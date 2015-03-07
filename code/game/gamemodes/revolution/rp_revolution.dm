@@ -123,7 +123,7 @@
 			//       probably wanna export this stuff into a separate function for use by both
 			//       revs and heads
 			//assume that only carbon mobs can become rev heads for now
-			if(!rev_mind.current:handcuffed && T && T.z == 1)
+			if(!rev_mind.current:handcuffed && T && T.z in config.station_levels)
 				return 0
 	return 1
 
@@ -135,7 +135,6 @@
 	world << "<B>The current game mode is - Revolution!</B>"
 	world << "<B>Some crewmembers are attempting to start a revolution!</B>"
 */
-	world << "<B>The current game mode is - Hidden!</B>"
 
 //////////////////////////////////////////////////////////////////////
 //Announces the end of the game with all relavent information stated//

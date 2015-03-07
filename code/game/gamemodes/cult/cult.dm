@@ -52,7 +52,6 @@
 	world << "<B>The current game mode is - Cult!</B>"
 	world << "<B>Some crewmembers are attempting to start a cult!<BR>\nCultists - complete your objectives. Convert crewmembers to your cause by using the convert rune. Remember - there is no you, there is only the cult.<BR>\nPersonnel - Do not let the cult succeed in its mission. Brainwashing them with the chaplain's bible reverts them to whatever CentCom-allowed faith they had.</B>"
 */
-	world << "<B>The current game mode is - Hidden!</B>"
 
 /datum/game_mode/cult/pre_setup()
 	if(!config.objectives_disabled)
@@ -336,7 +335,7 @@
 	if( cult.len || (ticker && istype(ticker.mode,/datum/game_mode/cult)) )
 		var/text = "<FONT size = 2><B>The cultists were:</B></FONT>"
 		for(var/datum/mind/cultist in cult)
-			text += printplayer(cultist)
+			text += print_player_full(cultist)
 		text += "<br>"
 
 		world << text

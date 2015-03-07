@@ -28,7 +28,6 @@
 	world << "<B>The AI on the satellite has malfunctioned and must be destroyed.</B>"
 	world << "The AI satellite is deep in space and can only be accessed with the use of a teleporter! You have [AI_win_timeleft/60] minutes to disable it."
 */
-	world << "<B>The current game mode is - Hidden!</B>"
 
 /datum/game_mode/malfunction/pre_setup()
 	for(var/mob/new_player/player in player_list)
@@ -183,7 +182,7 @@
 		usr << "You are unable to access the self-destruct system as you don't control the station yet."
 		return
 
-	if(ticker.mode:explosion_in_progress || ticker.mode:station_was_nuked)
+	if(ticker.mode.explosion_in_progress || ticker.mode:station_was_nuked)
 		usr << "The self-destruct countdown is already triggered!"
 		return
 
@@ -194,7 +193,7 @@
 	usr << "\red Self-Destruct sequence initialised!"
 
 	ticker.mode:to_nuke_or_not_to_nuke = 0
-	ticker.mode:explosion_in_progress = 1
+	ticker.mode.explosion_in_progress = 1
 	for(var/mob/M in player_list)
 		M << 'sound/machines/Alarm.ogg'
 
@@ -237,16 +236,15 @@
 	R.autosay(msg, AN)
 
 	if(abort)
-		ticker.mode:explosion_in_progress = 0
+		ticker.mode.explosion_in_progress = 0
 		set_security_level("red") //Delta's over
 		return
 
-	enter_allowed = 0
 	if(ticker)
 		ticker.station_explosion_cinematic(0,null)
 		if(ticker.mode)
 			ticker.mode:station_was_nuked = 1
-			ticker.mode:explosion_in_progress = 0
+			ticker.mode.explosion_in_progress = 0
 	return
 
 

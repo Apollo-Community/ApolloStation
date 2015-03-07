@@ -48,6 +48,10 @@
 			latejoin_cryo += loc
 			del(src)
 
+		if("JoinLateCyborg")
+			latejoin_cyborg += loc
+			del(src)
+
 		//prisoners
 		if("prisonwarp")
 			prisonwarp += loc
@@ -56,10 +60,8 @@
 	//		mazewarp += loc
 		if("Holding Facility")
 			holdingfacility += loc
-		if("tdome1")
-			tdome1	+= loc
-		if("tdome2")
-			tdome2 += loc
+		if("tdome")
+			tdome += loc
 		if("tdomeadmin")
 			tdomeadmin	+= loc
 		if("tdomeobserve")
@@ -133,7 +135,7 @@
 /obj/effect/landmark/costume/madscientist/New()
 	new /obj/item/clothing/under/gimmick/rank/captain/suit(src.loc)
 	new /obj/item/clothing/head/flatcap(src.loc)
-	new /obj/item/clothing/suit/storage/labcoat/mad(src.loc)
+	new /obj/item/clothing/suit/storage/toggle/labcoat/mad(src.loc)
 	new /obj/item/clothing/glasses/gglasses(src.loc)
 	del(src)
 
@@ -159,7 +161,7 @@
 /obj/effect/landmark/costume/butler/New()
 	new /obj/item/clothing/suit/wcoat(src.loc)
 	new /obj/item/clothing/under/suit_jacket(src.loc)
-	new /obj/item/clothing/head/that(src.loc)
+	new /obj/item/clothing/head/tophat(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/scratch/New()
@@ -178,7 +180,7 @@
 /obj/effect/landmark/costume/prig/New()
 	new /obj/item/clothing/suit/wcoat(src.loc)
 	new /obj/item/clothing/glasses/monocle(src.loc)
-	var/CHOICE= pick( /obj/item/clothing/head/bowler, /obj/item/clothing/head/that)
+	var/CHOICE= pick( /obj/item/clothing/head/bowler, /obj/item/clothing/head/tophat)
 	new CHOICE(src.loc)
 	new /obj/item/clothing/shoes/black(src.loc)
 	new /obj/item/weapon/cane(src.loc)

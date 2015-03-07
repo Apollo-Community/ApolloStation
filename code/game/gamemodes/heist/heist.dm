@@ -29,7 +29,7 @@ var/global/list/obj/cortical_stacks = list() //Stacks for 'leave nobody behind' 
 	world << "<B>Raiders:</B> Loot [station_name()] for anything and everything you need."
 	world << "<B>Personnel:</B> Repel the raiders and their low, low prices and/or crossbows."
 */
-	world << "<B>The current game mode is - Hidden!</B>"
+
 
 /datum/game_mode/heist/can_start()
 
@@ -105,7 +105,6 @@ var/global/list/obj/cortical_stacks = list() //Stacks for 'leave nobody behind' 
 	vox.name = vox.real_name
 	newraider.name = vox.name
 	vox.age = rand(12,20)
-	vox.dna.mutantrace = "vox"
 	vox.set_species("Vox")
 	vox.languages = list() // Removing language from chargen.
 	vox.flavor_text = ""
@@ -173,7 +172,7 @@ var/global/list/obj/cortical_stacks = list() //Stacks for 'leave nobody behind' 
 
 /datum/game_mode/proc/greet_vox(var/datum/mind/raider)
 	raider.current << "\blue <B>You are a Vox Raider, fresh from the Shoal!</b>"
-	raider.current << "\blue The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to the frontier and much of the unexplored galaxy. You and the crew have come to the Exodus for plunder, trade or both."
+	raider.current << "\blue The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to the frontier and much of the unexplored galaxy. You and the crew have come to the Apollo for plunder, trade or both."
 	raider.current << "\blue Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious."
 	raider.current << "\blue Use :V to voxtalk, :H to talk on your encrypted channel, and don't forget to turn on your nitrogen internals!"
 	raider.current << "\red IF YOU HAVE NOT PLAYED A VOX BEFORE, REVIEW THIS THREAD: http://baystation12.net/forums/viewtopic.php?f=6&t=8657."

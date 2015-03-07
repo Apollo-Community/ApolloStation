@@ -1,4 +1,3 @@
-
 /obj/item/weapon/gun/energy/taser
 	name = "taser gun"
 	desc = "A small, low capacity gun used for non-lethal takedowns."
@@ -10,12 +9,6 @@
 	cell_type = "/obj/item/weapon/cell/crap"
 
 /obj/item/weapon/gun/energy/taser/cyborg
-	name = "taser gun"
-	desc = "A small, low capacity gun used for non-lethal takedowns."
-	icon_state = "taser"
-	fire_sound = 'sound/weapons/Taser.ogg'
-	charge_cost = 100
-	projectile_type = "/obj/item/projectile/beam/stun"
 	cell_type = "/obj/item/weapon/cell/secborg"
 	var/charge_tick = 0
 	var/recharge_time = 10 //Time it takes for shots to recharge (in ticks)
@@ -61,18 +54,20 @@
 
 /obj/item/weapon/gun/energy/crossbow
 	name = "mini energy-crossbow"
-	desc = "A weapon favored by many of the syndicates stealth specialists."
+	desc = "A weapon favored by many mercenary stealth specialists."
 	icon_state = "crossbow"
 	w_class = 2.0
 	item_state = "crossbow"
-	matter = list("metal" = 2000)
+	matter = list("metal" = 2000, "uranium" = 100)
 	origin_tech = "combat=2;magnets=2;syndicate=5"
 	silenced = 1
+	charge_cost = 250
 	fire_sound = 'sound/weapons/Genhit.ogg'
 	projectile_type = "/obj/item/projectile/energy/bolt"
 	cell_type = "/obj/item/weapon/cell/crap"
 	var/charge_tick = 0
-
+	var/charge_rate = 250
+	var/charge_time = 30
 
 	New()
 		..()
@@ -86,24 +81,24 @@
 
 	process()
 		charge_tick++
-		if(charge_tick < 4) return 0
+		if(charge_tick < charge_time) return 0
 		charge_tick = 0
 		if(!power_supply) return 0
-		power_supply.give(100)
+		power_supply.give(charge_rate)
 		return 1
 
 
 	update_icon()
 		return
 
-
+/obj/item/weapon/gun/energy/crossbow/ninja
+	name = "energy dart thrower"
+	projectile_type = "/obj/item/projectile/energy/dart"
 
 /obj/item/weapon/gun/energy/crossbow/largecrossbow
 	name = "Energy Crossbow"
-	desc = "A weapon favored by syndicate infiltration teams."
+	desc = "A weapon favored by mercenary infiltration teams."
 	w_class = 4.0
 	force = 10
 	matter = list("metal" = 200000)
 	projectile_type = "/obj/item/projectile/energy/bolt/large"
-
-

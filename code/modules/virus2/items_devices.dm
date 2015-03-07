@@ -6,7 +6,7 @@
 	icon_state = "health"
 	w_class = 2.0
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 
 /obj/item/device/antibody_scanner/attack(mob/M as mob, mob/user as mob)
 	if(!istype(M,/mob/living/carbon/))
@@ -36,13 +36,21 @@
 ///////////////VIRUS DISH///////////////
 
 /obj/item/weapon/virusdish
-	name = "virus containment/growth dish"
+	var/base_name = "virus sample"
+	name = "virus sample"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-b"
 	var/datum/disease2/disease/virus2 = null
 	var/growth = 0
 	var/info = 0
 	var/analysed = 0
+	var/label_text = ""
+	
+	proc/update_name_label()
+		if(src.label_text == "")
+			src.name = src.base_name
+		else
+			src.name = "[src.base_name] ([src.label_text])"
 
 /obj/item/weapon/virusdish/random
 	name = "virus sample"
@@ -54,7 +62,17 @@
 	growth = rand(5, 50)
 
 /obj/item/weapon/virusdish/attackby(var/obj/item/weapon/W as obj,var/mob/living/carbon/user as mob)
-	if(istype(W,/obj/item/weapon/hand_labeler) || istype(W,/obj/item/weapon/reagent_containers/syringe))
+	if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/device/flashlight/pen))
+		var/tmp_label = sanitize(copytext(input(user, "Enter a label for [src.name]","Label",src.label_text), 1, MAX_NAME_LEN))
+		if(length(tmp_label) > 14)
+			user << "\red The label can be at most 14 characters long."
+			return
+		else
+			user << "\blue You set the label to \"[tmp_label]\"."
+			src.label_text = tmp_label
+			src.update_name_label()
+			return
+	else if(istype(W,/obj/item/weapon/reagent_containers/syringe) || istype(W, /obj/item/weapon/hand_labeler))
 		return
 	..()
 	if(prob(50))
@@ -65,11 +83,11 @@
 					infect_virus2(target, src.virus2)
 		del src
 
-/obj/item/weapon/virusdish/examine()
-	usr << "This is a virus containment dish."
+/obj/item/weapon/virusdish/examine(mob/user)
+	user << "This is a virus containment dish."
 	if(src.info)
-		usr << "It has the following information about its contents:"
-		usr << src.info
+		user << "It has the following information about its contents:"
+		user << src.info
 
 /obj/item/weapon/ruinedvirusdish
 	name = "ruined virus sample"

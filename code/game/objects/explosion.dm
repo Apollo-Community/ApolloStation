@@ -84,5 +84,5 @@ proc/explosion_turf(var/x,var/y,var/z,var/force)
 	return
 
 proc/secondaryexplosion(turf/epicenter, range)
-	for(var/turf/tile in range(range, epicenter))
+	for(var/turf/tile in trange(range, epicenter))
 		tile.ex_act(2)

@@ -37,6 +37,22 @@
 /turf/ex_act(severity)
 	return 0
 
+/turf/attack_hand(mob/user)
+	if(!(user.canmove) || user.restrained() || !(user.pulling))
+		return 0
+	if(user.pulling.anchored || !isturf(user.pulling.loc))
+		return 0
+	if(user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1)
+		return 0
+	if(ismob(user.pulling))
+		var/mob/M = user.pulling
+		var/atom/movable/t = M.pulling
+		M.stop_pulling()
+		step(user.pulling, get_dir(user.pulling.loc, src))
+		M.start_pulling(t)
+	else
+		step(user.pulling, get_dir(user.pulling.loc, src))
+	return 1
 
 /turf/bullet_act(var/obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam/pulse))
@@ -186,7 +202,8 @@
 // Removes all signs of lattice on the pos of the turf -Donkieyo
 /turf/proc/RemoveLattice()
 	var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-	if(L)
+	var/obj/structure/lattice/catwalk/W = locate(/obj/structure/lattice/catwalk/, src)
+	if(L && !W)
 		del L
 
 //Creates a new turf

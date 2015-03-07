@@ -6,6 +6,7 @@ var/global/datum/global_init/init = new ()
 /datum/global_init/New()
 
 	makeDatumRefLists()
+	load_configuration()
 
 	del(src)
 
@@ -26,15 +27,12 @@ var/global/datum/global_init/init = new ()
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
 	diary = file("data/logs/[date_string].log")
-	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
 	diary << "[log_end]\n[log_end]\nStarting up. [time2text(world.timeofday, "hh:mm.ss")][log_end]\n---------------------[log_end]"
-	diaryofmeanpeople << "[log_end]\n[log_end]\nStarting up. [time2text(world.timeofday, "hh:mm.ss")][log_end]\n---------------------[log_end]"
-	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND"
 
-	load_configuration()
+	config.post_load()
 
 	if(config && config.server_name != null && config.server_suffix && world.port > 0)
 		// dumb and hardcoded but I don't care~
@@ -48,8 +46,8 @@ var/global/datum/global_init/init = new ()
 	load_mods()
 	//loads donators
 	load_donators()
-	//loads event staff
-	load_event_staff()
+	//loads custom titles
+	load_titles()
 	//end-emergency fix
 
 	src.update_status()
@@ -63,9 +61,9 @@ var/global/datum/global_init/init = new ()
 	// due to this list not being instantiated.
 	populate_seed_list()
 
-	processScheduler = new
-	processScheduler.setup()
-	processScheduler.start()
+	// Create autolathe recipes, as above.
+	populate_lathe_recipes()
+
 	master_controller = new /datum/controller/game_controller()
 	spawn(1)
 		master_controller.setup()
@@ -114,8 +112,8 @@ var/world_topic_spam_protect_time = world.timeofday
 		var/list/s = list()
 		s["version"] = game_version
 		s["mode"] = master_mode
-		s["respawn"] = config ? abandon_allowed : 0
-		s["enter"] = enter_allowed
+		s["respawn"] = config.abandon_allowed
+		s["enter"] = config.enter_allowed
 		s["vote"] = config.allow_vote_mode
 		s["ai"] = config.allow_ai
 		s["host"] = host ? host : null
@@ -218,8 +216,6 @@ var/world_topic_spam_protect_time = world.timeofday
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
-		else
-			C << link("byond://[world.address]:[world.port]")
 
 	..(reason)
 
@@ -264,15 +260,12 @@ var/world_topic_spam_protect_time = world.timeofday
 	join_motd = file2text("config/motd.txt")
 
 
-/world/proc/load_configuration()
+/proc/load_configuration()
 	config = new /datum/configuration()
 	config.load("config/config.txt")
 	config.load("config/game_options.txt","game_options")
 	config.loadsql("config/dbconfig.txt")
 	config.loadforumsql("config/forumdbconfig.txt")
-	// apply some settings from config..
-	abandon_allowed = config.respawn
-
 
 /hook/startup/proc/loadMods()
 	world.load_mods()
@@ -304,28 +297,28 @@ var/world_topic_spam_protect_time = world.timeofday
 	var/s = ""
 
 	if (config && config.server_name)
-		s += "<b>[config.server_name]</b> &#8212; "
+		s += "<b>[config.server_name]</b>"
 
-	s += "<b>[station_name()]</b>";
+//	s += "<b>[station_name()]</b>"; 	Don't need this "Apollo Station -- Apollo Station, lol.
 	s += " ("
-	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
+	s += "<a href=\"http://apollo-community.org\">" //Change this to wherever you want the hub to link to.
 //	s += "[game_version]"
-	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
+	s += "forums"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
 	s += "</a>"
 	s += ")"
 
 	var/list/features = list()
 
-	if(ticker)
-		if(master_mode)
-			features += master_mode
-	else
+	if(!ticker)
+	//	if(master_mode)
+	//		features += master_mode
+	//else									Don't want people seeing the game-mode from hub
 		features += "<b>STARTING</b>"
 
-	if (!enter_allowed)
+	if (!config.enter_allowed)
 		features += "closed"
 
-	features += abandon_allowed ? "respawn" : "no respawn"
+	features += config.abandon_allowed ? "respawn" : "no respawn"
 
 	if (config && config.allow_vote_mode)
 		features += "vote"

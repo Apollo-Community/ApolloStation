@@ -453,15 +453,13 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			new_character.loc = pick(wizardstart)
 			//ticker.mode.learn_basic_spells(new_character)
 			ticker.mode.equip_wizard(new_character)
-		if("Syndicate")
+		if("Mercenary")
 			var/obj/effect/landmark/synd_spawn = locate("landmark*Syndicate-Spawn")
 			if(synd_spawn)
 				new_character.loc = get_turf(synd_spawn)
 			call(/datum/game_mode/proc/equip_syndicate)(new_character)
 		if("Ninja")
 			new_character.equip_space_ninja()
-			new_character.internal = new_character.s_store
-			new_character.internals.icon_state = "internal1"
 			if(ninjastart.len == 0)
 				new_character << "<B>\red A proper starting location for you could not be found, please report this bug!</B>"
 				new_character << "<B>\red Attempting to place at a carpspawn.</B>"
@@ -942,3 +940,23 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		usr << "Random events disabled"
 		message_admins("Admin [key_name_admin(usr)] has disabled random events.", 1)
 	feedback_add_details("admin_verb","TRE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/locate_obj()
+	set category = "Admin"
+	set name = "Locate object"
+
+	set desc = "Locates a given object"
+	if(!check_rights(R_ADMIN)) return
+
+	var/type_text = input("Which type path? eg /obj/item/weapon/card/id/captains_spare","Path?") as text
+	if(!type_text) return
+
+	var/type_path = text2path(type_text)
+
+	for(var/atom/A in world)
+		if(istype(A,type_path))
+			src.Move(A)
+			switch(alert("Object found!","Would you like to keep searching?","No","Yes"))
+				if("Yes")	return
+
+	src << "\red No more instances of <b>[type_text]</b> exist on the current map"

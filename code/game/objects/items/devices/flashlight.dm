@@ -4,8 +4,9 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	item_state = "flashlight"
+	l_color = null
 	w_class = 2
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 
 	matter = list("metal" = 50,"glass" = 20)
@@ -24,9 +25,12 @@
 		SetLuminosity(0)
 
 /obj/item/device/flashlight/proc/update_brightness(var/mob/user = null)
+	user.l_color = null
+
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		if(loc == user)
+			user.l_color = l_color
 			user.SetLuminosity(user.luminosity + brightness_on)
 		else if(isturf(loc))
 			SetLuminosity(brightness_on)
@@ -106,7 +110,7 @@
 	desc = "A pen-sized light, used by medical staff."
 	icon_state = "penlight"
 	item_state = ""
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	brightness_on = 2
 	w_class = 1
 
@@ -115,7 +119,7 @@
 	desc = "A miniature lamp, that might be used by small robots."
 	icon_state = "penlight"
 	item_state = ""
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	brightness_on = 2
 	w_class = 1
 
@@ -128,7 +132,7 @@
 	item_state = "lamp"
 	brightness_on = 5
 	w_class = 4
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 
 	on = 1
 
@@ -156,6 +160,7 @@
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
 	w_class = 2.0
 	brightness_on = 7 // Pretty bright.
+	l_color = "#8F0000"
 	icon_state = "flare"
 	item_state = "flare"
 	icon_action_button = null	//just pull it manually, neckbeard.

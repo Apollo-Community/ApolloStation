@@ -50,7 +50,7 @@
 			m_type = 1
 
 		if ("custom")
-			var/input = copytext(sanitize(input("Choose an emote to display.") as text|null),1,MAX_MESSAGE_LEN)
+			var/input = sanitize(copytext(input("Choose an emote to display.") as text|null,1,MAX_MESSAGE_LEN))
 			if (!input)
 				return
 			var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
@@ -172,6 +172,21 @@
 				m_type = 1
 			else
 				if (!muzzled)
+					var/scream_sound
+
+					if( gender == "male" )
+						scream_sound = pick(\
+						'sound/voice/cough01_man.ogg',
+						'sound/voice/cough02_man.ogg',
+						'sound/voice/cough03_man.ogg')
+					else if( gender == "female" )
+						scream_sound = pick(\
+						'sound/voice/cough01_woman.ogg',
+						'sound/voice/cough02_woman.ogg',
+						'sound/voice/cough03_woman.ogg')
+
+					playsound(loc, scream_sound, 80, 1)
+
 					message = "<B>[src]</B> coughs!"
 					m_type = 2
 				else
@@ -372,7 +387,7 @@
 				if (!M)
 					message = "<B>[src]</B> points."
 				else
-					M.point()
+					pointed(M)
 
 				if (M)
 					message = "<B>[src]</B> points to [M]."
@@ -538,13 +553,16 @@
 					message = "<B>[src]</B> screams!"
 					var/scream_sound
 
-					if( gender == "male" )
-						scream_sound = pick(\
-						'sound/voice/mscream1.ogg',
-						'sound/voice/mscream2.ogg',
-						'sound/voice/mscream3.ogg')
-					else if( gender == "female" )
-						scream_sound = 'sound/voice/wscream1.ogg'
+					if( istype( type, /mob/living/silicon ) || get_species() == "Machine" )
+						scream_sound = 'sound/voice/rscream1.ogg'
+					else
+						if( gender == "male" )
+							scream_sound = pick(\
+							'sound/voice/mscream1.ogg',
+							'sound/voice/mscream2.ogg',
+							'sound/voice/mscream3.ogg')
+						else if( gender == "female" )
+							scream_sound = 'sound/voice/wscream1.ogg'
 
 					playsound(loc, scream_sound, 80, 1)
 					m_type = 2
@@ -557,10 +575,6 @@
 
 		else
 			src << "\blue Unusable emote '[act]'. Say *help for a list."
-
-
-
-
 
 	if (message)
 		log_emote("[name]/[key] : [message]")
@@ -588,7 +602,7 @@
 	set desc = "Sets a description which will be shown when someone examines you."
 	set category = "IC"
 
-	pose =  copytext(sanitize(input(usr, "This is [src]. \He is...", "Pose", null)  as text), 1, MAX_MESSAGE_LEN)
+	pose =  sanitize(copytext(input(usr, "This is [src]. \He is...", "Pose", null)  as text, 1, MAX_MESSAGE_LEN))
 
 /mob/living/carbon/human/verb/set_flavor()
 	set name = "Set Flavour Text"

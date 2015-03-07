@@ -7,6 +7,7 @@
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/head.dmi')
 
 /obj/item/weapon/holder/New()
+	item_state = icon_state
 	..()
 	processing_objects.Add(src)
 
@@ -39,8 +40,9 @@
 /mob/living/var/holder_type
 
 /mob/living/proc/get_scooped(var/mob/living/carbon/grabber)
-	if(!holder_type)
+	if(!holder_type || buckled || pinned.len)
 		return
+
 	var/obj/item/weapon/holder/H = new holder_type(loc)
 	src.loc = H
 	H.name = loc.name
@@ -57,7 +59,8 @@
 	name = "diona nymph"
 	desc = "It's a tiny plant critter."
 	icon_state = "nymph"
-	origin_tech = "magnets=3;biotech=5"
+	origin_tech = "biotech=5"
+	slot_flags = SLOT_HEAD | SLOT_OCLOTHING
 
 /obj/item/weapon/holder/drone
 	name = "maintenance drone"
@@ -76,3 +79,16 @@
 	desc = "It's a slimy brain slug. Gross."
 	icon_state = "borer"
 	origin_tech = "biotech=6"
+
+/obj/item/weapon/holder/bunny
+	name = "bunny"
+	desc = "It's a cute little bunny."
+	icon_state = "bunny"
+	origin_tech = null
+
+/obj/item/weapon/holder/spybug
+	name = "spy bug"
+	desc = "It's a small robot bug with a microscopic camera and microphone."
+	icon_state = "drone"
+	origin_tech = "engineering=5 illegal=2"
+

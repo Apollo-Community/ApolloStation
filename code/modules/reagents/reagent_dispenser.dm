@@ -7,7 +7,6 @@
 	icon_state = "watertank"
 	density = 1
 	anchored = 0
-	flags = FPRINT
 	pressure_resistance = 2*ONE_ATMOSPHERE
 
 	var/amount_per_transfer_from_this = 10
@@ -24,16 +23,15 @@
 			src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
 		..()
 
-	examine()
-		set src in view()
-		..()
-		if (!(usr in view(2)) && usr!=src.loc) return
-		usr << "\blue It contains:"
+	examine(mob/user)
+		if(!..(user, 2))
+			return
+		user << "\blue It contains:"
 		if(reagents && reagents.reagent_list.len)
 			for(var/datum/reagent/R in reagents.reagent_list)
-				usr << "\blue [R.volume] units of [R.name]"
+				user << "\blue [R.volume] units of [R.name]"
 		else
-			usr << "\blue Nothing."
+			user << "\blue Nothing."
 
 	verb/set_APTFT() //set amount_per_transfer_from_this
 		set name = "Set transfer amount"
@@ -95,14 +93,13 @@
 		..()
 		reagents.add_reagent("fuel",1000)
 
-/obj/structure/reagent_dispensers/fueltank/examine()
-	set src in view()
-	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
+/obj/structure/reagent_dispensers/fueltank/examine(mob/user)
+	if(!..(user, 2))
+		return
 	if (modded)
-		usr << "\red Fuel faucet is wrenched open, leaking the fuel!"
+		user << "\red Fuel faucet is wrenched open, leaking the fuel!"
 	if(rig)
-		usr << "<span class='notice'>There is some kind of device rigged to the tank."
+		user << "<span class='notice'>There is some kind of device rigged to the tank."
 
 /obj/structure/reagent_dispensers/fueltank/attack_hand()
 	if (rig)
@@ -241,3 +238,21 @@
 	New()
 		..()
 		reagents.add_reagent("virusfood", 1000)
+
+//Dispensers
+/obj/structure/reagent_dispensers/radiumtank
+	name = "CurieDispenser 2000"
+	desc = "Dispenses radium that's necessary for cures!"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "radiumtank"
+	anchored = 1
+	density = 0
+	amount_per_transfer_from_this = 10
+
+	luminosity = 2
+	amount_per_transfer_from_this = 10
+	l_color = "#002200"
+	New()
+		..()
+		reagents.add_reagent("radium",1000)
+		l_color = "#002200"

@@ -3,9 +3,6 @@
 	config_tag = "extended"
 	required_players = 0
 
-	uplink_welcome = "Syndicate Uplink Console:"
-	uplink_uses = 10
-
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800
 
@@ -14,7 +11,7 @@
 	world << "<B>The current game mode is - Extended Role-Playing!</B>"
 	world << "<B>Just have fun and role-play!</B>"
 */
-	world << "<B>The current game mode is - Hidden!</B>"
+
 
 /datum/game_mode/extended/pre_setup()
 	return 1

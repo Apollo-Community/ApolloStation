@@ -224,7 +224,8 @@ datum/preferences
 				preview_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
 
 		var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = current_species ? current_species.eyes : "eyes_s")
-		eyes_s.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
+		if ((current_species && (current_species.flags & HAS_EYE_COLOR)))
+			eyes_s.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
 
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
 		if(hair_style)
@@ -408,6 +409,17 @@ datum/preferences
 					clothes_s.Blend(new /icon('icons/mob/mask.dmi', "mime"), ICON_OVERLAY)
 					clothes_s.Blend(new /icon('icons/mob/head.dmi', "beret"), ICON_OVERLAY)
 					clothes_s.Blend(new /icon('icons/mob/suit.dmi', "suspenders"), ICON_OVERLAY)
+					switch(backbag)
+						if(2)
+							clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
+						if(3)
+							clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-norm"), ICON_OVERLAY)
+						if(4)
+							clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+				if(ENTERTAINER)
+					clothes_s = new /icon('icons/mob/uniform.dmi', "entertainer_s")
+					clothes_s.Blend(new /icon('icons/mob/head.dmi', "entertainerhat"), ICON_OVERLAY)
+					clothes_s.Blend(new /icon('icons/mob/feet.dmi', "black"), ICON_UNDERLAY)
 					switch(backbag)
 						if(2)
 							clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)

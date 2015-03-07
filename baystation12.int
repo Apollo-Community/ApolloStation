@@ -1,11 +1,11 @@
 // BEGIN_INTERNALS
 /*
 MAP_ICON_TYPE: 0
-WINDOW: maps\tgstation2.dmm
+WINDOW: code\modules\mob\living\carbon\human\species\station\station.dm
 LAST_COMPILE_VERSION: 506.1249
-DIR: code code\modules code\modules\paperwork code\modules\reagents code\modules\reagents\reagent_containers code\modules\reagents\reagent_containers\food maps 
-FILE: maps\tgstation2.dmm
-LAST_COMPILE_TIME: 1422897545
+DIR: code code\__HELPERS code\ATMOSPHERICS\components code\ATMOSPHERICS\components\binary_devices code\ATMOSPHERICS\components\omni_devices code\ATMOSPHERICS\components\unary code\controllers code\datums code\datums\spells code\datums\wires code\defines code\modules code\modules\mob code\modules\mob\living code\modules\mob\living\carbon code\modules\mob\living\carbon\human code\modules\mob\living\carbon\human\species code\modules\mob\living\carbon\human\species\station 
+FILE: code\modules\mob\living\carbon\human\species\station\station.dm
+LAST_COMPILE_TIME: 1425283984
 AUTO_FILE_DIR: OFF
 */
 // END_INTERNALS

@@ -86,39 +86,67 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 /obj/fire
 	//Icon for fire on turfs.
 
+	var/phoron_fire = 0
+
 	anchored = 1
 	mouse_opacity = 0
 
 	//luminosity = 3
 
 	icon = 'icons/effects/fire.dmi'
+
 	icon_state = "1"
-	l_color = "#ED9200"
+	l_color = "#FFCC00"
+
 	layer = TURF_LAYER
 
 	var/firelevel = 10000 //Calculated by gas_mixture.calculate_firelevel()
+
 
 /obj/fire/process()
 	. = 1
 
 	var/turf/simulated/my_tile = loc
+	var/datum/gas_mixture/air_contents = my_tile.return_air()
+
+	var/phoron_content = air_contents.gas["phoron"]
+
+	if( phoron_content > 0 )
+		icon_state = "phoron_1"
+		l_color = "#330080"
+		phoron_fire = 1
+	else
+		icon_state = "1"
+		l_color = "#FFCC00"
+
 	if(!istype(my_tile) || !my_tile.zone)
 		if(my_tile.fire == src)
 			my_tile.fire = null
 		RemoveFire()
 		return 1
 
-	var/datum/gas_mixture/air_contents = my_tile.return_air()
-
-	if(firelevel > 6)
-		icon_state = "3"
-		SetLuminosity(7)
-	else if(firelevel > 2.5)
-		icon_state = "2"
-		SetLuminosity(5)
+	if( phoron_fire )
+		if(firelevel > 6)
+			icon_state = "phoron_3"
+			SetLuminosity( 7 )
+		else if(firelevel > 2.5)
+			icon_state = "phoron_2"
+			SetLuminosity( 5 )
+		else
+			icon_state = "phoron_1"
+			SetLuminosity( 3 )
 	else
-		icon_state = "1"
-		SetLuminosity(3)
+		if(firelevel > 6)
+			icon_state = "3"
+			SetLuminosity( 7 )
+		else if(firelevel > 2.5)
+			icon_state = "2"
+			SetLuminosity( 5 )
+		else
+			icon_state = "1"
+			SetLuminosity( 3 )
+
+
 
 	//im not sure how to implement a version that works for every creature so for now monkeys are firesafe
 	for(var/mob/living/carbon/human/M in loc)
@@ -161,24 +189,29 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	if(!istype(loc, /turf))
 		del src
 
-	dir = pick(cardinal)
+	set_dir(pick(cardinal))
 	SetLuminosity(3)
 	firelevel = fl
-	air_master.active_hotspots.Add(src)
+	if( air_master )
+		air_master.active_hotspots.Add(src)
 
 
 /obj/fire/Del()
 	if (istype(loc, /turf/simulated))
 		SetLuminosity(0)
-
+		loc.l_color = null
+		l_color = null
 		loc = null
 	air_master.active_hotspots.Remove(src)
 
 	..()
 
+
 /obj/fire/proc/RemoveFire()
 	if (istype(loc, /turf))
 		SetLuminosity(0)
+		loc.l_color = null
+		l_color = null
 		loc = null
 	air_master.active_hotspots.Remove(src)
 
@@ -313,7 +346,7 @@ datum/gas_mixture/proc/calculate_firelevel(obj/effect/decal/cleanable/liquid_fue
 
 
 /mob/living/proc/FireBurn(var/firelevel, var/last_temperature, var/pressure)
-	var/mx = 5 * firelevel/vsc.fire_firelevel_multiplier * min(pressure / ONE_ATMOSPHERE, 1)
+	var/mx = 4 * firelevel/vsc.fire_firelevel_multiplier * min(pressure / ONE_ATMOSPHERE, 1)
 	apply_damage(2.5*mx, BURN)
 
 

@@ -12,6 +12,7 @@ var/list/admin_verbs_default = list(
 //	/client/proc/deadchat				/*toggles deadchat on/off*/
 	)
 var/list/admin_verbs_admin = list(
+	/client/proc/locate_obj,
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
 	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
 //	/datum/admins/proc/show_traitor_panel,	/*interface which shows a mob's mind*/ -Removed due to rare practical use. Moved to debug verbs ~Errorage
@@ -25,6 +26,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,	/*admin-pm list*/
 	/client/proc/cmd_admin_subtle_message,	/*send an message to somebody as a 'voice in their head'*/
+	/client/proc/cmd_admin_restrain,
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_admin_check_contents,	/*displays the contents of an instance*/
 	/datum/admins/proc/access_news_network,	/*allows access of newscasters*/
@@ -45,6 +47,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_create_centcom_report,
 	/client/proc/check_words,			/*displays cult-words*/
 	/client/proc/check_ai_laws,			/*shows AI and borg laws*/
+	/client/proc/rename_ai,				/*properly renames the AI*/
 	/client/proc/check_antagonists,
 	/client/proc/admin_memo,			/*admin memo system. show/delete/write. +SERVER needed to delete admin memos of others*/
 	/client/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
@@ -60,7 +63,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_say,			/*admin-only ooc chat*/
 	/datum/admins/proc/PlayerNotes,
 	/client/proc/cmd_mod_say,
-	/client/proc/cmd_dev_say,
 	/datum/admins/proc/show_player_info,
 	/client/proc/free_slot,			/*frees slot for chosen job*/
 	/client/proc/cmd_admin_change_custom_event,
@@ -76,7 +78,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/response_team, // Response Teams admin verb
 	/client/proc/toggle_antagHUD_use,
 	/client/proc/toggle_antagHUD_restrictions,
-	/client/proc/allow_character_respawn    /* Allows a ghost to respawn */
+	/client/proc/allow_character_respawn,    /* Allows a ghost to respawn */
+	/client/proc/event_manager_panel
 )
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -87,11 +90,12 @@ var/list/admin_verbs_sounds = list(
 	/client/proc/play_sound
 	)
 var/list/admin_verbs_fun = list(
+	/client/proc/angrymode,
 	/client/proc/object_talk,
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
-        /client/proc/everyone_random,
+	/client/proc/everyone_random,
 	/client/proc/cinematic,
 	/client/proc/one_click_antag,
 	/datum/admins/proc/toggle_aliens,
@@ -101,7 +105,6 @@ var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_add_random_ai_law,
 	/client/proc/make_sound,
 	/client/proc/toggle_random_events,
-	/client/proc/set_ooc,
 	/client/proc/editappear
 	)
 var/list/admin_verbs_spawn = list(
@@ -131,7 +134,7 @@ var/list/admin_verbs_server = list(
 	/client/proc/nanomapgen_DumpImage
 	)
 var/list/admin_verbs_debug = list(
-        /client/proc/getruntimelog,                     /*allows us to access runtime logs to somebody*/
+	/client/proc/getruntimelog,                     /*allows us to access runtime logs to somebody*/
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
 	/client/proc/kill_air,
@@ -175,7 +178,6 @@ var/list/admin_verbs_rejuv = list(
 
 //verbs which can be hidden - needs work
 var/list/admin_verbs_hideable = list(
-	/client/proc/set_ooc,
 	/client/proc/deadmin_self,
 //	/client/proc/deadchat,
 	/client/proc/toggleprayers,
@@ -370,7 +372,8 @@ var/list/admin_verbs_mentor = list(
 	else
 		//ghostize
 		var/mob/body = mob
-		body.ghostize(1)
+		var/mob/dead/observer/ghost = body.ghostize(1)
+		ghost.admin_ghosted = 1
 		if(body && !body.key)
 			body.key = "@[key]"	//Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
 		feedback_add_details("admin_verb","O") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -478,8 +481,6 @@ var/list/admin_verbs_mentor = list(
 				src << "Only Tier 2 or higher donators can use this command."
 		else
 			src << "Only tier 2 or higher donators and administrators can use this command."
-
-
 
 /client/proc/stealth()
 	set category = "Admin"
@@ -604,12 +605,14 @@ var/list/admin_verbs_mentor = list(
 
 	var/datum/disease2/disease/D = new /datum/disease2/disease()
 
-	var/greater = ((input("Is this a lesser or greater disease?", "Give Disease") in list("Lesser", "Greater")) == "Greater")
+	var/severity = 1
+	var/greater = input("Is this a lesser, greater, or badmin disease?", "Give Disease") in list("Lesser", "Greater", "Badmin")
+	switch(greater)
+		if ("Lesser") severity = 1
+		if ("Greater") severity = 2
+		if ("Badmin") severity = 99
 
-	D.makerandom(greater)
-	if (!greater)
-		D.infectionchance = 1
-
+	D.makerandom(severity)
 	D.infectionchance = input("How virulent is this disease? (1-100)", "Give Disease", D.infectionchance) as num
 
 	if(istype(T,/mob/living/carbon/human))
@@ -622,8 +625,8 @@ var/list/admin_verbs_mentor = list(
 	infect_virus2(T,D,1)
 
 	feedback_add_details("admin_verb","GD2") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	log_admin("[key_name(usr)] gave [key_name(T)] a [(greater)? "greater":"lesser"] disease2 with infection chance [D.infectionchance].")
-	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] a [(greater)? "greater":"lesser"] disease2 with infection chance [D.infectionchance].", 1)
+	log_admin("[key_name(usr)] gave [key_name(T)] a [greater] disease2 with infection chance [D.infectionchance].")
+	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] a [greater] disease2 with infection chance [D.infectionchance].", 1)
 
 /client/proc/make_sound(var/obj/O in world) // -- TLE
 	set category = "Special Verbs"
@@ -672,6 +675,17 @@ var/list/admin_verbs_mentor = list(
 	log_admin("[key_name(usr)] used 'kill air'.")
 	message_admins("\blue [key_name_admin(usr)] used 'kill air'.", 1)
 
+/client/proc/readmin_self()
+	set name = "Re-Admin self"
+	set category = "Admin"
+
+	if(deadmin_holder)
+		deadmin_holder.reassociate()
+		log_admin("[src] re-admined themself.")
+		message_admins("[src] re-admined themself.", 1)
+		src << "<span class='interface'>You now have the keys to control the planet, or atleast a small space station</span>"
+		verbs -= /client/proc/readmin_self
+
 /client/proc/deadmin_self()
 	set name = "De-admin self"
 	set category = "Admin"
@@ -682,6 +696,7 @@ var/list/admin_verbs_mentor = list(
 			message_admins("[src] deadmined themself.", 1)
 			deadmin()
 			src << "<span class='interface'>You are now a normal player.</span>"
+			verbs |= /client/proc/readmin_self
 	feedback_add_details("admin_verb","DAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_log_hrefs()
@@ -701,6 +716,17 @@ var/list/admin_verbs_mentor = list(
 	set category = "Admin"
 	if(holder)
 		src.holder.output_ai_laws()
+
+/client/proc/rename_ai(mob/living/silicon/ai/AI in world)
+	set name = "Rename AI"
+	set category = "Admin"
+
+	if(holder)
+		var/new_name = trim_strip_input(src, "Enter new AI name. Leave blank or as is to cancel.", "Enter new AI Name", AI.name)
+		if(new_name && new_name != AI.name)
+			admin_log_and_message_admins("has renamed the AI '[AI.name]' to '[new_name]'")
+			AI.SetName(new_name)
+	feedback_add_details("admin_verb","RAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 //---- bs12 verbs ----
