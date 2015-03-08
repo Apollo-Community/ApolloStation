@@ -131,6 +131,8 @@
 
 
 /datum/surgery_step/limb/attach
+
+
 	allowed_tools = list(/obj/item/robot_parts = 100)
 
 	min_duration = 80
@@ -147,6 +149,12 @@
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
+
+		if( target.species.flags & NO_ROBO_LIMBS )
+			user.visible_message("[user] goes to attach \the [tool] where [target]'s [affected.display_name] used to be, but realizes that isn't possible.", \
+			"You go to attach \the [tool] where [target]'s [affected.display_name] used to be, but realize that isn't possible on [target].")
+			return
+
 		user.visible_message("[user] starts attaching \the [tool] where [target]'s [affected.display_name] used to be.", \
 		"You start attaching \the [tool] where [target]'s [affected.display_name] used to be.")
 

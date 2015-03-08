@@ -777,10 +777,10 @@ datum
 			result_amount = 2
 			required_container = /obj/item/slime_core
 			required_other = 3
-		slimeplasma
-			name = "Slime Plasma"
-			id = "m_plasma"
-			result = "plasma"
+		slimephoron
+			name = "Slime phoron"
+			id = "m_phoron"
+			result = "phoron"
 			required_reagents = list("sugar" = 1, "blood" = 2)
 			result_amount = 2
 			required_container = /obj/item/slime_core
@@ -814,7 +814,7 @@ datum
 			id = "m_tele"
 			result = null
 			required_reagents = list("pacid" = 2, "mutagen" = 2)
-			required_catalysts = list("plasma" = 1)
+			required_catalysts = list("phoron" = 1)
 			result_amount = 1
 			required_container = /obj/item/slime_core
 			required_other = 4
@@ -873,7 +873,7 @@ datum
 			id = "m_tele"
 			result = null
 			required_reagents = list("sacid" = 1, "blood" = 1)
-			required_catalysts = list("plasma" = 1)
+			required_catalysts = list("phoron" = 1)
 			result_amount = 1
 			required_container = /obj/item/slime_core
 			required_other = 4
@@ -1243,9 +1243,9 @@ datum
 
 
 //Dark Purple
-		slimeplasma
-			name = "Slime Plasma"
-			id = "m_plasma"
+		slimephoron
+			name = "Slime phoron"
+			id = "m_phoron"
 			result = null
 			required_reagents = list("phoron" = 5)
 			result_amount = 1

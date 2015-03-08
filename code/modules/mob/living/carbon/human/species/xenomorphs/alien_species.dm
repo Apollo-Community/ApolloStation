@@ -45,7 +45,7 @@
 	has_organ = list(
 		"heart" =           /datum/organ/internal/heart,
 		"brain" =           /datum/organ/internal/brain/xeno,
-		"plasma vessel" =   /datum/organ/internal/xenos/plasmavessel,
+		"phoron vessel" =   /datum/organ/internal/xenos/phoronvessel,
 		"hive node" =       /datum/organ/internal/xenos/hivenode,
 		"nutrient vessel" = /datum/organ/internal/diona/nutrients
 		)
@@ -53,7 +53,7 @@
 	var/alien_number = 0
 	var/caste_name = "creature" // Used to update alien name.
 	var/weeds_heal_rate = 1     // Health regen on weeds.
-	var/weeds_plasma_rate = 5   // Plasma regen on weeds.
+	var/weeds_phoron_rate = 5   // phoron regen on weeds.
 
 /datum/species/xenos/can_understand(var/mob/other)
 
@@ -87,9 +87,9 @@
 
 	if(environment.gas["phoron"] > 0 || locate(/obj/effect/alien/weeds) in T)
 		if(!regenerate(H))
-			var/datum/organ/internal/xenos/plasmavessel/P = H.internal_organs_by_name["plasma vessel"]
-			P.stored_plasma += weeds_plasma_rate
-			P.stored_plasma = min(max(P.stored_plasma,0),P.max_plasma)
+			var/datum/organ/internal/xenos/phoronvessel/P = H.internal_organs_by_name["phoron vessel"]
+			P.stored_phoron += weeds_phoron_rate
+			P.stored_phoron = min(max(P.stored_phoron,0),P.max_phoron)
 	..()
 
 /datum/species/xenos/proc/regenerate(var/mob/living/carbon/human/H)
@@ -138,7 +138,7 @@
 /datum/species/xenos/drone
 	name = "Xenomorph Drone"
 	caste_name = "drone"
-	weeds_plasma_rate = 15
+	weeds_phoron_rate = 15
 	slowdown = 1
 	tail = "xenos_drone_tail"
 	rarity_value = 5
@@ -149,7 +149,7 @@
 	has_organ = list(
 		"heart" =           /datum/organ/internal/heart,
 		"brain" =           /datum/organ/internal/brain/xeno,
-		"plasma vessel" =   /datum/organ/internal/xenos/plasmavessel/queen,
+		"phoron vessel" =   /datum/organ/internal/xenos/phoronvessel/queen,
 		"acid gland" =      /datum/organ/internal/xenos/acidgland,
 		"hive node" =       /datum/organ/internal/xenos/hivenode,
 		"resin spinner" =   /datum/organ/internal/xenos/resinspinner,
@@ -160,7 +160,7 @@
 		/mob/living/proc/ventcrawl,
 		/mob/living/carbon/human/proc/regurgitate,
 		/mob/living/carbon/human/proc/plant,
-		/mob/living/carbon/human/proc/transfer_plasma,
+		/mob/living/carbon/human/proc/transfer_phoron,
 		/mob/living/carbon/human/proc/evolve,
 		/mob/living/carbon/human/proc/resin,
 		/mob/living/carbon/human/proc/corrosive_acid
@@ -176,7 +176,7 @@
 /datum/species/xenos/hunter
 
 	name = "Xenomorph Hunter"
-	weeds_plasma_rate = 5
+	weeds_phoron_rate = 5
 	caste_name = "hunter"
 	slowdown = -2
 	total_health = 150
@@ -188,7 +188,7 @@
 	has_organ = list(
 		"heart" =           /datum/organ/internal/heart,
 		"brain" =           /datum/organ/internal/brain/xeno,
-		"plasma vessel" =   /datum/organ/internal/xenos/plasmavessel/hunter,
+		"phoron vessel" =   /datum/organ/internal/xenos/phoronvessel/hunter,
 		"hive node" =       /datum/organ/internal/xenos/hivenode,
 		"nutrient vessel" = /datum/organ/internal/diona/nutrients
 		)
@@ -204,7 +204,7 @@
 
 /datum/species/xenos/sentinel
 	name = "Xenomorph Sentinel"
-	weeds_plasma_rate = 10
+	weeds_phoron_rate = 10
 	caste_name = "sentinel"
 	slowdown = 0
 	total_health = 125
@@ -216,7 +216,7 @@
 	has_organ = list(
 		"heart" =           /datum/organ/internal/heart,
 		"brain" =           /datum/organ/internal/brain/xeno,
-		"plasma vessel" =   /datum/organ/internal/xenos/plasmavessel/sentinel,
+		"phoron vessel" =   /datum/organ/internal/xenos/phoronvessel/sentinel,
 		"acid gland" =      /datum/organ/internal/xenos/acidgland,
 		"hive node" =       /datum/organ/internal/xenos/hivenode,
 		"nutrient vessel" = /datum/organ/internal/diona/nutrients
@@ -226,7 +226,7 @@
 		/mob/living/proc/ventcrawl,
 		/mob/living/carbon/human/proc/tackle,
 		/mob/living/carbon/human/proc/regurgitate,
-		/mob/living/carbon/human/proc/transfer_plasma,
+		/mob/living/carbon/human/proc/transfer_phoron,
 		/mob/living/carbon/human/proc/corrosive_acid,
 		/mob/living/carbon/human/proc/neurotoxin
 		)
@@ -236,7 +236,7 @@
 	name = "Xenomorph Queen"
 	total_health = 250
 	weeds_heal_rate = 5
-	weeds_plasma_rate = 20
+	weeds_phoron_rate = 20
 	caste_name = "queen"
 	slowdown = 4
 	tail = "xenos_queen_tail"
@@ -249,7 +249,7 @@
 		"heart" =           /datum/organ/internal/heart,
 		"brain" =           /datum/organ/internal/brain/xeno,
 		"egg sac" =         /datum/organ/internal/xenos/eggsac,
-		"plasma vessel" =   /datum/organ/internal/xenos/plasmavessel/queen,
+		"phoron vessel" =   /datum/organ/internal/xenos/phoronvessel/queen,
 		"acid gland" =      /datum/organ/internal/xenos/acidgland,
 		"hive node" =       /datum/organ/internal/xenos/hivenode,
 		"resin spinner" =   /datum/organ/internal/xenos/resinspinner,
@@ -262,7 +262,7 @@
 		/mob/living/carbon/human/proc/regurgitate,
 		/mob/living/carbon/human/proc/lay_egg,
 		/mob/living/carbon/human/proc/plant,
-		/mob/living/carbon/human/proc/transfer_plasma,
+		/mob/living/carbon/human/proc/transfer_phoron,
 		/mob/living/carbon/human/proc/corrosive_acid,
 		/mob/living/carbon/human/proc/neurotoxin,
 		/mob/living/carbon/human/proc/resin

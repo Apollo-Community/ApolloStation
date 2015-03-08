@@ -264,22 +264,22 @@ What are the archived variables for?
 		var/oxygen_burn_rate = 0
 		//more phoron released at higher temperatures
 		var/temperature_scale
-		if(temperature > PLASMA_UPPER_TEMPERATURE)
+		if(temperature > phoron_UPPER_TEMPERATURE)
 			temperature_scale = 1
 		else
-			temperature_scale = (temperature-PLASMA_MINIMUM_BURN_TEMPERATURE)/(PLASMA_UPPER_TEMPERATURE-PLASMA_MINIMUM_BURN_TEMPERATURE)
+			temperature_scale = (temperature-phoron_MINIMUM_BURN_TEMPERATURE)/(phoron_UPPER_TEMPERATURE-phoron_MINIMUM_BURN_TEMPERATURE)
 		if(temperature_scale > 0)
 			oxygen_burn_rate = 1.4 - temperature_scale
-			if(oxygen > toxins*PLASMA_OXYGEN_FULLBURN)
+			if(oxygen > toxins*phoron_OXYGEN_FULLBURN)
 				phoron_burn_rate = (toxins*temperature_scale)/4
 			else
-				phoron_burn_rate = (temperature_scale*(oxygen/PLASMA_OXYGEN_FULLBURN))/4
+				phoron_burn_rate = (temperature_scale*(oxygen/phoron_OXYGEN_FULLBURN))/4
 			if(phoron_burn_rate > MINIMUM_HEAT_CAPACITY)
 				toxins -= phoron_burn_rate
 				oxygen -= phoron_burn_rate*oxygen_burn_rate
 				carbon_dioxide += phoron_burn_rate
 
-				energy_released += FIRE_PLASMA_ENERGY_RELEASED * (phoron_burn_rate)
+				energy_released += FIRE_phoron_ENERGY_RELEASED * (phoron_burn_rate)
 
 				fuel_burnt += (phoron_burn_rate)*(1+oxygen_burn_rate)
 

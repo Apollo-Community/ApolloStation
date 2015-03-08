@@ -148,7 +148,7 @@
 		if(ATM_CO2)
 			return "Carbon Dioxide"
 		if(ATM_P)
-			return "Phoron" //*cough* Plasma *cough*
+			return "Phoron" //*cough* phoron *cough*
 		if(ATM_N2O)
 			return "Nitrous Oxide"
 		else

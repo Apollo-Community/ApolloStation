@@ -1254,7 +1254,7 @@ proc/is_hot(obj/item/W as obj)
 				return 1000
 			else
 				return 0
-		if(/obj/item/weapon/pickaxe/plasmacutter)
+		if(/obj/item/weapon/pickaxe/phoroncutter)
 			return 3800
 		if(/obj/item/weapon/melee/energy)
 			return 3500

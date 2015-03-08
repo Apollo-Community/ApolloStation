@@ -9,20 +9,20 @@
 		return 1
 	return 0
 
-/mob/living/carbon/human/proc/gain_plasma(var/amount)
+/mob/living/carbon/human/proc/gain_phoron(var/amount)
 
-	var/datum/organ/internal/xenos/plasmavessel/I = internal_organs_by_name["plasma vessel"]
+	var/datum/organ/internal/xenos/phoronvessel/I = internal_organs_by_name["phoron vessel"]
 	if(!istype(I)) return
 
 	if(amount)
-		I.stored_plasma += amount
-	I.stored_plasma = max(0,min(I.stored_plasma,I.max_plasma))
+		I.stored_phoron += amount
+	I.stored_phoron = max(0,min(I.stored_phoron,I.max_phoron))
 
 /mob/living/carbon/human/proc/check_alien_ability(var/cost,var/needs_foundation,var/needs_organ)
 
-	var/datum/organ/internal/xenos/plasmavessel/P = internal_organs_by_name["plasma vessel"]
+	var/datum/organ/internal/xenos/phoronvessel/P = internal_organs_by_name["phoron vessel"]
 	if(!istype(P))
-		src << "<span class='danger'>Your plasma vessel has been removed!</span>"
+		src << "<span class='danger'>Your phoron vessel has been removed!</span>"
 		return
 
 	if(needs_organ)
@@ -34,7 +34,7 @@
 			src << "<span class='danger'>Your [needs_organ] is too damaged to function!</span>"
 			return
 
-	if(P.stored_plasma < cost)
+	if(P.stored_phoron < cost)
 		src << "\red You don't have enough phoron stored to do that."
 		return 0
 
@@ -49,31 +49,31 @@
 			src << "\red You need a solid foundation to do that on."
 			return 0
 
-	P.stored_plasma -= cost
+	P.stored_phoron -= cost
 	return 1
 
 // Free abilities.
-/mob/living/carbon/human/proc/transfer_plasma(mob/living/carbon/human/M as mob in oview())
-	set name = "Transfer Plasma"
-	set desc = "Transfer Plasma to another alien"
+/mob/living/carbon/human/proc/transfer_phoron(mob/living/carbon/human/M as mob in oview())
+	set name = "Transfer phoron"
+	set desc = "Transfer phoron to another alien"
 	set category = "Abilities"
 
 	if (get_dist(src,M) <= 1)
 		src << "<span class='alium'>You need to be closer.</span>"
 		return
 
-	var/datum/organ/internal/xenos/plasmavessel/I = M.internal_organs_by_name["plasma vessel"]
+	var/datum/organ/internal/xenos/phoronvessel/I = M.internal_organs_by_name["phoron vessel"]
 	if(!istype(I))
-		src << "<span class='alium'>Their plasma vessel is missing.</span>"
+		src << "<span class='alium'>Their phoron vessel is missing.</span>"
 		return
 
-	var/amount = input("Amount:", "Transfer Plasma to [M]") as num
+	var/amount = input("Amount:", "Transfer phoron to [M]") as num
 	if (amount)
 		amount = abs(round(amount))
-		if(check_alien_ability(amount,0,"plasma vessel"))
-			M.gain_plasma(amount)
-			M << "<span class='alium'>[src] has transfered [amount] plasma to you.</span>"
-			src << "<span class='alium'>You have transferred [amount] plasma to [M].</span>"
+		if(check_alien_ability(amount,0,"phoron vessel"))
+			M.gain_phoron(amount)
+			M << "<span class='alium'>[src] has transfered [amount] phoron to you.</span>"
+			src << "<span class='alium'>You have transferred [amount] phoron to [M].</span>"
 	return
 
 // Queen verbs.

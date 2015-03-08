@@ -252,4 +252,4 @@ var/max_explosion_range = 14
 var/list/area/unlogged_areas = list( /area/tdome )
 
 // Alien taste-test
-var/unwhitelisted_alien = "Skrell"
+var/unwhitelisted_alien = "Tajara"

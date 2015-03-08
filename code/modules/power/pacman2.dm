@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
 
 
-//PACMAN variant that can run on the small plasma tanks.
+//PACMAN variant that can run on the small phoron tanks.
 /obj/machinery/power/port_gen/pacman2
 	name = "Pacman II"
 	desc = "P.A.C.M.A.N. type II portable generator. Uses liquid phoron as a fuel source."

@@ -20,6 +20,18 @@
 		return istype(H.species, /datum/species/xenos)
 	return 0
 
+/proc/isnucleation(A)
+	if(istype(A, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = A
+		return istype(H.species, /datum/species/nucleation)
+	return 0
+
+/proc/ismachine(A)
+	if(istype(A, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = A
+		return istype(H.species, /datum/species/machine)
+	return 0
+
 /proc/ismonkey(A)
 	if(A && istype(A, /mob/living/carbon/monkey))
 		return 1

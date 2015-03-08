@@ -1,11 +1,11 @@
 // BEGIN_INTERNALS
 /*
 MAP_ICON_TYPE: 0
-WINDOW: code\modules\mob\living\carbon\human\species\station\station.dm
-LAST_COMPILE_VERSION: 506.1249
-DIR: code code\__HELPERS code\ATMOSPHERICS\components code\ATMOSPHERICS\components\binary_devices code\ATMOSPHERICS\components\omni_devices code\ATMOSPHERICS\components\unary code\controllers code\datums code\datums\spells code\datums\wires code\defines code\modules code\modules\mob code\modules\mob\living code\modules\mob\living\carbon code\modules\mob\living\carbon\human code\modules\mob\living\carbon\human\species code\modules\mob\living\carbon\human\species\station 
-FILE: code\modules\mob\living\carbon\human\species\station\station.dm
-LAST_COMPILE_TIME: 1425283984
+WINDOW: code\modules\mob\living\carbon\human\species\station\station.dm;code\modules\supermatter\supermatter.dm;code\modules\virus2\effect.dm;code\modules\virus2\disease2.dm;code\modules\mob\mob_helpers.dm;code\__HELPERS\unsorted.dm;code\game\objects\objs.dm;code\modules\organs\organ.dm;code\modules\power\lighting.dm;code\modules\surgery\organs_internal.dm;baystation12.dme;code\modules\mob\living\carbon\brain\MMI.dm;code\modules\mob\living\carbon\human\death.dm;code\global.dm;icons\obj\supermatter.dmi;code\game\objects\effects\sm_crystals.dm;icons\obj\shards.dmi;code\modules\surgery\other.dm;code\modules\surgery\surgery.dm;code\modules\virus2\helpers.dm;code\controllers\master_controller.dm;code\game\objects\effects\decals\Cleanable\humans.dm;code\game\objects\effects\decals\posters\bs12.dm;code\modules\mob\new_player\sprite_accessories.dm;code\modules\mob\new_player\preferences_setup.dm;icons\obj\clothing\uniforms.dmi;code\modules\clothing\under\miscellaneous.dm;icons\mob\suit.dmi;icons\mob\uniform.dmi
+LAST_COMPILE_VERSION: 506.1250
+DIR: code code\__HELPERS code\ATMOSPHERICS code\ATMOSPHERICS\components code\ATMOSPHERICS\components\binary_devices code\ATMOSPHERICS\components\omni_devices code\ATMOSPHERICS\components\unary code\controllers code\datums code\datums\diseases code\datums\spells code\datums\wires code\defines code\defines\obj code\game code\game\gamemodes code\game\jobs code\game\machinery code\game\mecha\equipment code\game\mecha\equipment\weapons code\game\objects\effects\decals code\game\objects\effects\decals\Cleanable code\game\objects\effects\decals\posters code\game\objects\items\weapons code\game\objects\items\weapons\tanks code\modules code\modules\clothing code\modules\clothing\under code\modules\mob code\modules\mob\living code\modules\mob\living\carbon code\modules\mob\living\carbon\human\species code\modules\mob\living\carbon\human\species\station code\modules\mob\living\carbon\human\species\xenomorphs code\modules\mob\new_player code\modules\organs code\modules\power code\modules\reagents code\modules\reagents\reagent_containers code\modules\reagents\reagent_containers\food code\modules\reagents\reagent_containers\food\snacks code\modules\supermatter code\modules\surgery code\modules\virus2 code\WorkInProgress code\WorkInProgress\Sigyn code\WorkInProgress\Sigyn\Softcurity icons icons\mob icons\obj icons\obj\clothing sound sound\effects sound\weapons 
+FILE: code\modules\clothing\under\miscellaneous.dm
+LAST_COMPILE_TIME: 1425808344
 AUTO_FILE_DIR: OFF
 */
 // END_INTERNALS

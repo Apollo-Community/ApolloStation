@@ -27,6 +27,7 @@
 #define DETONATION_RADS 200
 #define DETONATION_HALLUCINATION 600
 
+#define TRANSFORM_DISTANCE_MOD 2 // Size/this is maximum distance from SM during burst for transformation to Nucleation
 
 #define WARNING_DELAY 30			//seconds between warnings.
 
@@ -101,16 +102,10 @@
 	anchored = 1
 	grav_pulling = 1
 	exploded = 1
-	for(var/mob/living/mob in living_mob_list)
-		if(loc.z == mob.loc.z)
-			if(istype(mob, /mob/living/carbon/human))
-				//Hilariously enough, running into a closet should make you get hit the hardest.
-				var/mob/living/carbon/human/H = mob
-				H.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
-			var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(mob, src) + 1) )
-			mob.apply_effect(rads, IRRADIATE)
 	spawn(pull_time)
-		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
+		var/turf/epicenter = get_turf(src)
+		explosion(epicenter, explosion_power, explosion_power*2, explosion_power*3, explosion_power*4, 1)
+		supermatter_delamination( epicenter, explosion_power*4, 1 )
 		del src
 		return
 
@@ -267,6 +262,9 @@
 	user << "<span class = \"warning\">You attempt to interface with the control circuits but find they are not connected to your network.  Maybe in a future firmware update.</span>"
 
 /obj/machinery/power/supermatter/attack_hand(mob/user as mob)
+	if( isnucleation( user )) // Nucleation's biology doesn't react to this
+		return
+
 	user.visible_message("<span class=\"warning\">\The [user] reaches out and touches \the [src], inducing a resonance... \his body starts to glow and bursts into flames before flashing into ash.</span>",\
 		"<span class=\"danger\">You reach out and touch \the [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"</span>",\
 		"<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>")
@@ -294,6 +292,8 @@
 
 /obj/machinery/power/supermatter/Bumped(atom/AM as mob|obj)
 	if(istype(AM, /mob/living))
+		if( isnucleation( AM )) // Nucleation's biology doesn't react to this
+			return
 		AM.visible_message("<span class=\"warning\">\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
 		"<span class=\"danger\">You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
 		"<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>")
@@ -305,6 +305,9 @@
 
 
 /obj/machinery/power/supermatter/proc/Consume(var/mob/living/user)
+	if( isnucleation( user )) // Nucleation's biology doesn't react to this
+		return
+
 	if(istype(user))
 		user.dust()
 		power += 200
@@ -358,6 +361,91 @@
 		defer_powernet_rebuild = 0
 	return
 
+
+proc/supermatter_delamination(var/turf/epicenter, var/size, var/transform_mobs = 0, var/adminlog = 1)
+	spawn(0)
+		var/start = world.timeofday
+		epicenter = get_turf(epicenter)
+		if(!epicenter) return
+
+		if(adminlog)
+			message_admins("Supermatter delamination with size ([size]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</a>)")
+			log_game("Supermatter delamination with size ([size]) in area [epicenter.loc.name] ")
+
+		playsound(epicenter, 'sound/effects/explosionfar.ogg', 100, 1, round(size*2,1) )
+		playsound(epicenter, "explosion", 100, 1, round(size,1) )
+
+		if(defer_powernet_rebuild != 2)
+			defer_powernet_rebuild = 1
+
+		var/x = epicenter.x
+		var/y = epicenter.y
+		var/z = epicenter.z
+
+		epicenter.ChangeTurf( /turf/simulated/floor/plating/smatter )
+
+		for(var/mob/living/mob in orange( epicenter, size*2 )) // Irradiate area twice the size of the main blast
+			if(epicenter.z == mob.loc.z)
+				if( ishuman(mob) )
+					//Hilariously enough, running into a closet should make you get hit the hardest.
+					var/mob/living/carbon/human/H = mob
+					H.hallucination += max(50, min(size*10, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, epicenter) + 1)) ) )
+				var/rads = size*10 * sqrt( 1 / (get_dist(mob, epicenter) + 1) )
+				mob.apply_effect(rads, IRRADIATE)
+
+		for(var/i=0, i<size, i++) // An awful way to do this, but i'm tired
+			for(var/j=0, j<i, j++)
+				var/turf/cur_turf = locate((x-i)+j, y+j, z )
+				var/dist = get_dist( cur_turf, epicenter )
+				var/percent = min( 100, ((( size-dist )/size )*100 ))
+				blow_lights( cur_turf )
+				if( prob( percent ))
+					supermatter_convert( cur_turf, transform_mobs )
+
+				cur_turf = locate(x+j, (y+i)-j, z )
+				dist = get_dist( cur_turf, epicenter )
+				percent = min( 100, ((( size-dist )/size )*100 ))
+				blow_lights( cur_turf )
+				if( prob( percent ))
+					supermatter_convert( cur_turf, transform_mobs )
+
+				cur_turf = locate((x+i)-j, y-j, z )
+				dist = get_dist( cur_turf, epicenter )
+				percent = min( 100, ((( size-dist )/size )*100 ))
+				blow_lights( cur_turf )
+				if( prob( percent ))
+					supermatter_convert( cur_turf, transform_mobs )
+
+				cur_turf = locate(x-j, (y-i)+j, z )
+				dist = get_dist( cur_turf, epicenter )
+				percent = min( 100, ((( size-dist )/size )*100 ))
+				blow_lights( cur_turf )
+				if( prob( percent ))
+					supermatter_convert( cur_turf, transform_mobs )
+
+		if(defer_powernet_rebuild != 2)
+			defer_powernet_rebuild = 0
+
+		diary << "## Supermatter delamination with size [size]. Took [(world.timeofday-start)/10] seconds."
+	return 1
+
+
+proc/supermatter_convert( var/turf/T, var/transform_mobs = 0 )
+	if( transform_mobs )
+		for( var/mob/item in T.contents )
+			if( ishuman( item ))
+				var/mob/living/carbon/human/M = item
+				if( istype(M.species, /datum/species/human ))
+					if( prob( 33 ))
+						M.set_species( "Nucleation", 1 )
+			item.ex_act( 3 )
+
+	if( istype( T, /turf/simulated/floor ))
+		new /obj/effect/supermatter_crystal(T)
+
+proc/blow_lights( var/turf/T )
+	for( var/obj/machinery/power/apc/apc in T )
+		apc.overload_lighting()
 
 /obj/machinery/power/supermatter/GotoAirflowDest(n) //Supermatter not pushed around by airflow
 	return

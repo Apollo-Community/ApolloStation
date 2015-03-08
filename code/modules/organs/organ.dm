@@ -107,14 +107,14 @@
 	// Don't need to process any of this if they aren't standing anyways
 	// unless their stance is damaged, and we want to check if they should stay down
 	if (!stance_damage && (lying || resting) && (life_tick % 4) == 0)
-		return 
-	
+		return
+
 	stance_damage = 0
-	
+
 	// Buckled to a bed/chair. Stance damage is forced to 0 since they're sitting on something solid
 	if (istype(buckled, /obj/structure/stool/bed))
 		return
-	
+
 	for (var/organ in list("l_leg","l_foot","r_leg","r_foot"))
 		var/datum/organ/external/E = organs_by_name[organ]
 		if (E.status & ORGAN_DESTROYED)

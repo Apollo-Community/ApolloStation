@@ -24,7 +24,7 @@
 
 /obj/item/weapon/cell/crap
 	name = "\improper Nanotrasen brand rechargable AA battery"
-	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
+	desc = "You can't top the phoron top." //TOTALLY TRADEMARK INFRINGEMENT
 	origin_tech = "powerstorage=0"
 	maxcharge = 500
 	matter = list("metal" = 700, "glass" = 40)

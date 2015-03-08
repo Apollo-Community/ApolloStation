@@ -337,7 +337,7 @@
 
 		if(Toxins_pp > safe_phoron_max) // Too much phoron
 			var/ratio = (breath.gas["phoron"] / safe_phoron_max) * 10
-			//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
+			//adjustToxLoss(Clamp(ratio, MIN_phoron_DAMAGE, MAX_phoron_DAMAGE))	//Limit amount of damage toxin exposure can do per second
 			if(reagents)
 				reagents.add_reagent("toxin", Clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
 			phoron_alert = max(phoron_alert, 1)

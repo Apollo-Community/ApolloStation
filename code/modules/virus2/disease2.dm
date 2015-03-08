@@ -58,6 +58,14 @@
 		cure(mob)
 		return
 
+	if( isnucleation( mob )) // Nucleation's biology doesn't react to this
+		cure(mob)
+		return
+
+	if( ismachine( mob )) // Machines can only get viruses from wetskrell.nt huehuehuehue
+		cure(mob)
+		return
+
 	if(mob.stat == 2)
 		return
 	if(stage <= 1 && clicks == 0) 	// with a certain chance, the mob may become immune to the disease before it starts properly

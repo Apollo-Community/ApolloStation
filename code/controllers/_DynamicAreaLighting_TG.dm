@@ -37,15 +37,14 @@ datum/light_source
 	var/atom/owner
 	var/changed = 1
 	var/list/effect = list()
-	var/__x = 0		//x coordinate at last update
-	var/__y = 0		//y coordinate at last update
-	var/__z = 0		//z coordinate at last update
+	var/__x = 0		// x coordinate at last update
+	var/__y = 0		// y coordinate at last update
+	var/__z = 0		// z coordinate at last update
 
-	var/_l_color //do not use directly, only used as reference for updating
+	var/_l_color // do not use directly, only used as reference for updating
 	var/col_r
 	var/col_g
 	var/col_b
-
 
 	New(atom/A)
 		if(!istype(A))
@@ -74,7 +73,6 @@ datum/light_source
 			changed = 1
 
 		if (owner.l_color != _l_color)
-			readrgb(owner.l_color)
 			changed = 1
 
 		if(changed)
@@ -83,21 +81,18 @@ datum/light_source
 			return add_effect()
 		return 0
 
-
 	proc/remove_effect()
 		// before we apply the effect we remove the light's current effect.
 		for(var/turf/T in effect)	// negate the effect of this light source
-			T.l_color = null
-			readrgb(owner.l_color)
 			T.update_lumcount(-effect[T], col_r, col_g, col_b, 1)
-		effect.Cut()					// clear the effect list
+		effect.len = 0					// clear the effect list
 
 	proc/add_effect()
 		// only do this if the light is turned on and is on the map
 		if(owner.loc && owner.luminosity > 0)
 			readrgb(owner.l_color)
 			effect = list()
-			for(var/turf/T in view(owner.get_light_range(),get_turf(owner)))
+			for(var/turf/T in view(owner.get_light_range(), get_turf(owner)))
 				var/delta_lumen = lum(T)
 				if(delta_lumen > 0)
 					effect[T] = delta_lumen
@@ -126,8 +121,9 @@ datum/light_source
 		else
 			return sqrtTable[owner.trueLuminosity] - dist
 
-	proc/readrgb(col)
+	proc/readrgb(const/col)
 		_l_color = col
+
 		if(col)
 			col_r = GetRedPart(col)
 			col_g = GetGreenPart(col)
@@ -162,15 +158,6 @@ atom/movable/New()
 		if(light)	WARNING("[type] - Don't set lights up manually during New(), We do it automatically.")
 		trueLuminosity = luminosity * luminosity
 		light = new(src)
-
-//Objects with opacity will trigger nearby lights to update at next lighting process.
-atom/movable/Del()
-	if(opacity)
-		if(isturf(loc))
-			if(loc:lighting_lumcount > 1)
-				UpdateAffectingLights()
-
-	..()
 
 //Sets our luminosity.
 //If we have no light it will create one.
@@ -240,7 +227,7 @@ turf
 	var/light_col_sources = 0
 
 turf/space
-	lighting_lumcount = 4		//starlight
+	lighting_lumcount = 4
 
 turf/proc/update_lumcount(amount, col_r, col_g, col_b, removing = 0)
 	lighting_lumcount += amount
@@ -258,9 +245,9 @@ turf/proc/update_lumcount(amount, col_r, col_g, col_b, removing = 0)
 			lumcount_b += col_b
 
 		if(light_col_sources)
-			var/r_avg = max(0, min(255, round(lumcount_r / light_col_sources, 16) + 15))
-			var/g_avg = max(0, min(255, round(lumcount_g / light_col_sources, 16) + 15))
-			var/b_avg = max(0, min(255, round(lumcount_b / light_col_sources, 16) + 15))
+			var/r_avg = Clamp(round(lumcount_r / light_col_sources, 16) + 15, 0, 255)
+			var/g_avg = Clamp(round(lumcount_g / light_col_sources, 16) + 15, 0, 255)
+			var/b_avg = Clamp(round(lumcount_b / light_col_sources, 16) + 15, 0, 255)
 			l_color = rgb(r_avg, g_avg, b_avg)
 		else
 			l_color = null
@@ -302,29 +289,26 @@ turf/proc/build_lighting_area(const/tag, const/level, const/color_light)
 turf/proc/shift_to_subarea()
 	lighting_changed = 0
 	var/area/Area = loc
-
 	if(!istype(Area) || !Area.lighting_use_dynamic) return
-
-	var/level = min(max(round(lighting_lumcount,1),0),lighting_controller.lighting_states)
+	var/level = Clamp(round(lighting_lumcount, 1), 0, lighting_controller.lighting_states)
 	var/new_tag = lighting_tag(level)
-
 	// pomf - If we have a lighting color that is not null, apply the new tag to seperate the areas.
 	if (l_color)
 		// pomf - We append the (rounded!) color lighting lumcount so we can have colored lights.
-		new_tag += "[l_color][min(max(round(color_lighting_lumcount,1),0),lighting_controller.lighting_states)]"
+		new_tag += "[l_color][Clamp(round(color_lighting_lumcount, 1), 0, lighting_controller.lighting_states)]"
 
-	if(Area.tag!=new_tag)	//skip if already in this area
+	if(Area.tag != new_tag)	//skip if already in this area
 		var/area/A = locate(new_tag)	// find an appropriate area
-		var/color_light = min(max(round(color_lighting_lumcount,1),0),lighting_controller.lighting_states)
+		var/color_light = Clamp(round(color_lighting_lumcount, 1), 0, lighting_controller.lighting_states)
 
-		if (!A)
+		if(!A)
 			A = build_lighting_area(new_tag, level, color_light)
-		else if (l_color != A.l_color)
+		else if(l_color != A.l_color)
 			A.l_color = l_color
-			//color_light = min(max(round(color_lighting_lumcount, 1), 0), lighting_controller.lighting_states)
 			A.SetLightLevel(level, color_light)
 
 		A.contents += src	// move the turf into the area
+//	universe.OnTurfTick(src)
 
 // Dedicated lighting sublevel for space turfs
 // helps us depower things in space, remove space fire alarms,
@@ -338,7 +322,6 @@ turf/space/build_lighting_area(var/tag,var/level)
 	A.SetLightLevel(4)
 	A.icon_state = null
 	return A
-
 
 area
 	var/lighting_use_dynamic = 1	//Turn this flag off to prevent sd_DynamicAreaLighting from affecting this area
@@ -375,6 +358,30 @@ area
 		if (istype(color_overlay))
 			color_overlay.color = l_color
 
+			/*
+			if (light < 6)
+				switch (level)
+					if (6)
+						color_overlay.alpha = 140
+					if (5)
+						color_overlay.alpha = 120
+					if (4)
+						color_overlay.alpha = 100
+					if (3)
+						color_overlay.alpha = 80
+					if (2)
+						color_overlay.alpha = 60
+					if (1)
+						color_overlay.alpha = 40
+					if (-INFINITY to 0)
+					//world << "Zero or below, [color_light]."
+					color_overlay.alpha = 0
+					else
+						//world << "Setting the alpha to max... color_light [color_light]."
+						color_overlay.alpha = 140
+
+				color_overlay.blend_mode = BLEND_MULTIPLY
+			*/
 
 			switch (color_light)
 				if (6)
@@ -394,8 +401,6 @@ area
 					//color_overlay.alpha = 60
 				if (1)
 					color_overlay.icon_state = "1"
-					color_overlay.alpha = 200
-					//color_overlay.alpha = 30
 				if (-INFINITY to 0)
 					//world << "Zero or below, [color_light]."
 					color_overlay.alpha = 0
@@ -403,7 +408,9 @@ area
 					//world << "Setting the alpha to max... color_light [color_light]."
 					color_overlay.alpha = 180
 
+
 			color_overlay.blend_mode = BLEND_ADD
+
 			if (color_overlay.color)
 				overlays.Add(color_overlay)
 

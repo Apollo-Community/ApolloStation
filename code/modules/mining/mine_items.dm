@@ -107,15 +107,15 @@
 	origin_tech = "materials=4"
 	desc = "This makes no metallurgic sense."
 
-/obj/item/weapon/pickaxe/plasmacutter
-	name = "plasma cutter"
-	icon_state = "plasmacutter"
+/obj/item/weapon/pickaxe/phoroncutter
+	name = "phoron cutter"
+	icon_state = "phoroncutter"
 	item_state = "gun"
 	w_class = 3.0 //it is smaller than the pickaxe
 	damtype = "fire"
 	digspeed = 20 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
 	origin_tech = "materials=4;phorontech=3;engineering=3"
-	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
+	desc = "A rock cutter that uses bursts of hot phoron. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	drill_verb = "cutting"
 
 /obj/item/weapon/pickaxe/diamond

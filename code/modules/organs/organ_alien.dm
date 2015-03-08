@@ -144,26 +144,26 @@
 	parent_organ = "groin"
 	removed_type = /obj/item/organ/xenos/eggsac
 
-/datum/organ/internal/xenos/plasmavessel
-	name = "plasma vessel"
+/datum/organ/internal/xenos/phoronvessel
+	name = "phoron vessel"
 	parent_organ = "chest"
-	removed_type = /obj/item/organ/xenos/plasmavessel
-	var/stored_plasma = 0
-	var/max_plasma = 500
+	removed_type = /obj/item/organ/xenos/phoronvessel
+	var/stored_phoron = 0
+	var/max_phoron = 500
 
-/datum/organ/internal/xenos/plasmavessel/queen
-	name = "bloated plasma vessel"
-	stored_plasma = 200
-	max_plasma = 500
+/datum/organ/internal/xenos/phoronvessel/queen
+	name = "bloated phoron vessel"
+	stored_phoron = 200
+	max_phoron = 500
 
-/datum/organ/internal/xenos/plasmavessel/sentinel
-	stored_plasma = 100
-	max_plasma = 250
+/datum/organ/internal/xenos/phoronvessel/sentinel
+	stored_phoron = 100
+	max_phoron = 250
 
-/datum/organ/internal/xenos/plasmavessel/hunter
-	name = "tiny plasma vessel"
-	stored_plasma = 100
-	max_plasma = 150
+/datum/organ/internal/xenos/phoronvessel/hunter
+	name = "tiny phoron vessel"
+	stored_phoron = 100
+	max_phoron = 150
 
 /datum/organ/internal/xenos/acidgland
 	name = "acid gland"
@@ -190,10 +190,10 @@
 	icon_state = "xgibmid1"
 	organ_tag = "egg sac"
 
-/obj/item/organ/xenos/plasmavessel
-	name = "plasma vessel"
+/obj/item/organ/xenos/phoronvessel
+	name = "phoron vessel"
 	icon_state = "xgibdown1"
-	organ_tag = "plasma vessel"
+	organ_tag = "phoron vessel"
 
 /obj/item/organ/xenos/acidgland
 	name = "acid gland"
@@ -240,3 +240,54 @@
 
 /obj/item/organ/stack/vox
 	name = "vox cortical stack"
+
+
+/obj/item/organ/nucleation
+	name = "nucleation organ"
+	icon = 'icons/obj/surgery.dmi'
+	desc = "A crystalized human organ. /red It has a strangely iridescent glow."
+
+// Absorbs radiation and produces radium, which heals nucleations
+/datum/organ/internal/nucleation/resonant_crystal
+	name = "resonant crystal"
+	parent_organ = "head"
+	removed_type = /obj/item/organ/nucleation/resonant_crystal
+
+/obj/item/organ/nucleation/resonant_crystal
+	name = "resonant crystal"
+	icon_state = "resonant-crystal"
+	organ_tag = "resonant crystal"
+
+// Let me see you with my special eyes!
+/datum/organ/internal/eyes/luminescent_crystal
+	name = "luminescent eyes"
+	parent_organ = "head"
+	removed_type = /obj/item/organ/nucleation/luminescent_crystal
+
+/obj/item/organ/nucleation/luminescent_crystal
+	name = "luminescent eyes"
+	icon_state = "crystal-eyes"
+	organ_tag = "luminescent eyes"
+	l_color = "#1C1C00"
+
+	New()
+		SetLuminosity( 2 )
+
+/datum/organ/internal/nucleation/strange_crystal // Does mysterious things, no one is sure what it does
+	name = "strange crystal"
+	parent_organ = "chest"
+	removed_type = /obj/item/organ/nucleation/strange_crystal
+
+/obj/item/organ/nucleation/strange_crystal
+	name = "strange crystal"
+	icon_state = "stramge-crystal"
+	organ_tag = "strange crystal"
+
+/datum/organ/internal/brain/crystal
+	name = "crystalized brain"
+	removed_type = /obj/item/organ/brain/crystal
+
+/obj/item/organ/brain/crystal
+	name = "crystalized brain"
+	icon_state = "crystal-brain"
+	organ_tag = "crystalized brain"

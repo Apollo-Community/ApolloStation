@@ -41,7 +41,7 @@
 
 	var/stomachProcessProbability = 50
 	var/digestionProbability = 20
-	var/flatPlasmaValue = 5 //flat plasma amount given for non-items
+	var/flatphoronValue = 5 //flat phoron amount given for non-items
 
 	var/atom/currentlyEating //what the worm is currently eating
 	var/eatingDuration = 0 //how long he's been eating it for
@@ -140,7 +140,7 @@
 			if((!istype(target,/turf/simulated/wall/r_wall) && eatingDuration >= 100) || eatingDuration >= 200) //need 20 ticks to eat an rwall, 10 for a regular one
 				var/turf/simulated/wall/wall = target
 				wall.ChangeTurf(/turf/simulated/floor)
-				new /obj/item/stack/sheet/metal(src, flatPlasmaValue)
+				new /obj/item/stack/sheet/metal(src, flatphoronValue)
 				return 1
 		else if(istype(target,/atom/movable))
 			if(istype(target,/mob) || eatingDuration >= 50) //5 ticks to eat stuff like airlocks
@@ -175,19 +175,19 @@
 	proc/ProcessStomach()
 		for(var/atom/movable/stomachContent in contents)
 			if(prob(digestionProbability))
-				if(istype(stomachContent,/obj/item/stack)) //converts to plasma, keeping the stack value
+				if(istype(stomachContent,/obj/item/stack)) //converts to phoron, keeping the stack value
 					if(!istype(stomachContent,/obj/item/stack/sheet/mineral/phoron))
 						var/obj/item/stack/oldStack = stomachContent
 						new /obj/item/stack/sheet/mineral/phoron(src, oldStack.get_amount())
 						del(oldStack)
 						continue
-				else if(istype(stomachContent,/obj/item)) //converts to plasma, keeping the w_class
+				else if(istype(stomachContent,/obj/item)) //converts to phoron, keeping the w_class
 					var/obj/item/oldItem = stomachContent
 					new /obj/item/stack/sheet/mineral/phoron(src, oldItem.w_class)
 					del(oldItem)
 					continue
 				else
-					new /obj/item/stack/sheet/mineral/phoron(src, flatPlasmaValue) //just flat amount
+					new /obj/item/stack/sheet/mineral/phoron(src, flatphoronValue) //just flat amount
 					del(stomachContent)
 					continue
 
