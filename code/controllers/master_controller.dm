@@ -51,6 +51,12 @@ datum/controller/game_controller/New()
 		job_master.LoadJobs("config/jobs.txt")
 		world << "\red \b Job setup complete"
 
+	if(!air_master)
+		air_master = new /datum/controller/air_system()
+		air_master.Setup()
+
+
+	if(!ticker)						ticker = new /datum/controller/gameticker()
 	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
 	if(!emergency_shuttle)			emergency_shuttle = new /datum/emergency_shuttle_controller()
@@ -63,12 +69,6 @@ datum/controller/game_controller/proc/setup()
 	spawn(20)
 		createRandomZlevel()
 	*/
-	if(!air_master)
-		air_master = new /datum/controller/air_system()
-		air_master.Setup()
-
-	if(!ticker)
-		ticker = new /datum/controller/gameticker()
 
 	setup_objects()
 	setupgenetics()
@@ -91,7 +91,7 @@ datum/controller/game_controller/proc/setup()
 datum/controller/game_controller/proc/setup_objects()
 	world << "\red \b Initializing objects"
 	sleep(-1)
-	for(var/atom/movable/object in world)
+	for(var/obj/object in world)
 		object.initialize()
 
 	world << "\red \b Initializing pipe networks"
@@ -101,13 +101,10 @@ datum/controller/game_controller/proc/setup_objects()
 
 	world << "\red \b Initializing atmos machinery."
 	sleep(-1)
-	for(var/obj/machinery/atmospherics/unary/U in machines)
-		if(istype(U, /obj/machinery/atmospherics/unary/vent_pump))
-			var/obj/machinery/atmospherics/unary/vent_pump/T = U
-			T.broadcast_status()
-		else if(istype(U, /obj/machinery/atmospherics/unary/vent_scrubber))
-			var/obj/machinery/atmospherics/unary/vent_scrubber/T = U
-			T.broadcast_status()
+	for(var/obj/machinery/atmospherics/unary/vent_pump/T in world)
+		T.broadcast_status()
+	for(var/obj/machinery/atmospherics/unary/vent_scrubber/T in world)
+		T.broadcast_status()
 
 	//Create the mining ore distribution map.
 	asteroid_ore_map = new /datum/ore_distribution()
@@ -153,107 +150,106 @@ datum/controller/game_controller/proc/process()
 				announcements()
 
 				//AIR
-				if(!air_processing_killed)
-					timer = world.timeofday
-					last_thing_processed = air_master.type
-					air_master.Tick()
-					/*											Never seen this happen, would rather not bother checking every cycle
-					if(!air_master.Tick()) //Runtimed.
-						air_master.failed_ticks++
-						if(air_master.failed_ticks > 5)
-							world << "<font color='red'><b>RUNTIMES IN ATMOS TICKER.  Killing air simulation!</font></b>"
-							world.log << "### ZAS SHUTDOWN"
-							message_admins("ZASALERT: unable to run [air_master.tick_progress], shutting down!")
-							log_admin("ZASALERT: unable run zone/process() -- [air_master.tick_progress]")
-							air_processing_killed = 1
-							air_master.failed_ticks = 0
-					*/
-
-					air_cost = (world.timeofday - timer) / 10
+				spawn(0)
+					if(!air_processing_killed)
+						timer = world.timeofday
+						air_master.Tick()
+						air_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//SUN
-				timer = world.timeofday
-				last_thing_processed = sun.type
-				sun.calc_position()
-				sun_cost = (world.timeofday - timer) / 10
+				spawn(0)
+					timer = world.timeofday
+					sun.calc_position()
+					sun_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//MOBS
-				timer = world.timeofday
-				process_mobs()
-				mobs_cost = (world.timeofday - timer) / 10
+				spawn(0)
+					timer = world.timeofday
+					for(var/mob/living/M in world)	//only living mobs have life processes
+						M.Life()
+					mobs_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//DISEASES
-				timer = world.timeofday
-				process_diseases()
-				diseases_cost = (world.timeofday - timer) / 10
+				spawn(0)
+					timer = world.timeofday
+					for(var/datum/disease/D in active_diseases)
+						D.process()
+					diseases_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//MACHINES
-				timer = world.timeofday
-				process_machines_process()
-				machines_cost = (world.timeofday - timer) / 10
+				spawn(0)
+					timer = world.timeofday
+					for(var/obj/machinery/machine in machines)
+						if(machine)
+							machine.process()
+							if(machine && machine.use_power)
+								machine.auto_use_power()
+					machines_cost = (world.timeofday - timer) / 10
 
 				sleep(4)
 
 				//OBJECTS
-				timer = world.timeofday
-				process_objects()
-				objects_cost = (world.timeofday - timer) / 10
+				spawn(0)
+					timer = world.timeofday
+					for(var/obj/object in processing_objects)
+						object.process()
+					objects_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//PIPENETS
-				if(!pipe_processing_killed)
-					timer = world.timeofday
-					process_pipenets()
-					networks_cost = (world.timeofday - timer) / 10
+				spawn(0)
+					if(!pipe_processing_killed)
+						timer = world.timeofday
+						for(var/datum/pipe_network/network in pipe_networks)
+							network.process()
+						networks_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//POWERNETS
-				timer = world.timeofday
-				process_powernets()
-				powernets_cost = (world.timeofday - timer) / 10
+				spawn(0)
+					timer = world.timeofday
+					for(var/datum/powernet/P in powernets)
+						P.reset()
+					powernets_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
 				//NANO UIS
-				timer = world.timeofday
-				process_nano()
-				nano_cost = (world.timeofday - timer) / 10
+				spawn(0)
+					timer = world.timeofday
+					for(var/datum/nanoui/ui in nanomanager.processing_uis)
+						ui.process()
+					nano_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
-				//EVENTS
-				timer = world.timeofday
-				process_events()
-				events_cost = (world.timeofday - timer) / 10
-
-				//MACHINE SORTING
-				timer = world.timeofday
-				process_machines_sort()
-				machine_sort_cost = (world.timeofday - timer) / 10
-
 				//TICKER
-				timer = world.timeofday
-				last_thing_processed = ticker.type
-				ticker.process()
-				ticker_cost = (world.timeofday - timer) / 10
+				spawn(0)
+					timer = world.timeofday
+					ticker.process()
+					ticker_cost = (world.timeofday - timer) / 10
+
+				//EVENTS
+				spawn(0)
+					timer = world.timeofday
+					process_events()
+					events_cost = (world.timeofday - timer) / 10
 
 				//TIMING
-				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + objects_cost + networks_cost + powernets_cost + nano_cost + events_cost + machine_sort_cost + ticker_cost
+				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + objects_cost + networks_cost + powernets_cost + nano_cost + events_cost + ticker_cost
 
-				var/end_time = world.timeofday
-				if(end_time < start_time)	//why not just use world.time instead?
-					start_time -= 864000    //deciseconds in a day
-				sleep( round(minimum_ticks - (end_time - start_time),1) )
+				sleep( minimum_ticks - max(world.timeofday-start_time,0))
+
 			else
 				sleep(10)
 
