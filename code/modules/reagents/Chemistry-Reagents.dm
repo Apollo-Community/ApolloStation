@@ -689,6 +689,14 @@ datum
 				// radium may increase your chances to cure a disease
 				if(istype(M,/mob/living/carbon)) // make sure to only use it on carbon mobs
 					var/mob/living/carbon/C = M
+					if( isnucleation( M ))
+						if(M.stat == 2.0)
+							return
+						if(!M) M = holder.my_atom
+						if(M.getOxyLoss()) M.adjustOxyLoss(-1*REM)
+						if(M.getBruteLoss() && prob(80)) M.heal_organ_damage(1*REM,0)
+						if(M.getFireLoss() && prob(80)) M.heal_organ_damage(0,1*REM)
+						if(M.getToxLoss() && prob(80)) M.adjustToxLoss(-1*REM)
 					if(C.virus2.len)
 						for (var/ID in C.virus2)
 							var/datum/disease2/disease/V = C.virus2[ID]
@@ -1050,6 +1058,8 @@ datum
 			scannable = 1
 
 			on_mob_life(var/mob/living/M as mob)
+				if( isnucleation( M )) // Nucleation's biology doesn't react to this
+					return
 				if(M.stat == 2.0)
 					return
 				if(!M) M = holder.my_atom
@@ -1068,6 +1078,8 @@ datum
 			scannable = 1
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
+				if( isnucleation( M )) // Nucleation's biology doesn't react to this
+					return
 				if(M.stat == 2.0) //THE GUY IS **DEAD**! BEREFT OF ALL LIFE HE RESTS IN PEACE etc etc. He does NOT metabolise shit anymore, god DAMN
 					return
 				if(!M) M = holder.my_atom
@@ -1086,6 +1098,8 @@ datum
 			scannable = 1
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
+				if( isnucleation( M )) // Nucleation's biology doesn't react to this
+					return
 				if(M.stat == 2.0)
 					return  //See above, down and around. --Agouri
 				if(!M) M = holder.my_atom
@@ -1109,6 +1123,8 @@ datum
 			scannable = 1
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
+				if( isnucleation( M )) // Nucleation's biology doesn't react to this
+					return
 				if(M.stat == 2.0)
 					return
 				if(!M) M = holder.my_atom
@@ -1131,6 +1147,8 @@ datum
 			scannable = 1
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
+				if( isnucleation( M )) // Nucleation's biology doesn't react to this
+					return
 				if(M.stat == 2.0)
 					return
 				if(!M) M = holder.my_atom
@@ -1151,6 +1169,8 @@ datum
 			scannable = 1
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
+				if( isnucleation( M )) // Nucleation's biology doesn't react to this
+					return
 				if(!M) M = holder.my_atom
 				if(!alien || alien != IS_DIONA)
 					M.reagents.remove_all_type(/datum/reagent/toxin, 1*REM, 0, 1)
@@ -1236,6 +1256,8 @@ datum
 			overdose = REAGENTS_OVERDOSE
 
 			on_mob_life(var/mob/living/M as mob)
+				if( isnucleation( M )) // Nucleation's biology doesn't react to this
+					return
 				if(!M) M = holder.my_atom
 				M.jitteriness = max(M.jitteriness-5,0)
 				if(prob(80)) M.adjustBrainLoss(1*REM)
@@ -1255,6 +1277,10 @@ datum
 			scannable = 1
 
 			on_mob_life(var/mob/living/M as mob)
+				if( isnucleation( M )) // Nucleation's biology doesn't play nice with this
+					var/mob/living/carbon/human/H = M
+					if(prob(33))
+						H.take_organ_damage(1*REM, 0)
 				if(!M) M = holder.my_atom
 				M.radiation = max(M.radiation-3*REM,0)
 				..()
@@ -1270,6 +1296,9 @@ datum
 			overdose = REAGENTS_OVERDOSE
 
 			on_mob_life(var/mob/living/M as mob)
+				if( isnucleation( M )) // Nucleation's biology REALLY doesn't play nice with this
+					var/mob/living/carbon/human/H = M
+					H.take_organ_damage(3*REM, 0)
 				if(M.stat == 2.0)
 					return  //See above, down and around. --Agouri
 				if(!M) M = holder.my_atom
@@ -1328,6 +1357,8 @@ datum
 			scannable = 1
 
 			on_mob_life(var/mob/living/M as mob)
+				if( isnucleation( M )) // Nucleation's biology doesn't react to this
+					return
 				if(!M) M = holder.my_atom
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
@@ -1349,6 +1380,8 @@ datum
 			scannable = 1
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
+				if( isnucleation( M )) // Nucleation's biology doesn't react to this
+					return
 				if(M.stat == 2.0)
 					return
 				if(!M) M = holder.my_atom
@@ -1396,6 +1429,10 @@ datum
 			scannable = 1
 
 			on_mob_life(var/mob/living/M as mob)
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if(H.species.flags & NO_CRYO)
+						return
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature < 170)
 					M.adjustCloneLoss(-1)
@@ -1414,6 +1451,10 @@ datum
 			scannable = 1
 
 			on_mob_life(var/mob/living/M as mob)
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if(H.species.flags & NO_CRYO)
+						return
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature < 170)
 					M.adjustCloneLoss(-3)

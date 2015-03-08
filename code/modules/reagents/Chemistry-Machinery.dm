@@ -830,7 +830,7 @@
 		//Sheets
 		/obj/item/stack/sheet/mineral/phoron = list("phoron" = 20),
 		/obj/item/stack/sheet/metal = list("iron" = 20),
-		/obj/item/stack/sheet/plasteel = list("iron" = 20, "plasma" = 20),
+		/obj/item/stack/sheet/plasteel = list("iron" = 20, "phoron" = 20),
 		/obj/item/stack/sheet/wood = list("carbon" = 20),
 		/obj/item/stack/sheet/glass = list("silicon" = 20),
 		/obj/item/stack/sheet/glass/reinforced = list("silicon" = 20, "iron" = 20),

@@ -23,7 +23,7 @@
 
 	var/igniting = 0
 
-	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && air_contents.toxins > 0.5)
+	if((exposed_temperature > phoron_MINIMUM_BURN_TEMPERATURE) && air_contents.toxins > 0.5)
 		igniting = 1
 
 	if(igniting)

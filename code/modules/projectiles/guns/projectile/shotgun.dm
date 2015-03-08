@@ -119,7 +119,7 @@
 				user << "<span class='notice'>You load a shell into \the [src]!</span>"
 		A.update_icon()
 		update_icon()
-		if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/melee/energy) || istype(A, /obj/item/weapon/pickaxe/plasmacutter))
+		if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/melee/energy) || istype(A, /obj/item/weapon/pickaxe/phoroncutter))
 			user << "<span class='notice'>You begin to shorten the barrel of \the [src].</span>"
 			if(loaded.len)
 				afterattack(user, user)	//will this work?

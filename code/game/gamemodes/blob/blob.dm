@@ -44,7 +44,7 @@ var/list/blob_nodes = list()
 			message_admins("Blob spawned and expanding, report created")
 			if(!kill_air)
 				kill_air = 1
-				message_admins("Kill air has been set to true by Blob, testing to see how laggy it is without the extra processing from hullbreaches. Note: the blob is fireproof so plasma does not help anyways")
+				message_admins("Kill air has been set to true by Blob, testing to see how laggy it is without the extra processing from hullbreaches. Note: the blob is fireproof so phoron does not help anyways")
 
 			if(ticker && ticker.minds && ticker.minds.len)
 				var/player_based_cores = round(ticker.minds.len/players_per_core, 1)

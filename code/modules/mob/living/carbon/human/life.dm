@@ -274,6 +274,15 @@
 		radiation = Clamp(radiation,0,100)
 
 		if (radiation)
+			if((locate(src.internal_organs_by_name["resonant crystal"]) in src.internal_organs))
+				var/rads = radiation/25
+				radiation -= rads
+				radiation -= 1 * RADIATION_SPEED_COEFFICIENT
+				reagents.add_reagent("radium", rads/10)
+				if( prob(10) )
+					src << "\blue You feel relaxed."
+				return
+
 			var/datum/organ/internal/diona/nutrients/rad_organ = locate() in internal_organs
 			if(rad_organ && !rad_organ.is_broken())
 				var/rads = radiation/25
@@ -655,7 +664,7 @@
 		if(!environment)
 			return
 
-		//Stuff like the xenomorph's plasma regen happens here.
+		//Stuff like the xenomorph's phoron regen happens here.
 		species.handle_environment_special(src)
 
 		//Moved pressure calculations here for use in skip-processing check.

@@ -1,4 +1,4 @@
-//Larvae regenerate health and nutrition from plasma and alien weeds.
+//Larvae regenerate health and nutrition from phoron and alien weeds.
 /mob/living/carbon/alien/larva/handle_environment(var/datum/gas_mixture/environment)
 
 	if(!environment) return

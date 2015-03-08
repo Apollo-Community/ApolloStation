@@ -96,7 +96,7 @@ display round(lastgen) and phorontank amount
 	else
 		usr << "\blue The generator is off."
 
-//A power generator that runs on solid plasma sheets.
+//A power generator that runs on solid phoron sheets.
 /obj/machinery/power/port_gen/pacman
 	name = "P.A.C.M.A.N.-type Portable Generator"
 	var/sheets = 0
@@ -106,7 +106,7 @@ display round(lastgen) and phorontank amount
 	var/board_path = "/obj/item/weapon/circuitboard/pacman"
 	var/sheet_left = 0 // How much is left of the sheet
 	var/heat = 0
-	
+
 	//produces up to 80 kW and lasts for 20 minutes with 50 sheets
 	var/time_per_sheet = 96
 	power_gen = 20000
@@ -333,11 +333,11 @@ display round(lastgen) and phorontank amount
 	icon_state = "portgen1"
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 	board_path = "/obj/item/weapon/circuitboard/pacman/super"
-	
+
 	//produces 80 kW like the PACMAN but 50 sheets will last for 2 hours
 	power_gen = 20000
 	time_per_sheet = 576
-	
+
 	overheat()
 		explosion(src.loc, 3, 3, 3, -1)
 
@@ -346,10 +346,10 @@ display round(lastgen) and phorontank amount
 	icon_state = "portgen2"
 	sheet_path = /obj/item/stack/sheet/mineral/tritium
 	board_path = "/obj/item/weapon/circuitboard/pacman/mrs"
-	
+
 	//produces 200 kW and lasts for 1 hour with 50 sheets
 	power_gen = 50000
 	time_per_sheet = 288
-	
+
 	overheat()
 		explosion(src.loc, 4, 4, 4, -1)

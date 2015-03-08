@@ -179,7 +179,7 @@
 	src.modules += new /obj/item/weapon/screwdriver(src)
 	src.modules += new /obj/item/weapon/wrench(src)
 	src.modules += new /obj/item/weapon/crowbar(src)
-	src.modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
+	src.modules += new /obj/item/weapon/pickaxe/phoroncutter(src)
 	src.modules += new /obj/item/device/pipe_painter(src)
 
 /obj/item/weapon/robot_module/engineering
@@ -349,7 +349,7 @@
 	src.modules += new /obj/item/weapon/gripper/miner(src)
 	src.modules += new /obj/item/weapon/mining_scanner(src)
 	src.modules += new /obj/item/weapon/crowbar(src)
-	src.emag = new /obj/item/weapon/pickaxe/plasmacutter(src)
+	src.emag = new /obj/item/weapon/pickaxe/phoroncutter(src)
 	return
 
 /obj/item/weapon/robot_module/syndicate
@@ -384,7 +384,7 @@
 	src.modules += new /obj/item/device/flash(src)
 	src.modules += new /obj/item/borg/sight/thermal(src)
 	src.modules += new /obj/item/weapon/gun/energy/laser/cyborg(src)
-	src.modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
+	src.modules += new /obj/item/weapon/pickaxe/phoroncutter(src)
 	src.modules += new /obj/item/borg/combat/shield(src)
 	src.modules += new /obj/item/borg/combat/mobility(src)
 	src.emag = new /obj/item/weapon/gun/energy/lasercannon/cyborg(src)
@@ -416,8 +416,8 @@
 	src.modules += new /obj/item/weapon/gripper(src)
 	src.modules += new /obj/item/weapon/matter_decompiler(src)
 	src.modules += new /obj/item/weapon/reagent_containers/spray/cleaner/drone(src)
-	src.emag = new /obj/item/weapon/pickaxe/plasmacutter(src)
-	src.emag.name = "Plasma Cutter"
+	src.emag = new /obj/item/weapon/pickaxe/phoroncutter(src)
+	src.emag.name = "phoron Cutter"
 
 /obj/item/weapon/robot_module/drone/add_languages(var/mob/living/silicon/robot/R)
 	return	//not much ROM to spare in that tiny microprocessor!

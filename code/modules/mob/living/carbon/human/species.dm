@@ -178,7 +178,7 @@
 			H.update_hair()
 	return
 
-// Only used for alien plasma weeds atm, but could be used for Dionaea later.
+// Only used for alien phoron weeds atm, but could be used for Dionaea later.
 /datum/species/proc/handle_environment_special(var/mob/living/carbon/human/H)
 	return
 

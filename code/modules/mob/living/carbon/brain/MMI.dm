@@ -19,7 +19,7 @@
 
 /obj/item/device/mmi
 	name = "man-machine interface"
-	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
+	desc = "The bland acronym, MMI, obscures the true horror of this monstrosity."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi_empty"
 	w_class = 3
@@ -44,6 +44,9 @@
 			var/obj/item/organ/brain/B = O
 			if(B.health <= 0)
 				user << "\red That brain is well and truly dead."
+				return
+			else if( istype( B, /obj/item/organ/brain/crystal ))
+				user << "\red This brain is too malformed to be able to use with the [src]."
 				return
 			else if(!B.brainmob)
 				user << "\red You aren't sure where this brain came from, but you're pretty sure it's a useless brain."

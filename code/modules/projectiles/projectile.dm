@@ -99,7 +99,7 @@
 				forcedodge = -1
 			else
 				if(silenced)
-					M << "\red You've been shot in the [parse_zone(def_zone)] by the [src.name]!"
+					M << "\red You've been shot in the [parse_zone(def_zone)]!"
 				else
 					visible_message("\red [A.name] is hit by the [src.name] in the [parse_zone(def_zone)]!")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 				if(istype(firer, /mob))

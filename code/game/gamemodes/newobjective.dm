@@ -587,9 +587,9 @@ datum
 						return 20
 
 
-			plasmatank
-				steal_target = /obj/item/weapon/tank/plasma
-				explanation_text = "Steal a small plasma tank."
+			phorontank
+				steal_target = /obj/item/weapon/tank/phoron
+				explanation_text = "Steal a small phoron tank."
 				weight = 20
 
 				get_points(var/job)
@@ -604,7 +604,7 @@ datum
 					var/list/all_items = owner.current.get_contents()
 					for(var/obj/item/I in all_items)
 						if(!istype(I, steal_target))	continue//If it's not actually that item.
-						if(I:air_contents:phoron) return 1 //If they got one with plasma
+						if(I:air_contents:phoron) return 1 //If they got one with phoron
 					return 0
 
 

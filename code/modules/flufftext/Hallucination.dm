@@ -188,7 +188,7 @@ mob/living/carbon/proc/handle_hallucinations()
 		mocktxt = ""
 
 		var/possible_txt = list("Launch Escape Pods","Self-Destruct Sequence","\[Swipe ID\]","De-Monkify",\
-		"Reticulate Splines","Plasma","Open Valve","Lockdown","Nerf Airflow","Kill Traitor","Nihilism",\
+		"Reticulate Splines","phoron","Open Valve","Lockdown","Nerf Airflow","Kill Traitor","Nihilism",\
 		"OBJECTION!","Arrest Stephen Bowman","Engage Anti-Trenna Defenses","Increase Captain IQ","Retrieve Arms",\
 		"Play Charades","Oxygen","Inject BeAcOs","Ninja Lizards","Limit Break","Build Sentry")
 

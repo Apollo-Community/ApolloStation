@@ -629,6 +629,10 @@ datum/preferences
 		dat += "</br><b>Has a plantlike physiology.</b>"
 	if(current_species.flags & IS_SYNTHETIC)
 		dat += "</br><b>Is machine-based.</b>"
+	if(current_species.flags & NO_CRYO)
+		dat += "</br><b>Cannot use cryogenics.</b>"
+	if(current_species.flags & NO_ROBO_LIMBS)
+		dat += "</br><b>Cannot have robotic limbs.</b>"
 	dat += "</small></td>"
 	dat += "</tr>"
 	dat += "</table><center><hr/>"

@@ -275,10 +275,34 @@
 	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/punch, /datum/unarmed_attack/bite)
 	blurb = "A sub-race of unforunates who have been exposed to too much supermatter radiation. As a result, \
 	supermatter crystal clusters have begun to grow across their bodies. Research to find a cure for this ailment \
-	has been slow, and so this is a common fate for veteran engineers. Their crystalline structure makes them \
-	much more susceptible to damage, especially heat damage. They however, can handle supermatter without protection, \
-	and actually seem to regenerate damage when bathed in radiation."
+	has been slow, and so this is a common fate for veteran engineers. The supermatter crystals produce oxygen, \
+	negating the need for the individual to breath. Their massive change in biology, however, renders most medicines \
+	obselete. Ionizing radiation seems to cause resonance in some of their crystals, which seems to encourage regeneration \
+	and produces a calming effect on the individual. Nucleations are highly stigmatized, and are treated much in the same \
+	way as lepers were back on Earth."
 
-	burn_mod = 2
+	burn_mod = 4 // holy shite, poor guys wont survive half a second cooking smores
+	brute_mod = 2 // damn, double wham, double dam
 
-	flags = IS_WHITELISTED | NO_BREATHE | NO_BLOOD | NO_PAIN | HAS_LIPS | HAS_UNDERWEAR
+	flags = CAN_JOIN | NO_BREATHE | NO_BLOOD | NO_PAIN | HAS_LIPS | NO_ROBO_LIMBS | NO_CRYO
+	reagent_tag = IS_NUCLEATION
+
+	has_organ = list(
+		"heart" =    /datum/organ/internal/heart,
+		"crystalized brain" =    /datum/organ/internal/brain/crystal,
+		"luminescent eyes" =     /datum/organ/internal/eyes/luminescent_crystal,
+		"strange crystal" = /datum/organ/internal/nucleation/strange_crystal,
+		"resonant crystal" = /datum/organ/internal/nucleation/resonant_crystal
+		)
+
+/datum/species/nucleation/handle_post_spawn(var/mob/living/carbon/human/H)
+	H.gender = "neuter"
+	H.l_color = "#1C1C00"
+	H.SetLuminosity(2)
+	return ..()
+
+/datum/species/nucleation/handle_death(var/mob/living/carbon/human/H)
+	var/turf/T = get_turf(H)
+	supermatter_delamination(T, 2, 0, 0) // Create a small supermatter burst upon death
+	new /obj/item/weapon/shard/supermatter( T )
+	del(H)
