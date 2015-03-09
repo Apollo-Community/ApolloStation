@@ -106,21 +106,15 @@ Class Procs:
 	var/active_power_usage = 0
 	var/power_channel = EQUIP
 		//EQUIP,ENVIRON or LIGHT
-	var/list/component_parts = list() //list of all the parts used to build it, if made from certain kinds of frames.
+	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
 	var/uid
 	var/manual = 0
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 	var/global/gl_uid = 1
 
-/obj/machinery/New(l, d=0)
-	..(l)
-	if(d)
-		set_dir(d)
-	if(!machinery_sort_required && ticker)
-		dd_insertObjectList(machines, src)
-	else
-		machines += src
-		machinery_sort_required = 1
+/obj/machinery/New()
+	..()
+	machines += src
 
 /obj/machinery/Del()
 	machines.Remove(src)

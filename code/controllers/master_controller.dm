@@ -118,9 +118,6 @@ datum/controller/game_controller/proc/setup_objects()
 	//Set up spawn points.
 	populate_spawn_points()
 
-	// Sort the machinery list so it doesn't cause a lagspike at roundstart
-	process_machines_sort()
-
 	world << "\red \b Initializations complete."
 	sleep(-1)
 
@@ -141,13 +138,16 @@ datum/controller/game_controller/proc/process()
 				var/start_time = world.timeofday
 				controller_iteration++
 
-				vote.process()
-				transfer_controller.process()
-				shuttle_controller.process()
-				process_newscaster()
+				spawn(0)
+					vote.process()
+					transfer_controller.process()
+					shuttle_controller.process()
+					process_newscaster()
 
-				//MAKING OOC ANNOUNCEMENTS
-				announcements()
+					//MAKING OOC ANNOUNCEMENTS
+					announcements()
+
+				sleep(1)
 
 				//AIR
 				spawn(0)
@@ -184,17 +184,13 @@ datum/controller/game_controller/proc/process()
 
 				sleep(breather_ticks)
 
-				//MACHINES
+				//MACHINES FIRST HALF
 				spawn(0)
 					timer = world.timeofday
-					for(var/obj/machinery/machine in machines)
-						if(machine)
-							machine.process()
-							if(machine && machine.use_power)
-								machine.auto_use_power()
+					process_machines_process(1,round(machines.len / 2))
 					machines_cost = (world.timeofday - timer) / 10
 
-				sleep(4)
+				sleep(breather_ticks)
 
 				//OBJECTS
 				spawn(0)
@@ -242,8 +238,16 @@ datum/controller/game_controller/proc/process()
 				//EVENTS
 				spawn(0)
 					timer = world.timeofday
-					process_events()
+					event_manager.process()
 					events_cost = (world.timeofday - timer) / 10
+
+				//MACHINES SECOND HALF
+				spawn(0)
+					timer = world.timeofday
+					process_machines_process(round(machines.len / 2)+1, machines.len)
+					machines_cost += (world.timeofday - timer) / 10
+
+				sleep(breather_ticks)
 
 				//TIMING
 				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + objects_cost + networks_cost + powernets_cost + nano_cost + events_cost + ticker_cost
@@ -253,71 +257,25 @@ datum/controller/game_controller/proc/process()
 			else
 				sleep(10)
 
-datum/controller/game_controller/proc/process_mobs()
-	for(var/i = 1, i <= mob_list.len, i++)			//converted to for loop to speed up processing, removed "expensive mobs"
-		var/mob/M = mob_list[i]
-		last_thing_processed = M.type
-		M.Life()
-		continue
-		mob_list.Cut(i,i+1)
-
-datum/controller/game_controller/proc/process_diseases()
-	for(var/datum/disease/Disease in active_diseases)
-		last_thing_processed = Disease.type
-		Disease.process()
-/*															going to try spreading these out - machines take their toll on the MC
-datum/controller/game_controller/proc/process_machines()
-	process_machines_sort()
-	process_machines_process()
-*/
-/var/global/machinery_sort_required = 0
-datum/controller/game_controller/proc/process_machines_sort()
-	if(machinery_sort_required)
-		machinery_sort_required = 0
-		machines = dd_sortedObjectList(machines)
-
-datum/controller/game_controller/proc/process_machines_process()
-	var/i = 1
-	while(i<=machines.len)
-		var/obj/machinery/Machine = machines[i]
-		last_thing_processed = Machine.type
+datum/controller/game_controller/proc/process_machines_process(var/start, var/end)
+//start and end added to stagger machine processing as a test
+//produces a runtime error at roundstart when 13k machines -> 6k machines.
+	while(start<=end)
+		var/obj/machinery/Machine = machines[start]
 		if(Machine.process() != PROCESS_KILL)
 			if(Machine)
 				if(Machine.use_power)
 					Machine.auto_use_power()
-				i++
+				start++
 				continue
-		machines.Cut(i,i+1)
-
-datum/controller/game_controller/proc/process_objects()
-	for(var/i = 1, i <= processing_objects.len, i++)
-		var/obj/Object = processing_objects[i]
-		last_thing_processed = Object.type
-		Object.process()
-		continue
-		processing_objects.Cut(i,i+1)
-
-datum/controller/game_controller/proc/process_pipenets()
-	last_thing_processed = /datum/pipe_network
-	for(var/datum/pipe_network/Network in pipe_networks)
-		Network.process()
-
-/datum/controller/game_controller/proc/process_powernets()
-	last_thing_processed = /datum/powernet
-	for(var/datum/powernet/Powernet in powernets)
-		Powernet.reset()
-
-datum/controller/game_controller/proc/process_nano()
-	last_thing_processed = /datum/nanoui
-	for(var/datum/nanoui/ui in nanomanager.processing_uis)
-		ui.process()
-
-datum/controller/game_controller/proc/process_events()
-	last_thing_processed = /datum/event
-	event_manager.process()
+		machines.Cut(start,start+1)
 
 datum/controller/game_controller/proc/announcements()
 	if( controller_iteration % 300 == 0 )// Make an announcement every 10 minutes
+
+		//Tagging this in here as little cheaty way to sort machine list every 10mins.
+		machines = dd_sortedObjectList(machines)
+
 		world << pick(	"<font color='green'><big><img src=\ref['icons/misc/news.png']></img></big><b> Come join our <a href='http://steamcommunity.com/groups/apcom'>steam group</a> for event notifications and for playing games outside of a space station!</font><br></b>",
 						"<font color='green'><big><img src=\ref['icons/misc/news.png']></img></big><b> Make sure to check out our <a href='http://apollo-community.org/'>forums</a>. Many people post many important things there!<br></font></b>",
 						"<font color='green'><big><img src=\ref['icons/misc/news.png']></img></big><b> Be sure check out our <a href='https://github.com/stuicey/AS_Project/'>source repository</a>. We're always welcoming new developers, and we'd love you have you on board!<br></font></b>",
