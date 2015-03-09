@@ -1,11 +1,11 @@
 // BEGIN_INTERNALS
 /*
 MAP_ICON_TYPE: 0
-WINDOW: code\modules\virus2\effect.dm;code\modules\virus2\disease2.dm;code\modules\mob\mob_helpers.dm;code\__HELPERS\unsorted.dm;code\game\objects\objs.dm;code\modules\mob\new_player\new_player.dm;code\global.dm;code\setup.dm;code\hub.dm;code\names.dm;maps\apollo-1.dmm;icons\mob\uniform.dmi
+WINDOW: maps\apollo-1.dmm;maps\apollo-2.dmm
 LAST_COMPILE_VERSION: 506.1250
-DIR: code code\__HELPERS code\_onclick code\_onclick\hud code\ATMOSPHERICS code\ATMOSPHERICS\components code\ATMOSPHERICS\components\binary_devices code\ATMOSPHERICS\components\omni_devices code\ATMOSPHERICS\components\unary code\controllers code\datums code\game code\game\objects code\modules code\modules\mob code\modules\mob\new_player code\modules\virus2 icons icons\mob maps 
+DIR: code code\__HELPERS code\_onclick code\_onclick\hud code\ATMOSPHERICS code\ATMOSPHERICS\components code\ATMOSPHERICS\components\binary_devices code\ATMOSPHERICS\components\omni_devices code\ATMOSPHERICS\components\unary code\controllers code\datums code\game code\game\objects code\modules code\modules\mob code\modules\mob\new_player code\modules\virus2 icons icons\mob icons\mob\human_races icons\obj icons\obj\machines maps 
 FILE: maps\apollo-1.dmm
-LAST_COMPILE_TIME: 1425862720
+LAST_COMPILE_TIME: 1425877723
 AUTO_FILE_DIR: OFF
 */
 // END_INTERNALS
