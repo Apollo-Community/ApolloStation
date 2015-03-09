@@ -303,6 +303,7 @@
 
 /datum/species/nucleation/handle_death(var/mob/living/carbon/human/H)
 	var/turf/T = get_turf(H)
+	H.visible_message("\red[H] splits apart with a wet slithering noise!")
 	supermatter_delamination(T, 2, 0, 0) // Create a small supermatter burst upon death
 	new /obj/item/weapon/shard/supermatter( T )
 	del(H)

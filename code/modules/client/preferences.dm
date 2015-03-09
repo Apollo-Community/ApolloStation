@@ -605,7 +605,7 @@ datum/preferences
 	dat += "<small>"
 	if(current_species.flags & CAN_JOIN)
 		dat += "</br><b>Often present on human stations.</b>"
-	if(( current_species.flags & IS_WHITELISTED ) && ( current_species.name != unwhitelisted_alien ))
+	if(( current_species.flags & IS_WHITELISTED ) && !( locate( current_species.name ) in unwhitelisted_aliens ))
 		dat += "</br><b>Whitelist restricted.</b>"
 	if(current_species.flags & NO_BLOOD)
 		dat += "</br><b>Does not have blood.</b>"
@@ -641,7 +641,7 @@ datum/preferences
 	if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
 		if(!(current_species.flags & CAN_JOIN))
 			restricted = 2
-		else if((current_species.flags & IS_WHITELISTED) && !is_alien_whitelisted(user,current_species) && ( current_species.name != unwhitelisted_alien ))
+		else if((current_species.flags & IS_WHITELISTED) && !is_alien_whitelisted(user,current_species) && !( locate( current_species.name ) in unwhitelisted_aliens ))
 			restricted = 1
 
 	if(restricted)

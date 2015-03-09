@@ -146,15 +146,14 @@
 				usr << "\red The round is either not ready, or has already finished..."
 				return
 
-			if(client.prefs.species != "Human" && !check_rights(R_ADMIN, 0))
-				if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist && ( client.prefs.species != unwhitelisted_alien ))
-					src << alert("You are currently not whitelisted to play [client.prefs.species].")
-					return 0
+			if( !is_alien_whitelisted(src, client.prefs.species ))
+				src << alert("You are currently not whitelisted to play [client.prefs.species].")
+				return 0
 
-				var/datum/species/S = all_species[client.prefs.species]
-				if(!(S.flags & IS_WHITELISTED))
-					src << alert("Your current species,[client.prefs.species], is not available for play on the station.")
-					return 0
+			var/datum/species/S = all_species[client.prefs.species]
+			if(!(S.flags & CAN_JOIN))
+				src << alert("Your current species, [client.prefs.species], is not available for play on the station.")
+				return 0
 
 			LateChoices()
 
@@ -170,15 +169,14 @@
 				usr << "<span class='danger'>The station is currently exploding. Joining would go poorly.</span>"
 				return
 
-			if(client.prefs.species != "Human")
-				if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist && ( client.prefs.species != unwhitelisted_alien ))
-					src << alert("You are currently not whitelisted to play [client.prefs.species].")
-					return 0
+			if( !is_alien_whitelisted(src, client.prefs.species ))
+				src << alert("You are currently not whitelisted to play [client.prefs.species].")
+				return 0
 
-				var/datum/species/S = all_species[client.prefs.species]
-				if(!(S.flags & CAN_JOIN))
-					src << alert("Your current species, [client.prefs.species], is not available for play on the station.")
-					return 0
+			var/datum/species/S = all_species[client.prefs.species]
+			if(!(S.flags & CAN_JOIN))
+				src << alert("Your current species, [client.prefs.species], is not available for play on the station.")
+				return 0
 
 			AttemptLateSpawn(href_list["SelectedJob"],client.prefs.spawnpoint)
 			return
@@ -417,7 +415,7 @@
 			chosen_species = all_species[client.prefs.species]
 		if(chosen_species)
 			// Have to recheck admin due to no usr at roundstart. Latejoins are fine though.
-			if(is_species_whitelisted(chosen_species) || has_admin_rights() || ( client.prefs.species == unwhitelisted_alien ))
+			if(is_species_whitelisted(chosen_species) || has_admin_rights())
 				new_character = new(loc, client.prefs.species)
 
 		if(!new_character)
