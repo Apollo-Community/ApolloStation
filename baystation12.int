@@ -1,11 +1,11 @@
 // BEGIN_INTERNALS
 /*
 MAP_ICON_TYPE: 0
-WINDOW: code\modules\virus2\effect.dm;code\modules\virus2\disease2.dm;code\modules\mob\mob_helpers.dm;code\__HELPERS\unsorted.dm;code\game\objects\objs.dm;code\modules\mob\new_player\new_player.dm;code\global.dm;code\setup.dm;code\hub.dm;code\names.dm;code\world.dm;code\__HELPERS\game.dm;code\game\mecha\mecha_control_console.dm;code\game\jobs\whitelist.dm;maps\apollo-1.dmm
+WINDOW: code\modules\virus2\effect.dm;code\modules\virus2\disease2.dm;code\modules\mob\mob_helpers.dm;code\__HELPERS\unsorted.dm;code\game\objects\objs.dm;code\modules\mob\new_player\new_player.dm;code\global.dm;code\setup.dm;code\hub.dm;code\names.dm;maps\apollo-1.dmm;icons\mob\uniform.dmi
 LAST_COMPILE_VERSION: 506.1250
-DIR: code code\__HELPERS code\_onclick code\_onclick\hud code\ATMOSPHERICS code\ATMOSPHERICS\components code\ATMOSPHERICS\components\binary_devices code\ATMOSPHERICS\components\omni_devices code\ATMOSPHERICS\components\unary code\controllers code\datums code\datums\diseases code\game code\game\dna code\game\dna\genes code\game\gamemodes code\game\gamemodes\cult code\game\jobs code\game\machinery code\game\mecha code\game\objects code\game\objects\items code\game\objects\items\devices code\game\objects\items\weapons code\modules code\modules\clothing code\modules\clothing\glasses code\modules\events code\modules\mob code\modules\mob\living code\modules\mob\living\carbon code\modules\mob\living\carbon\human code\modules\mob\living\carbon\human\species code\modules\mob\living\carbon\human\species\station code\modules\mob\living\silicon code\modules\mob\living\silicon\ai code\modules\mob\new_player code\modules\organs code\modules\reagents code\modules\supermatter code\modules\virus2 maps 
+DIR: code code\__HELPERS code\_onclick code\_onclick\hud code\ATMOSPHERICS code\ATMOSPHERICS\components code\ATMOSPHERICS\components\binary_devices code\ATMOSPHERICS\components\omni_devices code\ATMOSPHERICS\components\unary code\controllers code\datums code\game code\game\objects code\modules code\modules\mob code\modules\mob\new_player code\modules\virus2 icons icons\mob maps 
 FILE: maps\apollo-1.dmm
-LAST_COMPILE_TIME: 1425861969
+LAST_COMPILE_TIME: 1425862720
 AUTO_FILE_DIR: OFF
 */
 // END_INTERNALS
