@@ -4,16 +4,16 @@
 	desc = "A shard of supermatter. Incredibly dangerous, though not large enough to go critical."
 	force = 10.0
 	throwforce = 20.0
-	icon_state = "supermatterlarge"
+	icon_state = "supermatter"
 	sharp = 1
 	edge = 1
 	w_class = 2
 	flags = CONDUCT
 	l_color = "#8A8A00"
-	luminosity = 2
+	var/brightness = 2
 
 /obj/item/weapon/shard/supermatter/New()
-	src.icon_state = pick("supermatterlarge")
+	src.icon_state = pick("supermatter")
 	switch(src.icon_state)
 		if("supermattersmall")
 			src.pixel_x = rand(-12, 12)
@@ -25,9 +25,15 @@
 			src.pixel_x = rand(-5, 5)
 			src.pixel_y = rand(-5, 5)
 		else
-	return
+
+	SetLuminosity(brightness)
 
 /obj/item/weapon/shard/supermatter/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if( istype( W, /obj/item/weapon/tongs ))
+		var/obj/item/weapon/tongs/T = W
+		T.pick_up( src )
+		return
+
 	..()
 
 /obj/item/weapon/shard/supermatter/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
@@ -54,4 +60,45 @@
 				H.updatehealth()
 				if(!(H.species && (H.species.flags & NO_PAIN)))
 					H.Weaken(3)
+	..()
+
+
+/obj/item/weapon/shard/supermatter/attack_hand(var/mob/user)
+	if( !isnucleation( user ))
+		user << pick( "\red You think twice before touching that without protection.",
+					  "\red You don't want to touch that without some protection.",
+					  "\red You probably should get something else to pick that up.",
+					  "\red You aren't sure that's a good idea.",
+					  "\red You aren't in the mood to get vaporized today.",
+					  "\red You really don't feel like frying your hand off.",
+					  "\red You assume that's a bad idea." )
+		return
+
+	..()
+
+/obj/item/weapon/tongs
+	name = "tongs"
+	desc = "Tungsten-alloy tongs used for handling dangerous materials."
+	force = 7.0
+	throwforce = 12.0
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "tongs"
+	edge = 1
+	w_class = 2
+	flags = CONDUCT
+	var/obj/item/held = null // The item currently being held
+
+/obj/item/weapon/tongs/proc/pick_up( var/obj/item/I )
+	held = I
+	I.loc = src
+	icon_state = "[initial(icon_state)]_[held.icon_state]"
+	playsound(loc, 'sound/effects/tong_pickup.ogg', 50, 1, -1)
+
+/obj/item/weapon/tongs/attack_self(var/mob/user as mob)
+	if( held )
+		var/turf/T = get_turf(user.loc)
+		held.loc = T
+		held = null
+		icon_state = initial(icon_state)
+
 	..()
