@@ -239,6 +239,7 @@ var/list/robot_verbs_default = list(
 			module_sprites["Android"] = "droid"
 			module_sprites["Default"] = "robot"
 			module_sprites["Drone"] = "drone-standard"
+			module_sprites["Ravensdale"] = "ravensdale-Standard"
 
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
@@ -249,6 +250,7 @@ var/list/robot_verbs_default = list(
 			module_sprites["Rich"] = "maximillion"
 			module_sprites["Default"] = "Service2"
 			module_sprites["Drone"] = "drone-service" // How does this even work...? Oh well.
+			module_sprites["Ravensdale"] = "ravensdale-Service"
 
 		if("Clerical")
 			module = new /obj/item/weapon/robot_module/clerical(src)
@@ -269,6 +271,7 @@ var/list/robot_verbs_default = list(
 			module_sprites["Advanced Droid"] = "droid-miner"
 			module_sprites["Treadhead"] = "Miner"
 			module_sprites["Drone"] = "drone-miner"
+			module_sprites["Ravensdale"] = "ravensdale-Miner"
 
 		if("Crisis")
 			module = new /obj/item/weapon/robot_module/crisis(src)
@@ -280,6 +283,7 @@ var/list/robot_verbs_default = list(
 			module_sprites["Advanced Droid"] = "droid-medical"
 			module_sprites["Needles"] = "medicalrobot"
 			module_sprites["Drone" ] = "drone-medical"
+			module_sprites["Ravensdale"] = "ravensdale-Medical"
 
 		if("Surgeon")
 			module = new /obj/item/weapon/robot_module/surgeon(src)
@@ -292,6 +296,7 @@ var/list/robot_verbs_default = list(
 			module_sprites["Advanced Droid"] = "droid-medical"
 			module_sprites["Needles"] = "medicalrobot"
 			module_sprites["Drone"] = "drone-surgery"
+			module_sprites["Ravensdale"] = "ravensdale-Medical"
 
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
@@ -302,6 +307,7 @@ var/list/robot_verbs_default = list(
 			module_sprites["Bloodhound"] = "bloodhound"
 			module_sprites["Bloodhound - Treaded"] = "secborg+tread"
 			module_sprites["Drone"] = "drone-sec"
+			module_sprites["Ravensdale"] = "ravensdale-Security"
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -313,6 +319,7 @@ var/list/robot_verbs_default = list(
 			module_sprites["Landmate"] = "landmate"
 			module_sprites["Landmate - Treaded"] = "engiborg+tread"
 			module_sprites["Drone"] = "drone-engineer"
+			module_sprites["Ravensdale"] = "ravensdale-Engineering"
 
 		if("Construction")
 			module = new /obj/item/weapon/robot_module/construction(src)
@@ -324,6 +331,7 @@ var/list/robot_verbs_default = list(
 			module_sprites["Landmate"] = "landmate"
 			module_sprites["Landmate - Treaded"] = "engiborg+tread"
 			module_sprites["Drone"] = "drone-engineer"
+			module_sprites["Ravensdale"] = "ravensdale-Engineering"
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
@@ -332,10 +340,12 @@ var/list/robot_verbs_default = list(
 			module_sprites["Mopbot"]  = "janitorrobot"
 			module_sprites["Mop Gear Rex"] = "mopgearrex"
 			module_sprites["Drone"] = "drone-janitor"
+			module_sprites["Ravensdale"] = "ravensdale-Janitor"
 
 		if("Combat")
 			module = new /obj/item/weapon/robot_module/combat(src)
 			module_sprites["Combat Android"] = "droid-combat"
+			module_sprites["Ravensdale"] = "ravensdale-Combat"
 			module.channels = list("Security" = 1)
 
 	//languages
