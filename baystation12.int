@@ -1,9 +1,7 @@
 // BEGIN_INTERNALS
 /*
 MAP_ICON_TYPE: 0
-WINDOW: maps\exodus-1.dmm;maps\exodus-1-copy.dmm
 DIR: maps 
-FILE: maps\exodus-1.dmm
 AUTO_FILE_DIR: OFF
 */
 // END_INTERNALS
