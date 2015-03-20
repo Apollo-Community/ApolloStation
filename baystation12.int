@@ -2,10 +2,10 @@
 /*
 MAP_ICON_TYPE: 0
 LAST_COMPILE_VERSION: 506.1249
-WINDOW: maps\exodus-1.dmm;maps\exodus-1-copy.dmm;maps\exodus-5.dmm;icons\obj\structures.dmi
-DIR: icons icons\mob icons\obj maps 
+WINDOW: maps\exodus-1.dmm;maps\exodus-1-copy.dmm;maps\exodus-5.dmm;icons\obj\structures.dmi;icons\turf\space.dmi;code\global.dm;code\world.dm;code\setup.dm;code\__HELPERS\game.dm;code\controllers\configuration.dm
+DIR: code code\__HELPERS code\controllers icons icons\mob icons\obj icons\turf maps 
 FILE: maps\exodus-1.dmm
-LAST_COMPILE_TIME: 1426826205
+LAST_COMPILE_TIME: 1426836351
 AUTO_FILE_DIR: OFF
 */
 // END_INTERNALS
