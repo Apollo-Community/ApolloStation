@@ -1,0 +1,76 @@
+<div class="item">
+	<div class="itemLabel">
+		Status:
+	</div>
+	<div class="itemContent">		
+		{{:helper.link('On', 'power', {'toggleStatus' : 1}, data.on ? 'selected' : null)}}{{:helper.link('Idle', 'close', {'toggleStatus' : 1}, data.on ? null : 'selected')}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Name:
+	</div>
+	<div class="itemContent">
+		<span class="{{:data.nameclass}}">{{:data.name}}</span>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		State:
+	</div>
+	<div class="itemContent">
+		<span class="{{:data.TemperatureClass}}">{{:data.state}}</span>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Description:
+	</div>
+	<div class="itemContent">
+		<span class="orange">{{:data.desc}}</span>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Metal:
+	</div>
+	<div class="itemContent">
+		<span class="orange">{{:data.matter}}</span>
+	</div>
+</div>
+
+<h3> Temperature</h3>
+<div class="item">
+	<div class="itemLabel">
+		Current:
+	</div>
+	<div class="itemContent">		
+		{{:helper.displayBar(data.Temperature, data.minTemperature, data.maxTemperature, data.TemperatureClass)}}
+		<div class="statusValue">
+			<span class="{{:data.TemperatureClass}}">{{:data.Temperature}} K</span>
+		</div>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Target:
+	</div>
+	<div class="itemContent">
+		{{:helper.displayBar(data.targetTemperature, data.minTemperature, data.maxTemperature)}}			
+		<div style="clear: both; padding-top: 4px;">
+			{{:helper.link('-', null, {'temp' : -100}, (data.targetTemperature > data.minTemperature) ? null : 'disabled')}}
+			{{:helper.link('-', null, {'temp' : -10}, (data.targetTemperature > data.minTemperature) ? null : 'disabled')}}
+			{{:helper.link('-', null, {'temp' : -1}, (data.targetTemperature > data.minTemperature) ? null : 'disabled')}}				
+			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:data.targetTemperature}} K&nbsp;</div>
+			{{:helper.link('+', null, {'temp' : 1}, (data.targetTemperature < data.maxTemperature) ? null : 'disabled')}}
+			{{:helper.link('+', null, {'temp' : 10}, (data.targetTemperature < data.maxTemperature) ? null : 'disabled')}}
+			{{:helper.link('+', null, {'temp' : 100}, (data.targetTemperature < data.maxTemperature) ? null : 'disabled')}}	
+		</div>
+	</div>
+</div>
+
