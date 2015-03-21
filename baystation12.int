@@ -1,10 +1,10 @@
 // BEGIN_INTERNALS
 /*
 MAP_ICON_TYPE: 0
-WINDOW: code\modules\blacksmithing\forge.dm;code\modules\blacksmithing\power_hammer.dm;icons\obj\machines\weapon_lab.dmi;icons\obj\weapons_lab.dmi;code\modules\blacksmithing\weapon_defines.dm;code\ATMOSPHERICS\components\unary\heat_source.dm;code\modules\research\xenoarchaeology\machinery\geosample_scanner.dm;code\game\objects\items\weapons\sm_shard.dm;icons\obj\weapons.dmi
+WINDOW: code\modules\blacksmithing\forge.dm;code\modules\blacksmithing\power_hammer.dm;icons\obj\machines\weapon_lab.dmi;icons\obj\weapons_lab.dmi;code\modules\blacksmithing\weapon_defines.dm;code\ATMOSPHERICS\components\unary\heat_source.dm
 LAST_COMPILE_VERSION: 506.1249
-DIR: code code\ATMOSPHERICS code\ATMOSPHERICS\components code\ATMOSPHERICS\components\unary code\datums code\datums\wires code\game code\game\gamemodes code\game\machinery code\game\mecha code\game\mecha\equipment code\game\mecha\equipment\tools code\game\objects code\game\objects\items code\game\objects\items\weapons code\game\objects\structures code\game\objects\structures\crates_lockers code\game\objects\structures\crates_lockers\closets code\game\objects\structures\crates_lockers\closets\secure code\modules code\modules\admin code\modules\admin\verbs code\modules\blacksmithing code\modules\mob code\modules\mob\living code\modules\mob\living\carbon code\modules\mob\living\carbon\human code\modules\research code\modules\research\xenoarchaeology code\modules\research\xenoarchaeology\machinery code\modules\supermatter icons icons\obj icons\obj\machines icons\Testing 
-FILE: code\modules\blacksmithing\forge.dm
+DIR: code code\ATMOSPHERICS code\ATMOSPHERICS\components code\ATMOSPHERICS\components\unary code\datums code\datums\wires code\game code\game\gamemodes code\game\machinery code\game\mecha code\game\mecha\equipment code\game\mecha\equipment\tools code\modules code\modules\blacksmithing icons icons\obj icons\obj\machines 
+FILE: code\modules\blacksmithing\power_hammer.dm
 LAST_COMPILE_TIME: 1426863170
 AUTO_FILE_DIR: OFF
 */
