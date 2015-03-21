@@ -183,3 +183,22 @@
 	desc = "By retracting limbs and tucking in its head, a combat android can roll at high speeds."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "shock"
+
+/obj/item/weapon/borg_claw
+	name = "gripper claw"
+	desc = "Useful for grabbing large and cumbersome objects like squishy organics!"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "borg_claw"
+
+/obj/item/weapon/borg_claw/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	if (M == src)
+		return
+
+	var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( user, M, src )
+
+	user.put_in_active_hand(G)
+
+	G.synch()
+	G.affecting = src
+
+	M.visible_message("\red [user] has grabbed [M] passively!")

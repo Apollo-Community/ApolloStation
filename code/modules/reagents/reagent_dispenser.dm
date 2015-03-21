@@ -249,10 +249,10 @@
 	density = 0
 	amount_per_transfer_from_this = 10
 
-	luminosity = 2
 	amount_per_transfer_from_this = 10
 	l_color = "#002200"
 	New()
 		..()
 		reagents.add_reagent("radium",1000)
 		l_color = "#002200"
+		SetLuminosity(2)

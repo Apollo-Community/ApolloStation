@@ -123,7 +123,7 @@
 	if(state < GRAB_AGGRESSIVE)
 		if(!allow_upgrade)
 			return
-		assailant.visible_message("<span class='warning'>[assailant] has grabbed [affecting] aggressively (now hands)!</span>")
+		assailant.visible_message("<span class='warning'>[assailant] has grabbed [affecting] aggressively!</span>")
 		state = GRAB_AGGRESSIVE
 		icon_state = "grabbed1"
 	else
@@ -132,7 +132,11 @@
 				assailant << "<span class='notice'>You squeeze [affecting], but nothing interesting happens.</span>"
 				return
 
-			assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
+			if(!ishuman(assailant))
+				assailant << "<span class='notice'>Your actuators are at their maximum capacity already!</span>" // Cyborg grab
+				return
+
+			assailant.visible_message("<span class='warning'>[assailant] has grabbed [affecting]'s neck!</span>")
 			state = GRAB_NECK
 			icon_state = "grabbed+1"
 			if(!affecting.buckled)
