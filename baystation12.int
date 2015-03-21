@@ -1,9 +1,11 @@
 // BEGIN_INTERNALS
 /*
 MAP_ICON_TYPE: 0
+WINDOW: maps\whalestation-1.dmm;maps\exodus-1-copy.dmm;icons\turf\floors.dmi;code\modules\mob\living\simple_animal\hostile\tree.dm;icons\obj\flora\pinetrees.dmi;icons\obj\flora\deadtrees.dmi;icons\obj\flora\ausflora.dmi;icons\obj\flora\rocks.dmi;icons\obj\flora\trees.dmi;code\game\objects\structures\flora.dm;code\__HELPERS\lists.dm;code\game\machinery\ai_slipper.dm;code\game\machinery\rockets.dm;icons\obj\rocket_engine.dmi;icons\obj\rocket_engine_fire.dmi
 LAST_COMPILE_VERSION: 506.1249
-DIR: code code\__HELPERS code\controllers icons icons\mob icons\obj icons\turf maps 
-LAST_COMPILE_TIME: 1426836351
+DIR: code code\game code\game\machinery code\game\objects code\game\objects\structures code\modules code\modules\mob code\modules\mob\living code\modules\mob\living\simple_animal code\modules\mob\living\simple_animal\hostile code\modules\projectiles code\modules\projectiles\guns code\modules\projectiles\guns\projectile icons icons\mob icons\obj icons\obj\flora icons\turf maps 
+FILE: code\game\machinery\rockets.dm
+LAST_COMPILE_TIME: 1426885044
 AUTO_FILE_DIR: OFF
 */
 // END_INTERNALS

@@ -337,6 +337,7 @@
 #include "code\game\machinery\rechargestation.dm"
 #include "code\game\machinery\requests_console.dm"
 #include "code\game\machinery\robot_fabricator.dm"
+#include "code\game\machinery\rockets.dm"
 #include "code\game\machinery\seed_extractor.dm"
 #include "code\game\machinery\Sleeper.dm"
 #include "code\game\machinery\spaceheater.dm"
@@ -1533,5 +1534,5 @@
 #include "code\ZAS\Zone.dm"
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
-#include "maps\exodus-1.dmm"
+#include "maps\whalestation-1.dmm"
 // END_INCLUDE
