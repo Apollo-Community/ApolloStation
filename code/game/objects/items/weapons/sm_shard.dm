@@ -32,6 +32,7 @@
 	if( istype( W, /obj/item/weapon/tongs ))
 		var/obj/item/weapon/tongs/T = W
 		T.pick_up( src )
+		T.icon_state = "tongs_supermatter"
 		return
 
 	..()
@@ -91,7 +92,6 @@
 /obj/item/weapon/tongs/proc/pick_up( var/obj/item/I )
 	held = I
 	I.loc = src
-	icon_state = "[initial(icon_state)]_[held.icon_state]"
 	playsound(loc, 'sound/effects/tong_pickup.ogg', 50, 1, -1)
 
 /obj/item/weapon/tongs/attack_self(var/mob/user as mob)
@@ -100,5 +100,4 @@
 		held.loc = T
 		held = null
 		icon_state = initial(icon_state)
-
 	..()
