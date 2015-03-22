@@ -605,7 +605,7 @@ datum/preferences
 	dat += "<small>"
 	if(current_species.flags & CAN_JOIN)
 		dat += "</br><b>Often present on human stations.</b>"
-	if(( current_species.flags & IS_WHITELISTED ) && !( locate( current_species.name ) in unwhitelisted_aliens ))
+	if(( current_species.flags & IS_WHITELISTED ) && !( current_species.name in unwhitelisted_aliens ))
 		dat += "</br><b>Whitelist restricted.</b>"
 	if(current_species.flags & NO_BLOOD)
 		dat += "</br><b>Does not have blood.</b>"
@@ -637,20 +637,13 @@ datum/preferences
 	dat += "</tr>"
 	dat += "</table><center><hr/>"
 
-	var/restricted = 0
-	if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
-		if(!(current_species.flags & CAN_JOIN))
-			restricted = 2
-		else if((current_species.flags & IS_WHITELISTED) && !is_alien_whitelisted(user,current_species) && !( locate( current_species.name ) in unwhitelisted_aliens ))
-			restricted = 1
-
-	if(restricted)
-		if(restricted == 1)
+	if(config.usealienwhitelist )
+		if(!is_alien_whitelisted( user, current_species.name ))
 			dat += "<font color='red'><b>You cannot play as this species.</br><small>If you wish to be whitelisted, you can make an application post on <a href='?src=\ref[user];preference=open_whitelist_forum'>the forums</a>.</small></b></font></br>"
-		else if(restricted == 2)
+		else if(!(current_species.flags & CAN_JOIN) && !check_rights(R_ADMIN, 0))
 			dat += "<font color='red'><b>You cannot play as this species.</br><small>This species is not available for play as a station race..</small></b></font></br>"
-	if(!restricted || check_rights(R_ADMIN, 0))
-		dat += "\[<a href='?src=\ref[user];preference=species;task=input;newspecies=[species_preview]'>select</a>\]"
+		else
+			dat += "\[<a href='?src=\ref[user];preference=species;task=input;newspecies=[species_preview]'>select</a>\]"
 	dat += "</center></body>"
 
 	user << browse(null, "window=preferences")

@@ -192,7 +192,7 @@
 		user << "\red <B>You pick-up the [src.name]!</B>"
 		user.adjustFireLoss(temperature / 50)
 		user << "\red <B>Your hands burn!</B>"
-		if(temprature > T20C+40)		//Just for you kwaky..
+		if(temperature > T20C+40)		//Just for you kwaky..
 			user.drop_item()
 			user.emote("scream")
 
