@@ -1,10 +1,10 @@
 // BEGIN_INTERNALS
 /*
 MAP_ICON_TYPE: 0
-WINDOW: code\modules\mob\living\simple_animal\hostile\broodling.dm;icons\mob\broodling.dmi;icons\mob\biocraps.dmi;icons\obj\harvest.dmi;icons\obj\food.dmi;icons\obj\food_ingredients.dmi;code\game\machinery\dispenser.dm;code\modules\mob\living\silicon\robot\robot_items.dm;icons\obj\objects.dmi;code\modules\mob\living\silicon\robot\drone\drone.dm;code\modules\mob\living\silicon\robot\drone\drone_abilities.dm;code\modules\mob\living\silicon\robot\drone\drone_console.dm;code\modules\mob\living\silicon\robot\drone\drone_items.dm;code\modules\mob\living\silicon\robot\robot_modules.dm;code\modules\mob\mob_grab.dm;icons\effects\cameravis.dmi;icons\mob\monkey.dmi
+WINDOW: code\modules\mob\living\simple_animal\hostile\broodling.dm;icons\mob\broodling.dmi;icons\mob\biocraps.dmi;icons\obj\harvest.dmi;icons\obj\food.dmi;icons\obj\food_ingredients.dmi;code\game\machinery\dispenser.dm;icons\obj\objects.dmi;code\modules\clothing\head\misc_special.dm;code\modules\mining\mine_items.dm
 LAST_COMPILE_VERSION: 506.1250
-DIR: code code\__HELPERS code\_onclick code\_onclick\hud code\ATMOSPHERICS code\ATMOSPHERICS\components code\ATMOSPHERICS\components\binary_devices code\ATMOSPHERICS\components\omni_devices code\ATMOSPHERICS\components\unary code\controllers code\datums code\game code\game\jobs code\game\jobs\job code\game\machinery code\modules code\modules\food code\modules\mob code\modules\mob\living code\modules\mob\living\silicon code\modules\mob\living\silicon\robot code\modules\mob\living\silicon\robot\drone code\modules\mob\living\simple_animal code\modules\mob\living\simple_animal\hostile code\modules\paperwork code\modules\paperwork\dispenser code\modules\reagents code\modules\reagents\reagent_containers icons icons\effects icons\obj maps 
-FILE: icons\obj\objects.dmi
+DIR: code code\__HELPERS code\_onclick code\_onclick\hud code\ATMOSPHERICS code\ATMOSPHERICS\components code\ATMOSPHERICS\components\binary_devices code\ATMOSPHERICS\components\omni_devices code\ATMOSPHERICS\components\unary code\controllers code\datums code\datums\diseases code\datums\spells code\game code\game\gamemodes code\game\gamemodes\wizard code\game\machinery code\modules code\modules\clothing code\modules\clothing\head code\modules\clothing\spacesuits code\modules\clothing\spacesuits\void code\modules\mining code\modules\mob code\modules\mob\living\simple_animal\hostile icons icons\obj 
+FILE: code\modules\mining\mine_items.dm
 LAST_COMPILE_TIME: 1426347885
 AUTO_FILE_DIR: OFF
 */
