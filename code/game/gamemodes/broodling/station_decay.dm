@@ -1,3 +1,4 @@
+// Makes minor explosions to make the station a little bruised
 proc/station_erosion( var/erosion_level )
 	var/i = 0
 	while( i<erosion_level )
@@ -11,11 +12,16 @@ proc/station_erosion( var/erosion_level )
 
 	for( var/area/A in all_areas )
 		for( var/obj/machinery/power/apc/P in A )
-			if( prob( 40 ))
+			if( prob( 75 ))
 				P.overload_lighting()
+		for( var/obj/machinery/door/airlock/D in A )
+			if( prob( 10 ))
+				var/max = D.maxhealth
+				D.take_damage( rand( max/4, max+( max/4 )))
 
 	return
 
+// Just adds random items strewn around the map
 proc/populate_random_items()
 	var/gun_count = 0
 
@@ -27,17 +33,34 @@ proc/populate_random_items()
 	world << "Created [gun_count] guns around the map. Go find 'em!"
 	return
 
-proc/populate_barricades()
+// Spreads all of the guns found on the map around the map
+proc/spread_guns()
+	var/list/guns = list()
+
+	for( var/area/A in all_areas )
+		for( var/obj/item/weapon/gun/G in A )
+			guns.Add( G )
+
+	for( var/obj/item/weapon/gun/G in guns )
+		var/area/A = pick( all_areas )
+		var/turf/simulated/floor/T = pick( A.contents )
+		G.loc = T
+
+	return
+
+// Makes areas around the map barricaded
+proc/populate_barricades( var/barricade_chance )
 	var/areas_barricaded = 0
 
 	for( var/area/A in all_areas )
-		if( prob( 25 )) // 25% of all areas barricaded? seems fair enough i suppose
+		if( prob( barricade_chance ))
 			barricade_area( A )
 			areas_barricaded++
 
 	world << "Barricaded [areas_barricaded] areas! Good luck getting inside!"
 	return
 
+// Barricades the given area
 proc/barricade_area( var/area/area )
 	for( var/turf/T in area )
 		var/spawn_barricade = 0
