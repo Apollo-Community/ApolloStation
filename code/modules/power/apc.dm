@@ -1335,7 +1335,10 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 			for(var/area/A in area.related)
 				for(var/obj/machinery/light/L in A)
 					L.on = 1
-					L.broken()
+					if( prob( 80 ))
+						L.damage()
+					else
+						L.broken()
 					sleep(1)
 
 /obj/machinery/power/apc/proc/setsubsystem(val)
