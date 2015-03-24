@@ -173,6 +173,13 @@
 
 	var/temperature = T20C
 
+/obj/item/forge/heated_metal/ignot
+	name = "Metal Ignot"
+	desc = "A bar of superheated metal"
+	icon_state = "metal_ignot"
+	origin_tech = "materials=3"
+	matter = list("metal" = 450)
+
 /obj/item/forge/heated_metal/process()
 	if(temperature > 0)
 		temperature -= 2+rand(4)
