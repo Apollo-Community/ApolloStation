@@ -40,10 +40,12 @@ proc/spread_guns()
 	for( var/area/A in all_areas )
 		for( var/obj/item/weapon/gun/G in A )
 			guns.Add( G )
+			world << "Added [G] to guns."
 
 	for( var/obj/item/weapon/gun/G in guns )
 		var/area/A = pick( all_areas )
 		var/turf/simulated/floor/T = pick( A.contents )
+		world << "Moved [G] from [G.loc] to [T]."
 		G.loc = T
 
 	return
