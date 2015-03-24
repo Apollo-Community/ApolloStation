@@ -4,7 +4,7 @@
 
 /datum/game_mode/wizard
 	name = "wizard"
-	config_tag = "wizard"
+	config_tag = null 			//stops wizard being votable mode.
 	required_players = 2
 	required_players_secret = 10
 	required_enemies = 1
