@@ -757,7 +757,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 //handles up-down floaty effect in space
 /mob/proc/make_floating(var/n)
-
 	floatiness = n
 
 	if(floatiness && !is_floating)
@@ -766,7 +765,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 		stop_floating()
 
 /mob/proc/start_floating()
-
 	is_floating = 1
 
 	var/amplitude = 2 //maximum displacement from original position
@@ -781,18 +779,39 @@ note dizziness decrements automatically in the mob's Life() proc.
 	animate(pixel_y = bottom, time = half_period, easing = SINE_EASING, loop = -1)						//down
 	animate(pixel_y = old_y, time = quarter_period, easing = SINE_EASING | EASE_IN, loop = -1)			//back
 
+
 /mob/proc/stop_floating()
 	animate(src, pixel_y = old_y, time = 5, easing = SINE_EASING | EASE_IN) //halt animation
 	//reset the pixel offsets to zero
 	is_floating = 0
 
 
-
 /mob/Stat()
 	..()
 
-	if(statpanel("Status"))	//not looking at that panel
+	if(statpanel("Players"))
+		stat(null,"Total Players: [clients.len]")
 
+		for(var/client/C in clients)
+			var/entry = ""
+			if (C.holder && (R_MOD & C.holder.rights) && !C.holder.fakekey)
+				entry = "Mod - [C.key]"
+			else if(C.holder && (R_ADMIN & C.holder.rights) && !C.holder.fakekey)
+				entry = "Admin - [C.key]"
+			else if(C.holder && (R_DEBUG & C.holder.rights) && !C.holder.fakekey)
+				entry = "Dev - [C.key]"
+			else if(is_donator(C))
+				entry = "Donator - [C.key]"
+			else if(is_titled(C))
+				if(get_title(C) == 1)
+					entry = "Event - [C.key]"
+				else
+					entry = "Spriter - [C.key]"
+			else
+				entry = "Player - [C.key]"
+
+			stat(null, entry)
+	if(statpanel("Status"))	//not looking at that panel
 		if(client && client.holder)
 			stat(null,"Location:\t([x], [y], [z])")
 			stat(null,"CPU:\t[world.cpu]")

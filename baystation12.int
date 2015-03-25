@@ -1,11 +1,11 @@
 // BEGIN_INTERNALS
 /*
 MAP_ICON_TYPE: 0
-WINDOW: icons\obj\objects.dmi;code\modules\clothing\spacesuits\rig\rig.dm;code\modules\power\apc.dm;code\modules\power\cable.dm;code\game\gamemodes\broodling\station_decay.dm;code\game\machinery\doors\airlock.dm;code\game\machinery\doors\door.dm;code\game\gamemodes\wizard\spellbook.dm;code\modules\mob\new_player\new_player.dm;code\game\gamemodes\nuclear\nuclearbomb.dm
+WINDOW: icons\obj\objects.dmi;code\modules\clothing\spacesuits\rig\rig.dm;code\modules\power\apc.dm;code\modules\power\cable.dm;code\game\gamemodes\broodling\station_decay.dm;code\game\machinery\doors\airlock.dm;code\game\machinery\doors\door.dm;code\modules\mob\mob.dm;code\modules\admin\verbs\debug.dm;code\modules\economy\Events_Mundane.dm
 LAST_COMPILE_VERSION: 506.1250
-DIR: code code\__HELPERS code\_onclick code\_onclick\hud code\ATMOSPHERICS code\ATMOSPHERICS\components code\ATMOSPHERICS\components\binary_devices code\ATMOSPHERICS\components\omni_devices code\ATMOSPHERICS\components\unary code\controllers code\datums code\game code\game\gamemodes code\game\gamemodes\broodling code\game\gamemodes\nuclear code\game\gamemodes\wizard code\game\machinery code\game\machinery\doors code\modules code\modules\clothing code\modules\clothing\spacesuits code\modules\clothing\spacesuits\rig code\modules\mob code\modules\mob\new_player code\modules\power icons icons\obj 
-FILE: code\game\gamemodes\nuclear\nuclearbomb.dm
-LAST_COMPILE_TIME: 1427165307
+DIR: code code\__HELPERS code\_onclick code\_onclick\hud code\ATMOSPHERICS code\ATMOSPHERICS\components code\ATMOSPHERICS\components\binary_devices code\ATMOSPHERICS\components\omni_devices code\ATMOSPHERICS\components\unary code\controllers code\datums code\game code\game\gamemodes code\game\gamemodes\broodling code\game\machinery code\game\machinery\doors code\modules code\modules\admin code\modules\admin\verbs code\modules\clothing code\modules\clothing\spacesuits code\modules\clothing\spacesuits\rig code\modules\economy code\modules\mob code\modules\power icons icons\obj 
+FILE: code\modules\admin\verbs\debug.dm
+LAST_COMPILE_TIME: 1427172081
 AUTO_FILE_DIR: OFF
 */
 // END_INTERNALS
