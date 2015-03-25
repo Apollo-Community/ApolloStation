@@ -1,11 +1,11 @@
 // BEGIN_INTERNALS
 /*
 MAP_ICON_TYPE: 0
-WINDOW: maps\whalestation-1.dmm
-LAST_COMPILE_VERSION: 506.1249
+WINDOW: maps\whalestation-1.dmm;maps\exodus-1-copy.dmm
+LAST_COMPILE_VERSION: 506.1250
 DIR: code code\__HELPERS code\game code\game\machinery code\game\objects code\game\objects\structures code\game\turfs code\game\turfs\space code\modules code\modules\admin code\modules\mob code\modules\mob\living maps 
 FILE: maps\whalestation-1.dmm
-LAST_COMPILE_TIME: 1426910253
+LAST_COMPILE_TIME: 1427249176
 AUTO_FILE_DIR: OFF
 */
 // END_INTERNALS
