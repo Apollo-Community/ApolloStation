@@ -286,6 +286,7 @@
 	obselete. Ionizing radiation seems to cause resonance in some of their crystals, which seems to encourage regeneration \
 	and produces a calming effect on the individual. Nucleations are highly stigmatized, and are treated much in the same \
 	way as lepers were back on Earth."
+	language = "Sol Common"
 
 	burn_mod = 4 // holy shite, poor guys wont survive half a second cooking smores
 	brute_mod = 2 // damn, double wham, double dam
@@ -309,7 +310,7 @@
 
 /datum/species/nucleation/handle_death(var/mob/living/carbon/human/H)
 	var/turf/T = get_turf(H)
-	H.visible_message("\red[H] splits apart with a wet slithering noise!")
+	H.visible_message("\red[H]'s body explodes, leaving behind a pile of microscopic crystals!")
 	supermatter_delamination(T, 2, 0, 0) // Create a small supermatter burst upon death
 	new /obj/item/weapon/shard/supermatter( T )
 	del(H)

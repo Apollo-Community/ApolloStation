@@ -15,6 +15,7 @@
 	var/doors_opened = 0 // Total number of times doors have been opened
 	var/guns_fired = 0 // Total number of times any type of gun has been fired
 	var/beepsky_beatings = 0 // Total number of times beepsky arrested someone
+	var/doors_welded = 0 // Total number of doors welded
 
 	var/total_kwh = 0 // Total kilowatt/hours produced by engineering
 	var/artifacts = 0 // Total number of artifacts dug up
