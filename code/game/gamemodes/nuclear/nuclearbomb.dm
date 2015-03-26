@@ -315,7 +315,7 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 				if (href_list["time"])
 					var/time = text2num(href_list["time"])
 					src.timeleft += time
-					src.timeleft = min(max(round(src.timeleft), 60), 600)
+					src.timeleft = min(max(round(src.timeleft), 120), 600)
 				if (href_list["timer"])
 					if (src.timing == -1.0)
 						return
@@ -328,6 +328,7 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 							src.icon_state = "nuclearbomb2"
 						if(!src.safety)
 							bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
+							AnnounceActiveNuke( timeleft )
 						else
 							bomb_set = 0
 					else
@@ -432,3 +433,9 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 		message_admins("[src] has been destroyed. Spawning [D] at ([D.x], [D.y], [D.z]).")
 		log_game("[src] has been destroyed. Spawning [D] at ([D.x], [D.y], [D.z]).")
 	..()
+
+proc/AnnounceActiveNuke( var/time )
+	if (ticker.current_state == GAME_STATE_PLAYING)
+		var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)
+		a.autosay("The station's nuclear device has been activated. [time] seconds until detonation.", "Nuclear Ordinance Controller")
+		del(a)

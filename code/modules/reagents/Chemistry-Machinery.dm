@@ -142,6 +142,7 @@
 
 			//uses 1 energy per 10 units.
 			var/added_amount = min(amount, energy / CHEM_DISPENSER_ENERGY_COST, space)
+			statistics.dispense_volume += added_amount
 			R.add_reagent(href_list["dispense"], added_amount)
 			energy = max(energy - added_amount * CHEM_DISPENSER_ENERGY_COST, 0)
 

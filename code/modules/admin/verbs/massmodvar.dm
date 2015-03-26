@@ -116,7 +116,7 @@
 			usr << "If a direction, direction is: [dir]"
 
 	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-		"num","type","icon","file","edit referenced object","restore to default")
+		"num","type","icon","file","reference", "edit referenced object","restore to default")
 
 	if(!class)
 		return
@@ -370,6 +370,44 @@
 					for(var/turf/A in world)
 						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
+
+		if("reference")
+			var/new_value = input("Pick reference:","Reference") as null|mob|obj|turf|area in world
+			if(new_value == null) return
+			O.vars[variable] = new_value
+			if(method)
+				if(istype(O, /mob))
+					for(var/mob/M in mob_list)
+						if ( istype(M , O.type) )
+							M.vars[variable] = O.vars[variable]
+
+				else if(istype(O, /obj))
+					for(var/obj/A in world)
+						if ( istype(A , O.type) )
+							A.vars[variable] = O.vars[variable]
+
+				else if(istype(O, /turf))
+					for(var/turf/A in world)
+						if ( istype(A , O.type) )
+							A.vars[variable] = O.vars[variable]
+
+			else
+				if(istype(O, /mob))
+					for(var/mob/M in mob_list)
+						if (M.type == O.type)
+							M.vars[variable] = O.vars[variable]
+
+				else if(istype(O, /obj))
+					for(var/obj/A in world)
+						if (A.type == O.type)
+							A.vars[variable] = O.vars[variable]
+
+				else if(istype(O, /turf))
+					for(var/turf/A in world)
+						if (A.type == O.type)
+							A.vars[variable] = O.vars[variable]
+
+
 
 	log_admin("[key_name(src)] mass modified [original_name]'s [variable] to [O.vars[variable]]")
 	message_admins("[key_name_admin(src)] mass modified [original_name]'s [variable] to [O.vars[variable]]", 1)

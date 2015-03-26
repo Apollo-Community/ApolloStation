@@ -155,3 +155,7 @@
 
 /obj/effect/landmark/mobcorpse/russian/ranged
 	corpsehelmet = /obj/item/clothing/head/ushanka
+
+
+/obj/effect/landmark/mobcorpse/broodling
+	name = "broodling"

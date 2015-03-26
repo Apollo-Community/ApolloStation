@@ -5,7 +5,7 @@
 	var/datum/admins/holder = null
 	var/datum/admins/deadmin_holder = null
 	var/buildmode		= 0
-	var/angry = 0 // toggles if an admin becomes ANGRY!
+	var/angry = 0 // toggles madmin
 
 	var/last_message	= "" //Contains the last message sent by this client - used to protect against copy-paste spamming.
 	var/last_message_count = 0 //contins a number of how many times a message identical to last_message was sent.
@@ -48,3 +48,6 @@
 	var/related_accounts_cid = "Requires database"	//So admins know why it isn't working - Used to determine what other accounts previously logged in from this computer id
 
 	preload_rsc = 0 // This is 0 so we can set it to an URL once the player logs in and have them download the resources from a different server.
+
+	var/afk = 0
+	var/afk_start_time = 0 // Used to keep track of time they started being AFK

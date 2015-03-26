@@ -1682,7 +1682,7 @@
 "Gr" = (/obj/fire,/obj/structure/disposalpipe/trunk,/obj/structure/disposaloutlet{dir = 8},/turf/simulated/floor/plating/lava,/area/space)
 "Gs" = (/obj/structure/closet/thunderdome/red_team,/turf/unsimulated/floor{icon_state = "freezerfloor"; dir = 2},/area/tdome)
 "Gt" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/o2,/turf/unsimulated/floor{icon_state = "white"},/area/tdome)
-"Gu" = (/obj/machinery/dispenser/thunderdome{pixel_y = 32},/turf/unsimulated/floor{icon_state = "white"},/area/tdome)
+"Gu" = (/obj/machinery/dispenser/BK5{pixel_y = 32},/turf/unsimulated/floor{icon_state = "white"},/area/tdome)
 "Gv" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/adv,/turf/unsimulated/floor{icon_state = "white"},/area/tdome)
 "Gw" = (/obj/effect/forcefield{desc = "You can't get in. Heh."; layer = 1; name = "Blocker"},/obj/structure/window/reinforced{dir = 1; maxhealth = 1.#INF},/obj/machinery/disposal,/obj/structure/disposalpipe/trunk{dir = 1},/turf/simulated/floor,/area/tdome/arena)
 "Gx" = (/obj/structure/window/reinforced{dir = 5; health = 1.#INF; maxhealth = 1.#INF},/obj/effect/forcefield{desc = "You can't get in. Heh."; layer = 1; name = "Blocker"},/turf/simulated/floor,/area/tdome/arena)

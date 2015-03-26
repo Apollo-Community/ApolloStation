@@ -252,5 +252,10 @@ var/max_explosion_range = 14
 var/list/area/unlogged_areas = list( /area/tdome )
 
 // Alien taste-test
-var/unwhitelisted_alien = "Tajara"
+var/unwhitelisted_alien = "Unathi"
 var/list/unwhitelisted_aliens = list( unwhitelisted_alien, "Machine", "Nucleation" )
+
+// Random round statistics
+var/datum/round_stats/statistics = new()
+
+#define AFK_TIME 6000 // 10 minutes

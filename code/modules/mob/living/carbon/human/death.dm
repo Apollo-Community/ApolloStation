@@ -59,12 +59,21 @@
 	if(!gibbed && species.death_sound)
 		playsound(loc, species.death_sound, 80, 1, 1)
 
-
 	if(ticker && ticker.mode)
 		sql_report_death(src)
 		ticker.mode.check_win()
 		if(istype(ticker.mode,/datum/game_mode/heist))
 			vox_kills++ //Bad vox. Shouldn't be killing humans.
+
+	if( src.lastattacker )
+		var/mob/living/killer = src.lastattacker
+
+		if( is_special_character(killer) )
+			src << "\blue [killer.real_name] was the last person to attack you. They were an antagonist."
+		else
+			src << "\blue [killer.real_name] was the last person to attack you. \red <b>They were NOT an antagonist.</b>"
+
+		src << "\blue If you believe that your death wasn't properly roleplayed, ahelp it now."
 
 	return ..(gibbed,species.death_message)
 

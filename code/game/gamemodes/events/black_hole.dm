@@ -24,8 +24,10 @@
 			del(M)
 		for(var/obj/O in orange(1,src))
 			del(O)
-		for(var/turf/simulated/ST in orange(1,src))
+
+/*		for(var/turf/simulated/ST in orange(1,src))
 			ST.ChangeTurf(/turf/space)
+*/
 
 		sleep(6)
 		grav(10, 4, 10, 0 )

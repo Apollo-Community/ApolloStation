@@ -40,6 +40,10 @@
 		dna.real_name = real_name
 	make_blood()
 
+/mob/living/carbon/human/Move(NewLoc, direct)
+	..()
+	statistics.run_distance++ // Increase run distance by a meter
+
 /mob/living/carbon/human/Stat()
 	..()
 	statpanel("Status")

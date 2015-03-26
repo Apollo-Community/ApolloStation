@@ -250,6 +250,6 @@
 	Entered(atom/A, atom/OL)
 		..()
 
-		if(istype(A,/mob/living/carbon))
-			var/mob/living/carbon/M = A
-			M.adjustFireLoss(200)
+		visible_message( "\The [A] falls into the lava, melting beneath the molten surface!" )
+
+		A.Del()

@@ -308,6 +308,9 @@ Auto Patrol: []"},
 						mode = SECBOT_PREP_ARREST
 						src.anchored = 1
 						src.target_lastloc = M.loc
+
+						statistics.beepsky_beatings++
+
 						return
 					else if(istype(src.target,/mob/living/simple_animal))
 						//just harmbaton them until dead

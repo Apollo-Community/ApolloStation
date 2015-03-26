@@ -90,6 +90,7 @@ var/list/admin_verbs_sounds = list(
 	/client/proc/play_sound
 	)
 var/list/admin_verbs_fun = list(
+	/client/proc/roundstats,
 	/client/proc/angrymode,
 	/client/proc/object_talk,
 	/client/proc/cmd_admin_dress,
@@ -889,6 +890,12 @@ var/list/admin_verbs_mentor = list(
 		log_admin("[key_name(usr)] has become ANGRY!")
 		message_admins("\blue [key_name_admin(usr)] has become ANGRY!", 1)
 
+/client/proc/roundstats()
+	set category = "Fun"
+	set name = "Round Stats"
+	set desc = "Displays the round stats to everyone."
+
+	statistics.display()
 
 /* This is the worst frickin verb, why did anyone ever think it was a good idea?
 /client/proc/man_up(mob/T as mob in mob_list)

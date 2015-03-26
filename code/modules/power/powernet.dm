@@ -120,7 +120,7 @@
 	newavail = 0
 
 /datum/powernet/proc/get_electrocute_damage()
-	return rand(10,avail/1000)
+	return rand(10,avail/5000)
 
 
 ////////////////////////////////////////////////

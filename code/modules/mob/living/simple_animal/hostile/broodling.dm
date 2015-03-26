@@ -2,16 +2,17 @@
 	name = "\improper Broodling"
 	desc = "For the hive!"
 	icon = 'icons/mob/broodling.dmi'
-	icon_state = "syndicate"
-	icon_living = "syndicate"
-	icon_dead = "syndicate_dead"
-	icon_gib = "syndicate_gib"
+	icon_state = "broodling"
+	icon_living = "broodling"
+	icon_dead = "broodling_dead"
+	icon_gib = "broodling_gib"
 	speak_chance = 0
 	turns_per_move = 5
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 4
+	move_speed = 40
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 100
 	health = 100
@@ -20,7 +21,7 @@
 	melee_damage_upper = 10
 	attacktext = "punched"
 	a_intent = "harm"
-	var/corpse = /obj/effect/landmark/mobcorpse/syndicatesoldier
+	var/corpse = /obj/effect/landmark/mobcorpse/broodling
 	min_oxy = 5
 	max_oxy = 0
 	min_tox = 0
@@ -34,26 +35,14 @@
 	faction = "broodling"
 	status_flags = CANPUSH
 
-/mob/living/simple_animal/hostile/syndicate/death()
+/mob/living/simple_animal/hostile/broodling/death()
 	..()
 	if(corpse)
 		new corpse (src.loc)
 	del src
 	return
 
-///////////////Sword and shield////////////
-
-/mob/living/simple_animal/hostile/syndicate/melee
-	melee_damage_lower = 20
-	melee_damage_upper = 25
-	icon_state = "syndicatemelee"
-	icon_living = "syndicatemelee"
-	weapon1 = /obj/item/weapon/melee/energy/sword/red
-	weapon2 = /obj/item/weapon/shield/energy
-	attacktext = "slashed"
-	status_flags = 0
-
-/mob/living/simple_animal/hostile/syndicate/melee/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/mob/living/simple_animal/hostile/broodling/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
 		if(prob(80))
 			var/damage = O.force
@@ -68,9 +57,9 @@
 		visible_message("\red [user] gently taps [src] with the [O]. ")
 
 
-/mob/living/simple_animal/hostile/syndicate/melee/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/simple_animal/hostile/broodling/melee/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)	return
-	if(Proj.damage >= health) // Gotta get out the big guns to knock em down
+	if(Proj.damage >= health/2) // Gotta soften them up a bit first before you can knock em down
 		src.health -= Proj.damage
 	else
 		visible_message("\blue <B>[Proj] bounces off of [src], leaving it unharmed!</B>")

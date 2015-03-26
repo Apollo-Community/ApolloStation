@@ -385,6 +385,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	if(M.captured == 1)
 		M.captured = 0
+		M.anchored = 0
 
 		message_admins("[key_name_admin(src)] has lifted [key_name(M)]'s retraining order.")
 	else

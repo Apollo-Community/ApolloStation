@@ -996,6 +996,9 @@ About the new airlock wires panel:
 		playsound(src.loc, 'sound/machines/airlock.ogg', 30, 1)
 	if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 		src.closeOther.close()
+
+	statistics.doors_opened++
+
 	return ..()
 
 /obj/machinery/door/airlock/close(var/forced=0)

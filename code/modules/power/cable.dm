@@ -135,7 +135,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			user << "\red This cable is connected to nearby breaker box. Use breaker box to interact with it."
 			return
 
-		if (shock(user, 50))
+		if (shock(user, 50, 1, 200))
 			return
 
 		if(src.d1)	// 0-X cables are 1 unit, X-X cables are 2 units long
@@ -186,10 +186,10 @@ By design, d1 is the smallest direction and d2 is the highest
 	src.add_fingerprint(user)
 
 // shock the user with probability prb
-/obj/structure/cable/proc/shock(mob/user, prb, var/siemens_coeff = 1.0)
+/obj/structure/cable/proc/shock(mob/user, prb, var/siemens_coeff = 1.0, var/max_damage = 50)
 	if(!prob(prb))
 		return 0
-	if (electrocute_mob(user, powernet, src, siemens_coeff))
+	if (electrocute_mob(user, powernet, src, max_damage, siemens_coeff))
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()

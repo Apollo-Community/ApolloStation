@@ -261,6 +261,8 @@
 
 			// Vend the item
 			src.vend(src.currently_vending, usr)
+			statistics.vended++
+
 			currently_vending = null
 		else
 			usr << "\icon[src]<span class='warning'>You don't have that much money!</span>"

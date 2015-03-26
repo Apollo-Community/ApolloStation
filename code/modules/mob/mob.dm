@@ -14,7 +14,6 @@
 	..()
 
 /mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
-
 	if(!client)	return
 
 	if (type)
@@ -39,12 +38,12 @@
 		src << msg
 	return
 
+
 // Show a message to all mobs in sight of this one
 // This would be for visible actions by the src mob
 // message is the message output to anyone who can see e.g. "[src] does something!"
 // self_message (optional) is what the src mob sees  e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
-
 /mob/visible_message(var/message, var/self_message, var/blind_message)
 	for(var/mob/M in viewers(src))
 		if(M.see_invisible < invisibility)
@@ -54,6 +53,7 @@
 			msg = self_message
 		M.show_message( msg, 1, blind_message, 2)
 
+
 // Show a message to all mobs in sight of this atom
 // Use for objects performing visible actions
 // message is output to anyone who can see, e.g. "The [src] does something!"
@@ -62,12 +62,14 @@
 	for(var/mob/M in viewers(src))
 		M.show_message( message, 1, blind_message, 2)
 
+
 // Returns an amount of power drawn from the object (-1 if it's not viable).
 // If drain_check is set it will not actually drain power, just return a value.
 // If surge is set, it will destroy/damage the recipient and not return any power.
 // Not sure where to define this, so it can sit here for the rest of time.
 /atom/proc/drain_power(var/drain_check,var/surge, var/amount = 0)
 	return -1
+
 
 // Show a message to all mobs in earshot of this one
 // This would be for audible actions by the src mob
@@ -84,6 +86,7 @@
 		if(self_message && M==src)
 			msg = self_message
 		M.show_message( msg, 2, deaf_message, 1)
+
 
 // Show a message to all mobs in earshot of this atom
 // Use for objects performing audible actions
@@ -111,6 +114,19 @@
 //	if(organStructure)
 //		organStructure.ProcessOrgans()
 	//handle_typing_indicator() //You said the typing indicator would be fine. The test determined that was a lie.
+
+	if(client)
+		if(( client.inactivity >= AFK_TIME ) )
+			if( !client.afk )
+				client.afk_start_time = world.time
+				client.afk = 1
+		else if( client.afk )
+			var/afk_time = world.time-client.afk_start_time
+			statistics.break_time += afk_time
+
+			client.afk_start_time = 0
+			client.afk = 0
+
 	return
 
 
@@ -757,7 +773,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 //handles up-down floaty effect in space
 /mob/proc/make_floating(var/n)
-
 	floatiness = n
 
 	if(floatiness && !is_floating)
@@ -766,7 +781,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 		stop_floating()
 
 /mob/proc/start_floating()
-
 	is_floating = 1
 
 	var/amplitude = 2 //maximum displacement from original position
@@ -781,34 +795,58 @@ note dizziness decrements automatically in the mob's Life() proc.
 	animate(pixel_y = bottom, time = half_period, easing = SINE_EASING, loop = -1)						//down
 	animate(pixel_y = old_y, time = quarter_period, easing = SINE_EASING | EASE_IN, loop = -1)			//back
 
+
 /mob/proc/stop_floating()
 	animate(src, pixel_y = old_y, time = 5, easing = SINE_EASING | EASE_IN) //halt animation
 	//reset the pixel offsets to zero
 	is_floating = 0
 
 
-
 /mob/Stat()
 	..()
 
-	if(statpanel("Status"))	//not looking at that panel
+	if(statpanel("Players"))
+		stat("Total Players: ","[clients.len]")
 
+		for(var/client/C in clients)
+			var/entry = ""
+			if (C.holder && (R_MOD & C.holder.rights) && !C.holder.fakekey)
+				entry = "Mod"
+			else if(C.holder && (R_ADMIN & C.holder.rights) && !C.holder.fakekey)
+				entry = "Admin"
+			else if(C.holder && (R_DEBUG & C.holder.rights) && !C.holder.fakekey)
+				entry = "Dev"
+			else if(is_donator(C))
+				entry = "Donator"
+			else if(is_titled(C))
+				if(get_title(C) == 1)
+					entry = "Event"
+				else
+					entry = "Spriter"
+			else
+				entry = "Player"
+
+			if( C.afk )
+				entry += "   AFK"
+
+			stat("[C.key]", entry)
+	if(statpanel("Status"))	//not looking at that panel
 		if(client && client.holder)
 			stat(null,"Location:\t([x], [y], [z])")
 			stat(null,"CPU:\t[world.cpu]")
 			stat(null,"Instances:\t[world.contents.len]")
 
 			if(master_controller)
-				stat(null,"MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[controller_iteration])")
+				stat(null,"MasterController ([master_controller.processing?"On":"Off"]-[controller_iteration])")
+				stat(null,"Prev-[last_tick_duration] sec \t Cur-[master_controller.total_cost] sec")
 				stat(null,"Air-[master_controller.air_cost]\tSun-[master_controller.sun_cost]")
 				stat(null,"Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
 				stat(null,"Dis-[master_controller.diseases_cost]\t#[active_diseases.len]")
 				stat(null,"Mch-[master_controller.machines_cost]\t#[machines.len]")
-				stat(null,"MchS-[master_controller.machine_sort_cost]")
 				stat(null,"Obj-[master_controller.objects_cost]\t#[processing_objects.len]")
 				stat(null,"Net-[master_controller.networks_cost]\tPnet-[master_controller.powernets_cost]")
 				stat(null,"NanoUI-[master_controller.nano_cost]\t#[nanomanager.processing_uis.len]")
-				stat(null,"Tick-[master_controller.ticker_cost]\tALL-[master_controller.total_cost]")
+				stat(null,"Tick-[master_controller.ticker_cost]")
 			else
 				stat(null,"MasterController-ERROR")
 

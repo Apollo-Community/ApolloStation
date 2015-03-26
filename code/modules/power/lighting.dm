@@ -8,7 +8,7 @@
 #define LIGHT_EMPTY 1
 #define LIGHT_BROKEN 2
 #define LIGHT_BURNED 3
-
+#define LIGHT_DAMAGED 4
 
 
 /obj/item/light_fixture_frame
@@ -203,13 +203,12 @@
 	var/on = 0					// 1 if on, 0 if off
 	var/on_gs = 0
 	var/brightness = 8			// luminosity when on, also used in power calculation
-	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
+	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED, _BROKEN, or _DAMAGED
 	var/flickering = 0
 	var/light_type = /obj/item/weapon/light/tube		// the type of light item
 	var/fitting = "tube"
 	var/switchcount = 0			// count of number of times switched on/off
 								// this is used to calc the probability the light burns out
-
 	var/rigged = 0				// true if rigged to explode
 
 // the smaller bulb light fixture
@@ -270,6 +269,8 @@
 	switch(status)		// set icon_states
 		if(LIGHT_OK)
 			icon_state = "[base_state][on]"
+		if(LIGHT_DAMAGED)
+			icon_state = "[base_state]-damaged[on]"
 		if(LIGHT_EMPTY)
 			icon_state = "[base_state]-empty"
 			on = 0
@@ -739,7 +740,7 @@
 
 // called after an attack with a light item
 // shatter light, unless it was an attempt to put it in a light socket
-// now only shatter if the intent was harm
+// now only damage if the intent was harm
 
 /obj/item/weapon/light/afterattack(atom/target, mob/user, proximity)
 	if(!proximity) return
@@ -751,10 +752,20 @@
 	shatter()
 
 /obj/item/weapon/light/proc/shatter()
-	if(status == LIGHT_OK || status == LIGHT_BURNED)
+	if(status == LIGHT_OK || status == LIGHT_BURNED || status == LIGHT_DAMAGED)
 		src.visible_message("\red [name] shatters.","\red You hear a small glass object shatter.")
 		status = LIGHT_BROKEN
 		force = 5
 		sharp = 1
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		update()
+
+// Causes the light to flicker and sets it at half brightness
+/obj/machinery/light/proc/damage()
+	if(status == LIGHT_OK)
+		src.visible_message("[name] begins to buzz and flicker.","You hear something begin to buzz.")
+		status = LIGHT_DAMAGED
+		brightness = brightness/2
+		update()
+	else
+		broken()

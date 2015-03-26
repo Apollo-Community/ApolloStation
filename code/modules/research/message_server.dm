@@ -103,6 +103,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 		if (findtextEx(message,token))
 			message = "<font color=\"red\">[message]</font>"	//Rejected messages will be indicated by red color.
 			result = token										//Token caused rejection (if there are multiple, last will be chosen>.
+			statistics.spam_blocked++
 	pda_msgs += new/datum/data_pda_msg(recipient,sender,message)
 	return result
 

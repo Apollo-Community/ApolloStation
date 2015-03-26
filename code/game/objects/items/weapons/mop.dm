@@ -24,6 +24,8 @@
 			T.dirt = 0
 		for(var/obj/effect/O in src)
 			if(istype(O,/obj/effect/rune) || istype(O,/obj/effect/decal/cleanable) || istype(O,/obj/effect/overlay))
+				if( istype( O, /obj/effect/decal/cleanable/blood ))
+					statistics.blood_mopped += 0.7
 				del(O)
 	source.reagents.reaction(src, TOUCH, 10)	//10 is the multiplier for the reaction effect. probably needed to wet the floor properly.
 	source.reagents.remove_any(1)				//reaction() doesn't use up the reagents

@@ -7,18 +7,18 @@
 
 /obj/structure/closet/thunderdome/blue_team/New()
 	..()
-	new /obj/item/clothing/under/lightblue
-	new /obj/item/clothing/under/lightblue
-	new /obj/item/clothing/under/lightblue
-	new /obj/item/clothing/under/lightblue
-	new /obj/item/clothing/under/lightblue
-	new /obj/item/clothing/under/lightblue
-	new /obj/item/clothing/shoes/blue
-	new /obj/item/clothing/shoes/blue
-	new /obj/item/clothing/shoes/blue
-	new /obj/item/clothing/shoes/blue
-	new /obj/item/clothing/shoes/blue
-	new /obj/item/clothing/shoes/blue
+	new /obj/item/clothing/under/lightblue(src)
+	new /obj/item/clothing/under/lightblue(src)
+	new /obj/item/clothing/under/lightblue(src)
+	new /obj/item/clothing/under/lightblue(src)
+	new /obj/item/clothing/under/lightblue(src)
+	new /obj/item/clothing/under/lightblue(src)
+	new /obj/item/clothing/shoes/blue(src)
+	new /obj/item/clothing/shoes/blue(src)
+	new /obj/item/clothing/shoes/blue(src)
+	new /obj/item/clothing/shoes/blue(src)
+	new /obj/item/clothing/shoes/blue(src)
+	new /obj/item/clothing/shoes/blue(src)
 
 /obj/structure/closet/thunderdome/red_team
 	name = "red team clothing"
@@ -29,15 +29,15 @@
 
 /obj/structure/closet/thunderdome/red_team/New()
 	..()
-	new /obj/item/clothing/under/lightred
-	new /obj/item/clothing/under/lightred
-	new /obj/item/clothing/under/lightred
-	new /obj/item/clothing/under/lightred
-	new /obj/item/clothing/under/lightred
-	new /obj/item/clothing/under/lightred
-	new /obj/item/clothing/shoes/red
-	new /obj/item/clothing/shoes/red
-	new /obj/item/clothing/shoes/red
-	new /obj/item/clothing/shoes/red
-	new /obj/item/clothing/shoes/red
-	new /obj/item/clothing/shoes/red
+	new /obj/item/clothing/under/lightred(src)
+	new /obj/item/clothing/under/lightred(src)
+	new /obj/item/clothing/under/lightred(src)
+	new /obj/item/clothing/under/lightred(src)
+	new /obj/item/clothing/under/lightred(src)
+	new /obj/item/clothing/under/lightred(src)
+	new /obj/item/clothing/shoes/red(src)
+	new /obj/item/clothing/shoes/red(src)
+	new /obj/item/clothing/shoes/red(src)
+	new /obj/item/clothing/shoes/red(src)
+	new /obj/item/clothing/shoes/red(src)
+	new /obj/item/clothing/shoes/red(src)

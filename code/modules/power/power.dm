@@ -309,7 +309,7 @@
 //power_source is a source of electricity, can be powercell, area, apc, cable, powernet or null
 //source is an object caused electrocuting (airlock, grille, etc)
 //No animations will be performed by this proc.
-/proc/electrocute_mob(mob/living/carbon/M as mob, var/power_source, var/obj/source, var/siemens_coeff = 1.0)
+/proc/electrocute_mob(mob/living/carbon/M as mob, var/power_source, var/obj/source, var/max_damage = 25, var/siemens_coeff = 1.0)
 	if(istype(M.loc,/obj/mecha))	return 0	//feckin mechs are dumb
 	var/area/source_area
 	if(istype(power_source,/area))
@@ -368,6 +368,9 @@
 	else
 		power_source = cell
 		shock_damage = cell_damage
+
+	if( shock_damage > max_damage )
+		shock_damage = max_damage
 	var/drained_hp = M.electrocute_act(shock_damage, source, siemens_coeff) //zzzzzzap!
 	var/drained_energy = drained_hp*20
 

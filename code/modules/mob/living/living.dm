@@ -359,7 +359,6 @@
 	if (restrained())
 		stop_pulling()
 
-
 	var/t7 = 1
 	if (restrained())
 		for(var/mob/living/M in range(src, 1))

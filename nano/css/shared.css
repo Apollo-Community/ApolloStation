@@ -163,6 +163,11 @@ h4 {
     font-weight: bold;
 }
 
+.orange {
+	color: #ff9966;
+	font-weight: bold;
+}
+
 .bad {
     color: #ee0000;
     font-weight: bold;
@@ -254,9 +259,20 @@ div.notice {
     color: #e9c183;
 }
 
+.itemLabelR {
+	float: right;
+	width: 30%;
+	color: #e9c183;
+}
+
 .itemContent {
     float: left;
     width: 69%;
+}
+
+.itemContentR {
+	float: right;
+	width: 69%;
 }
 
 .itemLabelNarrow {

@@ -1,6 +1,10 @@
 /mob/living/carbon/Life()
 	..()
 
+	if( client )
+		if( client.afk )
+			sleeping = 2
+
 	// Increase germ_level regularly
 	if(germ_level < GERM_LEVEL_AMBIENT && prob(30))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
 		germ_level++
@@ -519,8 +523,13 @@
 	if(buckled)
 		return 0
 	stop_pulling()
+
 	src << "<span class='warning'>You slipped on [slipped_on]!</span>"
 	playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+
 	Stun(stun_duration)
 	Weaken(Floor(stun_duration/2))
+
+	statistics.people_slipped++
+
 	return 1
