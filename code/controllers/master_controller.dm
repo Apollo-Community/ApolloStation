@@ -169,7 +169,7 @@ datum/controller/game_controller/proc/process()
 				//MOBS
 				spawn(0)
 					timer = world.timeofday
-					for(var/mob/living/M in world)	//only living mobs have life processes
+					for(var/mob/M in world)	//only living mobs have life processes
 						M.Life()
 					mobs_cost = (world.timeofday - timer) / 10
 
