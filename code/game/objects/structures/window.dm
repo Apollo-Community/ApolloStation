@@ -48,6 +48,9 @@
 	else
 		new shardtype(loc)
 		if(reinf) new /obj/item/stack/rods(loc)
+
+	statistics.damage_cost += rand( 400, 600 )
+
 	del(src)
 	return
 

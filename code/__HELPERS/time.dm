@@ -6,7 +6,7 @@
 
 //Returns the world time in english
 proc/worldtime2text(time = world.time)
-	return "[round(time / 36000)+12]:[(time / 600 % 60) < 10 ? add_zero(time / 600 % 60, 1) : time / 600 % 60]"
+	return "[round(time / 36000)+8]:[(time / 600 % 60) < 10 ? add_zero(time / 600 % 60, 1) : time / 600 % 60]"
 
 proc/time_stamp()
 	return time2text(world.timeofday, "hh:mm:ss")

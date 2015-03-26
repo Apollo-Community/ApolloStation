@@ -14,7 +14,6 @@
 	..()
 
 /mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
-
 	if(!client)	return
 
 	if (type)
@@ -39,12 +38,12 @@
 		src << msg
 	return
 
+
 // Show a message to all mobs in sight of this one
 // This would be for visible actions by the src mob
 // message is the message output to anyone who can see e.g. "[src] does something!"
 // self_message (optional) is what the src mob sees  e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
-
 /mob/visible_message(var/message, var/self_message, var/blind_message)
 	for(var/mob/M in viewers(src))
 		if(M.see_invisible < invisibility)
@@ -54,6 +53,7 @@
 			msg = self_message
 		M.show_message( msg, 1, blind_message, 2)
 
+
 // Show a message to all mobs in sight of this atom
 // Use for objects performing visible actions
 // message is output to anyone who can see, e.g. "The [src] does something!"
@@ -62,12 +62,14 @@
 	for(var/mob/M in viewers(src))
 		M.show_message( message, 1, blind_message, 2)
 
+
 // Returns an amount of power drawn from the object (-1 if it's not viable).
 // If drain_check is set it will not actually drain power, just return a value.
 // If surge is set, it will destroy/damage the recipient and not return any power.
 // Not sure where to define this, so it can sit here for the rest of time.
 /atom/proc/drain_power(var/drain_check,var/surge, var/amount = 0)
 	return -1
+
 
 // Show a message to all mobs in earshot of this one
 // This would be for audible actions by the src mob
@@ -84,6 +86,7 @@
 		if(self_message && M==src)
 			msg = self_message
 		M.show_message( msg, 2, deaf_message, 1)
+
 
 // Show a message to all mobs in earshot of this atom
 // Use for objects performing audible actions
@@ -111,6 +114,19 @@
 //	if(organStructure)
 //		organStructure.ProcessOrgans()
 	//handle_typing_indicator() //You said the typing indicator would be fine. The test determined that was a lie.
+
+	if(client)
+		if(( client.inactivity >= AFK_TIME ) )
+			if( !client.afk )
+				client.afk_start_time = world.time
+				client.afk = 1
+		else if( client.afk )
+			var/afk_time = world.time-client.afk_start_time
+			statistics.break_time += afk_time
+
+			client.afk_start_time = 0
+			client.afk = 0
+
 	return
 
 
@@ -790,27 +806,30 @@ note dizziness decrements automatically in the mob's Life() proc.
 	..()
 
 	if(statpanel("Players"))
-		stat(null,"Total Players: [clients.len]")
+		stat("Total Players: ","[clients.len]")
 
 		for(var/client/C in clients)
 			var/entry = ""
 			if (C.holder && (R_MOD & C.holder.rights) && !C.holder.fakekey)
-				entry = "Mod - [C.key]"
+				entry = "Mod"
 			else if(C.holder && (R_ADMIN & C.holder.rights) && !C.holder.fakekey)
-				entry = "Admin - [C.key]"
+				entry = "Admin"
 			else if(C.holder && (R_DEBUG & C.holder.rights) && !C.holder.fakekey)
-				entry = "Dev - [C.key]"
+				entry = "Dev"
 			else if(is_donator(C))
-				entry = "Donator - [C.key]"
+				entry = "Donator"
 			else if(is_titled(C))
 				if(get_title(C) == 1)
-					entry = "Event - [C.key]"
+					entry = "Event"
 				else
-					entry = "Spriter - [C.key]"
+					entry = "Spriter"
 			else
-				entry = "Player - [C.key]"
+				entry = "Player"
 
-			stat(null, entry)
+			if( C.afk )
+				entry += "   AFK"
+
+			stat("[C.key]", entry)
 	if(statpanel("Status"))	//not looking at that panel
 		if(client && client.holder)
 			stat(null,"Location:\t([x], [y], [z])")
