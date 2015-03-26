@@ -344,30 +344,30 @@
 	// Eating with forks
 	if (istype(I, /obj/item/weapon/kitchen/utensil/))
 		var/obj/item/weapon/kitchen/utensil/U = I
-	if(!U.reagents)
-		U.create_reagents(5)
+		if(!U.reagents)
+			U.create_reagents(5)
 
-	if (U.reagents.total_volume > 0)
-		user << "\red You already have something on your [U]."
+		if (U.reagents.total_volume > 0)
+			user << "\red You already have something on your [U]."
+			return
+
+		user.visible_message( \
+			"[user] scoops up some [src] with \the [U]!", \
+			"\blue You scoop up some [src] with \the [U]!" \
+		)
+
+		src.bitecount++
+		U.overlays.Cut()
+		U.loaded = "[src]"
+		var/image/J = new(U.icon, "loadedfood")
+		J.color = src.filling_color
+		U.overlays += J
+
+		reagents.trans_to(U,min(reagents.total_volume,5))
+
+		if (reagents.total_volume <= 0)
+			del(src)
 		return
-
-	user.visible_message( \
-		"[user] scoops up some [src] with \the [U]!", \
-		"\blue You scoop up some [src] with \the [U]!" \
-	)
-
-	src.bitecount++
-	U.overlays.Cut()
-	U.loaded = "[src]"
-	var/image/J = new(U.icon, "loadedfood")
-	J.color = src.filling_color
-	U.overlays += J
-
-	reagents.trans_to(U,min(reagents.total_volume,5))
-
-	if (reagents.total_volume <= 0)
-		del(src)
-	return
 
 	user << "<span class='notice'>You add [I] to [src].</span>"
 	if(istype(I,  /obj/item/weapon/reagent_containers/))
