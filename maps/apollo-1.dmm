@@ -4109,7 +4109,7 @@
 "bBa" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/obj/structure/cable/green,/obj/structure/cable/green{d2 = 2; icon_state = "0-2"},/obj/machinery/door/blast/shutters{density = 0; dir = 2; icon_state = "shutter0"; id = "hop_office_window"; name = "HoP Office Privacy Shutters"; opacity = 0},/turf/simulated/floor/plating,/area/crew_quarters/heads/hop)
 "bBb" = (/obj/machinery/computer/card,/turf/simulated/floor{icon_state = "blue"; dir = 10},/area/crew_quarters/heads/hop)
 "bBc" = (/obj/machinery/hologram/holopad,/turf/simulated/floor/carpet,/area/crew_quarters/heads/hop)
-"bBd" = (/mob/living/simple_animal/corgi/Ian,/turf/simulated/floor/carpet,/area/crew_quarters/heads/hop)
+"bBd" = (/mob/living/simple_animal/dog/corgi/Ian,/turf/simulated/floor/carpet,/area/crew_quarters/heads/hop)
 "bBe" = (/obj/machinery/alarm{dir = 8; icon_state = "alarm0"; pixel_x = 16},/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor,/area/crew_quarters/heads/hop)
 "bBf" = (/obj/machinery/ai_status_display{pixel_x = -32; pixel_y = 0},/obj/machinery/power/apc{dir = 2; name = "south bump"; pixel_y = -24},/obj/structure/cable/cyan{d2 = 4; icon_state = "0-4"},/turf/simulated/floor/bluegrid,/area/turret_protected/ai_upload)
 "bBg" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/cable/cyan{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/cable/cyan{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/simulated/floor{icon_state = "dark"},/area/turret_protected/ai_upload)
