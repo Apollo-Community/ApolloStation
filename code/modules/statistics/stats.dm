@@ -24,10 +24,10 @@
 
 /datum/round_stats/proc/display()
 	var/productivity = 0
-	var/work_time = round( world.time/10 )*clients.len
+	var/work_time = round( world.time/10 )*living_mob_list.len
 	productivity = round(100*(1-(break_time/work_time))) // Productivity is just percentage of time spent not AFK
 
-	var/data = "<hr><b><h2>Round Statistics</h2></b><hr>"
+	var/data = "<hr><center><b><h2>Round Statistics</h2></b></center><hr>"
 	data += "<h3>TOTALS</h3>"
 	data += "Structural Damages: <b>\red $[damage_cost]</b><br>"
 	data += "Crew productivity: <b>[productivity]%</b><br>"

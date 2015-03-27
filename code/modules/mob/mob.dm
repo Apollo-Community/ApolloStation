@@ -120,10 +120,11 @@
 			if( !client.afk )
 				client.afk_start_time = world.time
 				client.afk = 1
+				src << "You are now AFK. Your character will fall asleep until you return."
 		else if( client.afk )
-			var/afk_time = world.time-client.afk_start_time
-			statistics.break_time += afk_time
-
+			if( istype( src, /mob/living/carbon/human ))
+				var/afk_time = world.time-client.afk_start_time
+				statistics.break_time += afk_time
 			client.afk_start_time = 0
 			client.afk = 0
 

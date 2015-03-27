@@ -1,11 +1,11 @@
 // BEGIN_INTERNALS
 /*
 MAP_ICON_TYPE: 0
-WINDOW: code\modules\admin\verbs\debug.dm;code\modules\donators.dm;code\modules\mob\living\silicon\silicon.dm;code\modules\mob\mob.dm;code\global.dm;code\modules\client\client defines.dm;code\modules\client\client procs.dm;code\modules\mob\living\living.dm;code\game\gamemodes\gameticker.dm;code\game\machinery\doors\airlock.dm;code\modules\statistics\stats.dm;code\names.dm;code\modules\mob\living\carbon\human\species\station\station.dm
+WINDOW: code\modules\mob\living\silicon\silicon.dm;code\modules\mob\mob.dm;code\modules\client\client defines.dm;code\global.dm;code\modules\client\client procs.dm;code\modules\mob\living\living.dm;code\modules\research\xenoarchaeology\artifact\artifact_autocloner.dm
 LAST_COMPILE_VERSION: 506.1250
-DIR: code code\__HELPERS code\_onclick code\_onclick\hud code\ATMOSPHERICS code\ATMOSPHERICS\components code\ATMOSPHERICS\components\binary_devices code\ATMOSPHERICS\components\omni_devices code\ATMOSPHERICS\components\unary code\datums code\datums\wires code\game code\game\gamemodes code\game\gamemodes\broodling code\game\machinery code\game\machinery\computer code\game\machinery\doors code\modules code\modules\admin code\modules\admin\verbs code\modules\client code\modules\clothing code\modules\clothing\spacesuits code\modules\clothing\spacesuits\rig code\modules\clothing\spacesuits\rig\suits code\modules\clothing\spacesuits\void code\modules\mob code\modules\mob\living code\modules\mob\living\carbon code\modules\mob\living\carbon\human code\modules\mob\living\carbon\human\species code\modules\mob\living\carbon\human\species\station code\modules\mob\living\silicon code\modules\statistics 
-FILE: code\modules\mob\living\carbon\human\species\station\station.dm
-LAST_COMPILE_TIME: 1427347282
+DIR: code code\__HELPERS code\_onclick code\_onclick\hud code\ATMOSPHERICS code\ATMOSPHERICS\components code\ATMOSPHERICS\components\binary_devices code\ATMOSPHERICS\components\omni_devices code\ATMOSPHERICS\components\unary code\datums code\datums\wires code\modules code\modules\client code\modules\mob code\modules\mob\living code\modules\mob\living\silicon code\modules\research code\modules\research\xenoarchaeology code\modules\research\xenoarchaeology\artifact maps 
+FILE: code\modules\research\xenoarchaeology\artifact\artifact_autocloner.dm
+LAST_COMPILE_TIME: 1427432346
 AUTO_FILE_DIR: OFF
 */
 // END_INTERNALS

@@ -1,7 +1,7 @@
 /obj/effect/bhole
 	name = "black hole"
 	icon = 'icons/obj/objects.dmi'
-	desc = "FUCK FUCK FUCK AAAHHH"
+	desc = "You are about to have a very bad day."
 	icon_state = "bhole3"
 	opacity = 1
 	unacidable = 1
@@ -49,8 +49,6 @@
 		grav( 2, 2, 75,25 )
 		sleep(6)
 
-
-
 		//MOVEMENT
 		if( prob(50) )
 			src.anchored = 0
@@ -84,7 +82,9 @@
 			step_towards(M,src)
 
 	//Destroying the turf
+	/* nope, we want a family-friendly black hole
 	if( T && istype(T,/turf/simulated) && prob(turf_removal_chance) )
 		var/turf/simulated/ST = T
 		ST.ChangeTurf(/turf/space)
+	*/
 	return

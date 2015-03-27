@@ -238,3 +238,12 @@ datum/track/New(var/title_name, var/audio)
 	icon = 'icons/obj/jukebox.dmi'
 	icon_state = "mixer"
 	state_base = "mixer"
+
+/obj/machinery/media/jukebox/attackby(obj/item/W as obj, mob/user as mob)
+	src.add_fingerprint(user)
+
+	if(istype(W, /obj/item/weapon/wrench))
+		user << "<span class='warning'>You can't unwrench \the [src] because it's hooked up to a sound system!</span>"
+		return
+
+	return ..()

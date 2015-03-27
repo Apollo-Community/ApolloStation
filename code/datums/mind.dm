@@ -72,7 +72,7 @@ datum/mind
 				current.remove_changeling_powers()
 				current.verbs -= /datum/changeling/proc/EvolutionMenu
 			current.mind = null
-			
+
 			nanomanager.user_transferred(current, new_character) // transfer active NanoUI instances to new user
 		if(new_character.mind)		//remove any mind currently in our new body's mind variable
 			new_character.mind.current = null
@@ -1274,7 +1274,7 @@ datum/mind
 	..()
 	mind.assigned_role = "Animal"
 
-/mob/living/simple_animal/corgi/mind_initialize()
+/mob/living/simple_animal/dog/corgi/mind_initialize()
 	..()
 	mind.assigned_role = "Corgi"
 

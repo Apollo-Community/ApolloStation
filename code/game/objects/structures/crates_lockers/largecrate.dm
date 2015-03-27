@@ -30,7 +30,7 @@
 
 /obj/structure/largecrate/lisa/attackby(obj/item/weapon/W as obj, mob/user as mob)	//ugly but oh well
 	if(istype(W, /obj/item/weapon/crowbar))
-		new /mob/living/simple_animal/corgi/Lisa(loc)
+		new /mob/living/simple_animal/dog/corgi/Lisa(loc)
 	..()
 
 /obj/structure/largecrate/cow
@@ -71,7 +71,7 @@
 	if(istype(W, /obj/item/weapon/crowbar))
 		var/obj/item/mecha_parts/mecha_equipment/ME
 		var/obj/mecha/working/hoverpod/H = new (loc)
-		
+
 		ME = new /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
 		ME.attach(H)
 		ME = new /obj/item/mecha_parts/mecha_equipment/tool/passenger
