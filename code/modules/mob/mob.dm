@@ -809,6 +809,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(statpanel("Players"))
 		stat("Total Players: ","[clients.len]")
 
+		var/list/List = new
 		for(var/client/C in clients)
 			var/entry = ""
 			if (C.holder && (R_MOD & C.holder.rights) && !C.holder.fakekey)
@@ -830,7 +831,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if( C.afk )
 				entry += "   AFK"
 
-			stat("[C.key]", entry)
+			List[C.key] = entry
+
+		for(var/key in sortList(List))
+			stat(key, List[key])
+
 	if(statpanel("Status"))	//not looking at that panel
 		if(client && client.holder)
 			stat(null,"Location:\t([x], [y], [z])")
