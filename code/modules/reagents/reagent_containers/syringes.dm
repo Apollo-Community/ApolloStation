@@ -46,7 +46,6 @@
 		update_icon()
 
 	attackby(obj/item/I as obj, mob/user as mob)
-
 		return
 
 	afterattack(obj/target, mob/user, proximity)
