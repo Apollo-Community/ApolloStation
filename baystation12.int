@@ -1,11 +1,11 @@
 // BEGIN_INTERNALS
 /*
 MAP_ICON_TYPE: 0
-WINDOW: code\modules\mob\living\silicon\silicon.dm;code\modules\mob\mob.dm;code\modules\client\client defines.dm;code\global.dm;code\modules\client\client procs.dm;code\modules\mob\living\living.dm;code\modules\research\xenoarchaeology\artifact\artifact_autocloner.dm
+WINDOW: maps\apollo-5.dmm;maps\apollo-1.dmm
 LAST_COMPILE_VERSION: 506.1250
-DIR: code code\__HELPERS code\_onclick code\_onclick\hud code\ATMOSPHERICS code\ATMOSPHERICS\components code\ATMOSPHERICS\components\binary_devices code\ATMOSPHERICS\components\omni_devices code\ATMOSPHERICS\components\unary code\datums code\datums\wires code\modules code\modules\client code\modules\mob code\modules\mob\living code\modules\mob\living\silicon code\modules\research code\modules\research\xenoarchaeology code\modules\research\xenoarchaeology\artifact maps 
-FILE: code\modules\research\xenoarchaeology\artifact\artifact_autocloner.dm
-LAST_COMPILE_TIME: 1427432346
+DIR: code code\__HELPERS code\_onclick code\_onclick\hud code\ATMOSPHERICS code\ATMOSPHERICS\components code\ATMOSPHERICS\components\binary_devices code\ATMOSPHERICS\components\omni_devices code\ATMOSPHERICS\components\unary code\datums code\datums\wires code\game code\game\gamemodes code\game\gamemodes\autotraitor code\game\gamemodes\events code\game\gamemodes\traitor code\game\jobs code\game\machinery code\game\machinery\bots code\game\machinery\computer code\game\mecha code\game\mecha\combat code\game\mecha\equipment code\game\mecha\equipment\weapons code\game\objects code\game\objects\items code\game\objects\items\devices code\game\objects\items\robot code\game\objects\items\weapons code\game\objects\items\weapons\grenades code\game\objects\items\weapons\storage code\game\objects\items\weapons\tanks code\game\objects\structures code\modules code\modules\admin code\modules\client code\modules\flufftext code\modules\icon generation code\modules\mob code\modules\mob\living code\modules\mob\living\silicon code\modules\mob\new_player code\modules\power code\modules\power\antimatter code\modules\power\singularity code\modules\power\singularity\particle_accelerator code\modules\projectiles code\modules\projectiles\guns code\modules\projectiles\guns\projectile code\modules\research code\modules\research\xenoarchaeology code\modules\research\xenoarchaeology\artifact code\WorkInProgress code\WorkInProgress\carn maps sound\music\midis sound\music\midis\Midi files from ichigo506 
+FILE: maps\apollo-5.dmm
+LAST_COMPILE_TIME: 1427525676
 AUTO_FILE_DIR: OFF
 */
 // END_INTERNALS
