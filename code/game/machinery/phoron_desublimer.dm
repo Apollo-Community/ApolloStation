@@ -345,10 +345,22 @@ The process works like this:
 		return ready
 
 
-	attackby(var/obj/item/weapon/shard/B as obj, var/mob/user as mob)
+	attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
 		if(isrobot(user))
 			return
-		if(istype(B, /obj/item/weapon/shard/supermatter))
+		if(istype(B, /obj/item/weapon/tongs))
+			if( !shard )
+				var/obj/item/weapon/tongs/T = B
+				if( T.held )
+					if( istype( T.held, /obj/item/weapon/shard/supermatter ))
+						T.held.loc = src
+						shard = T.held.loc
+						T.held = null
+						T.update_icon()
+						user << "You put [B] into the machine."
+			else
+				user << "There is already a shard in the machine."
+		else if(istype(B, /obj/item/weapon/shard/supermatter))
 			if( !shard )
 				user.drop_item()
 				B.loc = src
