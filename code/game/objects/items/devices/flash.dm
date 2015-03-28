@@ -212,9 +212,9 @@
 		icon_state = "flashburnt"
 
 /obj/item/device/flash/syndicamera
-	name = "Awesome Camera"
+	name = "camera"
 	icon = 'icons/obj/items.dmi'
-	desc = "A suspiciously good looking camera."
+	desc = "A one use - polaroid camera. This one has a flash attached to it."
 	icon_state = "camera"
 	item_state = "electropack"
 	flags = CONDUCT

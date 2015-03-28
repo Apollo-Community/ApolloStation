@@ -224,6 +224,14 @@
 	var/loc = ""
 	var/obj/item/R = locate() //Hide the uplink in a PDA if available, otherwise radio
 
+	// Giving traitors a weak emag to start with
+	var/backpack = locate(/obj/item/weapon/storage/backpack) in traitor_mob.contents
+	if(backpack)
+		new /obj/item/weapon/card/emag/weak(backpack)
+		traitor_mob << "The Syndicate has provided you with an Encryptic Sequencer in your backpack."
+	else
+		traitor_mob << "Could not find a backpack to put your Encryptic Sequencer in!"
+
 	if(traitor_mob.client.prefs.uplinklocation == "Headset")
 		R = locate(/obj/item/device/radio) in traitor_mob.contents
 		if(!R)

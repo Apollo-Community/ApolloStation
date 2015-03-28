@@ -39,14 +39,15 @@
 			 new/datum/uplink_item(/obj/item/weapon/melee/energy/sword, 4, "Energy Sword", "ES"),
 			 new/datum/uplink_item(/obj/item/mecha_parts/mecha_equipment/weapon/energy/riggedlaser, 6, "Exosuit Rigged Laser", "RL"),
 			 new/datum/uplink_item(/obj/item/weapon/storage/box/syndicate, 10, "Mercenary Bundle", "BU"),
-			 new/datum/uplink_item(/obj/item/weapon/storage/box/emps, 3, "5 EMP Grenades", "EM")
+			 new/datum/uplink_item(/obj/item/weapon/storage/box/emps, 3, "5 EMP Grenades", "EM"),
+			 new/datum/uplink_item(/obj/item/weapon/grenade/spawnergrenade/bhole, 10, "Black Hole Grenade", "BH")
 			),
 		"Stealthy and Inconspicuous Weapons" = list(
 			new/datum/uplink_item(/obj/item/weapon/pen/paralysis, 3, "Paralysis Pen", "PP"),
 			new/datum/uplink_item(/obj/item/weapon/soap/syndie, 1, "Subversive Soap", "SP"),
 			new/datum/uplink_item(/obj/item/weapon/cartridge/syndicate, 3, "Detomatix PDA Cartridge", "DC"),
 			new/datum/uplink_item(/obj/item/weapon/cane/pois_cane, 3, "Poison Tipped Cane", "PC"),
-			new/datum/uplink_item(/obj/item/device/flash/syndicamera, 2, "Camera Flasher", "CF")
+			new/datum/uplink_item(/obj/item/device/flash/syndicamera, 2, "Flashy Camera", "CF")
 			),
 		"Stealth and Camouflage Items" = list(
 			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/chameleon, 3, "Chameleon Kit", "CB"),
@@ -56,7 +57,8 @@
 			new/datum/uplink_item(/obj/item/device/chameleon, 4, "Chameleon-Projector", "CP")
 			),
 		"Devices and Tools" = list(
-			new/datum/uplink_item(/obj/item/weapon/card/emag, 3, "Cryptographic Sequencer", "EC"),
+			new/datum/uplink_item(/obj/item/weapon/card/emag, 4, "Cryptographic Sequencer", "CS"),
+			new/datum/uplink_item(/obj/item/weapon/card/emag/weak, 1, "Encryptic Sequencer", "ES"),
 			new/datum/uplink_item(/obj/item/weapon/storage/toolbox/syndicate, 1, "Fully Loaded Toolbox", "ST"),
 			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/clerical, 3, "Morphic Clerical Kit", "CK"),
 			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/space, 3, "Space Suit", "SS"),

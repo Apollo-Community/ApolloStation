@@ -8,9 +8,9 @@
 	var/banglet = 0
 	var/spawner_type = null // must be an object path
 	var/deliveryamt = 1 // amount of type to deliver
+	det_time = 100
 
-	prime()													// Prime now just handles the two loops that query for people in lockers and people who can see it.
-
+	prime()	// Prime now just handles the two loops that query for people in lockers and people who can see it.
 		if(spawner_type && deliveryamt)
 			// Make a quick flash
 			var/turf/T = get_turf(src)
@@ -42,3 +42,32 @@
 	spawner_type = /mob/living/simple_animal/hostile/carp
 	deliveryamt = 5
 	origin_tech = "materials=3;magnets=4;syndicate=4"
+
+/obj/item/weapon/grenade/spawnergrenade/bhole
+	name = "black hole grenade"
+	desc = "A highly-illegal and dangerous grenade which creates a small black hole which will suck up anything that isn't bolted down."
+	spawner_type = /obj/machinery/singularity/mostly_harmless
+	deliveryamt = 1
+	origin_tech = "materials=3;magnets=7;syndicate=6"
+
+	activate(mob/user as mob)
+		..()
+		for (var/mob/V in hearers(usr))
+			V.show_message("\icon[icon]<b>[src]</b> states, \"Primed. Please clear the area.\"", 2)
+
+	prime()	// Prime now just handles the two loops that query for people in lockers and people who can see it.
+		// Make a quick flash
+		for (var/mob/V in hearers(usr))
+			V.show_message("\icon[icon]<b>[src]</b> states, \"Deployed.\"", 2)
+
+		var/turf/T = get_turf(src)
+		playsound(T, 'sound/effects/phasein.ogg', 100, 1)
+		for(var/mob/living/carbon/human/M in viewers(T, null))
+			flick("e_flash", M.flash)
+			M.Stun(rand(10, 50))
+
+		var/obj/machinery/singularity/mostly_harmless/bh = new /obj/machinery/singularity/mostly_harmless
+		bh.loc = T
+
+		del(src)
+		return

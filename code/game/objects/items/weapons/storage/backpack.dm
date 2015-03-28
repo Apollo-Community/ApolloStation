@@ -55,9 +55,7 @@
 			user << "\red The Bluespace interfaces of the two devices catastrophically malfunction!"
 			del(W)
 
-			var/obj/effect/bhole/bh = new /obj/effect/bhole( src.loc )
-			spawn( rand( 300, 600 ))
-				del(bh)
+			new /obj/machinery/singularity/mostly_harmless( src.loc )
 			return
 
 		..()

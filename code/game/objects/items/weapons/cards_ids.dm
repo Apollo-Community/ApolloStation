@@ -123,6 +123,12 @@
 
 	..()
 
+/obj/item/weapon/card/emag/weak
+	desc = "Hey, even the syndicate has budget cuts!"
+	name = "encryptic sequencer"
+	origin_tech = "magnets=2;syndicate=1"
+	uses = 2
+
 /obj/item/weapon/card/id
 	name = "identification card"
 	desc = "A card used to provide ID and determine access across the station."

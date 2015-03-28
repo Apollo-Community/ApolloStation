@@ -7,7 +7,7 @@ var/global/list/uneatable = list(
 
 /obj/machinery/singularity/
 	name = "gravitational singularity"
-	desc = "A gravitational singularity."
+	desc = "You are about to have a very bad day."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
 	anchored = 1
@@ -32,14 +32,20 @@ var/global/list/uneatable = list(
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/teleport_del = 0
 	var/last_warning
+	var/eat_turf = 1 // does the singulo eat turfs?
+	var/life = 0
 
 /obj/machinery/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
 	admin_investigate_setup()
 
 	src.energy = starting_energy
+
 	if(temp)
-		spawn(temp)
+		life = temp
+
+	if(life)
+		spawn(life)
 			del(src)
 	..()
 	for(var/obj/machinery/power/singularity_beacon/singubeacon in machines)
@@ -47,6 +53,14 @@ var/global/list/uneatable = list(
 			target = singubeacon
 			break
 	return
+
+/obj/machinery/singularity/Del()
+	for(var/mob/M in hearers(src, null))
+		M.show_message(text("\blue A sizzling sound increases in volume until \the [src] disappears in a loud SNAP!"))
+
+	playsound(loc, 'sound/effects/snap.ogg', 255, 1)
+
+	..()
 
 
 /obj/machinery/singularity/attack_hand(mob/user as mob)
@@ -93,7 +107,6 @@ var/global/list/uneatable = list(
 		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
 			event()
 	return
-
 
 /obj/machinery/singularity/attack_ai() //to prevent ais from gibbing themselves when they click on one.
 	return
@@ -235,6 +248,10 @@ var/global/list/uneatable = list(
 		gain = 20
 		if(istype(A,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = A
+
+			for(var/mob/M in hearers(H, null))
+				M.show_message(text("\red [H] cries out one last time before they are sucked under the event horizon of \the [src]!"))
+
 			if(H.mind)
 
 				if((H.mind.assigned_role == "Station Engineer") || (H.mind.assigned_role == "Chief Engineer") )
@@ -278,7 +295,8 @@ var/global/list/uneatable = list(
 					continue
 				if(O.invisibility == 101)
 					src.consume(O)
-		T.ChangeTurf(/turf/space)
+		if( eat_turf )
+			T.ChangeTurf(/turf/space)
 		gain = 2
 	src.energy += gain
 	return
@@ -567,3 +585,10 @@ var/global/list/uneatable = list(
 		if(isturf(X) || istype(X, /atom/movable))
 			consume(X)
 	return
+
+/obj/machinery/singularity/mostly_harmless
+	eat_turf = 0
+	life = 300
+	grav_pull = 7
+	event_chance = 40
+	move_self = 0
