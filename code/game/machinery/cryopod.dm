@@ -453,6 +453,12 @@
 			//Despawning occurs when process() is called with an occupant without a client.
 			src.add_fingerprint(M)
 
+/obj/machinery/cryopod/attack_hand(mob/user as mob)
+	if (src.occupant == usr)
+		eject()
+	else
+		move_inside()
+
 /obj/machinery/cryopod/verb/eject()
 	set name = "Eject Pod"
 	set category = "Object"

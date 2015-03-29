@@ -256,6 +256,11 @@
 			return
 		return
 
+	attack_hand(mob/user as mob)
+		if (src.occupant == usr)
+			eject()
+		else
+			move_inside()
 
 	ex_act(severity)
 		if(filtering)
@@ -282,6 +287,7 @@
 					del(src)
 					return
 		return
+
 	emp_act(severity)
 		if(filtering)
 			toggle_filter()
@@ -309,6 +315,7 @@
 		if (M:reagents.get_reagent_amount("inaprovaline") < 5)
 			M:reagents.add_reagent("inaprovaline", 5)
 		return
+
 	proc/toggle_filter()
 		if(!src.occupant)
 			filtering = 0
@@ -332,7 +339,6 @@
 		if(orient == "RIGHT")
 			icon_state = "sleeper_0-r"
 		return
-
 
 	proc/inject_chemical(mob/living/user as mob, chemical, amount)
 		if (stat & (BROKEN|NOPOWER))
