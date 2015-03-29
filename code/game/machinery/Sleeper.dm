@@ -256,6 +256,11 @@
 			return
 		return
 
+	attack_hand(mob/user as mob)
+		if (src.occupant == usr)
+			eject()
+		else
+			move_inside()
 
 	ex_act(severity)
 		if(filtering)

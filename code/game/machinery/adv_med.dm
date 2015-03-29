@@ -101,6 +101,12 @@
 	del(G)
 	return
 
+/obj/machinery/bodyscanner/attack_hand(mob/user as mob)
+	if (src.occupant == usr)
+		eject()
+	else
+		move_inside()
+
 /obj/machinery/bodyscanner/ex_act(severity)
 	switch(severity)
 		if(1.0)
