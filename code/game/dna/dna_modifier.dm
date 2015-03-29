@@ -147,6 +147,12 @@
 	del(G)
 	return
 
+/obj/machinery/dna_scannernew/attack_hand(mob/user as mob)
+	if (src.occupant == usr)
+		eject()
+	else
+		move_inside()
+
 /obj/machinery/dna_scannernew/proc/put_in(var/mob/M)
 	if(M.client)
 		M.client.perspective = EYE_PERSPECTIVE
