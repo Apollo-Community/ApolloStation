@@ -23,6 +23,7 @@
 	data_core.general += G
 
 	del(dummy)
+	data_core.manifest_sort()
 	return G
 
 /proc/CreateSecurityRecord(var/name as text, var/id as text)
@@ -37,6 +38,7 @@
 	R.fields["ma_crim_d"] = "No major crime convictions."
 	R.fields["notes"] = "No notes."
 	data_core.security += R
+	data_core.manifest_sort()
 	return R
 
 /proc/find_security_record(field, value)
