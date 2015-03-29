@@ -427,23 +427,7 @@
 
 			if (href_list["new"])
 				if ((istype(src.active1, /datum/data/record) && !( istype(src.active2, /datum/data/record) )))
-					var/datum/data/record/R = new /datum/data/record(  )
-					R.fields["name"] = src.active1.fields["name"]
-					R.fields["id"] = src.active1.fields["id"]
-					R.name = text("Medical Record #[]", R.fields["id"])
-					R.fields["b_type"] = "Unknown"
-					R.fields["b_dna"] = "Unknown"
-					R.fields["mi_dis"] = "None"
-					R.fields["mi_dis_d"] = "No minor disabilities have been declared."
-					R.fields["ma_dis"] = "None"
-					R.fields["ma_dis_d"] = "No major disabilities have been diagnosed."
-					R.fields["alg"] = "None"
-					R.fields["alg_d"] = "No allergies have been detected in this patient."
-					R.fields["cdi"] = "None"
-					R.fields["cdi_d"] = "No diseases have been diagnosed at the moment."
-					R.fields["notes"] = "No notes."
-					data_core.medical += R
-					src.active2 = R
+					src.active2 = CreateMedicalRecord(src.active1.fields["name"], src.active1.fields["id"])
 					src.screen = 4
 
 			if (href_list["add_c"])

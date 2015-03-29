@@ -23,6 +23,7 @@
 	data_core.general += G
 
 	del(dummy)
+	data_core.manifest_sort()
 	return G
 
 /proc/CreateSecurityRecord(var/name as text, var/id as text)
@@ -37,6 +38,27 @@
 	R.fields["ma_crim_d"] = "No major crime convictions."
 	R.fields["notes"] = "No notes."
 	data_core.security += R
+	data_core.manifest_sort()
+	return R
+
+/proc/CreateMedicalRecord(var/name as text, var/id as text)
+	var/datum/data/record/R = new /datum/data/record()
+	R.fields["name"] = name
+	R.fields["id"] = id
+	R.name = text("Medical Record #[]", R.fields["id"])
+	R.fields["b_type"] = "Unknown"
+	R.fields["b_dna"] = "Unknown"
+	R.fields["mi_dis"] = "None"
+	R.fields["mi_dis_d"] = "No minor disabilities have been declared."
+	R.fields["ma_dis"] = "None"
+	R.fields["ma_dis_d"] = "No major disabilities have been diagnosed."
+	R.fields["alg"] = "None"
+	R.fields["alg_d"] = "No allergies have been detected in this patient."
+	R.fields["cdi"] = "None"
+	R.fields["cdi_d"] = "No diseases have been diagnosed at the moment."
+	R.fields["notes"] = "No notes."
+	data_core.medical += R
+	data_core.manifest_sort()
 	return R
 
 /proc/find_security_record(field, value)

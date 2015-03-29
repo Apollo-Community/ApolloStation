@@ -10,6 +10,13 @@
 			manifest_inject(H)
 		return
 
+/obj/effect/datacore/proc/manifest_sort()
+	// Keep 'em boys in neat rows
+	general = sortRecord(general, "name", 1)
+	medical = sortRecord(medical, "name", 1)
+	security = sortRecord(security, "name", 1)
+	locked = sortRecord(locked, "name", 1)
+
 /obj/effect/datacore/proc/manifest_modify(var/name, var/assignment)
 	if(PDA_Manifest.len)
 		PDA_Manifest.Cut()
@@ -34,6 +41,8 @@
 	if(foundrecord)
 		foundrecord.fields["rank"] = assignment
 		foundrecord.fields["real_rank"] = real_title
+
+	manifest_sort()
 
 /obj/effect/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
 	if(PDA_Manifest.len)
@@ -77,6 +86,7 @@
 		else
 			G.fields["notes"] = "No notes found."
 		general += G
+
 
 		//Medical Record
 		var/datum/data/record/M = new()
@@ -137,6 +147,9 @@
 		else
 			L.fields["exploit_record"] = "No additional information acquired."
 		locked += L
+
+		manifest_sort()
+
 	return
 
 
