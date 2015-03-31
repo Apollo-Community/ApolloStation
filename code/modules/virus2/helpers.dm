@@ -13,9 +13,10 @@ proc/infection_check(var/mob/living/carbon/M, var/vector = "Airborne")
 				var/obj/item/I = M.wear_mask
 
 				//masks provide a small bonus and can replace overall bio protection
-				score = max(score, round(0.06*I.armor["bio"]))
-				if (istype(I, /obj/item/clothing/mask))
-					score += 1 //this should be added after
+				if(I)
+					score = max(score, round(0.06*I.armor["bio"]))
+					if (istype(I, /obj/item/clothing/mask))
+						score += 1 //this should be added after
 
 		if("Contact")
 			if(istype(M, /mob/living/carbon/human))
