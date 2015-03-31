@@ -282,11 +282,11 @@
 "fv" = (/obj/structure/disposalpipe/segment,/turf/simulated/floor/plating,/area/research_outpost/maintstore2)
 "fw" = (/turf/simulated/wall,/area/mine/storage)
 "fx" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor{tag = "icon-yellowcorner (WEST)"; icon_state = "yellowcorner"; dir = 8},/area/mine/eva)
-"fy" = (/obj/machinery/door/airlock/maintenance_hatch{name = "Plant Room"; req_access_txt = "54"},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/research_outpost/power)
+"fy" = (/obj/machinery/door/airlock/maintenance_hatch,/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/research_outpost/power)
 "fz" = (/turf/simulated/floor/plating,/area/research_outpost/power)
 "fA" = (/obj/machinery/atmospherics/pipe/simple/hidden/universal,/turf/simulated/floor/plating,/area/research_outpost/power)
 "fB" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/meter,/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/simulated/floor/plating,/area/research_outpost/power)
-"fC" = (/obj/machinery/door/airlock/maintenance_hatch{name = "Plant Room"; req_access_txt = "65"},/obj/machinery/door/firedoor,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/simulated/floor/plating,/area/research_outpost/power)
+"fC" = (/obj/machinery/door/airlock/maintenance_hatch,/obj/machinery/door/firedoor,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/simulated/floor/plating,/area/research_outpost/power)
 "fD" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/simulated/floor{icon_state = "white"},/area/research_outpost/hallway)
 "fE" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/simulated/floor{dir = 4; icon_state = "whiteyellow"},/area/research_outpost/hallway)
 "fF" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/research_outpost/gearstore)
@@ -367,7 +367,7 @@
 "hc" = (/turf/simulated/floor{dir = 4; icon_state = "warning"},/area/mine/storage)
 "hd" = (/obj/machinery/conveyor{id = "mine_conveyor"},/turf/simulated/floor{icon_state = "dark"},/area/mine/storage)
 "he" = (/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 8},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor{dir = 8; icon_state = "warning"},/area/mine/storage)
-"hf" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 8},/turf/simulated/floor,/area/mine/storage)
+"hf" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 8},/obj/structure/cable{d2 = 2; icon_state = "0-2"; pixel_y = 0},/obj/machinery/power/apc{dir = 4; name = "east bump"; pixel_x = 24},/turf/simulated/floor,/area/mine/storage)
 "hg" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/mine/production)
 "hh" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/mine/production)
 "hi" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/plating,/area/mine/production)
@@ -407,8 +407,8 @@
 "hQ" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/simulated/floor{dir = 4; icon_state = "warning"},/area/mine/storage)
 "hR" = (/obj/machinery/conveyor{id = "mine_conveyor"},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/simulated/floor{icon_state = "dark"},/area/mine/storage)
 "hS" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/simulated/floor{dir = 8; icon_state = "warning"},/area/mine/storage)
-"hT" = (/obj/machinery/power/apc{dir = 4; name = "east bump"; pixel_x = 24},/obj/structure/cable{d2 = 8; icon_state = "0-8"},/turf/simulated/floor,/area/mine/storage)
-"hU" = (/obj/machinery/conveyor_switch/oneway{id = "refinery_conveyor"},/obj/machinery/alarm{dir = 4; icon_state = "alarm0"; pixel_x = -16},/turf/simulated/floor{icon_state = "dark"},/area/mine/production)
+"hT" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/simulated/floor,/area/mine/storage)
+"hU" = (/obj/machinery/door/airlock/maintenance_hatch{name = "Refinery"; req_access_txt = "54"},/turf/simulated/floor{icon_state = "dark"},/area/mine/production)
 "hV" = (/turf/simulated/floor{icon_state = "dark"},/area/mine/production)
 "hW" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 1},/turf/simulated/floor{icon_state = "dark"},/area/mine/production)
 "hX" = (/obj/machinery/atmospherics/unary/vent_scrubber/on,/turf/simulated/floor{icon_state = "dark"},/area/mine/production)
@@ -448,8 +448,8 @@
 "iF" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 8},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/simulated/floor{dir = 9; icon_state = "warning"},/area/research_outpost/harvesting)
 "iG" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/alarm{dir = 8; icon_state = "alarm0"; pixel_x = 16},/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/research_outpost/harvesting)
 "iH" = (/obj/structure/disposalpipe/segment,/obj/structure/closet/crate,/turf/simulated/floor{icon_state = "bot"; dir = 1},/area/mine/storage)
-"iI" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 8},/turf/simulated/floor{dir = 8; icon_state = "warning"},/area/mine/storage)
-"iJ" = (/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 8},/turf/simulated/floor,/area/mine/storage)
+"iI" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor{dir = 8; icon_state = "warning"},/area/mine/storage)
+"iJ" = (/obj/machinery/conveyor_switch/oneway{id = "refinery_conveyor"},/turf/simulated/floor,/area/mine/storage)
 "iK" = (/obj/machinery/mineral/stacking_unit_console,/turf/simulated/wall/r_wall,/area/mine/production)
 "iL" = (/obj/machinery/power/apc{dir = 4; name = "east bump"; pixel_x = 24},/obj/structure/cable{icon_state = "0-2"; d2 = 2},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor{icon_state = "dark"},/area/mine/production)
 "iM" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/mine/production)
@@ -497,8 +497,8 @@
 "jC" = (/obj/structure/lattice,/obj/machinery/light/small,/turf/space,/area/mine/lobby)
 "jD" = (/obj/structure/disposalpipe/segment,/obj/structure/closet/crate,/obj/item/weapon/storage/bag/sheetsnatcher,/turf/simulated/floor{icon_state = "bot"; dir = 1},/area/mine/storage)
 "jE" = (/turf/simulated/floor{icon_state = "warningcorner"; dir = 8},/area/mine/storage)
-"jF" = (/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/mine/storage)
-"jG" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/light,/turf/simulated/floor{icon_state = "warningcorner"; dir = 4},/area/mine/storage)
+"jF" = (/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 4},/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/mine/storage)
+"jG" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/light,/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 4},/turf/simulated/floor{icon_state = "warningcorner"; dir = 4},/area/mine/storage)
 "jH" = (/turf/simulated/floor{dir = 8; icon_state = "loadingarea"},/area/mine/storage)
 "jI" = (/obj/machinery/conveyor{dir = 8; id = "refinery_conveyor"},/obj/structure/plasticflaps,/obj/machinery/mineral/output,/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/mine/production)
 "jJ" = (/obj/machinery/mineral/stacking_machine,/turf/simulated/floor{icon_state = "delivery"; name = "floor"},/area/mine/production)
@@ -1159,7 +1159,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaay
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaayayayayayayayayayayayayayayayayayaaaaaaaaaaaaaaaaaaaaaaaaaaacacahaaaaaaaaagaaaaaaaaaaaaaaaaaaaaaaaaaPaaaaaaaaebfffgfhfifjfkflfmfnfofpfofqfofrfsfoftftftfuftftftftfvfwfwfwfwfwfwfwfwfwfxckfyfzfAfzfAfAfBfCfDfEfFfGfHfIfJcufKcwfLfMfNfOdNfPfQfRfSfTfUdNfVfdfefedZeaaaaaaaaaaaaaaaaaaaaaaaagaaaaaaaaaaaaaaagacacacacagagaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaayayayayayayayayayayayayayayayayayaaaaaaaaaaaaaaaaaaaaaaaaaaacacacaaaaaaaaagagagaaaaaaaaaaaaagaaaaaaaPaaaaaaaaebfWedfXedfYfZgagbgcgdgegfggghgigjgkglgmgngogpgngqftfvfwgrgsgtgugvgwgxgygzckcLfzgAgBgCgDgEcLcsgFgGgHgIgIgJcugKcwgLgMgNcVdNgOgPgQgRgSgTgUgVgWdXgXdZeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagagagacacacagagaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaayayayayayayayayayayayayayayayayayaaaaaaaaaaaaaaaaaaaaaaaaaaacacacaaaaagagagagagaaaaaaaaaaaaaaaaaaaaaPaaaaaaaagYgZgZgZgZgZgZgZgZgZfohagshbhchdhehffthghhhihhhjhkftfvfwhlgsgsgshbhmhnhohphqcLhrhshtgChuhvhwhxhycuhzcucucucuhAcwcwhBhCcwdNhDhEhFhGhHhIhJcZhKcZcZcZhLaaaaagaaaaaaaaaaaaaaaaaaagagaaaaaaaaagagagagagagaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaayayayayayayayayayayayayayayayayayaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaaaaaagagagaaaaaaaaaaaaaaaaaaaaaaaaaPaPaPaPaPaPaPaPaPaPaPaPaPaPaPhMhNhOhPhQhRhShTfthUhVhWhXhYhZftfvfwiagsibicidieifigihiicLcLcLcLijikililiminioipiqirisisitisisiuiviwixiyiziAiBiCiDiEiFiGcZaaaaaaaaaaagagagaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagaaagaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaayayayayayayayayayayayayayayayayayaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaaaaaagagagaaaaaaaaaaaaaaaaaaaaaaaaaPaPaPaPaPaPaPaPaPaPaPaPaPaPaPhMhNhOhPhQhRhShThUhVhVhWhXhYhZftfvfwiagsibicidieifigihiicLcLcLcLijikililiminioipiqirisisitisisiuiviwixiyiziAiBiCiDiEiFiGcZaaaaaaaaaaagagagaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagaaagaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaayayayayayayayayayayayayayayayayayaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagagagagaaaaaaaaaaaaaaaaaaaaaPaPaPaPaPaPaPaPaaaaaaaPaaaPaPfoiHhOgshchdiIiJftiKhghjiLiMiNftfvfwiOgsiPiQiRiSiTiUiViWiXiYiZjajbjcjdjejfjgjhjijjjkjljmjnjmjmjojpjqjrjsjtjujvjwjxjyjzjAcZaaaaaaaaagagagaaaaaaaaaaagaaaaaaaaaaaaaaaaaaaaaaaaaaagaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaayayayayayayayayayayayayayayayayayaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagagagaaaaaaaaagaaaaaaaaaaaPaPjBjBjBjBjBjCaaaaaaaPaaaPaPfojDhOgsjEjFjGjHjIjJjKjLjMjLjNftfvfwhljOjOjOjOjOjPjQgzbUiXjRjSjTjUjVjVjVjVjVjWjXjYhAjZkakakakbkcjZkddNkekfkgkhkidNdNcZcZcZaaaaaaaaaaagagagaaaaaaagagaaaaaaaaaaaaaaaaagaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaayayayayayayayayayayayayayayayayayaaaaaaaaaaaaaaaaagagagaaaaaaaaaaaaaaaaagagagaaaaaaaaaaagagaaaaaaaaaPaPjBjBjBjBjBkjaaaaaaaPaakkklfofpfofokmkmknfoftftftftkoftftftkpfwkqkrkrksktkqksfwkukviXkwkxkykzjVkAkBkCjVkDkEjYgKjZkFkGkGkGkHjZkIkJdNkKkLkMkNdNaaaaaaaaaaaaaaaaaaaaagaaaaaaaaagagaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
