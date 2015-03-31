@@ -67,6 +67,8 @@
 /mob/living/simple_animal/bunny/danton
 	name = "Danton"
 	desc = "Its the great Danton! Perhaps he could fit in the entertainer's hat?"
+	holder_type = /obj/item/weapon/holder/danton
+	icon = 'icons/apollo/animal.dmi'
 
 	New()
 		..()

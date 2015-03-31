@@ -1429,21 +1429,19 @@
 //		new/mob/living/simple_animal/cat/fluff/bones (src)
 	..()
 
-/mob/living/simple_animal/cat/fluff/bones
+/mob/living/simple_animal/cat/fluff/bones2
 	name = "Bones"
 	desc = "That's Bones the cat. He's a laid back, brown stray cat. Meow."
 	gender = MALE
+	icon = 'icons/apollo/animal.dmi'
 	icon_state = "cat3"
 	icon_living = "cat3"
 	icon_dead = "cat3_dead"
-	holder_type = /obj/item/weapon/holder/cat/fluff/bones
-	bff_name = "Genma Iroe"
-
-/mob/living/simple_animal/cat/fluff
-	var/bff_name
+	holder_type = /obj/item/weapon/holder/bones2
+	var/bff_name = "Genma Iroe"
 	var/mob/living/carbon/human/bff
 
-/mob/living/simple_animal/cat/fluff/handle_movement_target()
+/mob/living/simple_animal/cat/fluff/bones2/handle_movement_target()
 	if (!bff)
 		for (var/mob/living/carbon/human/M in player_list)
 			if (M.real_name == bff_name)
@@ -1479,7 +1477,7 @@
 	if (!(bff && movement_target == bff))
 		..()
 
-/mob/living/simple_animal/cat/fluff/Life()
+/mob/living/simple_animal/cat/fluff/bones2/Life()
 	..()
 	if (stat || !bff)
 		return
@@ -1504,6 +1502,7 @@
 	name = "Fluffles"
 	desc = "That's Fluffles the bunny! He looks like he wants a carrot."
 	gender = MALE
+	icon = 'icons/apollo/animal.dmi'
 	icon_state = "bunny_fuffles"
 	icon_living = "bunny_fluffles"
 	icon_dead = "bunny_fluffles_dead"

@@ -491,7 +491,7 @@
 "ajw" = (/obj/structure/disposalpipe/segment,/obj/effect/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/maintenance/security_starboard)
 "ajx" = (/obj/structure/closet,/obj/item/clothing/glasses/welding,/obj/item/weapon/weldingtool,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/maintenance/security_starboard)
 "ajy" = (/obj/machinery/portable_atmospherics/canister/empty,/turf/simulated/floor{icon_state = "floorgrime"},/area/maintenance/evahallway)
-"ajz" = (/mob/living/simple_animal/cat/fluff/bones,/turf/simulated/floor/plating,/area/maintenance/evahallway)
+"ajz" = (/mob/living/simple_animal/cat/fluff/bones2,/turf/simulated/floor/plating,/area/maintenance/evahallway)
 "ajA" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/manifold/visible/yellow{dir = 8},/turf/simulated/floor/plating,/area/maintenance/evahallway)
 "ajB" = (/obj/machinery/atmospherics/omni/mixer{tag_east = 1; tag_east_con = 0.4; tag_north = 1; tag_north_con = 0.2; tag_south = 1; tag_south_con = 0.4; tag_west = 2},/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/maintenance/evahallway)
 "ajC" = (/obj/machinery/atmospherics/pipe/simple/visible/green{tag = "icon-intact (SOUTHWEST)"; icon_state = "intact"; dir = 10},/turf/simulated/floor{icon_state = "floorgrime"},/area/maintenance/evahallway)
