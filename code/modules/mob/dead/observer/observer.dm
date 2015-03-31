@@ -664,7 +664,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	spawn(50)
 		new_gladiator << "\blue You have joined as a gladiator in the Thunderdome!"
-	say_dead_direct( say_dead_direct("<span class='name'>[name]</span> no longer [pick("skulks","lurks","prowls","creeps","stalks")] in the realm of the dead. They now fight for honor and glory in the thunderdome.")
+	say_dead_direct( "<span class='name'>[name]</span> no longer [pick("skulks","lurks","prowls","creeps","stalks")] in the realm of the dead. They now fight for honor and glory in the thunderdome.")
 
 	log_admin("[key_name_admin(M)] has joined the thunderdome!")
 	new_gladiator.Paralyse(5)
