@@ -243,7 +243,7 @@
 /obj/structure/reagent_dispensers/radiumtank
 	name = "CurieDispenser 2000"
 	desc = "Dispenses radium that's necessary for cures!"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/apollo/objects.dmi'
 	icon_state = "radiumtank"
 	anchored = 1
 	density = 0

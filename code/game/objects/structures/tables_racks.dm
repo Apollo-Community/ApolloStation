@@ -38,7 +38,7 @@
 /obj/structure/table/rack
 	name = "rack"
 	desc = "Different from the Middle Ages version."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/apollo/objects.dmi'
 	icon_state = "rack"
 	health = 100
 	parts = /obj/item/weapon/table_parts/rack

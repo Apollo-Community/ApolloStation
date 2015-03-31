@@ -187,7 +187,7 @@
 /obj/item/weapon/borg_claw
 	name = "gripper claw"
 	desc = "Useful for grabbing large and cumbersome objects like squishy organics!"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/apollo/objects.dmi'
 	icon_state = "borg_claw"
 
 /obj/item/weapon/borg_claw/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
