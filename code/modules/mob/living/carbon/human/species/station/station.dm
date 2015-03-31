@@ -125,7 +125,8 @@
 		"response node" =      /datum/organ/internal/diona/node,
 		"gas bladder" =        /datum/organ/internal/diona/bladder,
 		"polyp segment" =      /datum/organ/internal/diona/polyp,
-		"anchoring ligament" = /datum/organ/internal/diona/ligament
+		"anchoring ligament" = /datum/organ/internal/diona/ligament,
+		"eyes" =     /datum/organ/internal/eyes
 		)
 
 	warning_low_pressure = 50
@@ -207,7 +208,7 @@
 	blood_color = "#1F181F"
 	flesh_color = "#575757"
 
-	has_organ = list() //TODO: Positronic brain.
+	has_organ = list( "eyes" =     /datum/organ/internal/eyes ) //TODO: Positronic brain.
 
 /datum/species/machine/handle_death(var/mob/living/carbon/human/H)
 	..()
@@ -297,13 +298,12 @@
 	has_organ = list(
 		"heart" =    /datum/organ/internal/heart,
 		"crystalized brain" =    /datum/organ/internal/brain/crystal,
-		"luminescent eyes" =     /datum/organ/internal/eyes/luminescent_crystal,
+		"eyes" =     /datum/organ/internal/eyes/luminescent_crystal,
 		"strange crystal" = /datum/organ/internal/nucleation/strange_crystal,
 		"resonant crystal" = /datum/organ/internal/nucleation/resonant_crystal
 		)
 
 /datum/species/nucleation/handle_post_spawn(var/mob/living/carbon/human/H)
-	H.gender = "neuter"
 	H.l_color = "#1C1C00"
 	H.SetLuminosity(2)
 	return ..()

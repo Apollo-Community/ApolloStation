@@ -7,7 +7,7 @@
 	density = 1
 	anchored = 1
 	var/obj/machinery/mineral/stacking_machine/machine = null
-	var/machinedir = SOUTHEAST
+	var/machinedir = SOUTH
 
 /obj/machinery/mineral/stacking_unit_console/New()
 
@@ -126,6 +126,7 @@
 			S.amount = stack_amt
 			stack_storage[sheet] -= stack_amt
 
-	console.updateUsrDialog()
+	if(console)
+		console.updateUsrDialog()
 	return
 
