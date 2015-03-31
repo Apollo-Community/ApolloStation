@@ -118,10 +118,10 @@
 	attack(mob/living/M as mob, mob/user as mob)
 		if(!(istype(M,/mob)))
 			return
-
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed (attempt) with [src.name]  by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to poison [M.name] ([M.ckey])</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) Used the [src.name] to poison [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		if(!in_unlogged(M))
+			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed (attempt) with [src.name]  by [user.name] ([user.ckey])</font>")
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to poison [M.name] ([M.ckey])</font>")
+			msg_admin_attack("[user.name] ([user.ckey]) Used the [src.name] to poison [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 		..()
 

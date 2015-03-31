@@ -155,9 +155,10 @@
 	carded_ai = ai
 
 
-	ai.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been carded with [src.name] by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to card [ai.name] ([ai.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to card [ai.name] ([ai.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	if(!in_unlogged(user))
+		ai.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been carded with [src.name] by [user.name] ([user.ckey])</font>")
+		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to card [ai.name] ([ai.ckey])</font>")
+		msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to card [ai.name] ([ai.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 	if(ai.client)
 		ai << "You have been downloaded to a mobile storage device. Remote access lost."

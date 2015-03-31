@@ -662,14 +662,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	new_gladiator.mind.key = usr.key
 	new_gladiator.key = usr.key
 
-
-	del(M)
-
-	new_gladiator.Paralyse(5)
 	spawn(50)
 		new_gladiator << "\blue You have joined as a gladiator in the Thunderdome!"
-	log_admin("[key_name_admin(usr)] has joined the thunderdome!")
-	message_admins("[key_name_admin(usr)] has joined the thunderdome!", 1)
+	say_dead_direct( say_dead_direct("<span class='name'>[name]</span> no longer [pick("skulks","lurks","prowls","creeps","stalks")] in the realm of the dead. They now fight for honor and glory in the thunderdome.")
+
+	log_admin("[key_name_admin(M)] has joined the thunderdome!")
+	new_gladiator.Paralyse(5)
+
+	del(M)
 
 
 /proc/create_gladiator( var/obj/spawn_location, var/gladiator_name )

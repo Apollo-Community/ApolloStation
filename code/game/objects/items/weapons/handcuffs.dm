@@ -46,9 +46,10 @@
 			user << "\red \The [H] needs at least two wrists before you can cuff them together!"
 			return
 
-		H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to handcuff [H.name] ([H.ckey])</font>")
-		msg_admin_attack("[key_name(user)] attempted to handcuff [key_name(H)] (<A HREF='?_src_=holder;adminplayerobservejump=\ref[user]'>JMP</A>)")
+		if(!in_unlogged(user))
+			H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to handcuff [H.name] ([H.ckey])</font>")
+			msg_admin_attack("[key_name(user)] attempted to handcuff [key_name(H)] (<A HREF='?_src_=holder;adminplayerobservejump=\ref[user]'>JMP</A>)")
 
 		var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 		O.source = user
