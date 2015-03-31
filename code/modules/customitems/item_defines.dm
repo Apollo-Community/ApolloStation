@@ -1429,6 +1429,8 @@
 //		new/mob/living/simple_animal/cat/fluff/bones (src)
 	..()
 
+////////////////////////////// Mysticflame98 - Bones the cat /////////////////////////////////////////////////
+
 /mob/living/simple_animal/cat/fluff/bones2
 	name = "Bones"
 	desc = "That's Bones the cat. He's a laid back, brown stray cat. Meow."
