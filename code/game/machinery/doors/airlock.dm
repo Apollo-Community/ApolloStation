@@ -1000,8 +1000,6 @@ About the new airlock wires panel:
 	if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 		src.closeOther.close()
 
-	statistics.doors_opened++
-
 	return ..()
 
 /obj/machinery/door/airlock/close(var/forced=0)

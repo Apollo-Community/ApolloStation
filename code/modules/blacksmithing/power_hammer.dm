@@ -75,9 +75,3 @@
 		on = 0
 
 		del(I)
-
-/obj/item/forge/scrap_metal
-	name = "Scrap metal"
-	desc = "A bent and crumpled piece of metal forged by a crappy blacksmith"
-	icon = 'icons/obj/weapons_lab.dmi'
-	icon_state = "scrap_metal"

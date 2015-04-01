@@ -23,26 +23,37 @@
 	var/arrests = 0 // Total number of arrests
 
 /datum/round_stats/proc/display()
-	var/productivity = 0
 	var/work_time = round( world.time/10 )*living_mob_list.len
-	productivity = round(100*(1-(break_time/work_time))) // Productivity is just percentage of time spent not AFK
+	var/productivity = max(round(100*(1-(break_time/work_time))),0) // Productivity is just percentage of time spent not AFK
+	productivity = max(0,min(99.99, productivity - (deaths*3 + clones*2 + bombs_exploded*5 + vended + people_slipped*2) + (beepsky_beatings*2 + blood_mopped + spam_blocked)))
 
-	var/data = "<hr><center><b><h2>Round Statistics</h2></b></center><hr>"
-	data += "<h3>TOTALS</h3>"
-	data += "Structural Damages: <b>\red $[damage_cost]</b><br>"
-	data += "Crew productivity: <b>[productivity]%</b><br>"
-	data += "Deaths: <b>[deaths] unfortunates</b><br>"
-	data += "Time spent waiting for doors to open: <b>[doors_opened*0.4] seconds</b><br>"
-	data += "Number of reconstituted crew: <b>[clones] clones</b><br>"
-	data += "Bombs exploded: <b>[bombs_exploded] accidents waiting to happen</b><br>"
-	data += "Junk food vended: <b>[vended]</b><br>"
-	data += "Crew running distance: <b>[(run_distance/1000)/42.00] marathons</b><br>"
-	data += "Spam blocked: <b>[spam_blocked] messages returned to sender</b><br>"
-	data += "Monkeys inhumanely slain: <b>[monkey_deaths]</b><br>"
-	data += "Chemicals dispensed: <b>[dispense_volume/100] L</b><br>"
-	data += "Blood mopped: <b>[blood_mopped] L of blood</b><br>"
-	data += "Slippery floor signs ignored: <b>[people_slipped] slippings</b><br>"
-	data += "Weapons fired: <b>[guns_fired] 'warning' shots</b><br>"
-	data += "Beepsky beatings: <b>[people_slipped] criminal scums detained</b><br>"
+	var/datum/nanoui/ui = null
+	var/data[0]
 
-	world << data
+	data["structural"] = damage_cost
+	data["productivity"] = productivity
+	data["doors"] = doors_opened - 30
+	data["deaths"] = deaths - 1
+	data["ran"] = round((run_distance/1000)/42.00,0.01)
+
+	data["clone"] = clones
+	data["bombs"] = bombs_exploded
+	data["junk"] = vended
+	data["spam"] = spam_blocked
+	data["mkilled"] = monkey_deaths
+	data["chems"] = dispense_volume/100
+	data["blood"] = blood_mopped
+	data["slips"] = people_slipped
+	data["shots"] = guns_fired
+	data["beepsky"] = beepsky_beatings
+
+	for(var/client/C in clients)
+		ui = nanomanager.try_update_ui(usr, usr, "main", ui, data, 1)
+		if (!ui)
+			ui = new(usr, usr, "main", "stats.tmpl", "End Round Stats", 500, 450)
+			ui.set_initial_data(data)
+			ui.open()
+			ui.set_auto_update(1)
+
+datum/round_stats/proc/call_stats()
+	statistics.display()

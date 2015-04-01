@@ -6,7 +6,7 @@
 
 /obj/machinery/crucible
 	name = "Crucible"
-	desc = "A large crucible with an ignot mould attached."
+	desc = "A large crucible with an ingot mould attached."
 	icon = 'icons/obj/machines/weapon_lab.dmi'
 	icon_state = "crucible_empty"
 	layer = 2.9
@@ -21,12 +21,12 @@
 /obj/machinery/crucible/examine()
 	..()
 	if(on)
-		usr << "\blue An ignot mould is currently filling!"
+		usr << "\blue An ingot mould is currently filling!"
 	else
 		switch(metal_amount)
 			if(0 to 100)		usr << "\blue It doesn't look like there is much metal inside."
-			if(100 to 250)		usr << "\blue It looks like there is around half an ignot of metal inside"
-			if(250 to 450)		usr << "\blue It looks like I need just a little bit more metal to make an ignot"
+			if(100 to 250)		usr << "\blue It looks like there is around half an ingot of metal inside"
+			if(250 to 450)		usr << "\blue It looks like I need just a little bit more metal to make an ingot"
 			else				usr << "\blue There's <b>loads</b> of metal in there!"
 
 /obj/machinery/crucible/attackby(obj/item/I, mob/user)
@@ -45,7 +45,7 @@
 				usr << "\blue You put [S.name] into the [src.name]."
 				spawn(rand(70))
 					usr << "\blue [S.name] melts and begins to bubble away in the [src.name]"
-					metal_amount += (S.matter["metal"] * 1.04)		//slightly more efficient to make ignots
+					metal_amount += (S.matter["metal"] * 1.04)		//slightly more efficient to make ingots
 			else if(S.temperature >= T20C+40)
 				usr << "\blue You put [S.name] into the [src.name]."
 				spawn(rand(70))
@@ -63,12 +63,12 @@
 					icon_state = "crucible_filled"
 
 /obj/machinery/crucible/attack_hand(var/mob/user as mob)
-	//Opens the tap - spawns a ignot
+	//Opens the tap - spawns a ingot
 	if(metal_amount >= 450)
 		metal_amount -= 450
 		usr << "\blue You open the tap on the [src.name] and molten metal begins to flow into the mould."
 		icon_state = "crucible_pour"
-		var/obj/item/forge/heated_metal/ignot/S = new()
+		var/obj/item/forge/heated_metal/ingot/S = new()
 		S.temperature = (T0C+1000)+rand(500)
 		spawn(40)
 			usr << "\blue You close the tap on the [src.name]"
@@ -83,7 +83,7 @@
 		spawn(200)		S.color = null
 		return
 	else
-		usr << "\red It does not look like you have enough metal in the [src.name] to make an ignot."
+		usr << "\red It does not look like you have enough metal in the [src.name] to make an ingot."
 
 
 

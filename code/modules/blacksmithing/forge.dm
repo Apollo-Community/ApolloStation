@@ -1,6 +1,8 @@
 /*
 
-	The blacksmiths forge, used in the weapons research lab. This machine adds an orange glow to metals added to it that dissapates over time.
+	The blacksmiths forge, used in the weapons research lab. This machine converts items into a holder type /obj/item/forge/heated_metal (defines.dm).
+
+	This machine allows you to set a custom temperature to heat the holder object to. You can remove the holder object with tongs, doing so adds the item to the processing_objects list.
 
 */
 
@@ -76,7 +78,7 @@
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "forge.tmpl", "Forge", 500, 300)
+		ui = new(user, src, ui_key, "forge.tmpl", "Blacksmith's Forge", 500, 300)
 		ui.set_initial_data(data)
 		ui.open()
 		ui.set_auto_update(1)
@@ -129,6 +131,8 @@
 
 				S.color = "#FF704D"
 
+				processing_objects += S				//Enables process() on the object.
+
 			playsound(loc, 'sound/effects/tong_pickup.ogg', 50, 1, -1)
 
 			heating = null
@@ -163,51 +167,3 @@
 			return
 
 	usr << "You don't feel that [I.name] is suitable for heating."
-
-/obj/item/forge/heated_metal
-	name = "Forge superheated object holder"
-	desc = "If you can see this description the code for the forge fucked up."
-	icon = 'icons/obj/weapons_lab.dmi'
-	icon_state = "holder_bar"
-	origin_tech = "combat=2;materials=2"
-
-	var/temperature = T20C
-
-/obj/item/forge/heated_metal/ignot
-	name = "Metal Ignot"
-	desc = "A bar of superheated metal"
-	icon_state = "metal_ignot"
-	origin_tech = "materials=3"
-	matter = list("metal" = 450)
-
-/obj/item/forge/heated_metal/process()
-	if(temperature > 0)
-		temperature -= 2+rand(4)
-	else
-		//sends a message to people in view range
-		for(var/mob/M in viewers(src, null))
-			M.show_message("\red The [src.name] has cooled down and reverts to its original form.")
-
-		SetLuminosity(0)
-		color = null
-		temperature = 0
-		processing_objects -= src
-
-/obj/item/forge/heated_metal/pickup(mob/living/user)
-	if(temperature > T20C+20)
-		//only an idiot would pick up a superheated chunk of metal -sigh-
-		user << "\red <B>You pick-up the [src.name]!</B>"
-		user.adjustFireLoss(temperature / 50)
-		user << "\red <B>Your hands burn!</B>"
-		if(temperature > T20C+40)		//Just for you kwaky..
-			user.drop_item()
-			user.emote("scream")
-
-/obj/item/forge/heated_metal/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if( istype( W, /obj/item/weapon/tongs ))
-		var/obj/item/weapon/tongs/T = W
-		T.pick_up( src )
-		T.icon_state = "tongs_heated"
-		return
-
-	..()

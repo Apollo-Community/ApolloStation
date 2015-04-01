@@ -393,6 +393,8 @@
 		spawn(5)
 			autoclose()
 
+	statistics.doors_opened++
+
 	return 1
 
 
