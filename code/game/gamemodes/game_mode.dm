@@ -58,7 +58,7 @@
 			),
 		"Devices and Tools" = list(
 			new/datum/uplink_item(/obj/item/weapon/card/emag, 4, "Cryptographic Sequencer", "CS"),
-			new/datum/uplink_item(/obj/item/weapon/card/emag/weak, 1, "Encryptic Sequencer", "ES"),
+			new/datum/uplink_item(/obj/item/weapon/card/emag/weak, 1, "Encryptic Sequencer", "CE"),
 			new/datum/uplink_item(/obj/item/weapon/reagent_containers/tube/syndicream, 2, "Syndicream Tube", "SC"),
 			new/datum/uplink_item(/obj/item/weapon/storage/toolbox/syndicate, 1, "Fully Loaded Toolbox", "ST"),
 			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/clerical, 3, "Morphic Clerical Kit", "CK"),

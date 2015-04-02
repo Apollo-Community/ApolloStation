@@ -28,6 +28,9 @@
 	set category = "Object"
 	set src in oview(1)
 
+	if(!iscarbon(usr))
+		return
+
 	if(on)
 		on = 0
 		icon_state = "echair0"

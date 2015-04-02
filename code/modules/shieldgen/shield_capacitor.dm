@@ -146,6 +146,9 @@
 	set category = "Object"
 	set src in oview(1)
 
+	if(!iscarbon(usr))
+		return
+
 	if (src.anchored)
 		usr << "It is fastened to the floor!"
 		return

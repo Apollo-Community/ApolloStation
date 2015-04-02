@@ -202,6 +202,7 @@
 			del(src)
 			return
 		if(isrobot(user))
+			src.close()		//Allows cyborgs to close lockers.
 			return
 		if(W.loc != user) // This should stop mounted modules ending up outside the module.
 			return

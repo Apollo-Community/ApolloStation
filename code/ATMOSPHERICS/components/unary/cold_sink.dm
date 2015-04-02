@@ -37,6 +37,22 @@
 
 	power_rating = max_power_rating * (power_setting/100)
 
+/obj/machinery/atmospherics/unary/freezer/verb/rotate()
+	set name = "Rotate Freezer"
+	set category = "Object"
+	set src in oview(1)
+
+	if(!iscarbon(usr))
+		return
+
+	if(node)
+		usr << "\red You must disconnect [src.name] from the pipe network."
+		return
+
+	src.initialize_directions = turn(src.dir,270)
+	src.dir = turn(src.dir, 270)
+	return
+
 /obj/machinery/atmospherics/unary/freezer/initialize()
 	if(node) return
 

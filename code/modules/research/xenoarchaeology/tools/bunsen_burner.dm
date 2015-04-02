@@ -50,6 +50,9 @@
 	set name = "Toggle bunsen burner"
 	set category = "IC"
 
+	if(!iscarbon(usr))
+		return
+
 	heating = !heating
 	icon_state = "bunsen[heating]"
 	if(heating)
