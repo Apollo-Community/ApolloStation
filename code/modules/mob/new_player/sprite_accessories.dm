@@ -676,17 +676,20 @@
 
 	wry_antennae_default
 		name = "Antennae"
+		icon = 'icons/apollo/Human_face.dmi'
 		icon_state = "wryn_antennae"
 		species_allowed = list("Wryn")
 
 	nuc_crystals_m
 		name = "Nucleation Male Crystals"
+		icon = 'icons/apollo/Human_face.dmi'
 		icon_state = "crystal_m"
 		species_allowed = list("Nucleation")
 		gender = MALE
 
 	nuc_crystals_f
-		name = "Nucleation Male Crystals"
+		name = "Nucleation Female Crystals"
+		icon = 'icons/apollo/Human_face.dmi'
 		icon_state = "crystal_f"
 		species_allowed = list("Nucleation")
 		gender = FEMALE
