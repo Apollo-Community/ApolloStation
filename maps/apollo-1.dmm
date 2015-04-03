@@ -3042,7 +3042,7 @@
 "bgz" = (/turf/simulated/wall/r_wall,/area/crew_quarters/captain)
 "bgA" = (/obj/machinery/door/airlock/command{id_tag = "captaindoor"; name = "Captain's Office"; req_access = null; req_access_txt = "20"},/obj/structure/disposalpipe/segment,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/door/firedoor/border_only,/turf/simulated/floor/wood,/area/crew_quarters/captain)
 "bgB" = (/turf/simulated/wall/r_wall,/area/hallway/primary/central_two)
-"bgC" = (/obj/machinery/camera{c_tag = "Bridge East Entrance"; dir = 4},/turf/simulated/floor,/area/hallway/primary/central_two)
+"bgC" = (/obj/machinery/camera{c_tag = "Bridge East Entrance"; dir = 8},/turf/simulated/floor,/area/hallway/primary/central_two)
 "bgD" = (/obj/machinery/computer/arcade,/turf/simulated/floor/wood,/area/crew_quarters/bar)
 "bgE" = (/obj/machinery/vending/cola,/turf/simulated/floor/wood,/area/crew_quarters/bar)
 "bgF" = (/obj/machinery/light,/turf/simulated/floor/wood,/area/crew_quarters/bar)
