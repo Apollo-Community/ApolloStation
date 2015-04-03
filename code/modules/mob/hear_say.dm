@@ -108,7 +108,10 @@
 		if(hard_to_hear)
 			message = stars(message)
 
-	var/speaker_name = speaker.name
+	var/speaker_name = ""
+
+	if (speaker)
+		speaker_name = speaker.name
 
 	if(vname)
 		speaker_name = vname
