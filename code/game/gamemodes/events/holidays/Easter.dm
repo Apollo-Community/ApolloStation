@@ -6,7 +6,7 @@
 	for(var/E in list("Stuicey","Kwask","Dragarien","Donnern","JMMJ01","King_Nexus"))
 		var/obj/D = new /obj/item/weapon/easter_egg(pick(blobstart))
 		D.icon_state = E
-		D.name = "[E]'s Egg"
+		D.name = "easter egg"
 
 /obj/item/weapon/easter_egg
 	icon = 'icons/apollo/easter.dmi'
@@ -47,6 +47,7 @@
 
 	if(prob(25))
 		new_egg(icon_state)
+		usr << "\red The egg crumbles away..."
 		del(src)
 
 /obj/item/weapon/easter_egg/proc/new_egg(T as text)
