@@ -64,7 +64,7 @@
 		playsound(T, 'sound/effects/phasein.ogg', 100, 1)
 		for(var/mob/living/carbon/human/M in viewers(T, null))
 			flick("e_flash", M.flash)
-			M.Stun(rand(10, 50))
+			M.Stun(rand(1, 4))
 
 		var/obj/machinery/singularity/mostly_harmless/bh = new /obj/machinery/singularity/mostly_harmless
 		bh.loc = T

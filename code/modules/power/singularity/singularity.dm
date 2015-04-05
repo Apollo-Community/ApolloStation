@@ -587,6 +587,7 @@ var/global/list/uneatable = list(
 	return
 
 /obj/machinery/singularity/mostly_harmless
+	name = "gravitational anomaly"
 	eat_turf = 0
 	life = 300
 	grav_pull = 7
