@@ -2,10 +2,17 @@
 
 //Apollo Easter 2015 Stuff
 
+/hook/startup/proc/load_eggs()
+	for(var/E in list("Stuicey","Kwask","Dragarien","Donnern","JMMJ01","King_Nexus"))
+		var/obj/D = new /obj/item/weapon/easter_egg(pick(blobstart))
+		D.icon_state = E
+		D.name = "[E]'s Egg"
+
 /obj/item/weapon/easter_egg
-	icon = 'icons/apollo/objects.dmi'
+	icon = 'icons/apollo/easter.dmi'
 	w_class = 2.0
 	desc = "A colourful easter egg! Maybe it has chocolate inside?"
+	var/listening = 0
 
 /obj/item/weapon/easter_egg/attack_self()
 	open_egg()
@@ -15,10 +22,14 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(!iscarbon(usr))
+	usr << "\blue You stroke the egg gently.."
+
+	if(listening || !iscarbon(usr))
+		usr << "\blue the egg does not respond.."
 		return
 
 	if(!fexists("sound/easter/[icon_state].ogg"))
+		usr << "\red You slimey cheat! Go find the eggs on the <b>live</b> server!"
 		return
 
 	var/sound/AL = sound("sound/easter/[icon_state].ogg", repeat = 0, wait = 1, channel = 777, volume = 35)
@@ -26,29 +37,22 @@
 
 	log_admin("[key_name(usr)] is listening to [icon_state].ogg")
 	message_admins("[key_name(usr)] is listening to [icon_state].ogg", 1)
+	usr << "\blue The egg vibrates for a brief moment and begins to play an audio log."
 
 	usr << AL
 
-/obj/item/weapon/easter_egg/stuicey
-	icon_state = "stuicey"
-	name = "Stuicey's Egg"
+	listening = 1
+	spawn(300)
+		listening = 0
 
-/obj/item/weapon/easter_egg/kwask
-	icon_state = "Kwask"
-	name = "Kwask's Egg"
+	if(prob(25))
+		new_egg(icon_state)
+		del(src)
 
-/obj/item/weapon/easter_egg/dragarien
-	icon_state = "dragarien"
-	name = "Dragarien's Egg"
+/obj/item/weapon/easter_egg/proc/new_egg(T as text)
+	var/obj/D = new /obj/item/weapon/easter_egg(pick(blobstart))
+	D.icon_state = T
+	D.name = "[T]'s Egg"
 
-/obj/item/weapon/easter_egg/Donnern
-	icon_state = "donnern"
-	name = "Donnern's Egg"
 
-/obj/item/weapon/easter_egg/kingnexus
-	icon_state = "kingnexus"
-	name = "King Nexus's Egg"
 
-/obj/item/weapon/easter_egg/jmmj
-	icon_state = "jmmj"
-	name = "JMMJ's Egg"
