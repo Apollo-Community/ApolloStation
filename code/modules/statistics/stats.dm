@@ -22,7 +22,7 @@
 	var/cargo_profit = 0 // Profit made from cargobay
 	var/arrests = 0 // Total number of arrests
 
-/datum/round_stats/proc/display()
+/datum/round_stats/proc/display(var/client/C)
 	var/work_time = round( world.time/10 )*living_mob_list.len
 	var/productivity = max(round(100*(1-(break_time/work_time))),0) // Productivity is just percentage of time spent not AFK
 	productivity = max(0,min(99.99, productivity - (deaths*3 + clones*2 + bombs_exploded*5 + vended + people_slipped*2) + (beepsky_beatings*2 + blood_mopped + spam_blocked)))
@@ -47,13 +47,13 @@
 	data["shots"] = guns_fired
 	data["beepsky"] = beepsky_beatings
 
-	for(var/client/C in clients)
-		ui = nanomanager.try_update_ui(usr, usr, "main", ui, data, 1)
-		if (!ui)
-			ui = new(usr, usr, "main", "stats.tmpl", "End Round Stats", 500, 450)
-			ui.set_initial_data(data)
-			ui.open()
-			ui.set_auto_update(1)
+	ui = nanomanager.try_update_ui(C, C, "main", ui, data, 1)
+	if (!ui)
+		ui = new(C, C, "main", "stats.tmpl", "End Round Stats", 500, 450)
+		ui.set_initial_data(data)
+		ui.open()
+		ui.set_auto_update(1)
 
 datum/round_stats/proc/call_stats()
-	statistics.display()
+	for(var/client/C in clients)
+		statistics.display(C)

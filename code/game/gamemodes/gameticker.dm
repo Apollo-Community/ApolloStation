@@ -468,6 +468,6 @@ var/global/datum/controller/gameticker/ticker
 	for(var/i in total_antagonists)
 		log_game("[i]s[total_antagonists[i]].")
 
-	statistics.display() // Show the end-round stats
+	statistics.call_stats() // Show the end-round stats
 
 	return 1
