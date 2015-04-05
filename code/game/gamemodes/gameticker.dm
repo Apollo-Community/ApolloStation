@@ -53,7 +53,8 @@ var/global/datum/controller/gameticker/ticker
 	'sound/music/mining_song.ogg',\
 	'sound/music/mining_song1.ogg',\
 	'sound/music/mining_song2.ogg',\
-	'sound/music/mining_song3.ogg')
+	'sound/music/mining_song3.ogg',\
+	'sound/music/jazzy_jazz.ogg')
 	do
 		pregame_timeleft = 180
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
