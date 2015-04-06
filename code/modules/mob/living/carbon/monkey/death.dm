@@ -5,6 +5,6 @@
 	..("dust-m")
 
 /mob/living/carbon/monkey/death(gibbed)
-	statistics.monkey_deaths++
+	statistics.increase_stat("monkey_deaths")
 
 	..(gibbed,"lets out a faint chimper as it collapses and stops moving...")

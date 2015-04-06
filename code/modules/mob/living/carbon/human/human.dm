@@ -42,7 +42,7 @@
 
 /mob/living/carbon/human/Move(NewLoc, direct)
 	..()
-	statistics.run_distance++ // Increase run distance by a meter
+	statistics.increase_stat("run_distance", 0.00002 )
 
 /mob/living/carbon/human/Stat()
 	..()

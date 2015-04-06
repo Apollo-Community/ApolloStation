@@ -124,7 +124,7 @@
 		else if( client.afk )
 			if( istype( src, /mob/living/carbon/human ))
 				var/afk_time = world.time-client.afk_start_time
-				statistics.break_time += afk_time
+				statistics.increase_stat("break_time", afk_time/60)
 			client.afk_start_time = 0
 			client.afk = 0
 

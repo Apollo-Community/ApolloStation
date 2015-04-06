@@ -393,7 +393,7 @@
 		spawn(5)
 			autoclose()
 
-	statistics.doors_opened++
+	statistics.increase_stat("doors_opened", 0.3)
 
 	return 1
 

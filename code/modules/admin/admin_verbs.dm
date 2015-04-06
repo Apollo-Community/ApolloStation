@@ -895,7 +895,7 @@ var/list/admin_verbs_mentor = list(
 	set name = "Round Stats"
 	set desc = "Displays the round stats to everyone."
 
-	statistics.display()
+	statistics.display(usr)
 
 /* This is the worst frickin verb, why did anyone ever think it was a good idea?
 /client/proc/man_up(mob/T as mob in mob_list)

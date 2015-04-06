@@ -81,16 +81,16 @@ var/list/wood_icons = list("wood","wood-broken")
 	switch(severity)
 		if(1.0)
 			src.ChangeTurf(/turf/space)
-			statistics.damage_cost += rand( 900, 1100 )
+			statistics.increase_stat("damage_cost", rand( 900, 1100 ))
 		if(2.0)
 			switch(pick(1,2;75,3))
 				if (1)
 					src.ReplaceWithLattice()
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
-					statistics.damage_cost += rand( 900, 1000 )
+					statistics.increase_stat("damage_cost", rand( 900, 1000 ))
 				if(2)
 					src.ChangeTurf(/turf/space)
-					statistics.damage_cost += rand( 900, 1100 )
+					statistics.increase_stat("damage_cost", rand( 900, 1100 ))
 				if(3)
 					if(prob(80))
 						src.break_tile_to_plating()
@@ -240,7 +240,7 @@ turf/simulated/floor/proc/update_icon()
 		make_plating()
 	break_tile()
 
-	statistics.damage_cost += 100
+	statistics.increase_stat("damage_cost", 100)
 
 /turf/simulated/floor/is_plasteel_floor()
 	if(ispath(floor_type, /obj/item/stack/tile/plasteel))
@@ -301,7 +301,7 @@ turf/simulated/floor/proc/update_icon()
 		src.icon_state = "sand[pick("1","2","3")]"
 		broken = 1
 
-	statistics.damage_cost += rand( 300, 400 )
+	statistics.increase_stat("damage_cost", rand( 300, 400 ))
 
 /turf/simulated/floor/proc/burn_tile()
 	if(istype(src,/turf/simulated/floor/engine)) return
@@ -326,7 +326,7 @@ turf/simulated/floor/proc/update_icon()
 		src.icon_state = "sand[pick("1","2","3")]"
 		burnt = 1
 
-	statistics.damage_cost += rand( 200, 250 )
+	statistics.increase_stat("damage_cost", rand( 200, 250 ))
 
 //This proc will set floor_type to null and the update_icon() proc will then change the icon_state of the turf
 //This proc auto corrects the grass tiles' siding.

@@ -180,7 +180,7 @@
 		else
 			attacher_name = "[attacher.name]([attacher.ckey])"
 
-		statistics.bombs_exploded++
+		statistics.increase_stat("bombs_exploded")
 		var/log_str = "Bomb valve opened in <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name]</a> "
 		log_str += "with [attached_device ? attached_device : "no device"] attacher: [attacher_name]"
 

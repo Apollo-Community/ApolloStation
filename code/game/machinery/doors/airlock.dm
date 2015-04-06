@@ -879,7 +879,7 @@ About the new airlock wires panel:
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			src.update_icon()
 
-			statistics.doors_welded++
+			statistics.increase_stat("doors_welded")
 
 			return
 		else

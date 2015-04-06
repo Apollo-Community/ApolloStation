@@ -1,15 +1,24 @@
 <div class="item">
 	<div class="itemLabel">
-		<span class="orange">Structural Damages :</span>
+		{{:data.productivity_desc}}
 	</div>
 	<div class="itemContent">
-		<span class="brute">${{:data.structural}} Thaller</span>
+		<span class="average">{{:data.productivity}}</span>
 	</div>
 </div>
 
 <div class="item">
 	<div class="itemLabel">
-		<span class="orange">Crew Deaths :</span>
+		<span class="orange">{{:data.structural_desc}}</span>
+	</div>
+	<div class="itemContent">
+		<span class="brute">${{:data.structural}}</span>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		<span class="orange">{{:data.deaths_desc}}</span>
 	</div>
 	<div class="itemContent">
 		<span class="brute">{{:data.deaths}}</span>
@@ -18,122 +27,99 @@
 
 <div class="item">
 	<div class="itemLabel">
-		<span class="orange">Waiting for Doors :</span>
+		{{:data.clones_desc}}
 	</div>
 	<div class="itemContent">
-		<span class="brute">{{:data.doors}} seconds</span>
+		<span class="good">{{:data.clones}} clones</span>
 	</div>
 </div>
 
 <div class="item">
 	<div class="itemLabel">
-		<span class="orange">Crew Ran :</span>
+		{{:data.stat_0_desc}}
 	</div>
 	<div class="itemContent">
-		<span class="good">{{:data.ran}} marathons</span>
-	</div>
-</div>
-
-
-
-
-<div class="item">
-	<div class="itemLabel">
-		<span class="orange">Clones : </span>
-	</div>
-		<div class="itemContent">
-		<span class="brute">{{:data.clone}}</span>
+		{{:data.stat_0}}{{:data.stat_0_unit}}
 	</div>
 </div>
 
 <div class="item">
 	<div class="itemLabel">
-		<span class="orange">Bombs Exploded : </span>
-	</div>
-		<div class="itemContent">
-		<span class="brute">{{:data.bombs}}</span>
-	</div>
-</div>
-
-<div class="item">
-	<div class="itemLabel">
-		<span class="orange">Junk Vended : </span>
-	</div>
-		<div class="itemContent">
-		<span class="brute">{{:data.junk}}</span>
-	</div>
-</div>
-
-<div class="item">
-	<div class="itemLabel">
-		<span class="orange">Monkeys Killed : </span>
-	</div>
-		<div class="itemContent">
-		<span class="brute">{{:data.mkilled}}</span>
-	</div>
-</div>
-
-<div class="item">
-	<div class="itemLabel">
-		<span class="orange">Slip Ups : </span>
-	</div>
-		<div class="itemContent">
-		<span class="brute">{{:data.slips}}</span>
-	</div>
-</div>
-
-<div class="item">
-	<div class="itemLabel">
-		<span class="orange">Weapons Fibrute : </span>
-	</div>
-		<div class="itemContent">
-		<span class="brute">{{:data.shots}}</span>
-	</div>
-</div>
-
-<div class="item">
-	<div class="itemLabel">
-		<span class="orange">Chemicals Vended : </span>
-	</div>
-		<div class="itemContent">
-		<span class="good">{{:data.chems}}L</span>
-	</div>
-</div>
-
-<div class="item">
-	<div class="itemLabel">
-		<span class="orange">Spam Blocked : </span>
-	</div>
-		<div class="itemContent">
-		<span class="good">{{:data.spam}}</span>
-	</div>
-</div>
-
-<div class="item">
-	<div class="itemLabel">
-		<span class="orange">Blood Mopped : </span>
-	</div>
-		<div class="itemContent">
-		<span class="good">{{:data.blood}}L</span>
-	</div>
-</div>
-
-<div class="item">
-	<div class="itemLabel">
-		<span class="orange">Beepsky Beatings : </span>
-	</div>
-		<div class="itemContent">
-		<span class="good">{{:data.beepsky}}</span>
-	</div>
-</div>
-
-
-
-<div class="item">
-	<div class="itemLabel">
-		Crew Productivity :
+		{{:data.stat_1_desc}}
 	</div>
 	<div class="itemContent">
-		<span class="good">{{:data.productivity}}%</span>
+		{{:data.stat_1}}{{:data.stat_1_unit}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		{{:data.stat_2_desc}}
+	</div>
+	<div class="itemContent">
+		{{:data.stat_2}}{{:data.stat_2_unit}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		{{:data.stat_3_desc}}
+	</div>
+	<div class="itemContent">
+		{{:data.stat_3}}{{:data.stat_3_unit}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		{{:data.stat_4_desc}}
+	</div>
+	<div class="itemContent">
+		{{:data.stat_4}}{{:data.stat_4_unit}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		{{:data.stat_5_desc}}
+	</div>
+	<div class="itemContent">
+		{{:data.stat_5}}{{:data.stat_5_unit}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		{{:data.stat_6_desc}}
+	</div>
+	<div class="itemContent">
+		{{:data.stat_6}}{{:data.stat_6_unit}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		{{:data.stat_7_desc}}
+	</div>
+	<div class="itemContent">
+		{{:data.stat_7}}{{:data.stat_7_unit}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		{{:data.stat_8_desc}}
+	</div>
+	<div class="itemContent">
+		{{:data.stat_8}}{{:data.stat_8_unit}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		{{:data.stat_9_desc}}
+	</div>
+	<div class="itemContent">
+		{{:data.stat_9}}{{:data.stat_9_unit}}
 	</div>
 </div>
