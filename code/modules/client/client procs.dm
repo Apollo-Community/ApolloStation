@@ -209,6 +209,9 @@
 		related_accounts_cid += "[query_cid.item[1]], "
 		break
 
+	if(related_accounts_cid != "")
+		message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name(src)] has the same computer key as [related_accounts_cid] </font>", 1)
+
 	//Just the standard check to see if it's actually a number
 	if(sql_id)
 		if(istext(sql_id))
