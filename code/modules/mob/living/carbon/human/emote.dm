@@ -189,6 +189,10 @@
 
 					message = "<B>[src]</B> coughs!"
 					m_type = 2
+
+					if( istype( type, /mob/living/silicon ) || get_species() == "Machine" )
+						message = "<B>[src]</B> plays cough.ogg"
+
 				else
 					message = "<B>[src]</B> makes a strong noise."
 					m_type = 2
@@ -555,6 +559,7 @@
 
 					if( istype( type, /mob/living/silicon ) || get_species() == "Machine" )
 						scream_sound = 'sound/voice/rscream1.ogg'
+						message = "<B>[src]</B> plays scream.ogg"
 					else
 						if( gender == "male" )
 							scream_sound = pick(\
