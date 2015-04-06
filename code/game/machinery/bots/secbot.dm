@@ -309,7 +309,7 @@ Auto Patrol: []"},
 						src.anchored = 1
 						src.target_lastloc = M.loc
 
-						statistics.beepsky_beatings++
+						statistics.increase_stat("beepsky_beatings")
 
 						return
 					else if(istype(src.target,/mob/living/simple_animal))

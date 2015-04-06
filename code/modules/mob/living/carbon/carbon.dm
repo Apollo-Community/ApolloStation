@@ -531,6 +531,6 @@
 	Stun(stun_duration)
 	Weaken(Floor(stun_duration/2))
 
-	statistics.people_slipped++
+	statistics.increase_stat("people_slipped")
 
 	return 1

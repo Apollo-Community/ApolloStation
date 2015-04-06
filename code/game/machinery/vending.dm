@@ -261,7 +261,7 @@
 
 			// Vend the item
 			src.vend(src.currently_vending, usr)
-			statistics.vended++
+			statistics.increase_stat("vended")
 
 			currently_vending = null
 		else

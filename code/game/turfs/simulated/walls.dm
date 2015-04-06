@@ -101,7 +101,7 @@
 /turf/simulated/wall/proc/take_damage(dam)
 	if(dam)
 		damage = max(0, damage + dam)
-		statistics.damage_cost += damage*10
+		statistics.increase_stat("damage_cost", damage*10)
 		update_damage()
 	return
 
@@ -177,7 +177,7 @@
 	switch(severity)
 		if(1.0)
 			src.ChangeTurf(/turf/space)
-			statistics.damage_cost += rand( 2000, 2200 )
+			statistics.increase_stat("damage_cost", rand( 2000, 2200 ))
 			return
 		if(2.0)
 			if(prob(75))

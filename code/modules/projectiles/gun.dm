@@ -136,7 +136,7 @@
 		"<span class='warning'>You fire [src][reflex ? "by reflex":""]!</span>", \
 		"You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 
-	statistics.guns_fired++
+	statistics.increase_stat("guns_fired")
 
 	in_chamber.original = target
 	in_chamber.loc = get_turf(user)

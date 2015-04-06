@@ -88,6 +88,6 @@
 		ticker.mode.check_win()
 
 	if( istype( src, /mob/living/carbon/human ))
-		statistics.deaths++
+		statistics.increase_stat("deaths")
 
 	return 1
