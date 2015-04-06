@@ -239,7 +239,7 @@ datum/track/New(var/title_name, var/audio)
 	icon_state = "mixer"
 	state_base = "mixer"
 
-/obj/machinery/media/jukebox/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/media/jukebox/mixer/attackby(obj/item/W as obj, mob/user as mob)
 	src.add_fingerprint(user)
 
 	if(istype(W, /obj/item/weapon/wrench))

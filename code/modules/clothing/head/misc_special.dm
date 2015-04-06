@@ -172,7 +172,8 @@
 
 	attack_self(mob/user as mob)
 		if( bunny )
-			user.put_in_hands( new bunny.type(user.loc) )
+			bunny.loc = user
+			user.put_in_hands( bunny )
 			user.visible_message( "[user] pulls \the [bunny] out of \the [src]!", "You pull \the [bunny] out of \the [src]!" )
 			bunny = null
 		else
