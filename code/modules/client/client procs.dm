@@ -206,7 +206,8 @@
 	query_cid.Execute()
 	related_accounts_cid = ""
 	while(query_cid.NextRow())
-		related_accounts_cid += "[query_cid.item[1]], "
+		if(uppertext(key_name(src)) != uppertext(query_cid.item[1]))
+			related_accounts_cid += "[query_cid.item[1]], "
 		break
 
 	if(related_accounts_cid != "")
