@@ -694,6 +694,13 @@
 		species_allowed = list("Nucleation")
 		gender = FEMALE
 
+	nuc_radical
+		name = "Nucleation Free Radical"
+		icon = 'icons/apollo/human_face.dmi'
+		icon_state = "radical"
+		species_allowed = list("Nucleation")
+
+
 /datum/sprite_accessory/facial_hair
 
 	taj_sideburns
