@@ -1384,6 +1384,21 @@
 		feedback_inc("admin_cookies_spawned",1)
 		H << "\blue Your prayers have been answered!! You received the <b>best cookie</b>!"
 
+	else if(href_list["admingivedrugs"])
+		if(!check_rights(R_ADMIN|R_FUN))	return
+
+		var/mob/living/carbon/human/H = locate(href_list["admingivedrugs"])
+		if(!ishuman(H))
+			usr << "This can only be used on instances of type /mob/living/carbon/human"
+			return
+
+		H.reagents.add_reagent("space_drugs", 20)
+
+		log_admin("[key_name(H)] got their space drugs, administered by [key_name(src.owner)]")
+		message_admins("[key_name(H)] got their space drugs, administered by [key_name(src.owner)]")
+		feedback_inc("admin_give_drugs",1)
+		H << "\blue Your prayers have been answered!! You feel dizzy and start seeing the meaning of life!</b>!"
+
 	else if(href_list["BlueSpaceArtillery"])
 		if(!check_rights(R_ADMIN|R_FUN))	return
 
