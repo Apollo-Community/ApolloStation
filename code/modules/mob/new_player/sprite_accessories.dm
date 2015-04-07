@@ -686,6 +686,12 @@
 		icon_state = "crystal"
 		species_allowed = list("Nucleation")
 
+	nuc_neutron
+		name = "Nucleation Neutron Bomb"
+		icon = 'icons/apollo/human_face.dmi'
+		icon_state = "neutron"
+		species_allowed = list("Nucleation")
+
 	nuc_radical
 		name = "Nucleation Free Radical"
 		icon = 'icons/apollo/human_face.dmi'
