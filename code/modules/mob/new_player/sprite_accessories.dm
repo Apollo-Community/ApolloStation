@@ -680,19 +680,11 @@
 		icon_state = "wryn_antennae"
 		species_allowed = list("Wryn")
 
-	nuc_crystals_m
-		name = "Nucleation Male Crystals"
+	nuc_crystals
+		name = "Nucleation Crystals"
 		icon = 'icons/apollo/Human_face.dmi'
-		icon_state = "crystal_m"
+		icon_state = "crystal"
 		species_allowed = list("Nucleation")
-		gender = MALE
-
-	nuc_crystals_f
-		name = "Nucleation Female Crystals"
-		icon = 'icons/apollo/Human_face.dmi'
-		icon_state = "crystal_f"
-		species_allowed = list("Nucleation")
-		gender = FEMALE
 
 	nuc_radical
 		name = "Nucleation Free Radical"
