@@ -526,3 +526,31 @@
 	icon_state = "camo"
 	item_state = "camo"
 	item_color = "camo"
+
+/obj/item/clothing/under/red_gown
+	name = "evening gown"
+	desc = "A classy dress for a classy lady."
+	icon_state = "red_evening_gown"
+	item_state = "red_evening_gown"
+	item_color = "red_evening_gown"
+
+/obj/item/clothing/under/sailor_dress
+	name = "sailor dress"
+	desc = "For the ladies of the sea."
+	icon_state = "sailor_dress"
+	item_state = "sailor_dress"
+	item_color = "sailor_dress"
+
+/obj/item/clothing/under/striped_dress
+	name = "striped dress"
+	desc = "Does this dress make me look fat?"
+	icon_state = "striped_dress"
+	item_state = "striped_dress"
+	item_color = "striped_dress"
+
+/obj/item/clothing/under/black_tango
+	name = "tango dress"
+	desc = "Olé!"
+	icon_state = "black_tango"
+	item_state = "black_tango"
+	item_color = "black_tango"
