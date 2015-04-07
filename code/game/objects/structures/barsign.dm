@@ -5,7 +5,7 @@
 	var/emagged = 0
 
 	New()
-		ChangeSign(pick("pinkflamingo", "magmasea", "limbo", "rustyaxe", "armokbar", "brokendrum", "meadbay", "thedamnwall", "thecavern", "cindikate", "theorchard", "thesaucyclown", "theclownshead", "whiskeyimplant", "carpecarp", "robustroadhouse", "greytide", "theredshirt", "slipperyshots", "honkedbar", "greytidebar", ))
+		ChangeSign(pick("pinkflamingo", "magmasea", "limbo", "rustyaxe", "armokbar", "brokendrum", "meadbay", "thedamnwall", "thecavern", "cindikate", "theorchard", "thesaucyclown", "theclownshead", "whiskeyimplant", "carpecarp", "robustroadhouse", "greytide", "theredshirt", "slipperyshots", "honkednloaded", "thegreytide", ))
 		return
 	proc/ChangeSign(var/Text)
 		src.icon_state = "[Text]"
