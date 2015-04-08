@@ -36,3 +36,7 @@
 /mob/living/carbon/human/wryn/New(var/new_loc)
 	h_style = "wryn_antennae"
 	..(new_loc, "Wryn")
+
+/mob/living/carbon/human/nucleation/New(var/new_loc)
+	h_style = "Bald"
+	..(new_loc, "Nucleation")

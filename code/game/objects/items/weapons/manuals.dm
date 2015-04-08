@@ -757,13 +757,16 @@
 		</head>
 
 		<body>
-		<iframe width='100%' height='97%' src="[config.wikiurl]Corporate_Regulations&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		Space law accessable at :
+		<a href="[config.wikiurl]index.php/Corporate_Regulations" >Baystation Wiki<a/>
+
+		This book is currently broken due to baystations new wikipedia.
 		</body>
 
 		</html>
 
 		"}
-
+// baystations new wikia doesn't have the right page.
 
 
 /obj/item/weapon/book/manual/medical_diagnostics_manual

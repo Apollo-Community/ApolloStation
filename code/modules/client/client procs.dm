@@ -207,15 +207,13 @@
 	related_accounts_cid = ""
 
 	while(query_cid.NextRow())
-		if(lowertext(key_name(src)) != query_cid.item[1])
+		if(lowertext(src.ckey) != query_cid.item[1])
 			related_accounts_cid += "[query_cid.item[1]], "
 		break
 
 	if(related_accounts_cid != "")
-	//	message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name(src)] has the same computer key as [related_accounts_cid] </font>", 1)
-		for(var/client/C in admins)
-			if(C.ckey == "stuicey")
-				C << query_cid.item[1]			//Can only debug this on live server :l
+		message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name(src)] has the same computer key as [related_accounts_cid] </font>", 1)
+
 
 	//Just the standard check to see if it's actually a number
 	if(sql_id)
