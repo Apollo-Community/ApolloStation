@@ -1435,7 +1435,7 @@
 	name = "Bones"
 	desc = "That's Bones the cat. He's a laid back, brown stray cat. Meow."
 	gender = MALE
-	icon = 'icons/apollo/animal.dmi'
+	icon = 'icons/apollo/mob/animal.dmi'
 	icon_state = "cat3"
 	icon_living = "cat3"
 	icon_dead = "cat3_dead"
@@ -1504,7 +1504,7 @@
 	name = "Fluffles"
 	desc = "That's Fluffles the bunny! He looks like he wants a carrot."
 	gender = MALE
-	icon = 'icons/apollo/animal.dmi'
+	icon = 'icons/apollo/mob/animal.dmi'
 	icon_state = "bunny_fuffles"
 	icon_living = "bunny_fluffles"
 	icon_dead = "bunny_fluffles_dead"

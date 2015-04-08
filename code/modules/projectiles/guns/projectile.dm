@@ -36,12 +36,19 @@
 	loaded -= AC //Remove casing from loaded list.
 	if(isnull(AC) || !istype(AC))
 		return 0
-	AC.loc = get_turf(src) //Eject casing onto ground.
+
 	if(AC.BB)
 		in_chamber = AC.BB //Load projectile into chamber.
 		AC.BB.loc = src //Set projectile loc to gun.
-		return 1
-	return 0
+	else
+		return 0
+
+	if(ejectshell)
+		AC.loc = get_turf(src) //Eject casing onto ground.
+	else
+		del(AC)
+
+	return 1
 
 
 /obj/item/weapon/gun/projectile/attackby(var/obj/item/A as obj, mob/user as mob)

@@ -111,3 +111,9 @@
 	desc = "A set of bullets for the Chameleon Gun."
 	projectile_type = "/obj/item/projectile/bullet/chameleon"
 	caliber = ".45"
+
+/obj/item/ammo_casing/bb
+	desc = "A BB bullet casing."
+	caliber = "BB"
+	icon_state = "bb"
+	projectile_type = "/obj/item/projectile/bullet/weakbullet/BB"

@@ -146,3 +146,16 @@
    around simulating a removable magazine by adding the casings into the loaded list and spawning an empty magazine
    when the gun is out of rounds. Which means you can't eject magazines with rounds in them. The below is a very
    rough and poor attempt at making that happen. -Ausops */
+
+/obj/item/weapon/gun/projectile/automatic/bb_gun
+	name = "BB rifle"
+	desc = "A spring-powered BB rifle"
+	icon_state = "bb_gun"
+	w_class = 4.0
+	max_shells = 50
+	caliber = "BB"
+	silenced = 0
+	ejectshell = 0
+	origin_tech = "combat=2;materials=2"
+	ammo_type = "/obj/item/ammo_casing/bb"
+	fire_sound = 'sound/weapons/guns/bb.ogg'

@@ -259,7 +259,7 @@
 		name = "Overeye Long"
 		icon_state = "hair_longovereye"
 
-	fag
+	flow
 		name = "Flow Hair"
 		icon_state = "hair_f"
 

@@ -2,7 +2,7 @@
 	name = "\improper german shepherd"
 	real_name = "german shepherd"
 	desc = "It's a german shepherd."
-	icon = 'icons/apollo/animal.dmi'
+	icon = 'icons/apollo/mob/animal.dmi'
 	icon_state = "german_shep"
 	icon_living = "german_shep"
 	icon_dead = "german_shep_dead"

@@ -33,6 +33,12 @@
 	embed = 0
 	sharp = 0
 
+/obj/item/projectile/bullet/weakbullet/BB // "rubber" bullets
+	damage = 3
+	agony = 8
+	embed = 0
+	sharp = 0
+
 /obj/item/projectile/bullet/midbullet
 	damage = 20
 
