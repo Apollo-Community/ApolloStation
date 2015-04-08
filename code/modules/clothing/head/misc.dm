@@ -1,5 +1,3 @@
-
-
 /obj/item/clothing/head/centhat
 	name = "\improper CentComm. hat"
 	icon_state = "centcom"
@@ -247,7 +245,7 @@
 	item_state = "orange_bandana"
 	body_parts_covered = 0
 
-/obj/item/clothing/head/jesterhat
+/obj/item/clothing/head/apollo/jesterhat
 	name = "Jester Hat"
 	desc = "A hat fit for a fool."
 	icon_state = "jesterhat"
@@ -255,7 +253,7 @@
 	flags = BLOCKHAIR
 	flags_inv = 0
 
-/obj/item/clothing/head/butte
+/obj/item/clothing/head/apollo/butte
 	name = "butt"
 	desc = "For those who can't get their heads out of their ass."
 	icon_state = "butt"

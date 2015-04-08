@@ -89,7 +89,7 @@
 /obj/item/weapon/holder/bones2
 	name = "Bones"
 	desc = "That's Bones the cat. He's a laid back, brown stray cat. Meow."
-	icon = 'icons/apollo/animal.dmi'
+	icon = 'icons/apollo/mob/animal.dmi'
 	icon_state = "cat3"
 	origin_tech = null
 

@@ -1,3 +1,6 @@
+/obj/item/clothing/under/apollo
+	icon = 'icons/apollo/clothing/uniforms.dmi'
+
 /obj/item/clothing/under/pj/red
 	name = "red pj's"
 	desc = "Sleepwear."
@@ -484,7 +487,7 @@
 	item_color = "mai_yang"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 
-/obj/item/clothing/under/jester
+/obj/item/clothing/under/apollo/jester
 	name = "jester Suit"
 	desc = "Only a fool would wear such a suit."
 	icon_state = "jester"
@@ -506,49 +509,49 @@
 	item_state = "roman"
 	item_color = "roman"
 
-/obj/item/clothing/under/biomech
+/obj/item/clothing/under/apollo/biomech
 	name = "biomechanic jumpsuit"
 	desc = "Perfect for those creating monstrosities of man and machine."
 	icon_state = "biomech"
 	item_state = "biomech"
 	item_color = "biomech"
 
-/obj/item/clothing/under/entertainer
+/obj/item/clothing/under/apollo/entertainer
 	name = "entertainer's jumpsuit"
 	desc = "An entertaining suit for an entertaining man."
 	icon_state = "entertainer"
 	item_state = "entertainer"
 	item_color = "entertainer"
 
-/obj/item/clothing/under/camo
+/obj/item/clothing/under/apollo/camo
 	name = "camo jumpsuit"
 	desc = "Doesn't exactly blend with space, now does it?"
 	icon_state = "camo"
 	item_state = "camo"
 	item_color = "camo"
 
-/obj/item/clothing/under/red_gown
+/obj/item/clothing/under/apollo/red_gown
 	name = "evening gown"
 	desc = "A classy dress for a classy lady."
 	icon_state = "red_evening_gown"
 	item_state = "red_evening_gown"
 	item_color = "red_evening_gown"
 
-/obj/item/clothing/under/sailor_dress
+/obj/item/clothing/under/apollo/sailor_dress
 	name = "sailor dress"
 	desc = "For the ladies of the sea."
 	icon_state = "sailor_dress"
 	item_state = "sailor_dress"
 	item_color = "sailor_dress"
 
-/obj/item/clothing/under/striped_dress
+/obj/item/clothing/under/apollo/striped_dress
 	name = "striped dress"
 	desc = "Does this dress make me look fat?"
 	icon_state = "striped_dress"
 	item_state = "striped_dress"
 	item_color = "striped_dress"
 
-/obj/item/clothing/under/black_tango
+/obj/item/clothing/under/apollo/black_tango
 	name = "tango dress"
 	desc = "Olé!"
 	icon_state = "black_tango"

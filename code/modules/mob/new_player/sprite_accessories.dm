@@ -47,6 +47,9 @@
 
 	icon = 'icons/mob/Human_face.dmi'	  // default icon for all hairs
 
+	apollo
+		icon = 'icons/apollo/mob/human_face.dmi'
+
 	bald
 		name = "Bald"
 		icon_state = "bald"
@@ -345,10 +348,25 @@
 		icon_state = "hair_e"
 		gender = MALE // turnoff!
 
-	familyman
+	apollo/familyman
 		name = "The Family Man"
-		icon_state = "hair_thefamilyman"
+		icon_state = "hair_familyman"
 		gender = MALE
+
+	apollo/highpony
+		name = "High Ponytail"
+		icon_state = "hair_highponytail"
+		gender = FEMALE
+
+	apollo/straightpony
+		name = "Straight Ponytail"
+		icon_state = "hair_longponytail"
+		gender = FEMALE
+
+	apollo/partedlong
+		name = "Long Parted"
+		icon_state = "hair_longparted"
+		gender = FEMALE
 
 	mahdrills
 		name = "Drillruru"
@@ -674,27 +692,24 @@
 		icon_state = "vox_shortquills"
 		species_allowed = list("Vox")
 
-	wry_antennae_default
+
+	apollo/wry_antennae_default
 		name = "Antennae"
-		icon = 'icons/apollo/Human_face.dmi'
 		icon_state = "wryn_antennae"
 		species_allowed = list("Wryn")
 
-	nuc_crystals
+	apollo/nuc_crystals
 		name = "Nucleation Crystals"
-		icon = 'icons/apollo/Human_face.dmi'
 		icon_state = "crystal"
 		species_allowed = list("Nucleation")
 
-	nuc_neutron
+	apollo/nuc_neutron
 		name = "Nucleation Neutron Bomb"
-		icon = 'icons/apollo/human_face.dmi'
 		icon_state = "neutron"
 		species_allowed = list("Nucleation")
 
-	nuc_radical
+	apollo/nuc_radical
 		name = "Nucleation Free Radical"
-		icon = 'icons/apollo/human_face.dmi'
 		icon_state = "radical"
 		species_allowed = list("Nucleation")
 

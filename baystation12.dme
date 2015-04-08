@@ -10,6 +10,8 @@
 #define FILE_DIR "icons"
 #define FILE_DIR "icons/48x48"
 #define FILE_DIR "icons/apollo"
+#define FILE_DIR "icons/apollo/clothing"
+#define FILE_DIR "icons/apollo/mob"
 #define FILE_DIR "icons/atmos"
 #define FILE_DIR "icons/effects"
 #define FILE_DIR "icons/mecha"

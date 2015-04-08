@@ -130,7 +130,7 @@
 	slowdown = SHOES_SLOWDOWN+1
 	species_restricted = null
 
-obj/item/clothing/shoes/jester
+obj/item/clothing/shoes/apollo/jester
 	name = "Jester Shoes"
 	desc = "As worn by the clowns of old."
 	icon_state = "jestershoes"
