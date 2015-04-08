@@ -700,17 +700,37 @@
 
 	apollo/nuc_crystals
 		name = "Nucleation Crystals"
-		icon_state = "crystal"
-		species_allowed = list("Nucleation")
-
-	apollo/nuc_neutron
-		name = "Nucleation Neutron Bomb"
-		icon_state = "neutron"
+		icon_state = "nuc_crystal"
 		species_allowed = list("Nucleation")
 
 	apollo/nuc_radical
 		name = "Nucleation Free Radical"
-		icon_state = "radical"
+		icon_state = "nuc_radical"
+		species_allowed = list("Nucleation")
+
+	apollo/nuc_neutron
+		name = "Nucleation Neutron Bomb"
+		icon_state = "nuc_neutron"
+		species_allowed = list("Nucleation")
+
+	apollo/nuc_fallout
+		name = "Nucleation Fallout"
+		icon_state = "nuc_fallout"
+		species_allowed = list("Nucleation")
+
+	apollo/nuc_frission
+		name = "Nucleation Frission"
+		icon_state = "nuc_frission"
+		species_allowed = list("Nucleation")
+
+	apollo/nuc_gamma_ray
+		name = "Nucleation Gamma Ray"
+		icon_state = "nuc_gammaray"
+		species_allowed = list("Nucleation")
+
+	apollo/nuc_betaburns
+		name = "Nucleation Beta Burns"
+		icon_state = "nuc_betaburns"
 		species_allowed = list("Nucleation")
 
 
