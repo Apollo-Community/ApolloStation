@@ -692,26 +692,52 @@
 		icon_state = "vox_shortquills"
 		species_allowed = list("Vox")
 
+// Apollo-specific
+
+	//Wryn antennae
 
 	apollo/wry_antennae_default
 		name = "Antennae"
 		icon_state = "wryn_antennae"
 		species_allowed = list("Wryn")
 
+	//Nucleation "hairstyles"
+
 	apollo/nuc_crystals
 		name = "Nucleation Crystals"
-		icon_state = "crystal"
+		icon_state = "nuc_crystal"
 		species_allowed = list("Nucleation")
 
-	apollo/nuc_neutron
-		name = "Nucleation Neutron Bomb"
-		icon_state = "neutron"
+	apollo/nuc_betaburns
+		name = "Nucleation Beta Burns"
+		icon_state = "nuc_betaburns"
+		species_allowed = list("Nucleation")
+
+	apollo/nuc_fallout
+		name = "Nucleation Fallout"
+		icon_state = "nuc_fallout"
+		species_allowed = list("Nucleation")
+
+	apollo/nuc_frission
+		name = "Nucleation Frission"
+		icon_state = "nuc_frission"
 		species_allowed = list("Nucleation")
 
 	apollo/nuc_radical
 		name = "Nucleation Free Radical"
-		icon_state = "radical"
+		icon_state = "nuc_radical"
 		species_allowed = list("Nucleation")
+
+	apollo/nuc_gammaray
+		name = "Nucleation Gamma Ray"
+		icon_state = "nuc_gammaray"
+		species_allowed = list("Nucleation")
+
+	apollo/nuc_neutron
+		name = "Nucleation Neutron Bomb"
+		icon_state = "nuc_neutron"
+		species_allowed = list("Nucleation")
+
 
 
 /datum/sprite_accessory/facial_hair
