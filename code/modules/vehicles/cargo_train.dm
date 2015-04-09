@@ -11,11 +11,9 @@
 	load_item_visible = 1
 	load_offset_x = 0
 	mob_offset_y = 7
-	var/car_type = 0 // Specifies the type of train, 0 for cargo, 1 for science, 2 for security
 	var/car_limit = 3		//how many cars an engine can pull before performance degrades
 	active_engines = 1
 	var/obj/item/weapon/key/cargo_train/key
-	var/icon_state_init = "cargo_engine"
 
 /obj/item/weapon/key/cargo_train
 	name = "key"
@@ -48,15 +46,6 @@
 	var/image/I = new(icon = 'icons/obj/vehicles.dmi', icon_state = "cargo_engine_overlay", layer = src.layer + 0.2) //over mobs
 	overlays += I
 	turn_off()	//so engine verbs are correctly set
-
-	if( car_type == 2 )
-		icon_state = "security_engine"
-	else if( car_type == 1 )
-		icon_state = "science_engine"
-	else
-		icon_state = "cargo_engine"
-
-	icon_state_init = icon_state
 
 /obj/vehicle/train/cargo/engine/Move(var/turf/destination)
 	if(on && cell.charge < charge_use)
@@ -377,3 +366,16 @@
 		anchored = 0
 	else
 		anchored = 1
+
+
+/obj/vehicle/train/cargo/engine/security
+	name = "security train tug"
+	icon_state = "security_engine"
+
+/obj/vehicle/train/cargo/engine/science
+	name = "science train tug"
+	icon_state = "science_engine"
+
+/obj/vehicle/train/cargo/engine/engineering
+	name = "engineering train tug"
+	icon_state = "engineering_engine"

@@ -7,7 +7,7 @@
 	icon_dead = "broodling_dead"
 	icon_gib = "broodling_gib"
 	speak_chance = 0
-	turns_per_move = 5
+	turns_per_move = 10
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "hits"
@@ -21,26 +21,18 @@
 	melee_damage_upper = 10
 	attacktext = "punched"
 	a_intent = "harm"
-	var/corpse = /obj/effect/landmark/mobcorpse/broodling
-	min_oxy = 5
+	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
-	max_tox = 1
+	max_tox = 0
 	min_co2 = 0
-	max_co2 = 5
+	max_co2 = 0
 	min_n2 = 0
 	max_n2 = 0
 	unsuitable_atoms_damage = 15
 	wall_smash = 1
 	faction = "broodling"
 	status_flags = CANPUSH
-
-/mob/living/simple_animal/hostile/broodling/death()
-	..()
-	if(corpse)
-		new corpse (src.loc)
-	del src
-	return
 
 /mob/living/simple_animal/hostile/broodling/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
