@@ -418,6 +418,7 @@ var/global/datum/controller/occupations/job_master
 			var/obj/S = null
 			for(var/obj/effect/landmark/start/sloc in landmarks_list)
 				if(sloc.name != rank)	continue
+				if(!isStationLevel(sloc.z)) continue
 				if(locate(/mob/living) in sloc.loc)	continue
 				S = sloc
 				break
