@@ -130,6 +130,9 @@
 
 	attack_hand(var/mob/M)
 		if(!target || !istype(target.loc, /turf))
+			connect()
+
+		if(!target || !istype(target.loc, /turf))
 			M << "The ladder is incomplete and can't be climbed."
 		else
 			var/turf/T = target.loc
@@ -144,60 +147,60 @@
 				M.visible_message("\blue \The [M] climbs [src.icon_state == "ladderup" ? "up" : "down"] \the [src]!", "You climb [src.icon_state == "ladderup"  ? "up" : "down"] \the [src]!", "You hear some grunting, and clanging of a metal ladder being used.")
 				M.Move(target.loc)
 
-/*	hatch
-		icon_state = "hatchdown"
-		name = "hatch"
-		desc = "A hatch. You climb down it, and it will automatically seal against pressure loss behind you."
-		top_icon_state = "hatchdown"
-		var/top_icon_state_open = "hatchdown-open"
-		var/top_icon_state_close = "hatchdown-close"
+/*/obj/multiz/hatch
+	icon_state = "hatchdown"
+	name = "hatch"
+	desc = "A hatch. You climb down it, and it will automatically seal against pressure loss behind you."
+	top_icon_state = "hatchdown"
+	var/top_icon_state_open = "hatchdown-open"
+	var/top_icon_state_close = "hatchdown-close"
 
-		bottom_icon_state = "ladderup"
+	bottom_icon_state = "ladderup"
 
-		var/image/green_overlay
-		var/image/red_overlay
+	var/image/green_overlay
+	var/image/red_overlay
 
-		var/active = 0
+	var/active = 0
 
-		New()
-			. = ..()
-			red_overlay = image(icon, "red-ladderlight")
-			green_overlay = image(icon, "green-ladderlight")
+	New()
+		. = ..()
+		red_overlay = image(icon, "red-ladderlight")
+		green_overlay = image(icon, "green-ladderlight")
 
-		attack_hand(var/mob/M)
+	attack_hand(var/mob/M)
 
+		if(!target || !istype(target.loc, /turf))
+			del src
+
+		if(active)
+			M << "That [src] is being used."
+			return // It is a tiny airlock, only one at a time.
+
+		active = 1
+		var/obj/multiz/ladder/hatch/top_hatch = target
+		var/obj/multiz/ladder/hatch/bottom_hatch = src
+		if(icon_state == top_icon_state)
+			top_hatch = src
+			bottom_hatch = target
+
+		flick(top_icon_state_open, top_hatch)
+		bottom_hatch.overlays += green_overlay
+
+		spawn(7)
 			if(!target || !istype(target.loc, /turf))
 				del src
-
-			if(active)
-				M << "That [src] is being used."
-				return // It is a tiny airlock, only one at a time.
-
-			active = 1
-			var/obj/multiz/ladder/hatch/top_hatch = target
-			var/obj/multiz/ladder/hatch/bottom_hatch = src
-			if(icon_state == top_icon_state)
-				top_hatch = src
-				bottom_hatch = target
-
-			flick(top_icon_state_open, top_hatch)
-			bottom_hatch.overlays += green_overlay
+			if(M.z == z && get_dist(src,M) <= 1)
+				var/list/adjacent_to_me = global_adjacent_z_levels["[z]"]
+				M.visible_message("\blue \The [M] scurries [target.z == adjacent_to_me["up"] ? "up" : "down"] \the [src]!", "You scramble [target.z == adjacent_to_me["up"] ? "up" : "down"] \the [src]!", "You hear some grunting, and a hatch sealing.")
+				M.Move(target.loc)
+			flick(top_icon_state_close,top_hatch)
+			bottom_hatch.overlays -= green_overlay
+			bottom_hatch.overlays += red_overlay
 
 			spawn(7)
-				if(!target || !istype(target.loc, /turf))
-					del src
-				if(M.z == z && get_dist(src,M) <= 1)
-					var/list/adjacent_to_me = global_adjacent_z_levels["[z]"]
-					M.visible_message("\blue \The [M] scurries [target.z == adjacent_to_me["up"] ? "up" : "down"] \the [src]!", "You scramble [target.z == adjacent_to_me["up"] ? "up" : "down"] \the [src]!", "You hear some grunting, and a hatch sealing.")
-					M.Move(target.loc)
-				flick(top_icon_state_close,top_hatch)
-				bottom_hatch.overlays -= green_overlay
-				bottom_hatch.overlays += red_overlay
-
-				spawn(7)
-					top_hatch.icon_state = top_icon_state
-					bottom_hatch.overlays -= red_overlay
-					active = 0*/
+				top_hatch.icon_state = top_icon_state
+				bottom_hatch.overlays -= red_overlay
+				active = 0*/
 
 /obj/multiz/stairs
 	name = "Stairs"
