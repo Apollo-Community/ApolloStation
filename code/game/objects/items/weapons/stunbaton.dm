@@ -12,7 +12,7 @@
 	w_class = 3
 	origin_tech = "combat=2"
 	attack_verb = list("beaten")
-	var/stunforce = 0
+	var/stunforce = 2
 	var/agonyforce = 60
 	var/status = 0		//whether the thing is on or not
 	var/obj/item/weapon/cell/bcell = null
@@ -116,8 +116,8 @@
 	if(user.a_intent == "hurt")
 		if (!..())	//item/attack() does it's own messaging and logs
 			return 0	// item/attack() will return 1 if they hit, 0 if they missed.
-		agony *= 0.5	//whacking someone causes a much poorer contact than prodding them.
-		stun *= 0.5
+		agony *= 0.2	//whacking someone causes a much poorer contact than prodding them.
+		stun *= 0.2
 		//we can't really extract the actual hit zone from ..(), unfortunately. Just act like they attacked the area they intended to.
 	else
 		//copied from human_defense.dm - human defence code should really be refactored some time.
