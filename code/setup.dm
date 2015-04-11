@@ -597,6 +597,7 @@
 #define BE_PLANT      4096
 #define BE_MUTINEER   8192
 #define BE_PAI        16384
+#define BE_BROODSWARM 32768
 
 //Not sure if moving this to global.dm would break the defines.
 var/list/be_special_flags = list(
