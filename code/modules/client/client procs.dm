@@ -208,7 +208,7 @@
 
 	while(query_cid.NextRow())
 		if(lowertext(src.ckey) != query_cid.item[1])
-			related_accounts_cid += "[query_cid.item[1]]<A href='?src=\ref[src];notes=show;ckey=[query_cid.item[1]]'>(N)</A>,"
+			related_accounts_cid += "[query_cid.item[1]]<A href='?_src_=holder;notes=show;ckey=[query_cid.item[1]]'>(N)</A>,"
 		break
 
 	if(related_accounts_cid != "")

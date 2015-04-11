@@ -45,7 +45,7 @@
 
 			entry += " (<A HREF='?_src_=holder;adminmoreinfo=\ref[C.mob]'>?</A>)"
 			entry += "(<A HREF='?_src_=holder;adminplayerobservejump=\ref[C.mob]'>JMP</A>)"
-			entry += "(<A HREF='?_src_=holder;notes=show;ckey=[C.key]'>N</A>)"
+			entry += "(<A HREF='?_src_=holder;notes=show;ckey=[lowertext(C.key)]'>N</A>)"
 		Lines += entry
 	/*else
 		for(var/client/C in clients)
