@@ -386,10 +386,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(M.captured == 1)
 		M.captured = 0
 		M.anchored = 0
+		if(M.handcuffed = 2)	//only deletes handcuffs assigned via restraining
+			M.handcuffed = 0
 
-		message_admins("[key_name_admin(src)] has lifted [key_name(M)]'s retraining order.")
+		message_admins("[key_name_admin(src)] has lifted [key_name(M)]'s restraining order.")
 	else
 		M.captured = 1
+		M.anchored = 1
+		if(!M.handcuffed)		//so we don't delete real handcuffs
+			M.handcuffed = 2
 
 		message_admins("[key_name_admin(src)] has restrained [key_name(M)].")
 
