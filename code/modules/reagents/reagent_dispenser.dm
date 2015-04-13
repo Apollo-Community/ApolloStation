@@ -269,3 +269,17 @@
 	New()
 		..()
 		reagents.add_reagent("sacid",1000)
+
+/obj/structure/reagent_dispensers/cleanertank
+	name = "Space Cleaner Dispenser"
+	desc = "Dispenses space cleaner, for cleaning space."
+	icon = 'icons/apollo/objects.dmi'
+	icon_state = "cleanertank"
+	anchored = 1
+	density = 0
+
+	amount_per_transfer_from_this = 10
+
+	New()
+		..()
+		reagents.add_reagent("cleaner",1000)
