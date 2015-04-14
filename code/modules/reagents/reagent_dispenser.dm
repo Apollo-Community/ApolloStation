@@ -247,7 +247,6 @@
 	icon_state = "radiumtank"
 	anchored = 1
 	density = 0
-	amount_per_transfer_from_this = 10
 
 	amount_per_transfer_from_this = 10
 	l_color = "#002200"
@@ -256,3 +255,31 @@
 		reagents.add_reagent("radium",1000)
 		l_color = "#002200"
 		SetLuminosity(2)
+
+/obj/structure/reagent_dispensers/sacidtank
+	name = "CircuitMaster Acid Dispenser"
+	desc = "Dispenses sulphuric acid for building circuit boards."
+	icon = 'icons/apollo/objects.dmi'
+	icon_state = "sacidtank"
+	anchored = 1
+	density = 0
+
+	amount_per_transfer_from_this = 10
+
+	New()
+		..()
+		reagents.add_reagent("sacid",1000)
+
+/obj/structure/reagent_dispensers/cleanertank
+	name = "Space Cleaner Dispenser"
+	desc = "Dispenses space cleaner, for cleaning space."
+	icon = 'icons/apollo/objects.dmi'
+	icon_state = "cleanertank"
+	anchored = 1
+	density = 0
+
+	amount_per_transfer_from_this = 10
+
+	New()
+		..()
+		reagents.add_reagent("cleaner",1000)
