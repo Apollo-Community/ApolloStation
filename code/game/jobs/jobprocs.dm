@@ -81,9 +81,3 @@
 		for(var/i=1, i<candidates.len/9, i++)
 			if(rand(100)>45 ? pick(40;infect_mob_random_lesser(candidates[i]),60;infect_mob_random_greater(candidates[i])):)
 				continue
-
-			if(rand(25)<5)
-				if(rand(2)==2)
-					infect_mob_random_lesser(G)
-				else
-					infect_mob_random_greater(G)
