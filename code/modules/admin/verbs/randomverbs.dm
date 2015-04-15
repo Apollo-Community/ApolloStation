@@ -978,3 +978,19 @@ Traitors and the like can also be revived with the previous role mostly intact.
 					usr << "\red <b>The [del_gas] purge in [usr.loc:loc.name] was not successful. Make sure gas sources are closed.</b>"
 	else
 		usr << "You're doing something wierd right now.. stop it."		// <-- probably kwask
+
+/client/proc/gas_reset_zone()
+	set category = "Admin"
+	set name = "Zone Gas Reset"
+
+	set desc = "Resets the zone atmospheric settings."
+
+	var/G = usr.loc:zone:air
+
+	if(G)
+		G:gas = null
+		G:gas = list("oxygen" = 20, "nitrogen" = 80)
+
+		message_admins("Admin [key_name_admin(usr)] has reset atmospherics in [usr.loc:loc.name].")
+	else
+		usr << "You're doing something wierd right now.. stop it."		// <-- probably kwask
