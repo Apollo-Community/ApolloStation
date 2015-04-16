@@ -113,7 +113,23 @@
 	usr.forceMove(get_turf(src))
 
 	if (get_turf(user) == get_turf(src))
-		usr.visible_message("<span class='warning'>[user] climbs onto \the [src]!</span>")
+		if(istype(src,/obj/structure/table/glass))
+
+			if(prob(35))
+				src:health = 0
+			else
+				src:health -= 10
+
+			usr.visible_message("\red The [src] wobbles and cracks as [usr]'s fat ass climbs up on it!")
+
+			if(src:health<=0)
+				structure_shaken()
+				playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
+				usr.visible_message("\red The [src] smashes!")
+				new /obj/item/weapon/shard(src.loc)
+				del(src)
+		else
+			usr.visible_message("<span class='warning'>[user] climbs onto \the [src]!</span>")
 
 /obj/structure/proc/structure_shaken()
 
@@ -124,7 +140,7 @@
 		M.Weaken(5)
 		M << "<span class='danger'>You topple as \the [src] moves under you!</span>"
 
-		if(prob(25))
+		if(prob(45))
 
 			var/damage = rand(15,30)
 			var/mob/living/carbon/human/H = M

@@ -36,7 +36,22 @@
 	icon_state = "glass_table"
 	icon = 'icons/apollo/objects.dmi'
 	parts = /obj/item/weapon/table_parts/glass
-	health = 35
+	health = 20
+
+/obj/structure/table/glass/attackby(obj/item/W as obj, mob/user as mob)
+	if(!W)
+		return
+
+	if(usr.a_intent == "hurt")
+		health -= W.force
+		playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
+		usr.visible_message("\red <b>[usr]</b> hits the [src] violently with [W]!")
+		if(health<=0)
+			new /obj/item/weapon/shard(src.loc)
+			del(src)
+		return
+
+	..()
 
 /obj/structure/table/reinforced
 	icon_state = "reinf_table"
@@ -482,7 +497,7 @@
 	if (!can_touch(usr) || ismouse(usr))
 		return
 
-	if(flipped < 0 || !flip(get_cardinal_dir(usr,src)))
+	if(flipped < 0 || !flip(get_cardinal_dir(usr,src)) || istype(src,/obj/structure/table/glass))	//Don't want people to flip glass tables.
 		usr << "<span class='notice'>It won't budge.</span>"
 		return
 
