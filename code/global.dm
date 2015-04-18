@@ -252,7 +252,12 @@ var/max_explosion_range = 14
 var/list/area/unlogged_areas = list( /area/tdome )
 
 // Alien taste-test
-var/unwhitelisted_alien = "Diona"
+/* 	Diona
+	Skrell
+	Tajaran
+	Unathi
+	Wryn */
+var/unwhitelisted_alien = "Skrell"
 var/list/unwhitelisted_aliens = list( unwhitelisted_alien, "Machine", "Nucleation" )
 
 // Random round statistics

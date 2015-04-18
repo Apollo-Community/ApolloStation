@@ -151,7 +151,7 @@ var/global/list/uneatable = list(
 			pixel_x = -32
 			pixel_y = -32
 			grav_pull = 6
-			consume_range = 1
+			consume_range = 0
 			dissipate_delay = 5
 			dissipate_track = 0
 			dissipate_strength = 5
@@ -186,7 +186,16 @@ var/global/list/uneatable = list(
 			pixel_x = -128
 			pixel_y = -128
 			grav_pull = 10
-			consume_range = 4
+			consume_range = 5
+			dissipate = 0 //It cant go smaller due to e loss
+		if(11)//this one also lacks a check for gens because it eats everything
+			current_size = 11
+			icon = 'icons/effects/352x352.dmi'
+			icon_state = "singularity_s11"
+			pixel_x = -176
+			pixel_y = -176
+			grav_pull = 15
+			consume_range = 7
 			dissipate = 0 //It cant go smaller due to e loss
 	if(current_size == allowed_size)
 		investigate_log("<font color='red'>grew to size [current_size]</font>","singulo")
@@ -210,8 +219,10 @@ var/global/list/uneatable = list(
 			allowed_size = 5
 		if(1000 to 1999)
 			allowed_size = 7
-		if(2000 to INFINITY)
+		if(2000 to 4000)
 			allowed_size = 9
+		if(4000 to INFINITY)
+			allowed_size = 11
 	if(current_size != allowed_size)
 		expand()
 	return 1

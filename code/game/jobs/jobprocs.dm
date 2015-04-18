@@ -69,13 +69,15 @@
 
 /proc/rng_join_virus()
 	//Goes through every player and has a small chance to infect them after 100s -> 1000s waiting.
+	var/list/candidates
+
 	spawn(rand(1000,10000))
 		for(var/mob/living/carbon/human/G in player_list)
-			if(G.species.name == "Wryn")
-				return //wryn die from a fever :(
+			if(G.species.name == "Human")
+				candidates += G
 
-			if(rand(25)<5)
-				if(rand(2)==2)
-					infect_mob_random_lesser(G)
-				else
-					infect_mob_random_greater(G)
+		candidates = shuffle(candidates)
+
+		for(var/i=1, i<candidates.len/9, i++)
+			if(rand(100)>45 ? pick(40;infect_mob_random_lesser(candidates[i]),60;infect_mob_random_greater(candidates[i])):)
+				continue

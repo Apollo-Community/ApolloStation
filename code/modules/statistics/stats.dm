@@ -61,7 +61,7 @@
 /datum/round_stats/proc/increase_stat(var/stat_name, var/amount = 1)
 	stats[stat_name] += amount
 
-/datum/round_stats/proc/display(var/client/C)
+/datum/round_stats/proc/display()
 	var/work_time = round( world.time/10 )*living_mob_list.len
 	var/productivity = max(round(100*(1-(stats["break_time"]/work_time))),0) // Productivity is just percentage of time spent not AFK
 	productivity = max(0,min(99.99, productivity - (stats["deaths"]*3 + stats["clones"]*2 + stats["bombs_exploded"]*5 + stats["vended"] + stats["people_slipped"]*2) + (stats["beepsky_beatings"]*2 + stats["blood_mopped"] + stats["spam_blocked"])))
@@ -93,14 +93,11 @@
 				data["stat_[i]_unit"] = ""
 		else
 			i--
-
-	ui = nanomanager.try_update_ui(C, C, "main", ui, data, 1)
-	if (!ui)
-		ui = new(C, C, "main", "stats.tmpl", "End Round Stats", 500, 450)
-		ui.set_initial_data(data)
-		ui.open()
-		ui.set_auto_update(1)
+	for(var/mob/M in player_list)
+		if(M.client)
+			ui = new(M, M, "main", "stats.tmpl", "End Round Stats", 500, 450)
+			ui.set_initial_data(data)
+			ui.open()
 
 datum/round_stats/proc/call_stats()
-	for(var/client/C in clients)
-		statistics.display(C)
+	statistics.display()

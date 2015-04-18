@@ -13,6 +13,8 @@ var/list/admin_verbs_default = list(
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/locate_obj,
+	/client/proc/gas_del_zone,
+	/client/proc/gas_reset_zone,
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
 	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
 //	/datum/admins/proc/show_traitor_panel,	/*interface which shows a mob's mind*/ -Removed due to rare practical use. Moved to debug verbs ~Errorage
@@ -90,7 +92,6 @@ var/list/admin_verbs_sounds = list(
 	/client/proc/play_sound
 	)
 var/list/admin_verbs_fun = list(
-	/client/proc/roundstats,
 	/client/proc/angrymode,
 	/client/proc/object_talk,
 	/client/proc/cmd_admin_dress,
@@ -889,13 +890,6 @@ var/list/admin_verbs_mentor = list(
 		angry = 1
 		log_admin("[key_name(usr)] has become ANGRY!")
 		message_admins("\blue [key_name_admin(usr)] has become ANGRY!", 1)
-
-/client/proc/roundstats()
-	set category = "Fun"
-	set name = "Round Stats"
-	set desc = "Displays the round stats to everyone."
-
-	statistics.display(usr)
 
 /* This is the worst frickin verb, why did anyone ever think it was a good idea?
 /client/proc/man_up(mob/T as mob in mob_list)

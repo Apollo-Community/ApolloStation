@@ -82,6 +82,19 @@
 	alter_with = null
 	alter_cost = null
 
+/obj/item/weapon/table_parts/glass
+	name = "glass table parts"
+	desc = "Not for children under the age of three."
+	icon_state = "glass_tableparts"
+	icon = 'icons/apollo/objects.dmi'
+	flags = null
+
+	stack_types = list(/obj/item/stack/sheet/metal,/obj/item/stack/sheet/glass)
+	build_type = /obj/structure/table/glass
+	alter_type = null
+	alter_with = null
+	alter_cost = null
+
 /obj/item/weapon/table_parts/gambling/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/crowbar))
 		new /obj/item/stack/tile/carpet( get_turf(loc) )
@@ -96,6 +109,6 @@
 	icon_state = "rack_parts"
 	stack_types = list(/obj/item/stack/sheet/metal)
 	build_type = /obj/structure/table/rack
-	alter_type = null
-	alter_with = null
-	alter_cost = null
+	alter_type = /obj/item/weapon/table_parts/glass
+	alter_with = /obj/item/stack/sheet/glass
+	alter_cost = 1

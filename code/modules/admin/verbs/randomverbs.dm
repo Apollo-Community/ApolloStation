@@ -955,7 +955,42 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	for(var/atom/A in world)
 		if(istype(A,type_path))
 			src.Move(A)
-			switch(alert("Object found!","Would you like to keep searching?","No","Yes"))
+			switch(alert("Is this the correct object?","Object found!","No","Yes"))
 				if("Yes")	return
 
 	src << "\red No more instances of <b>[type_text]</b> exist on the current map"
+
+/client/proc/gas_del_zone()
+	set category = "Admin"
+	set name = "Zone Gas Purge"
+
+	set desc = "Purges a given gas from the zone you are located in"
+
+	var/datum/gas_mixture/G = usr.loc:zone:air:gas
+
+	if(G)
+		var/del_gas = input("Select the gas you wish to purge", "Gas") as null|anything in G
+		if(del_gas)
+			G -= del_gas
+			message_admins("Admin [key_name_admin(usr)] has deleted [del_gas] from [usr.loc:loc.name].")
+			spawn(35)
+				if(del_gas in G)
+					usr << "\red <b>The [del_gas] purge in [usr.loc:loc.name] was not successful. Make sure gas sources are closed.</b>"
+	else
+		usr << "You're doing something wierd right now.. stop it."		// <-- probably kwask
+
+/client/proc/gas_reset_zone()
+	set category = "Admin"
+	set name = "Zone Gas Reset"
+
+	set desc = "Resets the zone atmospheric settings."
+
+	var/G = usr.loc:zone:air
+
+	if(G)
+		G:gas = null
+		G:gas = list("oxygen" = 20, "nitrogen" = 80)
+
+		message_admins("Admin [key_name_admin(usr)] has reset atmospherics in [usr.loc:loc.name].")
+	else
+		usr << "You're doing something wierd right now.. stop it."		// <-- probably kwask

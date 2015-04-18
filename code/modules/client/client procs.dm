@@ -208,11 +208,11 @@
 
 	while(query_cid.NextRow())
 		if(lowertext(src.ckey) != query_cid.item[1])
-			related_accounts_cid += "[query_cid.item[1]], "
+			related_accounts_cid += "[query_cid.item[1]]<A href='?_src_=holder;notes=show;ckey=[query_cid.item[1]]'>(N)</A>,"
 		break
 
 	if(related_accounts_cid != "")
-		message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name(src)] has the same computer key as [related_accounts_cid] </font>", 1)
+		message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name(src)]<A href='?_src_=holder;notes=show;ckey=[lowertext(src.ckey)]'>(N)</A> has the same computer key as [related_accounts_cid] </font>", 1)
 
 
 	//Just the standard check to see if it's actually a number

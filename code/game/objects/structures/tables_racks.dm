@@ -30,6 +30,29 @@
 	parts = /obj/item/weapon/table_parts/gambling
 	health = 50
 
+/obj/structure/table/glass
+	name = "glass table"
+	desc = "A large glass table with metal supporting legs. It looks fragile."
+	icon_state = "glass_table"
+	icon = 'icons/apollo/objects.dmi'
+	parts = /obj/item/weapon/table_parts/glass
+	health = 20
+
+/obj/structure/table/glass/attackby(obj/item/W as obj, mob/user as mob)
+	if(!W)
+		return
+
+	if(usr.a_intent == "hurt")
+		health -= W.force
+		playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
+		usr.visible_message("\red <b>[usr]</b> hits the [src] violently with [W]!")
+		if(health<=0)
+			new /obj/item/weapon/shard(src.loc)
+			del(src)
+		return
+
+	..()
+
 /obj/structure/table/reinforced
 	icon_state = "reinf_table"
 	health = 200
@@ -260,6 +283,22 @@
 					icon_state = "gamble_tabledir2"
 				if(6)
 					icon_state = "gamble_tabledir3"
+		else if(istype(src,/obj/structure/table/glass))
+			switch(table_type)
+				if(0)
+					icon_state = "glass_table"
+				if(1)
+					icon_state = "glass_table_1tileendtable"
+				if(2)
+					icon_state = "glass_table_1tilethick"
+				if(3)
+					icon_state = "glass_table_tabledir"
+				if(4)
+					icon_state = "glass_table_middle"
+				if(5)
+					icon_state = "glass_table_tabledir2"
+				if(6)
+					icon_state = "glass_table_tabledir3"
 		else
 			switch(table_type)
 				if(0)
@@ -458,7 +497,7 @@
 	if (!can_touch(usr) || ismouse(usr))
 		return
 
-	if(flipped < 0 || !flip(get_cardinal_dir(usr,src)))
+	if(flipped < 0 || !flip(get_cardinal_dir(usr,src)) || istype(src,/obj/structure/table/glass))	//Don't want people to flip glass tables.
 		usr << "<span class='notice'>It won't budge.</span>"
 		return
 

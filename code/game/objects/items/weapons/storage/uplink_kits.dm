@@ -149,3 +149,12 @@
 	..()
 	new /obj/item/weapon/stamp/chameleon(src)
 	new /obj/item/weapon/pen/chameleon(src)
+
+/obj/item/weapon/storage/box/syndie_kit/spybug
+	name = "spybug kit"
+	desc = "Comes with everything you'll need to collect intel on the enemy."
+
+/obj/item/weapon/storage/box/syndie_kit/spybug/New()
+	..()
+	new /obj/item/clothing/head/helmet/virtual(src)
+	new /obj/item/weapon/holder/spybug(src)
