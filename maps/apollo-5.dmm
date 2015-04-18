@@ -748,7 +748,7 @@
 "ot" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/box/solution_trays,/turf/simulated/floor{icon_state = "white"},/area/research_outpost/sample)
 "ou" = (/obj/structure/stool,/turf/simulated/floor{icon_state = "white"},/area/research_outpost/sample)
 "ov" = (/obj/machinery/chem_master,/obj/machinery/firealarm{dir = 4; pixel_x = 16},/turf/simulated/floor{icon_state = "white"},/area/research_outpost/sample)
-"ow" = (/turf/space,/area/shuttle/research/station)
+"ow" = (/turf/space,/area/shuttle/research/outpost)
 "ox" = (/obj/machinery/atmospherics/unary/vent_pump/high_volume{dir = 1; frequency = 1379; id_tag = "mining_outpost_dock_pump"; power_rating = 30000},/turf/simulated/floor,/area/mine/lobby)
 "oy" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/space)
 "oz" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/alarm{dir = 4; icon_state = "alarm0"; pixel_x = -16; pixel_y = 0},/turf/simulated/floor,/area/mine/lobby)
