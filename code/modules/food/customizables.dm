@@ -369,10 +369,26 @@
 			del(src)
 		return
 
-	user << "<span class='notice'>You add [I] to [src].</span>"
 	if(istype(I,  /obj/item/weapon/reagent_containers/))
 		var/obj/item/weapon/reagent_containers/F = I
-		F.reagents.trans_to(src, F.reagents.total_volume)
+		if(istype(I, /obj/item/weapon/reagent_containers/food))
+			// Food and it's contents gets added right away...
+			F.reagents.trans_to(src, F.reagents.total_volume)
+		else if(F.reagents.total_volume)
+			// while other non-edible objects will transfer their contents first,
+			// IF, and only IF, they have something to transfer. Otherwise they
+			// will be put straight in just like any other items.
+			var/msg = ""
+			if(istype(I, /obj/item/weapon/reagent_containers/syringe))
+				msg = text("\red [] injects [] with the syringe!", user, src)
+			else
+				msg = text("\red [] adds [] to [].", user, I, src)
+			for(var/mob/O in viewers(world.view, user))
+				O.show_message(msg, 1)
+			F.reagents.trans_to(src, F.reagents.total_volume)
+			return
+
+	user << "<span class='notice'>You add [I] to [src].</span>"
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable))
 		var/obj/item/weapon/reagent_containers/food/snacks/customizable/origin = I
 		ingredients += origin.ingredients
