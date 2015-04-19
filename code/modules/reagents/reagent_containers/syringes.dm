@@ -123,6 +123,9 @@
 					update_icon()
 
 			if(SYRINGE_INJECT)
+				if(istype(target, /obj/item/weapon/reagent_containers/food/snacks/customizable))
+					return
+
 				if(!reagents.total_volume)
 					user << "\red The syringe is empty."
 					return

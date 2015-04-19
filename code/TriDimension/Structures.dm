@@ -21,6 +21,7 @@
 
 	New()
 		. = ..()
+		verbs += /obj/multiz/ladder/verb/climb_ladder
 
 	proc/connect()
 		if(icon_state == "ladderdown") // the upper will connect to the lower
@@ -54,6 +55,14 @@
 			if(target && icon_state == "ladderdown")
 				del target
 		return ..()
+
+	verb/climb_ladder()
+		set name = "Climb ladder"
+		set category = "Object"
+		set src in oview(1)
+
+		attack_hand(usr)
+		return 1
 
 	attackby(obj/item/C as obj, mob/user as mob)
 		(..)
