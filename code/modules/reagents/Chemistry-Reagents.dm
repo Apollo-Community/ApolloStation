@@ -764,7 +764,7 @@ datum
 						var/turf/simulated/wall/W = T
 						W.thermite = 1
 						W.overlays += image('icons/effects/effects.dmi',icon_state = "#673910")
-						message_admins("Thermite place on wall in [W.loc.name] ([W.x],[W.y],[W.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[W.x];Y=[W.y];Z=[W.z]'>JMP</a>)")
+						message_admins("Thermite place on wall in [W.loc.name] ([W.x],[W.y],[W.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[W.x];Y=[W.y];Z=[W.z]'>JMP</a>)", "LOG:")
 						log_game("Thermite place on wall in [W.loc.name] ([W.x],[W.y],[W.z])")
 				return
 

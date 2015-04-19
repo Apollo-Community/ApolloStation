@@ -194,7 +194,7 @@
 
 		log_str += " Last touched by: [src.fingerprintslast][last_touch_info]"
 		bombers += log_str
-		message_admins(log_str, 0, 1)
+		message_admins(log_str)
 		log_game(log_str)
 		merge_gases()
 		spawn(20) // In case one tank bursts

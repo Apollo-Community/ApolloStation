@@ -13,6 +13,11 @@ em						{font-style: normal;font-weight: bold;}
 
 .prefix					{font-weight: bold;}
 .log_message			{color: #386AFF;	font-weight: bold;}
+.attack_message			{color: #FF5050;	font-weight: bold;}
+.debug_message			{color: #00CCFF;	font-weight: bold;}
+.exploit_message		{color: #FF9933;	font-weight: bold;}
+.bews_message			{color: #CCFF33;	font-weight: bold;}
+
 
 /* OOC */
 .ooc					{font-weight: bold;}

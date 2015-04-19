@@ -54,7 +54,7 @@
 			grenades -= F
 			F.loc = user.loc
 			F.throw_at(target, 30, 2, user)
-			message_admins("[key_name_admin(user)] fired a grenade ([F.name]) from a grenade launcher ([src.name]).")
+			message_admins("[key_name_admin(user)] fired a grenade ([F.name]) from a grenade launcher ([src.name]).", "LOG:")
 			log_game("[key_name_admin(user)] used a grenade ([src.name]).")
 			F.active = 1
 			F.icon_state = initial(icon_state) + "_active"

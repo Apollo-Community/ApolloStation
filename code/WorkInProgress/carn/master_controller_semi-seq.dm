@@ -200,7 +200,7 @@ datum/controller/game_controller/proc/process()
 							MC_admin_report += "<b>OBJ PROCESSING stuck on </b>unknown<br>"
 					MC_admin_report += "<font color='red'><b>Master controller breaking out of delaying loop. Restarting the round is advised if problem persists. DO NOT manually restart the master controller.</b></font><br>"
 					message_admins(MC_admin_report)
-					log_admin("PROC BREAKAGE WARNING: infinite_loop_check = [IL_check]; [MC_report];")
+					log_admin("PROC BREAKAGE WARNING: infinite_loop_check = [IL_check]; [MC_report];", "DEBUG:")
 					break
 				sleep(3)
 		else

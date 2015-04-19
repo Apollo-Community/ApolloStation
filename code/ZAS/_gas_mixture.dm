@@ -933,7 +933,7 @@ What are the archived variables for?
 		var/self_heat_capacity = heat_capacity_archived()
 		var/sharer_heat_capacity = sharer.heat_capacity_archived()
 		if(!group_multiplier)
-			message_admins("Error!  The gas mixture (ref \ref[src]) has no group multiplier!")
+			message_admins("Error!  The gas mixture (ref \ref[src]) has no group multiplier!", "DEBUG:")
 			return
 
 		if((sharer_heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
@@ -948,7 +948,7 @@ What are the archived variables for?
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = heat_capacity()//_archived()
 		if(!group_multiplier)
-			message_admins("Error!  The gas mixture (ref \ref[src]) has no group multiplier!")
+			message_admins("Error!  The gas mixture (ref \ref[src]) has no group multiplier!", "DEBUG:")
 			return
 
 		if((model.heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))

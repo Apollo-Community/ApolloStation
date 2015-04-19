@@ -45,7 +45,7 @@
 		if("Supply")
 			supply_controller.process()
 			feedback_add_details("admin_verb","RSupply")
-	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.")
+	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.", "DEBUG:")
 	return
 
 /client/proc/debug_controller(controller in list("Master","Failsafe","Ticker","Lighting","Air","Jobs","Sun","Radio","Supply","Shuttles","Emergency Shuttle","Configuration","pAI", "Cameras", "Transfer Controller", "Gas Data","Event"))
@@ -106,5 +106,5 @@
 		if("Event")
 			debug_variables(event_manager)
 			feedback_add_details("admin_verb", "DEvent")
-	message_admins("Admin [key_name_admin(usr)] is debugging the [controller] controller.")
+	message_admins("Admin [key_name_admin(usr)] is debugging the [controller] controller.", "DEBUG:")
 	return

@@ -49,7 +49,7 @@ proc/makejson()
 		oldmap = M.mapname
 
 	else
-		message_admins("Did not locate mapinfo object. Go bug the mapper to add a /obj/mapinfo to their map!\n For now, you can probably spawn one manually. If you do, be sure to set it's mapname var correctly, or else you'll just get an error again.")
+		message_admins("Did not locate mapinfo object. Go bug the mapper to add a /obj/mapinfo to their map!\n For now, you can probably spawn one manually. If you do, be sure to set it's mapname var correctly, or else you'll just get an error again.", "DEBUG:")
 		return
 
 	message_admins("Current map: [oldmap]")
@@ -62,7 +62,7 @@ proc/makejson()
 		xpath = "#include \"maps\\[newpath].dmm\""
 		loc = findtext(text,path,1,0)
 		if(!loc)
-			message_admins("Could not find '#include \"maps\\[oldmap].dmm\"' or '\"maps/[oldmap].dmm\"' in the bs12.dme. The mapinfo probably has an incorrect mapname var. Alternatively, could not find the .dme itself, at [dmepath].")
+			message_admins("Could not find '#include \"maps\\[oldmap].dmm\"' or '\"maps/[oldmap].dmm\"' in the bs12.dme. The mapinfo probably has an incorrect mapname var. Alternatively, could not find the .dme itself, at [dmepath].", "DEBUG:")
 			return
 
 	var/rest = copytext(text, loc + length(path))

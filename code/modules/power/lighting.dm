@@ -296,7 +296,7 @@
 				if(status == LIGHT_OK && trigger)
 
 					log_admin("LOG: Rigged light explosion, last touched by [fingerprintslast]")
-					message_admins("LOG: Rigged light explosion, last touched by [fingerprintslast]")
+					message_admins("Rigged light explosion, last touched by [fingerprintslast]", "LOG:")
 
 					explode()
 			else if( prob( min(60, switchcount*switchcount*0.01) ) )
@@ -387,7 +387,7 @@
 				if(on && rigged)
 
 					log_admin("LOG: Rigged light explosion, last touched by [fingerprintslast]")
-					message_admins("LOG: Rigged light explosion, last touched by [fingerprintslast]")
+					message_admins("Rigged light explosion, last touched by [fingerprintslast]", "LOG:")
 
 					explode()
 			else
@@ -689,9 +689,9 @@
 /obj/item/weapon/light/bulb/fire
 	name = "fire bulb"
 	desc = "A replacement fire bulb."
-	icon_state = "fbulb"
-	base_state = "fbulb"
-	item_state = "egg4"
+	icon_state = "flight"
+	base_state = "flight"
+	item_state = "contvapour"
 	matter = list("glass" = 100)
 	brightness = 5
 
@@ -732,7 +732,7 @@
 		if(S.reagents.has_reagent("phoron", 5))
 
 			log_admin("LOG: [user.name] ([user.ckey]) injected a light with phoron, rigging it to explode.")
-			message_admins("LOG: [user.name] ([user.ckey]) injected a light with phoron, rigging it to explode.")
+			message_admins("[user.name] ([user.ckey]) injected a light with phoron, rigging it to explode.", "LOG:")
 
 			rigged = 1
 

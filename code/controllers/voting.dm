@@ -137,12 +137,12 @@ datum/controller/vote
 			if( mode == "gamemode" ) // Announce Extended gamemode, but not other gamemodes
 				text += "<b>The vote has ended.</b>"
 				log_admin("Vote Result: [.]")
-				message_admins("Vote Result: [.]")
+				message_admins("Vote Result: [.]", "LOG:")
 			else
 				if(mode != "gamemode")
 					text += "<b>Vote Result: [.]</b>"
 					log_admin("Vote Result: [.]")
-					message_admins("Vote Result: [.]")
+					message_admins("Vote Result: [.]", "LOG:")
 				else
 					text += "<b>The vote has ended.</b>" // What will be shown if it is a gamemode vote that isn't extended
 

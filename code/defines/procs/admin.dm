@@ -4,7 +4,7 @@ proc/log_and_message_admins(var/message as text)
 
 proc/admin_log_and_message_admins(var/message as text)
 	log_admin(usr ? "[key_name_admin(usr)] [message]" : "EVENT [message]")
-	message_admins(usr ? "[key_name_admin(usr)] [message]" : "EVENT [message]", 1)
+	message_admins(usr ? "[key_name_admin(usr)] [message]" : "EVENT [message]")
 
 proc/admin_attack_log(var/mob/attacker, var/mob/victim, var/attacker_message, var/victim_message, var/admin_message)
 	victim.attack_log += text("\[[time_stamp()]\] <font color='orange'>[victim_message] [key_name(attacker)]</font>")

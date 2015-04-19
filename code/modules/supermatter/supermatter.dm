@@ -97,7 +97,7 @@
 	. = ..()
 
 /obj/machinery/power/supermatter/proc/explode()
-	message_admins("Supermatter exploded at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+	message_admins("Supermatter exploded at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)", "LOG:")
 	log_game("Supermatter exploded at ([x],[y],[z])")
 	anchored = 1
 	grav_pulling = 1
@@ -369,7 +369,7 @@ proc/supermatter_delamination(var/turf/epicenter, var/size, var/transform_mobs =
 		if(!epicenter) return
 
 		if(adminlog)
-			message_admins("Supermatter delamination with size ([size]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</a>)")
+			message_admins("Supermatter delamination with size ([size]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</a>)", "LOG:")
 			log_game("Supermatter delamination with size ([size]) in area [epicenter.loc.name] ")
 
 		playsound(epicenter, 'sound/effects/explosionfar.ogg', 100, 1, round(size*2,1) )

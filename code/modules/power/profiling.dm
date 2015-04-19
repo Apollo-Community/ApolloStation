@@ -35,14 +35,14 @@ var/global/list/power_update_requests_by_area = list()
 		enable_power_update_profiling = 0
 
 		usr << "Area power update profiling disabled."
-		message_admins("[key_name(src)] toggled area power update profiling off.")
+		message_admins("[key_name(src)] toggled area power update profiling off.", "DEBUG:")
 		log_admin("[key_name(src)] toggled area power update profiling off.")
 	else
 		enable_power_update_profiling = 1
 		power_last_profile_time = world.time
 
 		usr << "Area power update profiling enabled."
-		message_admins("[key_name(src)] toggled area power update profiling on.")
+		message_admins("[key_name(src)] toggled area power update profiling on.", "DEBUG:")
 		log_admin("[key_name(src)] toggled area power update profiling on.")
 
 	feedback_add_details("admin_verb","APUP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
