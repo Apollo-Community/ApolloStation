@@ -257,7 +257,7 @@ var/list/area/unlogged_areas = list( /area/tdome )
 	Tajaran
 	Unathi
 	Wryn */
-var/unwhitelisted_alien = "Skrell"
+var/unwhitelisted_alien = "Tajaran"
 var/list/unwhitelisted_aliens = list( unwhitelisted_alien, "Machine", "Nucleation" )
 
 // Random round statistics
