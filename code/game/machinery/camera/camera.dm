@@ -55,7 +55,9 @@
 	..()
 
 	if(src.dir == 2 )
-		src.pixel_y = 20
+		var/turf/T = get_step( src, turn(src.dir, 180))
+		if( istype( T, /turf/simulated/wall ))
+			src.pixel_y = 20
 
 /obj/machinery/camera/Del()
 	if(!alarm_on)

@@ -254,6 +254,7 @@
 					broken(1)
 		spawn(1)
 			update(0)
+	update_icon()
 
 /obj/machinery/light/Del()
 	var/area/A = get_area(src)
@@ -264,7 +265,9 @@
 
 /obj/machinery/light/update_icon()
 	if( src.dir == 1 )
-		src.pixel_y = 19
+		var/turf/T = get_step( src, src.dir )
+		if( istype( T, /turf/simulated/wall ))
+			src.pixel_y = 19
 
 	switch(status)		// set icon_states
 		if(LIGHT_OK)

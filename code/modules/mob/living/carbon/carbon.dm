@@ -97,7 +97,6 @@
 
 	src.apply_damage(shock_damage, BURN, def_zone, used_weapon="Electrocution")
 
-
 	playsound(loc, "sparks", 50, 1, -1)
 	if (shock_damage > 15)
 		dir = turn(dir, 180)
