@@ -148,13 +148,13 @@
 				L.visible_message("<span class='danger'>[L] has been prodded with [src] by [user]!</span>")
 
 	//stun effects
-	L.stun_effect_act(stun, agony, target_zone, src)
+	if( status )
+		L.stun_effect_act(stun, agony, target_zone, src)
+		playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+		deductcharge(hitcost)
 
-	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 	if(!in_unlogged(user))
 		msg_admin_attack("[key_name(user)] stunned [key_name(L)] with the [src].")
-
-	deductcharge(hitcost)
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
