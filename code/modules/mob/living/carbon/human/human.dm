@@ -1306,3 +1306,13 @@
 	if((species.flags & NO_SLIP) || (shoes && (shoes.flags & NOSLIP)))
 		return 0
 	..(slipped_on,stun_duration)
+
+
+/mob/living/carbon/human/start_pulling(var/atom/movable/AM)
+	if( isBaldie( src ))
+		if( istype( AM, /obj/structure/reagent_dispensers/fueltank ))
+			message_admins("[src.ckey]/[src.real_name] is pulling a [AM] around <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>", "BEWS:")
+		else if( istype( AM, /obj/machinery/portable_atmospherics/canister ))
+			message_admins("[src.ckey]/[src.real_name] is pulling a [AM] around <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>", "BEWS:")
+
+	..(AM)

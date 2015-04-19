@@ -4,12 +4,12 @@ var/global/floorIsLava = 0
 
 
 ////////////////////////////////
-/proc/message_admins(var/msg)
+/proc/message_admins(var/msg, var/prefix = "ADMIN LOG:" )
 	var/area/A = get_area(src)
 	if( unlogged_areas.Find( A, 1, unlogged_areas.len+1 )) // Doesnt log if it originates in an unlogged area, E.G. thunderdome
 		return
 
-	msg = "<span class=\"log_message\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
+	msg = "<span class=\"log_message\"><span class=\"prefix\">[prefix]</span> <span class=\"message\">[msg]</span></span>"
 	log_adminwarn(msg)
 	for(var/client/C in admins)
 		if(R_ADMIN & C.holder.rights)

@@ -358,6 +358,8 @@
 			var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)// BS12 EDIT Arrivals Announcement Computer, rather than the AI.
 			if(character.mind.role_alt_title)
 				rank = character.mind.role_alt_title
+			if( isBaldie( character ))
+				message_admins("[character.ckey]/[character.real_name] is a baldie! Might want to keep a close eye on him! <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>", "BEWS:")
 			a.autosay("[character.real_name],[rank ? " [rank]," : " visitor," ] [join_message ? join_message : "has arrived on the station"].", "Arrivals Announcement Computer")
 			del(a)
 
@@ -512,3 +514,8 @@
 
 /mob/new_player/hear_radio(var/message, var/verb="says", var/datum/language/language=null, var/part_a, var/part_b, var/mob/speaker = null, var/hard_to_hear = 0)
 	return
+
+/proc/isBaldie( var/mob/living/carbon/human/character )
+	if( character.h_style == "Bald" && character.f_style == "Shaved" )
+		return 1
+	return 0
