@@ -167,6 +167,28 @@
 	src.thrower = null
 	src.throw_source = null
 
+/proc/get_distant_turf(atom/start, var/range, var/dir)
+	var/turf/T = null
+
+	switch(dir)
+		if(NORTH)
+			T = locate( start.x, start.y+range, start.z )
+		if(NORTHEAST)
+			T = locate( start.x+range, start.y+range, start.z )
+		if(EAST)
+			T = locate( start.x+range, start.y, start.z )
+		if(SOUTHEAST)
+			T = locate( start.x+range, start.y-range, start.z )
+		if(SOUTH)
+			T = locate( start.x, start.y-range, start.z )
+		if(SOUTHWEST)
+			T = locate( start.x-range, start.y-range, start.z )
+		if(WEST)
+			T = locate( start.x-range, start.y, start.z )
+		if(NORTHWEST)
+			T = locate( start.x-range, start.y+range, start.z )
+
+	return T
 
 //Overlays
 /atom/movable/overlay

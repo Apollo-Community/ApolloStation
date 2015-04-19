@@ -44,7 +44,7 @@
 				new/obj/structure/girder( src.loc )
 				del(src)
 
-	else if(istype(W, /obj/item/weapon/pickaxe/phoroncutter))
+	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 		user << "\blue Now slicing apart the girder"
 		if(do_after(user,30))
 			if(!src) return
@@ -241,7 +241,7 @@
 			user << "\blue You dissasembled the girder!"
 			dismantle()
 
-	else if(istype(W, /obj/item/weapon/pickaxe/phoroncutter))
+	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 		user << "\blue Now slicing apart the girder"
 		if(do_after(user,30))
 			user << "\blue You slice apart the girder!"

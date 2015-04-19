@@ -350,7 +350,7 @@
 				thermitemelt(user)
 				return
 
-		else if(istype(W, /obj/item/weapon/pickaxe/phoroncutter))
+		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 			thermitemelt(user)
 			return
 
@@ -402,7 +402,7 @@
 			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 			return
 
-	else if( istype(W, /obj/item/weapon/pickaxe/phoroncutter) )
+	else if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
 
 		user << "<span class='notice'>You begin slicing through the outer plating.</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)

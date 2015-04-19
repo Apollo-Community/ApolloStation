@@ -1374,7 +1374,7 @@ datum/design/item/weapon/mining/plasmacutter
 	req_tech = list("materials" = 4, "phorontech" = 3, "engineering" = 3)
 	materials = list("$metal" = 1500, "$glass" = 500, "$gold" = 500, "$phoron" = 500)
 	reliability_base = 79
-	build_path = /obj/item/weapon/pickaxe/phoroncutter
+	build_path = /obj/item/weapon/pickaxe/plasmacutter
 
 datum/design/item/weapon/mining/pick_diamond
 	id = "pick_diamond"

@@ -64,6 +64,8 @@
 	..()
 
 /mob/living/carbon/attack_hand(mob/M as mob)
+	M.do_attack_animation(src)
+
 	if(!istype(M, /mob/living/carbon)) return
 	if (hasorgans(M))
 		var/datum/organ/external/temp = M:organs_by_name["r_hand"]
@@ -94,16 +96,23 @@
 		return 0
 
 	src.apply_damage(shock_damage, BURN, def_zone, used_weapon="Electrocution")
+
+
 	playsound(loc, "sparks", 50, 1, -1)
 	if (shock_damage > 15)
+		dir = turn(dir, 180)
+		src.throw_at(get_distant_turf(get_turf(src), shock_damage, dir), min( 1, round(shock_damage/10)), throw_speed, null)
+
 		src.visible_message(
 			"\red [src] was shocked by the [source]!", \
 			"\red <B>You feel a powerful shock course through your body!</B>", \
 			"\red You hear a heavy electrical crack." \
 		)
 		playsound(src.loc, pick( 'sound/effects/electr1.ogg', 'sound/effects/electr2.ogg', 'sound/effects/electr3.ogg'), 100, 1)
+
 		Stun(10)//This should work for now, more is really silly and makes you lay there forever
 		Weaken(10)
+
 	else
 		src.visible_message(
 			"\red [src] was mildly shocked by the [source].", \

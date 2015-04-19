@@ -1,6 +1,6 @@
 /* Contains:
  * /obj/item/rig_module/device
- * /obj/item/rig_module/device/phoroncutter
+ * /obj/item/rig_module/device/plasmacutter
  * /obj/item/rig_module/device/healthscanner
  * /obj/item/rig_module/device/drill
  * /obj/item/rig_module/device/orescanner
@@ -25,15 +25,15 @@
 	var/device_type
 	var/obj/item/device
 
-/obj/item/rig_module/device/phoroncutter
-	name = "hardsuit phoron cutter"
+/obj/item/rig_module/device/plasmacutter
+	name = "hardsuit plasma cutter"
 	desc = "A lethal-looking industrial cutter."
-	interface_name = "phoron cutter"
-	interface_desc = "A self-sustaining phoron arc capable of cutting through walls."
-	suit_overlay_active = "phoroncutter"
-	suit_overlay_inactive = "phoroncutter"
+	interface_name = "plasma cutter"
+	interface_desc = "A self-sustaining plasma arc capable of cutting through walls."
+	suit_overlay_active = "plasmacutter"
+	suit_overlay_inactive = "plasmacutter"
 
-	device_type = /obj/item/weapon/pickaxe/phoroncutter
+	device_type = /obj/item/weapon/pickaxe/plasmacutter
 
 /obj/item/rig_module/device/healthscanner
 	name = "health scanner module"
