@@ -101,7 +101,7 @@
 	playsound(loc, "sparks", 50, 1, -1)
 	if (shock_damage > 15)
 		dir = turn(dir, 180)
-		src.throw_at(get_distant_turf(get_turf(src), shock_damage, dir), min( 1, round(shock_damage/10)), throw_speed, null)
+		src.throw_at(get_distant_turf(get_turf(src), shock_damage, dir), max( 1, round(shock_damage/10)), throw_speed, null)
 
 		src.visible_message(
 			"\red [src] was shocked by the [source]!", \
