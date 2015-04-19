@@ -12,6 +12,7 @@
 	del(src)
 
 /obj/structure/attack_hand(mob/user)
+	user.do_attack_animation(src)
 	if(breakable)
 		if(HULK in user.mutations)
 			user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
@@ -197,3 +198,7 @@
 	visible_message("<span class='danger'>[user] [attack_verb] the [src] apart!</span>")
 	spawn(1) destroy()
 	return 1
+
+/obj/structure/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	user.do_attack_animation(src)
+	..()

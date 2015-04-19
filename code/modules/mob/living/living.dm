@@ -429,7 +429,6 @@
 										if(blood_volume > 0)
 											H:vessel.remove_reagent("blood",1)
 
-
 						step(pulling, get_dir(pulling.loc, T))
 						if(t)
 							M.start_pulling(t)
@@ -842,3 +841,40 @@
 
 /mob/living/proc/slip(var/slipped_on,stun_duration=8)
 	return 0
+
+/atom/movable/proc/do_attack_animation(atom/A, end_pixel_y)
+	var/pixel_x_diff = 0
+	var/pixel_y_diff = 0
+	var/final_pixel_y = initial(pixel_y)
+	if(end_pixel_y)
+		final_pixel_y = end_pixel_y
+	var/direction = get_dir(src, A)
+	switch(direction)
+		if(NORTH)
+			pixel_y_diff = 8
+		if(SOUTH)
+			pixel_y_diff = -8
+		if(EAST)
+			pixel_x_diff = 8
+		if(WEST)
+			pixel_x_diff = -8
+		if(NORTHEAST)
+			pixel_x_diff = 8
+			pixel_y_diff = 8
+		if(NORTHWEST)
+			pixel_x_diff = -8
+			pixel_y_diff = 8
+		if(SOUTHEAST)
+			pixel_x_diff = 8
+			pixel_y_diff = -8
+		if(SOUTHWEST)
+			pixel_x_diff = -8
+			pixel_y_diff = -8
+
+	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
+	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
+
+
+/mob/living/do_attack_animation(atom/A)
+	..(A, initial(pixel_y))
+

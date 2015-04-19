@@ -35,6 +35,8 @@
 	status_flags = CANPUSH
 
 /mob/living/simple_animal/hostile/broodling/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	user.do_attack_animation(src)
+
 	if(O.force)
 		if(prob(80))
 			var/damage = O.force

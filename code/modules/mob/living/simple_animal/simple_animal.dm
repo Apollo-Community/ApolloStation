@@ -275,6 +275,8 @@
 			for(var/i=0;i<actual_meat_amount;i++)
 				var/obj/item/meat = new meat_type(get_turf(src))
 				meat.name = "[src.name] [meat.name]"
+
+			user.do_attack_animation(src)
 			if(small)
 				user.visible_message("<span class='danger'>[user] chops up \the [src]!</span>")
 				new/obj/effect/decal/cleanable/blood/splatter(get_turf(src))
@@ -284,11 +286,13 @@
 				gib()
 			return
 
+	user.do_attack_animation(src)
 	if(O.force)
 		var/damage = O.force
 		if (O.damtype == HALLOSS)
 			damage = 0
 		adjustBruteLoss(damage)
+
 		visible_message("<span class='danger'>\The [src] has been attacked with \the [O] by [user].</span>")
 	else
 		user << "<span class='danger'>This weapon is ineffective; it does no damage.</span>"

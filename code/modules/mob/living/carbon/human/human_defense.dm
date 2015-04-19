@@ -218,6 +218,7 @@ emp_act
 			affecting.sabotaged = 1
 		return 1
 
+	user.do_attack_animation(src)
 	if(I.attack_verb.len)
 		visible_message("\red <B>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I.name] by [user]!</B>")
 	else

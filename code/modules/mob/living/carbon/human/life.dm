@@ -214,16 +214,9 @@
 			if (prob(10))
 				stuttering = max(10, stuttering)
 		// No. -- cib
-		/*if (getBrainLoss() >= 60 && stat != 2)
+		if (getBrainLoss() >= 60 && stat != 2)
 			if (prob(3))
-				switch(pick(1,2,3))
-					if(1)
-						say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that meatball traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH monkeyS", "stop grifing me!!!!", "SOTP IT#"))
-					if(2)
-						say(pick("FUS RO DAH","fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom", "PACKETS!!!"))
-					if(3)
-						emote("drool")
-		*/
+				emote("drool")
 
 		if(stat != 2)
 			var/rn = rand(0, 200)
@@ -279,8 +272,8 @@
 				radiation -= rads
 				radiation -= 1 * RADIATION_SPEED_COEFFICIENT
 				reagents.add_reagent("radium", rads/10)
-				if( prob(10) )
-					src << "\blue You feel relaxed."
+				if( prob(3) )
+					src << pick( "\blue You feel relaxed.", "\blue You feel soothed.", "\blue A warm, calming wave rolls over you." )
 				return
 
 			var/datum/organ/internal/diona/nutrients/rad_organ = locate() in internal_organs
@@ -627,7 +620,7 @@
 				else
 					apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Heat")
 					fire_alert = max(fire_alert, 2)
-			
+
 			else if(breath.temperature <= species.cold_level_1)
 				if(breath.temperature > species.cold_level_2)
 					apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Cold")
@@ -711,7 +704,7 @@
 			//Body temperature is too hot.
 			fire_alert = max(fire_alert, 1)
 			if(status_flags & GODMODE)	return 1	//godmode
-			
+
 			if(bodytemperature < species.heat_level_2)
 				take_overall_damage(burn=HEAT_DAMAGE_LEVEL_1, used_weapon = "High Body Temperature")
 				fire_alert = max(fire_alert, 2)
@@ -725,7 +718,7 @@
 		else if(bodytemperature <= species.cold_level_1)
 			fire_alert = max(fire_alert, 1)
 			if(status_flags & GODMODE)	return 1	//godmode
-			
+
 			if(!istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
 				if(bodytemperature > species.cold_level_2)
 					take_overall_damage(burn=COLD_DAMAGE_LEVEL_1, used_weapon = "High Body Temperature")

@@ -59,6 +59,8 @@
 	status_flags = 0
 
 /mob/living/simple_animal/hostile/syndicate/melee/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	user.do_attack_animation(src)
+
 	if(O.force)
 		if(prob(80))
 			var/damage = O.force

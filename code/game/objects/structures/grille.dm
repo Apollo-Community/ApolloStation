@@ -12,6 +12,19 @@
 	var/health = 10
 	var/destroyed = 0
 
+/obj/structure/grille/New()
+	relativewall_neighbours()
+	..()
+
+/obj/structure/grille/Del()
+	spawn(rand(1,10))
+		for(var/turf/simulated/wall/W in range(src,1))
+			W.relativewall()
+
+		for(var/obj/structure/falsewall/W in range(src,1))
+			W.relativewall()
+
+	..()
 
 /obj/structure/grille/ex_act(severity)
 	del(src)

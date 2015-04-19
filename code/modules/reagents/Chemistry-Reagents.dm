@@ -2395,7 +2395,7 @@ datum
 			id = "syndicream"
 			description = "Delicious cream filling of a mysterious origin. Tastes criminally good."
 			nutriment_factor = 1 * REAGENTS_METABOLISM
-			color = "#AB7878" // rgb: 171, 120, 120
+			color = "#FFFFF8" // rgb: 171, 120, 120
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
@@ -2406,6 +2406,13 @@ datum
 						M.nutrition += nutriment_factor
 						..()
 						return
+
+					var/mob/living/carbon/human/H = M
+					for(var/datum/organ/external/E in H.bad_external_organs)
+						if (E.status & ORGAN_BROKEN)
+							if (prob(5))
+								if (E.mend_fracture())
+									H << "/blue You feel something mend itself inside your [E.display_name].</span>"
 				..()
 
 		cornoil

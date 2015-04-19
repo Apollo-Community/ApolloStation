@@ -1077,6 +1077,8 @@ About the new airlock wires panel:
 	return 0
 
 /obj/machinery/door/airlock/New(var/newloc, var/obj/structure/door_assembly/assembly=null)
+	relativewall_neighbours()
+
 	..()
 
 	//High-sec airlocks are much harder to completely break by emitters.
@@ -1116,6 +1118,17 @@ About the new airlock wires panel:
 				if(A.closeOtherId == src.closeOtherId && A != src)
 					src.closeOther = A
 					break
+
+
+/obj/machinery/door/airlock/Del()
+	spawn(rand(1,10))
+		for(var/turf/simulated/wall/W in range(src,1))
+			W.relativewall()
+
+		for(var/obj/structure/falsewall/W in range(src,1))
+			W.relativewall()
+
+	..()
 
 // Most doors will never be deconstructed over the course of a round,
 // so as an optimization defer the creation of electronics until

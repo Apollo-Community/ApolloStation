@@ -89,6 +89,8 @@
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
 	if(!Adjacent(target_mob))
 		return
+
+	src.do_attack_animation(target_mob)
 	if(isliving(target_mob))
 		var/mob/living/L = target_mob
 		L.attack_generic(src,rand(melee_damage_lower,melee_damage_upper),attacktext)
@@ -113,11 +115,11 @@
 
 /mob/living/simple_animal/hostile/proc/ListTargets(var/dist = 7)
 	var/list/L = hearers(src, dist)
-	
+
 	for (var/obj/mecha/M in mechas_list)
 		if (get_dist(src, M) <= dist)
 			L += M
-	
+
 	return L
 
 /mob/living/simple_animal/hostile/death()

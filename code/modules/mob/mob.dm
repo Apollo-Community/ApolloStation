@@ -1210,3 +1210,7 @@ mob/proc/yank_out_object()
 
 /mob/proc/updateicon()
 	return
+
+/mob/attack_hand(mob/user as mob)
+	user.do_attack_animation(src)
+	..()

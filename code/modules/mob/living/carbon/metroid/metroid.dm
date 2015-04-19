@@ -363,6 +363,8 @@
 	return
 
 /mob/living/carbon/slime/attackby(obj/item/W, mob/user)
+	user.do_attack_animation(src)
+
 	if(W.force > 0)
 		attacked += 10
 		if(prob(25))
