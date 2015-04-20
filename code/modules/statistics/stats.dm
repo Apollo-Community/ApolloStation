@@ -88,7 +88,7 @@
 			data["stat_[i]_desc"] = descriptions[stat]
 			data["stat_[i]"] = stats[stat]
 			if( units[stat] )
-				data["stat_[i]_unit"] = units[stat]
+				data["stat_[i]_unit"] = round( units[stat], 0.01)
 			else
 				data["stat_[i]_unit"] = ""
 		else
