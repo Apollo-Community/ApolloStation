@@ -45,7 +45,7 @@
 		ui.open()
 		ui.set_auto_update(1)
 
-/client/verb/open_STUI()
+/client/proc/open_STUI()
 	set name = "Open STUI"
 	set category = "Admin"
 

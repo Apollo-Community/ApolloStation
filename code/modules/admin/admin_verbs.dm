@@ -15,7 +15,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/locate_obj,
 	/client/proc/gas_del_zone,
 	/client/proc/gas_reset_zone,
-	/client/verb/open_STUI,
+	/client/proc/open_STUI,
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
 	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
 //	/datum/admins/proc/show_traitor_panel,	/*interface which shows a mob's mind*/ -Removed due to rare practical use. Moved to debug verbs ~Errorage
