@@ -836,6 +836,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 				entry += "   AFK"
 
 			stat("[C.key]", entry)
+
 	if(statpanel("Status"))	//not looking at that panel
 		if(client && client.holder)
 			stat(null,"Location:\t([x], [y], [z])")
