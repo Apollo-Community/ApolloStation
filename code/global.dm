@@ -263,4 +263,7 @@ var/list/unwhitelisted_aliens = list( unwhitelisted_alien, "Machine", "Nucleatio
 // Random round statistics
 var/datum/round_stats/statistics = new()
 
+// STUI
+var/datum/STUI/STUI = new()
+
 #define AFK_TIME 6000 // 10 minutes

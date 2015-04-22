@@ -7,8 +7,8 @@
 	msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
 	if(!msg)	return
 
-	log_admin("[key_name(src)] : [msg]")
-
+	log_adminsay("ADMIN : [key_name(src)] : [msg]")
+	STUI.logs[3] += "\[[time_stamp()]] <font color='#9611D4'>ADMIN : [key_name(src)] : [msg] </font><br>"
 	for(var/client/C in admins)
 		if((R_ADMIN & C.holder.rights))
 			if(!(R_MOD & C.holder.rights))
@@ -24,7 +24,8 @@
 	if(!check_rights(R_ADMIN|R_MOD))	return
 
 	msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
-	log_admin("MOD: [key_name(src)] : [msg]")
+	log_adminsay("MOD: [key_name(src)] : [msg]")
+	STUI.logs[3] += "\[[time_stamp()]] <font color='#b82e00'>MOD: [key_name(src)] : [msg]</font><br>"
 
 	if (!msg)
 		return

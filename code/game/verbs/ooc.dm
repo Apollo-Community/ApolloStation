@@ -37,8 +37,6 @@
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
 
-	log_ooc("[mob.name]/[key] : [msg]")
-
 	var/ooc_style = "everyone"
 	if(holder && !holder.fakekey)
 		ooc_style = "elevated"
@@ -48,6 +46,10 @@
 			ooc_style = "developer"
 		if(holder.rights & R_ADMIN)
 			ooc_style = "admin"
+
+	log_ooc("[mob.name]/[key] : [msg]")
+	STUI.logs[4] += "\[[time_stamp()]] <font color='#0066FF'>OOC: [mob.name]/[key]: [msg]</font><br>"
+
 
 	for(var/client/target in clients)
 		if(target.prefs.toggles & CHAT_OOC)
@@ -134,3 +136,5 @@
 				prefix = ""
 			if((target.mob in heard) || (target in admins))
 				target << "<span class='ooc'><span class='looc'>" + create_text_tag("looc", "LOOC:", target) + " <span class='prefix'>[prefix]</span><EM>[display_name][admin_stuff]:</EM> <span class='message'>[msg]</span></span></span>"
+
+	STUI.logs[4] += "\[[time_stamp()]] <font color='#3A9696'>LOOC: [mob.name]/[key]: [msg]</font><br>"

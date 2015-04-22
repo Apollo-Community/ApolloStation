@@ -1,7 +1,7 @@
 // All mobs should have custom emote, really..
 //m_type == 1 --> visual.
 //m_type == 2 --> audible
-/mob/proc/custom_emote(var/m_type=1,var/message = null)
+/mob/proc/custom_emote(var/m_type=1,var/message = null, var/nolog = 0)
 
 	if(stat || !use_me && usr == src)
 		usr << "You are unable to emote."
@@ -22,7 +22,8 @@
 
 
 	if (message)
-		log_emote("[name]/[key] : [message]")
+		if(!nolog)
+			log_emote("[name]/[key] : [message]")
 
 		var/list/seeing_obj = list() //For objs that need to see emotes.  You can use see_emote(), which is based off of hear_talk()
 

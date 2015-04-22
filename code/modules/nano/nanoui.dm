@@ -465,9 +465,10 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/push_data(data, force_push = 0)
-	update_status(0)
-	if (status == STATUS_DISABLED && !force_push)
-		return // Cannot update UI, no visibility
+	if(ui_key != "STUI")
+		update_status(0)
+		if (status == STATUS_DISABLED && !force_push)
+			return // Cannot update UI, no visibility
 
 	var/list/send_data = get_send_data(data)
 
@@ -482,7 +483,13 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/Topic(href, href_list)
+	if(ui_key == "STUI")
+		STUI.Topic(href,href_list)
+		nanomanager.update_uis(src_object)
+		return
+
 	update_status(0) // update the status
+
 	if (status != STATUS_INTERACTIVE || user != usr) // If UI is not interactive or usr calling Topic is not the UI user
 		return
 
@@ -523,5 +530,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/update(var/force_open = 0)
-	src_object.ui_interact(user, ui_key, src, force_open)
-
+	if(ui_key == "STUI")
+		STUI.ui_interact(user, ui_key, src, force_open)
+	else
+		src_object.ui_interact(user, ui_key, src, force_open)

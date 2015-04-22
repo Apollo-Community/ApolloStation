@@ -99,8 +99,6 @@
 	return (copytext(message, length(message)) == "!") ? 2 : 1
 
 /datum/language/proc/broadcast(var/mob/living/speaker,var/message,var/speaker_mask)
-	log_say("[key_name(speaker)] : ([name]) [message]")
-
 	for(var/mob/player in player_list)
 
 		var/understood = 0
@@ -115,10 +113,8 @@
 			if(!speaker_mask) speaker_mask = speaker.name
 			if(name == "Wryn Hivemind")
 				msg = "<i><span class='game say'>[name], <span class='name'>A voice</span> <span class='message'>[speech_verb], \"<span class='[colour]'>[message]</span><span class='message'>\"</span></span></i>"
-				log_say("[name]/[key] : [message]")
 			else
 				msg = "<i><span class='game say'>[name], <span class='name'>[speaker_mask]</span> <span class='message'>[speech_verb], \"<span class='[colour]'>[message]</span><span class='message'>\"</span></span></i>"
-				log_say("[name]/[key] : [message]")
 			player << "[msg]"
 
 /datum/language/proc/check_special_condition(var/mob/other)
@@ -407,6 +403,8 @@
 
 	var/message_start = "<i><span class='game say'>[name], <span class='name'>[speaker.name]</span>"
 	var/message_body = "<span class='message'>[speaker.say_quote(message)], \"[message]\"</span></span></i>"
+
+	STUI.logs[5] += "\[[time_stamp()]]<font color='#FFFF00'>BINARY: [key_name(speaker)] : [message]</font><br>"
 
 	for (var/mob/M in dead_mob_list)
 		if(!istype(M,/mob/new_player) && !istype(M,/mob/living/carbon/brain)) //No meta-evesdropping

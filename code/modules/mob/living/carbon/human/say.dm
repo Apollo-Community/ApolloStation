@@ -14,6 +14,7 @@
 
 	if(stat)
 		if(stat == 2)
+			STUI.logs[5] += "\[[time_stamp()]]<font color='#9611D4'>DSAY: [key_name(src)] : [message]</font><br>"
 			return say_dead(message)
 		return
 
@@ -50,6 +51,12 @@
 		// This is broadcast to all mobs with the language,
 		// irrespective of distance or anything else.
 		if(speaking.flags & HIVEMIND)
+			var/hive_prefix = "WRYN"
+			if(speaking.name == "Changeling")
+				hive_prefix = "LING"
+			else if(speaking.name == "Xenomorph")
+				hive_prefix = "XENO"
+			STUI.logs[5] += "\[[time_stamp()]]<font color='#0099FF'>[hive_prefix]: [key_name(src)] : [message]</font><br>"
 			speaking.broadcast(src,trim(message))
 			return
 		//If we've gotten this far, keep going!
@@ -136,6 +143,7 @@
 
 	//speaking into radios
 	if(used_radios.len)
+		STUI.logs[5] += "\[[time_stamp()]]<font color='#4f7529'>RADIO: [key_name(src)] : [message]</font><br>"
 		italics = 1
 		message_range = 1
 		if(speaking)
@@ -149,7 +157,7 @@
 			if (speech_sound)
 				sound_vol *= 0.5
 
-	..(message, speaking, verb, alt_name, italics, message_range, speech_sound, sound_vol)	//ohgod we should really be passing a datum here.
+	..(message, speaking, verb, alt_name, italics, message_range, speech_sound, sound_vol,used_radios.len)	//ohgod we should really be passing a datum here.
 
 /mob/living/carbon/human/proc/forcesay(list/append)
 	if(stat == CONSCIOUS)

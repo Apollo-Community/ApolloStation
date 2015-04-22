@@ -15,6 +15,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/locate_obj,
 	/client/proc/gas_del_zone,
 	/client/proc/gas_reset_zone,
+	/client/verb/open_STUI,
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
 	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
 //	/datum/admins/proc/show_traitor_panel,	/*interface which shows a mob's mind*/ -Removed due to rare practical use. Moved to debug verbs ~Errorage
@@ -356,6 +357,15 @@ var/list/admin_verbs_mentor = list(
 	set category = "Admin"
 	set name = "Aghost"
 	if(!holder)	return
+
+	var/new_STUI = 0
+
+	if(usr:open_uis)
+		for(var/datum/nanoui/ui in usr:open_uis)
+			if(ui.title == "STUI")
+				new_STUI = 1
+				ui.close()
+
 	if(istype(mob,/mob/dead/observer))
 		//re-enter
 		var/mob/dead/observer/ghost = mob
@@ -376,10 +386,14 @@ var/list/admin_verbs_mentor = list(
 		var/mob/body = mob
 		var/mob/dead/observer/ghost = body.ghostize(1)
 		ghost.admin_ghosted = 1
+
 		if(body && !body.key)
 			body.key = "@[key]"	//Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
 		feedback_add_details("admin_verb","O") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+			//re-open STUI
+	if(new_STUI)
+		STUI.ui_interact(mob)
 
 /client/proc/invisimin()
 	set name = "Invisimin"

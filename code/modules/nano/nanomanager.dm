@@ -206,6 +206,7 @@
 //
 /datum/nanomanager/proc/user_logout(var/mob/user)
 	//testing("nanomanager/user_logout user [user.name]")
+
 	return close_user_uis(user)
 
  /**

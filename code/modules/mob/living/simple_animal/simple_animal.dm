@@ -205,14 +205,14 @@
 	..(icon_gib,1)
 
 /mob/living/simple_animal/emote(var/act, var/type, var/desc)
-	if(act)
-		..(act, type, desc)
+	if(act == "me")
+		custom_emote(type,desc, nolog = !ckey)		//if the animal has a ckey then it will log the message
 
 /mob/living/simple_animal/proc/visible_emote(var/act_desc)
-	custom_emote(1, act_desc)
+	custom_emote(1, act_desc, nolog = !ckey)			//if the animal has a ckey then it will log the message
 
 /mob/living/simple_animal/proc/audible_emote(var/act_desc)
-	custom_emote(2, act_desc)
+	custom_emote(2, act_desc, nolog = !ckey)
 
 /mob/living/simple_animal/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj || Proj.nodamage)
@@ -375,7 +375,7 @@
 
 	message = capitalize(trim_left(message))
 
-	..(message, null, verb)
+	..(message, null, verb, nolog = !ckey)	//if the animal has a ckey then it will log the message
 
 /mob/living/simple_animal/put_in_hands(var/obj/item/W) // No hands.
 	W.loc = get_turf(src)

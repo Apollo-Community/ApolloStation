@@ -27,7 +27,6 @@
 		stafftype = "ADMIN"
 
 	msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
-	log_admin("[key_name(src)] : [msg]")
 
 	if (!msg)
 		return

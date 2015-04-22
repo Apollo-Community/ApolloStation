@@ -41,6 +41,7 @@ var/global/floorIsLava = 0
 		return
 
 	log_attack(text)
+
 	var/rendered = "<span class=\"attack_message\"><span class=\"prefix\">ATTACK:</span> <span class=\"message\">[text]</span></span>"
 	for(var/client/C in admins)
 		if(R_ADMIN & C.holder.rights)

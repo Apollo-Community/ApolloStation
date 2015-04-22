@@ -530,6 +530,8 @@ proc/is_blind(A)
 				lname = "<span class='name'>[lname]</span> "
 			M << "<span class='deadsay'>" + create_text_tag("dead", "DEAD:", M.client) + " [lname][follow][message]</span>"
 
+	STUI.logs[5] += "\[[time_stamp()]]<font color='#FF66FF'>DEAD : [keyname] ([name])(<a href='?_src_=holder;adminplayerobservejump=\ref[subject]'>JMP</a>) : [message]</font><br>"
+
 //Announces that a ghost has joined/left, mainly for use with wizards
 /proc/announce_ghost_joinleave(O, var/joined_ghosts = 1, var/message = "")
 	var/client/C
