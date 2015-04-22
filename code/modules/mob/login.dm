@@ -26,6 +26,7 @@
 /mob/Login()
 
 	player_list |= src
+	player_list = sortList(player_list)
 	update_Login_details()
 	world.update_status()
 

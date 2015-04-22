@@ -20,6 +20,7 @@
 
 	sight |= SEE_TURFS
 	player_list |= src
+	player_list = sortList(player_list)
 
 /*
 	var/list/watch_locations = list()
