@@ -775,7 +775,9 @@
 		set desc = "Fire the weapons."
 		set category = "Spacepod"
 		set src = usr.loc
-		equipment_system.weapon_system.fire_weapons()
+		if( equipment_system )
+			if( equipment_system.weapon_system )
+				equipment_system.weapon_system.fire_weapons()
 
 obj/spacepod/verb/toggleLights()
 	set name = "Toggle Lights"
