@@ -141,11 +141,12 @@
 			if("finalise_create_account")
 				var/account_name = href_list["holder_name"]
 				var/starting_funds = max(text2num(href_list["starting_funds"]), 0)
-				create_account(account_name, starting_funds, src)
-
 				starting_funds = Clamp(starting_funds, 0, station_account.money)	// Not authorized to put the station in debt.
 				starting_funds = min(starting_funds, fund_cap)						// Not authrorized to give more than the fund cap.
+
 				if(starting_funds > 0)
+					create_account(account_name, starting_funds, src)
+
 					//subtract the money
 					station_account.money -= starting_funds
 
@@ -155,6 +156,9 @@
 
 					creating_new_account = 0
 					ui.close()
+				else
+					usr << "\red There's not enough funds in the station's account to create this new account!"
+					return 0
 
 				creating_new_account = 0
 			if("insert_card")
