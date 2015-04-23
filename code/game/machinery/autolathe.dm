@@ -13,7 +13,7 @@
 	var/list/storage_capacity = list("metal" = 0, "glass" = 0)
 	var/show_category = "All"
 
-	var/panel_open = 0
+	panel_open = 0
 	var/hacked = 0
 	var/disabled = 0
 	var/shocked = 0

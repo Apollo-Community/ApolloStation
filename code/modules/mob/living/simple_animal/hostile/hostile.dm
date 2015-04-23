@@ -120,6 +120,10 @@
 		if (get_dist(src, M) <= dist)
 			L += M
 
+	for (var/obj/mecha/M in spacepods_list)
+		if (get_dist(src, M) <= dist)
+			L += M
+
 	return L
 
 /mob/living/simple_animal/hostile/death()

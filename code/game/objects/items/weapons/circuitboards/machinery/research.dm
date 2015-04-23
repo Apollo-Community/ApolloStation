@@ -1,5 +1,5 @@
 #ifndef T_BOARD
-#error T_BOARD macro is not defined but we need it! 
+#error T_BOARD macro is not defined but we need it!
 #endif
 
 obj/item/weapon/circuitboard/rdserver
@@ -68,3 +68,15 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/manipulator" = 1,
 							"/obj/item/weapon/stock_parts/micro_laser" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
+
+/obj/item/weapon/circuitboard/podfab
+	name = "Circuit board (Spacepod Fabricator)"
+	build_path = "/obj/machinery/spod_part_fabricator" //ah fuck my life
+	board_type = "machine"
+	origin_tech = "programming=3;engineering=3"
+	frame_desc = "Requires 3 Matter Bins, 2 Manipulators, 2 Micro-Lasers, and 1 Console Screen."
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 3,
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/weapon/stock_parts/micro_laser = 2,
+							/obj/item/weapon/stock_parts/console_screen = 1)

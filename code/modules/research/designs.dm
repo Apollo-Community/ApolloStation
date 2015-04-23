@@ -31,12 +31,6 @@ other types of metals and chemistry for reagents).
 
 
 */
-#define	IMPRINTER	1	//For circuits. Uses glass/chemicals.
-#define PROTOLATHE	2	//New stuff. Uses glass/metal/chemicals
-#define	AUTOLATHE	4	//Uses glass/metal only.
-#define CRAFTLATHE	8	//Uses fuck if I know. For use eventually.
-#define MECHFAB		16	//Remember, objects utilising this flag should have construction_time and construction_cost vars.
-//Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 datum/design						//Datum for object designs, used in construction
 	var/name = null					//Name of the created object. If null it will be 'guessed' from build_path if possible.
@@ -52,6 +46,7 @@ datum/design						//Datum for object designs, used in construction
 	var/build_path = null			//The path of the object that gets created.
 	var/locked = 0					//If true it will spawn inside a lockbox with currently sec access.
 	var/category = null 			//Primarily used for Mech Fabricators, but can be used for anything.
+	var/construction_time = 10		//Primarily used for Pod Fabricators
 
 //A proc to calculate the reliability of a design based on tech levels and innate modifiers.
 //Input: A list of /datum/tech; Output: The new reliabilty.

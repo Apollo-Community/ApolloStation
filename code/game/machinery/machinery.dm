@@ -104,13 +104,16 @@ Class Procs:
 		//2 = run auto, use active
 	var/idle_power_usage = 0
 	var/active_power_usage = 0
-	var/power_channel = EQUIP
-		//EQUIP,ENVIRON or LIGHT
+	var/power_channel = EQUIP //EQUIP,ENVIRON or LIGHT
 	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
 	var/uid
 	var/manual = 0
-	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 	var/global/gl_uid = 1
+	var/custom_aghost_alerts=0
+	var/panel_open = 0
+	var/area/myArea
+	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
+	var/use_log = list()
 
 /obj/machinery/New()
 	..()
@@ -285,17 +288,6 @@ Class Procs:
 	uid = gl_uid
 	gl_uid++
 
-/obj/machinery/proc/state(var/msg)
-  for(var/mob/O in hearers(src, null))
-    O.show_message("\icon[src] <span class = 'notice'>[msg]</span>", 2)
-
-/obj/machinery/proc/ping(text=null)
-  if (!text)
-    text = "\The [src] pings."
-
-  state(text, "blue")
-  playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
-
 /obj/machinery/proc/shock(mob/user, prb)
 	if(inoperable())
 		return 0
@@ -314,19 +306,6 @@ Class Procs:
 		return 1
 	else
 		return 0
-
-/obj/machinery/proc/dismantle()
-	playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-	var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(loc)
-	M.set_dir(src.dir)
-	M.state = 2
-	M.icon_state = "box_1"
-	for(var/obj/I in component_parts)
-		if(I.reliability != 100 && crit_fail)
-			I.crit_fail = 1
-		I.loc = loc
-	del(src)
-	return 1
 
 /obj/machinery/proc/on_assess_perp(mob/living/carbon/human/perp)
 	return 0
@@ -375,3 +354,104 @@ Class Procs:
 			threatcount += 4
 
 	return threatcount
+
+/obj/machinery/proc/default_deconstruction_crowbar(var/obj/item/weapon/crowbar/C, var/ignore_panel = 0)
+	if(istype(C) && (panel_open || ignore_panel))
+		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+		M.state = 2
+		M.icon_state = "box_1"
+		for(var/obj/item/I in component_parts)
+			if(I.reliability != 100 && crit_fail)
+				I.crit_fail = 1
+			I.loc = src.loc
+		del(src)
+
+/obj/machinery/proc/default_deconstruction_screwdriver(var/mob/user, var/icon_state_open, var/icon_state_closed, var/obj/item/weapon/screwdriver/S)
+	if(istype(S))
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		if(!panel_open)
+			panel_open = 1
+			icon_state = icon_state_open
+			user << "<span class='notice'>You open the maintenance hatch of [src].</span>"
+		else
+			panel_open = 0
+			icon_state = icon_state_closed
+			user << "<span class='notice'>You close the maintenance hatch of [src].</span>"
+		return 1
+	return 0
+
+/obj/machinery/proc/default_change_direction_wrench(var/mob/user, var/obj/item/weapon/wrench/W)
+	if(panel_open && istype(W))
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		dir = pick(WEST,EAST,SOUTH,NORTH)
+		user << "<span class='notice'>You clumsily rotate [src].</span>"
+		return 1
+	return 0
+
+/obj/machinery/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+	if(istype(W))
+		user << "<span class='notice'>Now [anchored ? "un" : ""]securing [name].</span>"
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(do_after(user, time))
+			user << "<span class='notice'>You've [anchored ? "un" : ""]secured [name].</span>"
+			anchored = !anchored
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		return 1
+	return 0
+
+/obj/machinery/proc/state(var/msg)
+  for(var/mob/O in hearers(src, null))
+    O.show_message("\icon[src] <span class = 'notice'>[msg]</span>", 2)
+
+/obj/machinery/proc/ping(text=null)
+  if (!text)
+    text = "\The [src] pings."
+
+  state(text, "blue")
+  playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+
+/obj/machinery/proc/dismantle()
+	playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+	var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(loc)
+	M.state = 2
+	M.icon_state = "box_1"
+	for(var/obj/I in component_parts)
+		if(I.reliability != 100 && crit_fail)
+			I.crit_fail = 1
+		I.loc = loc
+	del(src)
+	return 1
+
+/obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/part_replacer/W)
+	var/shouldplaysound = 0
+	if(istype(W) && component_parts)
+		if(panel_open)
+			var/obj/item/weapon/circuitboard/CB = locate(/obj/item/weapon/circuitboard) in component_parts
+			var/P
+			for(var/obj/item/weapon/stock_parts/A in component_parts)
+				for(var/D in CB.req_components)
+					if(ispath(A.type, D))
+						P = D
+						break
+				for(var/obj/item/weapon/stock_parts/B in W.contents)
+					if(istype(B, P) && istype(A, P))
+						if(B.rating > A.rating)
+							W.remove_from_storage(B, src)
+							W.handle_item_insertion(A, 1)
+							component_parts -= A
+							component_parts += B
+							B.loc = null
+							user << "<span class='notice'>[A.name] replaced with [B.name].</span>"
+							shouldplaysound = 1
+							break
+			RefreshParts()
+		else
+			user << "<span class='notice'>Following parts detected in the machine:</span>"
+			for(var/var/obj/item/C in component_parts)
+				user << "<span class='notice'>    [C.name]</span>"
+		if(shouldplaysound)
+			W.play_rped_sound()
+		return 1
+	else
+		return 0

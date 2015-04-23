@@ -84,5 +84,10 @@
 		name = T_BOARD_MECHA("Odysseus central control")
 		icon_state = "mainboard"
 
+
+/obj/item/weapon/circuitboard/mecha/pod
+	name = "pod circuit board"
+	origin_tech = "programming=3"
+
 //Undef the macro, shouldn't be needed anywhere else
 #undef T_BOARD_MECHA

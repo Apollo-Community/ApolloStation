@@ -429,6 +429,29 @@
 
 ///////////////////////////////////////Stock Parts /////////////////////////////////
 
+
+///////////////////////////////////////Stock Parts /////////////////////////////////
+
+/obj/item/weapon/storage/part_replacer
+	name = "Rapid Part Exchange Device"
+	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
+	icon_state = "RPED"
+	item_state = "RPED"
+	icon_override = 'icons/mob/tools.dmi'
+	w_class = 5
+	can_hold = list("/obj/item/weapon/stock_parts")
+	storage_slots = 50
+	use_to_pickup = 1
+	allow_quick_gather = 1
+	allow_quick_empty = 1
+	collection_mode = 1
+	max_w_class = 3
+	max_combined_w_class = 100
+
+/obj/item/weapon/storage/part_replacer/proc/play_rped_sound()
+	//Plays the sound for RPED exchanging or installing parts.
+	playsound(src, 'sound/items/rped.ogg', 40, 1)
+
 /obj/item/weapon/stock_parts
 	name = "stock part"
 	desc = "What?"

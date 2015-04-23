@@ -21,7 +21,7 @@
 	var/seconds_electrified = 0;
 	var/shoot_inventory = 0
 	var/locked = 0
-	var/panel_open = 0 //Hacking a smartfridge
+	panel_open = 0 //Hacking a smartfridge
 	var/scan_id = 1
 	var/is_secure = 0
 	var/datum/wires/smartfridge/wires = null
