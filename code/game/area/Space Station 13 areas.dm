@@ -139,6 +139,10 @@ var/list/ghostteleportlocs = list()
 	luminosity = 1
 	lighting_use_dynamic = 0
 
+/area/podbay
+	name = "\improper Podbay"
+	icon_state = "yellow"
+
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
 
@@ -501,10 +505,6 @@ var/list/ghostteleportlocs = list()
 /area/syndicate_station/mining
 	name = "\improper north east of the mining asteroid"
 	icon_state = "north"
-
-/area/syndicate_station/arrivals_dock
-	name = "\improper docked with station"
-	icon_state = "shuttle"
 
 /area/syndicate_station/maint_dock
 	name = "\improper docked with station"
@@ -2126,6 +2126,7 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Listening Post"
 	icon_state = "away"
 	requires_power = 0
+
 
 /////////////////////////////////////////////////////////////////////
 /*

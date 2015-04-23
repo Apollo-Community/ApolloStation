@@ -1,8 +1,8 @@
 /obj/structure/spacepoddoor
-	name = "Podlock"
-	desc = "Why it no open!!!"
+	name = "energy barrier"
+	desc = "A a repulsive energy field that only allows pods to pass."
 	icon = 'icons/effects/beam.dmi'
-	icon_state = "n_beam"
+	icon_state = "field"
 	var/id = 1.0
 	density = 0
 	anchored = 1
