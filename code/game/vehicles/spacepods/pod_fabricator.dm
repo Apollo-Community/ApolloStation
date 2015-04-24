@@ -14,14 +14,13 @@
 	var/time_coeff_tech = 1
 	var/resource_coeff_tech = 1
 	var/list/resources = list(
-								"$metal"=0,
-								"$glass"=0,
-								"$bananium"=0,
-								"$diamond"=0,
-								"$gold"=0,
-								"$plasma"=0,
-								"$silver"=0,
-								"$uranium"=0
+								"metal"=0,
+								"glass"=0,
+								"diamond"=0,
+								"gold"=0,
+								"phoron"=0,
+								"silver"=0,
+								"uranium"=0
 								)
 	var/res_max_amount = 200000
 	var/datum/research/files
@@ -34,10 +33,10 @@
 	var/screen = "main"
 	var/temp
 	var/list/part_sets = list(
-								"Pod_Weaponry",
-								"Pod_Armor",
-								"Pod_Parts",
-								"Pod_Frame",
+								"Pod Weaponry",
+								"Pod Armor",
+								"Pod Parts",
+								"Pod Frame",
 								"Misc",
 								)
 	var/turf/exit
@@ -146,7 +145,7 @@
 	var/output
 	for(var/c in D.materials)
 		if(c in resources)
-			output += "[i?" | ":null][get_resource_cost_w_coeff(D,c)] [material2name(c)]"
+			output += "[i?" | ":null][get_resource_cost_w_coeff(D,c)] [c]"
 			i++
 	return output
 
@@ -154,7 +153,7 @@
 	var/output
 	for(var/resource in resources)
 		var/amount = min(res_max_amount, resources[resource])
-		output += "<span class=\"res_name\">[material2name(resource)]: </span>[amount] cm&sup3;"
+		output += "<span class=\"res_name\">[resource]: </span>[amount] cm&sup3;"
 		if(amount>0)
 			output += "<span style='font-size:80%;'> - Remove \[<a href='?src=\ref[src];remove_mat=1;material=[resource]'>1</a>\] | \[<a href='?src=\ref[src];remove_mat=10;material=[resource]'>10</a>\] | \[<a href='?src=\ref[src];remove_mat=[resources[resource] / MINERAL_MATERIAL_AMOUNT];material=[resource]'>All</a>\]</span>"
 		output += "<br/>"
@@ -175,31 +174,28 @@
 	return 1
 
 /obj/machinery/spod_part_fabricator/proc/build_part(datum/design/D)
-	being_built = D
-	desc = "It's building \a [initial(D.name)]."
-	remove_resources(D)
-	overlays += "fab-active"
-	use_power = 2
-	updateUsrDialog()
+	src.being_built = D
+	src.desc = "It's building [src.being_built]."
+	src.overlays += "fab-active"
+	src.use_power = 2
+	src.updateUsrDialog()
+	src.remove_resources(D)
 	sleep(get_construction_time_w_coeff(D))
-	use_power = 1
-	overlays -= "fab-active"
-	desc = initial(desc)
+	src.use_power = 1
+	src.overlays -= "fab-active"
+	src.desc = initial(src.desc)
 
-	var/obj/item/I = new D.build_path
-	var/O = D.locked
-	if(O)
-		var/obj/item/weapon/storage/lockbox/L = new/obj/item/weapon/storage/lockbox(exit)
-		I.loc = L
-		L.name += " ([I.name])"
-	else
-		I.loc = exit
-	I.matter["metal"] = get_resource_cost_w_coeff(D,"$metal")
-	I.matter["glass"] = get_resource_cost_w_coeff(D,"$glass")
-	visible_message("\icon[src] <b>\The [src]</b> beeps, \"\The [I] is complete.\"")
-	being_built = null
+	if(being_built)
+		var/obj/item/I = new D.build_path
+		var/O = D.locked
+		if(O)
+			var/obj/item/weapon/storage/lockbox/L = new/obj/item/weapon/storage/lockbox(exit)
+			L.name += " ([I.name])"
+		I.Move(exit)
+		src.visible_message("\icon[src] <b>[src]</b> beeps, \"The following has been completed: [src.being_built] is built\".")
+		src.being_built = null
 
-	updateUsrDialog()
+	src.updateUsrDialog()
 	return 1
 
 /obj/machinery/spod_part_fabricator/proc/update_queue_on_page()
@@ -460,9 +456,9 @@
 
 		var/removed = remove_material(material,amount)
 		if(removed == -1)
-			temp = "Not enough [material2name(material)] to produce a sheet."
+			temp = "Not enough [material] to produce a sheet."
 		else
-			temp = "Ejected [removed] of [material2name(material)]"
+			temp = "Ejected [removed] of [material]"
 		temp += "<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
 
 	updateUsrDialog()
@@ -473,19 +469,19 @@
 		return -1
 	var/type
 	switch(mat_string)
-		if("$metal")
+		if("metal")
 			type = /obj/item/stack/sheet/metal
-		if("$glass")
+		if("glass")
 			type = /obj/item/stack/sheet/glass
-		if("$gold")
+		if("gold")
 			type = /obj/item/stack/sheet/mineral/gold
-		if("$silver")
+		if("silver")
 			type = /obj/item/stack/sheet/mineral/silver
-		if("$diamond")
+		if("diamond")
 			type = /obj/item/stack/sheet/mineral/diamond
-		if("$plasma")
+		if("plasma")
 			type = /obj/item/stack/sheet/mineral/phoron
-		if("$uranium")
+		if("uranium")
 			type = /obj/item/stack/sheet/mineral/uranium
 		else
 			return 0
@@ -531,19 +527,19 @@
 		var/material
 		switch(W.type)
 			if(/obj/item/stack/sheet/mineral/gold)
-				material = "$gold"
+				material = "gold"
 			if(/obj/item/stack/sheet/mineral/silver)
-				material = "$silver"
+				material = "silver"
 			if(/obj/item/stack/sheet/mineral/diamond)
-				material = "$diamond"
+				material = "diamond"
 			if(/obj/item/stack/sheet/mineral/phoron)
-				material = "$plasma"
+				material = "phoron"
 			if(/obj/item/stack/sheet/metal)
-				material = "$metal"
+				material = "metal"
 			if(/obj/item/stack/sheet/glass)
-				material = "$glass"
+				material = "glass"
 			if(/obj/item/stack/sheet/mineral/uranium)
-				material = "$uranium"
+				material = "uranium"
 			else
 				return ..()
 
@@ -551,12 +547,12 @@
 			user << "\The [src] is currently processing. Please wait until completion."
 			return
 		if(res_max_amount - resources[material] < MINERAL_MATERIAL_AMOUNT) //overstuffing the fabricator
-			user << "\The [src] [material2name(material)] storage is full."
+			user << "\The [src] [material] storage is full."
 			return
 		var/obj/item/stack/sheet/stack = W
 		var/sname = "[stack.name]"
 		if(resources[material] < res_max_amount)
-			overlays += "fab-load-[material2name(material)]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
+			overlays += "fab-load-[material]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
 
 			var/transfer_amount = min(stack.amount, round((res_max_amount - resources[material])/MINERAL_MATERIAL_AMOUNT,1))
 			resources[material] += transfer_amount * MINERAL_MATERIAL_AMOUNT
@@ -564,10 +560,7 @@
 			user << "You insert [transfer_amount] [sname] sheet\s into \the [src]."
 			sleep(10)
 			updateUsrDialog()
-			overlays -= "fab-load-[material2name(material)]" //No matter what the overlay shall still be deleted
+			overlays -= "fab-load-[material]" //No matter what the overlay shall still be deleted
 		else
 			user << "\The [src] cannot hold any more [sname] sheet\s."
 		return
-
-/obj/machinery/spod_part_fabricator/proc/material2name(var/ID)
-	return copytext(ID,2)

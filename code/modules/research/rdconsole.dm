@@ -904,7 +904,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				if(D.build_path)
 					dat += "<LI><B>[D.name]</B>: [D.desc]"
 			dat += "</UL>"
-			
+
 
 	user << browse("<TITLE>Research and Development Console</TITLE><HR>[dat]", "window=rdconsole;size=850x600")
 	onclose(user, "rdconsole")
@@ -914,6 +914,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	id = 2
 	req_access = null
 	req_access_txt = "29"
+
+/obj/machinery/computer/rdconsole/podbay
+	name = "Podbay R&D Console"
+	id = 3
+	req_access = null
+	req_access_txt = "11;29"
 
 /obj/machinery/computer/rdconsole/core
 	name = "Core R&D Console"

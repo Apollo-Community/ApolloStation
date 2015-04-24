@@ -31,9 +31,6 @@
 /////////////////////////////////
 // CONSTRUCTION STEPS
 /////////////////////////////////
-/datum/construction/
-	var/base_icon=null
-
 /datum/construction/reversible2/pod
 	result = /obj/spacepod/civilian
 	base_icon="pod"

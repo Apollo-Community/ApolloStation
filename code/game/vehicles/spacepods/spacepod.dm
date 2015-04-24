@@ -308,8 +308,10 @@
 	return
 
 /obj/spacepod/civilian
+	name = "\improper command spacepod"
+	desc = "A sleek command space pod."
 	icon_state = "pod_civ"
-	desc = "A sleek civilian space pod."
+
 /obj/spacepod/random
 	icon_state = "pod_civ"
 // placeholder
@@ -338,7 +340,7 @@
 	icon_state = pick("pod_civ", "pod_black", "pod_mil", "pod_synd", "pod_gold", "pod_industrial")
 	switch(icon_state)
 		if("pod_civ")
-			desc = "A sleek civilian space pod."
+			desc = "A sleek command space pod."
 		if("pod_black")
 			desc = "An all black space pod with no insignias."
 		if("pod_mil")
@@ -346,7 +348,7 @@
 		if("pod_synd")
 			desc = "A menacing military space pod with Fuck NT stenciled onto the side"
 		if("pod_gold")
-			desc = "A civilian space pod with a gold body, must have cost somebody a pretty penny"
+			desc = "A command space pod with a gold body, must have cost somebody a pretty penny"
 		if("pod_industrial")
 			desc = "A rough looking space pod meant for industrial work"
 
@@ -778,6 +780,8 @@
 		if( equipment_system )
 			if( equipment_system.weapon_system )
 				equipment_system.weapon_system.fire_weapons()
+			else
+				usr << "<span class='warning'>This pod does not have any active weapon systems.</span>"
 
 obj/spacepod/verb/toggleLights()
 	set name = "Toggle Lights"
@@ -853,6 +857,7 @@ obj/spacepod/verb/toggleLights()
 	..()
 	if(dir == 1 || dir == 4)
 		src.loc.Entered(src)
+
 /obj/spacepod/proc/Process_Spacemove(var/check_drift = 0, mob/user)
 	var/dense_object = 0
 	if(!user)
