@@ -542,10 +542,10 @@
 	if(src.occupant)
 		if(allow2enter)
 			if(!src.occupant2)
-				usr << "\blue <B>You start climbing into the secondary seat.</B>"
-				visible_message("\blue [usr] starts to climb into [src.name].")
-				if(enter_after(40,usr))
+				usr << "\blue <B>You start climbing into the passenger's seat.</B>"
+				if(enter_after(20,usr))
 					moved_inside(usr)
+					src.occupant = null
 				else
 					usr << "You stop entering the spacepod."
 				return
@@ -556,10 +556,10 @@
 
 	else if(!src.occupant && src.occupant2)
 		if(allow2enter)
-			usr << "\blue <B>You start climbing into the primary seat.</B>"
-			visible_message("\blue [usr] starts to climb into [src.name].")
-			if(enter_after(40,usr))
+			usr << "\blue <B>You scooch over into the pilot's seat.</B>"
+			if(enter_after(20,usr))
 				moved_inside(usr)
+				src.occupant2 = null
 			else
 				usr << "You stop entering the spacepod."
 			return
