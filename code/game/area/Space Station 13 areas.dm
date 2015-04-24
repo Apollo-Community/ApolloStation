@@ -94,6 +94,11 @@ var/list/ghostteleportlocs = list()
 	return 1
 
 /*-----------------------------------------------------------------------------*/
+
+/////////
+//SPACE//
+/////////
+
 /area/space
 	name = "\improper Space"
 	icon_state = "space"
@@ -105,7 +110,13 @@ var/list/ghostteleportlocs = list()
 	power_environ = 0
 	ambience = list('sound/ambience/ambispace.ogg','sound/ambience/ambispace1.ogg')
 
-/area/space/firealert()
+area/space/atmosalert()
+	return
+
+/area/space/fire_alert()
+	return
+
+/area/space/fire_reset()
 	return
 
 /area/space/readyalert()
@@ -113,8 +124,7 @@ var/list/ghostteleportlocs = list()
 
 /area/space/partyalert()
 	return
-/area/engine/
-	ambience = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
+
 /area/turret_protected/
 
 /area/arrival
@@ -130,9 +140,12 @@ var/list/ghostteleportlocs = list()
 
 
 
-//These are shuttle areas, they must contain two areas in a subgroup if you want to move a shuttle from one
+////////////
+//SHUTTLES//
+////////////
+//shuttle areas must contain at least two areas in a subgroup if you want to move a shuttle from one
 //place to another. Look at escape shuttle for example.
-//All shuttles show now be under shuttle since we have smooth-wall code.
+//All shuttles should now be under shuttle since we have smooth-wall code.
 
 /area/shuttle //DO NOT TURN THE lighting_use_dynamic STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
 	requires_power = 0
@@ -634,11 +647,9 @@ var/list/ghostteleportlocs = list()
 	name = "Prison Cell Block C"
 	icon_state = "brig"
 
-//STATION13
-
-/area/atmos
- 	name = "Atmospherics"
- 	icon_state = "atmos"
+////////////////////
+//SPACE STATION 13//
+////////////////////
 
 //Maintenance
 
@@ -1060,6 +1071,10 @@ var/list/ghostteleportlocs = list()
 /area/holodeck/source_thunderdomecourt
 	name = "\improper Holodeck - Thunderdome Court"
 
+/area/holodeck/source_courtroom
+	name = "\improper Holodeck - Courtroom"
+	icon_state = "Holodeck"
+
 /area/holodeck/source_beach
 	name = "\improper Holodeck - Beach"
 	icon_state = "Holodeck" // Lazy.
@@ -1091,81 +1106,71 @@ var/list/ghostteleportlocs = list()
 
 
 //Engineering
+/area/engineering/
+	name = "\improper Engineering"
+	icon_state = "engineering"
+	ambience = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
+/area/engineering/atmos
+ 	name = "\improper Atmospherics"
+ 	icon_state = "atmos"
+/area/engineering/atmos/monitoring
+	name = "\improper Atmospherics Monitoring Room"
+	icon_state = "atmos_monitoring"
+/area/engineering/atmos/storage
+	name = "\improper Atmospherics Storage"
+	icon_state = "atmos_storage"
+/area/engineering/drone_fabrication
+	name = "\improper Drone Fabrication"
+	icon_state = "drone_fab"
 
-/area/engine
+/area/engineering/engine_smes
+	name = "\improper Engineering SMES"
+	icon_state = "engine_smes"
 
-	drone_fabrication
-		name = "\improper Drone Fabrication"
-		icon_state = "engine"
+/area/engineering/engine_room
+	name = "\improper Engine Room"
+	icon_state = "engine"
 
-	engine_smes
-		name = "Engineering SMES"
-		icon_state = "engine_smes"
-//		requires_power = 0//This area only covers the batteries and they deal with their own power
+/area/engineering/engine_airlock
+	name = "\improper Engine Room Airlock"
+	icon_state = "engine"
 
-	engine_room
-		name = "\improper Engine Room"
-		icon_state = "engine"
+/area/engineering/engine_monitoring
+	name = "\improper Engine Monitoring Room"
+	icon_state = "engine_monitoring"
 
-	engine_airlock
-		name = "\improper Engine Room Airlock"
-		icon_state = "engine"
+/area/engineering/engine_waste
+	name = "\improper Engine Waste Handling"
+	icon_state = "engine_waste"
 
-	engine_monitoring
-		name = "\improper Engine Monitoring Room"
-		icon_state = "engine_monitoring"
+/area/engineering/engineering_monitoring
+	name = "\improper Engineering Monitoring Room"
+	icon_state = "engine_monitoring"
 
-	engine_waste
-		name = "\improper Engine Waste Handling"
-		icon_state = "engine_waste"
+/area/engineering/foyer
+	name = "\improper Engineering Foyer"
+	icon_state = "engineering_foyer"
 
-	engineering_monitoring
-		name = "\improper Engineering Monitoring Room"
-		icon_state = "engine_monitoring"
+/area/engineering/storage
+	name = "\improper Engineering Storage"
+	icon_state = "engineering_storage"
 
-	atmos_monitoring
-		name = "\improper Atmospherics Monitoring Room"
-		icon_state = "engine_monitoring"
+/area/engineering/break_room
+	name = "\improper Engineering Break Room"
+	icon_state = "engineering_break"
 
-	engineering
-		name = "Engineering"
-		icon_state = "engine_smes"
+/area/engineering/engine_eva
+	name = "\improper Engine EVA"
+	icon_state = "engine_eva"
 
-	engineering_foyer
-		name = "\improper Engineering Foyer"
-		icon_state = "engine"
+/area/engineering/locker_room
+	name = "\improper Engineering Locker Room"
+	icon_state = "engineering_locker"
 
-	engineering_supply
-		name = "Engineering Supply"
-		icon_state = "engine_supply"
+/area/engineering/workshop
+	name = "\improper Engineering Workshop"
+	icon_state = "engineering_workshop"
 
-	break_room
-		name = "\improper Engineering Break Room"
-		icon_state = "engine"
-
-	hallway
-		name = "\improper Engineering Hallway"
-		icon_state = "engine_hallway"
-
-	engine_hallway
-		name = "\improper Engine Room Hallway"
-		icon_state = "engine_hallway"
-
-	engine_eva
-		name = "\improper Engine EVA"
-		icon_state = "engine_eva"
-
-	engine_eva_maintenance
-		name = "\improper Engine EVA Maintenance"
-		icon_state = "engine_eva"
-
-	workshop
-		name = "\improper Engineering Workshop"
-		icon_state = "engine_storage"
-
-	locker_room
-		name = "\improper Engineering Locker Room"
-		icon_state = "engine_storage"
 
 
 //Solars
@@ -2161,7 +2166,6 @@ var/list/the_station_areas = list (
 	/area/shuttle/prison/station,
 	/area/shuttle/administration/station,
 	/area/shuttle/specops/station,
-	/area/atmos,
 	/area/maintenance,
 	/area/hallway,
 	/area/bridge,
@@ -2171,7 +2175,7 @@ var/list/the_station_areas = list (
 	/area/library,
 	/area/chapel,
 	/area/lawoffice,
-	/area/engine,
+	/area/engineering,
 	/area/solar,
 	/area/assembly,
 	/area/teleporter,

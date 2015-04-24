@@ -154,6 +154,13 @@
 		mob.Blend(earbit, ICON_OVERLAY)
 		mob2.Blend(earbit2, ICON_OVERLAY)
 
+/obj/item/clothing/head/richard
+	name = "chicken mask"
+	desc = "You can hear the distant sounds of rhythmic electronica."
+	icon_state = "richard"
+	body_parts_covered = HEAD|FACE
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+
 /obj/item/clothing/head/tophat
 	name = "top hat"
 	desc = "A top hat worn by only the most prestigious hat collectors."

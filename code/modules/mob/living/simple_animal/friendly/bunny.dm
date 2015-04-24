@@ -36,12 +36,12 @@
 		..()
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
-		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/carrot)) //feedin' dem chickens
-			user.visible_message("\blue [user] feeds [O] to [name]! It seems very happy.","\blue You feed [O] to [name]! It seems very happy.")
-			user.drop_item()
-			del(O)
-		else
-			..()
+		//BOGUS if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/carrot)) //feedin' dem chickens
+		//BOGUS	user.visible_message("\blue [user] feeds [O] to [name]! It seems very happy.","\blue You feed [O] to [name]! It seems very happy.")
+		//BOGUS	user.drop_item()
+		//BOGUS	del(O)
+		//BOGUS else
+		..()
 
 	Life()
 		. =..()

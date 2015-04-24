@@ -80,8 +80,8 @@
 /obj/spacepod/bullet_act(var/obj/item/projectile/P)
 	if(P.damage && !P.nodamage)
 		deal_damage(P.damage)
-	else if(P.flag == "energy" && istype(P,/obj/item/projectile/ion)) //needed to make sure ions work properly
-		empulse(src, 1, 1)
+	//BOGUS else if(P.flag == "energy" && istype(P,/obj/item/projectile/ion)) //needed to make sure ions work properly
+	//BOGUS 	empulse(src, 1, 1)
 
 /obj/spacepod/blob_act()
 	deal_damage(30)

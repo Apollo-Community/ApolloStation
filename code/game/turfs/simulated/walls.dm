@@ -6,8 +6,7 @@
 	var/rotting = 0
 
 	var/damage = 0
-	var/damage_cap = 100 //Wall will break down to girders if damage reaches this point
-	var/armor = 0.5 // Damage is multiplied by this
+	var/damage_cap = 150 //Wall will break down to girders if damage reaches this point
 
 	var/damage_overlay
 	var/global/damage_overlays[8]
@@ -24,21 +23,29 @@
 	var/walltype = "metal"
 
 /turf/simulated/wall/bullet_act(var/obj/item/projectile/Proj)
-	// Tasers and stuff? No thanks.
-	if(Proj.damage_type == HALLOSS)
+	// Tasers and stuff? No thanks. Also no clone or tox damage crap.
+	if(!(Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		return
 
-	// Emitter blasts are somewhat weaker as emitters have large rate of fire and don't require limited power cell to run
-	if(istype(Proj, /obj/item/projectile/beam/emitter))
-		Proj.damage /= 4
+	//cap the amount of damage, so that things like emitters can't destroy walls in one hit.
+	var/damage = min(Proj.damage, 100)
 
+	take_damage(damage)
 	if(istype(Proj, /obj/item/projectile/bullet ) && ( rand( 1, 3 ) == 1 ))
 		playsound( src, pick( 'sound/effects/ric1.ogg', 'sound/effects/ric2.ogg', 'sound/effects/ric3.ogg', 'sound/effects/ric4.ogg'), 100, 1)
 
-	take_damage(Proj.damage * armor)
 	return
 
+/turf/simulated/wall/hitby(AM as mob|obj, var/speed=THROWFORCE_SPEED_DIVISOR)
+	..()
+	if(ismob(AM))
+		return
 
+	var/tforce = AM:throwforce * (speed/THROWFORCE_SPEED_DIVISOR)
+	if (tforce < 15)
+		return
+
+	take_damage(tforce)
 
 /turf/simulated/wall/Del()
 	for(var/obj/effect/E in src) if(E.name == "Wallrot") del E
@@ -46,6 +53,8 @@
 
 /turf/simulated/wall/ChangeTurf(var/newtype)
 	for(var/obj/effect/E in src) if(E.name == "Wallrot") del E
+	for(var/obj/effect/plant/plant in range(1))
+		plant.update_neighbors()
 	..(newtype)
 
 //Appearance
@@ -268,7 +277,7 @@
 		user << rotting_touch_message
 		if(rotting_destroy_touch)
 			dismantle_wall()
-		return 1
+			return 1
 
 	if(..()) return 1
 
@@ -470,6 +479,9 @@
 
 	else if(istype(W,/obj/item/weapon/rcd)) //I bitterly resent having to write this. ~Z
 		return
+
+	else if(istype(W, /obj/item/weapon/reagent_containers))
+		return // They tend to have meaningful afterattack - let them apply it without destroying a rotting wall
 
 	else
 		return attack_hand(user)

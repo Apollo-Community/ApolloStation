@@ -8,7 +8,7 @@
 	var/plantname
 	var/potency = 1
 
-/obj/item/weapon/grown/New()
+/obj/item/weapon/grown/New(newloc,planttype)
 
 	..()
 
@@ -17,21 +17,20 @@
 	R.my_atom = src
 
 	//Handle some post-spawn var stuff.
-	spawn(1)
-		// Fill the object up with the appropriate reagents.
-		if(!isnull(plantname))
-			var/datum/seed/S = seed_types[plantname]
-			if(!S || !S.chems)
-				return
+	if(planttype)
+		plantname = planttype
+		var/datum/seed/S = plant_controller.seeds[plantname]
+		if(!S || !S.chems)
+			return
 
-			potency = S.potency
+		potency = S.get_trait(TRAIT_POTENCY)
 
-			for(var/rid in S.chems)
-				var/list/reagent_data = S.chems[rid]
-				var/rtotal = reagent_data[1]
-				if(reagent_data.len > 1 && potency > 0)
-					rtotal += round(potency/reagent_data[2])
-				reagents.add_reagent(rid,max(1,rtotal))
+		for(var/rid in S.chems)
+			var/list/reagent_data = S.chems[rid]
+			var/rtotal = reagent_data[1]
+			if(reagent_data.len > 1 && potency > 0)
+				rtotal += round(potency/reagent_data[2])
+			reagents.add_reagent(rid,max(1,rtotal))
 
 /obj/item/weapon/grown/log
 	name = "towercap"
@@ -169,7 +168,7 @@
 /obj/item/weapon/corncob
 	name = "corn cob"
 	desc = "A reminder of meals gone by."
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/trash.dmi'
 	icon_state = "corncob"
 	item_state = "corncob"
 	w_class = 2.0
@@ -181,6 +180,17 @@
 	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/kitchenknife/ritual))
 		user << "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>"
-		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
+		new /obj/item/clothing/mask/smokable/pipe/cobpipe (user.loc)
 		del(src)
 		return
+
+/obj/item/weapon/bananapeel
+	name = "banana peel"
+	desc = "A peel from a banana."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "banana_peel"
+	item_state = "banana_peel"
+	w_class = 2.0
+	throwforce = 0
+	throw_speed = 4
+	throw_range = 20

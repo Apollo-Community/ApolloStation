@@ -146,7 +146,7 @@
 
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(var/obj/item/projectile/Proj)
-	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
+	if(Proj.damage_type == BRUTE || Proj.damage_type == BURN)
 		if(istype(Proj.firer))
 			message_admins("[key_name_admin(Proj.firer)] shot fueltank at [loc.loc.name] ([loc.x],[loc.y],[loc.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc.x];Y=[loc.y];Z=[loc.z]'>JMP</a>).", "LOG:")
 			log_game("[key_name(Proj.firer)] shot fueltank at [loc.loc.name] ([loc.x],[loc.y],[loc.z]).")
@@ -240,6 +240,19 @@
 		reagents.add_reagent("virusfood", 1000)
 
 //Dispensers
+
+/obj/structure/reagent_dispensers/acid
+	name = "Sulphuric Acid Dispenser"
+	desc = "A dispenser of acid for industrial processes."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "acidtank"
+	amount_per_transfer_from_this = 10
+	anchored = 1
+
+	New()
+		..()
+		reagents.add_reagent("sacid", 1000)
+
 /obj/structure/reagent_dispensers/radiumtank
 	name = "CurieDispenser 2000"
 	desc = "Dispenses radium that's necessary for cures!"
@@ -255,20 +268,6 @@
 		reagents.add_reagent("radium",1000)
 		l_color = "#002200"
 		SetLuminosity(2)
-
-/obj/structure/reagent_dispensers/sacidtank
-	name = "CircuitMaster Acid Dispenser"
-	desc = "Dispenses sulphuric acid for building circuit boards."
-	icon = 'icons/apollo/objects.dmi'
-	icon_state = "sacidtank"
-	anchored = 1
-	density = 0
-
-	amount_per_transfer_from_this = 10
-
-	New()
-		..()
-		reagents.add_reagent("sacid",1000)
 
 /obj/structure/reagent_dispensers/cleanertank
 	name = "Space Cleaner Dispenser"

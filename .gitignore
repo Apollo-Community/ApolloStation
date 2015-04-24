@@ -4,6 +4,7 @@
 *.rsc
 *.dmb
 *.lk
+*.backup
 data/
 cfg/
 baystation12.int

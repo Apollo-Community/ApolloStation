@@ -8,6 +8,7 @@
 	desc = "If you can't take the heat, use one of these."
 	set_temperature = 20		// in celcius, add T0C for kelvin
 	var/cooling_power = 80000
+	var/open = 0
 
 /obj/machinery/space_heater/space_cooler/New()
 	..()

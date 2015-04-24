@@ -16,6 +16,9 @@ datum/track/New(var/title_name, var/audio)
 	anchored = 1
 	density = 1
 	power_channel = EQUIP
+	use_power = 1
+	idle_power_usage = 10
+	active_power_usage = 100
 
 	var/playing = 0
 
@@ -215,6 +218,7 @@ datum/track/New(var/title_name, var/audio)
 			M << sound(null, channel = 1)
 		related_area.forced_ambience = null
 	playing = 0
+	update_use_power(1)
 	update_icon()
 
 
@@ -231,6 +235,7 @@ datum/track/New(var/title_name, var/audio)
 				related_area.play_ambience(M)
 
 	playing = 1
+	update_use_power(2)
 	update_icon()
 
 /obj/machinery/media/jukebox/mixer

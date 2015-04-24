@@ -9,6 +9,7 @@
 	var/trash = null
 	var/slice_path
 	var/slices_num
+	var/dry = 0
 	center_of_mass = list("x"=15, "y"=15)
 	var/eatverb
 	var/wrapped = 0
@@ -37,9 +38,10 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/attack(mob/M as mob, mob/user as mob, def_zone)
-	if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
-		user << "\red None of [src] left, oh no!"
-		M.drop_from_inventory(src)	//so icons update :[
+
+	if(!reagents.total_volume)
+		user << "<span class='danger'>None of [src] left!</span>"
+		user.drop_from_inventory(src)
 		del(src)
 		return 0
 
@@ -117,9 +119,6 @@
 			return 1
 
 	return 0
-
-/obj/item/weapon/reagent_containers/food/snacks/afterattack(obj/target, mob/user, proximity)
-	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/examine(mob/user)
 	if(!..(user, 1))
@@ -223,7 +222,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/attack_generic(var/mob/living/user)
 	if(!isanimal(user) && !isalien(user))
 		return
-	user.visible_message("<b>[user]</b> nibbles away at the [src].","You nibble away at the [src].")
+	user.visible_message("<b>[user]</b> nibbles away at \the [src].","You nibble away at \the [src].")
 	bitecount++
 	if(reagents && user.reagents)
 		reagents.trans_to_ingest(user, bitesize)
@@ -483,31 +482,41 @@
 	icon_state = "egg"
 	filling_color = "#FDFFD1"
 
-	New()
+/obj/item/weapon/reagent_containers/food/snacks/egg/New()
+	..()
+	reagents.add_reagent("egg", 3)
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/afterattack(obj/O as obj, mob/user as mob, proximity)
+	if(istype(O,/obj/machinery/microwave))
+		return ..()
+	if(!(proximity && O.is_open_container()))
+		return
+	user << "You crack \the [src] into \the [O]."
+	reagents.trans_to(O, reagents.total_volume)
+	user.drop_from_inventory(src)
+	del(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
+	..()
+	new/obj/effect/decal/cleanable/egg_smudge(src.loc)
+	src.reagents.reaction(hit_atom, TOUCH)
+	src.visible_message("\red [src.name] has been squashed.","\red You hear a smack.")
+	del(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype( W, /obj/item/toy/crayon ))
+		var/obj/item/toy/crayon/C = W
+		var/clr = C.colourName
+
+		if(!(clr in list("blue","green","mime","orange","purple","rainbow","red","yellow")))
+			usr << "\blue The egg refuses to take on this color!"
+			return
+
+		usr << "\blue You color \the [src] [clr]"
+		icon_state = "egg-[clr]"
+		item_color = clr
+	else
 		..()
-		reagents.add_reagent("nutriment", 1)
-
-	throw_impact(atom/hit_atom)
-		..()
-		new/obj/effect/decal/cleanable/egg_smudge(src.loc)
-		src.reagents.reaction(hit_atom, TOUCH)
-		src.visible_message("\red [src.name] has been squashed.","\red You hear a smack.")
-		del(src)
-
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(istype( W, /obj/item/toy/crayon ))
-			var/obj/item/toy/crayon/C = W
-			var/clr = C.colourName
-
-			if(!(clr in list("blue","green","mime","orange","purple","rainbow","red","yellow")))
-				usr << "\blue The egg refuses to take on this color!"
-				return
-
-			usr << "\blue You color \the [src] [clr]"
-			icon_state = "egg-[clr]"
-			item_color = clr
-		else
-			..()
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/blue
 	icon_state = "egg-blue"
@@ -549,7 +558,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("protein", 3)
 		reagents.add_reagent("sodiumchloride", 1)
 		reagents.add_reagent("blackpepper", 1)
 		bitesize = 1
@@ -562,15 +571,19 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("protein", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/flour
-	name = "Flour bag"
-	desc = "A small bag filled with some flour."
+	name = "flour sack"
+	desc = "A big bag of flour. Good for baking!"
+	icon = 'icons/obj/food.dmi'
 	icon_state = "flour"
+	item_state = "flour"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("flour", 30)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
 
 	afterattack(obj/target, mob/user , flag)
 		if(istype(target, /obj/machinery/icecream_vat))
@@ -585,7 +598,6 @@
 			del(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/organ
-
 	name = "organ"
 	desc = "It's good for you."
 	icon = 'icons/obj/surgery.dmi'
@@ -594,7 +606,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", rand(3,5))
+		reagents.add_reagent("protein", rand(3,5))
 		reagents.add_reagent("toxin", rand(1,3))
 		src.bitesize = 3
 
@@ -640,7 +652,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("protein", 3)
 		reagents.add_reagent("carpotoxin", 3)
 		src.bitesize = 6
 
@@ -652,7 +664,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("protein", 4)
 		reagents.add_reagent("carpotoxin", 3)
 		bitesize = 3
 
@@ -687,7 +699,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 12)
+		reagents.add_reagent("protein", 12)
 		reagents.add_reagent("hyperzine", 5)
 		src.bitesize = 3
 
@@ -699,7 +711,8 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("protein", 6)
+		reagents.add_reagent("pacid",6)
 		src.bitesize = 6
 
 /obj/item/weapon/reagent_containers/food/snacks/meatball
@@ -710,7 +723,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("protein", 3)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sausage
@@ -721,8 +734,25 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("protein", 6)
 		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/donkpocket/sinpocket
+	name = "\improper Sin-pocket"
+	desc = "The food of choice for the veteran. Do <B>NOT</B> overconsume."
+	filling_color = "#6D6D00"
+	heated_reagents = list("doctorsdelight" = 5, "hyperzine" = 0.75, "synaptizine" = 0.25)
+	var/has_been_heated = 0
+
+/obj/item/weapon/reagent_containers/food/snacks/donkpocket/sinpocket/attack_self(mob/user)
+	if(has_been_heated)
+		user << "<span class='notice'>The heating chemicals have already been spent.</span>"
+		return
+	has_been_heated = 1
+	user.visible_message("<span class='notice'>[user] crushes \the [src] package.</span>", "You crush \the [src] package and feel a comfortable heat build up.")
+	spawn(200)
+		user << "You think \the [src] is ready to eat about now."
+		heat()
 
 /obj/item/weapon/reagent_containers/food/snacks/donkpocket
 	name = "Donk-pocket"
@@ -732,15 +762,26 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("protein", 2)
 
 	var/warm = 0
-	proc/cooltime() //Not working, derp?
+	var/list/heated_reagents = list("tricordrazine" = 5)
+	proc/heat()
+		warm = 1
+		for(var/reagent in heated_reagents)
+			reagents.add_reagent(reagent, heated_reagents[reagent])
+		bitesize = 6
+		name = "Warm " + name
+		cooltime()
+
+	proc/cooltime()
 		if (src.warm)
-			spawn( 4200 )
+			spawn(4200)
 				src.warm = 0
-				src.reagents.del_reagent("tricordrazine")
-				src.name = "donk-pocket"
+				for(var/reagent in heated_reagents)
+					src.reagents.del_reagent(reagent)
+				src.name = initial(name)
 		return
 
 /obj/item/weapon/reagent_containers/food/snacks/brainburger
@@ -751,7 +792,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("protein", 6)
 		reagents.add_reagent("alkysine", 6)
 		bitesize = 2
 
@@ -778,7 +819,7 @@
 	icon_state = "hburger"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("protein", 6)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/cheeseburger
@@ -787,6 +828,7 @@
 	icon_state = "cheeseburger"
 	New()
 		..()
+		reagents.add_reagent("protein", 2)
 		reagents.add_reagent("nutriment", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeyburger
@@ -797,7 +839,8 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("protein", 3)
+		reagents.add_reagent("nutriment", 3)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/fishburger
@@ -808,7 +851,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("protein", 6)
 		reagents.add_reagent("carpotoxin", 3)
 		bitesize = 3
 
@@ -856,7 +899,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("protein", 8)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/clownburger
@@ -867,11 +910,6 @@
 
 	New()
 		..()
-/*
-		var/datum/disease/F = new /datum/disease/pierrot_throat(0)
-		var/list/data = list("viruses"= list(F))
-		reagents.add_reagent("blood", 4, data)
-*/
 		reagents.add_reagent("nutriment", 6)
 		bitesize = 2
 
@@ -896,7 +934,7 @@
 	//var/herp = 0
 	New()
 		..()
-		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("protein", 8)
 		bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/muffin
@@ -973,7 +1011,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 10)
+		reagents.add_reagent("protein", 10)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/soylenviridians
@@ -998,7 +1036,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 10)
+		reagents.add_reagent("protein", 10)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/tofupie
@@ -1053,7 +1091,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 10)
+		reagents.add_reagent("protein", 10)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/wingfangchu
@@ -1065,7 +1103,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("protein", 6)
 		bitesize = 2
 
 
@@ -1078,7 +1116,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("protein", 8)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeykabob
@@ -1090,7 +1128,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("protein", 8)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/tofukabob
@@ -1107,14 +1145,15 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/cubancarp
 	name = "Cuban Carp"
-	desc = "A grifftastic sandwich that burns your tongue and then leaves it numb!"
+	desc = "A sandwich that burns your tongue and then leaves it numb!"
 	icon_state = "cubancarp"
 	trash = /obj/item/trash/plate
 	filling_color = "#E9ADFF"
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("protein", 3)
+		reagents.add_reagent("nutriment", 3)
 		reagents.add_reagent("carpotoxin", 3)
 		reagents.add_reagent("capsaicin", 3)
 		bitesize = 3
@@ -1148,7 +1187,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("protein", 4)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/no_raisin
@@ -1206,7 +1245,8 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("protein", 3)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/fries
@@ -1253,7 +1293,8 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("protein", 2)
+		reagents.add_reagent("nutriment", 4)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/fortunecookie
@@ -1288,7 +1329,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("protein", 4)
 		reagents.add_reagent("sodiumchloride", 1)
 		reagents.add_reagent("blackpepper", 1)
 		bitesize = 3
@@ -1342,7 +1383,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("protein", 8)
 		reagents.add_reagent("water", 5)
 		bitesize = 5
 
@@ -1360,13 +1401,13 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/bloodsoup
 	name = "Tomato soup"
-	desc = "Smells like copper"
+	desc = "Smells like copper."
 	icon_state = "tomatosoup"
 	filling_color = "#FF0000"
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("protein", 2)
 		reagents.add_reagent("blood", 10)
 		reagents.add_reagent("water", 5)
 		bitesize = 5
@@ -1482,7 +1523,8 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("protein", 3)
+		reagents.add_reagent("nutriment", 3)
 		reagents.add_reagent("capsaicin", 3)
 		reagents.add_reagent("tomatojuice", 2)
 		bitesize = 5
@@ -1497,7 +1539,8 @@
 	trash = /obj/item/trash/snack_bowl
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("protein", 3)
+		reagents.add_reagent("nutriment", 3)
 		reagents.add_reagent("frostoil", 3)
 		reagents.add_reagent("tomatojuice", 2)
 		bitesize = 5
@@ -1530,7 +1573,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment",10)
+		reagents.add_reagent("protein", 10)
 
 	afterattack(obj/O as obj, mob/user as mob, proximity)
 		if(!proximity) return
@@ -1595,24 +1638,18 @@
 	desc = "Still wrapped in some paper."
 	icon_state = "monkeycubewrap"
 	wrapped = 1
-
-
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/farwacube
 	name = "farwa cube"
 	monkey_type = /mob/living/carbon/monkey/tajara
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/farwacube
 	name = "farwa cube"
 	monkey_type =/mob/living/carbon/monkey/tajara
-
-
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/stokcube
 	name = "stok cube"
 	monkey_type = /mob/living/carbon/monkey/unathi
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/stokcube
 	name = "stok cube"
 	monkey_type =/mob/living/carbon/monkey/unathi
-
-
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/neaeracube
 	name = "neaera cube"
 	monkey_type = /mob/living/carbon/monkey/skrell
@@ -1640,7 +1677,8 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 14)
+		reagents.add_reagent("protein", 10)
+		reagents.add_reagent("nutriment", 4)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/enchiladas
@@ -1652,7 +1690,8 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment",8)
+		reagents.add_reagent("protein", 6)
+		reagents.add_reagent("nutriment",2)
 		reagents.add_reagent("capsaicin", 6)
 		bitesize = 4
 
@@ -1665,7 +1704,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 10)
+		reagents.add_reagent("protein", 10)
 		reagents.add_reagent("banana", 5)
 		reagents.add_reagent("blackpepper", 1)
 		reagents.add_reagent("sodiumchloride", 1)
@@ -1692,7 +1731,8 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("protein", 3)
+		reagents.add_reagent("nutriment", 3)
 		reagents.add_reagent("carpotoxin", 3)
 		bitesize = 3
 
@@ -1705,7 +1745,8 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("protein", 3)
+		reagents.add_reagent("nutriment", 3)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/toastedsandwich
@@ -1717,7 +1758,8 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("protein", 3)
+		reagents.add_reagent("nutriment", 3)
 		reagents.add_reagent("carbon", 2)
 		bitesize = 2
 
@@ -1730,7 +1772,8 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 7)
+		reagents.add_reagent("protein", 4)
+		reagents.add_reagent("nutriment", 3)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/tomatosoup
@@ -1767,7 +1810,8 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 10)
+		reagents.add_reagent("protein", 4)
+		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("tomatojuice", 5)
 		reagents.add_reagent("imidazoline", 5)
 		reagents.add_reagent("water", 5)
@@ -1863,7 +1907,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/ricepudding
 	name = "Rice Pudding"
-	desc = "Where's the Jam!"
+	desc = "Where's the jam?"
 	icon_state = "rpudding"
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#FFFBDB"
@@ -1895,7 +1939,8 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("protein", 4)
+		reagents.add_reagent("nutriment", 4)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/spesslaw
@@ -1906,7 +1951,8 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("protein", 4)
+		reagents.add_reagent("nutriment", 4)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/poppypretzel
@@ -1941,7 +1987,8 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 50)
+		reagents.add_reagent("protein", 25)
+		reagents.add_reagent("nutriment", 25)
 		bitesize = 10
 
 /obj/item/weapon/reagent_containers/food/snacks/candiedapple
@@ -2070,7 +2117,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 5)
+		reagents.add_reagent("protein", 5)
 		bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/beetsoup
@@ -2082,19 +2129,7 @@
 
 	New()
 		..()
-		switch(rand(1,6))
-			if(1)
-				name = "borsch"
-			if(2)
-				name = "bortsch"
-			if(3)
-				name = "borstch"
-			if(4)
-				name = "borsh"
-			if(5)
-				name = "borshch"
-			if(6)
-				name = "borscht"
+		name = pick(list("borsch","bortsch","borstch","borsh","borshch","borscht"))
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
 
@@ -2119,7 +2154,8 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("protein", 2)
+		reagents.add_reagent("nutriment", 6)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/appletart
@@ -2152,7 +2188,8 @@
 	filling_color = "#FF7575"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 30)
+		reagents.add_reagent("protein", 20)
+		reagents.add_reagent("nutriment", 10)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice
@@ -2172,7 +2209,8 @@
 	filling_color = "#8AFF75"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 30)
+		reagents.add_reagent("protein", 20)
+		reagents.add_reagent("nutriment", 10)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice
@@ -2255,7 +2293,8 @@
 	filling_color = "#E6AEDB"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 25)
+		reagents.add_reagent("protein", 25)
+		reagents.add_reagent("nutriment", 5)
 		reagents.add_reagent("alkysine", 10)
 		bitesize = 2
 
@@ -2276,7 +2315,8 @@
 	filling_color = "#FAF7AF"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 25)
+		reagents.add_reagent("protein", 15)
+		reagents.add_reagent("nutriment", 10)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesecakeslice
@@ -2391,7 +2431,7 @@
 	filling_color = "#FFF700"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 20)
+		reagents.add_reagent("protein", 20)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesewedge
@@ -2416,7 +2456,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/birthdaycakeslice
 	name = "Birthday Cake slice"
-	desc = "A slice of your birthday"
+	desc = "A slice of your birthday."
 	icon_state = "birthdaycakeslice"
 	trash = /obj/item/trash/plate
 	filling_color = "#FFD6D6"
@@ -2453,7 +2493,8 @@
 	filling_color = "#FFF896"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 20)
+		reagents.add_reagent("protein", 15)
+		reagents.add_reagent("nutriment", 5)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/creamcheesebreadslice
@@ -2538,7 +2579,8 @@
 	slices_num = 6
 	New()
 		..()
-		reagents.add_reagent("nutriment", 40)
+		reagents.add_reagent("nutriment", 35)
+		reagents.add_reagent("protein", 5)
 		reagents.add_reagent("tomatojuice", 6)
 		bitesize = 2
 
@@ -2557,7 +2599,7 @@
 	slices_num = 6
 	New()
 		..()
-		reagents.add_reagent("nutriment", 50)
+		reagents.add_reagent("protein", 50)
 		reagents.add_reagent("tomatojuice", 6)
 		bitesize = 2
 
@@ -2577,6 +2619,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 35)
+		reagents.add_reagent("protein", 5)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/mushroompizzaslice
@@ -2595,6 +2638,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 30)
+		reagents.add_reagent("protein", 5)
 		reagents.add_reagent("tomatojuice", 6)
 		reagents.add_reagent("imidazoline", 12)
 		bitesize = 2
@@ -2861,23 +2905,6 @@
 ///////////////////////////////////////////
 // new old food stuff from bs12
 ///////////////////////////////////////////
-
-// Flour + egg = dough
-/obj/item/weapon/reagent_containers/food/snacks/flour/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/egg))
-		new /obj/item/weapon/reagent_containers/food/snacks/dough(src)
-		user << "You make some dough."
-		del(W)
-		del(src)
-
-// Egg + flour = dough
-/obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/flour))
-		new /obj/item/weapon/reagent_containers/food/snacks/dough(src)
-		user << "You make some dough."
-		del(W)
-		del(src)
-
 /obj/item/weapon/reagent_containers/food/snacks/dough
 	name = "dough"
 	desc = "A piece of dough."
@@ -2886,6 +2913,7 @@
 	bitesize = 2
 	New()
 		..()
+		reagents.add_reagent("protein", 1)
 		reagents.add_reagent("nutriment", 3)
 
 // Dough + rolling pin = flat dough
@@ -2905,6 +2933,7 @@
 	slices_num = 3
 	New()
 		..()
+		reagents.add_reagent("protein", 1)
 		reagents.add_reagent("nutriment", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/doughslice
@@ -2912,6 +2941,8 @@
 	desc = "A building block of an impressive dish."
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "doughslice"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/spagetti
+	slices_num = 1
 	bitesize = 2
 	New()
 		..()
@@ -2978,7 +3009,8 @@
 	bitesize = 3
 	New()
 		..()
-		reagents.add_reagent("nutriment", 7)
+		reagents.add_reagent("protein", 3)
+		reagents.add_reagent("nutriment", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/rawcutlet
 	name = "raw cutlet"
@@ -2988,7 +3020,7 @@
 	bitesize = 1
 	New()
 		..()
-		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("protein", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/cutlet
 	name = "cutlet"
@@ -2998,7 +3030,7 @@
 	bitesize = 2
 	New()
 		..()
-		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("protein", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/rawmeatball
 	name = "raw meatball"
@@ -3008,7 +3040,7 @@
 	bitesize = 2
 	New()
 		..()
-		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("protein", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/hotdog
 	name = "hotdog"
@@ -3017,7 +3049,7 @@
 	bitesize = 2
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("protein", 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/flatbread
 	name = "flatbread"
@@ -3048,3 +3080,39 @@
 		..()
 		reagents.add_reagent("nutriment", 3)
 
+/obj/item/weapon/reagent_containers/food/snacks/liquidfood
+	name = "\improper LiquidFood Ration"
+	desc = "A prepackaged grey slurry of all the essential nutrients for a spacefarer on the go. Should this be crunchy?"
+	icon_state = "liquidfood"
+	trash = /obj/item/trash/liquidfood
+	filling_color = "#A8A8A8"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 20)
+		reagents.add_reagent("iron", 3)
+		bitesize = 4
+
+
+/obj/item/weapon/reagent_containers/food/snacks/tastybread
+	name = "bread tube"
+	desc = "Bread in a tube. Chewy...and surprisingly tasty."
+	icon_state = "tastybread"
+	trash = /obj/item/trash/tastybread
+	filling_color = "#A66829"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/skrellsnacks
+	name = "\improper SkrellSnax"
+	desc = "Cured fungus shipped all the way from Jargon 4, almost like jerky! Almost."
+	icon_state = "skrellsnacks"
+	filling_color = "#A66829"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
+		bitesize = 3

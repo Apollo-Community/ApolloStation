@@ -119,7 +119,7 @@
 
 /////////////////////// Cataguettes - Lucy's Stethoscope - Lucy Kemmerer //////
 
-/obj/item/clothing/tie/stethoscope/fluff/lucystethos
+/obj/item/clothing/accessory/stethoscope/fluff/lucystethos
    name = "Lucy's Stethoscope"
    desc = "A medical apparatus intended to ease in listening to the sounds of the human body. This one looks cleaner and sparklier than the rest. There is a small silver plaque attached to the tubing, with the words 'Lucy Kemmerer' engraved on it."
    icon_state = "lucystethos"
@@ -1116,22 +1116,33 @@
 	item_color = "lillian_dress"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
-////// Cybernetic Casings - Parker Eliza - MrSnapwalk
+////// Tailored Security Uniform - Parker Eliza - MrSnapwalk
+
 /obj/item/clothing/under/fluff/parkereliza
-	name = "cybernetic casings"
-	desc = "A set of somewhat bulky white casings for robotic limbs, paired with a basic blue tank top and black cargo pants. The arms have a small label on the inner elbow, which reads \"Bishop Corporation Cybernetic Solutions\"."
+	name = "tailored security uniform"
+	desc = "A red uniform shirt (tailored for easy access to the shoulder joint) and black cargo pants, paired with a set of somewhat bulky white casings for robotic limbs. The arms have a small label on the inner elbow, which reads \"Bishop Corporation Cybernetic Solutions\"."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "parker_eliza"
 	item_state = "parker_eliza"
 	item_color = "parker_eliza"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HANDS
 
+////// Bishop "GOLEM" V2200 Industrial Limb Augments - Parker Eliza - MrSnapwalk
+
+/obj/item/clothing/suit/fluff/parkereliza
+	name = "Bishop \"GOLEM\" V2200 Industrial Limb Augments"
+	desc = "A set of top-of-the-line cyberlimbs, only usable to someone with extensive bone structure augmentation. Often used in industrial applications, they are capable of throwing a man clear across a room. The load limitation circuit in this set appears to be modified."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "parker_eliza_arms"
+	item_state = "parker_eliza_arms"
+	item_color = "parker_eliza_arms"
+
 
 ////////////// Accessories /////
 
 //////////////////// Blood Red Pendant - Mewth - Mu'taz Radi ////////////////
 
-/obj/item/clothing/tie/fluff/radi
+/obj/item/clothing/accessory/fluff/radi
 	name = "Blood Red Pendant"
 	desc = "A blue chained necklace with a ruby in the middle, it looks pretty!"
 	icon = 'icons/obj/custom_items.dmi'
@@ -1171,9 +1182,19 @@
 	icon_state = "head_m"
 	body_parts_covered = FACE|EYES
 
+//Painted mask: Dante Cicero - andrewmeythaler
+
+/obj/item/clothing/mask/andrewmeythaler
+	name = "painted mask"
+	desc = "A ghoulish mask with a stylized painting of a flame over the left eye, and a painted tear stream coming from the right eye."
+	icon = 'icons/obj/custom_items.dmi'
+	item_state = "cicero"
+	icon_state = "cicero"
+	body_parts_covered = FACE|EYES
+
 ////// Small locket - Altair An-Nasaqan - Serithi
 
-/obj/item/clothing/tie/fluff/altair_locket
+/obj/item/clothing/accessory/fluff/altair_locket
 	name = "small locket"
 	desc = "A small golden locket attached to an Ii'rka-reed string. Inside the locket is a holo-picture of a female Tajaran, and an inscription writtin in Siik'mas."
 	icon = 'icons/obj/custom_items.dmi'
@@ -1186,7 +1207,7 @@
 
 ////// Silver locket - Konaa Hirano - Konaa_Hirano
 
-/obj/item/clothing/tie/fluff/konaa_hirano
+/obj/item/clothing/accessory/fluff/konaa_hirano
 	name = "silver locket"
 	desc = "This oval shaped, argentium sterling silver locket hangs on an incredibly fine, refractive string, almost thin as hair and microweaved from links to a deceptive strength, of similar material. The edges are engraved very delicately with an elegant curving design, but overall the main is unmarked and smooth to the touch, leaving room for either remaining as a stolid piece or future alterations. There is an obvious internal place for a picture or lock of some sort, but even behind that is a very thin compartment unhinged with the pinch of a thumb and forefinger."
 	icon = 'icons/obj/custom_items.dmi'
@@ -1198,13 +1219,13 @@
 	slot_flags = SLOT_MASK | SLOT_TIE
 	var/obj/item/held //Item inside locket.
 
-/obj/item/clothing/tie/fluff/konaa_hirano/attack_self(mob/user as mob)
+/obj/item/clothing/accessory/fluff/konaa_hirano/attack_self(mob/user as mob)
 	if(held)
 		user << "You open [src] and [held] falls out."
 		held.loc = get_turf(user)
 		src.held = null
 
-/obj/item/clothing/tie/fluff/konaa_hirano/attackby(var/obj/item/O as obj, mob/user as mob)
+/obj/item/clothing/accessory/fluff/konaa_hirano/attackby(var/obj/item/O as obj, mob/user as mob)
 	if(istype(O,/obj/item/weapon/paper))
 		if(held)
 			usr << "[src] already has something inside it."
@@ -1218,7 +1239,7 @@
 
 //////  Medallion - Nasir Khayyam - Jamini
 
-/obj/item/clothing/tie/fluff/nasir_khayyam_1
+/obj/item/clothing/accessory/fluff/nasir_khayyam_1
 	name = "medallion"
 	desc = "This silvered medallion bears the symbol of the Hadii Clan of the Tajaran."
 	icon = 'icons/obj/custom_items.dmi'
@@ -1334,22 +1355,21 @@
 	desc = "A stun baton used for incapacitating targets; there seems to be a bunch of tally marks set into the handle."
 
 ///// Deckard .44 - Callum Leamas - Roaper
-/obj/item/weapon/gun/projectile/detective/fluff/callum_leamas
+/obj/item/weapon/gun/projectile/revolver/detective/fluff/callum_leamas
 	name = "Deckard .44"
 	desc = "A custom built revolver, based off the semi-popular Detective Special model."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "leamas-empty"
+	ammo_type = /obj/item/ammo_magazine/c38/rubber
 
-/obj/item/weapon/gun/projectile/detective/fluff/callum_leamas/update_icon()
-
+/obj/item/weapon/gun/projectile/revolver/detective/fluff/callum_leamas/update_icon()
 	..()
 	if(loaded.len)
 		icon_state = "leamas-loaded"
 	else
 		icon_state = "leamas-empty"
 
-/obj/item/weapon/gun/projectile/attackby(var/obj/item/A as obj, mob/user as mob)
-
+/obj/item/weapon/gun/projectile/revolver/detective/fluff/callum_leamas/load_ammo(var/obj/item/A, mob/user)
 	if(istype(A, /obj/item/ammo_magazine))
 		flick("leamas-reloading",src)
 	..()
@@ -1415,18 +1435,36 @@
 
 ////////////////////////////// Foxler - Erstatz Vryroxes /////////////////////////////////////////////////
 
+//Use this subtype for spawning in the custom item.
+/obj/item/weapon/holder/cat/fluff/bones/custom_item
+
+/obj/item/weapon/holder/cat/fluff/bones/custom_item/New()
+	if (!contents.len)
+		new/mob/living/simple_animal/cat/fluff/bones (src)
+	..()
+
 /obj/item/weapon/holder/cat/fluff/bones
 	name = "Bones"
 	desc = "It's Bones! Meow."
 	gender = MALE
 	icon_state = "cat3"
 
-//Use this subtype for spawning in the custom item.
-/obj/item/weapon/holder/cat/fluff/bones/custom_item
+/mob/living/simple_animal/cat/fluff/bones
+	name = "Bones"
+	desc = "That's Bones the cat. He's a laid back, black cat. Meow."
+	gender = MALE
+	icon_state = "cat3"
+	icon_living = "cat3"
+	icon_dead = "cat3_dead"
+	holder_type = /obj/item/weapon/holder/cat/fluff/bones
+	var/friend_name = "Erstatz Vryroxes"
 
-/obj/item/weapon/holder/cat/fluff/bones/custom_item/New()
-//	if (!contents.len)
-//		new/mob/living/simple_animal/cat/fluff/bones (src)
+/mob/living/simple_animal/cat/fluff/bones/handle_movement_target()
+	if (!friend)
+		for (var/mob/living/carbon/human/M in player_list)
+			if (M.real_name == friend_name)
+				friend = M
+				break
 	..()
 
 ////////////////////////////// Mysticflame98 - Bones the cat /////////////////////////////////////////////////
@@ -1496,7 +1534,6 @@
 	else if (bff.health <= 50)
 		if (prob(10)) audible_emote("meows anxiously.")
 
-
 ////////////////////////////// Mysticflame98 - Fluffles the bunny /////////////////////////////////////////////////
 
 
@@ -1521,3 +1558,4 @@
 /mob/living/simple_animal/bunny/fluff/fluffles/custom_item/New()
 	if (!contents.len)
 		new/mob/living/simple_animal/bunny/fluff/fluffles (src)
+	..()

@@ -43,7 +43,11 @@
 		var/mob/living/carbon/human/H = target
 
 		if (!H.has_organ_for_slot(slot_handcuffed))
-			user << "\red \The [H] needs at least two wrists before you can cuff them together!"
+			user << "<span class='danger'>\The [H] needs at least two wrists before you can cuff them together!</span>"
+			return
+
+		if(istype(H.gloves,/obj/item/clothing/gloves/rig)) // Can't cuff someone who's in a deployed hardsuit.
+			user << "<span class='danger'>The cuffs won't fit around \the [H.gloves]!</span>"
 			return
 
 		if(!in_unlogged(user))
