@@ -1,6 +1,7 @@
 /mob/living/simple_animal/bunny
 	name = "\improper bunny"
 	desc = "A cute little bundle of fluff that breeds frantically."
+	icon = 'icons/apollo/mob/animal.dmi'
 	icon_state = "bunny"
 	icon_living = "bunny"
 	icon_dead = "bunny_dead"
@@ -36,18 +37,21 @@
 		..()
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
-		//BOGUS if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/carrot)) //feedin' dem chickens
-		//BOGUS	user.visible_message("\blue [user] feeds [O] to [name]! It seems very happy.","\blue You feed [O] to [name]! It seems very happy.")
-		//BOGUS	user.drop_item()
-		//BOGUS	del(O)
-		//BOGUS else
-		..()
+		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown)) //feedin' dem chickens
+			var/obj/item/weapon/reagent_containers/food/snacks/grown/G = O
+			if(G.seed && G.seed.kitchen_tag == "carrot")
+				user.visible_message("\blue [user] feeds [O] to [name]! It seems very happy.","\blue You feed [O] to [name]! It seems very happy.")
+				user.drop_item()
+				del(O)
+			else
+				user << "[name] doesn't seem interested in that."
+		else
+			..()
 
 	Life()
 		. =..()
 		if(!.)
 			return
-
 
 	MouseDrop(atom/over_object)
 		var/mob/living/carbon/H = over_object
@@ -68,7 +72,6 @@
 	name = "Danton"
 	desc = "Its the great Danton! Perhaps he could fit in the entertainer's hat?"
 	holder_type = /obj/item/weapon/holder/danton
-	icon = 'icons/apollo/mob/animal.dmi'
 
 	New()
 		..()
