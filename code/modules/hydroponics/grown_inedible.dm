@@ -36,7 +36,7 @@
 	name = "towercap"
 	name = "tower-cap log"
 	desc = "It's better than bad, it's good!"
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/apollo/harvest.dmi'
 	icon_state = "logs"
 	force = 5
 	throwforce = 5
@@ -65,7 +65,7 @@
 	plantname = "sunflowers"
 	name = "sunflower"
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/apollo/harvest.dmi'
 	icon_state = "sunflower"
 	damtype = "fire"
 	force = 0
