@@ -246,7 +246,11 @@
 	find_control_computer()
 
 /obj/machinery/cryopod/proc/find_control_computer(urgent=0)
-	control_computer = locate(/obj/machinery/computer/cryopod) in src.loc.loc
+	//BOGUS
+	// For some fucking reason this locate() call hangs the server (probably because the maps are fucked)
+	// Need to fix it ASAP
+	// -lmas
+	//control_computer = locate(/obj/machinery/computer/cryopod) in src.loc.loc
 
 	// Don't send messages unless we *need* the computer, and less than five minutes have passed since last time we messaged
 	if(!control_computer && urgent && last_no_computer_message + 5*60*10 < world.time)
