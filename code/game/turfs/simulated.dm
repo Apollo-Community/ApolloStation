@@ -51,6 +51,16 @@
 						O.footstep++
 				else
 					playsound(src, "clownstep", 20, 1)
+			if(istype(H.shoes, /obj/item/clothing/shoes/apollo/jester))
+				var/obj/item/clothing/shoes/clown_shoes/O = H.shoes
+				if(H.m_intent == "run")
+					if(O.footstep >= 2)
+						O.footstep = 0
+						playsound(src, 'sound/effects/jingle.ogg', 50, 1) // this will get annoying very fast.
+					else
+						O.footstep++
+				else
+					playsound(src, 'sound/effects/jingle.ogg', 20, 1)
 
 			// Tracking blood
 			var/list/bloodDNA = null

@@ -102,7 +102,7 @@
 			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access)))
 				open()
 			else
-				flick("door_deny", src)
+				do_animate("deny")
 		return
 	if(istype(AM, /obj/structure/stool/bed/chair/wheelchair))
 		var/obj/structure/stool/bed/chair/wheelchair/wheel = AM
@@ -110,7 +110,7 @@
 			if(wheel.pulling && (src.allowed(wheel.pulling)))
 				open()
 			else
-				flick("door_deny", src)
+				do_animate("deny")
 		return
 	return
 
@@ -132,7 +132,8 @@
 
 	if(density)
 		if(allowed(user))	open()
-		else				flick("door_deny", src)
+		else
+			do_animate("deny")
 	return
 
 /obj/machinery/door/meteorhit(obj/M as obj)
@@ -161,9 +162,7 @@
 		take_damage(Proj.damage)
 
 
-
 /obj/machinery/door/hitby(AM as mob|obj, var/speed=5)
-
 	..()
 	visible_message("\red <B>[src.name] was hit by [AM].</B>")
 	var/tforce = 0
@@ -280,7 +279,7 @@
 		return
 
 	if(src.density && !(stat & (NOPOWER|BROKEN)))
-		flick("door_deny", src)
+		do_animate("deny")
 	return
 
 /obj/machinery/door/proc/take_damage(var/damage)
@@ -364,6 +363,7 @@
 				flick("doorc1", src)
 		if("deny")
 			flick("door_deny", src)
+			playsound(src.loc, 'sound/effects/door_error.ogg', 100, 1)
 	return
 
 

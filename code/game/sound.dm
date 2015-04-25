@@ -153,6 +153,9 @@ var/const/FALLOFF_SOUNDS = 0.5
 			return PSYCHOTIC
 
 	if( M.loc )
+		if( istype( M.loc, /turf/space ))
+			return PLAIN
+
 		switch( M.loc.icon_state )
 			if( "plating" )
 				return STONEROOM
