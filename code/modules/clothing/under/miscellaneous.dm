@@ -475,9 +475,9 @@
 /obj/item/clothing/under/serviceoveralls
 	name = "workman outfit"
 	desc = "The very image of a working man. Not that you're probably doing work."
-	icon_state = "mechanic_s"
-	item_state = "mechanic_s"
-	item_color = "mechanic_s"
+	icon_state = "mechanic"
+	item_state = "mechanic"
+	item_color = "mechanic"
 
 /obj/item/clothing/under/cheongsam
 	name = "white cheongsam"

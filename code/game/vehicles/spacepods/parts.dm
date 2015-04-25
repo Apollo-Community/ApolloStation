@@ -3,14 +3,14 @@
 	icon = 'icons/pods/pod_parts.dmi'
 
 /obj/item/pod_parts/core
-	name="Space Pod Core"
+	name="space pod core"
 	icon_state = "core"
 	construction_cost = list("iron"=5000,"uranium"=1000,"plasma"=5000)
 	flags = CONDUCT
 	origin_tech = "programming=2;materials=3;bluespace=2;engineering=3"
 
 /obj/item/pod_parts/pod_frame
-	name = "Space Pod Frame"
+	name = "space pod frame"
 	icon_state = ""
 	flags = CONDUCT
 	density = 0
