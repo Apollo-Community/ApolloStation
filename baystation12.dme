@@ -1656,4 +1656,5 @@
 #include "maps\apollo-5.dmm"
 #include "maps\apollo-6.dmm"
 #include "maps\apollo-7.dmm"
+#include "maps\apollo-8.dmm"
 // END_INCLUDE
