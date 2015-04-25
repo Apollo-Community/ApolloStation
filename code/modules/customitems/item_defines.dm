@@ -1136,6 +1136,8 @@
 	icon_state = "parker_eliza_arms"
 	item_state = "parker_eliza_arms"
 	item_color = "parker_eliza_arms"
+	body_parts_covered = 0 //technicially it's underneath everything
+	canremove = 0
 
 
 ////////////// Accessories /////
