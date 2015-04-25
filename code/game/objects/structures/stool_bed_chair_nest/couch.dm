@@ -19,12 +19,6 @@
 
 	return ..()
 
-//BOGUS /obj/structure/stool/bed/chair/couch/afterbuckle()
-//BOGUS 	if(buckled_mob)
-//BOGUS 		overlays += armrest
-//BOGUS 	else
-//BOGUS 		overlays -= armrest
-
 /obj/structure/stool/bed/chair/couch/left
 	couchpart = 1
 	icon_state = "couch_left"
