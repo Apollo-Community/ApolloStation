@@ -125,8 +125,7 @@
 					 /obj/item/weapon/gun/projectile/shotgun/pump,
 					 /obj/item/weapon/gun/projectile/shotgun/doublebarrel,
 					 /obj/item/weapon/gun/projectile/shotgun,
-					 //BOGUS /obj/item/weapon/gun/projectile/mateba,
-					 //BOGUS /obj/item/weapon/gun/projectile/russian,
+					 /obj/item/weapon/gun/projectile/revolver/mateba,
 					 /obj/item/weapon/gun/projectile/pistol,
 					 /obj/item/weapon/gun/projectile/deagle,
 					 /obj/item/weapon/gun/projectile/deagle/gold,
@@ -135,9 +134,7 @@
 					 /obj/item/weapon/gun/projectile/automatic/c20r,
 					 /obj/item/weapon/gun/projectile/automatic/mini_uzi,
 					 /obj/item/weapon/gun/projectile/automatic,
-					 //BOGUS /obj/item/weapon/gun/projectile/detective,
-					 //BOGUS /obj/item/weapon/gun/projectile/detective/semiauto,
-					 //BOGUS /obj/item/weapon/gun/projectile/detective/fluff/callum_leamas,
+					 /obj/item/weapon/gun/projectile/revolver/detective,
 					 /obj/item/weapon/gun/energy/sniperrifle,
 					 /obj/item/weapon/gun/energy/temperature,
 					 /obj/item/weapon/gun/energy/toxgun,
@@ -150,12 +147,11 @@
 					 /obj/item/weapon/gun/energy/pulse_rifle/destroyer,
 					 /obj/item/weapon/gun/energy/xray,
 					 /obj/item/weapon/gun/energy/laser,
-					 //BOGUS /obj/item/weapon/gun/energy/laser/retro,
+					 /obj/item/weapon/gun/energy/retro,
 					 /obj/item/weapon/gun/energy/taser,
 					 /obj/item/weapon/gun/energy/gun,
 					 /obj/item/weapon/gun/energy/gun/nuclear,
-					 /obj/item/weapon/gun/energy/lasercannon,
-					  )
+					 /obj/item/weapon/gun/energy/lasercannon)
 
 /obj/random/medical
 	name = "Random Medicine"
