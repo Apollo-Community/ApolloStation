@@ -204,7 +204,6 @@
 	max_shells = 50
 	caliber = "BB"
 	silenced = 0
-	//BOGUS ejectshell = 0
 	origin_tech = "combat=2;materials=2"
 	ammo_type = "/obj/item/ammo_casing/bb"
 	fire_sound = 'sound/weapons/guns/bb.ogg'
