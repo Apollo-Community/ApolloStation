@@ -92,7 +92,6 @@
 	var/seconds_electrified = 0 //Shock customers like an airlock.
 	var/shoot_inventory = 0 //Fire items at customers! We're broken!
 
-	//BOGUS var/panel_open = 0 //Hacking that vending machine. Gonna get a free candy bar.
 	var/scan_id = 1
 	var/obj/item/weapon/coin/coin
 	var/datum/wires/vending/wires = null
