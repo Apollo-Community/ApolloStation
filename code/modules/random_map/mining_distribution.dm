@@ -168,9 +168,9 @@ Deep minerals:
 		iterate(iteration, x+hsize, y+hsize, hsize)
 
 /datum/random_map/ore/apply_to_map()
-	for(var/x = 0, x < real_size, x++)
+	for(var/x = 1, x < real_size, x++)
 		if((origin_x + x) > limit_x) continue
-		for(var/y = 0, y < real_size, y++)
+		for(var/y = 1, y < real_size, y++)
 			if((origin_y + y) > limit_y) continue
 			sleep(-1)
 			apply_to_turf(x,y)
