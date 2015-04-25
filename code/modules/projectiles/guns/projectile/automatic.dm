@@ -199,6 +199,7 @@
 /obj/item/weapon/gun/projectile/automatic/bb_gun
 	name = "BB rifle"
 	desc = "A spring-powered BB rifle"
+	icon = 'icons/apollo/obj/weapons.dmi'
 	icon_state = "bb_gun"
 	w_class = 4.0
 	max_shells = 50
