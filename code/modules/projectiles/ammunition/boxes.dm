@@ -221,6 +221,7 @@
 
 /obj/item/ammo_magazine/bb/empty
 	name = "Ammunition Tin (BB)"
+	icon = 'icons/apollo/obj/ammo.dmi'
 	icon_state = "bb_tin"
 	origin_tech = "combat=2"
 	ammo_type = "/obj/item/ammo_casing/bb"

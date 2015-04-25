@@ -146,6 +146,7 @@
 /obj/item/ammo_casing/bb
 	desc = "A BB bullet casing."
 	caliber = "BB"
+	icon = 'icons/apollo/obj/ammo.dmi'
 	icon_state = "bb"
 	projectile_type = "/obj/item/projectile/bullet/weakbullet/BB"
 
