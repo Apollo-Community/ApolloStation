@@ -248,8 +248,10 @@
 
 /obj/item/clothing/head/apollo
 	icon = 'icons/apollo/clothing/head.dmi'
-	icon_l_hand = 'icons/apollo/obj/lefthand.dmi'
-	icon_r_hand = 'icons/apollo/obj/righthand.dmi'
+	item_icons = list(
+		icon_l_hand = 'icons/apollo/obj/lefthand.dmi',
+		icon_r_hand = 'icons/apollo/obj/righthand.dmi',
+	)
 
 /obj/item/clothing/head/apollo/jesterhat
 	name = "Jester Hat"
@@ -265,12 +267,12 @@
 	icon_state = "butt"
 	item_state = "butt"
 
-/obj/item/clothing/head/apollo/roman
+/obj/item/clothing/head/roman
 	name = "roman soldier's hat"
 	desc = "A fearsome soldier's helm."
 	icon_state = "roman"
 	item_state = "roman"
 
-/obj/item/clothing/head/apollo/roman/fluff
+/obj/item/clothing/head/roman/fluff
 	icon_state = "roman2"
 	item_state = "roman2"

@@ -3,7 +3,7 @@
 	name = "virtual reality helmet"
 	desc = "Used to enter virtual reality simulations and uplinks. Has a built-in beta-wave sensor and neural clamp."
 
-	icon = 'icons/apollo/mob/head.dmi
+	icon = 'icons/apollo/clothing/head.dmi'
 	icon_state = "virtualhelmet"
 	item_state = "virtualhelmet"
 	flags = HEADCOVERSEYES

@@ -155,8 +155,10 @@
 
 /obj/item/clothing/shoes/apollo
 	icon = 'icons/apollo/clothing/feet.dmi'
-	icon_l_hand = 'icons/apollo/obj/lefthand.dmi'
-	icon_r_hand = 'icons/apollo/obj/righthand.dmi'
+	item_icons = list(
+		icon_l_hand = 'icons/apollo/obj/lefthand.dmi',
+		icon_r_hand = 'icons/apollo/obj/righthand.dmi',
+	)
 
 obj/item/clothing/shoes/apollo/jester
 	name = "Jester Shoes"
