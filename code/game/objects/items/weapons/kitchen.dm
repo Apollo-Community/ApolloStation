@@ -97,6 +97,7 @@
 	throwforce = 10.0
 	sharp = 1
 	edge = 1
+	hitsound = 'sound/weapons/knife.ogg'
 
 	suicide_act(mob/user)
 		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
