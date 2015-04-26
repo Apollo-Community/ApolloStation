@@ -516,10 +516,6 @@
 
 /obj/item/clothing/under/apollo
 	icon = 'icons/apollo/clothing/uniforms.dmi'
-	item_icons = list(
-		icon_l_hand = 'icons/apollo/obj/lefthand.dmi',
-		icon_r_hand = 'icons/apollo/obj/righthand.dmi',
-	)
 
 /obj/item/clothing/under/apollo/jester
 	name = "jester Suit"
@@ -541,6 +537,10 @@
 	icon_state = "entertainer"
 	item_state = "entertainer"
 	item_color = "entertainer"
+	item_icons = list(
+		icon_l_hand = 'icons/apollo/obj/lefthand.dmi',
+		icon_r_hand = 'icons/apollo/obj/righthand.dmi',
+	)
 
 /obj/item/clothing/under/apollo/camo
 	name = "camo jumpsuit"
