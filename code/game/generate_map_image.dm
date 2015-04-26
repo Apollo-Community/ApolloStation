@@ -31,7 +31,7 @@
 					// If they are, don't draw them
 					continue
 
-				res.Blend(img, blendMode2iconMode(A.blend_mode),  A.pixel_x, A.pixel_y)
+				res.Blend(img, blendMode2iconMode(A.blend_mode), A.pixel_x, A.pixel_y)
 
 	return res
 
@@ -59,72 +59,56 @@
 	set category = "Server"
 
 	if(holder)
-		fullmapgen_DumpTile(1, 1, text2num(input(usr,"Enter the Z level to generate")))
+		fullmapgen_DumpTile(text2num(input(usr,"Enter the Z level to generate")))
 
-/client/proc/fullmapgen_DumpTile(var/startX = 1, var/startY = 1, var/currentZ = 1, var/endX = -1, var/endY = -1)
-	// Checks if endX is outside of the bounds
-	if (endX < 0 || endX > world.maxx)
-		endX = world.maxx
-
-	// Checks if endY is outside of the bounds
-	if (endY < 0 || endY > world.maxy)
-		endY = world.maxy
+/client/proc/fullmapgen_DumpTile( var/currentZ = 1)
 
 	// Checks if currentZ is outside of the bounds
 	if (currentZ < 0 || currentZ > world.maxz)
 		usr << "NanoMapGen: <B>ERROR: currentZ ([currentZ]) must be between 1 and [world.maxz]</B>"
 		return FULLMAP_TERMINALERR
 
-	// Checks if startX is larger than endX
-	if (startX > endX)
-		usr << "NanoMapGen: <B>ERROR: startX ([startX]) cannot be greater than endX ([endX])</B>"
-		return FULLMAP_TERMINALERR
-
-	// Checks if startY is larger than endY
-	if (startY > endX)
-		usr << "NanoMapGen: <B>ERROR: startY ([startY]) cannot be greater than endY ([endY])</B>"
-		return FULLMAP_TERMINALERR
-
-	// Loads the base image
-	var/icon/Tile = icon(file("nano/mapbase1024.png"))
-	// Checks if the image is 1024x1024
-	if (Tile.Width() != FULLMAP_MAX_ICON_DIMENSION || Tile.Height() != FULLMAP_MAX_ICON_DIMENSION)
-		world.log << "NanoMapGen: <B>ERROR: BASE IMAGE DIMENSIONS ARE NOT [FULLMAP_MAX_ICON_DIMENSION]x[FULLMAP_MAX_ICON_DIMENSION]</B>"
-		return FULLMAP_TERMINALERR
-
-	world.log << "NanoMapGen: <B>GENERATE MAP ([startX],[startY],[currentZ]) to ([endX],[endY],[currentZ])</B>"
-	usr << "NanoMapGen: <B>GENERATE MAP ([startX],[startY],[currentZ]) to ([endX],[endY],[currentZ])</B>"
+	world.log << "FullMapGen: <B>GENERATE FULL MAP</B>"
+	usr << "FullMapGen: <B>GENERATE FULL MAP</B>"
 
 	// Where the magic happens
-	var/OverMaxX = world.maxx/FULLMAP_TILES_PER_IMAGE
-	var/OverMaxY = world.maxy/FULLMAP_TILES_PER_IMAGE
+	var/OverMaxX = round(world.maxx/FULLMAP_TILES_PER_IMAGE)
+	var/OverMaxY = round(world.maxy/FULLMAP_TILES_PER_IMAGE)
 	for( var/OverX = 0, OverX <= OverMaxX, OverX++ )
 		for( var/OverY = 0, OverY <= OverMaxY, OverY++ )
-			for(var/WorldX = startX, WorldX <= FULLMAP_TILES_PER_IMAGE, WorldX++)
-				for(var/WorldY = startY, WorldY <= FULLMAP_TILES_PER_IMAGE, WorldY++)
-					var/atom/Turf = locate(WorldX+( OverX*FULLMAP_TILES_PER_IMAGE ), WorldY+(OverY*FULLMAP_TILES_PER_IMAGE ), currentZ)
+			// Loads the base image
+			var/icon/Tile = icon(file("nano/mapbase1024.png"))
+
+			// Checks if the image is 1024x1024
+			if (Tile.Width() != FULLMAP_MAX_ICON_DIMENSION || Tile.Height() != FULLMAP_MAX_ICON_DIMENSION)
+				world.log << "FullMapGen: <B>ERROR: BASE IMAGE DIMENSIONS ARE NOT [FULLMAP_MAX_ICON_DIMENSION]x[FULLMAP_MAX_ICON_DIMENSION]</B>"
+				return FULLMAP_TERMINALERR
+
+			for(var/LocalX = 1, LocalX <= FULLMAP_TILES_PER_IMAGE, LocalX++)
+				for(var/LocalY = 1, LocalY <= FULLMAP_TILES_PER_IMAGE, LocalY++)
+					var/atom/Turf = locate(LocalX+( OverX*FULLMAP_TILES_PER_IMAGE ), LocalY+(OverY*FULLMAP_TILES_PER_IMAGE ), currentZ)
 					var/icon/TurfIcon = get_turf_icon(Turf)
 
 					if( !TurfIcon )
 						continue
 					//TurfIcon.Scale(FULLMAP_ICON_SIZE, FULLMAP_ICON_SIZE)
 
-					Tile.Blend(TurfIcon, ICON_OVERLAY, ( WorldX-1 ) * FULLMAP_ICON_SIZE, ( WorldY-1 ) * FULLMAP_ICON_SIZE )
+					Tile.Blend(TurfIcon, ICON_OVERLAY, (( LocalX-1 ) * FULLMAP_ICON_SIZE)+1, (( LocalY-1 ) * FULLMAP_ICON_SIZE)+1 )
 
 			var/mapFilename = "fullmap_[OverX]_[OverY]_[currentZ].png"
 
 			if (Tile.Width() != FULLMAP_MAX_ICON_DIMENSION || Tile.Height() != FULLMAP_MAX_ICON_DIMENSION)
-				usr << "NanoMapGen: ERROR <B>File [mapFilename] had a bad output</B>"
+				usr << "FullMapGen: ERROR <B>File [mapFilename] had a bad output</B>"
 
 				sleep(3)
 				return FULLMAP_BADOUTPUT
 
-			world.log << "NanoMapGen: <B>sending [mapFilename] to client</B>"
+			world.log << "FullMapGen: <B>sending [mapFilename] to client</B>"
 			usr << browse(Tile, "window=picture;file=[mapFilename];display=0")
-			world.log << "NanoMapGen: <B>Done.</B>"
-			usr << "NanoMapGen: <B>Done. File [mapFilename] uploaded to your cache.</B>"
+			world.log << "FullMapGen: <B>Done.</B>"
+			usr << "FullMapGen: <B>Done. File [mapFilename] uploaded to your cache.</B>"
+			del(Tile)
+			sleep(10)
 
-			sleep(3)
-
-	usr << "NanoMapGen: <B>Full map complete.</B>"
+	usr << "FullMapGen: <B>Full map complete.</B>"
 	return FULLMAP_SUCCESS

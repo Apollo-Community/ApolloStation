@@ -14,7 +14,6 @@
 
 	if(stat)
 		if(stat == 2)
-			STUI.logs[5] += "\[[time_stamp()]]<font color='#9611D4'>DSAY: [key_name(src)] : [message]</font><br>"
 			return say_dead(message)
 		return
 

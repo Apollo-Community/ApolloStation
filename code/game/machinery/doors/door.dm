@@ -363,7 +363,6 @@
 				flick("doorc1", src)
 		if("deny")
 			flick("door_deny", src)
-			playsound(src.loc, 'sound/effects/door_error.ogg', 100, 1)
 	return
 
 
