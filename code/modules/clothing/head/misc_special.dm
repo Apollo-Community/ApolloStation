@@ -196,6 +196,8 @@
 	name = "entertainer's hat"
 	desc = "Perhaps you could pull a rabbit out of this!"
 	icon = 'icons/apollo/clothing/head.dmi'
+	icon_l_hand = 'icons/apollo/obj/lefthand.dmi'
+	icon_r_hand = 'icons/apollo/obj/righthand.dmi'
 	icon_state = "entertainerhat"
 	item_state = "entertainerhat"
 	siemens_coefficient = 0.9

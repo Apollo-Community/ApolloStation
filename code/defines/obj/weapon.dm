@@ -89,6 +89,8 @@
 /obj/item/weapon/cane/pois_cane
 	desc = "An elegant black cane with a sharp needle protruding from the bottom."
 	icon = 'icons/apollo/obj/weapons.dmi'
+	icon_l_hand = 'icons/apollo/obj/lefthand.dmi'
+	icon_r_hand = 'icons/apollo/obj/righthand.dmi'
 	icon_state = "pcane"
 	item_state = "pstick"
 	force = 9.0

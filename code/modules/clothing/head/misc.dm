@@ -248,6 +248,8 @@
 
 /obj/item/clothing/head/apollo
 	icon = 'icons/apollo/clothing/head.dmi'
+	icon_l_hand = 'icons/apollo/obj/lefthand.dmi'
+	icon_r_hand = 'icons/apollo/obj/righthand.dmi'
 
 /obj/item/clothing/head/apollo/jesterhat
 	name = "Jester Hat"
