@@ -496,7 +496,7 @@
 
 /obj/item/clothing/under/blazer
 	name = "blue blazer"
-	desc = "A bold but yet conservative outfit, red corduroys, navy blazer and a tie." 
+	desc = "A bold but yet conservative outfit, red corduroys, navy blazer and a tie."
 	icon_state = "blue_blazer"
 	item_state = "blue_blazer"
 	item_color = "blue_blazer"
@@ -522,6 +522,7 @@
 	icon_state = "roman"
 	item_state = "roman"
 	item_color = "roman"
+
 
 /obj/item/clothing/under/apollo/biomech
 	name = "biomechanic jumpsuit"

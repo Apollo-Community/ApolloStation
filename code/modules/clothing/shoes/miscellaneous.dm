@@ -140,23 +140,6 @@
 	slowdown = SHOES_SLOWDOWN+1
 	species_restricted = null
 
-obj/item/clothing/shoes/apollo/jester
-	name = "Jester Shoes"
-	desc = "As worn by the clowns of old."
-	icon_state = "jestershoes"
-	item_state = "jestershoes"
-	force = 0
-	species_restricted = null
-
-/obj/item/clothing/shoes/roman
-	name = "roman soldier's shoes"
-	desc = "Et tu boote?"
-	icon_state = "roman"
-	item_state = "roman"
-	item_color = "roman"
-	force = 3
-	species_restricted = null
-
 /obj/item/clothing/shoes/kneehigh
 	name = "knee-high socks"
 	desc = "These go all the way up your shinny-shin-shins!"
@@ -168,3 +151,24 @@ obj/item/clothing/shoes/apollo/jester
 
 	cold_protection = FEET
 	min_cold_protection_temperature = T0C - 20
+
+
+/obj/item/clothing/shoes/apollo
+	icon = 'icons/apollo/clothing/feet.dmi'
+
+obj/item/clothing/shoes/apollo/jester
+	name = "Jester Shoes"
+	desc = "As worn by the clowns of old."
+	icon_state = "jestershoes"
+	item_state = "jestershoes"
+	force = 0
+	species_restricted = null
+
+/obj/item/clothing/shoes/apollo/roman
+	name = "roman soldier's shoes"
+	desc = "Et tu boote?"
+	icon_state = "roman"
+	item_state = "roman"
+	item_color = "roman"
+	force = 3
+	species_restricted = null

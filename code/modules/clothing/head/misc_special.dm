@@ -195,6 +195,7 @@
 /obj/item/clothing/head/tophat/entertainer
 	name = "entertainer's hat"
 	desc = "Perhaps you could pull a rabbit out of this!"
+	icon = 'icons/apollo/clothing/head.dmi'
 	icon_state = "entertainerhat"
 	item_state = "entertainerhat"
 	siemens_coefficient = 0.9
