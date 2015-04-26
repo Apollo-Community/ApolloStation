@@ -2885,7 +2885,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/cereal
 	name = "box of cereal"
 	desc = "A box of cereal."
-	icon = 'icons/obj/food.dmi'
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "cereal_box"
 	bitesize = 2
 	New()
@@ -2895,7 +2895,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/deepfryholder
 	name = "Deep Fried Foods Holder Obj"
 	desc = "If you can see this description the code for the deep fryer fucked up."
-	icon = 'icons/obj/food.dmi'
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "deepfried_holder_icon"
 	bitesize = 2
 	New()

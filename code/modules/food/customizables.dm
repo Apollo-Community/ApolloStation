@@ -96,6 +96,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/pizza
 	name = "personal pizza"
 	desc = "A personalized pan pizza meant for only one person."
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "personal_pizza"
 	baseicon = "personal_pizza"
 	basename = "personal pizza"
@@ -105,6 +106,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/pasta
 	name = "spagetti"
 	desc = "Noodles. With stuff. Delicious."
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "pasta_bot"
 	baseicon = "pasta_bot"
 	basename = "spagetti"
@@ -114,6 +116,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/cook/bread
 	name = "bread"
 	desc = "Tasty bread."
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "breadcustom"
 	baseicon = "breadcustom"
 	basename = "bread"
@@ -123,6 +126,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/cook/pie
 	name = "pie"
 	desc = "Tasty pie."
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "piecustom"
 	baseicon = "piecustom"
 	basename = "pie"
@@ -132,6 +136,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/cook/cake
 	name = "cake"
 	desc = "A popular band."
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "cakecustom"
 	baseicon = "cakecustom"
 	basename = "cake"
@@ -141,6 +146,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/cook/jelly
 	name = "jelly"
 	desc = "Totally jelly."
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "jellycustom"
 	baseicon = "jellycustom"
 	basename = "jelly"
@@ -150,6 +156,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/cook/donkpocket
 	name = "donk pocket"
 	desc = "You wanna put a bangin-Oh nevermind."
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "donkcustom"
 	baseicon = "donkcustom"
 	basename = "donk pocket"
@@ -159,6 +166,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/cook/kebab
 	name = "kebab"
 	desc = "Kebab or Kabab?"
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "kababcustom"
 	baseicon = "kababcustom"
 	basename = "kebab"
@@ -168,6 +176,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/cook/salad
 	name = "salad"
 	desc = "Very tasty."
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "saladcustom"
 	baseicon = "saladcustom"
 	basename = "salad"
@@ -177,6 +186,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/cook/waffles
 	name = "waffles"
 	desc = "Made with love."
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "wafflecustom"
 	baseicon = "wafflecustom"
 	basename = "waffles"
@@ -186,6 +196,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/candy/cookie
 	name = "cookie"
 	desc = "COOKIE!!1!"
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "cookiecustom"
 	baseicon = "cookiecustom"
 	basename = "cookie"
@@ -195,6 +206,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/candy/cotton
 	name = "flavored cotton candy"
 	desc = "Who can take a sunrise, sprinkle it with dew,"
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "cottoncandycustom"
 	baseicon = "cottoncandycustom"
 	basename = "flavored cotton candy"
@@ -204,6 +216,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/candy/gummybear
 	name = "flavored giant gummy bear"
 	desc = "Cover it in chocolate and a miracle or two,"
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "gummybearcustom"
 	baseicon = "gummybearcustom"
 	basename = "flavored giant gummy bear"
@@ -213,6 +226,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/candy/gummyworm
 	name = "flavored giant gummy worm"
 	desc = "The Candy Man can 'cause he mixes it with love,"
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "gummywormcustom"
 	baseicon = "gummywormcustom"
 	basename = "flavored giant gummy worm"
@@ -222,6 +236,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/candy/jellybean
 	name = "flavored giant jelly bean"
 	desc = "And makes the world taste good."
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "jellybeancustom"
 	baseicon = "jellybeancustom"
 	basename = "flavored giant jelly bean"
@@ -231,6 +246,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/candy/jawbreaker
 	name = "flavored jawbreaker"
 	desc = "Who can take a rainbow, Wrap it in a sigh,"
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "jawbreakercustom"
 	baseicon = "jawbreakercustom"
 	basename = "flavored jawbreaker"
@@ -240,6 +256,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/candy/candycane
 	name = "flavored candy cane"
 	desc = "Soak it in the sun and make strawberry-lemon pie,"
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "candycanecustom"
 	baseicon = "candycanecustom"
 	basename = "flavored candy cane"
@@ -249,6 +266,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/candy/gum
 	name = "flavored gum"
 	desc = "The Candy Man can 'cause he mixes it with love and makes the world taste good. And the world tastes good 'cause the Candy Man thinks it should..."
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "gumcustom"
 	baseicon = "gumcustom"
 	basename = "flavored gum"
@@ -258,6 +276,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/candy/donut
 	name = "filled donut"
 	desc = "Donut eat this!" // kill me
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "donutcustom"
 	baseicon = "donutcustom"
 	basename = "filled donut"
@@ -267,6 +286,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/candy/bar
 	name = "flavored chocolate bar"
 	desc = "Made in a factory downtown."
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "barcustom"
 	baseicon = "barcustom"
 	basename = "flavored chocolate bar"
@@ -276,6 +296,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/candy/sucker
 	name = "flavored sucker"
 	desc = "Suck suck suck."
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "suckercustom"
 	baseicon = "suckercustom"
 	basename = "flavored sucker"
@@ -285,6 +306,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/candy/cash
 	name = "flavored chocolate cash"
 	desc = "I got piles!"
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "cashcustom"
 	baseicon = "cashcustom"
 	basename = "flavored cash"
@@ -294,6 +316,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/candy/coin
 	name = "flavored chocolate coin"
 	desc = "Clink, clink, clink."
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "coincustom"
 	baseicon = "coincustom"
 	basename = "flavored coin"
@@ -303,6 +326,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/fullycustom // In the event you fuckers find something I forgot to add a customizable food for.
 	name = "on a plate"
 	desc = "A unique dish."
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "fullycustom"
 	baseicon = "fullycustom"
 	basename = "on a plate"
@@ -314,6 +338,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/soup
 	name = "soup"
 	desc = "A bowl with liquid and... stuff in it."
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "soup"
 	baseicon = "soup"
 	basename = "soup"
@@ -324,6 +349,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/burger
 	name = "burger bun"
 	desc = "A bun for a burger. Delicious."
+	icon = 'icons/apollo/obj/food.dmi'
 	icon_state = "burger"
 	baseicon = "burger"
 	basename = "burger"
