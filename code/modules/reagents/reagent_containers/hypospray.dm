@@ -82,6 +82,7 @@
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/adminorazine
 	name = "BK5 Injector"
 	desc = "'Tis but a flesh wound!"
+	icon = 'icons/apollo/obj/syringe.dmi'
 	icon_state = "a_autoinjector"
 	item_state = "a_autoinjector"
 
