@@ -1398,6 +1398,7 @@
 	name = "Chloe's Kimono"
 	desc = "A pale-pink, nearly white, kimono with a red and gold obi. There is a embroidered design of cherry blossom flowers covering the kimono."
 	icon = 'icons/apollo/clothing/uniforms.dmi'
+	icon_override = 'icons/apollo/mob/uniform.dmi'
 	icon_state = "chloe_kimono"
 	item_state = "chloe_kimono"
 	item_color = "chloe_kimono"

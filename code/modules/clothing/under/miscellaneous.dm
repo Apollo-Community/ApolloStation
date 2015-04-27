@@ -516,6 +516,7 @@
 
 /obj/item/clothing/under/apollo
 	icon = 'icons/apollo/clothing/uniforms.dmi'
+	icon_override = 'icons/apollo/mob/uniform.dmi'
 
 /obj/item/clothing/under/apollo/jester
 	name = "jester Suit"
