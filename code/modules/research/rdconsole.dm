@@ -957,6 +957,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	req_access = null
 	req_access_txt = "29"
 
+/obj/machinery/computer/rdconsole/podbay
+	name = "Podbay R&D Console"
+	id = 3
+	req_access = null
+	req_access_txt = "11;29"
+
 /obj/machinery/computer/rdconsole/core
 	name = "Core R&D Console"
 	id = 1

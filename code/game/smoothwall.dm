@@ -3,7 +3,7 @@
 //I should really make the shuttle wall check run every time it's moved, but centcom uses unsimulated floors so !effort
 
 var/list/blend_objects = list( /obj/structure/falsewall, /obj/structure/falserwall, /obj/machinery/door, /obj/structure/grille ) // Objects which the walls blend with
-var/list/noblend_objects = list( /obj/machinery/door/blast, /obj/machinery/door/firedoor )
+var/list/noblend_objects = list( /obj/machinery/door/blast, /obj/machinery/door/firedoor, /obj/machinery/door/window )
 
 /atom/proc/relativewall() //atom because it should be useable both for walls and false walls
 	if(istype(src,/turf/simulated/floor/vault)||istype(src,/turf/simulated/wall/vault)) //HACK!!!

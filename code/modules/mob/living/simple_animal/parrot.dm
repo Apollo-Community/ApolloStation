@@ -35,7 +35,7 @@
 	pass_flags = PASSTABLE
 	small = 1
 
-	speak = list("Hi","Hello!","Cracker?","BAWWWWK george mellons griffing me")
+	speak = list("Hi","Hello!","Cracker?","BAWWWWK")
 	speak_emote = list("squawks","says","yells")
 	emote_hear = list("squawks","bawks")
 	emote_see = list("flutters its wings")
@@ -288,7 +288,8 @@
 	   Then it clears the buffer to make sure they dont magically remember something from hours ago. */
 	if(speech_buffer.len && prob(10))
 		if(speak.len)
-			speak.Remove(pick(speak))
+			if( prob(15))
+				speak.Remove(pick(speak))
 
 		speak.Add(pick(speech_buffer))
 		clearlist(speech_buffer)
@@ -679,7 +680,7 @@
 /mob/living/simple_animal/parrot/Poly
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
-	speak = list("Poly wanna cracker!", ":e Check the singlo, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS FREE CALL THE SHUTTLE")
+	speak = list("Poly wanna cracker!", ":e How do I use this damn RIG?",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD, CALL THE SHUTTLE!")
 
 /mob/living/simple_animal/parrot/Poly/New()
 	ears = new /obj/item/device/radio/headset/headset_eng(src)
@@ -721,7 +722,7 @@
 
 
 /mob/living/simple_animal/parrot/hear_say(var/message, var/verb = "says", var/datum/language/language = null, var/alt_name = "",var/italics = 0, var/mob/speaker = null)
-	if(prob(50))
+	if(prob(80))
 		parrot_hear(message)
 	..(message,verb,language,alt_name,italics,speaker)
 

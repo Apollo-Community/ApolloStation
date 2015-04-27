@@ -47,6 +47,16 @@
 
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
+			if(istype(H.shoes, /obj/item/clothing/shoes/apollo/jester))
+				var/obj/item/clothing/shoes/clown_shoes/O = H.shoes
+				if(H.m_intent == "run")
+					if(O.footstep >= 2)
+						O.footstep = 0
+						playsound(src, 'sound/effects/jingle.ogg', 50, 1) // this will get annoying very fast.
+					else
+						O.footstep++
+				else
+					playsound(src, 'sound/effects/jingle.ogg', 20, 1)
 			// Tracking blood
 			var/list/bloodDNA = null
 			var/bloodcolor=""

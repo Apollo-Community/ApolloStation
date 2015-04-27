@@ -302,7 +302,7 @@
 		mymob.nutrition_icon.screen_loc = ui_nutrition
 		hud_elements |= mymob.nutrition_icon
 
-	mymob.blind = new /obj/screen()
+	mymob.blind = new
 	mymob.blind.icon = 'icons/mob/screen1_full.dmi'
 	mymob.blind.icon_state = "blackimageoverlay"
 	mymob.blind.name = " "
@@ -311,7 +311,7 @@
 	mymob.blind.layer = 0
 	hud_elements |= mymob.blind
 
-	mymob.damageoverlay = new /obj/screen()
+	mymob.damageoverlay = new
 	mymob.damageoverlay.icon = 'icons/mob/screen1_full.dmi'
 	mymob.damageoverlay.icon_state = "oxydamageoverlay0"
 	mymob.damageoverlay.name = "dmg"

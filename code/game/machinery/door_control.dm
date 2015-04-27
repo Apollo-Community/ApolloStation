@@ -107,6 +107,16 @@
 				spawn(0)
 					M.close()
 					return
+	for(var/obj/machinery/door/poddoor/M in world)
+		if(M.id == src.id)
+			if(M.density)
+				spawn(0)
+					M.open()
+					return
+			else
+				spawn(0)
+					M.close()
+					return
 
 /obj/machinery/door_control/proc/handle_emitters(mob/user as mob)
 	for(var/obj/machinery/power/emitter/E in world)

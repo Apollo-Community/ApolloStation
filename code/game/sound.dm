@@ -1,3 +1,31 @@
+// Environment types
+#define GENERIC 0
+#define PADDED_CELL 1
+#define ROOM 2
+#define BATHROOM 3
+#define LIVINGROOM 4
+#define STONEROOM 5
+#define AUDITORIUM 6
+#define CONCERT_HALL 7
+#define CAVE 8
+#define ARENA 9
+#define HANGAR 10
+#define CARPETTED_HALLWAY 11
+#define HALLWAY 12
+#define STONE_CORRIDOR 13
+#define ALLEY 14
+#define FOREST 15
+#define CITY 16
+#define MOUNTAINS 17
+#define QUARRY 18
+#define PLAIN 19
+#define PARKING_LOT 20
+#define SEWER_PIPE 21
+#define UNDERWATER 22
+#define DRUGGED 23
+#define DIZZY 24
+#define PSYCHOTIC 25
+
 var/list/shatter_sound = list('sound/effects/Glassbr1.ogg','sound/effects/Glassbr2.ogg','sound/effects/Glassbr3.ogg')
 var/list/explosion_sound = list('sound/effects/Explosion1.ogg','sound/effects/Explosion2.ogg')
 var/list/spark_sound = list('sound/effects/sparks1.ogg','sound/effects/sparks2.ogg','sound/effects/sparks3.ogg','sound/effects/sparks4.ogg')
@@ -31,11 +59,11 @@ var/list/page_sound = list('sound/effects/pageturn1.ogg', 'sound/effects/pagetur
 			var/turf/T = get_turf(M)
 
 			if(T && T.z == turf_source.z)
-				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, is_global)
+				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, is_global, get_environment_type(M) )
 
 var/const/FALLOFF_SOUNDS = 0.5
 
-/mob/proc/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff, is_global)
+/mob/proc/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff, is_global, var/environment = 2)
 	if(!src.client || ear_deaf > 0)	return
 	soundin = get_sfx(soundin)
 
@@ -53,43 +81,43 @@ var/const/FALLOFF_SOUNDS = 0.5
 	if(isturf(turf_source))
 		// 3D sounds, the technology is here!
 		var/turf/T = get_turf(src)
-		
+
 		//sound volume falloff with distance
 		var/distance = get_dist(T, turf_source)
-		
+
 		S.volume -= max(distance - world.view, 0) * 2 //multiplicative falloff to add on top of natural audio falloff.
-		
+
 		//sound volume falloff with pressure
 		var/pressure_factor = 1.0
-		
+
 		var/datum/gas_mixture/hearer_env = T.return_air()
 		var/datum/gas_mixture/source_env = turf_source.return_air()
-		
+
 		if (hearer_env && source_env)
 			var/pressure = min(hearer_env.return_pressure(), source_env.return_pressure())
-			
+
 			if (pressure < ONE_ATMOSPHERE)
 				pressure_factor = max((pressure - SOUND_MINIMUM_PRESSURE)/(ONE_ATMOSPHERE - SOUND_MINIMUM_PRESSURE), 0)
 		else //in space
 			pressure_factor = 0
-		
+
 		if (distance <= 1)
 			pressure_factor = max(pressure_factor, 0.15)	//hearing through contact
-		
+
 		S.volume *= pressure_factor
-		
+
 		if (S.volume <= 0)
 			return	//no volume means no sound
-		
-		var/dx = turf_source.x - T.x // Hearing from the right/left
+
+		var/dx = (turf_source.x - T.x)*3 // Hearing from the right/left
 		S.x = dx
-		var/dz = turf_source.y - T.y // Hearing from infront/behind
+		var/dz = (turf_source.y - T.y)*3 // Hearing from infront/behind
 		S.z = dz
 		// The y value is for above your head, but there is no ceiling in 2d spessmens.
 		S.y = 1
-		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
+		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)*5
 	if(!is_global)
-		S.environment = 2
+		S.environment = environment
 	src << S
 
 /client/proc/playtitlemusic()
@@ -114,3 +142,56 @@ var/const/FALLOFF_SOUNDS = 0.5
 			if ("pageturn") soundin = pick(page_sound)
 			//if ("gunshot") soundin = pick(gun_sound)
 	return soundin
+
+/proc/get_environment_type( var/mob/M )
+	if( M.druggy )
+		return DRUGGED
+
+	if( istype( M, /mob/living/carbon/human ))
+		var/mob/living/carbon/human/H = M
+		if( H.hallucination )
+			return PSYCHOTIC
+
+	if( M.loc )
+		if( istype( M.loc, /turf/space ))
+			return PLAIN
+
+		switch( M.loc.icon_state )
+			if( "plating" )
+				return STONEROOM
+			if( "padding" )
+				return PADDED_CELL
+			if( "grimy" )
+				return CARPETTED_HALLWAY
+			if( "wood" )
+				return QUARRY
+			else
+				return ALLEY
+
+
+#undef GENERIC
+#undef PADDED_CELL
+#undef ROOM
+#undef BATHROOM
+#undef LIVINGROOM
+#undef STONEROOM
+#undef AUDITORIUM
+#undef CONCERT_HALL
+#undef CAVE
+#undef ARENA
+#undef HANGAR
+#undef CARPETTED_HALLWAY
+#undef HALLWAY
+#undef STONE_CORRIDOR
+#undef ALLEY
+#undef FOREST
+#undef CITY
+#undef MOUNTAINS
+#undef QUARRY
+#undef PLAIN
+#undef PARKING_LOT
+#undef SEWER_PIPE
+#undef UNDERWATER
+#undef DRUGGED
+#undef DIZZY
+#undef PSYCHOTIC

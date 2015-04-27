@@ -166,6 +166,7 @@ obj/item/clothing/shoes/apollo/jester
 	icon_state = "jestershoes"
 	item_state = "jestershoes"
 	force = 0
+	var/footstep = 1	//used for jingles whilst walking
 	species_restricted = null
 
 /obj/item/clothing/shoes/apollo/roman

@@ -456,6 +456,7 @@ About the new airlock wires panel:
 				flick("door_spark", src)
 		if("deny")
 			if(density && src.arePowerSystemsOn())
+				playsound(src.loc, 'sound/effects/door_error.ogg', 75, 1)
 				flick("door_deny", src)
 	return
 
