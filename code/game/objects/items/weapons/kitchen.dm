@@ -110,7 +110,6 @@
 		user << "\red You accidentally cut yourself with the [src]."
 		user.take_organ_damage(20)
 		return
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
 
 /obj/item/weapon/kitchen/utensil/pknife
@@ -122,7 +121,7 @@
 	sharp = 0
 	edge = 1 //for cutting pizzas
 
-/obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
+/obj/item/weapon/kitchen/utensil/pknife/attack(target as mob, mob/living/user as mob)
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red You somehow managed to cut yourself with the [src]."
 		user.take_organ_damage(20)
@@ -149,6 +148,7 @@
 	matter = list("metal" = 12000)
 	origin_tech = "materials=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	hitsound = 'sound/weapons/knife.ogg'
 
 	suicide_act(mob/user)
 		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
@@ -161,6 +161,24 @@
 	desc = "The unearthly energies that once powered this blade are now dormant."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
+
+//If it's a hatchet it goes here. I guess
+/obj/item/weapon/kitchenknife/unathiknife
+	name = "duelling knife"
+	desc = "A length of leather-bound wood studded with razor-sharp teeth. How crude."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "unathiknife"
+	attack_verb = list("ripped", "torn", "cut")
+	flags = CONDUCT
+	force = 12.0
+	w_class = 2.0
+	throwforce = 15.0
+	throw_speed = 4
+	throw_range = 4
+	sharp = 1
+	edge = 1
+	matter = list("metal" = 15000)
+	origin_tech = "materials=2;combat=1"
 
 /*
  * Bucher's cleaver

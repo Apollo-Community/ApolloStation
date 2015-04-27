@@ -86,9 +86,9 @@
 			chosen_stats.Add(stat)
 
 			data["stat_[i]_desc"] = descriptions[stat]
-			data["stat_[i]"] = stats[stat]
+			data["stat_[i]"] = round( stats[stat], 0.01)
 			if( units[stat] )
-				data["stat_[i]_unit"] = round( units[stat], 0.01)
+				data["stat_[i]_unit"] = units[stat]
 			else
 				data["stat_[i]_unit"] = ""
 		else

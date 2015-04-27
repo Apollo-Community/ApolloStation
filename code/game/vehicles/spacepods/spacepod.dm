@@ -577,85 +577,6 @@
 			usr << "You stop entering the spacepod."
 		return
 
-
-/* !!OLD BROKEN SYSTEM!! - tiger
-
-/obj/spacepod/verb/move_inside()
-	set category = "Object"
-	set name = "Enter Pod"
-	set src in oview(1)
-	var/fukkendisk = usr.GetTypeInAllContents(/obj/item/weapon/disk/nuclear)
-
-	if(fukkendisk)
-		usr << "\red <B>The nuke-disk is locking the door every time you try to open it. You get the feeling that it doesn't want to go into the spacepod.</b>"
-		return
-
-	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting) //are you cuffed, dying, lying, stunned or other
-		return
-	if (usr.stat || !ishuman(usr))
-		return
-
-	if (src.occupant)
-		if(allow2enter)
-			if(src.occupant2)
-				usr << "\blue <B>You can't fit!</b"
-				return
-			usr << "\blue <B>You starts climbing into the secondary seat.</B>"
-			visible_message("\blue [usr] starts to climb into [src.name]")
-			if(enter_after(40,usr))
-				moved_inside(usr)
-			else
-				usr << "You stop entering the spacepod."
-			return
-		else
-			usr << "\red <B>The [src.name]'s doors are locked.</B>"
-			return
-
-	if(src.occupant2)
-		if(src.occupant)
-			usr << "\red <B>The spacepod is full! Are you going to sit on [src.occupant2.name]'s lap?</b>"
-			return
-		else
-			for(var/mob/living/carbon/slime/M in range(1,usr))
-				if(M.Victim == usr)
-					usr << "You're too busy getting your life sucked out of you."
-					return
-		//	usr << "You start climbing into [src.name]"
-
-			visible_message("\blue [usr] starts to climb into [src.name]")
-
-			if(enter_after(40,usr))
-				if(!src.occupant)
-					moved_inside(usr)
-				else if(src.occupant!=usr)
-					usr << "[src.occupant] was faster. Try better next time, loser."
-			else
-				usr << "You stop entering the exosuit."
-			return
-/*
-	if (usr.abiotic())
-		usr << "\blue <B>Subject cannot have abiotic items on.</B>"
-		return
-*/
-	for(var/mob/living/carbon/slime/M in range(1,usr))
-		if(M.Victim == usr)
-			usr << "You're too busy getting your life sucked out of you."
-			return
-//	usr << "You start climbing into [src.name]"
-
-	visible_message("\blue [usr] starts to climb into [src.name]")
-
-	if(enter_after(40,usr))
-		if(!src.occupant)
-			moved_inside(usr)
-		else if(src.occupant!=usr)
-			usr << "[src.occupant] was faster. Try better next time, loser."
-	else
-		usr << "You stop entering the exosuit."
-	return
-
-*/
-
 /obj/spacepod/verb/exit_pod()
 	set name = "Exit pod"
 	set category = "Spacepod"
@@ -789,6 +710,15 @@ obj/spacepod/verb/toggleLights()
 	set src = usr.loc
 	if(!CheckIfOccupant2(usr))
 		lightsToggle()
+
+/obj/spacepod/verb/use_warp_beacon()
+	set name = "Use Nearby Warp Beacon"
+	set category = "Spacepod"
+	set src = usr.loc
+
+	for(var/obj/machinery/warp_beacon/B in orange(usr.loc, 3)) // Finding suitable VR platforms in area
+		if(alert(usr, "Would you like to interface with: [B.name]?", "Confirm", "Yes", "No") == "Yes")
+			B.warp_prompt( src, occupant )
 
 /obj/spacepod/proc/lightsToggle()
 	lights = !lights

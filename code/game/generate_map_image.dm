@@ -71,19 +71,23 @@
 	world.log << "FullMapGen: <B>GENERATE FULL MAP</B>"
 	usr << "FullMapGen: <B>GENERATE FULL MAP</B>"
 
+	var/list/icon/Sectors = list()
+
 	// Where the magic happens
-	var/OverMaxX = round(world.maxx/FULLMAP_TILES_PER_IMAGE)
-	var/OverMaxY = round(world.maxy/FULLMAP_TILES_PER_IMAGE)
+	var/abort = 0
+	var/OverMaxX = round((world.maxx+1)/FULLMAP_TILES_PER_IMAGE)
+	var/OverMaxY = round((world.maxy+1)/FULLMAP_TILES_PER_IMAGE)
 	for( var/OverX = 0, OverX <= OverMaxX, OverX++ )
 		for( var/OverY = 0, OverY <= OverMaxY, OverY++ )
 			// Loads the base image
-			var/icon/Tile = icon(file("nano/mapbase1024.png"))
+			var/icon/Sector = icon(file("nano/mapbase1024.png"))
 
 			// Checks if the image is 1024x1024
-			if (Tile.Width() != FULLMAP_MAX_ICON_DIMENSION || Tile.Height() != FULLMAP_MAX_ICON_DIMENSION)
+			if (Sector.Width() != FULLMAP_MAX_ICON_DIMENSION || Sector.Height() != FULLMAP_MAX_ICON_DIMENSION)
 				world.log << "FullMapGen: <B>ERROR: BASE IMAGE DIMENSIONS ARE NOT [FULLMAP_MAX_ICON_DIMENSION]x[FULLMAP_MAX_ICON_DIMENSION]</B>"
 				return FULLMAP_TERMINALERR
 
+			// Rendering the individual section
 			for(var/LocalX = 1, LocalX <= FULLMAP_TILES_PER_IMAGE, LocalX++)
 				for(var/LocalY = 1, LocalY <= FULLMAP_TILES_PER_IMAGE, LocalY++)
 					var/atom/Turf = locate(LocalX+( OverX*FULLMAP_TILES_PER_IMAGE ), LocalY+(OverY*FULLMAP_TILES_PER_IMAGE ), currentZ)
@@ -93,22 +97,40 @@
 						continue
 					//TurfIcon.Scale(FULLMAP_ICON_SIZE, FULLMAP_ICON_SIZE)
 
-					Tile.Blend(TurfIcon, ICON_OVERLAY, (( LocalX-1 ) * FULLMAP_ICON_SIZE)+1, (( LocalY-1 ) * FULLMAP_ICON_SIZE)+1 )
+					Sector.Blend(TurfIcon, ICON_OVERLAY, (( LocalX-1 ) * FULLMAP_ICON_SIZE)+1, (( LocalY-1 ) * FULLMAP_ICON_SIZE)+1 )
+					del(TurfIcon)
 
 			var/mapFilename = "fullmap_[OverX]_[OverY]_[currentZ].png"
 
-			if (Tile.Width() != FULLMAP_MAX_ICON_DIMENSION || Tile.Height() != FULLMAP_MAX_ICON_DIMENSION)
+			if (Sector.Width() != FULLMAP_MAX_ICON_DIMENSION || Sector.Height() != FULLMAP_MAX_ICON_DIMENSION)
 				usr << "FullMapGen: ERROR <B>File [mapFilename] had a bad output</B>"
 
 				sleep(3)
 				return FULLMAP_BADOUTPUT
 
-			world.log << "FullMapGen: <B>sending [mapFilename] to client</B>"
-			usr << browse(Tile, "window=picture;file=[mapFilename];display=0")
-			world.log << "FullMapGen: <B>Done.</B>"
-			usr << "FullMapGen: <B>Done. File [mapFilename] uploaded to your cache.</B>"
-			del(Tile)
+			world.log << "FullMapGen: <B>[mapFilename] rendered</B>"
+			Sectors[mapFilename] = Sector
+			if( mapFilename == "fullmap_2_1_1.png" )
+				abort = 1
+				break
+
 			sleep(10)
+
+		if( abort )
+			break
+
+	// Exporting the final product
+	world.log << "FullMapGen: <B>Number of sectors: [Sectors.len]</B>"
+	var/icon/Sector
+	for( Sector in Sectors )
+		world.log << "FullMapGen: <B>Exporting [Sector]...</B>"
+		/*
+		spawn(0)
+			world.log << "FullMapGen: <B>Sending [Sector] to client</B>"
+			usr << browse_rsc(Sectors[Sector], "[Sector]")
+			world.log << "FullMapGen: <B>Done.</B>"
+			usr << "FullMapGen: <B>Done. File [Sector] uploaded to your cache.</B>"
+		*/
 
 	usr << "FullMapGen: <B>Full map complete.</B>"
 	return FULLMAP_SUCCESS

@@ -59,7 +59,7 @@ var/list/page_sound = list('sound/effects/pageturn1.ogg', 'sound/effects/pagetur
 			var/turf/T = get_turf(M)
 
 			if(T && T.z == turf_source.z)
-				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, is_global, get_environment_type(M) )
+				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, is_global )
 
 var/const/FALLOFF_SOUNDS = 0.5
 
@@ -108,6 +108,15 @@ var/const/FALLOFF_SOUNDS = 0.5
 
 		if (S.volume <= 0)
 			return	//no volume means no sound
+
+		// ghosties don't have enviormental effects
+		if( !istype( src, /mob/dead/observer ) && !istype( src, /mob/new_player ))
+			environment = get_environment_type(src)
+
+			/*if( behind_wall( src, turf_source ))
+				S.echo = list( 0, 0, 0, 0, 0, 0.0, 0, 0.25, 1.5, 1.0, 0, 1.0, 0, 0.0, 0.0, 0.0, 1.0, 7 )
+				S.echo[7] = -5000
+			*/
 
 		var/dx = (turf_source.x - T.x)*3 // Hearing from the right/left
 		S.x = dx
@@ -168,6 +177,11 @@ var/const/FALLOFF_SOUNDS = 0.5
 			else
 				return ALLEY
 
+// Checks if there is a wall between source and mob
+/proc/behind_wall( var/turf/source, var/mob/M )
+	if( locate(M) in ohearers( 7, src ))
+		return 1
+	return 0
 
 #undef GENERIC
 #undef PADDED_CELL

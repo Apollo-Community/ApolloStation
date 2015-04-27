@@ -321,18 +321,10 @@
 	matter = list("metal" = 15000)
 	origin_tech = "materials=2;combat=1"
 	attack_verb = list("chopped", "torn", "cut")
+	hitsound = 'sound/weapons/hatchet.ogg'
 
 /obj/item/weapon/hatchet/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
-
-//If it's a hatchet it goes here. I guess
-/obj/item/weapon/hatchet/unathiknife
-	name = "duelling knife"
-	desc = "A length of leather-bound wood studded with razor-sharp teeth. How crude."
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "unathiknife"
-	attack_verb = list("ripped", "torn", "cut")
 
 /obj/item/weapon/scythe
 	icon_state = "scythe0"

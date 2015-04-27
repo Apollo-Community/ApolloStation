@@ -1,5 +1,8 @@
 //Zlevel where overmap objects should be
 #define OVERMAP_ZLEVEL 1
+#define STATION_X 128
+#define STATION_Y 128
+#define POPULATE_RADIUS 5 // Radius form the station x, y to populate sectors
 //How far from the edge of overmap zlevel could randomly placed objects spawn
 #define OVERMAP_EDGE 7
 
@@ -96,6 +99,6 @@ proc/overmap_spacetravel(var/turf/space/T, var/atom/movable/A)
 	if(istype(M, /obj/effect/map/sector/temporary))
 		var/obj/effect/map/sector/temporary/source = M
 		if (source.can_die())
-			testing("Catching [M] for future use")
+			testing("Caching [M] for future use")
 			source.loc = null
 			cached_space += source
