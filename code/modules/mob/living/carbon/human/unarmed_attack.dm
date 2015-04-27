@@ -10,6 +10,12 @@
 	var/edge = 0
 
 /datum/unarmed_attack/proc/is_usable(var/mob/living/carbon/human/user)
+
+	world.log << "Unarmed_attack proc'd"
+
+	if(user.species && user.species.name_plural == "Xenomorphs")
+		user.alpha = 255
+
 	if(user.restrained())
 		return 0
 

@@ -58,7 +58,7 @@
 	set desc = "Transfer phoron to another alien"
 	set category = "Abilities"
 
-	if (get_dist(src,M) <= 1)
+	if (get_dist(src,M) >= 2)
 		src << "<span class='alium'>You need to be closer.</span>"
 		return
 
@@ -85,7 +85,7 @@
 
 	if(!config.aliens_allowed)
 		src << "You begin to lay an egg, but hesitate. You suspect it isn't allowed."
-		verbs -= /mob/living/carbon/human/proc/lay_egg
+		//verbs -= /mob/living/carbon/human/proc/lay_egg
 		return
 
 	if(locate(/obj/effect/alien/egg) in get_turf(src))
@@ -210,4 +210,46 @@
 			new /obj/effect/alien/resin/membrane(loc)
 		if("resin nest")
 			new /obj/structure/stool/bed/nest(loc)
+	return
+
+/mob/living/carbon/human/proc/nightvision()
+	set name = "Toggle Nightvision (10)"
+	set desc = "Toggles nightvision. Costs phoron to keep active."
+	set category = "Abilities"
+
+	if(src.see_invisible != 15)
+		src.see_invisible = 15
+		src.see_in_dark = 20
+	else
+		src.see_invisible = 25
+		src.see_in_dark = 2
+
+	spawn(0)
+		while(src && src.see_invisible == 15)
+			if(src.check_alien_ability(10,0,""))
+			else
+				src.see_invisible = 25
+				src.see_in_dark = 2
+			sleep(40)
+
+	return
+
+/mob/living/carbon/human/proc/camo()
+	set name = "Toggle Camouflage (20)"
+	set desc = "Toggles camouflage. Costs phoron to keep active."
+	set category = "Abilities"
+
+	if(src.alpha != 100)
+		src.alpha = 100
+	else
+		src.alpha = 255
+
+
+	spawn(0)
+		while(src && src.alpha == 100)
+			if(src.check_alien_ability(20,0,""))
+			else
+				src.alpha = 255
+			sleep(60)
+
 	return
