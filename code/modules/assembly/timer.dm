@@ -51,8 +51,8 @@
 	process()
 		if(timing && (time > 0))
 			time--
-			if( play_sound && (time <= 2 ))
-				playsound(get_turf(loc), 'sound/items/countdown.ogg', 70, 1, -1)
+			if( play_sound && (time <= 1 ))
+				playsound(get_turf(loc), 'sound/items/countdown.ogg', 70, 0)
 				play_sound = 0
 		if(timing && time <= 0)
 			timing = 0
