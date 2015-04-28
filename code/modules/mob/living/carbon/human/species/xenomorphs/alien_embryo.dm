@@ -95,7 +95,12 @@
 	spawn(6)
 		var/mob/living/carbon/alien/larva/new_xeno = new(affected_mob.loc)
 		new_xeno.key = picked
-		ticker.mode.aliens += new_xeno
+
+		if(!locate(picked) in ticker.mode.aliens)
+			ticker.mode.aliens += picked
+
+		ticker.mode.greet_alien(picked)
+
 		new_xeno << sound('sound/voice/hiss5.ogg',0,0,0,100)	//To get the player's attention
 		if(gib_on_success)
 			affected_mob.gib()

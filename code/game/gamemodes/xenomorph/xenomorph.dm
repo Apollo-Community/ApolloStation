@@ -74,15 +74,20 @@
 
 /datum/game_mode/proc/forge_alien_objectives(var/datum/mind/alien_mind)
 
-	var/explanation = "The species must survive. Make sure at least one Xenomorph escapes on the shuttle to spread the species."
+//	var/explanation = "The species must survive. Make sure at least one Xenomorph escapes on the shuttle to spread the species."
 
-	alien_mind.current << "<B>Objective #1</B>: [explanation]"
+//	alien_mind.current << "<B>Objective #1</B>: [explanation]"
 
 	return
 
 
 /datum/game_mode/proc/greet_alien(var/datum/mind/alien)
 	alien.current << "<B><font size=3 color=red>You are an alien!</font></B>"
+
+	var/explanation = "The species must survive. Make sure at least one Xenomorph escapes on the shuttle to spread the species."
+
+	alien.current << "<B>Objective #1</B>: [explanation]"
+
 	show_objectives(alien)
 
 
@@ -141,15 +146,15 @@
 		var/alienwin = check_alien_survive()
 
 		if(alienwin)
-			text += "<br><B>Objective #1</B>: The species must survive. Make sure at least one Xenomorph escapes on the shuttle to spread the species. <font color='green'><B>Success!</B></font>"
+			text += "<br><B>Objective #1</B>: The species must survive. Make sure at least one Xenomorph or Xenomorph embryo escapes on the shuttle to spread the species. <font color='green'><B>Success!</B></font>"
 		else
-			text += "<br><B>Objective #1</B>: The species must survive. Make sure at least one Xenomorph escapes on the shuttle to spread the species. <font color='red'>Fail.</font>"
+			text += "<br><B>Objective #1</B>: The species must survive. Make sure at least one Xenomorph or Xenomorph embryo escapes on the shuttle to spread the species. <font color='red'>Fail.</font>"
 
 		if(alienwin)
 			text += "<br><font color='green'><B>The Xenomorphs were successful!</B></font>"
 			feedback_add_details("alien_success","SUCCESS")
 		else
-			text += "<br><font color='red'><B>The Xenomorphs were failed!</B></font>"
+			text += "<br><font color='red'><B>The Xenomorphs failed!</B></font>"
 			feedback_add_details("alien_success","FAIL")
 
 		text += "<br>"
