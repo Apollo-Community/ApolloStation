@@ -82,6 +82,10 @@
 
 
 /datum/game_mode/proc/greet_alien(var/datum/mind/alien)
+	if(!alien.assigned_role == "MODE" || !alien.special_role == "alien")
+		alien.assigned_role = "MODE"
+		alien.special_role = "alien"
+
 	alien.current << "<B><font size=3 color=red>You are an alien!</font></B>"
 
 	var/explanation = "The species must survive. Make sure at least one Xenomorph escapes on the shuttle to spread the species."

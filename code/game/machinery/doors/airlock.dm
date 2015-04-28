@@ -971,6 +971,7 @@ About the new airlock wires panel:
 			user << "<span class='notice'>The airlock's bolts prevent it from being forced.</span>"
 		else
 			user << "<span class='notice'>You force open the airlock.</span>"
+			playsound(src.loc, 'sound/effects/xenoDoorForced.ogg', 100, 1)
 			open(1)
 	else
 		..()

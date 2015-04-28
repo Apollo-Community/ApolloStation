@@ -226,11 +226,11 @@
 
 	spawn(0)
 		while(src && src.see_invisible == 15)
-			if(src.check_alien_ability(10,0,""))
+			if(src.check_alien_ability(5,0,""))
 			else
 				src.see_invisible = 25
 				src.see_in_dark = 2
-			sleep(40)
+			sleep(60)
 
 	return
 
@@ -247,7 +247,7 @@
 
 	spawn(0)
 		while(src && src.alpha == 100)
-			if(src.check_alien_ability(20,0,""))
+			if(src.check_alien_ability(15,0,""))
 			else
 				src.alpha = 255
 			sleep(60)
