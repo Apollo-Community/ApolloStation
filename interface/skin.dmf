@@ -1354,7 +1354,7 @@ window "outputwindow"
 		type = BUTTON
 		pos = 520,460
 		size = 40x20
-		anchor1 = none
+		anchor1 = 100,100
 		anchor2 = none
 		font-family = ""
 		font-size = 0

@@ -604,3 +604,4 @@ var/global/list/uneatable = list(
 	grav_pull = 7
 	event_chance = 40
 	move_self = 0
+

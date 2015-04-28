@@ -716,9 +716,9 @@ obj/spacepod/verb/toggleLights()
 	set category = "Spacepod"
 	set src = usr.loc
 
-	for(var/obj/machinery/warp_beacon/B in orange(usr.loc, 3)) // Finding suitable VR platforms in area
-		if(alert(usr, "Would you like to interface with: [B.name]?", "Confirm", "Yes", "No") == "Yes")
-			B.warp_prompt( src, occupant )
+	for(var/obj/machinery/computer/gate_beacon_console/C in orange(usr.loc, 3)) // Finding suitable VR platforms in area
+		if(alert(usr, "Would you like to interface with: [C]?", "Confirm", "Yes", "No") == "Yes")
+			C.gate_prompt( occupant )
 
 /obj/spacepod/proc/lightsToggle()
 	lights = !lights

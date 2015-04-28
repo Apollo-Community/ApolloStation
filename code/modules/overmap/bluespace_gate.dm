@@ -1,58 +1,51 @@
-/obj/machinery/bluespace_inducer
-	name = "bluespace inducer"
-	desc = "A beacon used to warp to other sectors"
-	icon = 'icons/rust.dmi'
-	icon_state = "injector-emitting"
-	density = 1
-	opacity = 0
-	anchored = 1
-	unacidable = 1
-	l_color = "#142933"
-	var/brightness = 2
-	var/functional = 1
-	var/obj/effect/map/sector = null
+#define BLUESPACE_LEVEL 8
+
+/obj/machinery/singularity/bluespace_gate
+	name = "bluespace gate"
+	desc = "A gate into the extradimensional space know as \"bluespace\"."
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "emfield_s3"
+	eat_turf = 0
+	life = 100
+	grav_pull = 3
+	event_chance = 0
+	move_self = 0
+	consume_range = 1
 	var/turf/exit = null
 
-/obj/item/ray
-	name = "Energy Ray"
-	icon = 'icons/effects/beam.dmi'
-	icon_state = "field"
-	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	var/damage_type = BURN
-	var/damage = 40
-	var/active = 1
-	var/obj/item/ray/child = null
-	var/power = 20
-	var/turf/neighbor = null // The next tile that the ray "moves" onto
 
-	New(var/set_power = 20, dir = dir )
-		power = set_power
-
-		neighbor = get_step( src, dir )
-
-		if( istype( neighbor, /turf/simulated/floor ) || istype( neighbor, /turf/space ))
-			child = new(power-1, dir)
-
-	process()
-		if( !active )
-			Del()
-		if( child )
-			return
-		if( power <= 1 )
-			return
-
-		neighbor = get_step( src, dir )
-		if( istype( neighbor, /turf/simulated/floor ) || istype( neighbor, /turf/space ))
-			child = new(power-1, dir)
-			return
-
-		if( istype( neighbor, /turf/simulated/wall ))
-			var/turf/simulated/wall/wall = neighbor
-			wall.take_damage(damage)
+/obj/machinery/singularity/bluespace_gate/consume(var/atom/A)
+	if( !istype( A, /obj/machinery/gate_beacon ))
+		warp( src, A )
 
 
-	Del()
-		if( child )
-			del( child )
+/obj/machinery/singularity/bluespace_gate/proc/warp( var/turf/source, var/atom/A )
+	var/x_off = source.x-A.x
+	var/y_off = source.y-A.y
 
+	var/turf/bluespace = locate( rand( OVERMAP_EDGE, world.maxx-OVERMAP_EDGE ), rand( OVERMAP_EDGE, world.maxy-OVERMAP_EDGE ), BLUESPACE_LEVEL )
+	var/turf/initial = A.loc
+	var/turf/destination
 
+	if( exit )
+		destination = locate( exit.x+x_off, exit.y+y_off, exit.z ) // Getting the destination relative to where the object left
+	else
+		destination = initial
+
+	// Transporting turfs
+	if( istype( A, /turf/ ))
+		var/type = A.type
+		var/turf/transmit = A
+		transmit.ChangeTurf(/turf/space)
+
+		spawn( rand( 50, 100 ))
+			destination.ChangeTurf(type)
+
+	var/atom/movable/AM = A
+	AM.loc = bluespace
+	spawn( rand( 110, 150 ))
+		if( destination == initial )
+			if( istype( AM, /mob/ ))
+				AM << "\red You feel that something went wrong."
+
+		AM.loc = destination

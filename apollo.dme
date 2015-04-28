@@ -1334,8 +1334,9 @@
 #include "code\modules\organs\pain.dm"
 #include "code\modules\organs\wound.dm"
 #include "code\modules\overmap\_defines.dm"
-#include "code\modules\overmap\beacon.dm"
+#include "code\modules\overmap\bluespace_beacon.dm"
 #include "code\modules\overmap\bluespace_gate.dm"
+#include "code\modules\overmap\bluespace_inducer.dm"
 #include "code\modules\overmap\sectors.dm"
 #include "code\modules\overmap\ships\ship.dm"
 #include "code\modules\overmap\ships\computers\engine_control.dm"
@@ -1658,4 +1659,5 @@
 #include "maps\apollo-4.dmm"
 #include "maps\apollo-5.dmm"
 #include "maps\apollo-6.dmm"
+#include "maps\bluespace.dmm"
 // END_INCLUDE
