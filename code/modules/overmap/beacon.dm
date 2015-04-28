@@ -10,7 +10,7 @@ var/global/list/bluespace_beacons = list()
 	anchored = 1
 	unacidable = 1
 	l_color = "#142933"
-	var/brightness = 2
+	luminosity = 2
 	var/functional = 1
 	var/obj/effect/map/sector = null
 	var/turf/exit = null
@@ -29,8 +29,6 @@ var/global/list/bluespace_beacons = list()
 			functional = 0
 			src.ping("[src] states, \"ERROR: Warp location blocked!\"")
 			return
-
-		SetLuminosity(brightness)
 
 		if( name == "bluespace beacon" )
 			var/hash = "[pick( alphabet_uppercase )][pick( alphabet_uppercase )][rand(0, 9)]"

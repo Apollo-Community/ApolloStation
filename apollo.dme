@@ -1335,6 +1335,7 @@
 #include "code\modules\organs\wound.dm"
 #include "code\modules\overmap\_defines.dm"
 #include "code\modules\overmap\beacon.dm"
+#include "code\modules\overmap\bluespace_gate.dm"
 #include "code\modules\overmap\sectors.dm"
 #include "code\modules\overmap\ships\ship.dm"
 #include "code\modules\overmap\ships\computers\engine_control.dm"
