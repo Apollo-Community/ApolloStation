@@ -132,7 +132,7 @@ Proc: AddInfectionImages(C)
 Des: Checks if the passed mob (C) is infected with the alien egg, then gives each alien client an infected image at C.
 ----------------------------------------*/
 /obj/item/alien_embryo/proc/AddInfectionImages(var/mob/living/C)
-	if(C)
+	/*if(C)
 
 		for(var/mob/living/carbon/alien in player_list)
 
@@ -142,7 +142,7 @@ Des: Checks if the passed mob (C) is infected with the alien egg, then gives eac
 			if(alien.client)
 				if(C.status_flags & XENO_HOST)
 					var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[stage]")
-					alien.client.images += I
+					alien.client.images += I*/
 
 /*----------------------------------------
 Proc: RemoveInfectionImage(C)
