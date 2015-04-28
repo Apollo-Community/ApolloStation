@@ -862,6 +862,8 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/attackby(C as obj, mob/user as mob)
 	//world << text("airlock attackby src [] obj [] mob []", src, C, user)
+	var/mob/living/carbon/human/us = user
+
 	if(!istype(usr, /mob/living/silicon))
 		if(src.isElectrified())
 			if(src.shock(user, 75))
@@ -962,6 +964,14 @@ About the new airlock wires panel:
 				else
 					user << "\red You need to be wielding \the [C] to do that."
 
+	else if(us.species && us.species.name_plural == "Xenomorphs")
+		user << "<span class='notice'>You begin to force open \the [src].</span>"
+		if(!do_mob(user, src, 60)) return
+		if(locked)
+			user << "<span class='notice'>The airlock's bolts prevent it from being forced.</span>"
+		else
+			user << "<span class='notice'>You force open the airlock.</span>"
+			open(1)
 	else
 		..()
 	return

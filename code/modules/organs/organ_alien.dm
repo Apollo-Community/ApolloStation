@@ -158,12 +158,12 @@
 
 /datum/organ/internal/xenos/phoronvessel/sentinel
 	stored_phoron = 100
-	max_phoron = 250
+	max_phoron = 300
 
 /datum/organ/internal/xenos/phoronvessel/hunter
 	name = "tiny phoron vessel"
 	stored_phoron = 100
-	max_phoron = 150
+	max_phoron = 200
 
 /datum/organ/internal/xenos/acidgland
 	name = "acid gland"

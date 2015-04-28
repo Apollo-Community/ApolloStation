@@ -13,6 +13,8 @@
 	siemens_coefficient = 0
 	gluttonous = 2
 
+	darksight = 100
+
 	eyes = "blank_eyes"
 
 	brute_mod = 0.5 // Hardened carapace.
@@ -163,6 +165,7 @@
 		/mob/living/carbon/human/proc/transfer_phoron,
 		/mob/living/carbon/human/proc/evolve,
 		/mob/living/carbon/human/proc/resin,
+		/mob/living/carbon/human/proc/nightvision,
 		/mob/living/carbon/human/proc/corrosive_acid
 		)
 
@@ -199,6 +202,8 @@
 		/mob/living/carbon/human/proc/gut,
 		/mob/living/carbon/human/proc/leap,
 		/mob/living/carbon/human/proc/psychic_whisper,
+		/mob/living/carbon/human/proc/nightvision,
+		/mob/living/carbon/human/proc/camo,
 		/mob/living/carbon/human/proc/regurgitate
 		)
 
@@ -228,6 +233,7 @@
 		/mob/living/carbon/human/proc/regurgitate,
 		/mob/living/carbon/human/proc/transfer_phoron,
 		/mob/living/carbon/human/proc/corrosive_acid,
+		/mob/living/carbon/human/proc/nightvision,
 		/mob/living/carbon/human/proc/neurotoxin
 		)
 
@@ -265,6 +271,7 @@
 		/mob/living/carbon/human/proc/transfer_phoron,
 		/mob/living/carbon/human/proc/corrosive_acid,
 		/mob/living/carbon/human/proc/neurotoxin,
+		/mob/living/carbon/human/proc/nightvision,
 		/mob/living/carbon/human/proc/resin
 		)
 
@@ -294,8 +301,8 @@
 	has_internals = 0
 
 	gear = list(
-		"o_clothing" =   list("loc" = ui_belt,      "slot" = slot_wear_suit, "state" = "equip",  "dir" = SOUTH),
-		"head" =         list("loc" = ui_id,        "slot" = slot_head,      "state" = "hair"),
+		//"o_clothing" =   list("loc" = ui_belt,      "slot" = slot_wear_suit, "state" = "equip",  "dir" = SOUTH),
+		//"head" =         list("loc" = ui_id,        "slot" = slot_head,      "state" = "hair"),
 		"storage1" =     list("loc" = ui_storage1,  "slot" = slot_l_store,   "state" = "pocket"),
 		"storage2" =     list("loc" = ui_storage2,  "slot" = slot_r_store,   "state" = "pocket"),
 		)
