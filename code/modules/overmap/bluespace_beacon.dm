@@ -15,6 +15,8 @@ var/global/list/bluespace_beacons = list()
 	luminosity = 0
 	var/functional = 1
 	var/charge = 0 // Used for charging a bluespace gate
+	var/last_charge = 0 // What the charge was last tick
+	var/charge_decay = 15 // How much charge the beacon loses per tick
 	var/max_charge = 10000 // Used for charging a bluespace gate
 	var/obj/machinery/gate_beacon/exit = null
 	var/obj/effect/map/sector = null
@@ -46,6 +48,16 @@ var/global/list/bluespace_beacons = list()
 /obj/machinery/gate_beacon/process()
 	if( charge >= max_charge )
 		open_gate( exit )
+	if( charge%100 == 0 && charge >= 25 )
+		var/message = null
+		if( charge > last_charge )
+			message = "[src] states, \"Charge raising. Charge at [round(charge/max_charge)]%\""
+		else if( charge <= last_charge )
+			message = "[src] states, \"Charge falling! Charge at [round(charge/max_charge)]%\""
+		ping( message )
+
+	last_charge = charge
+	charge -= charge_decay
 
 /obj/machinery/gate_beacon
 
@@ -63,6 +75,7 @@ var/global/list/bluespace_beacons = list()
 	src.ping("[src] states, \"Opening bluespace gate. Prepare to embark.\"")
 	exit.ping("[exit] states, \"Offsite activation. Please clear the area.\"")
 
+	new /obj/machinery/singularity/bluespace_gate(exit, src)
 
 
 /proc/getWarpIcon( var/icon/A )//If safety is on, a new icon is not created.
@@ -76,6 +89,7 @@ var/global/list/bluespace_beacons = list()
 
 /obj/machinery/gate_beacon/proc/activate( var/obj/machinery/gate_beacon/dest = null )
 	exit = dest
+
 
 	if( inducers.len < 1 )
 		ping("[src] states, \"ERROR: No bluespace inducers nearby!\"")

@@ -13,6 +13,8 @@
 	consume_range = 1
 	var/turf/exit = null
 
+/obj/machinery/singularity/bluespace_gate/New( exit = exit )
+	..()
 
 /obj/machinery/singularity/bluespace_gate/consume(var/atom/A)
 	if( !istype( A, /obj/machinery/gate_beacon ))
@@ -27,6 +29,7 @@
 	var/turf/initial = A.loc
 	var/turf/destination
 
+	// Getting the destination
 	if( exit )
 		destination = locate( exit.x+x_off, exit.y+y_off, exit.z ) // Getting the destination relative to where the object left
 	else

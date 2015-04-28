@@ -202,6 +202,7 @@
 			..()
 
 /mob/living/simple_animal/gib()
+	playsound(src, pick( 'sound/effects/gib1.ogg', 'sound/effects/gib2.ogg', 'sound/effects/gib3.ogg' ), 100, 1)
 	..(icon_gib,1)
 
 /mob/living/simple_animal/emote(var/act, var/type, var/desc)

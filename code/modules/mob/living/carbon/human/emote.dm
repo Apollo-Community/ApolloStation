@@ -220,6 +220,21 @@
 			else
 				if (!muzzled)
 					message = "<B>[src]</B> gasps!"
+					var/gasp_sound = null
+					if( istype( type, /mob/living/silicon ) || get_species() == "Machine" )
+						gasp_sound = 'sound/voice/rscream1.ogg'
+						message = "<B>[src]</B> plays gasp.ogg"
+					else
+						if( gender == "male" )
+							gasp_sound = pick(\
+							'sound/voice/gasp01_male.ogg',
+							'sound/voice/gasp02_male.ogg' )
+						else if( gender == "female" )
+							gasp_sound = pick(\
+							'sound/voice/gasp01_female.ogg',
+							'sound/voice/gasp02_female.ogg' )
+					if( gasp_sound )
+						playsound(loc, gasp_sound, 70, 1)
 					m_type = 2
 				else
 					message = "<B>[src]</B> makes a weak noise."

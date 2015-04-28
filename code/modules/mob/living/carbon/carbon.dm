@@ -54,6 +54,8 @@
 					src.gib()
 
 /mob/living/carbon/gib()
+	playsound(src, pick( 'sound/effects/gib1.ogg', 'sound/effects/gib2.ogg', 'sound/effects/gib3.ogg' ), 100, 1)
+
 	for(var/mob/M in src)
 		if(M in src.stomach_contents)
 			src.stomach_contents.Remove(M)

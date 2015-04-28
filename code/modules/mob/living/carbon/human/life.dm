@@ -127,6 +127,10 @@
 	for(var/obj/item/weapon/grab/G in src)
 		G.process()
 
+	// Random coughs, sneezes
+	if( prob( 0.001 ))
+		emote(pick( "cough", "sneeze", "shiver", "sniff", "yawn" ))
+
 // Calculate how vulnerable the human is to under- and overpressure.
 // Returns 0 (equals 0 %) if sealed in an undamaged suit, 1 if unprotected (equals 100%).
 // Suitdamage can modifiy this in 10% steps.

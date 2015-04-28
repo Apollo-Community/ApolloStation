@@ -11,6 +11,7 @@
 
 	var/timing = 0
 	var/time = 10
+	var/play_sound = 1
 
 	proc
 		timer_end()
@@ -42,14 +43,17 @@
 		if(!holder)
 			visible_message("\icon[src] *beep* *beep*", "*beep* *beep*")
 		cooldown = 2
+		play_sound = 1
 		spawn(10)
 			process_cooldown()
 		return
 
-
 	process()
 		if(timing && (time > 0))
 			time--
+			if( play_sound && (time <= 2 ))
+				playsound(get_turf(loc), 'sound/items/countdown.ogg', 70, 1, -1)
+				play_sound = 0
 		if(timing && time <= 0)
 			timing = 0
 			timer_end()

@@ -452,6 +452,8 @@
 	if(!frequency)
 		return
 
+	playsound(src.loc, 'sound/machines/airalarm.ogg', 75, 0)
+
 	var/datum/signal/alert_signal = new
 	alert_signal.source = src
 	alert_signal.transmission_method = 1

@@ -9,7 +9,7 @@
 	unacidable = 1
 	l_color = "#142933"
 	use_power = 0	//uses powernet power, not APC power
-	active_power_usage = 100000	// 100kW per inducer, so opening a bluespace gate costs 400kW in total, better hope those engineers deliver
+	active_power_usage = 10	// 100kW per inducer, so opening a bluespace gate costs 400kW in total, better hope those engineers deliver
 
 	var/brightness = 2
 	var/functional = 1
@@ -35,12 +35,13 @@
 
 /obj/machinery/power/bluespace_inducer/process()
 	if( active )
-		var/actual_load = draw_power(active_power_usage)
+		beacon.charge( charge_rate )
+/*		var/actual_load = draw_power(active_power_usage)
 		if( actual_load >= active_power_usage )
-			beacon.charge( charge_rate )
+
 		else
 			deactivate()
-
+*/
 
 /obj/machinery/power/bluespace_inducer/proc/find_beacon()
 	var/turf/cur_turf = src
