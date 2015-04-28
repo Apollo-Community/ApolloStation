@@ -28,7 +28,6 @@ datum/track/New(var/title_name, var/audio)
 		new/datum/track("Encounter", 'sound/music/mining_song3.ogg'),
 		new/datum/track("Floating", 'sound/music/main.ogg'),
 		new/datum/track("Endless Space", 'sound/music/space.ogg'),
-		new/datum/track("Scratch", 'sound/music/title1.ogg'),
 		new/datum/track("Trai`Tor", 'sound/music/traitor.ogg'),
 		new/datum/track("Jukebox Hero", 'sound/music/jukeboxhero.ogg'),
 		new/datum/track("Unknown Title", 'sound/music/sandstorm.ogg'),
