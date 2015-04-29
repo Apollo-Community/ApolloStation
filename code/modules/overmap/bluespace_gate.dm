@@ -1,4 +1,4 @@
-#define BLUESPACE_LEVEL 8
+#define BLUESPACE_LEVEL 2
 
 /obj/machinery/singularity/bluespace_gate
 	name = "bluespace gate"
@@ -57,7 +57,7 @@
 
 	// Getting the destination
 	if( exit )
-		destination = locate( exit.x+x_off, exit.y+y_off, exit.z ) // Getting the destination relative to where the object left
+		destination = locate( exit.x-x_off, exit.y-y_off, exit.z ) // Getting the destination relative to where the object left
 	else
 		destination = locate( source.x+pick( rand( -10, source.x-2 ), rand( source.x+2, 10 )), source.y+pick( rand( -10, source.y-2 ), rand( source.y+2, 10 )), source.z )
 
@@ -70,6 +70,8 @@
 
 		spawn( transit_time )
 			destination.ChangeTurf(type)
+		return
+	else if( istype( A, /turf ))
 		return
 
 	var/atom/movable/AM = A

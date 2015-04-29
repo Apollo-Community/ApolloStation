@@ -28,6 +28,7 @@ var/global/list/bluespace_beacons = list()
 	var/last_charge = 0 // What the charge was last tick
 	var/charge_decay = 15 // How much charge the beacon loses per tick
 	var/max_charge = 1000 // Used for charging a bluespace gate
+	var/ticks_since_announce = 0
 	var/obj/machinery/gate_beacon/exit = null
 	var/obj/effect/map/sector = null
 	var/list/inducers = list()
@@ -69,13 +70,17 @@ var/global/list/bluespace_beacons = list()
 /obj/machinery/gate_beacon/process()
 	if( charge >= max_charge )
 		open_gate( exit )
-	if( charge%100 == 0 && charge >= 25 )
-		var/message = null
-		if( charge > last_charge )
-			message = "[src] states, \"Charge raising. Charge at [round(charge/max_charge)]%\""
-		else if( charge <= last_charge )
-			message = "[src] states, \"Charge falling! Charge at [round(charge/max_charge)]%\""
-		ping( message )
+	if( charge >= 25 )
+		if( ticks_since_announce > 50 )
+			ticks_since_announce = 0
+			var/message = null
+			if( charge > last_charge )
+				message = "[src] states, \"Charge raising. Charge at [round(charge/max_charge)]%\""
+			else if( charge <= last_charge )
+				message = "[src] states, \"Charge falling! Charge at [round(charge/max_charge)]%\""
+			ping( message )
+		else
+			ticks_since_announce++
 
 	last_charge = charge
 	charge -= charge_decay
