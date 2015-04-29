@@ -91,6 +91,9 @@ datum/controller/lighting/proc/initializeLighting(var/z_level)
 
 		changed_turfs.Cut()		// reset the changed list
 
+		if( z_level ) // If we were just initializing a single z-level, start processing again
+			processing = 1
+
 
 //Used to strip valid information from an existing controller and transfer it to a replacement
 //It works by using spawn(-1) to transfer the data, if there is a runtime the data does not get transfered but the loop

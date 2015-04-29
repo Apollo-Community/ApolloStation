@@ -5,7 +5,8 @@
 	desc = "A gate into the extradimensional space know as \"bluespace\"."
 	icon = 'icons/effects/bluespace_gate.dmi'
 	eat_turf = 0
-	current_size = 3 //It moves/eats like a max-size singulo, aside from range. --NEO
+	current_size = 3
+	allowed_size = 3
 	contained = 0 //Are we going to move around?
 	dissipate = 0 //Do we lose energy over time?
 	event_chance = 0

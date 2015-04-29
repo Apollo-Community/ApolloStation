@@ -25,7 +25,6 @@
 
 	..()
 
-	l_color = "#142933"
 
 /obj/machinery/power/bluespace_inducer/Del()
 	if( beacon )
@@ -36,6 +35,7 @@
 /obj/machinery/power/bluespace_inducer/update_icon()
 	if (active && powernet && avail(active_power_usage))
 		icon_state = "injector-emitting"
+		l_color = "#142933"
 		SetLuminosity( brightness )
 	else
 		icon_state = "injector-open"
