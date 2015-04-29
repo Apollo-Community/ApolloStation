@@ -97,9 +97,9 @@
 		new_xeno.key = picked
 
 		if(!locate(picked) in ticker.mode.aliens)
-			ticker.mode.aliens += picked
+			ticker.mode.aliens += new_xeno.mind
 
-		ticker.mode.greet_alien(picked)
+		ticker.mode.greet_alien(new_xeno.mind)
 
 		new_xeno << sound('sound/voice/hiss5.ogg',0,0,0,100)	//To get the player's attention
 		if(gib_on_success)
@@ -132,7 +132,7 @@ Proc: AddInfectionImages(C)
 Des: Checks if the passed mob (C) is infected with the alien egg, then gives each alien client an infected image at C.
 ----------------------------------------*/
 /obj/item/alien_embryo/proc/AddInfectionImages(var/mob/living/C)
-	/*if(C)
+	if(C)
 
 		for(var/mob/living/carbon/alien in player_list)
 
@@ -142,7 +142,7 @@ Des: Checks if the passed mob (C) is infected with the alien egg, then gives eac
 			if(alien.client)
 				if(C.status_flags & XENO_HOST)
 					var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[stage]")
-					alien.client.images += I*/
+					alien.client.images += I
 
 /*----------------------------------------
 Proc: RemoveInfectionImage(C)
