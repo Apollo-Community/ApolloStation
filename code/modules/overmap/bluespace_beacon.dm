@@ -1,3 +1,13 @@
+/*
+How opening a bluespace gate works
+ 1. You select your destination on the Bluespace Beacon Console
+ 2. That sends a signal to the beacon, which sends a signal to its linked inducers
+ 3. The inducers activate and begin to charge the beacon
+ 4. After the beacon reaches max charge, it creates a Bluespace Gate, with the destination
+ 	as set by the Bluespace Beacon Console
+ 5. The Bluespace Gate takes everything inside of it to the destination, including turfs
+*/
+
 var/global/list/bluespace_beacons = list()
 
 // ========= BLUESPACE BEACON ============
@@ -114,7 +124,7 @@ var/global/list/bluespace_beacons = list()
 // ========= BLUESPACE GATE CONTROL CONSOLE =========
 
 /obj/machinery/computer/gate_beacon_console
-	name = "bluespace beacon console"
+	name = "Bluespace Beacon Console"
 	desc = "A console used to set the destination for bluespace gates."
 	icon = 'icons/obj/machines/launch_computer.dmi'
 	icon_state = "launch0"

@@ -819,3 +819,5 @@ var/list/be_special_flags = list(
 #define MECHFAB		16
 #define PODFAB		32	//Remember, objects utilising this flag should have construction_time and construction_cost vars.
 //Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
+
+#define SYSTEM_DESIGNATION "NYX" // The system designation code, commonly used for sector formats

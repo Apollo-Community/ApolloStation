@@ -908,5 +908,26 @@ obj/spacepod/verb/toggleLights()
 		else
 			occupant << "<span class='warning'>There's nothing of interest below you!!</span>"
 
+/obj/spacepod/verb/sector_locate()
+	set category = "Spacepod"
+	set name = "Triangulate Sector"
+	set src = usr.loc
+
+	usr << "<span class='notice'>Triangulating sector location through bluespace beacons, please standby... (This may take up to a minute)</span>"
+	var/cur_z = src.z
+	spawn( rand( 300, 600 ))
+		if( cur_z != src.z )
+			usr << "<span class='warning'>ERROR: Inaccurate readings, cannot calculate sector. Please stay still next time.</span>"
+			return
+
+		var/obj/effect/map/sector = map_sectors["[z]"]
+		if( !sector )
+
+			usr << "<span class='warning'>ERROR: Critical error with the bluespace network!</span>"
+			return
+
+		usr << "<span class='notice'>You are currently located in Sector [SYSTEM_DESIGNATION]-[sector.x]-[sector.y]</span>"
+
+
 #undef DAMAGE
 #undef FIRE
