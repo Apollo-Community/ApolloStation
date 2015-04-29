@@ -158,10 +158,10 @@
 	var/use_lib_nudge = 0 //Use the C library nudge instead of the python nudge.
 	var/use_overmap = 1
 
-	var/list/station_levels = list(2, 8)				// Defines which Z-levels the station exists on.
-	var/list/admin_levels= list(3)					// Defines which Z-levels which are for admin functionality, for example including such areas as Central Command and the Syndicate Shuttle
-	var/list/contact_levels = list(2, 6, 8)			// Defines which Z-levels which, for example, a Code Red announcement may affect
-	var/list/player_levels = list(2, 4, 5, 6, 7, 8)	// Defines all Z-levels a character can typically reach
+	var/list/station_levels = list(3, 8)				// Defines which Z-levels the station exists on.
+	var/list/admin_levels= list(4)					// Defines which Z-levels which are for admin functionality, for example including such areas as Central Command and the Syndicate Shuttle
+	var/list/contact_levels = list(3, 7, 8)			// Defines which Z-levels which, for example, a Code Red announcement may affect
+	var/list/player_levels = list(3, 5, 6, 7, 8)	// Defines all Z-levels a character can typically reach
 
 	// Event settings
 	var/expected_round_length = 3 * 60 * 60 * 10 // 3 hours
