@@ -82,6 +82,10 @@
 
 	..()
 
+/datum/species/xenos/handle_death(var/mob/living/carbon/human/H)
+	if(H.stomach_contents.len)
+		H.gib()
+
 /datum/species/xenos/handle_environment_special(var/mob/living/carbon/human/H)
 
 	var/turf/T = H.loc
