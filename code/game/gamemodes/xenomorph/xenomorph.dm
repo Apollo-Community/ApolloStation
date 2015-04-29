@@ -7,7 +7,7 @@
 	config_tag = "xenomorph"
 //	restricted_jobs = list("Cyborg", "AI")//They are part of the AI if he is alien so are they, they use to get double chances
 //	protected_jobs = list("Security Officer", "Warden", "Detective", "Internal Affairs Agent", "Head of Security", "Captain")//AI", Currently out of the list as malf does not work for shit
-	required_players = 1
+	required_players = 5
 	required_enemies = 1
 	recommended_enemies = 1
 
