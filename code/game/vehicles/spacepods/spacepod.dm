@@ -873,6 +873,10 @@ obj/spacepod/verb/toggleLights()
 	set name = "Fly Upwards"
 	set src = usr.loc
 
+	var/turf/ground = get_turf( src )
+	if( !istype( ground.loc, /area/space ))
+		occupant << "<span class='warning'>\The ceiling is in the way!</span>"
+
 	var/turf/controllerlocation = locate(1, 1, z)
 	for(var/obj/effect/landmark/zcontroller/controller in controllerlocation)
 		if(controller.up)
@@ -882,7 +886,7 @@ obj/spacepod/verb/toggleLights()
 				src.loc = upwards
 				occupant << "You cruise upwards."
 			else
-				occupant << "<span class='warning'>\The [upwards] is in the way!</span>"
+				occupant << "<span class='warning'>There is a [upwards] in the way!</span>"
 		else
 			occupant << "<span class='warning'>There's nothing of interest above you!</span>"
 
@@ -892,7 +896,7 @@ obj/spacepod/verb/toggleLights()
 	set src = usr.loc
 
 	var/turf/ground = get_turf( src )
-	if( ground.density )
+	if( !istype( ground, /turf/space ) && !istype( ground,/turf/simulated/floor/open ))
 		occupant << "<span class='warning'>\The [ground] is in the way!</span>"
 
 	var/turf/controllerlocation = locate(1, 1, z)
@@ -904,7 +908,7 @@ obj/spacepod/verb/toggleLights()
 				src.loc = below
 				occupant << "You cruise downwards."
 			else
-				occupant << "<span class='warning'>\The [below] is in the way!</span>"
+				occupant << "<span class='warning'>There is a [below] in the way!</span>"
 		else
 			occupant << "<span class='warning'>There's nothing of interest below you!!</span>"
 

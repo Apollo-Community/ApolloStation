@@ -89,6 +89,7 @@ proc/overmap_spacetravel(var/turf/space/T, var/atom/movable/A)
 		else
 			world.maxz++
 			nz = world.maxz
+			lighting_controller.initializeLighting(nz)
 			TM = new /obj/effect/map/sector/temporary(mapx, mapy, nz)
 			testing("Destination: *new* [TM]")
 

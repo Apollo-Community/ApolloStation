@@ -124,4 +124,8 @@ var/global/list/map_sectors = list()
 		if(M != observer && M.z == map_z)
 			testing("There are people on it.")
 			return 0
+	for(var/obj/machinery/gate_beacon/B in bluespace_beacons)
+		if( B.functional && B.z == map_z)
+			testing("There is an active bluespace beacon located there.")
+			return 0
 	return 1
