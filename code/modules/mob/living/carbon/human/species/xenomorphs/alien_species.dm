@@ -31,6 +31,8 @@
 
 	reagent_tag = IS_XENOS
 
+	prone_icon = "sleep"
+
 	blood_color = "#05EE05"
 	flesh_color = "#282846"
 	gibbed_anim = "gibbed-a"

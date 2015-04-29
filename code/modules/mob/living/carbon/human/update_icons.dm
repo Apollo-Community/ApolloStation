@@ -142,6 +142,12 @@ Please contact me on #coderbus IRC. ~Carn x
 	update_hud()		//TODO: remove the need for this
 	overlays.Cut()
 
+	//Hacky pre-empting of this whacky icon stuff
+	if(lying && species.name_plural == "Xenomorphs")
+		icon = src.species.icobase
+		icon_state = src.species.prone_icon
+		return
+
 	var/stealth = 0
 	//cloaking devices. //TODO: get rid of this :<
 	for(var/obj/item/weapon/cloaking_device/S in list(l_hand,r_hand,belt,l_store,r_store))
@@ -166,7 +172,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		M.Scale(size_multiplier)
 		M.Translate(1,-6)
 		src.transform = M
-	else
+	else if(!species.name_plural)
 		var/matrix/M = matrix()
 		M.Scale(size_multiplier)
 		M.Translate(0, 16*(size_multiplier-1))
