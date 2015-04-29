@@ -234,7 +234,7 @@
 							'sound/voice/gasp01_female.ogg',
 							'sound/voice/gasp02_female.ogg' )
 					if( gasp_sound )
-						playsound(loc, gasp_sound, 70, 1)
+						playsound(loc, gasp_sound, 50, 1)
 					m_type = 2
 				else
 					message = "<B>[src]</B> makes a weak noise."

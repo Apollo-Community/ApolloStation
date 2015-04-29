@@ -1,3 +1,12 @@
+/proc/do_teleport( var/atom/A, var/turf/exit )
+	bluespace_jump( get_turf( A ), A, exit )
+
+/proc/do_teleport_rand( var/atom/A )
+	var/turf/exit = locate(rand((2*TRANSITIONEDGE), world.maxx - (2*TRANSITIONEDGE)), rand((2*TRANSITIONEDGE), world.maxy - (2*TRANSITIONEDGE)), rand( 2, world.maxz ))
+
+	do_teleport( A, exit )
+
+/*
 //wrapper
 /proc/do_teleport(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
 	new /datum/teleport/instant/science(arglist(args))
@@ -190,3 +199,4 @@
 		if(destination.z > 7) //Away mission z-levels
 			return 0
 		return 1
+*/

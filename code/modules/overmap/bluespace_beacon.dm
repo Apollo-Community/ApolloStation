@@ -5,9 +5,9 @@ var/global/list/bluespace_beacons = list()
 /obj/machinery/gate_beacon
 	name = "bluespace beacon"
 	desc = "A beacon used to open gates into bluespace."
-	icon = 'icons/rust.dmi'
-	icon_state = "injector-emitting"
-	density = 1
+	icon = 'icons/obj/bluespace_gate.dmi'
+	icon_state = "beacon0"
+	density = 0
 	opacity = 0
 	anchored = 1
 	unacidable = 1
@@ -17,7 +17,7 @@ var/global/list/bluespace_beacons = list()
 	var/charge = 0 // Used for charging a bluespace gate
 	var/last_charge = 0 // What the charge was last tick
 	var/charge_decay = 15 // How much charge the beacon loses per tick
-	var/max_charge = 10000 // Used for charging a bluespace gate
+	var/max_charge = 1000 // Used for charging a bluespace gate
 	var/obj/machinery/gate_beacon/exit = null
 	var/obj/effect/map/sector = null
 	var/list/inducers = list()
@@ -36,14 +36,25 @@ var/global/list/bluespace_beacons = list()
 			name = "Bluespace Beacon [hash]-[sector.x][sector.y]"
 
 		bluespace_beacons["[name]"] = src
-		luminosity = 2
 
-		..()
 
+	..()
+
+	luminosity = 2
+	l_color = "#142933"
 
 /obj/machinery/gate_beacon/Del()
 	bluespace_beacons["[name]"] = null
+	..()
 
+/obj/machinery/gate_beacon/update_icon()
+	if( functional )
+		if( charge > 0 )
+			icon_state = "beacon1"
+			SetLuminosity( 2 )
+			return
+	icon_state = "beacon0"
+	SetLuminosity( 0 )
 
 /obj/machinery/gate_beacon/process()
 	if( charge >= max_charge )
@@ -58,8 +69,8 @@ var/global/list/bluespace_beacons = list()
 
 	last_charge = charge
 	charge -= charge_decay
-
-/obj/machinery/gate_beacon
+	if( charge < 0 )
+		charge = 0
 
 /obj/machinery/gate_beacon/proc/open_gate()
 	if( src == exit )
@@ -75,34 +86,38 @@ var/global/list/bluespace_beacons = list()
 	src.ping("[src] states, \"Opening bluespace gate. Prepare to embark.\"")
 	exit.ping("[exit] states, \"Offsite activation. Please clear the area.\"")
 
-	new /obj/machinery/singularity/bluespace_gate(exit, src)
+	new /obj/machinery/singularity/bluespace_gate(src.loc, exit)
 
+	deactivate()
 
-/proc/getWarpIcon( var/icon/A )//If safety is on, a new icon is not created.
-	var/icon/flat_icon = new(A)//Has to be a new icon to not constantly change the same icon.
-	var/icon/alpha_mask = new('icons/effects/effects.dmi', "warp")//Scanline effect.
-	flat_icon.AddAlphaMask(alpha_mask)//Finally, let's mix in a distortion effect.
-	return flat_icon
-
-/obj/machinery/gate_beacon/proc/charge( var/charge_rate )
+/obj/machinery/gate_beacon/proc/charge( var/charge_rate = 0 )
 	charge += charge_rate
 
 /obj/machinery/gate_beacon/proc/activate( var/obj/machinery/gate_beacon/dest = null )
 	exit = dest
-
 
 	if( inducers.len < 1 )
 		ping("[src] states, \"ERROR: No bluespace inducers nearby!\"")
 	for( var/obj/machinery/power/bluespace_inducer/inducer in inducers )
 		inducer.activate( src )
 
+	spawn( 30 )
+		update_icon()
+
+/obj/machinery/gate_beacon/proc/deactivate()
+	for( var/obj/machinery/power/bluespace_inducer/inducer in inducers )
+		inducer.deactivate()
+
+	charge = 0
+	update_icon()
+
 // ========= BLUESPACE GATE CONTROL CONSOLE =========
 
 /obj/machinery/computer/gate_beacon_console
 	name = "bluespace beacon console"
 	desc = "A console used to set the destination for bluespace gates."
-	icon = 'icons/rust.dmi'
-	icon_state = "fuel0"
+	icon = 'icons/obj/machines/launch_computer.dmi'
+	icon_state = "launch0"
 	use_power = 0
 	var/obj/machinery/gate_beacon/beacon = null
 	var/functional = 0
@@ -114,9 +129,13 @@ var/global/list/bluespace_beacons = list()
 
 /obj/machinery/computer/gate_beacon_console/update_icon()
 	if( functional )
-		icon_state = "power"
+		if( beacon )
+			if( beacon.charge > 0 )
+				icon_state = "launch2"
+		else
+			icon_state = "launch"
 	else
-		icon_state = "fuel0"
+		icon_state = "launch0"
 
 /obj/machinery/computer/gate_beacon_console/proc/find_beacon()
 	for( beacon in orange( 7, src ))
@@ -144,3 +163,6 @@ var/global/list/bluespace_beacons = list()
 		beacon.activate( bluespace_beacons[destination] )
 	else
 		ping("[src] states, \"ERROR: No valid destination chosen!\"")
+
+	spawn( 30 )
+		update_icon()

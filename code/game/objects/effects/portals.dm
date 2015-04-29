@@ -47,7 +47,7 @@
 	if (istype(M, /atom/movable))
 		if(prob(failchance)) //oh dear a problem, put em in deep space
 			src.icon_state = "portal1"
-			do_teleport(M, locate(rand(5, world.maxx - 5), rand(5, world.maxy -5), 3), 0)
+			do_teleport_rand( M )
 		else
-			do_teleport(M, target, 1) ///You will appear adjacent to the beacon
+			do_teleport( M, target ) ///You will appear adjacent to the beacon
 

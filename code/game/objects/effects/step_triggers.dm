@@ -94,11 +94,9 @@
 	var/teleport_z = 0
 
 	Trigger(var/atom/movable/A)
-		if(teleport_x && teleport_y && teleport_z)
+		var/turf/exit = locate( teleport_x, teleport_y, teleport_z )
 
-			A.x = teleport_x
-			A.y = teleport_y
-			A.z = teleport_z
+		bluespace_jump( A.loc, A, exit )
 
 /* Random teleporter, teleports atoms to locations ranging from teleport_x - teleport_x_offset, etc */
 
@@ -108,10 +106,7 @@
 	var/teleport_z_offset = 0
 
 	Trigger(var/atom/movable/A)
-		if(teleport_x && teleport_y && teleport_z)
-			if(teleport_x_offset && teleport_y_offset && teleport_z_offset)
+		var/turf/exit = locate( rand(teleport_x, teleport_x_offset), rand(teleport_y, teleport_y_offset), rand(teleport_z, teleport_z_offset) )
 
-				A.x = rand(teleport_x, teleport_x_offset)
-				A.y = rand(teleport_y, teleport_y_offset)
-				A.z = rand(teleport_z, teleport_z_offset)
+		bluespace_jump( A.loc, A, exit )
 

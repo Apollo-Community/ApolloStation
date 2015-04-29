@@ -23,15 +23,23 @@
 		if( !find_beacon() )
 			return 0
 
+	..()
+
+	l_color = "#142933"
+
 /obj/machinery/power/bluespace_inducer/Del()
 	if( beacon )
 		beacon.inducers.Remove( src )
 
+	..()
+
 /obj/machinery/power/bluespace_inducer/update_icon()
 	if (active && powernet && avail(active_power_usage))
 		icon_state = "injector-emitting"
+		SetLuminosity( brightness )
 	else
 		icon_state = "injector-open"
+		SetLuminosity( 0 )
 
 /obj/machinery/power/bluespace_inducer/process()
 	if( active )
@@ -41,7 +49,7 @@
 
 		else
 			deactivate()
-*/
+*/w
 
 /obj/machinery/power/bluespace_inducer/proc/find_beacon()
 	var/turf/cur_turf = src
