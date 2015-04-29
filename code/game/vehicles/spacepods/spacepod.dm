@@ -868,5 +868,45 @@ obj/spacepod/verb/toggleLights()
 /obj/effect/landmark/spacepod/random/New()
 	..()
 
+/obj/spacepod/verb/fly_up()
+	set category = "Spacepod"
+	set name = "Fly Upwards"
+	set src = usr.loc
+
+	var/turf/controllerlocation = locate(1, 1, z)
+	for(var/obj/effect/landmark/zcontroller/controller in controllerlocation)
+		if(controller.up)
+			var/turf/upwards = locate(src.x, src.y, controller.up_target)
+
+			if( !upwards.density )
+				src.loc = upwards
+				occupant << "You cruise upwards."
+			else
+				occupant << "<span class='warning'>\The [upwards] is in the way!</span>"
+		else
+			occupant << "<span class='warning'>There's nothing of interest above you!</span>"
+
+/obj/spacepod/verb/fly_down()
+	set category = "Spacepod"
+	set name = "Fly Downwards"
+	set src = usr.loc
+
+	var/turf/ground = get_turf( src )
+	if( ground.density )
+		occupant << "<span class='warning'>\The [ground] is in the way!</span>"
+
+	var/turf/controllerlocation = locate(1, 1, z)
+	for(var/obj/effect/landmark/zcontroller/controller in controllerlocation)
+		if(controller.down)
+			var/turf/below = locate(src.x, src.y, controller.down_target)
+
+			if( !below.density )
+				src.loc = below
+				occupant << "You cruise downwards."
+			else
+				occupant << "<span class='warning'>\The [below] is in the way!</span>"
+		else
+			occupant << "<span class='warning'>There's nothing of interest below you!!</span>"
+
 #undef DAMAGE
 #undef FIRE

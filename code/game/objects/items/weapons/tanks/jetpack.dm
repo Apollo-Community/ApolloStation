@@ -145,3 +145,40 @@
 		return 1
 	del(G)
 	return
+
+/obj/item/weapon/tank/jetpack/verb/fly_up()
+	set category = "Object"
+	set name = "Fly Upwards"
+	set src = usr.loc
+
+	var/turf/controllerlocation = locate(1, 1, z)
+	for(var/obj/effect/landmark/zcontroller/controller in controllerlocation)
+		if(controller.up)
+			var/turf/upwards = locate(src.x, src.y, controller.up_target)
+			usr.loc = upwards
+			if( !upwards.density )
+				usr.loc = upwards
+			else
+				usr << "\red \The [upwards] is in the way!"
+		else
+			usr << "\red There's nothing of interest above you!"
+
+/obj/item/weapon/tank/jetpack/verb/fly_down()
+	set category = "Object"
+	set name = "Fly Downwards"
+	set src = usr.loc
+
+	var/turf/ground = get_turf( usr )
+	if( ground.density )
+		usr << "\red \The [ground] is in the way!"
+
+	var/turf/controllerlocation = locate(1, 1, z)
+	for(var/obj/effect/landmark/zcontroller/controller in controllerlocation)
+		if(controller.down)
+			var/turf/below = locate(src.x, src.y, controller.down_target)
+			if( !below.density )
+				usr.loc = below
+			else
+				usr << "\red \The [below] is in the way!"
+		else
+			usr << "\red There's nothing of interest below you!"
