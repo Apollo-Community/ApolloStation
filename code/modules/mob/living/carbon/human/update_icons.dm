@@ -143,6 +143,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		lying_prev = 0
 	else
 		lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
+
 	update_hud()		//TODO: remove the need for this
 	overlays.Cut()
 
