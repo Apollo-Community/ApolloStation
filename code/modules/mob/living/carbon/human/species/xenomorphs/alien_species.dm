@@ -133,7 +133,7 @@
 					H << "<span class='alium'>You feel something mend itself inside your [E.display_name].</span>"
 			return 1
 
-	if(!H.reagents.has_reagent("nutriment"))	//Getting food speeds it up
+	if(!H.reagents.has_reagent("nutriment"))
 		H.reagents.add_reagent("nutriment", 1)
 	if(!H.reagents.has_reagent("iron"))
 		H.reagents.add_reagent("iron", 1)
