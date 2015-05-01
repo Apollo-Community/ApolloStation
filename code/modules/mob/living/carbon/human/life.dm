@@ -1260,7 +1260,9 @@
 		else
 			sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 			see_in_dark = species.darksight
-			see_invisible = see_in_dark>2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
+
+			if(!(species && species.name_plural == "Xenomorphs"))
+				see_invisible = see_in_dark>2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
 
 			if(XRAY in mutations)
 				sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
@@ -1287,7 +1289,7 @@
 				glasses_processed = 1
 				process_glasses(glasses)
 
-			if(!seer && !glasses_processed)
+			if(!seer && !glasses_processed && !(species && species.name_plural == "Xenomorphs"))
 				see_invisible = SEE_INVISIBLE_LIVING
 
 			if(healths)
@@ -1632,8 +1634,8 @@
 			holder.icon_state = "huddead"
 			holder2.icon_state = "huddead"
 		else if(status_flags & XENO_HOST)
-			holder.icon_state = "hudxeno"
-			holder2.icon_state = "hudxeno"
+			holder.icon_state = "hudhealthy"
+			holder2.icon_state = "hudhealthy"
 		else if(foundVirus)
 			holder.icon_state = "hudill"
 		else if(has_brain_worms())

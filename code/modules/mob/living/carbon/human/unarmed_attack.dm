@@ -10,6 +10,10 @@
 	var/edge = 0
 
 /datum/unarmed_attack/proc/is_usable(var/mob/living/carbon/human/user)
+
+	if(user.species && user.species.name_plural == "Xenomorphs")
+		user.alpha = 255
+
 	if(user.restrained())
 		return 0
 

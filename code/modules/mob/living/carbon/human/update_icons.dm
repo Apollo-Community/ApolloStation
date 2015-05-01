@@ -138,9 +138,21 @@ Please contact me on #coderbus IRC. ~Carn x
 //this proc is messy as I was forced to include some old laggy cloaking code to it so that I don't break cloakers
 //I'll work on removing that stuff by rewriting some of the cloaking stuff at a later date.
 /mob/living/carbon/human/update_icons()
-	lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
+
+	if(lying && species.name_plural == "Xenomorphs" && stat == DEAD && icon_state == src.species.prone_icon && icon == src.species.icobase)
+		lying_prev = 0
+	else
+		lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
+
 	update_hud()		//TODO: remove the need for this
 	overlays.Cut()
+
+	//Hacky pre-empting of this whacky icon stuff
+	if(lying && species.name_plural == "Xenomorphs" && stat != DEAD && resting)
+		icon = src.species.icobase
+		icon_state = src.species.prone_icon
+		return
+
 
 	var/stealth = 0
 	//cloaking devices. //TODO: get rid of this :<
@@ -160,7 +172,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		for(var/image/I in overlays_standing)
 			overlays += I
 
-	if(lying && !species.prone_icon) //Only rotate them if we're not drawing a specific icon for being prone.
+	if(lying && (!species.prone_icon || species.name_plural == "Xenomorphs")) //Only rotate them if we're not drawing a specific icon for being prone.
 		var/matrix/M = matrix()
 		M.Turn(90)
 		M.Scale(size_multiplier)

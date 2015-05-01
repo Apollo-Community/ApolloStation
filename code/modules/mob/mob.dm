@@ -1205,6 +1205,9 @@ mob/proc/yank_out_object()
 	return 0
 
 /mob/proc/updateicon()
+	var/mob/living/carbon/human/user = src
+	if(user.species && user.species.name_plural == "Xenomorphs")
+		user.update_icons()
 	return
 
 /mob/attack_hand(mob/user as mob)
