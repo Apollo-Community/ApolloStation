@@ -14,8 +14,6 @@
 	var/mob/living/carbon/occupant
 	var/mob/living/carbon/occupant2 //two seaters
 	var/datum/spacepod/equipment/equipment_system
-	var/battery_type = "/obj/item/weapon/cell/super"
-	var/obj/item/weapon/cell/super/battery
 	var/datum/gas_mixture/cabin_air
 	var/obj/machinery/portable_atmospherics/canister/internal_tank
 	var/datum/effect/effect/system/ion_trail_follow/space_trail/ion_trail
@@ -31,6 +29,9 @@
 	var/lights_power = 6
 	var/allow2enter = 1
 	var/empcounter = 0 //Used for disabling movement when hit by an EMP
+	var/ticks_per_move = 3
+	var/move_tick = 0
+	var/battery_type = "/obj/item/weapon/cell/super"
 
 /obj/spacepod/New()
 	. = ..()
@@ -41,7 +42,8 @@
 	bound_width = 64
 	bound_height = 64
 	dir = EAST
-	battery = new battery_type(src)
+	equipment_system = new(src)
+	equipment_system.equip( new battery_type )
 	add_cabin()
 	add_airtank()
 	src.ion_trail = new /datum/effect/effect/system/ion_trail_follow/space_trail()
@@ -50,7 +52,7 @@
 	src.use_internal_tank = 1
 	pr_int_temp_processor = new /datum/global_iterator/pod_preserve_temp(list(src))
 	pr_give_air = new /datum/global_iterator/pod_tank_give_air(list(src))
-	equipment_system = new(src)
+
 	spacepods_list += src
 
 /obj/spacepod/Del()
@@ -153,12 +155,15 @@
 				deal_damage(50)
 
 /obj/spacepod/emp_act(severity)
+	var/obj/item/weapon/cell/battery = equipment_system.battery
+
 	switch(severity)
 		if(1)
 			if(src.occupant)
 				src.occupant << "<span class='warning'>The pod console flashes 'Heavy EMP WAVE DETECTED'.</span>" //warn the occupants
 			if(src.occupant2)
 				src.occupant2 << "<span class='warning'>The pod console flashes 'EMP WAVE DETECTED'.</span>" //warn the occupants
+
 
 			if(battery)
 				battery.charge = max(0, battery.charge - 5000) //Cell EMP act is too weak, this pod needs to be sapped.
@@ -180,23 +185,22 @@
 				src.empcounter = 20 //Disable movement for 20 ticks.
 			processing_objects.Add(src)
 
-
-
 /obj/spacepod/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(iscrowbar(W))
 		hatch_open = !hatch_open
 		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 		user << "<span class='notice'>You [hatch_open ? "open" : "close"] the maintenance hatch.</span>"
 	if(istype(W, /obj/item/weapon/cell))
+		var/obj/item/weapon/cell/battery = equipment_system.battery
+
 		if(!hatch_open)
 			user << "\red The maintenance hatch is closed!"
 			return
 		if(battery)
 			user << "<span class='notice'>The pod already has a battery.</span>"
 			return
-		user.drop_item(W)
-		battery = W
-		W.loc = src
+
+		equipment_system.equip(W, user)
 		return
 	if(istype(W, /obj/item/device/spacepod_equipment))
 		if(!hatch_open)
@@ -205,29 +209,10 @@
 		if(!equipment_system)
 			user << "<span class='warning'>The pod has no equipment datum, yell at pomf</span>"
 			return
-		if(istype(W, /obj/item/device/spacepod_equipment/weaponry))
-			if(equipment_system.weapon_system)
-				user << "<span class='notice'>The pod already has a weapon system, remove it first.</span>"
-				return
-			else
-				user << "<span class='notice'>You insert \the [W] into the equipment system.</span>"
-				user.drop_item(W)
-				W.loc = equipment_system
-				equipment_system.weapon_system = W
-				equipment_system.weapon_system.my_atom = src
-				return
 
-		if(istype(W, /obj/item/device/spacepod_equipment/misc))
-			if(equipment_system.misc_system)
-				user << "<span class='notice'>The pod already has a miscellaneous system, remove it first.</span>"
-				return
-			else
-				user << "<span class='notice'>You insert \the [W] into the equipment system.</span>"
-				user.drop_item(W)
-				W.loc = equipment_system
-				equipment_system.misc_system = W
-				equipment_system.misc_system.my_atom = src
-				return
+		// Adding the equipment to the system
+		equipment_system.equip(W, user)
+
 
 	if(istype(W, /obj/item/weapon/weldingtool))
 		if(!hatch_open)
@@ -253,57 +238,11 @@
 	if(!equipment_system || !istype(equipment_system))
 		user << "<span class='warning'>The pod has no equpment datum, or is the wrong type, yell at pomf.</span>"
 		return
-	var/list/possible = list()
-	if(battery)
-		possible.Add("Energy Cell")
-	if(equipment_system.weapon_system)
-		possible.Add("Weapon System")
-	if(equipment_system.misc_system)
-		possible.Add("Misc. System")
-	/* Not yet implemented
-	if(equipment_system.engine_system)
-		possible.Add("Engine System")
-	if(equipment_system.shield_system)
-		possible.Add("Shield System")
-	*/
-	var/obj/item/device/spacepod_equipment/SPE
-	switch(input(user, "Remove which equipment?", null, null) as null|anything in possible)
-		if("Energy Cell")
-			if(user.put_in_any_hand_if_possible(battery))
-				user << "<span class='notice'>You remove \the [battery] from the space pod</span>"
-				battery = null
-		if("Weapon System")
-			SPE = equipment_system.weapon_system
-			if(user.put_in_any_hand_if_possible(SPE))
-				user << "<span class='notice'>You remove \the [SPE] from the equipment system.</span>"
-				SPE.my_atom = null
-				equipment_system.weapon_system = null
-			else
-				user << "<span class='warning'>You need an open hand to do that.</span>"
-		if("Misc. System")
-			SPE = equipment_system.misc_system
-			if(user.put_in_any_hand_if_possible(SPE))
-				user << "<span class='notice'>You remove \the [SPE] from the equipment system.</span>"
-				SPE.my_atom = null
-				equipment_system.misc_system = null
-			else
-				user << "<span class='warning'>You need an open hand to do that.</span>"
-		/*
-		if("engine system")
-			SPE = equipment_system.engine_system
-			if(user.put_in_any_hand_if_possible(SPE))
-				user << "<span class='notice'>You remove \the [SPE] from the equipment system.</span>"
-				equipment_system.engine_system = null
-			else
-				user << "<span class='warning'>You need an open hand to do that.</span>"
-		if("shield system")
-			SPE = equipment_system.shield_system
-			if(user.put_in_any_hand_if_possible(SPE))
-				user << "<span class='notice'>You remove \the [SPE] from the equipment system.</span>"
-				equipment_system.shield_system = null
-			else
-				user << "<span class='warning'>You need an open hand to do that.</span>"
-		*/
+
+	// Removing the equipment
+	var/obj/item/SPE = input(user, "Remove which equipment?", null, null) as null|anything in equipment_system.spacepod_equipment
+	if( SPE )
+		equipment_system.dequip( SPE, user )
 
 	return
 
@@ -324,14 +263,9 @@
 
 /obj/spacepod/sec/New()
 	..()
-	var/obj/item/device/spacepod_equipment/weaponry/burst_taser/T = new /obj/item/device/spacepod_equipment/weaponry/taser
-	T.loc = equipment_system
-	equipment_system.weapon_system = T
-	equipment_system.weapon_system.my_atom = src
-	var/obj/item/device/spacepod_equipment/misc/tracker/L = new /obj/item/device/spacepod_equipment/misc/tracker
-	L.loc = equipment_system
-	equipment_system.misc_system = L
-	equipment_system.misc_system.my_atom = src
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/weaponry/taser )
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/misc/tracker )
+
 	equipment_system.misc_system.enabled = 1
 	return
 
@@ -784,6 +718,14 @@ obj/spacepod/verb/toggleLights()
 		return
 
 /obj/spacepod/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	if( istype( get_turf( src ), /turf/space/bluespace ))// no moving in bluespace
+		return
+
+	if( move_tick < ticks_per_move )
+		move_tick++
+		return
+
+	move_tick  = 0
 	..()
 	if(dir == 1 || dir == 4)
 		src.loc.Entered(src)
@@ -811,6 +753,8 @@ obj/spacepod/verb/toggleLights()
 
 /obj/spacepod/proc/handlerelaymove(mob/user, direction)
 	var/moveship = 1
+	var/obj/item/weapon/cell/battery = equipment_system.battery
+
 	if(battery && battery.charge >= 3 && health && empcounter == 0)
 		src.dir = direction
 		switch(direction)

@@ -8,7 +8,7 @@
 		usr << "<span class='warning'>Missing equipment or weapons.</span>"
 		my_atom.verbs -= text2path("[type]/proc/fire_weapons")
 		return
-	my_atom.battery.use(shot_cost)
+	my_atom.equipment_system.battery.use(shot_cost)
 	var/olddir
 	for(var/i = 0; i < shots_per; i++)
 		if(olddir != my_atom.dir)
@@ -48,15 +48,92 @@
 
 /datum/spacepod/equipment
 	var/obj/spacepod/my_atom
-	var/obj/item/device/spacepod_equipment/weaponry/weapon_system // weapons system
-	var/obj/item/device/spacepod_equipment/misc/misc_system // misc system
-	//var/obj/item/device/spacepod_equipment/engine/engine_system // engine system
-	//var/obj/item/device/spacepod_equipment/shield/shield_system // shielding system
+	var/list/spacepod_equipment = list()
+	var/max_size = 5
 
-/datum/spacepod/equipment/New(var/obj/spacepod/SP)
+	// Various systems for fast retrieval
+	var/obj/item/device/spacepod_equipment/weaponry/weapon_system  // weapons system
+	var/obj/item/device/spacepod_equipment/misc/misc_system // misc system
+	var/obj/item/device/spacepod_equipment/engine/engine_system // engine system
+	var/obj/item/device/spacepod_equipment/shield/shield_system // shielding system
+	var/obj/item/weapon/cell/battery // the battery, durh
+
+/datum/spacepod/equipment/New(var/obj/spacepod/SP, max_size)
 	..()
 	if(istype(SP))
 		my_atom = SP
+
+/datum/spacepod/equipment/proc/equip(var/obj/item/equipment, var/mob/user = null)
+	if( spacepod_equipment.len < max_size )
+		if( assign_system( equipment )) // Adding the special systems
+			spacepod_equipment.Add( equipment )
+			if( user )
+				user << "<span class='notice'>You insert \the [equipment] into the equipment system.</span>"
+				user.drop_item(equipment)
+			equipment.loc = src
+			return 1
+		else
+			if( user )
+				user << "\red That's not valid equipment!"
+			return 0
+	else
+		if( user )
+			user << "\red There's no space left for the [equipment]!"
+		return 0
+
+/datum/spacepod/equipment/proc/dequip(var/obj/item/equipment, var/mob/user)
+	if( user.put_in_any_hand_if_possible(equipment))
+		user << "<span class='notice'>You remove \the [equipment] from the space pod</span>"
+		deassign_system( equipment )
+		spacepod_equipment.Remove( equipment )
+		return 1
+	else
+		user << "<span class='notice'>You can't remove the [equipment]!</span>"
+
+	return 0
+
+// Assigns proper systems
+/datum/spacepod/equipment/proc/assign_system(var/obj/item/equipment)
+	if(istype( equipment, /obj/item/device/spacepod_equipment/weaponry )) // Assigning the weapon system
+		weapon_system = equipment
+	else if(istype( equipment, /obj/item/device/spacepod_equipment/misc )) // Assigning misc systems
+		misc_system = equipment
+	else if(istype( equipment, /obj/item/device/spacepod_equipment/engine )) // Assigning the engine system
+		engine_system = equipment
+	else if(istype( equipment, /obj/item/device/spacepod_equipment/shield )) // Assigning the shield system
+		shield_system = equipment
+	else if(istype( equipment, /obj/item/weapon/cell )) // Assigning the battery
+		battery = equipment
+	else if(!istype( equipment, /obj/item/device/spacepod_equipment ))  // If it wasn't any of those systems, and isn't spacepod_equipment, we don't want what you're selling
+		return 0
+
+	if( istype( equipment, /obj/item/device/spacepod_equipment ))
+		var/obj/item/device/spacepod_equipment/equipped = equipment
+		equipped.my_atom = my_atom
+
+	return 1
+
+// Deassigns proper system
+/datum/spacepod/equipment/proc/deassign_system(var/obj/item/equipment)
+	if( equipment == weapon_system ) // Assigning the weapon system
+		weapon_system = null
+	else if( equipment == misc_system ) // Assigning misc systems
+		misc_system = null
+	else if( equipment == engine_system ) // Assigning the engine system
+		engine_system = null
+	else if( equipment == shield_system ) // Assigning the shield system
+		shield_system = null
+	else if( equipment == battery ) // Assigning the battery
+		battery = null
+	else if(!istype( equipment, /obj/item/device/spacepod_equipment ))  // If it wasn't any of those systems, and isn't spacepod_equipment, we don't want what you're selling
+		world << "MAH EMULSION: Tried to remove an impossible object from the spacepod, yell at Kwask."
+		return 0
+
+	if( istype( equipment, /obj/item/device/spacepod_equipment ))
+		var/obj/item/device/spacepod_equipment/equipped = equipment
+		equipped.my_atom = null
+
+	return 1
 
 /obj/item/device/spacepod_equipment
 	name = "equipment"
@@ -125,3 +202,13 @@
 		user.show_message("<span class='notice'>You enable \the [src]'s power.</span>")
 	else
 		..()
+
+/obj/item/device/spacepod_equipment/engine
+	name = "\improper spacepod engine"
+	desc = "Vroom vroom."
+	icon_state = "pod_locator"
+
+/obj/item/device/spacepod_equipment/shield
+	name = "\improper spacepod shield system"
+	desc = "For particularily rainy days."
+	icon_state = "pod_locator"
