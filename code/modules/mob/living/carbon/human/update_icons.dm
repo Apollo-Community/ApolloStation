@@ -148,7 +148,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	overlays.Cut()
 
 	//Hacky pre-empting of this whacky icon stuff
-	if(lying && species.name_plural == "Xenomorphs" && stat != DEAD)
+	if(lying && species.name_plural == "Xenomorphs" && stat != DEAD && resting)
 		icon = src.species.icobase
 		icon_state = src.species.prone_icon
 		return
