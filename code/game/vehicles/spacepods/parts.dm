@@ -122,5 +122,11 @@
 /obj/item/pod_parts/armor
 	name = "command pod armor"
 	icon = 'icons/pods/pod_parts.dmi'
-	icon_state = "pod_armor_civ"
+	icon_state = "pod_armor_com"
 	desc = "Spacepod armor. This is the command version. It looks rather flimsy."
+
+/obj/item/pod_parts/armor/sec
+	name = "security pod armor"
+	icon = 'icons/pods/pod_parts.dmi'
+	icon_state = "pod_armor_sec"
+	desc = "Spacepod armor. This is the security version. It looks sturdy."

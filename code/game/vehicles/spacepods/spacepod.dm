@@ -43,7 +43,6 @@
 	bound_height = 64
 	dir = EAST
 	equipment_system = new(src)
-	equipment_system.equip( new battery_type )
 	add_cabin()
 	add_airtank()
 	src.ion_trail = new /datum/effect/effect/system/ion_trail_follow/space_trail()
@@ -65,7 +64,6 @@
 	else
 		processing_objects.Remove(src)
 
-
 /obj/spacepod/proc/update_icons()
 	if(!pod_overlays)
 		pod_overlays = new/list(2)
@@ -76,8 +74,14 @@
 
 	if(health <= round(initial(health)/2))
 		overlays += pod_overlays[DAMAGE]
-		if(health <= round(initial(health)/4))
+		if(is_on_fire())
 			overlays += pod_overlays[FIRE]
+
+/obj/spacepod/proc/is_on_fire()
+	if(health <= round(initial(health)/4))
+		return 1
+	else
+		return 0
 
 /obj/spacepod/bullet_act(var/obj/item/projectile/P)
 	if(P.damage && !P.nodamage)
@@ -110,22 +114,25 @@
 		if(occupant2)
 			occupant2 << S
 	if(!health)
-		spawn(0)
-			if(occupant)
-				if(occupant2)
-					occupant2 << "<big><span class='warning'>Critical damage to the vessel detected, core explosion imminent!</span></big>"
-				occupant << "<big><span class='warning'>Critical damage to the vessel detected, core explosion imminent!</span></big>"
-				for(var/i = 10, i >= 0; --i)
-					if(occupant)
-						occupant << "<span class='warning'>[i]</span>"
-					if(occupant2)
-						occupant2 << "<span class='warning'>[i]</span>"
-					if(i == 0)
-						explosion(loc, 2, 4, 8)
-						del(src)
-					sleep(10)
+		explode()
 
 	update_icons()
+
+/obj/spacepod/proc/explode()
+	spawn(0)
+		if(occupant)
+			if(occupant2)
+				occupant2 << "<big><span class='warning'>Critical damage to the vessel detected, core explosion imminent!</span></big>"
+			occupant << "<big><span class='warning'>Critical damage to the vessel detected, core explosion imminent!</span></big>"
+			for(var/i = 10, i >= 0; --i)
+				if(occupant)
+					occupant << "<span class='warning'>[i]</span>"
+				if(occupant2)
+					occupant2 << "<span class='warning'>[i]</span>"
+				if(i == 0)
+					explosion(loc, 2, 4, 8)
+					del(src)
+				sleep(10)
 
 /obj/spacepod/proc/repair_damage(var/repair_amount)
 	if(health)
@@ -246,45 +253,28 @@
 
 	return
 
-/obj/spacepod/civilian
+/obj/spacepod/command
 	name = "\improper command spacepod"
 	desc = "A sleek command space pod."
-	icon_state = "pod_civ"
+	icon_state = "pod_com"
 
-/obj/spacepod/random
-	icon_state = "pod_civ"
-// placeholder
+/obj/spacepod/command/complete/New()
+	..()
+	equipment_system.equip( new battery_type )
 
-/obj/spacepod/sec
+/obj/spacepod/security
 	name = "\improper security spacepod"
 	desc = "An armed security spacepod with reinforced armor plating."
-	icon_state = "pod_mil"
+	icon_state = "pod_sec"
 	health = 400
 
-/obj/spacepod/sec/New()
+/obj/spacepod/security/complete/New()
 	..()
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/weaponry/taser )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/misc/tracker )
 
 	equipment_system.misc_system.enabled = 1
 	return
-
-/obj/spacepod/random/New()
-	..()
-	icon_state = pick("pod_civ", "pod_black", "pod_mil", "pod_synd", "pod_gold", "pod_industrial")
-	switch(icon_state)
-		if("pod_civ")
-			desc = "A sleek command space pod."
-		if("pod_black")
-			desc = "An all black space pod with no insignias."
-		if("pod_mil")
-			desc = "A dark grey space pod brandishing the Nanotrasen Military insignia"
-		if("pod_synd")
-			desc = "A menacing military space pod with Fuck NT stenciled onto the side"
-		if("pod_gold")
-			desc = "A command space pod with a gold body, must have cost somebody a pretty penny"
-		if("pod_industrial")
-			desc = "A rough looking space pod meant for industrial work"
 
 /obj/spacepod/verb/toggle_internal_tank()
 	set name = "Toggle internal airtank usage"
@@ -726,6 +716,10 @@ obj/spacepod/verb/toggleLights()
 		return
 
 	move_tick  = 0
+
+	if( !equipment_system.engine_system.cycle() )
+		return
+
 	..()
 	if(dir == 1 || dir == 4)
 		src.loc.Entered(src)
@@ -755,7 +749,7 @@ obj/spacepod/verb/toggleLights()
 	var/moveship = 1
 	var/obj/item/weapon/cell/battery = equipment_system.battery
 
-	if(battery && battery.charge >= 3 && health && empcounter == 0)
+	if(health && empcounter == 0)
 		src.dir = direction
 		switch(direction)
 			if(1)

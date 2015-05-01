@@ -1,3 +1,5 @@
+#define FIRE			2
+
 /obj/item/device/spacepod_equipment/weaponry/proc/fire_weapons()
 	if(my_atom.next_firetime > world.time)
 		usr << "<span class='warning'>Your weapons are recharging.</span>"
@@ -8,7 +10,12 @@
 		usr << "<span class='warning'>Missing equipment or weapons.</span>"
 		my_atom.verbs -= text2path("[type]/proc/fire_weapons")
 		return
-	my_atom.equipment_system.battery.use(shot_cost)
+	if( my_atom.equipment_system.battery )
+		if( my_atom.equipment_system.battery.use(shot_cost) )
+			usr << "There's not enough charge left!"
+	else
+		usr << "There's no battery in the system!"
+
 	var/olddir
 	for(var/i = 0; i < shots_per; i++)
 		if(olddir != my_atom.dir)
@@ -137,13 +144,16 @@
 
 /obj/item/device/spacepod_equipment
 	name = "equipment"
+	icon = 'icons/pods/pod_parts.dmi'
 	var/obj/spacepod/my_atom
-// base item for spacepod weapons
+	var/manufacturer = "NanoTrasen" // purely a fluff detail
+
+/obj/item/device/spacepod_equipment/proc/check() // checks the status of a piece of equipment
+	return 1
 
 /obj/item/device/spacepod_equipment/weaponry
 	name = "pod weapon"
 	desc = "You shouldn't be seeing this"
-	icon = 'icons/pods/ship.dmi'
 	icon_state = "blank"
 	var/projectile_type
 	var/shot_cost = 0
@@ -182,7 +192,6 @@
 /obj/item/device/spacepod_equipment/misc
 	name = "pod misc"
 	desc = "You shouldn't be seeing this"
-	icon = 'icons/pods/ship.dmi'
 	icon_state = "blank"
 	var/enabled
 
@@ -192,9 +201,12 @@
 	icon_state = "pod_locator"
 	enabled = 0
 
+/obj/item/device/spacepod_equipment/misc/tracker/check()
+	return enabled
+
 /obj/item/device/spacepod_equipment/misc/tracker/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(isscrewdriver(I))
-		if(enabled)
+		if(check())
 			enabled = 0
 			user.show_message("<span class='notice'>You disable \the [src]'s power.")
 			return
@@ -206,9 +218,62 @@
 /obj/item/device/spacepod_equipment/engine
 	name = "\improper spacepod engine"
 	desc = "Vroom vroom."
-	icon_state = "pod_locator"
+	icon_state = "engine"
+	var/tank_volume = 0.000 // how full the tank is
+	var/tank_max_volume = 112.000 // 112 mols, or 4 full tanks of phoron
+	var/burn_rate = 0.100 // 0.1 mols per meter
+	var/heat_level = 0
+	var/heat_rate = 10 // how much heat is gained per meter moved
+	var/heat_rad_rate = 10 // how much heat is radiated per tick
+	var/max_heat_level = 1000 // how hot this baby can get before bad things happen
+	var/charge_rate = 10 // how much energy is generated every time fuel is used
+	var/use_fuel = 1 // whether this engine runs on fuel or a nice hot cup of tea
+
+/obj/item/device/spacepod_equipment/engine/New()
+	..()
+
+	processing_objects.Add( src )
+
+/obj/item/device/spacepod_equipment/engine/Del()
+	processing_objects.Remove( src )
+
+	..()
+
+/obj/item/device/spacepod_equipment/engine/process()
+	if( my_atom.is_on_fire() ) // Being on fire kinda sucks
+		heat_level += 20
+
+	heat_level -= heat_rad_rate
+
+	if( heat_level >= max_heat_level ) // hurt em a bit for running it too hot
+		my_atom.deal_damage( (heat_level/(4*max_heat_level))*heat_rate )
+
+/obj/item/device/spacepod_equipment/engine/check()
+	if( tank_volume > 0 )
+		return 1
+	else
+		return 0
+
+// Runs a single cycle of the engine
+/obj/item/device/spacepod_equipment/engine/proc/cycle()
+	if( use_fuel )
+		if( tank_volume > 0 )
+			tank_volume -= burn_rate
+			heat_level += heat_rate
+
+			if( my_atom.equipment_system.battery )
+				my_atom.equipment_system.battery.give( charge_rate )
+
+			if( tank_volume < 0 )
+				tank_volume = 0
+		else
+			return 0
+
+	return 1
 
 /obj/item/device/spacepod_equipment/shield
 	name = "\improper spacepod shield system"
 	desc = "For particularily rainy days."
-	icon_state = "pod_locator"
+	icon_state = "shield"
+
+#undef FIRE
