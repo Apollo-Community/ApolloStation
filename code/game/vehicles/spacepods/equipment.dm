@@ -1,5 +1,3 @@
-#define FIRE			2
-
 /obj/item/device/spacepod_equipment/weaponry/proc/fire_weapons()
 	if(my_atom.next_firetime > world.time)
 		usr << "<span class='warning'>Your weapons are recharging.</span>"
@@ -64,6 +62,7 @@
 	var/obj/item/device/spacepod_equipment/engine/engine_system // engine system
 	var/obj/item/device/spacepod_equipment/shield/shield_system // shielding system
 	var/obj/item/weapon/cell/battery // the battery, durh
+	var/obj/item/pod_parts/armor/armor // what kind of armor it has
 
 /datum/spacepod/equipment/New(var/obj/spacepod/SP, max_size)
 	..()
@@ -78,10 +77,11 @@
 				user << "<span class='notice'>You insert \the [equipment] into the equipment system.</span>"
 				user.drop_item(equipment)
 			equipment.loc = src
+			my_atom.update_icons()
 			return 1
 		else
 			if( user )
-				user << "\red That's not valid equipment!"
+				user << "\red Could not add [equipment] to the [my_atom]."
 			return 0
 	else
 		if( user )
@@ -93,6 +93,7 @@
 		user << "<span class='notice'>You remove \the [equipment] from the space pod</span>"
 		deassign_system( equipment )
 		spacepod_equipment.Remove( equipment )
+		my_atom.update_icons()
 		return 1
 	else
 		user << "<span class='notice'>You can't remove the [equipment]!</span>"
@@ -106,11 +107,28 @@
 	else if(istype( equipment, /obj/item/device/spacepod_equipment/misc )) // Assigning misc systems
 		misc_system = equipment
 	else if(istype( equipment, /obj/item/device/spacepod_equipment/engine )) // Assigning the engine system
+		if( engine_system )
+			return 0
 		engine_system = equipment
 	else if(istype( equipment, /obj/item/device/spacepod_equipment/shield )) // Assigning the shield system
+		if( shield_system )
+			return 0
 		shield_system = equipment
 	else if(istype( equipment, /obj/item/weapon/cell )) // Assigning the battery
+		if( battery )
+			return 0
 		battery = equipment
+	else if(istype( equipment, /obj/item/pod_parts/armor ))
+		if( armor )
+			return 0
+		armor = equipment
+
+		if( istype( equipment, /obj/item/pod_parts/armor/command ))
+			my_atom.health = 250
+		else if( istype( equipment, /obj/item/pod_parts/armor/security ))
+			my_atom.health = 400
+		else
+			my_atom.health = 100
 	else if(!istype( equipment, /obj/item/device/spacepod_equipment ))  // If it wasn't any of those systems, and isn't spacepod_equipment, we don't want what you're selling
 		return 0
 
@@ -132,6 +150,9 @@
 		shield_system = null
 	else if( equipment == battery ) // Assigning the battery
 		battery = null
+	else if( equipment == armor )
+		armor = null
+		my_atom.health = 100
 	else if(!istype( equipment, /obj/item/device/spacepod_equipment ))  // If it wasn't any of those systems, and isn't spacepod_equipment, we don't want what you're selling
 		world << "MAH EMULSION: Tried to remove an impossible object from the spacepod, yell at Kwask."
 		return 0
@@ -141,6 +162,13 @@
 		equipped.my_atom = null
 
 	return 1
+
+/datum/spacepod/equipment/proc/fill_engine( var/obj/item/weapon/tank/tank )
+	if( engine_system )
+		return engine_system.fill( tank )
+	else
+		usr << "There's no engine installed!"
+		return 0
 
 /obj/item/device/spacepod_equipment
 	name = "equipment"
@@ -219,20 +247,26 @@
 	name = "\improper spacepod engine"
 	desc = "Vroom vroom."
 	icon_state = "engine"
-	var/tank_volume = 0.000 // how full the tank is
-	var/tank_max_volume = 112.000 // 112 mols, or 4 full tanks of phoron
-	var/burn_rate = 0.100 // 0.1 mols per meter
-	var/heat_level = 0
+	var/datum/gas_mixture/fuel_tank = null
+	var/max_volume = 112.000 // 112 mols, or 4 full tanks of phoron
+	var/burn_rate = 0.050 // 0.1 mols per meter
 	var/heat_rate = 10 // how much heat is gained per meter moved
 	var/heat_rad_rate = 10 // how much heat is radiated per tick
-	var/max_heat_level = 1000 // how hot this baby can get before bad things happen
+	var/max_temp = 400 // how hot this baby can get before bad things happen
 	var/charge_rate = 10 // how much energy is generated every time fuel is used
 	var/use_fuel = 1 // whether this engine runs on fuel or a nice hot cup of tea
+	var/fire_heat = 20 // how much heat fire causes
+	var/fire = 0 // are we on fire right now?
 
 /obj/item/device/spacepod_equipment/engine/New()
 	..()
 
-	processing_objects.Add( src )
+	src.fuel_tank = new /datum/gas_mixture()
+	src.fuel_tank.volume = max_volume //liters
+	src.fuel_tank.temperature = T20C
+
+	spawn( 30 )
+		processing_objects.Add( src )
 
 /obj/item/device/spacepod_equipment/engine/Del()
 	processing_objects.Remove( src )
@@ -240,16 +274,20 @@
 	..()
 
 /obj/item/device/spacepod_equipment/engine/process()
-	if( my_atom.is_on_fire() ) // Being on fire kinda sucks
-		heat_level += 20
+	var/temp_fire = my_atom.is_on_fire()
+	if( fire && temp_fire ) // If we agree that we're on fire, light em up
+		fuel_tank.add_thermal_energy( fire_heat )
+	else if( fire != temp_fire ) // If we don't, then we need to work through this, together
+		fire = temp_fire
+		my_atom.update_icons()
 
-	heat_level -= heat_rad_rate
+	fuel_tank.add_thermal_energy( -heat_rad_rate )
 
-	if( heat_level >= max_heat_level ) // hurt em a bit for running it too hot
-		my_atom.deal_damage( (heat_level/(4*max_heat_level))*heat_rate )
+	if( fuel_tank.temperature >= max_temp ) // hurt em a bit for running it too hot
+		my_atom.deal_damage( (fuel_tank.temperature/(4*max_temp))*heat_rate )
 
 /obj/item/device/spacepod_equipment/engine/check()
-	if( tank_volume > 0 )
+	if( fuel_tank.total_moles > 0 )
 		return 1
 	else
 		return 0
@@ -257,23 +295,37 @@
 // Runs a single cycle of the engine
 /obj/item/device/spacepod_equipment/engine/proc/cycle()
 	if( use_fuel )
-		if( tank_volume > 0 )
-			tank_volume -= burn_rate
-			heat_level += heat_rate
+		if( fuel_tank.gas["phoron"] > 0 )
+			fuel_tank.adjust_gas( "phoron", -burn_rate) // use up dat phoron
+			fuel_tank.add_thermal_energy(heat_rate) // heat from the engine using phoron
 
-			if( my_atom.equipment_system.battery )
+			if( my_atom.equipment_system.battery ) // charge the battery if we have one
 				my_atom.equipment_system.battery.give( charge_rate )
 
-			if( tank_volume < 0 )
-				tank_volume = 0
+			if( fuel_tank.gas["oxygen"] > 0 )
+				fuel_tank.adjust_gas( "oxygen", -burn_rate/2) // burn up oxygen at half rate 4noraisin
+				fuel_tank.add_thermal_energy(heat_rate*10) // putting oxygen in this baby is bad news
+
+				if( my_atom.equipment_system.battery ) // but hey, we'll charge the battery even faster
+					my_atom.equipment_system.battery.give( charge_rate*2 )
 		else
 			return 0
 
 	return 1
 
+/obj/item/device/spacepod_equipment/engine/proc/fill( var/obj/item/weapon/tank/tank )
+	if( !tank )
+		usr << "That's not a valid tank!"
+		return 0
+
+	fuel_tank.merge( tank.air_contents )
+	tank.air_contents.remove( tank.air_contents.volume )
+	return 1
+
+/obj/item/device/spacepod_equipment/engine/proc/get_temp()
+	return fuel_tank.temperature
+
 /obj/item/device/spacepod_equipment/shield
 	name = "\improper spacepod shield system"
 	desc = "For particularily rainy days."
 	icon_state = "shield"
-
-#undef FIRE

@@ -45,9 +45,22 @@ var/global/list/map_sectors = list()
 	name = "generic ship"
 	obj_type = /obj/effect/map/ship
 
+
 /obj/effect/mapinfo/sector/station
+	name = "NSS Apollo"
 	mapx = STATION_X
 	mapy = STATION_Y
+
+/obj/effect/mapinfo/sector/ace
+	name = "A.C.E."
+
+/obj/effect/mapinfo/sector/engipost
+	name = "Engineering Outpost"
+
+/obj/effect/mapinfo/sector/tcomm_old
+	name = "Abandoned Satellite"
+
+
 
 //===================================================================================
 //Overmap object representing zlevel

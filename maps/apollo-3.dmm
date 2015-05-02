@@ -390,7 +390,7 @@
 "hz" = (/obj/structure/cable{icon_state = "0-4"; d2 = 4},/turf/simulated/floor/plating/airless,/area/AIsattele)
 "hA" = (/obj/structure/grille{density = 0; icon_state = "brokengrille"},/turf/space,/area/AIsattele)
 "hB" = (/obj/item/weapon/storage/toolbox/electrical{pixel_x = 1; pixel_y = -1},/turf/simulated/floor/plating/airless,/area/AIsattele)
-"hC" = (/obj/effect/mapinfo/sector{mapx = 128; mapy = 125},/turf/space,/area/space)
+"hC" = (/obj/effect/mapinfo/sector/tcomm_old,/turf/space,/area/space)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

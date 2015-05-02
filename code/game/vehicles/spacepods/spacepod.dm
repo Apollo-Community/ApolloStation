@@ -1,9 +1,17 @@
 #define DAMAGE			1
 #define FIRE			2
 
+#define JALOPY 1
+#define COMMAND 2
+#define SECURITY 3
+#define ENGINEERING 4
+#define SCIENCE 5
+#define CARGO 6
+#define SYNDICATE 7
+
 /obj/spacepod
 	name = "\improper space pod"
-	desc = "A space pod meant for space travel."
+	desc = "A space pod meant for space travel. This one looks rather bare."
 	icon = 'icons/48x48/pods.dmi'
 	density = 1 //Dense. To raise the heat.
 	opacity = 0
@@ -23,7 +31,7 @@
 	var/hatch_open = 0
 	var/next_firetime = 0
 	var/list/pod_overlays
-	var/health = 250
+	var/health = 100 // pods without armor are tough as a spongecake
 	var/lights = 0
 	var/lights_power = 6
 	var/allow2enter = 1
@@ -31,16 +39,15 @@
 	var/ticks_per_move = 3
 	var/move_tick = 0
 	var/battery_type = "/obj/item/weapon/cell/super"
+	var/fire = 0 // are we on fire?
+	var/fire_threshold_health = 0.2 // threshold heat for fires to start
+	var/fire_threshold_temp = 400 // threshold temp for fires to start
 
 /obj/spacepod/New()
 	. = ..()
-	if(!pod_overlays)
-		pod_overlays = new/list(2)
-		pod_overlays[DAMAGE] = image(icon, icon_state="pod_damage")
-		pod_overlays[FIRE] = image(icon, icon_state="pod_fire")
+	dir = EAST
 	bound_width = 64
 	bound_height = 64
-	dir = EAST
 	equipment_system = new(src)
 	add_cabin()
 	add_airtank()
@@ -53,6 +60,8 @@
 
 	spacepods_list += src
 
+	update_icons()
+
 /obj/spacepod/Del()
 	spacepods_list -= src
 	..()
@@ -64,6 +73,13 @@
 		processing_objects.Remove(src)
 
 /obj/spacepod/proc/update_icons()
+	if( istype( equipment_system.armor, /obj/item/pod_parts/armor/command ))
+		icon_state = "pod_com"
+	else if( istype( equipment_system.armor, /obj/item/pod_parts/armor/security ))
+		icon_state = "pod_sec"
+	else
+		icon_state = "pod"
+
 	if(!pod_overlays)
 		pod_overlays = new/list(2)
 		pod_overlays[DAMAGE] = image(icon, icon_state="pod_damage")
@@ -73,14 +89,22 @@
 
 	if(health <= round(initial(health)/2))
 		overlays += pod_overlays[DAMAGE]
-		if(is_on_fire())
-			overlays += pod_overlays[FIRE]
+	if( fire )
+		overlays += pod_overlays[FIRE]
 
 /obj/spacepod/proc/is_on_fire()
-	if(health <= round(initial(health)/4))
-		return 1
-	else
-		return 0
+	if( health/initial(health) <= fire_threshold_health )
+		if( prob( 10 ))
+			fire = 1
+	if( fire )
+		if( prob( 2 )) // Fires have a small chance of putting themselves out
+			fire = 0
+		else
+			fire = 1
+	if( equipment_system.engine_system.get_temp() >= fire_threshold_temp ) // high temp will always set it on fire
+		fire = 1
+
+	return fire
 
 /obj/spacepod/bullet_act(var/obj/item/projectile/P)
 	if(P.damage && !P.nodamage)
@@ -192,17 +216,18 @@
 			processing_objects.Add(src)
 
 /obj/spacepod/attackby(obj/item/W as obj, mob/user as mob, params)
+	if( istype( W, /obj/item/weapon/tank ))
+		if( equipment_system.fill_engine( W ))
+			usr << "You hook the phoron tank up to the fuel hose and with a hiss all of the fuel is added to the pod's fuel tank."
 	if(iscrowbar(W))
 		hatch_open = !hatch_open
 		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 		user << "<span class='notice'>You [hatch_open ? "open" : "close"] the maintenance hatch.</span>"
 	if(istype(W, /obj/item/weapon/cell))
-		var/obj/item/weapon/cell/battery = equipment_system.battery
-
 		if(!hatch_open)
 			user << "\red The maintenance hatch is closed!"
 			return
-		if(battery)
+		if(equipment_system.battery)
 			user << "<span class='notice'>The pod already has a battery.</span>"
 			return
 
@@ -212,13 +237,19 @@
 		if(!hatch_open)
 			user << "\red The maintenance hatch is closed!"
 			return
-		if(!equipment_system)
-			user << "<span class='warning'>The pod has no equipment datum, yell at pomf</span>"
-			return
 
 		// Adding the equipment to the system
 		equipment_system.equip(W, user)
+	if(istype(W, /obj/item/pod_parts/armor))
+		if(!hatch_open)
+			user << "\red The maintenance hatch is closed!"
+			return
+		if(equipment_system.armor)
+			user << "<span class='notice'>The pod already has armor.</span>"
+			return
 
+		equipment_system.equip(W, user)
+		return
 
 	if(istype(W, /obj/item/weapon/weldingtool))
 		if(!hatch_open)
@@ -257,18 +288,28 @@
 	desc = "A sleek command space pod."
 	icon_state = "pod_com"
 
+/obj/spacepod/command/New()
+	..()
+	equipment_system.equip( new /obj/item/pod_parts/armor/command )
+
 /obj/spacepod/command/complete/New()
 	..()
 	equipment_system.equip( new battery_type )
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine )
 
 /obj/spacepod/security
 	name = "\improper security spacepod"
 	desc = "An armed security spacepod with reinforced armor plating."
 	icon_state = "pod_sec"
-	health = 400
+
+/obj/spacepod/security/New()
+	..()
+	equipment_system.equip( new /obj/item/pod_parts/armor/security )
 
 /obj/spacepod/security/complete/New()
 	..()
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine )
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/shield )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/weaponry/taser )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/misc/tracker )
 
@@ -418,6 +459,30 @@
 	else
 		return
 
+/obj/spacepod/proc/occupants_announce( var/message, var/type = 1, var/big = 0 )
+	var/full_message = ""
+
+	if( big )
+		full_message += "<big>"
+
+	if( type == 1 )
+		full_message += "<span class='notice'>"
+	else if( type == 2 )
+		full_message += "<span class='warning'>"
+	else if( type == 3 )
+		full_message += "<span class='warning'>"
+
+	if( message )
+		full_message += message
+
+	if( type ) // if we had a header, better close it
+		full_message += "</span>"
+
+	if( big )
+		full_message += "/<big>"
+
+	for( var/occupant in occupants )
+		occupants[occupant] << full_message
 
 
 /obj/spacepod/MouseDrop_T(mob/M as mob, mob/user as mob)
@@ -502,101 +567,51 @@
 		return
 
 /obj/spacepod/verb/exit_pod()
-	set name = "Exit pod"
+	set name = "Exit Pod"
 	set category = "Spacepod"
 	set src = usr.loc
 
-
-	if(usr != src.occupants["pilot"])
-		if(src.occupants["passenger"])
-			if(usr != src.occupants["passenger"])
-				return
-			else
-				var/mob/pilot = src.occupants["pilot"]
-				inertia_dir = 0 // engage reverse thruster and power down pod
-				pilot.loc = src.loc
-				src.occupants["passenger"] = null
-				usr << "<span class='notice'>You climb out of the pod.</span>"
-
-
-		else
-			return
-	else
-		var/mob/passenger = src.occupants["passenger"]
+	if( usr == src.occupants["pilot"] )
+		var/mob/pilot = src.occupants["pilot"]
 		inertia_dir = 0 // engage reverse thruster and power down pod
-		passenger.loc = src.loc
+		pilot.loc = src.loc
 		src.occupants["pilot"] = null
-		usr << "<span class='notice'>You climb out of the pod.</span>"
-		return
+	else if( usr == src.occupants["passenger"] )
+		var/mob/passenger = src.occupants["passenger"]
+		passenger.loc = src.loc
+		src.occupants["passenger"] = null
+
 
 /obj/spacepod/verb/exit_pod2()
-	if(!src.occupants["passenger"])
-		set hidden = 1
-		return
-
-	else
-		set name = "Eject Secondary Seat"
+	if(src.occupants["pilot"] == usr)
+		set name = "Eject Occupant"
 		set category = "Spacepod"
 		set src = usr.loc
-		set hidden = 0
 
-		if(usr == src.occupants["passenger"])
-			usr << "<span class='notice'>Use 'Exit Pod'</span>"
-			return
-		else
-			var/mob/passenger = src.occupants["passenger"]
-			usr << "<span class='notice'>You eject [passenger.name].</span>"
-			passenger.visible_message("<span class='warning'>You were ejected from the pod!</span>")
-			inertia_dir = 0 // engage reverse thruster and power down pod
+		var/chair = input( usr, "Which occupant seat would you like to eject?", "Eject Whom?", null ) in occupants
+
+		var/mob/passenger = occupants[chair]
+		if( passenger )
+			occupants_announce( "Occupant [passenger] has been ejected from the pod." )
 			passenger.loc = src.loc
+			src.throw_at( get_distant_turf( get_turf(src), 4, dir ), 4, 4, passenger.throw_speed, null)
 			src.occupants["passenger"] = null
 
-
 /obj/spacepod/verb/locksecondseat()
-	set name = "Lock Doors"
-	set category = "Spacepod"
-	set src = usr.loc
+	if( occupants["pilot"] == usr )
+		set name = "Lock Doors"
+		set category = "Spacepod"
+		set src = usr.loc
 
-	if(occupants["passenger"] == usr)
-		if(!allow2enter)
-			usr << "<span class='notice'>You can't unlock the doors from your seat.</span>"
-			return
-		else
-			usr << "<span class='notice'>You can't lock the doors from your seat.</span>"
-			return
-	else
 		if(src.allow2enter)
 			src.allow2enter = 0
-			usr << "<span class='notice'>You lock the doors.</span>"
+			occupants_announce( "Spacepod exterior doors locked." )
 		else
 			src.allow2enter = 1
-			usr << "<span class='notice'>You unlock the doors.</span>"
+			occupants_announce( "Spacepod exterior doors unlocked." )
 
 /obj/spacepod/verb/toggleDoors()
-	if(src.occupants["passenger"])
-		var/mob/passenger = src.occupants["passenger"]
-		if(usr.ckey != passenger.ckey)
-			set name = "Toggle Nearby Pod Doors"
-			set category = "Spacepod"
-			set src = usr.loc
-
-			for(var/obj/machinery/door/poddoor/P in oview(3,src))
-				if(istype(P, /obj/machinery/door/poddoor/three_tile_hor) || istype(P, /obj/machinery/door/poddoor/three_tile_ver) || istype(P, /obj/machinery/door/poddoor/four_tile_hor) || istype(P, /obj/machinery/door/poddoor/four_tile_ver))
-					var/mob/living/carbon/human/L = usr
-					if(P.check_access(L.get_active_hand()) || P.check_access(L.wear_id))
-						if(P.density)
-							P.open()
-							return 1
-						else
-							P.close()
-							return 1
-					usr << "<span class='warning'>Access denied.</span>"
-					return
-			usr << "<span class='warning'>You are not close to any pod doors.</span>"
-			return
-		else
-			return
-	else
+	if(src.occupants["pilot"])
 		set name = "Toggle Nearby Pod Doors"
 		set category = "Spacepod"
 		set src = usr.loc
@@ -611,9 +626,9 @@
 					else
 						P.close()
 						return 1
-				usr << "<span class='warning'>Access denied.</span>"
+				occupants["pilot"] << "<span class='warning'>Access denied.</span>"
 				return
-		usr << "<span class='warning'>You are not close to any pod doors.</span>"
+		occupants["pilot"] << "<span class='warning'>You are not close to any pod doors.</span>"
 		return
 
 /obj/spacepod/verb/fireWeapon()
@@ -626,7 +641,7 @@
 			if( equipment_system.weapon_system )
 				equipment_system.weapon_system.fire_weapons()
 			else
-				usr << "<span class='warning'>This pod does not have any active weapon systems.</span>"
+				occupants_announce( "ERROR: This pod does not have any active weapon systems.", 2 )
 
 obj/spacepod/verb/toggleLights()
 	set name = "Toggle Lights"
@@ -643,6 +658,7 @@ obj/spacepod/verb/toggleLights()
 	for(var/obj/machinery/computer/gate_beacon_console/C in orange(usr.loc, 3)) // Finding suitable VR platforms in area
 		if(alert(usr, "Would you like to interface with: [C]?", "Confirm", "Yes", "No") == "Yes")
 			C.gate_prompt( occupants["pilot"] )
+			occupants_announce( "Activated charging sequence for nearby bluespace beacon." )
 
 /obj/spacepod/proc/lightsToggle()
 	lights = !lights
@@ -650,7 +666,7 @@ obj/spacepod/verb/toggleLights()
 		SetLuminosity(luminosity + lights_power)
 	else
 		SetLuminosity(luminosity - lights_power)
-	occupants["pilot"] << "Toggled lights [lights?"on":"off"]."
+	occupants_announce( "Spacepod lights toggled [lights?"on":"off"]." )
 	return
 
 /obj/spacepod/proc/enter_after(delay as num, var/mob/user as mob, var/numticks = 5)
@@ -717,10 +733,12 @@ obj/spacepod/verb/toggleLights()
 
 	move_tick  = 0
 
-	if( !equipment_system.engine_system.cycle() )
-		return
+	if( equipment_system.engine_system )
+		if( !equipment_system.engine_system.cycle() )
+			return
 
 	..()
+
 	if(dir == 1 || dir == 4)
 		src.loc.Entered(src)
 
@@ -787,13 +805,11 @@ obj/spacepod/verb/toggleLights()
 	battery.charge = max(0, battery.charge - 3)
 
 /obj/spacepod/proc/CheckIfOccupant(mob/user)
-	if(!src.occupants["passenger"])
-		return 0
-	if(src.occupants["passenger"])
-		if(user == src.occupants["passenger"])
+	for( var/occupant in occupants )
+		if( occupants[occupant] == user )
 			return 1
-		else
-			return 0
+
+	return 0
 
 
 /obj/effect/landmark/spacepod/random
@@ -870,6 +886,13 @@ obj/spacepod/verb/toggleLights()
 
 		usr << "<span class='notice'>You are currently located in Sector [SYSTEM_DESIGNATION]-[sector.x]-[sector.y]</span>"
 
+#undef JALOPY
+#undef COMMAND
+#undef SECURITY
+#undef ENGINEERING
+#undef SCIENCE
+#undef CARGO
+#undef SYNDICATE
 
 #undef DAMAGE
 #undef FIRE

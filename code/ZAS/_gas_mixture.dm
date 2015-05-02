@@ -395,7 +395,6 @@ What are the archived variables for?
 
 	var/datum/gas_mixture/removed = new
 
-
 	removed.oxygen = QUANTIZE((oxygen/sum)*amount)
 	removed.nitrogen = QUANTIZE((nitrogen/sum)*amount)
 	removed.carbon_dioxide = QUANTIZE((carbon_dioxide/sum)*amount)

@@ -910,7 +910,7 @@
 "rz" = (/obj/machinery/firealarm{dir = 4; pixel_x = 16},/turf/simulated/floor,/area/research_outpost/entry)
 "rA" = (/obj/machinery/power/bluespace_inducer{dir = 1},/turf/simulated/floor/plating,/area/space)
 "rB" = (/obj/structure/lattice,/obj/machinery/light/small{dir = 1},/turf/space,/area/research_outpost/entry)
-"rC" = (/obj/effect/mapinfo/sector{mapx = 125; mapy = 128},/turf/space,/area/space)
+"rC" = (/obj/effect/mapinfo/sector/ace,/turf/space,/area/space)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

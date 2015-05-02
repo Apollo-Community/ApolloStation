@@ -143,7 +143,6 @@
 //Technically vacuum doesn't have a specific entropy. Just use a really big number (infinity would be ideal) here so that it's easy to add gas to vacuum and hard to take gas out.
 #define SPECIFIC_ENTROPY_VACUUM		150000
 
-
 //Returns the ideal gas specific entropy of the whole mix. This is the entropy per mole of /mixed/ gas.
 /datum/gas_mixture/proc/specific_entropy()
 	if (!gas.len || total_moles == 0)

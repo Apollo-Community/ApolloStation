@@ -30,7 +30,8 @@
 			brainmob.client.screen.len = null //clear the hud
 
 /obj/item/organ/brain/proc/transfer_identity(var/mob/living/carbon/H)
-	name = "\the [H]'s [initial(src.name)]"
+	name = "brain"
+	desc = "It's a brain. Who knows who it belongs to."
 	brainmob = new(src)
 	brainmob.name = H.real_name
 	brainmob.real_name = H.real_name

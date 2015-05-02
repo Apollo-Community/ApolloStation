@@ -119,13 +119,13 @@
 	link_to = /obj/item/pod_parts/pod_frame/aft_port
 	link_angle = 270
 
-/obj/item/pod_parts/armor
+/obj/item/pod_parts/armor/command
 	name = "command pod armor"
 	icon = 'icons/pods/pod_parts.dmi'
 	icon_state = "pod_armor_com"
 	desc = "Spacepod armor. This is the command version. It looks rather flimsy."
 
-/obj/item/pod_parts/armor/sec
+/obj/item/pod_parts/armor/security
 	name = "security pod armor"
 	icon = 'icons/pods/pod_parts.dmi'
 	icon_state = "pod_armor_sec"

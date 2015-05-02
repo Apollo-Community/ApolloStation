@@ -319,7 +319,7 @@
 "gg" = (/obj/machinery/door/airlock/maintenance_hatch{name = "SMES Access"; req_access_txt = "11"},/turf/simulated/floor/plating/airless,/area/constructionsite/engineering)
 "gh" = (/obj/machinery/power/smes/buildable,/turf/simulated/floor/plating/airless,/area/constructionsite/engineering)
 "gi" = (/obj/machinery/field_generator,/turf/simulated/floor/plating/airless,/area/space)
-"gj" = (/obj/effect/mapinfo/sector{mapx = 128; mapy = 133},/turf/space,/area/space)
+"gj" = (/obj/effect/mapinfo/sector/engipost,/turf/space,/area/space)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

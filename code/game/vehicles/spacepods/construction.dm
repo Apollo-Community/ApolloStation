@@ -32,7 +32,7 @@
 // CONSTRUCTION STEPS
 /////////////////////////////////
 /datum/construction/reversible2/pod
-	result = /obj/spacepod/command
+	result = /obj/spacepod
 	base_icon="pod"
 	steps = list(
 				// 1. Initial state
@@ -167,51 +167,6 @@
 						"key"      = /obj/item/weapon/weldingtool,
 						"vis_msg"  = "{USER} seals the {HOLDER}'s bulkhead panelling with a weld.",
 						"self_msg" = "You seal the {HOLDER}'s bulkhead panelling with a weld."
-					)
-				),
-				// 10. Welded bulkhead
-				list(
-					"desc" = "A space pod with sealed bulkhead panelling exposed.",
-					state_prev = list(
-						"key"      = /obj/item/weapon/weldingtool,
-						"vis_msg"  = "{USER} cuts the {HOLDER}'s bulkhead panelling loose.",
-						"self_msg" = "You cut the {HOLDER}'s bulkhead panelling loose."
-					),
-					state_next = list(
-						"key"      = /obj/item/pod_parts/armor,
-						"vis_msg"  = "{USER} installs the {HOLDER}'s armor plating.",
-						"self_msg" = "You install the {HOLDER}'s armor plating.",
-						"delete"   = 1
-					)
-				),
-				// 11. Loose armor
-				list(
-					"desc" = "A space pod with unsecured armor.",
-					state_prev = list(
-						"key"      = /obj/item/weapon/crowbar,
-						"vis_msg"  = "{USER} pries off {HOLDER}'s armor.",
-						"self_msg" = "You pry off {HOLDER}'s armor.",
-						"spawn"    = /obj/item/pod_parts/armor,
-						"amount"   = 1
-					),
-					state_next = list(
-						"key"      = /obj/item/weapon/wrench,
-						"vis_msg"  = "{USER} bolts down the {HOLDER}'s armor.",
-						"self_msg" = "You bolt down the {HOLDER}'s armor."
-					)
-				),
-				// 12. Bolted-down armor
-				list(
-					"desc" = "A space pod with unsecured armor.",
-					state_prev = list(
-						"key"      = /obj/item/weapon/wrench,
-						"vis_msg"  = "{USER} unsecures the {HOLDER}'s armor.",
-						"self_msg" = "You unsecure the {HOLDER}'s armor."
-					),
-					state_next = list(
-						"key"      = /obj/item/weapon/weldingtool,
-						"vis_msg"  = "{USER} welds the {HOLDER}'s armor.",
-						"self_msg" = "You weld the {HOLDER}'s armor."
 					)
 				)
 				// EOF
