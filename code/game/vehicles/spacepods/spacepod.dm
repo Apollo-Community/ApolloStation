@@ -1,14 +1,6 @@
 #define DAMAGE			1
 #define FIRE			2
 
-#define JALOPY 1
-#define COMMAND 2
-#define SECURITY 3
-#define ENGINEERING 4
-#define SCIENCE 5
-#define CARGO 6
-#define SYNDICATE 7
-
 /obj/spacepod
 	name = "\improper space pod"
 	desc = "A space pod meant for space travel. This one looks rather bare."
@@ -39,9 +31,7 @@
 	var/ticks_per_move = 3
 	var/move_tick = 0
 	var/battery_type = "/obj/item/weapon/cell/super"
-	var/fire = 0 // are we on fire?
 	var/fire_threshold_health = 0.2 // threshold heat for fires to start
-	var/fire_threshold_temp = 400 // threshold temp for fires to start
 
 /obj/spacepod/New()
 	. = ..()
@@ -49,6 +39,7 @@
 	bound_width = 64
 	bound_height = 64
 	equipment_system = new(src)
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/misc/autopilot )
 	add_cabin()
 	add_airtank()
 	src.ion_trail = new /datum/effect/effect/system/ion_trail_follow/space_trail()
@@ -89,22 +80,17 @@
 
 	if(health <= round(initial(health)/2))
 		overlays += pod_overlays[DAMAGE]
-	if( fire )
+	if( is_on_fire() )
 		overlays += pod_overlays[FIRE]
 
 /obj/spacepod/proc/is_on_fire()
-	if( health/initial(health) <= fire_threshold_health )
-		if( prob( 10 ))
-			fire = 1
-	if( fire )
-		if( prob( 2 )) // Fires have a small chance of putting themselves out
-			fire = 0
-		else
-			fire = 1
-	if( equipment_system.engine_system.get_temp() >= fire_threshold_temp ) // high temp will always set it on fire
-		fire = 1
+	if( equipment_system )
+		if( equipment_system.engine_system )
+			return equipment_system.engine_system.fire
+	return 0
 
-	return fire
+/obj/spacepod/proc/fire_hazard()
+	return health/initial(health) <= fire_threshold_health
 
 /obj/spacepod/bullet_act(var/obj/item/projectile/P)
 	if(P.damage && !P.nodamage)
@@ -283,49 +269,16 @@
 
 	return
 
-/obj/spacepod/command
-	name = "\improper command spacepod"
-	desc = "A sleek command space pod."
-	icon_state = "pod_com"
-
-/obj/spacepod/command/New()
-	..()
-	equipment_system.equip( new /obj/item/pod_parts/armor/command )
-
-/obj/spacepod/command/complete/New()
-	..()
-	equipment_system.equip( new battery_type )
-	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine )
-
-/obj/spacepod/security
-	name = "\improper security spacepod"
-	desc = "An armed security spacepod with reinforced armor plating."
-	icon_state = "pod_sec"
-
-/obj/spacepod/security/New()
-	..()
-	equipment_system.equip( new /obj/item/pod_parts/armor/security )
-
-/obj/spacepod/security/complete/New()
-	..()
-	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine )
-	equipment_system.equip( new /obj/item/device/spacepod_equipment/shield )
-	equipment_system.equip( new /obj/item/device/spacepod_equipment/weaponry/taser )
-	equipment_system.equip( new /obj/item/device/spacepod_equipment/misc/tracker )
-
-	equipment_system.misc_system.enabled = 1
-	return
-
 /obj/spacepod/verb/toggle_internal_tank()
-	set name = "Toggle internal airtank usage"
-	set category = "Spacepod"
-	set src = usr.loc
-	set popup_menu = 0
-	if(usr!=src.occupants["pilot"])
+	if(usr == src.occupants["pilot"])
+		set name = "Toggle internal airtank usage"
+		set category = "Spacepod"
+		set src = usr.loc
+		set popup_menu = 0
+
+		use_internal_tank = !use_internal_tank
+		occupants_announce( "Now taking air from [use_internal_tank?"internal airtank":"environment"]." )
 		return
-	use_internal_tank = !use_internal_tank
-	src.occupants["pilot"] << "<span class='notice'>Now taking air from [use_internal_tank?"internal airtank":"environment"].</span>"
-	return
 
 /obj/spacepod/proc/add_cabin()
 	cabin_air = new
@@ -469,20 +422,20 @@
 		full_message += "<span class='notice'>"
 	else if( type == 2 )
 		full_message += "<span class='warning'>"
-	else if( type == 3 )
-		full_message += "<span class='warning'>"
 
 	if( message )
 		full_message += message
 
-	if( type ) // if we had a header, better close it
+	if( type > 0 ) // if we had a header, better close it
 		full_message += "</span>"
 
 	if( big )
 		full_message += "/<big>"
 
-	for( var/occupant in occupants )
-		occupants[occupant] << full_message
+	for( var/chair in occupants )
+		var/mob/occupant = occupants[chair]
+		if( occupant )
+			occupant << full_message
 
 
 /obj/spacepod/MouseDrop_T(mob/M as mob, mob/user as mob)
@@ -631,23 +584,35 @@
 		occupants["pilot"] << "<span class='warning'>You are not close to any pod doors.</span>"
 		return
 
+/obj/spacepod/verb/autopilot()
+	if( equipment_system.autopilot )
+		if( src.occupants["pilot"] == usr )
+			set name = "Activate Autopilot"
+			set category = "Spacepod"
+			set src = usr.loc
+
+			equipment_system.autopilot.prompt()
+
+
 /obj/spacepod/verb/fireWeapon()
-	if(!CheckIfOccupant(usr))
-		set name = "Fire Pod Weapons"
-		set desc = "Fire the weapons."
-		set category = "Spacepod"
-		set src = usr.loc
-		if( equipment_system )
-			if( equipment_system.weapon_system )
-				equipment_system.weapon_system.fire_weapons()
-			else
-				occupants_announce( "ERROR: This pod does not have any active weapon systems.", 2 )
+	if( equipment_system.weapon_system )
+		if( src.occupants["pilot"] == usr )
+			set name = "Fire Pod Weapons"
+			set desc = "Fire the weapons."
+			set category = "Spacepod"
+			set src = usr.loc
+			if( equipment_system )
+				if( equipment_system.weapon_system )
+					equipment_system.weapon_system.fire_weapons()
+				else
+					occupants_announce( "ERROR: This pod does not have any active weapon systems.", 2 )
 
 obj/spacepod/verb/toggleLights()
-	set name = "Toggle Lights"
-	set category = "Spacepod"
-	set src = usr.loc
-	if(!CheckIfOccupant(usr))
+	if( src.occupants["pilot"] == usr )
+		set name = "Toggle Lights"
+		set category = "Spacepod"
+		set src = usr.loc
+
 		lightsToggle()
 
 /obj/spacepod/verb/use_warp_beacon()
@@ -724,14 +689,15 @@ obj/spacepod/verb/toggleLights()
 		return
 
 /obj/spacepod/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	if( istype( get_turf( src ), /turf/space/bluespace ))// no moving in bluespace
-		return
+	//if( istype( get_turf( src ), /turf/space/bluespace ))// no moving in bluespace
+	//	return
 
 	if( move_tick < ticks_per_move )
 		move_tick++
 		return
 
-	move_tick  = 0
+	move_tick = 0
+
 
 	if( equipment_system.engine_system )
 		if( !equipment_system.engine_system.cycle() )
@@ -757,9 +723,8 @@ obj/spacepod/verb/toggleLights()
 	return 1
 
 /obj/spacepod/relaymove(mob/user, direction)
-	if(!CheckIfOccupant(user))
+	if( src.occupants["pilot"] == usr )
 		handlerelaymove(user, direction)
-
 	else
 		return
 
@@ -803,14 +768,6 @@ obj/spacepod/verb/toggleLights()
 			user << "<span class='warning'>Unknown error has occurred, yell at pomf.</span>"
 		return 0
 	battery.charge = max(0, battery.charge - 3)
-
-/obj/spacepod/proc/CheckIfOccupant(mob/user)
-	for( var/occupant in occupants )
-		if( occupants[occupant] == user )
-			return 1
-
-	return 0
-
 
 /obj/effect/landmark/spacepod/random
 	name = "spacepod spawner"
@@ -886,13 +843,52 @@ obj/spacepod/verb/toggleLights()
 
 		usr << "<span class='notice'>You are currently located in Sector [SYSTEM_DESIGNATION]-[sector.x]-[sector.y]</span>"
 
-#undef JALOPY
-#undef COMMAND
-#undef SECURITY
-#undef ENGINEERING
-#undef SCIENCE
-#undef CARGO
-#undef SYNDICATE
+/obj/spacepod/command
+	name = "\improper command spacepod"
+	desc = "A sleek command space pod."
+	icon_state = "pod_com"
+
+/obj/spacepod/command/New()
+	..()
+	equipment_system.equip( new /obj/item/pod_parts/armor/command )
+
+/obj/spacepod/command/complete/New()
+	..()
+	equipment_system.equip( new battery_type )
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine )
+
+/obj/spacepod/security
+	name = "\improper security spacepod"
+	desc = "An armed security spacepod with reinforced armor plating."
+	icon_state = "pod_sec"
+
+/obj/spacepod/security/New()
+	..()
+	equipment_system.equip( new /obj/item/pod_parts/armor/security )
+
+/obj/spacepod/security/complete/New()
+	..()
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine )
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/shield )
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/weaponry/taser )
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/misc/tracker )
+
+	equipment_system.misc_system.enabled = 1
+	return
+
+/obj/spacepod/dev/New()
+	..()
+	equipment_system.max_size = 1000
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine )
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/weaponry/taser )
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/weaponry/burst_taser )
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/weaponry/laser )
+	equipment_system.equip( new /obj/item/pod_parts/armor/security )
+	equipment_system.equip( new /obj/item/weapon/cell/super )
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/shield )
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/misc/tracker )
+	equipment_system.misc_system.enabled = 1
+	return
 
 #undef DAMAGE
 #undef FIRE

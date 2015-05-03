@@ -113,6 +113,10 @@ var/list/ghostteleportlocs = list()
 
 /area/space/partyalert()
 	return
+
+/area/space/bluespace
+	name = "\improper Bluespace"
+
 /area/engine/
 	ambience = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
 /area/turret_protected/

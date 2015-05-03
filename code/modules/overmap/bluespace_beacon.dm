@@ -162,7 +162,7 @@ var/global/list/bluespace_beacons = list()
 	else
 		return 0
 
-/obj/machinery/computer/gate_beacon_console/proc/gate_prompt( var/user = usr )
+/obj/machinery/computer/gate_beacon_console/proc/gate_prompt( var/mob/user = usr )
 	if( !beacon )
 		if( !find_beacon() )
 			ping("[src] states, \"ERROR: Cannot find nearby bluespace beacon!\"")

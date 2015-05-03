@@ -265,7 +265,7 @@
 
 /obj/machinery/light/update_icon()
 	if( src.dir == 1 )
-		var/turf/T = get_step( src, src.dir )
+		var/turf/T = get_step( src, turn(src.dir, 180))
 		if( istype( T, /turf/simulated/wall ))
 			src.pixel_y = 19
 
