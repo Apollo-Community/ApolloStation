@@ -780,48 +780,50 @@ obj/spacepod/verb/toggleLights()
 	..()
 
 /obj/spacepod/verb/fly_up()
-	set category = "Spacepod"
-	set name = "Fly Upwards"
-	set src = usr.loc
+	if( src.occupants["pilot"] == usr )
+		set category = "Spacepod"
+		set name = "Fly Upwards"
+		set src = usr.loc
 
-	var/turf/ground = get_turf( src )
-	if( !istype( ground.loc, /area/space ))
-		occupants["pilot"] << "<span class='warning'>\The ceiling is in the way!</span>"
+		var/turf/ground = get_turf( src )
+		if( !istype( ground.loc, /area/space ))
+			occupants["pilot"] << "<span class='warning'>\The ceiling is in the way!</span>"
 
-	var/turf/controllerlocation = locate(1, 1, z)
-	for(var/obj/effect/landmark/zcontroller/controller in controllerlocation)
-		if(controller.up)
-			var/turf/upwards = locate(src.x, src.y, controller.up_target)
+		var/turf/controllerlocation = locate(1, 1, z)
+		for(var/obj/effect/landmark/zcontroller/controller in controllerlocation)
+			if(controller.up)
+				var/turf/upwards = locate(src.x, src.y, controller.up_target)
 
-			if( !upwards.density )
-				src.loc = upwards
-				occupants["pilot"] << "You cruise upwards."
+				if( !upwards.density )
+					src.loc = upwards
+					occupants["pilot"] << "You cruise upwards."
+				else
+					occupants["pilot"] << "<span class='warning'>There is a [upwards] in the way!</span>"
 			else
-				occupants["pilot"] << "<span class='warning'>There is a [upwards] in the way!</span>"
-		else
-			occupants["pilot"] << "<span class='warning'>There's nothing of interest above you!</span>"
+				occupants["pilot"] << "<span class='warning'>There's nothing of interest above you!</span>"
 
 /obj/spacepod/verb/fly_down()
-	set category = "Spacepod"
-	set name = "Fly Downwards"
-	set src = usr.loc
+	if( src.occupants["pilot"] == usr )
+		set category = "Spacepod"
+		set name = "Fly Downwards"
+		set src = usr.loc
 
-	var/turf/ground = get_turf( src )
-	if( !istype( ground, /turf/space ) && !istype( ground,/turf/simulated/floor/open ))
-		occupants["pilot"] << "<span class='warning'>\The [ground] is in the way!</span>"
+		var/turf/ground = get_turf( src )
+		if( !istype( ground, /turf/space ) && !istype( ground,/turf/simulated/floor/open ))
+			occupants["pilot"] << "<span class='warning'>\The [ground] is in the way!</span>"
 
-	var/turf/controllerlocation = locate(1, 1, z)
-	for(var/obj/effect/landmark/zcontroller/controller in controllerlocation)
-		if(controller.down)
-			var/turf/below = locate(src.x, src.y, controller.down_target)
+		var/turf/controllerlocation = locate(1, 1, z)
+		for(var/obj/effect/landmark/zcontroller/controller in controllerlocation)
+			if(controller.down)
+				var/turf/below = locate(src.x, src.y, controller.down_target)
 
-			if( !below.density )
-				src.loc = below
-				occupants["pilot"] << "You cruise downwards."
+				if( !below.density )
+					src.loc = below
+					occupants["pilot"] << "You cruise downwards."
+				else
+					occupants["pilot"] << "<span class='warning'>There is a [below] in the way!</span>"
 			else
-				occupants["pilot"] << "<span class='warning'>There is a [below] in the way!</span>"
-		else
-			occupants["pilot"] << "<span class='warning'>There's nothing of interest below you!!</span>"
+				occupants["pilot"] << "<span class='warning'>There's nothing of interest below you!!</span>"
 
 /obj/spacepod/verb/sector_locate()
 	set category = "Spacepod"
@@ -842,6 +844,20 @@ obj/spacepod/verb/toggleLights()
 			return
 
 		usr << "<span class='notice'>You are currently located in Sector [SYSTEM_DESIGNATION]-[sector.x]-[sector.y]</span>"
+
+/obj/spacepod/verb/switch_weapon()
+	if( src.occupants["pilot"] == usr )
+		if( equipment_system.weapon_system )
+			set category = "Spacepod"
+			set name = "Switch Weapon System"
+			set src = usr.loc
+
+			var/list/weapons = list()
+			for( var/weapon in equipment_system )
+				if( istype( weapon, /obj/item/device/spacepod_equipment/weaponry ))
+					weapons.Add( weapon )
+			var/selected = equipment_system.weapon_system
+			selected = input( usr, "Select your preferred weapon system.", "Select Weapon System", selected ) in weapons
 
 /obj/spacepod/command
 	name = "\improper command spacepod"
@@ -879,7 +895,7 @@ obj/spacepod/verb/toggleLights()
 /obj/spacepod/dev/New()
 	..()
 	equipment_system.max_size = 1000
-	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine )
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine/magic )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/weaponry/taser )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/weaponry/burst_taser )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/weaponry/laser )

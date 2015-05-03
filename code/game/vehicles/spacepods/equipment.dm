@@ -63,6 +63,7 @@
 	var/obj/item/device/spacepod_equipment/shield/shield_system // shielding system
 	var/obj/item/weapon/cell/battery // the battery, durh
 	var/obj/item/pod_parts/armor/armor // what kind of armor it has
+	var/obj/item/device/spacepod_equipment/misc/autopilot/autopilot // the autopilot
 
 /datum/spacepod/equipment/New(var/obj/spacepod/SP, max_size)
 	..()
@@ -104,8 +105,6 @@
 /datum/spacepod/equipment/proc/assign_system(var/obj/item/equipment)
 	if(istype( equipment, /obj/item/device/spacepod_equipment/weaponry )) // Assigning the weapon system
 		weapon_system = equipment
-	else if(istype( equipment, /obj/item/device/spacepod_equipment/misc )) // Assigning misc systems
-		misc_system = equipment
 	else if(istype( equipment, /obj/item/device/spacepod_equipment/engine )) // Assigning the engine system
 		if( engine_system )
 			return 0
@@ -114,7 +113,13 @@
 		if( shield_system )
 			return 0
 		shield_system = equipment
-	else if(istype( equipment, /obj/item/weapon/cell )) // Assigning the battery
+	else if(istype( equipment, /obj/item/device/spacepod_equipment/misc/autopilot )) // Assigning the shield system
+		if( autopilot )
+			return 0
+		autopilot = equipment
+	else if( istype( equipment, /obj/item/device/spacepod_equipment/misc )) // Assigning misc systems
+		misc_system = equipment
+	else if( istype( equipment, /obj/item/weapon/cell )) // Assigning the battery
 		if( battery )
 			return 0
 		battery = equipment
@@ -134,7 +139,7 @@
 
 	if( istype( equipment, /obj/item/device/spacepod_equipment ))
 		var/obj/item/device/spacepod_equipment/equipped = equipment
-		equipped.my_atom = my_atom
+		equipped.assign(src.my_atom)
 
 	return 1
 
@@ -148,6 +153,8 @@
 		engine_system = null
 	else if( equipment == shield_system ) // Assigning the shield system
 		shield_system = null
+	else if( equipment == autopilot ) // Assigning the battery
+		autopilot = null
 	else if( equipment == battery ) // Assigning the battery
 		battery = null
 	else if( equipment == armor )
@@ -159,7 +166,7 @@
 
 	if( istype( equipment, /obj/item/device/spacepod_equipment ))
 		var/obj/item/device/spacepod_equipment/equipped = equipment
-		equipped.my_atom = null
+		equipped.deassign()
 
 	return 1
 
@@ -173,11 +180,17 @@
 /obj/item/device/spacepod_equipment
 	name = "equipment"
 	icon = 'icons/pods/pod_parts.dmi'
-	var/obj/spacepod/my_atom
+	var/obj/spacepod/my_atom = null
 	var/manufacturer = "NanoTrasen" // purely a fluff detail
 
 /obj/item/device/spacepod_equipment/proc/check() // checks the status of a piece of equipment
 	return 1
+
+/obj/item/device/spacepod_equipment/proc/assign(var/obj/spacepod/atom)
+	src.my_atom = atom
+
+/obj/item/device/spacepod_equipment/proc/deassign()
+	src.my_atom = null
 
 /obj/item/device/spacepod_equipment/weaponry
 	name = "pod weapon"
@@ -274,12 +287,24 @@
 	..()
 
 /obj/item/device/spacepod_equipment/engine/process()
-	var/temp_fire = my_atom.is_on_fire()
-	if( fire && temp_fire ) // If we agree that we're on fire, light em up
-		fuel_tank.add_thermal_energy( fire_heat )
-	else if( fire != temp_fire ) // If we don't, then we need to work through this, together
-		fire = temp_fire
-		my_atom.update_icons()
+	if( my_atom )
+		var/temp_fire = fire
+		if( my_atom.fire_hazard() )
+			if( prob( 10 )) // if the pod is damage enough, there is a chance of fire
+				fire = 1
+		if( fire )
+			if( prob( 2 )) // Fires have a small chance of putting themselves out
+				fire = 0
+			else
+				fire = 1
+		if( fuel_tank.temperature >= max_temp )
+			fire = 1
+
+		if( fire != temp_fire )
+			my_atom.update_icons()
+
+		if( fire ) // If we agree that we're on fire, light em up
+			fuel_tank.add_thermal_energy( fire_heat )
 
 	fuel_tank.add_thermal_energy( -heat_rad_rate )
 
@@ -302,13 +327,16 @@
 			if( my_atom.equipment_system.battery ) // charge the battery if we have one
 				my_atom.equipment_system.battery.give( charge_rate )
 
+			/*
 			if( fuel_tank.gas["oxygen"] > 0 )
 				fuel_tank.adjust_gas( "oxygen", -burn_rate/2) // burn up oxygen at half rate 4noraisin
 				fuel_tank.add_thermal_energy(heat_rate*10) // putting oxygen in this baby is bad news
 
 				if( my_atom.equipment_system.battery ) // but hey, we'll charge the battery even faster
 					my_atom.equipment_system.battery.give( charge_rate*2 )
+			*/
 		else
+			my_atom.occupants_announce( "ERROR: No phoron left in the fuel tank!", 2 )
 			return 0
 
 	return 1
@@ -325,7 +353,134 @@
 /obj/item/device/spacepod_equipment/engine/proc/get_temp()
 	return fuel_tank.temperature
 
+/obj/item/device/spacepod_equipment/engine/magic
+	use_fuel = 0
+
 /obj/item/device/spacepod_equipment/shield
 	name = "\improper spacepod shield system"
 	desc = "For particularily rainy days."
 	icon_state = "shield"
+
+/obj/item/device/spacepod_equipment/misc/autopilot
+	name = "\improper spacepod autopilot system"
+	desc = "Used to automatically pilot the shuttle to known locations."
+	icon_state = "pod_locator"
+	var/piloting = 0 // Are we currently on autopilot?
+	var/obj/machinery/gate_beacon/destination = null
+	var/list/path = null
+	var/list/local_path = null
+	var/obj/effect/map/sector = null // The current sector
+
+/obj/item/device/spacepod_equipment/misc/autopilot/Del()
+	if( processing_objects[src] )
+		processing_objects.Remove( src )
+
+	..()
+
+/obj/item/device/spacepod_equipment/misc/autopilot/process()
+	if( piloting )
+		if( path ) // If we have our map acrossed the sectors, do our stuff
+			if( sector != map_sectors["[my_atom.z]"] ) // If we're in a new sector
+				testing( "[my_atom] entered a new sector" )
+				sector = map_sectors["[my_atom.z]"]
+				path.Remove( sector ) // Removing the current sector from the list of destinations
+				get_local_path( get_end() )
+
+			if( local_path ) // If we have a local path across the sector, do your magic
+				if( local_path.len > 1 ) // Local path len will only fall to this low if we actually reach the end
+					local_path.Remove( my_atom.loc )
+					my_atom.Move( local_path[1] )
+				else // If we arrived
+					testing( "[my_atom] arrived at destination [destination]" )
+					quit_pilot()
+			else // If not, we need to make one
+				testing( "Making new local path" )
+				get_local_path( get_end() )
+
+		else // Otherwise, we need one asap
+			get_path()
+	else
+		testing( "process() quit piloting" )
+		quit_pilot()
+		processing_objects.Remove( src )
+
+/obj/item/device/spacepod_equipment/misc/autopilot/proc/prompt( var/mob/user = usr )
+	testing( "Starting autopilot sequence" )
+	var/target = input( user, "Where would you like to fly to?", "Destination", null ) in bluespace_beacons
+	destination = bluespace_beacons[target]
+
+	if( destination )
+		get_path()
+
+		if( path )
+			testing( "Successfully found a path" )
+			spawn( 30 )
+				processing_objects.Add( src )
+		else
+			testing( "Could not find a path" )
+			my_atom.occupants_announce( "Could not plot a course to [target]!" )
+	else
+		my_atom.occupants_announce( "Autopilot aborted." )
+		testing( "Autopilot sequence aborted" )
+
+/obj/item/device/spacepod_equipment/misc/autopilot/proc/get_path()
+	testing( "Getting autopilot path" )
+	path = null
+	if( !destination )
+		testing( "No valid destination" )
+		quit_pilot()
+		return
+
+	sector = map_sectors["[my_atom.z]"] // getting our current sector
+	var/obj/effect/map/target = map_sectors["[destination.z]"] // getting our destination sector
+
+	if( !sector )
+		my_atom.occupants_announce( "Spacepod is not in a valid sector!" )
+		testing( "Could not find pod sector" )
+		quit_pilot()
+		return
+	if( !target )
+		my_atom.occupants_announce( "Destination is not a valid target!" )
+		testing( "Could not find destination sector" )
+		quit_pilot()
+		return
+
+	path = AStar(sector.loc, target.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, 15)
+
+/obj/item/device/spacepod_equipment/misc/autopilot/proc/get_end()
+	var/turf/start = get_turf(my_atom)
+	var/turf/end = null
+
+	if( path )
+		if( path.len > 0 )
+			testing( "Finding edge of next sector" )
+			var/obj/effect/map/next_sector = path[1]
+
+			switch( get_dir( sector, next_sector ))
+				if(NORTH)
+					end = locate( start.x, world.maxy, start.z )
+				if(SOUTH)
+					end = locate( start.x, 1, start.z )
+				if(EAST)
+					end = locate( world.maxx, start.y, start.z )
+				if(WEST)
+					end = locate( 1, start.y, start.z )
+		else
+			testing( "Finding destination" )
+			end = destination.loc
+	else
+		testing( "end_turf() called with no path" )
+
+	return end
+
+/obj/item/device/spacepod_equipment/misc/autopilot/proc/get_local_path( var/turf/end )
+	testing( "Finding local path" )
+	local_path = null
+	local_path = AStar(my_atom.loc, end, /turf/proc/AdjacentTurfs, /turf/proc/Distance, 15)
+
+/obj/item/device/spacepod_equipment/misc/autopilot/proc/quit_pilot()
+	testing( "Quitting autopilot sequence" )
+	piloting = 0
+	path = null
+	local_path = null
+	destination = null
