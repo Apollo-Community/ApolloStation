@@ -367,6 +367,7 @@
 			if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
 				L.Add(t)
 	return L
+
 /turf/proc/Distance(turf/t)
 	if(get_dist(src,t) == 1)
 		var/cost = (src.x - t.x) * (src.x - t.x) + (src.y - t.y) * (src.y - t.y)
@@ -374,6 +375,7 @@
 		return cost
 	else
 		return get_dist(src,t)
+
 /turf/proc/AdjacentTurfsSpace()
 	var/L[] = new()
 	for(var/turf/t in oview(src,1))

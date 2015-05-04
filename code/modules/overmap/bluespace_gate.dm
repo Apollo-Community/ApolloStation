@@ -50,21 +50,18 @@
 	var/y_off = source.y-A.y
 
 	var/turf/bluespace = locate( rand( OVERMAP_EDGE, world.maxx-OVERMAP_EDGE ), rand( OVERMAP_EDGE, world.maxy-OVERMAP_EDGE ), BLUESPACE_LEVEL )
-	var/turf/initial = A.loc
 	var/turf/destination
 
 	// Getting the amount of time that the object will spend in bluespace
 	var/transit_time = rand( 30, 80 )
 
-	// Getting the destination
-	if( exit )
+	if( exit ) // Getting the destination
 		destination = locate( exit.x-x_off, exit.y-y_off, exit.z ) // Getting the destination relative to where the object left
-	else
+	else // If we don't have a destination, toss them somewhere random
 		destination = locate( source.x+pick( rand( -10, source.x-2 ), rand( source.x+2, 10 )), source.y+pick( rand( -10, source.y-2 ), rand( source.y+2, 10 )), source.z )
 
-
 	// Transporting turfs
-	if( istype( A, /turf/simulated ))
+	if( istype( A, /turf/simulated ) && !istype( A, /turf/simulated/floor/bspace_safe ))
 		var/type = A.type
 		var/turf/simulated/transmit = A
 		transmit.ChangeTurf(/turf/space)
@@ -76,14 +73,14 @@
 		return
 
 	var/atom/movable/AM = A
-	testing( "Warping [AM] into bluespace from ([AM.x], [AM.y], [AM.z]). Expected arrival is ([destination.x], [destination.y], [destination.z])." )
+	//testing( "Warping [AM] into bluespace from ([AM.x], [AM.y], [AM.z]). Expected arrival is ([destination.x], [destination.y], [destination.z])." )
 
 	AM.loc = bluespace
 
 	spawn( transit_time )
-		if( destination.z == initial.z )
+		if( !exit )
 			if( istype( AM, /mob ))
 				var/mob/M = AM
-				M << "\red You feel that something went wrong."
+				M << "\red You feel that something went very wrong."
 
 		AM.loc = destination

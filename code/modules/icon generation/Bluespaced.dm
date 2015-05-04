@@ -230,8 +230,6 @@
 
 	return result
 
-
-
 /atom/verb/test()
 	set src in view()
 	src.icon = generate_bluespace_icon(src.icon, src.icon_state)

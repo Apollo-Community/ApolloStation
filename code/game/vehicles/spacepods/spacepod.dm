@@ -5,6 +5,7 @@
 	name = "\improper space pod"
 	desc = "A space pod meant for space travel. This one looks rather bare."
 	icon = 'icons/48x48/pods.dmi'
+	icon_state = "pod"
 	density = 1 //Dense. To raise the heat.
 	opacity = 0
 	anchored = 1
@@ -689,8 +690,8 @@ obj/spacepod/verb/toggleLights()
 		return
 
 /obj/spacepod/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	//if( istype( get_turf( src ), /turf/space/bluespace ))// no moving in bluespace
-	//	return
+	if( istype( get_turf( src ), /turf/space/bluespace )) // no moving in bluespace
+		return
 
 	if( move_tick < ticks_per_move )
 		move_tick++
@@ -698,10 +699,11 @@ obj/spacepod/verb/toggleLights()
 
 	move_tick = 0
 
-
 	if( equipment_system.engine_system )
 		if( !equipment_system.engine_system.cycle() )
 			return
+	else
+		return
 
 	..()
 
@@ -731,6 +733,10 @@ obj/spacepod/verb/toggleLights()
 /obj/spacepod/proc/handlerelaymove(mob/user, direction)
 	var/moveship = 1
 	var/obj/item/weapon/cell/battery = equipment_system.battery
+
+	if( !battery )
+		user << "<span class='warning'>No energy cell detected.</span>"
+		return
 
 	if(health && empcounter == 0)
 		src.dir = direction

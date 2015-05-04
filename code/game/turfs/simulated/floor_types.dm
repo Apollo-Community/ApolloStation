@@ -100,6 +100,18 @@
 	nitrogen = 0
 	temperature = TCMB
 
+/turf/simulated/floor/bspace_safe
+	name = "phoron-reinforced floor"
+	icon_state = "bproof"
+	thermal_conductivity = 0.025
+	heat_capacity = 500000
+	l_color = "#0F0026"
+	intact = 0
+
+	New()
+		. = ..()
+		SetLuminosity( 2 )
+
 /turf/simulated/floor/plating
 	name = "plating"
 	icon_state = "plating"
@@ -127,6 +139,10 @@
 		..()
 		icon_state += rand( 1, 16 )
 		name = "space"
+
+	Del()
+		..()
+		ChangeTurf( /turf/space )
 
 /turf/simulated/floor/bluegrid
 	icon = 'icons/turf/floors.dmi'

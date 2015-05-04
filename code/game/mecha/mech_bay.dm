@@ -109,7 +109,6 @@
 	else
 		return 0
 
-
 /datum/global_iterator/mech_bay_recharger
 	delay = 20
 	var/max_charge = 45
