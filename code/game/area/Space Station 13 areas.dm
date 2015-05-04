@@ -13,7 +13,33 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 */
 
-
+// Environment types
+#define GENERIC 0
+#define PADDED_CELL 1
+#define ROOM 2
+#define BATHROOM 3
+#define LIVINGROOM 4
+#define STONEROOM 5
+#define AUDITORIUM 6
+#define CONCERT_HALL 7
+#define CAVE 8
+#define ARENA 9
+#define HANGAR 10
+#define CARPETTED_HALLWAY 11
+#define HALLWAY 12
+#define STONE_CORRIDOR 13
+#define ALLEY 14
+#define FOREST 15
+#define CITY 16
+#define MOUNTAINS 17
+#define QUARRY 18
+#define PLAIN 19
+#define PARKING_LOT 20
+#define SEWER_PIPE 21
+#define UNDERWATER 22
+#define DRUGGED 23
+#define DIZZY 24
+#define PSYCHOTIC 25
 
 /area
 	var/fire = null
@@ -44,6 +70,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/used_equip = 0
 	var/used_light = 0
 	var/used_environ = 0
+
+	var/environment = ROOM
 
 	var/has_gravity = 1
 	var/list/apc = list()
@@ -104,6 +132,7 @@ var/list/ghostteleportlocs = list()
 	power_equip = 0
 	power_environ = 0
 	ambience = list('sound/ambience/ambispace.ogg','sound/ambience/ambispace1.ogg')
+	environment = PLAIN
 
 /area/space/firealert()
 	return
@@ -116,6 +145,7 @@ var/list/ghostteleportlocs = list()
 
 /area/space/bluespace
 	name = "\improper Bluespace"
+	environment = UNDERWATER
 
 /area/engine/
 	ambience = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
@@ -146,6 +176,10 @@ var/list/ghostteleportlocs = list()
 /area/podbay
 	name = "\improper Podbay"
 	icon_state = "yellow"
+	environment = SEWER_PIPE
+
+/area/shuttle
+	environment = CAVE
 
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
@@ -555,6 +589,7 @@ var/list/ghostteleportlocs = list()
 /area/prison
 	name = "\improper Prison Station"
 	icon_state = "brig"
+	environment = HALLWAY
 
 /area/prison/arrival_airlock
 	name = "\improper Prison Station Airlock"
@@ -576,6 +611,7 @@ var/list/ghostteleportlocs = list()
 /area/prison/closet
 	name = "\improper Prison Supply Closet"
 	icon_state = "dk_yellow"
+	environment = ROOM
 
 /area/prison/hallway/fore
 	name = "\improper Prison Fore Hallway"
@@ -641,13 +677,15 @@ var/list/ghostteleportlocs = list()
 //STATION13
 
 /area/atmos
- 	name = "Atmospherics"
- 	icon_state = "atmos"
+	name = "Atmospherics"
+	icon_state = "atmos"
+	environment = CONCERT_HALL
 
 //Maintenance
 
 /area/maintenance
 	rad_shielded = 1
+	environment = STONEROOM
 
 /area/maintenance/aft
 	name = "Aft Maintenance"
@@ -790,6 +828,7 @@ var/list/ghostteleportlocs = list()
 /area/maintenance/substation
 	name = "Substation"
 	icon_state = "substation"
+	environment = ALLEY
 
 /area/maintenance/substation/engineering // Probably will be connected to engineering SMES room, as wires cannot be crossed properly without them sharing powernets.
 	name = "Engineering Substation"
@@ -821,9 +860,13 @@ var/list/ghostteleportlocs = list()
 
 //Hallway
 
+/area/hallway/
+	environment = HALLWAY
+
 /area/hallway/primary/fore
 	name = "\improper Fore Primary Hallway"
 	icon_state = "hallF"
+
 
 /area/hallway/primary/starboard
 	name = "\improper Starboard Primary Hallway"
@@ -879,11 +922,13 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Bridge"
 	icon_state = "bridge"
 	music = "signal"
+	environment = STONEROOM
 
 /area/bridge/meeting_room
 	name = "\improper Heads of Staff Meeting Room"
 	icon_state = "bridge"
 	music = null
+	environment = ROOM
 
 /area/crew_quarters/captain
 	name = "\improper Captain's Office"
@@ -931,10 +976,12 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Dormitories"
 	icon_state = "Sleep"
 	rad_shielded = 1
+	environment = QUARRY
 
 /area/crew_quarters/toilet
 	name = "\improper Dormitory Toilets"
 	icon_state = "toilet"
+	environment = BATHROOM
 
 /area/crew_quarters/sleep
 	name = "\improper Dormitories"
@@ -943,6 +990,7 @@ var/list/ghostteleportlocs = list()
 /area/crew_quarters/sleep/engi_wash
 	name = "\improper Engineering Washroom"
 	icon_state = "toilet"
+	environment = BATHROOM
 
 /area/crew_quarters/sleep/bedrooms
 	name = "\improper Dormitory Bedroom One"
@@ -959,6 +1007,7 @@ var/list/ghostteleportlocs = list()
 /area/crew_quarters/sleep_male/toilet_male
 	name = "\improper Male Toilets"
 	icon_state = "toilet"
+	environment = BATHROOM
 
 /area/crew_quarters/sleep_female
 	name = "\improper Female Dorm"
@@ -967,6 +1016,7 @@ var/list/ghostteleportlocs = list()
 /area/crew_quarters/sleep_female/toilet_female
 	name = "\improper Female Toilets"
 	icon_state = "toilet"
+	environment = BATHROOM
 
 /area/crew_quarters/locker
 	name = "\improper Locker Room"
@@ -983,6 +1033,7 @@ var/list/ghostteleportlocs = list()
 /area/crew_quarters/cafeteria
 	name = "\improper Cafeteria"
 	icon_state = "cafeteria"
+	environment = QUARRY
 
 /area/crew_quarters/kitchen
 	name = "\improper Kitchen"
@@ -991,6 +1042,7 @@ var/list/ghostteleportlocs = list()
 /area/crew_quarters/bar
 	name = "\improper Bar"
 	icon_state = "bar"
+	environment = QUARRY
 
 /area/crew_quarters/commodationhall
 	name = "\improper Commodation Hall"
@@ -1003,40 +1055,49 @@ var/list/ghostteleportlocs = list()
 /area/crew_quarters/dancefloor
 	name = "\improper Dance Floor"
 	icon_state = "bar"
+	environment = PARKING_LOT
 
 /area/crew_quarters/theatre
 	name = "\improper Theatre"
 	icon_state = "Theatre"
 	ambience = list( 'sound/ambience/ambitheatre1.ogg' )
+	environment = AUDITORIUM
 
 /area/crew_quarters/theatre/backstage
 	name = "\improper Theatre Back Stage"
 	icon_state = "Theatre"
+	environment = HALLWAY
 
 /area/crew_quarters/theatre/changingroom
 	name = "\improper Theatre Changing Room"
 	icon_state = "Theatre"
+	environment = QUARRY
 
 /area/crew_quarters/theatre/office
 	name = "\improper Entertainer's Office"
 	icon_state = "Theatre"
+	environment = QUARRY
 
 /area/library
- 	name = "\improper Library"
- 	icon_state = "library"
+	name = "\improper Library"
+	icon_state = "library"
+	environment = QUARRY
 
 /area/chapel/main
 	name = "\improper Chapel"
 	icon_state = "chapel"
 	ambience = list('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg','sound/music/traitor.ogg')
+	environment = MOUNTAINS
 
 /area/chapel/office
 	name = "\improper Chapel Office"
 	icon_state = "chapeloffice"
+	environment = QUARRY
 
 /area/lawoffice
 	name = "\improper Internal Affairs"
 	icon_state = "law"
+	environment = QUARRY
 
 /area/holodeck
 	name = "\improper Holodeck"
@@ -1046,7 +1107,6 @@ var/list/ghostteleportlocs = list()
 
 /area/holodeck/alphadeck
 	name = "\improper Holodeck Alpha"
-
 
 /area/holodeck/source_plating
 	name = "\improper Holodeck - Off"
@@ -1097,6 +1157,7 @@ var/list/ghostteleportlocs = list()
 //Engineering
 
 /area/engine
+	environment = SEWER_PIPE
 
 	drone_fabrication
 		name = "\improper Drone Fabrication"
@@ -1146,22 +1207,27 @@ var/list/ghostteleportlocs = list()
 	break_room
 		name = "\improper Engineering Break Room"
 		icon_state = "engine"
+		environment = QUARRY
 
 	hallway
 		name = "\improper Engineering Hallway"
 		icon_state = "engine_hallway"
+		environment = HALLWAY
 
 	engine_hallway
 		name = "\improper Engine Room Hallway"
 		icon_state = "engine_hallway"
+		environment = HALLWAY
 
 	engine_eva
 		name = "\improper Engine EVA"
 		icon_state = "engine_eva"
+		environment = QUARRY
 
 	engine_eva_maintenance
 		name = "\improper Engine EVA Maintenance"
 		icon_state = "engine_eva"
+		environment = STONE_CORRIDOR
 
 	workshop
 		name = "\improper Engineering Workshop"
@@ -1170,7 +1236,7 @@ var/list/ghostteleportlocs = list()
 	locker_room
 		name = "\improper Engineering Locker Room"
 		icon_state = "engine_storage"
-
+		environment = QUARRY
 
 //Solars
 
@@ -1179,6 +1245,7 @@ var/list/ghostteleportlocs = list()
 	always_unpowered = 1
 	luminosity = 1
 	lighting_use_dynamic = 0
+	environment = PLAIN
 
 	auxport
 		name = "\improper Fore Port Solar Array"
@@ -1227,6 +1294,7 @@ var/list/ghostteleportlocs = list()
 /area/assembly/chargebay
 	name = "\improper Mech Bay"
 	icon_state = "mechbay"
+	environment = QUARRY
 
 /area/assembly/showroom
 	name = "\improper Robotics Showroom"
@@ -1235,6 +1303,7 @@ var/list/ghostteleportlocs = list()
 /area/assembly/robotics
 	name = "\improper Robotics Lab"
 	icon_state = "robotics"
+	environment = QUARRY
 
 /area/assembly/assembly_line //Derelict Assembly Line
 	name = "\improper Assembly Line"
@@ -1249,20 +1318,25 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Teleporter"
 	icon_state = "teleporter"
 	music = "signal"
+	environment = QUARRY
 
 /area/gateway
 	name = "\improper Gateway"
 	icon_state = "teleporter"
 	music = "signal"
+	environment = QUARRY
 
 /area/AIsattele
 	name = "\improper AI Satellite Teleporter Room"
 	icon_state = "teleporter"
 	music = "signal"
 	ambience = list('sound/ambience/ambimalf.ogg')
-
+	environment = QUARRY
 
 //MedBay
+
+/area/medical
+	environment = HALLWAY
 
 /area/medical/medbay
 	name = "\improper Medbay Hallway - Port"
@@ -1404,6 +1478,9 @@ var/list/ghostteleportlocs = list()
 
 //Security
 
+/area/security
+	environment = HALLWAY
+
 /area/security/main
 	name = "\improper Security Office"
 	icon_state = "security"
@@ -1415,6 +1492,7 @@ var/list/ghostteleportlocs = list()
 /area/security/brig
 	name = "\improper Brig"
 	icon_state = "brig"
+	environment = SEWER_PIPE
 
 /area/security/prison
 	name = "\improper Prison Wing"
@@ -1423,23 +1501,27 @@ var/list/ghostteleportlocs = list()
 /area/security/warden
 	name = "\improper Warden"
 	icon_state = "Warden"
+	environment = QUARRY
 
 /area/security/armoury
 	name = "\improper Armory"
 	icon_state = "Warden"
+	environment = QUARRY
 
 /area/security/detectives_office
 	name = "\improper Detective's Office"
 	icon_state = "detective"
+	environment = QUARRY
 
 /area/security/range
 	name = "\improper Firing Range"
 	icon_state = "firingrange"
+	environment = HALLWAY
 
 /area/security/tactical
 	name = "\improper Tactical Equipment"
 	icon_state = "Tactical"
-
+	environment = QUARRY
 
 /*
 	New()
@@ -1461,6 +1543,7 @@ var/list/ghostteleportlocs = list()
 /area/security/nuke_storage
 	name = "\improper Vault"
 	icon_state = "nuke_storage"
+	environment = QUARRY
 
 /area/security/checkpoint
 	name = "\improper Security Checkpoint"
@@ -1489,14 +1572,17 @@ var/list/ghostteleportlocs = list()
 /area/security/vacantoffice
 	name = "\improper Vacant Office"
 	icon_state = "security"
+	environment = QUARRY
 
 /area/security/vacantoffice2
 	name = "\improper Vacant Office"
 	icon_state = "security"
+	environment = QUARRY
 
 /area/quartermaster
 	name = "\improper Quartermasters"
 	icon_state = "quart"
+	environment = QUARRY
 
 ///////////WORK IN PROGRESS//////////
 
@@ -1513,10 +1599,12 @@ var/list/ghostteleportlocs = list()
 /area/quartermaster/storage
 	name = "\improper Cargo Bay"
 	icon_state = "quartstorage"
+	environment = SEWER_PIPE
 
 /area/quartermaster/qm
 	name = "\improper Quartermaster's Office"
 	icon_state = "quart"
+	environment = QUARRY
 
 /area/quartermaster/miningdock
 	name = "\improper Mining Dock"
@@ -1537,16 +1625,22 @@ var/list/ghostteleportlocs = list()
 /area/hydroponics
 	name = "\improper Hydroponics"
 	icon_state = "hydro"
+	environment = CAVE
 
 /area/hydroponics/garden
 	name = "\improper Garden"
 	icon_state = "garden"
+	environment = CAVE
 
 /area/hydroponics/pasture
 	name = "\improper Pasture"
 	icon_state = "garden"
+	environment = CAVE
 
 //rnd (Research and Development
+/area/rnd
+	environment = HALLWAY
+
 /area/rnd/research
 	name = "\improper Research and Development"
 	icon_state = "research"
@@ -1600,6 +1694,9 @@ var/list/ghostteleportlocs = list()
 	icon_state = "server"
 
 //Storage
+
+/area/storage
+	environment = STONE_CORRIDOR
 
 /area/storage/tools
 	name = "Auxiliary Tool Storage"
@@ -1655,16 +1752,19 @@ var/list/ghostteleportlocs = list()
 /area/djstation
 	name = "\improper Engineering Outpost"
 	icon_state = "LP"
+	environment = HALLWAY
 
 /area/djstation/solars
 	name = "\improper Engineering Outpost Solars"
 	icon_state = "LPS"
+	environment = PLAIN
 
 //DERELICT
 
 /area/derelict
 	name = "\improper Derelict Station"
 	icon_state = "storage"
+	environment = PLAIN
 
 /area/derelict/hallway/primary
 	name = "\improper Derelict Primary Hallway"
@@ -1763,6 +1863,7 @@ var/list/ghostteleportlocs = list()
 /area/constructionsite
 	name = "\improper Construction Site"
 	icon_state = "storage"
+	environment = PLAIN
 
 /area/constructionsite/storage
 	name = "\improper Construction Site Storage Area"
@@ -1818,14 +1919,17 @@ var/list/ghostteleportlocs = list()
 /area/construction
 	name = "\improper Construction Area"
 	icon_state = "yellow"
+	environment = QUARRY
 
 /area/desubber
 	name = "\improper Phoron Descublimation Room"
 	icon_state = "yellow"
+	environment = QUARRY
 
 /area/expansionzone
 	name = "\improper Expansion Zone"
 	icon_state = "yellow"
+	environment = QUARRY
 
 /area/construction/supplyshuttle
 	name = "\improper Supply Shuttle"
@@ -1846,6 +1950,7 @@ var/list/ghostteleportlocs = list()
 /area/construction/solars
 	name = "\improper Solar Panels"
 	icon_state = "yellow"
+	environment = PLAIN
 
 /area/construction/solarscontrol
 	name = "\improper Solar Panel Control"
@@ -1860,10 +1965,12 @@ var/list/ghostteleportlocs = list()
 /area/ai_monitored/storage/eva
 	name = "EVA Storage"
 	icon_state = "eva"
+	environment = ALLEY
 
 /area/ai_monitored/storage/secure
 	name = "Secure Storage"
 	icon_state = "storage"
+	environment = ALLEY
 
 /area/ai_monitored/storage/emergency
 	name = "Emergency Storage"
@@ -1873,6 +1980,7 @@ var/list/ghostteleportlocs = list()
 	name = "\improper AI Upload Chamber"
 	icon_state = "ai_upload"
 	ambience = list('sound/ambience/ambimalf.ogg')
+	environment = ALLEY
 
 /area/turret_protected/ai_upload_foyer
 	name = "AI Upload Access"
@@ -1887,6 +1995,7 @@ var/list/ghostteleportlocs = list()
 	name = "\improper AI Chamber"
 	icon_state = "ai_chamber"
 	ambience = list('sound/ambience/ambimalf.ogg')
+	environment = ALLEY
 
 /area/turret_protected/ai_cyborg_station
 	name = "\improper Cyborg Station"
@@ -1895,6 +2004,7 @@ var/list/ghostteleportlocs = list()
 /area/turret_protected/aisat
 	name = "\improper AI Satellite"
 	icon_state = "ai"
+	environment = ALLEY
 
 /area/turret_protected/aisat_interior
 	name = "\improper AI Satellite"
@@ -1937,28 +2047,33 @@ var/list/ghostteleportlocs = list()
 /area/wreck/ai
 	name = "\improper AI Chamber"
 	icon_state = "ai"
+	environment = PLAIN
 
 /area/wreck/main
 	name = "\improper Wreck"
 	icon_state = "storage"
+	environment = PLAIN
 
 /area/wreck/engineering
 	name = "\improper Power Room"
 	icon_state = "engine"
+	environment = PLAIN
 
 /area/wreck/bridge
 	name = "\improper Bridge"
 	icon_state = "bridge"
+	environment = PLAIN
 
 /area/generic
 	name = "Unknown"
 	icon_state = "storage"
-
+	environment = QUARRY
 
 
 // Telecommunications Satellite
 /area/tcomms/
 	ambience = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
+	environment = QUARRY
 
 /area/tcomms/entrance
 	name = "\improper Telecomms Teleporter"
@@ -1986,6 +2101,7 @@ var/list/ghostteleportlocs = list()
 /area/laborcamp
 	name = "Labor Camp"
 	icon_state = "brig"
+	environment = QUARRY
 
 /area/laborcamp/cargohold
 	name = "\improper Cargohold"
@@ -2194,3 +2310,30 @@ var/list/the_station_areas = list (
 	/area/turret_protected/ai_upload_foyer,
 	/area/turret_protected/ai,
 )
+
+#undef GENERIC
+#undef PADDED_CELL
+#undef ROOM
+#undef BATHROOM
+#undef LIVINGROOM
+#undef STONEROOM
+#undef AUDITORIUM
+#undef CONCERT_HALL
+#undef CAVE
+#undef ARENA
+#undef HANGAR
+#undef CARPETTED_HALLWAY
+#undef HALLWAY
+#undef STONE_CORRIDOR
+#undef ALLEY
+#undef FOREST
+#undef CITY
+#undef MOUNTAINS
+#undef QUARRY
+#undef PLAIN
+#undef PARKING_LOT
+#undef SEWER_PIPE
+#undef UNDERWATER
+#undef DRUGGED
+#undef DIZZY
+#undef PSYCHOTIC

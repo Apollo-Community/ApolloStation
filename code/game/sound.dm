@@ -165,17 +165,13 @@ var/const/FALLOFF_SOUNDS = 0.5
 		if( istype( M.loc, /turf/space ))
 			return PLAIN
 
-		switch( M.loc.icon_state )
-			if( "plating" )
-				return STONEROOM
-			if( "padding" )
-				return PADDED_CELL
-			if( "grimy" )
-				return CARPETTED_HALLWAY
-			if( "wood" )
-				return QUARRY
-			else
-				return ALLEY
+	var/turf/T = get_turf( M )
+	if( T )
+		var/area/A = T.loc
+		if( A )
+			return A.environment
+
+	return ROOM
 
 // Checks if there is a wall between source and mob
 /proc/behind_wall( var/turf/source, var/mob/M )
