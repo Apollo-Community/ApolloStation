@@ -220,12 +220,8 @@
 			user << "\red The lock seems to be broken"
 			return
 		if(src.allowed(user))
-			if(active)
-				src.locked = !src.locked
-				user << "The controls are now [src.locked ? "locked." : "unlocked."]"
-			else
-				src.locked = 0 //just in case it somehow gets locked
-				user << "\red The controls can only be locked when the [src] is online"
+			src.locked = !src.locked
+			user << "The controls are now [src.locked ? "locked." : "unlocked."]"
 		else
 			user << "\red Access denied."
 		return
