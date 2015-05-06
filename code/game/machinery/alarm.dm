@@ -1159,7 +1159,8 @@ FIRE ALARM
 		return
 	var/area/A = src.loc
 	A = A.loc
-	if(!src.loc.fire)
+
+	if(!A.fire)
 		src.alarm()
 	else
 		src.reset()
