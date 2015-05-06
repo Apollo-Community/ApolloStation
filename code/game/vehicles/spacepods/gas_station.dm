@@ -9,35 +9,23 @@
 	var/datum/global_iterator/refueling_floor/hose
 
 /turf/simulated/floor/bspace_safe/refueling_floor/New()
-	processing_objects.Add( src )
-
-	hose = new /datum/global_iterator/refueling_floor( null, 0 )
-
 	..()
+
+	processing_objects.Add( src )
+	spawn( 30 )
+		init_devices()
+		hose = new /datum/global_iterator/refueling_floor( list( src ))
 
 /turf/simulated/floor/bspace_safe/refueling_floor/Del()
 	processing_objects.Remove( src )
+	del( hose )
+
 	..()
 
 /turf/simulated/floor/bspace_safe/refueling_floor/Entered( var/obj/spacepod/spacepod )
 	. = ..()
-	if( spacepod == refueling )
-		return
 
-	if( istype( spacepod ))
-		spacepod.occupants_announce("Connecting pod to refueling station...")
-		init_devices()
-
-		if( spacepod.equipment_system.engine_system )
-			if( fuel_tanks.len >= 1 ) // if we have a tank to take fuel from
-				refueling = spacepod
-				refueling.occupants_announce("Connected to refueling station.")
-				sync_devices()
-				hose.start( src )
-			else
-				spacepod.occupants_announce("No nearby tanks to refuel from!", 2)
-		else
-			spacepod.occupants_announce("This spacepod does not have an engine!", 2)
+	init_devices( spacepod )
 
 	return
 
@@ -45,16 +33,42 @@
 	. = ..()
 	if( atom == refueling )
 		refueling = null
-		hose.stop()
 		sync_devices()
 	return
 
-/turf/simulated/floor/bspace_safe/refueling_floor/proc/init_devices()
-	for( var/obj/machinery/atmospherics/pipe/tank/phoron/tank in range( src.loc, 3 ))
+/turf/simulated/floor/bspace_safe/refueling_floor/proc/init_devices( var/obj/spacepod/spacepod = null )
+	for( var/obj/machinery/atmospherics/pipe/tank/phoron/tank in range( src, 3 ))
+		testing( "Fuel tank found" )
 		fuel_tanks.Add( tank )
 
-	for( var/turf/simulated/floor/bspace_safe/refueling_floor/port in range( src.loc, 3 ))
+	for( var/turf/simulated/floor/bspace_safe/refueling_floor/port in range( src, 3 ))
+		testing( "Fuel port found" )
 		fuel_ports.Add( port )
+
+	if( !spacepod ) // If we weren't given one, we better find one
+		for( spacepod in range( src, 1 ))
+			testing( "Spacepod found" )
+			break
+
+	if( !istype( spacepod )) // If we still couldn't find one, lets end this hopeless endeavour
+		testing( "Not a valid spacepod" )
+		return
+
+	if( spacepod == refueling )
+		testing( "Already matches the spacepod being refueled" )
+		return
+
+	spacepod.occupants_announce("Connecting pod to refueling station...")
+
+	if( spacepod.equipment_system.engine_system )
+		if( fuel_tanks.len >= 1 ) // if we have a tank to take fuel from
+			refueling = spacepod
+			refueling.occupants_announce("Connected to refueling station.")
+			sync_devices()
+		else
+			spacepod.occupants_announce("No nearby tanks to refuel from!", 2)
+	else
+		spacepod.occupants_announce("This spacepod does not have an engine!", 2)
 
 	return
 
@@ -72,16 +86,43 @@
 /datum/global_iterator/refueling_floor/process( var/turf/simulated/floor/bspace_safe/refueling_floor/hose )
 	if( hose.refueling )
 		for( var/obj/machinery/atmospherics/pipe/tank/phoron/tank in hose.fuel_tanks )
-			var/datum/gas_mixture/fuel = tank.air_temporary
 			var/obj/spacepod/refueling = hose.refueling
 			var/datum/gas_mixture/pod = refueling.equipment_system.engine_system.fuel_tank
+			var/datum/gas_mixture/fuel = tank.air_temporary
+			var/pressure_delta
+			var/output_volume
+			var/air_temperature
+			var/target_pressure = 10*ONE_ATMOSPHERE // max pressure of the fuel tank
 
-			var/transfer_moles = 0.003 * fuel.total_moles
-			var/datum/gas_mixture/removed = fuel.remove( transfer_moles )
+			pressure_delta = fuel.return_pressure()-target_pressure
+			output_volume = fuel.volume * fuel.group_multiplier
+			air_temperature = fuel.temperature? fuel.temperature : pod.temperature
 
-			if(removed)
-				if( !pod.merge( removed ))
-					testing( "Could not get merge the gas" )
-					src.stop()
+			testing( "Pressure delta: [pressure_delta]" )
+			testing( "Output volume: [output_volume]" )
+			testing( "Air temperature: [air_temperature]" )
+
+			var/transfer_moles = pressure_delta*output_volume/(air_temperature * R_IDEAL_GAS_EQUATION)
+			testing( "Calculated trasnfer moles: [transfer_moles]" )
+
+			if (isnull(transfer_moles))
+				transfer_moles = fuel.total_moles
 			else
-				testing( "Could not get transfer gas" )
+				transfer_moles = min(fuel.total_moles, transfer_moles)
+
+			if(fuel)
+				testing( "Fuel exists and has [fuel.total_moles] mols of gas in it" )
+			else
+				testing( "Fuel does not exist" )
+
+			testing( "Attempting to merge [transfer_moles] of gas." )
+			var/datum/gas_mixture/removed = fuel.remove(transfer_moles)
+			if (removed) //Just in case
+				testing( "Gas succesfully merged!" )
+				pod.merge(removed)
+			else
+				testing( "Failed to remove gas!" )
+				return -1
+	else
+		testing( "No spacepod located!" )
+

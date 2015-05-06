@@ -31,7 +31,6 @@
 	var/empcounter = 0 //Used for disabling movement when hit by an EMP
 	var/ticks_per_move = 3
 	var/move_tick = 0
-	var/battery_type = "/obj/item/weapon/cell/super"
 	var/fire_threshold_health = 0.2 // threshold heat for fires to start
 
 /obj/spacepod/New()
@@ -95,7 +94,10 @@
 
 /obj/spacepod/bullet_act(var/obj/item/projectile/P)
 	if(P.damage && !P.nodamage)
-		deal_damage(P.damage)
+		if( equipment_system.shield_system )
+			equipment_system.shield_system.hit( P.damage )
+		else
+			deal_damage(P.damage)
 	else if(P.flag == "energy" && istype(P,/obj/item/projectile/ion)) //needed to make sure ions work properly
 		empulse(src, 1, 1)
 
@@ -865,6 +867,11 @@ obj/spacepod/verb/toggleLights()
 			var/selected = equipment_system.weapon_system
 			selected = input( usr, "Select your preferred weapon system.", "Select Weapon System", selected ) in weapons
 
+/obj/spacepod/complete/New()
+	..()
+	equipment_system.equip( new /obj/item/weapon/cell/super )
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine )
+
 /obj/spacepod/command
 	name = "\improper command spacepod"
 	desc = "A sleek command space pod."
@@ -876,7 +883,7 @@ obj/spacepod/verb/toggleLights()
 
 /obj/spacepod/command/complete/New()
 	..()
-	equipment_system.equip( new battery_type )
+	equipment_system.equip( new /obj/item/weapon/cell/super )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine )
 
 /obj/spacepod/security
@@ -906,7 +913,7 @@ obj/spacepod/verb/toggleLights()
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/weaponry/burst_taser )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/weaponry/laser )
 	equipment_system.equip( new /obj/item/pod_parts/armor/security )
-	equipment_system.equip( new /obj/item/weapon/cell/super )
+	equipment_system.equip( new /obj/item/weapon/cell/infinite )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/shield )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/misc/tracker )
 	equipment_system.misc_system.enabled = 1

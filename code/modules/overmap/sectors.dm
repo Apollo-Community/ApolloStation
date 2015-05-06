@@ -78,17 +78,36 @@ var/global/list/map_sectors = list()
 	map_z = data.zlevel
 	name = data.name
 	always_known = data.known
+
 	if(data.icon != 'icons/mob/screen1.dmi')
 		icon = data.icon
 		icon_state = data.icon_state
+
 	if(data.desc)
 		desc = data.desc
-	var/new_x = data.mapx ? data.mapx : rand(STATION_X-POPULATE_RADIUS, STATION_X+POPULATE_RADIUS)
-	var/new_y = data.mapy ? data.mapy : rand(STATION_Y-POPULATE_RADIUS, STATION_Y+POPULATE_RADIUS)
-	loc = locate(new_x, new_y, OVERMAP_ZLEVEL)
 
+	var/turf/T = null
+	for( var/i = 0; i < 50; i++ )
+		var/new_x = data.mapx ? data.mapx : rand(STATION_X-POPULATE_RADIUS, STATION_X+POPULATE_RADIUS)
+		var/new_y = data.mapy ? data.mapy : rand(STATION_Y-POPULATE_RADIUS, STATION_Y+POPULATE_RADIUS)
+		T = locate(new_x, new_y, OVERMAP_ZLEVEL)
+		if( !sector_exists( T ))
+			break
+		else
+			T = null
+
+	if( !T )
+		testing( "Could not find a place for sector, deleting." )
+		del( src )
+
+	loc = T
 	if(data.landing_area)
 		shuttle_landing = locate(data.landing_area)
+
+/proc/sector_exists( var/turf/T )
+	for( var/obj/effect/map/sec in T )
+		return 1
+	return 0
 
 /obj/effect/map/CanPass(atom/movable/A)
 	testing("[A] attempts to enter sector\"[name]\"")

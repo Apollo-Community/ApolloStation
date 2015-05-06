@@ -346,9 +346,12 @@
 		usr << "That's not a valid tank!"
 		return 0
 
-
-	tank.air_contents.remove( fuel_tank.merge( tank.air_contents ))
-	return 1
+	if( tank.air_contents.total_moles > 0 )
+		fuel_tank.merge( tank.air_contents.remove( tank.air_contents.total_moles ))
+		return 1
+	else
+		usr << "There's no gas in that tank!"
+		return 0
 
 /obj/item/device/spacepod_equipment/engine/proc/get_temp()
 	return fuel_tank.temperature
@@ -360,6 +363,29 @@
 	name = "\improper spacepod shield system"
 	desc = "For particularily rainy days."
 	icon_state = "shield"
+	var/max_negate = 20 // The maximum amount of damage that the shield can totally block
+	var/charge_multiplier = 20 // How much charge it takes per unit of damage
+
+/obj/item/device/spacepod_equipment/shield/proc/hit( var/damage )
+	var/obj/item/weapon/cell/battery = my_atom.equipment_system.battery
+
+	if( battery )
+		if( battery.charge > 0 )
+			var/negated = max_negate-damage
+			var/charge_cost = 0
+
+			if( negated >= 0 )
+				charge_cost = charge_multiplier*negated
+				damage = 0
+				testing( "Shield blocked all damage and it cost [charge_cost] energy" )
+			else
+				charge_cost = charge_multiplier*max_negate
+				damage -= max_negate
+				testing( "Shield blocked some damage and it cost [charge_cost] energy" )
+
+			battery.charge = max( 0, battery.charge-charge_cost )
+
+	my_atom.deal_damage( damage )
 
 /obj/item/device/spacepod_equipment/misc/autopilot
 	name = "\improper spacepod autopilot system"
