@@ -14,7 +14,7 @@ var/global/list/bluespace_beacons = list()
 
 /obj/machinery/gate_beacon
 	name = "bluespace beacon"
-	desc = "A beacon used to open gates into bluespace."
+	desc = "A beacon used to act as an anchor in bluespace. There are less-than-desirable reuslts if you enter a bluespace gate without having a destination set to one of these."
 	icon = 'icons/obj/bluespace_gate.dmi'
 	icon_state = "beacon0"
 	density = 0
@@ -48,17 +48,16 @@ var/global/list/bluespace_beacons = list()
 
 		bluespace_beacons["[name]"] = src
 
-
 	..()
 
-	luminosity = 2
-	l_color = "#142933"
 
 /obj/machinery/gate_beacon/Del()
 	bluespace_beacons["[name]"] = null
 	..()
 
 /obj/machinery/gate_beacon/update_icon()
+	l_color = "#142933"
+
 	if( functional )
 		if( charge > 0 )
 			icon_state = "beacon1"

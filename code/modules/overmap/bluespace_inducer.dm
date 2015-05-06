@@ -1,6 +1,6 @@
 /obj/machinery/power/bluespace_inducer
 	name = "bluespace inducer"
-	desc = "A beacon used to warp to other sectors"
+	desc = "A device used to increased instability in the bluespace matrix, opening temporary holes from our reality into the extradimension."
 	icon = 'icons/rust.dmi'
 	icon_state = "injector-open"
 	density = 1
@@ -33,9 +33,9 @@
 	..()
 
 /obj/machinery/power/bluespace_inducer/update_icon()
+	l_color = "#142933"
 	if (active && powernet && avail(active_power_usage))
 		icon_state = "injector-emitting"
-		l_color = "#142933"
 		SetLuminosity( brightness )
 	else
 		icon_state = "injector-open"
