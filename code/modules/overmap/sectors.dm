@@ -60,6 +60,8 @@ var/global/list/map_sectors = list()
 /obj/effect/mapinfo/sector/tcomm_old
 	name = "Abandoned Satellite"
 
+/obj/effect/mapinfo/sector/mining_old
+	name = "Abandoned Asteroid"
 
 
 //===================================================================================

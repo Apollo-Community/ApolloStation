@@ -87,7 +87,7 @@
 //////////////////////////////////////////
 
 /datum/design/pod_armor_com
-	construction_time = 400 //more time than frames, less than pod core
+	construction_time = 400 // more time than frames, less than pod core
 	name = "Pod Armor (command)"
 	desc = "Allows for the construction of spacepod armor. This is the command version."
 	id = "podarmor_com"
@@ -98,7 +98,7 @@
 	materials = list("metal"=15000,"glass"=5000,"phoron"=10000)
 
 /datum/design/pod_armor_sec
-	construction_time = 400 //more time than frames, less than pod core
+	construction_time = 400
 	name = "Pod Armor (security)"
 	desc = "Allows for the construction of spacepod armor. This is the security version."
 	id = "podarmor_sec"
@@ -107,6 +107,18 @@
 	build_path = /obj/item/pod_parts/armor/security
 	category = list("Pod Armor")
 	materials = list("metal"=30000,"glass"=7500,"phoron"=12000)
+
+/datum/design/pod_armor_shuttle
+	construction_time = 500 // hey man, this armor is hefty
+	name = "Pod Armor (shuttle)"
+	desc = "Allows for the construction of spacepod armor. This is the shuttle version."
+	id = "podarmor_shuttle"
+	build_type = PODFAB
+	req_tech = list("materials" = 3)
+	build_path = /obj/item/pod_parts/armor/shuttle
+	category = list("Pod Armor")
+	materials = list("metal"=30000,"glass"=7500,"phoron"=5000)
+
 
 //////////////////////////////////////////
 //////SPACEPOD GUNS///////////////////////

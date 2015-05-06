@@ -1,6 +1,12 @@
 #define DAMAGE			1
 #define FIRE			2
 
+#define SPACEPOD_SHIELD 1
+#define SPACEPOD_WEAPONS 2
+#define SPACEPOD_AUTOPILOT 4
+#define SPACEPOD_MISC 8
+#define SPACEPOD_ALL 15
+
 /obj/spacepod
 	name = "\improper space pod"
 	desc = "A space pod meant for space travel. This one looks rather bare."
@@ -68,6 +74,8 @@
 		icon_state = "pod_com"
 	else if( istype( equipment_system.armor, /obj/item/pod_parts/armor/security ))
 		icon_state = "pod_sec"
+	else if( istype( equipment_system.armor, /obj/item/pod_parts/armor/shuttle ))
+		icon_state = "pod_shuttle"
 	else
 		icon_state = "pod"
 
@@ -901,6 +909,25 @@ obj/spacepod/verb/toggleLights()
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/shield )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/weaponry/taser )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/misc/tracker )
+	equipment_system.equip( new /obj/item/weapon/cell/super )
+
+	equipment_system.misc_system.enabled = 1
+	return
+
+/obj/spacepod/shuttle
+	name = "\improper shuttle"
+	desc = "A pod refitted as a transport shuttle. Doesn't have any sort of protection at all."
+	icon_state = "pod_shuttle"
+
+/obj/spacepod/shuttle/New()
+	..()
+	equipment_system.equip( new /obj/item/pod_parts/armor/shuttle )
+
+/obj/spacepod/shuttle/complete/New()
+	..()
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine )
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/misc/tracker )
+	equipment_system.equip( new /obj/item/weapon/cell/super )
 
 	equipment_system.misc_system.enabled = 1
 	return
@@ -918,6 +945,12 @@ obj/spacepod/verb/toggleLights()
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/misc/tracker )
 	equipment_system.misc_system.enabled = 1
 	return
+
+#undef SPACEPOD_SHIELD
+#undef SPACEPOD_WEAPONS
+#undef SPACEPOD_AUTOPILOT
+#undef SPACEPOD_MISC
+#undef SPACEPOD_ALL
 
 #undef DAMAGE
 #undef FIRE

@@ -1,3 +1,9 @@
+#define SPACEPOD_SHIELD 1
+#define SPACEPOD_WEAPONS 2
+#define SPACEPOD_AUTOPILOT 4
+#define SPACEPOD_MISC 8
+#define SPACEPOD_ALL 15
+
 /obj/item/device/spacepod_equipment/weaponry/proc/fire_weapons()
 	if(my_atom.next_firetime > world.time)
 		usr << "<span class='warning'>Your weapons are recharging.</span>"
@@ -56,6 +62,8 @@
 	var/list/spacepod_equipment = list()
 	var/max_size = 5
 
+	var/allowed_flags = SPACEPOD_ALL | SPACEPOD_WEAPONS | SPACEPOD_SHIELD // Everything but shields and weapons
+
 	// Various systems for fast retrieval
 	var/obj/item/device/spacepod_equipment/weaponry/weapon_system  // weapons system
 	var/obj/item/device/spacepod_equipment/misc/misc_system // misc system
@@ -103,21 +111,21 @@
 
 // Assigns proper systems
 /datum/spacepod/equipment/proc/assign_system(var/obj/item/equipment)
-	if(istype( equipment, /obj/item/device/spacepod_equipment/weaponry )) // Assigning the weapon system
+	if(( allowed_flags & SPACEPOD_WEAPONS ) && istype( equipment, /obj/item/device/spacepod_equipment/weaponry )) // Assigning the weapon system
 		weapon_system = equipment
 	else if(istype( equipment, /obj/item/device/spacepod_equipment/engine )) // Assigning the engine system
 		if( engine_system )
 			return 0
 		engine_system = equipment
-	else if(istype( equipment, /obj/item/device/spacepod_equipment/shield )) // Assigning the shield system
+	else if(( allowed_flags & SPACEPOD_SHIELD ) && istype( equipment, /obj/item/device/spacepod_equipment/shield )) // Assigning the shield system
 		if( shield_system )
 			return 0
 		shield_system = equipment
-	else if(istype( equipment, /obj/item/device/spacepod_equipment/misc/autopilot )) // Assigning the shield system
+	else if(( allowed_flags & SPACEPOD_AUTOPILOT ) && istype( equipment, /obj/item/device/spacepod_equipment/misc/autopilot )) // Assigning the shield system
 		if( autopilot )
 			return 0
 		autopilot = equipment
-	else if( istype( equipment, /obj/item/device/spacepod_equipment/misc )) // Assigning misc systems
+	else if(( allowed_flags & SPACEPOD_MISC ) &&  istype( equipment, /obj/item/device/spacepod_equipment/misc )) // Assigning misc systems
 		misc_system = equipment
 	else if( istype( equipment, /obj/item/weapon/cell )) // Assigning the battery
 		if( battery )
@@ -130,10 +138,17 @@
 
 		if( istype( equipment, /obj/item/pod_parts/armor/command ))
 			my_atom.health = 250
+			allowed_flags = SPACEPOD_ALL
 		else if( istype( equipment, /obj/item/pod_parts/armor/security ))
 			my_atom.health = 400
+
+			allowed_flags = SPACEPOD_ALL
+		else if( istype( equipment, /obj/item/pod_parts/armor/shuttle ))
+			my_atom.health = 200
+			allowed_flags = SPACEPOD_ALL | SPACEPOD_WEAPONS | SPACEPOD_SHIELD
 		else
 			my_atom.health = 100
+			allowed_flags = SPACEPOD_ALL
 	else if(!istype( equipment, /obj/item/device/spacepod_equipment ))  // If it wasn't any of those systems, and isn't spacepod_equipment, we don't want what you're selling
 		return 0
 
@@ -158,6 +173,7 @@
 	else if( equipment == battery ) // Assigning the battery
 		battery = null
 	else if( equipment == armor )
+		allowed_flags = SPACEPOD_ALL | SPACEPOD_WEAPONS | SPACEPOD_SHIELD
 		armor = null
 		my_atom.health = 100
 	else if(!istype( equipment, /obj/item/device/spacepod_equipment ))  // If it wasn't any of those systems, and isn't spacepod_equipment, we don't want what you're selling
@@ -595,3 +611,9 @@
 	destination = null
 
 	testing( "quit_pilot() returned" )
+
+#undef SPACEPOD_SHIELD
+#undef SPACEPOD_WEAPONS
+#undef SPACEPOD_AUTOPILOT
+#undef SPACEPOD_MISC
+#undef SPACEPOD_ALL
