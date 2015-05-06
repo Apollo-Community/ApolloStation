@@ -9,6 +9,7 @@
 	allowed_size = 3
 	contained = 0 //Are we going to move around?
 	dissipate = 0 //Do we lose energy over time?
+	dissipate_strength = 0
 	event_chance = 0
 	move_self = 0
 	consume_range = 1
@@ -20,7 +21,10 @@
 	var/turf/exit = null
 
 /obj/machinery/singularity/bluespace_gate/process()
-	..()
+	eat()
+
+	if(prob(1))
+		mezzer()
 
 	lifetime -= decay
 	if( lifetime <= 0 )
