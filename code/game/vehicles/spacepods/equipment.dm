@@ -1,9 +1,3 @@
-#define SPACEPOD_SHIELD 1
-#define SPACEPOD_WEAPONS 2
-#define SPACEPOD_AUTOPILOT 4
-#define SPACEPOD_MISC 8
-#define SPACEPOD_ALL 15
-
 /obj/item/device/spacepod_equipment/weaponry/proc/fire_weapons()
 	if(my_atom.next_firetime > world.time)
 		usr << "<span class='warning'>Your weapons are recharging.</span>"
@@ -62,8 +56,6 @@
 	var/list/spacepod_equipment = list()
 	var/max_size = 5
 
-	var/allowed_flags = SPACEPOD_ALL | SPACEPOD_WEAPONS | SPACEPOD_SHIELD // Everything but shields and weapons
-
 	// Various systems for fast retrieval
 	var/obj/item/device/spacepod_equipment/weaponry/weapon_system  // weapons system
 	var/obj/item/device/spacepod_equipment/misc/misc_system // misc system
@@ -72,9 +64,11 @@
 	var/obj/item/weapon/cell/battery // the battery, durh
 	var/obj/item/pod_parts/armor/armor // what kind of armor it has
 	var/obj/item/device/spacepod_equipment/misc/autopilot/autopilot // the autopilot
+	var/list/seats = list()
 
 /datum/spacepod/equipment/New(var/obj/spacepod/SP, max_size)
 	..()
+
 	if(istype(SP))
 		my_atom = SP
 
@@ -97,58 +91,51 @@
 			user << "\red There's no space left for the [equipment]!"
 		return 0
 
-/datum/spacepod/equipment/proc/dequip(var/obj/item/equipment, var/mob/user)
-	if( user.put_in_any_hand_if_possible(equipment))
-		user << "<span class='notice'>You remove \the [equipment] from the space pod</span>"
-		deassign_system( equipment )
-		spacepod_equipment.Remove( equipment )
-		my_atom.update_icons()
-		return 1
-	else
-		user << "<span class='notice'>You can't remove the [equipment]!</span>"
+/datum/spacepod/equipment/proc/dequip(var/obj/item/equipment, var/mob/user = null)
 
-	return 0
+	deassign_system( equipment )
+	spacepod_equipment.Remove( equipment )
+	my_atom.update_icons()
+
+	if( user )
+		if( user.put_in_any_hand_if_possible(equipment))
+			user << "<span class='notice'>You remove \the [equipment] from the space pod</span>"
+			return 1
+
+	equipment.loc = my_atom.loc
+	return 1
 
 // Assigns proper systems
 /datum/spacepod/equipment/proc/assign_system(var/obj/item/equipment)
-	if(( allowed_flags & SPACEPOD_WEAPONS ) && istype( equipment, /obj/item/device/spacepod_equipment/weaponry )) // Assigning the weapon system
+	if( istype( equipment, /obj/item/device/spacepod_equipment/weaponry )) // Assigning the weapon system
 		weapon_system = equipment
 	else if(istype( equipment, /obj/item/device/spacepod_equipment/engine )) // Assigning the engine system
 		if( engine_system )
 			return 0
 		engine_system = equipment
-	else if(( allowed_flags & SPACEPOD_SHIELD ) && istype( equipment, /obj/item/device/spacepod_equipment/shield )) // Assigning the shield system
+	else if( istype( equipment, /obj/item/device/spacepod_equipment/shield )) // Assigning the shield system
 		if( shield_system )
 			return 0
 		shield_system = equipment
-	else if(( allowed_flags & SPACEPOD_AUTOPILOT ) && istype( equipment, /obj/item/device/spacepod_equipment/misc/autopilot )) // Assigning the shield system
+	else if( istype( equipment, /obj/item/device/spacepod_equipment/seat )) // Assigning seats
+		seats.Add( equipment )
+	else if( istype( equipment, /obj/item/device/spacepod_equipment/misc/autopilot )) // Assigning the shield system
 		if( autopilot )
 			return 0
 		autopilot = equipment
-	else if(( allowed_flags & SPACEPOD_MISC ) &&  istype( equipment, /obj/item/device/spacepod_equipment/misc )) // Assigning misc systems
+	else if( istype( equipment, /obj/item/device/spacepod_equipment/misc )) // Assigning misc systems
 		misc_system = equipment
 	else if( istype( equipment, /obj/item/weapon/cell )) // Assigning the battery
 		if( battery )
 			return 0
 		battery = equipment
-	else if(istype( equipment, /obj/item/pod_parts/armor ))
+	else if( istype( equipment, /obj/item/pod_parts/armor )) // And finally, armor
 		if( armor )
 			return 0
 		armor = equipment
 
-		if( istype( equipment, /obj/item/pod_parts/armor/command ))
-			my_atom.health = 250
-			allowed_flags = SPACEPOD_ALL
-		else if( istype( equipment, /obj/item/pod_parts/armor/security ))
-			my_atom.health = 400
+		my_atom.health = 100+armor.armor
 
-			allowed_flags = SPACEPOD_ALL
-		else if( istype( equipment, /obj/item/pod_parts/armor/shuttle ))
-			my_atom.health = 200
-			allowed_flags = SPACEPOD_ALL | SPACEPOD_WEAPONS | SPACEPOD_SHIELD
-		else
-			my_atom.health = 100
-			allowed_flags = SPACEPOD_ALL
 	else if(!istype( equipment, /obj/item/device/spacepod_equipment ))  // If it wasn't any of those systems, and isn't spacepod_equipment, we don't want what you're selling
 		return 0
 
@@ -160,31 +147,40 @@
 
 // Deassigns proper system
 /datum/spacepod/equipment/proc/deassign_system(var/obj/item/equipment)
-	if( equipment == weapon_system ) // Assigning the weapon system
+	if( equipment == weapon_system ) // Deassigning the weapon system
 		weapon_system = null
-	else if( equipment == misc_system ) // Assigning misc systems
+	else if( equipment == misc_system ) // Deassigning misc systems
 		misc_system = null
-	else if( equipment == engine_system ) // Assigning the engine system
+	else if( equipment == engine_system ) // Deassigning the engine system
 		engine_system = null
-	else if( equipment == shield_system ) // Assigning the shield system
+	else if( equipment == shield_system ) // Deassigning the shield system
 		shield_system = null
-	else if( equipment == autopilot ) // Assigning the battery
+	else if( locate( equipment ) in seats ) // Removing the seat
+		seats.Remove( equipment )
+	else if( equipment == autopilot ) // Deassigning the battery
 		autopilot = null
-	else if( equipment == battery ) // Assigning the battery
+	else if( equipment == battery ) // Deassigning the battery
 		battery = null
 	else if( equipment == armor )
-		allowed_flags = SPACEPOD_ALL | SPACEPOD_WEAPONS | SPACEPOD_SHIELD
-		armor = null
-		my_atom.health = 100
-	else if(!istype( equipment, /obj/item/device/spacepod_equipment ))  // If it wasn't any of those systems, and isn't spacepod_equipment, we don't want what you're selling
-		world << "MAH EMULSION: Tried to remove an impossible object from the spacepod, yell at Kwask."
-		return 0
+		spawn( 1 )
+			reset_default()
 
 	if( istype( equipment, /obj/item/device/spacepod_equipment ))
 		var/obj/item/device/spacepod_equipment/equipped = equipment
 		equipped.deassign()
 
 	return 1
+
+/datum/spacepod/equipment/proc/reset_default()
+	dump_equipment()
+	armor = null
+	my_atom.update_icon()
+	my_atom.health = 100
+	max_size = 5
+
+/datum/spacepod/equipment/proc/dump_equipment()
+	for( var/obj/item/device/spacepod_equipment/equipment in spacepod_equipment )
+		dequip( equipment )
 
 /datum/spacepod/equipment/proc/fill_engine( var/obj/item/weapon/tank/tank )
 	if( engine_system )
@@ -197,7 +193,11 @@
 	name = "equipment"
 	icon = 'icons/pods/pod_parts.dmi'
 	var/obj/spacepod/my_atom = null
-	var/manufacturer = "NanoTrasen" // purely a fluff detail
+	var/manufacturer = "NanoTrasen" // purely a fluffy detail
+
+/obj/item/device/spacepod_equipment/examine(mob/user)
+	..(user)
+	user << "This part has printed on the back, \"Manufactured by [manufacturer]\"."
 
 /obj/item/device/spacepod_equipment/proc/check() // checks the status of a piece of equipment
 	return 1
@@ -217,6 +217,7 @@
 	var/shots_per = 1
 	var/fire_sound
 	var/fire_delay = 20
+	manufacturer = "Hesphaistos Industries"
 
 /obj/item/device/spacepod_equipment/weaponry/taser
 	name = "\improper taser system"
@@ -253,13 +254,18 @@
 	var/enabled
 
 /obj/item/device/spacepod_equipment/misc/tracker
-	name = "\improper spacepod tracking system"
+	name = "\improper tracking system"
 	desc = "A tracking device for spacepods."
-	icon_state = "pod_locator"
+	icon_state = "locator"
 	enabled = 0
 
 /obj/item/device/spacepod_equipment/misc/tracker/check()
 	return enabled
+
+/obj/item/device/spacepod_equipment/seat
+	name = "\improper seat"
+	desc = "An extra seat for your spacepods, to squeeze in extra spacemen for those space rides."
+	icon_state = "seat"
 
 /obj/item/device/spacepod_equipment/misc/tracker/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(isscrewdriver(I))
@@ -273,11 +279,11 @@
 		..()
 
 /obj/item/device/spacepod_equipment/engine
-	name = "\improper spacepod engine"
-	desc = "Vroom vroom."
+	name = "\improper engine"
+	desc = "Uses phoron fuel to jet around in space."
 	icon_state = "engine"
 	var/datum/gas_mixture/fuel_tank = null
-	var/max_volume = 112.000 // 112 mols, or 4 full tanks of phoron
+	var/max_volume = 336.000 // 336 mols, or 12 full tanks of phoron
 	var/burn_rate = 0.050 // 0.1 mols per meter
 	var/heat_rate = 10 // how much heat is gained per meter moved
 	var/heat_rad_rate = 10 // how much heat is radiated per tick
@@ -286,6 +292,7 @@
 	var/use_fuel = 1 // whether this engine runs on fuel or a nice hot cup of tea
 	var/fire_heat = 20 // how much heat fire causes
 	var/fire = 0 // are we on fire right now?
+	manufacturer = "Newton Engines"
 
 /obj/item/device/spacepod_equipment/engine/New()
 	..()
@@ -343,14 +350,12 @@
 			if( my_atom.equipment_system.battery ) // charge the battery if we have one
 				my_atom.equipment_system.battery.give( charge_rate )
 
-			/*
 			if( fuel_tank.gas["oxygen"] > 0 )
 				fuel_tank.adjust_gas( "oxygen", -burn_rate/2) // burn up oxygen at half rate 4noraisin
 				fuel_tank.add_thermal_energy(heat_rate*10) // putting oxygen in this baby is bad news
 
 				if( my_atom.equipment_system.battery ) // but hey, we'll charge the battery even faster
 					my_atom.equipment_system.battery.give( charge_rate*2 )
-			*/
 		else
 			my_atom.occupants_announce( "ERROR: No phoron left in the fuel tank!", 2 )
 			return 0
@@ -364,6 +369,7 @@
 
 	if( tank.air_contents.total_moles > 0 )
 		fuel_tank.merge( tank.air_contents.remove( tank.air_contents.total_moles ))
+		usr << "You hook the phoron tank up to the fuel hose and with a hiss all of the fuel is added to the pod's fuel tank."
 		return 1
 	else
 		usr << "There's no gas in that tank!"
@@ -376,7 +382,7 @@
 	use_fuel = 0
 
 /obj/item/device/spacepod_equipment/shield
-	name = "\improper spacepod shield system"
+	name = "\improper shield system"
 	desc = "For particularily rainy days."
 	icon_state = "shield"
 	var/max_negate = 20 // The maximum amount of damage that the shield can totally block
@@ -404,14 +410,15 @@
 	my_atom.deal_damage( damage )
 
 /obj/item/device/spacepod_equipment/misc/autopilot
-	name = "\improper spacepod autopilot system"
+	name = "\improper autopilot system"
 	desc = "Used to automatically pilot the shuttle to known locations."
-	icon_state = "pod_locator"
+	icon_state = "autopilot"
 	var/piloting = 0 // Are we currently on autopilot?
 	var/obj/machinery/gate_beacon/destination = null
 	var/list/path = null
 	var/turf/local_end = null
 	var/obj/effect/map/sector = null // The current sector
+	manufacturer = "Ward-Takahashi GMB"
 
 /obj/item/device/spacepod_equipment/misc/autopilot/Del()
 	if( processing_objects[src] )
@@ -611,9 +618,3 @@
 	destination = null
 
 	testing( "quit_pilot() returned" )
-
-#undef SPACEPOD_SHIELD
-#undef SPACEPOD_WEAPONS
-#undef SPACEPOD_AUTOPILOT
-#undef SPACEPOD_MISC
-#undef SPACEPOD_ALL

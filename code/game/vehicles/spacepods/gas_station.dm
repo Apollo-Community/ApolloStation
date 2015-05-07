@@ -94,35 +94,37 @@
 			var/air_temperature
 			var/target_pressure = 10*ONE_ATMOSPHERE // max pressure of the fuel tank
 
-			pressure_delta = fuel.return_pressure()-target_pressure
-			output_volume = fuel.volume * fuel.group_multiplier
+			pressure_delta = target_pressure-pod.return_pressure()
+			output_volume = pod.volume/4.0
 			air_temperature = fuel.temperature? fuel.temperature : pod.temperature
-
+/*
 			testing( "Pressure delta: [pressure_delta]" )
 			testing( "Output volume: [output_volume]" )
 			testing( "Air temperature: [air_temperature]" )
-
+*/
 			var/transfer_moles = pressure_delta*output_volume/(air_temperature * R_IDEAL_GAS_EQUATION)
-			testing( "Calculated trasnfer moles: [transfer_moles]" )
+//			testing( "Calculated trasnfer moles: [transfer_moles]" )
 
 			if (isnull(transfer_moles))
 				transfer_moles = fuel.total_moles
 			else
 				transfer_moles = min(fuel.total_moles, transfer_moles)
 
+/*
 			if(fuel)
 				testing( "Fuel exists and has [fuel.total_moles] mols of gas in it" )
 			else
 				testing( "Fuel does not exist" )
+*/
 
-			testing( "Attempting to merge [transfer_moles] of gas." )
+//			testing( "Attempting to merge [transfer_moles] of gas." )
 			var/datum/gas_mixture/removed = fuel.remove(transfer_moles)
 			if (removed) //Just in case
-				testing( "Gas succesfully merged!" )
+//				testing( "Gas succesfully merged!" )
 				pod.merge(removed)
 			else
-				testing( "Failed to remove gas!" )
+//				testing( "Failed to remove gas!" )
 				return -1
-	else
-		testing( "No spacepod located!" )
+//	else
+//		testing( "No spacepod located!" )
 
