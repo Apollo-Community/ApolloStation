@@ -134,7 +134,7 @@
 			return 0
 		armor = equipment
 
-		my_atom.health = 100+armor.armor
+		my_atom.health = 100+armor.health_bonus
 
 	else if(!istype( equipment, /obj/item/device/spacepod_equipment ))  // If it wasn't any of those systems, and isn't spacepod_equipment, we don't want what you're selling
 		return 0
