@@ -66,7 +66,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/power_equip = 1
 	var/power_light = 1
 	var/power_environ = 1
-	var/music = null
 	var/used_equip = 0
 	var/used_light = 0
 	var/used_environ = 0
@@ -82,7 +81,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //	var/list/lights				// list of all lights on this area
 	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
 	var/air_doors_activated = 0
-	var/list/ambience = list('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
+	var/list/ambience = list( 'sound/ambience/shipambience.ogg' )
+	var/list/music = list('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
 	var/sound/forced_ambience = null
 
 	var/rad_shielded = 0
@@ -131,7 +131,8 @@ var/list/ghostteleportlocs = list()
 	power_light = 0
 	power_equip = 0
 	power_environ = 0
-	ambience = list('sound/ambience/ambispace.ogg','sound/ambience/ambispace1.ogg')
+	music = list('sound/ambience/ambispace.ogg','sound/ambience/ambispace1.ogg')
+	ambience = list()
 	environment = PLAIN
 
 /area/space/firealert()
@@ -149,7 +150,7 @@ var/list/ghostteleportlocs = list()
 	environment = UNDERWATER
 
 /area/engine/
-	ambience = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
+	music = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
 /area/turret_protected/
 
 /area/arrival
@@ -193,7 +194,7 @@ var/list/ghostteleportlocs = list()
 
 /area/shuttle/escape
 	name = "\improper Emergency Shuttle"
-	music = "music/escape.ogg"
+	music = list( "music/escape.ogg" )
 
 /area/shuttle/escape/station
 	name = "\improper Emergency Shuttle Station"
@@ -209,7 +210,7 @@ var/list/ghostteleportlocs = list()
 
 /area/shuttle/escape_pod1
 	name = "\improper Escape Pod One"
-	music = "music/escape.ogg"
+	music = list( "music/escape.ogg" )
 
 /area/shuttle/escape_pod1/station
 	icon_state = "shuttle2"
@@ -222,7 +223,7 @@ var/list/ghostteleportlocs = list()
 
 /area/shuttle/escape_pod2
 	name = "\improper Escape Pod Two"
-	music = "music/escape.ogg"
+	music = list( "music/escape.ogg" )
 
 /area/shuttle/escape_pod2/station
 	icon_state = "shuttle2"
@@ -235,7 +236,7 @@ var/list/ghostteleportlocs = list()
 
 /area/shuttle/escape_pod3
 	name = "\improper Escape Pod Three"
-	music = "music/escape.ogg"
+	music = list( "music/escape.ogg" )
 
 /area/shuttle/escape_pod3/station
 	icon_state = "shuttle2"
@@ -248,7 +249,7 @@ var/list/ghostteleportlocs = list()
 
 /area/shuttle/escape_pod5 //Pod 4 was lost to meteors
 	name = "\improper Escape Pod Five"
-	music = "music/escape.ogg"
+	music = list( "music/escape.ogg" )
 
 /area/shuttle/escape_pod5/station
 	icon_state = "shuttle2"
@@ -261,7 +262,7 @@ var/list/ghostteleportlocs = list()
 
 /area/shuttle/mining
 	name = "\improper Mining Shuttle"
-	music = "music/escape.ogg"
+	music = list( "music/escape.ogg" )
 
 /area/shuttle/mining/station
 	icon_state = "shuttle2"
@@ -354,7 +355,7 @@ var/list/ghostteleportlocs = list()
 
 /area/shuttle/research
 	name = "\improper Research Shuttle"
-	music = "music/escape.ogg"
+	music = list( "music/escape.ogg" )
 
 /area/shuttle/research/station
 	icon_state = "shuttle2"
@@ -481,7 +482,7 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Thunderdome Arena"
 	icon_state = "thunder"
 	requires_power = 0
-	music = 'sound/music/THUNDERDOME.ogg'
+	music = list( 'sound/music/THUNDERDOME.ogg' )
 
 /area/tdome/tdome1
 	name = "\improper Thunderdome (Team 1)"
@@ -922,13 +923,12 @@ var/list/ghostteleportlocs = list()
 /area/bridge
 	name = "\improper Bridge"
 	icon_state = "bridge"
-	music = "signal"
 	environment = STONEROOM
 
 /area/bridge/meeting_room
 	name = "\improper Heads of Staff Meeting Room"
 	icon_state = "bridge"
-	music = null
+	music = list()
 	environment = ROOM
 
 /area/crew_quarters/captain
@@ -1061,7 +1061,7 @@ var/list/ghostteleportlocs = list()
 /area/crew_quarters/theatre
 	name = "\improper Theatre"
 	icon_state = "Theatre"
-	ambience = list( 'sound/ambience/ambitheatre1.ogg' )
+	music = list( 'sound/ambience/ambitheatre1.ogg' )
 	environment = AUDITORIUM
 
 /area/crew_quarters/theatre/backstage
@@ -1087,7 +1087,7 @@ var/list/ghostteleportlocs = list()
 /area/chapel/main
 	name = "\improper Chapel"
 	icon_state = "chapel"
-	ambience = list('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg','sound/music/traitor.ogg')
+	music = list('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg','sound/music/traitor.ogg')
 	environment = MOUNTAINS
 
 /area/chapel/office
@@ -1318,20 +1318,19 @@ var/list/ghostteleportlocs = list()
 /area/teleporter
 	name = "\improper Teleporter"
 	icon_state = "teleporter"
-	music = "signal"
+	music = list( 'sound/ambience/signal.ogg' )
 	environment = QUARRY
 
 /area/gateway
 	name = "\improper Gateway"
 	icon_state = "teleporter"
-	music = "signal"
+	music = list( 'sound/ambience/signal.ogg' )
 	environment = QUARRY
 
 /area/AIsattele
 	name = "\improper AI Satellite Teleporter Room"
 	icon_state = "teleporter"
-	music = "signal"
-	ambience = list('sound/ambience/ambimalf.ogg')
+	music = list( 'sound/ambience/ambimalf.ogg', 'sound/ambience/signal.ogg' )
 	environment = QUARRY
 
 //MedBay
@@ -1342,43 +1341,35 @@ var/list/ghostteleportlocs = list()
 /area/medical/medbay
 	name = "\improper Medbay Hallway - Port"
 	icon_state = "medbay"
-	music = 'sound/ambience/signal.ogg'
 
 //Medbay is a large area, these additional areas help level out APC load.
 /area/medical/medbay2
 	name = "\improper Medbay Hallway - Starboard"
 	icon_state = "medbay2"
-	music = 'sound/ambience/signal.ogg'
 
 /area/medical/medbay3
 	name = "\improper Medbay Hallway - Fore"
 	icon_state = "medbay3"
-	music = 'sound/ambience/signal.ogg'
 
 /area/medical/medbay4
 	name = "\improper Medbay Hallway - Aft"
 	icon_state = "medbay4"
-	music = 'sound/ambience/signal.ogg'
 
 /area/medical/biostorage
 	name = "\improper Secondary Storage"
 	icon_state = "medbay2"
-	music = 'sound/ambience/signal.ogg'
 
 /area/medical/reception
 	name = "\improper Medbay Reception"
 	icon_state = "medbay"
-	music = 'sound/ambience/signal.ogg'
 
 /area/medical/psych
 	name = "\improper Psych Room"
 	icon_state = "medbay3"
-	music = 'sound/ambience/signal.ogg'
 
 /area/crew_quarters/medbreak
 	name = "\improper Break Room"
 	icon_state = "medbay3"
-	music = 'sound/ambience/signal.ogg'
 
 /area/medical/patients_rooms
 	name = "\improper Patient's Rooms"
@@ -1423,7 +1414,7 @@ var/list/ghostteleportlocs = list()
 /area/medical/morgue
 	name = "\improper Morgue"
 	icon_state = "morgue"
-	ambience = list('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg','sound/music/main.ogg')
+	music = list('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg','sound/music/main.ogg')
 
 /area/medical/chemistry
 	name = "\improper Chemistry"
@@ -1980,13 +1971,13 @@ var/list/ghostteleportlocs = list()
 /area/turret_protected/ai_upload
 	name = "\improper AI Upload Chamber"
 	icon_state = "ai_upload"
-	ambience = list('sound/ambience/ambimalf.ogg')
+	music = list('sound/ambience/ambimalf.ogg')
 	environment = ALLEY
 
 /area/turret_protected/ai_upload_foyer
 	name = "AI Upload Access"
 	icon_state = "ai_foyer"
-	ambience = list('sound/ambience/ambimalf.ogg')
+	music = list('sound/ambience/ambimalf.ogg')
 
 /area/turret_protected/ai_server_room
 	name = "AI Server Room"
@@ -1995,7 +1986,7 @@ var/list/ghostteleportlocs = list()
 /area/turret_protected/ai
 	name = "\improper AI Chamber"
 	icon_state = "ai_chamber"
-	ambience = list('sound/ambience/ambimalf.ogg')
+	music = list('sound/ambience/ambimalf.ogg')
 	environment = ALLEY
 
 /area/turret_protected/ai_cyborg_station
@@ -2073,7 +2064,7 @@ var/list/ghostteleportlocs = list()
 
 // Telecommunications Satellite
 /area/tcomms/
-	ambience = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
+	music = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 	environment = QUARRY
 
 /area/tcomms/entrance
@@ -2095,7 +2086,7 @@ var/list/ghostteleportlocs = list()
 /area/turret_protected/tcomsat
 	name = "\improper Abandoned Satellite"
 	icon_state = "tcomsatlob"
-	ambience = list('sound/ambience/ambispace.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg','sound/ambience/ambispace1.ogg' )
+	music = list('sound/ambience/ambispace.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg','sound/ambience/ambispace1.ogg' )
 
 
 // Labor Camp
