@@ -145,6 +145,7 @@ var/list/ghostteleportlocs = list()
 
 /area/space/bluespace
 	name = "\improper Bluespace"
+	ambience = list('sound/ambience/ambbspace.ogg')
 	environment = UNDERWATER
 
 /area/engine/

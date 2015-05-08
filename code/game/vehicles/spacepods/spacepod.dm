@@ -1,59 +1,66 @@
 #define DAMAGE			1
 #define FIRE			2
 
-#define SPACEPOD_SHIELD 1
-#define SPACEPOD_WEAPONS 2
-#define SPACEPOD_AUTOPILOT 4
-#define SPACEPOD_MISC 8
-#define SPACEPOD_ALL 15
-
 /obj/spacepod
 	name = "\improper space pod"
 	desc = "A space pod meant for space travel. This one looks rather bare."
 	icon = 'icons/48x48/pods.dmi'
 	icon_state = "pod"
-	density = 1 //Dense. To raise the heat.
+	density = 1
 	opacity = 0
 	anchored = 1
 	unacidable = 1
 	layer = 3.9
 	infra_luminosity = 15
-	var/list/occupants = list("pilot" = null, "passenger" = null)
+
+	var/mob/pilot = null
+	var/list/passengers = list()
+
 	var/datum/spacepod/equipment/equipment_system
 	var/datum/gas_mixture/cabin_air
 	var/obj/machinery/portable_atmospherics/canister/internal_tank
-	var/datum/effect/effect/system/ion_trail_follow/space_trail/ion_trail
 	var/use_internal_tank = 0
+
 	var/datum/global_iterator/pr_int_temp_processor //normalizes internal air mixture temperature
 	var/datum/global_iterator/pr_give_air //moves air from tank to cabin
-	var/inertia_dir = 0
-	var/hatch_open = 0
-	var/next_firetime = 0
-	var/list/pod_overlays
-	var/health = 100 // pods without armor are tough as a spongecake
+
 	var/lights = 0
 	var/lights_power = 6
-	var/allow2enter = 1
-	var/empcounter = 0 //Used for disabling movement when hit by an EMP
-	var/ticks_per_move = 3
-	var/move_tick = 0
+
+	var/inertia_dir = 0
+	var/hatch_open = 0
+	var/next_firetime = 0 // Used for weapon firing
+
+	var/health = 100 // pods without armor are tough as a spongecake
 	var/fire_threshold_health = 0.2 // threshold heat for fires to start
+	var/empcounter = 0 //Used for disabling movement when hit by an EMP
+
+	var/ticks_per_move = 3 // how many ticks does it take to move once?
+	var/move_tick = 0 // counter for above var
+
+	var/datum/effect/effect/system/ion_trail_follow/space_trail/ion_trail
+	var/list/pod_overlays
 
 /obj/spacepod/New()
 	. = ..()
+
 	dir = EAST
 	bound_width = 64
 	bound_height = 64
+
 	equipment_system = new(src)
-	equipment_system.equip( new /obj/item/device/spacepod_equipment/misc/autopilot )
+//	equipment_system.equip( new /obj/item/device/spacepod_equipment/misc/autopilot )
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/seat )
+
 	add_cabin()
 	add_airtank()
-	src.ion_trail = new /datum/effect/effect/system/ion_trail_follow/space_trail()
-	src.ion_trail.set_up(src)
-	src.ion_trail.start()
 	src.use_internal_tank = 1
 	pr_int_temp_processor = new /datum/global_iterator/pod_preserve_temp(list(src))
 	pr_give_air = new /datum/global_iterator/pod_tank_give_air(list(src))
+
+	src.ion_trail = new /datum/effect/effect/system/ion_trail_follow/space_trail()
+	src.ion_trail.set_up(src)
+	src.ion_trail.start()
 
 	spacepods_list += src
 
@@ -117,42 +124,34 @@
 	var/oldhealth = health
 	health = max(0, health - damage)
 	var/percentage = (health / initial(health)) * 100
-	if(occupants["pilot"] && oldhealth > health && percentage <= 25 && percentage > 0)
-		var/sound/S = sound('sound/effects/engine_alert2.ogg')
-		S.wait = 0 //No queue
-		S.channel = 0 //Any channel
-		S.volume = 50
-		occupants["pilot"] << S
-		if(occupants["passenger"])
-			occupants["passenger"] << S
-	if(occupants["pilot"] && oldhealth > health && !health)
-		var/sound/S = sound('sound/effects/engine_alert1.ogg')
-		S.wait = 0
-		S.channel = 0
-		S.volume = 50
-		occupants["pilot"] << S
-		if(occupants["passenger"])
-			occupants["passenger"] << S
+	if( oldhealth > health && percentage <= 25 && percentage > 0)
+		play_interior_sound('sound/effects/engine_alert2.ogg')
+	if( oldhealth > health && !health)
+		play_interior_sound('sound/effects/engine_alert1.ogg')
 	if(!health)
 		explode()
 
 	update_icons()
 
+/obj/spacepod/proc/play_interior_sound( var/sound )
+	var/sound/S = sound(sound)
+	S.wait = 0 //No queue
+	S.channel = 0 //Any channel
+	S.volume = 50
+	if( pilot )
+		pilot << S
+
+
 /obj/spacepod/proc/explode()
 	spawn(0)
-		if(occupants["pilot"])
-			if(occupants["passenger"])
-				occupants["passenger"] << "<big><span class='warning'>Critical damage to the vessel detected, core explosion imminent!</span></big>"
-			occupants["pilot"] << "<big><span class='warning'>Critical damage to the vessel detected, core explosion imminent!</span></big>"
-			for(var/i = 10, i >= 0; --i)
-				if(occupants["pilot"])
-					occupants["pilot"] << "<span class='warning'>[i]</span>"
-				if(occupants["passenger"])
-					occupants["passenger"] << "<span class='warning'>[i]</span>"
-				if(i == 0)
-					explosion(loc, 2, 4, 8)
-					del(src)
-				sleep(10)
+		occupants_announce( "The pod's console lights up with a hundred different alarms!", 2, 1 )
+
+		for(var/i = 10, i >= 0; --i)
+			occupants_announce( "[i] seconds", 2 )
+			if(i == 0)
+				explosion(loc, 2, 4, 8)
+				del(src)
+			sleep(10)
 
 /obj/spacepod/proc/repair_damage(var/repair_amount)
 	if(health)
@@ -163,16 +162,6 @@
 /obj/spacepod/ex_act(severity)
 	switch(severity)
 		if(1)
-			var/mob/living/carbon/human/H = occupants["pilot"]
-			var/mob/living/carbon/human/H2 = occupants["passenger"]
-			if(H)
-				H.loc = get_turf(src)
-				H.ex_act(severity + 1)
-				H << "<span class='warning'>You are forcefully thrown from \the [src]!</span>"
-			if(H2)
-				H2.loc = get_turf(src)
-				H2.ex_act(severity + 1)
-				H2 << "<span class='warning'>You are forcefully thrown from \the [src]!</span>"
 			del(ion_trail)
 			del(src)
 		if(2)
@@ -186,11 +175,7 @@
 
 	switch(severity)
 		if(1)
-			if(src.occupants["pilot"])
-				src.occupants["pilot"] << "<span class='warning'>The pod console flashes 'Heavy EMP WAVE DETECTED'.</span>" //warn the occupants
-			if(src.occupants["passenger"])
-				src.occupants["passenger"] << "<span class='warning'>The pod console flashes 'EMP WAVE DETECTED'.</span>" //warn the occupants
-
+			occupants_announce( "The pod console flashes 'HEAVY EMP WAVE DETECTED'.", 2 ) //warn the occupants
 
 			if(battery)
 				battery.charge = max(0, battery.charge - 5000) //Cell EMP act is too weak, this pod needs to be sapped.
@@ -200,10 +185,7 @@
 			processing_objects.Add(src)
 
 		if(2)
-			if(src.occupants["pilot"])
-				src.occupants["pilot"] << "<span class='warning'>The pod console flashes 'EMP WAVE DETECTED'.</span>" //warn the occupants
-			if(src.occupants["passenger"])
-				src.occupants["passenger"] << "<span class='warning'>The pod console flashes 'EMP WAVE DETECTED'.</span>" //warn the occupants
+			occupants_announce( "The pod console flashes 'EMP WAVE DETECTED'.", 2 ) //warn the occupants
 
 			src.deal_damage(40)
 			if(battery)
@@ -214,8 +196,7 @@
 
 /obj/spacepod/attackby(obj/item/W as obj, mob/user as mob, params)
 	if( istype( W, /obj/item/weapon/tank ))
-		if( equipment_system.fill_engine( W ))
-			usr << "You hook the phoron tank up to the fuel hose and with a hiss all of the fuel is added to the pod's fuel tank."
+		equipment_system.fill_engine( W )
 	if(iscrowbar(W))
 		hatch_open = !hatch_open
 		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
@@ -281,7 +262,7 @@
 	return
 
 /obj/spacepod/verb/toggle_internal_tank()
-	if(usr == src.occupants["pilot"])
+	if(usr == src.pilot)
 		set name = "Toggle internal airtank usage"
 		set category = "Spacepod"
 		set src = usr.loc
@@ -344,84 +325,11 @@
 	return
 
 /obj/spacepod/proc/moved_inside(var/mob/living/carbon/human/H as mob)
-	var/fukkendisk
-	for( var/obj/A in usr.contents )
-		if( istype( A, /obj/item/weapon/disk/nuclear ))
-			fukkendisk = A
-
-	if(fukkendisk)
-		usr << "\red <B>The nuke-disk locks the door as you try to get in. You evil person.</b>"
-		return
-
 	if(H && H.client && H in range(1))
-		if(src.occupants["pilot"] && src.occupants["passenger"])
-			H << "<span class='notice'>[src.name] is full.</span>"
-			return
+		if( put_in_seat( H ))
+			return 1
 
-		if(src.occupants["pilot"] && !src.occupants["passenger"])
-			var/mob/pilot = src.occupants["pilot"]
-			if(pilot.ckey == H.ckey)
-				H.visible_message("You climb over the console and drop down into the secondary seat.")
-				H.reset_view(src)
-				/*
-				H.client.perspective = EYE_PERSPECTIVE
-				H.client.eye = src
-				*/
-				H.stop_pulling()
-				H.forceMove(src)
-				src.occupants["pilot"] = null
-				src.occupants["passenger"] = H
-				src.add_fingerprint(H)
-				src.forceMove(src.loc)
-				//dir = dir_in
-				playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
-				return 1
-			else
-				H.reset_view(src)
-				/*
-				H.client.perspective = EYE_PERSPECTIVE
-				H.client.eye = src
-				*/
-				H.stop_pulling()
-				H.forceMove(src)
-				src.occupants["passenger"] = H
-				src.add_fingerprint(H)
-				src.forceMove(src.loc)
-				//dir = dir_in
-				playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
-				return 1
-
-		else
-			if(!src.occupants["pilot"])
-				H.reset_view(src)
-				/*
-				H.client.perspective = EYE_PERSPECTIVE
-				H.client.eye = src
-				*/
-				H.stop_pulling()
-				H.forceMove(src)
-				src.occupants["pilot"] = H
-				src.add_fingerprint(H)
-				src.forceMove(src.loc)
-				//dir = dir_in
-				playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
-				return 1
-			else
-				return
-	else
-		return 0
-
-/obj/spacepod/proc/moved_other_inside(var/mob/living/carbon/human/H as mob)
-	if(!src.occupants["passenger"])
-		H.reset_view(src)
-		H.stop_pulling()
-		H.forceMove(src)
-		src.occupants["passenger"] = H
-		src.forceMove(src.loc)
-		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
-		return 1
-	else
-		return
+	return 0
 
 /obj/spacepod/proc/occupants_announce( var/message, var/type = 1, var/big = 0 )
 	var/full_message = ""
@@ -443,28 +351,104 @@
 	if( big )
 		full_message += "/<big>"
 
-	for( var/chair in occupants )
-		var/mob/occupant = occupants[chair]
-		if( occupant )
-			occupant << full_message
+	if( pilot )
+		pilot << full_message
 
+	for( var/passenger in passengers )
+		passenger << full_message
+
+/obj/spacepod/proc/put_in_seat( mob/user as mob )
+	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
+		return 0
+
+	src.add_fingerprint(user)
+
+	var/fukkendisk
+	for( var/obj/A in user.contents )
+		if( istype( A, /obj/item/weapon/disk/nuclear ))
+			fukkendisk = A
+
+	if(fukkendisk)
+		user << "\red <B>The nuke-disk locks the door as you attempt to get in, you evil person.</b>"
+		return 0
+
+//	if (user.stat || !ishuman(user)) // I'll leave this here in case we wanna be speciest later
+//		return
+
+	for(var/mob/living/carbon/slime/M in range(1,usr))
+		if(M.Victim == user)
+			user << "You're too busy getting your life sucked out of you."
+			return 0
+
+	if( !( user in passengers ))
+		if( !pilot )
+			testing( "Moved [user] into the pilot's seat of [src]" )
+			visible_message("[user] climbs into the pilot's helm of \the [src]!")
+			pilot = user
+
+			playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
+
+			user.loc = src
+			user.reset_view(src)
+			user.stop_pulling()
+			user.forceMove(src)
+			return 1
+	else
+		if( !pilot )
+			occupants_announce( "[user] climbs out of their passenger's seat and into the pilot's helm." )
+			testing( "Moved [user] from the  passegner's list and into the pilot's seat of [src]" )
+			passengers.Remove( user )
+			pilot = user
+			return 1
+		else
+			user << "\red [pilot] is already in the pilot's seat!"
+
+	if( equipment_system )
+		if( equipment_system.seats.len > passengers.len ) // if theres still seats for them
+			user.reset_view(src)
+			user.stop_pulling()
+			user.forceMove(src)
+
+			if( user == pilot )
+				occupants_announce( "[user] climbs out of the pilot's seat and into a passenger's seat" )
+				testing( "Moved [user] from pilots seat into passegner's list of [src]." )
+				passengers.Add( user )
+				pilot = null
+				return 1
+			else
+				visible_message("[user] climbs into the [src]!")
+				testing( "Added [user] to the passenger list of [src]" )
+				passengers.Add( user )
+				user.loc = src
+				playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
+				return 1
+		else
+			user << "\red There's no spare seats!"
+
+	return 0
+
+/obj/spacepod/proc/exit( mob/user as mob )
+	if( user == pilot )
+		testing( "Removed [user] from the pilot's seat of [src]" )
+		pilot = null
+	if( user in passengers )
+		testing( "Removed [user] from the passengers list of [src]" )
+		passengers.Remove( user )
+
+	playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
+	user.loc = src.loc
 
 /obj/spacepod/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if(!isliving(M)) return
 	if(M != user)
 		if(M.stat != 0)
-			if(allow2enter)
-				if(!src.occupants["passenger"])
-					visible_message("\red [user.name] starts loading [M.name] into the pod!")
-					sleep(10)
-					moved_other_inside(M)
-				else if(src.occupants["passenger"] && !src.occupants["pilot"])
-					usr << "\red <b>You can't put a corpse into the driver's seat!</b>"
-					return
+			visible_message("\red [user.name] starts loading [M.name] into the pod!")
+			sleep(10)
+			put_in_seat( M )
 		else
 			return
 	else
-		move_inside(M, user)
+		put_in_seat( M, user )
 
 
 /obj/spacepod/verb/move_inside()
@@ -472,110 +456,23 @@
 	set name = "Enter Pod"
 	set src in oview(1)
 
-	var/fukkendisk
-	for( var/obj/A in usr.contents )
-		if( istype( A, /obj/item/weapon/disk/nuclear ))
-			fukkendisk = A
-
-	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting) //are you cuffed, dying, lying, stunned or other
-		return
-
-	if (usr.stat || !ishuman(usr))
-		return
-
-	if(fukkendisk)
-		usr << "\red <B>The nuke-disk is locking the door every time you try to open it. You get the feeling that it doesn't want to go into the spacepod.</b>"
-		return
-
-	for(var/mob/living/carbon/slime/M in range(1,usr))
-		if(M.Victim == usr)
-			usr << "You're too busy getting your life sucked out of you."
-			return
-
-	if(src.occupants["pilot"])
-		if(allow2enter)
-			if(!src.occupants["passenger"])
-				usr << "\blue <B>You start climbing into the passenger's seat.</B>"
-				if(enter_after(20,usr))
-					moved_inside(usr)
-					src.occupants["pilot"] = null
-				else
-					usr << "You stop entering the spacepod."
-				return
-			else
-				usr << "\red <b>You can't fit!</b>"
-		else
-			usr << "\red <b>The door is locked!</b>"
-
-	else if(!src.occupants["pilot"] && src.occupants["passenger"])
-		if(allow2enter)
-			usr << "\blue <B>You scooch over into the pilot's seat.</B>"
-			if(enter_after(20,usr))
-				moved_inside(usr)
-				src.occupants["passenger"] = null
-			else
-				usr << "You stop entering the spacepod."
-			return
-		else
-			usr << "\red <b>The door is locked!</b>"
-
-	else if(!src.occupants["pilot"] && !src.occupants["passenger"])
-		visible_message("\blue [usr] starts to climb into [src.name].")
-		if(enter_after(40,usr))
-			if(!src.occupants["pilot"])
-				moved_inside(usr)
-			else if(src.occupants["pilot"]!=usr)
-				usr << "[src.occupants["pilot"]] was faster. Try better next time, loser."
-		else
-			usr << "You stop entering the spacepod."
-		return
+	put_in_seat( usr )
 
 /obj/spacepod/verb/exit_pod()
 	set name = "Exit Pod"
 	set category = "Spacepod"
 	set src = usr.loc
 
-	if( usr == src.occupants["pilot"] )
-		var/mob/pilot = src.occupants["pilot"]
+	if( usr == src.pilot )
 		inertia_dir = 0 // engage reverse thruster and power down pod
 		pilot.loc = src.loc
-		src.occupants["pilot"] = null
-	else if( usr == src.occupants["passenger"] )
-		var/mob/passenger = src.occupants["passenger"]
-		passenger.loc = src.loc
-		src.occupants["passenger"] = null
-
-
-/obj/spacepod/verb/exit_pod2()
-	if(src.occupants["pilot"] == usr)
-		set name = "Eject Occupant"
-		set category = "Spacepod"
-		set src = usr.loc
-
-		var/chair = input( usr, "Which occupant seat would you like to eject?", "Eject Whom?", null ) in occupants
-
-		var/mob/passenger = occupants[chair]
-		if( passenger )
-			occupants_announce( "Occupant [passenger] has been ejected from the pod." )
-			passenger.loc = src.loc
-			src.throw_at( get_distant_turf( get_turf(src), 4, dir ), 4, 4, passenger.throw_speed, null)
-			src.occupants["passenger"] = null
-
-/obj/spacepod/verb/locksecondseat()
-	if( occupants["pilot"] == usr )
-		set name = "Lock Doors"
-		set category = "Spacepod"
-		set src = usr.loc
-
-		if(src.allow2enter)
-			src.allow2enter = 0
-			occupants_announce( "Spacepod exterior doors locked." )
-		else
-			src.allow2enter = 1
-			occupants_announce( "Spacepod exterior doors unlocked." )
+		src.pilot = null
+	else if( locate( usr ) in passengers )
+		usr.loc = src.loc
+		passengers.Remove( usr )
 
 /obj/spacepod/verb/toggleDoors()
-	if(src.occupants["pilot"])
+	if(src.pilot)
 		set name = "Toggle Nearby Pod Doors"
 		set category = "Spacepod"
 		set src = usr.loc
@@ -590,24 +487,25 @@
 					else
 						P.close()
 						return 1
-				occupants["pilot"] << "<span class='warning'>Access denied.</span>"
+				pilot << "<span class='warning'>Access denied.</span>"
 				return
-		occupants["pilot"] << "<span class='warning'>You are not close to any pod doors.</span>"
+		pilot << "<span class='warning'>You are not close to any pod doors.</span>"
 		return
 
+/*
 /obj/spacepod/verb/autopilot()
 	if( equipment_system.autopilot )
-		if( src.occupants["pilot"] == usr )
+		if( src.pilot == usr )
 			set name = "Activate Autopilot"
 			set category = "Spacepod"
 			set src = usr.loc
 
 			equipment_system.autopilot.prompt()
-
+*/
 
 /obj/spacepod/verb/fireWeapon()
 	if( equipment_system.weapon_system )
-		if( src.occupants["pilot"] == usr )
+		if( src.pilot == usr )
 			set name = "Fire Pod Weapons"
 			set desc = "Fire the weapons."
 			set category = "Spacepod"
@@ -619,7 +517,7 @@
 					occupants_announce( "ERROR: This pod does not have any active weapon systems.", 2 )
 
 obj/spacepod/verb/toggleLights()
-	if( src.occupants["pilot"] == usr )
+	if( src.pilot == usr )
 		set name = "Toggle Lights"
 		set category = "Spacepod"
 		set src = usr.loc
@@ -633,7 +531,7 @@ obj/spacepod/verb/toggleLights()
 
 	for(var/obj/machinery/computer/gate_beacon_console/C in orange(usr.loc, 3)) // Finding suitable VR platforms in area
 		if(alert(usr, "Would you like to interface with: [C]?", "Confirm", "Yes", "No") == "Yes")
-			C.gate_prompt( occupants["pilot"] )
+			C.gate_prompt( pilot )
 			occupants_announce( "Activated charging sequence for nearby bluespace beacon." )
 
 /obj/spacepod/proc/lightsToggle()
@@ -735,7 +633,7 @@ obj/spacepod/verb/toggleLights()
 	return 1
 
 /obj/spacepod/relaymove(mob/user, direction)
-	if( src.occupants["pilot"] == usr )
+	if( src.pilot == usr )
 		handlerelaymove(user, direction)
 	else
 		return
@@ -796,14 +694,14 @@ obj/spacepod/verb/toggleLights()
 	..()
 
 /obj/spacepod/verb/fly_up()
-	if( src.occupants["pilot"] == usr )
+	if( src.pilot == usr )
 		set category = "Spacepod"
 		set name = "Fly Upwards"
 		set src = usr.loc
 
 		var/turf/ground = get_turf( src )
 		if( !istype( ground.loc, /area/space ))
-			occupants["pilot"] << "<span class='warning'>\The ceiling is in the way!</span>"
+			pilot << "<span class='warning'>\The ceiling is in the way!</span>"
 
 		var/turf/controllerlocation = locate(1, 1, z)
 		for(var/obj/effect/landmark/zcontroller/controller in controllerlocation)
@@ -812,21 +710,21 @@ obj/spacepod/verb/toggleLights()
 
 				if( !upwards.density )
 					src.loc = upwards
-					occupants["pilot"] << "You cruise upwards."
+					pilot << "You cruise upwards."
 				else
-					occupants["pilot"] << "<span class='warning'>There is a [upwards] in the way!</span>"
+					pilot << "<span class='warning'>There is a [upwards] in the way!</span>"
 			else
-				occupants["pilot"] << "<span class='warning'>There's nothing of interest above you!</span>"
+				pilot << "<span class='warning'>There's nothing of interest above you!</span>"
 
 /obj/spacepod/verb/fly_down()
-	if( src.occupants["pilot"] == usr )
+	if( src.pilot == usr )
 		set category = "Spacepod"
 		set name = "Fly Downwards"
 		set src = usr.loc
 
 		var/turf/ground = get_turf( src )
 		if( !istype( ground, /turf/space ) && !istype( ground,/turf/simulated/floor/open ))
-			occupants["pilot"] << "<span class='warning'>\The [ground] is in the way!</span>"
+			pilot << "<span class='warning'>\The [ground] is in the way!</span>"
 
 		var/turf/controllerlocation = locate(1, 1, z)
 		for(var/obj/effect/landmark/zcontroller/controller in controllerlocation)
@@ -835,11 +733,11 @@ obj/spacepod/verb/toggleLights()
 
 				if( !below.density )
 					src.loc = below
-					occupants["pilot"] << "You cruise downwards."
+					pilot << "You cruise downwards."
 				else
-					occupants["pilot"] << "<span class='warning'>There is a [below] in the way!</span>"
+					pilot << "<span class='warning'>There is a [below] in the way!</span>"
 			else
-				occupants["pilot"] << "<span class='warning'>There's nothing of interest below you!!</span>"
+				pilot << "<span class='warning'>There's nothing of interest below you!!</span>"
 
 /obj/spacepod/verb/sector_locate()
 	set category = "Spacepod"
@@ -862,7 +760,7 @@ obj/spacepod/verb/toggleLights()
 		usr << "<span class='notice'>You are currently located in Sector [SYSTEM_DESIGNATION]-[sector.x]-[sector.y]</span>"
 
 /obj/spacepod/verb/switch_weapon()
-	if( src.occupants["pilot"] == usr )
+	if( src.pilot == usr )
 		if( equipment_system.weapon_system )
 			set category = "Spacepod"
 			set name = "Switch Weapon System"
@@ -874,6 +772,7 @@ obj/spacepod/verb/toggleLights()
 					weapons.Add( weapon )
 			var/selected = equipment_system.weapon_system
 			selected = input( usr, "Select your preferred weapon system.", "Select Weapon System", selected ) in weapons
+			equipment_system.weapon_system = selected
 
 /obj/spacepod/complete/New()
 	..()
@@ -928,6 +827,10 @@ obj/spacepod/verb/toggleLights()
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/misc/tracker )
 	equipment_system.equip( new /obj/item/weapon/cell/super )
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/seat )
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/seat )
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/seat )
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/seat )
 
 	equipment_system.misc_system.enabled = 1
 	return
@@ -945,12 +848,6 @@ obj/spacepod/verb/toggleLights()
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/misc/tracker )
 	equipment_system.misc_system.enabled = 1
 	return
-
-#undef SPACEPOD_SHIELD
-#undef SPACEPOD_WEAPONS
-#undef SPACEPOD_AUTOPILOT
-#undef SPACEPOD_MISC
-#undef SPACEPOD_ALL
 
 #undef DAMAGE
 #undef FIRE
