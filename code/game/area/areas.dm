@@ -299,30 +299,35 @@ var/list/mob/living/forced_ambiance_list = new
 		L.make_floating(0)
 
 	L.lastarea = newarea
+
+	if( L.client.ambience_playing && ( oldarea.ambience != src.ambience ))
+		L << sound(null, channel = 1)
+		L.client.ambience_playing = 0
+
 	play_ambience(L)
 
 /area/proc/play_ambience(var/mob/living/L)
 	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
-	if(!(L && L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))	return
+	if(!(L && L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))
+		// If we previously were in an area with force-played ambiance, stop it.
+		if( L in forced_ambiance_list )
+			L << sound(null, channel = 1)
+			forced_ambiance_list -= L
 
-	// If we previously were in an area with force-played ambiance, stop it.
-	if(L in forced_ambiance_list)
-		L << sound(null, channel = 1)
-		forced_ambiance_list -= L
+		if( src.ambience.len )
+			if( !L.client.ambience_playing )
+				L.client.ambience_playing = 1
+				L << sound( pick( ambience ), repeat = 1, wait = 0, volume = 35, channel = 2)
 
-	if(!L.client.ambience_playing)
-		L.client.ambience_playing = 1
-		L << sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
-
-	if(forced_ambience)
-		forced_ambiance_list += L
-		L << forced_ambience
-	else if(src.ambience.len && prob(35))
-		if((world.time >= L.client.played + 600))
-			var/musVolume = 25
-			var/sound = pick(ambience)
-			L << sound(sound, repeat = 0, wait = 0, volume = musVolume, channel = 1)
-			L.client.played = world.time
+	if(!(L && L.client && (L.client.prefs.toggles & SOUND_MIDI)))
+		if(forced_ambience)
+			forced_ambiance_list += L
+			L << forced_ambience
+		else if(src.music.len && prob(35))
+			if((world.time >= L.client.played + 600))
+				var/musVolume = 25
+				L << sound( pick(music), repeat = 0, wait = 0, volume = musVolume, channel = 1)
+				L.client.played = world.time
 
 /area/proc/gravitychange(var/gravitystate = 0, var/area/A)
 
@@ -363,5 +368,5 @@ var/list/mob/living/forced_ambiance_list = new
 		mob:AdjustStunned(2)
 		mob:AdjustWeakened(2)
 
-	mob << "Gravity!"
+	mob << "You fall to the floor because gravity!"
 
