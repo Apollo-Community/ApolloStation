@@ -384,7 +384,9 @@
 		if( !pilot )
 			testing( "Moved [user] into the pilot's seat of [src]" )
 			visible_message("[user] climbs into the pilot's helm of \the [src]!")
+
 			pilot = user
+			add_HUD(pilot)
 
 			playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 
@@ -398,7 +400,10 @@
 			occupants_announce( "[user] climbs out of their passenger's seat and into the pilot's helm." )
 			testing( "Moved [user] from the  passegner's list and into the pilot's seat of [src]" )
 			passengers.Remove( user )
+
 			pilot = user
+			add_HUD(pilot)
+
 			return 1
 		else
 			user << "\red [pilot] is already in the pilot's seat!"
@@ -413,13 +418,18 @@
 				occupants_announce( "[user] climbs out of the pilot's seat and into a passenger's seat" )
 				testing( "Moved [user] from pilots seat into passegner's list of [src]." )
 				passengers.Add( user )
+
+				remove_HUD(pilot)
 				pilot = null
+
 				return 1
 			else
 				visible_message("[user] climbs into the [src]!")
 				testing( "Added [user] to the passenger list of [src]" )
+
 				passengers.Add( user )
 				user.loc = src
+
 				playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 				return 1
 		else
@@ -430,6 +440,8 @@
 /obj/spacepod/proc/exit( mob/user as mob )
 	if( user == pilot )
 		testing( "Removed [user] from the pilot's seat of [src]" )
+
+		remove_HUD(pilot)
 		pilot = null
 	if( user in passengers )
 		testing( "Removed [user] from the passengers list of [src]" )
@@ -682,6 +694,16 @@ obj/spacepod/verb/toggleLights()
 			user << "<span class='warning'>Unknown error has occurred, yell at pomf.</span>"
 		return 0
 	battery.charge = max(0, battery.charge - 3)
+
+/obj/spacepod/proc/add_HUD(var/mob/M)
+	if(!M || !(M.hud_used))	return
+
+	M.hud_used.spacepod_hud()
+
+/obj/spacepod/proc/remove_HUD(var/mob/M)
+	if(!M || !(M.hud_used))	return
+
+	M.hud_used.remove_spacepod_hud()
 
 /obj/effect/landmark/spacepod/random
 	name = "spacepod spawner"
