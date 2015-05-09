@@ -1440,5 +1440,27 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/clothing/under/dress/dress_saloon)
 	group = "Miscellaneous"
 
+/datum/supply_packs/randomised/newton/engines
+	name = "Newton Engines surplus crate"
+	containername = "Newton Engines surplus crate"
+	containertype = /obj/structure/closet/crate
+	cost = 200
+	num_contained = 1
+	contains = list(/obj/item/device/spacepod_equipment/engine/newton/galileo,
+					/obj/item/device/spacepod_equipment/engine/newton/fourier)
+	group = "Operations"
 
-
+/datum/supply_packs/spacepod
+	name = "Spacepod construction kit"
+	containername = "spacepod construction kit"
+	containertype = /obj/structure/closet/crate
+	cost = 300
+	contains = list(/obj/item/pod_parts/pod_frame/fore_port,
+					/obj/item/pod_parts/pod_frame/fore_starboard,
+					/obj/item/pod_parts/pod_frame/aft_port,
+					/obj/item/pod_parts/pod_frame/aft_starboard,
+					/obj/item/pod_parts/core,
+					/obj/item/device/spacepod_equipment/engine,
+					/obj/item/weapon/cell/super
+					)
+	group = "Operations"

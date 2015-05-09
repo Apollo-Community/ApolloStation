@@ -24,10 +24,11 @@ var/global/list/bluespace_beacons = list()
 	l_color = "#142933"
 	luminosity = 0
 	var/functional = 1
+	var/warpable = 1
 	var/charge = 0 // Used for charging a bluespace gate
 	var/last_charge = 0 // What the charge was last tick
 	var/charge_decay = 15 // How much charge the beacon loses per tick
-	var/max_charge = 1000 // Used for charging a bluespace gate
+	var/max_charge = 200 // Used for charging a bluespace gate
 	var/ticks_since_announce = 0
 	var/obj/machinery/gate_beacon/exit = null
 	var/obj/effect/map/sector = null
@@ -45,6 +46,9 @@ var/global/list/bluespace_beacons = list()
 		if( name == "bluespace beacon" )
 			var/hash = "[pick( alphabet_uppercase )][pick( alphabet_uppercase )][rand(0, 9)]"
 			name = "Bluespace Beacon [hash]-[sector.x][sector.y]"
+
+		if( istype( get_turf( src ), /turf/simulated/floor/bspace_safe ))
+			warpable = 0
 
 		bluespace_beacons["[name]"] = src
 
@@ -68,7 +72,7 @@ var/global/list/bluespace_beacons = list()
 
 /obj/machinery/gate_beacon/process()
 	if( charge >= max_charge )
-		open_gate( exit )
+		open_gate()
 	if( charge >= 25 )
 		if( ticks_since_announce > 50 )
 			ticks_since_announce = 0
@@ -93,9 +97,10 @@ var/global/list/bluespace_beacons = list()
 	if( !functional )
 		src.ping("[src] states, \"ERROR: Failed to interface with bluespace network!\"")
 		return
-	if( !exit.functional )
-		src.ping("[src] states, \"ERROR: Failed to interface with destination beacon!\"")
-		return
+	if( exit )
+		if( !exit.functional )
+			src.ping("[src] states, \"ERROR: Failed to interface with destination beacon!\"")
+			return
 
 	src.ping("[src] states, \"Opening bluespace gate. Prepare to embark.\"")
 	exit.ping("[exit] states, \"Offsite activation. Please clear the area.\"")
@@ -168,8 +173,13 @@ var/global/list/bluespace_beacons = list()
 
 	var/obj/machinery/gate_beacon/destination
 
-	var/list/bluespace_beacons_dest = bluespace_beacons
-	bluespace_beacons_dest.Remove( beacon )
+	var/list/bluespace_beacons_dest = list()
+	for( var/name in bluespace_beacons )
+		var/obj/machinery/gate_beacon/B = bluespace_beacons[name]
+		if( B.warpable )
+			bluespace_beacons_dest.Add( B )
+	testing( "bluespace_beacons.len is [bluespace_beacons.len]" )
+	testing( "bluespace_beacons_dest.len is [bluespace_beacons_dest.len]" )
 
 	destination = input( user, "Where would you like to open a bluespace gate to?", "Destination", destination ) in bluespace_beacons_dest
 

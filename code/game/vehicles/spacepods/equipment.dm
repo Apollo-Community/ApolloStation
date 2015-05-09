@@ -388,8 +388,8 @@
 
 
 /obj/item/device/spacepod_equipment/shield
-	name = "\improper shield system"
-	desc = "For particularily rainy days."
+	name = "Lancelot P3R (shield)"
+	desc = "A shield system designed to negate energy from attacks."
 	icon_state = "shield"
 	var/max_negate = 20 // The maximum amount of damage that the shield can totally block
 	var/charge_multiplier = 20 // How much charge it takes per unit of damage

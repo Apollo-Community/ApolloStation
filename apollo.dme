@@ -844,7 +844,7 @@
 #include "code\game\turfs\unsimulated\walls.dm"
 #include "code\game\vehicles\spacepods\construction.dm"
 #include "code\game\vehicles\spacepods\equipment.dm"
-#include "code\game\vehicles\spacepods\gas_station.dm"
+#include "code\game\vehicles\spacepods\fuel_station.dm"
 #include "code\game\vehicles\spacepods\parts.dm"
 #include "code\game\vehicles\spacepods\pod_fabricator.dm"
 #include "code\game\vehicles\spacepods\spacepod.dm"

@@ -144,7 +144,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttle.area_station = locate(/area/shuttle/alien/mine)
 	shuttles["Alien"] = shuttle
 	//process_shuttles += shuttle	//don't need to process this. It can only be moved using admin magic anyways.
-
+/*
 	// Public shuttles
 	shuttle = new()
 	shuttle.location = 1
@@ -186,6 +186,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttle.dock_target_offsite = "laborcamp_outpost_dock"
 	shuttles["Labor Camp"] = shuttle
 	process_shuttles += shuttle
+*/
 */
 	// ERT Shuttle
 	var/datum/shuttle/ferry/multidock/specops/ERT = new()

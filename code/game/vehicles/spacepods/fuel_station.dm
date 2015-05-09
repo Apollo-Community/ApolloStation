@@ -38,24 +38,19 @@
 
 /turf/simulated/floor/bspace_safe/refueling_floor/proc/init_devices( var/obj/spacepod/spacepod = null )
 	for( var/obj/machinery/atmospherics/pipe/tank/phoron/tank in range( src, 3 ))
-		testing( "Fuel tank found" )
 		fuel_tanks.Add( tank )
 
 	for( var/turf/simulated/floor/bspace_safe/refueling_floor/port in range( src, 3 ))
-		testing( "Fuel port found" )
 		fuel_ports.Add( port )
 
 	if( !spacepod ) // If we weren't given one, we better find one
 		for( spacepod in range( src, 1 ))
-			testing( "Spacepod found" )
 			break
 
 	if( !istype( spacepod )) // If we still couldn't find one, lets end this hopeless endeavour
-		testing( "Not a valid spacepod" )
 		return
 
 	if( spacepod == refueling )
-		testing( "Already matches the spacepod being refueled" )
 		return
 
 	spacepod.occupants_announce("Connecting pod to refueling station...")
