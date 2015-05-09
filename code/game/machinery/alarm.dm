@@ -1159,8 +1159,13 @@ FIRE ALARM
 					playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 					del(src)
 		return
+	var/area/A = src.loc
+	A = A.loc
 
-	src.alarm()
+	if(!A.fire)
+		src.alarm()
+	else
+		src.reset()
 	return
 
 /obj/machinery/firealarm/process()//Note: this processing was mostly phased out due to other code, and only runs when needed
