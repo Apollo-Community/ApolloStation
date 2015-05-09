@@ -75,14 +75,6 @@
 
 	STUI.ui_interact(usr)
 
-/proc/show_vars()
-	user << "##TESTING CACHED LOGS"
-	user << STUI.cached_logs[1]
-	user << "##TESTING ENTIRE LOGS"
-	user << STUI.entire_log[1]
-	user << "##TESTING TEMP LOGS"
-	user << STUI.temp_logs[1]
-
 //F_A's split
 proc/split(txt, d)
     var/pos = findtext(txt, d)
