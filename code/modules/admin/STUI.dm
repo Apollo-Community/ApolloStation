@@ -12,16 +12,20 @@
 		DEBUG 			6
 
 
+		DEFAULT CONFIG LENGTH == 150
+
+
 		WIP: TODO: **
 
-			Stop mods seeing admin say
-			integrate HREFS
-			investigate possibilities for in-game grep
-
+			Improve efficency
 */
 
+
 /datum/STUI
-	var/logs[6]
+	var/cached_logs[6]			//stores changes to the logs
+	var/entire_log[6]			//stores the entirety of the logs
+	var/temp_logs[6]			//stores the temporary state of the logs
+	var/process = 1
 
 /datum/STUI/Topic(href, href_list)
 	if(href_list["command"])
@@ -30,7 +34,27 @@
 /datum/STUI/proc/ui_interact(mob/user, ui_key = "STUI", var/datum/nanoui/ui = null, var/force_open = 1)
 	var/data[0]
 
-	data["log"] = STUI.logs[user.STUI_log]
+	if(cached_logs[user.STUI_log])									//only need to do this if cached logs exist
+		var/temp_split[]
+		entire_log[user.STUI_log] += cached_logs[user.STUI_log]		//adds the cache to the entire log
+
+		if(process)
+			temp_split = split(entire_log[user.STUI_log],"<br>")
+		else
+			temp_split = split(addtext(temp_logs[user.STUI_log],cached_logs[user.STUI_log]),"<br>")
+
+		if(temp_split.len > config.STUI_length+1)
+			temp_split.Cut(,temp_split.len-config.STUI_length)
+			process = 0
+
+		temp_logs[user.STUI_log] = list2text(temp_split,"<br>")
+
+
+		cached_logs[user.STUI_log] = null							//clears the cache-
+
+		//show_vars()
+
+	data["log"] = temp_logs[user.STUI_log]
 	data["current_log"] = user.STUI_log
 	switch(user.STUI_log)
 		if(1)		data["colour"] = "bad"
@@ -51,3 +75,25 @@
 
 	STUI.ui_interact(usr)
 
+/proc/show_vars()
+	user << "##TESTING CACHED LOGS"
+	user << STUI.cached_logs[1]
+	user << "##TESTING ENTIRE LOGS"
+	user << STUI.entire_log[1]
+	user << "##TESTING TEMP LOGS"
+	user << STUI.temp_logs[1]
+
+//F_A's split
+proc/split(txt, d)
+    var/pos = findtext(txt, d)
+    var/start = 1
+    var/dlen = length(d)
+
+    . = list()
+
+    while(pos > 0)
+        . += copytext(txt, start, pos)
+        start = pos + dlen
+        pos = findtext(txt, d, start)
+
+    . += copytext(txt, start)

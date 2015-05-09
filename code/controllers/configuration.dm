@@ -182,6 +182,8 @@
 	var/dooc_allowed = 1
 	var/dsay_allowed = 1
 
+	var/STUI_length = 150
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for (var/T in L)
