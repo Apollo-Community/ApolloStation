@@ -74,6 +74,10 @@ var/global/list/bluespace_beacons = list()
 	if( charge >= max_charge )
 		open_gate()
 	if( charge >= 25 )
+		var/charge_percent = charge/max_charge
+		var/turf/T = get_turf(src)
+		playsound( T, 'sound/effects/portal_charge.ogg', 90, 1, 0, 0, 0, ( 32000+( charge_percent*23000 )))
+
 		if( ticks_since_announce > 50 )
 			ticks_since_announce = 0
 			var/message = null
@@ -90,22 +94,22 @@ var/global/list/bluespace_beacons = list()
 	if( charge < 0 )
 		charge = 0
 
-/obj/machinery/gate_beacon/proc/open_gate()
+/obj/machinery/gate_beacon/proc/open_gate( var/obj/machinery/gate_beacon/dest = exit )
 	if( src == exit )
 		src.ping("[src] states, \"ERROR: Critical error with the bluespace network!\"")
 		return
 	if( !functional )
 		src.ping("[src] states, \"ERROR: Failed to interface with bluespace network!\"")
 		return
-	if( exit )
-		if( !exit.functional )
+	if( dest )
+		if( !dest.functional )
 			src.ping("[src] states, \"ERROR: Failed to interface with destination beacon!\"")
 			return
 
 	src.ping("[src] states, \"Opening bluespace gate. Prepare to embark.\"")
-	exit.ping("[exit] states, \"Offsite activation. Please clear the area.\"")
+	dest.ping("[exit] states, \"Offsite activation. Please clear the area.\"")
 
-	new /obj/machinery/singularity/bluespace_gate(src.loc, exit)
+	new /obj/machinery/singularity/bluespace_gate(src.loc, dest)
 
 	deactivate()
 
@@ -119,6 +123,9 @@ var/global/list/bluespace_beacons = list()
 		ping("[src] states, \"ERROR: No bluespace inducers nearby!\"")
 	for( var/obj/machinery/power/bluespace_inducer/inducer in inducers )
 		inducer.activate( src )
+
+	ping("[src] states, \"Bluespace gate opening, standby.\"")
+	dest.ping("[dest] states, \"Incoming transmission, please clear the area.\"")
 
 	spawn( 30 )
 		update_icon()
@@ -170,21 +177,20 @@ var/global/list/bluespace_beacons = list()
 	if( !beacon )
 		if( !find_beacon() )
 			ping("[src] states, \"ERROR: Cannot find nearby bluespace beacon!\"")
+			return
 
 	var/obj/machinery/gate_beacon/destination
 
 	var/list/bluespace_beacons_dest = list()
 	for( var/name in bluespace_beacons )
 		var/obj/machinery/gate_beacon/B = bluespace_beacons[name]
-		if( B.warpable )
+		if( B.warpable && B != beacon )
 			bluespace_beacons_dest.Add( B )
-	testing( "bluespace_beacons.len is [bluespace_beacons.len]" )
-	testing( "bluespace_beacons_dest.len is [bluespace_beacons_dest.len]" )
 
 	destination = input( user, "Where would you like to open a bluespace gate to?", "Destination", destination ) in bluespace_beacons_dest
 
 	if( destination )
-		beacon.activate( bluespace_beacons[destination] )
+		beacon.activate( destination )
 	else
 		ping("[src] states, \"ERROR: No valid destination chosen!\"")
 

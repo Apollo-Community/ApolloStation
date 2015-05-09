@@ -37,9 +37,9 @@
 /obj/machinery/computer/pod_recall/process()
 	if( active )
 		if( !beacon )
-			processing_objects.Remove( src )
+			return
 		if( !target )
-			processing_objects.Remove( src )
+			return
 
 		if( src.charge >= src.max_charge )
 			new /obj/machinery/singularity/bluespace_gate/( src.target.loc, src.beacon.loc )
@@ -57,4 +57,5 @@
 	if( alert(usr, "Would you like recall [target]? \nWARNING: Do not recall the shuttle if it is inside a structure.", "Recall Shuttle", "Yes", "No") == "Yes")
 		ping("[src] states, \"Recalling [target] to [beacon]\"")
 		target.occupants_announce("Shuttle being recalled by [src]. Prepare for travel through a bluespace gate.")
+		beacon.ping("[src] states, \"ALERT: Incoming transmission, clear the area.\"")
 		active = 1

@@ -34,11 +34,6 @@
 	..(loc)
 
 	exit = new_exit
-
-	if( !exit )
-		testing( "A bluespace gate was opened with no exit." )
-	else
-		testing( "A bluespace gate was opened with exit ([exit.x], [exit.y], [exit.z])" )
 	l_color = "#142933"
 	SetLuminosity( 5 )
 
@@ -49,12 +44,11 @@
 /proc/bluespace_jump( var/turf/source, var/atom/A, var/turf/exit = null )
 	if( !A ) return
 	if( !source ) return
-	if( !istype( A, /obj ))
+	if( istype( A, /turf/simulated/floor/bspace_safe )) return // bluespace-safe floors cant be sucked through
+
+	if( istype( A, /obj ) && !istype( A, /obj/spacepod/shuttle ))
 		var/obj/O = A
 		if( O.anchored )
-			return
-	if( !istype( A, /atom/movable ))
-		if( istype( get_turf( A ), /turf/simulated/floor/bspace_safe )) // items anchored down on bluespace safe turf wont be sucked through
 			return
 
 	var/x_off = source.x-A.x
@@ -70,6 +64,10 @@
 		destination = locate( exit.x-x_off, exit.y-y_off, exit.z ) // Getting the destination relative to where the object left
 	else // If we don't have a destination, toss them somewhere random
 		destination = locate( source.x+pick( rand( -10, source.x-2 ), rand( source.x+2, 10 )), source.y+pick( rand( -10, source.y-2 ), rand( source.y+2, 10 )), source.z )
+
+	animate(A, transform = matrix()*(-2), transform = turn(matrix(), 360), time = 2)
+	sleep(2)
+	animate(A, transform = null, time = 1)
 
 	// Transporting turfs
 	if( istype( A, /turf/simulated ))
@@ -95,3 +93,4 @@
 				M << "\red You feel that something went very wrong."
 
 		AM.loc = destination
+		playsound(AM.loc, 'sound/effects/pop1.ogg', 80, 1)
