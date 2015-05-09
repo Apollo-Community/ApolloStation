@@ -120,7 +120,8 @@ var/global/list/bluespace_beacons = list()
 	exit = dest
 
 	if( inducers.len < 1 )
-		ping("[src] states, \"ERROR: No bluespace inducers nearby!\"")
+		if( !find_inducers() )
+			ping("[src] states, \"ERROR: No bluespace inducers nearby!\"")
 	for( var/obj/machinery/power/bluespace_inducer/inducer in inducers )
 		inducer.activate( src )
 
@@ -136,6 +137,15 @@ var/global/list/bluespace_beacons = list()
 
 	charge = 0
 	update_icon()
+
+/obj/machinery/gate_beacon/proc/find_inducers()
+	for( var/obj/machinery/power/bluespace_inducer/inducer in orange( 7 ))
+		if( !( inducer in inducers ))
+			inducers.Add( inducer )
+
+	if( inducers.len )
+		return 1
+	return 0
 
 // ========= BLUESPACE GATE CONTROL CONSOLE =========
 
