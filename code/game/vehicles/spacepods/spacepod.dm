@@ -197,10 +197,12 @@
 /obj/spacepod/attackby(obj/item/W as obj, mob/user as mob, params)
 	if( istype( W, /obj/item/weapon/tank ))
 		equipment_system.fill_engine( W )
+		return
 	if(iscrowbar(W))
 		hatch_open = !hatch_open
 		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 		user << "<span class='notice'>You [hatch_open ? "open" : "close"] the maintenance hatch.</span>"
+		return
 	if(istype(W, /obj/item/weapon/cell))
 		if(!hatch_open)
 			user << "\red The maintenance hatch is closed!"
@@ -218,6 +220,7 @@
 
 		// Adding the equipment to the system
 		equipment_system.equip(W, user)
+		return
 	if(istype(W, /obj/item/pod_parts/armor))
 		if(!hatch_open)
 			user << "\red The maintenance hatch is closed!"
@@ -244,8 +247,13 @@
 				if(!src || !WT.remove_fuel(3, user)) return
 				repair_damage(10)
 				user << "\blue You mend some [pick("dents","bumps","damage")] with \the [WT]"
+				return
 		else
 			user << "\blue <b>\The [src] is fully repaired!</b>"
+			return
+
+	if( equipment_system.cargohold )
+		equipment_system.cargohold.put_inside( W, user )
 
 /obj/spacepod/attack_hand(mob/user as mob)
 	if(!hatch_open)
@@ -452,18 +460,23 @@
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 	user.loc = src.loc
 
-/obj/spacepod/MouseDrop_T(mob/M as mob, mob/user as mob)
-	if(!isliving(M)) return
-	if(M != user)
-		if(M.stat != 0)
-			visible_message("\red [user.name] starts loading [M.name] into the pod!")
-			sleep(10)
-			put_in_seat( M )
+/obj/spacepod/MouseDrop_T(var/atom/movable/W, mob/user as mob)
+	if( istype( W, /mob ))
+		var/mob/M = W
+		if(!isliving(M)) return
+		if(M != user)
+			if(M.stat != 0)
+				visible_message("\red [user.name] starts loading [M.name] into the pod!")
+				sleep(10)
+				put_in_seat( M )
+			else
+				return
 		else
-			return
-	else
-		put_in_seat( M, user )
+			put_in_seat( M, user )
 
+	if( istype( W, /obj ))
+		if( equipment_system.cargohold )
+			equipment_system.cargohold.put_inside( W, user )
 
 /obj/spacepod/verb/move_inside()
 	set category = "Object"
@@ -540,14 +553,24 @@ obj/spacepod/verb/toggleLights()
 		lightsToggle()
 
 /obj/spacepod/verb/use_warp_beacon()
-	set name = "Use Nearby Warp Beacon"
-	set category = "Spacepod"
-	set src = usr.loc
+	if( src.pilot == usr )
+		set name = "Use Nearby Warp Beacon"
+		set category = "Spacepod"
+		set src = usr.loc
 
-	for(var/obj/machinery/computer/gate_beacon_console/C in orange(usr.loc, 3)) // Finding suitable VR platforms in area
-		if(alert(usr, "Would you like to interface with: [C]?", "Confirm", "Yes", "No") == "Yes")
-			C.gate_prompt( pilot )
-			occupants_announce( "Activated charging sequence for nearby bluespace beacon." )
+		for(var/obj/machinery/computer/gate_beacon_console/C in orange(usr.loc, 3)) // Finding suitable VR platforms in area
+			if(alert(usr, "Would you like to interface with: [C]?", "Confirm", "Yes", "No") == "Yes")
+				C.gate_prompt( pilot )
+				occupants_announce( "Activated charging sequence for nearby bluespace beacon." )
+
+/obj/spacepod/verb/dump_cargo()
+	if( src.pilot == usr )
+		if( equipment_system.cargohold )
+			set name = "Dump Cargo"
+			set category = "Spacepod"
+			set src = usr.loc
+
+			equipment_system.cargohold.dump_prompt( usr )
 
 /obj/spacepod/proc/lightsToggle()
 	lights = !lights
@@ -926,6 +949,7 @@ obj/spacepod/verb/toggleLights()
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/seat )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/seat )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/seat )
+	equipment_system.equip( new /obj/item/device/spacepod_equipment/misc/cargo )
 
 	equipment_system.misc_system.enabled = 1
 	return

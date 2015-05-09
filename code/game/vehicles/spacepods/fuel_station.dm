@@ -81,9 +81,13 @@
 /datum/global_iterator/refueling_floor/process( var/turf/simulated/floor/bspace_safe/refueling_floor/hose )
 	if( hose )
 		if( hose.refueling )
+			var/obj/spacepod/refueling = hose.refueling
+			var/datum/gas_mixture/pod = refueling.equipment_system.engine_system.fuel_tank
+
+			if( !refueling.equipment_system.engine_system ) return
+
 			for( var/obj/machinery/atmospherics/pipe/tank/phoron/tank in hose.fuel_tanks )
-				var/obj/spacepod/refueling = hose.refueling
-				var/datum/gas_mixture/pod = refueling.equipment_system.engine_system.fuel_tank
+
 				var/datum/gas_mixture/fuel = tank.air_temporary
 				var/pressure_delta
 				var/output_volume

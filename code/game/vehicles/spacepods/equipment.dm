@@ -61,6 +61,7 @@
 	var/obj/item/device/spacepod_equipment/misc/misc_system // misc system
 	var/obj/item/device/spacepod_equipment/engine/engine_system // engine system
 	var/obj/item/device/spacepod_equipment/shield/shield_system // shielding system
+	var/obj/item/device/spacepod_equipment/misc/cargo/cargohold // shielding system
 	var/obj/item/weapon/cell/battery // the battery, durh
 	var/obj/item/pod_parts/armor/armor // what kind of armor it has
 //	var/obj/item/device/spacepod_equipment/misc/autopilot/autopilot // the autopilot
@@ -93,7 +94,6 @@
 		return 0
 
 /datum/spacepod/equipment/proc/dequip(var/obj/item/equipment, var/mob/user = null)
-
 	deassign_system( equipment )
 	spacepod_equipment.Remove( equipment )
 	my_atom.update_icons()
@@ -124,6 +124,10 @@
 		if( autopilot )
 			return 0
 		autopilot = equipment*/
+	else if( istype( equipment, /obj/item/device/spacepod_equipment/misc/cargo )) // Assigning seats
+		if( cargohold )
+			return 0
+		cargohold = equipment
 	else if( istype( equipment, /obj/item/device/spacepod_equipment/misc )) // Assigning misc systems
 		misc_system = equipment
 	else if( istype( equipment, /obj/item/weapon/cell )) // Assigning the battery
@@ -161,10 +165,14 @@
 		seats.Remove( equipment )
 /*	else if( equipment == autopilot ) // Deassigning the battery
 		autopilot = null*/
+	else if( equipment == cargohold ) // Deassigning the cargohold
+		cargohold = null
 	else if( equipment == battery ) // Deassigning the battery
 		battery = null
 	else if( equipment == armor )
 		reset_default()
+		my_atom.update_icon()
+		return 1
 
 	if( istype( equipment, /obj/item/device/spacepod_equipment ))
 		var/obj/item/device/spacepod_equipment/equipped = equipment
@@ -174,13 +182,16 @@
 	return 1
 
 /datum/spacepod/equipment/proc/reset_default()
-	dump_equipment()
 	armor = null
 	my_atom.health = 100
 	max_size = 5
 
+	spawn( 1 )
+		dump_equipment()
+
 /datum/spacepod/equipment/proc/dump_equipment()
 	my_atom.loc.visible_message( "The entire equipment system of the [my_atom] is dumped out of the back" )
+
 	for( var/obj/equipment in spacepod_equipment )
 		dequip( equipment )
 
@@ -335,10 +346,10 @@
 	fuel_tank.add_thermal_energy( -heat_rad_rate )
 
 	if( fuel_tank.temperature >= max_temp ) // hurt em a bit for running it too hot
-		my_atom.deal_damage( (fuel_tank.temperature/(4*max_temp))*heat_rate )
+		my_atom.deal_damage(( fuel_tank.temperature/( 4*max_temp ))*heat_rate )
 
 	if( my_atom.pilot )
-		my_atom.update_HUD(my_atom.pilot)
+		my_atom.update_HUD( my_atom.pilot )
 
 /obj/item/device/spacepod_equipment/engine/check()
 	if( fuel_tank.total_moles > 0 )
@@ -385,8 +396,6 @@
 /obj/item/device/spacepod_equipment/engine/proc/get_temp()
 	return fuel_tank.temperature
 
-
-
 /obj/item/device/spacepod_equipment/shield
 	name = "Lancelot P3R (shield)"
 	desc = "A shield system designed to negate energy from attacks."
@@ -416,6 +425,64 @@
 			my_atom.play_interior_sound( 'sound/effects/eshield_hit.ogg' )
 
 	my_atom.deal_damage( damage )
+
+/obj/item/device/spacepod_equipment/misc/cargo
+	name = "cargohold"
+	icon_state = "cargohold"
+	desc = "Used to securely store crates and other such items inside of a spacepod."
+	var/max_size = 5
+
+/obj/item/device/spacepod_equipment/misc/cargo/proc/put_inside(var/obj/O, var/mob/user = usr)
+	if( !O ) return 0
+	if( src.contents.len >= max_size )
+		user << "\red The [my_atom]\'s cargohold is full!"
+		return 0
+	if( O.anchored )
+		user << "\red You can't move that!"
+		return 0
+	if ( istype( O, /obj/item/weapon/grab ))
+		return 0
+
+	user.drop_item()
+	if( O.loc != src )
+		O.loc = src
+		my_atom.visible_message( "[user] puts the [O] inside of [my_atom]\'s cargohold." )
+
+	return 1
+
+/obj/item/device/spacepod_equipment/misc/cargo/proc/dump_prompt( var/mob/user = usr )
+	if( !src.contents.len )
+		user << "\red There's nothing to dump!"
+		return 0
+
+	var/list/answers = list( "All" )
+	for( var/obj/O in src )
+		answers.Add( O )
+
+	var/response = input( user, "What cargo do you want to dump?", "Dump Cargo", null ) in answers
+
+	if( response == "All" )
+		dump_all()
+	else
+		if( istype( response, /obj ))
+			dump_item( response )
+		else
+			user << "\red Not a valid object for dumping!"
+			return 0
+
+	return 1
+
+/obj/item/device/spacepod_equipment/misc/cargo/proc/dump_all()
+	for( var/obj/O in src )
+		dump_item( O )
+
+/obj/item/device/spacepod_equipment/misc/cargo/proc/dump_item( var/obj/O )
+	O.loc = get_step( my_atom.loc, turn( my_atom.dir, 180 )) // putting the items behind the spacepod
+
+/obj/item/device/spacepod_equipment/misc/cargo/deassign()
+	..()
+
+	dump_all()
 
 /*
 /obj/item/device/spacepod_equipment/misc/autopilot

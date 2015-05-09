@@ -154,13 +154,26 @@
 /datum/design/pod/tracker
 	construction_time = 100
 	name = "Spacepod Tracking Module"
-	desc = "Allows for the construction of a Space Pod Tracking Module."
+	desc = "Allows for the construction of a Spacepod Tracking Module."
 	id = "podmisc_tracker"
 	req_tech = list("materials" = 2) //Materials 2: easy to get, no trackers with 0 science progress
 	build_type = MECHFAB | PODFAB
 	materials = list("metal"=5000)
 	build_path = /obj/item/device/spacepod_equipment/misc/tracker
 	category = list("Pod Parts")
+
+/datum/design/pod/cargohold
+	construction_time = 300
+	name = "Spacepod Cargohold"
+	desc = "Allows for the construction of a Spacepod Cargohold."
+	id = "podmisc_cargo"
+	req_tech = list("materials" = 1) //Materials 2: easy to get, no trackers with 0 science progress
+	build_type = MECHFAB | PODFAB
+	materials = list("metal"=15000)
+	build_path = /obj/item/device/spacepod_equipment/misc/cargo
+	category = list("Pod Parts")
+
+
 
 //////////////////////////////////////////
 //////SPACEPOD ENGINES////////////////////
