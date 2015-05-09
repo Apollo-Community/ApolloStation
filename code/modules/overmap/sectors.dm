@@ -14,6 +14,8 @@ var/global/list/map_sectors = list()
 		if (data)
 			testing("Located sector \"[data.name]\" at [data.mapx],[data.mapy] corresponding to zlevel [level]")
 			map_sectors["[level]"] = new data.obj_type(data)
+
+	generate_sectors_paper() // Making the info for our landmarks paper
 	return 1
 
 //===================================================================================
@@ -163,3 +165,40 @@ var/global/list/map_sectors = list()
 			testing("There is an active bluespace beacon located there.")
 			return 0
 	return 1
+
+
+
+/*======= LANDMARKS PAPER ==========*/
+
+/obj/item/weapon/paper/sectors
+	name = "Notable Landmarks List"
+
+var/global/sectors_landmarks_info = ""
+/proc/generate_sectors_paper()
+	var/list/required_sectors = list( "NSS Apollo", "A.C.E.", "Engineering Outpost" )
+	sectors_landmarks_info = "<FONT size = 3><center>Notable Landmarks</center></large></<FONT><hr>"
+
+	for( var/level in map_sectors )
+		var/added = 0
+		var/known = 0
+		var/obj/effect/map/sector = map_sectors["[level]"]
+
+		if( sector.name in required_sectors )
+			added = 1
+			known = 1
+
+		if( prob( 10 ))
+			added = 1
+
+		if( added )
+			if( known )
+				sectors_landmarks_info += "<br>[sector.name] located in Sector [SYSTEM_DESIGNATION]-[sector.x]-[sector.y]<br>"
+			else
+				sectors_landmarks_info += "<br>Uknown object detected in Sector [SYSTEM_DESIGNATION]-[sector.x]-[sector.y]<br>"
+
+
+/obj/item/weapon/paper/sectors/New()
+	..()
+
+	spawn( 20 )
+		info = sectors_landmarks_info
