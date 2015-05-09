@@ -387,6 +387,7 @@
 
 			pilot = user
 			add_HUD(pilot)
+			update_HUD(pilot)
 
 			playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 
@@ -403,6 +404,7 @@
 
 			pilot = user
 			add_HUD(pilot)
+			update_HUD(pilot)
 
 			return 1
 		else
@@ -477,6 +479,7 @@
 
 	if( usr == src.pilot )
 		inertia_dir = 0 // engage reverse thruster and power down pod
+		remove_HUD( pilot )
 		pilot.loc = src.loc
 		src.pilot = null
 	else if( locate( usr ) in passengers )
@@ -613,15 +616,17 @@ obj/spacepod/verb/toggleLights()
 	if( istype( get_turf( src ), /turf/space/bluespace )) // no moving in bluespace
 		return
 
-	if( move_tick < ticks_per_move )
-		move_tick++
-		return
-
-	move_tick = 0
-
 	if( equipment_system.engine_system )
+		if( move_tick < equipment_system.engine_system.ticks_per_move )
+			move_tick++
+			return
+
+		move_tick = 0
+
 		if( !equipment_system.engine_system.cycle() )
 			return
+
+
 	else
 		return
 
@@ -704,6 +709,72 @@ obj/spacepod/verb/toggleLights()
 	if(!M || !(M.hud_used))	return
 
 	M.hud_used.remove_spacepod_hud()
+
+/obj/spacepod/proc/update_HUD(var/mob/M)
+	if( !M )
+		return
+
+	if( !has_power() ) // Can't read the instruments without power
+		M.spacepod_health.icon_state = "health_off"
+		M.spacepod_fuel.icon_state = "fuel_off"
+		if( equipment_system.battery )
+			M.spacepod_charge.icon_state = "charge0"
+		else
+			M.spacepod_charge.icon_state = "charge-empty"
+		return
+	else
+		var/obj/item/weapon/cell/battery = equipment_system.battery
+		var/charge_percent = battery.charge/battery.maxcharge
+
+		if( charge_percent <= 0.05 )
+			M.spacepod_charge.icon_state = "charge0"
+		else if( charge_percent <= 0.25)
+			M.spacepod_charge.icon_state = "charge1"
+		else if( charge_percent <= 0.5)
+			M.spacepod_charge.icon_state = "charge2"
+		else if( charge_percent <= 0.75)
+			M.spacepod_charge.icon_state = "charge3"
+		else
+			M.spacepod_charge.icon_state = "charge4"
+
+	var/health_percent = health/initial(health)
+
+	if( health_percent <= 0.1 )
+		M.spacepod_health.icon_state = "health5"
+	else if( health_percent <= 0.3)
+		M.spacepod_health.icon_state = "health4"
+	else if( health_percent <= 0.5)
+		M.spacepod_health.icon_state = "health3"
+	else if( health_percent <= 0.7)
+		M.spacepod_health.icon_state = "health2"
+	else if( health_percent <= 0.8)
+		M.spacepod_health.icon_state = "health1"
+	else
+		M.spacepod_health.icon_state = "health0"
+
+	if( equipment_system.engine_system )
+		var/fuel_percent = equipment_system.engine_system.fuel_tank.return_pressure()/equipment_system.engine_system.max_pressure
+
+		if( fuel_percent <= 0.05 )
+			M.spacepod_fuel.icon_state = "fuel0"
+		else if( fuel_percent <= 0.25)
+			M.spacepod_fuel.icon_state = "fuel1"
+		else if( fuel_percent <= 0.5)
+			M.spacepod_fuel.icon_state = "fuel2"
+		else if( fuel_percent <= 0.75)
+			M.spacepod_fuel.icon_state = "fuel3"
+		else
+			M.spacepod_fuel.icon_state = "fuel4"
+	else
+		M.spacepod_fuel.icon_state = "fuel_off"
+
+/obj/spacepod/proc/has_power()
+	if( equipment_system )
+		if( equipment_system.battery )
+			if( equipment_system.battery.charge > 0 )
+				return 1
+
+	return 0
 
 /obj/effect/landmark/spacepod/random
 	name = "spacepod spawner"

@@ -281,12 +281,13 @@
 		..()
 
 /obj/item/device/spacepod_equipment/engine
-	name = "\improper engine"
-	desc = "Uses phoron fuel to jet around in space."
+	name = "PutPut (engine)"
+	desc = "An extremely basic, but cheap, engine."
 	icon_state = "engine"
 	var/datum/gas_mixture/fuel_tank = null
-	var/max_volume = 336.000 // 336 mols, or 12 full tanks of phoron
-	var/burn_rate = 0.050 // 0.1 mols per meter
+	var/max_pressure = 10*ONE_ATMOSPHERE // standard pressure
+	var/volume = 300.000
+	var/burn_rate = 0.20 // 0.2 mols per meter, starter engine is total carp efficiency
 	var/heat_rate = 10 // how much heat is gained per meter moved
 	var/heat_rad_rate = 10 // how much heat is radiated per tick
 	var/max_temp = 400 // how hot this baby can get before bad things happen
@@ -294,13 +295,13 @@
 	var/use_fuel = 1 // whether this engine runs on fuel or a nice hot cup of tea
 	var/fire_heat = 20 // how much heat fire causes
 	var/fire = 0 // are we on fire right now?
-	manufacturer = "Newton Engines"
+	var/ticks_per_move = 5 // toot toot, how many ticks it takes to move a single tile
 
 /obj/item/device/spacepod_equipment/engine/New()
 	..()
 
 	src.fuel_tank = new /datum/gas_mixture()
-	src.fuel_tank.volume = max_volume //liters
+	src.fuel_tank.volume = volume //liters
 	src.fuel_tank.temperature = T20C
 
 	spawn( 30 )
@@ -335,6 +336,9 @@
 
 	if( fuel_tank.temperature >= max_temp ) // hurt em a bit for running it too hot
 		my_atom.deal_damage( (fuel_tank.temperature/(4*max_temp))*heat_rate )
+
+	if( my_atom.pilot )
+		my_atom.update_HUD(my_atom.pilot)
 
 /obj/item/device/spacepod_equipment/engine/check()
 	if( fuel_tank.total_moles > 0 )
@@ -381,8 +385,7 @@
 /obj/item/device/spacepod_equipment/engine/proc/get_temp()
 	return fuel_tank.temperature
 
-/obj/item/device/spacepod_equipment/engine/magic
-	use_fuel = 0
+
 
 /obj/item/device/spacepod_equipment/shield
 	name = "\improper shield system"

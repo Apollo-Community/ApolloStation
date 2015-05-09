@@ -93,10 +93,10 @@
 				var/pressure_delta
 				var/output_volume
 				var/air_temperature
-				var/target_pressure = 10*ONE_ATMOSPHERE // max pressure of the fuel tank
+				var/target_pressure = refueling.equipment_system.engine_system.max_pressure // max pressure of the fuel tank
 
 				pressure_delta = target_pressure-pod.return_pressure()
-				output_volume = pod.volume/4.0
+				output_volume = pod.volume/16.0
 				air_temperature = fuel.temperature? fuel.temperature : pod.temperature
 	/*
 				testing( "Pressure delta: [pressure_delta]" )
