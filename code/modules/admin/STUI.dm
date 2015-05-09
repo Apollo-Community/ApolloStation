@@ -52,7 +52,7 @@
 
 		cached_logs[user.STUI_log] = null							//clears the cache-
 
-		show_vars()
+		//show_vars()
 
 	data["log"] = temp_logs[user.STUI_log]
 	data["current_log"] = user.STUI_log
@@ -76,12 +76,12 @@
 	STUI.ui_interact(usr)
 
 /proc/show_vars()
-	world << "##TESTING CACHED LOGS"
-	world << STUI.cached_logs[1]
-	world << "##TESTING ENTIRE LOGS"
-	world << STUI.entire_log[1]
-	world << "##TESTING TEMP LOGS"
-	world << STUI.temp_logs[1]
+	user << "##TESTING CACHED LOGS"
+	user << STUI.cached_logs[1]
+	user << "##TESTING ENTIRE LOGS"
+	user << STUI.entire_log[1]
+	user << "##TESTING TEMP LOGS"
+	user << STUI.temp_logs[1]
 
 //F_A's split
 proc/split(txt, d)
