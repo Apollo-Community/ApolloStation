@@ -18,9 +18,9 @@
 
 /obj/item/device/sector_locator/proc/calculate_sector()
 	var/turf/T = get_turf( src )
-	T.visible_message("\icon[src] [src] [pick("chirps","chirrups","cheeps")], \"Give me a moment, I'll try to find out where we are. This may take up to a minute!\"")
+	T.visible_message("\icon[src] [src] [pick("chirps","chirrups","cheeps")], \"Give me a moment, I'll try to find out where we are. This may take up to 30 seconds!\"")
 	var/cur_z = T.z
-	spawn( rand( 300, 600 ))
+	spawn( rand( 100, 300 ))
 		T = get_turf( src )
 		if( cur_z != T.z )
 			T.visible_message("\icon[src] [src] [pick("chirps","chirrups","cheeps")], \"I couldn't tell where we are. Don't wander so much next time!\"")

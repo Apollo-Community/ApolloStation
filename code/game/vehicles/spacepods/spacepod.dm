@@ -865,9 +865,9 @@ obj/spacepod/verb/toggleLights()
 	set name = "Triangulate Sector"
 	set src = usr.loc
 
-	usr << "<span class='notice'>Triangulating sector location through bluespace beacons, please standby... (This may take up to a minute)</span>"
+	usr << "<span class='notice'>Triangulating sector location through bluespace beacons, please standby... (This may take up to 15 seconds)</span>"
 	var/cur_z = src.z
-	spawn( rand( 300, 600 ))
+	spawn( rand( 100, 150 ))
 		if( cur_z != src.z )
 			usr << "<span class='warning'>ERROR: Inaccurate readings, cannot calculate sector. Please stay still next time.</span>"
 			return
