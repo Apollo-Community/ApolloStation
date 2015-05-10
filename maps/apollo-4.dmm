@@ -209,7 +209,7 @@
 "ea" = (/obj/structure/toilet{pixel_y = 8},/obj/machinery/light/small{dir = 4},/turf/simulated/floor{icon_state = "freezerfloor"},/area/djstation)
 "eb" = (/obj/structure/stool/bed/chair{dir = 4},/obj/machinery/alarm{dir = 4; icon_state = "alarm0"; pixel_x = -22},/turf/simulated/floor{icon_state = "cafeteria"; dir = 5},/area/djstation)
 "ec" = (/obj/machinery/atmospherics/pipe/simple/hidden,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor{icon_state = "cafeteria"; dir = 5},/area/djstation)
-"ed" = (/obj/machinery/computer/pod_recall{beacon_name = "Engineering Outpost Beacon"; name = "Engineering Shuttle Recall"; target_name = "Engineering Shuttle"},/turf/simulated/floor{icon_state = "cafeteria"; dir = 5},/area/maintenance/engi_shuttle)
+"ed" = (/obj/machinery/computer/pod_recall{beacon_name = "Engineering Outpost Beacon"; name = "Engineering Shuttle Recall"; target_name = "Engineering Shuttle"},/turf/simulated/floor{icon_state = "cafeteria"; dir = 5},/area/djstation)
 "ee" = (/obj/machinery/light/small,/turf/simulated/floor{icon_state = "grimy"},/area/djstation)
 "ef" = (/obj/machinery/door/airlock/external{frequency = 1379; icon_state = "door_locked"; id_tag = "listeningpost_inner"; locked = 1; name = "Engineering Dock Airlock"; req_access = null; req_access_txt = "13"},/obj/machinery/atmospherics/pipe/simple/hidden,/turf/simulated/floor/plating,/area/djstation)
 "eg" = (/obj/machinery/atmospherics/portables_connector{dir = 1},/obj/machinery/portable_atmospherics/canister/air/airlock,/turf/simulated/floor/plating,/area/djstation)
