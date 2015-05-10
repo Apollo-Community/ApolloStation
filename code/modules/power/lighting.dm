@@ -220,7 +220,7 @@
 	brightness = 4
 	desc = "A small lighting fixture."
 	light_type = /obj/item/weapon/light/bulb
-
+	l_color = "#1A1A00"
 
 /obj/machinery/light/spot
 	name = "spotlight"

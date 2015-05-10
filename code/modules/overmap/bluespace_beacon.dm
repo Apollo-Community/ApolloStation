@@ -35,6 +35,8 @@ var/global/list/bluespace_beacons = list()
 	var/list/inducers = list()
 
 /obj/machinery/gate_beacon/New()
+	..()
+
 	src.ping("[src] states, \"Initializing...\"")
 	spawn(20)
 		sector = map_sectors["[z]"]
@@ -51,8 +53,6 @@ var/global/list/bluespace_beacons = list()
 			warpable = 0
 
 		bluespace_beacons["[name]"] = src
-
-	..()
 
 
 /obj/machinery/gate_beacon/Del()
@@ -174,8 +174,13 @@ var/global/list/bluespace_beacons = list()
 		icon_state = "launch0"
 
 /obj/machinery/computer/gate_beacon_console/proc/find_beacon()
-	for( beacon in orange( 7, src ))
-		if( beacon.warpable )
+	functional = 0
+	beacon = null
+
+	var/obj/machinery/gate_beacon/temp
+	for( temp in orange( 7, src ))
+		if( temp.warpable )
+			beacon = temp
 			break
 	if( beacon )
 		functional = 1
