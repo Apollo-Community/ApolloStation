@@ -175,7 +175,8 @@ var/global/list/bluespace_beacons = list()
 
 /obj/machinery/computer/gate_beacon_console/proc/find_beacon()
 	for( beacon in orange( 7, src ))
-		break
+		if( beacon.warpable )
+			break
 	if( beacon )
 		functional = 1
 		update_icon()

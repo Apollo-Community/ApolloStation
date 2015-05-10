@@ -324,32 +324,34 @@
 	..()
 
 /obj/item/device/spacepod_equipment/engine/process()
+	var/temp_fire = fire
+
+	if( fire )
+		if( prob( 2 )) // Fires have a small chance of putting themselves out
+			fire = 0
+		else
+			fire = 1
+	if( fuel_tank.temperature >= max_temp )
+		fire = 1
+
 	if( my_atom )
-		var/temp_fire = fire
 		if( my_atom.fire_hazard() )
 			if( prob( 10 )) // if the pod is damage enough, there is a chance of fire
 				fire = 1
-		if( fire )
-			if( prob( 2 )) // Fires have a small chance of putting themselves out
-				fire = 0
-			else
-				fire = 1
-		if( fuel_tank.temperature >= max_temp )
-			fire = 1
 
 		if( fire != temp_fire )
 			my_atom.update_icons()
 
-		if( fire ) // If we agree that we're on fire, light em up
-			fuel_tank.add_thermal_energy( fire_heat )
+		if( fuel_tank.temperature >= max_temp ) // hurt em a bit for running it too hot
+			my_atom.deal_damage(( fuel_tank.temperature/( 4*max_temp ))*heat_rate )
+
+		if( my_atom.pilot )
+			my_atom.update_HUD( my_atom.pilot )
+
+	if( fire ) // If we agree that we're on fire, light em up
+		fuel_tank.add_thermal_energy( fire_heat )
 
 	fuel_tank.add_thermal_energy( -heat_rad_rate )
-
-	if( fuel_tank.temperature >= max_temp ) // hurt em a bit for running it too hot
-		my_atom.deal_damage(( fuel_tank.temperature/( 4*max_temp ))*heat_rate )
-
-	if( my_atom.pilot )
-		my_atom.update_HUD( my_atom.pilot )
 
 /obj/item/device/spacepod_equipment/engine/check()
 	if( fuel_tank.total_moles > 0 )

@@ -68,6 +68,12 @@
 
 /obj/spacepod/Del()
 	spacepods_list -= src
+
+	// Dumping the occupants
+	pilot.loc = src.loc
+	for( var/mob/passenger in passengers )
+		passenger.loc = src.loc
+
 	..()
 
 /obj/spacepod/process()

@@ -9,11 +9,6 @@
 	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
 	emote_hear = list("barks", "woofs", "yaps","pants")
 
-/*
-/mob/living/simple_animal/dog/corgi/Life()
-	..()
-	regenerate_icons()
-
 /mob/living/simple_animal/dog/corgi/show_inv(mob/user as mob)
 	user.set_machine(src)
 	if(user.stat) return
@@ -37,11 +32,11 @@
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			if( O.force )
-				usr << "\red This animal is wearing too much armor. You can't cause /him any damage."
+				usr << "\red [src.name] is wearing too much armor. You can't cause /him any damage."
 				for (var/mob/M in viewers(src, null))
 					M.show_message("\red \b [user] hits [src] with the [O], however [src] is too armored.")
 			else
-				usr << "\red This animal is wearing too much armor. You can't reach its skin."
+				usr << "\red [src.name] is wearing too much armor. You can't reach /his skin."
 				for (var/mob/M in viewers(src, null))
 					M.show_message("\red [user] gently taps [src] with the [O]. ")
 			if(prob(15))
@@ -54,7 +49,7 @@
 
 	//Removing from inventory
 	if(href_list["remove_inv"])
-		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
+		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr)))
 			return
 		var/remove_from = href_list["remove_inv"]
 		switch(remove_from)
@@ -71,38 +66,32 @@
 					inventory_head.loc = src.loc
 					inventory_head = null
 				else
-					usr << "\red There is nothing to remove from its [remove_from]."
+					usr << "\red There is nothing to remove from [src.name]\'s [remove_from]."
 					return
 			if("back")
 				if(inventory_back)
 					inventory_back.loc = src.loc
 					inventory_back = null
 				else
-					usr << "\red There is nothing to remove from its [remove_from]."
+					usr << "\red There is nothing to remove from [src.name]\'s [remove_from]."
 					return
 
 		//show_inv(usr) //Commented out because changing Ian's  name and then calling up his inventory opens a new inventory...which is annoying.
 
 	//Adding things to inventory
 	else if(href_list["add_inv"])
-		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
+		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr)))
 			return
 		var/add_to = href_list["add_inv"]
 		if(!usr.get_active_hand())
-			usr << "\red You have nothing in your hand to put on its [add_to]."
+			usr << "\red You have nothing in your hand to put on [src.name]\'s [add_to]."
 			return
 		switch(add_to)
 			if("head")
 				if(inventory_head)
-					usr << "\red It's is already wearing something."
+					usr << "\red [src.name] is already wearing something."
 					return
 				else
-					place_on_head(usr.get_active_hand())
-
-					var/obj/item/item_to_add = usr.get_active_hand()
-					if(!item_to_add)
-						return
-
 					//Corgis are supposed to be simpler, so only a select few objects can actually be put
 					//to be compatible with them. The objects are below.
 					//Many  hats added, Some will probably be removed, just want to see which ones are popular.
@@ -112,8 +101,7 @@
 						/obj/item/clothing/glasses/sunglasses,
 						/obj/item/clothing/head/caphat,
 						/obj/item/clothing/head/collectable/captain,
-						/obj/item/clothing/head/that,
-						/obj/item/clothing/head/that,
+						/obj/item/clothing/head/tophat,
 						/obj/item/clothing/head/kitty,
 						/obj/item/clothing/head/collectable/kitty,
 						/obj/item/clothing/head/rabbitears,
@@ -140,17 +128,20 @@
 						/obj/item/clothing/head/soft
 					)
 
+					var/obj/item/item_to_add = usr.get_active_hand()
+					if(!item_to_add)
+						return
+
 					if( ! ( item_to_add.type in allowed_types ) )
-						usr << "\red It doesn't seem too keen on wearing that item."
+						usr << "\red [src.name] doesn't seem too keen on wearing that item."
 						return
 
 					usr.drop_item()
-
 					place_on_head(item_to_add)
 
 			if("back")
 				if(inventory_back)
-					usr << "\red It's already wearing something."
+					usr << "\red [src.name] is already wearing something."
 					return
 				else
 					var/obj/item/item_to_add = usr.get_active_hand()
@@ -172,16 +163,16 @@
 					usr.drop_item()
 					item_to_add.loc = src
 					src.inventory_back = item_to_add
-					regenerate_icons()
 
 		//show_inv(usr) //Commented out because changing Ian's  name and then calling up his inventory opens a new inventory...which is annoying.
 	else
 		..()
 
+	regenerate_icons()
+
 /mob/living/simple_animal/dog/corgi/proc/place_on_head(obj/item/item_to_add)
 	item_to_add.loc = src
 	src.inventory_head = item_to_add
-	regenerate_icons()
 
 	//Various hats and items (worn on his head) change Ian's behaviour. His attributes are reset when a HAT is removed.
 	switch(inventory_head && inventory_head.type)
@@ -241,7 +232,7 @@
 		if(/obj/item/clothing/head/soft)
 			name = "Corgi Tech [real_name]"
 			desc = "The reason your yellow gloves have chew-marks."
-*/
+	regenerate_icons()
 
 
 //IAN! SQUEEEEEEEEE~
