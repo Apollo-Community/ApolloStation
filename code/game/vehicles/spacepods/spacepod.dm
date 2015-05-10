@@ -830,6 +830,7 @@ obj/spacepod/verb/toggleLights()
 		var/turf/ground = get_turf( src )
 		if( !istype( ground.loc, /area/space ))
 			pilot << "<span class='warning'>\The ceiling is in the way!</span>"
+			return
 
 		var/turf/controllerlocation = locate(1, 1, z)
 		for(var/obj/effect/landmark/zcontroller/controller in controllerlocation)
@@ -843,6 +844,7 @@ obj/spacepod/verb/toggleLights()
 					pilot << "<span class='warning'>There is a [upwards] in the way!</span>"
 			else
 				pilot << "<span class='warning'>There's nothing of interest above you!</span>"
+		return
 
 /obj/spacepod/verb/fly_down()
 	if( src.pilot == usr )
@@ -853,6 +855,7 @@ obj/spacepod/verb/toggleLights()
 		var/turf/ground = get_turf( src )
 		if( !istype( ground, /turf/space ) && !istype( ground,/turf/simulated/floor/open ))
 			pilot << "<span class='warning'>\The [ground] is in the way!</span>"
+			return
 
 		var/turf/controllerlocation = locate(1, 1, z)
 		for(var/obj/effect/landmark/zcontroller/controller in controllerlocation)
@@ -866,6 +869,7 @@ obj/spacepod/verb/toggleLights()
 					pilot << "<span class='warning'>There is a [below] in the way!</span>"
 			else
 				pilot << "<span class='warning'>There's nothing of interest below you!!</span>"
+		return
 
 /obj/spacepod/verb/sector_locate()
 	set category = "Spacepod"

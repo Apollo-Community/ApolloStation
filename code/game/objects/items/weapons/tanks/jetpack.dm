@@ -154,6 +154,7 @@
 	var/turf/ground = get_turf( src )
 	if( !istype( ground.loc, /area/space ))
 		usr << "<span class='warning'>\The ceiling is in the way!</span>"
+		return
 
 	var/turf/controllerlocation = locate(1, 1, z)
 	for(var/obj/effect/landmark/zcontroller/controller in controllerlocation)
@@ -167,6 +168,7 @@
 				usr << "\red \The [upwards] is in the way!"
 		else
 			usr << "\red There's nothing of interest above you!"
+	return
 
 /obj/item/weapon/tank/jetpack/verb/fly_down()
 	set category = "Object"
@@ -176,6 +178,7 @@
 	var/turf/ground = get_turf( usr )
 	if( !istype( ground, /turf/space ) && !istype( ground, /turf/simulated/floor/open ))
 		usr << "\red \The [ground] is in the way!"
+		return
 
 	var/turf/controllerlocation = locate(1, 1, z)
 	for(var/obj/effect/landmark/zcontroller/controller in controllerlocation)
@@ -188,3 +191,4 @@
 				usr << "\red There is a [below] in the way!"
 		else
 			usr << "\red There's nothing of interest below you!"
+	return
