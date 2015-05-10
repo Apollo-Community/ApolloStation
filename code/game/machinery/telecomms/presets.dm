@@ -7,12 +7,13 @@
 
 /obj/machinery/telecomms/relay/preset/station
 	id = "Station Relay"
-	listening_level = 1
+	listening_level = 3
 	autolinkers = list("s_relay")
 
 /obj/machinery/telecomms/relay/preset/telecomms
 	id = "Telecomms Relay"
 	autolinkers = list("relay")
+
 
 /obj/machinery/telecomms/relay/preset/mining
 	id = "Mining Relay"
@@ -33,6 +34,7 @@
 	//idle_power_usage = 0
 	produces_heat = 0
 	autolinkers = list("c_relay")
+
 
 //HUB
 
@@ -60,7 +62,6 @@
 	autolinkers = list("receiverA") // link to relay
 	freq_listening = list(SCI_FREQ, MED_FREQ, SUP_FREQ, SRV_FREQ) // science, medical, supply, service
 
-
 //--PRESET RIGHT--//
 
 /obj/machinery/telecomms/receiver/preset_right
@@ -81,7 +82,6 @@
 	produces_heat = 0
 	autolinkers = list("receiverCent")
 	freq_listening = list(ERT_FREQ, DTH_FREQ)
-
 
 //Buses
 

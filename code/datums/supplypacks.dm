@@ -1446,8 +1446,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containertype = /obj/structure/closet/crate
 	cost = 200
 	num_contained = 1
-	contains = list(/obj/item/device/spacepod_equipment/engine/newton/galileo,
-					/obj/item/device/spacepod_equipment/engine/newton/fourier)
+	contains = list(/obj/item/device/spacepod_equipment/engine/einstein/galileo,
+					/obj/item/device/spacepod_equipment/engine/einstein/fourier)
 	group = "Operations"
 
 /datum/supply_packs/spacepod

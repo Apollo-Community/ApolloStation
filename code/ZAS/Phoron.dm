@@ -5,7 +5,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 	var/PHORON_DMG_NAME = "Phoron Damage Amount"
 	var/PHORON_DMG_DESC = "Self Descriptive"
 
-	var/CLOTH_CONTAMINATION = 1
+	var/CLOTH_CONTAMINATION = 0
 	var/CLOTH_CONTAMINATION_NAME = "Cloth Contamination"
 	var/CLOTH_CONTAMINATION_DESC = "If this is on, phoron does damage by getting into cloth."
 
