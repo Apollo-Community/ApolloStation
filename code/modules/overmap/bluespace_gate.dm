@@ -44,9 +44,9 @@
 /proc/bluespace_jump( var/turf/source, var/atom/A, var/turf/exit = null )
 	if( !A ) return
 	if( !source ) return
-	if( istype( A, /turf/simulated/floor/bspace_safe )) return // bluespace-safe floors cant be sucked through
+	if( istype( A, /turf )) return // turfs can't go through
 
-	if( istype( A, /obj ) && !istype( A, /obj/spacepod/shuttle ))
+	if( istype( A, /obj ) && !istype( A, /obj/spacepod/shuttle )) // anything nailed down can't go through
 		var/obj/O = A
 		if( O.anchored )
 			return
@@ -65,10 +65,13 @@
 	else // If we don't have a destination, toss them somewhere random
 		destination = locate( source.x+pick( rand( -10, source.x-2 ), rand( source.x+2, 10 )), source.y+pick( rand( -10, source.y-2 ), rand( source.y+2, 10 )), source.z )
 
+/*
 	animate(A, transform = matrix()*(-2), transform = turn(matrix(), 360), time = 2)
 	sleep(2)
 	animate(A, transform = null, time = 1)
+*/
 
+/* // Decided this was a bad idea after all
 	// Transporting turfs
 	if( istype( A, /turf/simulated ))
 		var/type = A.type
@@ -80,9 +83,9 @@
 		return
 	else if( istype( A, /turf ))
 		return
+*/
 
 	var/atom/movable/AM = A
-	//testing( "Warping [AM] into bluespace from ([AM.x], [AM.y], [AM.z]). Expected arrival is ([destination.x], [destination.y], [destination.z])." )
 
 	AM.loc = bluespace
 

@@ -43,6 +43,12 @@ var/list/cached_space = list()
 
 proc/overmap_spacetravel(var/turf/space/T, var/atom/movable/A)
 	var/obj/effect/map/M = map_sectors["[T.z]"]
+	if (istype( A, /obj/item )) // Optimization to keep spacejunk from killing the server
+		testing( "Deleted item [A] as it floated off into deep space" )
+		statistics.increase_stat("trash_vented")
+		spawn(0)
+			del(A)
+		return
 	if (!M)
 		return
 	var/mapx = M.x

@@ -74,8 +74,6 @@
 
 		user << "\red You start [P.drill_verb] [src]."
 
-
-
 		if(!do_after(user,P.digspeed))
 			return
 
@@ -92,6 +90,7 @@
 		if(prob(excavation_level))
 			//success
 			if(artifact_find)
+				statistics.increase_stat("artifacts")
 				var/spawn_type = artifact_find.artifact_find_type
 				var/obj/O = new spawn_type(get_turf(src))
 				if(istype(O,/obj/machinery/artifact))

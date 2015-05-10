@@ -19,6 +19,7 @@
 								  "total_kwh" = "Power Produced: ",
 								  "artifacts" = "Artifacts Found: ",
 								  "cargo_profit" = "Cargo Profit: ",
+								  "trash_vented" = "Space Trash Created: ",
 								 )
 
 	// The actual stat value
@@ -41,11 +42,11 @@
 						   "total_kwh" = 0, // Total kilowatt/hours produced by engineering
 						   "artifacts" = 0, // Total number of artifacts dug up
 						   "cargo_profit" = 0, // Profit made from cargobay
+						   "trash_vented" = 0, // Trash vented to space
 						   )
 
 	// Just add any stats that need units
 	var/list/units = list( "dispense_volume" = " L",
-						   "bombs_exploded" = " accidents",
 						   "vended" = " junk foods",
 						   "run_distance" = " marathons",
 						   "blood_mopped" = " L",
@@ -55,7 +56,7 @@
 						   "beepsky_beatings" = " beatings",
 						   "total_kwh" = " kW/h",
 						   "artifacts" = " alien artifacts",
-						   "break_time" = "minutes",
+						   "break_time" = " minutes",
 						   )
 
 /datum/round_stats/proc/increase_stat(var/stat_name, var/amount = 1)

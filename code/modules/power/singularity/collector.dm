@@ -127,6 +127,7 @@ var/global/list/rad_collectors = list()
 	if(P && active)
 		var/power_produced = 0
 		power_produced = P.air_contents.gas["phoron"]*pulse_strength*20
+		statistics.increase_stat("total_kwh", power_produced/(18000*1000))
 		add_avail(power_produced)
 		last_power_new = power_produced
 		return
