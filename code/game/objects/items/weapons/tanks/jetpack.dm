@@ -160,8 +160,9 @@
 	for(var/obj/effect/landmark/zcontroller/controller in controllerlocation)
 		if(controller.up)
 			var/turf/upwards = locate(src.x, src.y, controller.up_target)
+
 			usr.loc = upwards
-			if( !upwards.density )
+			if( istype( upwards, /turf/space ) || istype( upwards, /turf/simulated/floor/open )
 				usr.loc = upwards
 				usr << "\blue You fly upwards."
 			else

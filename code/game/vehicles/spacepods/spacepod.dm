@@ -837,7 +837,7 @@ obj/spacepod/verb/toggleLights()
 			if(controller.up)
 				var/turf/upwards = locate(src.x, src.y, controller.up_target)
 
-				if( !upwards.density )
+				if( istype( upwards, /turf/space ) || istype( upwards, /turf/simulated/floor/open )
 					src.loc = upwards
 					pilot << "You cruise upwards."
 				else
