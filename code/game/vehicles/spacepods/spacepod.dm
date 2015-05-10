@@ -734,6 +734,9 @@ obj/spacepod/verb/toggleLights()
 	M.hud_used.remove_spacepod_hud()
 
 	M.hud_used.instantiate()
+	M.hud_used.hidden_inventory_update()
+	M.hud_used.persistant_inventory_update()
+	M.update_action_buttons()
 
 /obj/spacepod/proc/update_HUD(var/mob/M)
 	if( !M )

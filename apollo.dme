@@ -1670,9 +1670,4 @@
 #include "maps\apollo-5.dmm"
 #include "maps\apollo-6.dmm"
 #include "maps\apollo-7.dmm"
-#include "maps\astfieldmed1.dmm"
-#include "maps\astfieldmed2.dmm"
-#include "maps\astfieldmed3.dmm"
-#include "maps\astfieldsparse1.dmm"
-#include "maps\astfieldsparse2.dmm"
 // END_INCLUDE
