@@ -1,4 +1,4 @@
-# apollostation
+# Apollo Station
 
 [Website](https://apollo-community.org/) - [Code](https://github.com/stuicey/ApolloStation) - [IRC](https://apollo-community.org/viewforum.php?f=42)
 
