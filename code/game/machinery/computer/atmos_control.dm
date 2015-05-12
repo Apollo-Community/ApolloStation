@@ -21,6 +21,7 @@
 	desc = "Cheap Nanotrasen Laptop."
 	icon_state = "medlaptop"
 	density = 0
+	l_color = COMPUTER_GREEN
 
 /obj/machinery/computer/atmoscontrol/initialize()
 	..()

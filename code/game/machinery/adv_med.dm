@@ -13,6 +13,8 @@
 	use_power = 1
 	idle_power_usage = 60
 	active_power_usage = 10000	//10 kW. It's a big all-body scanner.
+	l_color = "#002900"
+	luminosity = 2
 
 /*/obj/machinery/bodyscanner/allow_drop()
 	return 0*/
@@ -185,6 +187,9 @@
 	icon_state = "body_scannerconsole"
 	density = 1
 	anchored = 1
+
+	l_color = COMPUTER_RED
+	luminosity = 2
 
 
 /obj/machinery/body_scanconsole/New()

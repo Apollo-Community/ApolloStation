@@ -12,6 +12,7 @@
 	var/temp = ""				// temporary feedback messages
 
 	var/universal_translate = 0 // set to 1 if it can translate nonhuman speech
+	l_color = COMPUTER_GREEN
 
 	req_access = list(access_tcomsat)
 

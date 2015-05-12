@@ -14,6 +14,9 @@
 	var/delay = 10
 	req_access = list(access_rd) //Only the R&D can change server settings.
 
+	l_color = COMPUTER_BLUE
+	luminosity = 2
+
 /obj/machinery/r_n_d/server/New()
 	..()
 	component_parts = list()
@@ -103,7 +106,7 @@
 /obj/machinery/r_n_d/server/proc/produce_heat()
 	if (!produces_heat)
 		return
-	
+
 	if (!use_power)
 		return
 
@@ -118,7 +121,7 @@
 
 			if(removed)
 				var/heat_produced = idle_power_usage	//obviously can't produce more heat than the machine draws from it's power source
-				
+
 				removed.add_thermal_energy(heat_produced)
 
 			env.merge(removed)
@@ -343,12 +346,20 @@
 	src.updateUsrDialog()
 	return ..()
 
+/obj/machinery/r_n_d/server/update_icon()
+	..()
+
+	if(!(stat & (NOPOWER|BROKEN)))
+		SetLuminosity( 2 )
+	else
+		SetLuminosity( 0 )
 
 /obj/machinery/r_n_d/server/robotics
 	name = "Robotics R&D Server"
 	id_with_upload_string = "1;2"
 	id_with_download_string = "1;2"
 	server_id = 2
+	l_color = COMPUTER_BLUE
 
 
 /obj/machinery/r_n_d/server/core
@@ -356,3 +367,4 @@
 	id_with_upload_string = "1"
 	id_with_download_string = "1"
 	server_id = 1
+	l_color = COMPUTER_BLUE

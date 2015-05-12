@@ -23,6 +23,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	produces_heat = 0
 	delay = 7
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/broadcaster"
+	l_color = COMPUTER_BLUE
 
 /obj/machinery/telecomms/broadcaster/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	// Don't broadcast rejected signals
@@ -122,6 +123,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	machinetype = 6
 	produces_heat = 0
 	var/intercept = 0 // if nonzero, broadcasts all messages to syndicate channel
+	l_color = COMPUTER_BLUE
 
 /obj/machinery/telecomms/allinone/receive_signal(datum/signal/signal)
 

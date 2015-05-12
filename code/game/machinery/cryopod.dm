@@ -17,6 +17,8 @@
 	circuit = "/obj/item/weapon/circuitboard/cryopodcontrol"
 	density = 0
 	interact_offline = 1
+	l_color = COMPUTER_GREEN
+
 	var/mode = null
 
 	//Used for logging people entering cryosleep and important items they are carrying.
@@ -33,6 +35,7 @@
 	icon = 'icons/obj/robot_storage.dmi'
 	icon_state = "console"
 	circuit = "/obj/item/weapon/circuitboard/robotstoragecontrol"
+	l_color = COMPUTER_BLUE
 
 	storage_type = "cyborgs"
 	storage_name = "Robotic Storage Control"
@@ -169,6 +172,7 @@
 	icon_state = "body_scanner_0"
 	density = 1
 	anchored = 1
+	l_color = "#002900"
 
 	var/base_icon_state = "body_scanner_0"
 	var/occupied_icon_state = "body_scanner_1"
@@ -219,6 +223,7 @@
 	on_enter_occupant_message = "The storage unit broadcasts a sleep signal to you. Your systems start to shut down, and you enter low-power mode."
 	allow_occupant_types = list(/mob/living/silicon/robot)
 	disallow_occupant_types = list(/mob/living/silicon/robot/drone)
+	l_color = COMPUTER_RED
 
 /obj/machinery/cryopod/robot/right
 	orient_right = 1
@@ -227,7 +232,6 @@
 /obj/machinery/cryopod/New()
 	announce = new /obj/item/device/radio/intercom(src)
 
-	l_color = "#002900"
 	luminosity = 2
 
 	if(orient_right)

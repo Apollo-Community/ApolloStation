@@ -9,6 +9,7 @@
 	default_prog = /datum/file/program/secure_data
 	spawn_parts = list(/obj/item/part/computer/storage/hdd/big,/obj/item/part/computer/cardslot,/obj/item/part/computer/networking/radio)
 	icon_state = "laptop"
+	l_color = COMPUTER_GREEN
 
 
 /datum/file/program/secure_data

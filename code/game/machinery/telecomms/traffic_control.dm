@@ -19,7 +19,7 @@
 	var/temp = ""				// temporary feedback messages
 
 	var/storedcode = ""			// code stored
-
+	l_color = COMPUTER_GREEN
 
 	proc/update_ide()
 

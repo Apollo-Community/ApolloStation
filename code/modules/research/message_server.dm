@@ -56,6 +56,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100
+	l_color = COMPUTER_BLUE
 
 	var/list/datum/data_pda_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
@@ -131,10 +132,13 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 /obj/machinery/message_server/update_icon()
 	if((stat & (BROKEN|NOPOWER)))
 		icon_state = "server-nopower"
+		SetLuminosity(0)
 	else if (!active)
 		icon_state = "server-off"
+		SetLuminosity(0)
 	else
 		icon_state = "server-on"
+		SetLuminosity(1)
 
 	return
 
@@ -221,6 +225,8 @@ var/obj/machinery/blackbox_recorder/blackbox
 	var/list/msg_service = list()
 
 	var/list/datum/feedback_variable/feedback = new()
+	l_color = COMPUTER_BLUE
+	luminosity = 1
 
 	//Only one can exsist in the world!
 /obj/machinery/blackbox_recorder/New()
