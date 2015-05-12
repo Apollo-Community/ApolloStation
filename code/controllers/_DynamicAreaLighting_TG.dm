@@ -308,7 +308,7 @@ turf/proc/shift_to_subarea()
 			A.SetLightLevel(level, color_light)
 
 		A.contents += src	// move the turf into the area
-//	universe.OnTurfTick(src)
+	//universe.OnTurfTick(src)
 
 // Dedicated lighting sublevel for space turfs
 // helps us depower things in space, remove space fire alarms,
@@ -349,11 +349,10 @@ area
 
 		if (color_overlay)
 			overlays.Remove(color_overlay)
-			color_overlay.icon_state = "5"
+			color_overlay.icon_state = "white"
 		else
 			if (l_color)
-				color_overlay = image('icons/effects/effects.dmi', ,"5", 10.1)
-				//color_overlay = image('icons/effects/effects.dmi', ,"white", 10.1)
+				color_overlay = image('icons/obj/weapons.dmi', ,"white", 10.1)
 
 		if (istype(color_overlay))
 			color_overlay.color = l_color
@@ -383,31 +382,26 @@ area
 				color_overlay.blend_mode = BLEND_MULTIPLY
 			*/
 
-			switch (color_light)
-				if (6)
-					color_overlay.icon_state = "5"
-					//color_overlay.alpha = 180
-				if (5)
-					color_overlay.icon_state = "4"
-					//color_overlay.alpha = 150
-				if (4)
-					color_overlay.icon_state = "3"
-					//color_overlay.alpha = 120
-				if (3)
-					color_overlay.icon_state = "2"
-					//color_overlay.alpha = 90
-				if (2)
-					color_overlay.icon_state = "1"
-					//color_overlay.alpha = 60
-				if (1)
-					color_overlay.icon_state = "1"
-				if (-INFINITY to 0)
-					//world << "Zero or below, [color_light]."
-					color_overlay.alpha = 0
-				else
-					//world << "Setting the alpha to max... color_light [color_light]."
-					color_overlay.alpha = 180
-
+			if (1)
+				switch (color_light)
+					if (6)
+						color_overlay.alpha = 180
+					if (5)
+						color_overlay.alpha = 140
+					if (4)
+						color_overlay.alpha = 120
+					if (3)
+						color_overlay.alpha = 80
+					if (2)
+						color_overlay.alpha = 60
+					if (1)
+						color_overlay.alpha = 20
+					if (-INFINITY to 0)
+						//world << "Zero or below, [color_light]."
+						color_overlay.alpha = 0
+					else
+						//world << "Setting the alpha to max... color_light [color_light]."
+						color_overlay.alpha = 180
 
 			color_overlay.blend_mode = BLEND_ADD
 

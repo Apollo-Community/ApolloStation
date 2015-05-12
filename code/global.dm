@@ -267,3 +267,13 @@ var/datum/round_stats/statistics = new()
 var/datum/STUI/STUI = new()
 
 #define AFK_TIME 6000 // 10 minutes
+
+// Computer lighting colors
+#define COMPUTER_RED "#4D0000"
+#define COMPUTER ORANGE "#803300"
+#define COMPUTER_YELLOW "#666600"
+#define COMPUTER_GREEN "#006600"
+#define COMPUTER_CYAN "#005656"
+#define COMPUTER_BLUE "#001F3D"
+#define COMPUTER_PURPLE "#4C0066"
+#define COMPUTER_BROWN "#402000"

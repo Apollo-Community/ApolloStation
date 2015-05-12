@@ -13,6 +13,7 @@
 	var/datum/dna2/record/active_record = null
 	var/obj/item/weapon/disk/data/diskette = null //Mostly so the geneticist can steal everything.
 	var/loading = 0 // Nice loading text
+	l_color = COMPUTER_BLUE
 
 /obj/machinery/computer/cloning/New()
 	..()

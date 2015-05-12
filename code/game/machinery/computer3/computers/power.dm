@@ -2,6 +2,7 @@
 	default_prog = /datum/file/program/powermon
 	spawn_parts = list(/obj/item/part/computer/storage/hdd,/obj/item/part/computer/networking/cable)
 	icon_state = "frame-eng"
+	l_color = COMPUTER_YELLOW
 
 /datum/file/program/powermon
 	name = "power monitoring console"

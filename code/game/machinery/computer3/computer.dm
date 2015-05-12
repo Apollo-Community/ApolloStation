@@ -69,21 +69,21 @@
 	// Laptops will require batteries and have no mains power.
 
 	var/obj/item/weapon/cell/battery	= null // uninterruptible power supply aka battery
-
+	var/brightness = 2
 
 	verb/ResetComputer()
 		set name = "Reset Computer"
 		set category = "Object"
 		set src in view(1)
-		
+
 		if(usr.stat || usr.restrained() || usr.lying || !istype(usr, /mob/living))
 			usr << "\red You can't do that."
 			return
-		
+
 		if(!Adjacent(usr))
 			usr << "You can't reach it."
 			return
-		
+
 		Reset()
 
 	New(var/L, var/built = 0)
@@ -421,11 +421,13 @@
 			// Broken
 			if(stat & BROKEN)
 				icon_state += "b"
+				SetLuminosity(0)
 
 			// Powered
 			else if(stat & NOPOWER)
 				icon_state = initial(icon_state)
 				icon_state += "0"
+				SetLuminosity(0)
 			return
 		if(stat)
 			overlays.Cut()
@@ -446,6 +448,7 @@
 			if(show_keyboard)
 				overlays += kb
 			name = initial(name) + " (orange screen of death)"
+		SetLuminosity(brightness)
 
 	//Returns percentage of battery charge remaining. Returns -1 if no battery is installed.
 	proc/check_battery_status()

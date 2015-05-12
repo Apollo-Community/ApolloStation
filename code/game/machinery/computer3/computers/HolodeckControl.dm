@@ -1,6 +1,6 @@
 /obj/machinery/computer3/HolodeckControl
 	default_prog = /datum/file/program/holodeck
-
+	l_color = COMPUTER_CYAN
 
 // Todo: I personally would like to add a second holodeck in the theater for making appropriate playgrounds.
 // perhaps a holodeck association keyfile?
@@ -20,7 +20,6 @@
 	var/damaged = 0
 	var/last_change = 0
 	var/emagged = 0
-
 
 	interact()
 		if(!interactable())

@@ -105,12 +105,12 @@
 	icon_state = "bproof"
 	thermal_conductivity = 0.025
 	heat_capacity = 500000
-	l_color = "#0F0026"
 	intact = 0
 
 	New()
+		l_color = "#002900"
+		luminosity = 1
 		. = ..()
-		SetLuminosity( 2 )
 
 /turf/simulated/floor/plating
 	name = "plating"

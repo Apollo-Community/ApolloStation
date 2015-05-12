@@ -14,6 +14,7 @@
 	req_access = list(access_ce)
 	var/list/monitored_alarm_ids = null
 	var/list/monitored_alarms = null
+	l_color = COMPUTER_GREEN
 
 /obj/machinery/computer/atmoscontrol/laptop
 	name = "Atmospherics Laptop"

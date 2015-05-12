@@ -8,6 +8,7 @@
 	active_power_usage = 300
 	var/circuit = null //The path to the circuit board type. If circuit==null, the computer can't be disassembled.
 	var/processing = 0
+	var/brightness = 2
 
 /obj/machinery/computer/New()
 	..()
@@ -74,15 +75,18 @@
 
 /obj/machinery/computer/update_icon()
 	..()
+	SetLuminosity(brightness)
 	icon_state = initial(icon_state)
 	// Broken
 	if(stat & BROKEN)
 		icon_state += "b"
+		SetLuminosity(0)
 
 	// Powered
 	else if(stat & NOPOWER)
 		icon_state = initial(icon_state)
 		icon_state += "0"
+		SetLuminosity(0)
 
 
 

@@ -18,6 +18,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 	var/temp = null
 	var/hacked = 0
 	var/allowedtocall = 0
+	l_color = COMPUTER_RED
 
 /proc/syndicate_elite_process()
 	var/area/syndicate_mothership/control/syndicate_ship = locate()//To find announcer. This area should exist for this proc to work.

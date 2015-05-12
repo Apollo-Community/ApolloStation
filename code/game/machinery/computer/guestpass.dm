@@ -9,6 +9,7 @@
 	var/temp_access = list() //to prevent agent cards stealing access as permanent
 	var/expiration_time = 0
 	var/reason = "NOT SPECIFIED"
+	l_color = COMPUTER_BLUE
 
 /obj/item/weapon/card/id/guest/GetAccess()
 	if (world.time > expiration_time)

@@ -1,6 +1,6 @@
 /obj/machinery/computer3/laptop/vended
 	default_prog = /datum/file/program/welcome
-
+	l_color = null
 
 /datum/file/program/welcome
 	name 		= "Welcome Screen"

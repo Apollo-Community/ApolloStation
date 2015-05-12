@@ -1,6 +1,7 @@
 /obj/machinery/computer3/communications
 	default_prog		= /datum/file/program/communications
 	spawn_parts			= list(/obj/item/part/computer/storage/hdd,/obj/item/part/computer/networking/radio/subspace)
+	l_color = COMPUTER_BLUE
 
 /obj/machinery/computer3/communications/captain
 	default_prog		= /datum/file/program/communications

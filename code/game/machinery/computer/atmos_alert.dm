@@ -13,7 +13,7 @@ var/global/list/minor_air_alarms = list()
 	icon_state = "alert:0"
 	var/receive_frequency = 1437
 	var/datum/radio_frequency/radio_connection
-
+	l_color = COMPUTER_CYAN
 
 /obj/machinery/computer/atmos_alert/initialize()
 	..()
@@ -56,7 +56,10 @@ var/global/list/minor_air_alarms = list()
 
 /obj/machinery/computer/atmos_alert/update_icon()
 	..()
+	SetLuminosity( 2 )
+
 	if(stat & (NOPOWER|BROKEN))
+		SetLuminosity( 0 )
 		return
 	if(priority_air_alarms.len)
 		icon_state = "alert:2"

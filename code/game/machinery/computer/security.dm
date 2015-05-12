@@ -21,6 +21,7 @@
 	//Sorting Variables
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
+	l_color = COMPUTER_RED
 
 /obj/machinery/computer/secure_data/verb/eject_id()
 	set category = "Object"

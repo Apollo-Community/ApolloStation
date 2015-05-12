@@ -34,6 +34,7 @@
 	var/stat_msg2
 
 	var/datum/announcement/priority/crew_announcement = new
+	l_color = COMPUTER_BLUE
 
 /obj/machinery/computer/communications/New()
 	..()

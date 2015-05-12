@@ -227,6 +227,9 @@
 /obj/machinery/cryopod/New()
 	announce = new /obj/item/device/radio/intercom(src)
 
+	l_color = "#002900"
+	luminosity = 2
+
 	if(orient_right)
 		icon_state = "[base_icon_state]-r"
 	else

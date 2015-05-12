@@ -5,7 +5,7 @@
 	icon_state = "alert:0"
 	circuit = "/obj/item/weapon/circuitboard/stationalert"
 	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
-
+	l_color = COMPUTER_CYAN
 
 	attack_ai(mob/user)
 		add_fingerprint(user)

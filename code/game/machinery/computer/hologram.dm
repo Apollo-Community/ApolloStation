@@ -11,7 +11,7 @@
 	var/h_r = 245.0
 	var/h_g = 245.0
 	var/h_b = 245.0
-
+	l_color = COMPUTER_BLUE
 
 /obj/machinery/computer/hologram_comp/New()
 	..()

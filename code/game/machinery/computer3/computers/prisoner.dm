@@ -3,6 +3,7 @@
 	default_prog = /datum/file/program/prisoner
 	spawn_parts = list(/obj/item/part/computer/storage/hdd,/obj/item/part/computer/networking/radio)
 	icon_state = "frame-sec"
+	l_color = COMPUTER_RED
 
 /datum/file/program/prisoner
 	name = "Prisoner Management Console"
