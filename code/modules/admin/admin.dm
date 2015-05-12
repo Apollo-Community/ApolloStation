@@ -948,7 +948,7 @@ var/global/floorIsLava = 0
 /datum/admins/proc/unprison(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"
-	if (M.z == 2)
+	if (M.z in config.admin_levels)
 		if (config.allow_admin_jump)
 			M.loc = pick(latejoin)
 			message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]", 1)

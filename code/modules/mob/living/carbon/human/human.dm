@@ -903,7 +903,7 @@
 
 	for(var/mob/living/carbon/h in world)
 		var/turf/temp_turf = get_turf(h)
-		if((temp_turf.z != 1 && temp_turf.z != 5) || h.stat!=CONSCIOUS) //Not on mining or the station. Or dead
+		if(!(temp_turf.z in config.station_levels ) || h.stat!=CONSCIOUS) //Not on mining or the station. Or dead
 			continue
 		creatures += h
 

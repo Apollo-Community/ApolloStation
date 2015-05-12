@@ -49,7 +49,7 @@
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..())
 		return
-	if (src.z > 1)
+	if ( !( src.z in config.station_levels ))
 		usr << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
 		return
 	usr.set_machine(src)
@@ -280,7 +280,7 @@
 /obj/machinery/computer/communications/attack_hand(var/mob/user as mob)
 	if(..())
 		return
-	if (src.z > 6)
+	if ( src.z in config.admin_levels )
 		user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
 		return
 

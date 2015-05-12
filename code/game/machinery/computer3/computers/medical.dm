@@ -50,7 +50,7 @@
 		scan = computer.cardslot.reader
 		if(!interactable())
 			return
-		if (computer.z > 6)
+		if (computer.z in config.admin_levels)
 			usr << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
 			return
 		var/dat

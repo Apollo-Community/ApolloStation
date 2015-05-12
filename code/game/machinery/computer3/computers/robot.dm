@@ -32,7 +32,7 @@
 
 
 	interact()
-		if(!interactable() || computer.z > 6)
+		if(!interactable() || computer.z in config.admin_levels)
 			return
 		var/dat
 		if (src.temp)

@@ -7,8 +7,8 @@
 
 */
 
-#define STATION_Z 1
-#define TELECOMM_Z 3
+#define STATION_Z 3
+#define TELECOMM_Z 8
 
 /obj/machinery/telecomms
 	var/temp = "" // output message
@@ -186,7 +186,7 @@
 	var/turf/position = get_turf(src)
 
 	// Toggle on/off getting signals from the station or the current Z level
-	if(src.listening_level == STATION_Z) // equals the station
+	if(src.listening_level in config.station_levels) // equals the station
 		src.listening_level = position.z
 		return 1
 	else if(position.z == TELECOMM_Z)

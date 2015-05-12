@@ -401,7 +401,7 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 		if(ticker.mode && ticker.mode.name == "mercenary")
 			var/obj/machinery/computer/shuttle_control/multi/syndicate/syndie_location = locate(/obj/machinery/computer/shuttle_control/multi/syndicate)
 			if(syndie_location)
-				ticker.mode:syndies_didnt_escape = (syndie_location.z > 1 ? 0 : 1)	//muskets will make me change this, but it will do for now
+				ticker.mode:syndies_didnt_escape = (syndie_location.z > 3 ? 0 : 1)	//muskets will make me change this, but it will do for now
 			ticker.mode:nuke_off_station = off_station
 		ticker.station_explosion_cinematic(off_station,null)
 		if(ticker.mode)

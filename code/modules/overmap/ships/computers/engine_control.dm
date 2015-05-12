@@ -6,6 +6,7 @@
 	var/state = "status"
 	var/list/engines = list()
 	var/obj/effect/map/ship/linked
+	l_color = COMPUTER_CYAN
 
 /obj/machinery/computer/engines/initialize()
 	linked = map_sectors["[z]"]

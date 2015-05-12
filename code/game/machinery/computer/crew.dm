@@ -41,7 +41,7 @@
 
 /obj/machinery/computer/crew/Topic(href, href_list)
 	if(..()) return
-	if (src.z > 6)
+	if (src.z in  config.admin_levels)
 		usr << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
 		return 0
 	if( href_list["close"] )

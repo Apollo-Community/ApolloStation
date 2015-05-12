@@ -4,9 +4,7 @@
 /mob/living/silicon/ai/proc/InvalidTurf(turf/T as turf)
 	if(!T)
 		return 1
-	if(T.z == 2)
-		return 1
-	if(T.z > 6)
+	if(T.z in config.admin_levels)
 		return 1
 	return 0
 
