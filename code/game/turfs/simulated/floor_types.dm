@@ -108,8 +108,6 @@
 	intact = 0
 
 	New()
-		l_color = "#002900"
-		luminosity = 1
 		. = ..()
 
 /turf/simulated/floor/plating
@@ -147,13 +145,11 @@
 /turf/simulated/floor/bluegrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "bcircuit"
-	l_color = COMPUTER_BLUE
 	luminosity = 1
 
 /turf/simulated/floor/greengrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "gcircuit"
-	l_color = COMPUTER_GREEN
 	luminosity = 1
 
 /turf/simulated/shuttle

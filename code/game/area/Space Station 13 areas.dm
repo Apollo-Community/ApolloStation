@@ -1741,15 +1741,20 @@ var/list/ghostteleportlocs = list()
 
 //ENGINEERING OUTPOST
 
-/area/djstation
+/area/engioutpost
 	name = "\improper Engineering Outpost"
 	icon_state = "LP"
 	environment = HALLWAY
 
-/area/djstation/solars
+/area/engioutpost/solars
 	name = "\improper Engineering Outpost Solars"
 	icon_state = "LPS"
 	environment = PLAIN
+
+/area/engioutpost/dock
+	name = "\improper Engineering Outpost"
+	icon_state = "LP"
+	environment = SEWER_PIPE
 
 //DERELICT
 
