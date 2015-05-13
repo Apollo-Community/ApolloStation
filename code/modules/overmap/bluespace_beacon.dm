@@ -160,7 +160,8 @@ var/global/list/bluespace_beacons = list()
 	var/functional = 0
 
 /obj/machinery/computer/gate_beacon_console/New()
-	find_beacon()
+	spawn( 10 )
+		find_beacon()
 
 	..()
 
