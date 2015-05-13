@@ -55,7 +55,8 @@
 				hive_prefix = "LING"
 			else if(speaking.name == "Xenomorph")
 				hive_prefix = "XENO"
-			STUI.cached_logs[5] += "\[[time_stamp()]]<font color='#0099FF'>[hive_prefix]: [key_name(src)] : [message]</font><br>"
+			STUI.game.Add("\[[time_stamp()]]<font color='#0099FF'>[hive_prefix]: [key_name(src)] : [message]</font><br>")
+			STUI.processing |= 5
 			speaking.broadcast(src,trim(message))
 			return
 		//If we've gotten this far, keep going!
@@ -142,7 +143,8 @@
 
 	//speaking into radios
 	if(used_radios.len)
-		STUI.cached_logs[5] += "\[[time_stamp()]]<font color='#4f7529'>RADIO: [key_name(src)] : [message]</font><br>"
+		STUI.game.Add("\[[time_stamp()]]<font color='#4f7529'>RADIO: [key_name(src)] : [message]</font><br>")
+		STUI.processing |= 5
 		italics = 1
 		message_range = 1
 		if(speaking)

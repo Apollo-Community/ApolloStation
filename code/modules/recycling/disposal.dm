@@ -166,7 +166,8 @@
 		msg = "[user.name] climbs into the [src]."
 		user << "You climb into the [src]."
 		message_admins("[usr] ([usr.ckey]) climbed in a disposals unit. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
-		STUI.cached_logs[2] += "\[[time_stamp()]]ADMIN: [usr] ([usr.ckey]) climbed in a disposals unit. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)"
+		STUI.admin.Add("\[[time_stamp()]]ADMIN: [usr] ([usr.ckey]) climbed in a disposals unit. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
+		STUI.processing |= 2
 	else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
 		msg = "[user.name] stuffs [target.name] into the [src]!"
 		user << "You stuff [target.name] into the [src]!"

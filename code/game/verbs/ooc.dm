@@ -48,8 +48,8 @@
 			ooc_style = "admin"
 
 	log_ooc("[mob.name]/[key] : [msg]")
-	STUI.cached_logs[4] += "\[[time_stamp()]] <font color='#0066FF'>OOC: [mob.name]/[key]: [msg]</font><br>"
-
+	STUI.ooc.Add("\[[time_stamp()]] <font color='#0066FF'>OOC: [mob.name]/[key]: [msg]</font><br>")
+	STUI.processing |= 4
 
 	for(var/client/target in clients)
 		if(target.prefs.toggles & CHAT_OOC)
@@ -137,4 +137,5 @@
 			if((target.mob in heard) || (target in admins))
 				target << "<span class='ooc'><span class='looc'>" + create_text_tag("looc", "LOOC:", target) + " <span class='prefix'>[prefix]</span><EM>[display_name][admin_stuff]:</EM> <span class='message'>[msg]</span></span></span>"
 
-	STUI.cached_logs[4] += "\[[time_stamp()]] <font color='#3A9696'>LOOC: [mob.name]/[key]: [msg]</font><br>"
+	STUI.ooc.Add("\[[time_stamp()]] <font color='#3A9696'>LOOC: [mob.name]/[key]: [msg]</font><br>")
+	STUI.processing |= 4

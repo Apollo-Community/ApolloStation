@@ -25,7 +25,8 @@
 
 	msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
 	log_adminsay("MOD: [key_name(src)] : [msg]")
-	STUI.cached_logs[3] += "\[[time_stamp()]] <font color='#b82e00'>MOD: [key_name(src)] : [msg]</font><br>"
+	STUI.staff.Add("\[[time_stamp()]] <font color='#b82e00'>MOD: [key_name(src)] : [msg]</font><br>")
+	STUI.processing |= 3
 
 	if (!msg)
 		return
