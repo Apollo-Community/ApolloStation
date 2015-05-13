@@ -38,6 +38,10 @@ var/global/list/bluespace_beacons = list()
 	..()
 
 	src.ping("[src] states, \"Initializing...\"")
+	
+	if( istype( get_turf( src ), /turf/simulated/floor/bspace_safe ))
+		warpable = 0
+	
 	spawn(20)
 		sector = map_sectors["[z]"]
 		if( !sector )
@@ -48,9 +52,6 @@ var/global/list/bluespace_beacons = list()
 		if( name == "bluespace beacon" )
 			var/hash = "[pick( alphabet_uppercase )][pick( alphabet_uppercase )][rand(0, 9)]"
 			name = "Bluespace Beacon [hash]-[sector.x][sector.y]"
-
-		if( istype( get_turf( src ), /turf/simulated/floor/bspace_safe ))
-			warpable = 0
 
 		bluespace_beacons["[name]"] = src
 
