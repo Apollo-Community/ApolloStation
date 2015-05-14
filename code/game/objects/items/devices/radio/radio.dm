@@ -183,7 +183,7 @@
 	Broadcast_Message(connection, A,
 						0, "*garbled automated announcement*", src,
 						message, from, "Automated Announcement", from, "synthesized voice",
-						4, 0, list(1), PUB_FREQ)
+						4, 0, config.station_levels, PUB_FREQ)
 	del(A)
 	return
 

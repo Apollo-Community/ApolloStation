@@ -277,3 +277,6 @@ var/datum/STUI/STUI = new()
 #define COMPUTER_BLUE "#001F3D"
 #define COMPUTER_PURPLE "#4C0066"
 #define COMPUTER_BROWN "#402000"
+
+// Announcer intercom, because too much stuff creates an intercom for one message then hard del()s it.
+var/global/obj/item/device/radio/intercom/global_announcer = new(null)
