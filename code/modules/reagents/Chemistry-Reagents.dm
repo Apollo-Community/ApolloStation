@@ -2,7 +2,7 @@
 #define LIQUID 2
 #define GAS 3
 #define REAGENTS_OVERDOSE 30
-#define REM REAGENTS_EFFECT_MULTIP
+#define REM REAGENTS_EFFECT_MULTIPLIER
 
 //The reaction procs must ALWAYS set src = null, this detaches the proc from the object (the reagent)
 //so that it can continue working when the reagent is deleted while the proc is still active.
@@ -951,7 +951,7 @@ datum
 				return
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.adjustToxLoss(rand(rand(0, 1), rand(0, 1)))
+				M.adjustToxLoss(rand( 0, rand( 0, rand(0, 1))))
 				..()
 				return
 
