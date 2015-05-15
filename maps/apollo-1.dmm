@@ -7150,7 +7150,7 @@
 "cHz" = (/obj/machinery/space_heater,/turf/simulated/floor/plating,/area/maintenance/engineering)
 "cHA" = (/obj/machinery/atmospherics/unary/outlet_injector{dir = 1; frequency = 1443; icon_state = "map_injector"; id = "air_in"; use_power = 1},/obj/machinery/sparker{id = "Incinerator"; pixel_x = -20},/turf/simulated/floor/engine/vacuum,/area/maintenance/incinerator)
 "cHB" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 1; external_pressure_bound = 0; external_pressure_bound_default = 0; icon_state = "map_vent_in"; initialize_directions = 1; internal_pressure_bound = 4000; internal_pressure_bound_default = 4000; use_power = 1; pressure_checks = 2; pressure_checks_default = 2; pump_direction = 0},/turf/simulated/floor/engine/vacuum,/area/maintenance/incinerator)
-"cHC" = (/obj/structure/sign/securearea{desc = "A warning sign which reads 'VACUUM'"; icon_state = "space"; layer = 4; name = "VACUUM"; pixel_x = 32; pixel_y = 0},/obj/structure/disposalpipe/trunk{dir = 4},/obj/structure/disposaloutlet{dir = 8},/turf/simulated/floor/engine/vacuum,/area/maintenance/incinerator)
+"cHC" = (/obj/structure/disposalpipe/trunk{dir = 4},/obj/structure/disposaloutlet{dir = 8},/turf/simulated/floor/engine/vacuum,/area/maintenance/incinerator)
 "cHD" = (/obj/machinery/atmospherics/pipe/simple/visible,/obj/structure/disposalpipe/junction{dir = 8},/turf/simulated/wall/a_wall,/area/maintenance/incinerator)
 "cHE" = (/obj/structure/lattice,/obj/structure/disposalpipe/segment{dir = 2; icon_state = "pipe-c"},/turf/space,/area/space)
 "cHF" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet/green,/obj/item/device/radio/intercom{dir = 0; name = "Station Intercom (General)"; pixel_x = -27},/turf/simulated/floor{icon_state = "white"},/area/medical/virology)

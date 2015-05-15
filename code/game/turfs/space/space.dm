@@ -12,7 +12,7 @@ var/list/accessible_z_levels = list("1" = 5, "3" = 10, "4" = 15, "5" = 10, "6" =
 //	heat_capacity = 700000 No.
 
 /turf/space/New()
-	if(!istype(src, /turf/space/transit))
+	if(!istype(src, /turf/space/transit) && !istype(src, /turf/space/bluespace))
 		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
 
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
