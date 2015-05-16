@@ -150,6 +150,7 @@ var/list/ghostteleportlocs = list()
 	environment = UNDERWATER
 
 /area/engine/
+	music = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg' )
 
 /area/turret_protected/
 
@@ -1241,6 +1242,7 @@ var/list/ghostteleportlocs = list()
 
 	dock
 		name = "\improper Engineering Dock"
+		icon_state = "engine_storage"
 		environment = SEWER_PIPE
 
 //Solars

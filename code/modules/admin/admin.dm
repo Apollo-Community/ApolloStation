@@ -951,7 +951,7 @@ var/global/floorIsLava = 0
 	if (M.z in config.admin_levels)
 		if (config.allow_admin_jump)
 			M.loc = pick(latejoin)
-			message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]", 1)
+			message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
 			log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
 		else
 			alert("Admin jumping disabled")
@@ -1084,7 +1084,7 @@ var/global/floorIsLava = 0
 	else
 		world << "<B>Reduced welder vision has been disabled!</B>"
 	log_admin("[key_name(usr)] toggled welder vision.")
-	message_admins("[key_name_admin(usr)] toggled welder vision.", 1)
+	message_admins("[key_name_admin(usr)] toggled welder vision.")
 	feedback_add_details("admin_verb","TTWH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleguests()
@@ -1097,7 +1097,7 @@ var/global/floorIsLava = 0
 	else
 		world << "<B>Guests may now enter the game.</B>"
 	log_admin("[key_name(usr)] toggled guests game entering [config.guests_allowed?"":"dis"]allowed.")
-	message_admins("\blue [key_name_admin(usr)] toggled guests game entering [config.guests_allowed?"":"dis"]allowed.", 1)
+	message_admins("\blue [key_name_admin(usr)] toggled guests game entering [config.guests_allowed?"":"dis"]allowed.")
 	feedback_add_details("admin_verb","TGU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/output_ai_laws()
@@ -1146,7 +1146,6 @@ var/global/floorIsLava = 0
 
 	if(istype(H))
 		H.regenerate_icons()
-
 
 /*
 	helper proc to test if someone is a mentor or not.  Got tired of writing this same check all over the place.
@@ -1214,3 +1213,4 @@ var/global/floorIsLava = 0
 //ALL DONE
 //*********************************************************************************************************
 //
+
