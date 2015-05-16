@@ -398,6 +398,22 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 		message_admins("[key_name_admin(src)] has restrained [key_name(M)].")
 
+/client/proc/toggle_lagfree()
+	set category = "Server"
+	set name = "Lag-free Mode"
+
+	if(!ticker)
+		alert("Wait until the game starts")
+		return
+
+	lag_free = lag_free ? 0 : 1
+
+	air_processing_killed = lag_free ? 1 : 0
+	pipe_processing_killed = lag_free ? 1 : 0
+	machine_processing_killed = lag_free ? 1 : 0
+
+	message_admins("[src] has toggled lag-free mode.")
+
 /client/proc/cmd_admin_grantfullaccess(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Grant Full Access"
