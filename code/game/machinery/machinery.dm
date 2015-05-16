@@ -184,6 +184,8 @@ Class Procs:
 /obj/machinery/Topic(href, href_list, var/nowindow = 0, var/checkrange = 1)
 	if(..())
 		return 1
+	if(isobserver(usr) && check_rights(R_ADMIN|R_MOD))
+		return 0
 	if(!can_be_used_by(usr, be_close = checkrange))
 		return 1
 	add_fingerprint(usr)
@@ -254,6 +256,8 @@ Class Procs:
 		return src.attack_hand(user)
 
 /obj/machinery/attack_hand(mob/user as mob)
+	if(isobserver(user) && check_rights(R_ADMIN|R_MOD))
+		return 0 			//allows aghosts to interact with machinery
 	if(inoperable(MAINT))
 		return 1
 	if(user.lying || user.stat)

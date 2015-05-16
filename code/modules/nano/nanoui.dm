@@ -140,6 +140,9 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/update_status(var/push_update = 0)
+	if (isobserver(usr) && check_rights(R_ADMIN|R_MOD))
+		set_status(STATUS_INTERACTIVE, push_update) // interactive (green visibility)
+		return
 	if (istype(user, /mob/living/silicon/ai) || (get_dist(get_turf(user),get_turf(src_object)) <= 1))
 		set_status(STATUS_INTERACTIVE, push_update) // interactive (green visibility)
 	else if (istype(user, /mob/living/silicon/robot))

@@ -680,7 +680,7 @@ About the new airlock wires panel:
 	if((in_range(src, usr) && istype(src.loc, /turf)) && src.p_open)
 		usr.set_machine(src)
 
-	if(istype(usr, /mob/living/silicon))
+	if(istype(usr, /mob/living/silicon) || (isobserver(usr) && check_rights(R_ADMIN|R_MOD)))
 		if (!check_synth_access(usr))
 			return 1
 

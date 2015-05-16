@@ -36,7 +36,10 @@
 	next_move = world.time + 8
 	// You are responsible for checking config.ghost_interaction when you override this function
 	// Not all of them require checking, see below
-	A.attack_ghost(src)
+	if((R_ADMIN|R_MOD) && src.client.holder.rights)
+		A.attack_ai(src)
+	else
+		A.attack_ghost(src)
 
 // Oh by the way this didn't work with old click code which is why clicking shit didn't spam you
 /atom/proc/attack_ghost(mob/dead/observer/user as mob)
