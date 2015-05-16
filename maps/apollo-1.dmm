@@ -2523,7 +2523,7 @@
 "aWA" = (/obj/item/device/radio/intercom{pixel_y = 25},/obj/machinery/camera{c_tag = "Kitchen"; dir = 2},/obj/item/weapon/book/manual/chef_recipes{layer = 2.99},/obj/structure/table/reinforced,/turf/simulated/floor{icon_state = "cafeteria"; dir = 2},/area/crew_quarters/kitchen)
 "aWB" = (/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor{icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
 "aWC" = (/obj/structure/closet/secure_closet/freezer/kitchen,/obj/machinery/light{dir = 1},/turf/simulated/floor{icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
-"aWD" = (/obj/machinery/reagentgrinder{pixel_y = 10},/obj/structure/table/reinforced,/turf/simulated/floor{icon_state = "cafeteria"; dir = 2},/area/crew_quarters/kitchen)
+"aWD" = (/obj/machinery/reagentgrinder{pixel_y = 10},/obj/structure/table/glass,/turf/simulated/floor{icon_state = "cafeteria"; dir = 2},/area/crew_quarters/kitchen)
 "aWE" = (/obj/machinery/chem_dispenser/soda,/obj/structure/table/glass,/turf/simulated/floor{icon_state = "cafeteria"; dir = 2},/area/crew_quarters/kitchen)
 "aWF" = (/obj/machinery/processor,/turf/simulated/floor{icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
 "aWG" = (/turf/simulated/floor{icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
