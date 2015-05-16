@@ -2098,7 +2098,7 @@
 "aOr" = (/obj/structure/disposalpipe/segment,/obj/machinery/alarm{pixel_y = 22},/obj/machinery/camera{c_tag = "Botany Pasture"; pixel_y = 20},/turf/simulated/floor{icon_state = "bar"},/area/hydroponics/pasture)
 "aOs" = (/obj/structure/sink/kitchen{pixel_y = 28},/turf/simulated/floor/grass,/area/hydroponics/pasture)
 "aOt" = (/obj/machinery/light{tag = "icon-tube1 (NORTH)"; icon_state = "tube1"; dir = 1},/obj/structure/flora/ausbushes,/turf/simulated/floor/grass,/area/hydroponics/pasture)
-"aOu" = (/obj/machinery/firealarm{dir = 2; pixel_y = 24},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/grass,/area/hydroponics/pasture)
+"aOu" = (/obj/machinery/firealarm{dir = 2; pixel_y = 24},/obj/structure/window/reinforced{dir = 4},/obj/item/weapon/shovel,/turf/simulated/floor/grass,/area/hydroponics/pasture)
 "aOv" = (/obj/item/weapon/minihoe,/obj/item/weapon/hatchet,/obj/structure/table,/obj/item/weapon/reagent_containers/glass/bucket,/turf/simulated/floor{dir = 1; icon_state = "green"},/area/hydroponics)
 "aOw" = (/obj/machinery/light{tag = "icon-tube1 (NORTH)"; icon_state = "tube1"; dir = 1},/obj/machinery/atmospherics/unary/vent_pump/on,/obj/structure/reagent_dispensers/watertank,/turf/simulated/floor{dir = 1; icon_state = "green"},/area/hydroponics)
 "aOx" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/turf/simulated/floor{dir = 1; icon_state = "green"},/area/hydroponics)
