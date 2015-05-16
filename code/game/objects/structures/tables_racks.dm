@@ -320,6 +320,13 @@
 		else
 			set_dir(2)
 
+/obj/structure/table/flip(var/direction)
+	playsound(loc, 'sound/effects/Glassbr2.ogg', 100, 1)
+	src.visible_message("\red The [src] shatters!")
+	new /obj/item/weapon/shard(src.loc)
+	del(src)
+	return
+
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return
 
@@ -497,7 +504,7 @@
 	if (!can_touch(usr) || ismouse(usr))
 		return
 
-	if(flipped < 0 || !flip(get_cardinal_dir(usr,src)) || istype(src,/obj/structure/table/glass))	//Don't want people to flip glass tables.
+	if(flipped < 0 || !flip(get_cardinal_dir(usr,src)))	//Don't want people to flip glass tables.
 		usr << "<span class='notice'>It won't budge.</span>"
 		return
 
