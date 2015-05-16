@@ -36,7 +36,7 @@
 	next_move = world.time + 8
 	// You are responsible for checking config.ghost_interaction when you override this function
 	// Not all of them require checking, see below
-	if((R_ADMIN|R_MOD) && src.client.holder.rights)
+	if(check_rights(R_ADMIN|R_MOD))
 		A.attack_ai(src)
 	else
 		A.attack_ghost(src)

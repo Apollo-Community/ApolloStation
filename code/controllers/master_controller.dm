@@ -10,6 +10,9 @@ var/global/last_tick_duration = 0
 
 var/global/air_processing_killed = 0
 var/global/pipe_processing_killed = 0
+var/global/machine_processing_killed = 0
+
+var/global/lag_free = 0
 
 datum/controller/game_controller
 	var/processing = 0
@@ -26,7 +29,6 @@ datum/controller/game_controller
 	var/powernets_cost	= 0
 	var/nano_cost		= 0
 	var/events_cost		= 0
-	var/machine_sort_cost = 0
 	var/ticker_cost		= 0
 	var/total_cost		= 0
 
@@ -86,7 +88,6 @@ datum/controller/game_controller/proc/setup()
 			ticker.pregame()
 
 	lighting_controller.initializeLighting()
-
 
 datum/controller/game_controller/proc/setup_objects()
 	world << "\red \b Initializing objects"
@@ -266,8 +267,10 @@ datum/controller/game_controller/proc/process()
 
 datum/controller/game_controller/proc/process_machines_process(var/start, var/end)
 //start and end added to stagger machine processing as a test
-//produces a runtime error at roundstart when 13k machines -> 6k machines.
-	while(start<=end)
+	if(machine_processing_killed)
+		return
+
+	while(start<=end && end <=machines.len)			//Supresses run-time but less efficient.
 		var/obj/machinery/Machine = machines[start]
 		if(Machine.process() != PROCESS_KILL)
 			if(Machine)
