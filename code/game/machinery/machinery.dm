@@ -229,7 +229,7 @@ Class Procs:
 		return
 	// Prevents the AI from using Topic on admin levels (by for example viewing through the court/thunderdome cameras)
 	// unless it's on the same level as the object it's interacting with.
-	if(!(z == M.z || M.z in config.player_levels))
+	if(!( z == M.z ) || M.z in config.admin_levels )
 		return
 	//stop AIs from leaving windows open and using then after they lose vision
 	//apc_override is needed here because AIs use their own APC when powerless
