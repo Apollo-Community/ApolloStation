@@ -218,7 +218,7 @@
 "ej" = (/obj/machinery/door/airlock/maintenance_hatch,/turf/simulated/floor/plating/airless,/area/constructionsite/hallway/aft)
 "ek" = (/obj/structure/sink{icon_state = "sink"; dir = 8; pixel_x = -12; pixel_y = 2},/obj/machinery/atmospherics/pipe/simple/hidden,/turf/simulated/floor{icon_state = "freezerfloor"},/area/engioutpost)
 "el" = (/obj/machinery/door/airlock{name = "Restroom"; req_access_txt = "0"},/turf/simulated/floor{icon_state = "freezerfloor"},/area/engioutpost)
-"em" = (/obj/machinery/door/airlock/glass_engineering{name = "Outpost Lobby"; req_one_access_txt = "10;24"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/wall,/area/engioutpost)
+"em" = (/obj/machinery/door/airlock/glass_engineering{name = "Outpost Lobby"; req_one_access_txt = "10;24"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor{icon_state = "cafeteria"; dir = 5},/area/engioutpost)
 "en" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/machinery/door/firedoor/border_only{dir = 2},/turf/simulated/floor/plating,/area/engioutpost)
 "eo" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/machinery/door/firedoor/border_only{dir = 2},/turf/simulated/floor/plating,/area/engioutpost)
 "ep" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/machinery/door/firedoor/border_only{dir = 2},/turf/simulated/floor/plating,/area/engioutpost)

@@ -150,7 +150,7 @@ var/list/ghostteleportlocs = list()
 	environment = UNDERWATER
 
 /area/engine/
-	music = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
+
 /area/turret_protected/
 
 /area/arrival
@@ -1238,6 +1238,10 @@ var/list/ghostteleportlocs = list()
 		name = "\improper Engineering Locker Room"
 		icon_state = "engine_storage"
 		environment = QUARRY
+
+	dock
+		name = "\improper Engineering Dock"
+		environment = SEWER_PIPE
 
 //Solars
 
