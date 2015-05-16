@@ -410,4 +410,4 @@
 
 
 	log_admin("[key_name(src)] mass modified [original_name]'s [variable] to [O.vars[variable]]")
-	message_admins("[key_name_admin(src)] mass modified [original_name]'s [variable] to [O.vars[variable]]", 1)
+	message_admins("[key_name_admin(src)] mass modified [original_name]'s [variable] to [O.vars[variable]]", "DEBUG:")

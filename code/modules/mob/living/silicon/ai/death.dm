@@ -41,7 +41,7 @@
 	if(callshuttle == 3) //if all three conditions are met
 		emergency_shuttle.call_evac()
 		log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-		message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
+		message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", "EVENT:")
 
 	if(explosive)
 		spawn(10)

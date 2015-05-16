@@ -513,7 +513,7 @@ var/list/admin_verbs_mentor = list(
 				new_key = copytext(new_key, 1, 26)
 			holder.fakekey = new_key
 		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
-		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]", 1)
+		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]", "SNEAKY BREEKI:")
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 #define MAX_WARNS 3
@@ -598,7 +598,7 @@ var/list/admin_verbs_mentor = list(
 	T.spell_list += new path
 	feedback_add_details("admin_verb","GS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
-	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the spell [S].", 1)
+	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the spell [S].")
 
 /client/proc/give_disease(mob/T as mob in mob_list) // -- Giacom
 	set category = "Fun"
@@ -614,7 +614,7 @@ var/list/admin_verbs_mentor = list(
 	T.contract_disease(new path, 1)
 	feedback_add_details("admin_verb","GD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
-	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the disease [D].", 1)
+	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the disease [D].")
 
 /client/proc/give_disease2(mob/T as mob in mob_list) // -- Giacom
 	set category = "Fun"
@@ -644,7 +644,7 @@ var/list/admin_verbs_mentor = list(
 
 	feedback_add_details("admin_verb","GD2") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] a [greater] disease2 with infection chance [D.infectionchance].")
-	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] a [greater] disease2 with infection chance [D.infectionchance].", 1)
+	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] a [greater] disease2 with infection chance [D.infectionchance].")
 
 /client/proc/make_sound(var/obj/O in world) // -- TLE
 	set category = "Special Verbs"
@@ -657,7 +657,7 @@ var/list/admin_verbs_mentor = list(
 		for (var/mob/V in hearers(O))
 			V.show_message(message, 2)
 		log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound")
-		message_admins("\blue [key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound", 1)
+		message_admins("\blue [key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound")
 		feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -691,7 +691,7 @@ var/list/admin_verbs_mentor = list(
 		usr << "<b>Disabled air processing.</b>"
 	feedback_add_details("admin_verb","KA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] used 'kill air'.")
-	message_admins("\blue [key_name_admin(usr)] used 'kill air'.", 1)
+	message_admins("\blue [key_name_admin(usr)] used 'kill air'.")
 
 /client/proc/readmin_self()
 	set name = "Re-Admin self"
@@ -700,7 +700,7 @@ var/list/admin_verbs_mentor = list(
 	if(deadmin_holder)
 		deadmin_holder.reassociate()
 		log_admin("[src] re-admined themself.")
-		message_admins("[src] re-admined themself.", 1)
+		message_admins("[src] re-admined themself.")
 		src << "<span class='interface'>You now have the keys to control the planet, or atleast a small space station</span>"
 		verbs -= /client/proc/readmin_self
 
@@ -711,7 +711,7 @@ var/list/admin_verbs_mentor = list(
 	if(holder)
 		if(alert("Confirm self-deadmin for the round? You can't re-admin yourself without someont promoting you.",,"Yes","No") == "Yes")
 			log_admin("[src] deadmined themself.")
-			message_admins("[src] deadmined themself.", 1)
+			message_admins("[src] deadmined themself.")
 			deadmin()
 			src << "<span class='interface'>You are now a normal player.</span>"
 			verbs |= /client/proc/readmin_self
@@ -861,11 +861,11 @@ var/list/admin_verbs_mentor = list(
 		if(config.cult_ghostwriter)
 			config.cult_ghostwriter = 0
 			src << "<b>Disallowed ghost writers.</b>"
-			message_admins("Admin [key_name_admin(usr)] has disabled ghost writers.", 1)
+			message_admins("Admin [key_name_admin(usr)] has disabled ghost writers.")
 		else
 			config.cult_ghostwriter = 1
 			src << "<b>Enabled ghost writers.</b>"
-			message_admins("Admin [key_name_admin(usr)] has enabled ghost writers.", 1)
+			message_admins("Admin [key_name_admin(usr)] has enabled ghost writers.")
 
 /client/proc/toggledrones()
 	set name = "Toggle maintenance drones"
@@ -875,11 +875,11 @@ var/list/admin_verbs_mentor = list(
 		if(config.allow_drone_spawn)
 			config.allow_drone_spawn = 0
 			src << "<b>Disallowed maint drones.</b>"
-			message_admins("Admin [key_name_admin(usr)] has disabled maint drones.", 1)
+			message_admins("Admin [key_name_admin(usr)] has disabled maint drones.")
 		else
 			config.allow_drone_spawn = 1
 			src << "<b>Enabled maint drones.</b>"
-			message_admins("Admin [key_name_admin(usr)] has enabled maint drones.", 1)
+			message_admins("Admin [key_name_admin(usr)] has enabled maint drones.")
 
 /client/proc/toggledebuglogs()
 	set name = "Toggle Debug Log Messages"
@@ -901,11 +901,11 @@ var/list/admin_verbs_mentor = list(
 	if( angry )
 		angry = 0
 		log_admin("[key_name(usr)] has CALMED DOWN!")
-		message_admins("\blue [key_name_admin(usr)] has CALMED DOWN!", 1)
+		message_admins("\blue [key_name_admin(usr)] has CALMED DOWN!")
 	else
 		angry = 1
 		log_admin("[key_name(usr)] has become ANGRY!")
-		message_admins("\blue [key_name_admin(usr)] has become ANGRY!", 1)
+		message_admins("\blue [key_name_admin(usr)] has become ANGRY!")
 
 /* This is the worst frickin verb, why did anyone ever think it was a good idea?
 /client/proc/man_up(mob/T as mob in mob_list)

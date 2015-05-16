@@ -457,7 +457,7 @@
 
 	emergency_shuttle.call_evac()
 	log_game("[key_name(user)] has called the shuttle.")
-	message_admins("[key_name_admin(user)] has called the shuttle.", 1)
+	message_admins("[key_name_admin(user)] has called the shuttle.")
 
 
 	return

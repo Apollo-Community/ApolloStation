@@ -214,7 +214,7 @@
 		break
 
 	if(related_accounts_cid != "")
-		message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name(src)]<A href='?_src_=holder;notes=show;ckey=[lowertext(src.ckey)]'>(N)</A> has the same computer key as [related_accounts_cid] </font>", 1)
+		message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name(src)]<A href='?_src_=holder;notes=show;ckey=[lowertext(src.ckey)]'>(N)</A> has the same computer key as [related_accounts_cid] </font>")
 
 
 	//Just the standard check to see if it's actually a number
