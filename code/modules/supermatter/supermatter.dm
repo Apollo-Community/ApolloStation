@@ -362,7 +362,7 @@
 	return
 
 
-proc/supermatter_delamination(var/turf/epicenter, var/size, var/transform_mobs = 0, var/adminlog = 1)
+proc/supermatter_delamination(var/turf/epicenter, var/size, var/transform_mobs = 0, var/adminlog = 1, var/rads = 0)
 	spawn(0)
 		var/start = world.timeofday
 		epicenter = get_turf(epicenter)
@@ -382,7 +382,7 @@ proc/supermatter_delamination(var/turf/epicenter, var/size, var/transform_mobs =
 		var/y = epicenter.y
 		var/z = epicenter.z
 
-		epicenter.ChangeTurf( /turf/simulated/floor/plating/smatter )
+		//epicenter.ChangeTurf( /turf/simulated/floor/plating/smatter )
 
 		for(var/mob/living/mob in orange( epicenter, size*2 )) // Irradiate area twice the size of the main blast
 			if(epicenter.z == mob.loc.z)
@@ -390,7 +390,8 @@ proc/supermatter_delamination(var/turf/epicenter, var/size, var/transform_mobs =
 					//Hilariously enough, running into a closet should make you get hit the hardest.
 					var/mob/living/carbon/human/H = mob
 					H.hallucination += max(50, min(size*10, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, epicenter) + 1)) ) )
-				var/rads = size*10 * sqrt( 1 / (get_dist(mob, epicenter) + 1) )
+				if( !rads )
+					rads = size*10 * sqrt( 1 / (get_dist(mob, epicenter) + 1) )
 				mob.apply_effect(rads, IRRADIATE)
 
 		for(var/i=0, i<size, i++) // An awful way to do this, but i'm tired
