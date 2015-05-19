@@ -70,7 +70,8 @@
 	spacepods_list -= src
 
 	// Dumping the occupants
-	pilot.loc = src.loc
+	if( pilot )
+		pilot.loc = src.loc
 	for( var/mob/passenger in passengers )
 		passenger.loc = src.loc
 
@@ -154,6 +155,10 @@
 
 		for(var/i = 10, i >= 0; --i)
 			occupants_announce( "[i] seconds", 2 )
+
+			if( prob( 10 ))
+				explosion(loc, 0, rand( 0, 1 ), rand( 2, 4 ))
+
 			if(i == 0)
 				explosion(loc, 2, 4, 8)
 				del(src)

@@ -1240,3 +1240,44 @@
 				</body>
 			</html>
 			"}
+
+/obj/item/weapon/book/manual/bluegate
+	name = "Bluespace Travel: As Simple as Rifting an Extradimensional Gateway"
+	icon_state = "evabook"
+	author = "Jorp Murshul, PhD in Meta-Astrodynamics"
+	title = "Bluespace Travel: As Simple as Rifting an Extradimensional Gateway"
+	dat = {"<html>
+				<head>
+				<style>
+				h1 {font-size: 18px; margin: 15px 0px 5px;}
+				h2 {font-size: 15px; margin: 15px 0px 5px;}
+				li {margin: 2px 0px 2px 15px;}
+				ul {margin: 5px; padding: 0px;}
+				ol {margin: 5px; padding: 0px 15px;}
+				body {font-size: 13px; font-family: Verdana;}
+				</style>
+				</head>
+				<body>
+				<h1><a name="Foreword">Bluespace Travel: As Simple as Rifting an Extradimensional Gateway</a></h1>
+				<I>Or: How to not spend your entire life trying to travel across the vast distances of space.</I><BR>
+
+				<h2><a name="Contents">Contents</a></h2>
+				<ol>
+					<li><a href="#Foreword">A Foreword on Bluespace Gates</a></li>
+					<li><a href="#Theory">Theory of Operation</a></li>
+					<li><a href="#Usage">Usage of a Gate</a></li>
+				</ol>
+				<br>
+				Bluespace travel has been a staple of our civilization for centuries, and yet very few people truly understand how they work. This book aims to help the layman come to an understanding of how this vital part of civilization works.
+				<BR><BR>
+
+				<h2><a name="Theory">Theory of Operation</a></h2>
+				Bluespace is a higher-dimensional area of space
+
+				<h2><a name="Usage">Usage of a Gate</a></h2>
+				NanoTrasen has made great effort to make the usage of a bluespace gate as simple as possible. Nowadays using one is as simple as the press of a button!
+
+
+				</body>
+			</html>
+			"}
