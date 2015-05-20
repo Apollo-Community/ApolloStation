@@ -1272,11 +1272,27 @@
 				<BR><BR>
 
 				<h2><a name="Theory">Theory of Operation</a></h2>
-				Bluespace is a higher-dimensional area of space
+				Bluespace is a 3-dimensional area (brane) of space which exists seperately from our own 3-dimensional brane. The bluespace brane, which was discovered some 400 years ago, eixsts "close" to our own brane, in that they occasionally skirt and intersect with one another.
+				These occurences are theorized to be the cause of nearly, if not all, quantum phenomena. Bluespace and our reality can be "bent" in such a way that an intersection between the two branes can be created. These intersections are commonly known as "Bluespace Gates".
+				A bluespace inducer is the device that is most commonly used to perform this task. A bluespace inducer "raises" our reality until it intersects with bluespace. When a object enters this intersection, they are placed onto a local "hill" within bluespace.
+				A bluespace beacon is then activated, which pulls bluespace "downward", creating a 4-dimsional slope within bluespace. Any object within bluespace will move towards the lowest point of this slope, until it reaches the point where bluespace intersects with our reality.
+				At this point, the object is ejected from bluespace and appears at the location of the beacon.
+
+				On a side note, if an object enters bluespace without a beacon being activated, the object is likely to remain within bluespace for an indeterminite amount of time until another intersection, be it man-made or natural, occurs.
+
 
 				<h2><a name="Usage">Usage of a Gate</a></h2>
 				NanoTrasen has made great effort to make the usage of a bluespace gate as simple as possible. Nowadays using one is as simple as the press of a button!
 
+				<ol>
+				  <li>To start, you'll want to have space-worthy gear or a spacepod. All NanoTrasen approved gates are constructed outside of the station, in order to avoid causing unintenitonal damage to the station.</li>
+				  <li>After you've gotten your garb, or climbed into a pilot's seat, you'll need to make your way to the closest gate computer.</li>
+				  <li>Once you've arrived, you'll want to travel on over to the computer and tap in your destination. If you're in a spacepod, you'll want to remotely interface with the computer and do the same. <b>It is incredibly important that you select a valid destination, or you may be left stranded in space billions of miles away from anyone.</b></li>
+				  <li>After you've done that, activate the sequence and await for the gate to open. The amount of time this takes depends on how many inducers you have active and how much power you have available.</li>
+				  <li>The gate will then open and you'll want to rush through. The gates can't be kept open forever, so you have to be quick about it before they close!</li>
+				  <li>After you've entered the gate, you'll find yourself in bluespace. You may find an overwhelming sense of nasuea and vertigo, but those are temporary symptoms and will subside shortly after you exit bluespace.</li>
+				  <li>Congratulations! You've completed your first trip through bluespace!</li>
+				</ol>
 
 				</body>
 			</html>

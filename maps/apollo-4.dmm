@@ -258,7 +258,7 @@
 "eX" = (/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 6},/area/engioutpost/dock)
 "eY" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor/engine,/area/engioutpost/dock)
 "eZ" = (/obj/machinery/portable_atmospherics/canister/air/airlock,/obj/machinery/power/apc{dir = 2; name = "south bump"; pixel_y = -24},/obj/structure/cable,/obj/structure/cable{icon_state = "0-4"; d2 = 4},/turf/simulated/floor/engine,/area/engioutpost/dock)
-"fa" = (/obj/structure/table,/obj/item/device/sector_locator,/obj/machinery/light,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/obj/item/weapon/paper/sectors,/turf/simulated/floor/engine,/area/engioutpost/dock)
+"fa" = (/obj/structure/table,/obj/item/device/sector_locator,/obj/machinery/light,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/obj/item/weapon/paper/sectors,/obj/item/weapon/book/manual/bluegate,/turf/simulated/floor/engine,/area/engioutpost/dock)
 "fb" = (/obj/item/device/radio/intercom{dir = 1; name = "Station Intercom (General)"; pixel_y = -30},/obj/machinery/camera{c_tag = "ACE Mining Dock"; dir = 8; network = list("SS13")},/obj/structure/dispenser{phorontanks = 0},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/simulated/floor/engine,/area/engioutpost/dock)
 "fc" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/simulated/wall,/area/engioutpost/dock)
 "fd" = (/obj/structure/lattice,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/obj/structure/lattice/catwalk,/turf/space,/area/space)
