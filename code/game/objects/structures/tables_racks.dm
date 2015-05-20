@@ -320,7 +320,7 @@
 		else
 			set_dir(2)
 
-/obj/structure/table/flip(var/direction)
+/obj/structure/table/glass/flip(var/direction)
 	playsound(loc, 'sound/effects/Glassbr2.ogg', 100, 1)
 	src.visible_message("\red The [src] shatters!")
 	new /obj/item/weapon/shard(src.loc)
