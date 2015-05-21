@@ -2250,6 +2250,11 @@ var/list/ghostteleportlocs = list()
 	icon_state = "away"
 	requires_power = 0
 
+// Asteroid fields
+/area/asteroidfields/asteroid
+	name = "\improper Asteroid"
+	icon_state = "red"
+
 
 /////////////////////////////////////////////////////////////////////
 /*
