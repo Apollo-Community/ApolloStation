@@ -1,14 +1,14 @@
 "a" = (/turf/space,/area/space)
-"b" = (/turf/space,/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_s"; icon_state = "rock_side_s"},/area/mine/explored)
-"c" = (/turf/space,/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_e"; icon_state = "rock_side_e"},/area/mine/explored)
-"d" = (/turf/simulated/mineral/random,/area/mine/explored)
-"e" = (/turf/space,/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_s"; icon_state = "rock_side_s"},/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_w"; icon_state = "rock_side_w"},/area/mine/explored)
-"f" = (/turf/space,/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_w"; icon_state = "rock_side_w"},/area/mine/explored)
-"g" = (/turf/space,/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_e"; icon_state = "rock_side_e"},/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_n"; icon_state = "rock_side_n"},/area/mine/explored)
-"h" = (/turf/space,/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_w"; icon_state = "rock_side_w"},/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_n"; icon_state = "rock_side_n"},/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_w"; icon_state = "rock_side_w"},/area/mine/explored)
-"i" = (/turf/space,/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_n"; icon_state = "rock_side_n"},/area/mine/explored)
-"j" = (/turf/space,/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_s"; icon_state = "rock_side_s"},/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_e"; icon_state = "rock_side_e"},/area/mine/explored)
-"k" = (/turf/space,/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_w"; icon_state = "rock_side_w"},/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_n"; icon_state = "rock_side_n"},/area/mine/explored)
+"b" = (/turf/space,/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_s"; icon_state = "rock_side_s"},/area/asteroidfields/asteroid)
+"c" = (/turf/space,/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_e"; icon_state = "rock_side_e"},/area/asteroidfields/asteroid)
+"d" = (/turf/simulated/mineral,/area/asteroidfields/asteroid)
+"e" = (/turf/space,/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_s"; icon_state = "rock_side_s"},/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_w"; icon_state = "rock_side_w"},/area/asteroidfields/asteroid)
+"f" = (/turf/space,/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_w"; icon_state = "rock_side_w"},/area/asteroidfields/asteroid)
+"g" = (/turf/space,/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_e"; icon_state = "rock_side_e"},/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_n"; icon_state = "rock_side_n"},/area/asteroidfields/asteroid)
+"h" = (/turf/space,/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_w"; icon_state = "rock_side_w"},/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_n"; icon_state = "rock_side_n"},/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_w"; icon_state = "rock_side_w"},/area/asteroidfields/asteroid)
+"i" = (/turf/space,/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_n"; icon_state = "rock_side_n"},/area/asteroidfields/asteroid)
+"j" = (/turf/space,/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_s"; icon_state = "rock_side_s"},/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_e"; icon_state = "rock_side_e"},/area/asteroidfields/asteroid)
+"k" = (/turf/space,/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_w"; icon_state = "rock_side_w"},/turf/simulated/wall/mineral/sandstone{tag = "icon-rock_side_n"; icon_state = "rock_side_n"},/area/asteroidfields/asteroid)
 "l" = (/obj/effect/mapinfo/sector,/turf/space,/area/space)
 
 (1,1,1) = {"
@@ -187,7 +187,7 @@ aaaaaaaaaaaaaaaaaaaaacdddfaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaagddfaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaacdhaacdfaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaiaaaaiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabadfaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcdfaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacdfiaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaajdeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacdddfaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
