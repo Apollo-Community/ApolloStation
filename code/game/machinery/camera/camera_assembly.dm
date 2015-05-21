@@ -21,6 +21,8 @@
 				4 = Screwdriver panel closed and is fully built (you cannot attach upgrades)
 	*/
 
+	origin_tech = "materials=2;programming=1;magnets=1"
+
 /obj/item/weapon/camera_assembly/attackby(obj/item/W as obj, mob/living/user as mob)
 
 	switch(state)

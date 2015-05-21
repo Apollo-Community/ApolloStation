@@ -14,6 +14,7 @@
 	icon_action_button = "action_flashlight"
 	var/on = 0
 	var/brightness_on = 4 //luminosity when on
+	origin_tech = "materials=1;magnets=1"
 
 /obj/item/device/flashlight/initialize()
 	..()

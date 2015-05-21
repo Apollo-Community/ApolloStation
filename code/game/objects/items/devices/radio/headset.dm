@@ -18,6 +18,8 @@
 	var/ks1type = /obj/item/device/encryptionkey
 	var/ks2type = null
 
+	origin_tech = "materials=1;programming=1"
+
 /obj/item/device/radio/headset/New()
 	..()
 	if(ks1type)

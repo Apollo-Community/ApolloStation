@@ -26,6 +26,7 @@
 	pixel_x		= 2
 	pixel_y		= -3
 	w_class		= 3
+	origin_tech = "materials=2;programming=2;magnets=1"
 
 	var/obj/machinery/computer3/laptop/stored_computer = null
 

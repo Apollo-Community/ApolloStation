@@ -17,6 +17,8 @@
 	item_state = "electropack"
 	w_class = 1.0
 
+	origin_tech = "materials=1;magnets=1"
+
 
 /********
 * photo *
@@ -131,6 +133,8 @@ var/global/photo_count = 0
 	var/icon_on = "camera"
 	var/icon_off = "camera_off"
 	var/size = 3
+
+	origin_tech = "materials=2;engineering=1;magnets=1"
 
 /obj/item/device/camera/verb/change_size()
 	set name = "Set Photo Focus"
