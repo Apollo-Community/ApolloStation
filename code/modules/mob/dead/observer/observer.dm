@@ -207,7 +207,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	..()
 	statpanel("Status")
 	if (client.statpanel == "Status")
-		stat(null, "Station Time: [worldtime2text()]")
+		stat("Station Time:\t", "[worldtime2text()]")
 		if(ticker)
 			if(ticker.mode)
 				//world << "DEBUG: ticker not null"

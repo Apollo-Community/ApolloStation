@@ -32,6 +32,7 @@ datum/controller/game_controller
 	var/ticker_cost		= 0
 	var/total_cost		= 0
 
+
 	var/last_thing_processed
 
 	var/list/shuttle_list	                    // For debugging and VV
@@ -131,7 +132,7 @@ datum/controller/game_controller/proc/process()
 			if(!Failsafe)	new /datum/controller/failsafe()
 
 			var/currenttime = world.timeofday
-			last_tick_duration = (currenttime - last_tick_timeofday) / 10
+			last_tick_duration = (currenttime - last_tick_timeofday) / 100
 			last_tick_timeofday = currenttime
 
 			if(processing)

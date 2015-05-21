@@ -70,7 +70,7 @@
 		statpanel("Status")
 		if (client.statpanel == "Status" && ticker)
 			if (ticker.current_state != GAME_STATE_PREGAME)
-				stat(null, "Station Time: [worldtime2text()]")
+				stat("Station Time:\t", "[worldtime2text()]")
 		statpanel("Lobby")
 		if(client.statpanel=="Lobby" && ticker)
 			if(ticker.hide_mode)
