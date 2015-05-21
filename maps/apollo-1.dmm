@@ -2168,7 +2168,7 @@
 "aPJ" = (/obj/structure/cable/green{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/simulated/floor{dir = 1; icon_state = "blue"},/area/hallway/primary/central_one)
 "aPK" = (/turf/simulated/floor{dir = 1; icon_state = "blue"},/area/hallway/primary/central_one)
 "aPL" = (/obj/machinery/atmospherics/unary/vent_scrubber/on,/turf/simulated/floor{dir = 1; icon_state = "blue"},/area/hallway/primary/central_one)
-"aPM" = (/obj/machinery/door/firedoor/border_only{dir = 4; name = "Firelock East"},/turf/simulated/floor{dir = 1; icon_state = "bluecorner"},/area/hallway/primary/central_one)
+"aPM" = (/obj/machinery/door/firedoor/border_only{dir = 4; name = "Firelock East"},/obj/structure/sign/poster{pixel_x = 0; pixel_y = 32; poster_type = "/datum/poster/bay_51"; serial_number = 51},/turf/simulated/floor{dir = 1; icon_state = "bluecorner"},/area/hallway/primary/central_one)
 "aPN" = (/obj/machinery/status_display{density = 0; layer = 4; pixel_x = 0; pixel_y = 32},/turf/simulated/floor{icon_state = "L1"},/area/hallway/primary/central_one)
 "aPO" = (/obj/item/device/radio/intercom{broadcasting = 0; listening = 1; name = "Station Intercom (General)"; pixel_y = 20},/turf/simulated/floor{icon_state = "L3"},/area/hallway/primary/central_one)
 "aPP" = (/obj/machinery/firealarm{dir = 2; pixel_x = -12; pixel_y = 24},/turf/simulated/floor{icon_state = "L5"},/area/hallway/primary/central_one)

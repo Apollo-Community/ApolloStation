@@ -248,3 +248,8 @@
 	icon_state="bsposter50"
 	name = "Pinup Girl Cindy Kate"
 	desc = "This particular one is of Cindy Kate, a seductive performer well known among less savoury circles." //idk
+
+/datum/poster/bay_51
+	icon_state="bsposter51"
+	name = "First Contact"
+	desc = "This poster contains an image two official looking men. Below it says \"Remember your \'CDC\' First Contact procedure! If you see an unknown type of non-human, <u>C</u>ooperate with it, <u>D</u>etermine it's intelligence, and finally <u>C</u>ommunicate!\"" //idk
