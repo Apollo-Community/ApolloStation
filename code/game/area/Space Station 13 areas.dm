@@ -2250,10 +2250,26 @@ var/list/ghostteleportlocs = list()
 	icon_state = "away"
 	requires_power = 0
 
-// Asteroid fields
+// Admin Preperation area for events for use with the z-admin-shuttle.dmm map valan's ship
+
+/area/adminprep/valanspreparea
+	name = "\improper valan prep room"
+	icon_state = "red"
+	requires_power = 0
+	unlimited_power = 1
+	environment = PLAIN
+
+// Asteroid fields - it's space really
 /area/asteroidfields/asteroid
 	name = "\improper Asteroid"
 	icon_state = "red"
+	requires_power = 1
+	always_unpowered = 1
+	lighting_use_dynamic = 1
+	power_light = 0
+	power_equip = 0
+	power_environ = 0
+	environment = PLAIN
 
 
 /////////////////////////////////////////////////////////////////////
