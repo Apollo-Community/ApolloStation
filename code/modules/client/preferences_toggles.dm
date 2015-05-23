@@ -137,6 +137,7 @@
 	set category = "Preferences"
 	set desc = "Toggles hearing ambient sound effects"
 	prefs.toggles ^= SOUND_AMBIENCE
+	ambience_playing = 0
 	prefs.save_preferences()
 	if(prefs.toggles & SOUND_AMBIENCE)
 		src << "You will now hear ambient sounds."

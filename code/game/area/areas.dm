@@ -300,15 +300,22 @@ var/list/mob/living/forced_ambiance_list = new
 
 	L.lastarea = newarea
 
-	if( L.client.ambience_playing && ( oldarea.ambience != src.ambience ))
-		L << sound(null, channel = 1)
-		L.client.ambience_playing = 0
+	if( L.client.ambience_playing )
+		if( oldarea.ambience.len && src.ambience.len )
+			if( oldarea.ambience[1] == src.ambience[1] )
+				return
+
+	L << sound(null, channel = 1)
+	L.client.ambience_playing = 0
 
 	play_ambience(L)
 
 /area/proc/play_ambience(var/mob/living/L)
+	if( !(L && L.client ))
+		return
+
 	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
-	if(!(L && L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))
+	if(( L.client.prefs.toggles & SOUND_AMBIENCE ))
 		// If we previously were in an area with force-played ambiance, stop it.
 		if( L in forced_ambiance_list )
 			L << sound(null, channel = 1)
@@ -319,13 +326,15 @@ var/list/mob/living/forced_ambiance_list = new
 				L.client.ambience_playing = 1
 				L << sound( pick( ambience ), repeat = 1, wait = 0, volume = 35, channel = 2)
 
-	if(!(L && L.client && (L.client.prefs.toggles & SOUND_MIDI)))
+	if(( L.client.prefs.toggles & SOUND_AMBIENCE ))
 		if(forced_ambience)
 			forced_ambiance_list += L
+			forced_ambience.environment = src.environment
 			L << forced_ambience
 		else if(src.music.len && prob(35))
 			if((world.time >= L.client.played + 600))
 				var/musVolume = 25
+				testing( "Played music for [L]" )
 				L << sound( pick(music), repeat = 0, wait = 0, volume = musVolume, channel = 1)
 				L.client.played = world.time
 
