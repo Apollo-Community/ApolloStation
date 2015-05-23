@@ -530,7 +530,7 @@ proc/is_blind(A)
 				lname = "<span class='name'>[lname]</span> "
 			M << "<span class='deadsay'>" + create_text_tag("dead", "DEAD:", M.client) + " [lname][follow][message]</span>"
 
-	STUI.game.Add("\[[time_stamp()]]<font color='#FF66FF'>DEAD : [keyname] ([name])(<a href='?_src_=holder;adminplayerobservejump=\ref[subject]'>JMP</a>) : [message]</font><br>")
+	STUI.game.Add("\[[time_stamp()]]<font color='#FF66FF'>DEAD : [keyname] ([name]): [message]</font><br>")
 	STUI.processing |= 5
 
 //Announces that a ghost has joined/left, mainly for use with wizards

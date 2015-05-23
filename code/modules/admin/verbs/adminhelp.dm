@@ -92,7 +92,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 			//		highlight special roles (0 = everyone has same looking name, 1 = antags / special roles get a golden name)
 
 	var/mentor_msg = "\blue <b><font color=red>Request for Help: </font>[get_options_bar(mob, 4, 1, 1, 0)][ai_cl]:</b> [msg]"
-	STUI.staff.Add("\[[time_stamp()]] <font color=red>AHELP: </font><font color='#0066ff'>[get_options_bar(mob, 4, 1, 1, 0)][ai_cl]:</b> [msg]</font><br>")
+	STUI.staff.Add("\[[time_stamp()]] <font color=red>AHELP: </font><font color='#0066ff'>[key_name(mob)]:</b> [msg]</font><br>")
 	STUI.processing |= 3
 	msg = "\blue <b><font color=red>Request for Help:: </font>[get_options_bar(mob, 2, 1, 1)][ai_cl]:</b> [msg]"
 

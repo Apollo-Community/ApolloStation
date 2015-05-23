@@ -111,7 +111,7 @@
 			C << 'sound/effects/adminhelp.ogg'
 
 	log_admin("PM: [key_name(src)]->[key_name(C)]: [msg]")
-	STUI.staff.Add("\[[time_stamp()]] <font color=red>PM: </font><font color='#0066ff'>[key_name(src, 1, 1)] -> [key_name(C, 1, 1)] : [msg]</font><br>")
+	STUI.staff.Add("\[[time_stamp()]] <font color=red>PM: </font><font color='#0066ff'>[key_name(src)] -> [key_name(C)] : [msg]</font><br>")
 	STUI.processing |= 3
 
 	//we don't use message_admins here because the sender/receiver might get it too
