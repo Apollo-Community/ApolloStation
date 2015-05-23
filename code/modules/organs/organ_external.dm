@@ -532,7 +532,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/tburn = 0
 	var/tbrute = 0
 
-	if(burn_dam ==0)
+	if( !burn_dam )
 		tburn =0
 	else if (burn_dam < (max_damage * 0.25 / 2))
 		tburn = 1
@@ -541,7 +541,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	else
 		tburn = 3
 
-	if (brute_dam == 0)
+	if( !brute_dam )
 		tbrute = 0
 	else if (brute_dam < (max_damage * 0.25 / 2))
 		tbrute = 1

@@ -52,6 +52,9 @@ datum/track/New(var/title_name, var/audio)
 		new/datum/track("Eileen", 'sound/music/midis/comeoneileen.mid'),
 		new/datum/track("Falling Out", 'sound/music/midis/idontwant.mid'),
 		new/datum/track("Velvet", 'sound/music/midis/bluevelvet.mid'),
+		new/datum/track("NanoTrasen", 'sound/music/jazzy_jazz.ogg'),
+		new/datum/track("Smartest People", 'sound/music/bakerstreet.ogg'),
+		new/datum/track("Careless", 'sound/music/carelesswhisper.ogg'),
 	)
 
 /obj/machinery/media/jukebox/New()
