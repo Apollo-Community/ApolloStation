@@ -67,7 +67,7 @@
 			data["colour"] = "white"
 			if(game.len > config.STUI_length+1)
 				game.Cut(,game.len-config.STUI_length)
-			data["log"] = list2text(admin)
+			data["log"] = list2text(game)
 		else
 			data["colour"] = "average"
 			if(debug.len > config.STUI_length+1)
