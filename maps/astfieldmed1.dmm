@@ -1,7 +1,7 @@
 "a" = (/turf/space,/area/space)
 "b" = (/turf/space,/turf/unsimulated/wall{tag = "icon-rock_side_s"; icon_state = "rock_side_s"},/area/space)
 "c" = (/turf/space,/turf/unsimulated/wall{tag = "icon-rock_side_e"; icon_state = "rock_side_e"},/area/space)
-"d" = (/turf/unsimulated/wall{tag = "icon-rock"; icon_state = "rock"},/area/asteroidfields/asteroid)
+"d" = (/turf/unsimulated/wall{tag = "icon-rock"; icon_state = "rock"},/area/space)
 "e" = (/turf/space,/turf/unsimulated/wall{tag = "icon-rock_side_w"; icon_state = "rock_side_w"},/area/space)
 "f" = (/turf/space,/turf/unsimulated/wall{tag = "icon-rock_side_n"; icon_state = "rock_side_n"},/area/space)
 "g" = (/turf/space,/turf/unsimulated/wall{tag = "icon-rock_side_s"; icon_state = "rock_side_s"},/turf/unsimulated/wall{tag = "icon-rock_side_e"; icon_state = "rock_side_e"},/area/space)

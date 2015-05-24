@@ -2260,16 +2260,18 @@ var/list/ghostteleportlocs = list()
 	environment = PLAIN
 
 // Asteroid fields - it's space really
-/area/asteroidfields/asteroid
-	name = "\improper Asteroid"
+/area/asteroidfields/asteroideva
+	name = "\improper Asteroid eva"
 	icon_state = "red"
-	requires_power = 1
-	always_unpowered = 1
-	lighting_use_dynamic = 1
-	power_light = 0
-	power_equip = 0
-	power_environ = 0
-	environment = PLAIN
+	environment = HANGAR
+/area/asteroidfields/asteroidarea1
+	name = "\improper Asteroid area1"
+	icon_state = "bluenew"
+	environment = STONE_CORRIDOR
+/area/asteroidfields/asteroidcave
+	name = "\improper Asteroid cave"
+	icon_state = "purple"
+	environment = CAVE
 
 
 /////////////////////////////////////////////////////////////////////
