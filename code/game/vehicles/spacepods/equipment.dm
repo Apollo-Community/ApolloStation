@@ -439,7 +439,7 @@
 	if( src.contents.len >= max_size )
 		user << "\red The [my_atom]\'s cargohold is full!"
 		return 0
-	if( O.anchored )
+	if( O.anchored && !istype( O, /obj/mecha ))
 		user << "\red You can't move that!"
 		return 0
 	if ( istype( O, /obj/item/weapon/grab ))
@@ -447,8 +447,11 @@
 
 	user.drop_item()
 	if( O.loc != src )
+		if( istype( O, /obj/mecha ))
+			var/obj/mecha/M = O
+			M.go_out()
 		O.loc = src
-		my_atom.visible_message( "[user] puts the [O] inside of [my_atom]\'s cargohold." )
+		my_atom.visible_message( "[user] loads the [O] into [my_atom]\'s cargohold." )
 
 	return 1
 
