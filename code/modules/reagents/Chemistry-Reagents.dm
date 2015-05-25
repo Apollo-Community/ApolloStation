@@ -478,24 +478,23 @@ datum
 					M.adjustToxLoss(REAGENTS_METABOLISM)
 					holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
 					return
+				else
+					M.adjustOxyLoss(-2*REM) // not an effective way to cure oxygen loss
+					holder.remove_reagent(src.id, REAGENTS_METABOLISM)
+					return
+
 				..()
 
-		copper
-			name = "Copper"
-			id = "copper"
-			description = "A highly ductile metal."
-			color = "#6E3B08" // rgb: 110, 59, 8
-
-			custom_metabolism = 0.01
+			reaction_turf(var/turf/T, var/volume)
+				src = null
+				T.assume_gas("oxygen", volume, T20C)
 
 		nitrogen
 			name = "Nitrogen"
 			id = "nitrogen"
-			description = "A colorless, odorless, tasteless gas."
+			description = "A common gas, used primarily for atmospherics and fertilizers."
 			reagent_state = GAS
-			color = "#808080" // rgb: 128, 128, 128
-
-			custom_metabolism = 0.01
+			color = "#B3B3B3" // rgb: 128, 128, 128
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
 				if(M.stat == 2) return
@@ -504,6 +503,29 @@ datum
 					holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
 					return
 				..()
+
+			reaction_turf(var/turf/T, var/volume)
+				src = null
+				T.assume_gas("nitrogen", volume, T20C)
+
+		carbondioxide
+			name = "Carbon Dioxide"
+			id = "carbon_dioxide"
+			description = "A gas commonly found as the product of combustion reactions."
+			reagent_state = GAS
+			color = "#B3B3B3" // rgb: 128, 128, 128
+
+			reaction_turf(var/turf/T, var/volume)
+				src = null
+				T.assume_gas("carbon_dioxide", volume, T20C) // this may not be a good idea
+
+		copper
+			name = "Copper"
+			id = "copper"
+			description = "A highly ductile metal."
+			color = "#6E3B08" // rgb: 110, 59, 8
+
+			custom_metabolism = 0.01
 
 		hydrogen
 			name = "Hydrogen"
@@ -930,7 +952,7 @@ datum
 			color = "#A8A8A8" // rgb: 168, 168, 168
 
 		fuel
-			name = "Welding fuel"
+			name = "Welding Fuel"
 			id = "fuel"
 			description = "Required for welders. Flamable."
 			reagent_state = LIQUID
@@ -1666,10 +1688,10 @@ datum
 						egg.Hatch()*/
 				if((!O) || (!volume))	return 0
 				var/turf/the_turf = get_turf(O)
-				the_turf.assume_gas("volatile_fuel", volume, T20C)
+				the_turf.assume_gas("phoron", volume, T20C)
 			reaction_turf(var/turf/T, var/volume)
 				src = null
-				T.assume_gas("volatile_fuel", volume, T20C)
+				T.assume_gas("phoron", volume, T20C)
 				return
 
 		toxin/lexorin
@@ -1988,7 +2010,7 @@ datum
 				..()
 				return
 
-		toxin/acid
+		toxin/caustic
 			name = "Sulphuric acid"
 			id = "sacid"
 			description = "A very corrosive mineral acid with the molecular formula H2SO4."
@@ -2052,6 +2074,7 @@ datum
 							var/mob/living/carbon/human/H = M
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting)
+								M << "/red The chemical eats away at your skin!"
 								if(affecting.take_damage(4*toxpwr, 2*toxpwr))
 									H.UpdateDamageIcon()
 								if(prob(meltprob)) //Applies disfigurement
@@ -2059,9 +2082,11 @@ datum
 										H.emote("scream")
 									H.status_flags |= DISFIGURED
 						else
+							M << "/red The chemical eats away at your skin!"
 							M.take_organ_damage(min(6*toxpwr, volume * toxpwr)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
 				else
 					if(!M.unacidable)
+						M << "/red The chemical eats away at your skin!"
 						M.take_organ_damage(min(6*toxpwr, volume * toxpwr))
 
 			reaction_obj(var/obj/O, var/volume)
@@ -2073,7 +2098,7 @@ datum
 							M << "\red \the [O] melts."
 						del(O)
 
-		toxin/acid/polyacid
+		toxin/caustic/polyacid
 			name = "Polytrinic acid"
 			id = "pacid"
 			description = "Polytrinic acid is a an extremely corrosive chemical substance."
@@ -2461,6 +2486,46 @@ datum
 			reagent_state = LIQUID
 			color = "#365E30" // rgb: 54, 94, 48
 			overdose = REAGENTS_OVERDOSE
+
+		ammonium_nitrate
+			name = "Ammonium Nitrate"
+			id = "ammonium_nitrate"
+			description = "A substance which doesn't burn on its own, but a good explosive when prepared properly. Oh, and also used as a fertilizer."
+			reagent_state = LIQUID
+			color = "#FFDB94" // rgb: 54, 94, 48
+			overdose = REAGENTS_OVERDOSE
+
+		oil
+			name = "Oil"
+			id = "oil"
+			description = "A liquid commonly used as a lubricant in machines."
+			reagent_state = LIQUID
+			color = "#0A0A05" // rgb: 54, 94, 48
+			overdose = REAGENTS_OVERDOSE
+
+			reaction_turf(var/turf/simulated/T, var/volume)//splash the blood all over the place
+				if(!istype(T)) return
+				if(!(volume >= 3)) return
+
+				new /obj/effect/decal/cleanable/blood/oil( T )
+				..()
+
+		lithium_hydroxide
+			name = "Lithium Hydroxide"
+			id = "lithium_hydroxide"
+			description = "A substance that was used in the early days of space travel as a carbon dioxide scrubber."
+			reagent_state = SOLID
+			color = "#CCFFFF" // rgb: 54, 94, 48
+			overdose = REAGENTS_OVERDOSE
+
+		toxin/caustic/sodium_hydroxide
+			name = "Sodium Hydroxide"
+			id = "sodium_hydroxide"
+			description = "A strong base chemical, commonly known as lye and used in detergents."
+			reagent_state = LIQUID
+			color = "#FFCCCC" // rgb: 54, 94, 48
+			overdose = REAGENTS_OVERDOSE
+			toxpwr = 1
 
 		dry_ramen
 			name = "Dry Ramen"
@@ -4408,6 +4473,14 @@ datum
 					M.confused = max(M.confused+15,15)
 				..()
 				return
+
+datum/reagent/lithium_hydroxide/reaction_turf(var/turf/simulated/T, var/volume)
+	if( !T ) return
+	if( !T.zone ) return
+
+	var/zone/Z = T.zone
+
+	Z.air.adjust_gas( "carbon_dioxide", -( volume/2 ))
 
 // Undefine the alias for REAGENTS_EFFECT_MULTIPLER
 #undef REM

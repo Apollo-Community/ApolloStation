@@ -145,6 +145,16 @@
 		..()
 		reagents.add_reagent("diethylamine", 60)
 
+/obj/item/weapon/reagent_containers/glass/bottle/ammonium_nitrate
+	name = "ammonium nitrate bottle"
+	desc = "A small bottle of the fertilizer ammonium nitrate."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle17"
+
+	New()
+		..()
+		reagents.add_reagent("ammonium_nitrate", 60)
+
 /obj/item/weapon/reagent_containers/glass/bottle/flu_virion
 	name = "Flu virion culture bottle"
 	desc = "A small bottle. Contains H13N1 flu virion culture in synthblood medium."

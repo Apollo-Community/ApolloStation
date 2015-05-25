@@ -55,18 +55,19 @@
 		"radium" =          2
 		)
 	var/global/list/nutrient_reagents = list(
-		"milk" =            0.1,
-		"beer" =            0.25,
-		"phosphorus" =      0.1,
-		"sugar" =           0.1,
-		"sodawater" =       0.1,
-		"ammonia" =         1,
-		"diethylamine" =    2,
-		"nutriment" =       1,
-		"adminordrazine" =  1,
-		"eznutrient" =      1,
-		"robustharvest" =   1,
-		"left4zed" =        1
+		"milk" =            	0.1,
+		"beer" =            	0.25,
+		"phosphorus" =      	0.1,
+		"sugar" =           	0.1,
+		"sodawater" =       	0.1,
+		"ammonia" =         	1,
+		"ammonium_nitrate" =	2,
+		"diethylamine" =    	4,
+		"nutriment" =       	1,
+		"adminordrazine" =  	1,
+		"eznutrient" =      	1,
+		"robustharvest" =   	1,
+		"left4zed" =        	1
 		)
 	var/global/list/weedkiller_reagents = list(
 		"fluorine" =       -4,

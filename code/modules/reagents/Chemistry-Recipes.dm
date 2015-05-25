@@ -120,12 +120,13 @@ datum
 			required_catalysts = list("phoron" = 1)
 			result_amount = 1
 
-		//cyanide
-		//	name = "Cyanide"
-		//	id = "cyanide"
-		//	result = "cyanide"
-		//	required_reagents = list("hydrogen" = 1, "carbon" = 1, "nitrogen" = 1)
-		//	result_amount = 1
+		cyanide
+			name = "Cyanide"
+			id = "cyanide"
+			result = "cyanide"
+			required_reagents = list("hydrogen" = 1, "carbon" = 1, "nitrogen" = 1, "phoron" = 1)
+			required_catalysts = list("phoron" = 5)
+			result_amount = 1
 
 		water //I can't believe we never had this.
 			name = "Water"
@@ -672,7 +673,7 @@ datum
 			name = "Foaming Agent"
 			id = "foaming_agent"
 			result = "foaming_agent"
-			required_reagents = list("lithium" = 1, "hydrogen" = 1)
+			required_reagents = list("lithium" = 1, "hydrogen" = 1, "carbon" = 1)
 			result_amount = 1
 
 		// Synthesizing these three chemicals is pretty complex in real life, but fuck it, it's just a game!
@@ -687,7 +688,7 @@ datum
 			name = "Diethylamine"
 			id = "diethylamine"
 			result = "diethylamine"
-			required_reagents = list ("ammonia" = 1, "ethanol" = 1)
+			required_reagents = list ("ammonium_nitrate" = 2, "nitrogen" = 1,"ethanol" = 1)
 			result_amount = 2
 
 		space_cleaner
@@ -703,6 +704,49 @@ datum
 			result = "plantbgone"
 			required_reagents = list("toxin" = 1, "water" = 4)
 			result_amount = 5
+
+		oil
+			name = "Oil"
+			id = "oil"
+			result = "oil"
+			required_reagents = list ("carbon" = 1, "hydrogen" = 1, "ethanol" = 1)
+			result_amount = 3
+
+		fuel
+			name = "Welding Fuel"
+			id = "fuel"
+			result = "fuel"
+			required_reagents = list ("oil" = 1, "oxygen" = 1, "ethanol" = 1)
+			result_amount = 3
+
+		ammonium_nitrate
+			name = "Ammonium Nitrate"
+			id = "ammonium_nitrate"
+			result = "ammonium_nitrate"
+			required_reagents = list ("ammonia" = 1, "oxygen" = 1, "nitrogen" = 1)
+			result_amount = 3
+
+		lithium_hydroxide
+			name = "Lithium Hydroxide"
+			id = "lithium_hydroxide"
+			result = "lithium_hydroxide"
+			required_reagents = list ("lithium" = 1, "water" = 1)
+			result_amount = 2
+
+		sodium_hydroxide
+			name = "Sodium Hydroxide"
+			id = "sodium_hydroxide"
+			result = "sodium_hydroxide"
+			required_reagents = list ("sodium" = 1, "water" = 1)
+			result_amount = 2
+
+		carbon_dioxide
+			name = "Carbon Dioxide"
+			id = "carbon_dioxide"
+			result = "carbon_dioxide"
+			required_reagents = list ("carbon" = 1, "oxygen" = 2)
+			required_catalysts = list("phoron" = 1)
+			result_amount = 1
 
 
 /////////////////////////////////////OLD SLIME CORE REACTIONS ///////////////////////////////

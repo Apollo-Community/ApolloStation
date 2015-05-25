@@ -121,7 +121,7 @@
 			//reagents that should be applied to turfs in a random pattern
 			if(R.id == "carbon")
 				proba = 75
-			else if(R.id in list("blood", "radium", "uranium"))
+			else if(R.id in list("blood", "radium", "uranium", "lithium_hydroxide"))
 				proba = 25
 
 			spawn(0)
