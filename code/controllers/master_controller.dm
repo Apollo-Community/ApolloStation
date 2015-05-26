@@ -228,11 +228,9 @@ datum/controller/game_controller/proc/process()
 					for(var/datum/nanoui/ui in nanomanager.processing_uis)
 						ui.process()
 					if(STUI.processing)		// Only do this if there is something processing.
-						for(var/mob/M in admins)		// Cheaty fix to stop processing a list if it hasn't changed
-							if(M:open_uis)
-								for(var/datum/nanoui/ui in M:open_uis)
-									if(ui.title == "STUI")
-										processing -= M.STUI_log
+						for(var/datum/nanoui/ui in nanomanager.processing_uis)	// need to wait until all UI's are processed
+							if(ui.title == "STUI")
+								STUI.processing.Remove(ui.user.STUI_log)
 
 					nano_cost = (world.timeofday - timer) / 10
 
