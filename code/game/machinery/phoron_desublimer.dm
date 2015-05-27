@@ -3,11 +3,7 @@
 	~~Created by Kwask, sprites by Founded1992~~
 Desc: This is a machine which will take gaseous phoron and turns it into various materials
 The process works like this:
-	1.) Gaseous phoron is pumped into the Hyperinductor. This machine is basically a super heater, as it can heat gas up to 500,000 kelvin
-	2.) Gas is heated up to the optimal temperature for crystalization, which is randomly determined at round start.
-	3.) After the gas is hot enough, it is injected into the reaction chamber. The reaction chamber must be at a specific pressure.
-		If it is too low, then there is waste product, and if it is too high, you risk breaking the machine.
-	4.) The supermatter shard is then formed and extracted from the machine and taken to the Neutron Furnace
+	1.) A supermatter seed crystal is place inside of the react
 
 	NEUTRON FURNACE
 	5.) Place the supermatter shard inside and set the neutron flow. The neutron flow represents the desired focus point.
@@ -35,161 +31,24 @@ The process works like this:
 		if( stat & ( BROKEN|NOPOWER ))
 			ready = 0
 
-
-/*  //////// HYPERINDUCTOR ////////
-	Superheats gas sent into it, up to 500,000 K
-*/
-/obj/machinery/atmospherics/unary/heater/inductor
-	name = "Hyperinductor"
-	desc = "Gas goes into here to be superheated to prepare for crystalization."
-	icon = 'icons/obj/machines/phoron_compressor.dmi'
-	icon_state = "Inactive"
-
-	set_temperature = T20C	//thermostat
-	max_temperature = T20C + 500000
-	internal_volume = 1000	//L
-
-	use_power = 0
-	idle_power_usage = 5			//5 Watts for thermostat related circuitry
-
-	max_power_rating = 500000	//power rating when the usage is turned up to 100
-	power_setting = 100
-
-	New()
-		..()
-
-		component_parts = list()
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-		component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-		component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-		component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-		component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-
-	update_icon()
-		if(src.node)
-			if(src.use_power && src.heating)
-				icon_state = "Active"
-			else
-				icon_state = "Inactive"
-		else
-			icon_state = "Inactive"
-		return
-
-/*
-	New()
-		..()
-		icon_state = "Inactive"
-		air_contents.volume = internal_volume
-
-		component_parts = list()
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-		component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-		component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-		component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-		component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-
-	update_icon()
-		..()
-
-		if(src.heating)
-			icon_state = "Active"
-		else
-			icon_state = "Inactive"
-
-		return
-
-	process()
-		..()
-
-		idle_power_usage = 5
-		if( active & ready )
-			icon_state = "Heating"
-			heat_gas()
-
-		if(stat & (NOPOWER|BROKEN) || !use_power)
-			heating = 0
-			update_icon()
-			return
-
-		if (network && air_contents.total_moles && air_contents.temperature < set_temperature)
-			air_contents.add_thermal_energy( heat_power )
-			use_power(power_rating)
-
-			heating = 1
-			network.update = 1
-		else
-			heating = 0
-
-		update_icon()
-
-	report_ready()
-		ready = 0
-
-		var/list/machine = list( "vessel" = 0 )
-		for( var/obj/machinery/phoron_desublimer/M in orange(src) )
-			if( istype( M, /obj/machinery/phoron_desublimer/vessel ))
-				machine["vessel"] = 1
-
-		if( machine["vessel"] )
-			ready = 1
-
-		..()
-
-		return ready
-
-	proc/heat_gas() // Heating the contained gas
-		var/heat_transfer = air_contents.get_thermal_energy_change(set_temperature)
-		heat_transfer = min( heat_transfer, heating_power ) //limit by the power rating of the heater
-		air_contents.add_thermal_energy(heat_transfer)
-
-		idle_power_usage = heat_transfer
-
-	proc/change_temperature( var/change )
-		set_temperature += change
-
-		if( set_temperature < 0 )
-			set_temperature = 0
-		else if( set_temperature > max_temperature )
-			set_temperature = max_temperature
-*/
-
 /*  //////// PHORON REACTANT VESSEL ////////
-	Recieves superheated gas from the Hyperinductor, turns it into supermatter shards
+	Takes in gas and supermatter seed, creates supermatter shard
 */
-
-
-/obj/machinery/portable_atmospherics/react_vessel
-	name = "Reactant Vessel"
-	desc = "Created supermatter shards from high-temperature phoron."
-	icon_state = "ProcessorEmpty"
-	active_power_usage = 10000
-
-	density = 1
-	var/health = 100.0
-	flags = CONDUCT
-
-	var/valve_open = 0
-
-
-	var/canister_color = "yellow"
-	var/can_label = 1
-	start_pressure = 45 * ONE_ATMOSPHERE
-	pressure_resistance = 1000 * ONE_ATMOSPHERE
-	var/temperature_resistance = 1000 + T0C
-	volume = 1000
-	use_power = 0
-	var/release_log = ""
-	var/update_flag = 0
 
 /obj/machinery/phoron_desublimer/vessel
-	name = "Reactant Vessel"
-	desc = "Created supermatter shards from high-temperature phoron."
+	name = "Formation Vessel"
+	desc = "Grows supermatter shards by seeding them with phoron."
 	icon_state = "ProcessorEmpty"
-	var/datum/gas_mixture/air_contents = new
+	var/obj/item/weapon/tank/loaded_tank
+	var/obj/item/weapon/shard/supermatter/loaded_shard
+	var/datum/gas_mixture/air_contents
+
 	active_power_usage = 10000
 
 	New()
 		..()
+
+		air_contents = new
 
 		component_parts = list()
 		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
@@ -198,19 +57,98 @@ The process works like this:
 		component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 		component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 
-	process()
-		..()
+	attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
+		if(isrobot(user))
+			return
+		if(istype(B, /obj/item/weapon/tongs))
+			if( !loaded_shard )
+				var/obj/item/weapon/tongs/T = B
+				if( T.held )
+					if( istype( T.held, /obj/item/weapon/shard/supermatter ))
+						T.held.loc = src
+						loaded_shard = T.held
+						T.held = null
+						T.update_icon()
+						user << "You put [loaded_shard] into the machine."
+			else
+				user << "There is already a shard in the machine."
+		else if(istype(B, /obj/item/weapon/shard/supermatter))
+			if( !loaded_shard )
+				user.drop_item()
+				B.loc = src
+				loaded_shard = B
+				user << "You put [B] into the machine."
+			else
+				user << "There is already a shard in the machine."
+		else if( istype( B, /obj/item/weapon/tank ))
+			if( !loaded_tank )
+				user.drop_item()
+				B.loc = src
+				loaded_tank = B
+				user << "You put [B] into the machine."
+			else
+				user << "There is already a tank in the machine."
+		else
+			user << "/red That's not a valid item!"
 
-		if( active & ready )
-			icon_state = "ProcessorFull"
+		update_icon()
+		return
 
-	proc/start_fill()
-		flick("ProcessorFill", src)
-		active = 1
+	proc/filled()
+		if( air_contents.total_moles < 1 )
+			return 0
+		else
+			return 1
+
+	proc/fill()
+		if( !loaded_tank )
+			src.visible_message("\icon[src] <b>[src]</b> buzzes, \"No tank loaded!\"")
+			return
+		if( loaded_tank.air_contents.total_moles < 1 )
+			src.visible_message("\icon[src] <b>[src]</b> buzzes, \"Loaded tank is empty!\"")
+			return
+
+		air_contents.merge( loaded_tank.air_contents.remove( loaded_tank.air_contents.total_moles ))
+
+		if( !filled() )
+			flick("ProcessorFill", src)
+		icon_state = "ProcessorFull"
+
 
 	proc/crystalize()
+		if( !loaded_shard )
+			src.visible_message("\icon[src] <b>[src]</b> buzzes, \"No gas present in system!\"")
+			return
+		if( !filled() )
+			src.visible_message("\icon[src] <b>[src]</b> buzzes, \"Need a supermatter shard to feed!\"")
+			return
+		if( !report_ready() )
+			return
+
+		active = 1
+
+		loaded_shard.feed( air_contents.remove( loaded_tank.air_contents.total_moles ))
+
 		flick("ProcessorCrystalize", src)
+		icon_state = "ProcessorEmpty"
+
+		src.visible_message("\icon[src] <b>[src]</b> buzzes, \"Crystal successfully fed.\"")
+
 		active = 0
+
+	proc/eject_shard()
+		if( !loaded_shard )
+			return
+
+		loaded_shard.loc = get_turf( src )
+		loaded_shard = null
+
+	proc/eject_tank()
+		if( !loaded_tank )
+			return
+
+		loaded_tank.loc = get_turf( src )
+		loaded_tank = null
 
 	report_ready()
 		ready = 1
@@ -357,7 +295,7 @@ The process works like this:
 						shard = T.held.loc
 						T.held = null
 						T.update_icon()
-						user << "You put [B] into the machine."
+						user << "You put [shard] into the machine."
 			else
 				user << "There is already a shard in the machine."
 		else if(istype(B, /obj/item/weapon/shard/supermatter))
@@ -475,6 +413,26 @@ The process works like this:
 								dat += "<A href='?src=\ref[src];furnace_activate=1'>Activate</A><BR>"
 						else
 							dat += "<b>Supermatter Shard Needed</b> <BR>"
+					else if( istype( type, /obj/machinery/phoron_desublimer/vessel ))
+						var/obj/machinery/phoron_desublimer/vessel/vessel = type
+						dat += "<b>Tank: </b>"
+						if( vessel.loaded_tank )
+							dat += "<b>Loaded</b>"
+							dat += " <A href='?src=\ref[src];vessel_eject_tank'>Eject</A>"
+						else
+							dat += "Not Loaded"
+						dat += "<br>"
+
+						dat += "<b>Supermatter Shard: </b>"
+						if( vessel.loaded_shard )
+							dat += "<b>Loaded</b>"
+							dat += " <A href='?src=\ref[src];vessel_eject_shard'>Eject</A><br>"
+							//dat += "Shard Size: [vessel.loaded_shard.size_percent()]<br>"
+						else
+							dat += "Not Loaded<br>"
+
+						dat += "<A href='?src=\ref[src];vessel_fill'>Fill Chamber</A><br>"
+						dat += "<A href='?src=\ref[src];vessel_feed'>Feed Crystal</A><br>"
 				else
 					dat += "ERROR: Incrreoctly set up!<BR>"
 				dat += "<BR><HR>"
@@ -519,6 +477,18 @@ The process works like this:
 			var/obj/machinery/phoron_desublimer/furnace/furnace = machine_ref["furnace"]
 			if( furnace.ready & !furnace.active )
 				furnace.produce()
+		else if(href_list["vessel_fill"])
+			var/obj/machinery/phoron_desublimer/vessel/vessel = machine_ref["vessel"]
+			vessel.fill()
+		else if(href_list["vessel_feed"])
+			var/obj/machinery/phoron_desublimer/vessel/vessel = machine_ref["vessel"]
+			vessel.crystalize()
+		else if(href_list["vessel_eject_shard"])
+			var/obj/machinery/phoron_desublimer/vessel/vessel = machine_ref["vessel"]
+			vessel.eject_shard()
+		else if(href_list["vessel_eject_tank"])
+			var/obj/machinery/phoron_desublimer/vessel/vessel = machine_ref["vessel"]
+			vessel.eject_tank()
 
 		src.updateDialog()
 		src.update_icon()

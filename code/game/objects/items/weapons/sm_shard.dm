@@ -4,35 +4,43 @@
 	desc = "A shard of supermatter. Incredibly dangerous, though not large enough to go critical."
 	force = 10.0
 	throwforce = 20.0
-	icon_state = "supermatter"
+	icon_state = "supermattersmall"
 	sharp = 1
 	edge = 1
 	w_class = 2
 	flags = CONDUCT
 	l_color = "#8A8A00"
-	var/brightness = 2
+	luminosity = 2
+	var/size = 1
+	var/max_size = 100
 
 /obj/item/weapon/shard/supermatter/New()
-	src.icon_state = pick("supermatter")
-	switch(src.icon_state)
-		if("supermattersmall")
-			src.pixel_x = rand(-12, 12)
-			src.pixel_y = rand(-12, 12)
-		if("supermattermedium")
-			src.pixel_x = rand(-8, 8)
-			src.pixel_y = rand(-8, 8)
-		if("supermatterlarge")
-			src.pixel_x = rand(-5, 5)
-			src.pixel_y = rand(-5, 5)
-		else
+	..()
 
-	SetLuminosity(brightness)
+	size += rand(0, 10)
+
+	update_icon()
+
+/obj/item/weapon/shard/supermatter/update_icon()
+	if( src.size <= 34 )
+		icon_state = "supermattersmall"
+		src.pixel_x = rand(-12, 12)
+		src.pixel_y = rand(-12, 12)
+	else if( src.size <= 67 )
+		icon_state = "supermattermedium"
+		src.pixel_x = rand(-8, 8)
+		src.pixel_y = rand(-8, 8)
+	else
+		icon_state = "supermatterlarge"
+		src.pixel_x = rand(-5, 5)
+		src.pixel_y = rand(-5, 5)
+
 
 /obj/item/weapon/shard/supermatter/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if( istype( W, /obj/item/weapon/tongs ))
 		var/obj/item/weapon/tongs/T = W
 		T.pick_up( src )
-		T.icon_state = "tongs_supermatter"
+		T.update_icon()
 		return
 
 	..()
@@ -77,6 +85,16 @@
 
 	..()
 
+/obj/item/weapon/shard/supermatter/proc/size_percent()
+	return round(( size/max_size )*100 )
+
+/obj/item/weapon/shard/supermatter/proc/feed( var/datum/gas_mixture/gas )
+	size += gas.gas["phoron"]
+
+	del( gas )
+
+	update_icon()
+
 /obj/item/weapon/tongs
 	name = "tongs"
 	desc = "Tungsten-alloy tongs used for handling dangerous materials."
@@ -101,3 +119,9 @@
 		held = null
 		icon_state = initial(icon_state)
 	..()
+
+/obj/item/weapon/tongs/update_icon()
+	if( !held )
+		icon_state = initial( icon_state )
+	else if( istype( held, /obj/item/weapon/shard/supermatter ))
+		icon_state = "tongs_supermatter"
