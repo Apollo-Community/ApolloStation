@@ -126,7 +126,7 @@
 
 
 	clients += src
-	clients = sortList(clients)
+	clients = sortKey(clients)
 	directory[ckey] = src
 
 	//Admin Authorisation
@@ -154,7 +154,7 @@
 
 	if(holder)
 		admins += src
-		admins = sortList(admins)
+		admins = sortKey(admins)
 		holder.owner = src
 		add_admin_verbs()
 		admin_memo_show()
