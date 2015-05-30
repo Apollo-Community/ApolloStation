@@ -660,6 +660,7 @@
 		if(hackprogress >= 100)
 			src.hackprogress = 0
 			src.cable.machine:open()
+			return
 		sleep(50)			// Update every 5 seconds
 
 // Digital Messenger
