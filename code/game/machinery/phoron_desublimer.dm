@@ -137,18 +137,24 @@ The process works like this:
 		active = 0
 
 	proc/eject_shard()
+		testing( "eject_shard()" )
 		if( !loaded_shard )
+			testing( "return failed" )
 			return
 
 		loaded_shard.loc = get_turf( src )
 		loaded_shard = null
+		testing( "return success" )
 
 	proc/eject_tank()
+		testing( "eject_shard()" )
 		if( !loaded_tank )
+			testing( "return failed" )
 			return
 
 		loaded_tank.loc = get_turf( src )
 		loaded_tank = null
+		testing( "return success" )
 
 	report_ready()
 		ready = 1
@@ -321,175 +327,252 @@ The process works like this:
 		else
 			icon_state = "Open"
 
-
-
 /obj/machinery/computer/phoron_desublimer_control
 	name = "Phoron Desublimation Control"
 	desc = "Controls the phoron desublimation process."
 	icon = 'icons/obj/machines/phoron_compressor.dmi'
 	icon_state = "Ready"
+	var/ui_title = "Phoron Desublimation Control"
 
 	idle_power_usage = 500
 	active_power_usage = 70000 //70 kW per unit of strength
 	var/active = 0
 	var/assembled = 0
+	var/state = null
 
-	var/list/machine = list( "vessel", "furnace" )
-	var/list/obj/machinery/phoron_desublimer/machine_ref = list( "vessel" = null, "furnace" = null )
-	var/list/obj/machinery/phoron_desublimer/machine_obj = list( "vessel" = /obj/machinery/phoron_desublimer/vessel,
-																 "furnace" = /obj/machinery/phoron_desublimer/furnace )
+	var/obj/machinery/phoron_desublimer/vessel/vessel
+	var/obj/machinery/phoron_desublimer/furnace/furnace
 
-	New()
-		..()
+/obj/machinery/computer/phoron_desublimer_control/New()
+	..()
 
+	src.check_parts()
+
+/obj/machinery/computer/phoron_desublimer_control/proc/find_parts()
+	vessel = null
+	furnace = null
+
+	var/area/main_area = get_area(src)
+	testing( "Area [main_area] found" )
+
+	for(var/area/related_area in main_area.related)
+		testing( "Area [related_area] found" )
+		for( var/obj/machinery/phoron_desublimer/PD in related_area )
+			if( istype( PD, /obj/machinery/phoron_desublimer/vessel ))
+				testing( "v: [PD] found" )
+				vessel = PD
+			if( istype( PD, /obj/machinery/phoron_desublimer/furnace ))
+				testing( "f: [PD] found" )
+				furnace = PD
+
+	return
+
+/obj/machinery/computer/phoron_desublimer_control/proc/check_parts()
+	find_parts()
+
+	if( !vessel )
+		return 0
+	if( !furnace )
+		return 0
+
+	return 1
+
+/obj/machinery/computer/phoron_desublimer_control/attack_hand(mob/user as mob)
+	ui_interact(user)
+
+/obj/machinery/computer/phoron_desublimer_control/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
+	if(stat & (BROKEN|NOPOWER)) return
+	if(user.stat || user.restrained()) return
+
+	src.check_parts()
+
+	// this is the data which will be sent to the ui
+	var/data[0]
+	data["run_scan"] = 0
+	data["state"] = state
+	if( vessel )
+		testing( "vessel found" )
+		data["vessel"] = vessel
+		data["shard"] = vessel.loaded_shard
+		data["max_shard_size"] = 100
+		data["vessel_pressure"] = vessel.air_contents.return_pressure()
+
+		if( vessel.loaded_shard )
+			data["shard_size"] = vessel.loaded_shard.size_percent()
+		else
+			data["shard_size"] = 0
+
+		if( vessel.loaded_tank )
+			data["tank_pressure"] = round(vessel.loaded_tank.air_contents.return_pressure() ? vessel.loaded_tank.air_contents.return_pressure() : 0)
+		else
+			data["tank_pressure"] = 0
+	else
+		testing( "vessel not found" )
+		data["vessel"] = null
+		data["shard"] = null
+		data["max_shard_size"] = null
+		data["shard_size"] = null
+
+		// update the ui if it exists, returns null if no ui is passed/found
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
+	if (!ui)
+		// the ui does not exist, so we'll create a new() one
+        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
+		ui = new(user, src, ui_key, "phoron_desublimation.tmpl", ui_title, 390, 655)
+		// when the ui is first opened this is the data it will use
+		ui.set_initial_data(data)
+		// open the new ui window
+		ui.open()
+
+/obj/machinery/computer/phoron_desublimer_control/Topic(href, href_list)
+	if(..())
+		return
+
+	if(stat & (NOPOWER|BROKEN))
+		return 0 // don't update UIs attached to this object
+
+	if(href_list["state"])
+		state = href_list["state"]
+	else if(href_list["run_scan"])
 		src.check_parts()
+	else if(href_list["vessel_eject_shard"])
+		testing( "Ejecting shard from [vessel]" )
+		vessel.eject_shard()
+	else if(href_list["vessel_eject_tank"])
+		testing( "Ejecting tank from [vessel]" )
+		vessel.eject_tank()
+	else if(href_list["vessel_fill"])
+		testing( "Filling vessel [vessel]" )
+		vessel.fill()
+	else if(href_list["vessel_feed"])
+		testing( "Feeding crystal from [vessel]" )
+		vessel.crystalize()
 
-	proc/find_parts()
-		for( var/M in machine_ref )
-			M = null
+	nanomanager.update_uis(src)
+	add_fingerprint(usr)
 
-		var/area/main_area = get_area(src)
-
-		for(var/area/related_area in main_area.related)
-			for( var/obj/machinery/phoron_desublimer/PD in related_area.contents )
-				if(PD.report_ready())
-					for( var/type in machine_obj )
-						if( istype( PD, machine_obj[type] ))
-							machine_ref[type] = PD // Gettinng the machines sorted out
-		return
-
-	proc/check_parts()
-		assembled = 0
-		find_parts()
-
-		var/count = 0
-		for( var/type in machine )
-			if( machine_ref[type] )
-				count++
-
-		if( count == 3 )
-			assembled = 1
-
-		return
-
-	attack_hand(mob/user as mob)
-		interact(user)
-
-	interact(mob/user)
-		if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
-			if(!istype(user, /mob/living/silicon))
-				user.unset_machine()
-				user << browse(null, "window=pacontrol")
-				return
-		user.set_machine(src)
-
-		var/dat = ""
-		dat += "<h3><b>Phoron Desublimer Controller</b></h3><BR>"
-		dat += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-		dat += "<A href='?src=\ref[src];scan=1'>Run Scan</A><BR><BR>"
-
-		dat += "<b>Status:</b><BR>"
-		for( var/M in machine_ref )
-			if( machine_ref[M] )
-				var/list/obj/machinery/phoron_desublimer/type = machine_ref[M]
-				dat += "<h4><center>[type.name]</center></h4>"
-				if( type && type.ready )
-					dat += "<BR>"
-					if( istype( type, /obj/machinery/phoron_desublimer/furnace ))
-						var/obj/machinery/phoron_desublimer/furnace/furnace = type
-						dat += "<b>Neutron Flow:</b><BR>"
-						dat += "<A href='?src=\ref[src];furnace_n10=1'>---</A> "
-						dat += "<A href='?src=\ref[src];furnace_n1=1'>--</A> "
-						dat += "<A href='?src=\ref[src];furnace_n01=1'>-</A> "
-						dat += "   [furnace.neutron_flow]   "
-						dat += "<A href='?src=\ref[src];furnace_01=1'>+</A> "
-						dat += "<A href='?src=\ref[src];furnace_1=1'>++</A> "
-						dat += "<A href='?src=\ref[src];furnace_10=1'>+++</A> <BR><BR>"
-						if( furnace.shard )
-							dat += "<b>Supermatter Shard Inserted</b> <BR>"
-							if( furnace.active )
-								dat += "<b>Active</b>"
-							else
-								dat += "<A href='?src=\ref[src];furnace_activate=1'>Activate</A><BR>"
-						else
-							dat += "<b>Supermatter Shard Needed</b> <BR>"
-					else if( istype( type, /obj/machinery/phoron_desublimer/vessel ))
-						var/obj/machinery/phoron_desublimer/vessel/vessel = type
-						dat += "<b>Tank: </b>"
-						if( vessel.loaded_tank )
-							dat += "<b>Loaded</b>"
-							dat += " <A href='?src=\ref[src];vessel_eject_tank'>Eject</A>"
-						else
-							dat += "Not Loaded"
-						dat += "<br>"
-
-						dat += "<b>Supermatter Shard: </b>"
-						if( vessel.loaded_shard )
-							dat += "<b>Loaded</b>"
-							dat += " <A href='?src=\ref[src];vessel_eject_shard'>Eject</A><br>"
-							//dat += "Shard Size: [vessel.loaded_shard.size_percent()]<br>"
-						else
-							dat += "Not Loaded<br>"
-
-						dat += "<A href='?src=\ref[src];vessel_fill'>Fill Chamber</A><br>"
-						dat += "<A href='?src=\ref[src];vessel_feed'>Feed Crystal</A><br>"
-				else
-					dat += "ERROR: Incrreoctly set up!<BR>"
-				dat += "<BR><HR>"
-
-		user << browse(dat, "window=pdcontrol;size=420x500")
-		onclose(user, "pdcontrol")
-		return
-
-	Topic(href, href_list)
-		..()
-		//Ignore input if we are broken, !silicon guy cant touch us, or nonai controlling from super far away
-		if(stat & (BROKEN|NOPOWER) || (get_dist(src, usr) > 1 && !istype(usr, /mob/living/silicon)) || (get_dist(src, usr) > 8 && !istype(usr, /mob/living/silicon/ai)))
-			usr << browse(null, "window=pdcontrol")
-			usr.unset_machine()
+/*
+/obj/machinery/computer/phoron_desublimer_control/interact(mob/user)
+	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
+		if(!istype(user, /mob/living/silicon))
+			user.unset_machine()
+			user << browse(null, "window=pacontrol")
 			return
+	user.set_machine(src)
 
-		if( href_list["close"] )
-			usr << browse(null, "window=pdcontrol")
-			usr.unset_machine()
-			return
-		else if(href_list["scan"])
-			src.check_parts()
-		else if(href_list["furnace_10"])
-			var/obj/machinery/phoron_desublimer/furnace/furnace = machine_ref["furnace"]
-			furnace.modify_flow( 10 )
-		else if(href_list["furnace_1"])
-			var/obj/machinery/phoron_desublimer/furnace/furnace = machine_ref["furnace"]
-			furnace.modify_flow( 1 )
-		else if(href_list["furnace_01"])
-			var/obj/machinery/phoron_desublimer/furnace/furnace = machine_ref["furnace"]
-			furnace.modify_flow( 0.1 )
-		else if(href_list["furnace_n01"])
-			var/obj/machinery/phoron_desublimer/furnace/furnace = machine_ref["furnace"]
-			furnace.modify_flow( -0.1 )
-		else if(href_list["furnace_n1"])
-			var/obj/machinery/phoron_desublimer/furnace/furnace = machine_ref["furnace"]
-			furnace.modify_flow( -1 )
-		else if(href_list["furnace_n10"])
-			var/obj/machinery/phoron_desublimer/furnace/furnace = machine_ref["furnace"]
-			furnace.modify_flow( -10 )
-		else if(href_list["furnace_activate"])
-			var/obj/machinery/phoron_desublimer/furnace/furnace = machine_ref["furnace"]
-			if( furnace.ready & !furnace.active )
-				furnace.produce()
-		else if(href_list["vessel_fill"])
-			var/obj/machinery/phoron_desublimer/vessel/vessel = machine_ref["vessel"]
-			vessel.fill()
-		else if(href_list["vessel_feed"])
-			var/obj/machinery/phoron_desublimer/vessel/vessel = machine_ref["vessel"]
-			vessel.crystalize()
-		else if(href_list["vessel_eject_shard"])
-			var/obj/machinery/phoron_desublimer/vessel/vessel = machine_ref["vessel"]
-			vessel.eject_shard()
-		else if(href_list["vessel_eject_tank"])
-			var/obj/machinery/phoron_desublimer/vessel/vessel = machine_ref["vessel"]
-			vessel.eject_tank()
+	var/dat = ""
+	dat += "<h3><b>Phoron Desublimer Controller</b></h3><BR>"
+	dat += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
+	dat += "<A href='?src=\ref[src];scan=1'>Run Scan</A><BR><BR>"
 
-		src.updateDialog()
-		src.update_icon()
+	dat += "<b>Status:</b><BR>"
+	for( var/M in machine_ref )
+		if( machine_ref[M] )
+			var/list/obj/machinery/phoron_desublimer/type = machine_ref[M]
+			dat += "<h4><center>[type.name]</center></h4>"
+			if( type && type.report_ready() )
+				dat += "<BR>"
+				if( istype( type, /obj/machinery/phoron_desublimer/furnace ))
+					var/obj/machinery/phoron_desublimer/furnace/furnace = type
+					dat += "<b>Neutron Flow:</b><BR>"
+					dat += "<A href='?src=\ref[src];furnace_n10=1'>---</A> "
+					dat += "<A href='?src=\ref[src];furnace_n1=1'>--</A> "
+					dat += "<A href='?src=\ref[src];furnace_n01=1'>-</A> "
+					dat += "   [furnace.neutron_flow]   "
+					dat += "<A href='?src=\ref[src];furnace_01=1'>+</A> "
+					dat += "<A href='?src=\ref[src];furnace_1=1'>++</A> "
+					dat += "<A href='?src=\ref[src];furnace_10=1'>+++</A> <BR><BR>"
+					if( furnace.shard )
+						dat += "<b>Supermatter Shard Inserted</b> <BR>"
+						if( furnace.active )
+							dat += "<b>Active</b>"
+						else
+							dat += "<A href='?src=\ref[src];furnace_activate=1'>Activate</A><BR>"
+					else
+						dat += "<b>Supermatter Shard Needed</b> <BR>"
+				else if( istype( type, /obj/machinery/phoron_desublimer/vessel ))
+					var/obj/machinery/phoron_desublimer/vessel/vessel = type
+					dat += "<b>Tank: </b>"
+					if( vessel.loaded_tank )
+						dat += "<b>Loaded</b>"
+						dat += " <A href='?src=\ref[src];vessel_eject_tank'>Eject</A>"
+					else
+						dat += "Not Loaded"
+					dat += "<br>"
+
+					dat += "<b>Supermatter Shard: </b>"
+					if( vessel.loaded_shard )
+						dat += "<b>Loaded</b>"
+						dat += " <A href='?src=\ref[src];vessel_eject_shard'>Eject</A><br>"
+						dat += "Shard Size: [vessel.loaded_shard.size_percent()]<br>"
+					else
+						dat += "Not Loaded<br>"
+
+					dat += "<A href='?src=\ref[src];vessel_fill'>Fill Chamber</A><br>"
+					dat += "<A href='?src=\ref[src];vessel_feed'>Feed Crystal</A><br>"
+			else
+				dat += "ERROR: Incrreoctly set up!<BR>"
+			dat += "<BR><HR>"
+
+	user << browse(dat, "window=pdcontrol;size=420x500")
+	onclose(user, "pdcontrol")
+	return
+
+
+/obj/machinery/computer/phoron_desublimer_control/Topic(href, href_list)
+	..()
+	//Ignore input if we are broken, !silicon guy cant touch us, or nonai controlling from super far away
+	if(stat & (BROKEN|NOPOWER) || (get_dist(src, usr) > 1 && !istype(usr, /mob/living/silicon)) || (get_dist(src, usr) > 8 && !istype(usr, /mob/living/silicon/ai)))
+		usr << browse(null, "window=pdcontrol")
+		usr.unset_machine()
 		return
+
+	if( href_list["close"] )
+		usr << browse(null, "window=pdcontrol")
+		usr.unset_machine()
+		return
+	else if(href_list["scan"])
+		src.check_parts()
+	else if(href_list["furnace_10"])
+		var/obj/machinery/phoron_desublimer/furnace/furnace = machine_ref["furnace"]
+		furnace.modify_flow( 10 )
+	else if(href_list["furnace_1"])
+		var/obj/machinery/phoron_desublimer/furnace/furnace = machine_ref["furnace"]
+		furnace.modify_flow( 1 )
+	else if(href_list["furnace_01"])
+		var/obj/machinery/phoron_desublimer/furnace/furnace = machine_ref["furnace"]
+		furnace.modify_flow( 0.1 )
+	else if(href_list["furnace_n01"])
+		var/obj/machinery/phoron_desublimer/furnace/furnace = machine_ref["furnace"]
+		furnace.modify_flow( -0.1 )
+	else if(href_list["furnace_n1"])
+		var/obj/machinery/phoron_desublimer/furnace/furnace = machine_ref["furnace"]
+		furnace.modify_flow( -1 )
+	else if(href_list["furnace_n10"])
+		var/obj/machinery/phoron_desublimer/furnace/furnace = machine_ref["furnace"]
+		furnace.modify_flow( -10 )
+	else if(href_list["furnace_activate"])
+		var/obj/machinery/phoron_desublimer/furnace/furnace = machine_ref["furnace"]
+		if( furnace.ready & !furnace.active )
+			furnace.produce()
+	else if(href_list["vessel_fill"])
+		var/obj/machinery/phoron_desublimer/vessel/vessel = machine_ref["vessel"]
+		testing( "Filling vessel [vessel]" )
+		vessel.fill()
+	else if(href_list["vessel_feed"])
+		var/obj/machinery/phoron_desublimer/vessel/vessel = machine_ref["vessel"]
+		testing( "Feeding crystal from [vessel]" )
+		vessel.crystalize()
+	else if(href_list["vessel_eject_shard"])
+		var/obj/machinery/phoron_desublimer/vessel/vessel = machine_ref["vessel"]
+		testing( "Ejecting crystal from [vessel]" )
+		vessel.eject_shard()
+	else if(href_list["vessel_eject_tank"])
+		var/obj/machinery/phoron_desublimer/vessel/vessel = machine_ref["vessel"]
+		testing( "Ejecting tank from [vessel]" )
+		vessel.eject_tank()
+
+	src.updateDialog()
+	src.update_icon()
+	return
+*/

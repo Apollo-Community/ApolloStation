@@ -1925,7 +1925,7 @@ var/list/ghostteleportlocs = list()
 	environment = QUARRY
 
 /area/desubber
-	name = "\improper Phoron Descublimation Room"
+	name = "\improper Phoron Desublimation Room"
 	icon_state = "yellow"
 	environment = QUARRY
 

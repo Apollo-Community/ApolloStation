@@ -91,6 +91,9 @@
 /obj/item/weapon/shard/supermatter/proc/feed( var/datum/gas_mixture/gas )
 	size += gas.gas["phoron"]
 
+	if( size > max_size )
+		size = max_size
+
 	del( gas )
 
 	update_icon()

@@ -1,0 +1,62 @@
+<!-- 
+Title: Phoron Desublimation Control
+Used In File(s): \code\game\machinery\phoron_desublimer.dm
+-->
+
+<div class="item">
+	{{:helper.link('Formation Vessel', 'note', {'state' :'vessel'}, null, data.state == 'vessel' ? 'selected' : null)}}
+	{{:helper.link('Neutron Furnace', 'note', {'state' : 'furnace'}, null, data.state == 'furnace' ? 'selected' : null)}}
+	{{:helper.link('Scan for Machines', 'gear', {'run_scan' : 1}, data.run_scan == 1 ? 'selected' : null)}}
+</div>
+
+{{if data.state == 'vessel'}}
+	{{if data.vessel}}
+		<div style="min-width: 480px">
+			<h3>Formation Vessel</h3>
+			<div class="item">
+				<div class="itemLabel">
+					<span class=data.shard ? "good" : "bad">Supermatter Shard</span><br>
+				</div>
+				<div class="itemContent">
+					{{:helper.link('Eject Shard', 'eject', {'vessel_eject_shard' : 1}, data.shard ? null : 'disabled')}}<br>
+				</div>
+				<div class="itemLabel">
+					Size: 
+				</div>
+				<div class="itemContent">
+					{{:helper.displayBar(data.shard_size, 0, data.max_shard_size, (data.shard_size < data.max_shard_size - 5) ? 'good' : 'average')}}
+				</div>
+			</div>
+			<div class="item">
+				<div class="itemLabel">
+					<span class=data.shard ? "good" : "bad">{{:data.tank ? data.tank : "No Tank Loaded"}}</span><br>
+				</div>
+				<div class="itemContent">
+					{{:helper.link('Eject Tank', 'eject', {'vessel_eject_tank' : 1}, data.tank ? null : 'disabled')}}<br>
+				</div>
+				<div class="itemLabel">
+					Tank Pressure:
+				</div>
+				<div class="itemContent">
+					{{:helper.displayBar(data.tank_pressure, 0, 1013, (data.tank_pressure > 200) ? 'good' : ((data.tank_pressure > 100) ? 'average' : 'bad'))}}
+					<div class="statusValue">
+						{{:data.tank_pressure}} kPa
+					</div>
+				</div>
+			</div>
+			<div class="item">
+				Vessel Air Contents
+				
+				<div class="itemLabel">
+					Vessel Pressure:
+				</div>
+				<div class="itemContent">
+					{{:helper.displayBar(data.vessel_pressure, 0, 1013, (data.vessel_pressure > 200) ? 'good' : ((data.vessel_pressure > 100) ? 'average' : 'bad'))}}
+					<div class="statusValue">
+						{{:data.vessel_pressure}} kPa
+					</div>
+				</div>
+			</div>
+		</div>
+	{{/if}}
+{{/if}}
