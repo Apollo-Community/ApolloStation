@@ -426,6 +426,7 @@
 	icon_state = "wire1"
 
 	var/obj/machinery/machine
+	var/mob/pai
 
 ///////////////////////////////////////Stock Parts /////////////////////////////////
 

@@ -1,6 +1,7 @@
 /obj/item/weapon/pai_cable/proc/plugin(obj/machinery/M as obj, mob/user as mob)
 	if(istype(M, /obj/machinery/door) || istype(M, /obj/machinery/camera))
 		user.visible_message("[user] inserts [src] into a data port on [M].", "You insert [src] into a data port on [M].", "You hear the satisfying click of a wire jack fastening into place.")
+		src.pai.show_message("\red [user] inserts [src] into a data port on [M].", 2)
 		user.drop_item()
 		src.loc = M
 		src.machine = M
