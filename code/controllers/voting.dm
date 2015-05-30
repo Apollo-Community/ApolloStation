@@ -177,12 +177,13 @@ datum/controller/vote
 				world << "<font color='red'><b>The round will start soon.</b></font>"
 
 		if(restart)
-			world << "World restarting due to vote..."
-			feedback_set_details("end_error","restart vote")
-			if(blackbox)	blackbox.save_all_data_to_sql()
-			sleep(50)
-			log_game("Rebooting due to restart vote")
-			world.Reboot()
+			spawn(0)
+				world << "World restarting due to vote..."
+				feedback_set_details("end_error","restart vote")
+				if(blackbox)	blackbox.save_all_data_to_sql()
+				sleep(50)
+				log_game("Rebooting due to restart vote")
+				world.Reboot()
 
 		return .
 
