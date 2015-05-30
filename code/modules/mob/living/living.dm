@@ -413,7 +413,7 @@
 							if (istype(location, /turf/simulated))
 								location.add_blood(M)
 						//pull damage with injured people
-							if(prob(25))
+							if(!istype(src.loc, /turf/space) && prob(25))
 								M.adjustBruteLoss(1)
 								visible_message("\red \The [M]'s wounds open more from being dragged!")
 						if(M.pull_damage())
