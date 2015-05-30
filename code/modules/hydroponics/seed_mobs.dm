@@ -25,6 +25,8 @@
 /datum/seed/proc/request_player(var/mob/living/host)
 	if(!host) return
 	for(var/mob/dead/observer/O in player_list)
+		if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
+			continue
 		if(jobban_isbanned(O, "Dionaea"))
 			continue
 		if(O.client)

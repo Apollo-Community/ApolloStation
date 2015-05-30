@@ -233,6 +233,8 @@
 
 /mob/living/silicon/robot/drone/proc/request_player()
 	for(var/mob/dead/observer/O in player_list)
+		if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
+			continue
 		if(jobban_isbanned(O, "Cyborg"))
 			continue
 		if(O.client)
