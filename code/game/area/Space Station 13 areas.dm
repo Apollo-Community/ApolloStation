@@ -2251,7 +2251,13 @@ var/list/ghostteleportlocs = list()
 	requires_power = 0
 
 // Admin Preperation area for events for use with the z-admin-shuttle.dmm map valan's ship
-
+/area/adminprep/valansship
+	name = "\improper valans shuttle"
+	icon_state = "south"
+	requires_power = 0
+	unlimited_power = 1
+	lighting_use_dynamic = 0 // the ship doesn't have any lights
+	environment = PLAIN
 /area/adminprep/valanspreparea
 	name = "\improper valan prep room"
 	icon_state = "red"
