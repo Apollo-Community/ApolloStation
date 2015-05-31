@@ -30,7 +30,6 @@
 	var/turf/pickedgoal
 	var/max_i = 10//number of tries to spawn meteor.
 
-
 	do
 		switch(pick(1,2,3,4))
 			if(1) //NORTH
@@ -54,13 +53,11 @@
 				endy = rand(TRANSITIONEDGE,world.maxy-TRANSITIONEDGE)
 				endx = world.maxx-TRANSITIONEDGE
 
-		pickedstart = locate(startx, starty, 1)
-		pickedgoal = locate(endx, endy, 1)
+		pickedstart = locate(startx, starty, 3) //TODO HACK: KWASK FIX YO BROKEN Z-LEVELS
+		pickedgoal = locate(endx, endy, 3)
 		max_i--
 		if(max_i<=0) return
-
 	while (!istype(pickedstart, /turf/space)) //FUUUCK, should never happen.
-
 
 	var/obj/effect/meteor/M
 	switch(rand(1, 100))
@@ -75,7 +72,6 @@
 	M.dest = pickedgoal
 	spawn(0)
 		walk_towards(M, M.dest, 1)
-
 	return
 
 /obj/effect/meteor
@@ -95,12 +91,10 @@
 
 /obj/effect/meteor/Bump(atom/A)
 	spawn(0)
-
 		if (A)
 			A.meteorhit(src)
 			playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
 		if (--src.hits <= 0)
-
 			//Prevent meteors from blowing up the singularity's containment.
 			//Changing emitter and generator ex_act would result in them being bomb and C4 proof.
 			if(!istype(A,/obj/machinery/power/emitter) && \
@@ -112,7 +106,6 @@
 
 
 /obj/effect/meteor/ex_act(severity)
-
 	if (severity < 4)
 		del(src)
 	return
