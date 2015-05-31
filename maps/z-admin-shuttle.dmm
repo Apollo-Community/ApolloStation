@@ -9,7 +9,7 @@
 "ai" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/adminprep/valansship)
 "aj" = (/obj/structure/table,/obj/machinery/recharger,/obj/machinery/recharger/wallcharger{pixel_x = -25},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/adminprep/valansship)
 "ak" = (/obj/structure/computerframe,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/adminprep/valansship)
-"al" = (/obj/machinery/computer/shuttle_control/multi/syndicate{req_access = list(103); req_access_txt = "0"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/adminprep/valansship)
+"al" = (/obj/machinery/computer/shuttle_control/multi/syndicate{req_access = list(103); req_access_txt = "0"; shuttle_tag = "Valans"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/adminprep/valansship)
 "am" = (/obj/structure/table,/obj/machinery/door_control{id = "syndieshutters"; name = "remote shutter control"; req_access_txt = "103"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/adminprep/valansship)
 "an" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/grille,/obj/machinery/door/blast/shutters{density = 0; icon_state = "shutter0"; id = "syndieshutters"; name = "Blast Shutters"; opacity = 0},/turf/simulated/shuttle/plating,/area/adminprep/valansship)
 "ao" = (/obj/structure/table,/obj/machinery/microwave{pixel_x = -1; pixel_y = 2},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/adminprep/valansship)
