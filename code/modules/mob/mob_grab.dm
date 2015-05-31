@@ -35,6 +35,8 @@
 	hud.name = "reinforce grab"
 	hud.master = src
 
+	if(assailant.pulling == affecting)
+		assailant.stop_pulling()
 
 //Used by throw code to hand over the mob, instead of throwing the grab. The grab is then deleted by the throw code.
 /obj/item/weapon/grab/proc/throw()
@@ -61,9 +63,6 @@
 	if(assailant.client)
 		assailant.client.screen -= hud
 		assailant.client.screen += hud
-
-	if(assailant.pulling == affecting)
-		assailant.stop_pulling()
 
 	if(state <= GRAB_AGGRESSIVE)
 		allow_upgrade = 1
