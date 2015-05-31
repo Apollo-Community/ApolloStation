@@ -246,7 +246,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttles["Mercenary"] = MS
 
 // Valen's shuttle - same layout as nuke and goes to mostly same locations
-	var/datum/shuttle/multi_shuttle/MS = new/datum/shuttle/multi_shuttle()
+	var/datum/shuttle/multi_shuttle/VALS = new/datum/shuttle/multi_shuttle()
 	VALS.origin = locate(/area/adminprep/valansship)
 
 	VALS.destinations = list(
