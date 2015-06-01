@@ -53,8 +53,8 @@
 				endy = rand(TRANSITIONEDGE,world.maxy-TRANSITIONEDGE)
 				endx = world.maxx-TRANSITIONEDGE
 
-		pickedstart = locate(startx, starty, 3) //TODO HACK: KWASK FIX YO BROKEN Z-LEVELS
-		pickedgoal = locate(endx, endy, 3)
+		pickedstart = locate(startx, starty, config.station_levels)
+		pickedgoal = locate(endx, endy, config.station_levels)
 		max_i--
 		if(max_i<=0) return
 	while (!istype(pickedstart, /turf/space)) //FUUUCK, should never happen.
