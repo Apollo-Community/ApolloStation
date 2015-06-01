@@ -57,6 +57,7 @@ The process works like this:
 		..()
 
 		air_contents = new
+		air_contents.volume = 84
 
 		component_parts = list()
 		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
@@ -182,13 +183,13 @@ The process works like this:
 
 	var/list/mat = list( "Osmium", "Phoron", "Diamonds", "Platinum", "Gold", "Uranium",  "Silver", "Steel",  )
 	var/list/mat_mod = list(    "Steel" = 3.5,
-								"Silver" = 2.5,
-								"Uranium" = 2.5,
-								"Gold" = 1.5,
-								"Platinum" = 1.5,
-								"Diamonds" = 1.5,
-								"Phoron" = 1.5,
-								"Osmium" = 1.3 ) // modifier for output amount
+								"Silver" = 1.0,
+								"Uranium" = 0.5,
+								"Gold" = 0.5,
+								"Platinum" = 0.3,
+								"Diamonds" = 0.2,
+								"Phoron" = 0.2,
+								"Osmium" = 0.1 ) // modifier for output amount
 
 	var/list/mat_peak = list(   "Steel" = 30,
 								"Silver" = 70,

@@ -1297,3 +1297,65 @@
 				</body>
 			</html>
 			"}
+
+/obj/item/weapon/book/manual/phoron_desubber
+	name = "Modern Day Alchemy: A Guide to Supermatter Transmutation"
+	icon_state = "bookDesubber"
+	author = "Ogg Vorbis"
+	title = "Modern Day Alchemy: A Guide to Supermatter Transmutation"
+	dat = {"<html>
+				<head>
+				<style>
+				h1 {font-size: 18px; margin: 15px 0px 5px;}
+				h2 {font-size: 15px; margin: 15px 0px 5px;}
+				li {margin: 2px 0px 2px 15px;}
+				ul {margin: 5px; padding: 0px;}
+				ol {margin: 5px; padding: 0px 15px;}
+				body {font-size: 13px; font-family: Verdana;}
+				</style>
+				</head>
+				<body>
+				<h1><a name="Foreword">Modern Day Alchemy: A Guide to Supermatter Transmutation</a></h1>
+				<I>Transmuting supermatter into everyday elements.</I><BR>
+
+				<br>
+				At all times, it is highly recommended that you use tungsten-alloy tongs to handle supermatter.
+				<br>
+
+				<h2><a name="Contents">Contents</a></h2>
+				<ol>
+					<li><a href="#Foreword">Foreword</a></li>
+					<li><a href="#UsageVessel">Usage of the Formation Vessel</a></li>
+					<li><a href="#UsageFurnace">Usage of the Neutron Furnace</a></li>
+				</ol>
+				<br>
+
+				<h2><a name="UsageVessel">Usage of the Formation Vessel</a></h2>
+				Phoron Desublimation is the term commonly used to refer to seeding phoron to supermatter crystals. Doing this causes the crystals to grow in size. The larger the crystal, the more material you'll get from transmutating it.
+
+				<ol>
+				  <li>To start, you'll want to locate the supermatter shard that NanoTrasen has provided for you. You'll also want to dispense a phoron tank from the dispenser
+				  <li>Load the shard and tank into the vessel, then make your way to the control console.
+				  <li>On the console, you'll notice the readings of the shard's size and the pressure the tank and vessel.
+				  <li>Now you want to flood the interior of the vessel with the phoron from the tank. To do so, press the \"Fill Vessel\" button.
+				  <li>Repeat until the vessel is filled to the desired level.
+				  <li>Now press the \"Expose Shard\" button in order to begin the seeding procedure. The reaction will take place rapidly and violently, but the vessel is strong enough to remain unharmed.
+				  <li>The shard will now be larger. To eject it, press the \"Eject Shard\" button.
+				</ol>
+
+				<h2><a name="UsageFurnace">Usage of the Neutron Furnace</a></h2>
+				The neutron furnace is a device that uses two streams of neutrons to forcibly decay the supermatter into a base element. This procedure requires radiation protection, or else the user may be exposed to a lethal dosage.
+				When you transmute supermatter, various elements have different level "peaks". These peaks are the optimal energy level to decay the supermatter into that element. The closer you get to a materials peak, the more of that material you will produce.
+				Each neutron furnace has been calibrated so that it will produce steel with the neutron flow set to 30 mSv. Beyond that, the user will need to calibrate the machine themselves, discovering the peaks of the remaining elements.
+
+				<ol>
+				  <li>First off, put your supermatter shard into the furnace and head to the control console.
+				  <li>From the console, you can adjust the neutron-flow rate, eject the shard, and begin the transmutation process.
+				  <li>You can also select and set preset neutron-flow rates. These will allow you to bookmark various element's peaks. Manually setting a preset will set that material's preset to the current neutron-flow rate.
+				  <li>To transmutate, select the desired neutron flow, ensure radiological protective gear is donned, and press the \"Transmute Shard\" button.
+				  <li>After a short time, the transmutation will complete, and you will be left with a stack of your transmutated materials!
+				</ol>
+
+				</body>
+			</html>
+			"}
