@@ -124,7 +124,7 @@ datum
 			name = "Cyanide"
 			id = "cyanide"
 			result = "cyanide"
-			required_reagents = list("hydrogen" = 1, "carbon" = 1, "nitrogen" = 1, "phoron" = 1)
+			required_reagents = list("lexorin" = 1, "phoron" = 1)
 			required_catalysts = list("phoron" = 5)
 			result_amount = 1
 
@@ -253,7 +253,7 @@ datum
 			name = "Dexalin"
 			id = "dexalin"
 			result = "dexalin"
-			required_reagents = list("oxygen" = 2, "phoron" = 0.1)
+			required_reagents = list("oxygen" = 2)
 			required_catalysts = list("phoron" = 5)
 			result_amount = 1
 
@@ -303,7 +303,7 @@ datum
 			name = "Clonexadone"
 			id = "clonexadone"
 			result = "clonexadone"
-			required_reagents = list("cryoxadone" = 1, "sodium" = 1, "phoron" = 0.1)
+			required_reagents = list("cryoxadone" = 1, "sodium" = 1)
 			required_catalysts = list("phoron" = 5)
 			result_amount = 2
 
