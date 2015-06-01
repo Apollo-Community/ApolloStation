@@ -95,14 +95,17 @@
 	size += gas.gas["phoron"]
 
 	if( size > max_size )
-		size = max_size
+		shatter()
 
 	del( gas )
 
 	update_icon()
 
 /obj/item/weapon/shard/supermatter/proc/shatter()
-	if( size >= 10 )
+	if( size > 100 )
+		src.visible_message( "The supermatter shard grows into a full-sized supermatter crystal!" )
+		new /obj/machinery/power/supermatter/bare( get_turf( src ))
+	else if( size >= 10 )
 		src.visible_message( "The supermatter shard shatters into smaller fragments!" )
 		for( size, size >= 10, size -= 10 )
 			new /obj/item/weapon/shard/supermatter( get_turf( src ))

@@ -142,6 +142,10 @@ The process works like this:
 		sleep(22)
 		icon_state = "ProcessorEmpty"
 
+		if( !loaded_shard ) //If our shard turned into something else, aka full crystal
+			explosion( get_turf( src ), 0, 0, 5, 10, 1 )
+			del( src )
+
 		src.visible_message("\icon[src] <b>[src]</b> beeps, \"Crystal successfully fed.\"")
 
 		active = 0

@@ -35,14 +35,14 @@
 	name = "Supermatter"
 	desc = "A strangely translucent and iridescent crystal. \red You get headaches just from looking at it."
 	icon = 'icons/obj/engine.dmi'
-	icon_state = "darkmatter"
+	icon_state = "supermatter"
 	density = 1
 	anchored = 0
 	luminosity = 4
 
 	var/gasefficency = 0.25
 
-	var/base_icon_state = "darkmatter"
+	var/base_icon_state = "supermatter"
 
 	var/damage = 0
 	var/damage_archived = 0
@@ -289,6 +289,8 @@
 
 	user.apply_effect(150, IRRADIATE)
 
+/obj/machinery/power/supermatter/ex_act()
+	return
 
 /obj/machinery/power/supermatter/Bumped(atom/AM as mob|obj)
 	if(istype(AM, /mob/living))
@@ -472,3 +474,7 @@ proc/blow_lights( var/turf/T )
 
 /obj/machinery/power/supermatter/shard/announce_warning() //Shards don't get announcements
 	return
+
+/obj/machinery/power/supermatter/bare
+	icon_state = "supermatter_bare"
+	base_icon_state = "supermatter_bare"

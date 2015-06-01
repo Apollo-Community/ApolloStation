@@ -1344,6 +1344,8 @@
 				</ol>
 
 				At this point, if the shard is large enough, you'll probably want to get something heavy and smash the shard into smaller shards. This way you won't use up your one shard and be left with nothing to work from.
+				<h1>IMPORTANT</h1><br>
+				Do not feed a crystal so that it becomes larger than the vessel. The size indicator on the console gives a percentage of how much space the crystal takes up. Creating a crystal larger than the vessel will result in the vessel being breeched, followed by rapid decompression of the chamber.
 
 				<h2><a name="UsageFurnace">Usage of the Neutron Furnace</a></h2>
 				The neutron furnace is a device that uses two streams of neutrons to forcibly decay the supermatter into a base element. This procedure requires radiation protection, or else the user may be exposed to a lethal dosage.

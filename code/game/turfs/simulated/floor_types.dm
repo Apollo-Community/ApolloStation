@@ -139,7 +139,6 @@
 		name = "space"
 
 	Del()
-		..()
 		ChangeTurf( /turf/space )
 
 /turf/simulated/floor/bluegrid
