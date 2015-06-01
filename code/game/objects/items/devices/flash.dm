@@ -66,7 +66,8 @@
 	if(iscarbon(M))
 		var/safety = M:eyecheck()
 		if(safety <= 0)
-			M.Weaken(10)
+			if( prob( 75 ))
+				M.Weaken(10)
 			flick("e_flash", M.flash)
 
 			if(ishuman(M) && ishuman(user) && M.stat!=DEAD)
@@ -90,7 +91,8 @@
 			flashfail = 1
 
 	else if(issilicon(M))
-		M.Weaken(rand(5,10))
+		if( prob( 75 ))
+			M.Weaken(rand(5,10))
 	else
 		flashfail = 1
 
@@ -183,7 +185,8 @@
 				var/mob/living/carbon/M = loc
 				var/safety = M.eyecheck()
 				if(safety <= 0)
-					M.Weaken(10)
+					if( prob( 75 ))
+						M.Weaken(10)
 					flick("e_flash", M.flash)
 					for(var/mob/O in viewers(M, null))
 						O.show_message("<span class='disarm'>[M] is blinded by the flash!</span>")

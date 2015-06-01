@@ -77,7 +77,9 @@
 		if (istype(O, /mob/living/carbon/alien))//So aliens don't get flashed (they have no external eyes)/N
 			continue
 
-		O.Weaken(strength)
+		if( prob( 75 ))
+			O.Weaken(strength)
+
 		if (istype(O, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = O
 			var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
