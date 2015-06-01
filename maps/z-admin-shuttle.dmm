@@ -54,57 +54,56 @@
 "bb" = (/obj/structure/bookcase{name = "bookcase (Reference)"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/adminprep/valansship)
 "bc" = (/obj/machinery/sleeper,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
 "bd" = (/obj/machinery/sleep_console,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
-"be" = (/obj/machinery/portable_atmospherics/canister/oxygen,/obj/structure/sign/nosmoking_1{pixel_y = 32},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
+"be" = (/obj/structure/sign/nosmoking_1{pixel_y = 32},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
 "bf" = (/obj/structure/table,/obj/item/roller{pixel_y = 8},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
 "bg" = (/obj/structure/table,/obj/structure/closet/secure_closet/medical_wall{pixel_y = 32; req_access = null; req_access_txt = "103"},/obj/item/bodybag,/obj/item/weapon/reagent_containers/syringe/antiviral,/obj/item/weapon/reagent_containers/syringe/antiviral,/obj/item/weapon/reagent_containers/syringe/antiviral,/obj/item/weapon/reagent_containers/glass/bottle/antitoxin{pixel_x = -4; pixel_y = 8},/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline{pixel_x = 4; pixel_y = 7},/obj/item/weapon/reagent_containers/syringe,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
 "bh" = (/obj/structure/closet/hydrant{pixel_y = 32},/obj/item/weapon/storage/toolbox/mechanical,/obj/item/clothing/glasses/welding,/obj/item/weapon/twohanded/fireaxe,/obj/item/stack/sheet/plasteel{amount = 50},/obj/item/stack/sheet/metal{amount = 50},/obj/item/stack/sheet/glass{amount = 50},/obj/item/stack/rods{amount = 50},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/adminprep/valansship)
 "bi" = (/obj/machinery/door/blast/regular{id = "syndieshutters_telebay"; name = "Outer Airlock"},/turf/simulated/shuttle/plating,/area/adminprep/valansship)
-"bj" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/machinery/door/blast/shutters{density = 0; dir = 8; icon_state = "shutter0"; id = "syndieshutters_infirmary"; name = "Blast Shutters"; opacity = 0},/turf/simulated/shuttle/plating,/area/adminprep/valansship)
-"bk" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/machinery/door/blast/shutters{density = 0; dir = 8; icon_state = "shutter0"; id = "syndieshutters_infirmary"; name = "Blast Shutters"; opacity = 0},/turf/simulated/shuttle/plating,/area/adminprep/valansship)
-"bl" = (/obj/machinery/bodyscanner,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
-"bm" = (/obj/machinery/body_scanconsole,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
-"bn" = (/obj/machinery/door/window,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
-"bo" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/machinery/door/blast/shutters{density = 0; dir = 8; icon_state = "shutter0"; id = "syndieshutters_infirmary"; name = "Blast Shutters"; opacity = 0},/turf/simulated/shuttle/plating,/area/adminprep/valansship)
-"bp" = (/obj/structure/closet/emcloset,/obj/item/clothing/suit/space,/obj/item/clothing/mask/breath,/obj/item/weapon/tank/emergency_oxygen/engi,/obj/item/clothing/head/helmet/space,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/adminprep/valansship)
-"bq" = (/obj/machinery/door_control{id = "syndieshutters_infirmary"; name = "remote shutter control"; pixel_x = -25; req_access_txt = "0"},/obj/structure/mopbucket,/obj/item/weapon/mop,/obj/item/weapon/reagent_containers/glass/bucket,/obj/structure/closet,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
-"br" = (/obj/item/device/radio/intercom{dir = 4; name = "Station Intercom (General)"; pixel_x = 30},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
-"bs" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/turf/simulated/shuttle/plating,/area/adminprep/valansship)
-"bt" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/turf/simulated/shuttle/plating,/area/adminprep/valansship)
-"bu" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/table,/obj/item/weapon/bonesetter,/obj/item/weapon/bonegel,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
-"bv" = (/obj/machinery/door/window{dir = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
-"bw" = (/obj/structure/window/reinforced{dir = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
-"bx" = (/obj/structure/table,/obj/structure/window/reinforced{dir = 8},/obj/item/weapon/storage/firstaid/toxin{pixel_x = 3; pixel_y = 3},/obj/item/weapon/storage/firstaid/adv{pixel_x = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
-"by" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/o2{pixel_x = 3; pixel_y = 3},/obj/item/weapon/storage/firstaid/fire{pixel_x = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
-"bz" = (/obj/structure/sign/securearea{name = "\improper CAUTION"; pixel_x = 32},/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill,/obj/item/mecha_parts/mecha_equipment/tool/extinguisher,/obj/machinery/door_control{desc = "A remote control-switch for the cargo bay doors."; id = "syndieshutters_telebay"; name = "Cargo Bay control"; pixel_x = 0; pixel_y = 25; req_access_txt = "103"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/adminprep/valansship)
-"bA" = (/obj/structure/table,/obj/item/weapon/scalpel,/obj/item/weapon/circular_saw{pixel_y = 8},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
-"bB" = (/obj/structure/sink{dir = 4; icon_state = "sink"; pixel_x = 11; pixel_y = 0},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
-"bC" = (/obj/structure/closet/secure_closet/medical_wall{pixel_y = 0; req_access = null; req_access_txt = "103"},/obj/item/weapon/surgicaldrill,/obj/item/clothing/gloves/latex,/obj/item/clothing/mask/surgical,/obj/item/weapon/reagent_containers/glass/bottle/stoxin,/obj/item/weapon/reagent_containers/glass/bottle/stoxin,/obj/item/weapon/reagent_containers/syringe,/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/adminprep/valansship)
-"bD" = (/obj/mecha/medical/odysseus/loaded,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/adminprep/valansship)
-"bE" = (/obj/mecha/working/ripley/firefighter,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/adminprep/valansship)
-"bF" = (/obj/structure/table,/obj/item/weapon/cautery,/obj/item/weapon/hemostat,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
-"bG" = (/obj/machinery/optable,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
-"bH" = (/obj/structure/table,/obj/item/stack/medical/advanced/bruise_pack,/obj/item/weapon/retractor,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
-"bI" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating/airless,/area/adminprep/valansship)
-"bJ" = (/obj/structure/shuttle/engine/propulsion,/turf/space,/area/adminprep/valansship)
-"bK" = (/obj/structure/table,/obj/item/weapon/airlock_electronics,/obj/item/weapon/airlock_electronics,/obj/item/weapon/airlock_electronics,/obj/item/weapon/storage/belt/utility/full,/obj/item/weapon/cell/infinite,/obj/item/weapon/cell/infinite,/obj/item/weapon/cell/infinite,/obj/item/stack/cable_coil/yellow,/obj/item/stack/rods{amount = 50},/obj/item/stack/sheet/glass{amount = 50},/obj/item/stack/sheet/metal{amount = 50},/obj/item/device/radio/headset,/obj/item/device/radio/headset,/obj/item/device/radio/headset,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
-"bL" = (/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
-"bM" = (/obj/item/device/megaphone,/obj/item/device/megaphone,/obj/item/device/megaphone,/obj/item/weapon/tank/emergency_oxygen/double,/obj/item/weapon/tank/emergency_oxygen/double,/obj/item/weapon/tank/emergency_oxygen/double,/obj/item/clothing/mask/gas,/obj/item/clothing/mask/gas,/obj/item/clothing/mask/gas,/obj/structure/table,/obj/structure/mirror{dir = 4; pixel_x = 0; pixel_y = 28},/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
-"bN" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
-"bO" = (/obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse,/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive,/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,/obj/item/mecha_parts/mecha_equipment/tool/passenger,/obj/item/mecha_parts/mecha_equipment/tool/rcd,/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
-"bP" = (/obj/mecha/working/hoverpod,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
-"bQ" = (/obj/mecha/combat/phazon,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
-"bR" = (/obj/item/weapon/card/id/centcom{desc = "Visitors ID"; icon = 'icons/obj/vehicles.dmi'; icon_state = "keys"; name = "\improper Visitor. ID"},/obj/item/clothing/shoes/black,/obj/item/device/radio/headset,/obj/item/clothing/glasses/eyepatch/fluff/thysse_1,/obj/item/weapon/storage/backpack/satchel,/obj/item/clothing/under/det/slob,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
-"bS" = (/obj/machinery/light{dir = 8},/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
-"bT" = (/obj/machinery/light{dir = 4},/obj/machinery/power/fractal_reactor,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
-"bU" = (/obj/machinery/floodlight{in_use = 0; on = 1},/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
-"bV" = (/obj/structure/closet/cabinet,/obj/item/weapon/tank/oxygen,/obj/item/weapon/tank/oxygen,/obj/item/weapon/gun/launcher/pneumatic,/obj/item/weapon/gun/launcher/pneumatic,/obj/item/weapon/gun/launcher/crossbow,/obj/item/weapon/gun/launcher/crossbow,/obj/item/stack/rods{amount = 10},/obj/item/stack/rods{amount = 10},/obj/item/weapon/cell/high,/obj/item/weapon/cell/high,/obj/item/weapon/melee/energy/sword/pirate,/obj/item/weapon/melee/energy/sword/pirate,/obj/item/weapon/gun/projectile/pistol,/obj/item/ammo_magazine/c9mm,/obj/item/weapon/legcuffs/beartrap,/obj/item/weapon/legcuffs/beartrap,/obj/item/weapon/storage/box/handcuffs,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
-"bW" = (/obj/structure/stool/bed/chair/comfy/black{dir = 8},/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
-"bX" = (/obj/item/weapon/card/id/captains_spare,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
-"bY" = (/obj/machinery/door/airlock/external,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
-"bZ" = (/obj/machinery/door/airlock/diamond{req_access_txt = "103"},/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
-"ca" = (/obj/machinery/artifact,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
-"cb" = (/obj/structure/table,/obj/item/weapon/implantcase/explosive,/obj/item/weapon/implantcase/tracking,/obj/item/weapon/implanter,/obj/item/weapon/implanter/explosive,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
-"cc" = (/obj/machinery/computer/card,/obj/machinery/light,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
+"bj" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/machinery/door/blast/shutters{density = 0; dir = 8; icon_state = "shutter0"; id = "syndieshutters_infirmary"; name = "Blast Shutters"; opacity = 0},/turf/simulated/shuttle/plating,/area/adminprep/valansship)
+"bk" = (/obj/machinery/bodyscanner,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
+"bl" = (/obj/machinery/body_scanconsole,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
+"bm" = (/obj/machinery/door/window,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
+"bn" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/adminprep/valansship)
+"bo" = (/obj/machinery/door_control{id = "syndieshutters_infirmary"; name = "remote shutter control"; pixel_x = -25; req_access_txt = "0"},/obj/structure/mopbucket,/obj/item/weapon/mop,/obj/item/weapon/reagent_containers/glass/bucket,/obj/structure/closet,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
+"bp" = (/obj/item/device/radio/intercom{dir = 4; name = "Station Intercom (General)"; pixel_x = 30},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
+"bq" = (/obj/structure/closet/emcloset,/obj/item/clothing/suit/space,/obj/item/clothing/mask/breath,/obj/item/weapon/tank/emergency_oxygen/engi,/obj/item/clothing/head/helmet/space,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/adminprep/valansship)
+"br" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/table,/obj/item/weapon/bonesetter,/obj/item/weapon/bonegel,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
+"bs" = (/obj/machinery/door/window{dir = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
+"bt" = (/obj/structure/window/reinforced{dir = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
+"bu" = (/obj/structure/table,/obj/structure/window/reinforced{dir = 8},/obj/item/weapon/storage/firstaid/toxin{pixel_x = 3; pixel_y = 3},/obj/item/weapon/storage/firstaid/adv{pixel_x = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
+"bv" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/o2{pixel_x = 3; pixel_y = 3},/obj/item/weapon/storage/firstaid/fire{pixel_x = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
+"bw" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/turf/simulated/shuttle/plating,/area/adminprep/valansship)
+"bx" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/turf/simulated/shuttle/plating,/area/adminprep/valansship)
+"by" = (/obj/structure/table,/obj/item/weapon/scalpel,/obj/item/weapon/circular_saw{pixel_y = 8},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
+"bz" = (/obj/structure/sink{dir = 4; icon_state = "sink"; pixel_x = 11; pixel_y = 0},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
+"bA" = (/obj/structure/closet/secure_closet/medical_wall{pixel_y = 0; req_access = null; req_access_txt = "103"},/obj/item/weapon/surgicaldrill,/obj/item/clothing/gloves/latex,/obj/item/clothing/mask/surgical,/obj/item/weapon/reagent_containers/glass/bottle/stoxin,/obj/item/weapon/reagent_containers/glass/bottle/stoxin,/obj/item/weapon/reagent_containers/syringe,/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/adminprep/valansship)
+"bB" = (/obj/structure/sign/securearea{name = "\improper CAUTION"; pixel_x = 32},/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill,/obj/item/mecha_parts/mecha_equipment/tool/extinguisher,/obj/machinery/door_control{desc = "A remote control-switch for the cargo bay doors."; id = "syndieshutters_telebay"; name = "Cargo Bay control"; pixel_x = 0; pixel_y = 25; req_access_txt = "103"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/adminprep/valansship)
+"bC" = (/obj/structure/table,/obj/item/weapon/cautery,/obj/item/weapon/hemostat,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
+"bD" = (/obj/machinery/optable,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
+"bE" = (/obj/structure/table,/obj/item/stack/medical/advanced/bruise_pack,/obj/item/weapon/retractor,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/adminprep/valansship)
+"bF" = (/obj/mecha/medical/odysseus/loaded,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/adminprep/valansship)
+"bG" = (/obj/mecha/working/ripley/firefighter,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/adminprep/valansship)
+"bH" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating/airless,/area/adminprep/valansship)
+"bI" = (/obj/structure/shuttle/engine/propulsion,/turf/space,/area/adminprep/valansship)
+"bJ" = (/obj/structure/table,/obj/item/weapon/airlock_electronics,/obj/item/weapon/airlock_electronics,/obj/item/weapon/airlock_electronics,/obj/item/weapon/storage/belt/utility/full,/obj/item/weapon/cell/infinite,/obj/item/weapon/cell/infinite,/obj/item/weapon/cell/infinite,/obj/item/stack/cable_coil/yellow,/obj/item/stack/rods{amount = 50},/obj/item/stack/sheet/glass{amount = 50},/obj/item/stack/sheet/metal{amount = 50},/obj/item/device/radio/headset,/obj/item/device/radio/headset,/obj/item/device/radio/headset,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
+"bK" = (/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
+"bL" = (/obj/item/device/megaphone,/obj/item/device/megaphone,/obj/item/device/megaphone,/obj/item/weapon/tank/emergency_oxygen/double,/obj/item/weapon/tank/emergency_oxygen/double,/obj/item/weapon/tank/emergency_oxygen/double,/obj/item/clothing/mask/gas,/obj/item/clothing/mask/gas,/obj/item/clothing/mask/gas,/obj/structure/table,/obj/structure/mirror{dir = 4; pixel_x = 0; pixel_y = 28},/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
+"bM" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
+"bN" = (/obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse,/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive,/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,/obj/item/mecha_parts/mecha_equipment/tool/passenger,/obj/item/mecha_parts/mecha_equipment/tool/rcd,/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
+"bO" = (/obj/mecha/working/hoverpod,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
+"bP" = (/obj/mecha/combat/phazon,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
+"bQ" = (/obj/item/weapon/card/id/centcom{desc = "Visitors ID"; icon = 'icons/obj/vehicles.dmi'; icon_state = "keys"; name = "\improper Visitor. ID"},/obj/item/clothing/shoes/black,/obj/item/device/radio/headset,/obj/item/clothing/glasses/eyepatch/fluff/thysse_1,/obj/item/weapon/storage/backpack/satchel,/obj/item/clothing/under/det/slob,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
+"bR" = (/obj/machinery/light{dir = 8},/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
+"bS" = (/obj/machinery/light{dir = 4},/obj/machinery/power/fractal_reactor,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
+"bT" = (/obj/machinery/floodlight{in_use = 0; on = 1},/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
+"bU" = (/obj/structure/closet/cabinet,/obj/item/weapon/tank/oxygen,/obj/item/weapon/tank/oxygen,/obj/item/weapon/gun/launcher/pneumatic,/obj/item/weapon/gun/launcher/pneumatic,/obj/item/weapon/gun/launcher/crossbow,/obj/item/weapon/gun/launcher/crossbow,/obj/item/stack/rods{amount = 10},/obj/item/stack/rods{amount = 10},/obj/item/weapon/cell/high,/obj/item/weapon/cell/high,/obj/item/weapon/melee/energy/sword/pirate,/obj/item/weapon/melee/energy/sword/pirate,/obj/item/weapon/gun/projectile/pistol,/obj/item/ammo_magazine/c9mm,/obj/item/weapon/legcuffs/beartrap,/obj/item/weapon/legcuffs/beartrap,/obj/item/weapon/storage/box/handcuffs,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
+"bV" = (/obj/structure/stool/bed/chair/comfy/black{dir = 8},/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
+"bW" = (/obj/item/weapon/card/id/captains_spare,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
+"bX" = (/obj/machinery/door/airlock/external,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
+"bY" = (/obj/machinery/door/airlock/diamond{req_access_txt = "103"},/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
+"bZ" = (/obj/machinery/artifact,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
+"ca" = (/obj/structure/table,/obj/item/weapon/implantcase/explosive,/obj/item/weapon/implantcase/tracking,/obj/item/weapon/implanter,/obj/item/weapon/implanter/explosive,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
+"cb" = (/obj/machinery/computer/card,/obj/machinery/light,/turf/unsimulated/floor{icon_state = "vault"; dir = 8},/area/adminprep/valanspreparea)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -132,25 +131,25 @@ aaabaaaaacaaaaaaaaaaaaaaaaaaaaaiaYajaZajajajajajajajajbabbaiaaaaaaaaaaaaaaaaaaaa
 aaabaaaaacaaaaaaaaaaaaaaaaaaadaiaiaiaiaiaiawaiaiaiaiaiaiaiaiahaaaaaaaaaaaaaaaaaaaaacaaabaa
 aaabaaaaacaaaaaaaaaaaaaaaaaaaibcbdbebfbgaiajazbhaiajajajajajbiaaaaaaaaaaaaaaaaaaaaacaaabaa
 aaabaaaaacaaaaaaaaaaaaaaaaaabjaEaEaEaEaEaiajajajaiajajajajajbiaaaaaaaaaaaaaaaaaaaaacaaabaa
-aaabaaaaacaaaaaaaaaaaaaaaaaabkblbmaEaEaEbnajajajaiajajajajajbiaaaaaaaaaaaaaaaaaaaaacaaabaa
-aaabaaaaacaaaaaaaaaaaaaaaaaaboaEaEaEaEaEbnajajbpaiajajajajajbiaaaaaaaaaaaaaaaaaaaaacaaabaa
-aaabaaaaacaaaaaaaaaaaaaaaaaaaibqaEaEaEbraiawbsbtaiajajajajajbiaaaaaaaaaaaaaaaaaaaaacaaabaa
-aaabaaaaacaaaaaaaaaaaaaaaaaaaibubvbwbxbyaiajajbzaMaNaiaiaiaiaiaaaaaaaaaaaaaaaaaaaaacaaabaa
-aaabaaaaacaaaaaaaaaaaaaaaaaaaibAaEbBbCaiaiajbDbEaiaiaiajajajaiaaaaaaaaaaaaaaaaaaaaacaaabaa
-aaabaaaaacaaaaaaaaaaaaaaaaaaaibFbGbHaiaaaibIbIbIaiaaaiajajajaiaaaaaaaaaaaaaaaaaaaaacaaabaa
-aaabaaaaacaaaaaaaaaaaaaaaaaaaibIbIbIaiaaavbJbJbJaxaaaibIbIbIaiaaaaaaaaaaaaaaaaaaaaacaaabaa
-aaabaaaaacaaaaaaaaaaaaaaaaaaavbJbJbJaxaaaaaaaaaaaaaaavbJbJbJaxaaaaaaaaaaaaaaaaaaaaacaaabaa
+aaabaaaaacaaaaaaaaaaaaaaaaaabjbkblaEaEaEbmajajajaiajajajajajbiaaaaaaaaaaaaaaaaaaaaacaaabaa
+aaabaaaaacaaaaaaaaaaaaaaaaaabjaEaEaEaEaEbmajajbnaiajajajajajbiaaaaaaaaaaaaaaaaaaaaacaaabaa
+aaabaaaaacaaaaaaaaaaaaaaaaaaaiboaEaEaEbpaiajajbqaiajajajajajbiaaaaaaaaaaaaaaaaaaaaacaaabaa
+aaabaaaaacaaaaaaaaaaaaaaaaaaaibrbsbtbubvaiawbwbxaMaNaiaiaiaiaiaaaaaaaaaaaaaaaaaaaaacaaabaa
+aaabaaaaacaaaaaaaaaaaaaaaaaaaibyaEbzbAaiaiajajbBaiaiaiajajajaiaaaaaaaaaaaaaaaaaaaaacaaabaa
+aaabaaaaacaaaaaaaaaaaaaaaaaaaibCbDbEaiaaaiajbFbGaiaaaiajajajaiaaaaaaaaaaaaaaaaaaaaacaaabaa
+aaabaaaaacaaaaaaaaaaaaaaaaaaaibHbHbHaiaaavaiafaiaxaaaibHbHbHaiaaaaaaaaaaaaaaaaaaaaacaaabaa
+aaabaaaaacaaaaaaaaaaaaaaaaaaavbIbIbIaxaaaaaaaaaaaaaaavbIbIbIaxaaaaaaaaaaaaaaaaaaaaacaaabaa
 aaabaaaaacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaabaa
 aaabaaaaacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaabaa
 aaabaaaaacaaaaaaaaaaaaaaaaaaacacacacacacacacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaabaa
-aaabaaaaacaaaaaaaaaaaaaaaaaaacbKbLbMbNbObPacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaabaa
-aaabaaaaacaaaaaaaaaaaaaaaaaaacbLbLbLbLbLbQacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaabaa
-aaabaaaaacaaaaaaaaaaaaaaaaaaacbLbLbLbRbLbLacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaabaa
-aaabaaaaacaaaaaaaaaaaaaaaaaaacbSbLbLbLbLbTacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaabaa
-aaabaaaaacaaaaaaaaaaaaaaaaaaacbLbLbLbLbLbUacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaabaa
-aaabaaaaacaaaaaaaaaaaaaaaaaaacbVbLbLbLbLbWacaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacacaaaaacaaabaa
-aaabaaaaacaaaaaaaaaaaaaaaaaaacbLbLbLbXbYbZacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccaacaaaaacaaabaa
-aaabaaaaacaaaaaaaaaaaaaaaaaaaccbbLbLccbYbZacaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacacaaaaacaaabaa
+aaabaaaaacaaaaaaaaaaaaaaaaaaacbJbKbLbMbNbOacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaabaa
+aaabaaaaacaaaaaaaaaaaaaaaaaaacbKbKbKbKbKbPacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaabaa
+aaabaaaaacaaaaaaaaaaaaaaaaaaacbKbKbKbQbKbKacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaabaa
+aaabaaaaacaaaaaaaaaaaaaaaaaaacbRbKbKbKbKbSacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaabaa
+aaabaaaaacaaaaaaaaaaaaaaaaaaacbKbKbKbKbKbTacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaabaa
+aaabaaaaacaaaaaaaaaaaaaaaaaaacbUbKbKbKbKbVacaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacacaaaaacaaabaa
+aaabaaaaacaaaaaaaaaaaaaaaaaaacbKbKbKbWbXbYacaaaaaaaaaaaaaaaaaaaaaaaaaaaaacbZacaaaaacaaabaa
+aaabaaaaacaaaaaaaaaaaaaaaaaaaccabKbKcbbXbYacaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacacaaaaacaaabaa
 aaabaaaaacaaaaaaaaaaaaaaaaaaacacacacacacacacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaabaa
 aaabaaaaacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaabaa
 aaabaaaaacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaaabaa
