@@ -1343,6 +1343,8 @@
 				  <li>The shard will now be larger. To eject it, press the \"Eject Shard\" button.
 				</ol>
 
+				At this point, if the shard is large enough, you'll probably want to get something heavy and smash the shard into smaller shards. This way you won't use up your one shard and be left with nothing to work from.
+
 				<h2><a name="UsageFurnace">Usage of the Neutron Furnace</a></h2>
 				The neutron furnace is a device that uses two streams of neutrons to forcibly decay the supermatter into a base element. This procedure requires radiation protection, or else the user may be exposed to a lethal dosage.
 				When you transmute supermatter, various elements have different level "peaks". These peaks are the optimal energy level to decay the supermatter into that element. The closer you get to a materials peak, the more of that material you will produce.
