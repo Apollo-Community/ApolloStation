@@ -8,7 +8,7 @@ Used In File(s): \code\game\machinery\phoron_desublimer.dm
 	{{:helper.link('Neutron Furnace', 'note', {'state' : 'furnace'}, null, data.state == 'furnace' ? 'selected' : null)}}
 	{{:helper.link('Scan for Machines', 'gear', {'run_scan' : 1}, data.run_scan == 1 ? 'selected' : null)}}
 </div>
-
+<hr>
 {{if data.state == 'vessel'}}
 	{{if data.vessel}}
 		<div style="min-width: 480px">
@@ -21,10 +21,13 @@ Used In File(s): \code\game\machinery\phoron_desublimer.dm
 					{{:helper.link('Eject Shard', 'eject', {'vessel_eject_shard' : 1}, data.shard ? null : 'disabled')}}<br>
 				</div>
 				<div class="itemLabel">
-					Size: 
+					Shard Size: 
 				</div>
 				<div class="itemContent">
-					{{:helper.displayBar(data.shard_size, 0, data.max_shard_size, (data.shard_size < data.max_shard_size - 5) ? 'good' : 'average')}}
+					{{:helper.displayBar(data.shard_size, 0, data.max_shard_size, (data.shard_size < data.max_shard_size - 5) ? 'good' : 'average')}} 
+					<div class="statusValue">
+						{{:data.shard_size}}%
+					</div>
 				</div>
 			</div>
 			<div class="item">
@@ -44,9 +47,15 @@ Used In File(s): \code\game\machinery\phoron_desublimer.dm
 					</div>
 				</div>
 			</div>
+			<br>
 			<div class="item">
-				Vessel Air Contents
-				
+				<div class="itemLabel">
+					Vessel Air Contents
+				</div>
+				<div class="itemContent">
+					{{:helper.link('Fill Vessel', 'unlocked', {'vessel_fill' : 1}, data.tank ? null : 'disabled')}}
+					{{:helper.link('Expose Shard', 'unlocked', {'vessel_feed' : 1}, data.vessel_pressure ? null : 'disabled')}}
+				</div>
 				<div class="itemLabel">
 					Vessel Pressure:
 				</div>
@@ -55,6 +64,70 @@ Used In File(s): \code\game\machinery\phoron_desublimer.dm
 					<div class="statusValue">
 						{{:data.vessel_pressure}} kPa
 					</div>
+				</div>
+			</div>
+		</div>
+	{{/if}}
+{{/if}}
+
+{{if data.state == 'furnace'}}
+	{{if data.furnace}}
+		<div style="min-width: 480px">
+			<h3>Neutron Furnace</h3>
+			<div class="item">
+				<div class="itemLabel">
+					<span class=data.shard ? "good" : "bad">Supermatter Shard</span><br>
+				</div>
+				<div class="itemContent">
+					{{:helper.link('Eject Shard', 'eject', {'furnace_eject_shard' : 1}, data.shard ? null : 'disabled')}}
+					{{:helper.link('Transmute Shard', 'unlocked', {'furnace_activate' : 1}, data.shard ? null : 'disabled')}}<br>
+				</div>
+				<div class="itemLabel">
+					Shard Size: 
+				</div>
+				<div class="itemContent">
+					{{:helper.displayBar(data.shard_size, 0, data.max_shard_size, (data.shard_size < data.max_shard_size - 5) ? 'good' : 'average')}}
+					<div class="statusValue">
+						{{:data.shard_size}}%
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="item">
+				<div class="itemLabel">
+					Neutron Flow: 
+				</div>
+				<div class="itemContent">
+					{{:helper.displayBar(data.neutron_flow, 1, data.max_neutron_flow)}} mSv
+				</div>
+				<div class="itemContent">
+					<div style="clear: both; padding-top: 4px;">
+						{{:helper.link('-', null, {'neutron_adj' : -100}, (data.neutron_flow > data.min_neutron_flow) ? null : 'disabled')}}
+						{{:helper.link('-', null, {'neutron_adj' : -10}, (data.neutron_flow > data.min_neutron_flow) ? null : 'disabled')}}
+						{{:helper.link('-', null, {'neutron_adj' : -1}, (data.neutron_flow > data.min_neutron_flow) ? null : 'disabled')}}
+						{{:helper.link('-', null, {'neutron_adj' : -0.1}, (data.neutron_flow > data.min_neutron_flow) ? null : 'disabled')}}
+						<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:data.neutron_flow}}&nbsp;</div>
+						{{:helper.link('+', null, {'neutron_adj' : 0.1}, (data.neutron_flow < data.max_neutron_flow) ? null : 'disabled')}}
+						{{:helper.link('+', null, {'neutron_adj' : 1}, (data.neutron_flow < data.max_neutron_flow) ? null : 'disabled')}}
+						{{:helper.link('+', null, {'neutron_adj' : 10}, (data.neutron_flow < data.max_neutron_flow) ? null : 'disabled')}}
+						{{:helper.link('+', null, {'neutron_adj' : 100}, (data.neutron_flow < data.max_neutron_flow) ? null : 'disabled')}}
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="item">
+				<div class="itemLabel">
+					Presets: 
+				</div>
+				<div class="itemContent">
+					{{:helper.link('Set Preset', 'refresh', {'set_preset' : 1}, null)}}
+				</div>
+			</div>
+			<div class="item">
+				<div class="itemContentWide" style="width: 100%;">
+					{{for data.presets}}
+						{{:helper.link(value.title, 'circle-arrow-s', value.commands, value.value ? null : 'disabled' )}}
+					{{/for}}
 				</div>
 			</div>
 		</div>

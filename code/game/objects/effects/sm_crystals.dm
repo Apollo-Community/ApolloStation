@@ -56,6 +56,7 @@
 /obj/effect/supermatter_crystal/Del()
 	if( !deleted )
 		visible_message("\red <B>\The [src] shatters!</B>")
+		playsound(loc, 'sound/effects/Glassbr2.ogg', 100, 1)
 		new /obj/item/weapon/shard/supermatter( src.loc )
 
 	processing_objects -= src

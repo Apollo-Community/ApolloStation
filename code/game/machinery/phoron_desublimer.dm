@@ -3,13 +3,18 @@
 	~~Created by Kwask, sprites by Founded1992~~
 Desc: This is a machine which will take gaseous phoron and turns it into various materials
 The process works like this:
-	1.) A supermatter seed crystal is place inside of the react
+	1.) A supermatter seed crystal is place inside of the formation chamber
+	2.) A phoron tank filled with phoron is placed inside of the formation chamber
+	3.) Flood the formation chamber with phoron
+	4.) Expose the shard to the phoron and watch as the crystal is grown
+	5.) Eject seed and phoron or repeat process until the shard is desirable size
 
 	NEUTRON FURNACE
 	5.) Place the supermatter shard inside and set the neutron flow. The neutron flow represents the desired focus point.
 		Each of the different materials has a "focus peak" where you produce a maximum output of that material.
 		Setting the neutron flow between two peaks creates a smaller amount of both materials.
 		Some materials, such as osmium and phoron, produce so little amount that you may get nothing unless the neutron flow matches the peak.
+		The amount of material recieved is also determined by the size of the shard, so a small shard may never yield osmium or phoron.
 	6.) Activate the machine.
 	7.) Congrats, you now have some bars!
 */
@@ -30,9 +35,12 @@ The process works like this:
 	proc/report_ready()
 		if( stat & ( BROKEN|NOPOWER ))
 			ready = 0
+			return
 
-/*  //////// PHORON REACTANT VESSEL ////////
-	Takes in gas and supermatter seed, creates supermatter shard
+		ready = 1
+
+/*  //////// PHORON FORMATION VESSEL ////////
+	Uses phoron gas to grow a supermatter shard
 */
 
 /obj/machinery/phoron_desublimer/vessel
@@ -95,10 +103,10 @@ The process works like this:
 		return
 
 	proc/filled()
-		if( air_contents.total_moles < 1 )
-			return 0
-		else
+		if( air_contents.total_moles > 1 )
 			return 1
+		else
+			return 0
 
 	proc/fill()
 		if( !loaded_tank )
@@ -110,10 +118,10 @@ The process works like this:
 
 		air_contents.merge( loaded_tank.air_contents.remove( loaded_tank.air_contents.total_moles ))
 
-		if( !filled() )
+		if( icon_state != "ProcessorFull" )
 			flick("ProcessorFill", src)
-		icon_state = "ProcessorFull"
-
+			sleep(12)
+			icon_state = "ProcessorFull"
 
 	proc/crystalize()
 		if( !loaded_shard )
@@ -127,34 +135,29 @@ The process works like this:
 
 		active = 1
 
-		loaded_shard.feed( air_contents.remove( loaded_tank.air_contents.total_moles ))
+		loaded_shard.feed( air_contents.remove( air_contents.total_moles ))
 
 		flick("ProcessorCrystalize", src)
+		sleep(22)
 		icon_state = "ProcessorEmpty"
 
-		src.visible_message("\icon[src] <b>[src]</b> buzzes, \"Crystal successfully fed.\"")
+		src.visible_message("\icon[src] <b>[src]</b> beeps, \"Crystal successfully fed.\"")
 
 		active = 0
 
 	proc/eject_shard()
-		testing( "eject_shard()" )
 		if( !loaded_shard )
-			testing( "return failed" )
 			return
 
 		loaded_shard.loc = get_turf( src )
 		loaded_shard = null
-		testing( "return success" )
 
 	proc/eject_tank()
-		testing( "eject_shard()" )
 		if( !loaded_tank )
-			testing( "return failed" )
 			return
 
 		loaded_tank.loc = get_turf( src )
 		loaded_tank = null
-		testing( "return success" )
 
 	report_ready()
 		ready = 1
@@ -172,6 +175,7 @@ The process works like this:
 	desc = "A modern day alchemist's best friend."
 	icon_state = "Open"
 
+	var/min_neutron_flow = 1
 	var/neutron_flow = 25
 	var/max_neutron_flow = 300
 	var/obj/item/weapon/shard/supermatter/shard = null
@@ -224,6 +228,14 @@ The process works like this:
 	process()
 		..()
 
+	proc/eject_shard()
+		if( !shard )
+			return
+
+		shard.loc = get_turf( src )
+		shard = null
+		update_icon()
+
 	proc/modify_flow(var/change)
 		neutron_flow += change
 		if( neutron_flow > max_neutron_flow )
@@ -237,18 +249,31 @@ The process works like this:
 		if( !shard )
 			src.visible_message("\icon[src] <b>[src]</b> buzzes, \"Needs a supermatter shard to transmutate.\"")
 			return
+
+		active = 1
+		playsound(loc, 'sound/effects/neutron_charge.ogg', 50, 1, -1)
+		flick( "Active", src )
+		for(var/mob/living/l in oview(src, round(sqrt(neutron_flow / 2))))
+			var/rads = (neutron_flow / 3) * sqrt( 1 / get_dist(l, src) )
+			l.apply_effect(rads, IRRADIATE)
+		sleep(28)
+		playsound(loc, 'sound/effects/laser_sustained.ogg', 75, 1, -1)
+		sleep(8)
+		playsound(loc, 'sound/machines/ding.ogg', 50, 1, -1)
+		sleep(10)
+
 		var/list/peak_distances = list()
 		peak_distances = get_peak_distances( neutron_flow )
 		var/max_distance = 50.0 // Max peak distance from neutron flow which will still produce materials
-
-		active = 1
-		flick( "Active", src )
 
 		var/amount = 0
 		for( var/cur_mat in mat )
 			var/distance = peak_distances[cur_mat]
 			if( distance <= max_distance )
-				amount = round((( max_distance-distance )/max_distance )*mat_mod[cur_mat] ) // Produces amount based on distance from flow and modifier
+				var/size_modifier = shard.size*0.2
+				amount = (( max_distance-distance )/max_distance )*mat_mod[cur_mat] // Produces amount based on distance from flow and modifier
+				amount += amount*size_modifier
+				amount = round( amount )
 
 				if( amount > 0 ) // Will only do anything if any amount was actually created
 					var/obj/item/stack/sheet/T = mat_obj[cur_mat]
@@ -298,7 +323,7 @@ The process works like this:
 				if( T.held )
 					if( istype( T.held, /obj/item/weapon/shard/supermatter ))
 						T.held.loc = src
-						shard = T.held.loc
+						shard = T.held
 						T.held = null
 						T.update_icon()
 						user << "You put [shard] into the machine."
@@ -338,7 +363,15 @@ The process works like this:
 	active_power_usage = 70000 //70 kW per unit of strength
 	var/active = 0
 	var/assembled = 0
-	var/state = null
+	var/state = "vessel"
+	var/list/mat_presets = list(   "Steel" = 30,
+									"Silver" = null,
+									"Uranium" = null,
+									"Gold" = null,
+									"Platinum" = null,
+									"Diamonds" = null,
+									"Phoron" = null,
+									"Osmium" = null )
 
 	var/obj/machinery/phoron_desublimer/vessel/vessel
 	var/obj/machinery/phoron_desublimer/furnace/furnace
@@ -346,23 +379,20 @@ The process works like this:
 /obj/machinery/computer/phoron_desublimer_control/New()
 	..()
 
-	src.check_parts()
+	spawn( 2 )
+		src.check_parts()
 
 /obj/machinery/computer/phoron_desublimer_control/proc/find_parts()
 	vessel = null
 	furnace = null
 
 	var/area/main_area = get_area(src)
-	testing( "Area [main_area] found" )
 
 	for(var/area/related_area in main_area.related)
-		testing( "Area [related_area] found" )
 		for( var/obj/machinery/phoron_desublimer/PD in related_area )
 			if( istype( PD, /obj/machinery/phoron_desublimer/vessel ))
-				testing( "v: [PD] found" )
 				vessel = PD
 			if( istype( PD, /obj/machinery/phoron_desublimer/furnace ))
-				testing( "f: [PD] found" )
 				furnace = PD
 
 	return
@@ -377,6 +407,13 @@ The process works like this:
 
 	return 1
 
+/obj/machinery/computer/phoron_desublimer_control/proc/set_preset()
+	if( !usr ) return
+
+	var/preset = null
+	preset = input( usr, "Which preset would you like set?", "Select Preset", preset ) in mat_presets
+	mat_presets[preset] = furnace.neutron_flow
+
 /obj/machinery/computer/phoron_desublimer_control/attack_hand(mob/user as mob)
 	ui_interact(user)
 
@@ -384,41 +421,53 @@ The process works like this:
 	if(stat & (BROKEN|NOPOWER)) return
 	if(user.stat || user.restrained()) return
 
-	src.check_parts()
-
 	// this is the data which will be sent to the ui
 	var/data[0]
 	data["run_scan"] = 0
 	data["state"] = state
-	if( vessel )
-		testing( "vessel found" )
+
+	var/list/presets = list()
+	for (var/re in mat_presets )
+		presets.Add(list(list("title" = re, "value" = mat_presets[re] ,"commands" = list("set_neutron_flow" = mat_presets[re]))))
+	data["presets"] = presets
+
+	if( vessel && state == "vessel" )
 		data["vessel"] = vessel
 		data["shard"] = vessel.loaded_shard
 		data["max_shard_size"] = 100
 		data["vessel_pressure"] = vessel.air_contents.return_pressure()
 
 		if( vessel.loaded_shard )
-			data["shard_size"] = vessel.loaded_shard.size_percent()
+			var/obj/item/weapon/shard/supermatter/S = vessel.loaded_shard
+			data["shard_size"] = size_percent( S.size, S.max_size )
 		else
 			data["shard_size"] = 0
 
 		if( vessel.loaded_tank )
+			data["tank"] = vessel.loaded_tank
 			data["tank_pressure"] = round(vessel.loaded_tank.air_contents.return_pressure() ? vessel.loaded_tank.air_contents.return_pressure() : 0)
 		else
 			data["tank_pressure"] = 0
-	else
-		testing( "vessel not found" )
-		data["vessel"] = null
-		data["shard"] = null
-		data["max_shard_size"] = null
-		data["shard_size"] = null
+	else if( furnace && state == "furnace" )
+		data["furnace"] = furnace
+		data["neutron_flow"] = furnace.neutron_flow
+		data["max_neutron_flow"] = furnace.max_neutron_flow
+		data["min_neutron_flow"] = furnace.min_neutron_flow
+		data["shard"] = furnace.shard
+		data["max_shard_size"] = 100
+
+		if( furnace.shard )
+			var/obj/item/weapon/shard/supermatter/S = furnace.shard
+			data["shard_size"] = size_percent( S.size, S.max_size )
+		else
+			data["shard_size"] = 0
 
 		// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "phoron_desublimation.tmpl", ui_title, 390, 655)
+		ui = new(user, src, ui_key, "phoron_desublimation.tmpl", ui_title, 600, 385)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
 		// open the new ui window
@@ -435,18 +484,32 @@ The process works like this:
 		state = href_list["state"]
 	else if(href_list["run_scan"])
 		src.check_parts()
+	else if(href_list["set_preset"])
+		src.set_preset()
 	else if(href_list["vessel_eject_shard"])
-		testing( "Ejecting shard from [vessel]" )
 		vessel.eject_shard()
 	else if(href_list["vessel_eject_tank"])
-		testing( "Ejecting tank from [vessel]" )
 		vessel.eject_tank()
 	else if(href_list["vessel_fill"])
-		testing( "Filling vessel [vessel]" )
 		vessel.fill()
 	else if(href_list["vessel_feed"])
-		testing( "Feeding crystal from [vessel]" )
 		vessel.crystalize()
+	else if(href_list["furnace_eject_shard"])
+		furnace.eject_shard()
+	else if(href_list["neutron_adj"])
+		var/diff = text2num(href_list["neutron_adj"])
+		if(furnace.neutron_flow > 1)
+			furnace.neutron_flow = min(furnace.max_neutron_flow, furnace.neutron_flow+diff)
+		else
+			furnace.neutron_flow = max(furnace.min_neutron_flow, furnace.neutron_flow+diff)
+	else if(href_list["set_neutron_flow"])
+		var/diff = text2num(href_list["set_neutron_flow"])
+		if( diff )
+			furnace.neutron_flow = diff
+	else if(href_list["furnace_activate"])
+		if( furnace.report_ready() & !furnace.active )
+			furnace.produce()
+
 
 	nanomanager.update_uis(src)
 	add_fingerprint(usr)

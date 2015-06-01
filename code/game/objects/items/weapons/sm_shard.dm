@@ -1,3 +1,8 @@
+/proc/size_percent( var/size = 0, var/max_size = 0 )
+	if( !size )	return
+	if( !max_size )	return
+
+	return round( 100*( size/max_size ))
 
 /obj/item/weapon/shard/supermatter
 	name = "supermatter shard"
@@ -35,14 +40,15 @@
 		src.pixel_x = rand(-5, 5)
 		src.pixel_y = rand(-5, 5)
 
-
 /obj/item/weapon/shard/supermatter/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if( istype( W, /obj/item/weapon/tongs ))
 		var/obj/item/weapon/tongs/T = W
 		T.pick_up( src )
 		T.update_icon()
 		return
-
+	else if( istype( W, /obj/item/weapon ))
+		if( W.force >= 5 )
+			src.shatter()
 	..()
 
 /obj/item/weapon/shard/supermatter/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
@@ -85,9 +91,6 @@
 
 	..()
 
-/obj/item/weapon/shard/supermatter/proc/size_percent()
-	return round(( size/max_size )*100 )
-
 /obj/item/weapon/shard/supermatter/proc/feed( var/datum/gas_mixture/gas )
 	size += gas.gas["phoron"]
 
@@ -97,6 +100,17 @@
 	del( gas )
 
 	update_icon()
+
+/obj/item/weapon/shard/supermatter/proc/shatter()
+	if( size >= 10 )
+		src.visible_message( "The supermatter shard shatters into smaller fragments!" )
+		for( size, size >= 10, size -= 10 )
+			new /obj/item/weapon/shard/supermatter( get_turf( src ))
+	else
+		src.visible_message( "The supermatter shard shatters into dust!" )
+
+	playsound(loc, 'sound/effects/Glassbr2.ogg', 100, 1)
+	del( src )
 
 /obj/item/weapon/tongs
 	name = "tongs"
