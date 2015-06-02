@@ -112,6 +112,7 @@
 /proc/log_misc(text)
 	diary << "\[[time_stamp()]]MISC: [text][log_end]"
 	STUI.debug.Add("\[[time_stamp()]]MISC: [text]<br>")
+	STUI.processing |= 6
 
 /proc/in_unlogged(var/mob/M) // Checks if the mob is in an unlogged area
 	if( istype( M.loc.loc, /area/tdome ))
