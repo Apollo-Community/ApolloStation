@@ -195,7 +195,7 @@ The process works like this:
 								"Phoron" = 0.2,
 								"Osmium" = 0.1 ) // modifier for output amount
 
-	var/list/mat_peak = list(   "Steel" = rand(1, 300),
+	var/list/mat_peak = list(   "Steel" = 30,
 								"Silver" = rand(1, 300),
 								"Uranium" = rand(1, 300),
 								"Gold" = rand(1, 300),
