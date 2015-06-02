@@ -364,13 +364,13 @@ proc/populate_seed_list()
 				if(prob(degree*5))
 					harvest_repeat = !harvest_repeat
 			if(10)
-				if(prob(degree*2))
+				if(biolum && prob(degree))
+					biolum_colour = pick(rgb(rand(0,255),rand(0,255),rand(0,255), rgb(rand(128,255), rand(0,128), 0), rgb(rand(0,128), rand(192,255), rand(0,128)), rgb(rand(0,192),rand(0,64),rand(128,255))) // Makes for a ton more color variation. The ones i added were "completely random", "Hot Colors", "Greens", "Cold Colors".
+					source_turf.visible_message("\blue \The [display_name]'s glow <font color='[biolum_colour]'>changes colour</font>!")
+				else if(prob(degree*2))
 					biolum = !biolum
 					if(biolum)
 						source_turf.visible_message("\blue \The [display_name] begins to glow!")
-						if(prob(degree*2))
-							biolum_colour = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
-							source_turf.visible_message("\blue \The [display_name]'s glow <font color='[biolum_colour]'>changes colour</font>!")
 					else
 						source_turf.visible_message("\blue \The [display_name]'s glow dims...")
 			if(11)
