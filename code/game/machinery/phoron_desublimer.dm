@@ -181,7 +181,7 @@ The process works like this:
 	icon_state = "Open"
 
 	var/min_neutron_flow = 1
-	var/neutron_flow = 25
+	var/neutron_flow = rand(1,300)
 	var/max_neutron_flow = 300
 	var/obj/item/weapon/shard/supermatter/shard = null
 
