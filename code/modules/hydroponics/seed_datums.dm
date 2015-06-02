@@ -321,7 +321,7 @@ proc/populate_seed_list()
 	//This looks like shit, but it's a lot easier to read/change this way.
 	var/total_mutations = rand(1,1+degree)
 	for(var/i = 0;i<total_mutations;i++)
-		switch(rand(0,11))
+		switch(rand(0,12))
 			if(0) //Plant cancer!
 				lifespan = max(0,lifespan-rand(1,5))
 				endurance = max(0,endurance-rand(10,20))
@@ -383,6 +383,10 @@ proc/populate_seed_list()
 						source_turf.visible_message("\blue \The [display_name]'s flowers <font=[flower_colour]>changes colour</font>!")
 					else
 						source_turf.visible_message("\blue \The [display_name]'s flowers wither and fall off.")
+			if(12)
+				if(biolum && prob(degree*2))
+					biolum_colour = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
+					source_turf.visible_message("\blue \The [display_name]'s glow <font color='[biolum_colour]'>changes colour</font>!")
 	return
 
 //Mutates a specific trait/set of traits.
