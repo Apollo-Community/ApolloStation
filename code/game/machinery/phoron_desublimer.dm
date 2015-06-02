@@ -333,7 +333,16 @@ The process works like this:
 						T.update_icon()
 						user << "You put [shard] into the machine."
 			else
-				user << "There is already a shard in the machine."
+				var/obj/item/weapon/tongs/T = B
+				if( T.held )
+					user << "There is already a shard in the machine."
+				else
+					T.held = shard
+					T.held.loc = T
+					shard = null
+					T.update_icon()
+					user << "You get [T.held] from the machine."
+
 		else if(istype(B, /obj/item/weapon/shard/supermatter))
 			if( !shard )
 				user.drop_item()
