@@ -195,14 +195,14 @@ The process works like this:
 								"Phoron" = 0.2,
 								"Osmium" = 0.1 ) // modifier for output amount
 
-	var/list/mat_peak = list(   "Steel" = 30,
-								"Silver" = 70,
-								"Uranium" = 110,
-								"Gold" = 150,
-								"Platinum" = 190,
-								"Diamonds" = 230,
-								"Phoron" = 270,
-								"Osmium" = 300 ) // Standard peak locations
+	var/list/mat_peak = list(   "Steel" = rand(1, 300),
+								"Silver" = rand(1, 300),
+								"Uranium" = rand(1, 300),
+								"Gold" = rand(1, 300),
+								"Platinum" = rand(1, 300),
+								"Diamonds" = rand(1, 300),
+								"Phoron" = rand(1, 300),
+								"Osmium" = rand(1, 300) ) // Standard peak locations
 
 	var/list/obj/item/stack/sheet/mat_obj = list( 	"Diamonds" = /obj/item/stack/sheet/mineral/diamond,
 													"Steel" = /obj/item/stack/sheet/metal,
@@ -220,15 +220,6 @@ The process works like this:
 		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
 		component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 		component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-
-
-		/*
-		for( var/i = 1, i <= output_peak.len, i++ )
-			var/peak = output_peak[i]
-			peak += -rand(0,1)*rand(1,3) // adding a bit of randomness to the process
-			output_peak[i] = peak
-
-		*/
 
 	process()
 		..()
