@@ -245,6 +245,28 @@ var/global/datum/shuttle_controller/shuttle_controller
 	MS.warmup_time = 0
 	shuttles["Mercenary"] = MS
 
+// Valen's shuttle - same layout as nuke and goes to mostly same locations
+	var/datum/shuttle/multi_shuttle/VALS = new/datum/shuttle/multi_shuttle()
+	VALS.origin = locate(/area/adminprep/valansship)
+
+	VALS.destinations = list(
+		"Northwest of the station" = locate(/area/syndicate_station/northwest),
+		"North of the station" = locate(/area/syndicate_station/north),
+		"Northeast of the station" = locate(/area/syndicate_station/northeast),
+		"Southwest of the station" = locate(/area/syndicate_station/southwest),
+		"South of the station" = locate(/area/syndicate_station/south),
+		"Southeast of the station" = locate(/area/syndicate_station/southeast),
+		"Telecomms Satellite" = locate(/area/syndicate_station/commssat),
+		"Mining Asteroid" = locate(/area/syndicate_station/mining),
+		)
+
+	VALS.announcer = "NSV Icarus"
+	VALS.arrival_message = "Attention, Apollo, you have a large signature approaching the station - looks unarmed to surface scans. We're too far out to intercept - brace for visitors."
+	VALS.departure_message = "Your visitors are on their way out of the system, Apollo, burning delta-v like it's nothing. Good riddance."
+	VALS.interim = locate(/area/syndicate_station/transit)
+
+	VALS.warmup_time = 0
+	shuttles["Valans"] = VALS
 
 //This is called by gameticker after all the machines and radio frequencies have been properly initialized
 /datum/shuttle_controller/proc/setup_shuttle_docks()

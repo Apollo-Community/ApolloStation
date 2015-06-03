@@ -38,6 +38,7 @@
 	// Not all of them require checking, see below
 	if(check_rights(R_ADMIN|R_MOD))
 		A.attack_ai(src)
+		log_misc("[src.name] has opened [A.name]'s interface ([A.x],[A.y],[A.z])")
 	else
 		A.attack_ghost(src)
 
