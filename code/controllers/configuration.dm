@@ -155,6 +155,7 @@
 	var/main_irc = ""
 	var/admin_irc = ""
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
+	var/git_commit_id = ""
 	var/use_lib_nudge = 0 //Use the C library nudge instead of the python nudge.
 	var/use_overmap = 1
 
@@ -781,3 +782,6 @@
 			config.python_path = "/usr/bin/env python2"
 		else //probably windows, if not this should work anyway
 			config.python_path = "python"
+
+	// Grab the id of the latest commit in the master branch
+	config.git_commit_id = file2text(".git/refs/heads/master")

@@ -860,6 +860,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 			else
 				stat("MasterController:\t","ERROR")
 
+			stat("Commit:\t", "#[config.git_commit_id]")
+
 	if(listed_turf && client)
 		if(!TurfAdjacent(listed_turf))
 			listed_turf = null
