@@ -39,3 +39,5 @@
 	var/update_slimes = 1
 	var/silent = null 		// Can't talk. Value goes down every life proc.
 	var/mob_size            // Used by lockers.
+
+	var/sound/jukebox_sound = null

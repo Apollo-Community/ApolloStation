@@ -17,7 +17,9 @@ datum/track/New(var/title_name, var/audio)
 	density = 1
 	power_channel = EQUIP
 
-	var/playing = 0
+	var/playing = 2
+
+	var/stop_ticks = 0
 
 	var/datum/track/current_track
 	var/list/datum/track/tracks = list(
@@ -211,30 +213,49 @@ datum/track/New(var/title_name, var/audio)
 	return ..()
 
 /obj/machinery/media/jukebox/proc/StopPlaying()
-	var/area/main_area = get_area(src)
-	// Always kill the current sound
-	for(var/area/related_area in main_area.related)
-		for(var/mob/living/M in mobs_in_area(related_area))
-			M << sound(null, channel = 1)
-		related_area.forced_ambience = null
+	for(var/mob/living/M in living_mob_list)
+		if(M.mind && M.jukebox_sound && get_dist(M, src) < 30 && M.z == src.z)	//Shouldn't be able to travel 15 squares in < 2 seconds.
+			M << sound(null, channel = 50)
+			M.jukebox_sound = null
+
 	playing = 0
 	update_icon()
 
-
 /obj/machinery/media/jukebox/proc/StartPlaying()
-	StopPlaying()
+	StopPlaying()	// Stops Playing the sound, process() will begin the song.
+
 	if(!current_track)
 		return
 
-	var/area/main_area = get_area(src)
-	for(var/area/related_area in main_area.related)
-		related_area.forced_ambience = sound(current_track.sound, channel = 1, repeat = 1, volume = 25)
-		for(var/mob/living/M in mobs_in_area(related_area))
-			if(M.mind)
-				related_area.play_ambience(M)
-
 	playing = 1
+	stop_ticks = 0
+
 	update_icon()
+
+/obj/machinery/media/jukebox/process()
+	switch(playing)
+		if(2)	return
+		if(0)
+			stop_ticks++
+			if(stop_ticks > 2)
+				playing = 2		// Caps checking for stopped music at 2 checks.
+
+	for(var/mob/living/M in living_mob_list)
+		if(get_dist(M,src) <=15 && M.z == src.z)	// Only same z-level
+			if(playing)			//Plays the song to people within range while the song is active.
+				if(!M.jukebox_sound)
+					M.jukebox_sound = sound(current_track.sound, channel = 50, repeat = 1, volume = 35 - 3*(get_dist(src,M)-1))
+					M.jukebox_sound.status = SOUND_UPDATE
+				else
+					M.jukebox_sound.volume = 35 - 3*(get_dist(src,M)-1)
+				M << M.jukebox_sound
+		else
+			if(M.jukebox_sound && get_dist(M,src) < 30)	//Support for multiple jukeboxes
+				M << sound(null, channel = 50)
+				M.jukebox_sound = null
+
+
+
 
 /obj/machinery/media/jukebox/mixer
 	name = "record mixer"
