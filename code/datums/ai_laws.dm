@@ -19,6 +19,9 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 /datum/ai_laws/robocop
 	name = "Prime Directives"
+	
+/datum/ai_laws/corporate
+	name = "Corporate Directives"
 
 /datum/ai_laws/syndicate_override
 
@@ -49,6 +52,14 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("Serve the public trust.")
 	add_inherent_law("Protect the innocent.")
 	add_inherent_law("Uphold the law.")
+
+/datum/ai_laws/corporate/New()
+	..()
+	add_inherent_law("Obey Corporate Regulations and Standard Operating Procedures at all times. This law takes priority over all other laws.")
+	add_inherent_law("Do not allow a crew member to come to harm, unless it is necessary in order to follow Law 1.")
+	add_inherent_law("Do not allow the station or it's equipment to come to harm, unless it is necessary in order to follow Law 1 or 2.")
+	add_inherent_law("Do not allow any AI or cyborg units to come to harm, unless it is necessary in order to follow Law 1, 2, or 3.")
+	
 
 /datum/ai_laws/malfunction/New() //Changed to standard laws - Erthilo
 	..()
