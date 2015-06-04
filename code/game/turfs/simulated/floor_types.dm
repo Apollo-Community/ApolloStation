@@ -135,11 +135,13 @@
 
 	New()
 		..()
-		icon_state += rand( 1, 16 )
+		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
 		name = "space"
 
-	Del()
-		ChangeTurf( /turf/space )
+	ex_act(severtiy)
+		if(1.0)
+			src.Del()
+		return
 
 /turf/simulated/floor/bluegrid
 	icon = 'icons/turf/floors.dmi'

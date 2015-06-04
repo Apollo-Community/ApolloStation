@@ -52,12 +52,15 @@ var/global/list/map_sectors = list()
 	name = "NSS Apollo"
 	mapx = STATION_X
 	mapy = STATION_Y
+	obj_type = /obj/effect/map/sector/nssapollo
 
 /obj/effect/mapinfo/sector/ace
 	name = "A.C.E."
+	obj_type = /obj/effect/map/sector/ace
 
 /obj/effect/mapinfo/sector/engipost
 	name = "Engineering Outpost"
+	obj_type = /obj/effect/map/sector/engipost
 
 /obj/effect/mapinfo/sector/tcomm_old
 	name = "Abandoned Satellite"
@@ -72,7 +75,7 @@ var/global/list/map_sectors = list()
 
 /obj/effect/map
 	name = "map object"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/effects/sectors.dmi'
 	icon_state = "sheet-plasteel"
 	var/map_z = 0
 	var/area/shuttle/shuttle_landing
@@ -135,6 +138,15 @@ var/global/list/map_sectors = list()
 	anchored = 1
 
 //Space stragglers go here
+
+/obj/effect/map/sector/nssapollo
+	icon_state = "NSS Apollo"
+
+/obj/effect/map/sector/ace
+	icon_state = "ACE"
+
+/obj/effect/map/sector/engipost
+	icon_state = "Engi Outpost"
 
 /obj/effect/map/sector/temporary
 	name = "Deep Space"
