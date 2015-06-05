@@ -1046,36 +1046,40 @@ var/list/ghostteleportlocs = list()
 	icon_state = "bar"
 	environment = QUARRY
 
-/area/crew_quarters/commodationhall
-	name = "\improper Commodation Hall"
+/area/basement/civilian/hallway
+	name = "\improper Civilian Basement Hallway"
 	icon_state = "bar"
 
-/area/crew_quarters/basement_breaker
-	name = "\improper Basement Breaker Room"
+/area/basement/civilian/breaker
+	name = "\improper Civlian Basement Breaker"
 	icon_state = "bar"
 
-/area/crew_quarters/dancefloor
+/area/basement/civilian/maintenance
+	name = "\improper Civlian Basement Maintenance"
+	icon_state = "bar"
+
+/area/basement/civilian/dancefloor
 	name = "\improper Dance Floor"
 	icon_state = "bar"
-	environment = PARKING_LOT
+	environment = QUARRY
 
-/area/crew_quarters/theatre
+/area/basement/civilian/theatre
 	name = "\improper Theatre"
 	icon_state = "Theatre"
 	music = list( 'sound/ambience/ambitheatre1.ogg' )
 	environment = AUDITORIUM
 
-/area/crew_quarters/theatre/backstage
+/area/basement/civilian/theatre/backstage
 	name = "\improper Theatre Back Stage"
 	icon_state = "Theatre"
 	environment = HALLWAY
 
-/area/crew_quarters/theatre/changingroom
+/area/basement/civilian/theatre/changingroom
 	name = "\improper Theatre Changing Room"
 	icon_state = "Theatre"
 	environment = QUARRY
 
-/area/crew_quarters/theatre/office
+/area/basement/civilian/theatre/office
 	name = "\improper Entertainer's Office"
 	icon_state = "Theatre"
 	environment = QUARRY
