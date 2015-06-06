@@ -323,13 +323,11 @@
 
 	if(href_list["write"])
 		var/id = href_list["write"]
-		var/t =  sanitize(input("Enter what you want to write:", "Write", null, null) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
+		var/t = sanitize(input("Enter what you want to write:", "Write", null, null) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
 		var/textlimit = MAX_PAPER_MESSAGE_LEN - length(info)
 		if(textlimit <= 0)
 			usr << "<span class='info'>You're trying to find a free place on paper, but can't!</span>"
 			return
-
-		var/t =  strip_html_simple(input("Enter what you want to write:", "Write", null, null) as message, textlimit)
 
 		if(!t)
 			return
@@ -356,6 +354,7 @@
 				message_admins("PAPER: [usr] ([usr.ckey]) tried to use forbidden word in [src]: [bad].")
 				return
 */
+		var last_fields_value = fields
 		//t = html_encode(t)
 
 		t = replacetext(t, "\n", "<BR>")

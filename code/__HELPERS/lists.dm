@@ -585,9 +585,6 @@ datum/proc/dd_SortValue()
 /obj/machinery/camera/dd_SortValue()
 	return "[c_tag]"
 
-/datum/alarm/dd_SortValue()
-	return "[sanitize_old(last_name)]"
-
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.
 /proc/init_subtypes(prototype, list/L)
