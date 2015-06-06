@@ -82,7 +82,7 @@
 	id = "podarmor_com"
 	build_type = MECHFAB | PODFAB
 	req_tech = list("materials" = 1)
-	build_path = /obj/item/pod_parts/armor
+	build_path = /obj/item/pod_parts/armor/command
 	category = list("Pod Armor")
 	materials = list("metal"=15000,"glass"=5000,"phoron"=10000)
 

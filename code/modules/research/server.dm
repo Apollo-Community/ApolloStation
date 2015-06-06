@@ -354,17 +354,23 @@
 	else
 		SetLuminosity( 0 )
 
-/obj/machinery/r_n_d/server/robotics
-	name = "Robotics R&D Server"
-	id_with_upload_string = "1;2"
-	id_with_download_string = "1;2"
-	server_id = 2
-	l_color = COMPUTER_BLUE
-
-
 /obj/machinery/r_n_d/server/core
 	name = "Core R&D Server"
 	id_with_upload_string = "1"
 	id_with_download_string = "1"
 	server_id = 1
+	l_color = COMPUTER_BLUE
+
+/obj/machinery/r_n_d/server/robotics
+	name = "Robotics R&D Server"
+	id_with_upload_string = "1;2"
+	id_with_download_string = "1;2;3"
+	server_id = 2
+	l_color = COMPUTER_BLUE
+
+/obj/machinery/r_n_d/server/podbay
+	name = "Podbay R&D Server"
+	id_with_upload_string = "1;3"
+	id_with_download_string = "1;2;3"
+	server_id = 3
 	l_color = COMPUTER_BLUE

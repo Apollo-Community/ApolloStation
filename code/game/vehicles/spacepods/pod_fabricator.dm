@@ -186,11 +186,12 @@
 	src.desc = initial(src.desc)
 
 	if(being_built)
-		var/obj/item/I = new D.build_path
-		var/O = D.locked
-		if(O)
+		var/obj/item/I = new being_built.build_path
+
+		if( being_built.locked )
 			var/obj/item/weapon/storage/lockbox/L = new/obj/item/weapon/storage/lockbox(exit)
 			L.name += " ([I.name])"
+
 		I.Move(exit)
 		src.visible_message("\icon[src] <b>[src]</b> beeps, \"The following has been completed: [src.being_built] is built\".")
 		src.being_built = null
