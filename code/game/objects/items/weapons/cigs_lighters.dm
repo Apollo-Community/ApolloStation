@@ -203,6 +203,57 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	processing_objects.Remove(src)
 	del(src)
 
+////////////////
+// CIGARETTES //
+////////////////
+
+/obj/item/clothing/mask/cigarette/lucky7
+	name = "Lucky Sevens cigarette"
+	desc = "Contrary to popular belief, there are many more than seven flavors of Lucky Sevens cigarettes. Safety not gaurenteed."
+	icon_state = "l7off"
+	icon_on = "l7on"  //Note - these are in masks.dmi not in cigarette.dmi
+	icon_off = "l7off"
+	type_butt = /obj/item/weapon/cigbutt/lucky7
+	var/list/flavors = list( "holywater",
+							 "amutationtoxin",
+							 "inaprovaline",
+							 "space_drugs",
+							 "serotrotium",
+							 "mercury",
+							 "lithium",
+							 "radium",
+							 "ryetalyn",
+							 "oxycodone",
+							 "sterilizine",
+							 "cryptobiolin",
+							 "dermaline",
+							 "dexalinp",
+							 "tricordrazine",
+							 "anti_toxin",
+							 "adminordrazine",
+							 "impedrezene",
+							 "arithrazine",
+							 "imidazoline",
+							 "peridaxon",
+							 "bicaridine",
+							 "hyperzine",
+							 "nanites",
+							 "ethylredoxrazine",
+							 "phoron",
+							 "lexorin",
+							 "slimejelly",
+							 "zombiepowder",
+							 "mindbreaker",
+							 "plantbgone",
+							 "chloralhydrate",
+							 "potassium_chlorophoride",
+							 "pacid" )
+
+/obj/item/clothing/mask/cigarette/lucky7/New()
+	..()
+
+	src.reagents.add_reagent( pick( flavors ), chem_volume )
+
 ////////////
 // CIGARS //
 ////////////
@@ -241,6 +292,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigbutt"
 	w_class = 1
 	throwforce = 1
+
+/obj/item/weapon/cigbutt/lucky7
+	icon_state = "l7butt"
 
 /obj/item/weapon/cigbutt/New()
 	..()

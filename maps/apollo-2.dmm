@@ -1662,7 +1662,7 @@
 "FX" = (/turf/unsimulated/floor{icon_state = "redbluefull"; dir = 8},/area/tdome)
 "FY" = (/obj/structure/window/reinforced,/turf/unsimulated/floor{icon_state = "redbluefull"; dir = 8},/area/tdome)
 "FZ" = (/obj/structure/window/reinforced{dir = 4},/turf/unsimulated/floor{icon_state = "redbluefull"; dir = 8},/area/tdome)
-"Ga" = (/obj/structure/table/woodentable,/obj/item/weapon/storage/fancy/cigar,/turf/unsimulated/floor{dir = 9; icon_state = "carpetside"},/area/tdome)
+"Ga" = (/obj/structure/table/woodentable,/obj/item/weapon/storage/fancy/cigarettes/cigar,/turf/unsimulated/floor{dir = 9; icon_state = "carpetside"},/area/tdome)
 "Gb" = (/obj/structure/stool/bed/chair/couch/left,/turf/unsimulated/floor{dir = 1; icon_state = "carpetside"},/area/tdome)
 "Gc" = (/obj/structure/stool/bed/chair/couch/middle,/turf/unsimulated/floor{dir = 1; icon_state = "carpetside"},/area/tdome)
 "Gd" = (/obj/structure/stool/bed/chair/couch/right,/turf/unsimulated/floor{dir = 1; icon_state = "carpetside"},/area/tdome)

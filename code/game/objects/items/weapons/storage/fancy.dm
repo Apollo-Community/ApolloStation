@@ -27,7 +27,7 @@
 /obj/item/weapon/storage/fancy/examine(mob/user)
 	if(!..(user, 1))
 		return
-	
+
 	if(contents.len <= 0)
 		user << "There are no [src.icon_type]s left in the box."
 	else if(contents.len == 1)
@@ -134,6 +134,7 @@
 	throwforce = 2
 	slot_flags = SLOT_BELT
 	storage_slots = 6
+	var/cig_type = /obj/item/clothing/mask/cigarette
 	can_hold = list("/obj/item/clothing/mask/cigarette")
 	icon_type = "cigarette"
 
@@ -141,7 +142,7 @@
 	..()
 	flags |= NOREACT
 	for(var/i = 1 to storage_slots)
-		new /obj/item/clothing/mask/cigarette(src)
+		new cig_type(src)
 	create_reagents(15 * storage_slots)//so people can inject cigarettes without opening a packet, now with being able to inject the whole one
 
 /obj/item/weapon/storage/fancy/cigarettes/Del()
@@ -169,7 +170,7 @@
 		user.equip_to_slot_if_possible(W, slot_wear_mask)
 		reagents.maximum_volume = 15 * contents.len
 		contents.len--
-		user << "<span class='notice'>You take a cigarette out of the pack.</span>"
+		user << "<span class='notice'>You take a [W] out of the pack.</span>"
 		update_icon()
 	else
 		..()
@@ -186,55 +187,19 @@
 	storage_slots = 7
 	icon_state = "L7packet"
 	item_state = "L7packet"
+	cig_type = /obj/item/clothing/mask/cigarette/lucky7
 
-/obj/item/weapon/storage/fancy/cigar
+/obj/item/weapon/storage/fancy/cigarettes/cigar
 	name = "cigar case"
 	desc = "A case for holding your cigars when you are not smoking them."
 	icon_state = "cigarcase"
 	item_state = "cigarcase"
 	icon = 'icons/obj/cigarettes.dmi'
-	w_class = 1
-	throwforce = 2
 	slot_flags = SLOT_BELT
 	storage_slots = 7
+	cig_type = /obj/item/clothing/mask/cigarette/cigar
 	can_hold = list("/obj/item/clothing/mask/cigarette/cigar")
 	icon_type = "cigar"
-
-/obj/item/weapon/storage/fancy/cigar/New()
-	..()
-	flags |= NOREACT
-	for(var/i = 1 to storage_slots)
-		new /obj/item/clothing/mask/cigarette/cigar(src)
-	create_reagents(15 * storage_slots)
-
-/obj/item/weapon/storage/fancy/cigar/Del()
-	del(reagents)
-	..()
-
-/obj/item/weapon/storage/fancy/cigar/update_icon()
-	icon_state = "[initial(icon_state)][contents.len]"
-	return
-
-/obj/item/weapon/storage/fancy/cigar/remove_from_storage(obj/item/W as obj, atom/new_location)
-		var/obj/item/clothing/mask/cigarette/cigar/C = W
-		if(!istype(C)) return
-		reagents.trans_to(C, (reagents.total_volume/contents.len))
-		..()
-
-/obj/item/weapon/storage/fancy/cigar/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if(!istype(M, /mob))
-		return
-
-	if(M == user && user.zone_sel.selecting == "mouth" && contents.len > 0 && !user.wear_mask)
-		var/obj/item/clothing/mask/cigarette/cigar/W = new /obj/item/clothing/mask/cigarette/cigar(user)
-		reagents.trans_to(W, (reagents.total_volume/contents.len))
-		user.equip_to_slot_if_possible(W, slot_wear_mask)
-		reagents.maximum_volume = 15 * contents.len
-		contents.len--
-		user << "<span class='notice'>You take a cigar out of the case.</span>"
-		update_icon()
-	else
-		..()
 
 /*
  * Vial Box
