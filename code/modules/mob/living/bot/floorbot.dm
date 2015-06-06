@@ -254,7 +254,7 @@
 		visible_message("<span class='notice'>[src] begins to make tiles.</span>")
 		repairing = 1
 		update_icons()
-		if(do_after(50))
+		if(do_after(src, 50))
 			if(M)
 				M.use(1)
 				addTiles(4)
