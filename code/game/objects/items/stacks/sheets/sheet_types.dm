@@ -35,6 +35,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("rack parts", /obj/item/weapon/table_parts/rack), \
 	new/datum/stack_recipe("metal baseball bat", /obj/item/weapon/baseballbat/metal, 10, time = 20, one_per_turf = 0, on_floor = 1), \
 	new/datum/stack_recipe("closet", /obj/structure/closet, 2, time = 15, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("filing cabinet", /obj/structure/filingcabinet, 2, time = 15, one_per_turf = 1, on_floor = 1), \
 	null, \
 	new/datum/stack_recipe("canister", /obj/machinery/portable_atmospherics/canister, 10, time = 15, one_per_turf = 1, on_floor = 1), \
 	null, \
