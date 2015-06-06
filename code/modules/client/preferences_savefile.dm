@@ -184,7 +184,7 @@
 
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
-	real_name		= reject_bad_name(real_name)
+	real_name		= sanitizeName(real_name)
 
 	if(isnull(species) || !(species in playable_species))
 		species = "Human"

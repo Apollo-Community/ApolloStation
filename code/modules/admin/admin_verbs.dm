@@ -653,7 +653,7 @@ var/list/admin_verbs_mentor = list(
 	set name = "Make Sound"
 	set desc = "Display a message to everyone who can hear the target"
 	if(O)
-		var/message = input("What do you want the message to be?", "Make Sound") as text|null
+		var/message = sanitize(input("What do you want the message to be?", "Make Sound") as text|null)
 		if(!message)
 			return
 		for (var/mob/V in hearers(O))
@@ -742,7 +742,7 @@ var/list/admin_verbs_mentor = list(
 	set category = "Admin"
 
 	if(holder)
-		var/new_name = trim_strip_input(src, "Enter new mob name. Leave blank or as is to cancel.", "Enter new AI Name", M.name)
+		var/new_name = sanitizeSafe(input(src, "Enter new name. Leave blank or as is to cancel.", "Enter new silicon name", M.real_name))
 		if(new_name && new_name != M.name)
 			admin_log_and_message_admins("has renamed '[M.name]' to '[new_name]'")
 			M.fully_replace_character_name( M.name, new_name )
