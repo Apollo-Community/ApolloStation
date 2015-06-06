@@ -268,7 +268,7 @@
 			var/raw_choice = input(usr, "Please enter a new name.")  as text|null
 			if(!raw_choice)
 				return 0
-			voice_holder.voice = sanitize(copytext(raw_choice,1,MAX_MESSAGE_LEN))
+			voice_holder.voice = sanitize(raw_choice)
 			usr << "<font color='blue'>You are now mimicking <B>[voice_holder.voice]</B>.</font>"
 	return 1
 

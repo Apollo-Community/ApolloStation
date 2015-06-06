@@ -4,7 +4,7 @@
 	set hidden = 1
 	if(!check_rights(R_ADMIN) || R_MOD & src.holder.rights)		return
 
-	msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
+	msg = sanitize(msg)
 	if(!msg)	return
 
 	log_adminsay("ADMIN : [key_name(src)] : [msg]")
@@ -23,7 +23,7 @@
 
 	if(!check_rights(R_ADMIN|R_MOD))	return
 
-	msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
+	msg = sanitize(msg)
 	log_adminsay("MOD: [key_name(src)] : [msg]")
 	STUI.staff.Add("\[[time_stamp()]] <font color='#b82e00'>MOD: [key_name(src)] : [msg]</font><br>")
 	STUI.processing |= 3
