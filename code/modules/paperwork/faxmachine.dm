@@ -15,9 +15,26 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 	idle_power_usage = 30
 	active_power_usage = 200
 
+	New()
+		..()
+		component_parts = list()
+		component_parts += new /obj/item/weapon/circuitboard/fax_machine(src)
+		component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+		component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
+		component_parts += new /obj/item/weapon/stock_parts/subspace/transmitter(src)
+		component_parts += new /obj/item/weapon/stock_parts/subspace/amplifier(src)
+		RefreshParts()
+
+	RefreshParts()	// If you add better parts, you can spam the admins as a reward. The shortest the delay can be is 12 seconds.
+		for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+			senddelay -= M.rating*240
+		for(var/obj/item/weapon/stock_parts/scanning_module/M in component_parts)
+			senddelay -= M.rating*240
+
 	var/obj/item/weapon/card/id/scan = null // identification
 	var/authenticated = 0
 	var/sendcooldown = 0 // to avoid spamming fax messages
+	var/senddelay = 1800 // how long before you can send another message. Defaults to 3 minutes
 
 	var/department = "Unknown" // our department
 
@@ -205,7 +222,7 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 			message_admins(sender, "SOL GOVERNMENT FAX", rcvdcopy, "CentcommFaxReply", "#1F66A0")
 			//message_admins(sender, "SOL GOVERNMENT FAX", rcvdcopy, "SolGovFaxReply", "#1F66A0")
 
-	sendcooldown = 1800
+	sendcooldown = senddelay
 	sleep(50)
 	visible_message("[src] beeps, \"Message transmitted successfully.\"")
 
