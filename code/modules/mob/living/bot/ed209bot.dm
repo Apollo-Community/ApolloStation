@@ -109,7 +109,7 @@
 					icon_state = "ed209_legs"
 
 		if(2)
-			if(istype(W, /obj/item/clothing/suit/storage/vest))
+			if(istype(W, /obj/item/clothing/suit/armor/vest))
 				user.drop_item()
 				del(W)
 				build_step++
