@@ -10,17 +10,6 @@
 /obj/item/weapon/hand_labeler/attack()
 	return
 
-/obj/item/weapon/hand_labeler/attackby(obj/item/I as obj, mob/user as mob)
-	if (istype(I, /obj/item/weapon/paper))
-		if (labels_left < 30)
-			labels_left = min(labels_left+10, 30)
-			user << "<span class='notice'>You add some labels to the [src.name].</span>"
-			del(I)
-		else
-			user << "<span class='notice'>The [src] is full! You can't add any more labels to it.</span>"
-
-	return
-
 /obj/item/weapon/hand_labeler/afterattack(atom/A, mob/user as mob, proximity)
 	if(!proximity)
 		return

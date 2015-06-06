@@ -235,9 +235,7 @@
 		t = replacetext(t, "\[/grid\]", "</td></tr></table>")
 		t = replacetext(t, "\[row\]", "</td><tr>")
 		t = replacetext(t, "\[cell\]", "<td>")
-		t = replacetext(t, "\[time]", "<font face=\"[signfont]\"><i>[worldtime2text()]</i></font>")	// Adds ability to add a timestamp for added document security.
 		t = replacetext(t, "\[logo\]", "<img src = ntlogo.png>")
-		t = replacetext(t, "\[antilogo\]", "<img src = antilogo.png>")	// Adds alternative anti-NT logo.
 
 		t = "<font face=\"[deffont]\" color=[P ? P.colour : "black"]>[t]</font>"
 	else // If it is a crayon, and he still tries to use these, make them empty!

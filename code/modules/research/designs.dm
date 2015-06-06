@@ -304,17 +304,6 @@ datum/design/circuit/aifixer
 	req_tech = list("programming" = 3, "biotech" = 2)
 	build_path = /obj/item/weapon/circuitboard/aifixer
 
-datum/design/circuit/fax_machine
-	name = "fax machine"
-	id = "fax_machine"
-	req_tech = list("programming" = 2, "bluespace" = 2)
-	build_path = /obj/item/weapon/circuitboard/fax_machine
-
-datum/design/circuit/photocopier
-	name = "photocopier"
-	id = "photocopier"
-	build_path = /obj/item/weapon/circuitboard/photocopier
-
 ///////////////////////////////////
 /////////Shield Generators/////////
 ///////////////////////////////////

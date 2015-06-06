@@ -3,34 +3,16 @@
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bigscanner"
 	var/insert_anim = "bigscanner1"
-	var/opened = 0
 	anchored = 1
 	density = 1
 	use_power = 1
 	idle_power_usage = 30
 	active_power_usage = 200
-
-	New()
-		..()
-		component_parts = list()
-		component_parts += new /obj/item/weapon/circuitboard/photocopier(src)
-		component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-		component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
-		component_parts += new /obj/item/weapon/light/tube(src)
-		RefreshParts()
-
-	RefreshParts()
-		for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)	// Up to 30 copies at once!
-			maxcopies += M.rating*10
-		for(var/obj/item/weapon/stock_parts/scanning_module/M in component_parts)	// Instantaneous Copying!
-			copydelay -= M.rating*10
-
 	power_channel = EQUIP
 	var/obj/item/copyitem = null	//what's in the copier!
 	var/copies = 1	//how many copies to print!
 	var/toner = 30 //how much toner is left! woooooo~
-	var/copydelay = 30 // Can be sped up using better parts.
-	var/maxcopies = 0	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
+	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
 
 /obj/machinery/photocopier/attack_ai(mob/user as mob)
 	return attack_hand(user)
@@ -68,13 +50,13 @@
 
 			if (istype(copyitem, /obj/item/weapon/paper))
 				copy(copyitem)
-				sleep(copydelay)
+				sleep(15)
 			else if (istype(copyitem, /obj/item/weapon/photo))
 				photocopy(copyitem)
-				sleep(copydelay)
+				sleep(15)
 			else if (istype(copyitem, /obj/item/weapon/paper_bundle))
 				var/obj/item/weapon/paper_bundle/B = bundlecopy(copyitem)
-				sleep(copydelay*B.amount)
+				sleep(15*B.amount)
 			else
 				usr << "<span class='warning'>\The [copyitem] can't be copied by \the [src].</span>"
 				break
@@ -120,32 +102,6 @@
 		updateUsrDialog()
 
 /obj/machinery/photocopier/attackby(obj/item/O as obj, mob/user as mob)
-	if (istype(O, /obj/item/weapon/screwdriver))
-		if (!opened)
-			opened = 1
-			user << "You open the maintenance hatch of [src]."
-		else
-			opened = 0
-			user << "You close the maintenance hatch of [src]."
-		return
-	if (opened)
-		if(istype(O, /obj/item/weapon/crowbar))
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
-			for(var/obj/item/I in contents)
-				I.loc = src.loc
-			del(src)
-			return 1
-		else
-			user << "\red You can't load the [src.name] while its panel is opened."
-			return 1
-
 	if(istype(O, /obj/item/weapon/paper) || istype(O, /obj/item/weapon/photo) || istype(O, /obj/item/weapon/paper_bundle))
 		if(!copyitem)
 			user.drop_item()

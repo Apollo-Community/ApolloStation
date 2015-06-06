@@ -65,21 +65,16 @@
 	return
 
 
-/obj/item/weapon/paper_bin/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I, /obj/item/weapon/paper))
-		user.drop_item()
-		I.loc = src
-		user << "<span class='notice'>You put [I] in [src].</span>"
-		papers.Add(I)
-		amount++
+/obj/item/weapon/paper_bin/attackby(obj/item/weapon/paper/i as obj, mob/user as mob)
+	if(!istype(i))
 		return
-	else if(istype(I, /obj/item/weapon/wrench))
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		new /obj/item/stack/sheet/metal(loc)
-		user << "<span class='notice'>You disassembled the paper bin.</span>"
-		for (var/obj/item/weapon/paper/P in contents)
-			P.loc = loc
-		del(src)
+
+	user.drop_item()
+	i.loc = src
+	user << "<span class='notice'>You put [i] in [src].</span>"
+	papers.Add(i)
+	amount++
+
 
 /obj/item/weapon/paper_bin/examine(mob/user)
 	if(get_dist(src, user) <= 1)
