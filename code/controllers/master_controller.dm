@@ -113,9 +113,11 @@ datum/controller/game_controller/proc/setup_objects()
 	asteroid_ore_map.populate_distribution_map()
 
 	//Shitty hack to fix mining turf overlays, for some reason New() is not being called.
+/*
 	for(var/turf/simulated/floor/plating/airless/asteroid/T in world)
 		T.updateMineralOverlays()
 		T.name = "asteroid"
+*/
 
 	//Set up spawn points.
 	populate_spawn_points()
@@ -288,7 +290,6 @@ datum/controller/game_controller/proc/announcements()
 		world << pick(	"<font color='green'><big><img src=\ref['icons/misc/news.png']></img></big><b> Come join our <a href='http://steamcommunity.com/groups/apcom'>steam group</a> for event notifications and for playing games outside of a space station!</font><br></b>",
 						"<font color='green'><big><img src=\ref['icons/misc/news.png']></img></big><b> Make sure to check out our <a href='http://apollo-community.org/'>forums</a>. Many people post many important things there!<br></font></b>",
 						"<font color='green'><big><img src=\ref['icons/misc/news.png']></img></big><b> Be sure check out our <a href='https://github.com/stuicey/AS_Project/'>source repository</a>. We're always welcoming new developers, and we'd love you have you on board!<br></font></b>",
-						"<font color='green'><big><img src=\ref['icons/misc/news.png']></img></big><b> Got a little spare change jingling in your pockets? We'd love it if you <a href='http://apollo-community.org/viewtopic.php?f=29&t=34'>tossed it our way</a>!<br></font></b>",
 						"<font color='green'><big><img src=\ref['icons/misc/news.png']></img></big><b> Feel free to come and hop on our <a href='http://apollo-community.org/viewforum.php?f=32'>teamspeak</a> and chat with us!<br></font></b>",
 						"<font color='green'><big><img src=\ref['icons/misc/news.png']></img></big><b> Make sure to read the <a href='http://apollo-community.org/viewtopic.php?f=4&t=6'>full rules</a>, otherwise you may get in trouble!<br></font></b>",
 						"<font color='green'><big><img src=\ref['icons/misc/news.png']></img></big><b> We have community meetings every Saturday at 4 PM EST in our <a href='http://apollo-community.org/viewforum.php?f=32'>teamspeak</a>. Got a problem? Bring it up there!<br></font></b>",
@@ -297,7 +298,7 @@ datum/controller/game_controller/proc/announcements()
 						"<font color='green'><big><img src=\ref['icons/misc/news.png']></img></big><b> Each week, we de-whitelist an alien race so you give them a test drive. This week's alien is: [unwhitelisted_alien]. Go ahead and give 'em a spin!<br></font></b>",
 						"<font color='green'><big><img src=\ref['icons/misc/news.png']></img></big><b> We've got an <a href='http://apollo-community.org/viewforum.php?f=42'>IRC channel</a> if you want to chat!<br></font></b>",
 						"<font color='green'><big><img src=\ref['icons/misc/news.png']></img></big><b> Nucleations and IPCs are always dewhitelisted!<br></font></b>",
-		)
+						)
 datum/controller/game_controller/proc/Recover()		//Mostly a placeholder for now.
 	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"
 	for(var/varname in master_controller.vars)

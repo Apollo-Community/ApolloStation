@@ -399,9 +399,13 @@
 	has_resources = 1
 
 /turf/simulated/floor/plating/airless/asteroid/New()
+	..()
 
-	if(prob(20))
-		overlay_detail = "asteroid[rand(0,9)]"
+	spawn(1)
+		updateMineralOverlays(0)
+		if(prob(20))
+			overlay_detail = "asteroid[rand(0,9)]"
+
 
 /turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
 	switch(severity)
