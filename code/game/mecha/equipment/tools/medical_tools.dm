@@ -236,6 +236,7 @@
 	name = "Cable Layer"
 	icon_state = "mecha_wire"
 	var/datum/event/event
+	var/severity = 0 // HACK: Fixes runtime error when it's trying to add that new onMove event
 	var/turf/old_turf
 	var/obj/structure/cable/last_piece
 	var/obj/item/stack/cable_coil/cable
