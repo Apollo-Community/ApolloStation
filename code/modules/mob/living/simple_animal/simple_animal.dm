@@ -7,6 +7,7 @@
 	var/icon_living = ""
 	var/icon_dead = ""
 	var/icon_gib = null	//We only try to show a gibbing animation if this exists.
+	var/datum/species/species = null // HACK: Fixes various runtime errors when trying to update icons for dead mobs.
 
 	var/list/speak = list()
 	var/speak_chance = 0
