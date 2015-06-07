@@ -1526,7 +1526,7 @@
 	bitesize = 12
 	filling_color = "#ADAC7F"
 
-	var/monkey_type = /mob/living/carbon/monkey
+	var/monkey_type = "Monkey"
 
 	New()
 		..()
@@ -1544,6 +1544,7 @@
 		if(wrapped)
 			Unwrap(user)
 
+	/*
 	On_Consume(var/mob/M)
 		M << "<span class = 'warning'>Something inside of you suddently expands!</span>"
 
@@ -1569,7 +1570,7 @@
 			else 		//someone is having a bad day
 				E.createwound(CUT, 30)
 				E.embed(surprise)
-		else if (ismonkey(M))
+		else if (issmall(M))
 			M.visible_message("<span class='danger'>[M] suddenly tears in half!</span>")
 			var/mob/living/carbon/monkey/ook = new monkey_type(M.loc)
 			ook.name = "malformed [ook.name]"
@@ -1577,11 +1578,13 @@
 			ook.add_blood(M)
 			M.gib()
 		..()
+	*/
 
 	proc/Expand()
 		for(var/mob/M in viewers(src,7))
 			M << "\red \The [src] expands!"
-		new monkey_type(src)
+		var/mob/living/carbon/human/H = new (src)
+		H.set_species(monkey_type)
 		del(src)
 
 	proc/Unwrap(mob/user as mob)
@@ -1599,26 +1602,29 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/farwacube
 	name = "farwa cube"
-	monkey_type = /mob/living/carbon/monkey/tajara
+	monkey_type = "Farwa"
+
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/farwacube
 	name = "farwa cube"
-	monkey_type =/mob/living/carbon/monkey/tajara
+	monkey_type = "Farwa"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/stokcube
 	name = "stok cube"
-	monkey_type = /mob/living/carbon/monkey/unathi
+	monkey_type = "Stok"
+
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/stokcube
 	name = "stok cube"
-	monkey_type =/mob/living/carbon/monkey/unathi
+	monkey_type = "Stok"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/neaeracube
 	name = "neaera cube"
-	monkey_type = /mob/living/carbon/monkey/skrell
+	monkey_type = "Neara"
+
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/neaeracube
 	name = "neaera cube"
-	monkey_type =/mob/living/carbon/monkey/skrell
+	monkey_type = "Neara"
 
 
 /obj/item/weapon/reagent_containers/food/snacks/spellburger

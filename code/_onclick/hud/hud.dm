@@ -235,7 +235,7 @@ datum/hud/New(mob/owner)
 
 	if(ishuman(mymob))
 		human_hud(ui_style, ui_color, ui_alpha, mymob) // Pass the player the UI style chosen in preferences
-	else if(ismonkey(mymob))
+	else if(issmall(mymob))
 		monkey_hud(ui_style)
 	else if(isbrain(mymob))
 		brain_hud(ui_style)
@@ -254,8 +254,14 @@ datum/hud/New(mob/owner)
 	set name = "F12"
 	set hidden = 1
 
-	if(hud_used)
-		if(ishuman(src))
+	if(!hud_used)
+		usr << "\red This mob type does not use a HUD."
+		return
+
+	if(!ishuman(src))
+		usr << "\red Inventory hiding is currently only supported for human mobs, sorry."
+		return
+
 			if(!client) return
 			if(client.view != world.view)
 				return
@@ -306,7 +312,41 @@ datum/hud/New(mob/owner)
 			hud_used.hidden_inventory_update()
 			hud_used.persistant_inventory_update()
 			update_action_buttons()
-		else
-			usr << "\red Inventory hiding is currently only supported for human mobs, sorry."
+
+//Similar to button_pressed_F12() but keeps zone_sel, gun_setting_icon, and healths.
+/mob/proc/toggle_zoom_hud()
+	if(!hud_used)
+		return
+	if(!ishuman(src))
+		return
+	if(!client)
+		return
+	if(client.view != world.view)
+		return
+
+	if(hud_used.hud_shown)
+		hud_used.hud_shown = 0
+		if(src.hud_used.adding)
+			src.client.screen -= src.hud_used.adding
+		if(src.hud_used.other)
+			src.client.screen -= src.hud_used.other
+		if(src.hud_used.hotkeybuttons)
+			src.client.screen -= src.hud_used.hotkeybuttons
+		if(src.hud_used.item_action_list)
+			src.client.screen -= src.hud_used.item_action_list
+		src.client.screen -= src.internals
 	else
-		usr << "\red This mob type does not use a HUD."
+		hud_used.hud_shown = 1
+		if(src.hud_used.adding)
+			src.client.screen += src.hud_used.adding
+		if(src.hud_used.other && src.hud_used.inventory_shown)
+			src.client.screen += src.hud_used.other
+		if(src.hud_used.hotkeybuttons && !src.hud_used.hotkey_ui_hidden)
+			src.client.screen += src.hud_used.hotkeybuttons
+		if(src.internals)
+			src.client.screen |= src.internals
+		src.hud_used.action_intent.screen_loc = ui_acti //Restore intent selection to the original position
+
+	hud_used.hidden_inventory_update()
+	hud_used.persistant_inventory_update()
+	update_action_buttons()

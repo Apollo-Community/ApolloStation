@@ -681,7 +681,7 @@ datum/mind
 						if (!where)
 							usr << "\red Spawning tome failed!"
 						else
-							H << "A tome, a message from your new master, appears in your [where]."
+		/*
 
 				if("amulet")
 					if (!ticker.mode.equip_cultist(current))
@@ -893,7 +893,7 @@ datum/mind
 						src = mobfinder.loc:mind
 						del(mobfinder)
 						current.radiation -= 50
-
+		*/
 		else if (href_list["silicon"])
 			current.hud_updateflag |= (1 << SPECIALROLE_HUD)
 			switch(href_list["silicon"])
@@ -1240,10 +1240,6 @@ datum/mind
 	..()
 	if(!mind.assigned_role)	mind.assigned_role = "Assistant"	//defualt
 
-//MONKEY
-/mob/living/carbon/monkey/mind_initialize()
-	..()
-
 //slime
 /mob/living/carbon/slime/mind_initialize()
 	..()
@@ -1296,10 +1292,3 @@ datum/mind
 	..()
 	mind.assigned_role = "Juggernaut"
 	mind.special_role = "Cultist"
-
-/mob/living/simple_animal/vox/armalis/mind_initialize()
-	..()
-	mind.assigned_role = "Armalis"
-	mind.special_role = "Vox Raider"
-
-
