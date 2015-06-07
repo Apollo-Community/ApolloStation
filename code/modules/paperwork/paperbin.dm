@@ -9,9 +9,13 @@
 	throw_range = 7
 	pressure_resistance = 10
 	layer = OBJ_LAYER - 0.1
-	var/amount = 30					//How much paper is in the bin.
+	var/amount = 0					//How much paper is in the bin.
 	var/list/papers = new/list()	//List of papers put in the bin for reference.
 
+/obj/item/weapon/paper_bin/initialize()
+	amount = 30
+	update_icon()
+	return
 
 /obj/item/weapon/paper_bin/MouseDrop(mob/user as mob)
 	if((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
@@ -79,6 +83,10 @@
 		user << "<span class='notice'>You disassembled the paper bin.</span>"
 		for (var/obj/item/weapon/paper/P in contents)
 			P.loc = loc
+			amount-=1
+		while (amount)
+			amount-=1
+			new /obj/item/weapon/paper(loc)
 		del(src)
 
 /obj/item/weapon/paper_bin/examine(mob/user)
