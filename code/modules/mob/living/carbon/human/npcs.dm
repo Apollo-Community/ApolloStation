@@ -17,4 +17,5 @@
 	spawn(1)
 		name = "Ed"
 		real_name = name
-		//w_uniform = new /obj/item/clothing/under/punpun(src)
+		w_uniform = new /obj/item/clothing/under/rank/cargotech(src)
+		head = new /obj/item/clothing/head/soft(src)
