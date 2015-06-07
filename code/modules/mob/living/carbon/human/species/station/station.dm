@@ -225,7 +225,6 @@
 	language = "Wryn Hivemind"
 	tail = "wryntail"
 	unarmed_types = list(/datum/unarmed_attack/punch/weak)
-	primitive = /mob/living/carbon/monkey/wryn
 
 	darksight = 3
 	slowdown = 1

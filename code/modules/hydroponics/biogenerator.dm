@@ -198,7 +198,7 @@
 		if("cashbag")
 			new/obj/item/weapon/storage/bag/cash(src.loc)
 		if("monkey")
-			new/mob/living/carbon/monkey(src.loc)
+			new/mob/living/carbon/human/monkey(src.loc)
 	processing = 0
 	menustat = "complete"
 	update_icon()

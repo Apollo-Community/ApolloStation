@@ -1860,7 +1860,7 @@
 "JN" = (/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/wizard_station)
 "JO" = (/obj/structure/flora/ausbushes/fullgrass,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/wizard_station)
 "JP" = (/obj/effect/decal/cleanable/blood,/turf/unsimulated/floor{icon_state = "freezerfloor"; dir = 2},/area/wizard_station)
-"JQ" = (/mob/living/carbon/monkey{name = "Murphey"},/turf/unsimulated/floor{icon_state = "freezerfloor"; dir = 2},/area/wizard_station)
+"JQ" = (/mob/living/carbon/human/monkey{name = "Murphey"},/turf/unsimulated/floor{icon_state = "freezerfloor"; dir = 2},/area/wizard_station)
 "JR" = (/turf/unsimulated/floor{icon_state = "freezerfloor"; dir = 2},/area/wizard_station)
 "JS" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/machinery/door/blast/regular{id = "skipjack"; name = "Skipjack Blast Shielding"},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
 "JT" = (/obj/machinery/atmospherics/pipe/simple/visible,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)

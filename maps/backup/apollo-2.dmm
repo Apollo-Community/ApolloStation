@@ -1866,7 +1866,7 @@
 "JT" = (/obj/machinery/atmospherics/pipe/simple/visible,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
 "JU" = (/obj/structure/window/basic{dir = 1},/obj/structure/table,/obj/machinery/recharger,/obj/item/robot_parts/chest,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
 "JV" = (/obj/structure/window/basic{dir = 1},/obj/structure/table,/obj/machinery/cell_charger,/obj/item/weed_extract,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"JW" = (/obj/structure/window/basic{dir = 1},/obj/structure/table,/obj/machinery/bot/floorbot,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"JW" = (/obj/structure/window/basic{dir = 1},/obj/structure/table,/mob/living/bot/floorbot,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
 "JX" = (/obj/structure/window/basic{dir = 1},/obj/structure/table,/obj/item/broken_device,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
 "JY" = (/obj/structure/table/reinforced,/obj/item/weapon/pickaxe,/obj/item/weapon/storage/firstaid/toxin,/obj/structure/window/basic{dir = 1},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
 "JZ" = (/obj/structure/table/reinforced,/obj/item/weapon/scalpel,/obj/item/stack/cable_coil,/obj/item/weapon/storage/firstaid/regular,/obj/structure/window/basic{dir = 1},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)

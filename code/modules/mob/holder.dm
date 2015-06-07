@@ -80,7 +80,6 @@
 	icon_state = "borer"
 	origin_tech = "biotech=6"
 
-
 /obj/item/weapon/holder/monkey
 	name = "monkey"
 	desc = "It's a monkey. Ook."
@@ -107,7 +106,6 @@
 	icon_state = "bunny"
 	origin_tech = null
 
-
 /obj/item/weapon/holder/bones2
 	name = "Bones"
 	desc = "That's Bones the cat. He's a laid back, brown stray cat. Meow."
@@ -127,4 +125,4 @@
 	desc = "It's a small robot bug with a microscopic camera and microphone."
 	icon_state = "drone"
 	icon = 'icons/apollo/objects.dmi'
-	origin_tech = "engineering=5 ill
+	origin_tech = "engineering=5 illegal=2"
