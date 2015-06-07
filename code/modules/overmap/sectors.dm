@@ -7,12 +7,12 @@ var/global/list/map_sectors = list()
 /hook/startup/proc/build_map()
 	if(!config.use_overmap)
 		return 1
-	testing("Building overmap...")
+	//testing("Building overmap...")
 	var/obj/effect/mapinfo/data
 	for(var/level in 1 to world.maxz)
 		data = locate("sector[level]")
 		if (data)
-			testing("Located sector \"[data.name]\" at [data.mapx],[data.mapy] corresponding to zlevel [level]")
+			//testing("Located sector \"[data.name]\" at [data.mapx],[data.mapy] corresponding to zlevel [level]")
 			map_sectors["[level]"] = new data.obj_type(data)
 
 	generate_sectors_paper() // Making the info for our landmarks paper
