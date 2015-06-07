@@ -83,6 +83,7 @@
 		user << "<span class='notice'>You disassembled the paper bin.</span>"
 		for (var/obj/item/weapon/paper/P in contents)
 			P.loc = loc
+			amount-=1
 		while (amount)
 			amount-=1
 			new /obj/item/weapon/paper(loc)
