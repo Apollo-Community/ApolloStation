@@ -209,7 +209,7 @@ datum/preferences
 
 		//Tail
 		if(current_species && (current_species.tail))
-			var/icon/temp = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[current_species.tail]_s")
+			var/icon/temp = new/icon("icon" = current_species.effect_icons, "icon_state" = "[current_species.tail]_s")
 			preview_icon.Blend(temp, ICON_OVERLAY)
 
 		// Skin color

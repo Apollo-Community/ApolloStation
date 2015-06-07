@@ -890,7 +890,7 @@ var/global/list/damage_icon_parts = list()
 
 	if(species.tail)
 		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space))
-			var/icon/tail_s = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[species.tail]_s")
+			var/icon/tail_s = new/icon("icon" = species.effect_icons, "icon_state" = "[species.tail]_s")
 			tail_s.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
 
 			overlays_standing[TAIL_LAYER]	= image(tail_s)
