@@ -11,3 +11,10 @@
 		name = "Pun Pun"
 		real_name = name
 		w_uniform = new /obj/item/clothing/under/punpun(src)
+
+/mob/living/carbon/human/monkey/ed/New()
+	..()
+	spawn(1)
+		name = "Ed"
+		real_name = name
+		//w_uniform = new /obj/item/clothing/under/punpun(src)
