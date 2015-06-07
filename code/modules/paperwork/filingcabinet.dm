@@ -46,6 +46,27 @@
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		anchored = !anchored
 		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
+	else if(istype(P, /obj/item/weapon/weldingtool)&&(!anchored))
+		var/obj/item/weapon/weldingtool/WT = P
+		if (WT.get_fuel() < 3)
+			user << "<span class='warning'>You need more welding fuel to complete this task.</span>"
+			return
+		user.visible_message("<span class='warning'>[user.name] welds [src].</span>", \
+							"You start welding the filing cabinet...", \
+							"You hear welding.")
+		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+		if(do_after(user, 30))
+			if(!src || !WT.remove_fuel(3, user)) return
+			new /obj/item/stack/sheet/metal(loc)
+			new /obj/item/stack/sheet/metal(loc)
+			user.visible_message(\
+				"<span class='warning'>[src] has been cut apart by [user.name] with the weldingtool.</span>",\
+				"<span class='notice'>You disassembled the filing cabinet.</span>",\
+				"You hear welding.")
+			for (var/obj/item/weapon/paper/I in contents)
+				I.loc = loc
+			del(src) // qdel
+			return
 	else
 		user << "<span class='notice'>You can't put [P] in [src]!</span>"
 
