@@ -29,39 +29,30 @@
 
 	if (smlevel<2)
 		l_color = "#808000"
-		color = "#808000"
 		luminosity = 1
 	else if (smlevel<3)
 		l_color = "#C08000"
-		color = "#C08000"
 		luminosity = 2
 	else if (smlevel<4)
 		l_color = "#DF6000"
-		color = "#DF6000"
 		luminosity = 2
 	else if (smlevel<5)
 		l_color = "#FF2000"
-		color = "#FF2000"
 		luminosity = 1
 	else if (smlevel<6)
 		l_color = "#C00040"
-		color = "#C00040"
 		luminosity = 1
 	else if (smlevel<7)
 		l_color = "#800080"
-		color = "#800080"
 		luminosity = 2
 	else if (smlevel<8)
 		l_color = "#4000C0"
-		color = "#4000C0"
 		luminosity = 1
 	else if (smlevel<9)
 		l_color = "#008080"
-		color = "#008080"
 		luminosity = 3
 	else if (smlevel>=9)
 		l_color = "#FFC0C0"
-		color = "#FFC0C0"
 		luminosity = 4
 
 	dir = CalcDir()
@@ -97,12 +88,13 @@
 			visible_message("\red <B>\The [src] explodes!</B>")
 			supermatter_delamination(src, smlevel)
 			return
-		visible_message("\red <B>\The [src] shatters!</B>")
-		playsound(loc, 'sound/effects/Glassbr2.ogg', 100, 1)
-		for(var/mob/living/l in range( src, 2 ))
-			var/rads = 15*smlevel
-			l.apply_effect(rads, IRRADIATE)
-		new /obj/item/weapon/shard/supermatter( src.loc, max(0.1, smlevel-1) )
+		else
+			visible_message("\red <B>\The [src] shatters!</B>")
+			playsound(loc, 'sound/effects/Glassbr2.ogg', 100, 1)
+			for(var/mob/living/l in range( src, 2 ))
+				var/rads = 15*smlevel
+				l.apply_effect(rads, IRRADIATE)
+			new /obj/item/weapon/shard/supermatter( src.loc, max(1, smlevel-1) )
 
 	processing_objects -= src
 	..()
@@ -112,7 +104,7 @@
 		return
 	if(smlevel == 0) // Hacky fix to get rid of divisions by zero, as well as depopulating crystals a bit.
 		del(src)
-	if(smlevel>=5 && prob(smlevel/10))
+	if(smlevel>=5 && prob(smlevel/50))
 		del(src)
 
 
@@ -152,7 +144,7 @@
 				if(crystalCount >= placeCount)
 					continue
 
-				var/obj/effect/supermatter_crystal/child = new /obj/effect/supermatter_crystal(newLoc, max(1, smlevel-rand(1,smlevel+1)))
+				var/obj/effect/supermatter_crystal/child = new /obj/effect/supermatter_crystal(newLoc, max(1, smlevel-1))
 				if( child )
 					child.delay = delay
 					child.endurance = endurance

@@ -104,8 +104,8 @@
 	exploded = 1
 	spawn(pull_time)
 		var/turf/epicenter = get_turf(src)
-		explosion(epicenter, max(explosion_power+(smlevel-1), 0), max((explosion_power+((smlevel-1)))*2.3, 1), max((explosion_power+((smlevel-1)))*3.4, 3), max((explosion_power+((smlevel-1)))*5, 5), 1)
-		supermatter_delamination( epicenter, min((explosion_power+(smlevel))*5, 128), 1, smlevel)
+		explosion(epicenter, max(explosion_power+smlevel, (explosion_power*4)-4), max((explosion_power*2)+(smlevel*2), (explosion_power*4)-2), explosion_power*4, (explosion_power*4)+(smlevel*3), 1)
+		supermatter_delamination( epicenter, (explosion_power*4)+(smlevel*2), 1, smlevel)
 		del src
 		return
 
@@ -479,7 +479,7 @@ proc/supermatter_delamination(var/turf/epicenter, var/size, var/transform_mobs =
 
 		playsound(epicenter, 'sound/effects/explosionfar.ogg', 100, 1, round(size*2,1) )
 		playsound(epicenter, "explosion", 100, 1, round(size,1) )
-		explosion(epicenter, 0, 0, max(size/10, 0), max(size/5, 3), 0)
+		explosion(epicenter, 0, 0, 0, max(size/5, 3), 0)
 		if(defer_powernet_rebuild != 2)
 			defer_powernet_rebuild = 1
 
@@ -547,7 +547,7 @@ proc/supermatter_convert( var/turf/T, var/transform_mobs = 0, var/level = 1 )
 			item.ex_act( 3 )
 
 	if( istype( T, /turf/simulated/floor ))
-		new /obj/effect/supermatter_crystal(T, rand(0, level))
+		new /obj/effect/supermatter_crystal(T, max(1, rand(level-2, level)))
 
 proc/blow_lights( var/turf/T )
 	for( var/obj/machinery/power/apc/apc in T )
