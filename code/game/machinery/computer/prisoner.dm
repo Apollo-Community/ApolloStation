@@ -50,7 +50,7 @@
 				if(T.malfunction)
 					loc_display = pick(teleportlocs)
 				dat += "ID: [T.id] | Location: [loc_display]<BR>"
-				dat += "<A href='?src=\ref[src];warn=\ref[T]'>(<font color=red><i>Message Holder</i></font>)</A> |<BR>"
+				dat += "<A href='?src=\ref[src];warn=\ref[T];user=\ref[user]'>(<font color=red><i>Message Holder</i></font>)</A> |<BR>"
 				dat += "********************************<BR>"
 			dat += "<HR><A href='?src=\ref[src];lock=1'>Lock Console</A>"
 
@@ -93,9 +93,13 @@
 				var/warning = sanitize(input(usr,"Message:","Enter your message here!",""))
 				if(!warning) return
 				var/obj/item/weapon/implant/I = locate(href_list["warn"])
+				var/mob/user = locate(href_list["user"])
 				if((I)&&(I.imp_in))
 					var/mob/living/carbon/R = I.imp_in
 					R << "\green You hear a voice in your head saying: '[warning]'"
+					STUI.game.Add("\[[time_stamp()]]PRISON_IMPLANT: [key_name(user)] to [key_name(R)] : [warning]<br>")
+					STUI.processing |= 5
+
 
 			src.add_fingerprint(usr)
 		src.updateUsrDialog()
