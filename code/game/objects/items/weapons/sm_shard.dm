@@ -25,39 +25,30 @@
 
 	if (level<2)
 		l_color = "#808000"
-		color = "#808000"
 		luminosity = 1
 	else if (level<3)
 		l_color = "#C08000"
-		color = "#C08000"
 		luminosity = 2
 	else if (level<4)
 		l_color = "#DF6000"
-		color = "#DF6000"
 		luminosity = 2
 	else if (level<5)
 		l_color = "#FF2000"
-		color = "#FF2000"
 		luminosity = 1
 	else if (level<6)
 		l_color = "#C00040"
-		color = "#C00040"
 		luminosity = 2
 	else if (level<7)
 		l_color = "#800080"
-		color = "#800080"
 		luminosity = 2
 	else if (level<8)
 		l_color = "#4000C0"
-		color = "#4000C0"
 		luminosity = 1
 	else if (level<9)
 		l_color = "#008080"
-		color = "#008080"
 		luminosity = 2
 	else
 		l_color = "#FFC0C0"
-		color = "#FFC0C0"
 		luminosity = 5
 
 
@@ -128,7 +119,7 @@
 	..()
 
 
-/obj/item/weapon/shard/supermatter/attack_hand(var/A, mob/user)
+/obj/item/weapon/shard/supermatter/attack_hand(var/mob/user)
 	if( !isnucleation( user ))
 		user << pick( "\red You think twice before touching that without protection.",
 					  "\red You don't want to touch that without some protection.",
