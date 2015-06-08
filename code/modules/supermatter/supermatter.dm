@@ -3,7 +3,7 @@
 #define THERMAL_RELEASE_MODIFIER 750		//Higher == more heat released during reaction
 #define PHORON_RELEASE_MODIFIER 1500		//Higher == less phoron released by reaction
 #define OXYGEN_RELEASE_MODIFIER 1500		//Higher == less oxygen released at high temperature/power
-#define REACTION_POWER_MODIFIER 1.1			//Higher == more overall power
+#define REACTION_POWER_MODIFIER 1.1		//Higher == more overall power
 
 /*
 	How to tweak the SM
@@ -16,11 +16,11 @@
 */
 
 //Controls how much power is produced by each collector in range - this is the main parameter for tweaking SM balance, as it basically controls how the power variable relates to the rest of the game.
-#define POWER_FACTOR 1.0
+#define POWER_FACTOR 0.4
 #define DECAY_FACTOR 700			//Affects how fast the supermatter power decays
 #define CRITICAL_TEMPERATURE 800	//K
 #define CHARGING_FACTOR 0.05
-#define DAMAGE_RATE_LIMIT 3			//damage rate cap at power = 300, scales linearly with power
+#define DAMAGE_RATE_LIMIT 1			//damage rate cap at power = 300, scales linearly with power
 
 
 //These would be what you would get at point blank, decreases with distance
@@ -35,14 +35,15 @@
 	name = "Supermatter"
 	desc = "A strangely translucent and iridescent crystal. \red You get headaches just from looking at it."
 	icon = 'icons/obj/engine.dmi'
-	icon_state = "supermatter"
+	icon_state = "supermatter_1"
 	density = 1
 	anchored = 0
 	luminosity = 4
 
-	var/gasefficency = 0.25
+	var/smlevel = 1
+	var/bare = 0
 
-	var/base_icon_state = "supermatter"
+	var/base_icon_state = "supermatter_1"
 
 	var/damage = 0
 	var/damage_archived = 0
@@ -55,14 +56,13 @@
 	var/explosion_point = 1000
 
 	l_color = "#8A8A00"
-	var/warning_color = "#B8B800"
-	var/emergency_color = "#D9D900"
+	var/base_color = "#8A8A00"
 
 	var/grav_pulling = 0
 	var/pull_radius = 14
 	// Time in ticks between delamination ('exploding') and exploding (as in the actual boom)
 	var/pull_time = 100
-	var/explosion_power = 8
+	var/explosion_power = 6
 
 	var/emergency_issued = 0
 
@@ -104,20 +104,13 @@
 	exploded = 1
 	spawn(pull_time)
 		var/turf/epicenter = get_turf(src)
-		explosion(epicenter, explosion_power, explosion_power*2, explosion_power*3, explosion_power*4, 1)
-		supermatter_delamination( epicenter, explosion_power*4, 1 )
+		explosion(epicenter, max(explosion_power+smlevel, (explosion_power*4)-4), max((explosion_power*2)+(smlevel*2), (explosion_power*4)-2), explosion_power*4, (explosion_power*4)+(smlevel*3), 1)
+		supermatter_delamination( epicenter, (explosion_power*4)+(smlevel*2), 1, smlevel)
 		del src
 		return
 
-//Changes color and luminosity of the light to these values if they were not already set
-/obj/machinery/power/supermatter/proc/shift_light(var/lum, var/clr)
-	if(l_color != clr)
-		l_color = clr
-	if(luminosity != lum)
-		SetLuminosity(lum)
-
 /obj/machinery/power/supermatter/proc/announce_warning()
-	var/integrity = damage / explosion_point
+	var/integrity = damage / (explosion_point+(smlevel*250))
 	integrity = round(100 - integrity * 100)
 	integrity = integrity < 0 ? 0 : integrity
 	var/alert_msg = " Integrity at [integrity]%"
@@ -148,21 +141,30 @@
 	if(!istype(L)) 	//We are in a crate or somewhere that isn't turf, if we return to turf resume processing but for now.
 		return  //Yeah just stop.
 
-	if(damage > explosion_point)
+	if(damage > explosion_point+(smlevel*250))	// Upgrading the engine slightly upgrades the explosion point. This isn't as noticeable at higher levels.
 		if(!exploded)
 			if(!istype(L, /turf/space))
 				announce_warning()
 			explode()
-	else if(damage > warning_point) // while the core is still damaged and it's still worth noting its status
-		shift_light(5, warning_color)
-		if(damage > emergency_point)
-			shift_light(7, emergency_color)
-		if(!istype(L, /turf/space) && (world.timeofday - lastwarning) >= WARNING_DELAY * 10)
+	else if(damage > warning_point && (world.timeofday - lastwarning) >= WARNING_DELAY * 10) // while the core is still damaged and it's still worth noting its status
+		if(!istype(L, /turf/space))
 			announce_warning()
-	else
-		shift_light(4,initial(l_color))
+
+	if (l_color!=base_color)
+		l_color = base_color
+
 	if(grav_pulling)
 		supermatter_pull()
+
+	for (var/obj/machinery/power/supermatter/S in orange(smlevel))	// Supermatters are drawn to eachother.
+		spawn(0)
+			step_towards(S, src)
+			step_towards(src, S)
+
+	for (var/obj/item/weapon/shard/supermatter/S in orange(smlevel*3))
+		spawn(0)
+			step_towards(S, src)
+			step_towards(S, src)
 
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/removed = null
@@ -170,23 +172,33 @@
 
 	//ensure that damage doesn't increase too quickly due to super high temperatures resulting from no coolant, for example. We dont want the SM exploding before anyone can react.
 	//We want the cap to scale linearly with power (and explosion_point). Let's aim for a cap of 5 at power = 300 (based on testing, equals roughly 5% per SM alert announcement).
-	var/damage_inc_limit = (power/300)*(explosion_point/1000)*DAMAGE_RATE_LIMIT
+
+	//I've modified damage_rate limit to be easier to understand from an ic perspective. per 100 power, the engine is able to take 1 damage +1 for every stage of upgrading.
+
+	var/damage_inc_limit = (power/100)*(explosion_point/1000)*(DAMAGE_RATE_LIMIT+smlevel)
 
 	if(!istype(L, /turf/space))
 		env = L.return_air()
-		removed = env.remove(gasefficency * env.total_moles)	//Remove gas from surrounding area
+		removed = env.remove(min(smlevel/10*env.total_moles, env.total_moles))	//At stage 10, the sm is at maximum gas efficiency.
+
+	if (prob((smlevel-1)/10))	// Critical damage. Probability increases with sm stage, but at stage one or less, it will not happen at all.
+		damage += (10*smlevel)	// Take a bunch of damage. At stage 10 critical damage has the potential to explode instantly.
+		var/lost_int = (damage/explosion_point+(smlevel*250))*100
+		radio.autosay("CRITICAL FAILURE, [lost_int]% Integrity Lost!", "Supermatter Monitor")
+		announce_warning()
 
 	if(!env || !removed || !removed.total_moles)
-		damage += max((power - 15*POWER_FACTOR)/10, 0)
+		damage += max((power - 15*POWER_FACTOR)/5, 0)
 	else if (grav_pulling) //If supermatter is detonating, remove all air from the zone
 		env.remove(env.total_moles)
 	else
 		damage_archived = damage
 
 		damage = max( damage + min( ( (removed.temperature - CRITICAL_TEMPERATURE) / 150 ), damage_inc_limit ) , 0 )
+
 		//Ok, 100% oxygen atmosphere = best reaction
 		//Maxes out at 100% oxygen pressure
-		oxygen = max(min((removed.gas["oxygen"] - (removed.gas["nitrogen"] * NITROGEN_RETARDATION_FACTOR)) / removed.total_moles, 1), 0)
+		oxygen = max(min((removed.gas["oxygen"] - (removed.gas["nitrogen"] * (NITROGEN_RETARDATION_FACTOR*smlevel))) / removed.total_moles, 1), 0)
 
 		//calculate power gain for oxygen reaction
 		var/temp_factor
@@ -194,13 +206,11 @@
 		if (oxygen > 0.8)
 			//If chain reacting at oxygen == 1, we want the power at 800 K to stabilize at a power level of 400
 			equilibrium_power = 400
-			icon_state = "[base_icon_state]_glow"
 		else
 			//If chain reacting at oxygen == 1, we want the power at 800 K to stabilize at a power level of 250
 			equilibrium_power = 250
-			icon_state = base_icon_state
 
-		temp_factor = ( (equilibrium_power/DECAY_FACTOR)**3 )/800
+		temp_factor = ( (equilibrium_power/(DECAY_FACTOR/smlevel))**3 )/800	// Better upgrades lose power more slowly. Merely upgrading the engine once allows you to maintain a ton more power.
 		power = max( (removed.temperature * temp_factor) * oxygen + power, 0)
 
 		//We've generated power, now let's transfer it to the collectors for storing/usage
@@ -210,8 +220,8 @@
 
 		//Release reaction gasses
 		var/heat_capacity = removed.heat_capacity()
-		removed.adjust_multi("phoron", max(device_energy / PHORON_RELEASE_MODIFIER, 0), \
-		                     "oxygen", max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0))
+		removed.adjust_multi("phoron", max(device_energy*(smlevel/2) / PHORON_RELEASE_MODIFIER, 0), \
+		                     "oxygen", max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0))	// Higher stages produce more phoron/oxygen mole.
 
 		var/thermal_power = THERMAL_RELEASE_MODIFIER * device_energy
 		if (debug)
@@ -226,14 +236,14 @@
 
 	for(var/mob/living/carbon/human/l in view(src, min(7, round(sqrt(power/6))))) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
-			l.hallucination = max(0, min(200, l.hallucination + power * config_hallucination_power * sqrt( 1 / max(1,get_dist(l, src)) ) ) )
+			l.hallucination = max(0, min(200*smlevel, l.hallucination + power * config_hallucination_power * sqrt( 1 / max(1,get_dist(l, src)) ) ) )
 
 	//adjusted range so that a power of 300 (pretty high) results in 8 tiles, roughly the distance from the core to the engine monitoring room.
 	for(var/mob/living/l in range(src, round(sqrt(power / 5))))
 		var/rads = (power / 10) * sqrt( 1 / get_dist(l, src) )
 		l.apply_effect(rads, IRRADIATE)
 
-	power -= (power/DECAY_FACTOR)**3		//energy losses due to radiation
+	power -= (power/(DECAY_FACTOR*(smlevel/2)))**3		//energy losses due to radiation. higher stages lose less power.
 
 	return 1
 
@@ -274,12 +284,25 @@
 /obj/machinery/power/supermatter/proc/transfer_energy()
 	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
 		var/distance = get_dist(R, src)
-		if(distance <= 15)
+		if(distance <= 13+(smlevel*2)) // Upgrading the engine allows for more range. At fully upgraded engine, it is able to interact with collectors twice as far from itself.
 			//for collectors using standard phoron tanks at 1013 kPa, the actual power generated will be this power*POWER_FACTOR*20*29 = power*POWER_FACTOR*580
 			R.receive_pulse(power * POWER_FACTOR * (min(3/distance, 1))**2)
 	return
 
 /obj/machinery/power/supermatter/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
+	if(istype(W, /obj/item/weapon/tongs))
+		var/obj/item/weapon/tongs/T = W
+		if (T.held)
+			Consume(T.held)
+			T.held = null
+			T.update_icon()
+			return
+
+	if(istype(W, /obj/item/weapon/shard/supermatter))
+		var/obj/item/weapon/shard/supermatter/S = W
+		Consume(S)
+		return
+
 	user.visible_message("<span class=\"warning\">\The [user] touches \a [W] to \the [src] as a silence fills the room...</span>",\
 		"<span class=\"danger\">You touch \the [W] to \the [src] when everything suddenly goes silent.\"</span>\n<span class=\"notice\">\The [W] flashes into dust as you flinch away from \the [src].</span>",\
 		"<span class=\"warning\">Everything suddenly goes silent.</span>")
@@ -287,7 +310,7 @@
 	user.drop_from_inventory(W)
 	Consume(W)
 
-	user.apply_effect(150, IRRADIATE)
+	user.apply_effect(150*(smlevel/2), IRRADIATE)
 
 /obj/machinery/power/supermatter/ex_act()
 	return
@@ -299,6 +322,12 @@
 		AM.visible_message("<span class=\"warning\">\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
 		"<span class=\"danger\">You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
 		"<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>")
+	else if(istype(AM, /obj/machinery/power/supermatter))
+		AM.visible_message("<span class=\"warning\">\The [AM] smacks into \the [src] and fuses with it.</span>",\
+		"<span class=\"warning\">You hear a loud shriek as you are washed with a wave of heat.</span>")
+	else if( istype(AM, /obj/item/weapon/shard/supermatter))
+		AM.visible_message("<span class=\"warning\">\The [AM] smacks into \the [src] and fuses with it.</span>",\
+		"<span class=\"warning\">You hear a loud shriek as you are washed with a wave of heat.</span>")
 	else if(!grav_pulling) //To prevent spam, detonating supermatter does not indicate non-mobs being destroyed
 		AM.visible_message("<span class=\"warning\">\The [AM] smacks into \the [src] and rapidly flashes to ash.</span>",\
 		"<span class=\"warning\">You hear a loud crack as you are washed with a wave of heat.</span>")
@@ -314,30 +343,98 @@
 		user.dust()
 		power += 200
 	else
+		if (istype(user, /obj/machinery/power/supermatter))
+			var/obj/machinery/power/supermatter/S = user
+			smlevel+=S.smlevel
+			power += 5000*smlevel	// Get a ton of power from the fusion.
+			for(var/mob/living/l in range(10*smlevel))
+				var/rads = (500) * sqrt( 1 / (get_dist(l, src) + 1) ) * smlevel // Increased range for radiation. Eventually you'll be radiating the entire station.
+				l.apply_effect(rads, IRRADIATE)
+			del S
+			update_icon()	// Update stats related to supermatter stage.
+			return
+		if (istype(user, /obj/item/weapon/shard/supermatter))
+			var/obj/item/weapon/shard/supermatter/S = user
+			smlevel+=((S.smlevel*S.size)/1000)
+			power += 500*smlevel	// Get a ton of power from the fusion.
+			for(var/mob/living/l in range(10*smlevel))
+				var/rads = (100) * sqrt( 1 / (get_dist(l, src) + 1) ) * smlevel // Increased range for radiation. Eventually you'll be radiating the entire station.
+				l.apply_effect(rads, IRRADIATE)
+			del S
+			update_icon()	// Update stats related to supermatter stage.
+			return
 		del user
 
 	power += 200
 
 		//Some poor sod got eaten, go ahead and irradiate people nearby.
-	for(var/mob/living/l in range(10))
+	for(var/mob/living/l in range(10*smlevel))
 		if(l in view())
 			l.show_message("<span class=\"warning\">As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", 1,\
 				"<span class=\"warning\">The unearthly ringing subsides and you notice you have new radiation burns.</span>", 2)
 		else
 			l.show_message("<span class=\"warning\">You hear an uneartly ringing and notice your skin is covered in fresh radiation burns.</span>", 2)
-		var/rads = 500 * sqrt( 1 / (get_dist(l, src) + 1) )
+		var/rads = (500) * sqrt( 1 / (get_dist(l, src) + 1) ) * smlevel
 		l.apply_effect(rads, IRRADIATE)
 
+/obj/machinery/power/supermatter/update_icon()
+	if(smlevel<2)
+		l_color = "#808000"
+		base_color = "#808000"
+		luminosity = 4
+		base_icon_state = "supermatter[bare?"_bare":""]_1"
+	else if(smlevel<3)
+		l_color = "#C08000"
+		base_color = "#C08000"
+		luminosity = 6
+		base_icon_state = "supermatter[bare?"_bare":""]_2"
+	else if(smlevel<4)
+		l_color = "#DF6000"
+		base_color = "#DF6000"
+		luminosity = 6
+		base_icon_state = "supermatter[bare?"_bare":""]_3"
+	else if(smlevel<5)
+		l_color = "#FF2000"
+		base_color = "#FF2000"
+		luminosity = 4
+		base_icon_state = "supermatter[bare?"_bare":""]_4"
+	else if(smlevel<6)
+		l_color = "#C00040"
+		base_color = "#C00040"
+		luminosity = 4
+		base_icon_state = "supermatter[bare?"_bare":""]_5"
+	else if(smlevel<7)
+		l_color = "#800080"
+		base_color = "#800080"
+		luminosity = 6
+		base_icon_state = "supermatter[bare?"_bare":""]_6"
+	else if(smlevel<8)
+		l_color = "#4000C0"
+		base_color = "#4000C0"
+		luminosity = 4
+		base_icon_state = "supermatter[bare?"_bare":""]_7"
+	else if(smlevel<9)
+		l_color = "#008080"
+		base_color = "#008080"
+		luminosity = 6
+		base_icon_state = "supermatter[bare?"_bare":""]_8"
+	else if(smlevel>=9)
+		l_color = "#FFC0C0"
+		base_color = "#FFC0C0"
+		luminosity = 7
+		base_icon_state = "supermatter[bare?"_bare":""]_9"
+	icon_state = base_icon_state
 
 /obj/machinery/power/supermatter/proc/supermatter_pull()
 	//following is adapted from singulo code
 	if(defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 1
 	// Let's just make this one loop.
-	for(var/atom/X in orange(pull_radius,src))
+	for(var/atom/X in orange(pull_radius+smlevel,src))
 		// Movable atoms only
 		if(istype(X, /atom/movable))
 			if(is_type_in_list(X, uneatable))	continue
+			if(!grav_pulling)	return
 			if(((X) && (!istype(X,/mob/living/carbon/human))))
 				spawn( 0 )
 					step_towards(X,src)
@@ -369,9 +466,10 @@
 	return
 
 
-proc/supermatter_delamination(var/turf/epicenter, var/size, var/transform_mobs = 0, var/adminlog = 1, var/rads = 0)
+proc/supermatter_delamination(var/turf/epicenter, var/size, var/transform_mobs = 0, var/smlevel = 1, var/adminlog = 1, var/rads = 0)
 	spawn(0)
 		var/start = world.timeofday
+		size = min(size, 128)
 		epicenter = get_turf(epicenter)
 		if(!epicenter) return
 
@@ -381,7 +479,7 @@ proc/supermatter_delamination(var/turf/epicenter, var/size, var/transform_mobs =
 
 		playsound(epicenter, 'sound/effects/explosionfar.ogg', 100, 1, round(size*2,1) )
 		playsound(epicenter, "explosion", 100, 1, round(size,1) )
-
+		explosion(epicenter, 0, 0, 0, max(size/5, 3), 0)
 		if(defer_powernet_rebuild != 2)
 			defer_powernet_rebuild = 1
 
@@ -398,7 +496,7 @@ proc/supermatter_delamination(var/turf/epicenter, var/size, var/transform_mobs =
 					var/mob/living/carbon/human/H = mob
 					H.hallucination += max(50, min(size*10, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, epicenter) + 1)) ) )
 				if( !rads )
-					rads = size*10 * sqrt( 1 / (get_dist(mob, epicenter) + 1) )
+					rads = size*10 * sqrt( 1 / (get_dist(mob, epicenter) + 1) ) * smlevel
 				mob.apply_effect(rads, IRRADIATE)
 
 		for(var/i=0, i<size, i++) // An awful way to do this, but i'm tired
@@ -408,28 +506,28 @@ proc/supermatter_delamination(var/turf/epicenter, var/size, var/transform_mobs =
 				var/percent = min( 100, ((( size-dist )/size )*100 ))
 				blow_lights( cur_turf )
 				if( prob( percent ))
-					supermatter_convert( cur_turf, transform_mobs )
+					supermatter_convert( cur_turf, transform_mobs, smlevel )
 
 				cur_turf = locate(x+j, (y+i)-j, z )
 				dist = get_dist( cur_turf, epicenter )
 				percent = min( 100, ((( size-dist )/size )*100 ))
 				blow_lights( cur_turf )
 				if( prob( percent ))
-					supermatter_convert( cur_turf, transform_mobs )
+					supermatter_convert( cur_turf, transform_mobs, smlevel )
 
 				cur_turf = locate((x+i)-j, y-j, z )
 				dist = get_dist( cur_turf, epicenter )
 				percent = min( 100, ((( size-dist )/size )*100 ))
 				blow_lights( cur_turf )
 				if( prob( percent ))
-					supermatter_convert( cur_turf, transform_mobs )
+					supermatter_convert( cur_turf, transform_mobs, smlevel )
 
 				cur_turf = locate(x-j, (y-i)+j, z )
 				dist = get_dist( cur_turf, epicenter )
 				percent = min( 100, ((( size-dist )/size )*100 ))
 				blow_lights( cur_turf )
 				if( prob( percent ))
-					supermatter_convert( cur_turf, transform_mobs )
+					supermatter_convert( cur_turf, transform_mobs, smlevel )
 
 		if(defer_powernet_rebuild != 2)
 			defer_powernet_rebuild = 0
@@ -438,7 +536,7 @@ proc/supermatter_delamination(var/turf/epicenter, var/size, var/transform_mobs =
 	return 1
 
 
-proc/supermatter_convert( var/turf/T, var/transform_mobs = 0 )
+proc/supermatter_convert( var/turf/T, var/transform_mobs = 0, var/level = 1 )
 	if( transform_mobs )
 		for( var/mob/item in T.contents )
 			if( ishuman( item ))
@@ -449,7 +547,7 @@ proc/supermatter_convert( var/turf/T, var/transform_mobs = 0 )
 			item.ex_act( 3 )
 
 	if( istype( T, /turf/simulated/floor ))
-		new /obj/effect/supermatter_crystal(T)
+		new /obj/effect/supermatter_crystal(T, max(1, rand(level-2, level)))
 
 proc/blow_lights( var/turf/T )
 	for( var/obj/machinery/power/apc/apc in T )
@@ -471,8 +569,6 @@ proc/blow_lights( var/turf/T )
 	emergency_point = 400
 	explosion_point = 600
 
-	gasefficency = 0.125
-
 	pull_radius = 5
 	pull_time = 45
 	explosion_power = 3
@@ -481,5 +577,6 @@ proc/blow_lights( var/turf/T )
 	return
 
 /obj/machinery/power/supermatter/bare
-	icon_state = "supermatter_bare"
-	base_icon_state = "supermatter_bare"
+	icon_state = "supermatter_bare_1"
+	base_icon_state = "supermatter_bare_1"
+	bare = 1
