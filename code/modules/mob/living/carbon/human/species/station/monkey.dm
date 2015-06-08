@@ -33,6 +33,7 @@
 
 	flags = IS_RESTRICTED
 
+	var/holder_type = /obj/item/weapon/holder/monkey
 /datum/species/monkey/handle_npc(var/mob/living/carbon/human/H)
 	if(H.stat != CONSCIOUS)
 		return
@@ -42,9 +43,11 @@
 		H.emote(pick("scratch","jump","roll","tail"))
 
 /datum/species/monkey/handle_post_spawn(var/mob/living/carbon/human/H)
-	H.real_name = "[lowertext(name)] ([rand(100,999)])"
-	H.name = H.real_name
 	..()
+	H.holder_type = holder_type
+
+/datum/species/monkey/get_random_name()
+	return "[lowertext(name)] ([rand(100,999)])"
 
 /datum/species/monkey/tajaran
 	name = "Farwa"
@@ -58,6 +61,7 @@
 	flesh_color = "#AFA59E"
 	base_color = "#333333"
 	tail = "farwatail"
+	holder_type = /obj/item/weapon/holder/monkey/farwa
 
 /datum/species/monkey/skrell
 	name = "Neara"
@@ -72,6 +76,7 @@
 	blood_color = "#1D2CBF"
 	reagent_tag = IS_SKRELL
 	tail = null
+	holder_type = /obj/item/weapon/holder/monkey/neaera
 
 /datum/species/monkey/unathi
 	name = "Stok"
@@ -86,3 +91,4 @@
 	flesh_color = "#34AF10"
 	base_color = "#066000"
 	reagent_tag = IS_UNATHI
+	holder_type = /obj/item/weapon/holder/monkey/stok

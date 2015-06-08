@@ -159,6 +159,9 @@
 			I.mechanize()
 
 /datum/species/proc/hug(var/mob/living/carbon/human/H,var/mob/living/target)
+	if (target.holder_type && target.a_intent == "help" && H.a_intent == "help")
+		target.get_scooped(H)
+		return
 
 	var/t_him = "them"
 	switch(target.gender)
