@@ -40,3 +40,6 @@
 /mob/living/carbon/human/nucleation/New(var/new_loc)
 	h_style = "Bald"
 	..(new_loc, "Nucleation")
+
+/mob/living/carbon/human/nucleation
+	var/smlevel = 1

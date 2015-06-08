@@ -41,6 +41,7 @@
 	luminosity = 4
 
 	var/smlevel = 1
+	var/changed = 1	// adminbus
 	var/bare = 0
 
 	var/base_icon_state = "supermatter_1"
@@ -104,7 +105,7 @@
 	exploded = 1
 	spawn(pull_time)
 		var/turf/epicenter = get_turf(src)
-		explosion(epicenter, max(explosion_power+smlevel, (explosion_power*4)-4), max((explosion_power*2)+(smlevel*2), (explosion_power*4)-2), explosion_power*4, (explosion_power*4)+(smlevel*3), 1)
+		explosion(epicenter, min(explosion_power+(smlevel-1), explosion_power*2), min((explosion_power*2)+(smlevel*2), explosion_power*3), explosion_power*4, (explosion_power*4)+(smlevel*3), 1)
 		supermatter_delamination( epicenter, (explosion_power*4)+(smlevel*2), 1, smlevel)
 		del src
 		return
@@ -134,6 +135,10 @@
 /obj/machinery/power/supermatter/process()
 
 	var/turf/L = loc
+
+	if(smlevel != changed)
+		changed = smlevel
+		update_icon()
 
 	if(isnull(L))		// We have a null turf...something is wrong, stop processing this entity.
 		return PROCESS_KILL
@@ -183,7 +188,7 @@
 
 	if (prob((smlevel-1)/10))	// Critical damage. Probability increases with sm stage, but at stage one or less, it will not happen at all.
 		damage += (10*smlevel)	// Take a bunch of damage. At stage 10 critical damage has the potential to explode instantly.
-		var/lost_int = (damage/explosion_point+(smlevel*250))*100
+		var/lost_int = ((10*smlevel)/(explosion_point+(smlevel*250)))*100
 		radio.autosay("CRITICAL FAILURE, [lost_int]% Integrity Lost!", "Supermatter Monitor")
 		announce_warning()
 
@@ -236,7 +241,7 @@
 
 	for(var/mob/living/carbon/human/l in view(src, min(7, round(sqrt(power/6))))) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
-			l.hallucination = max(0, min(200*smlevel, l.hallucination + power * config_hallucination_power * sqrt( 1 / max(1,get_dist(l, src)) ) ) )
+			l.hallucination = max(0, min(180+(10*smlevel), l.hallucination + power * config_hallucination_power * sqrt( 1 / max(1,get_dist(l, src)) ) ) )
 
 	//adjusted range so that a power of 300 (pretty high) results in 8 tiles, roughly the distance from the core to the engine monitoring room.
 	for(var/mob/living/l in range(src, round(sqrt(power / 5))))
@@ -310,7 +315,7 @@
 	user.drop_from_inventory(W)
 	Consume(W)
 
-	user.apply_effect(150*(smlevel/2), IRRADIATE)
+	user.apply_effect(150+(smlevel*10), IRRADIATE)
 
 /obj/machinery/power/supermatter/ex_act()
 	return
@@ -346,9 +351,9 @@
 		if (istype(user, /obj/machinery/power/supermatter))
 			var/obj/machinery/power/supermatter/S = user
 			smlevel+=S.smlevel
-			power += 5000*smlevel	// Get a ton of power from the fusion.
-			for(var/mob/living/l in range(10*smlevel))
-				var/rads = (500) * sqrt( 1 / (get_dist(l, src) + 1) ) * smlevel // Increased range for radiation. Eventually you'll be radiating the entire station.
+			power += 1000*smlevel	// Get a ton of power from the fusion.
+			for(var/mob/living/l in range(10+(smlevel*2)))
+				var/rads = (500) * sqrt( 1 / (get_dist(l, src) + 1) ) // Increased range for radiation. Eventually you'll be radiating the entire station.
 				l.apply_effect(rads, IRRADIATE)
 			del S
 			update_icon()	// Update stats related to supermatter stage.
@@ -356,9 +361,9 @@
 		if (istype(user, /obj/item/weapon/shard/supermatter))
 			var/obj/item/weapon/shard/supermatter/S = user
 			smlevel+=((S.smlevel*S.size)/1000)
-			power += 500*smlevel	// Get a ton of power from the fusion.
-			for(var/mob/living/l in range(10*smlevel))
-				var/rads = (100) * sqrt( 1 / (get_dist(l, src) + 1) ) * smlevel // Increased range for radiation. Eventually you'll be radiating the entire station.
+			power += 100*smlevel	// Get a ton of power from the fusion.
+			for(var/mob/living/l in range(10+(2*smlevel)))
+				var/rads = (100) * sqrt( 1 / (get_dist(l, src) + 1) ) // Increased range for radiation. Eventually you'll be radiating the entire station.
 				l.apply_effect(rads, IRRADIATE)
 			del S
 			update_icon()	// Update stats related to supermatter stage.
@@ -368,7 +373,7 @@
 	power += 200
 
 		//Some poor sod got eaten, go ahead and irradiate people nearby.
-	for(var/mob/living/l in range(10*smlevel))
+	for(var/mob/living/l in range(10+(2*smlevel)))
 		if(l in view())
 			l.show_message("<span class=\"warning\">As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", 1,\
 				"<span class=\"warning\">The unearthly ringing subsides and you notice you have new radiation burns.</span>", 2)
@@ -547,7 +552,7 @@ proc/supermatter_convert( var/turf/T, var/transform_mobs = 0, var/level = 1 )
 			item.ex_act( 3 )
 
 	if( istype( T, /turf/simulated/floor ))
-		new /obj/effect/supermatter_crystal(T, max(1, rand(level-2, level)))
+		new /obj/effect/supermatter_crystal(T, max(1, rand(level-1, level)))
 
 proc/blow_lights( var/turf/T )
 	for( var/obj/machinery/power/apc/apc in T )

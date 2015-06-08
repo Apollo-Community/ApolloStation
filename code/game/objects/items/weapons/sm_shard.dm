@@ -128,7 +128,7 @@
 	..()
 
 
-/obj/item/weapon/shard/supermatter/attack_hand(var/mob/user)
+/obj/item/weapon/shard/supermatter/attack_hand(var/A, mob/user)
 	if( !isnucleation( user ))
 		user << pick( "\red You think twice before touching that without protection.",
 					  "\red You don't want to touch that without some protection.",
@@ -140,6 +140,17 @@
 		return
 
 	..()
+
+/obj/item/weapon/shard/supermatter/afterattack(var/mob/living/carbon/human/nucleation/A, mob/user, flag, params)
+	if(!in_range(user, A) || !istype(A))
+		return
+
+	A.smlevel += (size*smlevel)/500
+	A.heal_overall_damage((size*smlevel)/50, (size*smlevel)/50)
+	user << "\red The [src] fuses with [A]!"
+	A << "\blue You feel a soothing wave wash over you."
+	user.drop_from_inventory(src)
+	del(src)
 
 /obj/item/weapon/shard/supermatter/proc/feed( var/datum/gas_mixture/gas )
 	size += gas.gas["phoron"]

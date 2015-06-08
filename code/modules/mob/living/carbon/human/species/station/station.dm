@@ -308,9 +308,9 @@
 	H.SetLuminosity(2)
 	return ..()
 
-/datum/species/nucleation/handle_death(var/mob/living/carbon/human/H)
+/datum/species/nucleation/handle_death(var/mob/living/carbon/human/nucleation/H)
 	var/turf/T = get_turf(H)
 	H.visible_message("\red[H]'s body explodes, leaving behind a pile of microscopic crystals!")
-	supermatter_delamination(T, 2, 0, 0, 80) // Create a small supermatter burst upon death
+	supermatter_delamination(T, 2+H.smlevel, 0, H.smlevel, 0, 80) // Create a small supermatter burst upon death
 	new /obj/item/weapon/shard/supermatter( T )
 	del(H)

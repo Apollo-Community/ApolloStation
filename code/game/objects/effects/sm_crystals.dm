@@ -6,7 +6,7 @@
 	opacity = 0
 	density = 0
 	icon = 'icons/obj/lighting.dmi'
-	icon_state = "supermatter_crystalf_1"
+	icon_state = "supermatter_crystalf"
 	layer = 2.1
 	l_color = "#8A8A00"
 	var/smlevel = 0
@@ -35,25 +35,25 @@
 		luminosity = 2
 	else if (smlevel<4)
 		l_color = "#DF6000"
-		luminosity = 2
+		luminosity = 3
 	else if (smlevel<5)
 		l_color = "#FF2000"
-		luminosity = 1
+		luminosity = 2
 	else if (smlevel<6)
 		l_color = "#C00040"
-		luminosity = 1
+		luminosity = 2
 	else if (smlevel<7)
 		l_color = "#800080"
-		luminosity = 2
+		luminosity = 3
 	else if (smlevel<8)
 		l_color = "#4000C0"
-		luminosity = 1
+		luminosity = 2
 	else if (smlevel<9)
 		l_color = "#008080"
 		luminosity = 3
 	else if (smlevel>=9)
 		l_color = "#FFC0C0"
-		luminosity = 4
+		luminosity = 5
 
 	dir = CalcDir()
 
@@ -69,7 +69,7 @@
 				pixel_x = -32
 		icon_state = "supermatter_crystal"
 	else
-		if( prob( 10 )) // Only 10% of all floor crystals survive, so there's not a forest of 'em
+		if( prob( 25*(1/smlevel) )) // Only 10% of all floor crystals survive, so there's not a forest of 'em - tweaked by nullbear
 			icon_state = "supermatter_crystalf"
 			name = "supermatter crystal"
 			density = 1
@@ -86,7 +86,7 @@
 	if( !deleted )
 		if(smlevel>=5 && prob(smlevel*10))
 			visible_message("\red <B>\The [src] explodes!</B>")
-			supermatter_delamination(src, smlevel)
+			supermatter_delamination(src, smlevel, 1, max(1, smlevel-1))
 			return
 		else
 			visible_message("\red <B>\The [src] shatters!</B>")
