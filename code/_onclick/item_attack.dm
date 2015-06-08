@@ -30,7 +30,7 @@
 	/////////////////////////
 	user.lastattacked = M
 	M.lastattacker = user
-	if(!in_unlogged(M) && !(isslime(M) | ismonkey(M)))
+	if(!in_unlogged(M) && !(isslime(M) | issmall(M)))
 		user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
 		M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
 		msg_admin_attack("[key_name(user)] attacked [key_name(M)] with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)]) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[M]'>JMP</A>)" )

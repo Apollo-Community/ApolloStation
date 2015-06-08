@@ -26,15 +26,17 @@
 		return istype(H.species, /datum/species/nucleation)
 	return 0
 
+/proc/issmall(A)
+	if(A && istype(A, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = A
+		if(H.species && H.species.is_small)
+			return 1
+	return 0
+
 /proc/ismachine(A)
 	if(istype(A, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = A
 		return istype(H.species, /datum/species/machine)
-	return 0
-
-/proc/ismonkey(A)
-	if(A && istype(A, /mob/living/carbon/monkey))
-		return 1
 	return 0
 
 /proc/isbrain(A)
@@ -234,11 +236,18 @@ var/list/global/organ_rel_size = list(
 // Emulates targetting a specific body part, and miss chances
 // May return null if missed
 // miss_chance_mod may be negative.
-/proc/get_zone_with_miss_chance(zone, var/mob/target, var/miss_chance_mod = 0)
+/proc/get_zone_with_miss_chance(zone, var/mob/target, var/miss_chance_mod = 0, var/ranged_attack=0)
 	zone = check_zone(zone)
 
-	// you can only miss if your target is standing and not restrained
-	if(!target.buckled && !target.lying)
+	// you cannot miss if your target is prone or restrained
+	if(target.buckled || target.lying)
+		return zone
+	// if your target is being grabbed aggressively by someone you cannot miss either
+	if(!ranged_attack)
+		for(var/obj/item/weapon/grab/G in target.grabbed_by)
+			if(G.state >= GRAB_AGGRESSIVE)
+				return zone
+
 		var/miss_chance = 10
 		if (zone in base_miss_chance)
 			miss_chance = base_miss_chance[zone]
@@ -444,7 +453,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "intent_[a_intent]"
 
-	else if(isrobot(src) || ismonkey(src))
+	else if(isrobot(src))
 		switch(input)
 			if("help")
 				a_intent = "help"

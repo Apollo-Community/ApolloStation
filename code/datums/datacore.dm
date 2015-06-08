@@ -178,7 +178,7 @@ proc/get_id_photo(var/mob/living/carbon/human/H)
 
 	//Tail
 	if(H.species.tail)
-		temp = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[H.species.tail]_s")
+		temp = new/icon("icon" = H.species.effect_icons, "icon_state" = "[H.species.tail]_s")
 		preview_icon.Blend(temp, ICON_OVERLAY)
 
 	// Skin tone

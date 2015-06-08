@@ -80,6 +80,26 @@
 	icon_state = "borer"
 	origin_tech = "biotech=6"
 
+/obj/item/weapon/holder/monkey
+	name = "monkey"
+	desc = "It's a monkey. Ook."
+	icon_state = "monkey"
+
+/obj/item/weapon/holder/monkey/farwa
+	name = "farwa"
+	desc = "It's a farwa."
+	icon_state = "farwa"
+
+/obj/item/weapon/holder/monkey/stok
+	name = "stok"
+	desc = "It's a stok. stok."
+	icon_state = "stok"
+
+/obj/item/weapon/holder/monkey/neaera
+	name = "neaera"
+	desc = "It's a neaera."
+	icon_state = "neara"
+
 /obj/item/weapon/holder/bunny
 	name = "bunny"
 	desc = "It's a cute little bunny."
@@ -106,4 +126,3 @@
 	icon_state = "drone"
 	icon = 'icons/apollo/objects.dmi'
 	origin_tech = "engineering=5 illegal=2"
-

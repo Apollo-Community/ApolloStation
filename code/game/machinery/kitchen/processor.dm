@@ -61,7 +61,7 @@
 
 		monkey
 			process(loc, what)
-				var/mob/living/carbon/monkey/O = what
+				var/mob/living/carbon/human/monkey/O = what
 				if (O.client) //grief-proof
 					O.loc = loc
 					O.visible_message("\blue Suddenly [O] jumps out from the processor!", \
@@ -88,7 +88,7 @@
 				//bucket_of_blood.reagents.handle_reactions() //blood doesn't react
 				..()
 
-			input = /mob/living/carbon/monkey
+			input = /mob/living/carbon/human/monkey
 			output = null
 
 /obj/machinery/processor/proc/select_recipe(var/X)

@@ -126,7 +126,7 @@ datum/mind
 		)
 		var/text = ""
 		var/mob/living/carbon/human/H = current
-		if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey))
+		if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/human/monkey))
 			/** Impanted**/
 			if(istype(current, /mob/living/carbon/human))
 				if(H.is_loyalty_implanted(H))
@@ -141,7 +141,7 @@ datum/mind
 			if (ticker.mode.config_tag=="revolution")
 				text += uppertext(text)
 			text = "<i><b>[text]</b></i>: "
-			if (istype(current, /mob/living/carbon/monkey) || H.is_loyalty_implanted(H))
+			if (istype(current, /mob/living/carbon/human/monkey) || H.is_loyalty_implanted(H))
 				text += "<b>LOYAL EMPLOYEE</b>|headrev|rev"
 			else if (src in ticker.mode.head_revolutionaries)
 				text = "<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
@@ -171,7 +171,7 @@ datum/mind
 			if (ticker.mode.config_tag=="cult")
 				text = uppertext(text)
 			text = "<i><b>[text]</b></i>: "
-			if (istype(current, /mob/living/carbon/monkey) || H.is_loyalty_implanted(H))
+			if (istype(current, /mob/living/carbon/human/monkey) || H.is_loyalty_implanted(H))
 				text += "<B>LOYAL EMPLOYEE</B>|cultist"
 			else if (src in ticker.mode.cult)
 				text += "<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
@@ -260,7 +260,7 @@ datum/mind
 			text = "<i><b>[text]</b></i>: "
 			if (istype(current, /mob/living/carbon/human))
 				text += "<a href='?src=\ref[src];monkey=healthy'>healthy</a>|<a href='?src=\ref[src];monkey=infected'>infected</a>|<b>HUMAN</b>|other"
-			else if (istype(current, /mob/living/carbon/monkey))
+			else if (istype(current, /mob/living/carbon/human/monkey))
 				var/found = 0
 				for(var/datum/disease/D in current.viruses)
 					if(istype(D, /datum/disease/jungle_fever)) found = 1
@@ -681,7 +681,7 @@ datum/mind
 						if (!where)
 							usr << "\red Spawning tome failed!"
 						else
-							H << "A tome, a message from your new master, appears in your [where]."
+		/*
 
 				if("amulet")
 					if (!ticker.mode.equip_cultist(current))
@@ -893,7 +893,7 @@ datum/mind
 						src = mobfinder.loc:mind
 						del(mobfinder)
 						current.radiation -= 50
-
+		*/
 		else if (href_list["silicon"])
 			current.hud_updateflag |= (1 << SPECIALROLE_HUD)
 			switch(href_list["silicon"])
@@ -1240,10 +1240,6 @@ datum/mind
 	..()
 	if(!mind.assigned_role)	mind.assigned_role = "Assistant"	//defualt
 
-//MONKEY
-/mob/living/carbon/monkey/mind_initialize()
-	..()
-
 //slime
 /mob/living/carbon/slime/mind_initialize()
 	..()
@@ -1296,10 +1292,3 @@ datum/mind
 	..()
 	mind.assigned_role = "Juggernaut"
 	mind.special_role = "Cultist"
-
-/mob/living/simple_animal/vox/armalis/mind_initialize()
-	..()
-	mind.assigned_role = "Armalis"
-	mind.special_role = "Vox Raider"
-
-

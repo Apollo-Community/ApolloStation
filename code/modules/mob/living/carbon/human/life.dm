@@ -104,6 +104,9 @@
 
 		handle_medical_side_effects()
 
+		if(!client)
+			species.handle_npc(src)
+
 	handle_stasis_bag()
 
 	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle

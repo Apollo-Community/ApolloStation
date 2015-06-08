@@ -66,3 +66,11 @@
 		"storage2" =     list("loc" = ui_storage2,  "slot" = slot_r_store,   "state" = "pocket"),
 		"belt" =         list("loc" = ui_belt,      "slot" = slot_belt,      "state" = "belt")
 		)
+
+/datum/hud_data/monkey
+	gear = list(
+		"i_clothing" =   list("loc" = ui_iclothing, "slot" = slot_w_uniform, "state" = "center", "toggle" = 1, "dir" = SOUTH),
+		"mask" =         list("loc" = ui_shoes,     "slot" = slot_wear_mask, "state" = "equip",  "toggle" = 1, "dir" = NORTH),
+		"head" =         list("loc" = ui_head,      "slot" = slot_head,      "state" = "hair",   "toggle" = 1),
+		"back" =         list("loc" = ui_sstore1,   "slot" = slot_back,      "state" = "back",   "dir" = NORTH),
+		)

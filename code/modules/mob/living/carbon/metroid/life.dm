@@ -365,7 +365,7 @@
 									Target = C
 									break
 
-							if(isalien(C) || ismonkey(C))
+							if(isalien(C) || issmall(C) || isanimal(C))
 								Target = C
 								break
 

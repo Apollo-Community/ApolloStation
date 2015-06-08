@@ -1082,7 +1082,7 @@
 "auP" = (/obj/structure/stool/bed/chair{dir = 8},/turf/simulated/floor,/area/security/prison)
 "auQ" = (/obj/machinery/flasher_button{id = "IAflash"; pixel_y = -30},/obj/machinery/door_control{id = "visit_blast"; name = "Privacy Shutters"; pixel_x = 25; pixel_y = 0},/obj/machinery/atmospherics/unary/vent_pump/on{dir = 1},/turf/simulated/floor,/area/security/prison)
 "auR" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor{icon_state = "redcorner"; dir = 1},/area/hallway/primary/fore)
-"auS" = (/obj/machinery/bot/secbot/beepsky{name = "Officer Beepsky"},/obj/structure/disposalpipe/segment,/turf/simulated/floor,/area/hallway/primary/fore)
+"auS" = (/mob/living/bot/secbot/beepsky{name = "Officer Beepsky"},/obj/structure/disposalpipe/segment,/turf/simulated/floor,/area/hallway/primary/fore)
 "auT" = (/obj/machinery/light{icon_state = "tube1"; dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor{icon_state = "redcorner"; dir = 4},/area/hallway/primary/fore)
 "auU" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 6},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 6},/obj/structure/disposalpipe/segment{dir = 4; icon_state = "pipe-c"},/obj/effect/decal/cleanable/cobweb,/turf/simulated/floor/plating,/area/maintenance/dormitory)
 "auV" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor/plating,/area/maintenance/dormitory)

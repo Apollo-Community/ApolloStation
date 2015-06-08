@@ -300,7 +300,7 @@ var/list/mob/living/forced_ambiance_list = new
 
 	L.lastarea = newarea
 
-	if( L.client.ambience_playing )
+	if((L.client != null) && L.client.ambience_playing)
 		if( oldarea.ambience.len && src.ambience.len )
 			if( oldarea.ambience[1] == src.ambience[1] )
 				return
