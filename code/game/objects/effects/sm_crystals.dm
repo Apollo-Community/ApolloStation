@@ -84,10 +84,9 @@
 
 /obj/effect/supermatter_crystal/Del()
 	if( !deleted )
-		if(smlevel>=5 && prob(smlevel*10))
+		if(smlevel>=1 && prob(min(100, smlevel*10)))
 			visible_message("\red <B>\The [src] explodes!</B>")
 			supermatter_delamination(src, smlevel, 1, max(1, smlevel-1))
-			return
 		else
 			visible_message("\red <B>\The [src] shatters!</B>")
 			playsound(loc, 'sound/effects/Glassbr2.ogg', 100, 1)
@@ -104,7 +103,7 @@
 		return
 	if(smlevel == 0) // Hacky fix to get rid of divisions by zero, as well as depopulating crystals a bit.
 		del(src)
-	if(smlevel>=5 && prob(smlevel/50))
+	if(smlevel>=1 && prob(smlevel/10))
 		del(src)
 
 

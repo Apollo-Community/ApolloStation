@@ -93,14 +93,6 @@
 	..()
 
 /obj/item/weapon/shard/supermatter/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if (isnucleation(M))
-		M.smlevel += (size*smlevel)/500
-		M.heal_overall_damage((size*smlevel)/50, (size*smlevel)/50)
-		user << "\red The [src] fuses with [M]!"
-		M << "\blue You feel a soothing wave wash over you."
-		user.drop_from_inventory(src)
-		del(src)
-		return
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
 
