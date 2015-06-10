@@ -13,22 +13,27 @@
 #define SM_FUSION_POWER 1.3			// How much smlevel affects power. At a factor of 1, a stage 2 SM has the equivalent power of 2 SM's.
 #define SM_FUSION_STABILITY 10		// Amount of stability gained or lost via fusion. At 100, the SM becomes 10% more stable per fusion. At -100, the SM becomes 10% less stable.
 #define SM_CRYSTAL_RATE	100			// How quickly the SM is able to regenerate crystal formations. At lower higher numbers, the sm heals faster.
-#define SM_CONSUMPTION_RATE 10		// How fast the SM consumes gas to produce power. Raising this will require the SM to be checked up on, and refueled, more often.
+
 #define SM_CRITICAL_STABILITY 100		// Affects how likely the SM is to have a critical failure. at 100, there is a probability of 0.1 per fusion stage.
-#define SM_CRITICAL_DANGER 100		// Affects how dangerous a critical failure is. At higher numbers, the potential for instant delamination increases.
 #define SM_THERMAL_FACTOR 350			// How much heat the SM gives off. This is affected greatly by power.
 #define SM_CRITICAL_TEMP 800			// The temperature in Kelvin before the SM starts to take damage. This is affected by fusion power.
-#define SM_DAMAGE_FACTOR 1.0			// How much damage the SM is able to take per 100 power. This is affected by fusion power.
-#define SM_PSIONIC_POWER 10			// Affects shit like hallucinations and whatever.
-#define SM_WARNING_DELAY 30			// Time in seconds between each SM radio alert warning.
+
+#define SM_CONSUMPTION_RATE 10		// How fast the SM consumes gas to produce power. Raising this will require the SM to be checked up on, and refueled, more often.
 #define SM_OXYGEN_FACTOR 5			// Amount of Kiliwatts produced by 1 Mole of Oxygen.
 #define SM_CARBON_FACTOR 7.5			// Amount of Kiliwatts produced by 1 Mole of Carbon Dioxide.
-#define SM_LUMINANCE_FACTOR 1.0		// Affects how much light is emitted by the engine based on power-levels. This is affected by fusion power and base power.
+
+#define SM_PSIONIC_POWER 10			// Affects shit like hallucinations and whatever.
+#define SM_WARNING_DELAY 30			// Time in seconds between each SM radio alert warning.
 #define SM_DETONATE_DELAY 10			// Time in seconds before the SM will actually detonate. Affected by fusion power.
 #define SM_EXPLOSION_SIZE 5			// Controls the maximum-size of SM explosion and delamination.
-#define SM_SUFFOCATION_MOLES 2		// Amount of moles of oxygen per SM stage the engine needs to prevent suffocation.
+
+#define SM_CRITICAL_DANGER 100		// Affects how dangerous a critical failure is. At higher numbers, the potential for instant delamination increases.
+#define SM_DAMAGE_FACTOR 1.0			// How much damage the SM is able to take per 100 power. This is affected by fusion power.
+#define SM_SUFFOCATION_MOLES 5		// Amount of moles of oxygen per SM stage the engine needs to prevent suffocation.
 #define SM_HEAT_DAMAGE 10			// Controls the damage the SM takes per degree K above critical temperature. Increasing this will speed delamination by a ton.
+
 #define SM_POWER_RATE 1				// Affects rate of power increase. Raise it if you dont want to wait.
+#define SM_DECAY_RATE 100			// Affects rate of decay. Reduce for slower decay, increase for faster decay. Affects how often engine will need to be charged.
 
 // Seeing as none of these will change throughout a round, and we had a fuckton of defines anyways, I made them into defines. For the blood god.
 #define SM_SAFE_ALERT "Crystaline hyperstructure returning to safe operating levels."
@@ -57,7 +62,6 @@
 	var/power_archived = 0
 	var/damage = 0
 	var/damage_archived = 0
-	var/heat_archived = 0
 	var/safe_alert = ""
 	var/safe_warned = 0
 	var/emergency_issued = 0
@@ -144,7 +148,7 @@
 			announce_warning()
 
 	// SUPERMATTER CHANGE CHECK
-	if( (smlevel != changed) || (abs(power-power_archived) >= SM_BASE_POWER / 4) )
+	if( (smlevel != changed) || (power!=power_archived) )
 		changed = smlevel
 		power_archived = power
 		update_icon()
@@ -211,7 +215,7 @@
 
 		if(phoron)
 			if (removed.temperature < SM_CRITICAL_TEMP)
-				var/heal_amt = min(0, (SM_CRITICAL_TEMP-removed.temperature)/SM_CRITICAL_TEMP)*(phoron*SM_CRYSTAL_RATE)
+				var/heal_amt = max(0, (SM_CRITICAL_TEMP-removed.temperature)/SM_CRITICAL_TEMP)*(phoron*SM_CRYSTAL_RATE)
 				damage = max(0, damage - min(damage_inc_limit, heal_amt))
 				phoron = 0
 			else
@@ -222,14 +226,14 @@
 		phoron += oxygen*(SM_CONSUMPTION_RATE/100)
 		oxygen -= oxygen*(SM_CONSUMPTION_RATE/200)
 
-		var/need_oxy = (SM_SUFFOCATION_MOLES * (smlevel**SM_FUSION_POWER))-(oxygen+SM_SUFFOCATION_MOLES)
+		var/need_oxy = ((SM_SUFFOCATION_MOLES/10) * (smlevel**SM_FUSION_POWER))-(oxygen+(SM_SUFFOCATION_MOLES/10))
 
 		if (need_oxy>0)
 			phoron+=need_oxy
 			damage+=need_oxy
 
 		if(removed.temperature >= SM_CRITICAL_TEMP)
-			damage += min(damage_inc_limit, (SM_CRITICAL_TEMP-removed.temperature)*(SM_HEAT_DAMAGE/1000))
+			damage += min(damage_inc_limit, (removed.temperature-SM_CRITICAL_TEMP)*(SM_HEAT_DAMAGE/1000))
 
 		transfer_energy()
 
@@ -257,7 +261,7 @@
 		l.apply_effect(rads, IRRADIATE)
 
 	// SUPERMATTER DECAY
-	var/decay = ((power/(SM_BASE_POWER*(smlevel**SM_FUSION_POWER)))*(10*(smlevel**SM_FUSION_POWER)))/20
+	var/decay = (power / (SM_BASE_POWER * (smlevel**SM_FUSION_POWER) ) ) * (SM_DECAY_RATE/1000)
 	power = max(0, power-decay)
 
 	return 1
@@ -271,9 +275,9 @@
 
 
 	if(istype(Proj, /obj/item/projectile/beam))
-		power += Proj.damage * SM_BASE_POWER/2000 * (smlevel**SM_FUSION_POWER)
+		power += Proj.damage * SM_BASE_POWER/200 * (smlevel**SM_FUSION_POWER)
 	else
-		damage += Proj.damage * SM_BASE_POWER/2000 * (smlevel**SM_FUSION_POWER)
+		damage += Proj.damage * SM_BASE_POWER/200 * (smlevel**SM_FUSION_POWER)
 	return 0
 
 /obj/machinery/power/supermatter/attack_robot(mob/user as mob)
@@ -365,8 +369,13 @@
 	else
 		if (istype(user, /obj/machinery/power/supermatter))
 			var/obj/machinery/power/supermatter/S = user
-			smlevel += S.smlevel
-			power += (100 * (smlevel**SM_FUSION_POWER))  // Get a ton of power from the fusion.
+			var/newsm = S.smlevel + smlevel
+			var/newdm = ((S.smlevel/newsm)*S.damage)+((smlevel/newsm)*damage)
+			var/newpw = ((S.smlevel/newsm)*S.power)+((smlevel/newsm)*power)
+			smlevel += newsm
+			damage = newdm
+			power = newpw
+			power += (100 * (S.smlevel**SM_FUSION_POWER))  // Get a ton of power from the fusion.
 			for(var/mob/living/l in range(16))
 				var/rads = (power/2) * sqrt( 1 / (get_dist(l, src) + 1) ) // Increased range for radiation. Eventually you'll be radiating the entire station.
 				l.apply_effect(rads, IRRADIATE)
@@ -393,7 +402,7 @@
 		l.apply_effect(rads, IRRADIATE)
 
 /obj/machinery/power/supermatter/update_icon()
-	luminosity = 2+min(6, ((power/SM_BASE_POWER)*SM_LUMINANCE_FACTOR))
+	luminosity = 2+min(6, ((2*power)/SM_BASE_POWER))
 	if(smlevel<1)
 		l_color = "#88FF00"
 		base_icon_state = "supermatter[bare?"_bare":""]_1"
