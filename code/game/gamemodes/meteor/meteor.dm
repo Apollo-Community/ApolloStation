@@ -1,3 +1,5 @@
+#define METEOR_DELAY 6000
+
 /datum/game_mode/meteor
 	name = "meteor"
 	config_tag = "meteor"
@@ -10,7 +12,6 @@
 
 	uplink_welcome = "EVIL METEOR Uplink Console:"
 	uplink_uses = 10
-	deny_respawn = 1
 	var/next_wave = METEOR_DELAY
 
 /datum/game_mode/meteor/announce()

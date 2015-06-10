@@ -25,18 +25,19 @@
 /proc/spawn_meteor(var/list/meteortypes)
 	var/turf/pickedstart
 	var/turf/pickedgoal
+	var/picked_station_level = pick(config.station_levels)
 	var/max_i = 10//number of tries to spawn meteor.
 	while (!istype(pickedstart, /turf/space))
 		var/startSide = pick(cardinal)
-		pickedstart = spaceDebrisStartLoc(startSide, 1)
-		pickedgoal = spaceDebrisFinishLoc(startSide, 1)
+		pickedstart = spaceDebrisStartLoc(startSide, picked_station_level)
+		pickedgoal = spaceDebrisFinishLoc(startSide, picked_station_level)
 		max_i--
 		if(max_i<=0)
 			return
 	var/Me = pickweight(meteortypes)
 	var/obj/effect/meteor/M = new Me(pickedstart)
 	M.dest = pickedgoal
-	M.z_original = 1
+	M.z_original = picked_station_level
 	spawn(0)
 		walk_towards(M, M.dest, 1)
 	return
@@ -103,7 +104,7 @@
 
 /obj/effect/meteor/Move()
 	if(z != z_original || loc == dest)
-		qdel(src)
+		del(src)
 		return
 
 	. = ..() //process movement...
@@ -142,13 +143,14 @@
 	if(hits <= 0)
 		make_debris()
 		meteor_effect(heavy)
+		del(src)
 
 /obj/effect/meteor/ex_act()
 	return
 
 /obj/effect/meteor/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/pickaxe))
-		qdel(src)
+		del(src)
 		return
 	..()
 

@@ -243,8 +243,6 @@
 /mob/living/carbon/slime/attack_ui(slot)
 	return
 
-			M.show_message(text("\red [] has been hit by []", src, O), 1)
-	if (health > 0)
 /mob/living/carbon/slime/attack_hand(mob/living/carbon/human/M as mob)
 
 	..()

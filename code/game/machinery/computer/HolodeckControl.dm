@@ -164,10 +164,6 @@ var/global/list/holodeck_programs = list(
 	emergencyShutdown()
 	..()
 
-/obj/machinery/computer/HolodeckControl/meteorhit(var/obj/O as obj)
-	emergencyShutdown()
-	..()
-
 
 /obj/machinery/computer/HolodeckControl/emp_act(severity)
 	emergencyShutdown()
