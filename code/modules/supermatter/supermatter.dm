@@ -32,6 +32,7 @@
 #define SM_SUFFOCATION_MOLES 5		// Amount of moles of oxygen per SM stage the engine needs to prevent suffocation.
 #define SM_HEAT_DAMAGE 10			// Controls the damage the SM takes per degree K above critical temperature. Increasing this will speed delamination by a ton.
 
+#define SM_CHARGE_FACTOR 200			// Affects how much power can be gotten by an emitter blast. 200 is DOUBLE emitter damage.
 #define SM_POWER_RATE 1				// Affects rate of power increase. Raise it if you dont want to wait.
 #define SM_DECAY_RATE 100			// Affects rate of decay. Reduce for slower decay, increase for faster decay. Affects how often engine will need to be charged.
 
@@ -59,6 +60,7 @@
 	var/base_icon_state = "supermatter_1"
 
 	var/power = 0
+	var/power_percent = 0
 	var/power_archived = 0
 	var/damage = 0
 	var/damage_archived = 0
@@ -95,12 +97,12 @@
 	spawn(SM_DETONATE_DELAY * 10 * smlevel)
 		var/turf/epicenter = get_turf(src)
 		explosion(epicenter, \
-		          min(1 * SM_EXPLOSION_SIZE + (power / SM_BASE_POWER), (SM_EXPLOSION_SIZE) * 3), \
-		          min(2 * SM_EXPLOSION_SIZE + (power / SM_BASE_POWER), (SM_EXPLOSION_SIZE) * 4), \
-		          min(3 * SM_EXPLOSION_SIZE + (power / SM_BASE_POWER), (SM_EXPLOSION_SIZE) * 5), \
-		          min(4 * SM_EXPLOSION_SIZE + (power / SM_BASE_POWER), (SM_EXPLOSION_SIZE) * 6), 1)
+		          min(1 * SM_EXPLOSION_SIZE + power_percent + smlevel, (SM_EXPLOSION_SIZE) * 3), \
+		          min(2 * SM_EXPLOSION_SIZE + power_percent + smlevel, (SM_EXPLOSION_SIZE) * 4), \
+		          min(3 * SM_EXPLOSION_SIZE + power_percent + smlevel, (SM_EXPLOSION_SIZE) * 5), \
+		          min(4 * SM_EXPLOSION_SIZE + power_percent + smlevel, (SM_EXPLOSION_SIZE) * 6), 1)
 		supermatter_delamination(epicenter, \
-		          min(4 * SM_EXPLOSION_SIZE + (power / SM_BASE_POWER), (SM_EXPLOSION_SIZE) * 7), 1, smlevel)
+		          min(4 * SM_EXPLOSION_SIZE + power_percent + smlevel, (SM_EXPLOSION_SIZE) * 6), 1, smlevel)
 		del src
 		return
 
@@ -127,7 +129,7 @@
 		radio.autosay(alert_msg, "Supermatter Monitor")
 
 /obj/machinery/power/supermatter/process()
-
+	power_percent = (power / (SM_BASE_POWER*(smlevel ** SM_FUSION_POWER))) // This was a fucking pain to use over and over again.
 	processed += 1
 
 	// SUPERMATTER LOCATION CHECK
@@ -148,9 +150,9 @@
 			announce_warning()
 
 	// SUPERMATTER CHANGE CHECK
-	if( (smlevel != changed) || (power!=power_archived) )
+	if( (smlevel != changed) || ((power_percent-power_archived)*120)>=1 )
 		changed = smlevel
-		power_archived = power
+		power_archived = power_percent
 		update_icon()
 
 	// SUPERMATTER GRAVITY PULL
@@ -162,7 +164,7 @@
 
 
 	// SUPERMATTER DAMAGE LIMIT
-	var/damage_inc_limit = (smlevel ** SM_FUSION_POWER) + ( (power / SM_BASE_POWER) * SM_DAMAGE_FACTOR * 100)
+	var/damage_inc_limit = (smlevel ** SM_FUSION_POWER) + ( power_percent * SM_DAMAGE_FACTOR * 100)
 
 	// SUPERMATTER GAS CONSUMPTION
 	var/datum/gas_mixture/removed = null
@@ -197,20 +199,20 @@
 		var/carbon = removed.gas["carbon_dioxide"]
 		var/sleepy = removed.gas["sleeping_agent"]
 
-		var/max_power = (SM_BASE_POWER*(smlevel**SM_FUSION_POWER))
+
 
 		if(sleepy)
 			power = max(0, power-sleepy)
 
 		if(oxygen)
-			power += oxygen*(1-(power/max_power))*SM_OXYGEN_FACTOR*(SM_POWER_RATE/100)*(smlevel**SM_FUSION_POWER)
+			power += oxygen*(1-power_percent)*SM_OXYGEN_FACTOR*(SM_POWER_RATE/10)*(smlevel**SM_FUSION_POWER)
 			if (prob(oxygen/10000))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(oxygen/100, 1, src)
 				s.start()
 
 		if(carbon)
-			power += carbon**(1-(power/max_power))*SM_CARBON_FACTOR*SM_POWER_RATE
+			power += carbon**(1-power_percent)*SM_CARBON_FACTOR*SM_POWER_RATE
 			carbon = 0
 
 		if(phoron)
@@ -219,7 +221,7 @@
 				damage = max(0, damage - min(damage_inc_limit, heal_amt))
 				phoron = 0
 			else
-				power += phoron*(1-(power/max_power))*(2*SM_OXYGEN_FACTOR)*(SM_POWER_RATE/100)
+				power += phoron*(1-power_percent)*(2*SM_OXYGEN_FACTOR)*(SM_POWER_RATE/10)
 				phoron = 0
 
 		phoron += (damage/(explosion_point + ( (SM_FUSION_STABILITY / explosion_point) * smlevel) ))*(smlevel**SM_FUSION_POWER)
@@ -261,7 +263,7 @@
 		l.apply_effect(rads, IRRADIATE)
 
 	// SUPERMATTER DECAY
-	var/decay = (power / (SM_BASE_POWER * (smlevel**SM_FUSION_POWER) ) ) * (SM_DECAY_RATE/1000)
+	var/decay = (power_percent + 1) * (SM_DECAY_RATE/1000)
 	power = max(0, power-decay)
 
 	return 1
@@ -275,9 +277,9 @@
 
 
 	if(istype(Proj, /obj/item/projectile/beam))
-		power += Proj.damage * SM_BASE_POWER/200 * (smlevel**SM_FUSION_POWER)
+		power += Proj.damage * (1-power_percent) * SM_CHARGE_FACTOR
 	else
-		damage += Proj.damage * SM_BASE_POWER/200 * (smlevel**SM_FUSION_POWER)
+		damage += Proj.damage * (1-power_percent) * SM_CHARGE_FACTOR
 	return 0
 
 /obj/machinery/power/supermatter/attack_robot(mob/user as mob)
@@ -402,40 +404,61 @@
 		l.apply_effect(rads, IRRADIATE)
 
 /obj/machinery/power/supermatter/update_icon()
-	luminosity = 2+min(6, ((2*power)/SM_BASE_POWER))
+	var/light_mult = max(240, power_percent*120)+16
+
+	if (smlevel <= 9)
+
+		var/c = ((smlevel+1)/11)*360
+		var/r = 120
+		var/b = 240
+		var/g = 0
+
+		if (abs(c - r) >= 120)
+			r = 0
+		else
+			r = 1-(abs(c-r)/120)
+
+		if (abs(c - b) >= 120)
+			b = 0
+		else
+			b = 1-(abs(c-b)/120)
+
+		g = 1-(r+b)
+
+		r = r*light_mult
+		b = b*light_mult
+		g = g*light_mult
+		c = rgb(r, g, b)
+
+		l_color = c
+	else
+		l_color = rgb(light_mult, light_mult, light_mult)
+
+	luminosity = min(7, smlevel+3)
+
 	if(smlevel<1)
-		l_color = "#88FF00"
 		base_icon_state = "supermatter[bare?"_bare":""]_1"
 	else if(smlevel<2)
-		l_color = "#FFFF00"
 		base_icon_state = "supermatter[bare?"_bare":""]_1"
 	else if(smlevel<3)
-		l_color = "#FF8800"
 		base_icon_state = "supermatter[bare?"_bare":""]_2"
 	else if(smlevel<4)
-		l_color = "#FF0000"
 		base_icon_state = "supermatter[bare?"_bare":""]_3"
 	else if(smlevel<5)
-		l_color = "#FF0088"
 		base_icon_state = "supermatter[bare?"_bare":""]_4"
 	else if(smlevel<6)
-		l_color = "#FF00FF"
 		base_icon_state = "supermatter[bare?"_bare":""]_5"
 	else if(smlevel<7)
-		l_color = "#8800FF"
 		base_icon_state = "supermatter[bare?"_bare":""]_6"
 	else if(smlevel<8)
-		l_color = "#0000FF"
 		base_icon_state = "supermatter[bare?"_bare":""]_7"
 	else if(smlevel<9)
-		l_color = "#0080FF"
 		base_icon_state = "supermatter[bare?"_bare":""]_8"
 	else if(smlevel<10)
-		l_color = "#00FFFF"
 		base_icon_state = "supermatter[bare?"_bare":""]_8"
 	else if(smlevel>=9)
-		l_color = "#FFFFFF"
 		base_icon_state = "supermatter[bare?"_bare":""]_9"
+
 	icon_state = base_icon_state
 
 /obj/machinery/power/supermatter/proc/supermatter_pull()
