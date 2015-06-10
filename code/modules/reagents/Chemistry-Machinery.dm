@@ -289,10 +289,6 @@
 	if (prob(50))
 		del(src)
 
-/obj/machinery/chem_master/meteorhit()
-	del(src)
-	return
-
 /obj/machinery/chem_master/attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
 
 	if(istype(B, /obj/item/weapon/reagent_containers/glass))

@@ -61,9 +61,6 @@
 */
 
 
-/atom/proc/meteorhit(obj/meteor as obj)
-	return
-
 /atom/proc/allow_drop()
 	return 1
 

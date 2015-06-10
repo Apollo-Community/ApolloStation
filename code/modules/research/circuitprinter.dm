@@ -46,10 +46,6 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		if (prob(50))
 			del(src)
 
-	meteorhit()
-		del(src)
-		return
-
 	proc/TotalMaterials()
 		return g_amount + gold_amount + diamond_amount + uranium_amount
 

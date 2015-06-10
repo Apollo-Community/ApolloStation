@@ -116,10 +116,15 @@
 	if(luminosity != lum)
 		SetLuminosity(lum)
 
-/obj/machinery/power/supermatter/proc/announce_warning()
+/obj/machinery/power/supermatter/proc/get_integrity()
 	var/integrity = damage / explosion_point
 	integrity = round(100 - integrity * 100)
 	integrity = integrity < 0 ? 0 : integrity
+	return integrity
+
+
+/obj/machinery/power/supermatter/proc/announce_warning()
+	var/integrity = get_integrity()
 	var/alert_msg = " Integrity at [integrity]%"
 
 	if(damage > emergency_point)
@@ -137,6 +142,28 @@
 		alert_msg = null
 	if(alert_msg)
 		radio.autosay(alert_msg, "Supermatter Monitor")
+		radio.autosay(alert_msg, "Supermatter Monitor", "Engineering")
+		//Public alerts
+		if((damage > emergency_point) && !public_alert)
+			radio.autosay("WARNING: SUPERMATTER CRYSTAL DELAMINATION IMMINENT!", "Supermatter Monitor")
+			public_alert = 1
+		else if(safe_warned && public_alert)
+			radio.autosay(alert_msg, "Supermatter Monitor")
+			public_alert = 0
+
+
+/obj/machinery/power/supermatter/get_transit_zlevel()
+	//don't send it back to the station -- most of the time
+	if(prob(99))
+		var/list/candidates = accessible_z_levels.Copy()
+		for(var/zlevel in config.station_levels)
+			candidates.Remove("[zlevel]")
+		candidates.Remove("[src.z]")
+
+		if(candidates.len)
+			return text2num(pickweight(candidates))
+
+	return ..()
 
 /obj/machinery/power/supermatter/process()
 
@@ -335,34 +362,7 @@
 		defer_powernet_rebuild = 1
 	// Let's just make this one loop.
 	for(var/atom/X in orange(pull_radius,src))
-		// Movable atoms only
-		if(istype(X, /atom/movable))
-			if(is_type_in_list(X, uneatable))	continue
-			if(((X) && (!istype(X,/mob/living/carbon/human))))
-				spawn( 0 )
-					step_towards(X,src)
-				if(istype(X, /obj)) //unanchored objects pulled twice as fast
-					var/obj/O = X
-					if(!O.anchored)
-						spawn( 0 )
-							step_towards(X,src)
-				else
-					spawn( 0 )
-						step_towards(X,src)
-				if(istype(X, /obj/structure/window)) //shatter windows
-					var/obj/structure/window/W = X
-					W.ex_act(2.0)
-			else if(istype(X,/mob/living/carbon/human))
-				var/mob/living/carbon/human/H = X
-				if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
-					var/obj/item/clothing/shoes/magboots/M = H.shoes
-					if(M.magpulse)
-						spawn( 0 )
-							step_towards(H,src) //step just once with magboots
-						continue
-				spawn( 0 )
-					step_towards(H,src) //step twice
-					step_towards(H,src)
+		spawn()	X.singularity_pull(src, STAGE_FIVE)
 
 	if(defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 0

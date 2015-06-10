@@ -395,10 +395,6 @@
 		del src
 		return
 
-	meteorhit()
-		del src
-		return
-
 	attack_hand(mob/user as mob)
 		user.set_machine(src)
 		var/dat = {"<html>

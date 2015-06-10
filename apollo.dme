@@ -31,6 +31,7 @@
 #include "code\__HELPERS\turfs.dm"
 #include "code\__HELPERS\type2type.dm"
 #include "code\__HELPERS\unsorted.dm"
+#include "code\_helpers\matrices.dm"
 #include "code\_onclick\adjacent.dm"
 #include "code\_onclick\ai.dm"
 #include "code\_onclick\click.dm"
