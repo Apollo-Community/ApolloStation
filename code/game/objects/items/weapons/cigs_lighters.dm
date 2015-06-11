@@ -209,7 +209,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/lucky7
 	name = "Lucky Sevens cigarette"
-	desc = "Contrary to popular belief, there are many more than seven flavors of Lucky Sevens cigarettes. Safety not gaurenteed."
+	desc = "Contrary to popular belief, there are many more than seven flavors of Lucky Sevens cigarettes. Safety not guarenteed."
 	icon_state = "l7off"
 	icon_on = "l7on"  //Note - these are in masks.dmi not in cigarette.dmi
 	icon_off = "l7off"
