@@ -1050,13 +1050,13 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 					Pump.air2.temperature = 50
 					Pump.air2.update_values()
 				Pump.use_power=1
-				Pump.target_pressure = 4500
+				Pump.target_pressure = 15000
 				Pump.update_icon()
 
 			else if(istype(M,/obj/machinery/power/supermatter))
 				SM = M
 				spawn(50)
-					SM.power = 320
+					SM.power = 520
 
 			else if(istype(M,/obj/machinery/power/smes))	//This is the SMES inside the engine room.  We don't need much power.
 				var/obj/machinery/power/smes/SMES = M

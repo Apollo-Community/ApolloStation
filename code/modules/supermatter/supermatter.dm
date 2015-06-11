@@ -32,9 +32,8 @@
 #define SM_SUFFOCATION_MOLES 5		// Amount of moles of oxygen per SM stage the engine needs to prevent suffocation.
 #define SM_HEAT_DAMAGE 10			// Controls the damage the SM takes per degree K above critical temperature. Increasing this will speed delamination by a ton.
 
-#define SM_CHARGE_FACTOR 200			// Affects how much power can be gotten by an emitter blast. 200 is DOUBLE emitter damage.
 #define SM_POWER_RATE 1				// Affects rate of power increase. Raise it if you dont want to wait.
-#define SM_DECAY_RATE 100			// Affects rate of decay. Reduce for slower decay, increase for faster decay. Affects how often engine will need to be charged.
+#define SM_DECAY_RATE 50			// Affects rate of decay. Reduce for slower decay, increase for faster decay. Affects how often engine will need to be charged.
 
 // Seeing as none of these will change throughout a round, and we had a fuckton of defines anyways, I made them into defines. For the blood god.
 #define SM_SAFE_ALERT "Crystaline hyperstructure returning to safe operating levels."
@@ -50,7 +49,7 @@
 	icon_state = "supermatter_1"
 	density = 1
 	anchored = 0
-	luminosity = 2
+	luminosity = 4
 	l_color = "#FFFF00"
 
 	var/smlevel = 1
@@ -205,14 +204,14 @@
 			power = max(0, power-sleepy)
 
 		if(oxygen)
-			power += oxygen*(1-power_percent)*SM_OXYGEN_FACTOR*(SM_POWER_RATE/10)*(smlevel**SM_FUSION_POWER)
+			power += oxygen*min(0.01, (1-power_percent))*SM_OXYGEN_FACTOR*(SM_POWER_RATE/10)*(smlevel**SM_FUSION_POWER)
 			if (prob(oxygen/10000))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(oxygen/100, 1, src)
 				s.start()
 
 		if(carbon)
-			power += carbon**(1-power_percent)*SM_CARBON_FACTOR*SM_POWER_RATE
+			power += carbon*min(0.01, min(1-power_percent))*SM_CARBON_FACTOR*SM_POWER_RATE
 			carbon = 0
 
 		if(phoron)
@@ -221,7 +220,7 @@
 				damage = max(0, damage - min(damage_inc_limit, heal_amt))
 				phoron = 0
 			else
-				power += phoron*(1-power_percent)*(2*SM_OXYGEN_FACTOR)*(SM_POWER_RATE/10)
+				power += phoron*min(0.01, (1-power_percent))*(2*SM_OXYGEN_FACTOR)*(SM_POWER_RATE/10)
 				phoron = 0
 
 		phoron += (damage/(explosion_point + ( (SM_FUSION_STABILITY / explosion_point) * smlevel) ))*(smlevel**SM_FUSION_POWER)
@@ -232,6 +231,7 @@
 
 		if (need_oxy>0)
 			phoron+=need_oxy
+			power-=need_oxy
 			damage+=need_oxy
 
 		if(removed.temperature >= SM_CRITICAL_TEMP)
@@ -245,7 +245,7 @@
 		removed.gas["sleeping_agent"] = sleepy
 		removed.gas["carbon_dioxide"] = carbon
 
-		removed.add_thermal_energy(power*SM_THERMAL_FACTOR)
+		removed.add_thermal_energy(power*SM_THERMAL_FACTOR*(power_percent**2))
 		env.merge(removed)
 
 
@@ -263,11 +263,10 @@
 		l.apply_effect(rads, IRRADIATE)
 
 	// SUPERMATTER DECAY
-	var/decay = (power_percent + 1) * (SM_DECAY_RATE/1000)
+	var/decay = min(0.01, (power_percent**5)) * SM_DECAY_RATE
 	power = max(0, power-decay)
 
 	return 1
-
 
 /obj/machinery/power/supermatter/bullet_act(var/obj/item/projectile/Proj)
 	var/turf/L = loc
@@ -277,9 +276,9 @@
 
 
 	if(istype(Proj, /obj/item/projectile/beam))
-		power += Proj.damage * (1-power_percent) * SM_CHARGE_FACTOR
+		power += Proj.damage * 0.5
 	else
-		damage += Proj.damage * (1-power_percent) * SM_CHARGE_FACTOR
+		damage += Proj.damage * 0.5
 	return 0
 
 /obj/machinery/power/supermatter/attack_robot(mob/user as mob)
@@ -432,9 +431,9 @@
 
 		l_color = c
 	else
-		l_color = rgb(light_mult, light_mult, light_mult)
+		l_color = rgb(light_mult/2, light_mult, light_mult/2)
 
-	luminosity = min(7, smlevel+3)
+	luminosity = 3 + (smlevel*power_percent)
 
 	if(smlevel<1)
 		base_icon_state = "supermatter[bare?"_bare":""]_1"
