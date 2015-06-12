@@ -353,10 +353,9 @@ Alien plants should do something if theres a lot of poison
 		del(src)
 
 /obj/effect/alien/egg/attack_hand(user as mob)
-
 	var/mob/living/carbon/M = user
 	if(!istype(M) || !(locate(/datum/organ/internal/xenos/hivenode) in M.internal_organs))
-		return attack_hand(user)
+		return
 
 	switch(status)
 		if(BURST)
