@@ -25,6 +25,10 @@
 	mob_size = 5
 
 /mob/living/simple_animal/cat/Life()
+
+	if(client)
+		return
+
 	//MICE!
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)

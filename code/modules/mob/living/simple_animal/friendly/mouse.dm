@@ -36,6 +36,9 @@
 		for(var/mob/M in view())
 			M << 'sound/effects/mousesqueek.ogg'
 
+	if(client)
+		return
+
 	if(!ckey && stat == CONSCIOUS && prob(0.5))
 		stat = UNCONSCIOUS
 		icon_state = "mouse_[body_color]_sleep"

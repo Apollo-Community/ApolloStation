@@ -31,6 +31,10 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/Life()
 	. = ..()
+
+	if(client)
+		return
+
 	if(.)
 		//chance to go crazy and start wacking stuff
 		if(!enemies.len && prob(1))

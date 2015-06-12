@@ -28,6 +28,9 @@
 /mob/living/simple_animal/bee/Life()
 	..()
 
+	if(client)
+		return
+
 	if(stat == CONSCIOUS)
 		//if we're strong enough, sting some people
 		var/mob/living/carbon/human/M = target_mob

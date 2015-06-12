@@ -250,6 +250,9 @@
 /mob/living/simple_animal/dog/corgi/Ian/Life()
 	..()
 
+	if(client)
+		return
+
 	//Feeding, chasing food, FOOOOODDDD
 	if(!stat && !resting && !buckled)
 		turns_since_scan++
