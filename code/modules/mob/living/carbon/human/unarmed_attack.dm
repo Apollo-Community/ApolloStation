@@ -64,7 +64,7 @@
 						target.set_dir(reverse_dir[target.dir])
 					target.apply_effect(attack_damage * 0.4, WEAKEN, armour)
 			if("groin")
-				target.visible_message("<span class='warning'>[target] looks like \he is in pain!</span>", "<span class='warning'>[(target.gender=="female") ? "Oh god that hurt!" : "Oh no, not your[pick("testicles", "crown jewels", "clockweights", "family jewels", "marbles", "bean bags", "teabags", "sweetmeats", "goolies")]!"]</span>")
+				target.visible_message("<span class='warning'>[target] looks like \he is in pain!</span>", "<span class='warning'>[(target.gender=="female") ? "Oh god that hurt!" : "Oh no, not your [pick("testicles", "crown jewels", "clockweights", "family jewels", "marbles", "bean bags", "teabags", "sweetmeats", "goolies")]!"]</span>")
 				target.apply_effects(stutter = attack_damage * 2, agony = attack_damage* 3, blocked = armour)
 			if("l_leg", "l_foot", "r_leg", "r_foot")
 				if(!target.lying)
