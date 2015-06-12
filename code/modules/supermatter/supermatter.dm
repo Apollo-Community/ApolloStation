@@ -48,6 +48,7 @@
 	var/damage_archived = 0
 	var/safe_alert = "Crystaline hyperstructure returning to safe operating levels."
 	var/safe_warned = 0
+	var/public_alert = 0 //Stick to Engineering frequency except for big warnings when integrity bad
 	var/warning_point = 100
 	var/warning_alert = "Danger! Crystal hyperstructure instability!"
 	var/emergency_point = 700
@@ -116,10 +117,15 @@
 	if(luminosity != lum)
 		SetLuminosity(lum)
 
-/obj/machinery/power/supermatter/proc/announce_warning()
+/obj/machinery/power/supermatter/proc/get_integrity()
 	var/integrity = damage / explosion_point
 	integrity = round(100 - integrity * 100)
 	integrity = integrity < 0 ? 0 : integrity
+	return integrity
+
+
+/obj/machinery/power/supermatter/proc/announce_warning()
+	var/integrity = get_integrity()
 	var/alert_msg = " Integrity at [integrity]%"
 
 	if(damage > emergency_point)
@@ -137,6 +143,15 @@
 		alert_msg = null
 	if(alert_msg)
 		radio.autosay(alert_msg, "Supermatter Monitor")
+		radio.autosay(alert_msg, "Supermatter Monitor", "Engineering")
+		//Public alerts
+		if((damage > emergency_point) && !public_alert)
+			radio.autosay("WARNING: SUPERMATTER CRYSTAL DELAMINATION IMMINENT!", "Supermatter Monitor")
+			public_alert = 1
+		else if(safe_warned && public_alert)
+			radio.autosay(alert_msg, "Supermatter Monitor")
+			public_alert = 0
+
 
 /obj/machinery/power/supermatter/process()
 

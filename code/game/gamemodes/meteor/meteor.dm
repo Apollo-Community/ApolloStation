@@ -1,3 +1,5 @@
+#define METEOR_DELAY 6000
+
 /datum/game_mode/meteor
 	name = "meteor"
 	config_tag = "meteor"
@@ -10,7 +12,7 @@
 
 	uplink_welcome = "EVIL METEOR Uplink Console:"
 	uplink_uses = 10
-
+	var/next_wave = METEOR_DELAY
 
 /datum/game_mode/meteor/announce()
 /*
@@ -29,14 +31,9 @@
 
 
 /datum/game_mode/meteor/process()
-	if(nometeors) return
-	/*if(prob(80))
-		spawn()
-			dust_swarm("norm")
-	else
-		spawn()
-			dust_swarm("strong")*/
-	spawn() spawn_meteors(6)
+	if(world.time >= next_wave)
+		next_wave = world.time + meteor_wave_delay
+		spawn() spawn_meteors(6, meteors_normal)
 
 
 /datum/game_mode/meteor/declare_completion()

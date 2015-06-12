@@ -39,13 +39,6 @@
 		Break()
 		del(src)
 
-
-/obj/structure/lamarr/meteorhit(obj/O as obj)
-		new /obj/item/weapon/shard( src.loc )
-		Break()
-		del(src)
-
-
 /obj/structure/lamarr/proc/healthcheck()
 	if (src.health <= 0)
 		if (!( src.destroyed ))

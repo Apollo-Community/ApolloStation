@@ -452,10 +452,6 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 	health = 0
 	healthcheck()
 
-/obj/effect/energy_net/meteorhit()
-	health = 0
-	healthcheck()
-
 /obj/effect/energy_net/attack_hand(var/mob/user)
 
 	var/mob/living/carbon/human/H = user
