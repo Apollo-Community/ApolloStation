@@ -16,11 +16,41 @@
 	flags = CONDUCT
 	l_color = "#8A8A00"
 	luminosity = 2
+	var/smlevel = 1
 	var/size = 1
 	var/max_size = 100
 
-/obj/item/weapon/shard/supermatter/New()
+/obj/item/weapon/shard/supermatter/New(var/loc, var/level = 1)
 	..()
+
+	if (level<2)
+		l_color = "#808000"
+		luminosity = 1
+	else if (level<3)
+		l_color = "#C08000"
+		luminosity = 2
+	else if (level<4)
+		l_color = "#DF6000"
+		luminosity = 2
+	else if (level<5)
+		l_color = "#FF2000"
+		luminosity = 1
+	else if (level<6)
+		l_color = "#C00040"
+		luminosity = 2
+	else if (level<7)
+		l_color = "#800080"
+		luminosity = 2
+	else if (level<8)
+		l_color = "#4000C0"
+		luminosity = 1
+	else if (level<9)
+		l_color = "#008080"
+		luminosity = 2
+	else
+		l_color = "#FFC0C0"
+		luminosity = 5
+
 
 	size += rand(0, 10)
 
@@ -43,9 +73,20 @@
 /obj/item/weapon/shard/supermatter/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if( istype( W, /obj/item/weapon/tongs ))
 		var/obj/item/weapon/tongs/T = W
-		T.pick_up( src )
-		T.update_icon()
-		return
+		if(T.held)
+			if(istype(T.held, src.type))
+				var/obj/item/weapon/shard/supermatter/S = T.held
+				smlevel += (S.smlevel*S.size)/100
+				src.visible_message( "The [S] fuses with the [src]!" )
+				del (T.held)
+				T.held = null
+				T.update_icon()
+			else
+				return
+		else
+			T.pick_up( src )
+			T.update_icon()
+			return
 	else if( istype( W, /obj/item/weapon ))
 		if( W.force >= 5 )
 			src.shatter()
@@ -104,11 +145,13 @@
 /obj/item/weapon/shard/supermatter/proc/shatter()
 	if( size > 100 )
 		src.visible_message( "The supermatter shard grows into a full-sized supermatter crystal!" )
-		new /obj/machinery/power/supermatter/bare( get_turf( src ))
+		var/obj/machinery/power/supermatter/S = new /obj/machinery/power/supermatter/bare( get_turf( src ))
+		S.smlevel = smlevel
+		S.update_icon()
 	else if( size >= 10 )
 		src.visible_message( "The supermatter shard shatters into smaller fragments!" )
 		for( size, size >= 10, size -= 10 )
-			new /obj/item/weapon/shard/supermatter( get_turf( src ))
+			new /obj/item/weapon/shard/supermatter( get_turf( src ), smlevel)
 	else
 		src.visible_message( "The supermatter shard shatters into dust!" )
 
@@ -128,6 +171,7 @@
 	var/obj/item/held = null // The item currently being held
 
 /obj/item/weapon/tongs/proc/pick_up( var/obj/item/I )
+	if(held) return
 	held = I
 	I.loc = src
 	playsound(loc, 'sound/effects/tong_pickup.ogg', 50, 1, -1)
