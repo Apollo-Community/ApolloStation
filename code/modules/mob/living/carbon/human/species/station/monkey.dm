@@ -45,6 +45,9 @@
 /datum/species/monkey/handle_post_spawn(var/mob/living/carbon/human/H)
 	..()
 	H.holder_type = holder_type
+	H.name = get_random_name()
+	H.real_name = H.name
+	H.voice_name = H.name
 
 /datum/species/monkey/get_random_name()
 	return "[lowertext(name)] ([rand(100,999)])"
