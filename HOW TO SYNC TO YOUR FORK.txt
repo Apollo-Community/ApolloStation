@@ -51,7 +51,7 @@ git checkout master
 	Just to make sure that we're sending commands for your fork, and not your
 	pigeon dating simulator or whatever else you losers work on.
 
-git merge upstream
+git merge upstream/master
 	Now, if we did everything correctly then you should see all the commits that were
 	fast-fowarded, and you can scroll up to check that you have everything.
 	You SHOULD have something similar to: http://goo.gl/5iR8mC
