@@ -231,3 +231,16 @@
 	corpseid = 1
 	corpseidjob = "Commander"
 	corpseidaccess = "Captain"
+
+
+//////////////////Asteroid Map////////////////
+/obj/effect/landmark/corpse/piratelooter
+	name = "Pirate Looter"
+	corpseuniform = /obj/item/clothing/under/pirate
+	corpsesuit = /obj/item/clothing/suit/space/pirate
+	corpseshoes = /obj/item/clothing/shoes/brown
+	corpseglasses = /obj/item/clothing/glasses/eyepatch
+	corpsemask = /obj/item/clothing/mask/breath
+	corpsehelmet = /obj/item/clothing/head/helmet/space/pirate
+	corpseback = /obj/item/weapon/tank/oxygen
+
