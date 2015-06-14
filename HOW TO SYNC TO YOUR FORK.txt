@@ -67,7 +67,7 @@ Now you gotta save your work, just do the following:
 Go back to your GitHub client, you can close Git Shell now.
 
 You should now have some unsynced commits. Go ahead and sift through them to make sure they're
-all there, and they're the ones that you want.
+all there, and that they're the ones that you want.
 	If there's something you don't want, just click on it, and then choose the option for
 	"revert", this will undo the commit and leave it out of the sync.
 
