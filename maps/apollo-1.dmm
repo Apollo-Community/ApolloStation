@@ -2719,7 +2719,7 @@
 "bao" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/deepfryer,/turf/simulated/floor{icon_state = "cafeteria"; dir = 2},/area/crew_quarters/kitchen)
 "bap" = (/obj/item/weapon/hand_labeler,/obj/item/weapon/packageWrap,/obj/item/device/destTagger{pixel_x = 4; pixel_y = 3},/obj/structure/table,/turf/simulated/floor{icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
 "baq" = (/obj/machinery/disposal,/obj/structure/disposalpipe/trunk{dir = 1},/turf/simulated/floor{icon_state = "cafeteria"; dir = 2},/area/crew_quarters/kitchen)
-"bar" = (/obj/structure/table,/obj/machinery/cooking/candy{step_y = -1; pixel_y = 8},/turf/simulated/floor{icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
+"bar" = (/obj/structure/table,/obj/machinery/cooking/candy{density = 0; pixel_y = 8; step_y = -1},/turf/simulated/floor{icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
 "bas" = (/obj/structure/flora/pottedplant{pixel_x = 10; pixel_y = 8},/obj/item/weapon/storage/box/donkpockets,/obj/structure/table/reinforced,/turf/simulated/floor{icon_state = "cafeteria"; dir = 2},/area/crew_quarters/kitchen)
 "bat" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/crew_quarters/kitchen)
 "bau" = (/obj/machinery/vending/hydronutrients,/turf/simulated/floor{dir = 9; icon_state = "green"},/area/hydroponics/garden)
