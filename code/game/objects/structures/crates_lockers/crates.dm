@@ -335,9 +335,18 @@
 			newgas.temperature = target_temp
 		return newgas
 
-/obj/structure/closet/crate/freezer/rations //Fpr use in the escape shuttle
+/obj/structure/closet/crate/freezer/rations //For use in the escape shuttle
 	name = "emergency rations"
 	desc = "A crate of emergency rations."
+
+/obj/structure/closet/crate/freezer/gibber // For use with Kitchen Gibber, made separate so that other freezers work normally.
+	name = "freezer"
+	desc = "A freezer that is covered in blood and gibs."
+	icon_state = "gfreezer"
+	icon_opened = "gfreezeropen"
+	icon_closed = "gfreezer"
+	throwpass = 1 // Added so that gibs will now actually fly into or onto this crate, rather than the crate stopping the gibs.
+	// Note: Not sure if gibs can actually be stored inside crates, will test and come back to this.
 
 
 /obj/structure/closet/crate/freezer/rations/New()

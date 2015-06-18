@@ -2264,7 +2264,7 @@
 "aRB" = (/obj/machinery/chem_dispenser/soda,/obj/structure/table/reinforced,/obj/structure/disposalpipe/segment,/turf/simulated/floor{icon_state = "grimy"},/area/crew_quarters/bar)
 "aRC" = (/obj/structure/mopbucket,/obj/item/weapon/mop,/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
 "aRD" = (/obj/effect/landmark{name = "xeno_spawn"; pixel_x = -1},/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
-"aRE" = (/obj/machinery/gibber,/obj/machinery/gibber,/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
+"aRE" = (/obj/structure/closet/crate/freezer/gibber,/obj/machinery/gibber,/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
 "aRF" = (/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
 "aRG" = (/obj/item/weapon/reagent_containers/glass/bucket,/obj/machinery/atmospherics/unary/vent_pump/on{dir = 4},/obj/machinery/power/apc{dir = 8; name = "west bump"; pixel_x = -24},/obj/structure/cable/green{d2 = 4; icon_state = "0-4"},/obj/structure/table/glass,/turf/simulated/floor{icon_state = "bar"},/area/hydroponics/pasture)
 "aRH" = (/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/structure/cable/green{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor{icon_state = "bar"},/area/hydroponics/pasture)

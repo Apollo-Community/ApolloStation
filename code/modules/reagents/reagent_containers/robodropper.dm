@@ -1,7 +1,7 @@
 
 /obj/item/weapon/reagent_containers/robodropper
 	name = "Industrial Dropper"
-	desc = "A larger dropper. Transfers 10 units."
+	desc = "A larger dropper. Transfers between 1 to 10 units."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dropper0"
 	amount_per_transfer_from_this = 10

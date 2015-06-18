@@ -861,6 +861,10 @@
 				<h1>Food for Dummies</h1>
 				Here is a guide on basic food recipes and also how to not poison your customers accidentally.
 
+				<h2>Operating Machinery</h2>
+				Using most machinery is rather simple, just slam whatever food like into the machine and watch the magic unfold!
+				Please aware that most machines will not accept deep-fried food.
+
 				<h3>Basics:</h3>
 				Knead an egg and some flour to make dough. Bake that to make a bun or flatten and cut it.
 
@@ -868,25 +872,25 @@
 				Put a bun and some meat into the microwave and turn it on. Then wait.
 
 				<h3>Bread:</h3>
-				Put some dough and an egg into the microwave and then wait.
+				Put some dough and an egg into the microwave and turn it on and then wait.
 
 				<h3>Waffles:</h3>
-				Add two lumps of dough and 10 units of sugar to the microwave and then wait.
+				Add two lumps of dough and 10 units of sugar to the microwave and turn it on and then wait.
 
 				<h3>Popcorn:</h3>
-				Add 1 corn to the microwave and wait.
+				Add 1 corn to the microwave and turn it on and wait.
 
 				<h3>Meat Steak:</h3>
-				Put a slice of meat, 1 unit of salt, and 1 unit of pepper into the microwave and wait.
+				Put a slice of meat, 1 unit of salt, and 1 unit of pepper into the microwave and turn it on and wait.
 
 				<h3>Meat Pie:</h3>
-				Put a flattened piece of dough and some meat into the microwave and wait.
+				Put a flattened piece of dough and some meat into the microwave and turn it on and wait.
 
 				<h3>Boiled Spaghetti:</h3>
-				Put the spaghetti (processed flour) and 5 units of water into the microwave and wait.
+				Put the spaghetti (processed flour) and 5 units of water into the microwave and turn it on and wait.
 
 				<h3>Donuts:</h3>
-				Add some dough and 5 units of sugar to the microwave and wait.
+				Add some dough and 5 units of sugar to the microwave and turn it on and wait.
 
 				<h3>Fries:</h3>
 				Add one potato to the processor, then bake them in the microwave.

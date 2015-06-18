@@ -3,7 +3,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /obj/item/weapon/reagent_containers/dropper
 	name = "Dropper"
-	desc = "A dropper. Transfers 5 units."
+	desc = "A dropper. Transfers between 1 to 5 units."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dropper0"
 	amount_per_transfer_from_this = 5
