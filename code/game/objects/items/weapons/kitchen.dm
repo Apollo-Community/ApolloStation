@@ -181,7 +181,7 @@
 	origin_tech = "materials=2;combat=1"
 
 /*
- * Bucher's cleaver
+ * Butcher's cleaver
  */
 /obj/item/weapon/kitchenknife/butcher
 	name = "butcher's cleaver"
