@@ -6,7 +6,7 @@
 	icon_state = "grinder"
 	density = 1
 	anchored = 1
-	throwpass = 1 // To allow new crates to be moved underneath.
+	throwpass = 1
 	req_access = list(access_kitchen,access_morgue)
 
 	var/operating = 0 //Is it on?
@@ -18,6 +18,11 @@
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 500
+
+/* Lets you place new crates underneath the gibber */
+/obj/machinery/gibber/CanPass(atom/A, turf/T)
+	if(istype(A, /obj/structure/closet/crate/freezer))
+		return 1
 
 //auto-gibs anything that bumps into it
 /obj/machinery/gibber/autogibber

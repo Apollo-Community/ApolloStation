@@ -345,8 +345,10 @@
 	icon_state = "gfreezer"
 	icon_opened = "gfreezeropen"
 	icon_closed = "gfreezer"
-	throwpass = 1 // Added so that gibs will now actually fly into or onto this crate, rather than the crate stopping the gibs.
-	// Note: Not sure if gibs can actually be stored inside crates, will test and come back to this.
+	throwpass = 1
+/obj/structure/closet/crate/freezer/gibber/CanPass(atom/A, turf/T)
+	if(istype(A, /mob/living) || istype(A, /obj/item))
+		return 1
 
 
 /obj/structure/closet/crate/freezer/rations/New()
