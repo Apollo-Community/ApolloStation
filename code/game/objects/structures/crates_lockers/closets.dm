@@ -19,7 +19,6 @@
 	var/store_misc = 1
 	var/store_items = 1
 	var/store_mobs = 1
-
 	var/const/default_mob_size = 15
 
 /obj/structure/closet/initialize()
