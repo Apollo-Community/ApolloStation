@@ -331,7 +331,7 @@ var/list/mob/living/forced_ambiance_list = new
 			forced_ambiance_list += L
 			forced_ambience.environment = src.environment
 			L << forced_ambience
-		else if(src.music.len && prob(35))
+		else if(src.music && prob(35))
 			if((world.time >= L.client.played + 600))
 				var/musVolume = 25
 				testing( "Played music for [L]" )
