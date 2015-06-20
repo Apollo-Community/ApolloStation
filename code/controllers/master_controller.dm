@@ -271,7 +271,7 @@ datum/controller/game_controller/proc/process_machines_process(var/start, var/en
 	if(machine_processing_killed)
 		return
 
-	while(start<=end && end <=machines.len)			//Supresses run-time but less efficient.
+	while(start<end && end <=machines.len)			//Supresses run-time but less efficient.
 		var/obj/machinery/Machine = machines[start]
 		if(Machine.process() != PROCESS_KILL)
 			if(Machine)
