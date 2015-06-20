@@ -31,6 +31,8 @@
 	if(postStartTicks == radIntervall)
 		postStartTicks = 0
 		radiate()
+		for(var/obj/machinery/power/rad_collector/R in rad_collectors)
+			R.receive_pulse(200)
 
 	else if(activeFor == leaveBelt)
 		command_announcement.Announce("The station has passed the radiation belt. Please report to medbay if you experience any unusual symptoms. Maintenance will lose all access again shortly.", "Anomaly Alert")
