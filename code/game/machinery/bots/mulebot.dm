@@ -155,6 +155,13 @@
 	..()
 
 
+/* Mulebots will now actually open doors. */
+/obj/machinery/bot/mulebot/Bump(var/atom/A)
+	if(istype(A, /obj/machinery/door) && botcard)
+		var/obj/machinery/door/D = A
+		if(!istype(D, /obj/machinery/door/firedoor) && !istype(D, /obj/machinery/door/blast) && D.check_access(botcard))
+			D.open()
+
 /obj/machinery/bot/mulebot/attack_ai(var/mob/user)
 	user.set_machine(src)
 	interact(user, 1)
