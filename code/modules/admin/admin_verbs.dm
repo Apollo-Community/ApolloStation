@@ -489,7 +489,7 @@ var/list/admin_verbs_mentor = list(
 		return
 	else
 		if (is_donator(src))
-			if (donator_tier(src) == 2)
+			if (donator_tier(src) == 2 || donator_tier == "BYOND" )
 				var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
 				if(new_ooccolor)
 					prefs.ooccolor = new_ooccolor
