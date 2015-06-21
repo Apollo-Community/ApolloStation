@@ -137,7 +137,7 @@
 			if(target.mob in heard)
 				prefix = ""
 			if((target.mob in heard) || (target in admins))
-				if(src.IsByondMember())
+				if(source.client.IsByondMember())
 					target << "<span class='ooc'><span class='looc'>" + create_text_tag("byond-looc", "VIP-LOOC:", target) + " <span class='prefix'>[prefix]</span><EM>[display_name][admin_stuff]:</EM> <span class='message'>[msg]</span></span></span>"
 				else
 					target << "<span class='ooc'><span class='looc'>" + create_text_tag("looc", "LOOC:", target) + " <span class='prefix'>[prefix]</span><EM>[display_name][admin_stuff]:</EM> <span class='message'>[msg]</span></span></span>"
