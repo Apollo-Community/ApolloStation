@@ -300,7 +300,15 @@ var/list/mob/living/forced_ambiance_list = new
 
 	L.lastarea = newarea
 
-	if((L.client != null) && L.client.ambience_playing)
+	// Do not try to play music for non-players
+	if(L.client == null)
+		// Don't know why or how this happends so have to do some testing
+		// Also the jukebox won't play for me on my local server for some damned reason...
+		// Def. needs more testing
+		testing("Tried to play ambience for [L]/[L.client]!")
+		return
+
+	if(L.client.ambience_playing)
 		if( oldarea.ambience.len && src.ambience.len )
 			if( oldarea.ambience[1] == src.ambience[1] )
 				return
