@@ -4,6 +4,8 @@ proc/load_donators()
 	donator_list = file2list("config/donators.txt")
 
 proc/is_donator(client/C)
+	if(C.IsByondMember())
+		return 1
 	if(donator_list)
 		for(var/line in donator_list)
 			if(!length(line))				continue
@@ -13,6 +15,8 @@ proc/is_donator(client/C)
 	return 0
 
 proc/donator_tier(client/C)
+	if(C.IsByondMember())
+		return "BYOND"		// TIER BYOND MASTERRACE?
 	if(donator_list)
 		for(var/line in donator_list)
 			if(!length(line))				continue
@@ -50,7 +54,6 @@ proc/donator_tier(client/C)
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 
 	log_admin("DON: [key_name(src)] : [msg]")
-	msg = "<span class='donatorsay'><big><img src=\ref['icons/misc/don.png']> </img></big>[src]: <span class='message'>[msg]</span></span>"
 	for(var/client/C in clients)
 		if((C.holder && (C.holder.rights & R_ADMIN || C.holder.rights & R_MOD)) || is_donator(C))
-			C << msg
+			C << "<span class='donatorsay'>" + create_text_tag("don", "DON:", C) + " <b>[src]: </b><span class='message'>[msg]</span></span>"
