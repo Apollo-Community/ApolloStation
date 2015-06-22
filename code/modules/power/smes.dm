@@ -69,6 +69,11 @@
 			// Maximum Setting Nudges, could be annoying if left unchecked for a while.
 			output_level_max = max(output_level_max+rand(-50, 50), 0)
 			input_level_max = max(input_level_max+rand(-50, 50), 0)
+		if(5)
+			// Spray sparks, your only identifier that the smes is surging. 1% chance
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			s.set_up(2, 1, src)
+			s.start()
 
 /obj/machinery/power/smes/New()
 	..()
