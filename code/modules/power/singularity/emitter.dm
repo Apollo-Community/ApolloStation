@@ -19,6 +19,7 @@
 	var/max_burst_delay = 100
 	var/min_burst_delay = 20
 	var/burst_shots = 3
+	var/burst_energy = 60
 	var/last_shot = 0
 	var/shot_number = 0
 	var/state = 0
@@ -84,6 +85,18 @@
 		user << "\red The [src] needs to be firmly secured to the floor first."
 		return 1
 
+/obj/machinery/power/emitter/surge_act()
+	..()
+	switch(rand(0,5)) // 30% chance only to spark, 60% chance for semi-permanent effect.
+		if(1)
+			burst_shots = max(burst_shots-rand(-1, 1), 1)	// shots before delay will increase and decrease. this is mostly harmless.
+		if(2)
+			min_burst_delay = min(max_burst_delay, min_burst_delay+rand(0, 5))	// Minimum burst delay will increase over time, this is annoying as hell.
+		if(3)
+			max_burst_delay = max_burst_delay+rand(0, 5) 	// Maximum burst delay will increase over time, this is annoying as hell.
+		if(4)
+			burst_energy = max(burst_energy+rand(-10, 20), 10) 	// Amount of energy per shot will rise and fall, this could be either beneficial or negative.
+
 
 /obj/machinery/power/emitter/emp_act(var/severity)//Emitters are hardened but still might have issues
 //	add_load(1000)
@@ -100,8 +113,9 @@
 		src.active = 0
 		update_icon()
 		return
+	if(surplus() >= (5*active_power_usage) && src.active == 1)
+		surge_act()
 	if(((src.last_shot + src.fire_delay) <= world.time) && (src.active == 1))
-
 		var/actual_load = draw_power(active_power_usage)
 		if(actual_load >= active_power_usage) //does the laser have enough power to shoot?
 			if(!powered)
@@ -123,17 +137,11 @@
 			src.fire_delay = rand(min_burst_delay, max_burst_delay)
 			src.shot_number = 0
 
-		//need to calculate the power per shot as the emitter doesn't fire continuously.
-		var/burst_time = (min_burst_delay + max_burst_delay)/2 + 2*(burst_shots-1)
-		var/power_per_shot = active_power_usage * (burst_time/10) / burst_shots
 		var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
-		A.damage = round(power_per_shot/EMITTER_DAMAGE_POWER_TRANSFER)
+		A.damage = burst_energy
 
 		playsound(src.loc, 'sound/weapons/emitter.ogg', 25, 1)
-		if(prob(35))
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-			s.set_up(5, 1, src)
-			s.start()
+
 		A.set_dir(src.dir)
 		switch(dir)
 			if(NORTH)
