@@ -96,7 +96,9 @@
 			max_burst_delay = max_burst_delay+rand(0, 5) 	// Maximum burst delay will increase over time, this is annoying as hell.
 		if(4)
 			burst_energy = max(burst_energy+rand(-10, 20), 10) 	// Amount of energy per shot will rise and fall, this could be either beneficial or negative.
-
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(2, 1, src)
+	s.start()
 
 /obj/machinery/power/emitter/emp_act(var/severity)//Emitters are hardened but still might have issues
 //	add_load(1000)
