@@ -141,6 +141,12 @@ Class Procs:
 			pulse2.delete()
 	..()
 
+/obj/machinery/proc/surge_act()
+	if(prob(90)) return
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(2, 1, src)
+	s.start()
+
 /obj/machinery/ex_act(severity)
 	switch(severity)
 		if(1.0)
