@@ -181,7 +181,7 @@ The process works like this:
 	icon_state = "Open"
 
 	var/min_neutron_flow = 1
-	var/neutron_flow = 25
+	var/neutron_flow = 30
 	var/max_neutron_flow = 300
 	var/obj/item/weapon/shard/supermatter/shard = null
 
@@ -195,14 +195,7 @@ The process works like this:
 								"Phoron" = 0.2,
 								"Osmium" = 0.1 ) // modifier for output amount
 
-	var/list/mat_peak = list(   "Steel" = 30,
-								"Silver" = 70,
-								"Uranium" = 110,
-								"Gold" = 150,
-								"Platinum" = 190,
-								"Diamonds" = 230,
-								"Phoron" = 270,
-								"Osmium" = 300 ) // Standard peak locations
+	var/list/mat_peak = list()
 
 	var/list/obj/item/stack/sheet/mat_obj = list( 	"Diamonds" = /obj/item/stack/sheet/mineral/diamond,
 													"Steel" = /obj/item/stack/sheet/metal,
@@ -215,20 +208,23 @@ The process works like this:
 
 	New()
 		..()
+		
+		mat_peak = list(				"Steel" = 30,
+								"Silver" = rand(1, 300),
+								"Uranium" = rand(1, 300),
+								"Gold" = rand(1, 300),
+								"Platinum" = rand(1, 300),
+								"Diamonds" = rand(1, 300),
+								"Phoron" = rand(1, 300),
+								"Osmium" = rand(1, 300) ) // Setting peak locations
+		
+		neutron_flow = rand(1,300)
+		
 		component_parts = list()
 		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
 		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
 		component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 		component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-
-
-		/*
-		for( var/i = 1, i <= output_peak.len, i++ )
-			var/peak = output_peak[i]
-			peak += -rand(0,1)*rand(1,3) // adding a bit of randomness to the process
-			output_peak[i] = peak
-
-		*/
 
 	process()
 		..()

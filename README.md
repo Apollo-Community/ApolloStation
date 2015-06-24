@@ -1,4 +1,4 @@
-# Apollo Station
+# Apollo Station  [![Build Status](https://travis-ci.org/stuicey/ApolloStation.svg?branch=master)](https://travis-ci.org/stuicey/ApolloStation)
 
 [Website](https://apollo-community.org/) - [Code](https://github.com/stuicey/ApolloStation) - [IRC](https://apollo-community.org/viewforum.php?f=42)
 
