@@ -1645,7 +1645,7 @@
 "FG" = (/turf/simulated/wall,/area/quartermaster/storage)
 "FH" = (/turf/simulated/floor{icon_state = "delivery"},/area/quartermaster/storage)
 "FI" = (/obj/machinery/door/airlock/mining{name = "Cargobay"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor,/area/quartermaster/storage)
-"FJ" = (/obj/machinery/autolathe{step_x = 0},/turf/simulated/floor,/area/quartermaster/office)
+"FJ" = (/obj/machinery/autolathe,/turf/simulated/floor,/area/quartermaster/office)
 "FK" = (/obj/structure/table,/obj/machinery/camera{c_tag = "Cargo Office"; dir = 4; network = list("SS13")},/obj/item/stack/sheet/glass{amount = 50; pixel_x = 3; pixel_y = 3},/obj/item/stack/sheet/metal{amount = 50},/obj/item/device/multitool,/turf/simulated/floor,/area/quartermaster/office)
 "FL" = (/obj/structure/table,/obj/item/weapon/folder/yellow,/obj/item/device/eftpos{eftpos_name = "Cargo Bay EFTPOS scanner"},/obj/machinery/light,/turf/simulated/floor,/area/quartermaster/office)
 "FM" = (/obj/structure/table,/obj/item/weapon/storage/belt/utility,/turf/simulated/floor,/area/quartermaster/office)
