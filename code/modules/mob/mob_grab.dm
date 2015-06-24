@@ -39,11 +39,7 @@
 		assailant.stop_pulling()
 
 //Used by throw code to hand over the mob, instead of throwing the grab. The grab is then deleted by the throw code.
-<<<<<<< HEAD
-/obj/item/weapon/grab/proc/g_throw()
-=======
 /obj/item/weapon/grab/proc/throw_held()
->>>>>>> origin/master
 	if(affecting)
 		if(affecting.buckled)
 			return null
