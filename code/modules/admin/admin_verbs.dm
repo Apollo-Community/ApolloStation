@@ -480,7 +480,7 @@ var/list/admin_verbs_mentor = list(
 	set category = "OOC"
 	set name = "OOC Text Color"
 
-	if(src.holder && (src.holder.rights & R_ADMIN))
+	if((src.holder && (src.holder.rights & R_ADMIN)) || src.IsByondMember())
 		var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
 		if(new_ooccolor)
 			prefs.ooccolor = new_ooccolor
