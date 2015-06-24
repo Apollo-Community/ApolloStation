@@ -2092,7 +2092,7 @@
 "aOl" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/turf/simulated/floor{dir = 1; icon_state = "green"},/area/hydroponics)
 "aOm" = (/obj/machinery/disposal,/obj/structure/disposalpipe/trunk{dir = 8},/turf/simulated/floor{dir = 1; icon_state = "green"},/area/hydroponics)
 "aOn" = (/obj/structure/sink/kitchen{pixel_y = 28},/obj/machinery/atmospherics/unary/vent_pump/on,/turf/simulated/floor{dir = 1; icon_state = "green"},/area/hydroponics)
-"aOo" = (/obj/machinery/light{tag = "icon-tube1 (NORTH)"; icon_state = "tube1"; dir = 1},/turf/simulated/floor{dir = 1; icon_state = "green"},/area/hydroponics)
+"aOo" = (/obj/machinery/light{tag = "icon-tube1 (NORTH)"; icon_state = "tube1"; dir = 1},/mob/living/bot/farmbot,/turf/simulated/floor{dir = 1; icon_state = "green"},/area/hydroponics)
 "aOp" = (/obj/machinery/portable_atmospherics/hydroponics,/turf/simulated/floor{dir = 1; icon_state = "green"},/area/hydroponics)
 "aOq" = (/obj/machinery/firealarm{dir = 2; pixel_y = 24},/obj/machinery/portable_atmospherics/hydroponics,/turf/simulated/floor{dir = 1; icon_state = "green"},/area/hydroponics)
 "aOr" = (/obj/machinery/light{tag = "icon-tube1 (NORTH)"; icon_state = "tube1"; dir = 1},/obj/machinery/portable_atmospherics/hydroponics,/turf/simulated/floor{dir = 1; icon_state = "green"},/area/hydroponics)
