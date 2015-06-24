@@ -1,3 +1,0 @@
-# dmm map merger hook
-# needs additional setup, see tools/mapmerge/install.txt
-*.dmm merge=merge-dmm
