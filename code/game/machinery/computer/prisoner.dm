@@ -99,7 +99,11 @@
 					R << "\green You hear a voice in your head saying: '[warning]'"
 					STUI.game.Add("\[[time_stamp()]]PRISON_IMPLANT: [key_name(user)] to [key_name(R)] : [warning]<br>")
 					STUI.processing |= 5
-
+					for(var/mob/M in player_list)
+						if(M.stat == DEAD && M.client && (M.client.prefs.toggles & CHAT_GHOSTEARS)) // src.client is so that ghosts don't have to listen to mice
+							if(istype(M, /mob/new_player))
+								continue
+							M.show_message("<span class='game say'>Prisoner Message - <span class='name'>[user]</span> -> <span class='name'>[R]</span>: <span class='message'>[warning]</span></span>")
 
 			src.add_fingerprint(usr)
 		src.updateUsrDialog()
