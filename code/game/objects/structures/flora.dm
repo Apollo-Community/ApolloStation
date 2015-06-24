@@ -1,6 +1,7 @@
 //trees
 /obj/structure/flora/tree
 	name = "tree"
+	icon = 'icons/obj/flora/trees.dmi'
 	anchored = 1
 	density = 1
 	pixel_x = -16
@@ -32,6 +33,9 @@
 	..()
 	icon_state = "tree_[rand(1, 6)]"
 
+/obj/structure/flora/tree/apple
+	name = "apple tree"
+	icon_state = "apple"
 
 //grass
 /obj/structure/flora/grass
