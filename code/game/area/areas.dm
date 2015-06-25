@@ -288,6 +288,7 @@ var/list/mob/living/forced_ambiance_list = new
 	if(!istype(A,/mob/living))	return
 
 	var/mob/living/L = A
+
 	if(!L.ckey)	return
 
 	if(!L.lastarea)
@@ -301,11 +302,9 @@ var/list/mob/living/forced_ambiance_list = new
 	L.lastarea = newarea
 
 	// Do not try to play music for non-players
+	// Ghosting will leave behind a mob with a ckey but no client, so we have to really make
+	// sure we want to play the ambience.
 	if(L.client == null)
-		// Don't know why or how this happends so have to do some testing
-		// Also the jukebox won't play for me on my local server for some damned reason...
-		// Def. needs more testing
-		testing("Tried to play ambience for [L]/[L.client]!")
 		return
 
 	if(L.client.ambience_playing)
