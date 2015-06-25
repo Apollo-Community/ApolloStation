@@ -76,7 +76,7 @@ var/global/list/map_sectors = list()
 /obj/effect/map
 	name = "map object"
 	icon = 'icons/effects/sectors.dmi'
-	icon_state = "sheet-plasteel"
+
 	var/map_z = 0
 	var/area/shuttle/shuttle_landing
 	var/always_known = 1

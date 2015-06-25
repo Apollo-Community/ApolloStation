@@ -1,47 +1,68 @@
-//Zlevel where overmap objects should be
-#define OVERMAP_ZLEVEL 1
-#define STATION_X 128
-#define STATION_Y 128
-#define POPULATE_RADIUS 5 // Radius form the station x, y to populate sectors
-//How far from the edge of overmap zlevel could randomly placed objects spawn
-#define OVERMAP_EDGE 7
+/obj/effect/traveler
+	name = "Stellar Object"
+	desc = "An object that seems to be flying out in the void of space."
 
-//list used to track which zlevels are being 'moved' by the proc below
-var/list/moving_levels = list()
-//Proc to 'move' stars in spess
-//yes it looks ugly, but it should only fire when state actually change.
-//null direction stops movement
-proc/toggle_move_stars(zlevel, direction)
-	if(!zlevel)
+	icon = 'icons/effects/sectors.dmi'
+	icon_state = "spacepod"
+
+	var/atom/movable/object = null // The object that the traveler represents, usually just spacepods
+
+/obj/effect/traveler/New( object = null )
+	if( !object )
+		del( src )
+
+	loc = getOvermapLoc( object )
+
+/obj/effect/traveler/relaymove( mob/user, direction )
+	if( !object )
 		return
 
-	var/gen_dir = null
-	if(direction & (NORTH|SOUTH))
-		gen_dir += "ns"
-	else if(direction & (EAST|WEST))
-		gen_dir += "ew"
-	if(!direction)
-		gen_dir = null
+	if( istype( object, /obj/spacepod ))
+		var/obj/spacepod/SP = object
 
-	if (moving_levels["zlevel"] != gen_dir)
-		moving_levels["zlevel"] = gen_dir
-		for(var/x = 1 to world.maxx)
-			for(var/y = 1 to world.maxy)
-				var/turf/space/T = locate(x,y,zlevel)
-				if (istype(T))
-					if(!gen_dir)
-						T.icon_state = "[((T.x + T.y) ^ ~(T.x * T.y) + T.z) % 25]"
-					else
-						T.icon_state = "speedspace_[gen_dir]_[rand(1,15)]"
-						for(var/atom/movable/AM in T)
-							if (!AM.anchored)
-								AM.throw_at(get_step(T,reverse_direction(direction)), 5, 1)
+		if( !SP.canMove() )
+			return
 
+	handleMovement( direction )
 
-//list used to cache empty zlevels to avoid nedless map bloat
-var/list/cached_space = list()
+/obj/effect/traveler/proc/handleMovement( var/direction )
+	if( !direction )
+		return
 
-proc/overmap_spacetravel(var/turf/space/T, var/atom/movable/A)
+	switch( direction )
+		if( NORTH )
+			if( pixel_y >= 16 )
+				src.pixel_y = -16
+				step(src, direction)
+			else
+				pixel_y++
+		if( SOUTH )
+			if( pixel_y < -16 )
+				src.pixel_y = 16
+				step(src, direction)
+			else
+				pixel_y--
+		if( WEST )
+			if( pixel_x < -16 )
+				src.pixel_x = 16
+				step(src, direction)
+			else
+				pixel_x--
+		if( EAST )
+			if( pixel_x >= 16 )
+				src.pixel_x = -16
+				step(src, direction)
+			else
+				pixel_x++
+
+/proc/getOvermapLoc( var/atom )
+	var/turf/T = get_turf( atom )
+	var/obj/effect/map/M = map_sectors["[T.z]"]
+
+	return get_turf( M )
+
+/*
+proc/overmap_spacetravel( var/turf/space/T, var/atom/movable/A )
 	var/obj/effect/map/M = map_sectors["[T.z]"]
 	if (istype( A, /obj/item )) // Optimization to keep spacejunk from killing the server
 		statistics.increase_stat("trash_vented")
@@ -104,3 +125,4 @@ proc/overmap_spacetravel(var/turf/space/T, var/atom/movable/A)
 			testing("Caching [M] for future use")
 			source.loc = null
 			cached_space += source
+*/

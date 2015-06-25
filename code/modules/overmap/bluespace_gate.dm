@@ -30,10 +30,9 @@
 	if( lifetime <= 0 )
 		del(src)
 
-/obj/machinery/singularity/bluespace_gate/New( loc, var/turf/new_exit )
+/obj/machinery/singularity/bluespace_gate/New( loc, exit )
 	..(loc)
 
-	exit = new_exit
 	l_color = "#142933"
 	SetLuminosity( 5 )
 

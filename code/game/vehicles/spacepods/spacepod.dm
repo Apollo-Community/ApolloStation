@@ -646,24 +646,48 @@ obj/spacepod/verb/toggleLights()
 			return stop()
 		return
 
-/obj/spacepod/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	if( istype( get_turf( src ), /turf/space/bluespace )) // no moving in bluespace
+/obj/spacepod/proc/canMove()
+	if( !pilot )
 		return
 
 	if( equipment_system.engine_system )
 		if( move_tick < equipment_system.engine_system.ticks_per_move )
 			move_tick++
-			return
+			return 0
 
 		move_tick = 0
 
 		if( !equipment_system.engine_system.cycle() )
-			return
-
+			pilot << "<span class='warning'>The engine sits silent, not a single part moving.</span>"
+			return 0
 
 	else
-		return
+		pilot << "<span class='warning'>No engine detected!</span>"
+		return 0
 
+	if( equipment_system.battery )
+		if( equipment_system.battery.charge <= 3 )
+			pilot << "<span class='warning'>The loaded energy cell has too little charge!</span>"
+			return 0
+	else
+		pilot << "<span class='warning'>No energy cell detected!</span>"
+		return 0
+
+	if( !health  )
+		pilot << "<span class='warning'>She's dead, Jim!</span>"
+		return 0
+
+	if( empcounter )
+		pilot << "<span class='warning'>The console appears to be suffering from electromagnetic intereference!</span>"
+		return 0
+
+	if( istype( get_turf( src ), /turf/space/bluespace )) // no moving in bluespace
+		pilot << "<span class='warning'>The console appears non-responsive, most likely because you're traveling through a higher dimension.</span>"
+		return 0
+
+	return 1
+
+/obj/spacepod/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	..()
 
 	if(dir == 1 || dir == 4)
@@ -684,8 +708,12 @@ obj/spacepod/verb/toggleLights()
 	return 1
 
 /obj/spacepod/relaymove(mob/user, direction)
-	if( src.pilot == usr )
-		handlerelaymove(user, direction)
+	if( src.pilot == user )
+		if( isobj( src.loc ) || ismob( src.loc ))//Inside an object, tell it we moved
+			var/atom/O = src.loc
+			return O.relaymove( user, direction )
+		else
+			handlerelaymove(user, direction)
 	else
 		return
 
@@ -693,45 +721,33 @@ obj/spacepod/verb/toggleLights()
 	var/moveship = 1
 	var/obj/item/weapon/cell/battery = equipment_system.battery
 
-	if( !battery )
-		user << "<span class='warning'>No energy cell detected.</span>"
-		return
-
-	if(health && empcounter == 0)
-		src.dir = direction
-		switch(direction)
-			if(1)
-				if(inertia_dir == 2)
-					inertia_dir = 0
-					moveship = 0
-			if(2)
-				if(inertia_dir == 1)
-					inertia_dir = 0
-					moveship = 0
-			if(4)
-				if(inertia_dir == 8)
-					inertia_dir = 0
-					moveship = 0
-			if(8)
-				if(inertia_dir == 4)
-					inertia_dir = 0
-					moveship = 0
-		if(moveship)
-			step(src, direction)
-			if(istype(src.loc, /turf/space))
-				inertia_dir = direction
-	else
-		if(!battery)
-			user << "<span class='warning'>No energy cell detected.</span>"
-		else if(battery.charge < 3)
-			user << "<span class='warning'>Not enough charge left.</span>"
-		else if(!health)
-			user << "<span class='warning'>She's dead, Jim</span>"
-		else if(empcounter != 0)
-			user << "<span class='warning'>The pod control interface isn't responding. The console indicates [empcounter] seconds before reboot.</span>"
-		else
-			user << "<span class='warning'>Unknown error has occurred, yell at pomf.</span>"
+	if( !canMove() )
 		return 0
+
+	src.dir = direction
+	switch(direction)
+		if(1)
+			if(inertia_dir == 2)
+				inertia_dir = 0
+				moveship = 0
+		if(2)
+			if(inertia_dir == 1)
+				inertia_dir = 0
+				moveship = 0
+		if(4)
+			if(inertia_dir == 8)
+				inertia_dir = 0
+				moveship = 0
+		if(8)
+			if(inertia_dir == 4)
+				inertia_dir = 0
+				moveship = 0
+
+	if(moveship)
+		step(src, direction)
+		if(istype(src.loc, /turf/space))
+			inertia_dir = direction
+
 	battery.charge = max(0, battery.charge - 3)
 
 /obj/spacepod/proc/add_HUD(var/mob/M)
