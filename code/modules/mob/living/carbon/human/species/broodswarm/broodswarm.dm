@@ -53,7 +53,6 @@
 	..()
 
 /datum/species/broodswarm/handle_environment_special(var/mob/living/carbon/human/H)
-
 	var/turf/T = H.loc
 	if(!T) return
 	var/datum/gas_mixture/environment = T.return_air()
@@ -101,10 +100,9 @@
 
 	return 0
 
-/datum/species/broodswarm/drone
-	name = "Xenomorph Drone"
-	caste_name = "drone"
-	weeds_phoron_rate = 15
+/datum/species/broodswarm/broodmother
+	name = "Broodmother"
+	creep_phoron_rate = 15
 	slowdown = 1
 	rarity_value = 5
 
