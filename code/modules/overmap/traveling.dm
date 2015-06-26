@@ -7,6 +7,7 @@
 	animate_movement = 0
 
 	var/atom/movable/object = null // The object that the traveler represents, usually just spacepods
+	var/frozen = 0 // Used to prevent movement
 
 /obj/effect/traveler/New( var/atom/movable/new_object )
 	object = new_object
@@ -20,10 +21,23 @@
 	src.loc = getOvermapLoc( object )
 	step( src, object.dir )
 
+	switch( object.dir )
+		if( NORTH )
+			pixel_y = -16
+		if( SOUTH )
+			pixel_y = 15
+		if( WEST )
+			pixel_x = 15
+		if( EAST )
+			pixel_x = -16
+
 	object.Move( src )
 
 /obj/effect/traveler/relaymove( mob/user, direction )
 	if( !object )
+		return
+
+	if( frozen )
 		return
 
 	if( istype( object, /obj/spacepod ))
@@ -34,7 +48,7 @@
 
 	handleMovement( direction )
 
-/obj/effect/traveler/proc/handleMovement( var/direction )
+/obj/effect/traveler/proc/handleMovement( var/direction = src.dir )
 	if( !direction )
 		return
 
@@ -67,14 +81,22 @@
 				pixel_x++
 
 /obj/effect/traveler/proc/enterLocal()
-	testing( "enterLocal() called" )
-
 	var/obj/effect/map/sector/sector = locate( /obj/effect/map/sector ) in get_turf( src )
 
 	if( sector )
+		fadeout()
+
+		if( alert_user( "Would you like to enter sector \"[sector]\"?" ) == "No" )
+			fadein()
+
+			src.dir = turn( src.dir, 180 )
+			handleMovement( src.dir ) // Turn them around and move them away from the sector
+
+			return
+
 		// Put in the local sector based on where they were in the overmap
-		var/obj_x = round((( pixel_x+16 )/32 )*( world.maxx-( 2*OVERMAP_EDGE )))
-		var/obj_y = round((( pixel_y+16 )/32 )*( world.maxy-( 2*OVERMAP_EDGE )))
+		var/obj_x = round((( pixel_x+16 )/32 )*( world.maxx-( 2*OVERMAP_EDGE )))+OVERMAP_EDGE
+		var/obj_y = round((( pixel_y+16 )/32 )*( world.maxy-( 2*OVERMAP_EDGE )))+OVERMAP_EDGE
 
 		switch( src.dir )
 			if( NORTH )
@@ -86,16 +108,49 @@
 			if( EAST )
 				obj_x = ( OVERMAP_EDGE+3 )
 
-		testing( "Attempting to place object in sector" )
 		var/turf/T = locate( obj_x, obj_y, sector.map_z )
 		if( T )
 			object.loc = T
 			object.dir = src.dir
+			fadein()
 			object = null
 			del( src )
 	else
-		testing( "Could not place object in sector" )
 		usr << "It doesn't seem like there's anything of interest in this sector."
+
+/obj/effect/traveler/proc/alert_user( var/message = "Would you like to answer this question?" )
+	if( istype( object, /obj/spacepod ))
+		var/obj/spacepod/SP = object
+		if( SP.pilot )
+			return alert( SP.pilot, message,,"Yes","No" )
+		else
+			return "No"
+
+	if( istype( object, /mob ))
+		var/mob/M = object
+		return alert( M, message,,"Yes","No" )
+
+/obj/effect/traveler/proc/fadeout()
+	frozen = 1 // you might stub your toe in the dark
+
+	if( istype( object, /obj/spacepod ))
+		var/obj/spacepod/SP = object
+		SP.fadeout()
+
+	if( istype( object, /mob ))
+		var/mob/M = object
+		M.fadeout()
+
+/obj/effect/traveler/proc/fadein()
+	frozen = 0
+
+	if( istype( object, /obj/spacepod ))
+		var/obj/spacepod/SP = object
+		SP.fadein()
+
+	if( istype( object, /mob ))
+		var/mob/M = object
+		M.fadein()
 
 /proc/getOvermapLoc( var/atom )
 	var/turf/T = get_turf( atom )

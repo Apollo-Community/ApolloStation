@@ -35,8 +35,7 @@
 	var/fire_threshold_health = 0.2 // threshold heat for fires to start
 	var/empcounter = 0 //Used for disabling movement when hit by an EMP
 
-	var/ticks_per_move = 3 // how many ticks does it take to move once?
-	var/move_tick = 0 // counter for above var
+	var/frozen = 0 // Used to stop the spacepod from moving
 
 	var/datum/effect/effect/system/ion_trail_follow/space_trail/ion_trail
 	var/list/pod_overlays
@@ -148,6 +147,22 @@
 	if( pilot )
 		pilot << S
 
+	for( var/mob/passenger in passengers )
+		passenger << S
+
+/obj/spacepod/proc/fadeout()
+	if( pilot )
+		pilot.fadeout()
+
+	for( var/mob/passenger in passengers )
+		passenger.fadeout()
+
+/obj/spacepod/proc/fadein()
+	if( pilot )
+		pilot.fadein()
+
+	for( var/mob/passenger in passengers )
+		passenger.fadein()
 
 /obj/spacepod/proc/explode()
 	spawn(0)
@@ -401,7 +416,6 @@
 
 	if( !( user in passengers ))
 		if( !pilot )
-			testing( "Moved [user] into the pilot's seat of [src]" )
 			visible_message("[user] climbs into the pilot's helm of \the [src]!")
 
 			pilot = user
@@ -418,7 +432,6 @@
 	else
 		if( !pilot )
 			occupants_announce( "[user] climbs out of their passenger's seat and into the pilot's helm." )
-			testing( "Moved [user] from the  passegner's list and into the pilot's seat of [src]" )
 			passengers.Remove( user )
 
 			pilot = user
@@ -437,7 +450,6 @@
 
 			if( user == pilot )
 				occupants_announce( "[user] climbs out of the pilot's seat and into a passenger's seat" )
-				testing( "Moved [user] from pilots seat into passegner's list of [src]." )
 				passengers.Add( user )
 
 				remove_HUD(pilot)
@@ -446,7 +458,6 @@
 				return 1
 			else
 				visible_message("[user] climbs into the [src]!")
-				testing( "Added [user] to the passenger list of [src]" )
 
 				passengers.Add( user )
 				user.loc = src
@@ -460,12 +471,9 @@
 
 /obj/spacepod/proc/exit( mob/user as mob )
 	if( user == pilot )
-		testing( "Removed [user] from the pilot's seat of [src]" )
-
 		remove_HUD(pilot)
 		pilot = null
 	if( user in passengers )
-		testing( "Removed [user] from the passengers list of [src]" )
 		passengers.Remove( user )
 
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
@@ -605,7 +613,29 @@ obj/spacepod/verb/toggleLights()
 	return 1
 
 /obj/spacepod/overmapTravel()
+	frozen = 1
+
+	if( !pilot )
+		return
+
+	fadeout()
+
+	if( alert( pilot, "Would you like to traverse across space?",,"Yes", "No" ) == "No" )
+		fadein()
+		frozen = 0
+
+		src.dir = turn( src.dir, 180 )
+		inertia_dir = src.dir
+
+		relaymove( pilot, src.dir ) // Turn them around and move them away from the sector
+		return
+
+	sleep( 5 )
+
+	frozen = 0
 	new /obj/effect/traveler( src )
+
+	fadein()
 
 /datum/global_iterator/pod_preserve_temp  //normalizing cabin air temperature to 20 degrees celsium
 	delay = 20
@@ -651,41 +681,37 @@ obj/spacepod/verb/toggleLights()
 
 /obj/spacepod/proc/canMove()
 	if( !pilot )
-		return
+		return 0
+
+	if( frozen )
+		return 0
 
 	if( equipment_system.engine_system )
-		if( move_tick < equipment_system.engine_system.ticks_per_move )
-			move_tick++
-			return 0
-
-		move_tick = 0
-
 		if( !equipment_system.engine_system.cycle() )
-			pilot << "<span class='warning'>The engine sits silent, not a single part moving.</span>"
 			return 0
 
 	else
-		pilot << "<span class='warning'>No engine detected!</span>"
+		pilot << "<span class='warning'>ERROR: No engine detected!</span>"
 		return 0
 
 	if( equipment_system.battery )
 		if( equipment_system.battery.charge <= 3 )
-			pilot << "<span class='warning'>The loaded energy cell has too little charge!</span>"
+			pilot << "<span class='warning'>ERROR: The loaded energy cell has too little charge!</span>"
 			return 0
 	else
-		pilot << "<span class='warning'>No energy cell detected!</span>"
+		pilot << "<span class='warning'>ERROR: No energy cell detected!</span>"
 		return 0
 
 	if( !health  )
-		pilot << "<span class='warning'>She's dead, Jim!</span>"
+		pilot << "<span class='warning'>ERROR: Hull integrity critical, evacuate!</span>"
 		return 0
 
 	if( empcounter )
-		pilot << "<span class='warning'>The console appears to be suffering from electromagnetic intereference!</span>"
+		pilot << "<span class='warning'>ERROR: Massive electromagnetic intereference!</span>"
 		return 0
 
 	if( istype( get_turf( src ), /turf/space/bluespace )) // no moving in bluespace
-		pilot << "<span class='warning'>The console appears non-responsive, most likely because you're traveling through a higher dimension.</span>"
+		pilot << "<span class='warning'>ERROR: Spacepod inoperable when traveling through higher dimensions.</span>"
 		return 0
 
 	return 1
@@ -719,7 +745,6 @@ obj/spacepod/verb/toggleLights()
 			return O.relaymove( user, direction )
 		else
 			if( !ion_trail.on )
-				ion_trail.set_up()
 				ion_trail.start()
 			handlerelaymove(user, direction)
 	else

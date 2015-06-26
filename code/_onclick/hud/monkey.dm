@@ -208,6 +208,13 @@
 	mymob.blind.screen_loc = "1,1"
 	mymob.blind.layer = 0
 
+	mymob.fade = new /obj/screen()
+	mymob.fade.icon = 'icons/mob/screen1_full.dmi'
+	mymob.fade.icon_state = "unfaded"
+	mymob.fade.name = " "
+	mymob.fade.screen_loc = "1,1"
+	mymob.fade.layer = 18
+
 	mymob.flash = new /obj/screen()
 	mymob.flash.icon = ui_style
 	mymob.flash.icon_state = "blank"
@@ -242,7 +249,7 @@
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, mymob.gun_setting_icon) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, mymob.gun_setting_icon, mymob.fade) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += src.adding + src.other
 
 	return

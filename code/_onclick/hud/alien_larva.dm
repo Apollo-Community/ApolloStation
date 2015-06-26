@@ -28,6 +28,13 @@
 	mymob.blind.screen_loc = "1,1"
 	mymob.blind.layer = 0
 
+	mymob.fade = new /obj/screen()
+	mymob.fade.icon = 'icons/mob/screen1_full.dmi'
+	mymob.fade.icon_state = "unfaded"
+	mymob.fade.name = " "
+	mymob.fade.screen_loc = "1,1"
+	mymob.fade.layer = 18
+
 	mymob.flash = new
 	mymob.flash.icon = 'icons/mob/screen1_alien.dmi'
 	mymob.flash.icon_state = "blank"
@@ -42,5 +49,5 @@
 	mymob.fire.screen_loc = ui_fire
 
 	mymob.client.screen = null
-	mymob.client.screen += list( mymob.healths, mymob.blind, mymob.flash, mymob.fire) //, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.healths, mymob.blind, mymob.flash, mymob.fire, mymob.fade) //, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += src.adding + src.other

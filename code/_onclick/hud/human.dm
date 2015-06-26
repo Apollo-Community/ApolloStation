@@ -1,5 +1,4 @@
 /datum/hud/proc/human_hud(var/ui_style='icons/mob/screen1_White.dmi', var/ui_color = "#ffffff", var/ui_alpha = 255, var/mob/living/carbon/human/target)
-
 	var/datum/hud_data/hud_data
 	if(!istype(target))
 		hud_data = new()
@@ -310,6 +309,15 @@
 	mymob.blind.mouse_opacity = 0
 	mymob.blind.layer = 0
 	hud_elements |= mymob.blind
+
+	mymob.fade = new /obj/screen()
+	mymob.fade.icon = 'icons/mob/screen1_full.dmi'
+	mymob.fade.icon_state = "unfaded"
+	mymob.fade.name = " "
+	mymob.fade.screen_loc = "1,1"
+	mymob.fade.mouse_opacity = 0
+	mymob.fade.layer = 18
+	hud_elements |= mymob.fade
 
 	mymob.damageoverlay = new
 	mymob.damageoverlay.icon = 'icons/mob/screen1_full.dmi'

@@ -104,7 +104,6 @@ var/global/list/map_sectors = list()
 			T = null
 
 	if( !T )
-		testing( "Could not find a place for sector, deleting." )
 		del( src )
 
 	loc = T
@@ -117,11 +116,9 @@ var/global/list/map_sectors = list()
 	return 0
 
 /obj/effect/map/CanPass(atom/movable/A)
-	testing("[A] attempts to enter sector\"[name]\"")
 	return 1
 
 /obj/effect/map/Crossed(atom/movable/A)
-	testing("[A] has entered sector\"[name]\"")
 	if (istype(A,/obj/effect/map/ship))
 		var/obj/effect/map/ship/S = A
 		S.current_sector = src
@@ -130,7 +127,6 @@ var/global/list/map_sectors = list()
 		T.enterLocal()
 
 /obj/effect/map/Uncrossed(atom/movable/A)
-	testing("[A] has left sector\"[name]\"")
 	if (istype(A,/obj/effect/map/ship))
 		var/obj/effect/map/ship/S = A
 		S.current_sector = null
