@@ -604,6 +604,9 @@ obj/spacepod/verb/toggleLights()
 
 	return 1
 
+/obj/spacepod/overmapTravel()
+	new /obj/effect/traveler( src )
+
 /datum/global_iterator/pod_preserve_temp  //normalizing cabin air temperature to 20 degrees celsium
 	delay = 20
 
@@ -710,9 +713,14 @@ obj/spacepod/verb/toggleLights()
 /obj/spacepod/relaymove(mob/user, direction)
 	if( src.pilot == user )
 		if( isobj( src.loc ) || ismob( src.loc ))//Inside an object, tell it we moved
+			if( ion_trail.on )
+				ion_trail.stop()
 			var/atom/O = src.loc
 			return O.relaymove( user, direction )
 		else
+			if( !ion_trail.on )
+				ion_trail.set_up()
+				ion_trail.start()
 			handlerelaymove(user, direction)
 	else
 		return

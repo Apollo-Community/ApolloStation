@@ -125,6 +125,9 @@ var/global/list/map_sectors = list()
 	if (istype(A,/obj/effect/map/ship))
 		var/obj/effect/map/ship/S = A
 		S.current_sector = src
+	if (istype(A,/obj/effect/traveler))
+		var/obj/effect/traveler/T = A
+		T.enterLocal()
 
 /obj/effect/map/Uncrossed(atom/movable/A)
 	testing("[A] has left sector\"[name]\"")
@@ -141,6 +144,7 @@ var/global/list/map_sectors = list()
 
 /obj/effect/map/sector/nssapollo
 	icon_state = "NSS Apollo"
+	desc = "The NSS Apollo, state-of-the-art phoron research station."
 
 /obj/effect/map/sector/ace
 	icon_state = "ACE"

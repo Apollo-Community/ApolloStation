@@ -52,9 +52,6 @@
 #define FILE_DIR "icons/Testing"
 #define FILE_DIR "icons/turf"
 #define FILE_DIR "icons/vending_icons"
-#define FILE_DIR "maps"
-#define FILE_DIR "maps/overmap"
-#define FILE_DIR "maps/overmap/bearcat"
 #define FILE_DIR "nano"
 #define FILE_DIR "nano/images"
 #define FILE_DIR "sound"
@@ -1667,5 +1664,4 @@
 #include "maps\apollo-4.dmm"
 #include "maps\apollo-5.dmm"
 #include "maps\apollo-6.dmm"
-#include "maps\apollo-7.dmm"
 // END_INCLUDE

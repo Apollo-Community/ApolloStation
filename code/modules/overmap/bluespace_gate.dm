@@ -16,7 +16,7 @@
 	pixel_x = -32
 	pixel_y = -32
 	l_color = "#142933"
-	var/lifetime = 100
+	life = 100
 	var/decay = 10
 	var/turf/exit = null
 
@@ -26,12 +26,10 @@
 	if(prob(1))
 		mezzer()
 
-	lifetime -= decay
-	if( lifetime <= 0 )
-		del(src)
-
-/obj/machinery/singularity/bluespace_gate/New( loc, exit )
+/obj/machinery/singularity/bluespace_gate/New( loc, var/new_exit )
 	..(loc)
+
+	exit = new_exit
 
 	l_color = "#142933"
 	SetLuminosity( 5 )

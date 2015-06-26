@@ -4,14 +4,23 @@
 
 	icon = 'icons/effects/sectors.dmi'
 	icon_state = "spacepod"
+	animate_movement = 0
 
 	var/atom/movable/object = null // The object that the traveler represents, usually just spacepods
 
-/obj/effect/traveler/New( object = null )
+/obj/effect/traveler/New( var/atom/movable/new_object )
+	object = new_object
+
 	if( !object )
 		del( src )
 
-	loc = getOvermapLoc( object )
+	name = object.name
+	desc = object.desc
+
+	src.loc = getOvermapLoc( object )
+	step( src, object.dir )
+
+	object.Move( src )
 
 /obj/effect/traveler/relaymove( mob/user, direction )
 	if( !object )
@@ -58,28 +67,34 @@
 				pixel_x++
 
 /obj/effect/traveler/proc/enterLocal()
-	if( /obj/effect/map/sector in get_turf( src ))
-		var/obj/effect/map/sector/sector = locate( /obj/effect/map/sector )
+	testing( "enterLocal() called" )
 
-		var/obj_x = rand( OVERMAP_EDGE, world.maxx-OVERMAP_EDGE )
-		var/obj_y = rand( OVERMAP_EDGE, world.maxy-OVERMAP_EDGE )
+	var/obj/effect/map/sector/sector = locate( /obj/effect/map/sector ) in get_turf( src )
+
+	if( sector )
+		// Put in the local sector based on where they were in the overmap
+		var/obj_x = round((( pixel_x+16 )/32 )*( world.maxx-( 2*OVERMAP_EDGE )))
+		var/obj_y = round((( pixel_y+16 )/32 )*( world.maxy-( 2*OVERMAP_EDGE )))
 
 		switch( src.dir )
 			if( NORTH )
-				obj_y = world.maxy-OVERMAP_EDGE
+				obj_y = ( OVERMAP_EDGE+3 )
 			if( SOUTH )
-				obj_y = OVERMAP_EDGE
+				obj_y = world.maxy-( OVERMAP_EDGE+3 )
 			if( WEST )
-				obj_x = OVERMAP_EDGE
+				obj_x = world.maxx-( OVERMAP_EDGE+3 )
 			if( EAST )
-				obj_x = world.maxx-OVERMAP_EDGE
+				obj_x = ( OVERMAP_EDGE+3 )
 
+		testing( "Attempting to place object in sector" )
 		var/turf/T = locate( obj_x, obj_y, sector.map_z )
 		if( T )
 			object.loc = T
+			object.dir = src.dir
 			object = null
 			del( src )
 	else
+		testing( "Could not place object in sector" )
 		usr << "It doesn't seem like there's anything of interest in this sector."
 
 /proc/getOvermapLoc( var/atom )
