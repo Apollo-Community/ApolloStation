@@ -29,6 +29,8 @@
 	if( !direction )
 		return
 
+	src.dir = direction
+
 	switch( direction )
 		if( NORTH )
 			if( pixel_y >= 16 )
@@ -55,74 +57,70 @@
 			else
 				pixel_x++
 
+/obj/effect/traveler/proc/enterLocal()
+	if( /obj/effect/map/sector in get_turf( src ))
+		var/obj/effect/map/sector/sector = locate( /obj/effect/map/sector )
+
+		var/obj_x = rand( OVERMAP_EDGE, world.maxx-OVERMAP_EDGE )
+		var/obj_y = rand( OVERMAP_EDGE, world.maxy-OVERMAP_EDGE )
+
+		switch( src.dir )
+			if( NORTH )
+				obj_y = world.maxy-OVERMAP_EDGE
+			if( SOUTH )
+				obj_y = OVERMAP_EDGE
+			if( WEST )
+				obj_x = OVERMAP_EDGE
+			if( EAST )
+				obj_x = world.maxx-OVERMAP_EDGE
+
+		var/turf/T = locate( obj_x, obj_y, sector.map_z )
+		if( T )
+			object.loc = T
+			object = null
+			del( src )
+	else
+		usr << "It doesn't seem like there's anything of interest in this sector."
+
 /proc/getOvermapLoc( var/atom )
 	var/turf/T = get_turf( atom )
 	var/obj/effect/map/M = map_sectors["[T.z]"]
 
 	return get_turf( M )
 
-/*
-proc/overmap_spacetravel( var/turf/space/T, var/atom/movable/A )
-	var/obj/effect/map/M = map_sectors["[T.z]"]
-	if (istype( A, /obj/item )) // Optimization to keep spacejunk from killing the server
-		statistics.increase_stat("trash_vented")
-		spawn(0)
-			del(A)
+
+/atom/movable/proc/overmapTravel()
+	var/move_to_z = src.z
+	var/safety = 1
+
+	while(move_to_z == src.z)
+		var/move_to_z_str = pickweight(accessible_z_levels)
+		move_to_z = text2num(move_to_z_str)
+		safety++
+		if(safety > 10)
+			break
+
+	if(!move_to_z)
 		return
-	if (!M)
-		return
-	var/mapx = M.x
-	var/mapy = M.y
-	var/nx = A.x
-	var/ny = A.y
-	var/nz = M.map_z
 
-	if(T.x <= TRANSITIONEDGE)
-		nx = world.maxx - TRANSITIONEDGE - 2
-		mapx = max(1, mapx-1)
+	src.z = move_to_z
 
-	else if (A.x >= (world.maxx - TRANSITIONEDGE - 1))
-		nx = TRANSITIONEDGE + 2
-		mapx = min(world.maxx, mapx+1)
+	if(src.x <= TRANSITIONEDGE)
+		src.x = world.maxx - TRANSITIONEDGE - 2
+		src.y = rand(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2)
 
-	if (T.y <= TRANSITIONEDGE)
-		ny = world.maxy - TRANSITIONEDGE -2
-		mapy = max(1, mapy-1)
+	else if (src.x >= (world.maxx - TRANSITIONEDGE - 1))
+		src.x = TRANSITIONEDGE + 1
+		src.y = rand(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2)
 
-	else if (A.y >= (world.maxy - TRANSITIONEDGE - 1))
-		ny = TRANSITIONEDGE + 2
-		mapy = min(world.maxy, mapy+1)
+	else if (src.y <= TRANSITIONEDGE)
+		src.y = world.maxy - TRANSITIONEDGE -2
+		src.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
 
-	testing("[A] moving from [M] ([M.x], [M.y]) to ([mapx],[mapy]).")
+	else if (src.y >= (world.maxy - TRANSITIONEDGE - 1))
+		src.y = TRANSITIONEDGE + 1
+		src.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
 
-	var/turf/map = locate(mapx,mapy,OVERMAP_ZLEVEL)
-	var/obj/effect/map/TM = locate() in map
-	if(TM)
-		nz = TM.map_z
-		testing("Destination: [TM]")
-	else
-		if(cached_space.len)
-			var/obj/effect/map/sector/temporary/cache = cached_space[cached_space.len]
-			cached_space -= cache
-			nz = cache.map_z
-			cache.x = mapx
-			cache.y = mapy
-			testing("Destination: *cached* [TM]")
-		else
-			world.maxz++
-			nz = world.maxz
-			lighting_controller.initializeLighting(nz)
-			TM = new /obj/effect/map/sector/temporary(mapx, mapy, nz)
-			testing("Destination: *new* [TM]")
-
-	var/turf/dest = locate(nx,ny,nz)
-	if(dest)
-		A.loc = dest
-
-	if(istype(M, /obj/effect/map/sector/temporary))
-		var/obj/effect/map/sector/temporary/source = M
-		if (source.can_die())
-			testing("Caching [M] for future use")
-			source.loc = null
-			cached_space += source
-*/
+	spawn (0)
+		if ((src && src.loc))
+			src.loc.Entered(src)

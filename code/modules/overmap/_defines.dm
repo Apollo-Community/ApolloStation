@@ -41,6 +41,7 @@ proc/toggle_move_stars(zlevel, direction)
 //list used to cache empty zlevels to avoid nedless map bloat
 var/list/cached_space = list()
 
+/*
 proc/overmap_spacetravel(var/turf/space/T, var/atom/movable/A)
 	var/obj/effect/map/M = map_sectors["[T.z]"]
 	if (istype( A, /obj/item )) // Optimization to keep spacejunk from killing the server
@@ -104,3 +105,4 @@ proc/overmap_spacetravel(var/turf/space/T, var/atom/movable/A)
 			testing("Caching [M] for future use")
 			source.loc = null
 			cached_space += source
+*/

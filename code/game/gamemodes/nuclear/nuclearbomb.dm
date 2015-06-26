@@ -427,6 +427,9 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 				return
 	return
 
+/obj/item/weapon/disk/nuclear/overmapTravel()
+	del(src) // Don't let nuke disks travel Z levels
+
 /obj/item/weapon/disk/nuclear/Del()
 	if(blobstart.len > 0)
 		var/obj/D = new /obj/item/weapon/disk/nuclear(pick(blobstart))
