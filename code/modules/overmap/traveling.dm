@@ -86,6 +86,7 @@
 	if( sector )
 		fadeout()
 
+		sleep( 5 )
 		if( alert_user( "Would you like to enter sector \"[sector]\"?" ) == "No" )
 			fadein()
 

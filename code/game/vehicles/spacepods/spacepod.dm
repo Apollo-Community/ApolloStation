@@ -151,6 +151,8 @@
 		passenger << S
 
 /obj/spacepod/proc/fadeout()
+	frozen = 1
+
 	if( pilot )
 		pilot.fadeout()
 
@@ -158,6 +160,8 @@
 		passenger.fadeout()
 
 /obj/spacepod/proc/fadein()
+	frozen = 0
+
 	if( pilot )
 		pilot.fadein()
 
@@ -613,16 +617,14 @@ obj/spacepod/verb/toggleLights()
 	return 1
 
 /obj/spacepod/overmapTravel()
-	frozen = 1
-
 	if( !pilot )
 		return
 
 	fadeout()
 
+	sleep( 5 )
 	if( alert( pilot, "Would you like to traverse across space?",,"Yes", "No" ) == "No" )
 		fadein()
-		frozen = 0
 
 		src.dir = turn( src.dir, 180 )
 		inertia_dir = src.dir
@@ -632,7 +634,6 @@ obj/spacepod/verb/toggleLights()
 
 	sleep( 5 )
 
-	frozen = 0
 	new /obj/effect/traveler( src )
 
 	fadein()

@@ -9,11 +9,35 @@ var/list/accessible_z_levels = list("1" = 5, "3" = 10, "4" = 15, "5" = 10, "6" =
 
 	temperature = 3
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
+	var/obj/effect/light_emitter/starlight/starlight = null
 //	heat_capacity = 700000 No.
 
 /turf/space/New()
 	if(!istype(src, /turf/space/transit) && !istype(src, /turf/space/bluespace))
 		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
+
+	update_starlight()
+
+/turf/space/proc/update_starlight()
+	if(!config.starlight)
+		return
+	if( !starlight )
+		if( locate( /turf/simulated ) in orange( src, 1 ))
+			starlight = new /obj/effect/light_emitter/starlight( src )
+
+/obj/effect/light_emitter/starlight
+	name = ""
+	desc = ""
+	luminosity = 2
+
+/obj/effect/light_emitter/starlight/New()
+	luminosity = rand( 2, 3 )
+	..()
+
+/turf/space/Del()
+	..()
+
+	del( starlight )
 
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
 

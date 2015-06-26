@@ -4,7 +4,7 @@
 #define STATION_Y 128
 #define POPULATE_RADIUS 5 // Radius form the station x, y to populate sectors
 //How far from the edge of overmap zlevel could randomly placed objects spawn
-#define OVERMAP_EDGE 8
+#define OVERMAP_EDGE 9
 
 //list used to track which zlevels are being 'moved' by the proc below
 var/list/moving_levels = list()

@@ -183,6 +183,8 @@
 	var/dooc_allowed = 1
 	var/dsay_allowed = 1
 
+	var/starlight = 1 // Whether stars emit light
+
 	var/STUI_length = 150
 
 /datum/configuration/New()
