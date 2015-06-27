@@ -313,7 +313,7 @@
 	mymob.fade = new /obj/screen()
 	mymob.fade.icon = 'icons/mob/screen1_full.dmi'
 	mymob.fade.icon_state = "unfaded"
-	mymob.fade.name = " "
+	mymob.fade.name = ""
 	mymob.fade.screen_loc = "1,1"
 	mymob.fade.mouse_opacity = 0
 	mymob.fade.layer = 18

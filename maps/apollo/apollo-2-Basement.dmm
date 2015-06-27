@@ -379,7 +379,7 @@
 "ho" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/light/small,/turf/simulated/floor/plating,/area/turret_protected/tcommbreaker)
 "hp" = (/obj/structure/cable/green{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/machinery/camera{c_tag = "Telecomms Breaker Room"; dir = 1; network = list("Tcom")},/turf/simulated/floor/plating,/area/turret_protected/tcommbreaker)
 "hq" = (/turf/space,/area/syndicate_station/commssat)
-"hr" = (/obj/effect/landmark/zcontroller/level_2_top{down = 0; down_target = 0; up = 1; up_target = 3},/turf/space,/area/space)
+"hr" = (/obj/effect/landmark/zcontroller/level_2_top{down = 0; down_target = 0; up = 1; up_target = 3},/obj/effect/mapinfo/sector/station/basement,/turf/space,/area/space)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

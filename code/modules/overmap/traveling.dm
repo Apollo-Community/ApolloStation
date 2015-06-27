@@ -113,7 +113,9 @@
 		if( T )
 			object.loc = T
 			object.dir = src.dir
+
 			fadein()
+
 			object = null
 			del( src )
 	else

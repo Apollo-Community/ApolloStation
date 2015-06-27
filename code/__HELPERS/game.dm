@@ -46,7 +46,7 @@
 	return !isStationLevel(level)
 
 /proc/isPlayerLevel(var/level)
-	return level in config.player_levels
+	return level in config.local_levels
 
 /proc/isAdminLevel(var/level)
 	return level in config.admin_levels
