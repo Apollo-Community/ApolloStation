@@ -50,12 +50,6 @@ var/global/list/map_sectors = list()
 	name = "generic sector"
 	obj_type = /obj/effect/map/sector
 
-/obj/effect/mapinfo/sector/proc/canEnter()
-	if( sector_flags & SECTOR_KNOWN & SECTOR_LOCAL & ~SECTOR_ADMIN )
-		return 1
-	else
-		return 0
-
 /obj/effect/mapinfo/sector/station
 	name = "NSS Apollo"
 	mapx = STATION_X

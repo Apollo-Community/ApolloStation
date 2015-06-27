@@ -8,15 +8,14 @@
 //	heat_capacity = 700000 No.
 
 /turf/space/bluespace/New()
-	/*var/size = rand(1, 3)
+	var/size = rand(1, 3)
 
 	for( var/i = 1; i <= size; i++ )
-		var/image/star = image(icon, icon_state=pick( "bstar1", "bstar2" )) // "bstar3", "bstar4", "bstar5", "bstar6", "bstar7" ))
+		var/image/star = image(icon, icon_state = pick( "bstar3", "bstar4" )) // "bstar4", "bstar5", "bstar6" ))
 		star.pixel_x = rand( -14, 14 )
 		star.pixel_y = rand( -14, 14 )
 		i++
 		overlays += star
-	*/
 
 	..()
 
