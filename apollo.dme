@@ -1666,4 +1666,5 @@
 #include "maps\apollo-5.dmm"
 #include "maps\apollo-6.dmm"
 #include "maps\explorationsite1.dmm"
+#include "maps\z-admin-shuttle.dmm"
 // END_INCLUDE
