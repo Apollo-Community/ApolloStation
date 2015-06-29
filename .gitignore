@@ -6,7 +6,6 @@
 *.lk
 data/
 cfg/
-apollo.int
+baystation12.int
 cfg/admin.txt
 code/hub.dm
-.atom-build.json
