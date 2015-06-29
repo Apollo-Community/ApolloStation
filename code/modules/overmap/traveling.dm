@@ -161,14 +161,15 @@
 
 	return get_turf( M )
 
-
 /atom/movable/proc/overmapTravel()
 	var/move_to_z = src.z
 	var/safety = 1
 
 	while(move_to_z == src.z)
-		var/move_to_z_str = pickweight(accessible_z_levels)
-		move_to_z = text2num(move_to_z_str)
+		var/obj/effect/map/sector = map_sectors["[pick( config.local_levels )]"]
+		if( sector.isKnown() )
+			move_to_z = sector.map_z
+
 		safety++
 		if(safety > 10)
 			break

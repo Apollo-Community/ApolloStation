@@ -1,7 +1,3 @@
-//This list contains the z-level numbers which can be accessed via space travel and the percentile chances to get there.
-//(Exceptions: extended, sandbox and nuke) -Errorage
-var/list/accessible_z_levels = list("1" = 5, "3" = 10, "4" = 15, "5" = 10, "6" = 60)
-
 /turf/space
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"

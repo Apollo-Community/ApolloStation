@@ -69,6 +69,12 @@
 	icon_state = "slag"
 	oretag = "slag"
 
+/obj/item/weapon/ore/trash
+	name = "Trash"
+	desc = "A ball of compacted trash."
+	icon_state = "trash"
+	oretag = "trash"
+
 /obj/item/weapon/ore/New()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8

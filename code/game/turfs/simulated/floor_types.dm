@@ -14,6 +14,8 @@
 	desc = "There's probably something under this."
 	lighting_lumcount = 2
 
+	temperature = T20C-270
+
 	New()
 		..()
 		name = "hull"
@@ -132,6 +134,8 @@
 	icon_state = ""
 	name = "space"
 	lighting_lumcount = 4
+
+	temperature = T20C-270
 
 	New()
 		..()
@@ -269,3 +273,6 @@
 		visible_message( "\The [A] falls into the lava, melting beneath the molten surface!" )
 
 		A.Del()
+
+/turf/simulated/floor/airless/trash
+	name = "compacted trash"
