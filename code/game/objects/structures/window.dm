@@ -379,7 +379,7 @@ BASIC WINDOW TYPES
 	basestate = "urawindow"
 	glasstype = /obj/item/stack/sheet/glass/uraniumglass
 	maxhealth = 160
-	luminosity = 1
+	luminosity = 2
 	l_color = "#25D53D"
 
 /obj/structure/window/uraniumbasic/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -443,7 +443,7 @@ REINFORCED WINDOW TYPES
 	basestate = "urarwindow"
 	glasstype = /obj/item/stack/sheet/glass/uraniumrglass
 	maxhealth = 200
-	luminosity = 1
+	luminosity = 2
 	l_color = "#25D53D"
 	reinf = 1
 
