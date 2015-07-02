@@ -159,13 +159,15 @@
 /*
  * Phoron Glass sheets
  */
-/obj/item/stack/sheet/glass/phoronglass
+ /obj/item/stack/sheet/glass/phoronglass
 	name = "phoron glass"
 	desc = "A very strong and very resistant sheet of a phoron-glass alloy."
 	singular_name = "phoron glass sheet"
 	icon_state = "sheet-phoronglass"
-	matter = list("glass" = 7500)
+
+	matter = list("glass" = 3750)
 	origin_tech = "materials=3;phorontech=2"
+
 	created_window = /obj/structure/window/phoronbasic
 
 /obj/item/stack/sheet/glass/phoronglass/attackby(obj/item/W, mob/user)
@@ -185,16 +187,146 @@
 	else
 		return ..()
 
-/*
- * Reinforced phoron glass sheets
- */
 /obj/item/stack/sheet/glass/phoronrglass
 	name = "reinforced phoron glass"
 	desc = "Phoron glass which has been reinforced with metal rods."
 	singular_name = "reinforced phoron glass sheet"
 	icon_state = "sheet-phoronrglass"
-	matter = list("glass" = 7500,"metal" = 1875)
 
+	matter = list("glass" = 3750,"metal" = 1875)
 	origin_tech = "materials=4;phorontech=2"
+
 	created_window = /obj/structure/window/phoronreinforced
+	is_reinforced = 1
+
+/*
+ * Uranium glass sheets
+ */
+ /obj/item/stack/sheet/glass/uraniumglass
+	name = "uranium glass"
+	desc = "A very strong, high density sheet of uranium-glass alloy."
+	singular_name = "uranium glass sheet"
+	icon_state = "sheet-uraglass"
+
+	matter = list("glass" = 3750)
+	origin_tech = "materials=4"
+
+	created_window = /obj/structure/window/uraniumbasic
+	is_reinforced = 0
+
+/obj/item/stack/sheet/glass/uraniumglass/attackby(obj/item/W, mob/user)
+	..()
+	if( istype(W, /obj/item/stack/rods) )
+		var/obj/item/stack/rods/V  = W
+		var/obj/item/stack/sheet/glass/uraniumrglass/RG = new (user.loc)
+		RG.add_fingerprint(user)
+		RG.add_to_stacks(user)
+		V.use(1)
+		var/obj/item/stack/sheet/glass/G = src
+		src = null
+		var/replace = (user.get_inactive_hand()==G)
+		G.use(1)
+		if (!G && !RG && replace)
+			user.put_in_hands(RG)
+	else
+		return ..()
+
+/obj/item/stack/sheet/glass/uraniumrglass
+	name = "reinforced uranium glass"
+	desc = "Uranium glass which has been reinforced with metal rods."
+	singular_name = "reinforced uranium glass sheet"
+	icon_state = "sheet-urarglass"
+
+	matter = list("glass" = 3750,"metal" = 1875)
+	origin_tech = "materials=5"
+
+	created_window = /obj/structure/window/uraniumreinforced
+	is_reinforced = 1
+
+/*
+ * Diamond glass sheets
+ */
+/obj/item/stack/sheet/glass/diamondglass
+	name = "diamond glass"
+	desc = "An ultra-hard glass sheet made from diamond-glass composite."
+	singular_name = "diamond glass sheet"
+	icon_state = "sheet-diaglass"
+
+	matter = list("glass" = 3750)
+	origin_tech = "materials=6"
+
+	created_window = /obj/structure/window/diamondbasic
+	is_reinforced = 0
+
+/obj/item/stack/sheet/glass/diamondglass/attackby(obj/item/W, mob/user)
+	..()
+	if( istype(W, /obj/item/stack/rods) )
+		var/obj/item/stack/rods/V  = W
+		var/obj/item/stack/sheet/glass/diamondrglass/RG = new (user.loc)
+		RG.add_fingerprint(user)
+		RG.add_to_stacks(user)
+		V.use(1)
+		var/obj/item/stack/sheet/glass/G = src
+		src = null
+		var/replace = (user.get_inactive_hand()==G)
+		G.use(1)
+		if (!G && !RG && replace)
+			user.put_in_hands(RG)
+	else
+		return ..()
+
+/obj/item/stack/sheet/glass/diamondrglass
+	name = "reinforced diamond glass"
+	desc = "Diamond glass which has been reinforced with metal rods, as if being made out of diamond wasn't enough."
+	singular_name = "reinforced diamond glass sheet"
+	icon_state = "sheet-diarglass"
+
+	matter = list("glass" = 3750,"metal" = 1875)
+	origin_tech = "materials=7"
+
+	created_window = /obj/structure/window/diamondreinforced
+	is_reinforced = 1
+
+/*
+ * Tinted glass sheets
+ */
+/obj/item/stack/sheet/glass/tinted
+	name = "tinted glass"
+	desc = "A sheet of glass that has been tinted to the point where you can't see though it. How useless..."
+	singular_name = "tinted glass sheet"
+	icon_state = "sheet-tinglass"
+
+	matter = list("glass" = 3750)
+	origin_tech = "materials=2"
+
+	created_window = /obj/structure/window/tintedbasic
+	is_reinforced = 0
+
+/obj/item/stack/sheet/glass/tinted/attackby(obj/item/W, mob/user)
+	..()
+	if( istype(W, /obj/item/stack/rods) )
+		var/obj/item/stack/rods/V  = W
+		var/obj/item/stack/sheet/glass/tintedrglass/RG = new (user.loc)
+		RG.add_fingerprint(user)
+		RG.add_to_stacks(user)
+		V.use(1)
+		var/obj/item/stack/sheet/glass/G = src
+		src = null
+		var/replace = (user.get_inactive_hand()==G)
+		G.use(1)
+		if (!G && !RG && replace)
+			user.put_in_hands(RG)
+	else
+		return ..()
+
+/obj/item/stack/sheet/glass/tintedrglass
+	name = "reinforced tinted glass"
+	desc = "Tinted glass which has been reinforced with metal rods."
+	singular_name = "reinforced tinted glass sheet"
+	icon_state = "sheet-tinrglass"
+
+	matter = list("glass" = 3750,"metal" = 1875)
+	origin_tech = "materials=3"
+
+	created_window = /obj/structure/window/tintedreinforced
 	is_reinforced = 1

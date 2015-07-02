@@ -6,6 +6,7 @@
 
 /datum/ore/uranium
 	smelts_to = /obj/item/stack/sheet/mineral/uranium
+	alloy = 1
 	oretag = "uranium"
 
 /datum/ore/iron
@@ -21,11 +22,13 @@
 /datum/ore/glass
 	smelts_to = /obj/item/stack/sheet/glass
 	compresses_to = /obj/item/stack/sheet/mineral/sandstone
+	alloy = 1
 	oretag = "sand"
 
 /datum/ore/phoron
 	//smelts_to = something that explodes violently on the conveyor, huhuhuhu
 	compresses_to = /obj/item/stack/sheet/mineral/phoron
+	alloy = 1
 	oretag = "phoron"
 
 /datum/ore/silver
@@ -38,6 +41,7 @@
 
 /datum/ore/diamond
 	compresses_to = /obj/item/stack/sheet/mineral/diamond
+	alloy = 1
 	oretag = "diamond"
 
 /datum/ore/osmium

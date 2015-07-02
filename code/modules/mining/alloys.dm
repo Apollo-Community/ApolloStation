@@ -25,3 +25,39 @@
 		"hematite" = 1
 		)
 	product = /obj/item/stack/sheet/metal
+
+
+/datum/alloy/pglass
+	metaltag = "phoronglass"
+	requires = list(
+		"sand" = 2,
+		"phoron" = 1
+		)
+	product = /obj/item/stack/sheet/glass/phoronglass
+
+
+/datum/alloy/uglass
+	metaltag = "uraniumglass"
+	requires = list(
+		"sand" = 2,
+		"uranium" = 1
+		)
+	product = /obj/item/stack/sheet/glass/uraniumglass
+
+
+/datum/alloy/tglass
+	metaltag = "tintedglass"
+	requires = list(
+		"sand" = 2,
+		"coal" = 2
+		)
+	product = /obj/item/stack/sheet/glass/tinted
+
+
+/datum/alloy/dglass
+	metaltag = "diamondglass"
+	requires = list(
+		"sand" = 2,
+		"diamond" = 1
+		)
+	product = /obj/item/stack/sheet/glass/diamondglass
