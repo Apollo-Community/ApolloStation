@@ -688,7 +688,10 @@ obj/spacepod/verb/toggleLights()
 		return 0
 
 	if( equipment_system.engine_system )
-		if( !equipment_system.engine_system.cycle() )
+		var/distance = 1
+		if( istype( src.loc, /obj/effect/traveler ))
+			distance = 16
+		if( !equipment_system.engine_system.cycle( distance ))
 			return 0
 
 	else

@@ -366,30 +366,31 @@
 		return 0
 
 // Runs a single cycle of the engine
-/obj/item/device/spacepod_equipment/engine/proc/cycle()
+/obj/item/device/spacepod_equipment/engine/proc/cycle( var/iterations = 1 )
 	if( move_tick < ticks_per_move )
 		move_tick++
 		return 0
 
 	move_tick = 0
 
-	if( use_fuel )
-		if( fuel_tank.gas["phoron"] > 0 )
-			fuel_tank.adjust_gas( "phoron", -burn_rate) // use up dat phoron
-			fuel_tank.add_thermal_energy(heat_rate) // heat from the engine using phoron
+	for( var/i = 0, i<iterations, i++ )
+		if( use_fuel )
+			if( fuel_tank.gas["phoron"] > 0 )
+				fuel_tank.adjust_gas( "phoron", -burn_rate) // use up dat phoron
+				fuel_tank.add_thermal_energy(heat_rate) // heat from the engine using phoron
 
-			if( my_atom.equipment_system.battery ) // charge the battery if we have one
-				my_atom.equipment_system.battery.give( charge_rate )
+				if( my_atom.equipment_system.battery ) // charge the battery if we have one
+					my_atom.equipment_system.battery.give( charge_rate )
 
-			if( fuel_tank.gas["oxygen"] > 0 )
-				fuel_tank.adjust_gas( "oxygen", -burn_rate/2) // burn up oxygen at half rate 4noraisin
-				fuel_tank.add_thermal_energy(heat_rate*10) // putting oxygen in this baby is bad news
+				if( fuel_tank.gas["oxygen"] > 0 )
+					fuel_tank.adjust_gas( "oxygen", -burn_rate/2) // burn up oxygen at half rate 4noraisin
+					fuel_tank.add_thermal_energy(heat_rate*10) // putting oxygen in this baby is bad news
 
-				if( my_atom.equipment_system.battery ) // but hey, we'll charge the battery even faster
-					my_atom.equipment_system.battery.give( charge_rate*2 )
-		else
-			my_atom.occupants_announce( "ERROR: No phoron left in the fuel tank!", 2 )
-			return 0
+					if( my_atom.equipment_system.battery ) // but hey, we'll charge the battery even faster
+						my_atom.equipment_system.battery.give( charge_rate*2 )
+			else
+				my_atom.occupants_announce( "ERROR: No phoron left in the fuel tank!", 2 )
+				return 0
 
 	return 1
 
