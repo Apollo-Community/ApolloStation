@@ -5,10 +5,26 @@
 #define SECTOR_LOCAL 8 // Is this sector accessible from the overmap?
 #define SECTOR_ADMIN 16 // Is this sector accessible only through admoon intervention?
 
+#define MAX_SECTORS 1 // How many unknown sectors are allowed?
+
 //===================================================================================
 //Hook for building overmap
 //===================================================================================
 var/global/list/map_sectors = list()
+
+/*
+/hook/startup/proc/load_sectors()
+	var/map_path = "maps/overmap/random/"
+	var/list/maps = flist( map_path )
+
+	for( var/i = 0, i < MAX_SECTORS, i++ )
+		var/chosen = pick( maps )
+
+		testing( "Loading [chosen] as a random sector" )
+		maploader.load_map( map_path+chosen )
+		testing( "Loaded" )
+		maps.Remove( chosen )
+*/
 
 /hook/startup/proc/build_map()
 	if(!config.use_overmap)
