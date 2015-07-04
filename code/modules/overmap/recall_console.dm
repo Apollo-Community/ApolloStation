@@ -37,12 +37,19 @@
 /obj/machinery/computer/pod_recall/process()
 	if( active )
 		if( !beacon )
+			active = 0
 			return
 		if( !target )
+			active = 0
 			return
 
 		if( src.charge >= src.max_charge )
-			new /obj/machinery/singularity/bluespace_gate/( src.target.loc, src.beacon.loc )
+			if(  istype( target.loc, /obj/effect/traveler ))
+				var/obj/effect/traveler/traveler = target.loc
+				bluespace_jump( get_turf( target ), target, beacon.loc )
+				del( traveler )
+			else
+				new /obj/machinery/singularity/bluespace_gate/( src.target.loc, src.beacon.loc )
 			src.charge = 0
 			src.active = 0
 		else

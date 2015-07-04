@@ -48,8 +48,9 @@
 		if( O.anchored )
 			return
 
-	var/x_off = source.x-A.x
-	var/y_off = source.y-A.y
+	var/turf/A_turf = get_turf( A )
+	var/x_off = source.x-A_turf.x
+	var/y_off = source.y-A_turf.y
 
 	var/turf/bluespace = locate( rand( OVERMAP_EDGE, world.maxx-OVERMAP_EDGE ), rand( OVERMAP_EDGE, world.maxy-OVERMAP_EDGE ), BLUESPACE_LEVEL )
 	var/turf/destination
