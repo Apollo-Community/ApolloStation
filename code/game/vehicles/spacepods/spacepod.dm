@@ -475,11 +475,11 @@
 
 /obj/spacepod/proc/exit( mob/user as mob )
 	if( istype( src.loc, /obj/effect/traveler ))
-		user << pick( "Stepping out into the vast emptiness of space isn't a very good idea.",
-					  "The void does not call to you.",
-					  "Why would you want to do that?",
-					  "You reach for the door and pull the handle, but it beeps and locks, stopping you from idiotically floating off into the void.",
-					  "Space looks perfectly fine from in here." )
+		user << pick( "\red Stepping out into the vast emptiness of space isn't a very good idea.",
+					  "\red The void does not call to you.",
+					  "\red Why would you want to do that?",
+					  "\red You reach for the door and pull the handle, but it beeps and locks, stopping you from idiotically floating off into the void.",
+					  "\red Space looks perfectly fine from in here." )
 		return
 
 	if( user == pilot )

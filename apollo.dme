@@ -14,7 +14,6 @@
 #define FILE_DIR "icons/apollo/effects"
 #define FILE_DIR "icons/apollo/mob"
 #define FILE_DIR "icons/atmos"
-#define FILE_DIR "icons/effects"
 #define FILE_DIR "icons/mecha"
 #define FILE_DIR "icons/misc"
 #define FILE_DIR "icons/mob"
@@ -1657,6 +1656,4 @@
 #include "maps\overmap\active\active-01-EngiPost.dmm"
 #include "maps\overmap\active\active-02-ACE.dmm"
 #include "maps\overmap\active\active-03-CentComm.dmm"
-#include "maps\overmap\random\sector-02-AbandonedSat.dmm"
-#include "maps\overmap\random\sector-03-AbandonedMining.dmm"
 // END_INCLUDE
