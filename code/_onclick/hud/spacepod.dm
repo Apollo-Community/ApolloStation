@@ -23,9 +23,10 @@
 	mymob.spacepod_charge.screen_loc = UI_SPACEPOD_CHARGE
 
 	mymob.client.screen = list(
-							mymob.spacepod_health,
-							mymob.spacepod_fuel,
-							mymob.spacepod_charge
+								mymob.spacepod_health,
+								mymob.spacepod_fuel,
+								mymob.spacepod_charge,
+								mymob.fade
 							)
 
 

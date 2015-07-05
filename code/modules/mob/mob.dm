@@ -1185,3 +1185,11 @@ mob/proc/yank_out_object()
 /mob/attack_hand(mob/user as mob)
 	user.do_attack_animation(src)
 	..()
+
+/mob/proc/fadeout()
+	flick("fadeout", fade)
+	fade.icon_state = "faded"
+
+/mob/proc/fadein()
+	flick("fadein", fade)
+	fade.icon_state = "unfaded"

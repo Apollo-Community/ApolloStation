@@ -70,3 +70,9 @@ var/list/name_to_mineral
 	result_amount = 5
 	spread_chance = 25
 	ore = /obj/item/weapon/ore/phoron
+
+/mineral/trash
+	name = "Trash"
+	result_amount = 1
+	spread_chance = 25
+	ore = /obj/item/weapon/ore/trash

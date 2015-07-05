@@ -1,6 +1,4 @@
 /**********************Mineral deposits**************************/
-
-
 /turf/simulated/mineral //wall piece
 	name = "Rock"
 	icon = 'icons/turf/walls.dmi'
@@ -24,6 +22,7 @@
 	var/excav_overlay = ""
 	var/obj/item/weapon/last_find
 	var/datum/artifact_find/artifact_find
+	var/side_type = "rock"
 
 	has_resources = 1
 
@@ -41,7 +40,7 @@
 				T.updateMineralOverlays()
 
 			else if(istype(turf_to_check,/turf/space) || istype(turf_to_check,/turf/simulated/floor))
-				turf_to_check.overlays += image('icons/turf/walls.dmi', "rock_side_[direction]")
+				turf_to_check.overlays += image('icons/turf/walls.dmi', "[side_type]_side_[direction]")
 
 /turf/simulated/mineral/ex_act(severity)
 	switch(severity)
@@ -382,6 +381,12 @@
 	mineralChance = 25
 	mineralSpawnChanceList = list("Uranium" = 10, "Platinum" = 10, "Iron" = 20, "Coal" = 20, "Diamond" = 2, "Gold" = 10, "Silver" = 10, "Phoron" = 20)
 
+/turf/simulated/mineral/random/trash
+	name = "Trash"
+	icon_state = "trash"
+	side_type = "trash"
+	mineralSpawnChanceList = list("Trash" = 35)
+	mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
 
 /**********************Asteroid**************************/
 
@@ -392,7 +397,7 @@
 	icon_state = "asteroid"
 	oxygen = 0
 	nitrogen = 0
-	temperature = TCMB
+	temperature = T20C-270
 	icon_plating = "asteroid"
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
 	var/overlay_detail

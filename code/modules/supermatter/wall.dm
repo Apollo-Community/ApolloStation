@@ -71,4 +71,3 @@
 			for(var/next_direction in step_overlays)
 				if(istype(get_step(T, step_overlays[next_direction]),/turf/simulated/wall/smatter))
 					T.overlays += image('icons/turf/walls.dmi', "smatter_side_[next_direction]")
-

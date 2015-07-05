@@ -113,7 +113,7 @@ var/list/ghostteleportlocs = list()
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z in config.player_levels)
+		if (picked.z in config.local_levels)
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 
