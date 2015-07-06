@@ -22,6 +22,7 @@
 			src.pixel_x = rand(-5, 5)
 			src.pixel_y = rand(-5, 5)
 		else
+	icon_state += pick("1","2","3")
 	return
 
 /obj/item/weapon/shard/phoron/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -29,8 +30,8 @@
 	if ( istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
-			var/obj/item/stack/sheet/glass/phoronglass/NG = new (user.loc)
-			for (var/obj/item/stack/sheet/glass/phoronglass/G in user.loc)
+			var/obj/item/stack/sheet/glass/phoron/NG = new (user.loc)
+			for (var/obj/item/stack/sheet/glass/phoron/G in user.loc)
 				if(G==NG)
 					continue
 				if(G.amount>=G.max_amount)

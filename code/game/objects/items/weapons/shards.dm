@@ -48,6 +48,7 @@
 			src.pixel_x = rand(-5, 5)
 			src.pixel_y = rand(-5, 5)
 		else
+	icon_state += pick("1","2","3")
 	return
 
 /obj/item/weapon/shard/attackby(obj/item/weapon/W as obj, mob/user as mob)
