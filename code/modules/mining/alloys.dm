@@ -33,7 +33,7 @@
 		"sand" = 2,
 		"phoron" = 1
 		)
-	product = /obj/item/stack/sheet/glass/phoronglass
+	product = /obj/item/stack/sheet/glass/phoron
 
 
 /datum/alloy/uglass
@@ -42,7 +42,7 @@
 		"sand" = 2,
 		"uranium" = 1
 		)
-	product = /obj/item/stack/sheet/glass/uraniumglass
+	product = /obj/item/stack/sheet/glass/uranium
 
 
 /datum/alloy/tglass
@@ -52,12 +52,3 @@
 		"coal" = 2
 		)
 	product = /obj/item/stack/sheet/glass/tinted
-
-
-/datum/alloy/dglass
-	metaltag = "diamondglass"
-	requires = list(
-		"sand" = 2,
-		"diamond" = 1
-		)
-	product = /obj/item/stack/sheet/glass/diamondglass

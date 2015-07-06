@@ -1,13 +1,14 @@
 /obj/structure/window
 	name = "window"
 	desc = "A window."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/structures/window.dmi'
+	icon_state = "window"
 	density = 1
 	layer = 3.2//Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = 1.0
 	flags = ON_BORDER
-	var/maxhealth = 14.0
+	var/maxhealth = 15
 	var/health
 	var/ini_dir = null
 	var/state = 2
@@ -328,6 +329,8 @@
 //This proc is used to update the icons of nearby windows. It should not be confused with update_nearby_tiles(), which is an atmos proc!
 /obj/structure/window/proc/update_nearby_icons()
 	update_icon()
+	for(var/turf/simulated/wall/W in range(src,1))
+		W.relativewall()
 	for(var/direction in cardinal)
 		for(var/obj/structure/window/W in get_step(src,direction) )
 			W.update_icon()
@@ -339,23 +342,26 @@
 	//This spawn is here so windows get properly updated when one gets deleted.
 	spawn(2)
 		if(!src) return
+		var/windowstate = "window"
+		if (reinf)
+			windowstate = "rwindow"
 		if(!is_fulltile())
-			icon_state = "[basestate]"
+			icon_state = "[windowstate]"
 			return
 		var/junction = 0 //will be used to determine from which side the window is connected to other windows
+		var/altbot = 0
 		if(anchored)
 			for(var/obj/structure/window/W in orange(src,1))
 				if(W.anchored && W.density	&& W.is_fulltile()) //Only counts anchored, not-destroyed fill-tile windows.
 					if(abs(x-W.x)-abs(y-W.y) ) 		//doesn't count windows, placed diagonally to src
 						junction |= get_dir(src,W)
-		if(opacity)
-			icon_state = "[basestate][junction]"
+			var/turf/T = get_step( src,SOUTH )
+			if( istype( T, /turf/simulated/wall ) )
+				altbot = 1
+		if(altbot)
+			icon_state = "[windowstate][junction]b"
 		else
-			if(reinf)
-				icon_state = "[basestate][junction]"
-			else
-				icon_state = "[basestate][junction]"
-
+			icon_state = "[windowstate][junction]"
 		return
 
 /obj/structure/window/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -368,19 +374,18 @@ BASIC WINDOW TYPES
 */
 /obj/structure/window/basic
 	desc = "It looks thin and flimsy. A few knocks with... anything, really should shatter it."
-	icon_state = "window"
-	basestate = "window"
+	icon = 'icons/obj/structures/window.dmi'
 	glasstype = /obj/item/stack/sheet/glass
 
 /obj/structure/window/uraniumbasic
 	name = "uranium window"
 	desc = "It looks quite a bit tougher than your average wndow. It's glowing slightly."
-	icon_state = "urawindow"
-	basestate = "urawindow"
-	glasstype = /obj/item/stack/sheet/glass/uraniumglass
-	maxhealth = 160
+	icon = 'icons/obj/structures/uwindow.dmi'
+	shardtype = /obj/effect/decal/cleanable/greenglow
+	glasstype = /obj/item/stack/sheet/glass/uranium
+	maxhealth = 60
 	luminosity = 2
-	l_color = "#25D53D"
+	l_color = "#09350F"
 
 /obj/structure/window/uraniumbasic/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 8000)
@@ -390,34 +395,31 @@ BASIC WINDOW TYPES
 /obj/structure/window/tintedbasic
 	name = "tinted window"
 	desc = "It looks rather flimsy and opaque. A few good hits should shatter it."
-	icon_state = "twindow"
-	basestate = "twindow"
+	icon = 'icons/obj/structures/twindow.dmi'
 	glasstype = /obj/item/stack/sheet/glass/tinted
-	maxhealth = 14
+	maxhealth = 15
 	opacity = 1
 
 /obj/structure/window/diamondbasic
 	name = "diamond window"
 	desc = "It looks thin but insanely hard. If you look closely you can see an ultrafine diamond lattice beneath the surface."
-	icon_state = "diawindow"
-	basestate = "diawindow"
+	icon = 'icons/obj/structures/dwindow.dmi'
 	shardtype = /obj/item/weapon/ore/diamond
-	glasstype = /obj/item/stack/sheet/glass/diamondglass
-	maxhealth = 240
+	glasstype = /obj/item/stack/sheet/glass/diamond
+	maxhealth = 120
 
 /obj/structure/window/diamondbasic/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > T0C + 16000)
+	if(exposed_temperature > T0C + 12000)
 		hit(round(exposed_volume / 1000), 0)
 	..()
 
 /obj/structure/window/phoronbasic
 	name = "phoron window"
 	desc = "A phoron-glass alloy window. It looks insanely tough to break. It appears it's also insanely tough to burn through."
-	basestate = "phoronwindow"
-	icon_state = "phoronwindow"
+	icon = 'icons/obj/structures/pwindow.dmi'
 	shardtype = /obj/item/weapon/shard/phoron
-	glasstype = /obj/item/stack/sheet/glass/phoronglass
-	maxhealth = 120
+	glasstype = /obj/item/stack/sheet/glass/phoron
+	maxhealth = 90
 
 /obj/structure/window/phoronbasic/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 32000)
@@ -430,62 +432,58 @@ REINFORCED WINDOW TYPES
 /obj/structure/window/reinforced
 	name = "reinforced window"
 	desc = "It looks rather strong. Might take a few good hits to shatter it."
-	icon_state = "rwindow"
-	basestate = "rwindow"
-	maxhealth = 40
+	icon = 'icons/obj/structures/window.dmi'
+	maxhealth = 30
 	reinf = 1
 	glasstype = /obj/item/stack/sheet/glass/reinforced
 
 /obj/structure/window/uraniumreinforced
 	name = "reinforced uranium window"
 	desc = "A uranium-glass alloy window, with rods supporting it. It looks hopelessly tough to break. It's glowing slightly."
-	icon_state = "urarwindow"
-	basestate = "urarwindow"
-	glasstype = /obj/item/stack/sheet/glass/uraniumrglass
-	maxhealth = 200
+	icon = 'icons/obj/structures/uwindow.dmi'
+	shardtype = /obj/effect/decal/cleanable/greenglow
+	glasstype = /obj/item/stack/sheet/glass/uraniumr
+	maxhealth = 120
 	luminosity = 2
 	l_color = "#25D53D"
 	reinf = 1
 
 /obj/structure/window/uraniumreinforced/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > T0C + 12000)
+	if(exposed_temperature > T0C + 16000)
 		hit(round(exposed_volume / 1000), 0)
 	..()
 
 /obj/structure/window/diamondreinforced
 	name = "reinforced diamond window"
 	desc = "A diamond-glass composite window, with rods supporting it. It looks virtually invincible. If you look closely you can see an ultrafine diamond lattice beneath the surface."
-	icon_state = "diarwindow"
-	basestate = "diarwindow"
+	icon = 'icons/obj/structures/dwindow.dmi'
 	shardtype = /obj/item/weapon/ore/diamond
-	glasstype = /obj/item/stack/sheet/glass/diamondrglass
-	maxhealth = 280
+	glasstype = /obj/item/stack/sheet/glass/diamondr
+	maxhealth = 240
 	reinf = 1
 
 /obj/structure/window/diamondbasic/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > T0C + 20000)
+	if(exposed_temperature > T0C + 24000)
 		hit(round(exposed_volume / 1000), 0)
 	..()
 
 /obj/structure/window/tintedreinforced
 	name = "reinforced tinted window"
 	desc = "It looks rather flimsy and opaque. A few good hits should shatter it."
-	icon_state = "trwindow"
-	basestate = "trwindow"
-	glasstype = /obj/item/stack/sheet/glass/tintedrglass
-	maxhealth = 40
+	icon = 'icons/obj/structures/twindow.dmi'
+	glasstype = /obj/item/stack/sheet/glass/tintedr
+	maxhealth = 30
 	opacity = 1
 	reinf = 1
 
 /obj/structure/window/phoronreinforced
 	name = "reinforced phoron window"
 	desc = "A phoron-glass alloy window, with rods supporting it. It looks extremely durable. It also looks completely fireproof, considering how basic phoron windows are insanely fireproof."
-	basestate = "phoronrwindow"
-	icon_state = "phoronrwindow"
+	icon = 'icons/obj/structures/pwindow.dmi'
 	shardtype = /obj/item/weapon/shard/phoron
-	glasstype = /obj/item/stack/sheet/glass/phoronrglass
+	glasstype = /obj/item/stack/sheet/glass/phoronr
 	reinf = 1
-	maxhealth = 160
+	maxhealth = 180
 
 /obj/structure/window/phoronreinforced/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return

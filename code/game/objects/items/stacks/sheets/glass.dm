@@ -19,7 +19,9 @@
 	origin_tech = "materials=1"
 	var/created_window = /obj/structure/window/basic
 	var/is_reinforced = 0
+	var/is_composite = 0
 	var/list/construction_options = list("One Direction", "Full Window")
+	var/reinforced_type = /obj/item/stack/sheet/glass/reinforced
 
 /obj/item/stack/sheet/glass/cyborg
 	name = "glass"
@@ -36,7 +38,7 @@
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
 	..()
 	if(!is_reinforced)
-		if(istype(W,/obj/item/stack/cable_coil))
+		if(istype(W,/obj/item/stack/cable_coil) && !is_composite)
 			var/obj/item/stack/cable_coil/CC = W
 			if (get_amount() < 1 || CC.get_amount() < 5)
 				user << "<span class='warning>You need five lengths of coil and one sheet of glass to make wired glass.</span>"
@@ -52,7 +54,7 @@
 				user << "<span class='warning'>You need one rod and one sheet of glass to make reinforced glass.</span>"
 				return
 
-			var/obj/item/stack/sheet/glass/reinforced/RG = new (user.loc)
+			var/obj/item/stack/sheet/glass/reinforced/RG = new reinforced_type (user.loc)
 			RG.add_fingerprint(user)
 			RG.add_to_stacks(user)
 			var/obj/item/stack/sheet/glass/G = src
@@ -62,6 +64,17 @@
 			G.use(1)
 			if (!G && replace)
 				user.put_in_hands(RG)
+		else if(istype(W, /obj/item/weapon/ore/diamond) && !is_composite)
+			var/obj/item/stack/sheet/glass/diamond/DG = new /obj/item/stack/sheet/glass/diamond (user.loc)
+			DG.add_fingerprint(user)
+			DG.add_to_stacks(user)
+			var/obj/item/stack/sheet/glass/G = src
+			src = null
+			var/replace = (user.get_inactive_hand()==G)
+			G.use(1)
+			del(W)
+			if (!G && replace)
+				user.put_in_hands(DG)
 
 /obj/item/stack/sheet/glass/proc/construct_window(mob/user as mob)
 	if(!user || !src)	return 0
@@ -142,13 +155,13 @@
 	desc = "Glass which has been reinforced with metal rods."
 	singular_name = "reinforced glass sheet"
 	icon_state = "sheet-rglass"
-
 	matter = list("metal" = 1875,"glass" = 3750)
 	origin_tech = "materials=2"
 
+	construction_options = list("One Direction", "Full Window", "Windoor")
 	created_window = /obj/structure/window/reinforced
 	is_reinforced = 1
-	construction_options = list("One Direction", "Full Window", "Windoor")
+
 
 /obj/item/stack/sheet/glass/reinforced/cyborg
 	name = "reinforced glass"
@@ -159,133 +172,83 @@
 /*
  * Phoron Glass sheets
  */
- /obj/item/stack/sheet/glass/phoronglass
+ /obj/item/stack/sheet/glass/phoron
 	name = "phoron glass"
 	desc = "A very strong and very resistant sheet of a phoron-glass alloy."
 	singular_name = "phoron glass sheet"
 	icon_state = "sheet-phoronglass"
-
 	matter = list("glass" = 3750)
 	origin_tech = "materials=3;phorontech=2"
 
+	reinforced_type = /obj/item/stack/sheet/glass/phoronr
 	created_window = /obj/structure/window/phoronbasic
+	is_composite = 1
 
-/obj/item/stack/sheet/glass/phoronglass/attackby(obj/item/W, mob/user)
-	..()
-	if( istype(W, /obj/item/stack/rods) )
-		var/obj/item/stack/rods/V  = W
-		var/obj/item/stack/sheet/glass/phoronrglass/RG = new (user.loc)
-		RG.add_fingerprint(user)
-		RG.add_to_stacks(user)
-		V.use(1)
-		var/obj/item/stack/sheet/glass/G = src
-		src = null
-		var/replace = (user.get_inactive_hand()==G)
-		G.use(1)
-		if (!G && !RG && replace)
-			user.put_in_hands(RG)
-	else
-		return ..()
-
-/obj/item/stack/sheet/glass/phoronrglass
+/obj/item/stack/sheet/glass/phoronr
 	name = "reinforced phoron glass"
 	desc = "Phoron glass which has been reinforced with metal rods."
 	singular_name = "reinforced phoron glass sheet"
 	icon_state = "sheet-phoronrglass"
-
 	matter = list("glass" = 3750,"metal" = 1875)
 	origin_tech = "materials=4;phorontech=2"
 
 	created_window = /obj/structure/window/phoronreinforced
 	is_reinforced = 1
+	is_composite = 1
 
 /*
  * Uranium glass sheets
  */
- /obj/item/stack/sheet/glass/uraniumglass
+ /obj/item/stack/sheet/glass/uranium
 	name = "uranium glass"
 	desc = "A very strong, high density sheet of uranium-glass alloy."
 	singular_name = "uranium glass sheet"
-	icon_state = "sheet-uraglass"
-
+	icon_state = "sheet-uraniumglass"
 	matter = list("glass" = 3750)
 	origin_tech = "materials=4"
 
+	reinforced_type = /obj/item/stack/sheet/glass/uraniumr
 	created_window = /obj/structure/window/uraniumbasic
-	is_reinforced = 0
+	is_composite = 0
 
-/obj/item/stack/sheet/glass/uraniumglass/attackby(obj/item/W, mob/user)
-	..()
-	if( istype(W, /obj/item/stack/rods) )
-		var/obj/item/stack/rods/V  = W
-		var/obj/item/stack/sheet/glass/uraniumrglass/RG = new (user.loc)
-		RG.add_fingerprint(user)
-		RG.add_to_stacks(user)
-		V.use(1)
-		var/obj/item/stack/sheet/glass/G = src
-		src = null
-		var/replace = (user.get_inactive_hand()==G)
-		G.use(1)
-		if (!G && !RG && replace)
-			user.put_in_hands(RG)
-	else
-		return ..()
-
-/obj/item/stack/sheet/glass/uraniumrglass
+/obj/item/stack/sheet/glass/uraniumr
 	name = "reinforced uranium glass"
 	desc = "Uranium glass which has been reinforced with metal rods."
 	singular_name = "reinforced uranium glass sheet"
-	icon_state = "sheet-urarglass"
-
+	icon_state = "sheet-uraniumrglass"
 	matter = list("glass" = 3750,"metal" = 1875)
 	origin_tech = "materials=5"
 
 	created_window = /obj/structure/window/uraniumreinforced
 	is_reinforced = 1
+	is_composite = 1
 
 /*
  * Diamond glass sheets
  */
-/obj/item/stack/sheet/glass/diamondglass
+/obj/item/stack/sheet/glass/diamond
 	name = "diamond glass"
 	desc = "An ultra-hard glass sheet made from diamond-glass composite."
 	singular_name = "diamond glass sheet"
-	icon_state = "sheet-diaglass"
-
+	icon_state = "sheet-diamondglass"
 	matter = list("glass" = 3750)
 	origin_tech = "materials=6"
 
+	reinforced_type = /obj/item/stack/sheet/glass/diamondr
 	created_window = /obj/structure/window/diamondbasic
-	is_reinforced = 0
+	is_composite = 1
 
-/obj/item/stack/sheet/glass/diamondglass/attackby(obj/item/W, mob/user)
-	..()
-	if( istype(W, /obj/item/stack/rods) )
-		var/obj/item/stack/rods/V  = W
-		var/obj/item/stack/sheet/glass/diamondrglass/RG = new (user.loc)
-		RG.add_fingerprint(user)
-		RG.add_to_stacks(user)
-		V.use(1)
-		var/obj/item/stack/sheet/glass/G = src
-		src = null
-		var/replace = (user.get_inactive_hand()==G)
-		G.use(1)
-		if (!G && !RG && replace)
-			user.put_in_hands(RG)
-	else
-		return ..()
-
-/obj/item/stack/sheet/glass/diamondrglass
+/obj/item/stack/sheet/glass/diamondr
 	name = "reinforced diamond glass"
 	desc = "Diamond glass which has been reinforced with metal rods, as if being made out of diamond wasn't enough."
 	singular_name = "reinforced diamond glass sheet"
-	icon_state = "sheet-diarglass"
-
+	icon_state = "sheet-diamondrglass"
 	matter = list("glass" = 3750,"metal" = 1875)
 	origin_tech = "materials=7"
 
 	created_window = /obj/structure/window/diamondreinforced
 	is_reinforced = 1
+	is_composite = 1
 
 /*
  * Tinted glass sheets
@@ -294,39 +257,22 @@
 	name = "tinted glass"
 	desc = "A sheet of glass that has been tinted to the point where you can't see though it. How useless..."
 	singular_name = "tinted glass sheet"
-	icon_state = "sheet-tinglass"
-
+	icon_state = "sheet-tintedglass"
 	matter = list("glass" = 3750)
 	origin_tech = "materials=2"
 
+	reinforced_type = /obj/item/stack/sheet/glass/tintedr
 	created_window = /obj/structure/window/tintedbasic
-	is_reinforced = 0
+	is_composite = 1
 
-/obj/item/stack/sheet/glass/tinted/attackby(obj/item/W, mob/user)
-	..()
-	if( istype(W, /obj/item/stack/rods) )
-		var/obj/item/stack/rods/V  = W
-		var/obj/item/stack/sheet/glass/tintedrglass/RG = new (user.loc)
-		RG.add_fingerprint(user)
-		RG.add_to_stacks(user)
-		V.use(1)
-		var/obj/item/stack/sheet/glass/G = src
-		src = null
-		var/replace = (user.get_inactive_hand()==G)
-		G.use(1)
-		if (!G && !RG && replace)
-			user.put_in_hands(RG)
-	else
-		return ..()
-
-/obj/item/stack/sheet/glass/tintedrglass
+/obj/item/stack/sheet/glass/tintedr
 	name = "reinforced tinted glass"
 	desc = "Tinted glass which has been reinforced with metal rods."
 	singular_name = "reinforced tinted glass sheet"
-	icon_state = "sheet-tinrglass"
-
+	icon_state = "sheet-tintedrglass"
 	matter = list("glass" = 3750,"metal" = 1875)
 	origin_tech = "materials=3"
 
 	created_window = /obj/structure/window/tintedreinforced
 	is_reinforced = 1
+	is_composite = 1

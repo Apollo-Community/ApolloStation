@@ -41,7 +41,6 @@
 
 /datum/ore/diamond
 	compresses_to = /obj/item/stack/sheet/mineral/diamond
-	alloy = 1
 	oretag = "diamond"
 
 /datum/ore/osmium

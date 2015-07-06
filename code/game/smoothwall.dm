@@ -2,7 +2,7 @@
 //Also assemblies.dm for falsewall checking for this when used.
 //I should really make the shuttle wall check run every time it's moved, but centcom uses unsimulated floors so !effort
 
-var/list/blend_objects = list( /obj/structure/falsewall, /obj/structure/falserwall, /obj/machinery/door, /obj/structure/grille ) // Objects which the walls blend with
+var/list/blend_objects = list( /obj/structure/falsewall, /obj/structure/falserwall, /obj/machinery/door, /obj/structure/grille, /obj/structure/window ) // Objects which the walls blend with
 var/list/noblend_objects = list( /obj/machinery/door/blast, /obj/machinery/door/firedoor, /obj/machinery/door/window )
 
 /atom/proc/relativewall() //atom because it should be useable both for walls and false walls
@@ -10,24 +10,24 @@ var/list/noblend_objects = list( /obj/machinery/door/blast, /obj/machinery/door/
 		return
 
 	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
-
+	//var/altbottom = 0
 	if(!istype(src,/turf/simulated/shuttle/wall)) //or else we'd have wacky shuttle merging with walls action
 		for( var/direction in cardinal )
 			var/turf/T = get_step( src,direction )
 			var/success = 0
 
-			if( istype( T, /turf/simulated/wall ))
+			if( istype( T, /turf/simulated/wall ) )
 				success = 1
 			else
 				for( var/atom/O in T ) // for each object in the turf
 					for( var/b_type in blend_objects )
-						if( istype( O, b_type ))
+						if( istype( O, b_type ) && direction == SOUTH)
+							//altbottom = 1
 							success = 1
-
 							for( var/n_type in noblend_objects )
-								if( istype( O, n_type ))
+								if( istype( O, n_type ) && direction == SOUTH)
+									//altbottom = 0
 									success = 0
-
 						if( success )
 							break
 					if( success )
@@ -36,8 +36,20 @@ var/list/noblend_objects = list( /obj/machinery/door/blast, /obj/machinery/door/
 			if( success )
 				junction |= get_dir( src, T )
 
+	/* This isn't very friendly with the rest of the code. Might eventually do something about it though.
+	var/turf/T = get_step( src, SOUTH)
+	if(altbottom && istype(src,/turf/simulated/wall))
+		var/turf/simulated/wall/wall = src
+		T.overlays += "[wall.walltype]bot[junction&EAST ? 1:0][junction&WEST ? 1:0]"
+	else
+		T.overlays.Cut()
+	*/
+
 	if(istype(src,/turf/simulated/wall))
 		var/turf/simulated/wall/wall = src
+		//if(altbottom)
+		//	wall.icon_state = "[wall.walltype][junction]b"
+		//else
 		wall.icon_state = "[wall.walltype][junction]"
 	else if (istype(src,/obj/structure/falserwall) )
 		src.icon_state = "rwall[junction]"
@@ -77,6 +89,9 @@ var/list/noblend_objects = list( /obj/machinery/door/blast, /obj/machinery/door/
 
 		for(var/obj/structure/falsewall/W in range(src,1))
 			W.relativewall()
+
+		for(var/obj/structure/window/W in range(src, 1))
+			W.update_icon()
 
 	for(var/direction in cardinal)
 		for(var/obj/effect/glowshroom/shroom in get_step(src,direction))
