@@ -41,3 +41,7 @@
 	var/mob_size            // Used by lockers.
 
 	var/sound/jukebox_sound = null
+
+	// Contains icon generation and language information, set during New().
+	// Prevents a bunch of runtime errors if we set it species for all mobs
+	var/datum/species/species = null
