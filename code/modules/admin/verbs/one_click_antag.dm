@@ -431,7 +431,7 @@ client/proc/one_click_antag()
 	new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
 
 	return new_syndicate_commando
-
+/*
 /datum/admins/proc/makeVoxRaiders()
 
 	var/list/mob/dead/observer/candidates = list()
@@ -526,3 +526,5 @@ client/proc/one_click_antag()
 	new_vox.equip_vox_raider()
 
 	return new_vox
+
+*/

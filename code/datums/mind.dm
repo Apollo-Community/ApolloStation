@@ -400,22 +400,20 @@ datum/mind
 							possible_targets += possible_target.current
 
 					var/mob/def_target = null
-					var/objective_list[] = list(/datum/objective/assassinate, /datum/objective/protect, /datum/objective/debrain)
+					var/objective_list[] = list(/datum/objective/targeted/assassinate, /datum/objective/targeted/protect, /datum/objective/targeted/debrain)
 					if (objective&&(objective.type in objective_list) && objective:target)
 						def_target = objective:target.current
 
 					var/new_target = input("Select target:", "Objective target", def_target) as null|anything in possible_targets
 					if (!new_target) return
 
-					var/objective_path = text2path("/datum/objective/[new_obj_type]")
+					var/objective_path = text2path("/datum/objective/targeted/[new_obj_type]")
 					if (new_target == "Free objective")
-						new_objective = new objective_path
-						new_objective.owner = src
+						new_objective = new objective_path( src )
 						new_objective:target = null
 						new_objective.explanation_text = "Free objective"
 					else
-						new_objective = new objective_path
-						new_objective.owner = src
+						new_objective = new objective_path( src )
 						new_objective:target = new_target:mind
 						//Will display as special role if the target is set as MODE. Ninjas/commandos/nuke ops.
 						new_objective.explanation_text = "[objective_type] [new_target:real_name], the [new_target:mind:assigned_role=="MODE" ? (new_target:mind:special_role) : (new_target:mind:assigned_role)]."
@@ -441,19 +439,15 @@ datum/mind
 					new_objective.owner = src
 
 				if ("steal")
-					if (!istype(objective, /datum/objective/steal))
-						new_objective = new /datum/objective/steal
-						new_objective.owner = src
-					else
-						new_objective = objective
-					var/datum/objective/steal/steal = new_objective
-					if (!steal.select_target())
-						return
+					var/steal_objective = pickRandomObjective( /datum/objective/steal )
+					new_objective = new steal_objective( src )
+					testing( "Steal Objective: [steal_objective:explanation_text]" )
+
 
 				if("download","capture","absorb")
 					var/def_num
 					if(objective&&objective.type==text2path("/datum/objective/[new_obj_type]"))
-						def_num = objective.target_amount
+						def_num = objective:target_amount
 
 					var/target_number = input("Input target number:", "Objective", def_num) as num|null
 					if (isnull(target_number))//Ordinarily, you wouldn't need isnull. In this case, the value may already exist.
@@ -467,10 +461,10 @@ datum/mind
 							new_objective = new /datum/objective/capture
 							new_objective.explanation_text = "Accumulate [target_number] capture points."
 						if("absorb")
-							new_objective = new /datum/objective/absorb
+							new_objective = new /datum/objective/targeted/absorb
 							new_objective.explanation_text = "Absorb [target_number] compatible genomes."
 					new_objective.owner = src
-					new_objective.target_amount = target_number
+					new_objective:target_amount = target_number
 
 				if ("custom")
 					var/expl = sanitize(input("Custom objective:", "Objective", objective ? objective.explanation_text : "") as text|null)
@@ -588,8 +582,8 @@ datum/mind
 						// copy targets
 						var/datum/mind/valid_head = locate() in ticker.mode.head_revolutionaries
 						if (valid_head)
-							for (var/datum/objective/mutiny/O in valid_head.objectives)
-								var/datum/objective/mutiny/rev_obj = new
+							for (var/datum/objective/targeted/mutiny/O in valid_head.objectives)
+								var/datum/objective/targeted/mutiny/rev_obj = new
 								rev_obj.owner = src
 								rev_obj.target = O.target
 								rev_obj.explanation_text = "Assassinate [O.target.name], the [O.target.assigned_role]."
@@ -1158,8 +1152,8 @@ datum/mind
 			// copy targets
 			var/datum/mind/valid_head = locate() in ticker.mode.head_revolutionaries
 			if (valid_head)
-				for (var/datum/objective/mutiny/O in valid_head.objectives)
-					var/datum/objective/mutiny/rev_obj = new
+				for (var/datum/objective/targeted/mutiny/O in valid_head.objectives)
+					var/datum/objective/targeted/mutiny/rev_obj = new
 					rev_obj.owner = src
 					rev_obj.target = O.target
 					rev_obj.explanation_text = "Assassinate [O.target.current.real_name], the [O.target.assigned_role]."

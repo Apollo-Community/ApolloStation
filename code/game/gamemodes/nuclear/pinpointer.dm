@@ -110,6 +110,7 @@
 				icon_state = "pinonfar"
 		spawn(5) .()
 
+/* Don't think this is ever used in game
 /obj/item/weapon/pinpointer/advpinpointer/verb/toggle_mode()
 	set category = "Object"
 	set name = "Toggle Pinpointer Mode"
@@ -170,7 +171,7 @@
 							break
 
 			return attack_self()
-
+*/
 
 ///////////////////////
 //nuke op pinpointers//

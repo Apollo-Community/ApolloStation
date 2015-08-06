@@ -91,21 +91,15 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	if (config.objectives_disabled)
 		return
 
-	var/datum/objective/absorb/absorb_objective = new
-	absorb_objective.owner = changeling
+	var/datum/objective/targeted/absorb/absorb_objective = new( changeling )
 	absorb_objective.gen_amount_goal(2, 3)
 	changeling.objectives += absorb_objective
 
-	var/datum/objective/assassinate/kill_objective = new
-	kill_objective.owner = changeling
-	kill_objective.find_target()
+	var/datum/objective/targeted/assassinate/kill_objective = new( changeling )
 	changeling.objectives += kill_objective
 
-	var/datum/objective/steal/steal_objective = new
-	steal_objective.owner = changeling
-	steal_objective.find_target()
-	changeling.objectives += steal_objective
-
+	var/steal_objective = pickRandomObjective( /datum/objective/steal )
+	changeling.objectives += new steal_objective( changeling )
 
 	switch(rand(1,100))
 		if(1 to 80)

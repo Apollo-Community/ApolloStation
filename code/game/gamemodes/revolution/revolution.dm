@@ -79,7 +79,7 @@
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		if(!config.objectives_disabled)
 			for(var/datum/mind/head_mind in heads)
-				var/datum/objective/mutiny/rev_obj = new
+				var/datum/objective/targeted/mutiny/rev_obj = new
 				rev_obj.owner = rev_mind
 				rev_obj.target = head_mind
 				rev_obj.explanation_text = "Assassinate [head_mind.name], the [head_mind.assigned_role]."
@@ -113,7 +113,7 @@
 	if(!config.objectives_disabled)
 		var/list/heads = get_living_heads()
 		for(var/datum/mind/head_mind in heads)
-			var/datum/objective/mutiny/rev_obj = new
+			var/datum/objective/targeted/mutiny/rev_obj = new
 			rev_obj.owner = rev_mind
 			rev_obj.target = head_mind
 			rev_obj.explanation_text = "Assassinate [head_mind.name], the [head_mind.assigned_role]."
@@ -379,7 +379,7 @@
 				text += "body destroyed"
 			text += ")"
 
-			for(var/datum/objective/mutiny/objective in headrev.objectives)
+			for(var/datum/objective/targeted/mutiny/objective in headrev.objectives)
 				targets |= objective.target
 
 		world << text

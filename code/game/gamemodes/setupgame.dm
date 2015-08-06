@@ -16,7 +16,7 @@
 	//testing("[name] assigned to block #[assigned].")
 	return assigned
 
-/proc/setupgenetics()
+/proc/setupGenetics()
 
 	if (prob(50))
 		// Currently unused.  Will revisit. - N3X
@@ -145,8 +145,7 @@
 	*/
 
 
-/proc/setupfactions()
-
+/proc/setupFactions()
 	// Populate the factions list:
 	for(var/x in typesof(/datum/faction))
 		var/datum/faction/F = new x
@@ -155,12 +154,22 @@
 			continue
 		else
 			ticker.factions.Add(F)
-			ticker.availablefactions.Add(F)
+			ticker.factions_available.Add(F)
 
 	// Populate the syndicate coalition:
 	for(var/datum/faction/syndicate/S in ticker.factions)
-		ticker.syndicate_coalition.Add(S)
+		testing( "Added Syndicate Faction: [S]" )
+		ticker.factions_syndicate.Add(S)
 
+		// Populate the syndicate coalition:
+	for(var/datum/faction/corporation/C in ticker.factions)
+		testing( "Added Corporation: [C]" )
+		ticker.factions_corp.Add(C)
+
+/proc/setupObjectives()
+	for( var/objective in typesof( /datum/objective ))
+		testing( "Added objective type: [objective]" )
+		ticker.objectives.Add( objective )
 
 /* This was used for something before, I think, but is not worth the effort to process now.
 /proc/setupcorpses()

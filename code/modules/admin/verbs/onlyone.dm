@@ -10,14 +10,8 @@
 		ticker.mode.traitors += H.mind
 		H.mind.special_role = "traitor"
 
-		var/datum/objective/steal/steal_objective = new
-		steal_objective.owner = H.mind
-		steal_objective.set_target("nuclear authentication disk")
-		H.mind.objectives += steal_objective
-
-		var/datum/objective/hijack/hijack_objective = new
-		hijack_objective.owner = H.mind
-		H.mind.objectives += hijack_objective
+		H.mind.objectives += new /datum/objective/steal/nukedisk( H.mind )
+		H.mind.objectives += new /datum/objective/hijack( H.mind )
 
 		H << "<B>You are the traitor.</B>"
 		show_objectives(H.mind)

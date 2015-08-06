@@ -73,7 +73,7 @@ var/global/next_account_number = 0
 var/global/list/all_money_accounts = list()
 var/global/economy_init = 0
 
-/proc/setup_economy()
+/proc/setupEconomy()
 	if(economy_init)
 		return 2
 

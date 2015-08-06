@@ -344,23 +344,25 @@
 				W.loc = src.loc
 
 	//Update any existing objectives involving this mob.
-	for(var/datum/objective/O in all_objectives)
+	for(var/datum/objective/O in ticker.objectives_active)
 		// We don't want revs to get objectives that aren't for heads of staff. Letting
 		// them win or lose based on cryo is silly so we remove the objective.
-		if(istype(O,/datum/objective/mutiny) && O.target == occupant.mind)
-			del(O)
-		else if(O.target && istype(O.target,/datum/mind))
-			if(O.target == occupant.mind)
-				if(O.owner && O.owner.current)
-					O.owner.current << "<span class='warning'>You get the feeling your target is no longer within your reach. Time for Plan [pick(list("A","B","C","D","X","Y","Z"))]...</span>"
-				O.target = null
-				spawn(1) //This should ideally fire after the occupant is deleted.
-					if(!O) return
-					O.find_target()
-					if(!(O.target))
-						all_objectives -= O
-						O.owner.objectives -= O
-						del(O)
+		if( istype( O,/datum/objective/targeted ))
+			var/datum/objective/targeted/T = O
+			if( istype( O,/datum/objective/targeted/mutiny ) && T.target == occupant.mind )
+				del(T)
+			else if(T.target && istype(T.target,/datum/mind))
+				if(T.target == occupant.mind)
+					if(T.owner && T.owner.current)
+						T.owner.current << "<span class='warning'>You get the feeling your target is no longer within your reach. Time for Plan [pick(list("A","B","C","D","X","Y","Z"))]...</span>"
+					T.target = null
+					spawn(1) //This should ideally fire after the occupant is deleted.
+						if(!T) return
+						T.find_target()
+						if(!(T.target))
+							ticker.objectives_active -= T
+							T.owner.objectives -= T
+							del(T)
 
 	//Handle job slot/tater cleanup.
 	var/job = occupant.mind.assigned_role

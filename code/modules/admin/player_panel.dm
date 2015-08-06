@@ -466,8 +466,8 @@
 		if(ticker.mode.wizards.len)
 			dat += check_role_table("Wizards", ticker.mode.wizards, src)
 
-		if(ticker.mode.raiders.len)
-			dat += check_role_table("Raiders", ticker.mode.raiders, src)
+//		if(ticker.mode.raiders.len)
+//			dat += check_role_table("Raiders", ticker.mode.raiders, src)
 
 		if(ticker.mode.ninjas.len)
 			dat += check_role_table("Ninjas", ticker.mode.ninjas, src)

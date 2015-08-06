@@ -60,7 +60,7 @@
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		if(!config.objectives_disabled)
 			for(var/datum/mind/head_mind in heads)
-				var/datum/objective/mutiny/rp/rev_obj = new
+				var/datum/objective/targeted/mutiny/rp/rev_obj = new
 				rev_obj.owner = rev_mind
 				rev_obj.target = head_mind
 				rev_obj.explanation_text = "Assassinate, convert or capture [head_mind.name], the [head_mind.assigned_role]."
@@ -205,7 +205,7 @@
 			for(var/mob/living/carbon/human/H in world) if(H.client && H.mind && H.client.inactivity <= 10*60*20 && H.mind in revolutionaries)
 				head_revolutionaries += H.mind
 				for(var/datum/mind/head_mind in heads)
-					var/datum/objective/mutiny/rp/rev_obj = new
+					var/datum/objective/targeted/mutiny/rp/rev_obj = new
 					rev_obj.owner = H.mind
 					rev_obj.target = head_mind
 					rev_obj.explanation_text = "Assassinate or capture [head_mind.name], the [head_mind.assigned_role]."
@@ -255,7 +255,7 @@
 		heads += M
 
 		for(var/datum/mind/rev_mind in head_revolutionaries)
-			var/datum/objective/mutiny/rp/rev_obj = new
+			var/datum/objective/targeted/mutiny/rp/rev_obj = new
 			rev_obj.owner = rev_mind
 			rev_obj.target = M.mind
 			rev_obj.explanation_text = "Assassinate, convert or capture [M.real_name], the [M.mind.assigned_role]."

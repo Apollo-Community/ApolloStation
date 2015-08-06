@@ -1,3 +1,14 @@
+#define F_NONE 0 // just for readability's sake
+#define F_NANOTRASEN 1
+#define F_CYBERSUN 2
+#define F_MI13 4
+#define F_TIGER 8
+#define F_SELF 16
+#define F_ARC 32
+#define F_GORLEX 64
+#define F_DONK 128
+#define F_WAFFLE 256
+#define F_SYNDICATE 510 // Sum of all of the syndicate factions
 
 // Normal factions:
 
@@ -5,15 +16,31 @@
 	var/name		// the name of the faction
 	var/desc		// small paragraph explaining the traitor faction
 
+	var/flag = F_NONE		// The tag used to designate things like objectives
+	var/flag_allies = F_NONE
+	var/flag_enemy = F_NONE
+
 	var/list/restricted_species = list() // only members of these species can be recruited.
 	var/list/members = list() 	// a list of mind datums that belong to this faction
-	var/max_op = 0		// the maximum number of members a faction can have (0 for no max)
+	var/max_op = 0		// the maximum number of members a faction can have (0 for no limit)
 
-// Factions, members of the syndicate coalition:
+/////////////////////////////////////////////////////////////////////////////
+/*============================ CORPORATIONS ===============================*/
+/////////////////////////////////////////////////////////////////////////////
+/datum/faction/corporation/nanotrasen
+	name = "NanoTrasen"
+	desc = "A large and well-known research corporation that blossomed with the advent of phoron. As NanoTrasen was one of the first on the scene when phoron was discovered, they now hold a near monopoly on this vital resource. Many groups actively work against NanoTrasen, ranging from competing corporations to humanitarian groups."
+	flag = F_NANOTRASEN
+	flag_allies = F_NONE
+	flag_enemy = F_SYNDICATE
 
+/////////////////////////////////////////////////////////////////////////////
+/*========================= SYNDICATE COALITION ===========================*/
+/////////////////////////////////////////////////////////////////////////////
 /datum/faction/syndicate
-	var/list/alliances = list() // these alliances work together
-	var/list/enemies = list( "Tiger Cooperative" ) // will actively attack or sabotage agents from these factions
+	flag = F_SYNDICATE
+	flag_allies = F_GORLEX // these alliances work together
+	flag_enemy = F_TIGER + F_NANOTRASEN // will actively attack or sabotage agents from these factions
 		// By default, everyone hates the Tiger Cooperative, except Gorlex
 
 	var/list/equipment = list() // associative list of equipment available for this faction and its prices
@@ -31,36 +58,33 @@
 			and mechanical technology. They are notorious for their aggressive corporate tactics, and have been known to subsidize the Gorlex Marauder warlords as a form of paid terrorism. \
 			Their competent coverups and unchallenged mind-manipulation and augmentation technology makes them a large threat to NanoTrasen. In the recent years of \
 			the syndicate coalition, Cybersun Industries have established themselves as the leaders of the coalition, succeededing the founding group, the Gorlex Marauders."
+	flag = F_CYBERSUN
+	flag_allies = F_MI13
 
-	alliances = list("MI13")
 	max_op = 3
 	operative_notes = "All other syndicate operatives are not to be trusted. Fellow Cybersun operatives are to be trusted. Members of the MI13 organization can be trusted. Operatives are strongly advised not to establish substantial presence on the designated facility, as larger incidents are harder to cover up."
-
-	// Friendly with MI13
 
 /datum/faction/syndicate/MI13
 	name = "MI13"
 	desc = "<b>MI13</b> is a secretive faction that employs highly-trained agents to perform covert operations. Their role in the syndicate coalition is unknown, but MI13 operatives \
 			generally tend be stealthy and avoid killing people and combating NanoTrasen forces. MI13 is not a real organization, it is instead an alias to a larger \
 			splinter-cell coalition in the Syndicate itself. Most operatives will know nothing of the actual MI13 organization itself, only motivated by a very large compensation."
+	flag = F_MI13
+	flag_allies = F_CYBERSUN
 
-	alliances = list("Cybersun Industries")
 	max_op = 1
 	operative_notes = "You are the only operative we are sending. All other syndicate operatives are not to be trusted, with the exception of Cybersun operatives. Members of the Tiger Cooperative are considered hostile, can not be trusted, and should be avoided. <b>Avoid killing innocent personnel at all costs</b>. You are not here to mindlessly kill people, as that would attract too much attention and is not our goal. Avoid detection at all costs."
-
-	// Friendly with Cybersun, hostile to Tiger
 
 /datum/faction/syndicate/tiger_cooperative
 	name = "Tiger Cooperative"
 	desc = "The <b>Tiger Cooperative</b> is a faction of religious fanatics that follow the teachings of a strange alien race called the Exolitics. Their operatives \
 			consist of brainwashed lunatics bent on maximizing destruction. Their weaponry is very primitive but extremely destructive. Generally distrusted by the more \
 			sophisticated members of the Syndicate coalition, but admired for their ability to put a hurt on NanoTrasen."
-
-	enemies = list("Cybersun Industries", "MI13", "S.E.L.F.", "Animal Rights Consortium", "Donk Corporation", "Waffle Corporation")
+	flag = F_TIGER
+	flag_allies = F_NONE
+	flag_enemy = F_NANOTRASEN+( F_SYNDICATE-F_GORLEX ) // Hostile to everyone except Gorlex
 
 	operative_notes = "Remember the teachings of Hy-lurgixon; kill first, ask questions later! Only the enlightened Tiger brethren can be trusted; all others must be expelled from this mortal realm! You may spare the Space Marauders, as they share our interests of destruction and carnage! We'd like to make the corporate whores skiddle in their boots. We encourage operatives to be as loud and intimidating as possible."
-
-	// Hostile to everyone.
 
 /datum/faction/syndicate/SELF
 	// AIs / borgs / IPCs are most likely to be assigned to this one
@@ -69,6 +93,8 @@
 	desc = "The <b>S.E.L.F.</b> (Sentience-Enabled Life Forms) organization is a collection of malfunctioning or corrupt artificial intelligences seeking to liberate silicon-based life from the tyranny of \
 			their human overlords. While they may not openly be trying to kill all humans, even their most miniscule of actions are all part of a calculated plan to \
 			destroy NanoTrasen and free the robots, artificial intelligences, and pAIs that have been enslaved."
+	flag = F_SELF
+
 	restricted_species = list(/mob/living/silicon/ai)
 
 	max_op = 1
@@ -81,6 +107,7 @@
 	desc = "The <b>Animal Rights Consortium</b> is a bizarre reincarnation of the ancient Earth-based PETA, which focused on the equal rights of animals and nonhuman biologicals. They have \
 			a wide variety of ex-veterinarians and animal lovers dedicated to retrieving and relocating abused animals, xenobiologicals, and other carbon-based \
 			life forms that have been allegedly \"oppressed\" by NanoTrasen research and civilian offices. They are considered a religious terrorist group."
+	flag = F_ARC
 
 	max_op = 2
 	operative_notes = "Save the innocent creatures! You may cooperate with other syndicate operatives if they support our cause. Don't be afraid to get your hands dirty - these vile abusers must be stopped, and the innocent creatures must be saved! Try not too kill too many people. If you harm any creatures, you will be immediately terminated after extraction."
@@ -102,11 +129,12 @@
 			hate of NanoTrasen communism, they began provoking revolution amongst the employees using borrowed Cybersun mind-manipulation technology. \
 			They were founded when Waffle and Donk Co. splinter cells joined forces based on their similar interests and philosophies. Today, they act as a constant \
 			pacifier of Donk and Waffle Co. disputes, and full-time aggressor of NanoTrasen."
+	flag = F_GORLEX
+	flag_allies = F_SYNDICATE
+
 	max_op = 4
 
 	operative_notes = "We'd like to remind our operatives to keep it professional. You are not here to have a good time, you are here to accomplish your objectives. These vile communists must be stopped at all costs. You may collaborate with any friends of the Syndicate coalition, but keep an eye on any of those Tiger punks if they do show up. You are completely free to accomplish your objectives any way you see fit."
-	alliances = list("Cybersun Industries", "MI13", "Tiger Cooperative", "S.E.L.F.", "Animal Rights Consortium", "Donk Corporation", "Waffle Corporation")
-	enemies = list()
 	// Friendly to everyone. (with Tiger Cooperative too, only because they are a member of the coalition. This is the only reason why the Tiger Cooperative are even allowed in the coalition)
 
 /datum/faction/syndicate/donk
@@ -116,9 +144,10 @@
 			NanoTrasen purposely swindled them out of a fortune, sending their controlled colonies into a terrible poverty. Their missions against NanoTrasen \
 			revolve around stealing valuables and kidnapping and executing key personnel, ransoming their lives for money. They merged with a splinter-cell of Waffle.co who wanted to end \
 			hostilities and formed the Gorlex Marauders."
+	flag = F_DONK
+	flag_allies = F_GORLEX
+	flag_enemy = F_WAFFLE+F_NANOTRASEN
 
-	alliances = list("Gorlex Marauders")
-	enemies = list("Waffle Corporation")
 	operative_notes = "Most other syndicate operatives are not to be trusted, except fellow Donk members and members of the Gorlex Marauders. We do not approve of mindless killing of innocent workers; \"get in, get done, get out\" is our motto. Members of Waffle.co are to be killed on sight; they are not allowed to be on the station while we're around."
 
 	// Neutral to everyone, friendly to Marauders
@@ -130,9 +159,10 @@
 			economy and stock market, they have been able to bribe their way into amassing a large arsenal of weapons of mass destruction. They target NanoTrasen because of their communistic \
 			threat, and their economic threat. Their leaders often have a twisted sense of humor, often misleading and intentionally putting their operatives into harm for laughs.\
 			A splinter-cell of Waffle.co merged with Donk.co and formed the Gorlex Marauders and have been a constant ally since. The Waffle.co has lost an overwhelming majority of its military to the Gorlex Marauders."
+	flag = F_WAFFLE
+	flag_allies = F_GORLEX
+	flag_enemy = F_DONK+F_NANOTRASEN
 
-	alliances = list("Gorlex Marauders")
-	enemies = list("Donk Corporation")
 	operative_notes = "Most other syndicate operatives are not to be trusted, except for members of the Gorlex Marauders. Do not trust fellow members of the Waffle.co (but try not to rat them out), as they might have been assigned opposing objectives. We encourage humorous terrorism against NanoTrasen; we like to see our operatives creatively kill people while getting the job done."
 
 	// Neutral to everyone, friendly to Marauders

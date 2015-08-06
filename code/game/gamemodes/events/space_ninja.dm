@@ -150,7 +150,6 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 	if(assign_key)
 		ninja_key = assign_key
 	else
-
 		var/list/candidates = list()	//list of candidate keys
 		for(var/mob/dead/observer/G in player_list)
 			if(G.client && !G.client.holder && !G.client.is_afk() && G.client.prefs.be_special & BE_NINJA)
@@ -200,7 +199,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 		if(ninja_confirmed_selection != ninja_selection_id)
 			ninja_selection_active = 0
 			usr << "\red The ninja did not accept the role in time."
-			return
+			return 0
 
 		ninja_selection_active = 0
 
@@ -221,7 +220,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 
 		if(assign_mission)
 			new_ninja.mind.store_memory("<B>Mission:</B> \red [assign_mission].<br>")
-			new_ninja << "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: \red <B>[assign_mission]</B>"
+			new_ninja << "\blue \nYou are an elite mercenary assassin of , [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: \red <B>[assign_mission]</B>"
 		else
 			if(xeno_list.len>3)//If there are more than three humanoid xenos on the station, time to get dangerous.
 				//Here we want the ninja to murder all the queens. The other aliens don't really matter.
@@ -231,7 +230,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 						xeno_queen_list += xeno_queen
 				if(xeno_queen_list.len&&side=="face")//If there are queen about and the probability is 50.
 					for(var/mob/living/carbon/human/xeno_queen in xeno_queen_list)
-						var/datum/objective/assassinate/ninja_objective = new
+						var/datum/objective/targeted/assassinate/ninja_objective = new
 						ninja_objective.owner = ninja_mind
 						//We'll do some manual overrides to properly set it up.
 						ninja_objective.target = xeno_queen.mind
@@ -245,7 +244,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 						commando_list += current_mind
 				if(commando_list.len)//If there are living commandos still in play.
 					for(var/mob/living/carbon/human/commando in commando_list)
-						var/datum/objective/assassinate/ninja_objective = new
+						var/datum/objective/targeted/assassinate/ninja_objective = new
 						ninja_objective.owner = ninja_mind
 						ninja_objective.find_target_by_role(commando.mind.special_role,1)
 						ninja_mind.objectives += ninja_objective
@@ -287,7 +286,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 							current_mind = pick(hostile_targets)
 
 							if(current_mind)
-								var/datum/objective/assassinate/ninja_objective = new
+								var/datum/objective/targeted/assassinate/ninja_objective = new
 								ninja_objective.owner = ninja_mind
 								ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role),(current_mind.special_role?1:0))//If they have a special role, use that instead to find em.
 								ninja_mind.objectives += ninja_objective
@@ -299,8 +298,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 						if(2)//Steal
 							var/datum/objective/steal/ninja_objective = new
 							ninja_objective.owner = ninja_mind
-							var/target_item = pick(ninja_objective.possible_items_special)
-							ninja_objective.set_target(target_item)
+
 							ninja_mind.objectives += ninja_objective
 
 							objective_list -= 2
@@ -309,7 +307,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 
 							if(current_mind)
 
-								var/datum/objective/protect/ninja_objective = new
+								var/datum/objective/targeted/protect/ninja_objective = new
 								ninja_objective.owner = ninja_mind
 								ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role),(current_mind.special_role?1:0))
 								ninja_mind.objectives += ninja_objective
@@ -323,7 +321,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 
 							if(current_mind)
 
-								var/datum/objective/debrain/ninja_objective = new
+								var/datum/objective/targeted/debrain/ninja_objective = new
 								ninja_objective.owner = ninja_mind
 								ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role),(current_mind.special_role?1:0))
 								ninja_mind.objectives += ninja_objective

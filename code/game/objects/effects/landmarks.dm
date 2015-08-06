@@ -83,9 +83,9 @@
 			ninjastart += loc
 			del(src)
 
-		if("voxstart")
-			raider_spawn += loc
-			del(src)
+//		if("voxstart")
+//			raider_spawn += loc
+//			del(src)
 
 		if("Syndicate-Spawn")
 			synd_spawn += loc

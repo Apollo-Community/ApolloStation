@@ -73,11 +73,12 @@ datum/controller/game_controller/proc/setup()
 		createRandomZlevel()
 	*/
 
-	setup_objects()
-	setupgenetics()
-	setupfactions()
-	setup_economy()
-	SetupXenoarch()
+	setupObjects()
+	setupGenetics()
+	setupFactions()
+	setupObjectives()
+	setupEconomy()
+	setupXenoarch()
 
 	transfer_controller = new
 
@@ -90,7 +91,7 @@ datum/controller/game_controller/proc/setup()
 
 	lighting_controller.initializeLighting()
 
-datum/controller/game_controller/proc/setup_objects()
+datum/controller/game_controller/proc/setupObjects()
 	world << "\red \b Initializing objects"
 	sleep(-1)
 	for(var/obj/object in world)

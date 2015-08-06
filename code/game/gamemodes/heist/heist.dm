@@ -154,7 +154,7 @@ var/global/list/obj/cortical_stacks = list() //Stacks for 'leave nobody behind' 
 
 		if(goal == "kidnap")
 			goals -= "kidnap"
-			O = new /datum/objective/heist/kidnap()
+			O = new /datum/objective/targeted/kidnap()
 		else if(goal == "loot")
 			O = new /datum/objective/heist/loot()
 		else
