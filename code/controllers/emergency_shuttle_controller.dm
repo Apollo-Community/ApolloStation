@@ -213,6 +213,7 @@ var/global/datum/emergency_shuttle_controller/emergency_shuttle
 			return "ETD-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
 
 	return ""
+
 /*
 	Some slapped-together star effects for maximum spess immershuns. Basically consists of a
 	spawner, an ender, and bgstar. Spawners create bgstars, bgstars shoot off into a direction

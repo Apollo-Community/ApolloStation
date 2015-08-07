@@ -57,13 +57,17 @@
 	return ..()
 
 /datum/shuttle/ferry/emergency/launch(var/user)
-	if (!can_launch(user)) return
+	testing( "Attempting to launch emergency shuttle" )
+	if (!can_launch(user))
+		testing( "[user] cannot launch the shuttle" )
+		return
 
 	if (istype(user, /obj/machinery/computer/shuttle_control/emergency))	//if we were given a command by an emergency shuttle console
 		if (emergency_shuttle.autopilot)
 			emergency_shuttle.autopilot = 0
 			world << "\blue <B>Alert: The shuttle autopilot has been overridden. Launch sequence initiated!</B>"
 
+	testing( "Got past first two checks" )
 	..(user)
 
 /datum/shuttle/ferry/emergency/force_launch(var/user)

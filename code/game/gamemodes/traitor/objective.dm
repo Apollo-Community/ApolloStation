@@ -5,12 +5,9 @@ proc/objectivesSubtypes( var/target_type, var/flags = F_SYNDICATE )
 
 	var/list/confirmed_types = list()
 	for( var/type in ticker.objectives )
-		testing( "Type [type]: " )
 		if( ispath( type, target_type )) // If it is the target type, or a subtype
 			var/datum/objective/objective = new type // If someone else has a better way of doing this, please fix
-			testing( "	Type test passed" )
 			if( initial( objective.flag ) & flags ) // And follows the given faction flags
-				testing( "	Flag test passed" )
 				confirmed_types.Add( type ) // go ahead and add it to the confirmed list
 			del objective
 
@@ -19,7 +16,6 @@ proc/objectivesSubtypes( var/target_type, var/flags = F_SYNDICATE )
 
 proc/pickRandomObjective( var/target_type, var/flags = F_SYNDICATE )
 	var/objective = pick( objectivesSubtypes( target_type, flags ))
-	testing( "[objective] chosen as an active objective" )
 	return objective
 
 datum/objective

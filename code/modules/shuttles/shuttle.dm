@@ -6,10 +6,10 @@
 /datum/shuttle
 	var/warmup_time = 0
 	var/moving_status = SHUTTLE_IDLE
-	
+
 	var/docking_controller_tag	//tag of the controller used to coordinate docking
 	var/datum/computer/file/embedded_program/docking/docking_controller	//the controller itself. (micro-controller, not game controller)
-	
+
 	var/arrive_time = 0	//the time at which the shuttle arrives when long jumping
 
 /datum/shuttle/proc/short_jump(var/area/origin,var/area/destination)
@@ -18,9 +18,9 @@
 	//it would be cool to play a sound here
 	moving_status = SHUTTLE_WARMUP
 	spawn(warmup_time*10)
-		if (moving_status == SHUTTLE_IDLE) 
+		if (moving_status == SHUTTLE_IDLE)
 			return	//someone cancelled the launch
-		
+
 		moving_status = SHUTTLE_INTRANSIT //shouldn't matter but just to be safe
 		move(origin, destination)
 		moving_status = SHUTTLE_IDLE
@@ -32,14 +32,14 @@
 	//it would be cool to play a sound here
 	moving_status = SHUTTLE_WARMUP
 	spawn(warmup_time*10)
-		if (moving_status == SHUTTLE_IDLE) 
+		if (moving_status == SHUTTLE_IDLE)
 			return	//someone cancelled the launch
-		
+
 		arrive_time = world.time + travel_time*10
 		moving_status = SHUTTLE_INTRANSIT
 		move(departing, interim, direction)
-		
-		
+
+
 		while (world.time < arrive_time)
 			sleep(5)
 
@@ -58,6 +58,7 @@
 
 /datum/shuttle/proc/undock()
 	if (!docking_controller)
+		testing( "No docking controller" )
 		return
 	docking_controller.initiate_undocking()
 
@@ -82,10 +83,10 @@
 	if(origin == destination)
 		//world << "cancelling move, shuttle will overlap."
 		return
-	
+
 	if (docking_controller && !docking_controller.undocked())
 		docking_controller.force_undock()
-	
+
 	var/list/dstturfs = list()
 	var/throwy = world.maxy
 

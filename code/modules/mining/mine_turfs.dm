@@ -29,6 +29,7 @@
 /turf/simulated/mineral/New()
 
 	MineralSpread()
+	var/side_type = src.side_type
 
 	spawn(2)
 		var/list/step_overlays = list("s" = NORTH, "n" = SOUTH, "w" = EAST, "e" = WEST)
@@ -40,7 +41,7 @@
 				T.updateMineralOverlays()
 
 			else if(istype(turf_to_check,/turf/space) || istype(turf_to_check,/turf/simulated/floor))
-				turf_to_check.overlays += image('icons/turf/walls.dmi', "[src:side_type]_side_[direction]")
+				turf_to_check.overlays += image('icons/turf/walls.dmi', "[side_type]_side_[direction]")
 
 /turf/simulated/mineral/ex_act(severity)
 	switch(severity)
