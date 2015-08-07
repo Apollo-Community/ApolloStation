@@ -4,15 +4,19 @@ datum/objective/steal/antiquelaser
 
 datum/objective/steal/handtele
 	target_type = /obj/item/weapon/hand_tele
+	explanation_text = "Steal a hand teleporter."
 
 datum/objective/steal/rcd
 	target_type = /obj/item/weapon/rcd
+	explanation_text = "Steal a rapid construction device."
 
 datum/objective/steal/jumpsuit
 	target_type = /obj/item/clothing/under/rank/captain
+	explanation_text = "Steal the captain's jumpsuit."
 
 datum/objective/steal/aicard
 	target_type = /obj/item/device/aicard
+	explanation_text = "Steal an intellicard and download a functional AI onto it."
 
 	check_completion()
 		if(!target_type || !owner.current)	return 0
@@ -27,10 +31,11 @@ datum/objective/steal/aicard
 
 datum/objective/steal/blueprints
 	target_type = /obj/item/blueprints
+	explanation_text = "Steal the blueprints of the station."
 
 datum/objective/steal/tank
 	target_type = /obj/item/weapon/tank
-	explanation_text = "Steal a full tank of phoron gas."
+	explanation_text = "Steal a tank of phoron gas. Make sure it is fully filled."
 
 	check_completion()
 		if(!target_type || !owner.current)	return 0
@@ -50,12 +55,16 @@ datum/objective/steal/slimeextract
 
 datum/objective/steal/pinpointer
 	target_type = /obj/item/weapon/pinpointer
+	explanation_text = "Steal the nuclear disk pinpointer."
 
 datum/objective/steal/ablative
 	target_type = /obj/item/clothing/suit/armor/laserproof
+	explanation_text = "Steal an ablative armor vest."
 
 datum/objective/steal/hypospray
 	target_type = /obj/item/weapon/reagent_containers/hypospray
+	explanation_text = "Steal the hypospray."
 
 datum/objective/steal/nukedisk
 	target_type = /obj/item/weapon/disk/nuclear
+	explanation_text = "Steal the nuclear disk."

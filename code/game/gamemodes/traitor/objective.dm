@@ -5,10 +5,12 @@ proc/objectivesSubtypes( var/target_type, var/flags = F_SYNDICATE )
 
 	var/list/confirmed_types = list()
 	for( var/type in ticker.objectives )
-		if( istype( type, target_type )) // If it is the target type, or a subtype
+		testing( "Type [type]: " )
+		if( ispath( type, target_type )) // If it is the target type, or a subtype
 			var/datum/objective/objective = new type // If someone else has a better way of doing this, please fix
+			testing( "	Type test passed" )
 			if( initial( objective.flag ) & flags ) // And follows the given faction flags
-				testing( "Adding type: [type] to list" )
+				testing( "	Flag test passed" )
 				confirmed_types.Add( type ) // go ahead and add it to the confirmed list
 			del objective
 
@@ -16,7 +18,9 @@ proc/objectivesSubtypes( var/target_type, var/flags = F_SYNDICATE )
 	return confirmed_types
 
 proc/pickRandomObjective( var/target_type, var/flags = F_SYNDICATE )
-	return pick( objectivesSubtypes( target_type, flags ))
+	var/objective = pick( objectivesSubtypes( target_type, flags ))
+	testing( "[objective] chosen as an active objective" )
+	return objective
 
 datum/objective
 	var/datum/mind/owner = null			// Who owns the objective.
@@ -24,10 +28,10 @@ datum/objective
 	var/completed = 0					// Only used for custom objectives.
 	var/flag = F_SYNDICATE
 
-	New( var/mind, var/text)
+	New( var/datum/mind/mind, var/text)
 		ticker.objectives_active |= src
 
-		if( istype( /datum/mind, mind ))
+		if( istype( mind, /datum/mind ))
 			owner = mind
 
 		if(text)
@@ -337,18 +341,18 @@ datum/objective/targeted/harm
 		return 0
 
 datum/objective/steal
-	var/target_type
+	var/target_type = /obj
 	var/rarity = 100 // 100 is default, 200 makes it twice as caommon, 50 is twice as rare
 
 	New()
 		..()
 
-		if( !explanation_text && !target_type )
-			explanation_text = "Steal \the [initial( target_type:name )]."
+		if( !explanation_text )
+			explanation_text = "Steal something."
 
 
 	check_completion()
-		if(!target_type || !owner.current)	return 0
+		if( !target_type || !owner.current )	return 0
 		if( !isliving( owner.current ))	return 0
 
 		var/list/all_items = owner.current.get_contents()

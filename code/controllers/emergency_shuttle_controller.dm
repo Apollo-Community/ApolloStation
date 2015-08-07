@@ -71,7 +71,7 @@ var/global/datum/emergency_shuttle_controller/emergency_shuttle
 	//set the launch timer
 	autopilot = 1
 	set_launch_countdown(get_shuttle_prep_time())
-	auto_recall_time = rand(world.time + 300, launch_time - 300)
+	auto_recall_time = rand(world.time + get_shuttle_prep_time(), launch_time - get_shuttle_prep_time())
 
 	//reset the shuttle transit time if we need to
 	shuttle.move_time = SHUTTLE_TRANSIT_DURATION

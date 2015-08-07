@@ -441,7 +441,7 @@ datum/mind
 				if ("steal")
 					var/steal_objective = pickRandomObjective( /datum/objective/steal )
 					new_objective = new steal_objective( src )
-					testing( "Steal Objective: [steal_objective:explanation_text]" )
+					testing( "Steal Objective: [new_objective.explanation_text]" )
 
 
 				if("download","capture","absorb")
