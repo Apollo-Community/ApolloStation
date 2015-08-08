@@ -12,7 +12,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 		if (shuttle.process_state)
 			shuttle.process()
 
-
 /datum/shuttle_controller/New()
 	shuttles = list()
 	process_shuttles = list()
@@ -139,55 +138,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttles["Administration"] = shuttle
 	process_shuttles += shuttle
 
-	shuttle = new()
-	shuttle.area_offsite = locate(/area/shuttle/alien/base)
-	shuttle.area_station = locate(/area/shuttle/alien/mine)
-	shuttles["Alien"] = shuttle
-	//process_shuttles += shuttle	//don't need to process this. It can only be moved using admin magic anyways.
-/*
-	// Public shuttles
-	shuttle = new()
-	shuttle.location = 1
-	shuttle.warmup_time = 10
-	shuttle.area_offsite = locate(/area/shuttle/constructionsite/site)
-	shuttle.area_station = locate(/area/shuttle/constructionsite/station)
-	shuttle.docking_controller_tag = "engineering_shuttle"
-	shuttle.dock_target_station = "engineering_dock_airlock"
-	shuttle.dock_target_offsite = "engineering_station_airlock"
-	shuttles["Engineering"] = shuttle
-	process_shuttles += shuttle
-
-	shuttle = new()
-	shuttle.warmup_time = 10
-	shuttle.area_offsite = locate(/area/shuttle/mining/outpost)
-	shuttle.area_station = locate(/area/shuttle/mining/station)
-	shuttle.docking_controller_tag = "mining_shuttle"
-	shuttle.dock_target_station = "mining_dock_airlock"
-	shuttle.dock_target_offsite = "mining_outpost_airlock"
-	shuttles["Mining"] = shuttle
-	process_shuttles += shuttle
-
-	shuttle = new()
-	shuttle.warmup_time = 10
-	shuttle.area_offsite = locate(/area/shuttle/research/outpost)
-	shuttle.area_station = locate(/area/shuttle/research/station)
-	shuttle.docking_controller_tag = "research_shuttle"
-	shuttle.dock_target_station = "research_dock_airlock"
-	shuttle.dock_target_offsite = "research_outpost_dock"
-	shuttles["Research"] = shuttle
-	process_shuttles += shuttle
-/*	Disabled for now
-	shuttle = new()
-	shuttle.warmup_time = 10
-	shuttle.area_offsite = locate(/area/shuttle/laborcamp/outpost)
-	shuttle.area_station = locate(/area/shuttle/laborcamp/station)
-	shuttle.docking_controller_tag = "laborcamp_shuttle"
-	shuttle.dock_target_station = "laborcamp_station_dock"
-	shuttle.dock_target_offsite = "laborcamp_outpost_dock"
-	shuttles["Labor Camp"] = shuttle
-	process_shuttles += shuttle
-*/
-*/
 	// ERT Shuttle
 	var/datum/shuttle/ferry/multidock/specops/ERT = new()
 	ERT.location = 0
@@ -202,6 +152,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttles["Special Operations"] = ERT
 	process_shuttles += ERT
 
+/*
 	//Vox Shuttle.
 	var/datum/shuttle/multi_shuttle/VS = new/datum/shuttle/multi_shuttle()
 	VS.origin = locate(/area/shuttle/vox/station)
@@ -221,6 +172,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 
 	VS.warmup_time = 0
 	shuttles["Vox Skipjack"] = VS
+*/
 
 	//Nuke Ops shuttle.
 	var/datum/shuttle/multi_shuttle/MS = new/datum/shuttle/multi_shuttle()
@@ -245,6 +197,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	MS.warmup_time = 0
 	shuttles["Mercenary"] = MS
 
+/*
 // Valen's shuttle - same layout as nuke and goes to mostly same locations
 	var/datum/shuttle/multi_shuttle/VALS = new/datum/shuttle/multi_shuttle()
 	VALS.origin = locate(/area/adminprep/valansship)
@@ -267,6 +220,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 
 	VALS.warmup_time = 0
 	shuttles["Valans"] = VALS
+*/
 
 //This is called by gameticker after all the machines and radio frequencies have been properly initialized
 /datum/shuttle_controller/proc/setup_shuttle_docks()

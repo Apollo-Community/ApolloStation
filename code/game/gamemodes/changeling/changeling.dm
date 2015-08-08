@@ -3,7 +3,6 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 /datum/game_mode
 	var/list/datum/mind/changelings = list()
 
-
 /datum/game_mode/changeling
 	name = "changeling"
 	config_tag = "changeling"

@@ -39,7 +39,6 @@
 		moving_status = SHUTTLE_INTRANSIT
 		move(departing, interim, direction)
 
-
 		while (world.time < arrive_time)
 			sleep(5)
 
@@ -47,13 +46,17 @@
 		moving_status = SHUTTLE_IDLE
 
 /datum/shuttle/proc/dock()
+	testing( "[docking_controller_tag]: Attempting to dock" )
 	if (!docking_controller)
+		testing( "[docking_controller_tag]: No docking controller" )
 		return
 
 	var/dock_target = current_dock_target()
 	if (!dock_target)
+		testing( "[docking_controller_tag]: No docking target" )
 		return
 
+	testing( "[docking_controller_tag]: Docking..." )
 	docking_controller.initiate_docking(dock_target)
 
 /datum/shuttle/proc/undock()

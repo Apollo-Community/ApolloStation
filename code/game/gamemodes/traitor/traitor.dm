@@ -11,7 +11,6 @@
 	required_enemies = 1
 	recommended_enemies = 4
 
-
 	uplink_welcome = "AntagCorp Portable Teleportation Relay:"
 	uplink_uses = 10
 
@@ -20,7 +19,6 @@
 
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/const/traitor_scaling_coeff = 5.0 //how much does the amount of players get divided by to determine traitors
-
 
 /datum/game_mode/traitor/announce()
 

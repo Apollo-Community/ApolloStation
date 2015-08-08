@@ -19,6 +19,7 @@
 	var/adminobs		= null
 	var/area			= null
 	var/time_died_as_mouse = null //when the client last died as a mouse
+	var/traitor_bias
 
 	var/adminhelped = 0
 
