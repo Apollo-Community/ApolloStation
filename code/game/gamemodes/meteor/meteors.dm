@@ -121,11 +121,16 @@
 /obj/effect/meteor/New()
 	..()
 	SpinAnimation()
+
 /obj/effect/meteor/Bump(atom/A)
 	if(A)
 		ram_turf(get_turf(A))
 		playsound(src.loc, meteorsound, 40, 1)
 		get_hit()
+
+/obj/effect/meteor/overmapTravel()
+	del(src)
+
 /obj/effect/meteor/proc/ram_turf(var/turf/T)
 	//first bust whatever is in the turf
 	for(var/atom/A in T)

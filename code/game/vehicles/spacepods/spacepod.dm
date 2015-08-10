@@ -35,8 +35,7 @@
 	var/fire_threshold_health = 0.2 // threshold heat for fires to start
 	var/empcounter = 0 //Used for disabling movement when hit by an EMP
 
-	var/ticks_per_move = 3 // how many ticks does it take to move once?
-	var/move_tick = 0 // counter for above var
+	var/frozen = 0 // Used to stop the spacepod from moving
 
 	var/datum/effect/effect/system/ion_trail_follow/space_trail/ion_trail
 	var/list/pod_overlays
@@ -148,6 +147,26 @@
 	if( pilot )
 		pilot << S
 
+	for( var/mob/passenger in passengers )
+		passenger << S
+
+/obj/spacepod/proc/fadeout()
+	frozen = 1
+
+	if( pilot )
+		pilot.fadeout()
+
+	for( var/mob/passenger in passengers )
+		passenger.fadeout()
+
+/obj/spacepod/proc/fadein()
+	frozen = 0
+
+	if( pilot )
+		pilot.fadein()
+
+	for( var/mob/passenger in passengers )
+		passenger.fadein()
 
 /obj/spacepod/proc/explode()
 	spawn(0)
@@ -401,7 +420,6 @@
 
 	if( !( user in passengers ))
 		if( !pilot )
-			testing( "Moved [user] into the pilot's seat of [src]" )
 			visible_message("[user] climbs into the pilot's helm of \the [src]!")
 
 			pilot = user
@@ -418,7 +436,6 @@
 	else
 		if( !pilot )
 			occupants_announce( "[user] climbs out of their passenger's seat and into the pilot's helm." )
-			testing( "Moved [user] from the  passegner's list and into the pilot's seat of [src]" )
 			passengers.Remove( user )
 
 			pilot = user
@@ -437,7 +454,6 @@
 
 			if( user == pilot )
 				occupants_announce( "[user] climbs out of the pilot's seat and into a passenger's seat" )
-				testing( "Moved [user] from pilots seat into passegner's list of [src]." )
 				passengers.Add( user )
 
 				remove_HUD(pilot)
@@ -446,7 +462,6 @@
 				return 1
 			else
 				visible_message("[user] climbs into the [src]!")
-				testing( "Added [user] to the passenger list of [src]" )
 
 				passengers.Add( user )
 				user.loc = src
@@ -459,13 +474,19 @@
 	return 0
 
 /obj/spacepod/proc/exit( mob/user as mob )
-	if( user == pilot )
-		testing( "Removed [user] from the pilot's seat of [src]" )
+	if( istype( src.loc, /obj/effect/traveler ))
+		user << pick( "\red Stepping out into the vast emptiness of space isn't a very good idea.",
+					  "\red The void does not call to you.",
+					  "\red Why would you want to do that?",
+					  "\red You reach for the door and pull the handle, but it beeps and locks, stopping you from idiotically floating off into the void.",
+					  "\red Space looks perfectly fine from in here." )
+		return
 
+	if( user == pilot )
 		remove_HUD(pilot)
+		inertia_dir = 0 // engage reverse thruster and power down pod
 		pilot = null
 	if( user in passengers )
-		testing( "Removed [user] from the passengers list of [src]" )
 		passengers.Remove( user )
 
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
@@ -501,14 +522,7 @@
 	set category = "Spacepod"
 	set src = usr.loc
 
-	if( usr == src.pilot )
-		inertia_dir = 0 // engage reverse thruster and power down pod
-		remove_HUD( pilot )
-		pilot.loc = src.loc
-		src.pilot = null
-	else if( locate( usr ) in passengers )
-		usr.loc = src.loc
-		passengers.Remove( usr )
+	exit( usr )
 
 /obj/spacepod/verb/toggleDoors()
 	if(src.pilot)
@@ -604,6 +618,28 @@ obj/spacepod/verb/toggleLights()
 
 	return 1
 
+/obj/spacepod/overmapTravel()
+	if( !pilot )
+		return
+
+	fadeout()
+
+	sleep( 5 )
+	if( alert( pilot, "Would you like to traverse across space?",,"Yes", "No" ) == "No" )
+		fadein()
+
+		src.dir = turn( src.dir, 180 )
+		inertia_dir = src.dir
+
+		relaymove( pilot, src.dir ) // Turn them around and move them away from the sector
+		return
+
+	sleep( 5 )
+
+	new /obj/effect/traveler( src )
+
+	fadein()
+
 /datum/global_iterator/pod_preserve_temp  //normalizing cabin air temperature to 20 degrees celsium
 	delay = 20
 
@@ -646,24 +682,47 @@ obj/spacepod/verb/toggleLights()
 			return stop()
 		return
 
-/obj/spacepod/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	if( istype( get_turf( src ), /turf/space/bluespace )) // no moving in bluespace
-		return
+/obj/spacepod/proc/canMove()
+	if( !pilot )
+		return 0
+
+	if( frozen )
+		return 0
 
 	if( equipment_system.engine_system )
-		if( move_tick < equipment_system.engine_system.ticks_per_move )
-			move_tick++
-			return
-
-		move_tick = 0
-
-		if( !equipment_system.engine_system.cycle() )
-			return
-
+		var/distance = 1
+		if( istype( src.loc, /obj/effect/traveler ))
+			distance = 16
+		if( !equipment_system.engine_system.cycle( distance ))
+			return 0
 
 	else
-		return
+		pilot << "<span class='warning'>ERROR: No engine detected!</span>"
+		return 0
 
+	if( equipment_system.battery )
+		if( equipment_system.battery.charge <= 3 )
+			pilot << "<span class='warning'>ERROR: The loaded energy cell has too little charge!</span>"
+			return 0
+	else
+		pilot << "<span class='warning'>ERROR: No energy cell detected!</span>"
+		return 0
+
+	if( !health  )
+		pilot << "<span class='warning'>ERROR: Hull integrity critical, evacuate!</span>"
+		return 0
+
+	if( empcounter )
+		pilot << "<span class='warning'>ERROR: Massive electromagnetic intereference!</span>"
+		return 0
+
+	if( istype( get_turf( src ), /turf/space/bluespace )) // no moving in bluespace
+		pilot << "<span class='warning'>ERROR: Spacepod inoperable when traveling through higher dimensions.</span>"
+		return 0
+
+	return 1
+
+/obj/spacepod/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	..()
 
 	if(dir == 1 || dir == 4)
@@ -684,8 +743,16 @@ obj/spacepod/verb/toggleLights()
 	return 1
 
 /obj/spacepod/relaymove(mob/user, direction)
-	if( src.pilot == usr )
-		handlerelaymove(user, direction)
+	if( src.pilot == user )
+		if( isobj( src.loc ) || ismob( src.loc ))//Inside an object, tell it we moved
+			if( ion_trail.on )
+				ion_trail.stop()
+			var/atom/O = src.loc
+			return O.relaymove( user, direction )
+		else
+			if( !ion_trail.on )
+				ion_trail.start()
+			handlerelaymove(user, direction)
 	else
 		return
 
@@ -693,45 +760,33 @@ obj/spacepod/verb/toggleLights()
 	var/moveship = 1
 	var/obj/item/weapon/cell/battery = equipment_system.battery
 
-	if( !battery )
-		user << "<span class='warning'>No energy cell detected.</span>"
-		return
-
-	if(health && empcounter == 0)
-		src.dir = direction
-		switch(direction)
-			if(1)
-				if(inertia_dir == 2)
-					inertia_dir = 0
-					moveship = 0
-			if(2)
-				if(inertia_dir == 1)
-					inertia_dir = 0
-					moveship = 0
-			if(4)
-				if(inertia_dir == 8)
-					inertia_dir = 0
-					moveship = 0
-			if(8)
-				if(inertia_dir == 4)
-					inertia_dir = 0
-					moveship = 0
-		if(moveship)
-			step(src, direction)
-			if(istype(src.loc, /turf/space))
-				inertia_dir = direction
-	else
-		if(!battery)
-			user << "<span class='warning'>No energy cell detected.</span>"
-		else if(battery.charge < 3)
-			user << "<span class='warning'>Not enough charge left.</span>"
-		else if(!health)
-			user << "<span class='warning'>She's dead, Jim</span>"
-		else if(empcounter != 0)
-			user << "<span class='warning'>The pod control interface isn't responding. The console indicates [empcounter] seconds before reboot.</span>"
-		else
-			user << "<span class='warning'>Unknown error has occurred, yell at pomf.</span>"
+	if( !canMove() )
 		return 0
+
+	src.dir = direction
+	switch(direction)
+		if(1)
+			if(inertia_dir == 2)
+				inertia_dir = 0
+				moveship = 0
+		if(2)
+			if(inertia_dir == 1)
+				inertia_dir = 0
+				moveship = 0
+		if(4)
+			if(inertia_dir == 8)
+				inertia_dir = 0
+				moveship = 0
+		if(8)
+			if(inertia_dir == 4)
+				inertia_dir = 0
+				moveship = 0
+
+	if(moveship)
+		step(src, direction)
+		if(istype(src.loc, /turf/space))
+			inertia_dir = direction
+
 	battery.charge = max(0, battery.charge - 3)
 
 /obj/spacepod/proc/add_HUD(var/mob/M)

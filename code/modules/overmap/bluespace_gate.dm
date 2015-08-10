@@ -16,7 +16,7 @@
 	pixel_x = -32
 	pixel_y = -32
 	l_color = "#142933"
-	var/lifetime = 100
+	life = 100
 	var/decay = 10
 	var/turf/exit = null
 
@@ -26,14 +26,11 @@
 	if(prob(1))
 		mezzer()
 
-	lifetime -= decay
-	if( lifetime <= 0 )
-		del(src)
-
-/obj/machinery/singularity/bluespace_gate/New( loc, var/turf/new_exit )
+/obj/machinery/singularity/bluespace_gate/New( loc, var/new_exit )
 	..(loc)
 
 	exit = new_exit
+
 	l_color = "#142933"
 	SetLuminosity( 5 )
 
@@ -51,8 +48,9 @@
 		if( O.anchored )
 			return
 
-	var/x_off = source.x-A.x
-	var/y_off = source.y-A.y
+	var/turf/A_turf = get_turf( A )
+	var/x_off = source.x-A_turf.x
+	var/y_off = source.y-A_turf.y
 
 	var/turf/bluespace = locate( rand( OVERMAP_EDGE, world.maxx-OVERMAP_EDGE ), rand( OVERMAP_EDGE, world.maxy-OVERMAP_EDGE ), BLUESPACE_LEVEL )
 	var/turf/destination

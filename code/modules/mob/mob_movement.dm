@@ -514,3 +514,28 @@
 
 	prob_slip = round(prob_slip)
 	return(prob_slip)
+
+/mob/overmapTravel()
+	var/list/disk_search = src.search_contents_for(/obj/item/weapon/disk/nuclear)
+	if(!isemptylist(disk_search))
+		if(istype(src, /mob/living))
+			var/mob/living/MM = src
+			if(MM.client && !MM.stat)
+				MM << "\red Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is."
+				if(MM.x <= TRANSITIONEDGE)
+					MM.inertia_dir = 4
+				else if(MM.x >= world.maxx -TRANSITIONEDGE)
+					MM.inertia_dir = 8
+				else if(MM.y <= TRANSITIONEDGE)
+					MM.inertia_dir = 1
+				else if(MM.y >= world.maxy -TRANSITIONEDGE)
+					MM.inertia_dir = 2
+			else
+				for(var/obj/item/weapon/disk/nuclear/N in disk_search)
+					del(N)//Make the disk respawn it is on a clientless mob or corpse
+		else
+			for(var/obj/item/weapon/disk/nuclear/N in disk_search)
+				del(N)//Make the disk respawn if it is floating on its own
+		return
+
+	..()

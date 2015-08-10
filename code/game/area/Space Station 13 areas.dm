@@ -113,7 +113,7 @@ var/list/ghostteleportlocs = list()
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z in config.player_levels)
+		if (picked.z in config.local_levels)
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 
@@ -2254,9 +2254,16 @@ var/list/ghostteleportlocs = list()
 	icon_state = "away"
 	requires_power = 0
 
-// Admin Preperation area for events for use with the z-admin-shuttle.dmm map valan's ship
+// Admin Preperation area for events for use with the valan's ship
 /area/adminprep/valansship
 	name = "\improper valans shuttle"
+	icon_state = "south"
+	requires_power = 0
+	unlimited_power = 1
+	lighting_use_dynamic = 0 // the ship doesn't have any lights
+	environment = PLAIN
+/area/adminprep/valansshiparrival
+	name = "\improper valans shuttle arrival"
 	icon_state = "south"
 	requires_power = 0
 	unlimited_power = 1
@@ -2271,17 +2278,24 @@ var/list/ghostteleportlocs = list()
 
 // Asteroid fields - it's space really
 /area/asteroidfields/asteroideva
-	name = "\improper Asteroid eva"
+	name = "\improper Pirate Asteroid eva"
 	icon_state = "red"
 	environment = HANGAR
+	requires_power = 0
+	unlimited_power = 1
 /area/asteroidfields/asteroidarea1
-	name = "\improper Asteroid area1"
+	name = "\improper Pirate Asteroid area1"
 	icon_state = "bluenew"
 	environment = STONE_CORRIDOR
 /area/asteroidfields/asteroidcave
-	name = "\improper Asteroid cave"
+	name = "\improper Pirate Asteroid cave"
 	icon_state = "purple"
 	environment = CAVE
+/area/asteroidfields/shuttle
+	name = "\improper Pirate Asteroid shuttle area"
+	icon_state = "south"
+	lighting_use_dynamic = 0 // the ship doesn't have any lights
+	environment = PLAIN
 
 
 /////////////////////////////////////////////////////////////////////

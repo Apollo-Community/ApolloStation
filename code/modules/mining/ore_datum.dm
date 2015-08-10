@@ -50,3 +50,7 @@
 	smelts_to = /obj/item/stack/sheet/mineral/tritium
 	compresses_to = /obj/item/stack/sheet/mineral/mhydrogen
 	oretag = "hydrogen"
+
+/datum/ore/hydrogen
+	smelts_to = /obj/item/stack/sheet/mineral/plastic
+	oretag = "trash"

@@ -116,14 +116,18 @@
 						if(component_check)
 							playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 							var/obj/machinery/new_machine = new src.circuit.build_path(src.loc, src.dir)
-							new_machine.component_parts.Cut()
 							src.circuit.construct(new_machine)
-							for(var/obj/O in src)
-								if(circuit.contain_parts) // things like disposal don't want their parts in them
-									O.loc = new_machine
-								else
-									O.loc = null
-								new_machine.component_parts += O
+							// There's a bunch of machines that doesn't have/use the component parts,
+							// like the subspace receiver and hull shield generator.
+							// Not our problem if someone forgot to add this list.
+							if(new_machine.component_parts)
+								new_machine.component_parts.Cut()
+								for(var/obj/O in src)
+									if(circuit.contain_parts) // things like disposal don't want their parts in them
+										O.loc = new_machine
+									else
+										O.loc = null
+									new_machine.component_parts += O
 							if(circuit.contain_parts)
 								circuit.loc = new_machine
 							else

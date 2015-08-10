@@ -288,6 +288,7 @@ var/list/mob/living/forced_ambiance_list = new
 	if(!istype(A,/mob/living))	return
 
 	var/mob/living/L = A
+
 	if(!L.ckey)	return
 
 	if(!L.lastarea)
@@ -300,7 +301,13 @@ var/list/mob/living/forced_ambiance_list = new
 
 	L.lastarea = newarea
 
-	if((L.client != null) && L.client.ambience_playing)
+	// Do not try to play music for non-players
+	// Ghosting will leave behind a mob with a ckey but no client, so we have to really make
+	// sure we want to play the ambience.
+	if(L.client == null)
+		return
+
+	if(L.client.ambience_playing)
 		if( oldarea.ambience.len && src.ambience.len )
 			if( oldarea.ambience[1] == src.ambience[1] )
 				return

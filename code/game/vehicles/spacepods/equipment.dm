@@ -1,56 +1,3 @@
-/obj/item/device/spacepod_equipment/weaponry/proc/fire_weapons()
-	if(my_atom.next_firetime > world.time)
-		usr << "<span class='warning'>Your weapons are recharging.</span>"
-		return
-	var/turf/firstloc
-	var/turf/secondloc
-	if(!my_atom.equipment_system || !my_atom.equipment_system.weapon_system)
-		usr << "<span class='warning'>Missing equipment or weapons.</span>"
-		my_atom.verbs -= text2path("[type]/proc/fire_weapons")
-		return
-	if( my_atom.equipment_system.battery )
-		if( my_atom.equipment_system.battery.use(shot_cost) )
-			usr << "There's not enough charge left!"
-	else
-		usr << "There's no battery in the system!"
-
-	var/olddir
-	for(var/i = 0; i < shots_per; i++)
-		if(olddir != my_atom.dir)
-			switch(my_atom.dir)
-				if(NORTH)
-					firstloc = get_step(my_atom, NORTH)
-					firstloc = get_step(firstloc, NORTH)
-					secondloc = get_step(firstloc,EAST)
-				if(SOUTH)
-					firstloc = get_step(my_atom, SOUTH)
-					secondloc = get_step(firstloc,EAST)
-				if(EAST)
-					firstloc = get_step(my_atom, EAST)
-					firstloc = get_step(firstloc, EAST)
-					secondloc = get_step(firstloc,NORTH)
-				if(WEST)
-					firstloc = get_step(my_atom, WEST)
-					secondloc = get_step(firstloc,NORTH)
-		olddir = dir
-		var/proj_type = text2path(projectile_type)
-		var/obj/item/projectile/projone = new proj_type(firstloc)
-		var/obj/item/projectile/projtwo = new proj_type(secondloc)
-		projone.starting = get_turf(my_atom)
-		projone.shot_from = src
-		projone.firer = usr
-		projone.def_zone = "chest"
-		projtwo.starting = get_turf(my_atom)
-		projtwo.shot_from = src
-		projtwo.firer = usr
-		projtwo.def_zone = "chest"
-		spawn()
-			playsound(src, fire_sound, 50, 1)
-			projone.dumbfire(my_atom.dir)
-			projtwo.dumbfire(my_atom.dir)
-		sleep(2)
-	my_atom.next_firetime = world.time + fire_delay
-
 /datum/spacepod/equipment
 	var/obj/spacepod/my_atom
 	var/list/spacepod_equipment = list()
@@ -232,6 +179,59 @@
 	var/fire_delay = 20
 	manufacturer = "Hesphaistos Industries"
 
+/obj/item/device/spacepod_equipment/weaponry/proc/fire_weapons()
+	if(my_atom.next_firetime > world.time)
+		usr << "<span class='warning'>Your weapons are recharging.</span>"
+		return
+	var/turf/firstloc
+	var/turf/secondloc
+	if(!my_atom.equipment_system || !my_atom.equipment_system.weapon_system)
+		usr << "<span class='warning'>Missing equipment or weapons.</span>"
+		my_atom.verbs -= text2path("[type]/proc/fire_weapons")
+		return
+	if( my_atom.equipment_system.battery )
+		if( my_atom.equipment_system.battery.use(shot_cost) )
+			usr << "There's not enough charge left!"
+	else
+		usr << "There's no battery in the system!"
+
+	var/olddir
+	for(var/i = 0; i < shots_per; i++)
+		if(olddir != my_atom.dir)
+			switch(my_atom.dir)
+				if(NORTH)
+					firstloc = get_step(my_atom, NORTH)
+					firstloc = get_step(firstloc, NORTH)
+					secondloc = get_step(firstloc,EAST)
+				if(SOUTH)
+					firstloc = get_step(my_atom, SOUTH)
+					secondloc = get_step(firstloc,EAST)
+				if(EAST)
+					firstloc = get_step(my_atom, EAST)
+					firstloc = get_step(firstloc, EAST)
+					secondloc = get_step(firstloc,NORTH)
+				if(WEST)
+					firstloc = get_step(my_atom, WEST)
+					secondloc = get_step(firstloc,NORTH)
+		olddir = dir
+		var/proj_type = text2path(projectile_type)
+		var/obj/item/projectile/projone = new proj_type(firstloc)
+		var/obj/item/projectile/projtwo = new proj_type(secondloc)
+		projone.starting = get_turf(my_atom)
+		projone.shot_from = src
+		projone.firer = usr
+		projone.def_zone = "chest"
+		projtwo.starting = get_turf(my_atom)
+		projtwo.shot_from = src
+		projtwo.firer = usr
+		projtwo.def_zone = "chest"
+		spawn()
+			playsound(src, fire_sound, 50, 1)
+			projone.dumbfire(my_atom.dir)
+			projtwo.dumbfire(my_atom.dir)
+		sleep(2)
+	my_atom.next_firetime = world.time + fire_delay
+
 /obj/item/device/spacepod_equipment/weaponry/taser
 	name = "\improper taser system"
 	desc = "A weak taser system for space pods, fires electrodes that shock upon impact."
@@ -298,15 +298,21 @@
 	var/datum/gas_mixture/fuel_tank = null
 	var/max_pressure = 10*ONE_ATMOSPHERE // standard pressure
 	var/volume = 300.000
+
 	var/burn_rate = 0.20 // 0.2 mols per meter, starter engine is total carp efficiency
 	var/heat_rate = 10 // how much heat is gained per meter moved
 	var/heat_rad_rate = 10 // how much heat is radiated per tick
 	var/max_temp = 400 // how hot this baby can get before bad things happen
-	var/charge_rate = 10 // how much energy is generated every time fuel is used
-	var/use_fuel = 1 // whether this engine runs on fuel or a nice hot cup of tea
 	var/fire_heat = 20 // how much heat fire causes
+
 	var/fire = 0 // are we on fire right now?
+
+	var/charge_rate = 10 // how much energy is generated every time fuel is used
+
+	var/use_fuel = 1 // whether this engine runs on fuel or a nice hot cup of tea
+
 	var/ticks_per_move = 5 // toot toot, how many ticks it takes to move a single tile
+	var/move_tick = 0 // Keeps track of how many ticks its been since we last moved
 
 /obj/item/device/spacepod_equipment/engine/New()
 	..()
@@ -360,24 +366,31 @@
 		return 0
 
 // Runs a single cycle of the engine
-/obj/item/device/spacepod_equipment/engine/proc/cycle()
-	if( use_fuel )
-		if( fuel_tank.gas["phoron"] > 0 )
-			fuel_tank.adjust_gas( "phoron", -burn_rate) // use up dat phoron
-			fuel_tank.add_thermal_energy(heat_rate) // heat from the engine using phoron
+/obj/item/device/spacepod_equipment/engine/proc/cycle( var/iterations = 1 )
+	if( move_tick < ticks_per_move )
+		move_tick++
+		return 0
 
-			if( my_atom.equipment_system.battery ) // charge the battery if we have one
-				my_atom.equipment_system.battery.give( charge_rate )
+	move_tick = 0
 
-			if( fuel_tank.gas["oxygen"] > 0 )
-				fuel_tank.adjust_gas( "oxygen", -burn_rate/2) // burn up oxygen at half rate 4noraisin
-				fuel_tank.add_thermal_energy(heat_rate*10) // putting oxygen in this baby is bad news
+	for( var/i = 0, i<iterations, i++ )
+		if( use_fuel )
+			if( fuel_tank.gas["phoron"] > 0 )
+				fuel_tank.adjust_gas( "phoron", -burn_rate) // use up dat phoron
+				fuel_tank.add_thermal_energy(heat_rate) // heat from the engine using phoron
 
-				if( my_atom.equipment_system.battery ) // but hey, we'll charge the battery even faster
-					my_atom.equipment_system.battery.give( charge_rate*2 )
-		else
-			my_atom.occupants_announce( "ERROR: No phoron left in the fuel tank!", 2 )
-			return 0
+				if( my_atom.equipment_system.battery ) // charge the battery if we have one
+					my_atom.equipment_system.battery.give( charge_rate )
+
+				if( fuel_tank.gas["oxygen"] > 0 )
+					fuel_tank.adjust_gas( "oxygen", -burn_rate/2) // burn up oxygen at half rate 4noraisin
+					fuel_tank.add_thermal_energy(heat_rate*10) // putting oxygen in this baby is bad news
+
+					if( my_atom.equipment_system.battery ) // but hey, we'll charge the battery even faster
+						my_atom.equipment_system.battery.give( charge_rate*2 )
+			else
+				my_atom.occupants_announce( "ERROR: No phoron left in the fuel tank!", 2 )
+				return 0
 
 	return 1
 

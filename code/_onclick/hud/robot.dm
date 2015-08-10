@@ -139,6 +139,13 @@ var/obj/screen/robot_inventory
 	mymob.blind.screen_loc = "1,1"
 	mymob.blind.layer = 0
 
+	mymob.fade = new
+	mymob.fade.icon = 'icons/mob/screen1_full.dmi'
+	mymob.fade.icon_state = "unfaded"
+	mymob.fade.name = ""
+	mymob.fade.screen_loc = "1,1"
+	mymob.fade.layer = 18
+
 	mymob.flash = new /obj/screen()
 	mymob.flash.icon = 'icons/mob/screen1_robot.dmi'
 	mymob.flash.icon_state = "blank"
@@ -173,7 +180,7 @@ var/obj/screen/robot_inventory
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.fire, mymob.hands, mymob.healths, mymob:cells, mymob.pullin, mymob.blind, mymob.flash, mymob.gun_setting_icon, robot_inventory) //, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.fire, mymob.hands, mymob.healths, mymob:cells, mymob.pullin, mymob.blind, mymob.flash, mymob.gun_setting_icon, robot_inventory, mymob.fade) //, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += src.adding + src.other
 
 	return

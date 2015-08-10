@@ -159,10 +159,11 @@
 	var/use_lib_nudge = 0 //Use the C library nudge instead of the python nudge.
 	var/use_overmap = 1
 
-	var/list/station_levels = list(3, 8)				// Defines which Z-levels the station exists on.
-	var/list/admin_levels= list(4)					// Defines which Z-levels which are for admin functionality, for example including such areas as Central Command and the Syndicate Shuttle
-	var/list/contact_levels = list(3, 7, 8)			// Defines which Z-levels which, for example, a Code Red announcement may affect
-	var/list/player_levels = list(3, 5, 6, 7, 8)	// Defines all Z-levels a character can typically reach
+	var/list/known_levels = list() // Defines with Z-levels are known
+	var/list/station_levels = list()  // Defines which Z-levels the station exists on.
+	var/list/alert_levels = list()	// Defines which Z-levels which, for example, a Code Red announcement may affect including such areas as Central Command and the Syndicate Shuttle
+	var/list/local_levels = list()	// Defines all Z-levels a character can typically reach
+	var/list/admin_levels= list()  // Defines which Z-levels which are for admin functionality, for example
 
 	// Event settings
 	var/expected_round_length = 3 * 60 * 60 * 10 // 3 hours
@@ -182,6 +183,8 @@
 	var/ooc_allowed = 1
 	var/dooc_allowed = 1
 	var/dsay_allowed = 1
+
+	var/starlight = 1 // Whether stars emit light
 
 	var/STUI_length = 150
 
@@ -563,19 +566,19 @@
 
 				if("use_overmap")
 					config.use_overmap = 1
-
+/*
 				if("station_levels")
 					config.station_levels = text2numlist(value, ";")
 
 				if("admin_levels")
 					config.admin_levels = text2numlist(value, ";")
 
-				if("contact_levels")
-					config.contact_levels = text2numlist(value, ";")
+				if("alert_levels")
+					config.alert_levels = text2numlist(value, ";")
 
-				if("player_levels")
-					config.player_levels = text2numlist(value, ";")
-
+				if("local_levels")
+					config.local_levels = text2numlist(value, ";")
+*/
 				if("expected_round_length")
 					config.expected_round_length = MinutesToTicks(text2num(value))
 

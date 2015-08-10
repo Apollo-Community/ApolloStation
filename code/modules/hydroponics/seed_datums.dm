@@ -368,11 +368,15 @@ proc/populate_seed_list()
 					biolum = !biolum
 					if(biolum)
 						source_turf.visible_message("\blue \The [display_name] begins to glow!")
-						if(prob(degree*2))
-							biolum_colour = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
-							source_turf.visible_message("\blue \The [display_name]'s glow <font color='[biolum_colour]'>changes colour</font>!")
 					else
 						source_turf.visible_message("\blue \The [display_name]'s glow dims...")
+				if(biolum)    // MORE COLORS!
+					biolum_colour = pick(
+						rgb(rand(0,255),   rand(0,255),   rand(0,255)),   // Completely Random
+						rgb(rand(128,255), rand(0,128),   rand(0,32)),    // Reds and Oranges
+						rgb(rand(0,128),   rand(192,255), rand(0,128)),   // A bunch of greens
+						rgb(rand(0,192),   rand(0,64),    rand(128,255))) // Blues and Violets.
+					source_turf.visible_message("\blue \The [display_name]'s glow <font color='[biolum_colour]'>changes colour</font>!")
 			if(11)
 				if(prob(degree*2))
 					flowers = !flowers
