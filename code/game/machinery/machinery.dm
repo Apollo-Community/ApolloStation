@@ -141,6 +141,10 @@ Class Procs:
 			pulse2.delete()
 	..()
 
+/obj/machinery/proc/surge_act()
+	if(prob(90)) return
+
+
 /obj/machinery/ex_act(severity)
 	switch(severity)
 		if(1.0)

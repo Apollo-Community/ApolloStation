@@ -1,40 +1,3 @@
-
-/*
-	How to tweak the SM
-
-	POWER_FACTOR		directly controls how much power the SM puts out at a given level of excitation (power var). Making this lower means you have to work the SM harder to get the same amount of power.
-	CRITICAL_TEMPERATURE	The temperature at which the SM starts taking damage.
-
-	CHARGING_FACTOR		Controls how much emitter shots excite the SM.
-	DAMAGE_RATE_LIMIT	Controls the maximum rate at which the SM will take damage due to high temperatures.
-*/
-
-#define SM_BASE_POWER 400			// Directly affects how much power the SM generates. Should be approx. the station's power draw in KW
-#define SM_FUSION_POWER 1.3			// How much smlevel affects power. At a factor of 1, a stage 2 SM has the equivalent power of 2 SM's.
-#define SM_FUSION_STABILITY 10		// Amount of stability gained or lost via fusion. At 100, the SM becomes 10% more stable per fusion. At -100, the SM becomes 10% less stable.
-#define SM_CRYSTAL_RATE	100			// How quickly the SM is able to regenerate crystal formations. At lower higher numbers, the sm heals faster.
-
-#define SM_CRITICAL_STABILITY 100		// Affects how likely the SM is to have a critical failure. at 100, there is a probability of 0.1 per fusion stage.
-#define SM_THERMAL_FACTOR 350			// How much heat the SM gives off. This is affected greatly by power.
-#define SM_CRITICAL_TEMP 800			// The temperature in Kelvin before the SM starts to take damage. This is affected by fusion power.
-
-#define SM_CONSUMPTION_RATE 10		// How fast the SM consumes gas to produce power. Raising this will require the SM to be checked up on, and refueled, more often.
-#define SM_OXYGEN_FACTOR 5			// Amount of Kiliwatts produced by 1 Mole of Oxygen.
-#define SM_CARBON_FACTOR 7.5			// Amount of Kiliwatts produced by 1 Mole of Carbon Dioxide.
-
-#define SM_PSIONIC_POWER 10			// Affects shit like hallucinations and whatever.
-#define SM_WARNING_DELAY 30			// Time in seconds between each SM radio alert warning.
-#define SM_DETONATE_DELAY 10			// Time in seconds before the SM will actually detonate. Affected by fusion power.
-#define SM_EXPLOSION_SIZE 5			// Controls the maximum-size of SM explosion and delamination.
-
-#define SM_CRITICAL_DANGER 100		// Affects how dangerous a critical failure is. At higher numbers, the potential for instant delamination increases.
-#define SM_DAMAGE_FACTOR 1.0			// How much damage the SM is able to take per 100 power. This is affected by fusion power.
-#define SM_SUFFOCATION_MOLES 5		// Amount of moles of oxygen per SM stage the engine needs to prevent suffocation.
-#define SM_HEAT_DAMAGE 10			// Controls the damage the SM takes per degree K above critical temperature. Increasing this will speed delamination by a ton.
-
-#define SM_POWER_RATE 1				// Affects rate of power increase. Raise it if you dont want to wait.
-#define SM_DECAY_RATE 50			// Affects rate of decay. Reduce for slower decay, increase for faster decay. Affects how often engine will need to be charged.
-
 // Seeing as none of these will change throughout a round, and we had a fuckton of defines anyways, I made them into defines. For the blood god.
 #define SM_SAFE_ALERT "Crystaline hyperstructure returning to safe operating levels."
 #define SM_WARNING_ALERT "Danger! Crystal hyperstructure instability!"
@@ -46,17 +9,17 @@
 	name = "Supermatter"
 	desc = "A strangely translucent and iridescent crystal. \red You get headaches just from looking at it."
 	icon = 'icons/obj/engine.dmi'
-	icon_state = "supermatter_1"
+	icon_state = "supermatter"
 	density = 1
 	anchored = 0
-	luminosity = 4
+	luminosity = 3
 	l_color = "#FFFF00"
 
 	var/smlevel = 1
 	var/changed = 1	// adminbus
 	var/bare = 0
 
-	var/base_icon_state = "supermatter_1"
+	var/base_icon_state = "supermatter"
 
 	var/power = 0
 	var/power_percent = 0
@@ -93,27 +56,27 @@
 	log_game("Supermatter exploded at ([x],[y],[z])")
 	grav_pulling = 1
 	exploded = 1
-	spawn(SM_DETONATE_DELAY * 10 * smlevel)
+	spawn(smvsc.detonate_delay * 10)
 		var/turf/epicenter = get_turf(src)
 		explosion(epicenter, \
-		          min(1 * SM_EXPLOSION_SIZE + power_percent + smlevel, (SM_EXPLOSION_SIZE) * 3), \
-		          min(2 * SM_EXPLOSION_SIZE + power_percent + smlevel, (SM_EXPLOSION_SIZE) * 4), \
-		          min(3 * SM_EXPLOSION_SIZE + power_percent + smlevel, (SM_EXPLOSION_SIZE) * 5), \
-		          min(4 * SM_EXPLOSION_SIZE + power_percent + smlevel, (SM_EXPLOSION_SIZE) * 6), 1)
+		          min(1 * (smvsc.explosion_size + (power_percent * smlevel)), (smvsc.explosion_size) * 3), \
+		          min(2 * (smvsc.explosion_size + (power_percent * smlevel)), (smvsc.explosion_size) * 4), \
+		          min(3 * (smvsc.explosion_size + (power_percent * smlevel)), (smvsc.explosion_size) * 5), \
+		          min(4 * (smvsc.explosion_size + (power_percent * smlevel)), (smvsc.explosion_size) * 6), 1)
 		supermatter_delamination(epicenter, \
-		          min(4 * SM_EXPLOSION_SIZE + power_percent + smlevel, (SM_EXPLOSION_SIZE) * 6), 1, smlevel)
+		          min(4 * (smvsc.explosion_size + (power_percent * smlevel)), (smvsc.explosion_size) * 6), 1, smlevel)
 		del src
 		return
 
 /obj/machinery/power/supermatter/proc/announce_warning()
-	var/integrity = damage / (explosion_point + ( (SM_FUSION_STABILITY / explosion_point) * smlevel) )
+	var/integrity = damage / (explosion_point + ( (smvsc.fusion_stability / explosion_point) * smlevel) )
 	integrity = round(100 - integrity * 100)
 	integrity = integrity < 0 ? 0 : integrity
 	var/alert_msg = " Integrity at [integrity]%"
 
 	if(damage > emergency_point)
 		alert_msg = SM_EMERGENCY_ALERT + alert_msg
-		lastwarning = world.timeofday - SM_WARNING_DELAY * 5
+		lastwarning = world.timeofday - smvsc.warning_delay * 5
 	else if(damage >= damage_archived) // The damage is still going up
 		safe_warned = 0
 		alert_msg = SM_WARNING_ALERT + alert_msg
@@ -128,7 +91,7 @@
 		radio.autosay(alert_msg, "Supermatter Monitor")
 
 /obj/machinery/power/supermatter/process()
-	power_percent = (power / (SM_BASE_POWER*(smlevel ** SM_FUSION_POWER))) // This was a fucking pain to use over and over again.
+	power_percent = (power / (smvsc.base_power*(smlevel ** smvsc.fusion_power))) // This was a fucking pain to use over and over again.
 	processed += 1
 
 	// SUPERMATTER LOCATION CHECK
@@ -139,12 +102,12 @@
 		return  //Yeah just stop.
 
 	// SUPERMATTER ALERT CHECK
-	if(damage > (explosion_point + ( (SM_FUSION_STABILITY / explosion_point) * smlevel) ))
+	if(damage > (explosion_point + ( (smvsc.fusion_stability / explosion_point) * smlevel) ))
 		if(!exploded)
 			if(!istype(L, /turf/space))
 				announce_warning()
 			explode()
-	else if(damage > warning_point && (world.timeofday - lastwarning) >= SM_WARNING_DELAY * 10) // while the core is still damaged and it's still worth noting its status
+	else if(damage > warning_point && (world.timeofday - lastwarning) >= smvsc.warning_delay * 10) // while the core is still damaged and it's still worth noting its status
 		if(!istype(L, /turf/space))
 			announce_warning()
 
@@ -163,7 +126,7 @@
 
 
 	// SUPERMATTER DAMAGE LIMIT
-	var/damage_inc_limit = (smlevel ** SM_FUSION_POWER) + ( power_percent * SM_DAMAGE_FACTOR * 100)
+	var/damage_inc_limit = ( power_percent * smvsc.damage_factor * 100)
 
 	// SUPERMATTER GAS CONSUMPTION
 	var/datum/gas_mixture/removed = null
@@ -171,13 +134,13 @@
 
 	if(!istype(L, /turf/space))
 		env = L.return_air()
-		removed = env.remove( max(env.total_moles / 10, min(smlevel * SM_CONSUMPTION_RATE, env.total_moles) ) )
+		removed = env.remove( max(env.total_moles / 10, min(smlevel * smvsc.consumption_rate, env.total_moles) ) )
 
 	// SUPERMATTER CRITICAL FAILURE
-	if (prob(smlevel / SM_CRITICAL_STABILITY))
-		var/crit_damage = rand(0, (SM_CRITICAL_DANGER * (smlevel ** SM_FUSION_POWER) ) )	// Take a bunch of damage. 5 = 500, 10 = 2000, 15 = 4500, 20 = 8000
+	if (prob(smlevel / smvsc.crit_stability))
+		var/crit_damage = rand(0, (smvsc.crit_danger * (smlevel ** smvsc.fusion_power) ) )	// Take a bunch of damage. 5 = 500, 10 = 2000, 15 = 4500, 20 = 8000
 		damage += crit_damage
-		var/integrity = crit_damage / (explosion_point + ( (SM_FUSION_STABILITY / explosion_point) * smlevel) )
+		var/integrity = crit_damage / (explosion_point + ( (smvsc.fusion_stability / explosion_point) * smlevel) )
 		integrity = round(100 - integrity * 100)
 		integrity = integrity < 0 ? 0 : integrity
 		radio.autosay("CRITICAL FAILURE! [integrity]% Integrity Lost!", "Supermatter Monitor")
@@ -185,7 +148,7 @@
 
 	// SUPERMATTER ENVIRONMENT PROCESSING
 	if(!env || !removed || !removed.total_moles)
-		damage += max((10 * smlevel * SM_DAMAGE_FACTOR), 0)
+		damage += (10 * smlevel * smvsc.damage_factor)
 
 	else
 		damage_archived = damage
@@ -204,38 +167,38 @@
 			power = max(0, power-sleepy)
 
 		if(oxygen)
-			power += oxygen*min(0.01, (1-power_percent))*SM_OXYGEN_FACTOR*(SM_POWER_RATE/10)*(smlevel**SM_FUSION_POWER)
-			if (prob(oxygen/10000))
+			power += oxygen*max(0.01, (1-power_percent))*(smvsc.gas_rate/10)*(smlevel**smvsc.fusion_power)
+			if (prob(oxygen/(10*smvsc.crit_stability)))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(oxygen/100, 1, src)
+				s.set_up(oxygen/smvsc.crit_stability, 1, src)
 				s.start()
 
 		if(carbon)
-			power += carbon*min(0.01, min(1-power_percent))*SM_CARBON_FACTOR*SM_POWER_RATE
+			power += carbon*max(0.01, (1-power_percent))*smvsc.gas_rate*(smlevel**smvsc.fusion_power)
 			carbon = 0
 
 		if(phoron)
-			if (removed.temperature < SM_CRITICAL_TEMP)
-				var/heal_amt = max(0, (SM_CRITICAL_TEMP-removed.temperature)/SM_CRITICAL_TEMP)*(phoron*SM_CRYSTAL_RATE)
-				damage = max(0, damage - min(damage_inc_limit, heal_amt))
+			if (removed.temperature < smvsc.crit_temp)
+				var/heal_amt = max(0, (smvsc.crit_temp-removed.temperature)/smvsc.crit_temp)*(phoron*smvsc.crystal_rate)
+				damage = max(0, damage - heal_amt)
 				phoron = 0
 			else
-				power += phoron*min(0.01, (1-power_percent))*(2*SM_OXYGEN_FACTOR)*(SM_POWER_RATE/10)
+				power += phoron*max(0.01, (1-power_percent))*(smvsc.gas_rate/5)
 				phoron = 0
 
-		phoron += (damage/(explosion_point + ( (SM_FUSION_STABILITY / explosion_point) * smlevel) ))*(smlevel**SM_FUSION_POWER)
-		phoron += oxygen*(SM_CONSUMPTION_RATE/100)
-		oxygen -= oxygen*(SM_CONSUMPTION_RATE/200)
+		phoron += (damage/(explosion_point + ( (smvsc.fusion_stability / explosion_point) * smlevel) ))*(smlevel**smvsc.fusion_power)
+		phoron += oxygen/20
+		oxygen -= oxygen/10
 
-		var/need_oxy = ((SM_SUFFOCATION_MOLES/10) * (smlevel**SM_FUSION_POWER))-(oxygen+(SM_SUFFOCATION_MOLES/10))
+		var/need_oxy = ((smvsc.suffocation_moles/10) * (smlevel**smvsc.fusion_power))-(smvsc.safe_level*(oxygen+(smvsc.suffocation_moles/10)))
 
 		if (need_oxy>0)
 			phoron+=need_oxy
 			power-=need_oxy
 			damage+=need_oxy
 
-		if(removed.temperature >= SM_CRITICAL_TEMP)
-			damage += min(damage_inc_limit, (removed.temperature-SM_CRITICAL_TEMP)*(SM_HEAT_DAMAGE/1000))
+		if(removed.temperature >= smvsc.crit_temp)
+			damage += min(damage_inc_limit, (removed.temperature-smvsc.crit_temp)*(smvsc.heat_damage/1000))
 
 		transfer_energy()
 
@@ -245,25 +208,25 @@
 		removed.gas["sleeping_agent"] = sleepy
 		removed.gas["carbon_dioxide"] = carbon
 
-		removed.add_thermal_energy(power*SM_THERMAL_FACTOR*(power_percent**2))
+		removed.add_thermal_energy(power*smvsc.thermal_factor*(power_percent**2))
 		env.merge(removed)
 
 
 	// SUPERMATTER PSIONIC SHIT
-	for(var/mob/living/carbon/human/l in view(src, min(7, round(sqrt(power/6))))) // If they can see it without mesons on.  Bad on them.
+	for(var/mob/living/carbon/human/l in view(src, 7)) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 			if(!isnucleation(l))
-				l.hallucination = max(0, min(10+(5*(smlevel**SM_FUSION_POWER)), l.hallucination + power * SM_PSIONIC_POWER * sqrt(1 / max(1,get_dist(l, src)))))
+				l.hallucination = max(0, min(smlevel*smvsc.psionic_power, l.hallucination + ((power/smvsc.base_power)*smvsc.psionic_power) * sqrt(1 / max(1,get_dist(l, src)))))
 			else
-				l.hallucination = max(0, min(0+(5*(smlevel**SM_FUSION_POWER)), l.hallucination + power * SM_PSIONIC_POWER * sqrt(1 / max(1,get_dist(l, src)))))
+				l.hallucination = max(0, min(smlevel*(smvsc.psionic_power/5), l.hallucination + ((power/smvsc.base_power)*(smvsc.psionic_power/5)) * sqrt(1 / max(1,get_dist(l, src)))))
 
 	// SUPERMATTER RADIATION
-	for(var/mob/living/l in range(src, round(sqrt(power / 5))))
-		var/rads = (power / 10) * sqrt( 1 / get_dist(l, src) )
+	for(var/mob/living/l in range(src, round(sqrt(((power/smvsc.base_power)*7) / 5))))
+		var/rads = ((power/smvsc.base_power)*smvsc.radiation_power) * sqrt( 1 / get_dist(l, src) )
 		l.apply_effect(rads, IRRADIATE)
 
 	// SUPERMATTER DECAY
-	var/decay = min(0.01, (power_percent**5)) * SM_DECAY_RATE
+	var/decay = min(0.01, (power_percent**5)) * smvsc.decay_rate
 	power = max(0, power-decay)
 
 	return 1
@@ -276,9 +239,9 @@
 
 
 	if(istype(Proj, /obj/item/projectile/beam))
-		power += Proj.damage * 0.5
+		power += Proj.damage
 	else
-		damage += Proj.damage * 0.5
+		damage += Proj.damage
 	return 0
 
 /obj/machinery/power/supermatter/attack_robot(mob/user as mob)
@@ -298,6 +261,7 @@
 		"\blue You reach out and touch \the [src]. Everything seems to go quiet and slow down as you feel your crystal structures mending.\"</span>", \
 		"<span class=\"danger\">Everything suddenly goes silent.\"</span>")
 		L.rejuvenate()
+		L.sleeping = max(L.sleeping+2, 10)
 		return
 
 	user.visible_message("<span class=\"warning\">\The [user] reaches out and touches \the [src], inducing a resonance... \his body starts to glow and bursts into flames before flashing into ash.</span>",\
@@ -335,7 +299,7 @@
 	user.drop_from_inventory(W)
 	Consume(W)
 
-	user.apply_effect(power/10, IRRADIATE)
+	user.apply_effect((power/smvsc.base_power)*smvsc.radiation_power, IRRADIATE)
 
 /obj/machinery/power/supermatter/ex_act()
 	return
@@ -348,10 +312,10 @@
 		"<span class=\"danger\">You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
 		"<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>")
 	else if(istype(AM, /obj/machinery/power/supermatter))
-		AM.visible_message("<span class=\"warning\">\The [AM] smacks into \the [src] and fuses with it.</span>",\
+		AM.visible_message("<span class=\"warning\">\The [AM] fuses with \the [src].</span>",\
 		"<span class=\"warning\">You hear a loud shriek as you are washed with a wave of heat.</span>")
 	else if( istype(AM, /obj/item/weapon/shard/supermatter))
-		AM.visible_message("<span class=\"warning\">\The [AM] smacks into \the [src] and fuses with it.</span>",\
+		AM.visible_message("<span class=\"warning\">\The [AM] fuses with \the [src].</span>",\
 		"<span class=\"warning\">You hear a loud shriek as you are washed with a wave of heat.</span>")
 	else if(!grav_pulling) //To prevent spam, detonating supermatter does not indicate non-mobs being destroyed
 		AM.visible_message("<span class=\"warning\">\The [AM] smacks into \the [src] and rapidly flashes to ash.</span>",\
@@ -366,40 +330,39 @@
 
 	if(istype(user))
 		user.dust()
-		power += 50
+		power += smvsc.base_power/8
 	else
 		if (istype(user, /obj/machinery/power/supermatter))
 			var/obj/machinery/power/supermatter/S = user
 			var/newsm = S.smlevel + smlevel
 			var/newdm = ((S.smlevel/newsm)*S.damage)+((smlevel/newsm)*damage)
 			var/newpw = ((S.smlevel/newsm)*S.power)+((smlevel/newsm)*power)
-			smlevel += newsm
+			smlevel = newsm
 			damage = newdm
 			power = newpw
-			power += (100 * (S.smlevel**SM_FUSION_POWER))  // Get a ton of power from the fusion.
-			for(var/mob/living/l in range(16))
-				var/rads = (power/2) * sqrt( 1 / (get_dist(l, src) + 1) ) // Increased range for radiation. Eventually you'll be radiating the entire station.
+			power += (smvsc.base_power/2 * (S.smlevel**smvsc.fusion_power))  // Get a ton of power from the fusion.
+			for(var/mob/living/l in range(src, round(sqrt(((power/smvsc.base_power)*7) / 5))))
+				var/rads = ((power/smvsc.base_power)*smvsc.radiation_power) * sqrt( 1 / get_dist(l, src) )
 				l.apply_effect(rads, IRRADIATE)
 		if (istype(user, /obj/item/weapon/shard/supermatter))
 			var/obj/item/weapon/shard/supermatter/S = user
-			smlevel += ((S.smlevel*S.size)/200)
-			power += ((S.smlevel*S.size)/20)
-			for(var/mob/living/l in range(8))
-				var/rads = (power/20) * sqrt( 1 / (get_dist(l, src) + 1) ) // Increased range for radiation. Eventually you'll be radiating the entire station.
+			smlevel += ((S.size)/100)
+			for(var/mob/living/l in range(src, round(sqrt(((power/smvsc.base_power)*7) / 5))))
+				var/rads = ((power/smvsc.base_power)*smvsc.radiation_power) * sqrt( 1 / get_dist(l, src) ) // Increased range for radiation. Eventually you'll be radiating the entire station.
 				l.apply_effect(rads, IRRADIATE)
 		del user
 		return
 
-	power += 50
+	power += smvsc.base_power/8
 
 		//Some poor sod got eaten, go ahead and irradiate people nearby.
-	for(var/mob/living/l in range(16))
+	for(var/mob/living/l in range(src, round(sqrt(((power/smvsc.base_power)*7) / 5))))
 		if(l in view())
 			l.show_message("<span class=\"warning\">As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", 1,\
 				"<span class=\"warning\">The unearthly ringing subsides and you notice you have new radiation burns.</span>", 2)
 		else
 			l.show_message("<span class=\"warning\">You hear an uneartly ringing and notice your skin is covered in fresh radiation burns.</span>", 2)
-		var/rads = (power/20) * sqrt( 1 / (get_dist(l, src) + 1) ) * smlevel
+		var/rads = ((power/smvsc.base_power)*smvsc.radiation_power) * sqrt( 1 / get_dist(l, src) )
 		l.apply_effect(rads, IRRADIATE)
 
 /obj/machinery/power/supermatter/update_icon()
@@ -433,32 +396,7 @@
 	else
 		l_color = rgb(light_mult/2, light_mult, light_mult/2)
 
-	luminosity = 3 + (smlevel*power_percent)
-
-	if(smlevel<1)
-		base_icon_state = "supermatter[bare?"_bare":""]_1"
-	else if(smlevel<2)
-		base_icon_state = "supermatter[bare?"_bare":""]_1"
-	else if(smlevel<3)
-		base_icon_state = "supermatter[bare?"_bare":""]_2"
-	else if(smlevel<4)
-		base_icon_state = "supermatter[bare?"_bare":""]_3"
-	else if(smlevel<5)
-		base_icon_state = "supermatter[bare?"_bare":""]_4"
-	else if(smlevel<6)
-		base_icon_state = "supermatter[bare?"_bare":""]_5"
-	else if(smlevel<7)
-		base_icon_state = "supermatter[bare?"_bare":""]_6"
-	else if(smlevel<8)
-		base_icon_state = "supermatter[bare?"_bare":""]_7"
-	else if(smlevel<9)
-		base_icon_state = "supermatter[bare?"_bare":""]_8"
-	else if(smlevel<10)
-		base_icon_state = "supermatter[bare?"_bare":""]_8"
-	else if(smlevel>=9)
-		base_icon_state = "supermatter[bare?"_bare":""]_9"
-
-	icon_state = base_icon_state
+	luminosity = 2 + (smlevel*power_percent)
 
 /obj/machinery/power/supermatter/proc/supermatter_pull()
 	//following is adapted from singulo code
@@ -529,7 +467,7 @@ proc/supermatter_delamination(var/turf/epicenter, var/size, var/transform_mobs =
 				if( ishuman(mob) )
 					//Hilariously enough, running into a closet should make you get hit the hardest.
 					var/mob/living/carbon/human/H = mob
-					H.hallucination += max(50, min(size*10, SM_PSIONIC_POWER*10 * sqrt(1 / (get_dist(mob, epicenter) + 1)) ) )
+					H.hallucination += max(50, min(size*10, smvsc.psionic_power*10 * sqrt(1 / (get_dist(mob, epicenter) + 1)) ) )
 				if( !rads )
 					rads = size*10 * sqrt( 1 / (get_dist(mob, epicenter) + 1) ) * smlevel
 				mob.apply_effect(rads, IRRADIATE)
@@ -608,6 +546,6 @@ proc/blow_lights( var/turf/T )
 	return
 
 /obj/machinery/power/supermatter/bare
-	icon_state = "supermatter_bare_1"
-	base_icon_state = "supermatter_bare_1"
+	icon_state = "supermatter_bare"
+	base_icon_state = "supermatter_bare"
 	bare = 1
