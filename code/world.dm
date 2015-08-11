@@ -22,10 +22,9 @@ var/global/datum/global_init/init = new ()
 #define RECOMMENDED_VERSION 501
 /world/New()
 	//logs
-	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
-	href_logfile = file("data/logs/[date_string] hrefs.htm")
-	diary = file("data/logs/[date_string].log")
-	diary << "[log_end]\n[log_end]\nStarting up. [time2text(world.timeofday, "hh:mm.ss")][log_end]\n---------------------[log_end]"
+	href_logfile = file("data/logs/hrefs.htm")
+	diary = file("data/logs/diary.log")
+	diary << "[log_end]\n[log_end]\nStarting up. [time2text(world.timeofday, "YYYY/MM-Month/DD-Day hh:mm:ss")][log_end]\n---------------------[log_end]"
 
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND"
@@ -37,7 +36,7 @@ var/global/datum/global_init/init = new ()
 		config.server_name += " #[(world.port % 1000) / 100]"
 
 	if(config && config.log_runtime)
-		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD-(hh-mm-ss)")]-runtime.log")
+		log = file("data/logs/runtime.log")
 
 	callHook("startup")
 	//Emergency Fix
