@@ -109,6 +109,14 @@
 	src << "You will [(prefs.toggles & CHAT_OOC) ? "now" : "no longer"] see messages on the OOC channel."
 	feedback_add_details("admin_verb","TOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/listen_ooc_notification()
+	set name = "Toggle OOC Sounds"
+	set category = "Preferences"
+	set desc = "Toggles the OOC notificaiton sounds"
+	prefs.toggles ^= CHAT_OOC_NOTIFICATIONS
+	prefs.save_preferences()
+	src << "You will [(prefs.toggles & CHAT_OOC) ? "now" : "no longer"] hear notifications from the OOC channel."
+	feedback_add_details("admin_verb","SOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/listen_looc()
 	set name = "Show/Hide LOOC"

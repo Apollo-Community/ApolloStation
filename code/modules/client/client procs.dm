@@ -124,6 +124,13 @@
 
 	src << "\red If the title screen is black, resources are still downloading. Please be patient until the title screen appears."
 
+	for(var/client/target in clients)
+		if(target.prefs.toggles & CHAT_OOC)
+			target << "<span class='notice'><b>[src.key] has connected to the server.</b></span>"
+
+			if( target.prefs.toggles & CHAT_OOC_NOTIFICATIONS )
+				target << sound( 'sound/effects/oocjoin.ogg' )
+
 
 	clients += src
 	clients = sortKey(clients)
