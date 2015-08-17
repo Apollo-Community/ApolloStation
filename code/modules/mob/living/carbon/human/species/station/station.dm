@@ -186,6 +186,8 @@
 	unarmed_types = list(/datum/unarmed_attack/punch)
 	rarity_value = 2
 
+	voice_sounds = new /datum/species_sounds/robot
+
 	eyes = "blank_eyes"
 	brute_mod = 0.75
 	burn_mod = 1
