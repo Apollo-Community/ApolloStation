@@ -36,16 +36,6 @@
 	usr << "You will [(prefs.toggles & CHAT_RADIO) ? "now" : "no longer"] see radio chatter from radios or speakers"
 	feedback_add_details("admin_verb","THR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/toggleadminhelpsound()
-	set name = "Hear/Silence Adminhelps"
-	set category = "Preferences"
-	set desc = "Toggle hearing a notification when admin PMs are recieved"
-	if(!holder)	return
-	prefs.toggles ^= SOUND_ADMINHELP
-	prefs.save_preferences()
-	usr << "You will [(prefs.toggles & SOUND_ADMINHELP) ? "now" : "no longer"] hear a sound when adminhelps arrive."
-	feedback_add_details("admin_verb","AHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/verb/deadchat() // Deadchat toggle is usable by anyone.
 	set name = "Show/Hide Deadchat"
 	set category = "Preferences"
@@ -109,13 +99,13 @@
 	src << "You will [(prefs.toggles & CHAT_OOC) ? "now" : "no longer"] see messages on the OOC channel."
 	feedback_add_details("admin_verb","TOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/verb/listen_ooc_notification()
+/client/verb/sound_notification()
 	set name = "Toggle OOC Sounds"
 	set category = "Preferences"
 	set desc = "Toggles the OOC notificaiton sounds"
-	prefs.toggles ^= CHAT_OOC_NOTIFICATIONS
+	prefs.toggles ^= SOUND_NOTIFICATIONS
 	prefs.save_preferences()
-	src << "You will [(prefs.toggles & CHAT_OOC) ? "now" : "no longer"] hear notifications from the OOC channel."
+	src << "You will [(prefs.toggles & SOUND_NOTIFICATIONS) ? "now" : "no longer"] hear notifications from the OOC channel."
 	feedback_add_details("admin_verb","SOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/listen_looc()

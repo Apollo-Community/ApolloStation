@@ -128,7 +128,7 @@
 		if(target.prefs.toggles & CHAT_OOC)
 			target << "<span class='notice'><b>[src.key] has connected to the server.</b></span>"
 
-			if( target.prefs.toggles & CHAT_OOC_NOTIFICATIONS )
+			if( target.prefs.toggles & SOUND_NOTIFICATIONS )
 				target << sound( 'sound/effects/oocjoin.ogg' )
 
 
