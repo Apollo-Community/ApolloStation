@@ -172,20 +172,9 @@
 				m_type = 1
 			else
 				if (!muzzled)
-					var/scream_sound
-
-					if( gender == "male" )
-						scream_sound = pick(\
-						'sound/voice/cough01_man.ogg',
-						'sound/voice/cough02_man.ogg',
-						'sound/voice/cough03_man.ogg')
-					else if( gender == "female" )
-						scream_sound = pick(\
-						'sound/voice/cough01_woman.ogg',
-						'sound/voice/cough02_woman.ogg',
-						'sound/voice/cough03_woman.ogg')
-
-					playsound(loc, scream_sound, 80, 1)
+					var/emote_sound = species.voice_sounds.getCough( gender )
+					if( emote_sound )
+						playsound(loc, emote_sound, 8, species.mod_sound )
 
 					message = "<B>[src]</B> coughs!"
 					m_type = 2
@@ -220,21 +209,11 @@
 			else
 				if (!muzzled)
 					message = "<B>[src]</B> gasps!"
-					var/gasp_sound = null
-					if( istype( type, /mob/living/silicon ) || get_species() == "Machine" )
-						gasp_sound = 'sound/voice/rscream1.ogg'
-						message = "<B>[src]</B> plays gasp.ogg"
-					else
-						if( gender == "male" )
-							gasp_sound = pick(\
-							'sound/voice/gasp01_male.ogg',
-							'sound/voice/gasp02_male.ogg' )
-						else if( gender == "female" )
-							gasp_sound = pick(\
-							'sound/voice/gasp01_female.ogg',
-							'sound/voice/gasp02_female.ogg' )
-					if( gasp_sound )
-						playsound(loc, gasp_sound, 50, 1)
+
+					var/emote_sound = species.voice_sounds.getGasp( gender )
+					if( emote_sound )
+						playsound(loc, emote_sound, 80, species.mod_sound )
+
 					m_type = 2
 				else
 					message = "<B>[src]</B> makes a weak noise."
@@ -570,21 +549,14 @@
 			else
 				if (!muzzled)
 					message = "<B>[src]</B> screams!"
-					var/scream_sound
+
+					var/emote_sound = species.voice_sounds.getScream( gender )
+					if( emote_sound )
+						playsound(loc, emote_sound, 80, species.mod_sound )
 
 					if( istype( type, /mob/living/silicon ) || get_species() == "Machine" )
-						scream_sound = 'sound/voice/rscream1.ogg'
-						message = "<B>[src]</B> plays scream.ogg"
-					else
-						if( gender == "male" )
-							scream_sound = pick(\
-							'sound/voice/mscream1.ogg',
-							'sound/voice/mscream2.ogg',
-							'sound/voice/mscream3.ogg')
-						else if( gender == "female" )
-							scream_sound = 'sound/voice/wscream1.ogg'
+						message = "<B>[src]</B> plays scream.mp3"
 
-					playsound(loc, scream_sound, 80, 1)
 					m_type = 2
 				else
 					message = "<B>[src]</B> makes a very loud noise."

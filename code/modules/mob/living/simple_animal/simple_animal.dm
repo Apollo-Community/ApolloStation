@@ -9,8 +9,10 @@
 	var/icon_gib = null	//We only try to show a gibbing animation if this exists.
 
 	var/list/speak = list()
+	var/list/speak_emote_sound = list()
 	var/speak_chance = 0
 	var/list/emote_hear = list()	//Hearable emotes
+	var/list/emote_hear_sound = list() // Accompanying sounds for hearable emotes
 	var/list/emote_see = list()		//Unlike speak_emote, the list of things in this variable only show by themselves with no spoken text. IE: Ian barks, Ian yaps
 
 	var/turns_per_move = 1
@@ -120,7 +122,12 @@
 						if(emote_see && randomValue <= emote_see.len)
 							visible_emote("[pick(emote_see)].")
 						else
-							audible_emote("[pick(emote_hear)].")
+							var/emoted = pick(emote_hear)
+
+							audible_emote("[emoted].")
+							if( emote_hear_sound["[emoted]"] )
+								playsound(src, emote_hear_sound["[emoted]"], 100)
+
 				else
 					say(pick(speak))
 			else
@@ -374,7 +381,11 @@
 	if(speak_emote.len)
 		verb = pick(speak_emote)
 
+
 	message = capitalize(trim_left(message))
+
+	if( speak_emote_sound["[verb]"] )
+		playsound(src, speak_emote_sound["[verb]"], 100)
 
 	..(message, null, verb, nolog = !ckey)	//if the animal has a ckey then it will log the message
 

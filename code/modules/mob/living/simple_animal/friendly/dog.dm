@@ -4,7 +4,9 @@
 
 	speak = list("Woof!", "Bark!")
 	speak_emote = list("barks", "woofs")
+	speak_emote_sound = list("barks" = 'sound/voice/dog/bark1.ogg', "woofs" = 'sound/voice/dog/bark2.ogg')
 	emote_hear = list("barks", "woofs","pants")
+	emote_hear = list("barks" = 'sound/voice/dog/bark1.ogg', "woofs" = 'sound/voice/dog/bark2.ogg')
 	emote_see = list("shakes its head", "shivers")
 	speak_chance = 1
 	turns_per_move = 10
