@@ -79,6 +79,13 @@ var/global/list/map_sectors = list()
 	mapy = STATION_Y
 	sector_flags = SECTOR_KNOWN | SECTOR_STATION
 
+
+/obj/effect/mapinfo/sector/artemis
+	name = "NSS Artemis"
+	mapx = STATION_X
+	mapy = STATION_Y+1
+	sector_flags = SECTOR_KNOWN | SECTOR_STATION | SECTOR_ALERT | SECTOR_LOCAL
+
 /obj/effect/mapinfo/sector/ace
 	name = "A.C.E."
 	obj_type = /obj/effect/map/sector/ace
