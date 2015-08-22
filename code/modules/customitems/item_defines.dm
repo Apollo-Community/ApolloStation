@@ -1521,3 +1521,11 @@
 /mob/living/simple_animal/bunny/fluff/fluffles/custom_item/New()
 	if (!contents.len)
 		new/mob/living/simple_animal/bunny/fluff/fluffles (src)
+
+/obj/item/weapon/flame/lighter/zippo/fluff/nathan_yates //rawrtaicho: Riley Rohtin
+	name = "Yates' black zippo"
+	desc = "A black zippo lighter, which holds some form of sentimental value."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "blackzippo"
+	icon_on = "blackzippoon"
+	icon_off = "blackzippo"
