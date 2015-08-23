@@ -187,11 +187,13 @@ var/list/ghostteleportlocs = list()
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
 
-/area/shuttle/arrival/pre_game
-	icon_state = "shuttle2"
-
-/area/shuttle/arrival/station
+/area/shuttle/arrival/nssapollo
 	icon_state = "shuttle"
+	name = "\improper NSS Apollo Arrival Shuttle"
+
+/area/shuttle/arrival/nssartemis
+	icon_state = "shuttle"
+	name = "\improper NSS Artemis Arrival Shuttle"
 
 /area/shuttle/escape
 	name = "\improper Emergency Shuttle"

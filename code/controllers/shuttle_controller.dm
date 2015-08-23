@@ -19,6 +19,18 @@ var/global/datum/shuttle_controller/shuttle_controller
 
 	var/datum/shuttle/ferry/shuttle
 
+	// Arrivals shuttle
+	shuttle = new()
+	shuttle.warmup_time = 0
+	shuttle.area_offsite = locate(/area/shuttle/arrival/nssartemis)
+	shuttle.area_station = locate(/area/shuttle/arrival/nssapollo)
+	shuttle.docking_controller_tag = "arrival_shuttle"
+	shuttle.dock_target_station = "arrival_dock"
+	shuttle.dock_target_offsite = "arrival_dock2"
+	shuttle.transit_direction = NORTH
+	shuttles["Arrivals"] = shuttle
+	process_shuttles += shuttle
+
 	// Escape shuttle and pods
 	shuttle = new/datum/shuttle/ferry/emergency()
 	shuttle.location = 1

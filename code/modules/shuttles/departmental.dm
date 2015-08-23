@@ -21,3 +21,9 @@
 	shuttle_tag = "Labor Camp"
 	//req_one_access_txt = "11;24"
 	circuit = /obj/item/weapon/circuitboard/laborcamp_shuttle
+
+/obj/machinery/computer/shuttle_control/arrivals
+	name = "arrival shuttle console"
+	shuttle_tag = "Arrivals"
+	//req_one_access_txt = "11;24"
+	circuit = /obj/item/weapon/circuitboard/arrival_shuttle

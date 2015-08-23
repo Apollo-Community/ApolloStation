@@ -174,6 +174,11 @@
 	build_path = /obj/machinery/computer/shuttle_control
 	origin_tech = "programming=2"
 
+/obj/item/weapon/circuitboard/arrival_shuttle
+	name = T_BOARD("arrival shuttle console")
+	build_path = /obj/machinery/computer/shuttle_control
+	origin_tech = "programming=2"
+
 /obj/item/weapon/circuitboard/aifixer
 	name = T_BOARD("AI integrity restorer")
 	build_path = /obj/machinery/computer/aifixer
