@@ -22,8 +22,8 @@ var/global/datum/shuttle_controller/shuttle_controller
 	// Arrivals shuttle
 	shuttle = new()
 	shuttle.warmup_time = 0
-	shuttle.area_offsite = locate(/area/shuttle/arrival/nssartemis)
 	shuttle.area_station = locate(/area/shuttle/arrival/nssapollo)
+	shuttle.area_offsite = locate(/area/shuttle/arrival/nssartemis)
 	shuttle.docking_controller_tag = "arrival_shuttle"
 	shuttle.dock_target_station = "arrival_dock"
 	shuttle.dock_target_offsite = "arrival_dock2"
