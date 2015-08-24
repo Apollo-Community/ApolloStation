@@ -30,6 +30,7 @@
 
 	MineralSpread()
 
+	var/side_type = src.side_type
 	spawn(2)
 		var/list/step_overlays = list("s" = NORTH, "n" = SOUTH, "w" = EAST, "e" = WEST)
 		for(var/direction in step_overlays)
