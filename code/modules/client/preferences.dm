@@ -1514,9 +1514,6 @@ datum/preferences
 				if("disabilities")				//please note: current code only allows nearsightedness as a disability
 					disabilities = !disabilities//if you want to add actual disabilities, code that selects them should be here
 
-				if("hear_adminhelps")
-					toggles ^= SOUND_ADMINHELP
-
 				if("ui")
 					switch(UI_style)
 						if("Midnight")

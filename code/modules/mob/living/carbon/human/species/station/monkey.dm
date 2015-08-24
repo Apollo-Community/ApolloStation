@@ -21,6 +21,9 @@
 	death_message = "lets out a faint chimper as it collapses and stops moving..."
 	tail = "chimptail"
 
+	voice_sounds = new /datum/species_sounds/monkey
+	mod_sound = 0
+
 	unarmed_types = list(/datum/unarmed_attack/bite, /datum/unarmed_attack/claws)
 	inherent_verbs = list(/mob/living/proc/ventcrawl)
 	hud_type = /datum/hud_data/monkey

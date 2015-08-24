@@ -54,6 +54,10 @@
 	for(var/client/target in clients)
 		if(target.prefs.toggles & CHAT_OOC)
 			var/display_name = src.key
+
+			if( target.prefs.toggles & SOUND_NOTIFICATIONS )
+				target << sound( 'sound/effects/oocalert.ogg' )
+
 			if(holder)
 				if(holder.fakekey)
 					if(target.holder)

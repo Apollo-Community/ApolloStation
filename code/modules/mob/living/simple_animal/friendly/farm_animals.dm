@@ -7,7 +7,9 @@
 	icon_dead = "goat_dead"
 	speak = list("EHEHEHEHEH","eh?")
 	speak_emote = list("brays")
+	speak_emote_sound = list( "brays" = 'sound/voice/goat/bray1.ogg' )
 	emote_hear = list("brays")
+	emote_hear_sound = list( "brays" = 'sound/voice/goat/bray1.ogg' )
 	emote_see = list("shakes its head", "stamps a foot", "glares around")
 	speak_chance = 1
 	turns_per_move = 5
@@ -96,7 +98,9 @@
 	icon_gib = "cow_gib"
 	speak = list("moo?","moo","MOOOOOO")
 	speak_emote = list("moos","moos hauntingly")
-	emote_hear = list("brays")
+	speak_emote_sound = list( "moos" = 'sound/voice/cow/moo2.ogg', "moos hauntingly" = 'sound/voice/cow/moo1.ogg' )
+	emote_hear = list("moos")
+	emote_hear_sound = list( "moos" = 'sound/voice/cow/moo2.ogg' )
 	emote_see = list("shakes its head")
 	speak_chance = 1
 	turns_per_move = 5
@@ -158,7 +162,9 @@
 	icon_gib = "chick_gib"
 	speak = list("Cherp.","Cherp?","Chirrup.","Cheep!")
 	speak_emote = list("cheeps")
+	speak_emote_sound = list( "cheeps" = 'sound/voice/chicken/cheep1.ogg' )
 	emote_hear = list("cheeps")
+	emote_hear_sound = list( "cheeps" = 'sound/voice/chicken/cheep1.ogg' )
 	emote_see = list("pecks at the ground","flaps its tiny wings")
 	speak_chance = 2
 	turns_per_move = 2
@@ -199,7 +205,9 @@ var/global/chicken_count = 0
 	icon_dead = "chicken_dead"
 	speak = list("Cluck!","BWAAAAARK BWAK BWAK BWAK!","Bwaak bwak.")
 	speak_emote = list("clucks","croons")
+	speak_emote_sound = list( "clucks" = 'sound/voice/chicken/cluck1.ogg', "croons" = 'sound/voice/chicken/croon1.ogg'  )
 	emote_hear = list("clucks")
+	emote_hear_sound = list( "clucks" = 'sound/voice/chicken/cluck1.ogg' )
 	emote_see = list("pecks at the ground","flaps its wings viciously")
 	speak_chance = 2
 	turns_per_move = 3

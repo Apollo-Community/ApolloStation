@@ -14,7 +14,6 @@
 	id = "Telecomms Relay"
 	autolinkers = list("relay")
 
-
 /obj/machinery/telecomms/relay/preset/mining
 	id = "Mining Relay"
 	autolinkers = list("m_relay")
@@ -35,6 +34,9 @@
 	produces_heat = 0
 	autolinkers = list("c_relay")
 
+/obj/machinery/telecomms/relay/preset/artemis
+	id = "NSS Artemis Relay"
+	autolinkers = list("a_relay")
 
 //HUB
 
