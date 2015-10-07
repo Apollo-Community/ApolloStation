@@ -5781,7 +5781,7 @@
 "chi" = (/obj/structure/bookcase,/turf/simulated/floor{icon_state = "bcarpet06"},/area/medical/psych)
 "chj" = (/obj/machinery/vending/medical,/turf/simulated/floor{icon_state = "white"},/area/medical/patient_wing)
 "chk" = (/turf/simulated/wall,/area/maintenance/substation/medical)
-"chl" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/door/airlock{name = "Starboard Emergency Storage"; req_access_txt = "29"},/turf/simulated/floor{icon_state = "dark"},/area/maintenance/substation/medical)
+"chl" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/door/airlock/engineering{name = "Medbay Substation"; req_access_txt = "0"; req_one_access_txt = "11;24;5"},/turf/simulated/floor{icon_state = "dark"},/area/maintenance/substation/medical)
 "chm" = (/obj/structure/sign/securearea{desc = "A warning sign which reads 'HIGH VOLTAGE'"; icon_state = "shock"; name = "HIGH VOLTAGE"; pixel_y = 0},/turf/simulated/wall,/area/maintenance/substation/medical)
 "chn" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 5},/turf/simulated/floor{icon_state = "freezerfloor"},/area/medical/patient_wing)
 "cho" = (/obj/structure/sink{dir = 4; icon_state = "sink"; pixel_x = 11; pixel_y = 0},/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 8},/obj/structure/mirror{pixel_x = 32},/turf/simulated/floor{icon_state = "freezerfloor"},/area/medical/patient_wing)
