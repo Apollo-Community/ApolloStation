@@ -34,7 +34,7 @@
 	name = "glass table"
 	desc = "A large glass table with metal supporting legs. It looks fragile."
 	icon_state = "glass_table"
-	icon = 'icons/apollo/objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	parts = /obj/item/weapon/table_parts/glass
 	health = 20
 
@@ -61,7 +61,7 @@
 /obj/structure/table/rack
 	name = "rack"
 	desc = "Different from the Middle Ages version."
-	icon = 'icons/apollo/objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
 	health = 100
 	parts = /obj/item/weapon/table_parts/rack

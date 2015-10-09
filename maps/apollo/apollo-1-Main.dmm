@@ -784,7 +784,7 @@
 "apd" = (/obj/structure/cable/yellow,/obj/structure/lattice/catwalk,/turf/space,/area/solar/auxstarboard)
 "ape" = (/obj/structure/cable/yellow,/obj/structure/lattice/catwalk,/turf/space,/area/solar/auxport)
 "apf" = (/obj/structure/barricade/wooden,/obj/structure/grille{health = 20; icon_state = "grille"; name = "dense grille"; opacity = 1},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{tag = "icon-intact-scrubbers (NORTH)"; icon_state = "intact-scrubbers"; dir = 1},/turf/simulated/floor/plating{icon_state = "platebot"},/area/maintenance/evahallway)
-"apg" = (/obj/structure/table,/obj/random/tech_supply,/obj/random/tech_supply,/obj/item/clothing/under/apollo/camo,/obj/effect/landmark{name = "blobstart"},/turf/simulated/floor/plating,/area/maintenance/evahallway)
+"apg" = (/obj/structure/table,/obj/random/tech_supply,/obj/random/tech_supply,/obj/item/clothing/under/camo,/obj/effect/landmark{name = "blobstart"},/turf/simulated/floor/plating,/area/maintenance/evahallway)
 "aph" = (/obj/structure/table,/obj/random/tech_supply,/obj/random/tech_supply,/turf/simulated/floor/plating,/area/maintenance/evahallway)
 "api" = (/obj/item/weapon/cigbutt,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/maintenance/evahallway)
 "apj" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/door/firedoor,/obj/machinery/door/airlock/maintenance{name = "EVA\\Security Maintenance"; req_access_txt = "0"},/turf/simulated/floor/plating,/area/maintenance/security_port)

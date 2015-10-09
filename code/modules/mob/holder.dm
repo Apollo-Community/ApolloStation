@@ -109,14 +109,14 @@
 /obj/item/weapon/holder/bones2
 	name = "Bones"
 	desc = "That's Bones the cat. He's a laid back, brown stray cat. Meow."
-	icon = 'icons/apollo/mob/animal.dmi'
+	icon = 'icons/mob/animal.dmi'
 	icon_state = "cat3"
 	origin_tech = null
 
 /obj/item/weapon/holder/danton
 	name = "Danton"
 	desc = "Its the great Danton! Perhaps he could fit in the entertainer's hat?"
-	icon = 'icons/apollo/objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "bunny"
 	origin_tech = null
 
@@ -124,5 +124,5 @@
 	name = "spy bug"
 	desc = "It's a small robot bug with a microscopic camera and microphone."
 	icon_state = "drone"
-	icon = 'icons/apollo/objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	origin_tech = "engineering=5 illegal=2"

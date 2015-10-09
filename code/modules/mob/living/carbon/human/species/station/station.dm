@@ -224,7 +224,7 @@
 	name_plural = "Wryn"
 	icobase = 'icons/mob/human_races/r_wryn.dmi'
 	deform = 'icons/mob/human_races/r_wryn.dmi'
-	effect_icons = 'icons/apollo/effects/species.dmi'
+	effect_icons = 'icons/effects/species.dmi'
 	language = "Wryn Hivemind"
 	tail = "wryntail"
 	unarmed_types = list(/datum/unarmed_attack/punch/weak)
