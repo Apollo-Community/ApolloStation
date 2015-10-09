@@ -47,6 +47,7 @@ em						{font-style: normal;font-weight: bold;}
 /* Radio: Misc */
 .deadsay				{color: #530FAD;}
 .radio					{color: #008000;}
+.radioattention			{color: #005A00; 	font-family: Georgia, Verdana, sans-serif; font-weight: bold}
 .deptradio				{color: #ff00ff;}	/* when all other department colors fail */
 .newscaster				{color: #750000;}
 
@@ -66,6 +67,7 @@ em						{font-style: normal;font-weight: bold;}
 /* Miscellaneous */
 .name					{font-weight: bold;}
 .say					{}
+.sayattention			{font-family: Georgia, Verdana, sans-serif; font-weight: bold}
 .alert					{color: #ff0000;}
 h1.alert, h2.alert		{color: #000000;}
 
