@@ -86,7 +86,7 @@
 	name = "glass table parts"
 	desc = "Not for children under the age of three."
 	icon_state = "glass_tableparts"
-	icon = 'icons/apollo/objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	flags = null
 
 	stack_types = list(/obj/item/stack/sheet/metal,/obj/item/stack/sheet/glass)

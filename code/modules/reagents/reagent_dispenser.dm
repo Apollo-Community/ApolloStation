@@ -243,7 +243,7 @@
 /obj/structure/reagent_dispensers/radiumtank
 	name = "CurieDispenser 2000"
 	desc = "Dispenses radium that's necessary for cures!"
-	icon = 'icons/apollo/objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "radiumtank"
 	anchored = 1
 	density = 0
@@ -259,7 +259,7 @@
 /obj/structure/reagent_dispensers/sacidtank
 	name = "CircuitMaster Acid Dispenser"
 	desc = "Dispenses sulphuric acid for building circuit boards."
-	icon = 'icons/apollo/objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "sacidtank"
 	anchored = 1
 	density = 0
@@ -273,7 +273,7 @@
 /obj/structure/reagent_dispensers/cleanertank
 	name = "Space Cleaner Dispenser"
 	desc = "Dispenses space cleaner, for cleaning space."
-	icon = 'icons/apollo/objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "cleanertank"
 	anchored = 1
 	density = 0
