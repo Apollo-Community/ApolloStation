@@ -845,13 +845,97 @@ var/global/list/gear_datums = list()
 /datum/gear/skrell_cloth_male
 	display_name = "skrell headtail-wear, male, cloth"
 	path = /obj/item/clothing/ears/skrell/cloth_male
-	cost = 2
+	cost = 1
 	sort_category = "ears"
 	whitelisted = "Skrell"
 
 /datum/gear/skrell_cloth_female
 	display_name = "skrell headtail-wear, female, cloth"
 	path = /obj/item/clothing/ears/skrell/cloth_female
-	cost = 2
+	cost = 1
+	sort_category = "ears"
+	whitelisted = "Skrell"
+
+/datum/gear/ruby_chain
+	display_name = "skrell headtail-wear, ruby chain"
+	path = /obj/item/clothing/ears/skrell/ruby_chain
+	cost = 3
+	sort_category = "ears"
+	whitelisted = "Skrell"
+
+/datum/gear/sapphire_chain
+	display_name = "skrell headtail-wear, sapphire chain"
+	path = /obj/item/clothing/ears/skrell/sapphire_chain
+	cost = 3
+	sort_category = "ears"
+	whitelisted = "Skrell"
+
+/datum/gear/ruby_band
+	display_name = "skrell headtail-wear, ruby band"
+	path = /obj/item/clothing/ears/skrell/ruby_band
+	cost = 3
+	sort_category = "ears"
+	whitelisted = "Skrell"
+
+/datum/gear/sapphire_band
+	display_name = "skrell headtail-wear, sapphire band"
+	path = /obj/item/clothing/ears/skrell/sapphire_band
+	cost = 3
+	sort_category = "ears"
+	whitelisted = "Skrell"
+
+/datum/gear/skrell_female_cloth_blue
+	display_name = "skrell headtail-wear, female, blue cloth"
+	path = /obj/item/clothing/ears/skrell/cloth_female/blue
+	cost = 1
+	sort_category = "ears"
+	whitelisted = "Skrell"
+
+/datum/gear/skrell_male_cloth_blue
+	display_name = "skrell headtail-wear, male, blue cloth"
+	path = /obj/item/clothing/ears/skrell/cloth_male/blue
+	cost = 1
+	sort_category = "ears"
+	whitelisted = "Skrell"
+
+/datum/gear/skrell_female_cloth_purple
+	display_name = "skrell headtail-wear, female, purple cloth"
+	path = /obj/item/clothing/ears/skrell/cloth_female/purple
+	cost = 1
+	sort_category = "ears"
+	whitelisted = "Skrell"
+
+/datum/gear/skrell_male_cloth_purple
+	display_name = "skrell headtail-wear, male, purple cloth"
+	path = /obj/item/clothing/ears/skrell/cloth_male/purple
+	cost = 1
+	sort_category = "ears"
+	whitelisted = "Skrell"
+
+/datum/gear/skrell_xilo_female
+	display_name = "skrell headtail-wear, female, Xilo beads"
+	path = /obj/item/clothing/ears/skrell/xilo_female
+	cost = 5
+	sort_category = "ears"
+	whitelisted = "Skrell"
+
+/datum/gear/skrell_xilo_male
+	display_name = "skrell headtail-wear, male, Xilo beads"
+	path = /obj/item/clothing/ears/skrell/xilo_male
+	cost = 5
+	sort_category = "ears"
+	whitelisted = "Skrell"
+
+/datum/gear/skrell_ebony_chain
+	display_name = "skrell headtail-wear, ebony chain"
+	path = /obj/item/clothing/ears/skrell/ebony_chain
+	cost = 4
+	sort_category = "ears"
+	whitelisted = "Skrell"
+
+/datum/gear/skrell_ebony_band
+	display_name = "skrell headtail-wear, ebony band"
+	path = /obj/item/clothing/ears/skrell/ebony_band
+	cost = 4
 	sort_category = "ears"
 	whitelisted = "Skrell"
