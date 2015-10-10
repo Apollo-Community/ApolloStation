@@ -88,7 +88,6 @@ datum/controller/game_controller/proc/setup()
 		if(ticker)
 			ticker.pregame()
 
-	lighting_controller.initializeLighting()
 
 datum/controller/game_controller/proc/setup_objects()
 	world << "\red \b Initializing objects"
@@ -131,8 +130,6 @@ datum/controller/game_controller/proc/process()
 	spawn(0)
 
 		while(1)	//far more efficient than recursively calling ourself
-			if(!Failsafe)	new /datum/controller/failsafe()
-
 			var/currenttime = world.timeofday
 			last_tick_duration = (currenttime - last_tick_timeofday) / 100
 			last_tick_timeofday = currenttime

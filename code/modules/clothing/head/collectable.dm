@@ -101,7 +101,7 @@
 
 /obj/item/clothing/head/collectable/hardhat
 	name = "collectable hard hat"
-	desc = "WARNING! Offers no real protection, or luminosity, but it is damn fancy!"
+	desc = "WARNING! Offers no real protection, or light_range, but it is damn fancy!"
 	icon_state = "hardhat0_yellow"
 	item_state = "hardhat0_yellow"
 	body_parts_covered = 0

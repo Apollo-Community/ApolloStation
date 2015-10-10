@@ -6,7 +6,7 @@
 	req_one_access = list(access_robotics, access_heads)
 	var/mob/living/silicon/ai/occupant = null
 	var/active = 0
-	l_color = COMPUTER_PURPLE
+	light_color = COMPUTER_PURPLE
 
 /obj/machinery/computer/aifixer/New()
 	update_icon()
@@ -148,9 +148,9 @@
 
 	overlays.Cut()
 
-	SetLuminosity(brightness)
+	set_light(brightness)
 	if((stat & BROKEN) || (stat & NOPOWER))
-		SetLuminosity(0)
+		set_light(0)
 		return
 
 	if(occupant)

@@ -249,12 +249,12 @@
 	density = 0
 
 	amount_per_transfer_from_this = 10
-	l_color = "#002200"
+	light_color = "#002200"
 	New()
 		..()
 		reagents.add_reagent("radium",1000)
-		l_color = "#002200"
-		SetLuminosity(2)
+		light_color = "#002200"
+		set_light(2)
 
 /obj/structure/reagent_dispensers/sacidtank
 	name = "CircuitMaster Acid Dispenser"

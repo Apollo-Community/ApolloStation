@@ -11,7 +11,7 @@
 	anchored = 1
 	unacidable = 1
 	layer = 3.9
-	infra_luminosity = 15
+	infra_light_range = 15
 
 	var/mob/pilot = null
 	var/list/passengers = list()
@@ -600,9 +600,9 @@ obj/spacepod/verb/toggleLights()
 /obj/spacepod/proc/lightsToggle()
 	lights = !lights
 	if(lights)
-		SetLuminosity(luminosity + lights_power)
+		set_light(light_range + lights_power)
 	else
-		SetLuminosity(luminosity - lights_power)
+		set_light(light_range - lights_power)
 	occupants_announce( "Spacepod lights toggled [lights?"on":"off"]." )
 	return
 

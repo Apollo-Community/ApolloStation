@@ -65,18 +65,18 @@
 
 /obj/machinery/computer/update_icon()
 	..()
-	SetLuminosity(brightness)
+	set_light(brightness)
 	icon_state = initial(icon_state)
 	// Broken
 	if(stat & BROKEN)
 		icon_state += "b"
-		SetLuminosity(0)
+		set_light(0)
 
 	// Powered
 	else if(stat & NOPOWER)
 		icon_state = initial(icon_state)
 		icon_state += "0"
-		SetLuminosity(0)
+		set_light(0)
 
 
 

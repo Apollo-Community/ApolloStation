@@ -485,7 +485,7 @@
 
 
 //Some mob defines below
-#define AI_CAMERA_LUMINOSITY 6
+#define AI_CAMERA_light_range 6
 
 #define BORGMESON 1
 #define BORGTHERM 2
@@ -821,3 +821,9 @@ var/list/be_special_flags = list(
 //Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 #define SYSTEM_DESIGNATION "NYX" // The system designation code, commonly used for sector formats
+
+#define FOR_DVIEW(type, range, center, invis_flags) \
+	dview_mob.loc = center; \
+	dview_mob.see_invisible = invis_flags; \
+	for(type in view(range, dview_mob))
+#define END_FOR_DVIEW dview_mob.loc = null

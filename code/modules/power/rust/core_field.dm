@@ -19,7 +19,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	//
 	var/obj/machinery/power/rust_core/owned_core
 	var/list/dormant_reactant_quantities = new
-	//luminosity = 1
+	//light_range = 1
 	layer = 3.1
 	//
 	var/energy = 0

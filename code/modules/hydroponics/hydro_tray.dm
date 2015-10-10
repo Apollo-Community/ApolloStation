@@ -444,7 +444,7 @@
 	update_icon()
 	return
 
-//Refreshes the icon and sets the luminosity
+//Refreshes the icon and sets the light_range
 /obj/machinery/portable_atmospherics/hydroponics/update_icon()
 
 	overlays.Cut()
@@ -490,14 +490,14 @@
 	// Update bioluminescence.
 	if(seed)
 		if(seed.biolum)
-			SetLuminosity(round(seed.potency/10))
+			set_light(round(seed.potency/10))
 			if(seed.biolum_colour)
-				l_color = seed.biolum_colour
+				light_color = seed.biolum_colour
 			else
-				l_color = null
+				light_color = null
 			return
 
-	SetLuminosity(0)
+	set_light(0)
 	return
 
  // If a weed growth is sufficient, this proc is called.

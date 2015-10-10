@@ -24,10 +24,10 @@
 /obj/effect/light_emitter/starlight
 	name = ""
 	desc = ""
-	luminosity = 2
+	light_range = 2
 
 /obj/effect/light_emitter/starlight/New()
-	luminosity = rand( 2, 3 )
+	light_range = rand( 2, 3 )
 	..()
 
 /turf/space/Del()

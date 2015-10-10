@@ -22,7 +22,7 @@
 
 /turf/simulated/floor/light
 	name = "Light floor"
-	luminosity = 5
+	light_range = 5
 	icon_state = "light_on"
 	floor_type = /obj/item/stack/tile/light
 
@@ -36,7 +36,7 @@
 
 /turf/simulated/floor/light/rainbow
 	name = "Dance floor"
-	luminosity = 5
+	light_range = 5
 	icon_state = "light_on-c"
 	floor_type = /obj/item/stack/tile/light
 
@@ -150,12 +150,12 @@
 /turf/simulated/floor/bluegrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "bcircuit"
-	luminosity = 1
+	light_range = 1
 
 /turf/simulated/floor/greengrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "gcircuit"
-	luminosity = 1
+	light_range = 1
 
 /turf/simulated/shuttle
 	name = "shuttle"

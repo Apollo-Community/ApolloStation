@@ -20,7 +20,7 @@
 	//Sorting Variables
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
-	l_color = COMPUTER_GREEN
+	light_color = COMPUTER_GREEN
 
 /obj/machinery/computer/skills/attackby(obj/item/O as obj, user as mob)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)

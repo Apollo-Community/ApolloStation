@@ -8,8 +8,8 @@
 	var/datum/ai_laws/laws = new /datum/ai_laws/nanotrasen
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/obj/item/device/mmi/brain = null
-	l_color = COMPUTER_BLUE
-	luminosity = 3
+	light_color = COMPUTER_BLUE
+	light_range = 3
 
 /obj/structure/AIcore/attackby(obj/item/P as obj, mob/user as mob)
 

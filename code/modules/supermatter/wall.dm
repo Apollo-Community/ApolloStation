@@ -1,7 +1,7 @@
 /turf/simulated/floor/plating/smatter
 	name = "supermatter floor"
 	icon_state = "smatter"
-	l_color = "#8A8A00"
+	light_color = "#8A8A00"
 
 /turf/simulated/floor/plating/smatter/New()
 	..()

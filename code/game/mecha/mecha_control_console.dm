@@ -8,7 +8,7 @@
 	var/screen = 0
 	var/stored_data
 
-	l_color = COMPUTER_PURPLE
+	light_color = COMPUTER_PURPLE
 
 	attack_ai(var/mob/user as mob)
 		return src.attack_hand(user)

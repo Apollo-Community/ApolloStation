@@ -8,7 +8,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "supermatter_crystalf"
 	layer = 2.1
-	l_color = "#8A8A00"
+	light_color = "#8A8A00"
 
 	var/endurance = 100
 	var/delay = 1200
@@ -24,7 +24,7 @@
 
 /obj/effect/supermatter_crystal/New()
 	..()
-	l_color = "#8A8A00"
+	light_color = "#8A8A00"
 
 	dir = CalcDir()
 
@@ -50,7 +50,7 @@
 
 	processing_objects += src
 
-	SetLuminosity(3)
+	set_light(3)
 	lastTick = world.timeofday
 
 /obj/effect/supermatter_crystal/Del()

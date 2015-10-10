@@ -3,13 +3,13 @@
 	default_prog = /datum/file/program/secure_data
 	spawn_parts = list(/obj/item/part/computer/storage/hdd,/obj/item/part/computer/cardslot,/obj/item/part/computer/networking/radio)
 	icon_state = "frame-sec"
-	l_color = COMPUTER_RED
+	light_color = COMPUTER_RED
 
 /obj/machinery/computer3/laptop/secure_data
 	default_prog = /datum/file/program/secure_data
 	spawn_parts = list(/obj/item/part/computer/storage/hdd/big,/obj/item/part/computer/cardslot,/obj/item/part/computer/networking/radio)
 	icon_state = "laptop"
-	l_color = COMPUTER_GREEN
+	light_color = COMPUTER_GREEN
 
 
 /datum/file/program/secure_data

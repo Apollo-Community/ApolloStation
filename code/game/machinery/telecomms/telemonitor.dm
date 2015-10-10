@@ -18,7 +18,7 @@
 	var/network = "NULL"		// the network to probe
 
 	var/temp = ""				// temporary feedback messages
-	l_color = COMPUTER_GREEN
+	light_color = COMPUTER_GREEN
 
 	attack_hand(mob/user as mob)
 		if(stat & (BROKEN|NOPOWER))

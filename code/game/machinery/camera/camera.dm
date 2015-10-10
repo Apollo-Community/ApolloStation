@@ -71,7 +71,7 @@
 		if(prob(100/severity))
 			invalidateCameraCache()
 			stat |= EMPED
-			SetLuminosity(0)
+			set_light(0)
 			kick_viewers()
 			triggerCameraAlarm()
 			update_icon()

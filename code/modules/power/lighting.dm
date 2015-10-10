@@ -202,7 +202,7 @@
 	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	var/on = 0					// 1 if on, 0 if off
 	var/on_gs = 0
-	var/brightness = 8			// luminosity when on, also used in power calculation
+	var/brightness = 8			// light_range when on, also used in power calculation
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED, _BROKEN, or _DAMAGED
 	var/flickering = 0
 	var/light_type = /obj/item/weapon/light/tube		// the type of light item
@@ -220,7 +220,7 @@
 	brightness = 4
 	desc = "A small lighting fixture."
 	light_type = /obj/item/weapon/light/bulb
-	l_color = "#251200"
+	light_color = "#251200"
 
 /obj/machinery/light/spot
 	name = "spotlight"
@@ -285,12 +285,12 @@
 			on = 0
 	return
 
-// update the icon_state and luminosity of the light depending on its state
+// update the icon_state and light_range of the light depending on its state
 /obj/machinery/light/proc/update(var/trigger = 1)
 
 	update_icon()
 	if(on)
-		if(luminosity != brightness)
+		if(light_range != brightness)
 			switchcount++
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
@@ -304,15 +304,15 @@
 					status = LIGHT_BURNED
 					icon_state = "[base_state]-burned"
 					on = 0
-					SetLuminosity(0)
+					set_light(0)
 			else
 				use_power = 2
-				SetLuminosity(brightness)
+				set_light(brightness)
 	else
 		use_power = 1
-		SetLuminosity(0)
+		set_light(0)
 
-	active_power_usage = (luminosity * 10)
+	active_power_usage = (light_range * 10)
 	if(on != on_gs)
 		on_gs = on
 
@@ -377,7 +377,7 @@
 				switchcount = L.switchcount
 				rigged = L.rigged
 				brightness = L.brightness
-				l_color = L.color
+				light_color = L.color
 				on = has_power()
 				update()
 
@@ -522,7 +522,7 @@
 	L.status = status
 	L.rigged = rigged
 	L.brightness = src.brightness
-	L.color = l_color
+	L.color = light_color
 
 	// light item inherits the switchcount, then zero it
 	L.switchcount = switchcount
@@ -548,7 +548,7 @@
 	L.status = status
 	L.rigged = rigged
 	L.brightness = brightness
-	L.color = l_color
+	L.color = light_color
 
 	// light item inherits the switchcount, then zero it
 	L.switchcount = switchcount
@@ -611,12 +611,12 @@
 // timed process
 // use power
 
-#define LIGHTING_POWER_FACTOR 20		//20W per unit luminosity
+#define LIGHTING_POWER_FACTOR 20		//20W per unit light_range
 
 
 /obj/machinery/light/process()
 	if(on)
-		use_power(luminosity * LIGHTING_POWER_FACTOR, LIGHT)
+		use_power(light_range * LIGHTING_POWER_FACTOR, LIGHT)
 
 
 // called when area power state changes

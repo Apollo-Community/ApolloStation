@@ -14,8 +14,8 @@
 	use_power = 1
 	idle_power_usage = 40
 	interact_offline = 1
-	l_color = COMPUTER_CYAN
-	luminosity = 2
+	light_color = COMPUTER_CYAN
+	light_range = 2
 
 /obj/machinery/sleep_console/process()
 	if(stat & (NOPOWER|BROKEN))
@@ -169,8 +169,8 @@
 	use_power = 1
 	idle_power_usage = 15
 	active_power_usage = 200 //builtin health analyzer, dialysis machine, injectors.
-	l_color = COMPUTER_CYAN
-	luminosity = 2
+	light_color = COMPUTER_CYAN
+	light_range = 2
 
 	New()
 		..()

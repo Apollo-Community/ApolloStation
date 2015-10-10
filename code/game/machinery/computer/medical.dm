@@ -15,7 +15,7 @@
 	var/a_id = null
 	var/temp = null
 	var/printing = null
-	l_color = COMPUTER_BLUE
+	light_color = COMPUTER_BLUE
 
 /obj/machinery/computer/med_data/verb/eject_id()
 	set category = "Object"
@@ -537,4 +537,4 @@
 	name = "Medical Laptop"
 	desc = "Cheap Nanotrasen Laptop."
 	icon_state = "medlaptop"
-	l_color = COMPUTER_GREEN
+	light_color = COMPUTER_GREEN

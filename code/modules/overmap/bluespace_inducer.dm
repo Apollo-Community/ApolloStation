@@ -7,7 +7,7 @@
 	opacity = 0
 	anchored = 1
 	unacidable = 1
-	l_color = "#142933"
+	light_color = "#142933"
 	use_power = 0	//uses powernet power, not APC power
 	active_power_usage = 10	// 100kW per inducer, so opening a bluespace gate costs 400kW in total, better hope those engineers deliver
 
@@ -33,13 +33,13 @@
 	..()
 
 /obj/machinery/power/bluespace_inducer/update_icon()
-	l_color = "#142933"
+	light_color = "#142933"
 	if (active && powernet && avail(active_power_usage))
 		icon_state = "injector-emitting"
-		SetLuminosity( brightness )
+		set_light( brightness )
 	else
 		icon_state = "injector-open"
-		SetLuminosity( 0 )
+		set_light( 0 )
 
 /obj/machinery/power/bluespace_inducer/process()
 	if( active )

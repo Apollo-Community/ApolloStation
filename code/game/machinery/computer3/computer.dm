@@ -413,13 +413,13 @@
 			// Broken
 			if(stat & BROKEN)
 				icon_state += "b"
-				SetLuminosity(0)
+				set_light(0)
 
 			// Powered
 			else if(stat & NOPOWER)
 				icon_state = initial(icon_state)
 				icon_state += "0"
-				SetLuminosity(0)
+				set_light(0)
 			return
 		if(stat)
 			overlays.Cut()
@@ -440,7 +440,7 @@
 			if(show_keyboard)
 				overlays += kb
 			name = initial(name) + " (orange screen of death)"
-		SetLuminosity(brightness)
+		set_light(brightness)
 
 	//Returns percentage of battery charge remaining. Returns -1 if no battery is installed.
 	proc/check_battery_status()

@@ -91,12 +91,12 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	anchored = 1
 	mouse_opacity = 0
 
-	//luminosity = 3
+	//light_range = 3
 
 	icon = 'icons/effects/fire.dmi'
 
 	icon_state = "1"
-	l_color = "#FFCC00"
+	light_color = "#FFCC00"
 
 	layer = TURF_LAYER
 
@@ -113,11 +113,11 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 
 	if( phoron_content > 0 )
 		icon_state = "phoron_1"
-		l_color = "#330080"
+		light_color = "#330080"
 		phoron_fire = 1
 	else
 		icon_state = "1"
-		l_color = "#FFCC00"
+		light_color = "#FFCC00"
 
 	if(!istype(my_tile) || !my_tile.zone)
 		if(my_tile.fire == src)
@@ -128,23 +128,23 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	if( phoron_fire )
 		if(firelevel > 6)
 			icon_state = "phoron_3"
-			SetLuminosity( 7 )
+			set_light( 7 )
 		else if(firelevel > 2.5)
 			icon_state = "phoron_2"
-			SetLuminosity( 5 )
+			set_light( 5 )
 		else
 			icon_state = "phoron_1"
-			SetLuminosity( 3 )
+			set_light( 3 )
 	else
 		if(firelevel > 6)
 			icon_state = "3"
-			SetLuminosity( 7 )
+			set_light( 7 )
 		else if(firelevel > 2.5)
 			icon_state = "2"
-			SetLuminosity( 5 )
+			set_light( 5 )
 		else
 			icon_state = "1"
-			SetLuminosity( 3 )
+			set_light( 3 )
 
 
 
@@ -190,7 +190,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 		del src
 
 	set_dir(pick(cardinal))
-	SetLuminosity(3)
+	set_light(3)
 	firelevel = fl
 	if( air_master )
 		air_master.active_hotspots.Add(src)
@@ -198,9 +198,9 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 
 /obj/fire/Del()
 	if (istype(loc, /turf/simulated))
-		SetLuminosity(0)
-		loc.l_color = null
-		l_color = null
+		set_light(0)
+		loc.light_color = null
+		light_color = null
 		loc = null
 	air_master.active_hotspots.Remove(src)
 
@@ -209,9 +209,9 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 
 /obj/fire/proc/RemoveFire()
 	if (istype(loc, /turf))
-		SetLuminosity(0)
-		loc.l_color = null
-		l_color = null
+		set_light(0)
+		loc.light_color = null
+		light_color = null
 		loc = null
 	air_master.active_hotspots.Remove(src)
 

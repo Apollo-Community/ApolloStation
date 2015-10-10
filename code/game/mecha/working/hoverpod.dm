@@ -8,7 +8,7 @@
 	step_energy_drain = 10
 	max_temperature = 20000
 	health = 150
-	infra_luminosity = 6
+	infra_light_range = 6
 	wreckage = /obj/effect/decal/mecha_wreckage/hoverpod
 	cargo_capacity = 5
 	max_equip = 3
@@ -51,7 +51,7 @@
 			ion_trail.start()
 		if (stabilization_enabled)
 			return 1
-	
+
 	return ..()
 
 //these three procs overriden to play different sounds

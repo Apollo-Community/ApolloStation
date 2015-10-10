@@ -268,10 +268,10 @@
 	name = "luminescent eyes"
 	icon_state = "crystal-eyes"
 	organ_tag = "luminescent eyes"
-	l_color = "#1C1C00"
+	light_color = "#1C1C00"
 
 	New()
-		SetLuminosity( 2 )
+		set_light( 2 )
 
 /datum/organ/internal/nucleation/strange_crystal // Does mysterious things, no one is sure what it does
 	name = "strange crystal"

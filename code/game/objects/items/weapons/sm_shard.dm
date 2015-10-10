@@ -14,8 +14,8 @@
 	edge = 1
 	w_class = 2
 	flags = CONDUCT
-	l_color = "#8A8A00"
-	luminosity = 2
+	light_color = "#8A8A00"
+	light_range = 2
 	var/size = 1
 	var/max_size = 100
 

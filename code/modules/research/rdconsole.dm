@@ -48,7 +48,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/sync = 1		//If sync = 0, it doesn't show up on Server Control Console
 	var/errored = 0		//Errored during item construction.
 
-	l_color = COMPUTER_PURPLE
+	light_color = COMPUTER_PURPLE
 
 	req_access = list(access_research)	//Data and setting manipulation requires scientist access.
 

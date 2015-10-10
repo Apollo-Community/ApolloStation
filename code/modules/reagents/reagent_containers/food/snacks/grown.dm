@@ -177,23 +177,23 @@
 	name = "bunch of glow-berries"
 	desc = "Nutritious!"
 	var/light_on = 1
-	var/brightness_on = 2 //luminosity when on
+	var/brightness_on = 2 //light_range when on
 	filling_color = "#D3FF9E"
 	icon_state = "glowberrypile"
 	plantname = "glowberries"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/Del()
 	if(istype(loc,/mob))
-		loc.SetLuminosity(round(loc.luminosity - potency/5,1))
+		loc.set_light(round(loc.light_range - potency/5,1))
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/pickup(mob/user)
-	src.SetLuminosity(0)
-	user.SetLuminosity(round(user.luminosity + (potency/5),1))
+	src.set_light(0)
+	user.set_light(round(user.light_range + (potency/5),1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/dropped(mob/user)
-	user.SetLuminosity(round(user.luminosity - (potency/5),1))
-	src.SetLuminosity(round(potency/5,1))
+	user.set_light(round(user.light_range - (potency/5),1))
+	src.set_light(round(potency/5,1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
 	name = "cocoa pod"
@@ -555,16 +555,16 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/Del()
 	if(istype(loc,/mob))
-		loc.SetLuminosity(round(loc.luminosity - potency/10,1))
+		loc.set_light(round(loc.light_range - potency/10,1))
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/pickup(mob/user)
-	SetLuminosity(0)
-	user.SetLuminosity(round(user.luminosity + (potency/10),1))
+	set_light(0)
+	user.set_light(round(user.light_range + (potency/10),1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/dropped(mob/user)
-	user.SetLuminosity(round(user.luminosity - (potency/10),1))
-	SetLuminosity(round(potency/10,1))
+	user.set_light(round(user.light_range - (potency/10),1))
+	set_light(round(potency/10,1))
 
 
 // *************************************

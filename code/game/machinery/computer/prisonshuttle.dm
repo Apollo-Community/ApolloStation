@@ -20,7 +20,7 @@ var/prison_shuttle_timeleft = 0
 	var/hacked = 0
 	var/allowedtocall = 0
 	var/prison_break = 0
-	l_color = COMPUTER_RED
+	light_color = COMPUTER_RED
 
 	attack_ai(var/mob/user as mob)
 		return src.attack_hand(user)

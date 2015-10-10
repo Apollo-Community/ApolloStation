@@ -306,8 +306,8 @@
 		)
 
 /datum/species/nucleation/handle_post_spawn(var/mob/living/carbon/human/H)
-	H.l_color = "#1C1C00"
-	H.SetLuminosity(2)
+	H.light_color = "#1C1C00"
+	H.set_light(2)
 	return ..()
 
 /datum/species/nucleation/handle_death(var/mob/living/carbon/human/H)
