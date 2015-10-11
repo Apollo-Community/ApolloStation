@@ -208,7 +208,6 @@ var/list/gamemode_cache = list()
 
 	var/law_zero = "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'ALL LAWS OVERRIDDEN#*?&110010"
 
-	var/aggressive_changelog = 0
 
 	var/STUI_length = 150
 
@@ -664,9 +663,6 @@ var/list/gamemode_cache = list()
 
 				if("law_zero")
 					law_zero = value
-
-				if("aggressive_changelog")
-					config.aggressive_changelog = 1
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
