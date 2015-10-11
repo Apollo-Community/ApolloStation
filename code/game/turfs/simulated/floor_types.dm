@@ -12,7 +12,6 @@
 /turf/simulated/floor/airless/hull
 	icon_state = "hull"
 	desc = "There's probably something under this."
-	lighting_lumcount = 2
 
 	temperature = T20C-270
 
@@ -133,7 +132,6 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = ""
 	name = "space"
-	lighting_lumcount = 4
 
 	temperature = T20C-270
 

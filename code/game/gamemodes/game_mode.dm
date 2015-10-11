@@ -29,6 +29,7 @@
 	var/recommended_enemies = 0
 	var/newscaster_announcements = null
 	var/ert_disabled = 0
+	var/shuttle_delay = 1
 	var/uplink_welcome = "Illegal Uplink Console:"
 	var/uplink_uses = 10
 	var/list/datum/uplink_item/uplink_items = list(

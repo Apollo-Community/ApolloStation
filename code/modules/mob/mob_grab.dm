@@ -2,7 +2,7 @@
 #define UPGRADE_KILL_TIMER	100
 
 /obj/item/weapon/grab
-	name = "grab"
+	name = I_GRAB
 	flags = NOBLUDGEON
 	var/obj/screen/grab/hud = null
 	var/mob/affecting = null

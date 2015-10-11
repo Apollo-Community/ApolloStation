@@ -25,7 +25,7 @@
 			L = locate(/obj/structure/lattice, get_step(src, dir))
 			L.updateOverlays()
 
-/obj/structure/lattice/proc/Destroy()
+/obj/structure/lattice/Destroy()
 	for (var/dir in cardinal)
 		var/obj/structure/lattice/L
 		if(locate(/obj/structure/lattice, get_step(src, dir)))

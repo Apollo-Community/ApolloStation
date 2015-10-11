@@ -68,7 +68,7 @@
 
 /obj/item/clothing/tie/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
 	if(ishuman(M) && isliving(user))
-		if(user.a_intent == "help")
+		if(user.a_intent == I_HELP)
 			var/body_part = parse_zone(user.zone_sel.selecting)
 			if(body_part)
 				var/their = "their"
@@ -231,7 +231,7 @@
 	if(istype(user.get_active_hand(),/obj) && istype(user.get_inactive_hand(),/obj))
 		user << "\red You need an empty hand to draw the [holstered]!"
 	else
-		if(user.a_intent == "hurt")
+		if(user.a_intent == I_HURT)
 			usr.visible_message("\red [user] draws the [holstered], ready to shoot!", \
 			"\red You draw the [holstered], ready to shoot!")
 		else

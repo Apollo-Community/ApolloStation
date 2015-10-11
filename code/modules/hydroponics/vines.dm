@@ -64,7 +64,7 @@
 
 /obj/effect/plantsegment/attack_hand(mob/user as mob)
 
-	if(user.a_intent == "help" && seed && harvest)
+	if(user.a_intent == I_HELP && seed && harvest)
 		seed.harvest(user,1)
 		harvest = 0
 		lastproduce = age
@@ -269,7 +269,7 @@
 	if(A)
 		var/light_available
 		if(A.lighting_use_dynamic)
-			light_available = max(0,min(10,T.lighting_lumcount)-5)
+			light_available = max(0,min(10,T.lighting_lumcount())-5)
 		else
 			light_available =  5
 		if(abs(light_available - seed.ideal_light) > seed.light_tolerance)

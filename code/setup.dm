@@ -827,3 +827,13 @@ var/list/be_special_flags = list(
 	dview_mob.see_invisible = invis_flags; \
 	for(type in view(range, dview_mob))
 #define END_FOR_DVIEW dview_mob.loc = null
+
+#define Clamp(x, y, z) 	(x <= y ? y : (x >= z ? z : x))
+
+#define CLAMP01(x) 		(Clamp(x, 0, 1))
+
+//intent flags, why wasn't this done the first time?
+#define I_HELP		"help"
+#define I_DISARM	"disarm"
+#define I_GRAB		"grab"
+#define I_HURT		"hurt"

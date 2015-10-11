@@ -346,8 +346,8 @@
 		else if(href_list["stop"])
 			playing = 0
 
-		else if(href_list["help"])
-			help = text2num(href_list["help"]) - 1
+		else if(href_list[I_HELP])
+			help = text2num(href_list[I_HELP]) - 1
 
 		else if(href_list["edit"])
 			edit = text2num(href_list["edit"]) - 1

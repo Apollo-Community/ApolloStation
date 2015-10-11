@@ -12,6 +12,8 @@
 	var/throwpass = 0
 	var/germ_level = GERM_LEVEL_AMBIENT // The higher the germ level, the more germ on the atom.
 
+	var/simulated = 1 //filter for actions - used by lighting overlays
+
 	///Chemistry.
 	var/datum/reagents/reagents = null
 

@@ -15,7 +15,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 
-		if(H.a_intent == "hurt")
+		if(H.a_intent == I_HURT)
 			if(prob(30) || H.species.can_shred(H))
 				attack_generic(user,1)
 			else

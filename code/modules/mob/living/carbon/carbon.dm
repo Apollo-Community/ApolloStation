@@ -486,7 +486,7 @@
 				now_pushing = 0
 				return
 
-			if((tmob.a_intent == "help" || tmob.restrained()) && (a_intent == "help" || src.restrained()) && tmob.canmove && !tmob.buckled && canmove) // mutual brohugs all around!
+			if((tmob.a_intent == I_HELP || tmob.restrained()) && (a_intent == I_HELP || src.restrained()) && tmob.canmove && !tmob.buckled && canmove) // mutual brohugs all around!
 				var/turf/oldloc = loc
 				loc = tmob.loc
 				tmob.loc = oldloc

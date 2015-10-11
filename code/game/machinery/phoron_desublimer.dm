@@ -208,7 +208,7 @@ The process works like this:
 
 	New()
 		..()
-		
+
 		mat_peak = list(				"Steel" = 30,
 								"Silver" = rand(1, 300),
 								"Uranium" = rand(1, 300),
@@ -217,9 +217,9 @@ The process works like this:
 								"Diamonds" = rand(1, 300),
 								"Phoron" = rand(1, 300),
 								"Osmium" = rand(1, 300) ) // Setting peak locations
-		
+
 		neutron_flow = rand(1,300)
-		
+
 		component_parts = list()
 		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
 		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
@@ -398,12 +398,11 @@ The process works like this:
 
 	var/area/main_area = get_area(src)
 
-	for(var/area/related_area in main_area.related)
-		for( var/obj/machinery/phoron_desublimer/PD in related_area )
-			if( istype( PD, /obj/machinery/phoron_desublimer/vessel ))
-				vessel = PD
-			if( istype( PD, /obj/machinery/phoron_desublimer/furnace ))
-				furnace = PD
+	for( var/obj/machinery/phoron_desublimer/PD in main_area )
+		if( istype( PD, /obj/machinery/phoron_desublimer/vessel ))
+			vessel = PD
+		if( istype( PD, /obj/machinery/phoron_desublimer/furnace ))
+			furnace = PD
 
 	return
 

@@ -284,7 +284,6 @@ var/world_topic_spam_protect_time = world.timeofday
 					continue
 
 				var/title = "Moderator"
-				if(config.mods_are_mentors) title = "Mentor"
 				var/rights = admin_ranks[title]
 
 				var/ckey = copytext(line, 1, length(line)+1)

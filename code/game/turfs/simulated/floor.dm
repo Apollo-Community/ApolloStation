@@ -581,6 +581,12 @@ turf/simulated/floor/proc/update_icon()
 				else
 					user << "\blue You need more welding fuel to complete this task."
 
+/turf/simulated/floor/melt()
+	if( prob( 80 ))
+		src.ReplaceWithLattice()
+	else
+		src.ChangeTurf(/turf/space)
+
 #undef LIGHTFLOOR_ON_BIT
 
 #undef LIGHTFLOOR_STATE_OK

@@ -23,18 +23,24 @@
 //	spawn(15)
 	power_change()		// all machines set to current power level, also updates lighting icon
 
+/area/proc/initialize()
+	if(!requires_power || !apc)
+		power_light = 0
+		power_equip = 0
+		power_environ = 0
+	power_change()		// all machines set to current power level, also updates lighting icon
+
 /area/proc/poweralert(var/state, var/obj/source as obj)
 	if (state != poweralm)
 		poweralm = state
 		if(istype(source))	//Only report power alarms on the z-level where the source is located.
 			var/list/cameras = list()
-			for (var/area/RA in related)
-				for (var/obj/machinery/camera/C in RA)
-					cameras += C
-					if(state == 1)
-						C.network.Remove("Power Alarms")
-					else
-						C.network.Add("Power Alarms")
+			for (var/obj/machinery/camera/C in contents)
+				cameras += C
+				if(state == 1)
+					C.network.Remove("Power Alarms")
+				else
+					C.network.Add("Power Alarms")
 			for (var/mob/living/silicon/aiPlayer in player_list)
 				if(aiPlayer.z == source.z)
 					if (state == 1)
@@ -54,10 +60,9 @@
 //		return 0 //redudant
 
 	//Check all the alarms before lowering atmosalm. Raising is perfectly fine.
-	for (var/area/RA in related)
-		for (var/obj/machinery/alarm/AA in RA)
-			if (!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted && AA.report_danger_level)
-				danger_level = max(danger_level, AA.danger_level)
+	for (var/obj/machinery/alarm/AA in contents)
+		if (!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted && AA.report_danger_level)
+			danger_level = max(danger_level, AA.danger_level)
 
 	if(danger_level != atmosalm)
 		if (set_firelocks && danger_level < 1 && atmosalm >= 1)
@@ -65,9 +70,8 @@
 			air_doors_open()
 
 		if (danger_level < 2 && atmosalm >= 2)
-			for(var/area/RA in related)
-				for(var/obj/machinery/camera/C in RA)
-					C.network.Remove("Atmosphere Alarms")
+			for(var/obj/machinery/camera/C in contents)
+				C.network.Remove("Atmosphere Alarms")
 			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.cancelAlarm("Atmosphere", src, src)
 			for(var/obj/machinery/computer/station_alert/a in machines)
@@ -75,11 +79,9 @@
 
 		if (danger_level >= 2 && atmosalm < 2)
 			var/list/cameras = list()
-			for(var/area/RA in related)
-				//updateicon()
-				for(var/obj/machinery/camera/C in RA)
-					cameras += C
-					C.network.Add("Atmosphere Alarms")
+			for(var/obj/machinery/camera/C in contents)
+				cameras += C
+				C.network.Add("Atmosphere Alarms")
 			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
 			for(var/obj/machinery/computer/station_alert/a in machines)
@@ -88,9 +90,8 @@
 				air_doors_close()
 
 		atmosalm = danger_level
-		for(var/area/RA in related)
-			for (var/obj/machinery/alarm/AA in RA)
-				AA.update_icon()
+		for (var/obj/machinery/alarm/AA in contents)
+			AA.update_icon()
 
 		return 1
 	return 0
@@ -134,10 +135,9 @@
 					spawn()
 						D.close()
 		var/list/cameras = list()
-		for(var/area/RA in related)
-			for (var/obj/machinery/camera/C in RA)
-				cameras.Add(C)
-				C.network.Add("Fire Alarms")
+		for (var/obj/machinery/camera/C in contents)
+			cameras.Add(C)
+			C.network.Add("Fire Alarms")
 		for (var/mob/living/silicon/ai/aiPlayer in player_list)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
 		for (var/obj/machinery/computer/station_alert/a in machines)
@@ -156,9 +156,8 @@
 				else if(D.density)
 					spawn(0)
 					D.open()
-		for(var/area/RA in related)
-			for (var/obj/machinery/camera/C in RA)
-				C.network.Remove("Fire Alarms")
+		for (var/obj/machinery/camera/C in contents)
+			C.network.Remove("Fire Alarms")
 		for (var/mob/living/silicon/ai/aiPlayer in player_list)
 			aiPlayer.cancelAlarm("Fire", src, src)
 		for (var/obj/machinery/computer/station_alert/a in machines)
@@ -349,9 +348,6 @@ var/list/mob/living/forced_ambiance_list = new
 				var/mob/living/carbon/human/H = src
 				if( istype( H.shoes, /obj/item/clothing/shoes/magboots ) && ( H.shoes.flags & NOSLIP ))  //magboots + dense_object = no floaty effect
 					H.make_floating(0)
- 				else
-					M.make_floating(1)
-					H.make_floating(1)
 			else
 				M.make_floating(1)
 

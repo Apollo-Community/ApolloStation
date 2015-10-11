@@ -439,13 +439,13 @@
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/light_fixture_frame))
-		var/obj/item/light_fixture_frame/AH = W
+	else if(istype(W,/obj/item/frame/light))
+		var/obj/item/frame/light/AH = W
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/light_fixture_frame/small))
-		var/obj/item/light_fixture_frame/small/AH = W
+	else if(istype(W,/obj/item/frame/light/small))
+		var/obj/item/frame/light/small/AH = W
 		AH.try_build(src)
 		return
 
@@ -465,3 +465,6 @@
 	else
 		return attack_hand(user)
 	return
+
+/turf/simulated/floor/melt()
+	src.ChangeTurf(/turf/simulated/floor/plating)

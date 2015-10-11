@@ -950,7 +950,7 @@
 				var/turf/T = loc
 				var/area/A = T.loc
 				if(A)
-					if(A.lighting_use_dynamic)	light_amount = min(10,T.lighting_lumcount) - 5 //hardcapped so it's not abused by having a ton of flashlights
+					if(A.lighting_use_dynamic)	light_amount = T.lighting_lumcount() - 5 //hardcapped so it's not abused by having a ton of flashlights
 					else						light_amount =  5
 			nutrition += light_amount
 			traumatic_shock -= light_amount
@@ -971,7 +971,7 @@
 				var/turf/T = loc
 				var/area/A = T.loc
 				if(A)
-					if(A.lighting_use_dynamic)	light_amount = T.lighting_lumcount
+					if(A.lighting_use_dynamic)	light_amount = T.lighting_lumcount() - 5
 					else						light_amount =  10
 			if(light_amount > species.light_dam) //if there's enough light, start dying
 				take_overall_damage(1,1)
@@ -1458,7 +1458,7 @@
 		//0.1% chance of playing a scary sound to someone who's in complete darkness
 		if(isturf(loc) && rand(1,1000) == 1)
 			var/turf/currentTurf = loc
-			if(!currentTurf.lighting_lumcount)
+			if(!currentTurf.lighting_lumcount(1))
 				playsound_local(src,pick(scarySounds),50, 1, -1)
 
 	proc/handle_virus_updates()

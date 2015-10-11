@@ -268,7 +268,7 @@ BLIND     // can't see anything
 	else
 		return ..(user)
 
-/obj/item/clothing/head/proc/update_light(var/mob/user = null)
+/obj/item/clothing/head/update_light(var/mob/user = null)
 	if(on && !light_applied)
 		if(loc == user)
 			user.set_light(user.light_range + brightness_on)

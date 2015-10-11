@@ -396,7 +396,7 @@ var/list/slot_equipment_priority = list( \
 
 /*
 /mob/verb/help()
-	set name = "Help"
+	set name = I_HELP
 	src << browse('html/help.html', "window=help")
 	return
 */
@@ -810,7 +810,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			stat("CPU:\t","[world.cpu]")
 			stat("Instances:","[world.contents.len]")
 
-			if(master_controller)
+/*			if(master_controller)
 				stat("MasterController","([master_controller.processing?"On":"Off"]-[controller_iteration])")
 				stat("Previous MC Tick:\t","[last_tick_duration]s")
 				stat("Current MC Tick:\t","[master_controller.total_cost]s")
@@ -826,7 +826,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 				stat("Ticker:\t","[master_controller.ticker_cost]")
 			else
 				stat("MasterController:\t","ERROR")
-
+			*/
 			stat("Commit:\t", "#[config.git_commit_id]")
 
 	if(listed_turf && client)

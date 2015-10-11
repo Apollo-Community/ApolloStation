@@ -47,7 +47,7 @@
 
 //Actual picking-up event.
 /mob/living/silicon/platform/spybug/attack_hand(mob/living/carbon/human/M as mob)
-	if(M.a_intent == "help" || M.a_intent == "grab")
+	if(M.a_intent == I_HELP || M.a_intent == I_GRAB)
 		get_scooped(M)
 	..()
 

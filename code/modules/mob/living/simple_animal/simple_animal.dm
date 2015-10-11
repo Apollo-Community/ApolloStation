@@ -234,15 +234,15 @@
 
 	switch(M.a_intent)
 
-		if("help")
+		if(I_HELP)
 			if (health > 0)
 				M.visible_message("\blue [M] [response_help] \the [src]")
 
-		if("disarm")
+		if(I_DISARM)
 			M.visible_message("\blue [M] [response_disarm] \the [src]")
 			//TODO: Push the mob away or something
 
-		if("grab")
+		if(I_GRAB)
 			if (M == src)
 				return
 			if (!(status_flags & CANPUSH))
@@ -258,7 +258,7 @@
 
 			M.visible_message("\red [M] has grabbed [src] passively!")
 
-		if("hurt")
+		if(I_HURT)
 			adjustBruteLoss(harm_intent_damage)
 			M.visible_message("\red [M] [response_harm] \the [src]")
 

@@ -42,7 +42,7 @@
 	if(!W)
 		return
 
-	if(usr.a_intent == "hurt")
+	if(usr.a_intent == I_HURT)
 		health -= W.force
 		playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
 		usr.visible_message("\red <b>[usr]</b> hits the [src] violently with [W]!")
@@ -409,7 +409,7 @@
 		if (istype(G.affecting, /mob/living))
 			var/mob/living/M = G.affecting
 			if (G.state < 2)
-				if(user.a_intent == "hurt")
+				if(user.a_intent == I_HURT)
 					if (prob(15))	M.Weaken(5)
 					M.apply_damage(8,def_zone = "head")
 					visible_message("<span class='danger'>[G.assailant] slams [G.affecting]'s face against \the [src]!</span>")

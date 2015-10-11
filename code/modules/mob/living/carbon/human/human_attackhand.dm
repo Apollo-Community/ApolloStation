@@ -45,7 +45,7 @@
 		M.spread_disease_to(src, "Contact")
 
 	switch(M.a_intent)
-		if("help")
+		if(I_HELP)
 
 			if(istype(H) && health < config.health_threshold_crit)
 
@@ -69,7 +69,7 @@
 				help_shake_act(M)
 			return 1
 
-		if("grab")
+		if(I_GRAB)
 			if(M == src || anchored)
 				return 0
 			if(w_uniform)
@@ -88,7 +88,7 @@
 			visible_message("<span class='warning'>[M] has grabbed [src] passively!</span>")
 			return 1
 
-		if("hurt")
+		if(I_HURT)
 			if(src.species.name == "Wryn")
 				if(src.handcuffed)
 					if(!(locate(src.internal_organs_by_name["antennae"]) in src.internal_organs))	return
@@ -125,11 +125,11 @@
 			var/datum/organ/external/affecting = get_organ(hit_zone)
 
 			switch(src.a_intent)
-				if("help")
+				if(I_HELP)
 					// We didn't see this coming, so we get the full blow
 					rand_damage = 5
 					accurate = 1
-				if("hurt", "grab")
+				if(I_HURT, I_GRAB)
 					// We're in a fighting stance, there's a chance we block
 					if(src.canmove && src!=H && prob(20))
 						block = 1
@@ -226,7 +226,7 @@
 			// Finally, apply damage to target
 			apply_damage(real_damage, BRUTE, affecting, armour, sharp=attack.sharp, edge=attack.edge)
 
-		if("disarm")
+		if(I_DISARM)
 			if(!in_unlogged(M))
 				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")

@@ -11,7 +11,7 @@
 	anchored = 1
 	unacidable = 1
 	layer = 3.9
-	infra_light_range = 15
+	infra_luminosity = 15
 
 	var/mob/pilot = null
 	var/list/passengers = list()

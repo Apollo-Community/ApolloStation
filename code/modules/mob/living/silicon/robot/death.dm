@@ -13,3 +13,4 @@
 	remove_robot_verbs()
 	sql_report_cyborg_death(src)
 	..(gibbed,"shudders violently for a moment, then becomes motionless, its eyes slowly darkening.")
+drone_items.dm
