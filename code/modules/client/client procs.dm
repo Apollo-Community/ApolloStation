@@ -310,6 +310,8 @@
 		'icons/spideros_icons/sos_12.png',
 		'icons/spideros_icons/sos_13.png',
 		'icons/spideros_icons/sos_14.png',
-		'html/images/ntlogo.png',
+		'html/images/logo-nt.png',
+		'html/images/logo-anti.png',
+		'html/images/logo-apollo.png',
 		'html/images/talisman.png'
 		)
