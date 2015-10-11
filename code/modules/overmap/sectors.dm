@@ -133,7 +133,7 @@ var/global/list/map_sectors = list()
 	metadata = data
 
 	if( !metadata )
-		del( src )
+		qdel( src )
 
 	map_z = metadata.zlevel
 	real_name = metadata.name
@@ -151,7 +151,7 @@ var/global/list/map_sectors = list()
 			T = null
 
 	if( !T )
-		del( src )
+		qdel( src )
 
 	loc = T
 

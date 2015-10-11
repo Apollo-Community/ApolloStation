@@ -27,6 +27,8 @@
 	//Used for self-mailing.
 	var/mail_destination = ""
 
+	var/obj/machinery/drone_fabricator/master_fabricator
+
 	holder_type = /obj/item/weapon/holder/drone
 
 /mob/living/silicon/robot/drone/New()
@@ -192,8 +194,9 @@
 //Standard robots use config for crit, which is somewhat excessive for these guys.
 //Drones killed by damage will gib.
 /mob/living/silicon/robot/drone/handle_regular_status_updates()
+	var/turf/T = get_turf(src)
 
-	if(health <= -35 && src.stat != 2)
+	if((!T || health <= -35 || (master_fabricator && T.z != master_fabricator.z)) && src.stat != DEAD)
 		timeofdeath = world.time
 		death() //Possibly redundant, having trouble making death() cooperate.
 		gib()
@@ -301,6 +304,7 @@
 	else
 		src << "<span class='warning'>You are too small to pull that.</span>"
 		return
+
 
 /mob/living/silicon/robot/drone/add_robot_verbs()
 

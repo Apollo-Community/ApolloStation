@@ -19,8 +19,10 @@ var/list/sqrtTable = list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 
 /proc/Ceiling(x)
 	return -round(-x)
 
+/*
 /proc/Clamp(val, min, max)
 	return max(min, min(val, max))
+*/
 
 // cotangent
 /proc/Cot(x)

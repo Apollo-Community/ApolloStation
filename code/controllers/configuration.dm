@@ -1,3 +1,5 @@
+var/list/gamemode_cache = list()
+
 /datum/configuration
 	var/server_name = null				// server name (for world name / status)
 	var/server_suffix = 0				// generate numeric suffix based on server port
@@ -39,11 +41,11 @@
 	var/feature_object_spell_system = 0 //spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard
 	var/traitor_scaling = 0 			//if amount of traitors scales based on amount of players
 	var/objectives_disabled = 0 			//if objectives are disabled or not
-	var/protect_roles_from_antagonist = 1 // If security and such can be traitor/cult/other
+	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
 	var/continous_rounds = 0			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
 	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
-	var/Ticklag = 0.3
+	var/Ticklag = 0.9
 	var/Tickcomp = 0
 	var/socket_talk	= 0					// use socket_talk to communicate with other processes
 	var/list/resource_urls = null
@@ -60,8 +62,13 @@
 	var/respawn = 1
 	var/guest_jobban = 1
 	var/usewhitelist = 0
-	var/mods_are_mentors = 0
-	var/kick_inactive = 0				//force disconnect for inactive players
+	var/kick_inactive = 0				//force disconnect for inactive players after this many minutes, if non-0
+	var/show_mods = 0
+	var/show_mentors = 0
+	var/mods_can_tempban = 0
+	var/mods_can_job_tempban = 0
+	var/mod_tempban_max = 1440
+	var/mod_job_tempban_max = 1440
 	var/load_jobs_from_txt = 0
 	var/ToRban = 0
 	var/automute_on = 0					//enables automuting/spam prevention
@@ -82,14 +89,16 @@
 	var/usealienwhitelist = 0
 	var/limitalienplayers = 0
 	var/alien_to_human_ratio = 0.5
-
+	var/allow_extra_antags = 0
 	var/guests_allowed = 1
 	var/debugparanoid = 0
 
+	var/serverurl
 	var/server
 	var/banappeals
 	var/wikiurl
 	var/forumurl
+	var/githuburl
 
 	//Alert level description
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
@@ -109,6 +118,12 @@
 
 	var/organ_health_multiplier = 1
 	var/organ_regeneration_multiplier = 1
+	var/organs_decay
+	var/default_brain_health = 400
+
+	//Paincrit knocks someone down once they hit 60 shock_stage, so by default make it so that close to 100 additional damage needs to be dealt,
+	//so that it's similar to HALLOSS. Lowered it a bit since hitting paincrit takes much longer to wear off than a halloss stun.
+	var/organ_damage_spillover_multiplier = 0.5
 
 	var/bones_can_break = 0
 	var/limbs_can_break = 0
@@ -120,6 +135,7 @@
 	var/use_loyalty_implants = 0
 
 	var/welder_vision = 1
+	var/generate_asteroid = 0
 
 	//Used for modifying movement speed for mobs.
 	//Unversal modifiers
@@ -152,11 +168,12 @@
 
 	var/use_irc_bot = 0
 	var/irc_bot_host = ""
+	var/irc_bot_export = 0 // whether the IRC bot in use is a Bot32 (or similar) instance; Bot32 uses world.Export() instead of nudge.py/libnudge
 	var/main_irc = ""
 	var/admin_irc = ""
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
-	var/git_commit_id = ""
 	var/use_lib_nudge = 0 //Use the C library nudge instead of the python nudge.
+
 	var/use_overmap = 1
 
 	var/list/known_levels = list() // Defines with Z-levels are known
@@ -181,12 +198,20 @@
 	var/ninjas_allowed = 0
 	var/abandon_allowed = 1
 	var/ooc_allowed = 1
+	var/looc_allowed = 1
 	var/dooc_allowed = 1
 	var/dsay_allowed = 1
 
-	var/starlight = 1 // Whether stars emit light
+	var/starlight = 0	// Whether space turfs have ambient light or not
+
+	var/list/ert_species = list("Human")
+
+	var/law_zero = "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'ALL LAWS OVERRIDDEN#*?&110010"
+
 
 	var/STUI_length = 150
+
+	var/git_commit_id = ""
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -194,8 +219,8 @@
 		// I wish I didn't have to instance the game modes in order to look up
 		// their information, but it is the only way (at least that I know of).
 		var/datum/game_mode/M = new T()
-
 		if (M.config_tag)
+			gamemode_cache[M.config_tag] = M // So we don't instantiate them repeatedly.
 			if(!(M.config_tag in modes))		// ensure each mode is added only once
 				log_misc("Adding game mode [M.name] ([M.config_tag]) to configuration.")
 				src.modes += M.config_tag
@@ -203,7 +228,6 @@
 				src.probabilities[M.config_tag] = M.probability
 				if (M.votable)
 					src.votable_modes += M.config_tag
-		del(M)
 	src.votable_modes += "secret"
 
 /datum/configuration/proc/load(filename, type = "config") //the type can also be game_options, in which case it uses a different switch. not making it separate to not copypaste code - Urist
@@ -302,8 +326,8 @@
 				if ("log_runtime")
 					config.log_runtime = 1
 
-				if ("mentors")
-					config.mods_are_mentors = 1
+				if ("generate_asteroid")
+					config.generate_asteroid = 1
 
 				if("allow_admin_ooccolor")
 					config.allow_admin_ooccolor = 1
@@ -368,6 +392,9 @@
 				if ("hostedby")
 					config.hostedby = value
 
+				if ("serverurl")
+					config.serverurl = value
+
 				if ("server")
 					config.server = value
 
@@ -380,6 +407,9 @@
 				if ("forumurl")
 					config.forumurl = value
 
+				if ("githuburl")
+					config.githuburl = value
+
 				if ("guest_jobban")
 					config.guest_jobban = 1
 
@@ -388,6 +418,7 @@
 
 				if ("disable_ooc")
 					config.ooc_allowed = 0
+					config.looc_allowed = 0
 
 				if ("disable_entry")
 					config.enter_allowed = 0
@@ -444,7 +475,25 @@
 					config.allow_random_events = 1
 
 				if("kick_inactive")
-					config.kick_inactive = 1
+					config.kick_inactive = text2num(value)
+
+				if("show_mods")
+					config.show_mods = 1
+
+				if("show_mentors")
+					config.show_mentors = 1
+
+				if("mods_can_tempban")
+					config.mods_can_tempban = 1
+
+				if("mods_can_job_tempban")
+					config.mods_can_job_tempban = 1
+
+				if("mod_tempban_max")
+					config.mod_tempban_max = text2num(value)
+
+				if("mod_job_tempban_max")
+					config.mod_job_tempban_max = text2num(value)
 
 				if("load_jobs_from_txt")
 					load_jobs_from_txt = 1
@@ -478,6 +527,9 @@
 
 				if("use_irc_bot")
 					use_irc_bot = 1
+
+				if("irc_bot_export")
+					irc_bot_export = 1
 
 				if("ticklag")
 					Ticklag = text2num(value)
@@ -566,24 +618,15 @@
 
 				if("use_overmap")
 					config.use_overmap = 1
-/*
-				if("station_levels")
-					config.station_levels = text2numlist(value, ";")
 
-				if("admin_levels")
-					config.admin_levels = text2numlist(value, ";")
-
-				if("alert_levels")
-					config.alert_levels = text2numlist(value, ";")
-
-				if("local_levels")
-					config.local_levels = text2numlist(value, ";")
-*/
 				if("expected_round_length")
 					config.expected_round_length = MinutesToTicks(text2num(value))
 
 				if("disable_welder_vision")
 					config.welder_vision = 0
+
+				if("allow_extra_antags")
+					config.allow_extra_antags = 1
 
 				if("event_custom_start_mundane")
 					var/values = text2numlist(value, ";")
@@ -608,6 +651,18 @@
 					config.event_delay_upper[EVENT_LEVEL_MUNDANE] = MinutesToTicks(values[1])
 					config.event_delay_upper[EVENT_LEVEL_MODERATE] = MinutesToTicks(values[2])
 					config.event_delay_upper[EVENT_LEVEL_MAJOR] = MinutesToTicks(values[3])
+
+				if("starlight")
+					value = text2num(value)
+					config.starlight = value >= 0 ? value : 0
+
+				if("ert_species")
+					config.ert_species = text2list(value, ";")
+					if(!config.ert_species.len)
+						config.ert_species += "Human"
+
+				if("law_zero")
+					law_zero = value
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
@@ -634,6 +689,14 @@
 					config.organ_health_multiplier = value / 100
 				if("organ_regeneration_multiplier")
 					config.organ_regeneration_multiplier = value / 100
+				if("organ_damage_spillover_multiplier")
+					config.organ_damage_spillover_multiplier = value / 100
+				if("organs_can_decay")
+					config.organs_decay = 1
+				if("default_brain_health")
+					config.default_brain_health = text2num(value)
+					if(!config.default_brain_health || config.default_brain_health < 1)
+						config.default_brain_health = initial(config.default_brain_health)
 				if("bones_can_break")
 					config.bones_can_break = value
 				if("limbs_can_break")
@@ -755,27 +818,18 @@
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up
 	// their information, but it is the only way (at least that I know of).
-	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
-		var/datum/game_mode/M = new T()
+	for (var/game_mode in gamemode_cache)
+		var/datum/game_mode/M = gamemode_cache[game_mode]
 		if (M.config_tag && M.config_tag == mode_name)
 			return M
-		del(M)
-	return new /datum/game_mode/extended()
+	return gamemode_cache["extended"]
 
 /datum/configuration/proc/get_runnable_modes()
-	var/list/datum/game_mode/runnable_modes = new
-	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
-		var/datum/game_mode/M = new T()
-		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
-		if (!(M.config_tag in modes))
-			del(M)
-			continue
-		if (probabilities[M.config_tag]<=0)
-			del(M)
-			continue
-		if (M.can_start())
-			runnable_modes[M] = probabilities[M.config_tag]
-			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
+	var/list/runnable_modes = list()
+	for(var/game_mode in gamemode_cache)
+		var/datum/game_mode/M = gamemode_cache[game_mode]
+		if(M && M.can_start() && !isnull(config.probabilities[M.config_tag]) && config.probabilities[M.config_tag] > 0)
+			runnable_modes |= M
 	return runnable_modes
 
 /datum/configuration/proc/post_load()
@@ -786,5 +840,4 @@
 		else //probably windows, if not this should work anyway
 			config.python_path = "python"
 
-	// Grab the id of the latest commit in the master branch
 	config.git_commit_id = file2text(".git/refs/heads/master")

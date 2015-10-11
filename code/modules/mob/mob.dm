@@ -1,4 +1,4 @@
-/mob/Del()//This makes sure that mobs with clients/keys are not just deleted from the game.
+/mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
@@ -156,7 +156,7 @@
 
 	if(!W.mob_can_equip(src, slot))
 		if(del_on_fail)
-			del(W)
+			qdel(W)
 		else
 			if(!disable_warning)
 				src << "\red You are unable to equip that." //Only print if del_on_fail is false
@@ -171,7 +171,7 @@
 	return
 
 //This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
-/mob/proc/equip_to_slot_or_del(obj/item/W as obj, slot)
+/mob/proc/equip_to_slot_or_qdel(obj/item/W as obj, slot)
 	return equip_to_slot_if_possible(W, slot, 1, 1, 0)
 
 //The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
@@ -267,7 +267,7 @@ var/list/slot_equipment_priority = list( \
 	P.invisibility = invisibility
 	spawn (20)
 		if(P)
-			del(P)	// qdel
+			qdel(P)	// qdel
 
 	face_atom(A)
 	return 1
@@ -300,7 +300,7 @@ var/list/slot_equipment_priority = list( \
 				var/list/temp = list(  )
 				temp += L.container
 				//L = null
-				del(L)
+				qdel(L)
 				return temp
 			else
 				return L.container
@@ -396,7 +396,7 @@ var/list/slot_equipment_priority = list( \
 
 /*
 /mob/verb/help()
-	set name = "Help"
+	set name = I_HELP
 	src << browse('html/help.html', "window=help")
 	return
 */
@@ -455,7 +455,7 @@ var/list/slot_equipment_priority = list( \
 	var/mob/new_player/M = new /mob/new_player()
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
-		del(M)
+		qdel(M)
 		return
 
 	M.key = key
@@ -810,7 +810,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			stat("CPU:\t","[world.cpu]")
 			stat("Instances:","[world.contents.len]")
 
-			if(master_controller)
+/*			if(master_controller)
 				stat("MasterController","([master_controller.processing?"On":"Off"]-[controller_iteration])")
 				stat("Previous MC Tick:\t","[last_tick_duration]s")
 				stat("Current MC Tick:\t","[master_controller.total_cost]s")
@@ -826,7 +826,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 				stat("Ticker:\t","[master_controller.ticker_cost]")
 			else
 				stat("MasterController:\t","ERROR")
-
+			*/
 			stat("Commit:\t", "#[config.git_commit_id]")
 
 	if(listed_turf && client)

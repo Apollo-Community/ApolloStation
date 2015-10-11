@@ -39,7 +39,7 @@
 		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/carrot)) //feedin' dem chickens
 			user.visible_message("\blue [user] feeds [O] to [name]! It seems very happy.","\blue You feed [O] to [name]! It seems very happy.")
 			user.drop_item()
-			del(O)
+			qdel(O)
 		else
 			..()
 
@@ -53,7 +53,7 @@
 		var/mob/living/carbon/H = over_object
 		if(!istype(H) || !Adjacent(H)) return ..()
 
-		if(H.a_intent == "help")
+		if(H.a_intent == I_HELP)
 			get_scooped(H)
 			return
 		else

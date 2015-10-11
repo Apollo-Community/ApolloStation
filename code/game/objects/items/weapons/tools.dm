@@ -124,7 +124,7 @@
 			C << "\red <B>[user] begins to cut off your antennae!<B>"
 			do_after(C, 150)
 			if(p_loc == user.loc && p_loc_m == C.loc)
-				del(C.internal_organs_by_name["antennae"])
+				qdel(C.internal_organs_by_name["antennae"])
 				C.remove_language("Wryn Hivemind")
 				new /obj/item/organ/wryn/hivenode(user.loc)
 				user << "\blue You hear a loud crunch as you mercilessly off cut [C]'s antennae."
@@ -179,6 +179,10 @@
 	R.add_reagent("fuel", max_fuel)
 	return
 
+/obj/item/weapon/weldingtool/Destroy()
+	if(welding)
+		processing_objects -= src
+	..()
 
 /obj/item/weapon/weldingtool/examine(mob/user)
 	if(..(user, 0))
@@ -474,7 +478,7 @@
 		var/datum/organ/external/S = M:organs_by_name[user.zone_sel.selecting]
 
 		if (!S) return
-		if(!(S.status & ORGAN_ROBOT) || user.a_intent != "help")
+		if(!(S.status & ORGAN_ROBOT) || user.a_intent != I_HELP)
 			return ..()
 
 		if(istype(M,/mob/living/carbon/human))

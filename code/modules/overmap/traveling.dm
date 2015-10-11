@@ -13,7 +13,7 @@
 	object = new_object
 
 	if( !object )
-		del( src )
+		qdel( src )
 
 	name = object.name
 	desc = object.desc
@@ -117,7 +117,7 @@
 			fadein()
 
 			object = null
-			del( src )
+			qdel( src )
 	else
 		usr << "It doesn't seem like there's anything of interest in this sector."
 

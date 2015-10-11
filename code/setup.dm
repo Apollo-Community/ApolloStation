@@ -2,6 +2,11 @@
 
 #define DEBUG
 
+#define GAME_STATE_PREGAME		1
+#define GAME_STATE_SETTING_UP	2
+#define GAME_STATE_PLAYING		3
+#define GAME_STATE_FINISHED		4
+
 #define PI 3.1415
 
 #define R_IDEAL_GAS_EQUATION	8.31 //kPa*L/(K*mol)
@@ -485,7 +490,7 @@
 
 
 //Some mob defines below
-#define AI_CAMERA_LUMINOSITY 6
+#define AI_CAMERA_light_range 6
 
 #define BORGMESON 1
 #define BORGTHERM 2
@@ -821,3 +826,19 @@ var/list/be_special_flags = list(
 //Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 #define SYSTEM_DESIGNATION "NYX" // The system designation code, commonly used for sector formats
+
+#define FOR_DVIEW(type, range, center, invis_flags) \
+	dview_mob.loc = center; \
+	dview_mob.see_invisible = invis_flags; \
+	for(type in view(range, dview_mob))
+#define END_FOR_DVIEW dview_mob.loc = null
+
+#define Clamp(x, y, z) 	(x <= y ? y : (x >= z ? z : x))
+
+#define CLAMP01(x) 		(Clamp(x, 0, 1))
+
+//intent flags, why wasn't this done the first time?
+#define I_HELP		"help"
+#define I_DISARM	"disarm"
+#define I_GRAB		"grab"
+#define I_HURT		"hurt"

@@ -220,7 +220,7 @@
 			if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
 				usr << "\red You need an empty hand to draw the gun!"
 			else
-				if(usr.a_intent == "hurt")
+				if(usr.a_intent == I_HURT)
 					usr.visible_message("\red \The [usr] draws \the [holstered], ready to shoot!", \
 					"\red You draw \the [holstered], ready to shoot!")
 				else

@@ -45,6 +45,14 @@
 	if(radio_controller)
 		initialize()
 
+/obj/item/device/radio/Destroy()
+	qdel(wires)
+	wires = null
+	if(radio_controller)
+		radio_controller.remove_object(src, frequency)
+		for (var/ch_name in channels)
+			radio_controller.remove_object(src, radiochannels[ch_name])
+	..()
 
 /obj/item/device/radio/initialize()
 
@@ -184,7 +192,7 @@
 						0, "*garbled automated announcement*", src,
 						message, from, "Automated Announcement", from, "synthesized voice",
 						4, 0, config.station_levels, PUB_FREQ)
-	del(A)
+	qdel(A)
 	return
 
 // Interprets the message mode when talking into a radio, possibly returning a connection datum

@@ -117,5 +117,5 @@
 				modmsg += "\t[C] is a [C.holder.rank]\n"
 				num_mods_online++
 
-	msg = "<b>Current Admins ([num_admins_online]):</b>\n" + msg + "\n<b> Current [config.mods_are_mentors ? "Mentors" : "Moderators"]([num_mods_online]):</b>\n" + modmsg
+	msg = "<b>Current Admins ([num_admins_online]):</b>\n" + msg + "\n<b> Current Moderators ([num_mods_online]):</b>\n" + modmsg
 	src << msg

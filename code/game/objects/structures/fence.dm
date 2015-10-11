@@ -14,13 +14,13 @@
 
 
 /obj/structure/fence/ex_act(severity)
-	del(src)
+	qdel(src)
 
 /obj/structure/fence/blob_act()
-	del(src)
+	qdel(src)
 
 /obj/structure/fence/meteorhit(var/obj/M)
-	del(src)
+	qdel(src)
 
 
 /obj/structure/fence/Bumped(atom/user)
@@ -113,7 +113,7 @@
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			new /obj/item/stack/rods(loc, 2)
-			del(src)
+			qdel(src)
 	else if((isscrewdriver(W)) && (istype(loc, /turf/simulated) || anchored))
 		if(!shock(user, 90))
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
@@ -187,7 +187,7 @@
 		else
 			if(health <= -6)
 				new /obj/item/stack/rods(loc)
-				del(src)
+				qdel(src)
 				return
 	return
 

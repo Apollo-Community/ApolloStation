@@ -2,7 +2,7 @@
 	default_prog = /datum/file/program/borg_control
 	spawn_parts = list(/obj/item/part/computer/storage/hdd,/obj/item/part/computer/networking/radio)
 	icon_state = "frame-rnd"
-	l_color = COMPUTER_PURPLE
+	light_color = COMPUTER_PURPLE
 
 /datum/file/program/borg_control
 	name = "Cyborg Control"

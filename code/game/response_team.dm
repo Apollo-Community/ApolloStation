@@ -65,7 +65,7 @@ client/verb/JoinResponseTeam()
 				return
 			var/leader_selected = isemptylist(response_team_members)
 			var/mob/living/carbon/human/new_commando = create_response_team(L.loc, leader_selected, new_name)
-			del(L)
+			qdel(L)
 			new_commando.mind.key = usr.key
 			new_commando.key = usr.key
 
@@ -156,7 +156,7 @@ proc/trigger_armed_response_team(var/force = 0)
 	for (var/obj/effect/landmark/A in world)
 		if (A.name == "nukecode")
 			P.loc = A.loc
-			del(A)
+			qdel(A)
 			continue
 */
 
@@ -203,7 +203,7 @@ proc/trigger_armed_response_team(var/force = 0)
 	for(var/x in all_hairs)
 		var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
 		hairs.Add(H.name) // add hair name to hairs
-		del(H) // delete the hair after it's all done
+		qdel(H) // delete the hair after it's all done
 
 //	var/new_style = input("Please select hair style", "Character Generation")  as null|anything in hairs
 //hair
@@ -226,7 +226,7 @@ proc/trigger_armed_response_team(var/force = 0)
 				M.h_style = H // assign the hair_style variable a new hair datum
 				break
 			else
-				del(H) // if hair H not used, delete. BYOND can garbage collect, but better safe than sorry
+				qdel(H) // if hair H not used, delete. BYOND can garbage collect, but better safe than sorry
 
 	// facial hair
 	var/list/all_fhairs = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
@@ -235,7 +235,7 @@ proc/trigger_armed_response_team(var/force = 0)
 	for(var/x in all_fhairs)
 		var/datum/sprite_accessory/facial_hair/H = new x
 		fhairs.Add(H.name)
-		del(H)
+		qdel(H)
 
 	new_style = input("Please select facial style", "Character Generation")  as null|anything in fhairs
 
@@ -247,7 +247,7 @@ proc/trigger_armed_response_team(var/force = 0)
 				M.f_style = H
 				break
 			else
-				del(H)
+				qdel(H)
 */
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
 	if (new_gender)
@@ -281,38 +281,38 @@ proc/trigger_armed_response_team(var/force = 0)
 /mob/living/carbon/human/proc/equip_strike_team(leader_selected = 0)
 
 	//Special radio setup
-	equip_to_slot_or_del(new /obj/item/device/radio/headset/ert(src), slot_l_ear)
+	equip_to_slot_or_qdel(new /obj/item/device/radio/headset/ert(src), slot_l_ear)
 
 	//Replaced with new ERT uniform
-	equip_to_slot_or_del(new /obj/item/clothing/under/ert(src), slot_w_uniform)
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(src), slot_shoes)
-	equip_to_slot_or_del(new /obj/item/clothing/gloves/swat(src), slot_gloves)
-	equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(src), slot_glasses)
+	equip_to_slot_or_qdel(new /obj/item/clothing/under/ert(src), slot_w_uniform)
+	equip_to_slot_or_qdel(new /obj/item/clothing/shoes/swat(src), slot_shoes)
+	equip_to_slot_or_qdel(new /obj/item/clothing/gloves/swat(src), slot_gloves)
+	equip_to_slot_or_qdel(new /obj/item/clothing/glasses/sunglasses(src), slot_glasses)
 /*
 
 	//Old ERT Uniform
 	//Basic Uniform
-	equip_to_slot_or_del(new /obj/item/clothing/under/syndicate/tacticool(src), slot_w_uniform)
-	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_l_store)
-	equip_to_slot_or_del(new /obj/item/weapon/clipboard(src), slot_r_store)
-	equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(src), slot_belt)
-	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/swat(src), slot_wear_mask)
+	equip_to_slot_or_qdel(new /obj/item/clothing/under/syndicate/tacticool(src), slot_w_uniform)
+	equip_to_slot_or_qdel(new /obj/item/device/flashlight(src), slot_l_store)
+	equip_to_slot_or_qdel(new /obj/item/weapon/clipboard(src), slot_r_store)
+	equip_to_slot_or_qdel(new /obj/item/weapon/gun/energy/gun(src), slot_belt)
+	equip_to_slot_or_qdel(new /obj/item/clothing/mask/gas/swat(src), slot_wear_mask)
 
 	//Glasses
-	equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(src), slot_glasses)
+	equip_to_slot_or_qdel(new /obj/item/clothing/glasses/sunglasses/sechud(src), slot_glasses)
 
 	//Shoes & gloves
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(src), slot_shoes)
-	equip_to_slot_or_del(new /obj/item/clothing/gloves/swat(src), slot_gloves)
+	equip_to_slot_or_qdel(new /obj/item/clothing/shoes/swat(src), slot_shoes)
+	equip_to_slot_or_qdel(new /obj/item/clothing/gloves/swat(src), slot_gloves)
 
 	//Removed
-//	equip_to_slot_or_del(new /obj/item/clothing/suit/armor/swat(src), slot_wear_suit)
-//	equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/deathsquad(src), slot_head)
+//	equip_to_slot_or_qdel(new /obj/item/clothing/suit/armor/swat(src), slot_wear_suit)
+//	equip_to_slot_or_qdel(new /obj/item/clothing/head/helmet/space/deathsquad(src), slot_head)
 
 	//Backpack
-	equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(src), slot_back)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(src), slot_in_backpack)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
+	equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/security(src), slot_back)
+	equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/engineer(src), slot_in_backpack)
+	equip_to_slot_or_qdel(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
 */
 	var/obj/item/weapon/card/id/W = new(src)
 	W.assignment = "Emergency Response Team[leader_selected ? " Leader" : ""]"
@@ -321,7 +321,7 @@ proc/trigger_armed_response_team(var/force = 0)
 	W.icon_state = "centcom"
 	W.access = get_all_accesses()
 	W.access += get_all_centcom_access()
-	equip_to_slot_or_del(W, slot_wear_id)
+	equip_to_slot_or_qdel(W, slot_wear_id)
 
 	return 1
 

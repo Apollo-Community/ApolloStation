@@ -87,7 +87,7 @@
 		while (amount)
 			amount-=1
 			new /obj/item/weapon/paper(loc)
-		del(src)
+		qdel(src)
 
 /obj/item/weapon/paper_bin/examine(mob/user)
 	if(get_dist(src, user) <= 1)

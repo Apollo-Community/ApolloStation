@@ -42,13 +42,13 @@
 	if(!W)
 		return
 
-	if(usr.a_intent == "hurt")
+	if(usr.a_intent == I_HURT)
 		health -= W.force
 		playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
 		usr.visible_message("\red <b>[usr]</b> hits the [src] violently with [W]!")
 		if(health<=0)
 			new /obj/item/weapon/shard(src.loc)
-			del(src)
+			qdel(src)
 		return
 
 	..()
@@ -82,11 +82,11 @@
 	..()
 	for(var/obj/structure/table/T in src.loc)
 		if(T != src)
-			del(T)
+			qdel(T)
 	update_icon()
 	update_adjacent()
 
-/obj/structure/table/Del()
+/obj/structure/table/Destroy()
 	update_adjacent()
 	..()
 
@@ -324,7 +324,7 @@
 	playsound(loc, 'sound/effects/Glassbr2.ogg', 100, 1)
 	src.visible_message("\red The [src] shatters!")
 	new /obj/item/weapon/shard(src.loc)
-	del(src)
+	qdel(src)
 	return
 
 /obj/structure/table/attack_tk() // no telehulk sorry
@@ -374,7 +374,7 @@
 				return 0
 			else
 				visible_message("<span class='warning'>[src] breaks down!</span>")
-				destroy()
+				Destroy()
 				return 1
 	return 1
 
@@ -409,7 +409,7 @@
 		if (istype(G.affecting, /mob/living))
 			var/mob/living/M = G.affecting
 			if (G.state < 2)
-				if(user.a_intent == "hurt")
+				if(user.a_intent == I_HURT)
 					if (prob(15))	M.Weaken(5)
 					M.apply_damage(8,def_zone = "head")
 					visible_message("<span class='danger'>[G.assailant] slams [G.affecting]'s face against \the [src]!</span>")
@@ -421,7 +421,7 @@
 				G.affecting.loc = src.loc
 				G.affecting.Weaken(5)
 				visible_message("<span class='danger'>[G.assailant] puts [G.affecting] on \the [src].</span>")
-			del(W)
+			qdel(W)
 			return
 
 	// Handle dissembly.
@@ -432,7 +432,7 @@
 		user << "<span class='notice'>You locate the bolts and begin disassembling \the [src]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user,50))
-			destroy()
+			Destroy()
 		return
 
 	// Handle weakening.
@@ -475,7 +475,7 @@
 		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 		playsound(src.loc, "sparks", 50, 1)
 		user.visible_message("<span class='danger'>The [src] was sliced apart by [user]!</span>")
-		destroy()
+		qdel()
 
 	user.drop_item(src)
 	return

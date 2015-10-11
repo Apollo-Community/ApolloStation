@@ -16,7 +16,7 @@
 			for(var/mob/M in viewers(src, null))
 				M.show_message("\red The [src.name] has cooled down and reverts to its original form.")
 
-			SetLuminosity(0)
+			set_light(0)
 			color = null
 			temperature = 0
 			processing_objects -= src

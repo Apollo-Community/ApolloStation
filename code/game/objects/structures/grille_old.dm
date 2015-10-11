@@ -14,13 +14,13 @@
 
 
 /obj/structure/grille/ex_act(severity)
-	del(src)
+	qdel(src)
 
 /obj/structure/grille/blob_act()
-	del(src)
+	qdel(src)
 
 /obj/structure/grille/meteorhit(var/obj/M)
-	del(src)
+	qdel(src)
 
 
 /obj/structure/grille/Bumped(atom/user)
@@ -82,7 +82,7 @@
 				Tsrc.ChangeTurf(/turf/simulated/wall/g_wall)
 				for(var/turf/simulated/wall/g_wall/X in Tsrc.loc)
 					if(X)	X.add_hiddenprint(usr)
-				del(src)
+				qdel(src)
 		return
 	else if(istype(W, /obj/item/stack/sheet/glass/reinforced) || istype(W, /obj/item/stack/sheet/glass/reinforced/cyborg))
 		var/obj/item/stack/sheet/S = W
@@ -95,14 +95,14 @@
 				Tsrc.ChangeTurf(/turf/simulated/wall/g_wall/reinforced)
 				for(var/turf/simulated/wall/g_wall/reinforced/X in Tsrc.loc)
 					if(X)	X.add_hiddenprint(usr)
-				del(src)
+				qdel(src)
 		return
 
 	if(iswirecutter(W))
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			new /obj/item/stack/rods(loc, 2)
-			del(src)
+			qdel(src)
 	else if((isscrewdriver(W)) && (istype(loc, /turf/simulated) || anchored))
 		if(!shock(user, 90))
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
@@ -176,7 +176,7 @@
 		else
 			if(health <= -6)
 				new /obj/item/stack/rods(loc)
-				del(src)
+				qdel(src)
 				return
 	return
 

@@ -11,7 +11,7 @@
 	if(graphic_remove && graphic_remove.len)
 		overlays -= graphic_remove
 		mouse_opacity = 1
-		l_color = null
+		light_color = null
 
 /turf/proc/update_air_properties()
 	var/block = c_airblock(src)

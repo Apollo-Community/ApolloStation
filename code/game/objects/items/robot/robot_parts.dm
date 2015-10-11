@@ -112,7 +112,7 @@
 			if (user.get_inactive_hand()==src)
 				user.before_take_item(src)
 			//	user.put_in_inactive_hand(B)
-			del(src)
+			qdel(src)
 		else
 			user << "<span class='warning'>You need one sheet of metal to arm the robot frame.</span>"
 	if(istype(W, /obj/item/robot_parts/l_leg))
@@ -229,7 +229,7 @@
 			O.notify_ai(1)
 			O.Namepick()
 
-			del(src)
+			qdel(src)
 		else
 			user << "\blue The MMI must go in after everything else!"
 
@@ -289,8 +289,8 @@
 		user << "\blue You install some manipulators and modify the head, creating a functional spider-bot!"
 		new /mob/living/simple_animal/spiderbot(get_turf(loc))
 		user.drop_item()
-		del(W)
-		del(src)
+		qdel(W)
+		qdel(src)
 		return
 	return
 

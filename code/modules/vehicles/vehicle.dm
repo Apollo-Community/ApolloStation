@@ -11,7 +11,7 @@
 	density = 1
 	anchored = 1
 	animate_movement=1
-	luminosity = 3
+	light_range = 3
 
 	var/attack_log = null
 	var/on = 0
@@ -149,7 +149,7 @@
 	pulse2.set_dir(pick(cardinal))
 
 	spawn(10)
-		pulse2.delete()
+		qdel(pulse2)
 	if(on)
 		turn_off()
 	spawn(severity*300)
@@ -173,13 +173,13 @@
 	if(powered && cell.charge < charge_use)
 		return 0
 	on = 1
-	luminosity = initial(luminosity)
+	light_range = initial(light_range)
 	update_icon()
 	return 1
 
 /obj/vehicle/proc/turn_off()
 	on = 0
-	luminosity = 0
+	light_range = 0
 	update_icon()
 
 /obj/vehicle/proc/Emag(mob/user as mob)
@@ -212,7 +212,7 @@
 	new /obj/effect/gibspawner/robot(Tsec)
 	new /obj/effect/decal/cleanable/blood/oil(src.loc)
 
-	del(src)
+	qdel(src)
 
 /obj/vehicle/proc/healthcheck()
 	if(health <= 0)

@@ -515,24 +515,24 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 /mob/living/carbon/human/proc/equip_space_ninja(safety=0)//Safety in case you need to unequip stuff for existing characters.
 
 	if(safety)
-		del(w_uniform)
-		del(wear_suit)
-		del(wear_mask)
-		del(head)
-		del(shoes)
-		del(gloves)
+		qdel(w_uniform)
+		qdel(wear_suit)
+		qdel(wear_mask)
+		qdel(head)
+		qdel(shoes)
+		qdel(gloves)
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
-	equip_to_slot_or_del(R, slot_l_ear)
+	equip_to_slot_or_qdel(R, slot_l_ear)
 	if(gender==FEMALE)
-		equip_to_slot_or_del(new /obj/item/clothing/under/color/blackf(src), slot_w_uniform)
+		equip_to_slot_or_qdel(new /obj/item/clothing/under/color/blackf(src), slot_w_uniform)
 	else
-		equip_to_slot_or_del(new /obj/item/clothing/under/color/black(src), slot_w_uniform)
+		equip_to_slot_or_qdel(new /obj/item/clothing/under/color/black(src), slot_w_uniform)
 
-	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_belt)
+	equip_to_slot_or_qdel(new /obj/item/device/flashlight(src), slot_belt)
 
 	var/obj/item/weapon/rig/light/ninja/ninjasuit = new(src)
-	equip_to_slot_or_del(ninjasuit,slot_back)
+	equip_to_slot_or_qdel(ninjasuit,slot_back)
 	ninjasuit.toggle_seals(src,1)
 
 	// Make sure the ninja can actually equip the suit.

@@ -14,9 +14,11 @@
 	edge = 1
 	w_class = 2
 	flags = CONDUCT
-	l_color = "#8A8A00"
-	luminosity = 2
+
 	var/smlevel = 1
+	light_color = "#8A8A00"
+	light_range = 2
+
 	var/size = 1
 	var/max_size = 100
 
@@ -24,32 +26,32 @@
 	..()
 
 	if (level<2)
-		l_color = "#808000"
-		luminosity = 1
+		light_color = "#808000"
+		light_range = 1
 	else if (level<3)
-		l_color = "#C08000"
-		luminosity = 2
+		light_color = "#C08000"
+		light_range = 2
 	else if (level<4)
-		l_color = "#DF6000"
-		luminosity = 2
+		light_color = "#DF6000"
+		light_range = 2
 	else if (level<5)
-		l_color = "#FF2000"
-		luminosity = 1
+		light_color = "#FF2000"
+		light_range = 1
 	else if (level<6)
-		l_color = "#C00040"
-		luminosity = 2
+		light_color = "#C00040"
+		light_range = 2
 	else if (level<7)
-		l_color = "#800080"
-		luminosity = 2
+		light_color = "#800080"
+		light_range = 2
 	else if (level<8)
-		l_color = "#4000C0"
-		luminosity = 1
+		light_color = "#4000C0"
+		light_range = 1
 	else if (level<9)
-		l_color = "#008080"
-		luminosity = 2
+		light_color = "#008080"
+		light_range = 2
 	else
-		l_color = "#FFC0C0"
-		luminosity = 5
+		light_color = "#FFC0C0"
+		light_range = 5
 
 
 	size += rand(0, 10)
@@ -138,7 +140,7 @@
 	if( size > max_size )
 		shatter()
 
-	del( gas )
+	qdel( gas )
 
 	update_icon()
 
@@ -156,7 +158,7 @@
 		src.visible_message( "The supermatter shard shatters into dust!" )
 
 	playsound(loc, 'sound/effects/Glassbr2.ogg', 100, 1)
-	del( src )
+	qdel( src )
 
 /obj/item/weapon/tongs
 	name = "tongs"

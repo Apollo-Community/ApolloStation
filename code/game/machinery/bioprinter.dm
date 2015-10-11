@@ -72,7 +72,7 @@
 		stored_matter += 50
 		user.drop_item()
 		user << "<span class='info'>\The [src] processes \the [W]. Levels of stored biomass now: [stored_matter]</span>"
-		del(W)
+		qdel(W)
 		return
 	// Steel for matter.
 	else if(prints_prosthetics && istype(W, /obj/item/stack/sheet/metal))
@@ -80,7 +80,7 @@
 		stored_matter += M.amount * 10
 		user.drop_item()
 		user << "<span class='info'>\The [src] processes \the [W]. Levels of stored matter now: [stored_matter]</span>"
-		del(W)
+		qdel(W)
 		return
 	else
 		return..()

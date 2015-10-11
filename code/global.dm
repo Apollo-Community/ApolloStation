@@ -6,6 +6,7 @@ var/global/obj/effect/datacore/data_core = null
 var/global/list/all_areas = list()
 var/global/list/machines = list()
 var/global/list/processing_objects = list()
+var/global/list/processing_power_items   = list()
 var/global/list/active_diseases = list()
 var/global/list/med_hud_users = list() //list of all entities using a medical HUD.
 var/global/list/sec_hud_users = list() //list of all entities using a security HUD.
@@ -278,5 +279,13 @@ var/datum/STUI/STUI = new()
 #define COMPUTER_PURPLE "#4C0066"
 #define COMPUTER_BROWN "#402000"
 
-// Announcer intercom, because too much stuff creates an intercom for one message then hard del()s it.
+// Announcer intercom, because too much stuff creates an intercom for one message then hard qdel()s it.
 var/global/obj/item/device/radio/intercom/global_announcer = new(null)
+
+var/global/const/TICKS_IN_DAY = 864000
+var/global/const/TICKS_IN_SECOND = 10
+
+var/global/datum/universal_state/universe = new
+
+var/global/list/endgame_exits = list()
+var/global/list/endgame_safespawns = list()

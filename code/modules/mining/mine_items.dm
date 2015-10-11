@@ -5,7 +5,7 @@
 	name = "Light-emtter"
 	anchored = 1
 	unacidable = 1
-	luminosity = 8
+	light_range = 8
 
 /**********************Miner Lockers**************************/
 
@@ -44,8 +44,8 @@
 	name = "lantern"
 	icon_state = "lantern"
 	desc = "A mining lantern."
-	l_color = "#1A0A00"
-	brightness_on = 6			// luminosity when on
+	light_color = "#1A0A00"
+	brightness_on = 6			// light_range when on
 
 /*****************************Pickaxe********************************/
 

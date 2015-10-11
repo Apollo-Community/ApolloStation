@@ -126,8 +126,8 @@
 
 			if(S.temperature > T20C+20)
 				//Sets up the metal.
-				S.l_color = "#FF704D"
-				S.SetLuminosity(4)
+				S.light_color = "#FF704D"
+				S.set_light(4)
 
 				S.color = "#FF704D"
 
@@ -163,7 +163,7 @@
 			heating.matter = I.matter
 			heating.desc = I.desc
 			heating.loc = src
-			del(I)
+			qdel(I)
 			return
 
 	usr << "You don't feel that [I.name] is suitable for heating."

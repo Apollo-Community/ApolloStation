@@ -10,14 +10,14 @@
 	New() //set the turf below the flaps to block air
 		var/turf/T = get_turf(loc)
 
-		l_color = "#003329"
-		luminosity = 3
+		light_color = "#003329"
+		light_range = 3
 
 		if(T)
 			T.blocks_air = 1
 		..()
 
-	Del() //lazy hack to set the turf to allow air to pass if it's a simulated floor
+	Destroy() //lazy hack to set the turf to allow air to pass if it's a simulated floor
 		var/turf/T = get_turf(loc)
 		if(T)
 			if(istype(T, /turf/simulated/floor))

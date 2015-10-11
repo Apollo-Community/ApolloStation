@@ -10,39 +10,37 @@
 /area/New()
 	icon_state = ""
 	layer = 10
-	master = src //moved outside the spawn(1) to avoid runtimes in lighting.dm when it references loc.loc.master ~Carn
 	uid = ++global_uid
-	related = list(src)
 	all_areas += src
 
-	if(requires_power)
-		luminosity = 0
-	else
+	if(!requires_power)
 		power_light = 0			//rastaf0
 		power_equip = 0			//rastaf0
 		power_environ = 0		//rastaf0
-		luminosity = 1
-		lighting_use_dynamic = 0
 
 	..()
 
 //	spawn(15)
 	power_change()		// all machines set to current power level, also updates lighting icon
-	InitializeLighting()
 
+/area/proc/initialize()
+	if(!requires_power || !apc)
+		power_light = 0
+		power_equip = 0
+		power_environ = 0
+	power_change()		// all machines set to current power level, also updates lighting icon
 
 /area/proc/poweralert(var/state, var/obj/source as obj)
 	if (state != poweralm)
 		poweralm = state
 		if(istype(source))	//Only report power alarms on the z-level where the source is located.
 			var/list/cameras = list()
-			for (var/area/RA in related)
-				for (var/obj/machinery/camera/C in RA)
-					cameras += C
-					if(state == 1)
-						C.network.Remove("Power Alarms")
-					else
-						C.network.Add("Power Alarms")
+			for (var/obj/machinery/camera/C in contents)
+				cameras += C
+				if(state == 1)
+					C.network.Remove("Power Alarms")
+				else
+					C.network.Add("Power Alarms")
 			for (var/mob/living/silicon/aiPlayer in player_list)
 				if(aiPlayer.z == source.z)
 					if (state == 1)
@@ -62,10 +60,9 @@
 //		return 0 //redudant
 
 	//Check all the alarms before lowering atmosalm. Raising is perfectly fine.
-	for (var/area/RA in related)
-		for (var/obj/machinery/alarm/AA in RA)
-			if (!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted && AA.report_danger_level)
-				danger_level = max(danger_level, AA.danger_level)
+	for (var/obj/machinery/alarm/AA in contents)
+		if (!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted && AA.report_danger_level)
+			danger_level = max(danger_level, AA.danger_level)
 
 	if(danger_level != atmosalm)
 		if (set_firelocks && danger_level < 1 && atmosalm >= 1)
@@ -73,9 +70,8 @@
 			air_doors_open()
 
 		if (danger_level < 2 && atmosalm >= 2)
-			for(var/area/RA in related)
-				for(var/obj/machinery/camera/C in RA)
-					C.network.Remove("Atmosphere Alarms")
+			for(var/obj/machinery/camera/C in contents)
+				C.network.Remove("Atmosphere Alarms")
 			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.cancelAlarm("Atmosphere", src, src)
 			for(var/obj/machinery/computer/station_alert/a in machines)
@@ -83,11 +79,9 @@
 
 		if (danger_level >= 2 && atmosalm < 2)
 			var/list/cameras = list()
-			for(var/area/RA in related)
-				//updateicon()
-				for(var/obj/machinery/camera/C in RA)
-					cameras += C
-					C.network.Add("Atmosphere Alarms")
+			for(var/obj/machinery/camera/C in contents)
+				cameras += C
+				C.network.Add("Atmosphere Alarms")
 			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
 			for(var/obj/machinery/computer/station_alert/a in machines)
@@ -96,17 +90,16 @@
 				air_doors_close()
 
 		atmosalm = danger_level
-		for(var/area/RA in related)
-			for (var/obj/machinery/alarm/AA in RA)
-				AA.update_icon()
+		for (var/obj/machinery/alarm/AA in contents)
+			AA.update_icon()
 
 		return 1
 	return 0
 
 /area/proc/air_doors_close()
-	if(!src.master.air_doors_activated)
-		src.master.air_doors_activated = 1
-		for(var/obj/machinery/door/firedoor/E in src.master.all_doors)
+	if(!air_doors_activated)
+		air_doors_activated = 1
+		for(var/obj/machinery/door/firedoor/E in all_doors)
 			if(!E:blocked)
 				if(E.operating)
 					E:nextstate = CLOSED
@@ -115,9 +108,9 @@
 						E.close()
 
 /area/proc/air_doors_open()
-	if(src.master.air_doors_activated)
-		src.master.air_doors_activated = 0
-		for(var/obj/machinery/door/firedoor/E in src.master.all_doors)
+	if(air_doors_activated)
+		air_doors_activated = 0
+		for(var/obj/machinery/door/firedoor/E in all_doors)
 			if(!E:blocked)
 				if(E.operating)
 					E:nextstate = OPEN
@@ -131,7 +124,7 @@
 		return
 	if( !fire )
 		fire = 1
-		master.fire = 1		//used for firedoor checks
+		updateicon()
 		updateicon()
 		mouse_opacity = 0
 		for(var/obj/machinery/door/firedoor/D in all_doors)
@@ -142,10 +135,9 @@
 					spawn()
 						D.close()
 		var/list/cameras = list()
-		for(var/area/RA in related)
-			for (var/obj/machinery/camera/C in RA)
-				cameras.Add(C)
-				C.network.Add("Fire Alarms")
+		for (var/obj/machinery/camera/C in contents)
+			cameras.Add(C)
+			C.network.Add("Fire Alarms")
 		for (var/mob/living/silicon/ai/aiPlayer in player_list)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
 		for (var/obj/machinery/computer/station_alert/a in machines)
@@ -154,7 +146,7 @@
 /area/proc/firereset()
 	if (fire)
 		fire = 0
-		master.fire = 0		//used for firedoor checks
+		updateicon()
 		mouse_opacity = 0
 		updateicon()
 		for(var/obj/machinery/door/firedoor/D in all_doors)
@@ -164,9 +156,8 @@
 				else if(D.density)
 					spawn(0)
 					D.open()
-		for(var/area/RA in related)
-			for (var/obj/machinery/camera/C in RA)
-				C.network.Remove("Fire Alarms")
+		for (var/obj/machinery/camera/C in contents)
+			C.network.Remove("Fire Alarms")
 		for (var/mob/living/silicon/ai/aiPlayer in player_list)
 			aiPlayer.cancelAlarm("Fire", src, src)
 		for (var/obj/machinery/computer/station_alert/a in machines)
@@ -206,7 +197,7 @@
 	return
 
 /area/proc/updateicon()
-	if ((fire || eject || party) && (!requires_power||power_environ) && !lighting_space)//If it doesn't require power, can still activate this proc.
+	if ((fire || eject || party) && (!requires_power||power_environ) && !istype(src, /area/space))//If it doesn't require power, can still activate this proc.
 		if(fire && !eject && !party)
 			icon_state = "blue"
 		/*else if(atmosalm && !fire && !eject && !party)
@@ -230,56 +221,53 @@
 
 /area/proc/powered(var/chan)		// return true if the area has power to given channel
 
-	if(!master.requires_power)
+	if(!requires_power)
 		return 1
-	if(master.always_unpowered)
+	if(always_unpowered)
 		return 0
-	if(src.lighting_space)
-		return 0 // Nope sorry
 	switch(chan)
 		if(EQUIP)
-			return master.power_equip
+			return power_equip
 		if(LIGHT)
-			return master.power_light
+			return power_light
 		if(ENVIRON)
-			return master.power_environ
+			return power_environ
 
 	return 0
 
 // called when power status changes
 /area/proc/power_change()
-	for(var/area/RA in related)
-		for(var/obj/machinery/M in RA)	// for each machine in the area
-			M.power_change()			// reverify power status (to update icons etc.)
-		if (fire || eject || party)
-			RA.updateicon()
+	for(var/obj/machinery/M in src)	// for each machine in the area
+		M.power_change()			// reverify power status (to update icons etc.)
+	if (fire || eject || party)
+		updateicon()
 
 /area/proc/usage(var/chan)
 	var/used = 0
 	switch(chan)
 		if(LIGHT)
-			used += master.used_light
+			used += used_light
 		if(EQUIP)
-			used += master.used_equip
+			used += used_equip
 		if(ENVIRON)
-			used += master.used_environ
+			used += used_environ
 		if(TOTAL)
-			used += master.used_light + master.used_equip + master.used_environ
+			used += used_light + used_equip + used_environ
 	return used
 
 /area/proc/clear_usage()
-	master.used_equip = 0
-	master.used_light = 0
-	master.used_environ = 0
+	used_equip = 0
+	used_light = 0
+	used_environ = 0
 
 /area/proc/use_power(var/amount, var/chan)
 	switch(chan)
 		if(EQUIP)
-			master.used_equip += amount
+			used_equip += amount
 		if(LIGHT)
-			master.used_light += amount
+			used_light += amount
 		if(ENVIRON)
-			master.used_environ += amount
+			used_environ += amount
 
 
 var/list/mob/living/forced_ambiance_list = new
@@ -349,24 +337,19 @@ var/list/mob/living/forced_ambiance_list = new
 
 	A.has_gravity = gravitystate
 
-	for(var/area/SubA in A.related)
-		SubA.has_gravity = gravitystate
-
-		if(gravitystate)
-			for(var/mob/living/carbon/human/M in SubA)
-				thunk(M)
-			for(var/mob/M1 in SubA)
-				M1.make_floating(0)
-		else
-			for(var/mob/M in SubA)
-				if(M.Check_Dense_Object() && istype(src,/mob/living/carbon/human/))
-					var/mob/living/carbon/human/H = src
-					if(istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP))  //magboots + dense_object = no floaty effect
-						H.make_floating(0)
-					else
-						H.make_floating(1)
-				else
-					M.make_floating(1)
+	if(gravitystate)
+		for(var/mob/living/carbon/human/M in A)
+			thunk(M)
+		for(var/mob/M1 in A)
+			M1.make_floating(0)
+	else
+		for(var/mob/M in A)
+			if(M.Check_Dense_Object() && istype(src,/mob/living/carbon/human/))
+				var/mob/living/carbon/human/H = src
+				if( istype( H.shoes, /obj/item/clothing/shoes/magboots ) && ( H.shoes.flags & NOSLIP ))  //magboots + dense_object = no floaty effect
+					H.make_floating(0)
+			else
+				M.make_floating(1)
 
 /area/proc/thunk(mob)
 	if(istype(mob,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.

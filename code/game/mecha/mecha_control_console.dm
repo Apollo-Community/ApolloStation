@@ -8,7 +8,7 @@
 	var/screen = 0
 	var/stored_data
 
-	l_color = COMPUTER_PURPLE
+	light_color = COMPUTER_PURPLE
 
 	attack_ai(var/mob/user as mob)
 		return src.attack_hand(user)
@@ -108,7 +108,7 @@
 		var/obj/mecha/M = in_mecha()
 		if(M)
 			M.emp_act(2)
-		del(src)
+		qdel(src)
 
 	proc/get_mecha_log()
 		if(!src.in_mecha())

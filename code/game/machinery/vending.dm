@@ -84,22 +84,21 @@
 
 	return
 
-/obj/machinery/vending/Del()
-	del(wires) // qdel
+/obj/machinery/vending/Destroy()
+	qdel(wires)
 	wires = null
-	if(coin)
-		del(coin) // qdel
-		coin = null
+	qdel(coin)
+	coin = null
 	..()
 
 /obj/machinery/vending/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
@@ -114,7 +113,7 @@
 	if (prob(50))
 		spawn(0)
 			src.malfunction()
-			del(src)
+			qdel(src)
 		return
 
 	return
@@ -200,7 +199,7 @@
 		for(var/datum/data/vending_product/R in product_records)
 			if(istype(W, R.product_path))
 				stock(R, user)
-				del(W)
+				qdel(W)
 
 	else
 		..()
@@ -464,9 +463,9 @@
 				user << "\blue You successfully pull the coin out before the [src] could swallow it."
 			else
 				user << "\blue You weren't able to pull the coin out fast enough, the machine ate it, string and all."
-				del(coin)
+				qdel(coin)
 		else
-			del(coin)
+			qdel(coin)
 
 	R.amount--
 
@@ -823,7 +822,7 @@
 
 		var/obj/item/seeds/S = new typepath(src)
 		R.product_name = S.name
-		del(S)
+		qdel(S)
 	return
 
 /obj/machinery/vending/magivend

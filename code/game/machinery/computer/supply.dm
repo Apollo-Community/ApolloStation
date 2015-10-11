@@ -9,7 +9,7 @@
 	var/hacked = 0
 	var/can_order_contraband = 0
 	var/last_viewed_group = "categories"
-	l_color = COMPUTER_BROWN
+	light_color = COMPUTER_BROWN
 
 /obj/machinery/computer/ordercomp
 	name = "supply ordering console"

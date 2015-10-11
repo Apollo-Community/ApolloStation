@@ -14,8 +14,8 @@
 	var/mapping = 0//For the overview file, interesting bit of code.
 	circuit = /obj/item/weapon/circuitboard/security
 	var/camera_cache = null
-	l_color = COMPUTER_RED
-	luminosity = 2
+	light_color = COMPUTER_RED
+	light_range = 2
 
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
@@ -190,7 +190,7 @@
 	network = list("thunder")
 	density = 0
 	circuit = null
-	l_color = null
+	light_color = null
 
 /obj/machinery/computer/security/telescreen/update_icon()
 	icon_state = initial(icon_state)

@@ -172,7 +172,7 @@
 		if(D.client)
 			D.loc = H.loc
 		else
-			del(D)
+			qdel(D)
 
 	H.visible_message("\red[H] splits apart with a wet slithering noise!")
 
@@ -306,8 +306,8 @@
 		)
 
 /datum/species/nucleation/handle_post_spawn(var/mob/living/carbon/human/H)
-	H.l_color = "#1C1C00"
-	H.SetLuminosity(2)
+	H.light_color = "#1C1C00"
+	H.set_light(2)
 	return ..()
 
 /datum/species/nucleation/handle_death(var/mob/living/carbon/human/H)
@@ -315,4 +315,4 @@
 	H.visible_message("\red[H]'s body explodes, leaving behind a pile of microscopic crystals!")
 	supermatter_delamination(T, 2, 0, 0, 80) // Create a small supermatter burst upon death
 	new /obj/item/weapon/shard/supermatter( T )
-	del(H)
+	qdel(H)

@@ -105,7 +105,7 @@ proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 				M.op_stage.in_progress -= zone 									// Clear the in-progress flag.
 				return	1	  												//don't want to do weapony things after surgery
 
-	if (user.a_intent == "help")
+	if (user.a_intent == I_HELP)
 		user << "\red You can't see any useful way to use [tool] on [M]."
 		return 1
 	return 0

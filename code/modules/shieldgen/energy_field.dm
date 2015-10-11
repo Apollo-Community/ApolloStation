@@ -17,7 +17,7 @@
 	..()
 	update_nearby_tiles()
 
-/obj/effect/energy_field/Del()
+/obj/effect/energy_field/Destroy()
 	update_nearby_tiles()
 	..()
 
@@ -54,7 +54,7 @@
 	else if(strength < 1)
 		invisibility = 101
 		density = 0
-	
+
 	if (density != old_density)
 		update_nearby_tiles()
 

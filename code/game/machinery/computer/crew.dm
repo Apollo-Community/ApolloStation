@@ -7,7 +7,7 @@
 	active_power_usage = 500
 	circuit = "/obj/item/weapon/circuitboard/crew"
 	var/list/tracked = list(  )
-	l_color = COMPUTER_BLUE
+	light_color = COMPUTER_BLUE
 
 /obj/machinery/computer/crew/New()
 	tracked = list()

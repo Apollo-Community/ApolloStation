@@ -8,8 +8,10 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "supermatter_crystalf"
 	layer = 2.1
-	l_color = "#8A8A00"
+
 	var/smlevel = 0
+
+	light_color = "#8A8A00"
 
 	var/endurance = 100
 	var/delay = 1200
@@ -25,35 +27,36 @@
 
 /obj/effect/supermatter_crystal/New(var/loc, var/level = 1)
 	..()
+
 	smlevel = level
 
 	if (smlevel<2)
-		l_color = "#808000"
-		luminosity = 1
+		light_color = "#808000"
+		light_range = 1
 	else if (smlevel<3)
-		l_color = "#C08000"
-		luminosity = 2
+		light_color = "#C08000"
+		light_range = 2
 	else if (smlevel<4)
-		l_color = "#DF6000"
-		luminosity = 3
+		light_color = "#DF6000"
+		light_range = 3
 	else if (smlevel<5)
-		l_color = "#FF2000"
-		luminosity = 2
+		light_color = "#FF2000"
+		light_range = 2
 	else if (smlevel<6)
-		l_color = "#C00040"
-		luminosity = 2
+		light_color = "#C00040"
+		light_range = 2
 	else if (smlevel<7)
-		l_color = "#800080"
-		luminosity = 3
+		light_color = "#800080"
+		light_range = 3
 	else if (smlevel<8)
-		l_color = "#4000C0"
-		luminosity = 2
+		light_color = "#4000C0"
+		light_range = 2
 	else if (smlevel<9)
-		l_color = "#008080"
-		luminosity = 3
+		light_color = "#008080"
+		light_range = 3
 	else if (smlevel>=9)
-		l_color = "#FFC0C0"
-		luminosity = 5
+		light_color = "#FFC0C0"
+		light_range = 5
 
 	dir = CalcDir()
 
@@ -75,14 +78,14 @@
 			density = 1
 		else
 			deleted = 1
-			del( src )
+			qdel( src )
 
 	processing_objects += src
 
-	SetLuminosity(3)
+	set_light(3)
 	lastTick = world.timeofday
 
-/obj/effect/supermatter_crystal/Del()
+/obj/effect/supermatter_crystal/Destroy()
 	if( !deleted )
 		if(smlevel>=1 && prob(min(100, smlevel*10)))
 			visible_message("\red <B>\The [src] explodes!</B>")
@@ -199,15 +202,15 @@
 /obj/effect/supermatter_crystal/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(5))
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -219,4 +222,4 @@
 
 /obj/effect/supermatter_crystal/proc/CheckEndurance()
 	if(endurance <= 0)
-		del(src)
+		qdel(src)

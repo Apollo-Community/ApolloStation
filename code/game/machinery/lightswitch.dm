@@ -10,7 +10,7 @@
 	var/on = 1
 	var/area/area = null
 	var/otherarea = null
-	//	luminosity = 1
+	//	light_range = 1
 
 /obj/machinery/light_switch/New()
 	..()
@@ -45,15 +45,11 @@
 
 	on = !on
 
-	for(var/area/A in area.master.related)
-		A.lightswitch = on
-		A.updateicon()
+	for(var/obj/machinery/light_switch/L in contents)
+		L.on = on
+		L.updateicon()
 
-		for(var/obj/machinery/light_switch/L in A)
-			L.on = on
-			L.updateicon()
-
-	area.master.power_change()
+	area.power_change()
 
 /obj/machinery/light_switch/power_change()
 

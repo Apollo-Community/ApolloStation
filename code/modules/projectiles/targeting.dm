@@ -40,14 +40,14 @@
 		for(var/mob/living/M in target)
 			if(M)
 				M.NotTargeted(src) //Untargeting people.
-		del(target)
+		qdel(target)
 
 //Compute how to fire.....
 //Return 1 if a target was found, 0 otherwise.
 /obj/item/weapon/gun/proc/PreFire(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, params)
 	//Lets not spam it.
 	if(lock_time > world.time - 2) return
-	
+
 	user.set_dir(get_cardinal_dir(src, A))
 	if(isliving(A) && !(A in target))
 		Aim(A) 	//Clicked a mob, aim at them
@@ -58,7 +58,7 @@
 	if(isliving(M) && (M in view(user)) && !(M in target))
 		Aim(M) //Aha!  Aim at them!
 		return 1
-	
+
 	return 0
 
 //Aiming at the target mob.
@@ -69,7 +69,7 @@
 			for(var/mob/living/L in target)
 				if(L)
 					L.NotTargeted(src)
-			del(target)
+			qdel(target)
 			usr.visible_message("\red <b>[usr] turns \the [src] on [M]!</b>")
 		else
 			usr.visible_message("\red <b>[usr] aims \a [src] at [M]!</b>")
@@ -83,12 +83,12 @@
 	if(src != M.equipped())
 		stop_aim()
 		return
-	
+
 	//reflex firing is disabled when help intent is set
-	if (M.a_intent == "help")
+	if (M.a_intent == I_HELP)
 		M << "\red You refrain from firing your [src] as your intent is set to help."
 		return
-	
+
 	M.last_move_intent = world.time
 	if(can_fire())
 		var/firing_check = can_hit(T,usr) //0 if it cannot hit them, 1 if it is capable of hitting, and 2 if a special check is preventing it from firing.
@@ -230,7 +230,7 @@ mob/living/proc/NotTargeted(var/obj/item/weapon/gun/I)
 	targeted_by -= I
 	I.target.Remove(src) //De-target them
 	if(!I.target.len)
-		del(I.target)
+		qdel(I.target)
 	var/mob/living/T = I.loc //Remove the targeting icons
 	if(T && ismob(T) && !I.target)
 		T.client.remove_gun_icons()
@@ -300,7 +300,7 @@ client/verb/AllowTargetMove()
 	else
 		usr << "Target may no longer move."
 		target_can_run = 0
-		del(usr.gun_run_icon)	//no need for icon for running permission
+		qdel(usr.gun_run_icon)	//no need for icon for running permission
 
 	//Updating walking permission button
 	if(usr.gun_move_icon)

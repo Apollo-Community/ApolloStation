@@ -15,7 +15,7 @@
 	var/a_id = null
 	var/temp = null
 	var/printing = null
-	l_color = COMPUTER_BLUE
+	light_color = COMPUTER_BLUE
 
 /obj/machinery/computer/med_data/verb/eject_id()
 	set category = "Object"
@@ -241,7 +241,7 @@
 			if (href_list["del_all2"])
 				for(var/datum/data/record/R in data_core.medical)
 					//R = null
-					del(R)
+					qdel(R)
 					//Foreach goto(494)
 				src.temp = "All records deleted."
 
@@ -409,7 +409,7 @@
 			if (href_list["del_r2"])
 				if (src.active2)
 					//src.active2 = null
-					del(src.active2)
+					qdel(src.active2)
 
 			if (href_list["d_rec"])
 				var/datum/data/record/R = locate(href_list["d_rec"])
@@ -527,7 +527,7 @@
 			continue
 
 		else if(prob(1))
-			del(R)
+			qdel(R)
 			continue
 
 	..(severity)
@@ -537,4 +537,4 @@
 	name = "Medical Laptop"
 	desc = "Cheap Nanotrasen Laptop."
 	icon_state = "medlaptop"
-	l_color = COMPUTER_GREEN
+	light_color = COMPUTER_GREEN

@@ -18,7 +18,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 	var/temp = null
 	var/hacked = 0
 	var/allowedtocall = 0
-	l_color = COMPUTER_RED
+	light_color = COMPUTER_RED
 
 /proc/syndicate_elite_process()
 	var/area/syndicate_mothership/control/syndicate_ship = locate()//To find announcer. This area should exist for this proc to work.
@@ -161,7 +161,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 		for(var/atom/movable/AM as mob|obj in T)
 			AM.Move(D)
 		if(istype(T, /turf/simulated))
-			del(T)
+			qdel(T)
 
 	for(var/mob/living/carbon/bug in end_location) // If someone somehow is still in the shuttle's docking area...
 		bug.gib()

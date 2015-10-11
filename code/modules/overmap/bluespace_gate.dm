@@ -15,7 +15,7 @@
 	consume_range = 1
 	pixel_x = -32
 	pixel_y = -32
-	l_color = "#142933"
+	light_color = "#142933"
 	life = 100
 	var/decay = 10
 	var/turf/exit = null
@@ -31,8 +31,8 @@
 
 	exit = new_exit
 
-	l_color = "#142933"
-	SetLuminosity( 5 )
+	light_color = "#142933"
+	set_light( 5 )
 
 /obj/machinery/singularity/bluespace_gate/consume(var/atom/A)
 	if( !istype( A, /obj/machinery/gate_beacon ))

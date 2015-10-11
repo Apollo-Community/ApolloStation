@@ -21,10 +21,11 @@ var/global/list/image/splatter_cache=list()
 	var/list/datum/disease2/disease/virus2 = list()
 	var/amount = 5
 
-/obj/effect/decal/cleanable/blood/Del()
+/obj/effect/decal/cleanable/blood/Destroy()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
-	..()
+	processing_objects -= src
+	return ..()
 
 /obj/effect/decal/cleanable/blood/New()
 	..()
@@ -37,7 +38,7 @@ var/global/list/image/splatter_cache=list()
 				if(B != src)
 					if (B.blood_DNA)
 						blood_DNA |= B.blood_DNA.Copy()
-					del(B)
+					qdel(B)
 	spawn(DRYING_TIME * (amount+1))
 		dry()
 

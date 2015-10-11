@@ -24,7 +24,7 @@
 		src.base_state = src.icon_state
 	return
 
-/obj/machinery/door/window/Del()
+/obj/machinery/door/window/Destroy()
 	density = 0
 	playsound(src, "shatter", 70, 1)
 	update_nearby_tiles()
@@ -91,7 +91,7 @@
 
 	explosion_resistance = 0
 	src.density = 0
-//	src.sd_SetOpacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
+//	src.sd_set_opacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
 	update_nearby_tiles()
 
 	if(operating == 1) //emag again
@@ -109,7 +109,7 @@
 	src.density = 1
 	explosion_resistance = initial(explosion_resistance)
 //	if(src.visible)
-//		SetOpacity(1)	//TODO: why is this here? Opaque windoors? ~Carn
+//		set_opacity(1)	//TODO: why is this here? Opaque windoors? ~Carn
 	update_nearby_tiles()
 
 	sleep(10)
@@ -141,7 +141,7 @@
 			ae.icon_state = "door_electronics_smoked"
 			operating = 0
 		src.density = 0
-		del(src)
+		qdel(src)
 		return
 
 /obj/machinery/door/window/attack_ai(mob/user as mob)
@@ -215,7 +215,7 @@
 			ae.icon_state = "door_electronics_smoked"
 
 			operating = 0
-			del(src)
+			qdel(src)
 			return
 
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)

@@ -27,15 +27,15 @@
 
 	return 0 //not in range and not telekinetic
 
-// Like view but bypasses luminosity check
+// Like view but bypasses light_range check
 
 /proc/hear(var/range, var/atom/source)
 
-	var/lum = source.luminosity
-	source.luminosity = 6
+	var/lum = source.light_range
+	source.light_range = 6
 
 	var/list/heard = view(range, source)
-	source.luminosity = lum
+	source.light_range = lum
 
 	return heard
 
@@ -53,18 +53,6 @@
 
 /proc/isNotAdminLevel(var/level)
 	return !isAdminLevel(level)
-
-//Magic constants obtained by using linear regression on right-angled triangles of sides 0<x<1, 0<y<1
-//They should approximate pythagoras theorem well enough for our needs.
-#define k1 0.934
-#define k2 0.427
-/proc/cheap_hypotenuse(Ax,Ay,Bx,By) // T is just the second atom to check distance to center with
-	var/dx = abs(Ax - Bx)	//sides of right-angled triangle
-	var/dy = abs(Ay - By)
-	if(dx>=dy)	return (k1*dx) + (k2*dy)	//No sqrt or powers :)
-	else		return (k2*dx) + (k1*dy)
-#undef k1
-#undef k2
 
 /proc/circlerange(center=usr,radius=3)
 

@@ -73,6 +73,11 @@
 	cover.Parent_Turret = src
 	setup()
 
+/obj/machinery/porta_turret/Destroy()
+	qdel(spark_system)
+	spark_system = null
+	. = ..()
+
 /obj/machinery/porta_turret/proc/setup()
 	var/obj/item/weapon/gun/energy/E = installation	//All energy-based weapons are applicable
 	//var/obj/item/ammo_casing/shottype = E.projectile_type
@@ -143,11 +148,6 @@
 				icon_state = "grey_target_prism"
 		else
 			icon_state = "grey_target_prism"
-
-/obj/machinery/porta_turret/Del()
-	//deletes its own cover with it
-	del(cover) // qdel
-	..()
 
 /obj/machinery/porta_turret/proc/can_use(mob/user)
 	if(ailock && issilicon(user))
@@ -281,7 +281,7 @@
 						new /obj/item/device/assembly/prox_sensor(loc)
 				else
 					user << "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>"
-				del(src) // qdel
+				qdel(src) // qdel
 
 	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
 		//Emagging the turret makes it go bonkers and stun everyone. It also makes
@@ -327,7 +327,7 @@
 				user << "<span class='notice'>You unsecure the exterior bolts on the turret.</span>"
 				invisibility = 0
 				update_icon()
-				del(cover) //deletes the cover, and the turret instance itself becomes its own cover. - qdel
+				qdel(cover) //deletes the cover, and the turret instance itself becomes its own cover. - qdel
 		wrenching = 0
 
 	else if(istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda))
@@ -397,10 +397,10 @@
 /obj/machinery/porta_turret/ex_act(severity)
 	switch (severity)
 		if (1)
-			del(src)
+			qdel(src)
 		if (2)
 			if (prob(25))
-				del(src)
+				qdel(src)
 			else
 				take_damage(150) //should instakill most turrets
 		if (3)
@@ -414,7 +414,7 @@
 	spark_system.start()	//creates some sparks because they look cool
 	density = 1
 	update_icon()
-	del(cover)	//deletes the cover - no need on keeping it there! - del
+	qdel(cover)	//deletes the cover - no need on keeping it there! - del
 
 /obj/machinery/porta_turret/proc/create_cover()
 	if(cover == null && anchored)
@@ -426,7 +426,7 @@
 
 	if(cover == null && anchored)	//if it has no cover and is anchored
 		if(stat & BROKEN)	//if the turret is borked
-			del(cover)	//delete its cover, assuming it has one. Workaround for a pesky little bug - qdel
+			qdel(cover)	//delete its cover, assuming it has one. Workaround for a pesky little bug - qdel
 		else
 			create_cover()
 
@@ -713,7 +713,7 @@
 				playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
 				user << "<span class='notice'>You dismantle the turret construction.</span>"
 				new /obj/item/stack/sheet/metal( loc, 5)
-				del(src) // qdel
+				qdel(src) // qdel
 				return
 
 		if(1)
@@ -778,7 +778,7 @@
 					target_type = /obj/machinery/porta_turret
 
 				build_step = 4
-				del(I) //delete the gun :( qdel
+				qdel(I) //delete the gun :( qdel
 				return
 
 			else if(istype(I, /obj/item/weapon/wrench))
@@ -794,7 +794,7 @@
 					user << "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>"
 					return
 				user << "<span class='notice'>You add the prox sensor to the turret.</span>"
-				del(I) // qdel
+				qdel(I) // qdel
 				return
 
 			//attack_hand() removes the gun
@@ -849,7 +849,7 @@
 //					Turret.cover=new/obj/machinery/porta_turret_cover(loc)
 //					Turret.cover.Parent_Turret=Turret
 //					Turret.cover.name = finish_name
-					del(src) // qdel
+					qdel(src) // qdel
 
 			else if(istype(I, /obj/item/weapon/crowbar))
 				playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)

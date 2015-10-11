@@ -70,7 +70,7 @@
 			if(1 == turn(F.dir, -F.link_angle)) //if the part links north during construction, as the bottom left part always does
 				//log_admin("Repositioning")
 				pod.loc = F.loc
-			del(F)
+			qdel(F)
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 	if(istype(O, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You [!anchored ? "secure \the [src] in place."  : "remove the securing bolts."]</span>"

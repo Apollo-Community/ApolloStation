@@ -1,7 +1,7 @@
 /mob/living/silicon/robot/dust()
 	//Delete the MMI first so that it won't go popping out.
 	if(mmi)
-		del(mmi)
+		qdel(mmi)
 	..()
 
 /mob/living/silicon/robot/death(gibbed)
@@ -13,3 +13,4 @@
 	remove_robot_verbs()
 	sql_report_cyborg_death(src)
 	..(gibbed,"shudders violently for a moment, then becomes motionless, its eyes slowly darkening.")
+drone_items.dm

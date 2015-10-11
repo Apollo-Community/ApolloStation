@@ -252,7 +252,7 @@ What are the archived variables for?
 		else
 			burned_fuel = fuel_store.moles
 			oxygen -= fuel_store.moles
-			del(fuel_store)
+			qdel(fuel_store)
 
 		energy_released += FIRE_CARBON_ENERGY_RELEASED * burned_fuel
 		carbon_dioxide += burned_fuel
@@ -379,7 +379,7 @@ What are the archived variables for?
 	update_values()
 
 	// Let the garbage collector handle it, faster according to /tg/ testers
-	//del(giver)
+	//Destroy(giver)
 	return 1
 
 /datum/gas_mixture/proc/remove(amount)

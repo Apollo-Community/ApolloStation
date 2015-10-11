@@ -161,7 +161,7 @@
 			I.mechanize()
 
 /datum/species/proc/hug(var/mob/living/carbon/human/H,var/mob/living/target)
-	if (target.holder_type && target.a_intent == "help" && H.a_intent == "help")
+	if (target.holder_type && target.a_intent == I_HELP && H.a_intent == I_HELP)
 		target.get_scooped(H)
 		return
 
@@ -220,7 +220,7 @@
 // Called when using the shredding behavior.
 /datum/species/proc/can_shred(var/mob/living/carbon/human/H, var/ignore_intent)
 
-	if(!ignore_intent && H.a_intent != "hurt")
+	if(!ignore_intent && H.a_intent != I_HURT)
 		return 0
 
 	for(var/datum/unarmed_attack/attack in unarmed_attacks)

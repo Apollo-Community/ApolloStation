@@ -53,7 +53,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "unknown"
 	layer = 10
 	mouse_opacity = 0
-	invisibility = INVISIBILITY_LIGHTING
+	luminosity = 1
+
 	var/lightswitch = 1
 
 	var/eject = null
@@ -75,10 +76,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/has_gravity = 1
 	var/list/apc = list()
 	var/no_air = null
-	var/area/master				// master area used for power calcluations
-								// (original area before splitting due to sd_DAL)
-	var/list/related			// the other areas of the same type as this
-//	var/list/lights				// list of all lights on this area
+
 	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
 	var/air_doors_activated = 0
 	var/list/ambience = list( 'sound/ambience/shipambience.ogg' )
@@ -127,7 +125,6 @@ var/list/ghostteleportlocs = list()
 	icon_state = "space"
 	requires_power = 1
 	always_unpowered = 1
-	lighting_use_dynamic = 1
 	power_light = 0
 	power_equip = 0
 	power_environ = 0
@@ -174,7 +171,6 @@ var/list/ghostteleportlocs = list()
 /area/shuttle //DO NOT TURN THE lighting_use_dynamic STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
 	requires_power = 0
 	luminosity = 1
-	lighting_use_dynamic = 0
 
 /area/podbay
 	name = "\improper Podbay"
@@ -284,14 +280,12 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Alien Shuttle Base"
 	requires_power = 1
 	luminosity = 0
-	lighting_use_dynamic = 1
 
 /area/shuttle/alien/mine
 	icon_state = "shuttle"
 	name = "\improper Alien Shuttle Mine"
 	requires_power = 1
 	luminosity = 0
-	lighting_use_dynamic = 1
 
 /area/shuttle/prison/
 	name = "\improper Prison Shuttle"
@@ -386,7 +380,6 @@ var/list/ghostteleportlocs = list()
 	icon_state = "start"
 	requires_power = 0
 	luminosity = 1
-	lighting_use_dynamic = 0
 	has_gravity = 1
 
 // === end remove
@@ -1109,7 +1102,6 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Holodeck"
 	icon_state = "Holodeck"
 	luminosity = 1
-	lighting_use_dynamic = 0
 
 /area/holodeck/alphadeck
 	name = "\improper Holodeck Alpha"
@@ -1255,7 +1247,6 @@ var/list/ghostteleportlocs = list()
 	requires_power = 1
 	always_unpowered = 1
 	luminosity = 1
-	lighting_use_dynamic = 0
 	environment = PLAIN
 
 	auxport
@@ -2021,25 +2012,22 @@ var/list/ghostteleportlocs = list()
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
-	lighting_use_dynamic = 0
 
 /area/turret_protected/AIsatextFS
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
-	lighting_use_dynamic = 0
 
 /area/turret_protected/AIsatextAS
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
-	lighting_use_dynamic = 0
 
 /area/turret_protected/AIsatextAP
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
-	lighting_use_dynamic = 0
+
 
 /area/turret_protected/NewAIMain
 	name = "\improper AI Main New"
@@ -2260,14 +2248,14 @@ var/list/ghostteleportlocs = list()
 	icon_state = "south"
 	requires_power = 0
 	unlimited_power = 1
-	lighting_use_dynamic = 0 // the ship doesn't have any lights
+	 // the ship doesn't have any lights
 	environment = PLAIN
 /area/adminprep/valansshiparrival
 	name = "\improper valans shuttle arrival"
 	icon_state = "south"
 	requires_power = 0
 	unlimited_power = 1
-	lighting_use_dynamic = 0 // the ship doesn't have any lights
+	 // the ship doesn't have any lights
 	environment = PLAIN
 /area/adminprep/valanspreparea
 	name = "\improper valan prep room"
@@ -2294,7 +2282,7 @@ var/list/ghostteleportlocs = list()
 /area/asteroidfields/shuttle
 	name = "\improper Pirate Asteroid shuttle area"
 	icon_state = "south"
-	lighting_use_dynamic = 0 // the ship doesn't have any lights
+	 // the ship doesn't have any lights
 	environment = PLAIN
 
 

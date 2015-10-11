@@ -62,7 +62,7 @@ datum/track/New(var/title_name, var/audio)
 	..()
 //	tracks = sortList(tracks) // sorting for the sake of stuicey's sanity
 
-/obj/machinery/media/jukebox/Del()
+/obj/machinery/media/jukebox/Destroy()
 	StopPlaying()
 	..()
 
@@ -186,7 +186,7 @@ datum/track/New(var/title_name, var/audio)
 	s.start()
 
 	new /obj/effect/decal/cleanable/blood/oil(src.loc)
-	del(src)
+	qdel(src)
 
 /obj/machinery/media/jukebox/attackby(obj/item/W as obj, mob/user as mob)
 	src.add_fingerprint(user)

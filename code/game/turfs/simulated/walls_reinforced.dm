@@ -120,7 +120,7 @@
 				if (O.amount > 1)
 					O.amount--
 				else
-					del(O)
+					qdel(O)
 				return
 
 		if(2)
@@ -266,7 +266,7 @@
 			if (MS.amount > 1)
 				MS.amount--
 			else
-				del(MS)
+				qdel(MS)
 
 	//APC
 	else if( istype(W,/obj/item/apc_frame) )
@@ -282,13 +282,13 @@
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/light_fixture_frame))
-		var/obj/item/light_fixture_frame/AH = W
+	else if(istype(W,/obj/item/frame/light))
+		var/obj/item/frame/light/AH = W
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/light_fixture_frame/small))
-		var/obj/item/light_fixture_frame/small/AH = W
+	else if(istype(W,/obj/item/frame/light/small))
+		var/obj/item/frame/light/small/AH = W
 		AH.try_build(src)
 		return
 

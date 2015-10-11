@@ -21,8 +21,8 @@ var/global/list/bluespace_beacons = list()
 	opacity = 0
 	anchored = 1
 	unacidable = 1
-	l_color = "#142933"
-	luminosity = 0
+	light_color = "#142933"
+	light_range = 0
 	var/functional = 1
 	var/warpable = 1
 	var/charge = 0 // Used for charging a bluespace gate
@@ -38,10 +38,10 @@ var/global/list/bluespace_beacons = list()
 	..()
 
 	src.ping("[src] states, \"Initializing...\"")
-	
+
 	if( istype( get_turf( src ), /turf/simulated/floor/bspace_safe ))
 		warpable = 0
-	
+
 	spawn(20)
 		sector = map_sectors["[z]"]
 		if( !sector )
@@ -56,20 +56,20 @@ var/global/list/bluespace_beacons = list()
 		bluespace_beacons["[name]"] = src
 
 
-/obj/machinery/gate_beacon/Del()
+/obj/machinery/gate_beacon/Destroy()
 	bluespace_beacons["[name]"] = null
 	..()
 
 /obj/machinery/gate_beacon/update_icon()
-	l_color = "#142933"
+	light_color = "#142933"
 
 	if( functional )
 		if( charge > 0 )
 			icon_state = "beacon1"
-			SetLuminosity( 2 )
+			set_light( 2 )
 			return
 	icon_state = "beacon0"
-	SetLuminosity( 0 )
+	set_light( 0 )
 
 /obj/machinery/gate_beacon/process()
 	if( charge >= max_charge )

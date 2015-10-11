@@ -134,9 +134,9 @@
 		ui.close()
 		return 0
 
-	if (href_list["grab"])
+	if (href_list[I_GRAB])
 		if (dish)
-			memorybank = locate(href_list["grab"])
+			memorybank = locate(href_list[I_GRAB])
 			species_buffer = null
 			analysed = dish.analysed
 			dish = null

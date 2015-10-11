@@ -8,7 +8,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowshroomf"
 	layer = 2.1
-	l_color = "#003300"
+	light_color = "#003300"
 
 	var/endurance = 30
 	var/potency = 30
@@ -46,10 +46,10 @@
 
 	processing_objects += src
 
-	SetLuminosity(round(potency/15))
+	set_light(round(potency/15))
 	lastTick = world.timeofday
 
-/obj/effect/glowshroom/Del()
+/obj/effect/glowshroom/Destroy()
 	processing_objects -= src
 	..()
 
@@ -143,15 +143,15 @@
 /obj/effect/glowshroom/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(5))
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -163,4 +163,4 @@
 
 /obj/effect/glowshroom/proc/CheckEndurance()
 	if(endurance <= 0)
-		del(src)
+		qdel(src)

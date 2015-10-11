@@ -12,8 +12,9 @@
 	icon_state = "supermatter"
 	density = 1
 	anchored = 0
-	luminosity = 3
-	l_color = "#FFFF00"
+
+	light_range = 3
+	light_color = "#FFFF00"
 
 	var/smlevel = 1
 	var/changed = 1	// adminbus
@@ -36,6 +37,10 @@
 
 	var/obj/item/device/radio/radio
 
+	light_color = "#8A8A00"
+	var/warning_color = "#B8B800"
+	var/emergency_color = "#D9D900"
+
 	var/grav_pulling = 0
 	var/exploded = 0
 
@@ -47,7 +52,7 @@
 	radio = new (src)
 
 
-/obj/machinery/power/supermatter/Del()
+/obj/machinery/power/supermatter/Destroy()
 	del radio
 	. = ..()
 
@@ -67,6 +72,13 @@
 		          min(4 * (smvsc.explosion_size + (power_percent * smlevel)), (smvsc.explosion_size) * 6), 1, smlevel)
 		del src
 		return
+
+//Changes color and light_range of the light to these values if they were not already set
+/obj/machinery/power/supermatter/proc/shift_light(var/lum, var/clr)
+	if(light_color != clr)
+		light_color = clr
+	if(light_range != lum)
+		set_light(lum)
 
 /obj/machinery/power/supermatter/proc/announce_warning()
 	var/integrity = damage / (explosion_point + ( (smvsc.fusion_stability / explosion_point) * smlevel) )
@@ -116,8 +128,6 @@
 		changed = smlevel
 		power_archived = power_percent
 		update_icon()
-
-	// SUPERMATTER GRAVITY PULL
 	if(grav_pulling)
 		supermatter_pull()
 	for(var/obj/machinery/power/supermatter/S in orange(10, src))
@@ -392,9 +402,9 @@
 		g = g*light_mult
 		c = rgb(r, g, b)
 
-		l_color = c
+		light_color = c
 	else
-		l_color = rgb(light_mult/2, light_mult, light_mult/2)
+		light_color = rgb(light_mult/2, light_mult, light_mult/2)
 
 	luminosity = 2 + (smlevel*power_percent)
 

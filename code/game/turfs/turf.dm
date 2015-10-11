@@ -26,6 +26,12 @@
 	var/has_resources
 	var/list/resources
 
+	// Flick animation
+	var/atom/movable/overlay/c_animation = null
+
+	var/dynamic_lighting = 1
+	luminosity = 1
+
 /turf/New()
 	..()
 	for(var/atom/movable/AM as mob|obj in src)
@@ -33,6 +39,9 @@
 			src.Entered(AM)
 			return
 	return
+
+/turf/Destroy()
+	..()
 
 /turf/ex_act(severity)
 	return 0
@@ -224,8 +233,6 @@
 					c.add(temp,3,1) // report the new open space to the zcontroller
 					return W
 ///// Z-Level Stuff
-
-	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 	var/obj/fire/old_fire = fire
 
 	//world << "Replacing [src.type] with [N]"
@@ -250,11 +257,6 @@
 		var/turf/simulated/W = new N( locate(src.x, src.y, src.z) )
 		//W.Assimilate_Air()
 
-		W.lighting_lumcount += old_lumcount
-
-		if(W.lighting_lumcount)
-			W.UpdateAffectingLights()
-
 		if(old_fire)
 			fire = old_fire
 
@@ -274,10 +276,6 @@
 		//		zone.SetStatus(ZONE_ACTIVE)
 
 		var/turf/W = new N( locate(src.x, src.y, src.z) )
-		W.lighting_lumcount += old_lumcount
-		if(old_lumcount != W.lighting_lumcount)
-			W.lighting_changed = 1
-			lighting_controller.changed_turfs += W
 
 		if(old_fire)
 			old_fire.RemoveFire()
@@ -387,3 +385,21 @@
 /turf/proc/ChangeState(var/turf/N)
 	if (!N)
 		return
+
+/turf/proc/process()
+	return PROCESS_KILL
+
+/turf/proc/contains_dense_objects()
+	if(density)
+		return 1
+	for(var/atom/A in src)
+		if(A.density && !(A.flags & ON_BORDER))
+			return 1
+	return 0
+
+/turf/proc/melt()
+	return
+
+/turf/proc/lighting_lumcount( var/cap = 10 )
+	var/atom/movable/lighting_overlay/L = locate(/atom/movable/lighting_overlay) in src
+	return min( cap, L.lum_r + L.lum_g + L.lum_b )

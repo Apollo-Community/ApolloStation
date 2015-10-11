@@ -49,7 +49,7 @@
 						return
 
 					user.visible_message("[GM.name]'s [body_part] has been placed in the [src] by [user]", "You place [GM.name]'s [body_part] in the fryer", "You hear a sizzling.")
-					del(G)
+					qdel(G)
 					if(!in_unlogged(usr))
 						usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Has placed [GM.name] ([GM.ckey]) in in the fryer.</font>")
 						GM.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fried by [usr.name] ([usr.ckey])</font>")
@@ -159,7 +159,7 @@
 		S.name = "deep fried [frying.name]"
 		S.desc = I.desc
 		frying.loc = S	//this might be a bad idea.
-		del(I)
+		qdel(I)
 
 	icon_state = "fryer_off"
 	on = FALSE

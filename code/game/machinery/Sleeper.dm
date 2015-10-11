@@ -14,8 +14,8 @@
 	use_power = 1
 	idle_power_usage = 40
 	interact_offline = 1
-	l_color = COMPUTER_CYAN
-	luminosity = 2
+	light_color = COMPUTER_CYAN
+	light_range = 2
 
 /obj/machinery/sleep_console/process()
 	if(stat & (NOPOWER|BROKEN))
@@ -27,12 +27,12 @@
 	switch(severity)
 		if(1.0)
 			//SN src = null
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				//SN src = null
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -169,8 +169,8 @@
 	use_power = 1
 	idle_power_usage = 15
 	active_power_usage = 200 //builtin health analyzer, dialysis machine, injectors.
-	l_color = COMPUTER_CYAN
-	luminosity = 2
+	light_color = COMPUTER_CYAN
+	light_range = 2
 
 	New()
 		..()
@@ -208,7 +208,7 @@
 			for(var/atom/movable/A as mob|obj in src)
 				A.loc = src.loc
 				A.blob_act()
-			del(src)
+			qdel(src)
 		return
 
 	attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
@@ -256,7 +256,7 @@
 					icon_state = "sleeper_1-r"
 
 				src.add_fingerprint(user)
-				del(G)
+				qdel(G)
 			return
 		return
 
@@ -274,21 +274,21 @@
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 			if(2.0)
 				if(prob(50))
 					for(var/atom/movable/A as mob|obj in src)
 						A.loc = src.loc
 						ex_act(severity)
-					del(src)
+					qdel(src)
 					return
 			if(3.0)
 				if(prob(25))
 					for(var/atom/movable/A as mob|obj in src)
 						A.loc = src.loc
 						ex_act(severity)
-					del(src)
+					qdel(src)
 					return
 		return
 
@@ -445,7 +445,7 @@
 				icon_state = "sleeper_1-r"
 
 			for(var/obj/O in src)
-				del(O)
+				qdel(O)
 			src.add_fingerprint(usr)
 			return
 		return

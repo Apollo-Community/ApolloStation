@@ -13,8 +13,8 @@
 	use_power = 1
 	idle_power_usage = 60
 	active_power_usage = 10000	//10 kW. It's a big all-body scanner.
-	l_color = "#002900"
-	luminosity = 2
+	light_color = "#002900"
+	light_range = 2
 
 /*/obj/machinery/bodyscanner/allow_drop()
 	return 0*/
@@ -58,7 +58,7 @@
 	src.icon_state = "body_scanner_1"
 	for(var/obj/O in src)
 		//O = null
-		del(O)
+		qdel(O)
 		//Foreach goto(124)
 	src.add_fingerprint(usr)
 	return
@@ -100,7 +100,7 @@
 		//Foreach goto(154)
 	src.add_fingerprint(user)
 	//G = null
-	del(G)
+	qdel(G)
 	return
 
 /obj/machinery/bodyscanner/attack_hand(mob/user as mob)
@@ -117,7 +117,7 @@
 				ex_act(severity)
 				//Foreach goto(35)
 			//SN src = null
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
@@ -126,7 +126,7 @@
 					ex_act(severity)
 					//Foreach goto(108)
 				//SN src = null
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
@@ -135,7 +135,7 @@
 					ex_act(severity)
 					//Foreach goto(181)
 				//SN src = null
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -144,19 +144,19 @@
 	if(prob(50))
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc
-		del(src)
+		qdel(src)
 
 /obj/machinery/body_scanconsole/ex_act(severity)
 
 	switch(severity)
 		if(1.0)
 			//SN src = null
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				//SN src = null
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -164,7 +164,7 @@
 /obj/machinery/body_scanconsole/blob_act()
 
 	if(prob(50))
-		del(src)
+		qdel(src)
 
 /obj/machinery/body_scanconsole/power_change()
 	..()
@@ -188,8 +188,8 @@
 	density = 1
 	anchored = 1
 
-	l_color = COMPUTER_RED
-	luminosity = 2
+	light_color = COMPUTER_RED
+	light_range = 2
 
 
 /obj/machinery/body_scanconsole/New()

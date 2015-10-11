@@ -44,17 +44,17 @@
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				del(src)
+				qdel(src)
 				return
 			if(2.0)
 				if (prob(50))
 					new /obj/effect/effect/water(src.loc)
-					del(src)
+					qdel(src)
 					return
 			if(3.0)
 				if (prob(5))
 					new /obj/effect/effect/water(src.loc)
-					del(src)
+					qdel(src)
 					return
 			else
 		return
@@ -62,7 +62,7 @@
 	blob_act()
 		if(prob(50))
 			new /obj/effect/effect/water(src.loc)
-			del(src)
+			qdel(src)
 
 
 
@@ -168,7 +168,7 @@
 	else
 		explosion(src.loc,-1,1,2)
 	if(src)
-		del(src)
+		qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank/fire_act(datum/gas_mixture/air, temperature, volume)
 	if(temperature > T0C+500)
@@ -225,7 +225,7 @@
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act()
 	explosion(src.loc,0,3,5,7,10)
-	del(src)
+	qdel(src)
 
 /obj/structure/reagent_dispensers/virusfood
 	name = "Virus Food Dispenser"
@@ -249,12 +249,12 @@
 	density = 0
 
 	amount_per_transfer_from_this = 10
-	l_color = "#002200"
+	light_color = "#002200"
 	New()
 		..()
 		reagents.add_reagent("radium",1000)
-		l_color = "#002200"
-		SetLuminosity(2)
+		light_color = "#002200"
+		set_light(2)
 
 /obj/structure/reagent_dispensers/sacidtank
 	name = "CircuitMaster Acid Dispenser"

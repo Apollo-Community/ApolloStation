@@ -63,7 +63,7 @@
 	if(allgases >= 0.005)
 		return 1
 
-	del(G)
+	qdel(G)
 	return
 
 /obj/item/weapon/tank/jetpack/ui_action_click()
@@ -143,7 +143,7 @@
 	var/allgases = G.gas["carbon_dioxide"] + G.gas["nitrogen"] + G.gas["oxygen"] + G.gas["phoron"]
 	if(allgases >= 0.005)
 		return 1
-	del(G)
+	qdel(G)
 	return
 
 /obj/item/weapon/tank/jetpack/verb/fly_up()
