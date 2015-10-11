@@ -51,7 +51,7 @@
 						O.footstep++
 				else
 					playsound(src, "clownstep", 20, 1)
-			if(istype(H.shoes, /obj/item/clothing/shoes/apollo/jester))
+			if(istype(H.shoes, /obj/item/clothing/shoes/jester))
 				var/obj/item/clothing/shoes/clown_shoes/O = H.shoes
 				if(H.m_intent == "run")
 					if(O.footstep >= 2)

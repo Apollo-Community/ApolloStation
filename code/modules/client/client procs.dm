@@ -124,6 +124,13 @@
 
 	src << "\red If the title screen is black, resources are still downloading. Please be patient until the title screen appears."
 
+	for(var/client/target in clients)
+		if(target.prefs.toggles & CHAT_OOC)
+			target << "<span class='notice'><b>[src.key] has connected to the server.</b></span>"
+
+			if( target.prefs.toggles & SOUND_NOTIFICATIONS )
+				target << sound( 'sound/effects/oocjoin.ogg' )
+
 
 	clients += src
 	clients = sortKey(clients)
@@ -303,6 +310,8 @@
 		'icons/spideros_icons/sos_12.png',
 		'icons/spideros_icons/sos_13.png',
 		'icons/spideros_icons/sos_14.png',
-		'html/images/ntlogo.png',
+		'html/images/logo-nt.png',
+		'html/images/logo-anti.png',
+		'html/images/logo-apollo.png',
 		'html/images/talisman.png'
 		)

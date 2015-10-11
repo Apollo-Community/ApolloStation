@@ -36,6 +36,8 @@
 	var/secondary_langs = list()             // The names of secondary languages that are available to this species.
 	var/list/speech_sounds                   // A list of sounds to potentially play when speaking.
 	var/list/speech_chance                   // The likelihood of a speech sound playing.
+	var/datum/species_sounds/voice_sounds = new /datum/species_sounds/human
+	var/mod_sound = 1 						 // Should the sounds made by this creature be modulated?
 
 	// Combat vars.
 	var/total_health = 100                   // Point at which the mob will enter crit.

@@ -58,10 +58,9 @@ datum/controller/game_controller/New()
 		air_master = new /datum/controller/air_system()
 		air_master.Setup()
 
-
 	if(!ticker)						ticker = new /datum/controller/gameticker()
-	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()
-	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
+	if(!syndicate_code_phrase.len )		syndicate_code_phrase	= generate_code_phrase()
+	if(!syndicate_code_response.len )	syndicate_code_response	= generate_code_phrase()
 	if(!emergency_shuttle)			emergency_shuttle = new /datum/emergency_shuttle_controller()
 	if(!shuttle_controller)			shuttle_controller = new /datum/shuttle_controller()
 

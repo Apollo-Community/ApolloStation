@@ -186,6 +186,8 @@
 	unarmed_types = list(/datum/unarmed_attack/punch)
 	rarity_value = 2
 
+	voice_sounds = new /datum/species_sounds/robot
+
 	eyes = "blank_eyes"
 	brute_mod = 0.75
 	burn_mod = 1
@@ -222,7 +224,7 @@
 	name_plural = "Wryn"
 	icobase = 'icons/mob/human_races/r_wryn.dmi'
 	deform = 'icons/mob/human_races/r_wryn.dmi'
-	effect_icons = 'icons/apollo/effects/species.dmi'
+	effect_icons = 'icons/effects/species.dmi'
 	language = "Wryn Hivemind"
 	tail = "wryntail"
 	unarmed_types = list(/datum/unarmed_attack/punch/weak)
