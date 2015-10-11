@@ -144,7 +144,7 @@ The process works like this:
 
 		if( !loaded_shard ) //If our shard turned into something else, aka full crystal
 			explosion( get_turf( src ), 0, 0, 5, 10, 1 )
-			del( src )
+			qdel( src )
 
 		src.visible_message("\icon[src] <b>[src]</b> beeps, \"Crystal successfully fed.\"")
 
@@ -301,7 +301,7 @@ The process works like this:
 		if( !shard )
 			return 0
 
-		del(shard)
+		qdel(shard)
 
 		update_icon()
 		return 1

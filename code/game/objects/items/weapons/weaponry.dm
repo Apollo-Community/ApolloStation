@@ -203,7 +203,7 @@
 	if(istype(W,/obj/item/weapon/screwdriver))
 		user << "You finish the concealed blade weapon."
 		new /obj/item/weapon/butterfly(user.loc)
-		del(src)
+		qdel(src)
 		return
 
 /obj/item/butterflyblade
@@ -224,8 +224,8 @@
 	if(istype(W,/obj/item/butterflyblade))
 		user << "You attach the two concealed blade parts."
 		new /obj/item/butterflyconstruction(user.loc)
-		del(W)
-		del(src)
+		qdel(W)
+		qdel(src)
 		return
 	update_icon(user)
 
@@ -278,8 +278,8 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 
 		user.put_in_hands(S)
 		user << "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>"
-		del(I)
-		del(src)
+		qdel(I)
+		qdel(src)
 		update_icon(user)
 
 	else if(istype(I, /obj/item/weapon/wirecutters))
@@ -287,8 +287,8 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 
 		user.put_in_hands(P)
 		user << "<span class='notice'>You fasten the wirecutters to the top of the rod with the cable, prongs outward.</span>"
-		del(I)
-		del(src)
+		qdel(I)
+		qdel(src)
 		update_icon(user)
 	update_icon(user)
 
@@ -335,7 +335,7 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 
 /obj/item/weapon/energy_net/dropped()
 	spawn(10)
-		if(src) del(src)
+		if(src) qdel(src)
 
 /obj/item/weapon/energy_net/throw_impact(atom/hit_atom)
 	..()
@@ -343,7 +343,7 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 	var/mob/living/M = hit_atom
 
 	if(!istype(M) || locate(/obj/effect/energy_net) in M.loc)
-		del(src)
+		qdel(src)
 		return 0
 
 	var/turf/T = get_turf(M)
@@ -353,11 +353,11 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 		M.captured = 1
 		net.affecting = M
 		T.visible_message("[M] was caught in an energy net!")
-		del(src)
+		qdel(src)
 
 	// If we miss or hit an obstacle, we still want to delete the net.
 	spawn(10)
-		if(src) del(src)
+		if(src) qdel(src)
 
 /obj/effect/energy_net
 	name = "energy net"
@@ -382,7 +382,7 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 	..()
 	processing_objects |= src
 
-/obj/effect/energy_net/Del()
+/obj/effect/energy_net/qdel()
 
 	if(affecting)
 		var/mob/living/carbon/M = affecting
@@ -398,13 +398,13 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 	if(health <=0)
 		density = 0
 		src.visible_message("The energy net is torn apart!")
-		del(src)
+		qdel(src)
 	return
 
 /obj/effect/energy_net/process()
 
 	if(isnull(affecting) || affecting.loc != loc)
-		del(src)
+		qdel(src)
 		return
 
 	// Countdown begin set to -1 will stop the teleporter from firing.
@@ -437,7 +437,7 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 	playsound(affecting.loc, 'sound/effects/sparks2.ogg', 50, 1)
 	anim(affecting.loc,affecting,'icons/mob/mob.dmi',,"phasein",,affecting.dir)
 
-	del(src)
+	qdel(src)
 
 /obj/effect/energy_net/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage

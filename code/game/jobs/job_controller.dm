@@ -390,7 +390,7 @@ var/global/datum/controller/occupations/job_master
 							// adding an arg to a bunch of different procs. Will look into it after this merge. ~ Z
 							if(G.slot == slot_wear_mask || G.slot == slot_wear_suit || G.slot == slot_head)
 								custom_equip_leftovers += thing
-							else if(H.equip_to_slot_or_del(new G.path(H), G.slot))
+							else if(H.equip_to_slot_or_qdel(new G.path(H), G.slot))
 								H << "\blue Equipping you with [thing]!"
 								custom_equip_slots.Add(G.slot)
 							else
@@ -406,7 +406,7 @@ var/global/datum/controller/occupations/job_master
 				if(G.slot in custom_equip_slots)
 					spawn_in_storage += thing
 				else
-					if(H.equip_to_slot_or_del(new G.path(H), G.slot))
+					if(H.equip_to_slot_or_qdel(new G.path(H), G.slot))
 						H << "\blue Equipping you with [thing]!"
 						custom_equip_slots.Add(G.slot)
 					else
@@ -469,19 +469,19 @@ var/global/datum/controller/occupations/job_master
 				else
 					switch(H.backbag) //BS12 EDIT
 						if(1)
-							H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
+							H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 						if(2)
 							var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(H)
 							new /obj/item/weapon/storage/box/survival(BPK)
-							H.equip_to_slot_or_del(BPK, slot_back,1)
+							H.equip_to_slot_or_qdel(BPK, slot_back,1)
 						if(3)
 							var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel_norm(H)
 							new /obj/item/weapon/storage/box/survival(BPK)
-							H.equip_to_slot_or_del(BPK, slot_back,1)
+							H.equip_to_slot_or_qdel(BPK, slot_back,1)
 						if(4)
 							var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel(H)
 							new /obj/item/weapon/storage/box/survival(BPK)
-							H.equip_to_slot_or_del(BPK, slot_back,1)
+							H.equip_to_slot_or_qdel(BPK, slot_back,1)
 
 					//Deferred item spawning.
 					if(spawn_in_storage && spawn_in_storage.len)
@@ -501,14 +501,14 @@ var/global/datum/controller/occupations/job_master
 		//TODO: Generalize this by-species
 		if(H.species)
 			if(H.species.name == "Tajara" || H.species.name == "Unathi")
-				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H),slot_shoes,1)
+				H.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/sandal(H),slot_shoes,1)
 			else if(H.species.name == "Vox")
-				H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(H), slot_wear_mask)
+				H.equip_to_slot_or_qdel(new /obj/item/clothing/mask/breath(H), slot_wear_mask)
 				if(!H.r_hand)
-					H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(H), slot_r_hand)
+					H.equip_to_slot_or_qdel(new /obj/item/weapon/tank/nitrogen(H), slot_r_hand)
 					H.internal = H.r_hand
 				else if (!H.l_hand)
-					H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(H), slot_l_hand)
+					H.equip_to_slot_or_qdel(new /obj/item/weapon/tank/nitrogen(H), slot_l_hand)
 					H.internal = H.l_hand
 				H.internals.icon_state = "internal1"
 
@@ -530,11 +530,11 @@ var/global/datum/controller/occupations/job_master
 			H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
 
 		spawnId(H, rank, alt_title)
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_l_ear)
+		H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset(H), slot_l_ear)
 
 		//Gives glasses to the vision impaired
 		if(H.disabilities & NEARSIGHTED)
-			var/equipped = H.equip_to_slot_or_del(new /obj/item/clothing/glasses/regular(H), slot_glasses)
+			var/equipped = H.equip_to_slot_or_qdel(new /obj/item/clothing/glasses/regular(H), slot_glasses)
 			if(equipped != 1)
 				var/obj/item/clothing/glasses/G = H.glasses
 				G.prescription = 1
@@ -574,9 +574,9 @@ var/global/datum/controller/occupations/job_master
 			if(H.mind && H.mind.initial_account)
 				C.associated_account_number = H.mind.initial_account.account_number
 
-			H.equip_to_slot_or_del(C, slot_wear_id)
+			H.equip_to_slot_or_qdel(C, slot_wear_id)
 
-		H.equip_to_slot_or_del(new /obj/item/device/pda(H), slot_belt)
+		H.equip_to_slot_or_qdel(new /obj/item/device/pda(H), slot_belt)
 		if(locate(/obj/item/device/pda,H))
 			var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
 			pda.owner = H.real_name

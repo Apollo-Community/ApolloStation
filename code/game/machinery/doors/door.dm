@@ -70,7 +70,7 @@
 	return
 
 
-/obj/machinery/door/Del()
+/obj/machinery/door/Destroy()
 	density = 0
 	update_nearby_tiles()
 	..()
@@ -152,7 +152,7 @@
 			if(emitter_hits >= emitter_resistance)
 				visible_message("\red <B>[src.name] breaks apart!</B>", 1)
 				new /obj/effect/decal/cleanable/ash(src.loc) // Turn it to ashes!
-				del(src)
+				qdel(src)
 
 	if(Proj.damage)
 		take_damage(Proj.damage)
@@ -236,7 +236,7 @@
 				user << "<span class='notice'>You finish repairing the damage to \the [src].</span>"
 				health = between(health, health + repairing.amount*DOOR_REPAIR_AMOUNT, maxhealth)
 				update_icon()
-				del(repairing)
+				qdel(repairing)
 		return
 
 	if(repairing && istype(I, /obj/item/weapon/crowbar))
@@ -304,7 +304,7 @@
 
 /obj/machinery/door/blob_act()
 	if(prob(40))
-		del(src)
+		qdel(src)
 	return
 
 
@@ -322,10 +322,10 @@
 /obj/machinery/door/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 		if(2.0)
 			if(prob(25))
-				del(src)
+				qdel(src)
 			else
 				take_damage(300)
 		if(3.0)

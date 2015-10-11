@@ -391,7 +391,7 @@
 								for(var/mob/O in viewers(M, null))
 									O.show_message(text("\red [] has been pulled from []'s grip by []", G.affecting, G.assailant, src), 1)
 								//G = null
-								del(G)
+								qdel(G)
 						else
 							ok = 0
 						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
@@ -507,24 +507,24 @@
 		var/resisting = 0
 		for(var/obj/O in L.requests)
 			L.requests.Remove(O)
-			del(O)
+			qdel(O)
 			resisting++
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
 			resisting++
 			if (G.state == 1)
-				del(G)
+				qdel(G)
 			else
 				if (G.state == 2)
 					if (prob(25))
 						for(var/mob/O in viewers(L, null))
 							O.show_message(text("\red [] has broken free of []'s grip!", L, G.assailant), 1)
-						del(G)
+						qdel(G)
 				else
 					if (G.state == 3)
 						if (prob(5))
 							for(var/mob/O in viewers(usr, null))
 								O.show_message(text("\red [] has broken free of []'s headlock!", L, G.assailant), 1)
-							del(G)
+							qdel(G)
 		if(resisting)
 			for(var/mob/O in viewers(usr, null))
 				O.show_message(text("\red <B>[] resists!</B>", L), 1)
@@ -647,7 +647,7 @@
 							O.show_message(text("\red <B>[] manages to break the handcuffs!</B>", CM), 1)
 						CM << "\red You successfully break your handcuffs."
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-						del(CM.handcuffed)
+						qdel(CM.handcuffed)
 						CM.handcuffed = null
 						CM.update_inv_handcuffed()
 			else
@@ -693,7 +693,7 @@
 							O.show_message(text("\red <B>[] manages to break the legcuffs!</B>", CM), 1)
 						CM << "\red You successfully break your legcuffs."
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-						del(CM.legcuffed)
+						qdel(CM.legcuffed)
 						CM.legcuffed = null
 						CM.update_inv_legcuffed()
 			else

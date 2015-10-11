@@ -48,7 +48,7 @@
 	if(prob(25))
 		new_egg(icon_state)
 		usr << "\red The egg crumbles away..."
-		del(src)
+		qdel(src)
 
 /obj/item/weapon/easter_egg/proc/new_egg(T as text)
 	var/obj/D = new /obj/item/weapon/easter_egg(pick(blobstart))

@@ -99,7 +99,7 @@
 					src << "\red <B>[M] grips your antennae and starts violently pulling!<B>"
 					do_after(src, 250)
 					if(p_loc == M.loc && p_loc_m == src.loc)
-						del(src.internal_organs_by_name["antennae"])
+						qdel(src.internal_organs_by_name["antennae"])
 						src.remove_language("Wryn Hivemind")
 						new /obj/item/organ/wryn/hivenode(M.loc)
 						M << "\blue You hear a loud crunch as you mercilessly pull off [src]'s antennae."
@@ -280,14 +280,14 @@
 						visible_message("\red <b>[M] has broken [src]'s grip on [lgrab.affecting]!</B>")
 						talked = 1
 					spawn(1)
-						del(lgrab)
+						qdel(lgrab)
 				if(istype(r_hand, /obj/item/weapon/grab))
 					var/obj/item/weapon/grab/rgrab = r_hand
 					if(rgrab.affecting)
 						visible_message("\red <b>[M] has broken [src]'s grip on [rgrab.affecting]!</B>")
 						talked = 1
 					spawn(1)
-						del(rgrab)
+						qdel(rgrab)
 				//End BubbleWrap
 
 				if(!talked)	//BubbleWrap

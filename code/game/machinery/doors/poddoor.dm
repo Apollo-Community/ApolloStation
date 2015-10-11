@@ -450,7 +450,7 @@
 		f2.set_opacity(opacity)
 		f3.set_opacity(opacity)
 
-	Del()
+	qdel()
 		del f1
 		del f2
 		del f3
@@ -474,7 +474,7 @@
 		f2.set_opacity(opacity)
 		f3.set_opacity(opacity)
 
-	Del()
+	qdel()
 		del f1
 		del f2
 		del f3
@@ -502,7 +502,7 @@
 		f3.set_opacity(opacity)
 		f4.set_opacity(opacity)
 
-	Del()
+	qdel()
 		del f1
 		del f2
 		del f3
@@ -531,7 +531,7 @@
 		f3.set_opacity(opacity)
 		f4.set_opacity(opacity)
 
-	Del()
+	qdel()
 		del f1
 		del f2
 		del f3

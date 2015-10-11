@@ -466,7 +466,7 @@ turf/simulated/floor/proc/update_icon()
 		if(is_light_floor())
 			if(get_lightfloor_state())
 				user.drop_item(C)
-				del(C)
+				qdel(C)
 				set_lightfloor_state(0) //fixing it by bashing it with a light bulb, fun eh?
 				update_icon()
 				user << "\blue You replace the light bulb."

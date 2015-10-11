@@ -46,7 +46,7 @@ var/global/list/uneatable = list(
 
 	if(life)
 		spawn(life)
-			del(src)
+			qdel(src)
 	..()
 	for(var/obj/machinery/power/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
@@ -54,7 +54,7 @@ var/global/list/uneatable = list(
 			break
 	return
 
-/obj/machinery/singularity/Del()
+/obj/machinery/singularity/qdel()
 	for(var/mob/M in hearers(src, null))
 		M.show_message(text("\blue A sizzling sound increases in volume until \the [src] disappears in a loud SNAP!"))
 
@@ -76,7 +76,7 @@ var/global/list/uneatable = list(
 	switch(severity)
 		if(1.0)
 			if(prob(25))
-				del(src)
+				qdel(src)
 				return
 			else
 				energy += 50
@@ -208,7 +208,7 @@ var/global/list/uneatable = list(
 
 /obj/machinery/singularity/proc/check_energy()
 	if(energy <= 0)
-		del(src)
+		qdel(src)
 		return 0
 	switch(energy)//Some of these numbers might need to be changed up later -Mport
 		if(1 to 199)
@@ -284,7 +284,7 @@ var/global/list/uneatable = list(
 		if(istype(A, /obj/machinery/singularity))//Welp now you did it
 			var/obj/machinery/singularity/S = A
 			src.energy += (S.energy/2)//Absorb most of it
-			del(S)
+			qdel(S)
 			var/dist = max((current_size - 2),1)
 			explosion(src.loc,(dist),(dist*2),(dist*4))
 			return//Quits here, the obj should be gone, hell we might be
@@ -296,7 +296,7 @@ var/global/list/uneatable = list(
 			O.z = 2
 		else
 			A.ex_act(1.0)
-			if(A) del(A)
+			if(A) qdel(A)
 		gain = 2
 	else if(isturf(A))
 		var/turf/T = A
@@ -485,6 +485,10 @@ var/global/list/uneatable = list(
 	grav_pull = 10 //How many tiles out do we pull?
 	consume_range = 3 //How many tiles out do we eat
 	var/last_boom = 0
+
+/obj/machinery/singularity/narsie/Destroy()
+	narsie_list.Remove(src)
+	..()
 
 /obj/machinery/singularity/narsie/large
 	name = "Nar-Sie"

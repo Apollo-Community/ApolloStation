@@ -16,6 +16,10 @@
 	var/damtype = "brute"
 	var/force = 0
 
+/obj/Destroy()
+	processing_objects -= src
+	..()
+
 /obj/Topic(href, href_list, var/nowindow = 0)
 	// Calling Topic without a corresponding window open causes runtime errors
 	if(nowindow)

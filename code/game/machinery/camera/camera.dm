@@ -59,11 +59,12 @@
 		if( istype( T, /turf/simulated/wall ))
 			src.pixel_y = 20
 
-/obj/machinery/camera/Del()
-	if(!alarm_on)
-		triggerCameraAlarm()
-
-	cancelCameraAlarm()
+/obj/machinery/camera/Destroy()
+	deactivate(null, 0) //kick anyone viewing out
+	if(assembly)
+		qdel(assembly)
+		assembly = null
+	qdel(wires)
 	..()
 
 /obj/machinery/camera/emp_act(severity)
@@ -149,7 +150,7 @@
 				assembly.loc = src.loc
 				assembly.state = 1
 				new /obj/item/stack/cable_coil(src.loc, length=2)
-			del(src)
+			qdel(src)
 
 	// OTHER
 	else if (can_use() && (istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))

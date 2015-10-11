@@ -24,7 +24,7 @@
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
 	icon_state = "abed"
 
-/obj/structure/stool/bed/Del()
+/obj/structure/stool/bed/qdel()
 	unbuckle()
 	..()
 	return
@@ -125,7 +125,7 @@
 			visible_message("[user] collapses \the [src.name].")
 			new/obj/item/roller(get_turf(src))
 			spawn(0)
-				del(src)
+				qdel(src)
 		return
 	..()
 
@@ -139,7 +139,7 @@
 /obj/item/roller/attack_self(mob/user)
 		var/obj/structure/stool/bed/roller/R = new /obj/structure/stool/bed/roller(user.loc)
 		R.add_fingerprint(user)
-		del(src)
+		qdel(src)
 
 /obj/item/roller/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
@@ -173,7 +173,7 @@
 	user << "\blue You deploy the roller bed."
 	var/obj/structure/stool/bed/roller/R = new /obj/structure/stool/bed/roller(user.loc)
 	R.add_fingerprint(user)
-	del(held)
+	qdel(held)
 	held = null
 
 
@@ -217,5 +217,5 @@
 		visible_message("[usr] collapses \the [src.name].")
 		new/obj/item/roller(get_turf(src))
 		spawn(0)
-			del(src)
+			qdel(src)
 		return

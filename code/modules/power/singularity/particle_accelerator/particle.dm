@@ -67,7 +67,7 @@
 
 
 /obj/effect/accelerated_particle/ex_act(severity)
-	del(src)
+	qdel(src)
 	return
 
 
@@ -95,7 +95,7 @@
 			src.loc = get_step(src,dir)
 	movement_range--
 	if(movement_range <= 0)
-		del(src)
+		qdel(src)
 	else
 		sleep(lag)
 		move(lag)

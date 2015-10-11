@@ -22,7 +22,7 @@
 		if (src.output && loc)
 			new src.output(loc)
 		if (what)
-			del(what)
+			qdel(what)
 
 	/* objs */
 	meat

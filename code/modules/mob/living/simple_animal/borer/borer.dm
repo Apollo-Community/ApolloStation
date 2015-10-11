@@ -145,7 +145,7 @@
 		if(!host.lastKnownIP)
 			host.lastKnownIP = b2h_ip
 
-	del(host_brain)
+	qdel(host_brain)
 
 /mob/living/simple_animal/borer/proc/leave_host()
 

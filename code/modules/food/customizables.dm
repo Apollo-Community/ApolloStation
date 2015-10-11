@@ -4,7 +4,7 @@
 		return
 	var/obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich/S = new(get_turf(user))
 	S.attackby(W,user)
-	del(src)
+	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/bun/attackby(obj/item/W as obj, mob/user as mob)
 	if(!istype(W, /obj/item/weapon/reagent_containers/food/snacks/))
@@ -12,7 +12,7 @@
 		return
 	var/obj/item/weapon/reagent_containers/food/snacks/customizable/burger/S = new(get_turf(user))
 	S.attackby(W,user)
-	del(src)
+	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough/attackby(obj/item/W as obj, mob/user as mob)
 	if(!istype(W, /obj/item/weapon/reagent_containers/food/snacks/))
@@ -20,7 +20,7 @@
 		return
 	var/obj/item/weapon/reagent_containers/food/snacks/customizable/pizza/S = new(get_turf(user))
 	S.attackby(W,user)
-	del(src)
+	qdel(src)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspagetti/attackby(obj/item/W as obj, mob/user as mob)
@@ -29,7 +29,7 @@
 		return
 	var/obj/item/weapon/reagent_containers/food/snacks/customizable/pasta/S = new(get_turf(user))
 	S.attackby(W,user)
-	del(src)
+	qdel(src)
 
 
 /obj/item/trash/plate/attackby(obj/item/W as obj, mob/user as mob)
@@ -40,7 +40,7 @@
 		return
 	var/obj/item/weapon/reagent_containers/food/snacks/customizable/fullycustom/S = new(get_turf(user))
 	S.attackby(W,user)
-	del(src)
+	qdel(src)
 
 /obj/item/trash/bowl
 	name = "bowl"
@@ -57,7 +57,7 @@
 	if(istype(W,/obj/item/))
 		var/obj/item/weapon/reagent_containers/food/snacks/customizable/soup/S = new(get_turf(user))
 		S.attackby(W,user)
-		del(src)
+		qdel(src)
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich
@@ -366,7 +366,7 @@
 		reagents.trans_to(U,min(reagents.total_volume,5))
 
 		if (reagents.total_volume <= 0)
-			del(src)
+			qdel(src)
 		return
 
 	if(istype(I,  /obj/item/weapon/reagent_containers/))
@@ -433,9 +433,9 @@
 		T.pixel_y = (ingredients.len * 2)+1
 		overlays += T
 
-/obj/item/weapon/reagent_containers/food/snacks/customizable/Del()
+/obj/item/weapon/reagent_containers/food/snacks/customizable/qdel()
 	for(var/obj/item/O in ingredients)
-		del(O)
+		qdel(O)
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/examine()

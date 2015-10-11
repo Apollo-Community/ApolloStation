@@ -142,7 +142,7 @@
 
 	ex_act(severtiy)
 		if(1.0)
-			src.Del()
+			src.qdel()
 		return
 
 /turf/simulated/floor/bluegrid
@@ -270,7 +270,7 @@
 
 		visible_message( "\The [A] falls into the lava, melting beneath the molten surface!" )
 
-		A.Del()
+		A.qdel()
 
 /turf/simulated/floor/airless/trash
 	name = "compacted trash"

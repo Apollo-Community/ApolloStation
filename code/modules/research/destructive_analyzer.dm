@@ -12,7 +12,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	icon_state = "d_analyzer"
 	var/obj/item/weapon/loaded_item = null
 	var/decon_mod = 1
-	
+
 	use_power = 1
 	idle_power_usage = 30
 	active_power_usage = 2500
@@ -64,7 +64,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			M.icon_state = "box_1"
 			for(var/obj/I in component_parts)
 				I.loc = src.loc
-			del(src)
+			qdel(src)
 			return 1
 		else
 			user << "\red You can't load the [src.name] while it's opened."

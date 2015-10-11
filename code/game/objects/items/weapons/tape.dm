@@ -8,7 +8,7 @@
 /* -- Disabled for now until it has a use --
 /obj/item/weapon/tape_roll/attack_self(mob/user as mob)
 	user << "You remove a length of tape from [src]."
-	
+
 	var/obj/item/weapon/ducttape/tape = new()
 	user.put_in_hands(tape)
 */
@@ -16,7 +16,7 @@
 /obj/item/weapon/tape_roll/proc/stick(var/obj/item/weapon/W, mob/user)
 	if(!istype(W, /obj/item/weapon/paper))
 		return
-	
+
 	user.drop_from_inventory(W)
 	var/obj/item/weapon/ducttape/tape = new(get_turf(src))
 	tape.attach(W)
@@ -52,13 +52,13 @@
 		return
 
 	user << "You remove \the [initial(name)] from [stuck]."
-	
+
 	user.drop_from_inventory(src)
 	stuck.forceMove(get_turf(src))
 	user.put_in_hands(stuck)
 	stuck = null
 	overlays = null
-	del(src)
+	qdel(src)
 
 /obj/item/weapon/ducttape/afterattack(var/A, mob/user, flag, params)
 	if(!in_range(user, A) || istype(A, /obj/machinery/door) || !stuck)

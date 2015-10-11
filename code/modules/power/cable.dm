@@ -85,7 +85,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	cable_list += src //add it to the global cable list
 
 
-/obj/structure/cable/Del()					// called when a cable is deleted
+/obj/structure/cable/qdel()					// called when a cable is deleted
 	if(powernet)
 		cut_cable_from_powernet()				// update the powernets
 	cable_list -= src							//remove it from global cable list
@@ -154,11 +154,11 @@ By design, d1 is the smallest direction and d2 is the highest
 					var/turf/below = locate(src.x, src.y, controller.down_target)
 					for(var/obj/structure/cable/c in below)
 						if(c.d1 == 12 || c.d2 == 12)
-							c.Del()
+							c.qdel()
 ///// Z-Level Stuff
 		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
 
-		del(src) // qdel
+		qdel(src) // qdel
 		return
 
 
@@ -201,16 +201,16 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src) // qdel
+			qdel(src) // qdel
 		if(2.0)
 			if (prob(50))
 				new/obj/item/stack/cable_coil(src.loc, src.d1 ? 2 : 1, color)
-				del(src) // qdel
+				qdel(src) // qdel
 
 		if(3.0)
 			if (prob(25))
 				new/obj/item/stack/cable_coil(src.loc, src.d1 ? 2 : 1, color)
-				del(src) // qdel
+				qdel(src) // qdel
 	return
 
 obj/structure/cable/proc/cableColor(var/colorC)
@@ -418,7 +418,7 @@ obj/structure/cable/proc/cableColor(var/colorC)
 		propagate_network(powerlist[1],PN) //propagates the new powernet beginning at the source cable
 
 		if(PN.is_empty()) //can happen with machines made nodeless when smoothing cables
-			del(PN) // qdel
+			qdel(PN) // qdel
 
 // cut the cable's powernet at this cable and updates the powergrid
 /obj/structure/cable/proc/cut_cable_from_powernet()
@@ -763,7 +763,7 @@ obj/structure/cable/proc/cableColor(var/colorC)
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
 				new/obj/item/stack/cable_coil(C.loc, 1, C.color)
-				del(C) // qdel
+				qdel(C) // qdel
 
 // called when cable_coil is click on an installed obj/cable
 // or click on a turf that already contains a "node" cable
@@ -829,7 +829,7 @@ obj/structure/cable/proc/cableColor(var/colorC)
 			if (NC.shock(user, 50))
 				if (prob(50)) //fail
 					new/obj/item/stack/cable_coil(NC.loc, 1, NC.color)
-					del(NC) // qdel
+					qdel(NC) // qdel
 
 			return
 
@@ -877,7 +877,7 @@ obj/structure/cable/proc/cableColor(var/colorC)
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
 				new/obj/item/stack/cable_coil(C.loc, 2, C.color)
-				del(C) // qdel
+				qdel(C) // qdel
 				return
 
 		C.denode()// this call may have disconnected some cables that terminated on the centre of the turf, if so split the powernets.

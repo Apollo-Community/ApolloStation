@@ -184,8 +184,8 @@
 		for(var/obj/item/organ/replacing_organ in tool)
 			replacing_organ.loc = get_turf(tool)
 			replacing_organ.replaced(target,affected)
-			del(replacing_organ) //Just in case.
-		del(tool)
+			qdel(replacing_organ) //Just in case.
+		qdel(tool)
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)

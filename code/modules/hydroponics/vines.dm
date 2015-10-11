@@ -26,7 +26,7 @@
 /obj/effect/plantsegment/New()
 	return
 
-/obj/effect/plantsegment/Del()
+/obj/effect/plantsegment/qdel()
 	if(master)
 		master.vines -= src
 		master.growth_queue -= src
@@ -239,7 +239,7 @@
 /obj/effect/plantsegment/proc/die()
 	if(seed && harvest && rand(5))
 		seed.harvest(src,1)
-		del(src)
+		qdel(src)
 
 /obj/effect/plantsegment/proc/life()
 
@@ -298,14 +298,14 @@
 
 /obj/effect/plant_controller/New()
 	if(!istype(src.loc,/turf/simulated/floor))
-		del(src)
+		qdel(src)
 
 	spawn(0)
 		spawn_piece(src.loc)
 
 	processing_objects.Add(src)
 
-/obj/effect/plant_controller/Del()
+/obj/effect/plant_controller/qdel()
 	processing_objects.Remove(src)
 	..()
 
@@ -324,12 +324,12 @@
 
 	// Space vines exterminated. Remove the controller
 	if(!vines)
-		del(src)
+		qdel(src)
 		return
 
 	// Sanity check.
 	if(!growth_queue)
-		del(src)
+		qdel(src)
 		return
 
 	// Check if we're too big for our own good.

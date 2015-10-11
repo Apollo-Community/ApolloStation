@@ -163,7 +163,7 @@
 			heating.matter = I.matter
 			heating.desc = I.desc
 			heating.loc = src
-			del(I)
+			qdel(I)
 			return
 
 	usr << "You don't feel that [I.name] is suitable for heating."

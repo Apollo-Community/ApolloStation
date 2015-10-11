@@ -935,7 +935,7 @@ About the new airlock wires panel:
 					electronics.loc = src.loc
 					electronics = null
 
-				del(src)
+				qdel(src)
 				return
 		else if(arePowerSystemsOn())
 			user << "\blue The airlock's motors resist your efforts to force it."
@@ -1043,7 +1043,7 @@ About the new airlock wires panel:
 				S.victim = M
 				S.loc = M.loc
 				spawn(20)
-					del(S)
+					qdel(S)
 				if (iscarbon(M))
 					var/mob/living/carbon/C = M
 					if (!(C.species && (C.species.flags & NO_PAIN)))
@@ -1132,13 +1132,17 @@ About the new airlock wires panel:
 					break
 
 
-/obj/machinery/door/airlock/Del()
+/obj/machinery/door/airlock/qdel()
 	spawn(rand(1,10))
 		for(var/turf/simulated/wall/W in range(src,1))
 			W.relativewall()
 
 		for(var/obj/structure/falsewall/W in range(src,1))
 			W.relativewall()
+
+	if(wires)
+		qdel(wires)
+		wires = null
 
 	..()
 

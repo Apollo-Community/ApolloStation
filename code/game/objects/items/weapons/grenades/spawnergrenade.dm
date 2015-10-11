@@ -28,7 +28,7 @@
 
 				// Spawn some hostile syndicate critters
 
-		del(src)
+		qdel(src)
 		return
 
 /obj/item/weapon/grenade/spawnergrenade/manhacks
@@ -69,5 +69,5 @@
 		var/obj/machinery/singularity/mostly_harmless/bh = new /obj/machinery/singularity/mostly_harmless
 		bh.loc = T
 
-		del(src)
+		qdel(src)
 		return

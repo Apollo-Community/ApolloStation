@@ -16,9 +16,9 @@
 		spawn(0)
 			AddInfectionImages(affected_mob)
 	else
-		del(src)
+		qdel(src)
 
-/obj/item/alien_embryo/Del()
+/obj/item/alien_embryo/qdel()
 	if(affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
 		spawn(0)
@@ -104,7 +104,7 @@
 		new_xeno << sound('sound/voice/hiss5.ogg',0,0,0,100)	//To get the player's attention
 		if(gib_on_success)
 			affected_mob.gib()
-		del(src)
+		qdel(src)
 
 /*----------------------------------------
 Proc: RefreshInfectionImage()
@@ -120,7 +120,7 @@ Des: Removes all infection images from aliens and places an infection image on a
 		if(alien.client)
 			for(var/image/I in alien.client.images)
 				if(dd_hasprefix_case(I.icon_state, "infected"))
-					del(I)
+					qdel(I)
 			for(var/mob/living/L in mob_list)
 				if(iscorgi(L) || iscarbon(L))
 					if(L.status_flags & XENO_HOST)
@@ -162,4 +162,4 @@ Des: Removes the alien infection image from all aliens in the world located in p
 				for(var/image/I in alien.client.images)
 					if(I.loc == C)
 						if(dd_hasprefix_case(I.icon_state, "infected"))
-							del(I)
+							qdel(I)

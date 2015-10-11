@@ -15,7 +15,7 @@
 		if (labels_left < 30)
 			labels_left = min(labels_left+10, 30)
 			user << "<span class='notice'>You add some labels to the [src.name].</span>"
-			del(I)
+			qdel(I)
 		else
 			user << "<span class='notice'>The [src] is full! You can't add any more labels to it.</span>"
 

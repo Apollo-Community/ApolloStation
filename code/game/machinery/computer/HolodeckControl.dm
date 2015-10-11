@@ -160,7 +160,7 @@ var/global/list/holodeck_programs = list(
 	//		loadProgram(target)
 
 //This could all be done better, but it works for now.
-/obj/machinery/computer/HolodeckControl/Del()
+/obj/machinery/computer/HolodeckControl/qdel()
 	emergencyShutdown()
 	..()
 
@@ -235,7 +235,7 @@ var/global/list/holodeck_programs = list(
 	if(!silent)
 		var/obj/oldobj = obj
 		visible_message("The [oldobj.name] fades away!")
-	del(obj)
+	qdel(obj)
 
 /obj/machinery/computer/HolodeckControl/proc/checkInteg(var/area/A)
 	for(var/turf/T in A)
@@ -296,7 +296,7 @@ var/global/list/holodeck_programs = list(
 		C.derez()
 
 	for(var/obj/effect/decal/cleanable/blood/B in linkedholodeck)
-		del(B)
+		qdel(B)
 
 	holographic_items = A.copy_contents_to(linkedholodeck , 1)
 
@@ -435,7 +435,7 @@ var/global/list/holodeck_programs = list(
 	flags = ON_BORDER
 
 
-/obj/structure/holowindow/Del()
+/obj/structure/holowindow/qdel()
 	..()
 
 /obj/item/weapon/holo
@@ -522,7 +522,7 @@ var/global/list/holodeck_programs = list(
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
 		visible_message("<span class='warning'>[G.assailant] dunks [G.affecting] into the [src]!</span>", 3)
-		del(W)
+		qdel(W)
 		return
 	else if (istype(W, /obj/item) && get_dist(src,user)<2)
 		user.drop_item(src)
@@ -581,7 +581,7 @@ var/global/list/holodeck_programs = list(
 
 	currentarea = get_area(src.loc)
 	if(!currentarea)
-		del(src)
+		qdel(src)
 
 	if(eventstarted)
 		usr << "The event has already begun!"
@@ -612,7 +612,7 @@ var/global/list/holodeck_programs = list(
 	eventstarted = 1
 
 	for(var/obj/structure/holowindow/W in currentarea)
-		del(W)
+		qdel(W)
 
 	for(var/mob/M in currentarea)
 		M << "FIGHT!"
@@ -667,4 +667,4 @@ var/global/list/holodeck_programs = list(
 
 /mob/living/simple_animal/hostile/carp/holodeck/proc/derez()
 	visible_message("<span class='notice'>\The [src] fades away!</span>")
-	del(src)
+	qdel(src)

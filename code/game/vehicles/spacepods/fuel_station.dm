@@ -16,9 +16,9 @@
 		init_devices()
 		hose = new /datum/global_iterator/refueling_floor( list( src ))
 
-/turf/simulated/floor/bspace_safe/refueling_floor/Del()
+/turf/simulated/floor/bspace_safe/refueling_floor/qdel()
 	processing_objects.Remove( src )
-	del( hose )
+	qdel( hose )
 
 	..()
 

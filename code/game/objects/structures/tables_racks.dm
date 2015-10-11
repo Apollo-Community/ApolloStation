@@ -48,7 +48,7 @@
 		usr.visible_message("\red <b>[usr]</b> hits the [src] violently with [W]!")
 		if(health<=0)
 			new /obj/item/weapon/shard(src.loc)
-			del(src)
+			qdel(src)
 		return
 
 	..()
@@ -82,11 +82,11 @@
 	..()
 	for(var/obj/structure/table/T in src.loc)
 		if(T != src)
-			del(T)
+			qdel(T)
 	update_icon()
 	update_adjacent()
 
-/obj/structure/table/Del()
+/obj/structure/table/qdel()
 	update_adjacent()
 	..()
 
@@ -324,7 +324,7 @@
 	playsound(loc, 'sound/effects/Glassbr2.ogg', 100, 1)
 	src.visible_message("\red The [src] shatters!")
 	new /obj/item/weapon/shard(src.loc)
-	del(src)
+	qdel(src)
 	return
 
 /obj/structure/table/attack_tk() // no telehulk sorry
@@ -421,7 +421,7 @@
 				G.affecting.loc = src.loc
 				G.affecting.Weaken(5)
 				visible_message("<span class='danger'>[G.assailant] puts [G.affecting] on \the [src].</span>")
-			del(W)
+			qdel(W)
 			return
 
 	// Handle dissembly.

@@ -67,6 +67,11 @@
 /obj/machinery/air_sensor/initialize()
 	set_frequency(frequency)
 
+obj/machinery/air_sensor/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src,frequency)
+	..()
+
 /obj/machinery/air_sensor/New()
 	..()
 
@@ -85,6 +90,11 @@
 	var/list/sensor_information = list()
 	var/datum/radio_frequency/radio_connection
 	circuit = /obj/item/weapon/circuitboard/air_management
+
+obj/machinery/computer/general_air_control/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src, frequency)
+	..()
 
 /obj/machinery/computer/general_air_control/attack_hand(mob/user)
 	if(..(user))
@@ -182,7 +192,7 @@
 
 	else
 		output += "<FONT color='red'>ERROR: Can not find input port</FONT> <A href='?src=\ref[src];in_refresh_status=1'>Search</A><BR>"
-	
+
 	output += "Flow Rate Limit: <A href='?src=\ref[src];adj_input_flow_rate=-100'>-</A> <A href='?src=\ref[src];adj_input_flow_rate=-10'>-</A> <A href='?src=\ref[src];adj_input_flow_rate=-1'>-</A> <A href='?src=\ref[src];adj_input_flow_rate=-0.1'>-</A> [round(input_flow_setting, 0.1)] L/s <A href='?src=\ref[src];adj_input_flow_rate=0.1'>+</A> <A href='?src=\ref[src];adj_input_flow_rate=1'>+</A> <A href='?src=\ref[src];adj_input_flow_rate=10'>+</A> <A href='?src=\ref[src];adj_input_flow_rate=100'>+</A><BR>"
 
 	output += "<BR>"
@@ -230,7 +240,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 		spawn(1)
 			src.updateUsrDialog()
 		return
-	
+
 	if(!radio_connection)
 		return 0
 	var/datum/signal/signal = new
@@ -296,7 +306,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 
 	else
 		output += "<FONT color='red'>ERROR: Can not find input port</FONT> <A href='?src=\ref[src];in_refresh_status=1'>Search</A><BR>"
-	
+
 	output += "Flow Rate Limit: <A href='?src=\ref[src];adj_input_flow_rate=-100'>-</A> <A href='?src=\ref[src];adj_input_flow_rate=-10'>-</A> <A href='?src=\ref[src];adj_input_flow_rate=-1'>-</A> <A href='?src=\ref[src];adj_input_flow_rate=-0.1'>-</A> [round(input_flow_setting, 0.1)] L/s <A href='?src=\ref[src];adj_input_flow_rate=0.1'>+</A> <A href='?src=\ref[src];adj_input_flow_rate=1'>+</A> <A href='?src=\ref[src];adj_input_flow_rate=10'>+</A> <A href='?src=\ref[src];adj_input_flow_rate=100'>+</A><BR>"
 
 	output += "<BR>"
@@ -344,7 +354,7 @@ Min Core Pressure: [pressure_limit] kPa<BR>"}
 		spawn(1)
 			src.updateUsrDialog()
 		return
-	
+
 	if(!radio_connection)
 		return 0
 	var/datum/signal/signal = new

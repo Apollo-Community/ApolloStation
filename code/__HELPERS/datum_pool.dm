@@ -61,7 +61,7 @@ var/global/list/GlobalPool = list()
 		if(garbage_collector)
 			garbage_collector.AddTrash(D)
 		else
-			del(D)
+			qdel(D)
 		return
 
 	if(D in GlobalPool[D.type])

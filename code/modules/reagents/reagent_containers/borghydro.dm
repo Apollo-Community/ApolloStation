@@ -31,7 +31,7 @@
 	processing_objects.Add(src)
 
 
-/obj/item/weapon/reagent_containers/borghypo/Del()
+/obj/item/weapon/reagent_containers/borghypo/qdel()
 	processing_objects.Remove(src)
 	..()
 

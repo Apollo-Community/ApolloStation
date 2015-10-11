@@ -560,7 +560,7 @@ proc/get_nt_opposed()
 			for(var/datum/uplink_item/UI in H.purchase_log)
 				var/obj/I = new UI.path
 				refined_log.Add("[H.purchase_log[UI]]x\icon[I][UI.name]")
-				del(I)
+				qdel(I)
 			purchases = english_list(refined_log, nothing_text = "")
 	if(uplink_true)
 		text += " (used [TC_uses] TC)"

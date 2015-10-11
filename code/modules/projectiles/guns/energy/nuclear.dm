@@ -48,7 +48,7 @@
 		processing_objects.Add(src)
 
 
-	Del()
+	qdel()
 		processing_objects.Remove(src)
 		..()
 

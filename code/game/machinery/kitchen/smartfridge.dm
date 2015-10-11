@@ -36,8 +36,8 @@
 	else
 		wires = new/datum/wires/smartfridge(src)
 
-/obj/machinery/smartfridge/Del()
-	del(wires) // qdel
+/obj/machinery/smartfridge/Destroy()
+	qdel(wires)
 	..()
 
 /obj/machinery/smartfridge/proc/accept_check(var/obj/item/O as obj)

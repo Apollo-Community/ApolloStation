@@ -138,7 +138,7 @@ datum/admins/proc/notes_gethtml(var/ckey)
 	del note_list
 
 
-/proc/notes_del(var/key, var/index)
+/proc/notes_qdel(var/key, var/index)
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
 	var/list/infos
 	info >> infos

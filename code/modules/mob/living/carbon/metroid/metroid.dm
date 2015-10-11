@@ -197,7 +197,7 @@
 	var/f_loss = null
 	switch (severity)
 		if (1.0)
-			del(src)
+			qdel(src)
 			return
 
 		if (2.0)
@@ -464,7 +464,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			user <<"You apply the enhancer. It now has triple the amount of uses."
 			Uses = 3
 			enhanced = 1
-			del(O)
+			qdel(O)
 
 /obj/item/slime_extract/New()
 		..()
@@ -585,14 +585,14 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		pet.icon_dead = "[M.colour] baby slime dead"
 		pet.colour = "[M.colour]"
 		user <<"You feed the slime the potion, removing it's powers and calming it."
-		del(M)
+		qdel(M)
 		var/newname = sanitize(copytext(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text,1,MAX_NAME_LEN))
 
 		if (!newname)
 			newname = "pet slime"
 		pet.name = newname
 		pet.real_name = newname
-		del(src)
+		qdel(src)
 
 /obj/item/weapon/slimepotion2
 	name = "advanced docility potion"
@@ -616,14 +616,14 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		pet.icon_dead = "[M.colour] baby slime dead"
 		pet.colour = "[M.colour]"
 		user <<"You feed the slime the potion, removing it's powers and calming it."
-		del(M)
+		qdel(M)
 		var/newname = sanitize(copytext(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text,1,MAX_NAME_LEN))
 
 		if (!newname)
 			newname = "pet slime"
 		pet.name = newname
 		pet.real_name = newname
-		del(src)
+		qdel(src)
 
 
 /obj/item/weapon/slimesteroid
@@ -648,7 +648,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 		user <<"You feed the slime the steroid. It now has triple the amount of extract."
 		M.cores = 3
-		del(src)
+		qdel(src)
 
 /obj/item/weapon/slimesteroid2
 	name = "extract enhancer"
@@ -667,7 +667,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			user <<"You apply the enhancer. It now has triple the amount of uses."
 			target.Uses = 3
 			target.enahnced = 1
-			del(src)*/
+			qdel(src)*/
 
 /obj/effect/golemrune
 	anchored = 1
@@ -790,7 +790,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	spawn(rand(50,100))
 		src.visible_message("<span class='warning'> The [name] bursts open!</span>")
 		new/mob/living/carbon/slime(T)
-		del(src)
+		qdel(src)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/process()

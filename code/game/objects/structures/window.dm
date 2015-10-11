@@ -51,7 +51,7 @@
 
 	statistics.increase_stat("damage_cost", rand( 400, 600 ))
 
-	del(src)
+	qdel(src)
 	return
 
 
@@ -69,7 +69,7 @@
 /obj/structure/window/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			shatter(0)
@@ -170,7 +170,7 @@
 		if(istype(G.affecting,/mob/living))
 			var/mob/living/M = G.affecting
 			var/state = G.state
-			del(W)	//gotta delete it here because if window breaks, it won't get deleted
+			qdel(W)	//gotta delete it here because if window breaks, it won't get deleted
 			switch (state)
 				if(1)
 					M.visible_message("<span class='warning'>[user] slams [M] against \the [src]!</span>")
@@ -220,7 +220,7 @@
 				mats.amount = is_fulltile() ? 4 : 2
 			else
 				new glasstype(loc)
-			del(src)
+			qdel(src)
 	else
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			hit(W.force)
@@ -305,7 +305,7 @@
 	update_nearby_icons()
 
 
-/obj/structure/window/Del()
+/obj/structure/window/qdel()
 	density = 0
 	update_nearby_tiles()
 	update_nearby_icons()

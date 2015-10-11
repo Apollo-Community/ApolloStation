@@ -65,7 +65,7 @@
 				"You hear welding.")
 			for (var/obj/item/weapon/paper/I in contents)
 				I.loc = loc
-			del(src) // qdel
+			qdel(src) // qdel
 			return
 	else
 		user << "<span class='notice'>You can't put [P] in [src]!</span>"

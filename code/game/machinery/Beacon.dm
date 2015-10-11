@@ -20,9 +20,9 @@
 
 		hide(T.intact)
 
-	Del()
+	qdel()
 		if(Beacon)
-			del(Beacon)
+			qdel(Beacon)
 		..()
 
 	// update the invisibility and icon

@@ -111,6 +111,29 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			if(!("[department]" in req_console_information))
 				req_console_information += department
 
+/obj/machinery/requests_console/Destroy()
+	allConsoles -= src
+	switch(departmentType)
+		if(1)
+			req_console_assistance -= department
+		if(2)
+			req_console_supplies -= department
+		if(3)
+			req_console_information -= department
+		if(4)
+			req_console_assistance -= department
+			req_console_supplies -= department
+		if(5)
+			req_console_assistance -= department
+			req_console_information -= department
+		if(6)
+			req_console_supplies -= department
+			req_console_information -= department
+		if(7)
+			req_console_assistance -= department
+			req_console_supplies -= department
+			req_console_information -= department
+	..()
 
 /obj/machinery/requests_console/attack_hand(user as mob)
 	if(..(user))

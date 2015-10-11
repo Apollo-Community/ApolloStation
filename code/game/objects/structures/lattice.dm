@@ -12,10 +12,10 @@
 /obj/structure/lattice/New()
 	..()
 	if(!( istype( src.loc, /turf/space )) && !( istype(src.loc, /turf/simulated/floor/plating/airless/fakespace )))
-		del(src)
+		qdel(src)
 	for(var/obj/structure/lattice/LAT in src.loc)
 		if(LAT != src)
-			del(LAT)
+			qdel(LAT)
 	stored = new/obj/item/stack/rods(src)
 	icon = 'icons/obj/smoothlattice.dmi'
 	updateOverlays()
@@ -34,16 +34,16 @@
 	..()
 
 /obj/structure/lattice/blob_act()
-	del(src)
+	qdel(src)
 	return
 
 /obj/structure/lattice/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
-			del(src)
+			qdel(src)
 			return
 		if(3.0)
 			return
@@ -99,7 +99,7 @@
 /obj/structure/lattice/catwalk/Move()
 	var/turf/T = loc
 	for(var/obj/structure/cable/C in T)
-		C.Del()
+		C.qdel()
 
 	var/turf/Tsrc = get_turf(src)
 	Tsrc.ChangeTurf(/turf/space)
@@ -108,7 +108,7 @@
 /obj/structure/lattice/catwalk/Destroy()
 	var/turf/T = loc
 	for(var/obj/structure/cable/C in T)
-		C.Del()
+		C.qdel()
 
 	var/turf/Tsrc = get_turf(src)
 	Tsrc.ChangeTurf(/turf/space)
@@ -117,7 +117,7 @@
 /obj/structure/lattice/catwalk/Deconstruct()
 	var/turf/T = loc
 	for(var/obj/structure/cable/C in T)
-		C.Del()
+		C.qdel()
 
 	var/turf/Tsrc = get_turf(src)
 	Tsrc.ChangeTurf(/turf/space)

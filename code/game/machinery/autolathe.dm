@@ -177,7 +177,7 @@
 		stack.use(max(1,round(total_used/mass_per_sheet))) // Always use at least 1 to prevent infinite materials.
 	else
 		user.drop_item(O)
-		del(O)
+		qdel(O)
 
 	updateUsrDialog()
 	return

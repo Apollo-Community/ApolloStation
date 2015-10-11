@@ -76,7 +76,7 @@ proc/explosion_rec(turf/epicenter, power) //this is now called by a spawn comman
 //	spawn(sleeptime)
 //		var/obj/fire/ourfire = new(ETE.turf,1000) //BALL OF FIRE WHAHFHUFIAFHIAFHA
 //		sleep sleeptime
-//		del(ourfire)
+//		qdel(ourfire)
 
 	spawn(sleeptime)
 	explosion_animation_in_progress = 1
@@ -263,7 +263,7 @@ proc/explosion_rec(turf/epicenter, power) //this is now called by a spawn comman
 //	spawn(sleeptime)
 //		var/obj/fire/ourfire = new(ET.turf,1000) //BALL OF FIRE WHAHFHUFIAFHIAFHA
 //		sleep sleeptime
-//		del(ourfire)
+//		qdel(ourfire)
 
 	spawn(sleeptime)
 		if(T)

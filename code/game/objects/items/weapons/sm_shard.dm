@@ -97,7 +97,7 @@
 	if( size > max_size )
 		shatter()
 
-	del( gas )
+	qdel( gas )
 
 	update_icon()
 
@@ -113,7 +113,7 @@
 		src.visible_message( "The supermatter shard shatters into dust!" )
 
 	playsound(loc, 'sound/effects/Glassbr2.ogg', 100, 1)
-	del( src )
+	qdel( src )
 
 /obj/item/weapon/tongs
 	name = "tongs"

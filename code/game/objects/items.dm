@@ -55,21 +55,30 @@
 	*/
 	var/list/sprite_sheets_obj = null
 
+/obj/item/Destroy()
+	if(ismob(loc))
+		var/mob/m = loc
+		m.drop_from_inventory(src)
+		m.update_inv_r_hand()
+		m.update_inv_l_hand()
+		src.loc = null
+	return ..()
+
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
 /obj/item/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(5))
-				del(src)
+				qdel(src)
 				return
 		else
 	return
