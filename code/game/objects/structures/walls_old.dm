@@ -38,7 +38,7 @@
 
 
 
-/turf/simulated/wall/qdel()
+/turf/simulated/wall/Destroy()
 	for(var/obj/effect/E in src) if(E.name == "Wallrot") del E
 	..()
 

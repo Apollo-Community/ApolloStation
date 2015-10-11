@@ -27,7 +27,7 @@
 	RefreshParts()
 	src.initialize(); //Agouri
 
-/obj/machinery/r_n_d/server/qdel()
+/obj/machinery/r_n_d/server/Destroy()
 	griefProtection()
 	..()
 

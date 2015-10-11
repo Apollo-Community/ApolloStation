@@ -101,7 +101,7 @@
 
 	return null
 
-/obj/machinery/atmospherics/tvalve/qdel()
+/obj/machinery/atmospherics/tvalve/Destroy()
 	loc = null
 
 	if(node1)

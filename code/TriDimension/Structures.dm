@@ -42,15 +42,15 @@
 		switch(severity)
 			if(1.0)
 				if(icon_state == "ladderup" && prob(10))
-					qdel()
+					Destroy()
 			if(2.0)
 				if(prob(50))
-					qdel()
+					Destroy()
 			if(3.0)
-				qdel()
+				Destroy()
 		return*/
 
-	qdel()
+	Destroy()
 		spawn(1)
 			if(target && icon_state == "ladderdown")
 				del target
@@ -126,7 +126,7 @@
 				var/obj/item/stack/sheet/metal/S = new /obj/item/stack/sheet/metal( src )
 				S.amount = 2
 				user << "<span class='notice'>You remove the ladder and close the hole.</span>"
-				qdel()
+				Destroy()
 			else
 				user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 			return

@@ -379,7 +379,7 @@ What are the archived variables for?
 	update_values()
 
 	// Let the garbage collector handle it, faster according to /tg/ testers
-	//qdel(giver)
+	//Destroy(giver)
 	return 1
 
 /datum/gas_mixture/proc/remove(amount)

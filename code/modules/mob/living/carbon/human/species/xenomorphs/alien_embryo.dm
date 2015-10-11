@@ -18,7 +18,7 @@
 	else
 		qdel(src)
 
-/obj/item/alien_embryo/qdel()
+/obj/item/alien_embryo/Destroy()
 	if(affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
 		spawn(0)

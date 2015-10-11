@@ -99,7 +99,7 @@ obj/machinery/atmospherics/mains_pipe
 		for(var/obj/machinery/atmospherics/pipe/mains_component/node in nodes)
 			node.disconnect()
 
-	qdel()
+	Destroy()
 		disconnect()
 		..()
 

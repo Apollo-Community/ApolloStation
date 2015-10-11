@@ -30,7 +30,7 @@
 	light_range = rand( 2, 3 )
 	..()
 
-/turf/space/qdel()
+/turf/space/Destroy()
 	..()
 
 	qdel( starlight )

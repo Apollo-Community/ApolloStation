@@ -76,7 +76,7 @@
 	spawn(5)
 		eyeobj.loc = src.loc
 
-/mob/living/silicon/ai/qdel()
+/mob/living/silicon/ai/Destroy()
 	eyeobj.ai = null
 	qdel(eyeobj) // No AI, no Eye
 	..()

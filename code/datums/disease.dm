@@ -205,6 +205,6 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	return new type(process, src)
 
 /*
-/datum/disease/qdel()
+/datum/disease/Destroy()
 	active_diseases.Remove(src)
 */

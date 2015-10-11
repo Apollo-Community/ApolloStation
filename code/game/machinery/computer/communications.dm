@@ -557,7 +557,7 @@
 		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
-	if(ticker.mode.name == "revolution" || deathsquad.deployed)
+	if(ticker.mode.name == "revolution")
 		return ..()
 
 	emergency_shuttle.call_evac()
@@ -580,7 +580,7 @@
 		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
-	if(ticker.mode.name == "revolution" || deathsquad.deployed)
+	if(ticker.mode.name == "revolution")
 		return ..()
 
 	emergency_shuttle.call_evac()

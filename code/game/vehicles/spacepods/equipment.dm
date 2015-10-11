@@ -324,7 +324,7 @@
 	spawn( 30 )
 		processing_objects.Add( src )
 
-/obj/item/device/spacepod_equipment/engine/qdel()
+/obj/item/device/spacepod_equipment/engine/Destroy()
 	processing_objects.Remove( src )
 
 	..()
@@ -514,7 +514,7 @@
 	var/obj/effect/map/sector = null // The current sector
 	manufacturer = "Ward-Takahashi GMB"
 
-/obj/item/device/spacepod_equipment/misc/autopilot/qdel()
+/obj/item/device/spacepod_equipment/misc/autopilot/Destroy()
 	if( processing_objects[src] )
 		processing_objects.Remove( src )
 

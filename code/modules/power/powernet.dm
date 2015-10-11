@@ -18,7 +18,7 @@
 	powernets += src
 	..()
 
-/datum/powernet/qdel()
+/datum/powernet/Destroy()
 	powernets -= src
 	..()
 

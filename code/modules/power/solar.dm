@@ -30,7 +30,7 @@ var/list/solars_list = list()
 	Make(S)
 	connect_to_network()
 
-/obj/machinery/power/solar/qdel()
+/obj/machinery/power/solar/Destroy()
 	unset_control() //remove from control computer
 	..()
 
@@ -314,7 +314,7 @@ var/list/solars_list = list()
 		initialize()
 	connect_to_network()
 
-/obj/machinery/power/solar_control/qdel()
+/obj/machinery/power/solar_control/Destroy()
 	for(var/obj/machinery/power/solar/M in connected_panels)
 		M.unset_control()
 	if(connected_tracker)

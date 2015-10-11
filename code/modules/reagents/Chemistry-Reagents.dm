@@ -160,7 +160,7 @@ datum
 
 /* Must check the transfering of reagents and their data first. They all can point to one disease datum.
 
-			qdel()
+			Destroy()
 				if(src.data["virus"])
 					var/datum/disease/D = src.data["virus"]
 					D.cure(0)
@@ -1785,7 +1785,7 @@ datum
 				..()
 				return
 
-			qdel()
+			Destroy()
 				if(holder && ismob(holder.my_atom))
 					var/mob/M = holder.my_atom
 					M.status_flags &= ~FAKEDEATH

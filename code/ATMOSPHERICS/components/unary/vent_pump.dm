@@ -400,7 +400,7 @@
 		new /obj/item/pipe(loc, make_from=src)
 		qdel(src)
 
-/obj/machinery/atmospherics/unary/vent_pump/qdel()
+/obj/machinery/atmospherics/unary/vent_pump/Destroy()
 	if(initial_loc)
 		initial_loc.air_vent_info -= id_tag
 		initial_loc.air_vent_names -= id_tag

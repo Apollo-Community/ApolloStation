@@ -260,7 +260,7 @@
 	else
 		user << "You are too far away to read the gauge."
 
-/obj/machinery/atmospherics/unary/vent_scrubber/qdel()
+/obj/machinery/atmospherics/unary/vent_scrubber/Destroy()
 	if(initial_loc)
 		initial_loc.air_scrub_info -= id_tag
 		initial_loc.air_scrub_names -= id_tag

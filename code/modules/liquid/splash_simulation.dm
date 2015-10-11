@@ -22,7 +22,7 @@ datum/puddle/New()
 	..()
 	puddles += src
 
-datum/puddle/qdel()
+datum/puddle/Destroy()
 	puddles -= src
 	for(var/obj/O in liquid_objects)
 		qdel(O)
@@ -131,7 +131,7 @@ obj/effect/liquid/proc/apply_calculated_effect()
 obj/effect/liquid/Move()
 	return 0
 
-obj/effect/liquid/qdel()
+obj/effect/liquid/Destroy()
 	src.controller.liquid_objects.Remove(src)
 	..()
 

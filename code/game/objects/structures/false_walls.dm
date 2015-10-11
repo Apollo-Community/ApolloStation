@@ -13,7 +13,7 @@
 	relativewall_neighbours()
 	..()
 
-/obj/structure/falsewall/qdel()
+/obj/structure/falsewall/Destroy()
 
 	var/temploc = src.loc
 

@@ -253,7 +253,7 @@
 					See the previous More info, for... more info...
 				*/
 
-			//qdel(D)
+			//Destroy(D)
 			// Garbage Collect Dummy
 			D.loc = null
 			D = null

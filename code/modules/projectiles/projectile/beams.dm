@@ -66,7 +66,7 @@ var/list/beam_master = list()
 		cleanup(reference)
 		return
 
-	qdel()
+	Destroy()
 		cleanup("\ref[src]")
 		..()
 

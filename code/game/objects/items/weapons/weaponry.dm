@@ -382,7 +382,7 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 	..()
 	processing_objects |= src
 
-/obj/effect/energy_net/qdel()
+/obj/effect/energy_net/Destroy()
 
 	if(affecting)
 		var/mob/living/carbon/M = affecting

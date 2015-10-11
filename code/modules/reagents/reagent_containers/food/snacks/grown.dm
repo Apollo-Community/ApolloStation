@@ -182,7 +182,7 @@
 	icon_state = "glowberrypile"
 	plantname = "glowberries"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/qdel()
+/obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/Destroy()
 	if(istype(loc,/mob))
 		loc.set_light(round(loc.light_range - potency/5,1))
 	..()
@@ -553,7 +553,7 @@
 
 	user << "<span class='notice'>You plant the glowshroom.</span>"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/qdel()
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/Destroy()
 	if(istype(loc,/mob))
 		loc.set_light(round(loc.light_range - potency/10,1))
 	..()

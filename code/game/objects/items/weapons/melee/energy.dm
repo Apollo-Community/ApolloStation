@@ -190,7 +190,7 @@
 
 	processing_objects |= src
 
-/obj/item/weapon/melee/energy/blade/qdel()
+/obj/item/weapon/melee/energy/blade/Destroy()
 	processing_objects -= src
 	..()
 

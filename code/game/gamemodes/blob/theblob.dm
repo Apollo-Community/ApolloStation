@@ -31,7 +31,7 @@
 		return
 
 
-	qdel()
+	Destroy()
 		blobs -= src
 		..()
 		return
@@ -212,7 +212,7 @@
 		icon_state = "blobidle0"
 
 
-	qdel()
+	Destroy()
 		var/obj/effect/blob/B = new /obj/effect/blob( src.loc )
 		spawn(30)
 			B.Life()

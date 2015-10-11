@@ -99,7 +99,7 @@
 /obj/structure/lattice/catwalk/Move()
 	var/turf/T = loc
 	for(var/obj/structure/cable/C in T)
-		C.qdel()
+		qdel(C)
 
 	var/turf/Tsrc = get_turf(src)
 	Tsrc.ChangeTurf(/turf/space)
@@ -108,7 +108,7 @@
 /obj/structure/lattice/catwalk/Destroy()
 	var/turf/T = loc
 	for(var/obj/structure/cable/C in T)
-		C.qdel()
+		qdel(C)
 
 	var/turf/Tsrc = get_turf(src)
 	Tsrc.ChangeTurf(/turf/space)
@@ -117,7 +117,7 @@
 /obj/structure/lattice/catwalk/Deconstruct()
 	var/turf/T = loc
 	for(var/obj/structure/cable/C in T)
-		C.qdel()
+		qdel(C)
 
 	var/turf/Tsrc = get_turf(src)
 	Tsrc.ChangeTurf(/turf/space)

@@ -944,7 +944,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		j = prob(10)
 
 	if(j) //This kills the PDA
-		P.qdel()
+		qdel(P)
 		if(message)
 			message += "It melts in a puddle of plastic."
 		else

@@ -340,10 +340,10 @@
 /dmm_suite/preloader/New(list/the_attributes)
 	.=..()
 	if(!the_attributes.len)
-		qdel()
+		Destroy()
 	attributes = the_attributes
 
 /dmm_suite/preloader/proc/load(atom/what)
 	for(var/attribute in attributes)
 		what.vars[attribute] = attributes[attribute]
-	qdel()
+	Destroy()

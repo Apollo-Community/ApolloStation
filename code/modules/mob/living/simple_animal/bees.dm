@@ -20,7 +20,7 @@
 	..()
 	parent = new_parent
 
-/mob/living/simple_animal/bee/qdel()
+/mob/living/simple_animal/bee/Destroy()
 	if(parent)
 		parent.owned_bee_swarms.Remove(src)
 	..()

@@ -22,7 +22,7 @@
 		name = "[mineralType] door"
 		update_nearby_tiles(need_rebuild=1)
 
-	qdel()
+	Destroy()
 		update_nearby_tiles()
 		..()
 

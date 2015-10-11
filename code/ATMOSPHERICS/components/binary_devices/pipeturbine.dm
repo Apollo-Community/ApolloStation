@@ -38,7 +38,7 @@
 			if(WEST)
 				initialize_directions = NORTH|SOUTH
 
-	qdel()
+	Destroy()
 		loc = null
 
 		if(node1)

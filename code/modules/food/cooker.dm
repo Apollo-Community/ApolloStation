@@ -140,4 +140,4 @@ obj/machinery/cooker/attackby(obj/item/I, mob/user)
 			setCooked(I, newfood)
 		newfood.cooktype[thiscooktype] = 1
 		turnoff(I)
-		//qdel(I)
+		//Destroy(I)

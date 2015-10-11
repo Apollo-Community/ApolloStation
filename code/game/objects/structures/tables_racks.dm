@@ -86,7 +86,7 @@
 	update_icon()
 	update_adjacent()
 
-/obj/structure/table/qdel()
+/obj/structure/table/Destroy()
 	update_adjacent()
 	..()
 
@@ -374,7 +374,7 @@
 				return 0
 			else
 				visible_message("<span class='warning'>[src] breaks down!</span>")
-				destroy()
+				Destroy()
 				return 1
 	return 1
 
@@ -432,7 +432,7 @@
 		user << "<span class='notice'>You locate the bolts and begin disassembling \the [src]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user,50))
-			destroy()
+			Destroy()
 		return
 
 	// Handle weakening.
@@ -475,7 +475,7 @@
 		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 		playsound(src.loc, "sparks", 50, 1)
 		user.visible_message("<span class='danger'>The [src] was sliced apart by [user]!</span>")
-		destroy()
+		qdel()
 
 	user.drop_item(src)
 	return

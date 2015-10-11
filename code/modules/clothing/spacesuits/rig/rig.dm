@@ -147,7 +147,7 @@
 
 	update_icon(1)
 
-/obj/item/weapon/rig/qdel()
+/obj/item/weapon/rig/Destroy()
 	for(var/obj/item/piece in list(gloves,boots,helmet,chest))
 		var/mob/living/M = piece.loc
 		if(istype(M))

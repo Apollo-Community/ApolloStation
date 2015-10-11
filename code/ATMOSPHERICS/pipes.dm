@@ -58,7 +58,7 @@
 
 	return parent.return_network(reference)
 
-/obj/machinery/atmospherics/pipe/qdel()
+/obj/machinery/atmospherics/pipe/Destroy()
 	qdel(parent)
 	if(air_temporary)
 		loc.assume_air(air_temporary)
@@ -223,7 +223,7 @@
 	else if(dir==12)
 		set_dir(4)
 
-/obj/machinery/atmospherics/pipe/simple/qdel()
+/obj/machinery/atmospherics/pipe/simple/Destroy()
 	if(node1)
 		node1.disconnect(src)
 	if(node2)
@@ -442,7 +442,7 @@
 	else
 		. = PROCESS_KILL
 
-/obj/machinery/atmospherics/pipe/manifold/qdel()
+/obj/machinery/atmospherics/pipe/manifold/Destroy()
 	if(node1)
 		node1.disconnect(src)
 	if(node2)
@@ -671,7 +671,7 @@
 	else
 		. = PROCESS_KILL
 
-/obj/machinery/atmospherics/pipe/manifold4w/qdel()
+/obj/machinery/atmospherics/pipe/manifold4w/Destroy()
 	if(node1)
 		node1.disconnect(src)
 	if(node2)
@@ -916,7 +916,7 @@
 		..()
 	else
 		. = PROCESS_KILL
-/obj/machinery/atmospherics/pipe/cap/qdel()
+/obj/machinery/atmospherics/pipe/cap/Destroy()
 	if(node)
 		node.disconnect(src)
 
@@ -1032,7 +1032,7 @@
 	else
 		. = PROCESS_KILL
 
-/obj/machinery/atmospherics/pipe/tank/qdel()
+/obj/machinery/atmospherics/pipe/tank/Destroy()
 	if(node1)
 		node1.disconnect(src)
 
@@ -1216,7 +1216,7 @@
 	else
 		parent.mingle_with_turf(loc, volume)
 
-/obj/machinery/atmospherics/pipe/vent/qdel()
+/obj/machinery/atmospherics/pipe/vent/Destroy()
 	if(node1)
 		node1.disconnect(src)
 

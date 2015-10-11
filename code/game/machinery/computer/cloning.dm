@@ -26,6 +26,10 @@
 	releasecloner()
 	..()
 
+/obj/machinery/computer/cloning/proc/releasecloner()
+	pod1.connected = null
+	pod1.name = initial(pod1.name)
+
 /obj/machinery/computer/cloning/proc/updatemodules()
 	src.scanner = findscanner()
 	src.pod1 = findcloner()

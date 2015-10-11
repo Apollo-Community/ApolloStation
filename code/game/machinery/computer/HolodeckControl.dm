@@ -160,7 +160,7 @@ var/global/list/holodeck_programs = list(
 	//		loadProgram(target)
 
 //This could all be done better, but it works for now.
-/obj/machinery/computer/HolodeckControl/qdel()
+/obj/machinery/computer/HolodeckControl/Destroy()
 	emergencyShutdown()
 	..()
 
@@ -435,7 +435,7 @@ var/global/list/holodeck_programs = list(
 	flags = ON_BORDER
 
 
-/obj/structure/holowindow/qdel()
+/obj/structure/holowindow/Destroy()
 	..()
 
 /obj/item/weapon/holo

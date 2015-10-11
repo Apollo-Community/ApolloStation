@@ -9,7 +9,7 @@ datum/pipeline
 
 	var/alert_pressure = 0
 
-	qdel()
+	Destroy()
 		if(network)
 			qdel(network)
 

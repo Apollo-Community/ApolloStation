@@ -30,7 +30,7 @@
 	spawn(1)
 		update()
 
-/obj/item/organ/qdel()
+/obj/item/organ/Destroy()
 	if(!robotic) processing_objects -= src
 	..()
 

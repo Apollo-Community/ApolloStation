@@ -53,7 +53,7 @@
 	set_light(3)
 	lastTick = world.timeofday
 
-/obj/effect/supermatter_crystal/qdel()
+/obj/effect/supermatter_crystal/Destroy()
 	if( !deleted )
 		visible_message("\red <B>\The [src] shatters!</B>")
 		playsound(loc, 'sound/effects/Glassbr2.ogg', 100, 1)

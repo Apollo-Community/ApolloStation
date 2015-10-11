@@ -11,7 +11,7 @@
 	..()
 	processing_objects.Add(src)
 
-/obj/item/weapon/holder/qdel()
+/obj/item/weapon/holder/Destroy()
 	processing_objects.Remove(src)
 	..()
 

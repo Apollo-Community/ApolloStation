@@ -17,7 +17,7 @@
 	..()
 	update_nearby_tiles(need_rebuild=1)
 
-/obj/machinery/shield/qdel()
+/obj/machinery/shield/Destroy()
 	opacity = 0
 	density = 0
 	update_nearby_tiles()
@@ -142,7 +142,7 @@
 	use_power = 0
 	idle_power_usage = 0
 
-/obj/machinery/shieldgen/qdel()
+/obj/machinery/shieldgen/Destroy()
 	collapse_shields()
 	..()
 

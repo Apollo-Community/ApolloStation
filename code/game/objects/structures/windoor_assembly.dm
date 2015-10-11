@@ -37,7 +37,7 @@ obj/structure/windoor_assembly/New(Loc, start_dir=NORTH, constructed=0)
 
 	update_nearby_tiles(need_rebuild=1)
 
-obj/structure/windoor_assembly/qdel()
+obj/structure/windoor_assembly/Destroy()
 	density = 0
 	update_nearby_tiles()
 	..()

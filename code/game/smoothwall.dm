@@ -70,7 +70,7 @@ var/list/noblend_objects = list( /obj/machinery/door/blast, /obj/machinery/door/
 
 	..()*/
 
-/turf/simulated/wall/qdel()
+/turf/simulated/wall/Destroy()
 	spawn(rand(1,10))
 		for(var/turf/simulated/wall/W in range(src,1))
 			W.relativewall()

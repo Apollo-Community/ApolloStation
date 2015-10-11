@@ -28,7 +28,7 @@
 	initialized = 1
 	return 1
 
-/obj/effect/landmark/zcontroller/qdel()
+/obj/effect/landmark/zcontroller/Destroy()
 	processing_objects.Remove(src)
 	return
 

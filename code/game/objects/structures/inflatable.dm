@@ -30,7 +30,7 @@
 	..()
 	update_nearby_tiles(need_rebuild=1)
 
-/obj/structure/inflatable/qdel()
+/obj/structure/inflatable/Destroy()
 	update_nearby_tiles()
 	..()
 

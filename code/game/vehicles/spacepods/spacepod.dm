@@ -65,7 +65,7 @@
 
 	update_icons()
 
-/obj/spacepod/qdel()
+/obj/spacepod/Destroy()
 	spacepods_list -= src
 
 	// Dumping the occupants

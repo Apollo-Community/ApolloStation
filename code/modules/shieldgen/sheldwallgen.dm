@@ -206,7 +206,7 @@
 			if(!G.active)
 				break
 
-/obj/machinery/shieldwallgen/qdel()
+/obj/machinery/shieldwallgen/Destroy()
 	src.cleanup(1)
 	src.cleanup(2)
 	src.cleanup(4)
@@ -254,7 +254,7 @@
 	else
 		qdel(src) //need at least two generator posts
 
-/obj/machinery/shieldwall/qdel()
+/obj/machinery/shieldwall/Destroy()
 	update_nearby_tiles()
 	..()
 

@@ -56,7 +56,7 @@ var/global/list/bluespace_beacons = list()
 		bluespace_beacons["[name]"] = src
 
 
-/obj/machinery/gate_beacon/qdel()
+/obj/machinery/gate_beacon/Destroy()
 	bluespace_beacons["[name]"] = null
 	..()
 

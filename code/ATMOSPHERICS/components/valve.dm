@@ -73,7 +73,7 @@
 
 	return null
 
-/obj/machinery/atmospherics/valve/qdel()
+/obj/machinery/atmospherics/valve/Destroy()
 	loc = null
 
 	if(node1)

@@ -46,7 +46,7 @@
 	if(climbable)
 		verbs += /obj/structure/proc/climb_on
 
-/obj/structure/qdel()
+/obj/structure/Destroy()
 	..()
 
 /obj/structure/proc/climb_on()
@@ -189,7 +189,7 @@
 	if(!breakable || !damage || !wallbreaker)
 		return 0
 	visible_message("<span class='danger'>[user] [attack_verb] the [src] apart!</span>")
-	spawn(1) destroy()
+	qdel()
 	return 1
 
 /obj/structure/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)

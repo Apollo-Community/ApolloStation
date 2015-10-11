@@ -88,7 +88,7 @@ obj/machinery/atmospherics/pipe/zpipe/proc/normalize_dir()
 	else if(dir==12)
 		set_dir(4)
 
-obj/machinery/atmospherics/pipe/zpipe/qdel()
+obj/machinery/atmospherics/pipe/zpipe/Destroy()
 	if(node1)
 		node1.disconnect(src)
 	if(node2)

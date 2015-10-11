@@ -507,7 +507,7 @@ datum/mind
 					for(var/obj/item/weapon/implant/loyalty/I in H.contents)
 						for(var/datum/organ/external/organs in H.organs)
 							if(I in organs.implants)
-								I.qdel()
+								qdel(I)
 								break
 					H << "\blue <Font size =3><B>Your loyalty implant has been deactivated.</B></FONT>"
 

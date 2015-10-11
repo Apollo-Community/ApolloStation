@@ -60,7 +60,7 @@
 
 	return null
 
-/obj/machinery/atmospherics/portables_connector/qdel()
+/obj/machinery/atmospherics/portables_connector/Destroy()
 	loc = null
 
 	if(connected_device)

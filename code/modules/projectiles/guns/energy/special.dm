@@ -48,7 +48,7 @@ obj/item/weapon/gun/energy/staff
 		processing_objects.Add(src)
 
 
-	qdel()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -95,7 +95,7 @@ obj/item/weapon/gun/energy/staff
 	..()
 	processing_objects.Add(src)
 
-/obj/item/weapon/gun/energy/floragun/qdel()
+/obj/item/weapon/gun/energy/floragun/Destroy()
 	processing_objects.Remove(src)
 	..()
 
@@ -154,7 +154,7 @@ obj/item/weapon/gun/energy/staff
 		processing_objects.Add(src)
 
 
-	qdel()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 

@@ -225,6 +225,6 @@
 /obj/item/weapon/grab/dropped()
 	qdel(src)
 
-/obj/item/weapon/grab/qdel()
+/obj/item/weapon/grab/Destroy()
 	qdel(hud)
 	..()

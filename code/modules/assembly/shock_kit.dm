@@ -8,7 +8,7 @@
 	w_class = 5.0
 	flags = CONDUCT
 
-/obj/item/assembly/shock_kit/qdel()
+/obj/item/assembly/shock_kit/Destroy()
 	qdel(part1)
 	qdel(part2)
 	..()

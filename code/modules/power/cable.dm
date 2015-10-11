@@ -85,7 +85,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	cable_list += src //add it to the global cable list
 
 
-/obj/structure/cable/qdel()					// called when a cable is deleted
+/obj/structure/cable/Destroy()					// called when a cable is deleted
 	if(powernet)
 		cut_cable_from_powernet()				// update the powernets
 	cable_list -= src							//remove it from global cable list
@@ -154,7 +154,7 @@ By design, d1 is the smallest direction and d2 is the highest
 					var/turf/below = locate(src.x, src.y, controller.down_target)
 					for(var/obj/structure/cable/c in below)
 						if(c.d1 == 12 || c.d2 == 12)
-							c.qdel()
+							qdel(c)
 ///// Z-Level Stuff
 		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
 

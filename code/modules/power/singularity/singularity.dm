@@ -54,7 +54,7 @@ var/global/list/uneatable = list(
 			break
 	return
 
-/obj/machinery/singularity/qdel()
+/obj/machinery/singularity/Destroy()
 	for(var/mob/M in hearers(src, null))
 		M.show_message(text("\blue A sizzling sound increases in volume until \the [src] disappears in a loud SNAP!"))
 
@@ -485,10 +485,6 @@ var/global/list/uneatable = list(
 	grav_pull = 10 //How many tiles out do we pull?
 	consume_range = 3 //How many tiles out do we eat
 	var/last_boom = 0
-
-/obj/machinery/singularity/narsie/Destroy()
-	narsie_list.Remove(src)
-	..()
 
 /obj/machinery/singularity/narsie/large
 	name = "Nar-Sie"

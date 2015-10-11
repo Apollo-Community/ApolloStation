@@ -20,7 +20,7 @@
 
 		hide(T.intact)
 
-	qdel()
+	Destroy()
 		if(Beacon)
 			qdel(Beacon)
 		..()

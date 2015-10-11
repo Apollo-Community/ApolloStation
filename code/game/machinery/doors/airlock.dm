@@ -1132,7 +1132,7 @@ About the new airlock wires panel:
 					break
 
 
-/obj/machinery/door/airlock/qdel()
+/obj/machinery/door/airlock/Destroy()
 	spawn(rand(1,10))
 		for(var/turf/simulated/wall/W in range(src,1))
 			W.relativewall()

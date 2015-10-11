@@ -96,7 +96,6 @@
 	target_temperature = 90
 
 /obj/machinery/alarm/Destroy()
-	unregister_radio(src, frequency)
 	if(wires)
 		qdel(wires)
 		wires = null
@@ -123,7 +122,7 @@
 
 	first_run()
 
-/obj/machinery/alarm/qdel()
+/obj/machinery/alarm/Destroy()
 	//If there's an active alarm, clear it after minute so that alarms don't keep going forver
 	delayed_reset()
 	..()
@@ -1309,7 +1308,7 @@ FIRE ALARM
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 
-/obj/machinery/firealarm/qdel()
+/obj/machinery/firealarm/Destroy()
 	//so fire alarms don't keep going forever
 	delayed_reset()
 	..()

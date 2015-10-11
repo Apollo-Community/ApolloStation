@@ -110,6 +110,4 @@
 		return
 
 /obj/machinery/computer/station_alert/Destroy()
-	alarm_monitor.unregister(src)
-	qdel(alarm_monitor)
 	..()

@@ -163,7 +163,7 @@ swapmap
 		z2=z?(z):1
 		AllocateSwapMap()
 
-	qdel()
+	Destroy()
 		// a temporary datum for a chunk can be deleted outright
 		// for others, some cleanup is necessary
 		if(!ischunk)

@@ -129,7 +129,7 @@ display round(lastgen) and phorontank amount
 	sheet_name = sheet.name
 	RefreshParts()
 
-/obj/machinery/power/port_gen/pacman/qdel()
+/obj/machinery/power/port_gen/pacman/Destroy()
 	DropFuel()
 	..()
 

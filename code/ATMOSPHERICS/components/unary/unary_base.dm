@@ -28,7 +28,7 @@
 
 		return null
 
-	qdel()
+	Destroy()
 		loc = null
 
 		if(node)

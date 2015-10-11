@@ -15,7 +15,7 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 
-/obj/machinery/power/qdel()
+/obj/machinery/power/Destroy()
 	disconnect_from_network()
 	..()
 

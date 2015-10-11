@@ -231,7 +231,7 @@
 
 	return null
 
-/obj/machinery/atmospherics/omni/qdel()
+/obj/machinery/atmospherics/omni/Destroy()
 	loc = null
 
 	for(var/datum/omni_port/P in ports)

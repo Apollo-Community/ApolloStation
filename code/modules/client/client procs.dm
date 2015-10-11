@@ -33,7 +33,7 @@
 	if( findtext(href,"<script",1,0) )
 		world.log << "Attempted use of scripts within a topic call, by [src]"
 		message_admins("Attempted use of scripts within a topic call, by [src]")
-		//qdel(usr)
+		//Destroy(usr)
 		return
 
 	//Admin PM
@@ -172,7 +172,7 @@
 	//////////////
 	//DISCONNECT//
 	//////////////
-/client/qdel()
+/client/Del()
 	if(holder)
 		holder.owner = null
 		admins -= src

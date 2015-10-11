@@ -670,7 +670,7 @@
 
 	// pipe is deleted
 	// ensure if holder is present, it is expelled
-	qdel()
+	Destroy()
 		var/obj/structure/disposalholder/H = locate() in src
 		if(H)
 			// holder was present

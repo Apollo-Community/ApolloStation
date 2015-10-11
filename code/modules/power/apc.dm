@@ -166,7 +166,7 @@
 		spawn(5)
 			src.update()
 
-/obj/machinery/power/apc/qdel()
+/obj/machinery/power/apc/Destroy()
 	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
 			if (src.z in config.station_levels) //if (is_type_in_list(get_area(src), the_station_areas))

@@ -26,7 +26,7 @@
 /obj/effect/plantsegment/New()
 	return
 
-/obj/effect/plantsegment/qdel()
+/obj/effect/plantsegment/Destroy()
 	if(master)
 		master.vines -= src
 		master.growth_queue -= src
@@ -305,7 +305,7 @@
 
 	processing_objects.Add(src)
 
-/obj/effect/plant_controller/qdel()
+/obj/effect/plant_controller/Destroy()
 	processing_objects.Remove(src)
 	..()
 

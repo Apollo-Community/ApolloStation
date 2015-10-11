@@ -149,7 +149,7 @@
 	pulse2.set_dir(pick(cardinal))
 
 	spawn(10)
-		pulse2.delete()
+		qdel(pulse2)
 	if(on)
 		turn_off()
 	spawn(severity*300)

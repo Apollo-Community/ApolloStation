@@ -49,7 +49,7 @@
 	set_light(round(potency/15))
 	lastTick = world.timeofday
 
-/obj/effect/glowshroom/qdel()
+/obj/effect/glowshroom/Destroy()
 	processing_objects -= src
 	..()
 

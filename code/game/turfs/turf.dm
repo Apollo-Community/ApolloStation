@@ -41,7 +41,6 @@
 	return
 
 /turf/Destroy()
-	turfs -= src
 	..()
 
 /turf/ex_act(severity)

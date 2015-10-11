@@ -433,7 +433,7 @@
 		T.pixel_y = (ingredients.len * 2)+1
 		overlays += T
 
-/obj/item/weapon/reagent_containers/food/snacks/customizable/qdel()
+/obj/item/weapon/reagent_containers/food/snacks/customizable/Destroy()
 	for(var/obj/item/O in ingredients)
 		qdel(O)
 	..()

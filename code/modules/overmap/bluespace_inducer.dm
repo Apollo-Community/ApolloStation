@@ -26,7 +26,7 @@
 	..()
 
 
-/obj/machinery/power/bluespace_inducer/qdel()
+/obj/machinery/power/bluespace_inducer/Destroy()
 	if( beacon )
 		beacon.inducers.Remove( src )
 
@@ -105,7 +105,7 @@
 
 	process()
 		if( !active )
-			qdel()
+			Destroy()
 		if( child )
 			return
 		if( power <= 1 )
@@ -121,7 +121,7 @@
 			wall.take_damage(damage)
 
 
-	qdel()
+	Destroy()
 		if( child )
 			qdel( child )
 */

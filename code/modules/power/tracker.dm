@@ -21,7 +21,7 @@
 	Make(S)
 	connect_to_network()
 
-/obj/machinery/power/tracker/qdel()
+/obj/machinery/power/tracker/Destroy()
 	unset_control() //remove from control computer
 	..()
 

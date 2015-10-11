@@ -93,5 +93,5 @@ you will have to do something like if(client.holder.rights & R_ADMIN) yourself.
 /client/proc/deadmin()
 	if(holder)
 		holder.disassociate()
-		//qdel(holder)
+		//Destroy(holder)
 	return 1

@@ -14,7 +14,7 @@
 		..(loc, h)
 
 
-	qdel()
+	Destroy()
 		blob_cores -= src
 		processing_objects.Remove(src)
 		..()

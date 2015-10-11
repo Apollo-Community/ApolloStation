@@ -171,7 +171,7 @@
 	return
 
 /*
-/obj/effect/hotspot/qdel()
+/obj/effect/hotspot/Destroy()
 	if (istype(loc, /turf/simulated))
 		DestroyTurf()
 	..()

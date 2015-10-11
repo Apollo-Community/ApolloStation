@@ -16,7 +16,7 @@
 	relativewall_neighbours()
 	..()
 
-/obj/structure/grille/qdel()
+/obj/structure/grille/Destroy()
 	spawn(rand(1,10))
 		for(var/turf/simulated/wall/W in range(src,1))
 			W.relativewall()

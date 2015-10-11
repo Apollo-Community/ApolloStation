@@ -14,7 +14,7 @@
 	New()
 		return
 
-	qdel()
+	Destroy()
 		if(master)
 			master.vines -= src
 			master.growth_queue -= src
@@ -61,7 +61,7 @@
 		spawn_biomass_piece(src.loc)
 		processing_objects.Add(src)
 
-	qdel()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
