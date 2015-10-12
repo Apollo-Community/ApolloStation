@@ -470,4 +470,6 @@ var/global/datum/controller/gameticker/ticker
 
 	statistics.call_stats() // Show the end-round stats
 
+	multiboot()
+
 	return 1

@@ -12,6 +12,7 @@ var/global/datum/global_init/init = new ()
 
 
 /world
+	name = "Apollo Station"
 	mob = /mob/new_player
 	turf = /turf/space
 	area = /area/space
@@ -241,9 +242,12 @@ var/world_topic_spam_protect_time = world.timeofday
 
 	processScheduler.stop()
 
-	for(var/client/C in clients)
-		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
-			C << link("byond://[config.server]")
+	if( config.server )
+		if( config.port )
+			redirect( "byond://[config.server]:[config.port]" )
+
+	if( config.multiboot )
+		shell( "sh stop.sh [config.port]" )
 
 	..(reason)
 

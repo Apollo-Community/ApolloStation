@@ -170,7 +170,10 @@ GUEST_BAN
 # USEWHITELIST
 
 ## set a server location for world reboot. Don't include the byond://, just give the address and port.
-# SERVER server.net:port
+# SERVER server.net
+
+## set a default server port
+# SERVER_PORT port
 
 
 ## forum address
