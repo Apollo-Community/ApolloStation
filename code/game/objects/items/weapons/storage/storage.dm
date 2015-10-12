@@ -24,6 +24,15 @@
 	var/foldable = null	// BubbleWrap - if set, can be folded (when empty) into a sheet of cardboard
 	var/use_sound = "rustle"	//sound played when used. null for no sound.
 
+/obj/item/weapon/storage/Destroy()
+	for( var/I in src )
+		qdel(I)
+	can_hold = null
+	cant_hold = null
+	boxes = null
+	closer = null
+	..()
+
 /obj/item/weapon/storage/MouseDrop(obj/over_object as obj)
 
 	if(!canremove)
