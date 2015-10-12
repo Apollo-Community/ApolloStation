@@ -42,8 +42,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttle.dock_target_offsite = "centcom_dock"
 	shuttle.transit_direction = NORTH
 	shuttle.move_time = SHUTTLE_TRANSIT_DURATION_RETURN
-	//shuttle.docking_controller_tag = "supply_shuttle"
-	//shuttle.dock_target_station = "cargo_bay"
 	shuttles["Escape"] = shuttle
 	process_shuttles += shuttle
 
@@ -89,21 +87,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 	process_shuttles += shuttle
 	shuttles["Escape Pod 3"] = shuttle
 
-	//There is no pod 4, apparently.
-
-	shuttle = new/datum/shuttle/ferry/escape_pod()
-	shuttle.location = 0
-	shuttle.warmup_time = 0
-	shuttle.area_station = locate(/area/shuttle/escape_pod5/station)
-	shuttle.area_offsite = locate(/area/shuttle/escape_pod5/centcom)
-	shuttle.area_transition = locate(/area/shuttle/escape_pod5/transit)
-	shuttle.docking_controller_tag = "escape_pod_5"
-	shuttle.dock_target_station = "escape_pod_5_berth"
-	shuttle.dock_target_offsite = "escape_pod_5_recovery"
-	shuttle.transit_direction = EAST //should this be WEST? I have no idea.
-	shuttle.move_time = SHUTTLE_TRANSIT_DURATION_RETURN + rand(-30, 60)	//randomize this so it seems like the pods are being picked up one by one
-	process_shuttles += shuttle
-	shuttles["Escape Pod 5"] = shuttle
 
 	//give the emergency shuttle controller it's shuttles
 	emergency_shuttle.shuttle = shuttles["Escape"]
@@ -205,7 +188,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 		"Mining Asteroid" = locate(/area/syndicate_station/mining),
 		)
 
-	MS.docking_controller_tag = "merc_shuttle"
 	MS.destination_dock_targets = list(
 		"Mercenary Base" = "merc_base"
 		)

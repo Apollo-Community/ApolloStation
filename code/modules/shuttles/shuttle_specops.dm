@@ -88,7 +88,7 @@
 
 /datum/shuttle/ferry/multidock/specops/move(var/area/origin,var/area/destination)
 	..(origin, destination)
-
+	
 	spawn(20)
 		if (!location)	//just arrived home
 			for(var/turf/T in get_area_turfs(destination))
@@ -99,7 +99,7 @@
 			for(var/turf/T in get_area_turfs(destination))
 				var/mob/M = locate(/mob) in T
 				M << "\red You have arrived at [station_name]. Commence operation!"
-
+				
 				var/obj/machinery/light/small/readylight/light = locate() in T
 				if(light) light.set_state(1)
 
