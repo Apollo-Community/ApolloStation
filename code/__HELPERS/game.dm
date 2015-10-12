@@ -482,8 +482,8 @@ datum/projectile_data
 		for( var/port in config.usable_ports )
 			if( port != world.port )
 				world.visibility = 0
-				config.port = port
-				shell( "sh start.sh [config.port]" ) // Prepares the new server instance
+				if( !shell( "sh start.sh [config.port]" )) // Prepares the new server instance
+					config.port = port
 
 // Swaps everyone over to the new instance of the server
 /proc/redirect( var/destination )
