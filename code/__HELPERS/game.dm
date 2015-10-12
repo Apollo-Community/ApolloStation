@@ -474,19 +474,3 @@ datum/projectile_data
 
 /proc/MinutesToTicks(var/minutes as num)
 	return minutes * 60 * 10
-
-
-// Starts another instance of the server as this one is ending, to minimize time spent waiting in the reset
-/proc/multiboot()
-	if( config.multiboot )
-		for( var/port in config.usable_ports )
-			if( port != world.port )
-				world.visibility = 0
-				config.port = port
-				shell( "sh start.sh [config.port]" ) // Prepares the new server instance
-
-// Swaps everyone over to the new instance of the server
-/proc/redirect( var/destination )
-	if( config.multiboot )
-		for( var/client/C in clients )
-			C << link( destination )
