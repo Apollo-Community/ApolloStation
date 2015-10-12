@@ -10,7 +10,7 @@
 	New() //set the turf below the flaps to block air
 		var/turf/T = get_turf(loc)
 
-		light_color = "#003329"
+		light_color = "#66FFFF"
 		light_range = 3
 
 		if(T)

@@ -96,7 +96,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	icon = 'icons/effects/fire.dmi'
 
 	icon_state = "1"
-	light_color = "#FFCC00"
+	light_color = FIRE_COLOR
 
 	layer = TURF_LAYER
 
@@ -113,11 +113,11 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 
 	if( phoron_content > 0 )
 		icon_state = "phoron_1"
-		light_color = "#330080"
+		light_color = FIRE_PHORON_COLOR
 		phoron_fire = 1
 	else
 		icon_state = "1"
-		light_color = "#FFCC00"
+		light_color = FIRE_COLOR
 
 	if(!istype(my_tile) || !my_tile.zone)
 		if(my_tile.fire == src)
@@ -128,23 +128,23 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	if( phoron_fire )
 		if(firelevel > 6)
 			icon_state = "phoron_3"
-			set_light( 7 )
+			set_light( 12 )
 		else if(firelevel > 2.5)
 			icon_state = "phoron_2"
-			set_light( 5 )
+			set_light( 8 )
 		else
 			icon_state = "phoron_1"
-			set_light( 3 )
+			set_light( 5 )
 	else
 		if(firelevel > 6)
 			icon_state = "3"
-			set_light( 7 )
+			set_light( 12 )
 		else if(firelevel > 2.5)
 			icon_state = "2"
-			set_light( 5 )
+			set_light( 8 )
 		else
 			icon_state = "1"
-			set_light( 3 )
+			set_light( 5 )
 
 
 
