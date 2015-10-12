@@ -17,6 +17,8 @@
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()
+	disconnect_terminal()
+
 	..()
 
 ///////////////////////////////
@@ -73,7 +75,7 @@
 		return 0					// if not, then not powered
 	if(chan == -1)
 		chan = power_channel
-	return A.powered(chan)	// return power status of the area
+	return A.powered(chan)			// return power status of the area
 
 // increment the power usage stats for an area
 /obj/machinery/proc/use_power(var/amount, var/chan = -1) // defaults to power_channel
@@ -369,15 +371,17 @@
 		power_source = cell
 		shock_damage = cell_damage
 
+	// Capping the shock damage
 	if( shock_damage > max_damage )
 		shock_damage = max_damage
+
 	var/drained_hp = M.electrocute_act(shock_damage, source, siemens_coeff) //zzzzzzap!
 	var/drained_energy = drained_hp*20
 
 	if (source_area)
 		source_area.use_power(drained_energy/CELLRATE)
 	else if (istype(power_source,/datum/powernet))
-		var/drained_power = drained_energy/CELLRATE //convert from "joules" to "watts"
+		var/drained_power = drained_energy/CELLRATE
 		drained_power = PN.draw_power(drained_power)
 	else if (istype(power_source, /obj/item/weapon/cell))
 		cell.use(drained_energy)
