@@ -246,7 +246,7 @@ var/world_topic_spam_protect_time = world.timeofday
 		if( config.port )
 			redirect( "byond://[config.server]:[config.port]" )
 
-	if( config.multiboot && world.port != config.port ) // If multiboot and if the multiboot instance has been started
+	if( config.multiboot )
 		shell( "sh stop.sh [config.port]" )
 
 	..(reason)
