@@ -52,16 +52,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "unknown"
 	layer = 10
+	luminosity = 0
 	mouse_opacity = 0
-	luminosity = 1
-
 	var/lightswitch = 1
 
 	var/eject = null
 
 	var/debug = 0
 	var/requires_power = 1
-	var/unlimited_power = 0
 	var/always_unpowered = 0	//this gets overriden to 1 for space in area/New()
 
 	var/power_equip = 1
@@ -71,12 +69,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/used_light = 0
 	var/used_environ = 0
 
-	var/environment = ROOM
-
 	var/has_gravity = 1
 	var/list/apc = list()
 	var/no_air = null
-
+//	var/list/lights				// list of all lights on this area
 	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
 	var/air_doors_activated = 0
 	var/list/ambience = list( 'sound/ambience/shipambience.ogg' )
@@ -84,6 +80,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/sound/forced_ambience = null
 
 	var/rad_shielded = 0
+	var/environment = ROOM
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
@@ -119,19 +116,28 @@ var/list/ghostteleportlocs = list()
 
 	return 1
 
+
+
 /*-----------------------------------------------------------------------------*/
+
+/////////
+//SPACE//
+/////////
+
 /area/space
 	name = "\improper Space"
 	icon_state = "space"
 	requires_power = 1
 	always_unpowered = 1
-	luminosity = 1
 	power_light = 0
 	power_equip = 0
 	power_environ = 0
 	music = list('sound/ambience/ambispace.ogg','sound/ambience/ambispace1.ogg')
 	ambience = list()
 	environment = PLAIN
+
+area/space/atmosalert()
+	return
 
 /area/space/firealert()
 	return
@@ -396,7 +402,6 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Centcom"
 	icon_state = "centcom"
 	requires_power = 0
-	unlimited_power = 1
 
 /area/centcom/control
 	name = "\improper Centcom Control"
@@ -434,7 +439,6 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Mercenary Base"
 	icon_state = "syndie-ship"
 	requires_power = 0
-	unlimited_power = 1
 
 /area/syndicate_mothership/control
 	name = "\improper Mercenary Control Room"
@@ -502,7 +506,6 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Independant Station"
 	icon_state = "yellow"
 	requires_power = 0
-	unlimited_power = 1
 	rad_shielded = 1
 
 /area/syndicate_station/start
@@ -2248,21 +2251,20 @@ var/list/ghostteleportlocs = list()
 	name = "\improper valans shuttle"
 	icon_state = "south"
 	requires_power = 0
-	unlimited_power = 1
 	 // the ship doesn't have any lights
 	environment = PLAIN
+
 /area/adminprep/valansshiparrival
 	name = "\improper valans shuttle arrival"
 	icon_state = "south"
 	requires_power = 0
-	unlimited_power = 1
 	 // the ship doesn't have any lights
 	environment = PLAIN
+
 /area/adminprep/valanspreparea
 	name = "\improper valan prep room"
 	icon_state = "red"
 	requires_power = 0
-	unlimited_power = 1
 	environment = PLAIN
 
 // Asteroid fields - it's space really
@@ -2271,15 +2273,17 @@ var/list/ghostteleportlocs = list()
 	icon_state = "red"
 	environment = HANGAR
 	requires_power = 0
-	unlimited_power = 1
+
 /area/asteroidfields/asteroidarea1
 	name = "\improper Pirate Asteroid area1"
 	icon_state = "bluenew"
 	environment = STONE_CORRIDOR
+
 /area/asteroidfields/asteroidcave
 	name = "\improper Pirate Asteroid cave"
 	icon_state = "purple"
 	environment = CAVE
+
 /area/asteroidfields/shuttle
 	name = "\improper Pirate Asteroid shuttle area"
 	icon_state = "south"
