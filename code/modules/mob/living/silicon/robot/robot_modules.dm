@@ -189,7 +189,7 @@
 		/obj/item/stack/sheet/metal = 50,
 		/obj/item/stack/sheet/glass = 50,
 		/obj/item/stack/sheet/glass/reinforced = 50,
-		/obj/item/stack/cable_coil/robot = 50,
+		/obj/item/stack/cable_coil/cyborg = 50,
 		/obj/item/stack/rods = 15,
 		/obj/item/stack/tile/plasteel = 15
 		)
@@ -401,7 +401,7 @@
 		/obj/item/stack/tile/plasteel = 15,
 		/obj/item/stack/sheet/metal = 20,
 		/obj/item/stack/sheet/glass = 20,
-		/obj/item/stack/cable_coil/robot = 30
+		/obj/item/stack/cable_coil/cyborg = 30
 		)
 
 /obj/item/weapon/robot_module/drone/New()
