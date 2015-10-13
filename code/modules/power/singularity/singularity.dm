@@ -291,9 +291,9 @@ var/global/list/uneatable = list(
 
 		if((teleport_del) && (!istype(A, /obj/machinery)))//Going to see if it does not lag less to tele items over to Z 2
 			var/obj/O = A
-			O.x = 2
-			O.y = 2
-			O.z = 2
+
+			var/area/bspace = locate( /area/space/bluespace )
+			O.loc = pick(get_area_turfs( bspace ))
 		else
 			A.ex_act(1.0)
 			if(A) qdel(A)
