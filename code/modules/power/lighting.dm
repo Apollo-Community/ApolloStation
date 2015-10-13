@@ -153,6 +153,7 @@
 								// this is used to calc the probability the light burns out
 
 	var/rigged = 0				// true if rigged to explode
+	var/north_offset = 19 		// how much to offset on northern walls
 
 // the smaller bulb light fixture
 
@@ -184,12 +185,30 @@
 	update(0)
 	..()
 
+// candles
+
+/obj/machinery/light/candle
+	icon_state = "wallcandle1"
+	base_state = "wallcandle"
+	fitting = "wallcandle"
+	brightness_range = 4
+	brightness_power = 2
+	brightness_color = "#FFB27F"
+	desc = "A small candle affixed to a wall stand."
+	light_type = /obj/item/weapon/light/candle
+
 // create a new lighting fixture
 /obj/machinery/light/New()
 	..()
 
 	spawn(2)
 		on = has_power()
+
+		if( src.dir == 1 )
+			var/turf/T = get_step( get_turf( src ), src.dir )
+
+			if( istype( T, /turf/simulated/wall ) && istype( T, /turf/simulated/wall ))
+				pixel_y = north_offset
 
 		switch(fitting)
 			if("tube")
@@ -599,6 +618,16 @@
 	var/brightness_range = 2 //how much light it gives off
 	var/brightness_power = 1
 	var/brightness_color = null
+
+/obj/item/weapon/light/candle
+	name = "candle"
+	desc = "A electric candle, used to really set the mood."
+	icon_state = "candle"
+	base_state = "candle"
+	item_state = ""
+	matter = list("glass" = 100)
+	brightness_range = 8
+	brightness_power = 3
 
 /obj/item/weapon/light/tube
 	name = "light tube"
