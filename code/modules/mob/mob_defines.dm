@@ -69,6 +69,7 @@
 	var/stuttering = null	//Carbon
 	var/slurring = null		//Carbon
 	var/real_name = null
+	var/list/trigger_words = list() // mah triggers, warning of triggers, trigger my warnings
 	var/flavor_text = ""
 	var/med_record = ""
 	var/sec_record = ""

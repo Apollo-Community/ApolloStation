@@ -11,6 +11,10 @@
 		dead_mob_list += src
 	else
 		living_mob_list += src
+
+	spawn(10)
+		if( real_name )
+			trigger_words += text2list( real_name, " " )
 	..()
 
 /mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
@@ -590,6 +594,24 @@ var/list/slot_equipment_priority = list( \
 	if(istype(M,/mob/living/silicon/ai)) return
 	show_inv(usr)
 
+/mob/verb/add_alert_word()
+	set name = "Alert Words Add"
+	set category = "IC"
+
+	var/word = sanitizeSafe(input(usr, "What word would you like to add to your alerts?", "Add Alert", null)  as text, MAX_NAME_LEN)
+
+	if( word )
+		if( trigger_words )
+			trigger_words += word
+
+/mob/verb/del_alert_word()
+	set name = "Alert Words Remove"
+	set category = "IC"
+
+	var/word = input("What do you want to yank out?", "Embedded objects") in trigger_words
+
+	if( word )
+		trigger_words -= word
 
 /mob/verb/stop_pulling()
 

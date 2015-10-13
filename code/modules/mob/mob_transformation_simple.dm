@@ -36,9 +36,11 @@
 	if( istext(new_name) )
 		M.name = new_name
 		M.real_name = new_name
+		M.trigger_words = text2list( new_name, " " )
 	else
 		M.name = src.name
 		M.real_name = src.real_name
+		M.trigger_words = text2list( src.real_name, " " )
 
 	if(src.dna)
 		M.dna = src.dna.Clone()

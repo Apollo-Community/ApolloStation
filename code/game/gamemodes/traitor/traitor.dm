@@ -51,6 +51,7 @@
 		if (!possible_traitors.len)
 			break
 		var/datum/mind/traitor = pick(possible_traitors)
+
 		traitors += traitor
 		traitor.special_role = "traitor"
 		possible_traitors.Remove(traitor)
@@ -304,3 +305,6 @@
 	if(M && M != traitor_mob)
 		traitor_mob << "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them."
 		traitor_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
+
+	traitor_mob.trigger_words += syndicate_code_phrase
+	traitor_mob.trigger_words += syndicate_code_response
