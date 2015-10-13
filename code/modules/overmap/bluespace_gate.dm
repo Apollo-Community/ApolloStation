@@ -52,7 +52,10 @@
 	var/x_off = source.x-A_turf.x
 	var/y_off = source.y-A_turf.y
 
-	var/turf/bluespace = locate( rand( OVERMAP_EDGE, world.maxx-OVERMAP_EDGE ), rand( OVERMAP_EDGE, world.maxy-OVERMAP_EDGE ), BLUESPACE_LEVEL )
+	var/area/bspace = locate( /area/space/bluespace )
+	var/turf/bluespace = pick( get_area_turfs( bspace ))
+
+//	var/turf/bluespace = locate( rand( OVERMAP_EDGE, world.maxx-OVERMAP_EDGE ), rand( OVERMAP_EDGE, world.maxy-OVERMAP_EDGE ), BLUESPACE_LEVEL )
 	var/turf/destination
 
 	// Getting the amount of time that the object will spend in bluespace

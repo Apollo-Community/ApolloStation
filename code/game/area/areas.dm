@@ -129,6 +129,7 @@ var/list/ghostteleportlocs = list()
 	icon_state = "space"
 	requires_power = 1
 	always_unpowered = 1
+	lighting_use_dynamic = 0
 	power_light = 0
 	power_equip = 0
 	power_environ = 0
@@ -177,15 +178,13 @@ area/space/atmosalert()
 
 /area/shuttle
 	requires_power = 0
-	luminosity = 1
+	lighting_use_dynamic = 0
+	environment = CAVE
 
 /area/podbay
 	name = "\improper Podbay"
 	icon_state = "yellow"
 	environment = SEWER_PIPE
-
-/area/shuttle
-	environment = CAVE
 
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
@@ -211,6 +210,8 @@ area/space/atmosalert()
 /area/shuttle/escape/transit // the area to pass through for 3 minute transit
 	name = "\improper Emergency Shuttle Transit"
 	icon_state = "shuttle"
+	ambience = list('sound/ambience/ambbspace.ogg')
+	environment = UNDERWATER
 
 /area/shuttle/escape_pod1
 	name = "\improper Escape Pod One"
@@ -224,6 +225,8 @@ area/space/atmosalert()
 
 /area/shuttle/escape_pod1/transit
 	icon_state = "shuttle"
+	ambience = list('sound/ambience/ambbspace.ogg')
+	environment = UNDERWATER
 
 /area/shuttle/escape_pod2
 	name = "\improper Escape Pod Two"
@@ -237,6 +240,8 @@ area/space/atmosalert()
 
 /area/shuttle/escape_pod2/transit
 	icon_state = "shuttle"
+	ambience = list('sound/ambience/ambbspace.ogg')
+	environment = UNDERWATER
 
 /area/shuttle/escape_pod3
 	name = "\improper Escape Pod Three"
@@ -250,6 +255,8 @@ area/space/atmosalert()
 
 /area/shuttle/escape_pod3/transit
 	icon_state = "shuttle"
+	ambience = list('sound/ambience/ambbspace.ogg')
+	environment = UNDERWATER
 
 /area/shuttle/escape_pod5 //Pod 4 was lost to meteors
 	name = "\improper Escape Pod Five"
@@ -263,6 +270,8 @@ area/space/atmosalert()
 
 /area/shuttle/escape_pod5/transit
 	icon_state = "shuttle"
+	ambience = list('sound/ambience/ambbspace.ogg')
+	environment = UNDERWATER
 
 /area/shuttle/mining
 	name = "\improper Mining Shuttle"
@@ -386,8 +395,8 @@ area/space/atmosalert()
 	name = "start area"
 	icon_state = "start"
 	requires_power = 0
-	luminosity = 1
 	has_gravity = 1
+	lighting_use_dynamic = 0
 
 // === end remove
 
@@ -549,8 +558,10 @@ area/space/atmosalert()
 	icon_state = "shuttle"
 
 /area/syndicate_station/transit
-	name = "\improper hyperspace"
+	name = "\improper bluespace"
 	icon_state = "shuttle"
+	ambience = list('sound/ambience/ambbspace.ogg')
+	environment = UNDERWATER
 
 /area/wizard_station
 	name = "\improper Wizard's Den"
@@ -562,24 +573,30 @@ area/space/atmosalert()
 	rad_shielded = 1
 
 /area/vox_station/transit
-	name = "\improper hyperspace"
+	name = "\improper bluespace"
 	icon_state = "shuttle"
+	ambience = list('sound/ambience/ambbspace.ogg')
+	environment = UNDERWATER
 
 /area/vox_station/southwest_solars
 	name = "\improper aft port solars"
 	icon_state = "southwest"
+	lighting_use_dynamic = 0
 
 /area/vox_station/northwest_solars
 	name = "\improper fore port solars"
 	icon_state = "northwest"
+	lighting_use_dynamic = 0
 
 /area/vox_station/northeast_solars
 	name = "\improper fore starboard solars"
 	icon_state = "northeast"
+	lighting_use_dynamic = 0
 
 /area/vox_station/southeast_solars
 	name = "\improper aft starboard solars"
 	icon_state = "southeast"
+	lighting_use_dynamic = 0
 
 /area/vox_station/mining
 	name = "\improper nearby mining asteroid"
@@ -645,6 +662,7 @@ area/space/atmosalert()
 	name = "\improper Prison Solar Array"
 	icon_state = "storage"
 	requires_power = 0
+	lighting_use_dynamic = 0
 
 /area/prison/podbay
 	name = "\improper Prison Podbay"
@@ -1250,6 +1268,7 @@ area/space/atmosalert()
 /area/solar
 	requires_power = 1
 	always_unpowered = 1
+	lighting_use_dynamic = 0
 	luminosity = 1
 	environment = PLAIN
 
