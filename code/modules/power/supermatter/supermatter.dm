@@ -10,45 +10,50 @@
 	desc = "A strangely translucent and iridescent crystal. \red You get headaches just from looking at it."
 	icon = 'icons/obj/supermatter.dmi'
 	icon_state = "supermatter"
+	var/base_icon = "base"
+
 	density = 1
 	anchored = 0
 
 	light_range = 3
-	light_color = "#FFFF00"
+	light_color = SM_DEFAULT_COLOR
+	light_power = 3
 
-	var/smlevel = 1
-	var/changed = 1	// adminbus
+	color = SM_DEFAULT_COLOR
+
 	var/bare = 0
 
-	var/base_icon_state = "supermatter"
+	var/smlevel = 1
 
 	var/power = 0
 	var/power_percent = 0
 	var/power_archived = 0
+
 	var/damage = 0
 	var/damage_archived = 0
+
 	var/safe_alert = ""
 	var/safe_warned = 0
+
 	var/emergency_issued = 0
 	var/lastwarning = 0
 	var/warning_point = 100
+
 	var/emergency_point = 500
 	var/explosion_point = 1000
 
 	var/obj/item/device/radio/radio
 
-	light_color = "#8A8A00"
-	var/warning_color = "#B8B800"
-	var/emergency_color = "#D9D900"
-
 	var/grav_pulling = 0
 	var/exploded = 0
 
 	var/debug = 0
-	var/processed = 0
 
 /obj/machinery/power/supermatter/New()
 	. = ..()
+
+	update_icon()
+
 	radio = new (src)
 
 
@@ -61,27 +66,34 @@
 	log_game("Supermatter exploded at ([x],[y],[z])")
 	grav_pulling = 1
 	exploded = 1
+
 	spawn(smvsc.detonate_delay * 10)
 		var/turf/epicenter = get_turf(src)
+
 		explosion(epicenter, \
 		          min(1 * (smvsc.explosion_size + (power_percent * smlevel)), (smvsc.explosion_size) * 3), \
 		          min(2 * (smvsc.explosion_size + (power_percent * smlevel)), (smvsc.explosion_size) * 4), \
 		          min(3 * (smvsc.explosion_size + (power_percent * smlevel)), (smvsc.explosion_size) * 5), \
 		          min(4 * (smvsc.explosion_size + (power_percent * smlevel)), (smvsc.explosion_size) * 6), 1)
+
+		sleep(1) // just need to catch our breath
+
 		supermatter_delamination(epicenter, \
 		          min(4 * (smvsc.explosion_size + (power_percent * smlevel)), (smvsc.explosion_size) * 6), 1, smlevel)
 		del src
 		return
 
 //Changes color and light_range of the light to these values if they were not already set
-/obj/machinery/power/supermatter/proc/shift_light(var/lum, var/clr)
-	if(light_color != clr)
-		light_color = clr
-	if(light_range != lum)
-		set_light(lum)
+/obj/machinery/power/supermatter/proc/shift_light( var/clr, var/lum = light_range )
+	light_color = clr
+	light_range = lum
+
+	color = clr
+
+	set_light( light_range, light_power, light_color )
 
 /obj/machinery/power/supermatter/proc/announce_warning()
-	var/integrity = damage / (explosion_point + ( (smvsc.fusion_stability / explosion_point) * smlevel) )
+	var/integrity = damage / (explosion_point + (( smvsc.fusion_stability / explosion_point ) * smlevel ))
 	integrity = round(100 - integrity * 100)
 	integrity = integrity < 0 ? 0 : integrity
 	var/alert_msg = " Integrity at [integrity]%"
@@ -103,17 +115,45 @@
 		radio.autosay(alert_msg, "Supermatter Monitor")
 
 /obj/machinery/power/supermatter/process()
-	power_percent = (power / (smvsc.base_power*(smlevel ** smvsc.fusion_power))) // This was a fucking pain to use over and over again.
-	processed += 1
+	power_percent = ( power/( smvsc.base_power*( smlevel ** smvsc.fusion_power ))) // This was a fucking pain to use over and over again.
 
 	// SUPERMATTER LOCATION CHECK
+	if( turfCheck() )
+		return
+
+	// SUPERMATTER ALERT CHECK
+	alertCheck()
+
+	if(grav_pulling)
+		supermatter_pull()
+
+	// SUPERMATTER GAS INTERACTIONS
+	hanldeEnvironment()
+
+	// SUPERMATTER CRITICAL FAILURE
+	if( prob( smlevel/smvsc.crit_stability ))
+		critFail()
+
+	// SUPERMATTER PSIONIC SHIT
+	psionicBurst()
+
+	// SUPERMATTER RADIATION
+	radiate()
+
+	// SUPERMATTER DECAY
+	decay()
+
+	return 1
+
+/obj/machinery/power/supermatter/proc/turfCheck()
 	var/turf/L = loc
 	if(isnull(L))		// We have a null turf...something is wrong, stop processing this entity.
 		return PROCESS_KILL
 	if(!istype(L)) 	//We are in a crate or somewhere that isn't turf, if we return to turf resume processing but for now.
-		return  //Yeah just stop.
+		return 1 //Yeah just stop.
 
-	// SUPERMATTER ALERT CHECK
+/obj/machinery/power/supermatter/proc/alertCheck()
+	var/turf/L = loc
 	if(damage > (explosion_point + ( (smvsc.fusion_stability / explosion_point) * smlevel) ))
 		if(!exploded)
 			if(!istype(L, /turf/space))
@@ -123,40 +163,18 @@
 		if(!istype(L, /turf/space))
 			announce_warning()
 
-	// SUPERMATTER CHANGE CHECK
-	if( (smlevel != changed) || ((power_percent-power_archived)*120)>=1 )
-		changed = smlevel
-		power_archived = power_percent
-		update_icon()
-	if(grav_pulling)
-		supermatter_pull()
-	for(var/obj/machinery/power/supermatter/S in orange(10, src))
-		spawn( 0 )
-			step_towards(S,src) // Supermatters are drawn to eachother.
-
-
-	// SUPERMATTER DAMAGE LIMIT
+/obj/machinery/power/supermatter/proc/hanldeEnvironment()
 	var/damage_inc_limit = ( power_percent * smvsc.damage_factor * 100)
+	var/turf/L = loc
 
-	// SUPERMATTER GAS CONSUMPTION
 	var/datum/gas_mixture/removed = null
 	var/datum/gas_mixture/env = null
 
+	// Getting the environment gas
 	if(!istype(L, /turf/space))
 		env = L.return_air()
-		removed = env.remove( max(env.total_moles / 10, min(smlevel * smvsc.consumption_rate, env.total_moles) ) )
+		removed = env.remove( max( env.total_moles/10, min( smlevel * smvsc.consumption_rate, env.total_moles )))
 
-	// SUPERMATTER CRITICAL FAILURE
-	if (prob(smlevel / smvsc.crit_stability))
-		var/crit_damage = rand(0, (smvsc.crit_danger * (smlevel ** smvsc.fusion_power) ) )	// Take a bunch of damage. 5 = 500, 10 = 2000, 15 = 4500, 20 = 8000
-		damage += crit_damage
-		var/integrity = crit_damage / (explosion_point + ( (smvsc.fusion_stability / explosion_point) * smlevel) )
-		integrity = round(100 - integrity * 100)
-		integrity = integrity < 0 ? 0 : integrity
-		radio.autosay("CRITICAL FAILURE! [integrity]% Integrity Lost!", "Supermatter Monitor")
-		announce_warning()
-
-	// SUPERMATTER ENVIRONMENT PROCESSING
 	if(!env || !removed || !removed.total_moles)
 		damage += (10 * smlevel * smvsc.damage_factor)
 
@@ -170,8 +188,6 @@
 		var/phoron = removed.gas["phoron"]
 		var/carbon = removed.gas["carbon_dioxide"]
 		var/sleepy = removed.gas["sleeping_agent"]
-
-
 
 		if(sleepy)
 			power = max(0, power-sleepy)
@@ -221,25 +237,39 @@
 		removed.add_thermal_energy(power*smvsc.thermal_factor*(power_percent**2))
 		env.merge(removed)
 
-
-	// SUPERMATTER PSIONIC SHIT
-	for(var/mob/living/carbon/human/l in view(src, 7)) // If they can see it without mesons on.  Bad on them.
+/obj/machinery/power/supermatter/proc/psionicBurst()
+	for(var/mob/living/carbon/human/l in oview(src, 7)) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 			if(!isnucleation(l))
 				l.hallucination = max(0, min(smlevel*smvsc.psionic_power, l.hallucination + ((power/smvsc.base_power)*smvsc.psionic_power) * sqrt(1 / max(1,get_dist(l, src)))))
 			else
 				l.hallucination = max(0, min(smlevel*(smvsc.psionic_power/5), l.hallucination + ((power/smvsc.base_power)*(smvsc.psionic_power/5)) * sqrt(1 / max(1,get_dist(l, src)))))
 
-	// SUPERMATTER RADIATION
+/obj/machinery/power/supermatter/proc/radiate()
 	for(var/mob/living/l in range(src, round(sqrt(((power/smvsc.base_power)*7) / 5))))
 		var/rads = ((power/smvsc.base_power)*smvsc.radiation_power) * sqrt( 1 / get_dist(l, src) )
 		l.apply_effect(rads, IRRADIATE)
 
-	// SUPERMATTER DECAY
+/obj/machinery/power/supermatter/proc/decay()
 	var/decay = min(0.01, (power_percent**5)) * smvsc.decay_rate
 	power = max(0, power-decay)
 
-	return 1
+/obj/machinery/power/supermatter/proc/critFail()
+	var/crit_damage = rand(0, (smvsc.crit_danger * (smlevel ** smvsc.fusion_power) ) )	// Take a bunch of damage. 5 = 500, 10 = 2000, 15 = 4500, 20 = 8000
+
+	damage += crit_damage
+
+	var/integrity = crit_damage / (explosion_point + ( (smvsc.fusion_stability / explosion_point) * smlevel) )
+	integrity = round(100 - integrity * 100)
+	integrity = integrity < 0 ? 0 : integrity
+	radio.autosay("CRITICAL FAILURE! [integrity]% Integrity Lost!", "Supermatter Monitor")
+	announce_warning()
+
+/obj/machinery/power/supermatter/proc/smLevelChange( var/level_increase = 1 )
+	smlevel += level_increase
+
+	power_archived = power_percent
+	update_icon()
 
 /obj/machinery/power/supermatter/bullet_act(var/obj/item/projectile/Proj)
 	var/turf/L = loc
@@ -360,7 +390,8 @@
 			for(var/mob/living/l in range(src, round(sqrt(((power/smvsc.base_power)*7) / 5))))
 				var/rads = ((power/smvsc.base_power)*smvsc.radiation_power) * sqrt( 1 / get_dist(l, src) ) // Increased range for radiation. Eventually you'll be radiating the entire station.
 				l.apply_effect(rads, IRRADIATE)
-		del user
+		update_icon()
+		qdel( user )
 		return
 
 	power += smvsc.base_power/8
@@ -375,38 +406,12 @@
 		var/rads = ((power/smvsc.base_power)*smvsc.radiation_power) * sqrt( 1 / get_dist(l, src) )
 		l.apply_effect(rads, IRRADIATE)
 
+
+
 /obj/machinery/power/supermatter/update_icon()
-	var/light_mult = max(240, power_percent*120)+16
+	color = getSMColor( smlevel )
 
-	if (smlevel <= 9)
-
-		var/c = ((smlevel+1)/11)*360
-		var/r = 120
-		var/b = 240
-		var/g = 0
-
-		if (abs(c - r) >= 120)
-			r = 0
-		else
-			r = 1-(abs(c-r)/120)
-
-		if (abs(c - b) >= 120)
-			b = 0
-		else
-			b = 1-(abs(c-b)/120)
-
-		g = 1-(r+b)
-
-		r = r*light_mult
-		b = b*light_mult
-		g = g*light_mult
-		c = rgb(r, g, b)
-
-		light_color = c
-	else
-		light_color = rgb(light_mult/2, light_mult, light_mult/2)
-
-	luminosity = 2 + (smlevel*power_percent)
+	shift_light( color )
 
 /obj/machinery/power/supermatter/proc/supermatter_pull()
 	//following is adapted from singulo code
@@ -542,20 +547,6 @@ proc/blow_lights( var/turf/T )
 /obj/machinery/power/supermatter/RepelAirflowDest(n)
 	return
 
-/obj/machinery/power/supermatter/shard //Small subtype, less efficient and more sensitive, but less boom.
-	name = "Supermatter Shard"
-	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure. \red You get headaches just from looking at it."
-	icon_state = "darkmatter_shard"
-	base_icon_state = "darkmatter_shard"
-
-	warning_point = 50
-	emergency_point = 400
-	explosion_point = 600
-
-/obj/machinery/power/supermatter/shard/announce_warning() //Shards don't get announcements
-	return
-
 /obj/machinery/power/supermatter/bare
 	icon_state = "supermatter_bare"
-	base_icon_state = "supermatter_bare"
 	bare = 1

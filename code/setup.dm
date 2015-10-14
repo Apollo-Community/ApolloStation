@@ -842,3 +842,5 @@ var/list/be_special_flags = list(
 #define I_DISARM	"disarm"
 #define I_GRAB		"grab"
 #define I_HURT		"hurt"
+
+#define SM_DEFAULT_COLOR "#ADAD4D"

@@ -1,86 +1,111 @@
+/*
+	Critical failure:
+
+*/
+
 
 var/global/sm_control/smvsc = new
 
 /sm_control
 	var/base_power = 400
-	var/base_power_NAME = "Supermatter - Base Power"
+/*	var/base_power_NAME = "Supermatter - Base Power"
 	var/base_power_DESC = "How many kilowatts a standard engine will produce with an ideal setup."
+*/
 
 	var/fusion_power = 1.3
-	var/fusion_power_NAME = "Supermatter - Fusion Power"
+/*	var/fusion_power_NAME = "Supermatter - Fusion Power"
 	var/fusion_power_DESC = "Rate at which efficiency increases per fusion."
+*/
 
 	var/fusion_stability = 10
-	var/fusion_stability_NAME = "Supermatter - Fusion Stability"
+/*	var/fusion_stability_NAME = "Supermatter - Fusion Stability"
 	var/fusion_stability_DESC = "Amount of stability gained during fusion."
+*/
 
 	var/crystal_rate = 10
-	var/crystal_rate_NAME = "Supermatter - Growth Rate"
+/*	var/crystal_rate_NAME = "Supermatter - Growth Rate"
 	var/crystal_rate_DESC = "Rate at which the supermatter crystal is able to regenerate."
+*/
 
 	var/crit_stability = 100
-	var/crit_stability_NAME = "Supermatter - Critical Stability"
+/*	var/crit_stability_NAME = "Supermatter - Critical Stability"
 	var/crit_stability_DESC = "How likely the engine is to have a critical failure."
+*/
 
 	var/thermal_factor = 350
-	var/thermal_factor_NAME = "Supermatter - Thermal Factor"
+/*	var/thermal_factor_NAME = "Supermatter - Thermal Factor"
 	var/thermal_factor_DESC = "Amount of heat produced by the engine."
+*/
 
 	var/crit_temp = 800
-	var/crit_temp_NAME = "Supermatter - Critical Temperature"
+/*	var/crit_temp_NAME = "Supermatter - Critical Temperature"
 	var/crit_temp_DESC = "Temperature in Kelvin at which the supermatter will start to take damage."
+*/
 
 	var/consumption_rate = 10
-	var/consumption_rate_NAME = "Supermatter - Consumption Rate"
+/*	var/consumption_rate_NAME = "Supermatter - Consumption Rate"
 	var/consumption_rate_DESC = "Affects the speed at which the supermatter will consume gasses."
+*/
 
 	var/gas_rate = 5
-	var/gas_rate_NAME = "Supermatter - Gas Value"
+/*	var/gas_rate_NAME = "Supermatter - Gas Value"
 	var/gas_rate_DESC = "The amount of power produced per mole of gas."
+*/
 
 	var/psionic_power = 10
-	var/psionic_power_NAME = "Supermatter - Psionic Power"
+/*	var/psionic_power_NAME = "Supermatter - Psionic Power"
 	var/psionic_power_DESC = "How powerful the psionic bursts produced by the engine are."
+*/
 
 	var/radiation_power = 10
-	var/radiation_power_NAME = "Supermatter - Radiation Power"
+/*	var/radiation_power_NAME = "Supermatter - Radiation Power"
 	var/radiation_power_DESC = "How powerful the radiation bursts produced by the engine are."
+*/
 
 	var/warning_delay = 30
-	var/warning_delay_NAME = "Supermatter - Warning Delay"
+/*	var/warning_delay_NAME = "Supermatter - Warning Delay"
 	var/warning_delay_DESC = "Time in seconds between supermatter alert messages."
+*/
 
 	var/detonate_delay = 10
-	var/detonate_delay_NAME = "Supermatter - Explosion Delay"
+/*	var/detonate_delay_NAME = "Supermatter - Explosion Delay"
 	var/detonate_delay_DESC = "Time in seconds to escape the supermatter blast."
+*/
 
 	var/explosion_size = 5
-	var/explosion_size_NAME = "Supermatter - Explosion Size"
+/*	var/explosion_size_NAME = "Supermatter - Explosion Size"
 	var/explosion_size_DESC = "The size of the supermatter explosion."
+*/
 
 	var/crit_danger = 100
-	var/crit_danger_NAME = "Supermatter - Critical Danger"
+/*	var/crit_danger_NAME = "Supermatter - Critical Danger"
 	var/crit_danger_DESC = "The amount of danger presented by a critical failure."
+*/
 
 	var/damage_factor = 1
-	var/damage_factor_NAME = "Supermatter - Damage Factor"
+/*	var/damage_factor_NAME = "Supermatter - Damage Factor"
 	var/damage_factor_DESC = "How much damage the supermatter is able to take."
+*/
 
 	var/suffocation_moles = 5
-	var/suffocation_moles_NAME = "Supermatter - Suffocation Moles"
+/*	var/suffocation_moles_NAME = "Supermatter - Suffocation Moles"
 	var/suffocation_moles_DESC = "How much oxygen the supermatter requires in order to function."
+*/
 
 	var/heat_damage = 10
-	var/heat_damage_NAME = "Supermatter - Heat Damage"
+/*	var/heat_damage_NAME = "Supermatter - Heat Damage"
 	var/heat_damage_DESC = "The amount of damage the engine will take from overheating."
+*/
 
 	var/decay_rate = 50
-	var/decay_rate_NAME = "Supermatter - Decay Rate"
+/*	var/decay_rate_NAME = "Supermatter - Decay Rate"
 	var/decay_rate_DESC = "The rate at which the supermatter loses power."
+*/
 
 	var/safe_level = 2
-	var/safe_level_NAME = "Supermatter - Safe Level"
+/*	var/safe_level_NAME = "Supermatter - Safe Level"
 	var/safe_level_DESC = "The fusion level at which the engine enters advanced mode."
+*/
 
 /sm_control/var/list/settings = list()
 /sm_control/var/list/bitflags = list("1","2","4","8","16","32","64","128","256","512","1024")

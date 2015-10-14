@@ -9,6 +9,7 @@
 	desc = "A shard of supermatter. Incredibly dangerous, though not large enough to go critical."
 	force = 10.0
 	throwforce = 20.0
+	icon = 'icons/obj/supermatter.dmi'
 	icon_state = "supermattersmall"
 	sharp = 1
 	edge = 1
@@ -16,7 +17,7 @@
 	flags = CONDUCT
 
 	var/smlevel = 1
-	light_color = "#8A8A00"
+	light_color = SM_DEFAULT_COLOR
 	light_range = 2
 
 	var/size = 1
@@ -25,40 +26,20 @@
 /obj/item/weapon/shard/supermatter/New(var/loc, var/level = 1)
 	..()
 
-	if (level<2)
-		light_color = "#808000"
-		light_range = 1
-	else if (level<3)
-		light_color = "#C08000"
-		light_range = 2
-	else if (level<4)
-		light_color = "#DF6000"
-		light_range = 2
-	else if (level<5)
-		light_color = "#FF2000"
-		light_range = 1
-	else if (level<6)
-		light_color = "#C00040"
-		light_range = 2
-	else if (level<7)
-		light_color = "#800080"
-		light_range = 2
-	else if (level<8)
-		light_color = "#4000C0"
-		light_range = 1
-	else if (level<9)
-		light_color = "#008080"
-		light_range = 2
-	else
-		light_color = "#FFC0C0"
-		light_range = 5
-
+	smlevel = level
+	light_color = getSMColor( smlevel )
+	color = light_color
 
 	size += rand(0, 10)
 
 	update_icon()
 
 /obj/item/weapon/shard/supermatter/update_icon()
+	light_color = getSMColor( smlevel )
+	color = light_color
+
+	set_light( light_range, light_power, light_color )
+
 	if( src.size <= 34 )
 		icon_state = "supermattersmall"
 		src.pixel_x = rand(-12, 12)
@@ -80,7 +61,7 @@
 				var/obj/item/weapon/shard/supermatter/S = T.held
 				smlevel += (S.smlevel*S.size)/100
 				src.visible_message( "The [S] fuses with the [src]!" )
-				del (T.held)
+				qdel(T.held)
 				T.held = null
 				T.update_icon()
 			else

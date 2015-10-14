@@ -35,6 +35,7 @@
 	return
 
 /obj/item/weapon/shard/New()
+	..()
 
 	src.icon_state = pick("large", "medium", "small")
 	switch(src.icon_state)
