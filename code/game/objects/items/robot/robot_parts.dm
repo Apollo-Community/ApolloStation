@@ -106,8 +106,8 @@
 	if(istype(W, /obj/item/stack/sheet/metal) && !l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
 		var/obj/item/stack/sheet/metal/M = W
 		if (M.use(1))
-			//var/obj/item/weapon/secbot_assembly/ed209_assembly/B = new /obj/item/weapon/secbot_assembly/ed209_assembly
-			//B.loc = get_turf(src)
+			new /obj/item/weapon/secbot_assembly/ed209_assembly(get_turf(src))
+
 			user << "<span class='notice'>You armed the robot frame.</span>"
 			if (user.get_inactive_hand()==src)
 				user.before_take_item(src)
