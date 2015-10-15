@@ -287,7 +287,9 @@ var/global/obj/item/device/radio/intercom/global_announcer = new(null)
 var/global/const/TICKS_IN_DAY = 864000
 var/global/const/TICKS_IN_SECOND = 10
 
-var/global/datum/universal_state/universe = new
+var/global/datum/universal_state/universe = new()
 
 var/global/list/endgame_exits = list()
 var/global/list/endgame_safespawns = list()
+
+var/global/datum/subsystem/cell_auto/cell_auto_manager = new()
