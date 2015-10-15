@@ -1648,7 +1648,7 @@
 				if(!check_rights(R_FUN,0))
 					removed_paths += dirty_path
 					continue
-			else if(ispath(path, /obj/machinery/singularity/mostly_harmless))
+			else if(ispath(path, /obj/singularity/mostly_harmless))
 				if(!check_rights(R_FUN,0))
 					removed_paths += dirty_path
 					continue
@@ -2170,7 +2170,7 @@
 				feedback_add_details("admin_secrets_fun_used","GA")
 				command_announcement.Announce("Attention. Gravitational anomalies detected on the station.", "Anomaly Alert", 'sound/AI/granomalies.ogg')
 				var/turf/T = pick(blobstart)
-				new /obj/machinery/singularity/mostly_harmless( T.loc, 30 )
+				new /obj/singularity/mostly_harmless( T.loc, 30 )
 
 			if("timeanomalies")	//dear god this code was awful :P Still needs further optimisation
 				feedback_inc("admin_secrets_fun_used",1)

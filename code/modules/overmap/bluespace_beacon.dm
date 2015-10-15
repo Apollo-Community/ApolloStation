@@ -110,7 +110,7 @@ var/global/list/bluespace_beacons = list()
 	src.ping("[src] states, \"Opening bluespace gate. Prepare to embark.\"")
 	dest.ping("[exit] states, \"Offsite activation. Please clear the area.\"")
 
-	new /obj/machinery/singularity/bluespace_gate(src.loc, dest)
+	new /obj/singularity/bluespace_gate(src.loc, dest)
 
 	deactivate()
 

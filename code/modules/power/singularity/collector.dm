@@ -30,12 +30,8 @@ var/global/list/rad_collectors = list()
 	last_power = last_power_new
 	last_power_new = 0
 
-	var/turf/simulated/L = loc
+
 	if(P)
-		if(istype(L))
-			var/datum/gas_mixture/env = L.return_air()
-			var/thermal = P.air_contents.get_thermal_energy_change(env.temperature) + (last_power/2000)
-			P.air_contents.add_thermal_energy(thermal/1000)
 		if(P.air_contents.gas["phoron"] == 0)
 			investigate_log("<font color='red'>out of fuel</font>.","singulo")
 			eject()
@@ -131,7 +127,6 @@ var/global/list/rad_collectors = list()
 	if(P && active)
 		var/power_produced = 0
 		power_produced = P.air_contents.gas["phoron"]*pulse_strength*20
-		statistics.increase_stat("total_kwh", power_produced/(18000*1000))
 		add_avail(power_produced)
 		last_power_new = power_produced
 		return

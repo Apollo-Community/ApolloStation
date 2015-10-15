@@ -41,22 +41,8 @@
 	if (A)
 		if(ismob(A))
 			toxmob(A)
-		if((istype(A,/obj/machinery/the_singularitygen))||(istype(A,/obj/machinery/singularity/)))
+		if((istype(A,/obj/machinery/the_singularitygen))||(istype(A,/obj/singularity/)))
 			A:energy += energy
-		else if( istype(A,/obj/effect/rust_particle_catcher) )
-			var/obj/effect/rust_particle_catcher/collided_catcher = A
-			if(particle_type && particle_type != "neutron")
-				if(collided_catcher.AddParticles(particle_type, 1 + additional_particles))
-					collided_catcher.parent.AddEnergy(energy,mega_energy)
-					del (src)
-		else if( istype(A,/obj/machinery/power/rust_core) )
-			var/obj/machinery/power/rust_core/collided_core = A
-			if(particle_type && particle_type != "neutron")
-				if(collided_core.AddParticles(particle_type, 1 + additional_particles))
-					var/energy_loss_ratio = abs(collided_core.owned_field.frequency - frequency) / 1e9
-					collided_core.owned_field.mega_energy += mega_energy - mega_energy * energy_loss_ratio
-					collided_core.owned_field.energy += energy - energy * energy_loss_ratio
-					del (src)
 	return
 
 
