@@ -10,8 +10,10 @@
 
 	var/age = 0 // how many iterations this cell has survived
 	var/age_max = 3 // Maximum number of iterations this cell will survive
+	var/datum/cell_auto_master/master = null
+	var/master_type = /datum/cell_auto_master
 
-/atom/movable/cell/New()
+/atom/movable/cell/New( loc as turf, var/set_master = null )
 	..()
 
 	var/turf/T = get_turf( src )
@@ -25,12 +27,39 @@
 		qdel( src )
 		return
 
+	if( !set_master )
+		master = new master_type()
+	else
+		master = set_master
+
+	master.cells += src
+
 /atom/movable/cell/proc/process()
+	if( age >= age_max )
+		qdel( src )
+
+	if( master )
+		if( !master.shouldProcess() )
+			qdel( src )
+
 	return
+
+/atom/movable/cell/proc/shouldProcess()
+	if( age >= age_max )
+		return 0
+
+	return 1
 
 /atom/movable/cell/Destroy()
 	var/turf/T = get_turf( src )
-	T.autocell = null
+
+	if( T )
+		T.autocell = null
+
+	if( master )
+		master.cells -= src
+
+	master = null
 
 	..()
 

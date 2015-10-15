@@ -1,9 +1,9 @@
 /datum/cell_auto_handler
-	var/list/cells = list()
+	var/list/datum/cell_auto_master/masters = list()
 
 /datum/cell_auto_handler/New()
 	..()
 
 /datum/cell_auto_handler/proc/process()
-	for( var/atom/movable/cell/cell in cells )
-		cell.process()
+	for( var/datum/cell_auto_master/master in masters )
+		master.process()

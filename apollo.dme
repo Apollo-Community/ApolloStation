@@ -952,6 +952,7 @@
 #include "code\modules\blacksmithing\power_hammer.dm"
 #include "code\modules\cellauto\cell_auto.dm"
 #include "code\modules\cellauto\handler.dm"
+#include "code\modules\cellauto\master.dm"
 #include "code\modules\cellauto\spawner.dm"
 #include "code\modules\cellauto\types\waveprop.dm"
 #include "code\modules\client\client defines.dm"
