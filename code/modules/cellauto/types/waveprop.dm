@@ -35,6 +35,8 @@
 /atom/movable/cell/v_wave/Destroy()
 	v_wave_handler.cells -= src
 
+	..()
+
 /proc/vwaveCanExpand( var/turf/T )
 	if( !T )
 		return 0
