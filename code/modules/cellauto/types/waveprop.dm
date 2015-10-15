@@ -4,7 +4,7 @@
 	icon = 'icons/obj/supermatter.dmi'
 	icon_state = "vorbis_wave"
 
-	age_max = 4
+	age_max = 2
 
 	light_range = 3
 	light_color = SM_DEFAULT_COLOR
