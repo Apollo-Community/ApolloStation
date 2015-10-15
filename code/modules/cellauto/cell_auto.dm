@@ -26,15 +26,12 @@
 		return
 
 /atom/movable/cell/proc/process()
-	if( age >= age_max )
-		qdel(src)
-
-	age++
+	return
 
 /atom/movable/cell/Destroy()
 	var/turf/T = get_turf( src )
 	T.autocell = null
 
-	loc = null
-
 	..()
+
+	return

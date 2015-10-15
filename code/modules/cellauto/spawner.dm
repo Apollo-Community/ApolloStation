@@ -4,8 +4,6 @@
 /obj/cell_spawner/New()
 	..()
 
-	testing( "Creating new cellular automata at [src.loc]" )
-
 	if( spawn_type )
 		new spawn_type( get_turf( src ))
 

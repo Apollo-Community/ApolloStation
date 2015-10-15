@@ -17,16 +17,18 @@
 	..()
 
 	dir = direction
-
-	testing( "CA: New cell at [src.loc]" )
-
 	v_wave_handler.cells += src
 
 /atom/movable/cell/v_wave/process()
+	if( age >= age_max )
+		qdel(src)
+
 	if( !age ) // If we have not aged at all
 		for( var/turf/T in orange( 1, get_turf( src )))
 			if( vwaveCanExpand( T ))
-				new /atom/movable/cell/v_wave( T )
+				PoolOrNew( /atom/movable/cell/v_wave, T )
+
+	age++
 
 	..()
 
