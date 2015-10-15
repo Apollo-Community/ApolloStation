@@ -24,6 +24,7 @@
 		else
 			T.autocell = src
 	else
+		testing( "Cell existsed on non-turf" )
 		qdel( src )
 		return
 
@@ -63,4 +64,13 @@
 
 	..()
 
+	return
+
+/atom/movable/cell/singularity_act()
+	return
+
+/atom/movable/cell/singularity_pull()
+	return
+
+/atom/movable/cell/ex_act()
 	return

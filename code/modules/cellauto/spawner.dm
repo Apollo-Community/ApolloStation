@@ -1,13 +1,6 @@
-/obj/cell_spawner
-	var/spawn_type = null
-
-/obj/cell_spawner/New()
+/obj/cell_spawner/v_wave/New( loc as turf, var/size = 25, var/level = 1 )
 	..()
 
-	if( spawn_type )
-		new spawn_type( get_turf( src ))
+	new /datum/cell_auto_master/v_wave( get_turf( src ), size, level )
 
 	qdel( src )
-
-/obj/cell_spawner/v_wave
-	spawn_type = /atom/movable/cell/v_wave

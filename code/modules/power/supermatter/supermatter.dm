@@ -77,10 +77,7 @@
 		          min(3 * (smvsc.explosion_size + (power_percent * smlevel)), (smvsc.explosion_size) * 5), \
 		          min(4 * (smvsc.explosion_size + (power_percent * smlevel)), (smvsc.explosion_size) * 6), 1)
 
-		sleep(1) // just need to catch our breath
-
-		supermatter_delamination(epicenter, \
-		          min(4 * (smvsc.explosion_size + (power_percent * smlevel)), (smvsc.explosion_size) * 6), 1, smlevel)
+		supermatter_delamination( epicenter, 25, smlevel, 1 )
 		qdel( src )
 		return
 

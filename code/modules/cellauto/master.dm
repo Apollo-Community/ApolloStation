@@ -1,10 +1,17 @@
 /datum/cell_auto_master
 	var/group_age = 0 // The number of ticks since the group was created
 	var/group_age_max = 25 // The maximum number of ticks the group is allowed to survive
+	var/cell_type = null
 	var/list/atom/movable/cell/cells = list()
 
-/datum/cell_auto_master/New()
+/datum/cell_auto_master/New( var/loc as turf, size = 0 )
 	..()
+
+	if( loc && cell_type )
+		new cell_type( loc, src )
+
+	if( size )
+		group_age_max = size
 
 	testing( "New group of cells created" )
 
