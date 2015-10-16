@@ -4,7 +4,7 @@
 	name = "infrared emitter"
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."
 	icon_state = "infrared"
-	matter = list("metal" = 1000, "glass" = 500, "waste" = 100)
+	matter = list(DEFAULT_WALL_MATERIAL = 1000, "glass" = 500, "waste" = 100)
 	origin_tech = "magnets=2"
 
 	wires = WIRE_PULSE
@@ -120,7 +120,7 @@
 
 
 	Topic(href, href_list)
-		..()
+		if(..()) return 1
 		if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 			usr << browse(null, "window=infra")
 			onclose(usr, "infra")
@@ -259,6 +259,9 @@
 	return
 
 /obj/effect/beam/i_beam/Destroy()
-	qdel(next)
+	if(master.first == src)
+		master.first = null
+	if(next)
+		qdel(next)
+		next = null
 	..()
-	return
