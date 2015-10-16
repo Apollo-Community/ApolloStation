@@ -38,6 +38,8 @@
 	light_color = getSMColor( smlevel )
 	color = light_color
 
+	name = getSMColorName( smlevel ) + " " + initial(name)
+
 	set_light( light_range, light_power, light_color )
 
 	if( src.size <= 34 )
@@ -128,7 +130,7 @@
 /obj/item/weapon/shard/supermatter/proc/shatter()
 	if( size > 100 )
 		src.visible_message( "The supermatter shard grows into a full-sized supermatter crystal!" )
-		var/obj/machinery/power/supermatter/S = new /obj/machinery/power/supermatter/bare( get_turf( src ))
+		var/obj/machinery/power/supermatter/S = new /obj/machinery/power/supermatter( get_turf( src ))
 		S.smlevel = smlevel
 		S.update_icon()
 	else if( size >= 10 )

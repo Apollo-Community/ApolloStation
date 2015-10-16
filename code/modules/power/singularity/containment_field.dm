@@ -36,6 +36,7 @@
 /obj/machinery/containment_field/ex_act(severity)
 	return 0
 
+
 /obj/machinery/containment_field/HasProximity(atom/movable/AM as mob|obj)
 	if(istype(AM,/mob/living/silicon) && prob(40))
 		shock(AM)

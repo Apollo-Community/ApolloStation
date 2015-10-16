@@ -6,7 +6,7 @@
 #define TRANSFORM_DISTANCE_MOD 2 // Size/this is maximum distance from SM during burst for transformation to Nucleation
 
 /obj/machinery/power/supermatter
-	name = "Supermatter"
+	name = "supermatter core"
 	desc = "A strangely translucent and iridescent crystal. \red You get headaches just from looking at it."
 	icon = 'icons/obj/supermatter.dmi'
 	icon_state = "supermatter"
@@ -20,8 +20,6 @@
 	light_power = 3
 
 	color = SM_DEFAULT_COLOR
-
-	var/bare = 0
 
 	var/smlevel = 1
 
@@ -45,6 +43,7 @@
 	var/obj/item/device/radio/radio
 
 	var/grav_pulling = 0
+	var/pull_radius = 7
 	var/exploded = 0
 
 	var/debug = 0
@@ -58,7 +57,7 @@
 
 
 /obj/machinery/power/supermatter/Destroy()
-	del radio
+	qdel( radio )
 	. = ..()
 
 /obj/machinery/power/supermatter/proc/explode()
@@ -76,11 +75,8 @@
 		          min(3 * (smvsc.explosion_size + (power_percent * smlevel)), (smvsc.explosion_size) * 5), \
 		          min(4 * (smvsc.explosion_size + (power_percent * smlevel)), (smvsc.explosion_size) * 6), 1)
 
-		sleep(1) // just need to catch our breath
-
-		supermatter_delamination(epicenter, \
-		          min(4 * (smvsc.explosion_size + (power_percent * smlevel)), (smvsc.explosion_size) * 6), 1, smlevel)
-		del src
+		supermatter_delamination( epicenter, 15 + ( smlevel*10 ), smlevel, 1 )
+		qdel( src )
 		return
 
 //Changes color and light_range of the light to these values if they were not already set
@@ -262,7 +258,11 @@
 	var/integrity = crit_damage / (explosion_point + ( (smvsc.fusion_stability / explosion_point) * smlevel) )
 	integrity = round(100 - integrity * 100)
 	integrity = integrity < 0 ? 0 : integrity
-	radio.autosay("CRITICAL FAILURE! [integrity]% Integrity Lost!", "Supermatter Monitor")
+
+	// A wave burst during a critical failure
+	supermatter_delamination( get_turf( src ), smlevel*3, smlevel, 0, 0 )
+
+	radio.autosay("CRITICAL STRUCTURE FAILURE: [integrity]% Integrity Lost!", "Supermatter Monitor")
 	announce_warning()
 
 /obj/machinery/power/supermatter/proc/smLevelChange( var/level_increase = 1 )
@@ -406,10 +406,9 @@
 		var/rads = ((power/smvsc.base_power)*smvsc.radiation_power) * sqrt( 1 / get_dist(l, src) )
 		l.apply_effect(rads, IRRADIATE)
 
-
-
 /obj/machinery/power/supermatter/update_icon()
 	color = getSMColor( smlevel )
+	name = getSMColorName( smlevel ) + " " + initial(name)
 
 	shift_light( color )
 
@@ -418,36 +417,8 @@
 	if(defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 1
 	// Let's just make this one loop.
-	for(var/atom/X in orange(10,src))
-		// Movable atoms only
-		if(istype(X, /atom/movable))
-			if(is_type_in_list(X, uneatable))	continue
-			if(!grav_pulling)	return
-			if(((X) && (!istype(X,/mob/living/carbon/human))))
-				spawn( 0 )
-					step_towards(X,src)
-				if(istype(X, /obj)) //unanchored objects pulled twice as fast
-					var/obj/O = X
-					if(!O.anchored)
-						spawn( 0 )
-							step_towards(X,src)
-				else
-					spawn( 0 )
-						step_towards(X,src)
-				if(istype(X, /obj/structure/window)) //shatter windows
-					var/obj/structure/window/W = X
-					W.ex_act(2.0)
-			else if(istype(X,/mob/living/carbon/human))
-				var/mob/living/carbon/human/H = X
-				if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
-					var/obj/item/clothing/shoes/magboots/M = H.shoes
-					if(M.magpulse)
-						spawn( 0 )
-							step_towards(H,src) //step just once with magboots
-						continue
-				spawn( 0 )
-					step_towards(H,src) //step twice
-					step_towards(H,src)
+	for(var/atom/X in orange(pull_radius,src))
+		X.singularity_pull(src, STAGE_FIVE)
 
 	if(defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 0
@@ -458,7 +429,3 @@
 
 /obj/machinery/power/supermatter/RepelAirflowDest(n)
 	return
-
-/obj/machinery/power/supermatter/bare
-	icon_state = "supermatter_bare"
-	bare = 1

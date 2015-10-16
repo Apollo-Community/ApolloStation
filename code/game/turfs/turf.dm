@@ -397,6 +397,12 @@
 			return 1
 	return 0
 
+/turf/proc/contains_opaque_objects()
+	for(var/atom/A in src)
+		if( A.opacity )
+			return 1
+	return 0
+
 /turf/proc/melt()
 	return
 

@@ -55,7 +55,7 @@
 			user << "\red The Bluespace interfaces of the two devices catastrophically malfunction!"
 			qdel(W)
 
-			new /obj/machinery/singularity/mostly_harmless( src.loc )
+			new /obj/singularity/mostly_harmless( src.loc )
 			return
 
 		..()

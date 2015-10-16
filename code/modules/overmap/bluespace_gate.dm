@@ -1,6 +1,6 @@
 #define BLUESPACE_LEVEL 2
 
-/obj/machinery/singularity/bluespace_gate
+/obj/singularity/bluespace_gate
 	name = "bluespace gate"
 	desc = "A gate into the extradimensional space know as \"bluespace\"."
 	icon = 'icons/effects/bluespace_gate.dmi'
@@ -16,17 +16,17 @@
 	pixel_x = -32
 	pixel_y = -32
 	light_color = "#142933"
-	life = 100
+	temp = 100
 	var/decay = 10
 	var/turf/exit = null
 
-/obj/machinery/singularity/bluespace_gate/process()
+/obj/singularity/bluespace_gate/process()
 	eat()
 
 	if(prob(1))
 		mezzer()
 
-/obj/machinery/singularity/bluespace_gate/New( loc, var/new_exit )
+/obj/singularity/bluespace_gate/New( loc, var/new_exit )
 	..(loc)
 
 	exit = new_exit
@@ -34,7 +34,7 @@
 	light_color = "#142933"
 	set_light( 5 )
 
-/obj/machinery/singularity/bluespace_gate/consume(var/atom/A)
+/obj/singularity/bluespace_gate/consume(var/atom/A)
 	if( !istype( A, /obj/machinery/gate_beacon ))
 		bluespace_jump( src, A, exit )
 

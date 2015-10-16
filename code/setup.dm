@@ -843,4 +843,12 @@ var/list/be_special_flags = list(
 #define I_GRAB		"grab"
 #define I_HURT		"hurt"
 
-#define SM_DEFAULT_COLOR "#ADAD4D"
+#define SM_DEFAULT_COLOR "#99FF33"
+
+//singularity defines
+#define STAGE_ONE 	1
+#define STAGE_TWO 	3
+#define STAGE_THREE	5
+#define STAGE_FOUR	7
+#define STAGE_FIVE	9
+#define STAGE_SUPER	11
