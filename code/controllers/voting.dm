@@ -67,13 +67,6 @@ datum/controller/vote
 		current_votes.Cut()
 		additional_text.Cut()
 
-	/*	if(auto_muted && !ooc_allowed)
-			auto_muted = 0
-			ooc_allowed = !( ooc_allowed )
-			world << "<b>The OOC channel has been automatically enabled due to vote end.</b>"
-			log_admin("OOC was toggled automatically due to vote end.")
-			message_admins("OOC has been toggled on automatically.") */ // Don't really like this feature :l
-
 	proc/get_result()
 		//get the highest number of votes
 		var/greatest_votes = 0
@@ -127,24 +120,23 @@ datum/controller/vote
 		var/text
 		if(winners.len > 0)
 			if(winners.len > 1)
-				if(mode != "gamemode" || ticker.hide_mode == 0) // Here we are making sure we don't announce potential game modes
+				if(mode != "gamemode" || !ticker.hide_mode ) // Here we are making sure we don't announce potential game modes
+					text = "<b>Vote Tied Between:</b>\n"
+					for(var/option in winners)
+						text += "\t[option]\n"
+				else
 					text = "<b>Vote Tied! Breaking tie...\n"
 			. = pick(winners)
 
 			for(var/key in current_votes)
 				if(choices[current_votes[key]] == .)
 					round_voters += key // Keep track of who voted for the winning round.
-			if( mode == "gamemode" ) // Announce Extended gamemode, but not other gamemodes
-				text += "<b>The vote has ended.</b>"
+			if((mode == "gamemode" && . == "Extended") || !ticker.hide_mode ) // Announce Extended gamemode, but not other gamemodes
+				text += "<b>Vote Result: [.]</b>"
+			else
+				text += "<b>The vote has ended.</b>" // What will be shown if it is a gamemode vote that isn't extended
 				log_admin("Vote Result: [.]")
 				message_admins("Vote Result: [.]", "LOG:")
-			else
-				if(mode != "gamemode")
-					text += "<b>Vote Result: [.]</b>"
-					log_admin("Vote Result: [.]")
-					message_admins("Vote Result: [.]", "LOG:")
-				else
-					text += "<b>The vote has ended.</b>" // What will be shown if it is a gamemode vote that isn't extended
 
 		else
 			text += "<b>Vote Result: Inconclusive - No Votes!</b>"
@@ -191,9 +183,9 @@ datum/controller/vote
 		if(mode)
 			if(config.vote_no_dead && usr.stat == DEAD && !usr.client.holder)
 				return 0
-			if(current_votes[ckey])
-				choices[choices[current_votes[ckey]]]--
-			if(vote && 1<=vote && vote<=choices.len)
+			if(vote && vote >= 1 && vote <= choices.len)
+				if(current_votes[ckey])
+					choices[choices[current_votes[ckey]]]--
 				voted += usr.ckey
 				choices[choices[vote]]++	//check this
 				current_votes[ckey] = vote
@@ -215,14 +207,12 @@ datum/controller/vote
 					if(ticker.current_state >= 2)
 						return 0
 					choices.Add(config.votable_modes)
-					var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 					for (var/F in choices)
-						for (var/T in L)
-							var/datum/game_mode/M = new T()
-							if (M.config_tag == F)
-								gamemode_names[M.config_tag] = capitalize(M.name) //It's ugly to put this here but it works
-								additional_text.Add("<td align = 'center'>[M.required_players]</td>")
-								break
+						var/datum/game_mode/M = gamemode_cache[F]
+						if(!M)
+							continue
+						gamemode_names[M.config_tag] = capitalize(M.name) //It's ugly to put this here but it works
+						additional_text.Add("<td align = 'center'>[M.required_players]</td>")
 					gamemode_names["secret"] = "Secret"
 				if("crew_transfer")
 					if(check_rights(R_ADMIN|R_MOD, 0))
@@ -244,7 +234,8 @@ datum/controller/vote
 						var/option = capitalize(sanitize(input(usr,"Please enter an option or hit cancel to finish") as text|null))
 						if(!option || mode || !usr.client)	break
 						choices.Add(option)
-				else			return 0
+				else
+					return 0
 			mode = vote_type
 			initiator = initiator_key
 			started_time = world.time
@@ -253,7 +244,7 @@ datum/controller/vote
 				text += "\n[question]"
 
 			log_vote(text)
-			world << "<font color='purple'><b>[text]</b>\nType vote to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>"
+			world << "<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>"
 			switch(vote_type)
 				if("crew_transfer")
 					world << sound('sound/ambience/alarm4.ogg', repeat = 0, wait = 0, volume = 50, channel = 3)
@@ -265,31 +256,11 @@ datum/controller/vote
 				going = 0
 				world << "<font color='red'><b>Round start has been delayed.</b></font>"
 
-		/*	if(mode == "crew_transfer" && ooc_allowed)
-				auto_muted = 1
-				ooc_allowed = !( ooc_allowed )
-				world << "<b>The OOC channel has been automatically disabled due to a crew transfer vote.</b>"
-				log_admin("OOC was toggled automatically due to crew_transfer vote.")
-				message_admins("OOC has been toggled off automatically.")*/
-
 			time_remaining = round(config.vote_period/10)
 			return 1
 		return 0
 
 	proc/interface(var/client/C)
-		var/list/required_players = list()
-		if( mode == "gamemode" )
-			var/list/L = typesof(/datum/game_mode) - /datum/game_mode
-			for (var/F in choices)
-				for (var/T in L)
-					var/datum/game_mode/M = new T()
-					if (M.config_tag == F)
-						required_players.Add( M.required_players ) // Swings and roundabouts just to get the required playercount :V
-
-		var/total_players = 0
-		for(var/client/D in clients)
-			total_players = total_players+1
-
 		if(!C)	return
 		var/admin = 0
 		var/trialmin = 0
@@ -321,15 +292,13 @@ datum/controller/vote
 						. += "<td><b><a href='?src=\ref[src];vote=[i]'>[choices[i]]</a></b></td><td align = 'center'>[votes]</td>"
 					else
 						. += "<td><a href='?src=\ref[src];vote=[i]'>[choices[i]]</a></b></td><td align = 'center'>[votes]</td>"
-
 				if (additional_text.len >= i)
 					. += additional_text[i]
 				. += "</tr>"
 
 			. += "</table><hr>"
 			if(admin)
-				. += "<a href='?src=\ref[src];vote=cancel'>Cancel Vote</a> "
-			. += "<a href='?src=\ref[src];vote=close' style='position:absolute;right:50px'>Close</a></body></html>"
+				. += "(<a href='?src=\ref[src];vote=cancel'>Cancel Vote</a>) "
 		else
 			. += "<h2>Start a vote:</h2><hr><ul><li>"
 			//restart
@@ -352,7 +321,6 @@ datum/controller/vote
 				. += "<font color='grey'>GameMode (Disallowed)</font>"
 			if(trialmin)
 				. += "\t(<a href='?src=\ref[src];vote=toggle_gamemode'>[config.allow_vote_mode?"Allowed":"Disallowed"]</a>)"
-
 			. += "</li>"
 			//custom
 			if(trialmin)
@@ -391,7 +359,9 @@ datum/controller/vote
 				if(usr.client.holder)
 					initiate_vote("custom",usr.key)
 			else
-				submit_vote(usr.ckey, round(text2num(href_list["vote"])))
+				var/t = round(text2num(href_list["vote"]))
+				if(t) // It starts from 1, so there's no problem
+					submit_vote(usr.ckey, t)
 		usr.vote()
 
 

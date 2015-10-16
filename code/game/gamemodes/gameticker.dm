@@ -10,7 +10,7 @@ var/global/datum/controller/gameticker/ticker
 	var/const/restart_timeout = 600
 	var/current_state = GAME_STATE_PREGAME
 
-	var/hide_mode = 0
+	var/hide_mode = 1
 	var/datum/game_mode/mode = null
 	var/post_game = 0
 	var/event_time = null
@@ -83,19 +83,24 @@ var/global/datum/controller/gameticker/ticker
 		src.hide_mode = 1
 
 	var/list/datum/game_mode/runnable_modes
+
 	if((master_mode=="random") || (master_mode=="secret"))
 		runnable_modes = config.get_runnable_modes()
 		if (runnable_modes.len==0)
 			current_state = GAME_STATE_PREGAME
 			world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
 			return 0
+
 		if(secret_force_mode != "secret")
 			var/datum/game_mode/M = config.pick_mode(secret_force_mode)
 			if(M.can_start())
 				src.mode = config.pick_mode(secret_force_mode)
+
 		job_master.ResetOccupations()
+
 		if(!src.mode)
 			src.mode = pickweight(runnable_modes)
+
 		if(src.mode)
 			var/mtype = src.mode.type
 			src.mode = new mtype
