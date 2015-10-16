@@ -18,7 +18,8 @@
 #define COSMIC_RADIATION_TEMPERATURE	3.15		//K
 #define AVERAGE_SOLAR_RADIATION			200			//W/m^2. Kind of arbitrary. Really this should depend on the sun position much like solars.  From the numbers on Erebus, this'd be an orbit of 23.3 lightseconds.
 #define RADIATOR_OPTIMUM_PRESSURE		110			//kPa at 20 C
-#define RADIATOR_EXPOSED_SURFACE_AREA 0.03  //The pipe looks to be thin vertically and wide horizontally, so we'll assume that it's three centimeters thick and only explosed to the sun edge-on.
+#define GAS_CRITICAL_TEMPERATURE     132.65    // K. The critical point temperature for air.
+#define RADIATOR_EXPOSED_SURFACE_AREA_RATIO 0.04 // (3 cm + 100 cm * sin(3deg))/(2*(3+100 cm)). Unitless ratio.
 
 #define CELL_VOLUME 2500	//liters in a cell
 #define MOLES_CELLSTANDARD (ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))	//moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC
@@ -780,6 +781,10 @@ var/list/be_special_flags = list(
 #define ATMOS_DEFAULT_VOLUME_FILTER	200	//L
 #define ATMOS_DEFAULT_VOLUME_MIXER	200	//L
 #define ATMOS_DEFAULT_VOLUME_PIPE	70	//L
+
+// Will not bother pumping or filtering if the gas source as fewer than this amount of moles, to help with performance.
+#define MINIMUM_MOLES_TO_PUMP   0.01
+#define MINIMUM_MOLES_TO_FILTER 0.1
 
 // Reagent metabolism defines.
 #define FOOD_METABOLISM 0.4

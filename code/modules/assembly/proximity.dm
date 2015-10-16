@@ -2,7 +2,7 @@
 	name = "proximity sensor"
 	desc = "Used for scanning and alerting when someone enters a certain proximity."
 	icon_state = "prox"
-	matter = list("metal" = 800, "glass" = 200, "waste" = 50)
+	matter = list(DEFAULT_WALL_MATERIAL = 800, "glass" = 200, "waste" = 50)
 	origin_tech = "magnets=1"
 
 	wires = WIRE_PULSE
@@ -129,7 +129,7 @@
 
 
 	Topic(href, href_list)
-		..()
+		if(..()) return 1
 		if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 			usr << browse(null, "window=prox")
 			onclose(usr, "prox")

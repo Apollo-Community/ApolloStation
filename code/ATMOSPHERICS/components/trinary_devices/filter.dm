@@ -54,9 +54,6 @@
 	air2.volume = ATMOS_DEFAULT_VOLUME_FILTER
 	air3.volume = ATMOS_DEFAULT_VOLUME_FILTER
 
-	if(radio_controller)
-		initialize()
-
 /obj/machinery/atmospherics/trinary/filter/update_icon()
 	if(istype(src, /obj/machinery/atmospherics/trinary/filter/m_filter))
 		icon_state = "m"
@@ -98,10 +95,10 @@
 
 /obj/machinery/atmospherics/trinary/filter/process()
 	..()
-
+	
 	last_power_draw = 0
 	last_flow_rate = 0
-
+	
 	if((stat & (NOPOWER|BROKEN)) || !use_power)
 		return
 
@@ -109,7 +106,7 @@
 	var/transfer_moles = (set_flow_rate/air1.volume)*air1.total_moles
 
 	var/power_draw = -1
-	if (transfer_moles > MINUMUM_MOLES_TO_FILTER)
+	if (transfer_moles > MINIMUM_MOLES_TO_FILTER)
 		power_draw = filter_gas(src, filtered_out, air1, air2, air3, transfer_moles, power_rating)
 
 		if(network2)
@@ -199,7 +196,7 @@
 
 /obj/machinery/atmospherics/trinary/filter/Topic(href, href_list) // -- TLE
 	if(..())
-		return
+		return 1
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["filterset"])

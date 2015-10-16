@@ -347,6 +347,13 @@
 /obj/machinery/atmospherics/pipe/simple/visible/purple
 	color = PIPE_COLOR_PURPLE
 
+/obj/machinery/atmospherics/pipe/simple/visible/red
+	color = PIPE_COLOR_RED
+
+/obj/machinery/atmospherics/pipe/simple/visible/blue
+	color = PIPE_COLOR_BLUE
+
+
 /obj/machinery/atmospherics/pipe/simple/hidden
 	icon_state = "intact"
 	level = 1
@@ -381,6 +388,12 @@
 
 /obj/machinery/atmospherics/pipe/simple/hidden/purple
 	color = PIPE_COLOR_PURPLE
+
+/obj/machinery/atmospherics/pipe/simple/hidden/red
+	color = PIPE_COLOR_RED
+
+/obj/machinery/atmospherics/pipe/simple/hidden/blue
+	color = PIPE_COLOR_BLUE
 
 /obj/machinery/atmospherics/pipe/simple/insulated
 	icon = 'icons/obj/atmospherics/red_pipe.dmi'
@@ -603,6 +616,13 @@
 /obj/machinery/atmospherics/pipe/manifold/visible/purple
 	color = PIPE_COLOR_PURPLE
 
+/obj/machinery/atmospherics/pipe/manifold/visible/red
+	color = PIPE_COLOR_RED
+
+/obj/machinery/atmospherics/pipe/manifold/visible/blue
+	color = PIPE_COLOR_BLUE
+
+
 /obj/machinery/atmospherics/pipe/manifold/hidden
 	icon_state = "map"
 	level = 1
@@ -637,6 +657,12 @@
 
 /obj/machinery/atmospherics/pipe/manifold/hidden/purple
 	color = PIPE_COLOR_PURPLE
+
+/obj/machinery/atmospherics/pipe/manifold/hidden/red
+	color = PIPE_COLOR_RED
+
+/obj/machinery/atmospherics/pipe/manifold/hidden/blue
+	color = PIPE_COLOR_BLUE
 
 /obj/machinery/atmospherics/pipe/manifold4w
 	icon = 'icons/atmos/manifold.dmi'
@@ -849,6 +875,12 @@
 /obj/machinery/atmospherics/pipe/manifold4w/visible/purple
 	color = PIPE_COLOR_PURPLE
 
+/obj/machinery/atmospherics/pipe/manifold4w/visible/red
+	color = PIPE_COLOR_RED
+
+/obj/machinery/atmospherics/pipe/manifold4w/visible/blue
+	color = PIPE_COLOR_BLUE
+
 /obj/machinery/atmospherics/pipe/manifold4w/hidden
 	icon_state = "map_4way"
 	level = 1
@@ -883,6 +915,12 @@
 
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/purple
 	color = PIPE_COLOR_PURPLE
+
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/red
+	color = PIPE_COLOR_RED
+
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/blue
+	color = PIPE_COLOR_BLUE
 
 /obj/machinery/atmospherics/pipe/cap
 	name = "pipe endcap"

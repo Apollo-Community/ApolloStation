@@ -75,7 +75,7 @@
 	if(output)
 		output.air.volume = ATMOS_DEFAULT_VOLUME_MIXER * 0.75 * inputs.len
 		output.concentration = 1
-
+	
 	rebuild_mixing_inputs()
 
 /obj/machinery/atmospherics/omni/mixer/proc/mapper_set()
@@ -107,7 +107,7 @@
 		transfer_moles += (set_flow_rate*P.concentration/P.air.volume)*P.air.total_moles
 
 	var/power_draw = -1
-	if (transfer_moles > MINUMUM_MOLES_TO_FILTER)
+	if (transfer_moles > MINIMUM_MOLES_TO_FILTER)
 		power_draw = mix_gas(src, mixing_inputs, output.air, transfer_moles, power_rating)
 
 	if (power_draw >= 0)
@@ -172,7 +172,7 @@
 	return data
 
 /obj/machinery/atmospherics/omni/mixer/Topic(href, href_list)
-	if(..()) return
+	if(..()) return 1
 
 	switch(href_list["command"])
 		if("power")

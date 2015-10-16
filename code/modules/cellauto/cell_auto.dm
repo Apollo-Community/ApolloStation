@@ -28,7 +28,6 @@
 		else
 			T.autocells += src
 	else
-		testing( "Cell existsed on non-turf" )
 		qdel( src )
 		return
 
