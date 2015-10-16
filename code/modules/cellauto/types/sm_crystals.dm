@@ -30,6 +30,7 @@
 		icon_state = "wall_crystal"
 	else
 		icon_state = "floor_crystal"
+		density = 1
 
 	if( master )
 		var/datum/cell_auto_master/v_wave/M = master
@@ -37,7 +38,10 @@
 		color = getSMColor( M.smlevel )
 		light_color = color
 
+		name = getSMColorName( M.smlevel ) + " " + initial(name)
+
 		set_light( light_range, light_power, light_color )
+
 
 /atom/movable/cell/supermatter_crystals/process()
 	if( shouldDie() )

@@ -6,7 +6,7 @@
 #define TRANSFORM_DISTANCE_MOD 2 // Size/this is maximum distance from SM during burst for transformation to Nucleation
 
 /obj/machinery/power/supermatter
-	name = "Supermatter"
+	name = "supermatter core"
 	desc = "A strangely translucent and iridescent crystal. \red You get headaches just from looking at it."
 	icon = 'icons/obj/supermatter.dmi'
 	icon_state = "supermatter"
@@ -20,8 +20,6 @@
 	light_power = 3
 
 	color = SM_DEFAULT_COLOR
-
-	var/bare = 0
 
 	var/smlevel = 1
 
@@ -77,7 +75,7 @@
 		          min(3 * (smvsc.explosion_size + (power_percent * smlevel)), (smvsc.explosion_size) * 5), \
 		          min(4 * (smvsc.explosion_size + (power_percent * smlevel)), (smvsc.explosion_size) * 6), 1)
 
-		supermatter_delamination( epicenter, 25, smlevel, 1 )
+		supermatter_delamination( epicenter, 15 + ( smlevel*10 ), smlevel, 1 )
 		qdel( src )
 		return
 
@@ -408,10 +406,9 @@
 		var/rads = ((power/smvsc.base_power)*smvsc.radiation_power) * sqrt( 1 / get_dist(l, src) )
 		l.apply_effect(rads, IRRADIATE)
 
-
-
 /obj/machinery/power/supermatter/update_icon()
 	color = getSMColor( smlevel )
+	name = getSMColorName( smlevel ) + " " + initial(name)
 
 	shift_light( color )
 
@@ -432,7 +429,3 @@
 
 /obj/machinery/power/supermatter/RepelAirflowDest(n)
 	return
-
-/obj/machinery/power/supermatter/bare
-	icon_state = "supermatter_bare"
-	bare = 1

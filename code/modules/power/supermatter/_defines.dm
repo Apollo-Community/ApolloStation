@@ -1,12 +1,14 @@
-var/list/SM_COLORS = list( SM_DEFAULT_COLOR, \
-						   "#00FF99", \
-						   "#0099FF", \
-						   "#6600FF", \
-						   "#FF00FF", \
-						   "#FF3399", \
-						   "#FFFF00", \
-						   "#FF6600", \
-						   "#FF0000" )
+var/list/SM_COLORS = list( SM_DEFAULT_COLOR = "green", \
+						   "#00FF99" = "cyan", \
+						   "#0099FF" = "blue", \
+						   "#6600FF" = "purple", \
+						   "#FF00FF" = "pink", \
+						   "#FF3399" = "magenta", \
+						   "#FFFF00" = "yellow", \
+						   "#FF6600" = "orange", \
+						   "#FF0000" = "red" )
+
+
 
 /proc/getSMColor( var/level )
 	if( level < 1 )
@@ -16,6 +18,15 @@ var/list/SM_COLORS = list( SM_DEFAULT_COLOR, \
 		level = 9
 
 	return SM_COLORS[level]
+
+/proc/getSMColorName( var/level )
+	if( level < 1 )
+		level = 1
+
+	if( level > 9 )
+		level = 9
+
+	return SM_COLORS[ SM_COLORS[level] ]
 
 proc/supermatter_delamination( var/turf/epicenter, var/size = 25, var/smlevel = 1, var/transform_mobs = 0, var/adminlog = 1 )
 	spawn(0)
