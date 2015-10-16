@@ -51,7 +51,7 @@ proc/supermatter_convert( var/turf/T, var/transform_mobs = 0, var/level = 1 )
 			mob.apply_effect( level*15, IRRADIATE )
 			mob.ex_act( 3 )
 
-	if( istype( T, /turf/simulated/floor ))
+	if( istype( T, /turf/simulated/ ) && prob( 10 ))
 		new /datum/cell_auto_master/supermatter_crystal( T, 0, level )
 
 	for( var/obj/machinery/light/item in T.contents )

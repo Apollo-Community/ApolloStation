@@ -13,7 +13,14 @@
 	color = SM_DEFAULT_COLOR
 	master_type = /datum/cell_auto_master/v_wave
 
+/atom/movable/cell/v_wave/New()
+	..()
+
+	update_icon()
+
 /atom/movable/cell/v_wave/proc/update_icon()
+	..()
+
 	if( master )
 		var/datum/cell_auto_master/v_wave/M = master
 
@@ -21,8 +28,6 @@
 		light_color = getSMColor( M.smlevel )
 
 		set_light( light_range, light_power, light_color )
-
-	..()
 
 /atom/movable/cell/v_wave/process()
 	if( shouldDie() )

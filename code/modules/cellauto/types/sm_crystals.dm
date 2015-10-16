@@ -16,18 +16,14 @@
 	age_max = 0 // There is no maximum age
 	master_type = /datum/cell_auto_master/supermatter_crystal
 
-	var/smlevel = 1
 	var/has_spread = 0
 	var/health = 30
 
 /atom/movable/cell/supermatter_crystals/New()
 	..()
 
-	if( !iswall( loc ))
-		if( prob( 90 ))
-			qdel( src )
-
-	update_icon()
+	spawn(0)
+		update_icon()
 
 /atom/movable/cell/supermatter_crystals/proc/update_icon()
 	if( iswall( get_turf( src )))
@@ -43,8 +39,6 @@
 
 		set_light( light_range, light_power, light_color )
 
-	..()
-
 /atom/movable/cell/supermatter_crystals/process()
 	if( shouldDie() )
 		qdel( src )
@@ -59,15 +53,21 @@
 		radiate()
 
 /atom/movable/cell/supermatter_crystals/spread()
+	has_spread = 1
+
 	for( var/direction in cardinal ) // Only gets NWSE
 		var/turf/T = get_step( src,direction )
 		if( checkTurf( T ))
-			PoolOrNew( /atom/movable/cell/supermatter_crystals, list( T, master ))
+			if( prob( 40 ))
+				PoolOrNew( /atom/movable/cell/supermatter_crystals, list( T, master ))
 
 /atom/movable/cell/supermatter_crystals/proc/radiate()
-	for(var/mob/living/l in range(src, smlevel ))
-		var/rads = smlevel*5
-		l.apply_effect(rads, IRRADIATE)
+	if( master )
+		var/datum/cell_auto_master/v_wave/M = master
+
+		for(var/mob/living/l in range( src, M.smlevel ))
+			var/rads = M.smlevel*5
+			l.apply_effect(rads, IRRADIATE)
 
 /atom/movable/cell/supermatter_crystals/shouldProcess()
 	if( has_spread )
@@ -82,26 +82,55 @@
 	health -= W.force
 
 	if( health <= 0 )
-		smash( prob( 100/smlevel ))
+		if( master )
+			var/datum/cell_auto_master/v_wave/M = master
+			smash( prob( 100-( 10*M.smlevel ))) // the highest the level, the less likely you are to get a crystal dropped
+
+/atom/movable/cell/supermatter_crystals/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			smash()
+			return
+		if(2.0)
+			if (prob(90))
+				smash()
+				return
+		if(3.0)
+			if (prob(50))
+				smash()
+				return
+	return
+
+/atom/movable/cell/supermatter_crystals/bullet_act(var/obj/item/projectile/P)
+	..()
+
+	health -= P.damage
+
+	if( health <= 0 )
+		if( master )
+			var/datum/cell_auto_master/v_wave/M = master
+			smash( prob( 30/M.smlevel )) // the higher the level, the less likely you are to get a crystal dropped
 
 /atom/movable/cell/supermatter_crystals/proc/smash( var/drop = 0 )
-	if(smlevel>=6 && prob(min(100, smlevel*10)))
-		visible_message("\red <B>\The [src] explodes!</B>")
-		playsound(loc, 'sound/effects/Glassbr2.ogg', 100, 1)
-		supermatter_delamination( get_turf( src ), smlevel/2, smlevel, 0, 0 )
-	else
+	if( master )
+		var/datum/cell_auto_master/v_wave/M = master
 
-		playsound(loc, 'sound/effects/Glassbr2.ogg', 100, 1)
-
-		for(var/mob/living/l in range( src, 2 ))
-			var/rads = 15*smlevel
-			l.apply_effect(rads, IRRADIATE)
-
-		if( drop )
-			visible_message("\red <B>\The [src] shatters!</B>")
-			new /obj/item/weapon/shard/supermatter( get_turf( src ), smlevel )
+		if( M.smlevel >= 4 && prob( min( 100, M.smlevel*10 )))
+			visible_message("\red <B>\The [src] explodes!</B>")
+			playsound(loc, 'sound/effects/Glassbr2.ogg', 100, 1)
+			supermatter_delamination( get_turf( src ), M.smlevel/2, M.smlevel, 0, 0 )
 		else
-			visible_message("\red <B>\The [src] shatters to dust!</B>")
+			playsound(loc, 'sound/effects/Glassbr2.ogg', 100, 1)
+
+			for(var/mob/living/l in range( src, 2 ))
+				var/rads = 15*M.smlevel
+				l.apply_effect(rads, IRRADIATE)
+
+			if( drop )
+				visible_message("\red <B>\The [src] shatters!</B>")
+				new /obj/item/weapon/shard/supermatter( get_turf( src ), M.smlevel )
+			else
+				visible_message("\red <B>\The [src] shatters to dust!</B>")
 
 	qdel( src )
 
