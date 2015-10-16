@@ -1,4 +1,10 @@
-/turf/var/autocell = null
+/turf/var/list/autocells = list()
+
+/turf/proc/containsCell( var/cell_type )
+	if( locate( cell_type ) in src.autocells )
+		return 1
+
+	return 0
 
 /atom/movable/cell
 	icon = 'icons/effects/effects.dmi'
@@ -16,11 +22,11 @@
 
 	var/turf/T = get_turf( src )
 	if( T ) // Checking and setting the turf's automata cell
-		if( T.autocell )
+		if( T.containsCell( type ))
 			qdel( src )
 			return
 		else
-			T.autocell = src
+			T.autocells += src
 	else
 		testing( "Cell existsed on non-turf" )
 		qdel( src )
@@ -64,7 +70,7 @@
 	var/turf/T = get_turf( src )
 
 	if( T )
-		T.autocell = null
+		T.autocells -= src
 
 	if( master )
 		master.cells -= src

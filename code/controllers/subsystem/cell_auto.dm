@@ -1,4 +1,4 @@
-var/global/datum/cell_auto_handler/v_wave_handler = new()
+var/global/datum/cell_auto_handler/v_wave_handler = new(2)
 
 /datum/subsystem/cell_auto
 	//things you will want to define

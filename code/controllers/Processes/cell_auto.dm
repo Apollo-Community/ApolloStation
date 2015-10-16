@@ -1,6 +1,6 @@
 /datum/controller/process/cell_auto/setup()
 	name = "cellular automata"
-	schedule_interval = 2
+	schedule_interval = 1
 	testing( "Cellular automata process setup complete" )
 
 /datum/controller/process/cell_auto/doWork()

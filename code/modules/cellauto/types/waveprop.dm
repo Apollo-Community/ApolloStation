@@ -58,7 +58,7 @@
 	if( !T )
 		return 0
 
-	if( T.autocell )
+	if( T.containsCell( type ))
 		return 0
 
 	if( istype( T, /turf/simulated/wall/r_wall ))
