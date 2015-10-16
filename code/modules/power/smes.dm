@@ -442,3 +442,4 @@
 /obj/machinery/power/smes/magical/process()
 	charge = 5000000
 	..()
+
