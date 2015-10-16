@@ -13,12 +13,6 @@
 	color = SM_DEFAULT_COLOR
 	master_type = /datum/cell_auto_master/v_wave
 
-/atom/movable/cell/v_wave/Destroy()
-	if( master )
-		master.cells -= src
-
-	..()
-
 /atom/movable/cell/v_wave/proc/update_icon()
 	if( master )
 		var/datum/cell_auto_master/v_wave/M = master
@@ -31,7 +25,7 @@
 	..()
 
 /atom/movable/cell/v_wave/process()
-	if( age >= age_max )
+	if( shouldDie() )
 		qdel(src)
 
 	age++
@@ -43,7 +37,7 @@
 		spread()
 		convert()
 
-/atom/movable/cell/v_wave/proc/spread()
+/atom/movable/cell/v_wave/spread()
 	for( var/direction in cardinal ) // Only gets NWSE
 		var/turf/T = get_step( src,direction )
 		if( checkTurf( T ))
@@ -68,6 +62,9 @@
 		return 0
 
 	if( istype( T, /turf/simulated/wall/r_wall ))
+		return 0
+
+	if( T.contains_opaque_objects() && level == 1 )
 		return 0
 
 	return 1

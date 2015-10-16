@@ -28,7 +28,7 @@ proc/supermatter_delamination( var/turf/epicenter, var/size = 25, var/smlevel = 
 			message_admins("Supermatter delamination with size ([size]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</a>)", "LOG:")
 			log_game("Supermatter delamination with size ([size]) in area [epicenter.loc.name] ")
 
-		playsound(epicenter, 'sound/effects/supermatter.ogg', 100, 1, round(size*2,1) )
+		playsound(epicenter, 'sound/effects/supermatter.ogg', 100, 1, round(size*3,1) )
 		new /obj/cell_spawner/v_wave( epicenter, size, smlevel )
 
 		diary << "## Supermatter delamination with size [size]. Took [(world.timeofday-start)/10] seconds."

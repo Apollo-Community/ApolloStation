@@ -10,7 +10,6 @@ var/global/datum/cell_auto_handler/v_wave_handler = new()
 /datum/subsystem/cell_auto/New()
 	..()
 
-	testing( "Cellular automata subsytem created" )
 	handlers += v_wave_handler
 
 //previously, this would have been named 'process()' but that name is used everywhere for different things!

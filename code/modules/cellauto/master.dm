@@ -22,7 +22,7 @@
 	..()
 
 /datum/cell_auto_master/proc/process()
-	if( !shouldProcess() && !cells.len )
+	if( shouldDie() && !cells.len )
 		qdel( src )
 
 	group_age++
@@ -31,7 +31,15 @@
 		cell.process()
 
 /datum/cell_auto_master/proc/shouldProcess()
-	if( group_age >= group_age_max )
-		return 0
+	if( group_age_max )
+		if( group_age >= group_age_max )
+			return 0
 
 	return 1
+
+/datum/cell_auto_master/proc/shouldDie()
+	if( group_age_max )
+		if( group_age >= group_age_max )
+			return 1
+
+	return 0

@@ -33,7 +33,7 @@
 	dir = CalcDir()
 
 	var/survives = 0
-	if( prob( 25*(1/smlevel) ))
+	if( prob( 25*( 1/sqrt(smlevel)) ))
 		survives = 1
 
 	update_icon()
@@ -145,35 +145,6 @@
 		name = "supermatter crystal"
 		density = 1
 
-/*
-	var/direction = 16
-
-	for(var/wallDir in cardinal)
-		var/turf/newTurf = get_step(location,wallDir)
-		if(newTurf.density)
-			direction |= wallDir
-
-	for(var/obj/effect/supermatter_crystal/crystal in location)
-		if(crystal == src)
-			continue
-		if(crystal.floor) //special
-			direction &= ~16
-		else
-			direction &= ~crystal.dir
-
-	var/list/dirList = list()
-
-	for(var/i=1,i<=16,i <<= 1)
-		if(direction & i)
-			dirList += i
-
-	if(dirList.len)
-		var/newDir = pick(dirList)
-		if(newDir == 16)
-			floor = 1
-			newDir = 1
-		return newDir
-*/
 	floor = 1
 	return 1
 
@@ -183,7 +154,7 @@
 	endurance -= W.force
 
 	if (prob(min(smlevel*10, 50)))
-		new /obj/item/weapon/shard/supermatter( src.loc, smlevel )
+		Destroy()
 
 /obj/effect/supermatter_crystal/ex_act(severity)
 	switch(severity)

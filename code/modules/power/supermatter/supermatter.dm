@@ -260,7 +260,11 @@
 	var/integrity = crit_damage / (explosion_point + ( (smvsc.fusion_stability / explosion_point) * smlevel) )
 	integrity = round(100 - integrity * 100)
 	integrity = integrity < 0 ? 0 : integrity
-	radio.autosay("CRITICAL FAILURE! [integrity]% Integrity Lost!", "Supermatter Monitor")
+
+	// A wave burst during a critical failure
+	supermatter_delamination( get_turf( src ), smlevel*3, smlevel, 0, 0 )
+
+	radio.autosay("CRITICAL STRUCTURE FAILURE: [integrity]% Integrity Lost!", "Supermatter Monitor")
 	announce_warning()
 
 /obj/machinery/power/supermatter/proc/smLevelChange( var/level_increase = 1 )

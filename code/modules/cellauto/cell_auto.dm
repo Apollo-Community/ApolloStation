@@ -1,8 +1,6 @@
 /turf/var/autocell = null
 
 /atom/movable/cell
-	name = ""
-	desc = ""
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cellauto"
 
@@ -36,7 +34,7 @@
 	master.cells += src
 
 /atom/movable/cell/proc/process()
-	if( age >= age_max )
+	if( src.shouldDie() )
 		qdel( src )
 
 	if( master )
@@ -46,10 +44,21 @@
 	return
 
 /atom/movable/cell/proc/shouldProcess()
-	if( age >= age_max )
-		return 0
+	if( age_max )
+		if( age >= age_max )
+			return 0
 
 	return 1
+
+/atom/movable/cell/proc/shouldDie()
+	if( age_max )
+		if( age >= age_max )
+			return 1
+
+	return 0
+
+/atom/movable/cell/proc/spread()
+	return
 
 /atom/movable/cell/Destroy()
 	var/turf/T = get_turf( src )
