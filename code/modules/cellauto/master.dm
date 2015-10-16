@@ -8,12 +8,10 @@
 	..()
 
 	if( loc && cell_type )
-		new cell_type( loc, src )
+		PoolOrNew( cell_type, list( loc, src ))
 
 	if( size )
 		group_age_max = size
-
-	testing( "New group of cells created" )
 
 /datum/cell_auto_master/Destroy()
 	for( var/cell in cells )
@@ -22,7 +20,7 @@
 	..()
 
 /datum/cell_auto_master/proc/process()
-	if( shouldDie() && !cells.len )
+	if( !cells.len )
 		qdel( src )
 
 	group_age++
@@ -36,10 +34,3 @@
 			return 0
 
 	return 1
-
-/datum/cell_auto_master/proc/shouldDie()
-	if( group_age_max )
-		if( group_age >= group_age_max )
-			return 1
-
-	return 0

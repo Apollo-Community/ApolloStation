@@ -85,12 +85,8 @@ var/list/noblend_objects = list( /obj/machinery/door/blast, /obj/machinery/door/
 				shroom.icon_state = "glowshroomf"
 				shroom.pixel_x = 0
 				shroom.pixel_y = 0
-		for(var/obj/effect/supermatter_crystal/crystal in get_step(src,direction))
-			if(!crystal.floor) //crystals drop to the floor
-				crystal.floor = 1
-				crystal.icon_state = "supermatter_crystalf"
-				crystal.pixel_x = 0
-				crystal.pixel_y = 0
+		for(var/atom/movable/cell/supermatter_crystals/crystal in src )
+			qdel( crystal )
 
 	..()
 

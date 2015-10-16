@@ -33,7 +33,7 @@
 		return
 
 	if( !set_master )
-		master = new master_type()
+		master = PoolOrNew( master_type )
 	else
 		master = set_master
 

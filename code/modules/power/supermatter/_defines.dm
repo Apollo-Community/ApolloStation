@@ -52,7 +52,7 @@ proc/supermatter_convert( var/turf/T, var/transform_mobs = 0, var/level = 1 )
 			mob.ex_act( 3 )
 
 	if( istype( T, /turf/simulated/floor ))
-		new /obj/effect/supermatter_crystal(T, max(1, rand(level-1, level)))
+		new /datum/cell_auto_master/supermatter_crystal( T, 0, level )
 
 	for( var/obj/machinery/light/item in T.contents )
 		item.broken()
