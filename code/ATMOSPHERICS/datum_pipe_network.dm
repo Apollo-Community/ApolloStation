@@ -70,7 +70,7 @@ datum/pipe_network
 
 		for(var/datum/pipeline/line_member in line_members)
 			gases += line_member.air
-
+		
 		for(var/datum/gas_mixture/air in gases)
 			volume += air.volume
 

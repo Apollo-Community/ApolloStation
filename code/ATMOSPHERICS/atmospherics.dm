@@ -10,6 +10,9 @@ Pipelines + Other Objects -> Pipe network
 
 */
 /obj/machinery/atmospherics
+
+	auto_init = 0
+
 	anchored = 1
 	idle_power_usage = 0
 	active_power_usage = 0
@@ -85,6 +88,9 @@ obj/machinery/atmospherics/proc/check_connect_types(obj/machinery/atmospherics/a
 	return node.pipe_color
 
 /obj/machinery/atmospherics/process()
+	last_flow_rate = 0
+	last_power_draw = 0
+
 	build_network()
 
 /obj/machinery/atmospherics/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
