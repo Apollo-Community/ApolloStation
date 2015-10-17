@@ -71,7 +71,7 @@ var/last_chew = 0
 
 	var/mob/living/carbon/human/H = A
 	if (!H.handcuffed) return
-	if (H.a_intent != "hurt") return
+	if (H.a_intent != I_HURT) return
 	if (H.zone_sel.selecting != "mouth") return
 	if (H.wear_mask) return
 	if (istype(H.wear_suit, /obj/item/clothing/suit/straight_jacket)) return
@@ -129,7 +129,7 @@ var/last_chew = 0
 
 			user.put_in_hands(W)
 			user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
-			del(src)
+			qdel(src)
 			update_icon(user)
 
 

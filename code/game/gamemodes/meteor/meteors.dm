@@ -104,7 +104,7 @@
 
 /obj/effect/meteor/Move()
 	if(z != z_original || loc == dest)
-		del(src)
+		qdel(src)
 		return
 
 	. = ..() //process movement...
@@ -129,7 +129,7 @@
 		get_hit()
 
 /obj/effect/meteor/overmapTravel()
-	del(src)
+	qdel(src)
 
 /obj/effect/meteor/proc/ram_turf(var/turf/T)
 	//first bust whatever is in the turf
@@ -148,14 +148,14 @@
 	if(hits <= 0)
 		make_debris()
 		meteor_effect(heavy)
-		del(src)
+		qdel(src)
 
 /obj/effect/meteor/ex_act()
 	return
 
 /obj/effect/meteor/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/pickaxe))
-		del(src)
+		qdel(src)
 		return
 	..()
 
@@ -173,6 +173,10 @@
 			var/dist = get_dist(M.loc, src.loc)
 			shake_camera(M, dist > 20 ? 3 : 5, dist > 20 ? 1 : 3)
 			M.playsound_local(src.loc, meteorsound, 50, 1, get_rand_frequency(), 10)
+
+/obj/effect/meteor/Destroy()
+	walk(src,0) //this cancels the walk_towards() proc
+	..()
 
 ///////////////////////
 //Meteor types

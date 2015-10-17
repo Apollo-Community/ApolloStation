@@ -205,7 +205,7 @@
 			else
 				src << "You are not security."
 
-		if ("help")
+		if (I_HELP)
 			src << "salute, bow-(none)/mob, clap, flap, aflap, twitch, twitch_s, nod, deathgasp, glare-(none)/mob, stare-(none)/mob, look, beep, ping, \nbuzz, law, halt"
 		else
 			src << "\blue Unusable emote '[act]'. Say *help for a list."

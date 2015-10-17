@@ -72,8 +72,8 @@ max volume of phoron storeable by the field = the total volume of a number of ti
 		Shutdown()
 
 	cached_power_avail = avail()
-	//luminosity = round(owned_field.field_strength/10)
-	//luminosity = max(luminosity,1)
+	//light_range = round(owned_field.field_strength/10)
+	//light_range = max(light_range,1)
 
 /obj/machinery/power/rust_core/attackby(obj/item/W, mob/user)
 
@@ -260,7 +260,7 @@ max volume of phoron storeable by the field = the total volume of a number of ti
 	owned_field.ChangeFieldStrength(field_strength)
 	owned_field.ChangeFieldFrequency(field_frequency)
 	icon_state = "core1"
-	luminosity = 1
+	light_range = 1
 	use_power = 2
 	return 1
 
@@ -268,8 +268,8 @@ max volume of phoron storeable by the field = the total volume of a number of ti
 	//todo: safety checks for field status
 	if(owned_field)
 		icon_state = "core0"
-		del(owned_field)
-		luminosity = 0
+		qdel(owned_field)
+		light_range = 0
 		use_power = 1
 
 /obj/machinery/power/rust_core/proc/AddParticles(var/name, var/quantity = 1)

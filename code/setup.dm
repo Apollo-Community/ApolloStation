@@ -2,6 +2,11 @@
 
 #define DEBUG
 
+#define GAME_STATE_PREGAME		1
+#define GAME_STATE_SETTING_UP	2
+#define GAME_STATE_PLAYING		3
+#define GAME_STATE_FINISHED		4
+
 #define PI 3.1415
 
 #define R_IDEAL_GAS_EQUATION	8.31 //kPa*L/(K*mol)
@@ -13,7 +18,8 @@
 #define COSMIC_RADIATION_TEMPERATURE	3.15		//K
 #define AVERAGE_SOLAR_RADIATION			200			//W/m^2. Kind of arbitrary. Really this should depend on the sun position much like solars.  From the numbers on Erebus, this'd be an orbit of 23.3 lightseconds.
 #define RADIATOR_OPTIMUM_PRESSURE		110			//kPa at 20 C
-#define RADIATOR_EXPOSED_SURFACE_AREA 0.03  //The pipe looks to be thin vertically and wide horizontally, so we'll assume that it's three centimeters thick and only explosed to the sun edge-on.
+#define GAS_CRITICAL_TEMPERATURE     132.65    // K. The critical point temperature for air.
+#define RADIATOR_EXPOSED_SURFACE_AREA_RATIO 0.04 // (3 cm + 100 cm * sin(3deg))/(2*(3+100 cm)). Unitless ratio.
 
 #define CELL_VOLUME 2500	//liters in a cell
 #define MOLES_CELLSTANDARD (ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))	//moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC
@@ -485,7 +491,7 @@
 
 
 //Some mob defines below
-#define AI_CAMERA_LUMINOSITY 6
+#define AI_CAMERA_light_range 6
 
 #define BORGMESON 1
 #define BORGTHERM 2
@@ -776,6 +782,10 @@ var/list/be_special_flags = list(
 #define ATMOS_DEFAULT_VOLUME_MIXER	200	//L
 #define ATMOS_DEFAULT_VOLUME_PIPE	70	//L
 
+// Will not bother pumping or filtering if the gas source as fewer than this amount of moles, to help with performance.
+#define MINIMUM_MOLES_TO_PUMP   0.01
+#define MINIMUM_MOLES_TO_FILTER 0.1
+
 // Reagent metabolism defines.
 #define FOOD_METABOLISM 0.4
 #define ALCOHOL_METABOLISM 0.1
@@ -821,3 +831,33 @@ var/list/be_special_flags = list(
 //Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 #define SYSTEM_DESIGNATION "NYX" // The system designation code, commonly used for sector formats
+
+#define FOR_DVIEW(type, range, center, invis_flags) \
+	dview_mob.loc = center; \
+	dview_mob.see_invisible = invis_flags; \
+	for(type in view(range, dview_mob))
+#define END_FOR_DVIEW dview_mob.loc = null
+
+#define Clamp(x, y, z) 	(x <= y ? y : (x >= z ? z : x))
+
+#define CLAMP01(x) 		(Clamp(x, 0, 1))
+
+//intent flags, why wasn't this done the first time?
+#define I_HELP		"help"
+#define I_DISARM	"disarm"
+#define I_GRAB		"grab"
+#define I_HURT		"hurt"
+
+#define SM_DEFAULT_COLOR "#99FF33"
+
+//singularity defines
+#define STAGE_ONE 	1
+#define STAGE_TWO 	3
+#define STAGE_THREE	5
+#define STAGE_FOUR	7
+#define STAGE_FIVE	9
+#define STAGE_SUPER	11
+
+// Supermatter defines
+#define MIN_SUPERMATTER_LEVEL 1
+#define MAX_SUPERMATTER_LEVEL 9

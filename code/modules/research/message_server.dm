@@ -56,7 +56,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100
-	l_color = COMPUTER_BLUE
+	light_color = COMPUTER_BLUE
 
 	var/list/datum/data_pda_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
@@ -76,7 +76,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	..()
 	return
 
-/obj/machinery/message_server/Del()
+/obj/machinery/message_server/Destroy()
 	message_servers -= src
 	..()
 	return
@@ -124,7 +124,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 		istype(O,/obj/item/weapon/circuitboard/message_monitor))
 		spamfilter_limit += round(MESSAGE_SERVER_DEFAULT_SPAM_LIMIT / 2)
 		user.drop_item()
-		del(O)
+		qdel(O)
 		user << "You install additional memory and processors into message server. Its filtering capabilities been enhanced."
 	else
 		..(O, user)
@@ -132,13 +132,13 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 /obj/machinery/message_server/update_icon()
 	if((stat & (BROKEN|NOPOWER)))
 		icon_state = "server-nopower"
-		SetLuminosity(0)
+		set_light(0)
 	else if (!active)
 		icon_state = "server-off"
-		SetLuminosity(0)
+		set_light(0)
 	else
 		icon_state = "server-on"
-		SetLuminosity(1)
+		set_light(1)
 
 	return
 
@@ -225,17 +225,17 @@ var/obj/machinery/blackbox_recorder/blackbox
 	var/list/msg_service = list()
 
 	var/list/datum/feedback_variable/feedback = new()
-	l_color = COMPUTER_BLUE
-	luminosity = 1
+	light_color = COMPUTER_BLUE
+	light_range = 1
 
 	//Only one can exsist in the world!
 /obj/machinery/blackbox_recorder/New()
 	if(blackbox)
 		if(istype(blackbox,/obj/machinery/blackbox_recorder))
-			del(src)
+			qdel(src)
 	blackbox = src
 
-/obj/machinery/blackbox_recorder/Del()
+/obj/machinery/blackbox_recorder/Destroy()
 	var/turf/T = locate(1,1,2)
 	if(T)
 		blackbox = null

@@ -207,11 +207,11 @@
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				del(src)
+				qdel(src)
 				return
 			if(2.0)
 				if (prob(25))
-					del(src)
+					qdel(src)
 					return
 				if (prob(50))
 					for(var/x in verbs)
@@ -270,8 +270,8 @@
 			chan = power_channel
 
 		var/area/A = get_area(loc)
-		if(istype(A) && A.master && A.master.powered(chan))
-			A.master.use_power(amount, chan)
+		if(istype(A) && A.powered(chan))
+			A.use_power(amount, chan)
 		else if(battery && battery.charge > 0)
 			battery.use(amount)
 
@@ -413,13 +413,13 @@
 			// Broken
 			if(stat & BROKEN)
 				icon_state += "b"
-				SetLuminosity(0)
+				set_light(0)
 
 			// Powered
 			else if(stat & NOPOWER)
 				icon_state = initial(icon_state)
 				icon_state += "0"
-				SetLuminosity(0)
+				set_light(0)
 			return
 		if(stat)
 			overlays.Cut()
@@ -440,7 +440,7 @@
 			if(show_keyboard)
 				overlays += kb
 			name = initial(name) + " (orange screen of death)"
-		SetLuminosity(brightness)
+		set_light(brightness)
 
 	//Returns percentage of battery charge remaining. Returns -1 if no battery is installed.
 	proc/check_battery_status()

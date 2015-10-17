@@ -46,7 +46,7 @@
 	if(ejectshell)
 		AC.loc = get_turf(src) //Eject casing onto ground.
 	else
-		del(AC)
+		qdel(AC)
 
 	return 1
 

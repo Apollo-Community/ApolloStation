@@ -60,14 +60,14 @@
 	if(user && user.client && !(A in target))
 		var/client/C = user.client
 		//If help intent is on and we have clicked on an eligible target, switch to aim mode automatically
-		if(user.a_intent == "help" && isliving(A) && !C.gun_mode)
+		if(user.a_intent == I_HELP && isliving(A) && !C.gun_mode)
 			C.ToggleGunMode()
 
 		if(C.gun_mode)
 			aiming = PreFire(A,user,params) //They're using the new gun system, locate what they're aiming at.
 
 	if (!aiming)
-		if(user && user.a_intent == "help") //regardless of what happens, refuse to shoot if help intent is on
+		if(user && user.a_intent == I_HELP) //regardless of what happens, refuse to shoot if help intent is on
 			user << "\red You refrain from firing your [src] as your intent is set to help."
 		else
 			Fire(A,user,params) //Otherwise, fire normally.
@@ -84,7 +84,7 @@
 				M << "<span class='danger'>[src] blows up in your face.</span>"
 				M.take_organ_damage(0,20)
 				M.drop_item()
-				del(src)
+				qdel(src)
 				return
 
 	if (!user.IsAdvancedToolUser())
@@ -120,7 +120,7 @@
 	in_chamber.def_zone = user.zone_sel.selecting
 	if(targloc == curloc)
 		user.bullet_act(in_chamber)
-		del(in_chamber)
+		qdel(in_chamber)
 		update_icon()
 		return
 
@@ -217,7 +217,7 @@
 			else
 				user << "<span class = 'notice'>Ow...</span>"
 				user.apply_effect(110,AGONY,0)
-			del(in_chamber)
+			qdel(in_chamber)
 			mouthshoot = 0
 			return
 		else
@@ -227,7 +227,7 @@
 
 	if (load_into_chamber())
 		//Point blank shooting if on harm intent or target we were targeting.
-		if(user.a_intent == "hurt")
+		if(user.a_intent == I_HURT)
 			user.visible_message("\red <b> \The [user] fires \the [src] point blank at [M]!</b>")
 			if(istype(in_chamber)) in_chamber.damage *= 1.3
 			Fire(M,user)

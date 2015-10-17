@@ -68,17 +68,17 @@
 				src << "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear \him."
 				return
 
-	// Pinging the player if their name is mentioned ICly
-	message = replacetext(message, real_name, "<span class='sayattention'>[real_name]</span>")
-	if( client.prefs.toggles & SOUND_NOTIFICATIONS )
-		if( findtext( message, real_name ))
-			src << sound( 'sound/effects/icalert.ogg' )
+	// Trigger word notifications
+	if( trigger_words && trigger_words.len && trigger_words.len < 50 )
+		var/sound_played = 0
 
-	// Highlighting code words in red
-	if( mind.special_role )
-		var/list/code_words = syndicate_code_phrase + syndicate_code_response
-		for( var/word in code_words )
-			message = replacetext(message, word, "<span class='sayattention'>[word]</span>" )
+		for( var/word in trigger_words )
+			if( findtext( message, word ))
+				if( !sound_played && ( client.prefs.toggles & SOUND_NOTIFICATIONS ))
+					sound_played = 1
+					src << sound( 'sound/effects/icalert.ogg' )
+
+				message = replacetext( message, word, "<span class='sayattention'>[word]</span>" )
 
 	if(language)
 		src << "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][language.format_message(message, verb)]</span>"
@@ -194,17 +194,16 @@
 			src << "<span class='warning'>You feel your headset vibrate but can hear nothing from it!</span>"
 			return
 
-		// Pinging the player if their name is mentioned ICly
-	formatted = replacetext(formatted, real_name, "<span class='radioattention'>[real_name]</span>")
-	if( client.prefs.toggles & SOUND_NOTIFICATIONS )
-		if( findtext( formatted, real_name ))
-			src << sound( 'sound/effects/icalert.ogg' )
+	// Trigger word notifications
+	if( trigger_words && trigger_words.len && trigger_words.len < 50 )
+		var/sound_played = 0
+		for( var/word in trigger_words )
+			if( findtext( formatted, word ))
+				if( !sound_played && ( client.prefs.toggles & SOUND_NOTIFICATIONS ))
+					sound_played = 1
+					src << sound( 'sound/effects/icalert.ogg' )
 
-	// Highlighting code words in red
-	if( mind.special_role )
-		var/list/code_words = syndicate_code_phrase + syndicate_code_response
-		for( var/word in code_words )
-			formatted = replacetext( formatted, word, "<span class='radioattention'>[word]</span>" )
+				formatted = replacetext( formatted, word, "<span class='radioattention'>[word]</span>" )
 
 	if(track)
 		src << "[part_a][track][part_b][formatted]</span></span>"

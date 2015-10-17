@@ -37,7 +37,7 @@
 	lethal = 1
 	icon_state = "control_kill"
 
-/obj/machinery/turretid/Del()
+/obj/machinery/turretid/Destroy()
 	if(control_area)
 		var/area/A = control_area
 		if(A && istype(A))
@@ -46,11 +46,7 @@
 
 /obj/machinery/turretid/initialize()
 	if(!control_area)
-		var/area/CA = get_area(src)
-		if(CA.master && CA.master != CA)
-			control_area = CA.master
-		else
-			control_area = CA
+		control_area = get_area(src)
 	else if(istext(control_area))
 		for(var/area/A in world)
 			if(A.name && A.name==control_area)

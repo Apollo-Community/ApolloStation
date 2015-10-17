@@ -18,14 +18,14 @@
 	name = "Pylon"
 	desc = "A floating crystal that hums with an unearthly energy"
 	icon_state = "pylon"
-	luminosity = 5
+	light_range = 5
 
 
 /obj/structure/cult/tome
 	name = "Desk"
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl"
 	icon_state = "tomealtar"
-//	luminosity = 5
+//	light_range = 5
 
 //sprites for this no longer exist	-Pete
 //(they were stolen from another game anyway)

@@ -19,19 +19,19 @@
 /obj/machinery/paperwork_dispenser/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 
 /obj/machinery/paperwork_dispenser/blob_act()
 	if (prob(50))
-		del(src)
+		qdel(src)
 
 /obj/machinery/paperwork_dispenser/meteorhit()
-	del(src)
+	qdel(src)
 	return
 
 /obj/machinery/paperwork_dispenser/ui_interact(mob/user, ui_key = "main",var/datum/nanoui/ui = null, var/force_open = 1)

@@ -234,15 +234,15 @@
 
 	switch(M.a_intent)
 
-		if("help")
+		if(I_HELP)
 			if (health > 0)
 				M.visible_message("\blue [M] [response_help] \the [src]")
 
-		if("disarm")
+		if(I_DISARM)
 			M.visible_message("\blue [M] [response_disarm] \the [src]")
 			//TODO: Push the mob away or something
 
-		if("grab")
+		if(I_GRAB)
 			if (M == src)
 				return
 			if (!(status_flags & CANPUSH))
@@ -258,7 +258,7 @@
 
 			M.visible_message("\red [M] has grabbed [src] passively!")
 
-		if("hurt")
+		if(I_HURT)
 			adjustBruteLoss(harm_intent_damage)
 			M.visible_message("\red [M] [response_harm] \the [src]")
 
@@ -288,7 +288,7 @@
 			if(small)
 				user.visible_message("<span class='danger'>[user] chops up \the [src]!</span>")
 				new/obj/effect/decal/cleanable/blood/splatter(get_turf(src))
-				del(src)
+				qdel(src)
 			else
 				user.visible_message("<span class='danger'>[user] butchers \the [src] messily!</span>")
 				gib()
@@ -361,7 +361,7 @@
 //Call when target overlay should be added/removed
 /mob/living/simple_animal/update_targeted()
 	if(!targeted_by && target_locked)
-		del(target_locked)
+		qdel(target_locked)
 	overlays = null
 	if (targeted_by && target_locked)
 		overlays += target_locked

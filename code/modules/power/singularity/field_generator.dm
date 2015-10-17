@@ -61,7 +61,6 @@ field_generator power level display
 	connected_gens = list()
 	return
 
-
 /obj/machinery/field_generator/process()
 	if(Varedit_start == 1)
 		if(active == 0)
@@ -174,7 +173,7 @@ field_generator power level display
 	return 0
 
 
-/obj/machinery/field_generator/Del()
+/obj/machinery/field_generator/Destroy()
 	src.cleanup()
 	..()
 
@@ -322,7 +321,7 @@ field_generator power level display
 	for (var/obj/machinery/containment_field/F in fields)
 		if (isnull(F))
 			continue
-		del(F)
+		qdel(F)
 	fields = list()
 	for(var/obj/machinery/field_generator/FG in connected_gens)
 		if (isnull(FG))
@@ -340,10 +339,10 @@ field_generator power level display
 	//I want to avoid using global variables.
 	spawn(1)
 		var/temp = 1 //stops spam
-		for(var/obj/machinery/singularity/O in machines)
+		for(var/obj/singularity/O in machines)
 			if(O.last_warning && temp)
 				if((world.time - O.last_warning) > 50) //to stop message-spam
 					temp = 0
-					message_admins("A singulo exists and a containment field has failed.", "LOG:")
+					message_admins("A singulo exists and a containment field has failed.",1)
 					investigate_log("has <font color='red'>failed</font> whilst a singulo exists.","singulo")
 			O.last_warning = world.time

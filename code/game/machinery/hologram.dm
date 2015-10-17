@@ -113,8 +113,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 	hologram.anchored = 1//So space wind cannot drag it.
 	hologram.name = "[A.name] (Hologram)"//If someone decides to right click.
-	hologram.SetLuminosity(2)	//hologram lighting
-	SetLuminosity(2)			//pad lighting
+	hologram.set_light(2)	//hologram lighting
+	set_light(2)			//pad lighting
 	icon_state = "holopad1"
 	A.holo = src
 	master = A//AI is the master.
@@ -122,12 +122,13 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	return 1
 
 /obj/machinery/hologram/holopad/proc/clear_holo()
-//	hologram.SetLuminosity(0)//Clear lighting.	//handled by the lighting controller when its ower is deleted
-	del(hologram)//Get rid of hologram.
-	if(master.holo == src)
-		master.holo = null
+//	hologram.set_light(0)//Clear lighting.	//handled by the lighting controller when its ower is deleted
+	qdel(hologram)//Get rid of hologram.
+	if( master )
+		if( master.holo == src )
+			master.holo = null
 	master = null//Null the master, since no-one is using it now.
-	SetLuminosity(0)			//pad lighting (hologram lighting will be handled automatically since its owner was deleted)
+	set_light(0)			//pad lighting (hologram lighting will be handled automatically since its owner was deleted)
 	icon_state = "holopad0"
 	use_power = 1//Passive power usage.
 	return 1
@@ -144,7 +145,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 					var/area/holo_area = get_area(src)
 					var/area/eye_area = get_area(master.eyeobj)
 
-					if(eye_area in holo_area.master.related)
+					if( eye_area in holo_area )
 						return 1
 
 		clear_holo()//If not, we want to get rid of the hologram.
@@ -172,24 +173,22 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/hologram/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 		if(3.0)
 			if (prob(5))
-				del(src)
+				qdel(src)
 	return
 
 /obj/machinery/hologram/blob_act()
-	del(src)
+	qdel(src)
 	return
 
-/obj/machinery/hologram/Del()
-	if(hologram)
-		src:clear_holo()
+/obj/machinery/hologram/holopad/Destroy()
+	clear_holo()
 	..()
-
 /*
 Holographic project of everything else.
 

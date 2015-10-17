@@ -69,6 +69,7 @@
 	var/stuttering = null	//Carbon
 	var/slurring = null		//Carbon
 	var/real_name = null
+	var/list/trigger_words = list() // mah triggers, warning of triggers, trigger my warnings
 	var/flavor_text = ""
 	var/med_record = ""
 	var/sec_record = ""
@@ -120,7 +121,7 @@
 	var/losebreath = 0.0//Carbon
 	var/intent = null//Living
 	var/shakecamera = 0
-	var/a_intent = "help"//Living
+	var/a_intent = I_HELP//Living
 	var/m_int = null//Living
 	var/m_intent = "run"//Living
 	var/lastKnownIP = null

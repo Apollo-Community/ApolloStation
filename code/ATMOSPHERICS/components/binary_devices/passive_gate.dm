@@ -204,7 +204,7 @@
 
 
 /obj/machinery/atmospherics/binary/passive_gate/Topic(href,href_list)
-	if(..()) return
+	if(..()) return 1
 	
 	if(href_list["toggle_valve"])
 		unlocked = !unlocked
@@ -258,4 +258,4 @@
 			"\blue You have unfastened \the [src].", \
 			"You hear ratchet.")
 		new /obj/item/pipe(loc, make_from=src)
-		del(src)
+		qdel(src)

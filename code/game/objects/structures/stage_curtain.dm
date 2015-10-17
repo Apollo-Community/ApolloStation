@@ -31,7 +31,7 @@
 	src.opacity = 0
 	update_nearby_tiles()
 	src.update_icon()
-	src.SetOpacity(0)
+	src.set_opacity(0)
 	sleep(15)
 	src.operating = 0
 
@@ -39,7 +39,7 @@
 /obj/machinery/door/blast/stage_curtain/force_close()
 	src.operating = 1
 	flick(icon_state_closing, src)
-	src.SetOpacity(1)
+	src.set_opacity(1)
 	update_nearby_tiles()
 	src.update_icon()
 	sleep(15)

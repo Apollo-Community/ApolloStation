@@ -77,7 +77,7 @@
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		new /obj/item/stack/sheet/metal(src.loc)
-		del(src)
+		qdel(src)
 	else
 		..()
 

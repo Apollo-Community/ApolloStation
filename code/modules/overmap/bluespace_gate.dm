@@ -1,6 +1,6 @@
 #define BLUESPACE_LEVEL 2
 
-/obj/machinery/singularity/bluespace_gate
+/obj/singularity/bluespace_gate
 	name = "bluespace gate"
 	desc = "A gate into the extradimensional space know as \"bluespace\"."
 	icon = 'icons/effects/bluespace_gate.dmi'
@@ -15,26 +15,26 @@
 	consume_range = 1
 	pixel_x = -32
 	pixel_y = -32
-	l_color = "#142933"
-	life = 100
+	light_color = "#142933"
+	temp = 100
 	var/decay = 10
 	var/turf/exit = null
 
-/obj/machinery/singularity/bluespace_gate/process()
+/obj/singularity/bluespace_gate/process()
 	eat()
 
 	if(prob(1))
 		mezzer()
 
-/obj/machinery/singularity/bluespace_gate/New( loc, var/new_exit )
+/obj/singularity/bluespace_gate/New( loc, var/new_exit )
 	..(loc)
 
 	exit = new_exit
 
-	l_color = "#142933"
-	SetLuminosity( 5 )
+	light_color = "#142933"
+	set_light( 5 )
 
-/obj/machinery/singularity/bluespace_gate/consume(var/atom/A)
+/obj/singularity/bluespace_gate/consume(var/atom/A)
 	if( !istype( A, /obj/machinery/gate_beacon ))
 		bluespace_jump( src, A, exit )
 
@@ -52,7 +52,10 @@
 	var/x_off = source.x-A_turf.x
 	var/y_off = source.y-A_turf.y
 
-	var/turf/bluespace = locate( rand( OVERMAP_EDGE, world.maxx-OVERMAP_EDGE ), rand( OVERMAP_EDGE, world.maxy-OVERMAP_EDGE ), BLUESPACE_LEVEL )
+	var/area/bspace = locate( /area/space/bluespace )
+	var/turf/bluespace = pick( get_area_turfs( bspace ))
+
+//	var/turf/bluespace = locate( rand( OVERMAP_EDGE, world.maxx-OVERMAP_EDGE ), rand( OVERMAP_EDGE, world.maxy-OVERMAP_EDGE ), BLUESPACE_LEVEL )
 	var/turf/destination
 
 	// Getting the amount of time that the object will spend in bluespace

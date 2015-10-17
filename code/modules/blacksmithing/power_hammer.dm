@@ -57,13 +57,13 @@
 				var/obj/item/forge/scrap_metal/S = new(get_turf(src))
 				S.matter = I.matter
 				user.put_in_hands(S)
-				del(I)
+				qdel(I)
 				return
 			else if(I.matter.Find("glass"))
 				user << "[I.name] shattered after the first strike, but you kept on smashing to let out some rage. You might have a problem."
 				var/obj/item/weapon/shard/S = new(get_turf(src))
 				user.put_in_hands(S)
-				del(I)
+				qdel(I)
 				return
 
 		user << "You smashed [I.name] up so good you're just left with a pile of dust now."
@@ -74,4 +74,4 @@
 		user.anchored = 0
 		on = 0
 
-		del(I)
+		qdel(I)

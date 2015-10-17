@@ -248,7 +248,7 @@ var/global/list/damage_icon_parts = list()
 
 	//Create a new, blank icon for our mob to use.
 	if(stand_icon)
-		del(stand_icon)
+		qdel(stand_icon)
 
 	stand_icon = new(species.icon_template ? species.icon_template : 'icons/mob/human.dmi',"blank")
 
@@ -486,7 +486,7 @@ var/global/list/damage_icon_parts = list()
 	if (targeted_by && target_locked)
 		overlays_standing[TARGETED_LAYER]	= target_locked
 	else if (!targeted_by && target_locked)
-		del(target_locked)
+		qdel(target_locked)
 	if (!targeted_by)
 		overlays_standing[TARGETED_LAYER]	= null
 	if(update_icons)		update_icons()

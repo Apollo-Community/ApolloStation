@@ -57,7 +57,7 @@
 	src.density = 0
 	update_nearby_tiles()
 	src.update_icon()
-	src.SetOpacity(0)
+	src.set_opacity(0)
 	sleep(15)
 	src.layer = open_layer
 	src.operating = 0
@@ -72,7 +72,7 @@
 	src.density = 1
 	update_nearby_tiles()
 	src.update_icon()
-	src.SetOpacity(initial(opacity))
+	src.set_opacity(initial(opacity))
 	sleep(15)
 	src.operating = 0
 

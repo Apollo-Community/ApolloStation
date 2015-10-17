@@ -53,7 +53,7 @@
 
 		if(locate(/obj/effect/plantsegment) in loc)
 			var/obj/effect/plantsegment/SV = locate(/obj/effect/plantsegment) in loc
-			del(SV)
+			qdel(SV)
 			if(prob(10))
 				say("Nom")
 
@@ -73,7 +73,7 @@
 	if(!stat)
 		if(locate(/obj/effect/plantsegment) in loc)
 			var/obj/effect/plantsegment/SV = locate(/obj/effect/plantsegment) in loc
-			del(SV)
+			qdel(SV)
 			if(prob(10))
 				say("Nom")
 
@@ -138,7 +138,7 @@
 			udder.add_reagent("milk", rand(5, 10))
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M as mob)
-	if(!stat && M.a_intent == "disarm" && icon_state != icon_dead)
+	if(!stat && M.a_intent == I_DISARM && icon_state != icon_dead)
 		M.visible_message("<span class='warning'>[M] tips over [src].</span>","<span class='notice'>You tip over [src].</span>")
 		Weaken(30)
 		icon_state = icon_dead
@@ -192,7 +192,7 @@
 		amount_grown += rand(1,2)
 		if(amount_grown >= 100)
 			new /mob/living/simple_animal/chicken(src.loc)
-			del(src)
+			qdel(src)
 
 var/const/MAX_CHICKENS = 50
 var/global/chicken_count = 0
@@ -243,7 +243,7 @@ var/global/chicken_count = 0
 		if(!stat && eggsleft < 8)
 			user.visible_message("\blue [user] feeds [O] to [name]! It clucks happily.","\blue You feed [O] to [name]! It clucks happily.")
 			user.drop_item()
-			del(O)
+			qdel(O)
 			eggsleft += rand(1, 4)
 			//world << eggsleft
 		else
@@ -272,7 +272,7 @@ var/global/chicken_count = 0
 			visible_message("[src] hatches with a quiet cracking sound.")
 			new /mob/living/simple_animal/chick(get_turf(src))
 			processing_objects.Remove(src)
-			del(src)
+			qdel(src)
 	else
 		processing_objects.Remove(src)
 

@@ -79,9 +79,9 @@ datum
 					if(A.volume > the_volume)
 						the_volume = A.volume
 						the_reagent = A
-				
+
 				return the_reagent
-			
+
 			get_master_reagent_name()
 				var/the_name = null
 				var/the_volume = 0
@@ -177,7 +177,7 @@ datum
 					BR.reaction(target, INGEST)
 					spawn(5)
 						BR.trans_to(target, BR.total_volume)
-						del(B)
+						qdel(B)
 
 				return amount
 
@@ -402,7 +402,7 @@ datum
 					var/datum/reagent/R = A
 					if (R.id == reagent)
 						reagent_list -= A
-						del(A)
+						qdel(A)
 						update_total()
 						my_atom.on_reagent_change()
 						return 0

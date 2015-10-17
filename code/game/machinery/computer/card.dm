@@ -10,7 +10,7 @@
 	var/obj/item/weapon/card/id/modify = null
 	var/mode = 0.0
 	var/printing = null
-	l_color = COMPUTER_BLUE
+	light_color = COMPUTER_BLUE
 
 /obj/machinery/computer/card/proc/is_centcom()
 	return 0

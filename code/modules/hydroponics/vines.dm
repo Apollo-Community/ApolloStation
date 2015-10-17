@@ -26,7 +26,7 @@
 /obj/effect/plantsegment/New()
 	return
 
-/obj/effect/plantsegment/Del()
+/obj/effect/plantsegment/Destroy()
 	if(master)
 		master.vines -= src
 		master.growth_queue -= src
@@ -64,7 +64,7 @@
 
 /obj/effect/plantsegment/attack_hand(mob/user as mob)
 
-	if(user.a_intent == "help" && seed && harvest)
+	if(user.a_intent == I_HELP && seed && harvest)
 		seed.harvest(user,1)
 		harvest = 0
 		lastproduce = age
@@ -178,14 +178,14 @@
 
 	// Update bioluminescence.
 	if(seed.biolum)
-		SetLuminosity(1+round(seed.potency/10))
+		set_light(1+round(seed.potency/10))
 		if(seed.biolum_colour)
-			l_color = seed.biolum_colour
+			light_color = seed.biolum_colour
 		else
-			l_color = null
+			light_color = null
 		return
 	else
-		SetLuminosity(0)
+		set_light(0)
 
 	// Update flower/product overlay.
 	overlays.Cut()
@@ -239,7 +239,7 @@
 /obj/effect/plantsegment/proc/die()
 	if(seed && harvest && rand(5))
 		seed.harvest(src,1)
-		del(src)
+		qdel(src)
 
 /obj/effect/plantsegment/proc/life()
 
@@ -269,7 +269,7 @@
 	if(A)
 		var/light_available
 		if(A.lighting_use_dynamic)
-			light_available = max(0,min(10,T.lighting_lumcount)-5)
+			light_available = max(0,min(10,T.lighting_lumcount())-5)
 		else
 			light_available =  5
 		if(abs(light_available - seed.ideal_light) > seed.light_tolerance)
@@ -298,14 +298,14 @@
 
 /obj/effect/plant_controller/New()
 	if(!istype(src.loc,/turf/simulated/floor))
-		del(src)
+		qdel(src)
 
 	spawn(0)
 		spawn_piece(src.loc)
 
 	processing_objects.Add(src)
 
-/obj/effect/plant_controller/Del()
+/obj/effect/plant_controller/Destroy()
 	processing_objects.Remove(src)
 	..()
 
@@ -324,12 +324,12 @@
 
 	// Space vines exterminated. Remove the controller
 	if(!vines)
-		del(src)
+		qdel(src)
 		return
 
 	// Sanity check.
 	if(!growth_queue)
-		del(src)
+		qdel(src)
 		return
 
 	// Check if we're too big for our own good.

@@ -33,7 +33,7 @@
 	if( findtext(href,"<script",1,0) )
 		world.log << "Attempted use of scripts within a topic call, by [src]"
 		message_admins("Attempted use of scripts within a topic call, by [src]")
-		//del(usr)
+		//Destroy(usr)
 		return
 
 	//Admin PM
@@ -52,7 +52,7 @@
 		if(mute_irc)
 			usr << "<span class='warning'You cannot use this as your client has been muted from sending messages to the admins on IRC</span>"
 			return
-		cmd_admin_irc_pm()
+		cmd_admin_irc_pm(href_list["irc_msg"])
 		return
 
 
@@ -73,10 +73,8 @@
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
-			src << "\red You have exceeded the spam filter limit for identical messages. A 10-second auto-mute was applied."
+			src << "\red You have exceeded the spam filter limit for identical messages. An auto-mute was applied."
 			cmd_admin_mute(src.mob, mute_type, 1)
-			spawn(100)
-				cmd_admin_mute(src.mob, mute_type, 1)
 			return 1
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
 			src << "\red You are nearing the spam filter limit for identical messages."
@@ -114,7 +112,7 @@
 
 	if(!config.guests_allowed && IsGuestKey(key))
 		alert(src,"This server doesn't allow guest accounts to play. Please go to http://www.byond.com/ and register for a key.","Guest","OK")
-		del(src)
+		qdel(src)
 		return
 
 	// Change the way they should download resources.
@@ -124,20 +122,15 @@
 
 	src << "\red If the title screen is black, resources are still downloading. Please be patient until the title screen appears."
 
-	for(var/client/target in clients)
-		if(target.prefs.toggles & CHAT_OOC)
-			target << "<span class='notice'><b>[src.key] has connected to the server.</b></span>"
-
-			if( target.prefs.toggles & SOUND_NOTIFICATIONS )
-				target << sound( 'sound/effects/oocjoin.ogg' )
-
 
 	clients += src
-	clients = sortKey(clients)
 	directory[ckey] = src
 
 	//Admin Authorisation
 	holder = admin_datums[ckey]
+	if(holder)
+		admins += src
+		holder.owner = src
 
 	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
 	prefs = preferences_datums[ckey]
@@ -160,16 +153,21 @@
 		world.update_status()
 
 	if(holder)
-		admins += src
-		admins = sortKey(admins)
-		holder.owner = src
 		add_admin_verbs()
 		admin_memo_show()
+
+	// Forcibly enable hardware-accelerated graphics, as we need them for the lighting overlays.
+	// (but turn them off first, since sometimes BYOND doesn't turn them on properly otherwise)
+	spawn(5) // And wait a half-second, since it sounds like you can do this too fast.
+		if(src)
+			winset(src, null, "command=\".configure graphics-hwmode off\"")
+			winset(src, null, "command=\".configure graphics-hwmode on\"")
 
 	log_client_to_db()
 
 	send_resources()
 	nanomanager.send_resources(src)
+
 
 	//////////////
 	//DISCONNECT//
@@ -182,6 +180,25 @@
 	clients -= src
 	return ..()
 
+
+// here because it's similar to below
+
+// Returns null if no DB connection can be established, or -1 if the requested key was not found in the database
+
+/proc/get_player_age(key)
+	establish_db_connection()
+	if(!dbcon.IsConnected())
+		return null
+
+	var/sql_ckey = sql_sanitize_text(ckey(key))
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT datediff(Now(),firstseen) as age FROM erro_player WHERE ckey = '[sql_ckey]'")
+	query.Execute()
+
+	if(query.NextRow())
+		return text2num(query.item[1])
+	else
+		return -1
 
 
 /client/proc/log_client_to_db()
@@ -214,15 +231,9 @@
 	var/DBQuery/query_cid = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE computerid = '[computer_id]'")
 	query_cid.Execute()
 	related_accounts_cid = ""
-
 	while(query_cid.NextRow())
-		if(lowertext(src.ckey) != query_cid.item[1])
-			related_accounts_cid += "[query_cid.item[1]]<A href='?_src_=holder;notes=show;ckey=[query_cid.item[1]]'>(N)</A>,"
+		related_accounts_cid += "[query_cid.item[1]], "
 		break
-
-	if(related_accounts_cid != "")
-		message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name(src)]<A href='?_src_=holder;notes=show;ckey=[lowertext(src.ckey)]'>(N)</A> has the same computer key as [related_accounts_cid] </font>")
-
 
 	//Just the standard check to see if it's actually a number
 	if(sql_id)
@@ -267,11 +278,12 @@
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
+
 	getFiles(
 		'html/search.js',
 		'html/panels.css',
-		'html/painew.png',
-		'html/loading.gif',
+		'html/images/loading.gif',
+		'html/images/talisman.png',
 		'icons/pda_icons/pda_atmos.png',
 		'icons/pda_icons/pda_back.png',
 		'icons/pda_icons/pda_bell.png',
@@ -315,3 +327,14 @@
 		'html/images/logo-apollo.png',
 		'html/images/talisman.png'
 		)
+
+
+mob/proc/MayRespawn()
+	return 0
+
+client/proc/MayRespawn()
+	if(mob)
+		return mob.MayRespawn()
+
+	// Something went wrong, client is usually kicked or transfered to a new mob at this point
+	return 0

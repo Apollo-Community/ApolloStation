@@ -17,8 +17,9 @@
 	var/frequency = 1439
 	var/datum/radio_frequency/radio_connection
 
+	var/hibernate = 0 //Do we even process?
 	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
-	var/list/scrubbing_gas = list("carbon_dioxide", "phoron", "sleeping_agent")
+	var/list/scrubbing_gas = list("carbon_dioxide")
 
 	var/panic = 0 //is this scrubber panicked?
 
@@ -36,15 +37,10 @@
 
 	icon = null
 	initial_loc = get_area(loc)
-	if (initial_loc.master)
-		initial_loc = initial_loc.master
 	area_uid = initial_loc.uid
 	if (!id_tag)
 		assign_uid()
 		id_tag = num2text(uid)
-	if(ticker && ticker.current_state == 3)//if the game is running
-		src.initialize()
-		src.broadcast_status()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/update_icon(var/safety = 0)
 	if(!check_icon_cache())
@@ -99,6 +95,8 @@
 		"power" = use_power,
 		"scrubbing" = scrubbing,
 		"panic" = panic,
+		"filter_o2" = ("oxygen" in scrubbing_gas),
+		"filter_n2" = ("nitrogen" in scrubbing_gas),
 		"filter_co2" = ("carbon_dioxide" in scrubbing_gas),
 		"filter_phoron" = ("phoron" in scrubbing_gas),
 		"filter_n2o" = ("sleeping_agent" in scrubbing_gas),
@@ -119,12 +117,13 @@
 	radio_filter_out = frequency==initial(frequency)?(RADIO_TO_AIRALARM):null
 	if (frequency)
 		set_frequency(frequency)
+		src.broadcast_status()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/process()
 	..()
 
-	last_power_draw = 0
-	last_flow_rate = 0
+	if (hibernate)
+		return 1
 
 	if (!node)
 		use_power = 0
@@ -145,6 +144,12 @@
 		var/transfer_moles = min(environment.total_moles, environment.total_moles*MAX_SIPHON_FLOWRATE/environment.volume)	//group_multiplier gets divided out here
 
 		power_draw = pump_gas(src, environment, air_contents, transfer_moles, power_rating)
+
+	if(scrubbing && power_draw < 0 && controller_iteration > 10)	//99% of all scrubbers
+		//Fucking hibernate because you ain't doing shit.
+		hibernate = 1
+		spawn(rand(100,200))	//hibernate for 10 or 20 seconds randomly
+			hibernate = 0
 
 	if (power_draw >= 0)
 		last_power_draw = power_draw
@@ -171,7 +176,7 @@
 		use_power = !use_power
 
 	if(signal.data["panic_siphon"]) //must be before if("scrubbing" thing
-		panic = text2num(signal.data["panic_siphon"] != null)
+		panic = text2num(signal.data["panic_siphon"])
 		if(panic)
 			use_power = 1
 			scrubbing = 0
@@ -187,10 +192,24 @@
 
 	if(signal.data["scrubbing"] != null)
 		scrubbing = text2num(signal.data["scrubbing"])
+		if(scrubbing)
+			panic = 0
 	if(signal.data["toggle_scrubbing"])
 		scrubbing = !scrubbing
+		if(scrubbing)
+			panic = 0
 
 	var/list/toggle = list()
+
+	if(!isnull(signal.data["o2_scrub"]) && text2num(signal.data["o2_scrub"]) != ("oxygen" in scrubbing_gas))
+		toggle += "oxygen"
+	else if(signal.data["toggle_o2_scrub"])
+		toggle += "oxygen"
+
+	if(!isnull(signal.data["n2_scrub"]) && text2num(signal.data["n2_scrub"]) != ("nitrogen" in scrubbing_gas))
+		toggle += "nitrogen"
+	else if(signal.data["toggle_n2_scrub"])
+		toggle += "nitrogen"
 
 	if(!isnull(signal.data["co2_scrub"]) && text2num(signal.data["co2_scrub"]) != ("carbon_dioxide" in scrubbing_gas))
 		toggle += "carbon_dioxide"
@@ -254,7 +273,7 @@
 			"\blue You have unfastened \the [src].", \
 			"You hear ratchet.")
 		new /obj/item/pipe(loc, make_from=src)
-		del(src)
+		qdel(src)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/examine(mob/user)
 	if(..(user, 1))
@@ -262,7 +281,7 @@
 	else
 		user << "You are too far away to read the gauge."
 
-/obj/machinery/atmospherics/unary/vent_scrubber/Del()
+/obj/machinery/atmospherics/unary/vent_scrubber/Destroy()
 	if(initial_loc)
 		initial_loc.air_scrub_info -= id_tag
 		initial_loc.air_scrub_names -= id_tag

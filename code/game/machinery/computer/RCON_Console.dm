@@ -18,7 +18,7 @@
 	var/hide_SMES = 0
 	var/hide_SMES_details = 0
 	var/hide_breakers = 0
-	l_color = COMPUTER_PURPLE
+	light_color = COMPUTER_PURPLE
 
 // Proc: attack_hand()
 // Parameters: 1 (user - Person which clicked this computer)

@@ -53,9 +53,9 @@
 		if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
 			investigate_log("has become a singularity. Caused by [user.key]","singulo")
 			user << "\red The Bluespace interfaces of the two devices catastrophically malfunction!"
-			del(W)
+			qdel(W)
 
-			new /obj/machinery/singularity/mostly_harmless( src.loc )
+			new /obj/singularity/mostly_harmless( src.loc )
 			return
 
 		..()
@@ -67,7 +67,7 @@
 		else
 			user << "\red The Bluespace generator malfunctions!"
 			for (var/obj/O in src.contents) //it broke, delete what was in it
-				del(O)
+				qdel(O)
 			crit_fail = 1
 			icon_state = "brokenpack"
 

@@ -113,7 +113,7 @@
 			message = "<B>The [src.name]</B> chirps!"
 			playsound(src.loc, 'sound/misc/nymphchirp.ogg', 50, 0)
 			m_type = 2
-		if("help")
+		if(I_HELP)
 			src << "burp, chirp, choke, collapse, dance, drool, gasp, shiver, gnarl, jump, moan, nod, roll, scratch,\nscretch, shake, sign-#, sulk, sway, tail, twitch, whimper"
 		else
 			src << text("Invalid Emote: []", act)

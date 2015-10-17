@@ -24,6 +24,15 @@
 	var/foldable = null	// BubbleWrap - if set, can be folded (when empty) into a sheet of cardboard
 	var/use_sound = "rustle"	//sound played when used. null for no sound.
 
+/obj/item/weapon/storage/Destroy()
+	for( var/I in src )
+		qdel(I)
+	can_hold = null
+	cant_hold = null
+	boxes = null
+	closer = null
+	..()
+
 /obj/item/weapon/storage/MouseDrop(obj/over_object as obj)
 
 	if(!canremove)
@@ -164,7 +173,7 @@
 
 	New(obj/item/sample as obj)
 		if(!istype(sample))
-			del(src)
+			qdel(src)
 		sample_object = sample
 		number = 1
 
@@ -449,7 +458,7 @@
 	// Now make the cardboard
 	user << "<span class='notice'>You fold [src] flat.</span>"
 	new src.foldable(get_turf(src))
-	del(src)
+	qdel(src)
 //BubbleWrap END
 
 /obj/item/weapon/storage/hear_talk(mob/M as mob, text, verb, datum/language/speaking)

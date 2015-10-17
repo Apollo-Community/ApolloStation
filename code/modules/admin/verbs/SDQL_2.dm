@@ -116,7 +116,7 @@
 	var/datum/SDQL_parser/parser = new(query_list)
 	var/list/query_tree = parser.parse()
 
-	del(parser)
+	qdel(parser)
 
 	return query_tree
 

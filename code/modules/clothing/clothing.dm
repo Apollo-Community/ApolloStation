@@ -117,7 +117,7 @@
 		O = (H.l_ear == src ? H.r_ear : H.l_ear)
 		user.u_equip(O)
 		if(!istype(src,/obj/item/clothing/ears/offear))
-			del(O)
+			qdel(O)
 			O = src
 	else
 		O = src
@@ -129,7 +129,7 @@
 		O.add_fingerprint(user)
 
 	if(istype(src,/obj/item/clothing/ears/offear))
-		del(src)
+		qdel(src)
 
 /obj/item/clothing/ears/update_clothing_icon()
 	if (ismob(src.loc))
@@ -268,16 +268,16 @@ BLIND     // can't see anything
 	else
 		return ..(user)
 
-/obj/item/clothing/head/proc/update_light(var/mob/user = null)
+/obj/item/clothing/head/update_light(var/mob/user = null)
 	if(on && !light_applied)
 		if(loc == user)
-			user.SetLuminosity(user.luminosity + brightness_on)
-		SetLuminosity(brightness_on)
+			user.set_light(user.light_range + brightness_on)
+		set_light(brightness_on)
 		light_applied = 1
 	else if(!on && light_applied)
 		if(loc == user)
-			user.SetLuminosity(user.luminosity - brightness_on)
-		SetLuminosity(0)
+			user.set_light(user.light_range - brightness_on)
+		set_light(0)
 		light_applied = 0
 	update_icon(user)
 
@@ -285,14 +285,14 @@ BLIND     // can't see anything
 	..()
 	spawn(1)
 		if(on && loc == user && !light_applied)
-			user.SetLuminosity(user.luminosity + brightness_on)
+			user.set_light(user.light_range + brightness_on)
 			light_applied = 1
 
 /obj/item/clothing/head/dropped(mob/user)
 	..()
 	spawn(1)
 		if(on && loc != user && light_applied)
-			user.SetLuminosity(user.luminosity - brightness_on)
+			user.set_light(user.light_range - brightness_on)
 			light_applied = 0
 
 /obj/item/clothing/head/update_icon(var/mob/user)

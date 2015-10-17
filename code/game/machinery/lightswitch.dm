@@ -15,7 +15,7 @@
 /obj/machinery/light_switch/New()
 	..()
 	spawn(5)
-		src.area = src.loc.loc
+		src.area = get_area(src)
 
 		if(otherarea)
 			src.area = locate(text2path("/area/[otherarea]"))
@@ -32,10 +32,7 @@
 	if(stat & NOPOWER)
 		icon_state = "light-p"
 	else
-		if(on)
-			icon_state = "light1"
-		else
-			icon_state = "light0"
+		icon_state = "light[on]"
 
 /obj/machinery/light_switch/examine(mob/user)
 	if(..(user, 1))
@@ -45,15 +42,14 @@
 
 	on = !on
 
-	for(var/area/A in area.master.related)
-		A.lightswitch = on
-		A.updateicon()
+	area.lightswitch = on
+	area.updateicon()
 
-		for(var/obj/machinery/light_switch/L in A)
-			L.on = on
-			L.updateicon()
+	for(var/obj/machinery/light_switch/L in area)
+		L.on = on
+		L.updateicon()
 
-	area.master.power_change()
+	area.power_change()
 
 /obj/machinery/light_switch/power_change()
 

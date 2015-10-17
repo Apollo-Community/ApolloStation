@@ -575,7 +575,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	for(var/image/I in client.images)
 		if(I.icon_state == icon)
 			iconRemoved = 1
-			del(I)
+			qdel(I)
 
 	if(!iconRemoved)
 		var/image/J = image('icons/mob/mob.dmi', loc = src, icon_state = icon)
@@ -669,7 +669,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	log_admin("[key_name_admin(M)] has joined the thunderdome!")
 	new_gladiator.Paralyse(5)
 
-	del(M)
+	qdel(M)
 
 
 /proc/create_gladiator( var/obj/spawn_location, var/gladiator_name )
@@ -714,7 +714,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	for(var/x in all_hairs)
 		var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
 		hairs.Add(H.name) // add hair name to hairs
-		del(H) // delete the hair after it's all done
+		qdel(H) // delete the hair after it's all done
 
 //	var/new_style = input("Please select hair style", "Character Generation")  as null|anything in hairs
 //hair
@@ -759,12 +759,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/living/carbon/human/proc/equip_gladiator()
 	//Uniform
-	equip_to_slot_or_del(new /obj/item/clothing/under/pj/blue(src), slot_w_uniform)
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/slippers(src), slot_shoes)
-	equip_to_slot_or_del(new /obj/item/clothing/head/roman/fluff(src), slot_head)
+	equip_to_slot_or_qdel(new /obj/item/clothing/under/pj/blue(src), slot_w_uniform)
+	equip_to_slot_or_qdel(new /obj/item/clothing/shoes/slippers(src), slot_shoes)
+	equip_to_slot_or_qdel(new /obj/item/clothing/head/roman/fluff(src), slot_head)
 
 	//Backpack
-	equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(src), slot_back)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
+	equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/cultpack(src), slot_back)
+	equip_to_slot_or_qdel(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
 
 	return 1

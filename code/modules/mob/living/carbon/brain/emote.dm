@@ -59,7 +59,7 @@
 			src << "You boop."
 			message = "<B>[src]</B> boops."
 			m_type = 2
-		if ("help")
+		if (I_HELP)
 			src << "alarm,alert,notice,flash,blink,whistle,beep,boop"
 		else
 			src << "\blue Unusable emote '[act]'. Say *help for a list."

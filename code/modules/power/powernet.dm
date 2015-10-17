@@ -18,7 +18,7 @@
 	powernets += src
 	..()
 
-/datum/powernet/Del()
+/datum/powernet/Destroy()
 	powernets -= src
 	..()
 
@@ -42,7 +42,7 @@
 	cables -= C
 	C.powernet = null
 	if(is_empty())//the powernet is now empty...
-		del(src)///... delete it - qdel
+		qdel(src)///... delete it
 
 //add a cable to the current powernet
 //Warning : this proc DON'T check if the cable exists
@@ -62,7 +62,7 @@
 	nodes -=M
 	M.powernet = null
 	if(is_empty())//the powernet is now empty...
-		del(src)///... delete it - qdel
+		qdel(src)///... delete it - qdel
 
 
 //add a power machine to the current powernet
@@ -120,8 +120,19 @@
 	newavail = 0
 
 /datum/powernet/proc/get_electrocute_damage()
-	return rand(10,avail/5000)
-
+	switch(avail)
+		if (1000000 to INFINITY)
+			return min(rand(50,160),rand(50,160))
+		if (200000 to 1000000)
+			return min(rand(25,80),rand(25,80))
+		if (100000 to 200000)//Ave powernet
+			return min(rand(20,60),rand(20,60))
+		if (50000 to 100000)
+			return min(rand(15,40),rand(15,40))
+		if (1000 to 50000)
+			return min(rand(10,20),rand(10,20))
+		else
+			return 0
 
 ////////////////////////////////////////////////
 // Misc.
@@ -138,8 +149,6 @@
 			return C
 	return null
 
+
 /area/proc/get_apc()
-	for(var/area/RA in src.related)
-		var/obj/machinery/power/apc/FINDME = locate() in RA
-		if (FINDME)
-			return FINDME
+	return apc

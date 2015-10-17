@@ -9,24 +9,47 @@
 	desc = "A shard of supermatter. Incredibly dangerous, though not large enough to go critical."
 	force = 10.0
 	throwforce = 20.0
+	icon = 'icons/obj/supermatter.dmi'
 	icon_state = "supermattersmall"
 	sharp = 1
 	edge = 1
 	w_class = 2
 	flags = CONDUCT
-	l_color = "#8A8A00"
-	luminosity = 2
+
+	var/smlevel = 1
+	light_color = SM_DEFAULT_COLOR
+	light_range = 2
+
 	var/size = 1
 	var/max_size = 100
 
-/obj/item/weapon/shard/supermatter/New()
+/obj/item/weapon/shard/supermatter/New(var/loc, var/level = 1, var/set_size = 0)
 	..()
 
-	size += rand(0, 10)
+	if( level > MAX_SUPERMATTER_LEVEL )
+		level = MAX_SUPERMATTER_LEVEL
+	else if( level < MIN_SUPERMATTER_LEVEL )
+		level = MIN_SUPERMATTER_LEVEL
+
+	smlevel = level
+	light_color = getSMColor( smlevel )
+	color = light_color
+
+	if( !set_size )
+		size += rand(0, 10)
+	else
+		size = set_size
 
 	update_icon()
 
 /obj/item/weapon/shard/supermatter/update_icon()
+	light_color = getSMColor( smlevel )
+	color = light_color
+
+	name = getSMColorName( smlevel ) + " " + initial(name)
+
+	set_light( light_range, light_power, light_color )
+
 	if( src.size <= 34 )
 		icon_state = "supermattersmall"
 		src.pixel_x = rand(-12, 12)
@@ -41,12 +64,7 @@
 		src.pixel_y = rand(-5, 5)
 
 /obj/item/weapon/shard/supermatter/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if( istype( W, /obj/item/weapon/tongs ))
-		var/obj/item/weapon/tongs/T = W
-		T.pick_up( src )
-		T.update_icon()
-		return
-	else if( istype( W, /obj/item/weapon ))
+	if( istype( W, /obj/item/weapon ))
 		if( W.force >= 5 )
 			src.shatter()
 	..()
@@ -79,7 +97,7 @@
 
 
 /obj/item/weapon/shard/supermatter/attack_hand(var/mob/user)
-	if( !isnucleation( user ))
+	if( !user.smSafeCheck() )
 		user << pick( "\red You think twice before touching that without protection.",
 					  "\red You don't want to touch that without some protection.",
 					  "\red You probably should get something else to pick that up.",
@@ -97,51 +115,23 @@
 	if( size > max_size )
 		shatter()
 
-	del( gas )
+	qdel( gas )
 
 	update_icon()
 
 /obj/item/weapon/shard/supermatter/proc/shatter()
 	if( size > 100 )
 		src.visible_message( "The supermatter shard grows into a full-sized supermatter crystal!" )
-		new /obj/machinery/power/supermatter/bare( get_turf( src ))
+		var/obj/machinery/power/supermatter/S = new /obj/machinery/power/supermatter( get_turf( src ))
+		S.smlevel = smlevel
+		S.update_icon()
 	else if( size >= 10 )
 		src.visible_message( "The supermatter shard shatters into smaller fragments!" )
 		for( size, size >= 10, size -= 10 )
-			new /obj/item/weapon/shard/supermatter( get_turf( src ))
+			new /obj/item/weapon/shard/supermatter( get_turf( src ), smlevel)
 	else
 		src.visible_message( "The supermatter shard shatters into dust!" )
 
 	playsound(loc, 'sound/effects/Glassbr2.ogg', 100, 1)
-	del( src )
+	qdel( src )
 
-/obj/item/weapon/tongs
-	name = "tongs"
-	desc = "Tungsten-alloy tongs used for handling dangerous materials."
-	force = 7.0
-	throwforce = 12.0
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "tongs"
-	edge = 1
-	w_class = 2
-	flags = CONDUCT
-	var/obj/item/held = null // The item currently being held
-
-/obj/item/weapon/tongs/proc/pick_up( var/obj/item/I )
-	held = I
-	I.loc = src
-	playsound(loc, 'sound/effects/tong_pickup.ogg', 50, 1, -1)
-
-/obj/item/weapon/tongs/attack_self(var/mob/user as mob)
-	if( held )
-		var/turf/T = get_turf(user.loc)
-		held.loc = T
-		held = null
-		icon_state = initial(icon_state)
-	..()
-
-/obj/item/weapon/tongs/update_icon()
-	if( !held )
-		icon_state = initial( icon_state )
-	else if( istype( held, /obj/item/weapon/shard/supermatter ))
-		icon_state = "tongs_supermatter"

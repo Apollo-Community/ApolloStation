@@ -4,7 +4,7 @@
 	icon_state = "shuttle"
 	var/auth_need = 3.0
 	var/list/authorized = list(  )
-	l_color = COMPUTER_CYAN
+	light_color = COMPUTER_CYAN
 
 	attackby(var/obj/item/weapon/card/W as obj, var/mob/user as mob)
 		if(stat & (BROKEN|NOPOWER))	return
@@ -43,7 +43,7 @@
 						world << "\blue <B>Alert: Shuttle launch time shortened to 10 seconds!</B>"
 						emergency_shuttle.set_launch_countdown(10)
 						//src.authorized = null
-						del(src.authorized)
+						qdel(src.authorized)
 						src.authorized = list(  )
 
 				if("Repeal")

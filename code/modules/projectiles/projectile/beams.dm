@@ -25,12 +25,12 @@ var/list/beam_master = list()
 			if((!( current ) || loc == current)) //If we pass our target
 				current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-				del(src) //Delete if it passes the world edge
+				qdel(src) //Delete if it passes the world edge
 				return
 			step_towards(src, current) //Move~
 
 			if(kill_count < 1)
-				del(src)
+				qdel(src)
 			kill_count--
 
 			if(!bumped && !isturf(original))
@@ -66,7 +66,7 @@ var/list/beam_master = list()
 		cleanup(reference)
 		return
 
-	Del()
+	Destroy()
 		cleanup("\ref[src]")
 		..()
 

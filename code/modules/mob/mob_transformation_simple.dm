@@ -30,15 +30,17 @@
 
 	if(!M || !ismob(M))
 		usr << "Type path is not a mob (new_type = [new_type]) in change_mob_type(). Contact a coder."
-		del(M)
+		qdel(M)
 		return
 
 	if( istext(new_name) )
 		M.name = new_name
 		M.real_name = new_name
+		M.trigger_words = text2list( new_name, " " )
 	else
 		M.name = src.name
 		M.real_name = src.real_name
+		M.trigger_words = text2list( src.real_name, " " )
 
 	if(src.dna)
 		M.dna = src.dna.Clone()
@@ -54,5 +56,5 @@
 
 	if(delete_old_mob)
 		spawn(1)
-			del(src)
+			qdel(src)
 	return M

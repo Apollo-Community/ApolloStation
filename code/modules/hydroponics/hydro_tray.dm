@@ -286,7 +286,7 @@
 	if(A)
 		var/light_available
 		if(A.lighting_use_dynamic)
-			light_available = max(0,min(10,T.lighting_lumcount)-5)
+			light_available = max(0,min(10,T.lighting_lumcount())-5)
 		else
 			light_available =  5
 		if(abs(light_available - seed.ideal_light) > seed.light_tolerance)
@@ -444,7 +444,7 @@
 	update_icon()
 	return
 
-//Refreshes the icon and sets the luminosity
+//Refreshes the icon and sets the light_range
 /obj/machinery/portable_atmospherics/hydroponics/update_icon()
 
 	overlays.Cut()
@@ -490,14 +490,14 @@
 	// Update bioluminescence.
 	if(seed)
 		if(seed.biolum)
-			SetLuminosity(round(seed.potency/10))
+			set_light(round(seed.potency/10))
 			if(seed.biolum_colour)
-				l_color = seed.biolum_colour
+				light_color = seed.biolum_colour
 			else
-				l_color = null
+				light_color = null
 			return
 
-	SetLuminosity(0)
+	set_light(0)
 	return
 
  // If a weed growth is sufficient, this proc is called.
@@ -638,7 +638,7 @@
 
 			if(!S.seed)
 				user << "The packet seems to be empty. You throw it away."
-				del(O)
+				qdel(O)
 				return
 
 			user << "You plant the [S.seed.seed_name] [S.seed.seed_noun]."
@@ -664,7 +664,7 @@
 
 				lastcycle = world.time
 
-			del(O)
+			qdel(O)
 
 			check_level_sanity()
 			update_icon()
@@ -700,7 +700,7 @@
 		weedlevel -= spray.weed_kill_str
 		user << "You spray [src] with [O]."
 		playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
-		del(O)
+		qdel(O)
 
 		check_level_sanity()
 		update_icon()
@@ -721,13 +721,13 @@
 			user << "\red [src] is already occupied!"
 		else
 			user.drop_item()
-			del(O)
+			qdel(O)
 
 			var/obj/machinery/apiary/A = new(src.loc)
 			A.icon = src.icon
 			A.icon_state = src.icon_state
 			A.hydrotray_type = src.type
-			del(src)
+			qdel(src)
 	return
 
 /obj/machinery/portable_atmospherics/hydroponics/attack_tk(mob/user as mob)
@@ -781,7 +781,7 @@
 			var/light_available
 			if(A)
 				if(A.lighting_use_dynamic)
-					light_available = max(0,min(10,T.lighting_lumcount)-5)
+					light_available = max(0,min(10,T.lighting_lumcount())-5)
 				else
 					light_available =  5
 
@@ -810,7 +810,7 @@
 /obj/machinery/portable_atmospherics/hydroponics/soil/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/shovel))
 		user << "You clear up [src]!"
-		del(src)
+		qdel(src)
 	else if(istype(O,/obj/item/weapon/shovel) || istype(O,/obj/item/weapon/tank))
 		return
 	else

@@ -131,8 +131,11 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				add_link(T)
 
 
-/obj/machinery/telecomms/Del()
+/obj/machinery/telecomms/Destroy()
 	telecomms_list -= src
+	for(var/obj/machinery/telecomms/comm in telecomms_list)
+		comm.links -= src
+	links = list()
 	..()
 
 // Used in auto linking
@@ -147,10 +150,10 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 /obj/machinery/telecomms/update_icon()
 	if(on)
-		SetLuminosity(brightness)
+		set_light(brightness)
 		icon_state = initial(icon_state)
 	else
-		SetLuminosity(0)
+		set_light(0)
 		icon_state = "[initial(icon_state)]_off"
 
 /obj/machinery/telecomms/proc/update_power()
@@ -254,7 +257,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	machinetype = 1
 	produces_heat = 0
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/receiver"
-	l_color = COMPUTER_GREEN
+	light_color = COMPUTER_GREEN
 
 /obj/machinery/telecomms/receiver/receive_signal(datum/signal/signal)
 
@@ -313,7 +316,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/hub"
 	long_range_link = 1
 	netspeed = 40
-	l_color = COMPUTER_CYAN
+	light_color = COMPUTER_CYAN
 
 
 /obj/machinery/telecomms/hub/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
@@ -351,7 +354,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	long_range_link = 1
 	var/broadcasting = 1
 	var/receiving = 1
-	l_color = COMPUTER_CYAN
+	light_color = COMPUTER_CYAN
 
 /obj/machinery/telecomms/relay/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
@@ -401,7 +404,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/bus"
 	netspeed = 40
 	var/change_frequency = 0
-	l_color = COMPUTER_CYAN
+	light_color = COMPUTER_CYAN
 
 /obj/machinery/telecomms/bus/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
@@ -454,7 +457,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	delay = 5
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/processor"
 	var/process_mode = 1 // 1 = Uncompress Signals, 0 = Compress Signals
-	l_color = COMPUTER_CYAN
+	light_color = COMPUTER_CYAN
 
 	receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
@@ -507,7 +510,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 							// would add up to md5("password123comsat")
 	var/language = "human"
 	var/obj/item/device/radio/headset/server_radio = null
-	l_color = COMPUTER_BLUE
+	light_color = COMPUTER_BLUE
 
 /obj/machinery/telecomms/server/New()
 	..()

@@ -209,7 +209,7 @@ var/list/robot_verbs_default = list(
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 //Improved /N
-/mob/living/silicon/robot/Del()
+/mob/living/silicon/robot/Destroy()
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
@@ -487,9 +487,9 @@ var/list/robot_verbs_default = list(
 	lights_on = !lights_on
 	usr << "You [lights_on ? "enable" : "disable"] your integrated light."
 	if(lights_on)
-		SetLuminosity(integrated_light_power) // 1.5x luminosity of flashlight
+		set_light(integrated_light_power) // 1.5x light_range of flashlight
 	else
-		SetLuminosity(0)
+		set_light(0)
 
 /mob/living/silicon/robot/verb/self_diagnosis_verb()
 	set category = "Robot Commands"
@@ -718,7 +718,7 @@ var/list/robot_verbs_default = list(
 				C.r_arm = new/obj/item/robot_parts/r_arm(C)
 				C.updateicon()
 				new/obj/item/robot_parts/chest(loc)
-				src.Del()
+				qdel()
 			else
 				// Okay we're not removing the cell or an MMI, but maybe something else?
 				var/list/removable_components = list()
@@ -861,7 +861,7 @@ var/list/robot_verbs_default = list(
 					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands."
 					if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
 						for(var/obj/item/weapon/pickaxe/borgdrill/D in src.module.modules)
-							del(D)
+							qdel(D)
 						src.module.modules += new /obj/item/weapon/pickaxe/diamonddrill(src.module)
 						src.module.rebuild()
 					updateicon()
@@ -989,7 +989,7 @@ var/list/robot_verbs_default = list(
 //Call when target overlay should be added/removed
 /mob/living/silicon/robot/update_targeted()
 	if(!targeted_by && target_locked)
-		del(target_locked)
+		qdel(target_locked)
 	updateicon()
 	if (targeted_by && target_locked)
 		overlays += target_locked
@@ -1139,7 +1139,7 @@ var/list/robot_verbs_default = list(
 				for(var/A in tile)
 					if(istype(A, /obj/effect))
 						if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
-							del(A)
+							qdel(A)
 					else if(istype(A, /obj/item))
 						var/obj/item/cleaned_item = A
 						cleaned_item.clean_blood()

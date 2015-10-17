@@ -39,9 +39,10 @@
 	return
 
 
-
-/turf/simulated/wall/Del()
+/turf/simulated/wall/Destroy()
 	for(var/obj/effect/E in src) if(E.name == "Wallrot") del E
+	processing_turfs -= src
+	dismantle_wall(null,null,1)
 	..()
 
 /turf/simulated/wall/ChangeTurf(var/newtype)
@@ -231,7 +232,7 @@
 	user << "<span class='warning'>The thermite starts melting through the wall.</span>"
 
 	spawn(100)
-		if(O)	del(O)
+		if(O)	qdel(O)
 //	F.sd_LumReset()		//TODO: ~Carn
 	return
 
@@ -439,13 +440,13 @@
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/light_fixture_frame))
-		var/obj/item/light_fixture_frame/AH = W
+	else if(istype(W,/obj/item/frame/light))
+		var/obj/item/frame/light/AH = W
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/light_fixture_frame/small))
-		var/obj/item/light_fixture_frame/small/AH = W
+	else if(istype(W,/obj/item/frame/light/small))
+		var/obj/item/frame/light/small/AH = W
 		AH.try_build(src)
 		return
 
@@ -465,3 +466,6 @@
 	else
 		return attack_hand(user)
 	return
+
+/turf/simulated/floor/melt()
+	src.ChangeTurf(/turf/simulated/floor/plating)

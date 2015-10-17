@@ -86,7 +86,7 @@
 	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
 	var/debug= 0
 	var/autoflag= 0		// 0 = off, 1= eqp and lights off, 2 = eqp off, 3 = all on.
-//	luminosity = 1
+//	light_range = 1
 	var/has_electronics = 0 // 0 - none, 1 - plugged in, 2 - secured by screwdriver
 	var/overload = 1 //used for the Blackout malf module
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
@@ -142,7 +142,7 @@
 	wires = new(src)
 	var/tmp/obj/item/weapon/cell/tmp_cell = new
 	standard_max_charge = tmp_cell.maxcharge
-	del(tmp_cell)
+	qdel(tmp_cell)
 
 	// offset 24 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
@@ -166,7 +166,7 @@
 		spawn(5)
 			src.update()
 
-/obj/machinery/power/apc/Del()
+/obj/machinery/power/apc/Destroy()
 	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
 			if (src.z in config.station_levels) //if (is_type_in_list(get_area(src), the_station_areas))
@@ -177,9 +177,9 @@
 	area.power_change()
 	if(occupier)
 		malfvacate(1)
-	del(wires)
+	qdel(wires)
 	if(cell)
-		del(cell) // qdel
+		qdel(cell) // qdel
 	if(terminal)
 		disconnect_terminal()
 
@@ -561,7 +561,7 @@
 					return
 				new /obj/item/stack/cable_coil(loc,10)
 				user << "<span class='notice'>You cut the cables and dismantle the power terminal.</span>"
-				del(terminal) // qdel
+				qdel(terminal) // qdel
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
 		user.visible_message("<span class='warning'>[user.name] inserts the power control board into [src].</span>", \
 							"You start to insert the power control board into the frame...")
@@ -570,7 +570,7 @@
 			if(has_electronics==0)
 				has_electronics = 1
 				user << "<span class='notice'>You place the power control board inside the frame.</span>"
-				del(W) // qdel
+				qdel(W) // qdel
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && ((stat & BROKEN) || malfhack))
 		user << "<span class='warning'>You cannot put the board inside, the frame is damaged.</span>"
 		return
@@ -597,7 +597,7 @@
 					"<span class='warning'>[src] has been cut from the wall by [user.name] with the weldingtool.</span>",\
 					"<span class='notice'>You cut the APC frame from the wall.</span>",\
 					"You hear welding.")
-			del(src) // qdel
+			qdel(src) // qdel
 			return
 	else if (istype(W, /obj/item/apc_frame) && opened && emagged)
 		emagged = 0
@@ -606,7 +606,7 @@
 		user.visible_message(\
 			"<span class='warning'>[user.name] has replaced the damaged APC frontal panel with a new one.</span>",\
 			"<span class='notice'>You replace the damaged APC frontal panel with a new one.</span>")
-		del(W) // qdel
+		qdel(W) // qdel
 		update_icon()
 	else if (istype(W, /obj/item/apc_frame) && opened && ((stat & BROKEN) || malfhack))
 		if (has_electronics)
@@ -618,7 +618,7 @@
 			user.visible_message(\
 				"<span class='notice'>[user.name] has replaced the damaged APC frame with new one.</span>",\
 				"You replace the damaged APC frame with new one.")
-			del(W) // qdel
+			qdel(W) // qdel
 			stat &= ~BROKEN
 			malfai = null
 			malfhack = 0
@@ -660,7 +660,7 @@
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 
-		if(H.species.flags & IS_SYNTHETIC && H.a_intent == "grab")
+		if(H.species.flags & IS_SYNTHETIC && H.a_intent == I_GRAB)
 			if(emagged || stat & BROKEN)
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(3, 1, src)
@@ -1005,7 +1005,7 @@
 	malf.mind.transfer_to(src.occupier)
 	src.occupier.eyeobj.name = "[src.occupier.name] (AI Eye)"
 	if(malf.parent)
-		del(malf) // qdel
+		qdel(malf) // qdel
 	// src.occupier.verbs += /mob/living/silicon/ai/proc/corereturn
 	src.occupier.verbs += /datum/game_mode/malfunction/proc/takeover
 	src.occupier.cancel_camera()
@@ -1021,7 +1021,7 @@
 		src.occupier.mind.transfer_to(src.occupier.parent)
 		src.occupier.parent.adjustOxyLoss(src.occupier.getOxyLoss())
 		src.occupier.parent.cancel_camera()
-		del(src.occupier) // qdel
+		qdel(src.occupier) // qdel
 		if (seclevel2num(get_security_level()) == SEC_LEVEL_DELTA)
 			for(var/obj/item/weapon/pinpointer/point in world)
 				for(var/datum/mind/AI_mind in ticker.mode.malf_ai)
@@ -1280,10 +1280,10 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 
 	switch(severity)
 		if(1.0)
-			//set_broken() //now Del() do what we need
+			//set_broken() //now qdel() do what we need
 			if (cell)
 				cell.ex_act(1.0) // more lags woohoo
-			del(src) // qdel
+			qdel(src) // qdel
 			return
 		if(2.0)
 			if (prob(50))
@@ -1332,14 +1332,10 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 	if( cell && cell.charge>=20)
 		cell.use(20);
 		spawn(0)
-			for(var/area/A in area.related)
-				for(var/obj/machinery/light/L in A)
-					L.on = 1
-					if( prob( 80 ))
-						L.damage()
-					else
-						L.broken()
-					sleep(1)
+			for(var/obj/machinery/light/L in area)
+				L.on = 1
+				L.broken()
+				sleep(1)
 
 /obj/machinery/power/apc/proc/setsubsystem(val)
 	if(cell && cell.charge > 0)

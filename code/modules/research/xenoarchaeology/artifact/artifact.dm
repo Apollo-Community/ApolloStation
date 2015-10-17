@@ -16,7 +16,6 @@
 	5;/obj/machinery/power/supermatter,\
 	5;/obj/structure/constructshell,\
 	5;/obj/machinery/syndicate_beacon,\
-	25;/obj/machinery/power/supermatter/shard,\
 	50;/obj/structure/cult/pylon,\
 	100;/obj/machinery/auto_cloner,\
 	100;/obj/machinery/giga_drill,\
@@ -84,7 +83,7 @@
 			//failure
 			user.visible_message("<font color='red'><b>[src] suddenly crumbles away.</b></font>",\
 			"\red [src] has disintegrated under your onslaught, any secrets it was holding are long gone.")
-			del(src)
+			qdel(src)
 			return
 
 		if(prob(excavation_level))
@@ -101,7 +100,7 @@
 			else
 				user.visible_message("<font color='red'><b>[src] suddenly crumbles away.</b></font>",\
 				"\blue [src] has been whittled away under your careful excavation, but there was nothing of interest inside.")
-			del(src)
+			qdel(src)
 
 /obj/structure/boulder/Bumped(AM)
 	. = ..()

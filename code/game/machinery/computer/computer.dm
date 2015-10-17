@@ -32,11 +32,11 @@
 /obj/machinery/computer/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(25))
-				del(src)
+				qdel(src)
 				return
 			if (prob(50))
 				for(var/x in verbs)
@@ -65,18 +65,18 @@
 
 /obj/machinery/computer/update_icon()
 	..()
-	SetLuminosity(brightness)
+	set_light(brightness)
 	icon_state = initial(icon_state)
 	// Broken
 	if(stat & BROKEN)
 		icon_state += "b"
-		SetLuminosity(0)
+		set_light(0)
 
 	// Powered
 	else if(stat & NOPOWER)
 		icon_state = initial(icon_state)
 		icon_state += "0"
-		SetLuminosity(0)
+		set_light(0)
 
 
 
@@ -115,7 +115,7 @@
 				A.state = 4
 				A.icon_state = "4"
 			M.deconstruct(src)
-			del(src)
+			qdel(src)
 	else
 		src.attack_hand(user)
 	return

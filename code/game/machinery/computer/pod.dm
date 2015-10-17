@@ -10,7 +10,7 @@
 	var/timing = 0.0
 	var/time = 30.0
 	var/title = "Mass Driver Controls"
-	l_color = COMPUTER_GREEN
+	light_color = COMPUTER_GREEN
 
 /obj/machinery/computer/pod/New()
 	..()
@@ -77,7 +77,7 @@
 				A.state = 3
 				A.icon_state = "3"
 				A.anchored = 1
-				del(src)
+				qdel(src)
 			else
 				user << "\blue You disconnect the monitor."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( loc )
@@ -100,7 +100,7 @@
 				A.state = 4
 				A.icon_state = "4"
 				A.anchored = 1
-				del(src)
+				qdel(src)
 	else
 		attack_hand(user)
 	return

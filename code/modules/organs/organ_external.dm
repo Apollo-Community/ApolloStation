@@ -575,7 +575,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		src.status &= ~ORGAN_SPLINTED
 		src.status &= ~ORGAN_DEAD
 		for(var/implant in implants)
-			del(implant)
+			qdel(implant)
 
 		germ_level = 0
 
@@ -653,7 +653,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			spark_system.attach(owner)
 			spark_system.start()
 			spawn(10)
-				del(spark_system)
+				qdel(spark_system)
 
 		owner.visible_message("\red [owner.name]'s [display_name] flies off in an arc.",\
 		"<span class='moderate'><b>Your [display_name] goes flying off!</b></span>",\
@@ -839,7 +839,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		spark_system.attach(owner)
 		spark_system.start()
 		spawn(10)
-			del(spark_system)
+			qdel(spark_system)
 
 /datum/organ/external/proc/embed(var/obj/item/weapon/W, var/silent = 0)
 	if(!silent)

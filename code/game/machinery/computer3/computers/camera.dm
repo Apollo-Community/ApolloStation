@@ -11,7 +11,7 @@
 	spawn_parts			= list(/obj/item/part/computer/storage/hdd,/obj/item/part/computer/networking/cameras)
 	spawn_files 		= list(/datum/file/camnet_key)
 	icon_state			= "frame-sec"
-	l_color = COMPUTER_RED
+	light_color = COMPUTER_RED
 
 /obj/machinery/computer3/security/wooden_tv
 	name				= "security cameras"
@@ -27,13 +27,13 @@
 		..(built=0)
 		os = program
 		circuit.OS = os
-	l_color = null
+	light_color = null
 
 /obj/machinery/computer3/security/mining
 	name = "Outpost Cameras"
 	desc = "Used to access the various cameras on the outpost."
 	spawn_files 		= list(/datum/file/camnet_key/mining)
-	l_color = COMPUTER_PURPLE
+	light_color = COMPUTER_PURPLE
 
 /*
 	Camera monitoring computers, wall-mounted
@@ -42,7 +42,7 @@
 	default_prog		= /datum/file/program/security
 	spawn_parts			= list(/obj/item/part/computer/storage/hdd,/obj/item/part/computer/networking/cameras)
 	spawn_files 		= list(/datum/file/camnet_key)
-	l_color = null
+	light_color = null
 
 /obj/machinery/computer3/wall_comp/telescreen/entertainment
 	desc = "Damn, they better have /tg/thechannel on these things."

@@ -18,7 +18,7 @@
 /obj/item/organ/attack_self(mob/user as mob)
 
 	// Convert it to an edible form, yum yum.
-	if(!robotic && user.a_intent == "help" && user.zone_sel.selecting == "mouth")
+	if(!robotic && user.a_intent == I_HELP && user.zone_sel.selecting == "mouth")
 		bitten(user)
 		return
 
@@ -30,7 +30,7 @@
 	spawn(1)
 		update()
 
-/obj/item/organ/Del()
+/obj/item/organ/Destroy()
 	if(!robotic) processing_objects -= src
 	..()
 
@@ -238,7 +238,7 @@
 	target.internal_organs_by_name[organ_tag] = organ_data
 	organ_data.status |= ORGAN_CUT_AWAY
 
-	del(src)
+	qdel(src)
 
 /obj/item/organ/eyes/replaced(var/mob/living/carbon/human/target)
 
@@ -273,4 +273,4 @@
 	if(fingerprintslast) O.fingerprintslast = fingerprintslast
 
 	user.put_in_active_hand(O)
-	del(src)
+	qdel(src)

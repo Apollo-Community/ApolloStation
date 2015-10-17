@@ -53,6 +53,27 @@
 	charge -= smes_amt
 	return smes_amt / SMESRATE
 
+/obj/machinery/power/smes/surge_act()
+	..()
+	switch(rand(0,10)) // 50% chance to do nothing but spark.
+		if(0) // Bonus Charge
+			charge = max(charge+rand(0, 10000), capacity)
+		if(1) // Small Capacity Change
+			capacity = max(capacity+rand(-1, 1), 0)
+		if(2) // Large Capacity Change
+			capacity = max(capacity+rand(-100, 100), 0)
+		if(3) // Setting Nudges, altering settings a bit. Left unchecked, this could be annoying.
+			input_level = min(max(input_level+rand(-1000, 1000), 0), input_level_max)
+			output_level = min(max(output_level+rand(-1000, 1000), 0), output_level_max)
+		if(4)
+			// Maximum Setting Nudges, could be annoying if left unchecked for a while.
+			output_level_max = max(output_level_max+rand(-50, 50), 0)
+			input_level_max = max(input_level_max+rand(-50, 50), 0)
+		if(5)
+			// Spray sparks, your only identifier that the smes is surging. 1% chance
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			s.set_up(2, 1, src)
+			s.start()
 
 /obj/machinery/power/smes/New()
 	..()
@@ -117,6 +138,8 @@
 	//inputting
 	if(input_attempt && (!input_pulsed && !input_cut))
 		var/target_load = min((capacity-charge)/SMESRATE, input_level)	// charge at set rate, limited to spare capacity
+		if(surplus()>=(5*target_load))
+			surge_act()
 		var/actual_load = draw_power(target_load)						// add the load to the terminal side network
 		charge += actual_load * SMESRATE								// increase the charge
 
@@ -278,7 +301,7 @@
 					user.visible_message(\
 						"<span class='notice'>[user.name] cut the cables and dismantled the power terminal.</span>",\
 						"<span class='notice'>You cut the cables and dismantle the power terminal.</span>")
-					del(terminal)
+					qdel(terminal)
 		building_terminal = 0
 		return 0
 	return 1
@@ -371,7 +394,7 @@
 			smoke.attach(src)
 			smoke.start()
 			explosion(src.loc, -1, 0, 1, 3, 1, 0)
-			del(src)
+			qdel(src)
 			return
 		if(prob(15)) //Power drain
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -419,3 +442,4 @@
 /obj/machinery/power/smes/magical/process()
 	charge = 5000000
 	..()
+

@@ -22,7 +22,7 @@
 	G.fields["photo_side"]	= side
 	data_core.general += G
 
-	del(dummy)
+	qdel(dummy)
 	data_core.manifest_sort()
 	return G
 

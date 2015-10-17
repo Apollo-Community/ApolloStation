@@ -2,7 +2,7 @@
 	name = "timer"
 	desc = "Used to time things. Works well with contraptions which has to count down. Tick tock."
 	icon_state = "timer"
-	matter = list("metal" = 500, "glass" = 50, "waste" = 10)
+	matter = list(DEFAULT_WALL_MATERIAL = 500, "glass" = 50, "waste" = 10)
 	origin_tech = "magnets=1"
 
 	wires = WIRE_PULSE
@@ -11,7 +11,6 @@
 
 	var/timing = 0
 	var/time = 10
-	var/play_sound = 1
 
 	proc
 		timer_end()
@@ -43,17 +42,14 @@
 		if(!holder)
 			visible_message("\icon[src] *beep* *beep*", "*beep* *beep*")
 		cooldown = 2
-		play_sound = 1
 		spawn(10)
 			process_cooldown()
 		return
 
+
 	process()
 		if(timing && (time > 0))
 			time--
-			if( play_sound && (time <= 1 ))
-				playsound(get_turf(loc), 'sound/items/countdown.ogg', 70, 0)
-				play_sound = 0
 		if(timing && time <= 0)
 			timing = 0
 			timer_end()
@@ -87,7 +83,7 @@
 
 
 	Topic(href, href_list)
-		..()
+		if(..()) return 1
 		if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 			usr << browse(null, "window=timer")
 			onclose(usr, "timer")

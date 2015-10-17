@@ -15,8 +15,10 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 
-/obj/machinery/power/Del()
+/obj/machinery/power/Destroy()
 	disconnect_from_network()
+	disconnect_terminal()
+
 	..()
 
 ///////////////////////////////
@@ -69,20 +71,20 @@
 	//	return 1
 
 	var/area/A = src.loc.loc		// make sure it's in an area
-	if(!A || !isarea(A) || !A.master)
+	if(!A || !isarea(A))
 		return 0					// if not, then not powered
 	if(chan == -1)
 		chan = power_channel
-	return A.master.powered(chan)	// return power status of the area
+	return A.powered(chan)			// return power status of the area
 
 // increment the power usage stats for an area
 /obj/machinery/proc/use_power(var/amount, var/chan = -1) // defaults to power_channel
 	var/area/A = get_area(src)		// make sure it's in an area
-	if(!A || !isarea(A) || !A.master)
+	if(!A || !isarea(A))
 		return
 	if(chan == -1)
 		chan = power_channel
-	A.master.use_power(amount, chan)
+	A.use_power(amount, chan)
 
 /obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
 										// by default, check equipment channel & set flag
@@ -235,7 +237,7 @@
 // rebuild all power networks from scratch - only called at world creation or by the admin verb
 /proc/makepowernets()
 	for(var/datum/powernet/PN in powernets)
-		del(PN)
+		qdel(PN)
 	powernets.Cut()
 
 	for(var/obj/structure/cable/PC in cable_list)
@@ -369,15 +371,17 @@
 		power_source = cell
 		shock_damage = cell_damage
 
+	// Capping the shock damage
 	if( shock_damage > max_damage )
 		shock_damage = max_damage
+
 	var/drained_hp = M.electrocute_act(shock_damage, source, siemens_coeff) //zzzzzzap!
 	var/drained_energy = drained_hp*20
 
 	if (source_area)
 		source_area.use_power(drained_energy/CELLRATE)
 	else if (istype(power_source,/datum/powernet))
-		var/drained_power = drained_energy/CELLRATE //convert from "joules" to "watts"
+		var/drained_power = drained_energy/CELLRATE
 		drained_power = PN.draw_power(drained_power)
 	else if (istype(power_source, /obj/item/weapon/cell))
 		cell.use(drained_energy)

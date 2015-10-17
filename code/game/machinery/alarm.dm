@@ -95,6 +95,11 @@
 	TLV["temperature"] =	list(20, 40, 140, 160) // K
 	target_temperature = 90
 
+/obj/machinery/alarm/Destroy()
+	if(wires)
+		qdel(wires)
+		wires = null
+	..()
 
 /obj/machinery/alarm/New(var/loc, var/dir, var/building = 0)
 	..()
@@ -117,7 +122,7 @@
 
 	first_run()
 
-/obj/machinery/alarm/Del()
+/obj/machinery/alarm/Destroy()
 	//If there's an active alarm, clear it after minute so that alarms don't keep going forver
 	delayed_reset()
 	..()
@@ -132,8 +137,7 @@
 
 /obj/machinery/alarm/proc/first_run()
 	alarm_area = get_area(src)
-	if (alarm_area.master)
-		alarm_area = alarm_area.master
+
 	area_uid = alarm_area.uid
 	if (name == "alarm")
 		name = "[alarm_area.name] Air Alarm"
@@ -295,11 +299,10 @@
 
 
 /obj/machinery/alarm/proc/elect_master()
-	for (var/area/A in alarm_area.related)
-		for (var/obj/machinery/alarm/AA in A)
-			if (!(AA.stat & (NOPOWER|BROKEN)))
-				alarm_area.master_air_alarm = AA
-				return 1
+	for (var/obj/machinery/alarm/AA in alarm_area)
+		if (!(AA.stat & (NOPOWER|BROKEN)))
+			alarm_area.master_air_alarm = AA
+			return 1
 	return 0
 
 /obj/machinery/alarm/proc/get_danger_level(var/current_value, var/list/danger_levels)
@@ -406,9 +409,8 @@
 /obj/machinery/alarm/proc/apply_mode()
 	//propagate mode to other air alarms in the area
 	//TODO: make it so that players can choose between applying the new mode to the room they are in (related area) vs the entire alarm area
-	for (var/area/RA in alarm_area.related)
-		for (var/obj/machinery/alarm/AA in RA)
-			AA.mode = mode
+	for (var/obj/machinery/alarm/AA in alarm_area)
+		AA.mode = mode
 
 	switch(mode)
 		if(AALARM_MODE_SCRUBBING)
@@ -964,7 +966,7 @@ table tr:first-child th:first-child { border: none;}
 		if(0)
 			if(istype(W, /obj/item/weapon/airalarm_electronics))
 				user << "You insert the circuit!"
-				del(W)
+				qdel(W)
 				buildstage = 1
 				update_icon()
 				return
@@ -974,7 +976,7 @@ table tr:first-child th:first-child { border: none;}
 				var/obj/item/alarm_frame/frame = new /obj/item/alarm_frame()
 				frame.loc = user.loc
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				del(src)
+				qdel(src)
 
 	return ..()
 
@@ -1017,7 +1019,7 @@ Code shamelessly copied from apc_frame
 /obj/item/alarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
-		del(src)
+		qdel(src)
 		return
 	..()
 
@@ -1043,7 +1045,7 @@ Code shamelessly copied from apc_frame
 		return
 
 	new /obj/machinery/alarm(loc, ndir, 1)
-	del(src)
+	qdel(src)
 
 /*
 FIRE ALARM
@@ -1148,7 +1150,7 @@ FIRE ALARM
 			if(0)
 				if(istype(W, /obj/item/weapon/firealarm_electronics))
 					user << "You insert the circuit!"
-					del(W)
+					qdel(W)
 					buildstage = 1
 					update_icon()
 
@@ -1157,7 +1159,7 @@ FIRE ALARM
 					var/obj/item/firealarm_frame/frame = new /obj/item/firealarm_frame()
 					frame.loc = user.loc
 					playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-					del(src)
+					qdel(src)
 		return
 	var/area/A = src.loc
 	A = A.loc
@@ -1306,7 +1308,7 @@ FIRE ALARM
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 
-/obj/machinery/firealarm/Del()
+/obj/machinery/firealarm/Destroy()
 	//so fire alarms don't keep going forever
 	delayed_reset()
 	..()
@@ -1357,7 +1359,7 @@ Code shamelessly copied from apc_frame
 /obj/item/firealarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
-		del(src)
+		qdel(src)
 		return
 	..()
 
@@ -1384,7 +1386,7 @@ Code shamelessly copied from apc_frame
 
 	new /obj/machinery/firealarm(loc, ndir, 1)
 
-	del(src)
+	qdel(src)
 
 
 /obj/machinery/partyalarm
@@ -1409,10 +1411,10 @@ Code shamelessly copied from apc_frame
 	user.machine = src
 	var/area/A = get_area(src)
 	ASSERT(isarea(A))
-	if(A.master)
-		A = A.master
+
 	var/d1
 	var/d2
+
 	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon/ai))
 
 		if (A.party)
@@ -1449,8 +1451,7 @@ Code shamelessly copied from apc_frame
 		return
 	var/area/A = get_area(src)
 	ASSERT(isarea(A))
-	if(A.master)
-		A = A.master
+
 	A.partyreset()
 	return
 
@@ -1459,8 +1460,7 @@ Code shamelessly copied from apc_frame
 		return
 	var/area/A = get_area(src)
 	ASSERT(isarea(A))
-	if(A.master)
-		A = A.master
+
 	A.partyalert()
 	return
 

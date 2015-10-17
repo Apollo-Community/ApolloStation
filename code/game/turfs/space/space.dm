@@ -2,6 +2,7 @@
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
 	icon_state = "0"
+	dynamic_lighting = 0
 
 	temperature = 3
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
@@ -24,16 +25,16 @@
 /obj/effect/light_emitter/starlight
 	name = ""
 	desc = ""
-	luminosity = 2
+	light_range = 2
 
 /obj/effect/light_emitter/starlight/New()
-	luminosity = rand( 2, 3 )
+	light_range = rand( 2, 3 )
 	..()
 
-/turf/space/Del()
+/turf/space/Destroy()
 	..()
 
-	del( starlight )
+	qdel( starlight )
 
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
 
@@ -54,7 +55,7 @@
 			var/obj/item/stack/tile/plasteel/S = C
 			if (S.get_amount() < 1)
 				return
-			del(L)
+			qdel(L)
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			S.build(src)
 			S.use(1)
@@ -91,7 +92,7 @@
 
 	if(src.x <= 1)
 		if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
-			del(A)
+			qdel(A)
 			return
 
 		var/list/cur_pos = src.get_global_map_pos()
@@ -116,7 +117,7 @@
 					A.loc.Entered(A)
 	else if (src.x >= world.maxx)
 		if(istype(A, /obj/effect/meteor))
-			del(A)
+			qdel(A)
 			return
 
 		var/list/cur_pos = src.get_global_map_pos()
@@ -141,7 +142,7 @@
 					A.loc.Entered(A)
 	else if (src.y <= 1)
 		if(istype(A, /obj/effect/meteor))
-			del(A)
+			qdel(A)
 			return
 		var/list/cur_pos = src.get_global_map_pos()
 		if(!cur_pos) return
@@ -166,7 +167,7 @@
 
 	else if (src.y >= world.maxy)
 		if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
-			del(A)
+			qdel(A)
 			return
 		var/list/cur_pos = src.get_global_map_pos()
 		if(!cur_pos) return

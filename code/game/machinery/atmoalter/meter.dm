@@ -67,13 +67,13 @@
 
 /obj/machinery/meter/examine(mob/user)
 	var/t = "A gas flow meter. "
-	
+
 	if(get_dist(user, src) > 3 && !(istype(user, /mob/living/silicon/ai) || istype(user, /mob/dead)))
 		t += "\blue <B>You are too far away to read it.</B>"
-	
+
 	else if(stat & (NOPOWER|BROKEN))
-		t += "\red <B>The display is off.</B>"	
-	
+		t += "\red <B>The display is off.</B>"
+
 	else if(src.target)
 		var/datum/gas_mixture/environment = target.return_air()
 		if(environment)
@@ -82,7 +82,7 @@
 			t += "The sensor error light is blinking."
 	else
 		t += "The connect error light is blinking."
-	
+
 	user << t
 
 /obj/machinery/meter/Click()
@@ -90,7 +90,7 @@
 	if(istype(usr, /mob/living/silicon/ai)) // ghosts can call ..() for examine
 		usr.examinate(src)
 		return 1
-	
+
 	return ..()
 
 /obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
@@ -104,7 +104,7 @@
 			"\blue You have unfastened \the [src].", \
 			"You hear ratchet.")
 		new /obj/item/pipe_meter(src.loc)
-		del(src)
+		qdel(src)
 
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
 

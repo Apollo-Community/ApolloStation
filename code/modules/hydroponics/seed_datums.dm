@@ -79,7 +79,7 @@ proc/populate_seed_list()
 	var/water_consumption = 3       // Plant drinks this much per tick.
 	var/ideal_heat = 293            // Preferred temperature in Kelvin.
 	var/heat_tolerance = 20         // Departure from ideal that is survivable.
-	var/ideal_light = 8             // Preferred light level in luminosity.
+	var/ideal_light = 8             // Preferred light level in light_range.
 	var/light_tolerance = 5         // Departure from ideal that is survivable.
 	var/toxins_tolerance = 5        // Resistance to poison.
 	var/lowkpa_tolerance = 25       // Low pressure capacity.
@@ -609,8 +609,8 @@ proc/populate_seed_list()
 
 			if(biolum)
 				if(biolum_colour)
-					product.l_color = biolum_colour
-				product.SetLuminosity(biolum)
+					product.light_color = biolum_colour
+				product.set_light(biolum)
 
 			//Handle spawning in living, mobile products (like dionaea).
 			if(istype(product,/mob/living))

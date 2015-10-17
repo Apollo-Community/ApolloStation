@@ -30,14 +30,14 @@
 	user.put_in_active_hand(B)
 	src.transfer_fingerprints_to(B)
 
-	del(src)
+	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/attack(mob/living/target as mob, mob/living/user as mob)
 
 	if(!target)
 		return
 
-	if(user.a_intent != "hurt" || !isGlass)
+	if(user.a_intent != I_HURT || !isGlass)
 		return ..()
 
 

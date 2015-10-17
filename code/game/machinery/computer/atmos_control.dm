@@ -14,14 +14,14 @@
 	req_access = list(access_ce)
 	var/list/monitored_alarm_ids = null
 	var/list/monitored_alarms = null
-	l_color = COMPUTER_GREEN
+	light_color = COMPUTER_GREEN
 
 /obj/machinery/computer/atmoscontrol/laptop
 	name = "Atmospherics Laptop"
 	desc = "Cheap Nanotrasen Laptop."
 	icon_state = "medlaptop"
 	density = 0
-	l_color = COMPUTER_GREEN
+	light_color = COMPUTER_GREEN
 
 /obj/machinery/computer/atmoscontrol/initialize()
 	..()

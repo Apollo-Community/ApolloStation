@@ -17,7 +17,7 @@
 	circuit = "/obj/item/weapon/circuitboard/cryopodcontrol"
 	density = 0
 	interact_offline = 1
-	l_color = COMPUTER_GREEN
+	light_color = COMPUTER_GREEN
 
 	var/mode = null
 
@@ -35,7 +35,7 @@
 	icon = 'icons/obj/robot_storage.dmi'
 	icon_state = "console"
 	circuit = "/obj/item/weapon/circuitboard/robotstoragecontrol"
-	l_color = COMPUTER_BLUE
+	light_color = COMPUTER_BLUE
 
 	storage_type = "cyborgs"
 	storage_name = "Robotic Storage Control"
@@ -172,7 +172,7 @@
 	icon_state = "body_scanner_0"
 	density = 1
 	anchored = 1
-	l_color = "#002900"
+	light_color = "#002900"
 
 	var/base_icon_state = "body_scanner_0"
 	var/occupied_icon_state = "body_scanner_1"
@@ -223,7 +223,7 @@
 	on_enter_occupant_message = "The storage unit broadcasts a sleep signal to you. Your systems start to shut down, and you enter low-power mode."
 	allow_occupant_types = list(/mob/living/silicon/robot)
 	disallow_occupant_types = list(/mob/living/silicon/robot/drone)
-	l_color = COMPUTER_RED
+	light_color = COMPUTER_RED
 
 /obj/machinery/cryopod/robot/right
 	orient_right = 1
@@ -232,7 +232,7 @@
 /obj/machinery/cryopod/New()
 	announce = new /obj/item/device/radio/intercom(src)
 
-	luminosity = 2
+	light_range = 2
 
 	if(orient_right)
 		icon_state = "[base_icon_state]-r"
@@ -241,7 +241,7 @@
 
 	..()
 
-/obj/machinery/cryopod/Del()
+/obj/machinery/cryopod/Destroy()
 	if(occupant)
 		occupant.loc = loc
 		occupant.resting = 1
@@ -298,12 +298,12 @@
 	var/mob/living/silicon/robot/R = occupant
 	if(!istype(R)) return ..()
 
-	del(R.mmi)
+	qdel(R.mmi)
 	for(var/obj/item/I in R.module) // the tools the borg has; metal, glass, guns etc
 		for(var/obj/item/O in I) // the things inside the tools, if anything; mainly for janiborg trash bags
 			O.loc = R
-		del(I)
-	del(R.module)
+		qdel(I)
+	qdel(R.module)
 
 	return ..()
 
@@ -315,7 +315,7 @@
 		occupant.drop_from_inventory(W)
 		W.loc = src
 
-		if(W.contents.len) //Make sure we catch anything not handled by del() on the items.
+		if(W.contents.len) //Make sure we catch anything not handled by qdel() on the items.
 			for(var/obj/item/O in W.contents)
 				if(istype(O,/obj/item/weapon/storage/internal)) //Stop eating pockets, you fuck!
 					continue
@@ -335,7 +335,7 @@
 				break
 
 		if(!preserve)
-			del(W)
+			qdel(W)
 		else
 			if(control_computer && control_computer.allow_items)
 				control_computer.frozen_items += W
@@ -348,7 +348,7 @@
 		// We don't want revs to get objectives that aren't for heads of staff. Letting
 		// them win or lose based on cryo is silly so we remove the objective.
 		if(istype(O,/datum/objective/mutiny) && O.target == occupant.mind)
-			del(O)
+			qdel(O)
 		else if(O.target && istype(O.target,/datum/mind))
 			if(O.target == occupant.mind)
 				if(O.owner && O.owner.current)
@@ -360,7 +360,7 @@
 					if(!(O.target))
 						all_objectives -= O
 						O.owner.objectives -= O
-						del(O)
+						qdel(O)
 
 	//Handle job slot/tater cleanup.
 	var/job = occupant.mind.assigned_role
@@ -368,7 +368,7 @@
 	job_master.FreeRole(job)
 
 	if(occupant.mind.objectives.len)
-		del(occupant.mind.objectives)
+		qdel(occupant.mind.objectives)
 		occupant.mind.special_role = null
 	else
 		if(ticker.mode.name == "AutoTraitor")
@@ -381,13 +381,13 @@
 		PDA_Manifest.Cut()
 	for(var/datum/data/record/R in data_core.medical)
 		if ((R.fields["name"] == occupant.real_name))
-			del(R)
+			qdel(R)
 	for(var/datum/data/record/T in data_core.security)
 		if ((T.fields["name"] == occupant.real_name))
-			del(T)
+			qdel(T)
 	for(var/datum/data/record/G in data_core.general)
 		if ((G.fields["name"] == occupant.real_name))
-			del(G)
+			qdel(G)
 
 	if(orient_right)
 		icon_state = "[base_icon_state]-r"
@@ -406,7 +406,7 @@
 	visible_message("<span class='notice'>\The [src] hums and hisses as it moves [occupant.real_name] into storage.</span>", 3)
 
 	// Delete the mob.
-	del(occupant)
+	qdel(occupant)
 	occupant = null
 	name = initial(name)
 

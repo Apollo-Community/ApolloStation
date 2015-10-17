@@ -47,9 +47,9 @@
 			if(  istype( target.loc, /obj/effect/traveler ))
 				var/obj/effect/traveler/traveler = target.loc
 				bluespace_jump( get_turf( target ), target, beacon.loc )
-				del( traveler )
+				qdel( traveler )
 			else
-				new /obj/machinery/singularity/bluespace_gate/( src.target.loc, src.beacon.loc )
+				new /obj/singularity/bluespace_gate/( src.target.loc, src.beacon.loc )
 			src.charge = 0
 			src.active = 0
 		else

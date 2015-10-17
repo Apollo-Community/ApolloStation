@@ -2,7 +2,7 @@
 	default_prog		= /datum/file/program/crew
 	spawn_parts			= list(/obj/item/part/computer/storage/hdd,/obj/item/part/computer/networking/radio)
 	icon_state			= "frame-med"
-	l_color = COMPUTER_BLUE
+	light_color = COMPUTER_BLUE
 
 /datum/file/program/crew
 	name = "Crew Monitoring Console"

@@ -12,7 +12,6 @@
 /turf/simulated/floor/airless/hull
 	icon_state = "hull"
 	desc = "There's probably something under this."
-	lighting_lumcount = 2
 
 	temperature = T20C-270
 
@@ -22,7 +21,7 @@
 
 /turf/simulated/floor/light
 	name = "Light floor"
-	luminosity = 5
+	light_range = 5
 	icon_state = "light_on"
 	floor_type = /obj/item/stack/tile/light
 
@@ -36,7 +35,7 @@
 
 /turf/simulated/floor/light/rainbow
 	name = "Dance floor"
-	luminosity = 5
+	light_range = 5
 	icon_state = "light_on-c"
 	floor_type = /obj/item/stack/tile/light
 
@@ -133,7 +132,6 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = ""
 	name = "space"
-	lighting_lumcount = 4
 
 	temperature = T20C-270
 
@@ -144,18 +142,18 @@
 
 	ex_act(severtiy)
 		if(1.0)
-			src.Del()
+			qdel()
 		return
 
 /turf/simulated/floor/bluegrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "bcircuit"
-	luminosity = 1
+	light_range = 1
 
 /turf/simulated/floor/greengrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "gcircuit"
-	luminosity = 1
+	light_range = 1
 
 /turf/simulated/shuttle
 	name = "shuttle"
@@ -272,7 +270,7 @@
 
 		visible_message( "\The [A] falls into the lava, melting beneath the molten surface!" )
 
-		A.Del()
+		qdel(A)
 
 /turf/simulated/floor/airless/trash
 	name = "compacted trash"

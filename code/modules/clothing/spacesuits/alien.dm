@@ -142,6 +142,7 @@
 		"Vox" = 'icons/mob/species/vox/gloves.dmi',
 		"Vox Armalis" = 'icons/mob/species/armalis/gloves.dmi',
 		)
+
 /obj/item/clothing/shoes/magboots/vox
 
 	desc = "A pair of heavy, jagged armoured foot pieces, seemingly suitable for a velociraptor."
@@ -170,7 +171,6 @@
 		if (H.shoes != src)
 			user << "You will have to put on the [src] before you can do that."
 			return
-
 
 		flags |= NOSLIP
 		magpulse = 1

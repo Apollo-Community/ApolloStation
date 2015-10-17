@@ -20,7 +20,7 @@ var/prison_shuttle_timeleft = 0
 	var/hacked = 0
 	var/allowedtocall = 0
 	var/prison_break = 0
-	l_color = COMPUTER_RED
+	light_color = COMPUTER_RED
 
 	attack_ai(var/mob/user as mob)
 		return src.attack_hand(user)
@@ -46,7 +46,7 @@ var/prison_shuttle_timeleft = 0
 					A.state = 4
 					A.icon_state = "4"
 
-				del(src)
+				qdel(src)
 		else if(istype(I,/obj/item/weapon/card/emag) && (!hacked))
 			hacked = 1
 			user << "\blue You disable the lock."
@@ -195,7 +195,7 @@ var/prison_shuttle_timeleft = 0
 					for(var/atom/movable/AM as mob|obj in T)
 						AM.Move(D)
 					if(istype(T, /turf/simulated))
-						del(T)
+						qdel(T)
 				start_location.move_contents_to(end_location)
 
 			if(1)
@@ -225,7 +225,7 @@ var/prison_shuttle_timeleft = 0
 					for(var/atom/movable/AM as mob|obj in T)
 						AM.Move(D)
 					if(istype(T, /turf/simulated))
-						del(T)
+						qdel(T)
 
 				for(var/mob/living/carbon/bug in end_location) // If someone somehow is still in the shuttle's docking area...
 					bug.gib()

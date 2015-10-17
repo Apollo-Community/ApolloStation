@@ -65,7 +65,7 @@
 
 	update_icons()
 
-/obj/spacepod/Del()
+/obj/spacepod/Destroy()
 	spacepods_list -= src
 
 	// Dumping the occupants
@@ -180,7 +180,7 @@
 
 			if(i == 0)
 				explosion(loc, 2, 4, 8)
-				del(src)
+				qdel(src)
 			sleep(10)
 
 /obj/spacepod/proc/repair_damage(var/repair_amount)
@@ -192,8 +192,8 @@
 /obj/spacepod/ex_act(severity)
 	switch(severity)
 		if(1)
-			del(ion_trail)
-			del(src)
+			qdel(ion_trail)
+			qdel(src)
 		if(2)
 			deal_damage(100)
 		if(3)
@@ -600,9 +600,9 @@ obj/spacepod/verb/toggleLights()
 /obj/spacepod/proc/lightsToggle()
 	lights = !lights
 	if(lights)
-		SetLuminosity(luminosity + lights_power)
+		set_light(light_range + lights_power)
 	else
-		SetLuminosity(luminosity - lights_power)
+		set_light(light_range - lights_power)
 	occupants_announce( "Spacepod lights toggled [lights?"on":"off"]." )
 	return
 
@@ -677,7 +677,7 @@ obj/spacepod/verb/toggleLights()
 					if(t_air)
 						t_air.merge(removed)
 					else //just delete the cabin gas, we're in space or some shit
-						del(removed)
+						qdel(removed)
 		else
 			return stop()
 		return

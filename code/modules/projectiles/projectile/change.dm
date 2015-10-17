@@ -23,12 +23,12 @@
 
 		if(istype(M, /mob/living/silicon/robot))
 			var/mob/living/silicon/robot/Robot = M
-			if(Robot.mmi)	del(Robot.mmi)
+			if(Robot.mmi)	qdel(Robot.mmi)
 			Robot.notify_ai(1)
 		else
 			for(var/obj/item/W in M)
 				if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
-					del(W)
+					qdel(W)
 					continue
 				W.layer = initial(W.layer)
 				W.loc = M.loc
@@ -72,7 +72,7 @@
 		for (var/obj/effect/proc_holder/spell/S in M.spell_list)
 			new_mob.spell_list += new S.type
 
-		new_mob.a_intent = "hurt"
+		new_mob.a_intent = I_HURT
 		if(M.mind)
 			M.mind.transfer_to(new_mob)
 		else
@@ -80,5 +80,5 @@
 
 		new_mob << "<B>Your form morphs into that of a [randomize].</B>"
 
-		del(M)
+		qdel(M)
 		return new_mob

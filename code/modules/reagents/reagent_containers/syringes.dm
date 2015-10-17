@@ -56,7 +56,7 @@
 			user << "\red This syringe is broken!"
 			return
 
-		if (user.a_intent == "hurt" && ismob(target))
+		if (user.a_intent == I_HURT && ismob(target))
 			if((CLUMSY in user.mutations) && prob(50))
 				target = user
 			syringestab(target, user)
@@ -254,7 +254,7 @@
 				for(var/mob/O in viewers(world.view, user))
 					O.show_message(text("\red <B>[user] tries to stab [target] in \the [hit_area] with [src.name], but the attack is deflected by armor!</B>"), 1)
 				user.u_equip(src)
-				del(src)
+				qdel(src)
 				return
 
 			for(var/mob/O in viewers(world.view, user))

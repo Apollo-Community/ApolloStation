@@ -539,7 +539,7 @@ client
 				for(var/obj/Obj in world)
 					if(Obj.type == O_type)
 						i++
-						del(Obj)
+						qdel(Obj)
 				if(!i)
 					usr << "No objects of this type exist"
 					return
@@ -550,7 +550,7 @@ client
 				for(var/obj/Obj in world)
 					if(istype(Obj,O_type))
 						i++
-						del(Obj)
+						qdel(Obj)
 				if(!i)
 					usr << "No objects of this type exist"
 					return
@@ -821,13 +821,13 @@ client
 				if(I.removed_type)
 					var/obj/item/organ/O = new I.removed_type()
 					organ_slot = O.organ_tag
-					del(O)
+					qdel(O)
 				else
 					organ_slot = "unknown organ"
 
 			if(H.internal_organs_by_name[organ_slot])
 				usr << "[H] already has an organ in that slot."
-				del(I)
+				qdel(I)
 				return
 
 			H.internal_organs |= I
@@ -856,7 +856,7 @@ client
 			return
 
 		usr << "Removed [rem_organ] from [M]."
-		del(rem_organ)
+		qdel(rem_organ)
 
 	else if(href_list["fix_nano"])
 		if(!check_rights(R_DEBUG)) return

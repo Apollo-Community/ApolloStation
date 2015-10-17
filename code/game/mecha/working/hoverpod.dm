@@ -51,7 +51,7 @@
 			ion_trail.start()
 		if (stabilization_enabled)
 			return 1
-	
+
 	return ..()
 
 //these three procs overriden to play different sounds

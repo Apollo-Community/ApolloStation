@@ -19,8 +19,10 @@ var/list/sqrtTable = list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 
 /proc/Ceiling(x)
 	return -round(-x)
 
+/*
 /proc/Clamp(val, min, max)
 	return max(min, min(val, max))
+*/
 
 // cotangent
 /proc/Cot(x)
@@ -119,3 +121,9 @@ var/list/sqrtTable = list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 
 	var/d = max - min
 	var/t = Floor((val - min) / d)
 	return val - (t * d)
+
+//A very crude linear approximatiaon of pythagoras theorem.
+/proc/cheap_pythag(var/dx, var/dy)
+	dx = abs(dx); dy = abs(dy);
+	if(dx>=dy)	return dx + (0.5*dy)	//The longest side add half the shortest side approximates the hypotenuse
+	else		return dy + (0.5*dx)

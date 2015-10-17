@@ -190,7 +190,7 @@ Thus, the two variables affect pump operation are set in New():
 	return
 
 /obj/machinery/atmospherics/binary/pump/Topic(href,href_list)
-	if(..()) return
+	if(..()) return 1
 
 	if(href_list["power"])
 		use_power = !use_power
@@ -235,4 +235,4 @@ Thus, the two variables affect pump operation are set in New():
 			"\blue You have unfastened \the [src].", \
 			"You hear ratchet.")
 		new /obj/item/pipe(loc, make_from=src)
-		del(src)
+		qdel(src)

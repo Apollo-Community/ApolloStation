@@ -19,7 +19,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	//
 	var/obj/machinery/power/rust_core/owned_core
 	var/list/dormant_reactant_quantities = new
-	//luminosity = 1
+	//light_range = 1
 	layer = 3.1
 	//
 	var/energy = 0
@@ -47,7 +47,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 		owned_core = core
 
 	if(!owned_core)
-		del(src)
+		qdel(src)
 
 	//create the gimmicky things to handle field collisions
 	var/obj/effect/rust_particle_catcher/catcher
@@ -118,7 +118,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 /obj/effect/rust_em_field/process()
 	//make sure the field generator is still intact
 	if(!owned_core)
-		del(src)
+		qdel(src)
 
 	//handle radiation
 	if(!radiator)
@@ -427,7 +427,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 			AddParticles(reactant, reactants_reacting_pool[reactant])
 			//world << "retained: [reactant], [reactants_reacting_pool[reactant]]"
 
-/obj/effect/rust_em_field/Del()
+/obj/effect/rust_em_field/Destroy()
 	//radiate everything in one giant burst
 	for(var/obj/effect/rust_particle_catcher/catcher in particle_catchers)
 		del (catcher)

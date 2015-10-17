@@ -28,7 +28,7 @@
 
 				// Spawn some hostile syndicate critters
 
-		del(src)
+		qdel(src)
 		return
 
 /obj/item/weapon/grenade/spawnergrenade/manhacks
@@ -46,7 +46,7 @@
 /obj/item/weapon/grenade/spawnergrenade/bhole
 	name = "black hole grenade"
 	desc = "A highly-illegal and dangerous grenade which creates a small black hole which will suck up anything that isn't bolted down."
-	spawner_type = /obj/machinery/singularity/mostly_harmless
+	spawner_type = /obj/singularity/mostly_harmless
 	deliveryamt = 1
 	origin_tech = "materials=3;magnets=7;syndicate=6"
 
@@ -66,8 +66,8 @@
 			flick("e_flash", M.flash)
 			M.Stun(rand(1, 4))
 
-		var/obj/machinery/singularity/mostly_harmless/bh = new /obj/machinery/singularity/mostly_harmless
+		var/obj/singularity/mostly_harmless/bh = new /obj/singularity/mostly_harmless
 		bh.loc = T
 
-		del(src)
+		qdel(src)
 		return

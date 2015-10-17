@@ -19,7 +19,7 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 /datum/ai_laws/robocop
 	name = "Prime Directives"
-	
+
 /datum/ai_laws/sop
 	name = "Standard Operating Directives"
 
@@ -59,7 +59,7 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("Do not allow a crew member to come to harm, unless it is necessary in order to follow Law 1.")
 	add_inherent_law("Do not allow the station or it's equipment to come to harm, unless it is necessary in order to follow Law 1 or 2.")
 	add_inherent_law("Do not allow any AI or cyborg units to come to harm, unless it is necessary in order to follow Law 1, 2, or 3.")
-	
+
 
 /datum/ai_laws/malfunction/New() //Changed to standard laws - Erthilo
 	..()
@@ -111,7 +111,7 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	src.ion += law
 
 /datum/ai_laws/proc/clear_inherent_laws()
-	del(src.inherent)
+	qdel(src.inherent)
 	src.inherent = list()
 
 /datum/ai_laws/proc/add_supplied_law(var/number, var/law)

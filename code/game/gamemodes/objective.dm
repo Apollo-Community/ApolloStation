@@ -13,7 +13,7 @@ datum/objective
 		if(text)
 			explanation_text = text
 
-	Del()
+	Destroy()
 		all_objectives -= src
 		..()
 
@@ -536,7 +536,7 @@ datum/objective/steal
 			if (!custom_target) return
 			var/tmp_obj = new custom_target
 			var/custom_name = tmp_obj:name
-			del(tmp_obj)
+			qdel(tmp_obj)
 			custom_name = sanitize(input("Enter target name:", "Objective target", custom_name) as text|null)
 			if (!custom_name) return
 			target_name = custom_name
@@ -964,5 +964,5 @@ datum/objective/heist/inviolate_death
 	explanation_text = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
 
 /datum/objective/cult_summon/check_completion()
-	if(locate(/obj/machinery/singularity/narsie/large) in machines) return 1
+	if(locate(/obj/singularity/narsie/large) in machines) return 1
 	return 0

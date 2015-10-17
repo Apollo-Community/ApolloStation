@@ -428,9 +428,9 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 	return
 
 /obj/item/weapon/disk/nuclear/overmapTravel()
-	del(src) // Don't let nuke disks travel Z levels
+	qdel(src) // Don't let nuke disks travel Z levels
 
-/obj/item/weapon/disk/nuclear/Del()
+/obj/item/weapon/disk/nuclear/Destroy()
 	if(blobstart.len > 0)
 		var/obj/D = new /obj/item/weapon/disk/nuclear(pick(blobstart))
 		message_admins("[src] has been destroyed. Spawning [D] at ([D.x], [D.y], [D.z]).")
@@ -441,4 +441,4 @@ proc/AnnounceActiveNuke( var/time )
 	if (ticker.current_state == GAME_STATE_PLAYING)
 		var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)
 		a.autosay("The station's nuclear device has been activated. [time] seconds until detonation.", "Nuclear Ordinance Controller")
-		del(a)
+		qdel(a)
