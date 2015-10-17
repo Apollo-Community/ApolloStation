@@ -23,7 +23,7 @@
 	var/size = 1
 	var/max_size = 100
 
-/obj/item/weapon/shard/supermatter/New(var/loc, var/level = 1)
+/obj/item/weapon/shard/supermatter/New(var/loc, var/level = 1, var/set_size = 0)
 	..()
 
 	if( level > MAX_SUPERMATTER_LEVEL )
@@ -35,11 +35,12 @@
 	light_color = getSMColor( smlevel )
 	color = light_color
 
-	size += rand(0, 10)
+	if( !set_size )
+		size += rand(0, 10)
+	else
+		size = set_size
 
 	update_icon()
-
-
 
 /obj/item/weapon/shard/supermatter/update_icon()
 	light_color = getSMColor( smlevel )

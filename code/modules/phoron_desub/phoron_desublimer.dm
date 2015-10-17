@@ -20,7 +20,7 @@ The process works like this:
 */
 
 /obj/machinery/phoron_desublimer
-	icon = 'icons/obj/machines/phoron_compressor.dmi'
+	icon = 'icons/obj/machines/phoron_desublimation.dmi'
 	density = 1
 	anchored = 1
 	use_power = 1

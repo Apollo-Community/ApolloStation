@@ -1,7 +1,7 @@
 /obj/machinery/computer/phoron_desublimer_control
 	name = "Phoron Desublimation Control"
 	desc = "Controls the phoron desublimation process."
-	icon = 'icons/obj/machines/phoron_compressor.dmi'
+	icon = 'icons/obj/machines/phoron_desublimation.dmi'
 	icon_state = "Ready"
 	var/ui_title = "Phoron Desublimation Control"
 

@@ -313,6 +313,5 @@
 /datum/species/nucleation/handle_death(var/mob/living/carbon/human/H)
 	var/turf/T = get_turf(H)
 	H.visible_message("\red[H]'s body explodes, leaving behind a pile of microscopic crystals!")
-	supermatter_delamination(T, 2, 0, 0, 80) // Create a small supermatter burst upon death
-	new /obj/item/weapon/shard/supermatter( T )
+	supermatter_delamination( T, 4, 1, 0, 0 ) // Create a small supermatter burst upon death
 	qdel(H)
