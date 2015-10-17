@@ -2,7 +2,7 @@
 
 /obj/machinery/phoron_desublimer/resonant_chamber
 	name = "Resonant Chamber"
-	desc = "Uses subspace resonance to restructure multiple pieces of supermatter into one. It can be unbolted for the lab tech on the go."
+	desc = "Uses subspace resonance to restructure multiple pieces of supermatter into one. It freezes time within, and can be unbolted from the floor, so it is also an ideal container to transport dangerous supermatter."
 	icon = 'icons/obj/machines/phoron_desublimation.dmi'
 	icon_state = "resonant_chamber"
 

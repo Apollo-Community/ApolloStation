@@ -154,6 +154,8 @@
 		return PROCESS_KILL
 	if(!istype(L)) 	//We are in a crate or somewhere that isn't turf, if we return to turf resume processing but for now.
 		return 1 //Yeah just stop.
+	if(istype( loc, /obj/machinery/phoron_desublimer/resonant_chamber ))
+		return 1 // Resonant chambers are similar to bluespace beakers, they halt reactions within them
 
 /obj/machinery/power/supermatter/proc/alertCheck()
 	var/turf/L = loc
