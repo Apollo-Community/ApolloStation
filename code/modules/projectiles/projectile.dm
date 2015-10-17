@@ -163,21 +163,8 @@
 	return
 
 /obj/item/projectile/proc/dumbfire(var/dir) // for spacepods, go snowflake go
-	if(!dir)
-		qdel(src)
-	if(kill_count < 1)
-		qdel(src)
-	kill_count--
-	spawn while(src)
-		var/turf/T = get_step(src, dir)
-		step_towards(src, T)
-		sleep(1)
-		if(!bumped && !isturf(original))
-			if(loc == get_turf(original))
-				if(!(original in permutated))
-					Bump(original)
-					sleep(1)
-	return
+	current = get_ranged_target_turf(src, dir, world.maxx) //world.maxx is the range. Not sure how to handle this better.
+	process()
 
 /obj/item/projectile/test //Used to see if you can hit them.
 	invisibility = 101 //Nope!  Can't see me!
