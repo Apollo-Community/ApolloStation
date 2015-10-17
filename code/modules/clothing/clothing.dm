@@ -264,11 +264,11 @@ BLIND     // can't see anything
 			return
 		on = !on
 		user << "You [on ? "enable" : "disable"] the helmet light."
-		update_light(user)
+		toggle_light(user)
 	else
 		return ..(user)
 
-/obj/item/clothing/head/update_light(var/mob/user = null)
+/obj/item/clothing/head/proc/toggle_light(var/mob/user = null)
 	if(on && !light_applied)
 		if(loc == user)
 			user.set_light(user.light_range + brightness_on)
