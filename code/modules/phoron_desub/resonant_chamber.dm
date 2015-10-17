@@ -73,7 +73,7 @@
 	if( !anchored )
 		return
 
-	var/choice = input( "What would you like to do?", \
+	var/choice = input( user, "What would you like to do?", \
                         "Resonant Chamber", \
                         "Cancel") in list("Combine", "Eject", "Cancel")
 
@@ -112,11 +112,8 @@
 
 	sm_pieces.Cut()
 
-	testing( "Total size is [total_size]" )
-
 	if( total_size > SM_CORE_SIZE )
 		var/smlevel = round( total_size/SM_CORE_SIZE )
-		testing( "Calculated smlevel is [smlevel]" )
 		var/obj/machinery/power/supermatter/core = new ( src, smlevel )
 		sm_pieces += core
 	else
@@ -126,9 +123,10 @@
 	active = 0
 
 /obj/machinery/phoron_desublimer/resonant_chamber/proc/eject( mob/user as mob )
-	var/obj/sm_piece = input( "What would you like to eject?", \
-                        "Resonant Chamber", \
-                        null ) in sm_pieces
+	var/obj/sm_piece = input( user, "What would you like to eject?", \
+                    		  		"Resonant Chamber", \
+                    		  		null ) in sm_pieces
+
 	if( !sm_piece )
 		return
 
