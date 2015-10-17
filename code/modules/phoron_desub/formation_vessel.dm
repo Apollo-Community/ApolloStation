@@ -28,18 +28,6 @@
 /obj/machinery/phoron_desublimer/vessel/attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
 	if(isrobot(user))
 		return
-	if(istype(B, /obj/item/weapon/tongs))
-		if( !loaded_shard )
-			var/obj/item/weapon/tongs/T = B
-			if( T.held )
-				if( istype( T.held, /obj/item/weapon/shard/supermatter ))
-					T.held.loc = src
-					loaded_shard = T.held
-					T.held = null
-					T.update_icon()
-					user << "You put [loaded_shard] into the machine."
-		else
-			user << "There is already a shard in the machine."
 	else if(istype(B, /obj/item/weapon/shard/supermatter))
 		if( !loaded_shard )
 			user.drop_item()

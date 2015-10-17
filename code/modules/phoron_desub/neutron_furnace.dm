@@ -102,7 +102,6 @@
 
 		if( distance <= max_distance )
 			if( cur_mat == "Supermatter" )
-				testing( "Making new supermatter shard level up" )
 				new /obj/item/weapon/shard/supermatter( get_turf( src ), shard.smlevel+1 )
 				break
 			else
@@ -154,28 +153,7 @@
 /obj/machinery/phoron_desublimer/furnace/attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
 	if(isrobot(user))
 		return
-	if(istype(B, /obj/item/weapon/tongs))
-		if( !shard )
-			var/obj/item/weapon/tongs/T = B
-			if( T.held )
-				if( istype( T.held, /obj/item/weapon/shard/supermatter ))
-					T.held.loc = src
-					shard = T.held
-					T.held = null
-					T.update_icon()
-					user << "You put [shard] into the machine."
-		else
-			var/obj/item/weapon/tongs/T = B
-			if( T.held )
-				user << "There is already a shard in the machine."
-			else
-				T.held = shard
-				T.held.loc = T
-				shard = null
-				T.update_icon()
-				user << "You get [T.held] from the machine."
-
-	else if(istype(B, /obj/item/weapon/shard/supermatter))
+	if(istype(B, /obj/item/weapon/shard/supermatter))
 		if( !shard )
 			user.drop_item()
 			B.loc = src

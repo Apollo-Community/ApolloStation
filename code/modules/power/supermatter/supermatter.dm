@@ -319,14 +319,6 @@
 	return
 
 /obj/machinery/power/supermatter/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
-	if(istype(W, /obj/item/weapon/tongs))
-		var/obj/item/weapon/tongs/T = W
-		if (T.held)
-			Consume(T.held)
-			T.held = null
-			T.update_icon()
-			return
-
 	if(istype(W, /obj/item/weapon/shard/supermatter))
 		var/obj/item/weapon/shard/supermatter/S = W
 		Consume(S)
@@ -365,12 +357,9 @@
 
 
 /obj/machinery/power/supermatter/proc/Consume(var/mob/living/user)
-	if( isnucleation( user )) // Nucleation's biology doesn't react to this
-		return
-
 	if(istype(user))
-		user.dust()
-		power += smvsc.base_power/8
+		if( user.smVaporize() )
+			power += smvsc.base_power/8
 	else
 		if (istype(user, /obj/machinery/power/supermatter))
 			var/obj/machinery/power/supermatter/S = user

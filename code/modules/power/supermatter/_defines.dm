@@ -68,6 +68,22 @@ proc/supermatter_convert( var/turf/T, var/transform_mobs = 0, var/level = 1 )
 	for( var/obj/machinery/light/item in T.contents )
 		item.broken()
 
-proc/blow_lights( var/turf/T )
-	for( var/obj/machinery/power/apc/apc in T )
-		apc.overload_lighting()
+/mob/proc/smVaporize()
+	if( !smSafeCheck() )
+		src.dust()
+		return 1
+	else
+		return 0
+
+/mob/proc/smSafeCheck()
+	return 0
+
+/mob/living/carbon/human/smSafeCheck()
+	if(src.gloves)
+		if(istype( src.gloves, /obj/item/clothing/gloves/sm_proof ))
+			return 1
+
+	if( isnucleation( src )) // Nucleation's biology doesn't react to this
+		return 1
+
+	return 0

@@ -39,6 +39,8 @@
 
 	update_icon()
 
+
+
 /obj/item/weapon/shard/supermatter/update_icon()
 	light_color = getSMColor( smlevel )
 	color = light_color
@@ -61,23 +63,7 @@
 		src.pixel_y = rand(-5, 5)
 
 /obj/item/weapon/shard/supermatter/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if( istype( W, /obj/item/weapon/tongs ))
-		var/obj/item/weapon/tongs/T = W
-		if(T.held)
-			if(istype(T.held, src.type))
-				var/obj/item/weapon/shard/supermatter/S = T.held
-				smlevel += (S.smlevel*S.size)/100
-				src.visible_message( "The [S] fuses with the [src]!" )
-				qdel(T.held)
-				T.held = null
-				T.update_icon()
-			else
-				return
-		else
-			T.pick_up( src )
-			T.update_icon()
-			return
-	else if( istype( W, /obj/item/weapon ))
+	if( istype( W, /obj/item/weapon ))
 		if( W.force >= 5 )
 			src.shatter()
 	..()
@@ -110,7 +96,7 @@
 
 
 /obj/item/weapon/shard/supermatter/attack_hand(var/mob/user)
-	if( !isnucleation( user ))
+	if( !user.smSafeCheck() )
 		user << pick( "\red You think twice before touching that without protection.",
 					  "\red You don't want to touch that without some protection.",
 					  "\red You probably should get something else to pick that up.",
@@ -148,34 +134,3 @@
 	playsound(loc, 'sound/effects/Glassbr2.ogg', 100, 1)
 	qdel( src )
 
-/obj/item/weapon/tongs
-	name = "tongs"
-	desc = "Tungsten-alloy tongs used for handling dangerous materials."
-	force = 7.0
-	throwforce = 12.0
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "tongs"
-	edge = 1
-	w_class = 2
-	flags = CONDUCT
-	var/obj/item/held = null // The item currently being held
-
-/obj/item/weapon/tongs/proc/pick_up( var/obj/item/I )
-	if(held) return
-	held = I
-	I.loc = src
-	playsound(loc, 'sound/effects/tong_pickup.ogg', 50, 1, -1)
-
-/obj/item/weapon/tongs/attack_self(var/mob/user as mob)
-	if( held )
-		var/turf/T = get_turf(user.loc)
-		held.loc = T
-		held = null
-		icon_state = initial(icon_state)
-	..()
-
-/obj/item/weapon/tongs/update_icon()
-	if( !held )
-		icon_state = initial( icon_state )
-	else if( istype( held, /obj/item/weapon/shard/supermatter ))
-		icon_state = "tongs_supermatter"
