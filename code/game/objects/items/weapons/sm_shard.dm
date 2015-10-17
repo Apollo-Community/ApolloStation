@@ -26,6 +26,11 @@
 /obj/item/weapon/shard/supermatter/New(var/loc, var/level = 1)
 	..()
 
+	if( level > MAX_SUPERMATTER_LEVEL )
+		level = MAX_SUPERMATTER_LEVEL
+	else if( level < MIN_SUPERMATTER_LEVEL )
+		level = MIN_SUPERMATTER_LEVEL
+
 	smlevel = level
 	light_color = getSMColor( smlevel )
 	color = light_color
