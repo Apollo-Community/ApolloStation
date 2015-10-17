@@ -1331,6 +1331,7 @@
 					<li><a href="#Foreword">Foreword</a></li>
 					<li><a href="#UsageVessel">Usage of the Formation Vessel</a></li>
 					<li><a href="#UsageFurnace">Usage of the Neutron Furnace</a></li>
+					<li><a href="#UsageResonant">Usage of the Resonant Chamber</a></li>
 				</ol>
 				<br>
 
@@ -1362,6 +1363,30 @@
 				  <li>You can also select and set preset neutron-flow rates. These will allow you to bookmark various element's peaks. Manually setting a preset will set that material's preset to the current neutron-flow rate.
 				  <li>To transmutate, select the desired neutron flow, ensure radiological protective gear is donned, and press the \"Transmute Shard\" button.
 				  <li>After a short time, the transmutation will complete, and you will be left with a stack of your transmutated materials!
+				</ol>
+
+				<h2><a name="UsageResonant">Usage of the Resonant Chamber</a></h2>
+				The resonant chamber uses tiny ripples in subspace in order to modify the matrix of supermatter. This allows for a user to remotely meld two pieces of supermatter together.
+
+				<ol>
+				  <li>First place all of the supermatter shards or cores you wish to combine into the chamber. There are only eight slots available within.
+				  <li>Use the panel on the machine itself to activate it. To combine the crystals press "Combine", if you wish to eject a crystal, press "Eject"
+				  <li>If the pieces were large enough, you might now have a new supermatter core. If not, you may just have a larger shard. If you wish, you may unbolt the machine to safely transport the core to it's new home.
+				  <li>Congratulations, you've succesfully melded two or more pieces of supermatter into one!
+				</ol>
+
+				Additionally, there are varying types of supermatter. Currently there are only 9 types known, each type increasing in instability and vorbis radiation output. If you wish to experiment with anything type 5 or above, it is highly recommended that you find a remote area.
+				Each type can be identified by its color:
+				<ol>
+					<li> Green
+					<li> Cyan
+					<li> Blue
+					<li> Purple
+					<li> Pink
+					<li> Magenta
+					<li> Yellow
+					<li> Orange
+					<li> Red
 				</ol>
 
 				</body>
