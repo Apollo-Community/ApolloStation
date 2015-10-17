@@ -857,3 +857,7 @@ var/list/be_special_flags = list(
 #define STAGE_FOUR	7
 #define STAGE_FIVE	9
 #define STAGE_SUPER	11
+
+// Supermatter defines
+#define MIN_SUPERMATTER_LEVEL 1
+#define MAX_SUPERMATTER_LEVEL 9

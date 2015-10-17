@@ -48,13 +48,20 @@
 
 	var/debug = 0
 
-/obj/machinery/power/supermatter/New()
+/obj/machinery/power/supermatter/New( loc as turf, var/level = 1 )
 	. = ..()
+
+	if( level > MAX_SUPERMATTER_LEVEL )
+		level = MAX_SUPERMATTER_LEVEL
+	else if( level < MIN_SUPERMATTER_LEVEL )
+		level = MIN_SUPERMATTER_LEVEL
+
+	if( level != MIN_SUPERMATTER_LEVEL )
+		smlevel = level
 
 	update_icon()
 
 	radio = new (src)
-
 
 /obj/machinery/power/supermatter/Destroy()
 	qdel( radio )
@@ -147,6 +154,8 @@
 		return PROCESS_KILL
 	if(!istype(L)) 	//We are in a crate or somewhere that isn't turf, if we return to turf resume processing but for now.
 		return 1 //Yeah just stop.
+	if(istype( loc, /obj/machinery/phoron_desublimer/resonant_chamber ))
+		return 1 // Resonant chambers are similar to bluespace beakers, they halt reactions within them
 
 /obj/machinery/power/supermatter/proc/alertCheck()
 	var/turf/L = loc
@@ -242,8 +251,8 @@
 				l.hallucination = max(0, min(smlevel*(smvsc.psionic_power/5), l.hallucination + ((power/smvsc.base_power)*(smvsc.psionic_power/5)) * sqrt(1 / max(1,get_dist(l, src)))))
 
 /obj/machinery/power/supermatter/proc/radiate()
-	for(var/mob/living/l in range(src, round(sqrt(((power/smvsc.base_power)*7) / 5))))
-		var/rads = ((power/smvsc.base_power)*smvsc.radiation_power) * sqrt( 1 / get_dist(l, src) )
+	for(var/mob/living/l in range(get_turf(src), round(sqrt(((power/smvsc.base_power)*7) / 5))))
+		var/rads = ((power/smvsc.base_power)*smvsc.radiation_power) * sqrt( 1 / get_dist(l, get_turf(src)) )
 		l.apply_effect(rads, IRRADIATE)
 
 /obj/machinery/power/supermatter/proc/decay()
@@ -319,17 +328,11 @@
 	return
 
 /obj/machinery/power/supermatter/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
-	if(istype(W, /obj/item/weapon/tongs))
-		var/obj/item/weapon/tongs/T = W
-		if (T.held)
-			Consume(T.held)
-			T.held = null
-			T.update_icon()
-			return
-
 	if(istype(W, /obj/item/weapon/shard/supermatter))
-		var/obj/item/weapon/shard/supermatter/S = W
-		Consume(S)
+		src.damage += W.force
+		user.visible_message("<span class=\"warning\">\The [user] slashes at \the [src] with a [W] with a horrendous clash!</span>",\
+		"<span class=\"danger\">You slash at \the [src] with \the [src] with a horrendous clash!\"</span>",\
+		"<span class=\"warning\">A horrendous clash fills your ears.</span>")
 		return
 
 	user.visible_message("<span class=\"warning\">\The [user] touches \a [W] to \the [src] as a silence fills the room...</span>",\
@@ -346,17 +349,12 @@
 
 /obj/machinery/power/supermatter/Bumped(atom/AM as mob|obj)
 	if(istype(AM, /mob/living))
-		if( isnucleation( AM )) // Nucleation's biology doesn't react to this
+		var/mob/living/M = AM
+		if( M.smVaporize()) // Nucleation's biology doesn't react to this
 			return
 		AM.visible_message("<span class=\"warning\">\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
 		"<span class=\"danger\">You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
 		"<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>")
-	else if(istype(AM, /obj/machinery/power/supermatter))
-		AM.visible_message("<span class=\"warning\">\The [AM] fuses with \the [src].</span>",\
-		"<span class=\"warning\">You hear a loud shriek as you are washed with a wave of heat.</span>")
-	else if( istype(AM, /obj/item/weapon/shard/supermatter))
-		AM.visible_message("<span class=\"warning\">\The [AM] fuses with \the [src].</span>",\
-		"<span class=\"warning\">You hear a loud shriek as you are washed with a wave of heat.</span>")
 	else if(!grav_pulling) //To prevent spam, detonating supermatter does not indicate non-mobs being destroyed
 		AM.visible_message("<span class=\"warning\">\The [AM] smacks into \the [src] and rapidly flashes to ash.</span>",\
 		"<span class=\"warning\">You hear a loud crack as you are washed with a wave of heat.</span>")
@@ -365,34 +363,14 @@
 
 
 /obj/machinery/power/supermatter/proc/Consume(var/mob/living/user)
-	if( isnucleation( user )) // Nucleation's biology doesn't react to this
-		return
-
 	if(istype(user))
-		user.dust()
-		power += smvsc.base_power/8
+		if( user.smVaporize() )
+			power += smvsc.base_power/8
 	else
-		if (istype(user, /obj/machinery/power/supermatter))
-			var/obj/machinery/power/supermatter/S = user
-			var/newsm = S.smlevel + smlevel
-			var/newdm = ((S.smlevel/newsm)*S.damage)+((smlevel/newsm)*damage)
-			var/newpw = ((S.smlevel/newsm)*S.power)+((smlevel/newsm)*power)
-			smlevel = newsm
-			damage = newdm
-			power = newpw
-			power += (smvsc.base_power/2 * (S.smlevel**smvsc.fusion_power))  // Get a ton of power from the fusion.
-			for(var/mob/living/l in range(src, round(sqrt(((power/smvsc.base_power)*7) / 5))))
-				var/rads = ((power/smvsc.base_power)*smvsc.radiation_power) * sqrt( 1 / get_dist(l, src) )
-				l.apply_effect(rads, IRRADIATE)
-		if (istype(user, /obj/item/weapon/shard/supermatter))
-			var/obj/item/weapon/shard/supermatter/S = user
-			smlevel += ((S.size)/100)
-			for(var/mob/living/l in range(src, round(sqrt(((power/smvsc.base_power)*7) / 5))))
-				var/rads = ((power/smvsc.base_power)*smvsc.radiation_power) * sqrt( 1 / get_dist(l, src) ) // Increased range for radiation. Eventually you'll be radiating the entire station.
-				l.apply_effect(rads, IRRADIATE)
-		update_icon()
 		qdel( user )
 		return
+
+	update_icon()
 
 	power += smvsc.base_power/8
 
