@@ -86,7 +86,7 @@
 		"Tajara" = 'icons/mob/species/tajaran/helmet.dmi',
 		"Unathi" = 'icons/mob/species/unathi/helmet.dmi',
 		)
-	
+
 	armor = list(melee = 62, bullet = 50, laser = 50,energy = 35, bomb = 10, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
 	siemens_coefficient = 0.7
