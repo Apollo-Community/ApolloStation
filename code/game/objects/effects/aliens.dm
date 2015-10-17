@@ -160,6 +160,7 @@
 	desc = "Weird purple octopus-like thing."
 	layer = 3
 	light_range = NODERANGE
+	light_color = "#A375FF"
 	var/node_range = NODERANGE
 
 /obj/effect/alien/weeds/node/New()
