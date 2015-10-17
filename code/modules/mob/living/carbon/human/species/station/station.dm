@@ -294,6 +294,8 @@
 	burn_mod = 4 // holy shite, poor guys wont survive half a second cooking smores
 	brute_mod = 2 // damn, double wham, double dam
 
+	var/brightness = 4
+
 	flags = CAN_JOIN | NO_BREATHE | NO_BLOOD | NO_PAIN | HAS_LIPS | NO_ROBO_LIMBS | NO_CRYO
 	reagent_tag = IS_NUCLEATION
 
@@ -307,7 +309,7 @@
 
 /datum/species/nucleation/handle_post_spawn(var/mob/living/carbon/human/H)
 	H.light_color = "#1C1C00"
-	H.set_light(2)
+	H.set_light(brightness, 1, light_color)
 	return ..()
 
 /datum/species/nucleation/handle_death(var/mob/living/carbon/human/H)

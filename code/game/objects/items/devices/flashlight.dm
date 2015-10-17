@@ -13,7 +13,7 @@
 
 	icon_action_button = "action_flashlight"
 	var/on = 0
-	var/brightness_on = 4 //light_range when on
+	var/brightness_on = 7 //light_range when on
 	origin_tech = "materials=1;magnets=1"
 
 /obj/item/device/flashlight/initialize()
@@ -112,7 +112,7 @@
 	icon_state = "penlight"
 	item_state = ""
 	flags = CONDUCT
-	brightness_on = 2
+	brightness_on = 3
 	w_class = 1
 
 /obj/item/device/flashlight/drone
@@ -121,7 +121,7 @@
 	icon_state = "penlight"
 	item_state = ""
 	flags = CONDUCT
-	brightness_on = 2
+	brightness_on = 5
 	w_class = 1
 
 
@@ -131,7 +131,7 @@
 	desc = "A desk lamp with an adjustable mount."
 	icon_state = "lamp"
 	item_state = "lamp"
-	brightness_on = 5
+	brightness_on = 7
 	w_class = 4
 	flags = CONDUCT
 
@@ -143,7 +143,7 @@
 	desc = "A classic green-shaded desk lamp."
 	icon_state = "lampgreen"
 	item_state = "lampgreen"
-	brightness_on = 5
+	brightness_on = 7
 
 
 /obj/item/device/flashlight/lamp/verb/toggle_light()
@@ -161,12 +161,12 @@
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
 	w_class = 2.0
 	brightness_on = 7 // Pretty bright.
-	light_color = "#8F0000"
+	light_color = "#FF5050"
 	icon_state = "flare"
 	item_state = "flare"
 	icon_action_button = null	//just pull it manually, neckbeard.
 	var/fuel = 0
-	var/on_damage = 7
+	var/on_damage = 9
 	var/produce_heat = 1500
 
 /obj/item/device/flashlight/flare/New()
@@ -218,6 +218,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "floor1" //not a slime extract sprite but... something close enough!
 	item_state = "slime"
+	light_color = "#FFCC66"
 	w_class = 1
 	brightness_on = 6
 	on = 1 //Bio-luminesence has one setting, on.
