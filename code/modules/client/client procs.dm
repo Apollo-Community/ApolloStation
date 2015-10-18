@@ -122,16 +122,18 @@
 
 	src << "\red If the title screen is black, resources are still downloading. Please be patient until the title screen appears."
 
-
-	clients += src
-	directory[ckey] = src
-
 	for(var/client/target in clients)
+		if( !target )
+			continue
+
 		if(target.prefs.toggles & CHAT_OOC)
 			target << "<span class='notice'><b>[src.key] has connected to the server.</b></span>"
 
 			if( target.prefs.toggles & SOUND_NOTIFICATIONS )
 				target << sound( 'sound/effects/oocjoin.ogg' )
+
+	clients += src
+	directory[ckey] = src
 
 	//Admin Authorisation
 	holder = admin_datums[ckey]
