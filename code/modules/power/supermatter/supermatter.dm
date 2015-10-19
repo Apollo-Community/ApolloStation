@@ -1,7 +1,7 @@
 /*
 	GAS EFFECTS
 	PHORON: Heals the supermatter up until level 9
-	N2O: Slows down power production until level 9, when it has the opposite effect
+	N2O: Slows down power production
 	O2: Acts as a turbocharger, multiplying heat and power production by a certain amount.
 		Is required to keep a stable engine after level 5. If an engine is starved of O2, it will start experiencing critical failures.
 	CO2: Fire suppressant, but also increases heat output by a small amount if SM level is 3 or above
@@ -210,6 +210,7 @@
 	else
 		if( prob( getSMVar( smlevel, "crit_fail_chance" )) && delayPassed( crit_delay, last_crit_check ))
 			critFail()
+		last_crit_check = world.timeofday
 		phoron += getSMVar( smlevel, "suffocation_damage" )
 		damage += getSMVar( smlevel, "suffocation_damage" )
 
@@ -228,7 +229,9 @@
 		damage += ( delta_temp*getSMVar( smlevel, "damage_per_degree" ))
 
 	if( power_percent > OVERCHARGE_LEVEL ) // If we're more than 120%
-		heat *= getSMVar( smlevel, "overcharge_heat_multiplier" ) // Carbon reacts violently with supermatter, creating heat and leaving O2
+		heat *= getSMVar( smlevel, "overcharge_heat_multiplier" )
+		if( prob( getSMVar( smlevel, "crit_fail_chance" )))
+			spark()
 
 	// Release phoron & oxygen
 	var/temp_percent = ( removed.temperature/getSMVar( smlevel, "heat_damage_level" ))
@@ -268,17 +271,18 @@
 
 	damage += crit_damage
 
-	// Light up some sparks
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up( 3, 1, src )
-	s.start()
-
 	// A wave burst during a critical failure
 	supermatter_delamination( get_turf( src ), smlevel*3, smlevel, 0, 0 )
 
 	var/integrity = calc_integrity()
 	radio.autosay("CRITICAL STRUCTURE FAILURE: [MAX_SM_INTEGRITY-integrity]% Integrity Lost!", "Supermatter Monitor")
 	announce_warning()
+
+/obj/machinery/power/supermatter/proc/spark()
+	// Light up some sparks
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up( 3, 1, src )
+	s.start()
 
 /obj/machinery/power/supermatter/proc/smLevelChange( var/level_increase = 1 )
 	smlevel += level_increase
@@ -410,4 +414,12 @@
 	return
 
 /obj/machinery/power/supermatter/RepelAirflowDest(n)
+	return
+
+/obj/machinery/power/supermatter/MouseDrop(atom/over)
+	if(!usr || !over) return
+	if(!Adjacent(usr) || !over.Adjacent(usr)) return // should stop you from dragging through windows
+
+	spawn(0)
+		over.MouseDrop_T(src,usr)
 	return

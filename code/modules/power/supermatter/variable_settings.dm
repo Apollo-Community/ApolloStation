@@ -6,7 +6,7 @@
 /datum/sm_control
 	var/base_power = 0 	// The power output that the engine will stabilize at, in kW
 	var/decay = 0.50 // Used to calculate power decay per tick
-	var/minimum_decay = 0.15 // Minimum amount of decay per tick, in kW
+	var/minimum_decay = 0.5 // Minimum amount of decay per tick, in kW
 
 	var/overcharge_heat_multiplier = 10.0 // 10x heat output when overcharged
 
