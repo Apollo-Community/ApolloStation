@@ -27,7 +27,6 @@
 
 	var/power = 0
 	var/power_percent = 0
-	var/power_archived = 0
 
 	var/damage = 0
 	var/damage_max = 1000
@@ -48,7 +47,6 @@
 	var/obj/item/device/radio/radio
 
 	var/grav_pulling = 0
-	var/pull_radius = 7
 	var/exploded = 0
 
 	var/debug = 0
@@ -79,7 +77,7 @@
 	grav_pulling = 1
 	exploded = 1
 
-	spawn( getSMVar( smlevel, "pull_time" ) * TICKS_IN_SECOND)
+	spawn( getSMVar( smlevel, "pull_time" ) * TICKS_IN_SECOND )
 		var/turf/epicenter = get_turf(src)
 
 		explosion(epicenter, \
@@ -187,68 +185,69 @@
 	// If we're in a vacuum, heat can't escape the core, so we'll get damaged
 	if(!env || !removed || !removed.total_moles)
 		damage += getSMVar( smlevel, "vacuum_damage" )
+		return
 
+	damage_archived = damage
+
+	var/heat = getSMVar( smlevel, "thermal_factor" ) // the amount of heat we release
+
+	// Awan suggested causing the SM to have different reactions to different gasses. So Let's try this.
+	// Store these variables for reactions.
+	var/oxygen = removed.gas["oxygen"]
+	var/phoron = removed.gas["phoron"]
+	var/carbon = removed.gas["carbon_dioxide"]
+	var/sleepy = removed.gas["sleeping_agent"]
+
+	// N2O handling
+	if(sleepy)
+		power = max( 0, power-( sleepy*getSMVar( smlevel, "n2o_power_loss" )))
+		sleepy = 0
+
+	// Oxygen handling
+	if(oxygen)
+		power *= ( oxygen*getSMVar( smlevel, "o2_turbo_multiplier" ))
+		oxygen = 0
 	else
-		damage_archived = damage
+		if( prob( getSMVar( smlevel, "crit_fail_chance" )) && delayPassed( crit_delay, last_crit_check ))
+			critFail()
+		phoron += getSMVar( smlevel, "suffocation_damage" )
+		damage += getSMVar( smlevel, "suffocation_damage" )
 
-		var/heat = getSMVar( smlevel, "thermal_factor" ) // the amount of heat we release
+	// CO2 handling
+	if(carbon)
+		heat *= ( carbon*getSMVar( smlevel, "co2_heat_multiplier" )) // Carbon reacts violently with supermatter, creating heat and leaving O2
+		oxygen += carbon
+		carbon = 0
 
-		// Awan suggested causing the SM to have different reactions to different gasses. So Let's try this.
-		// Store these variables for reactions.
-		var/oxygen = removed.gas["oxygen"]
-		var/phoron = removed.gas["phoron"]
-		var/carbon = removed.gas["carbon_dioxide"]
-		var/sleepy = removed.gas["sleeping_agent"]
+	// Temperature & phoron handling
+	if (removed.temperature < getSMVar( smlevel, "heat_damage_level" ))
+		if(phoron)
+			damage -= ( phoron*getSMVar( smlevel, "phoron_heal_rate" ))
+	else
+		var/delta_temp = removed.temperature-getSMVar( smlevel, "heat_damage_level" )
+		damage += (delta_temp*getSMVar( smlevel, "damage_per_degree" ))
 
-		// N2O handling
-		if(sleepy)
-			power = max(0, power-( sleepy*getSMVar( smlevel, "n2o_power_loss" )))
-			sleepy = 0
+	// Release phoron & oxygen
+	var/temp_percent = ( removed.temperature/getSMVar( smlevel, "heat_damage_level" ))
+	phoron += temp_percent*getSMVar( smlevel, "phoron_release" )
+	oxygen += temp_percent*getSMVar( smlevel, "oxygen" )
 
-		// Oxygen handling
-		if(oxygen)
-			power *= ( oxygen*getSMVar( smlevel, "o2_turbo_multiplier" ))
-			oxygen = 0
-		else
-			if( prob( getSMVar( smlevel, "crit_fail_chance" )) && delayPassed( crit_delay, last_crit_check ))
-				critFail()
-			phoron += getSMVar( smlevel, "suffocation_damage" )
-			damage += getSMVar( smlevel, "suffocation_damage" )
+	//Release reaction gasses
+	removed.gas["phoron"] = phoron
+	removed.gas["oxygen"] = oxygen
+	removed.gas["sleeping_agent"] = sleepy
+	removed.gas["carbon_dioxide"] = carbon
 
-		// CO2 handling
-		if(carbon)
-			heat *= ( carbon*getSMVar( smlevel, "co2_heat_multiplier" )) // Carbon reacts violently with supermatter, creating heat and leaving O2
-			oxygen += carbon
-			carbon = 0
-
-		// Temperature & phoron handling
-		if (removed.temperature < getSMVar( smlevel, "heat_damage_level" ))
-			if(phoron)
-				damage -= ( phoron*getSMVar( smlevel, "phoron_heal_rate" ))
-		else
-			var/delta_temp = removed.temperature-getSMVar( smlevel, "heat_damage_level" )
-			damage += (delta_temp*getSMVar( smlevel, "damage_per_degree" ))
-
-		// Release phoron & oxygen
-		phoron += (damage/damage_max) * smlevel
-		oxygen += (damage/damage_max) * smlevel
-
-		//Release reaction gasses
-		removed.gas["phoron"] = phoron
-		removed.gas["oxygen"] = oxygen
-		removed.gas["sleeping_agent"] = sleepy
-		removed.gas["carbon_dioxide"] = carbon
-
-		removed.add_thermal_energy( power*getSMVar( smlevel, "thermal_factor" )*(power_percent**2))
-		env.merge(removed)
+	removed.add_thermal_energy( power*heat*( power_percent**2 ))
+	env.merge(removed)
 
 /obj/machinery/power/supermatter/proc/psionicBurst()
 	for(var/mob/living/carbon/human/l in oview(src, 7)) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 			if(!isnucleation(l))
-				l.hallucination = max(0, getSMVar( smlevel, "damage_per_degree" ) * sqrt(1 / max(1,get_dist(l, src))))
+				l.hallucination = max(0, getSMVar( smlevel, "psionic_power" ) * sqrt(1 / max(1,get_dist(l, src))))
 			else // Nucleations get less hallucinatoins
-				l.hallucination = max(0, getSMVar( smlevel, "damage_per_degree" )/5 * sqrt(1 / max(1,get_dist(l, src))))
+				l.hallucination = max(0, getSMVar( smlevel, "psionic_power" )/5 * sqrt(1 / max(1,get_dist(l, src))))
 
 /obj/machinery/power/supermatter/proc/radiate()
 	for(var/mob/living/l in range( get_turf(src), round( sqrt(( power/getSMVar( smlevel, "base_power" ))*7 )/5 )))
@@ -258,11 +257,11 @@
 	transfer_energy()
 
 /obj/machinery/power/supermatter/proc/decay()
-	var/decay = min(0.01, (power_percent**5)) * getSMVar( smlevel, "decay" )
+	var/decay = max( getSMVar( smlevel, "minimum_decay" ), (power-getSMVar( smlevel, "base_power" ))*getSMVar( smlevel, "decay" ))
 	power = max(0, power-decay)
 
 /obj/machinery/power/supermatter/proc/critFail()
-	var/crit_damage = rand( 0, getSMVar( smlevel, "crit_fail_damage" ))	// Take a bunch of damage. 5 = 500, 10 = 2000, 15 = 4500, 20 = 8000
+	var/crit_damage = rand( 0, getSMVar( smlevel, "crit_fail_damage" ))
 
 	damage += crit_damage
 
@@ -281,7 +280,6 @@
 /obj/machinery/power/supermatter/proc/smLevelChange( var/level_increase = 1 )
 	smlevel += level_increase
 
-	power_archived = power_percent
 	update_icon()
 
 /obj/machinery/power/supermatter/bullet_act(var/obj/item/projectile/Proj)
@@ -290,9 +288,9 @@
 		return 0	// This stops people from being able to really power up the supermatter
 				// Then bring it inside to explode instantly upon landing on a valid turf.
 
-
 	if(istype(Proj, /obj/item/projectile/beam))
-		power += Proj.damage
+		power += getSMVar( smlevel, "emitter_power" )
+		damage += getSMVar( smlevel, "emitter_damage" )
 	else
 		damage += Proj.damage
 	return 0
@@ -326,9 +324,9 @@
 /obj/machinery/power/supermatter/proc/transfer_energy()
 	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
 		var/distance = get_dist(R, src)
-		if(distance <= 15)
+		if(distance <= getSMVar( smlevel, "collector_range" ))
 			//for collectors using standard phoron tanks at 1013 kPa, the actual power generated will be this power*0.3*20*29 = power*174
-			R.receive_pulse(power * 0.3 * (min(3/distance, 1))**2)
+			R.receive_pulse(power*(distance/getSMVar( smlevel, "collector_range" )))
 	return
 
 /obj/machinery/power/supermatter/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
@@ -365,7 +363,6 @@
 
 	Consume(AM)
 
-
 /obj/machinery/power/supermatter/proc/Consume(var/mob/living/user)
 	if(istype(user))
 		if( user.smVaporize() )
@@ -399,7 +396,7 @@
 	if(defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 1
 	// Let's just make this one loop.
-	for(var/atom/X in orange(pull_radius,src))
+	for(var/atom/X in orange( getSMVar( smlevel, "pull_radius" ), src ))
 		X.singularity_pull(src, STAGE_FIVE)
 
 	if(defer_powernet_rebuild != 2)
