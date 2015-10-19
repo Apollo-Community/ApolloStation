@@ -8,9 +8,11 @@
 	var/decay = 0.50 // Used to calculate power decay per tick
 	var/minimum_decay = 0.15 // Minimum amount of decay per tick, in kW
 
+	var/overcharge_heat_multiplier = 10.0 // 10x heat output when overcharged
+
 	var/collector_range = 10 // Max range of collectors, decreaes power output as distance increases
 
-	var/o2_release = 5 // Amount of o2 released if the core is at maximum damage
+	var/o2_release = 2 // Amount of o2 released if the core is at maximum damage
 	var/o2_turbo_multiplier = 0 // How much oxygen will multiply power and heat output by, per mole
 	var/o2_requirement = 0 // How much oxygen is required to keep the engine from critically failing, as a percent of the total gas composition
 	var/suffocation_damage = 0 // How much damage will be done if the engine doesn't have enough O2
@@ -22,7 +24,7 @@
 
 	var/n2o_power_loss = 0 // The rate that N2O decreases power output, per mole
 
-	var/phoron_release = 5 // Amount of phoron released if the core is at maximum damage
+	var/phoron_release = 2 // Amount of phoron released if the core is at maximum damage
 	var/phoron_heal_rate = 0 // The rate that phoron heals the core, per mole
 
 	var/emitter_damage = 0 // The amount of damage the emitter does per hit
@@ -50,18 +52,18 @@
 /datum/sm_control/level_1
 	base_power = 500
 	o2_turbo_multiplier = 1.5/CANISTER_MOLARITY
-	n2o_power_loss = 500000/CANISTER_MOLARITY
+	n2o_power_loss = 500/CANISTER_MOLARITY
 	phoron_heal_rate = 1000/CANISTER_MOLARITY
 	color = SM_DEFAULT_COLOR
 	color_name = "green"
-	thermal_factor = 50
+	thermal_factor = 200
 
 /datum/sm_control/level_2
 	base_power = 800
 	decay = 0.50
 
 	o2_turbo_multiplier = 1.6/CANISTER_MOLARITY
-	n2o_power_loss = 500000/CANISTER_MOLARITY
+	n2o_power_loss = 500/CANISTER_MOLARITY
 	phoron_heal_rate = 800/CANISTER_MOLARITY
 	emitter_damage = 10
 	color = "#00FF99"
@@ -69,8 +71,8 @@
 	delamination_size = 30
 	vacuum_damage = 10
 	emitter_damage = 5
-	emitter_power = 60000
-	thermal_factor = 100
+	emitter_power = 60
+	thermal_factor = 300
 	damage_per_degree = 1.1
 	psionic_power = 15
 	radiation_power = 30
@@ -81,7 +83,7 @@
 
 	o2_turbo_multiplier = 1.7/CANISTER_MOLARITY
 	co2_heat_multiplier = 1.1/CANISTER_MOLARITY
-	n2o_power_loss = 800000/CANISTER_MOLARITY
+	n2o_power_loss = 800/CANISTER_MOLARITY
 	phoron_heal_rate = 600/CANISTER_MOLARITY
 	emitter_damage = 20
 	color = "#0099FF"
@@ -90,8 +92,8 @@
 	delamination_size = 35
 	vacuum_damage = 25
 	emitter_damage = 10
-	emitter_power = 80000
-	thermal_factor = 150
+	emitter_power = 80
+	thermal_factor = 400
 	damage_per_degree = 1.2
 	psionic_power = 20
 	radiation_power = 40
@@ -102,7 +104,7 @@
 
 	o2_turbo_multiplier = 1.8/CANISTER_MOLARITY
 	co2_heat_multiplier = 1.2/CANISTER_MOLARITY
-	n2o_power_loss = 1400000/CANISTER_MOLARITY
+	n2o_power_loss = 1400/CANISTER_MOLARITY
 	phoron_heal_rate = 400/CANISTER_MOLARITY
 	emitter_damage = 30
 	color = "#6600FF"
@@ -111,8 +113,8 @@
 	delamination_size = 40
 	vacuum_damage = 50
 	emitter_damage = 15
-	emitter_power = 100000
-	thermal_factor = 200
+	emitter_power = 100
+	thermal_factor = 500
 	damage_per_degree = 1.3
 	psionic_power = 25
 	radiation_power = 50
@@ -126,7 +128,7 @@
 	crit_fail_chance = 0.01
 	crit_fail_damage = 100
 	co2_heat_multiplier = 1.3/CANISTER_MOLARITY
-	n2o_power_loss = 1400000/CANISTER_MOLARITY
+	n2o_power_loss = 1400/CANISTER_MOLARITY
 	phoron_heal_rate = 200/CANISTER_MOLARITY
 	emitter_damage = 40
 	color = "#FF00FF"
@@ -135,8 +137,8 @@
 	delamination_size = 45
 	vacuum_damage = 60
 	emitter_damage = 20
-	emitter_power = 250000
-	thermal_factor = 300
+	emitter_power = 250
+	thermal_factor = 600
 	damage_per_degree = 1.4
 	psionic_power = 30
 	radiation_power = 60
@@ -150,7 +152,7 @@
 	crit_fail_chance = 0.05
 	crit_fail_damage = 500
 	co2_heat_multiplier = 1.4/CANISTER_MOLARITY
-	n2o_power_loss = 5200000/CANISTER_MOLARITY
+	n2o_power_loss = 5200/CANISTER_MOLARITY
 	phoron_heal_rate = 0/CANISTER_MOLARITY
 	emitter_damage = 50
 	color = "#FF3399"
@@ -159,8 +161,8 @@
 	delamination_size = 55
 	vacuum_damage = 70
 	emitter_damage = 25
-	emitter_power = 500000
-	thermal_factor = 400
+	emitter_power = 500
+	thermal_factor = 700
 	damage_per_degree = 1.5
 	psionic_power = 50
 	radiation_power = 70
@@ -174,7 +176,7 @@
 	crit_fail_chance = 0.1
 	crit_fail_damage = 1000
 	co2_heat_multiplier = 1.5/CANISTER_MOLARITY
-	n2o_power_loss = 5200000/CANISTER_MOLARITY
+	n2o_power_loss = 5200/CANISTER_MOLARITY
 	phoron_heal_rate = 0/CANISTER_MOLARITY
 	emitter_damage = 60
 	color = "#FFFF00"
@@ -183,7 +185,7 @@
 	delamination_size = 65
 	vacuum_damage = 80
 	emitter_damage = 30
-	emitter_power = 800000
+	emitter_power = 800
 	thermal_factor = 500
 	damage_per_degree = 1.6
 	psionic_power = 70
@@ -198,7 +200,7 @@
 	crit_fail_chance = 0.5
 	crit_fail_damage = 5000
 	co2_heat_multiplier = 1.6/CANISTER_MOLARITY
-	n2o_power_loss = 10400000/CANISTER_MOLARITY
+	n2o_power_loss = 10400/CANISTER_MOLARITY
 	phoron_heal_rate = 0/CANISTER_MOLARITY
 	emitter_damage = 70
 	color = "#FF6600"
@@ -207,8 +209,8 @@
 	delamination_size = 75
 	vacuum_damage = 90
 	emitter_damage = 35
-	emitter_power = 1200000
-	thermal_factor = 600
+	emitter_power = 1200
+	thermal_factor = 900
 	damage_per_degree = 1.7
 	psionic_power = 90
 	radiation_power = 90
@@ -222,7 +224,7 @@
 	crit_fail_chance = 1.0
 	crit_fail_damage = 10000
 	co2_heat_multiplier = 1.7/CANISTER_MOLARITY
-	n2o_power_loss = 10400000/CANISTER_MOLARITY
+	n2o_power_loss = 10400/CANISTER_MOLARITY
 	phoron_heal_rate = -10/CANISTER_MOLARITY
 	emitter_damage = 80
 	color = "#FF0000"
@@ -231,8 +233,8 @@
 	delamination_size = 85
 	vacuum_damage = 100
 	emitter_damage = 40
-	emitter_power = 2400000
-	thermal_factor = 700
+	emitter_power = 2400
+	thermal_factor = 1000
 	damage_per_degree = 1.8
 	psionic_power = 110
 	radiation_power = 100

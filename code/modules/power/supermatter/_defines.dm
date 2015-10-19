@@ -9,6 +9,7 @@
 #define MAX_SM_INTEGRITY 100
 
 #define CANISTER_MOLARITY 1871.71
+#define OVERCHARGE_LEVEL // The level when overcharge effects come into play
 
 var/global/list/datum/sm_control/sm_levels = list(	  new /datum/sm_control/level_1, \
 													  new /datum/sm_control/level_2, \

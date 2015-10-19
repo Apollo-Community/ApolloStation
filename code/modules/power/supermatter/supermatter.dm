@@ -227,6 +227,9 @@
 		var/delta_temp = removed.temperature-getSMVar( smlevel, "heat_damage_level" )
 		damage += (delta_temp*getSMVar( smlevel, "damage_per_degree" ))
 
+	if( power_percent > OVERCHARGE_LEVEL ) // If we're more than 120%
+		heat *= getSMVar( smlevel, "overcharge_heat_multiplier" ) // Carbon reacts violently with supermatter, creating heat and leaving O2
+
 	// Release phoron & oxygen
 	var/temp_percent = ( removed.temperature/getSMVar( smlevel, "heat_damage_level" ))
 	phoron += temp_percent*getSMVar( smlevel, "phoron_release" )
