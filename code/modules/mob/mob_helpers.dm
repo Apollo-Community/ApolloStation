@@ -576,3 +576,6 @@ proc/is_blind(A)
 			say_dead_direct("The ghost of <span class='name'>[name]</span> now [pick("skulks","lurks","prowls","creeps","stalks")] among the dead. [message]")
 		else
 			say_dead_direct("<span class='name'>[name]</span> no longer [pick("skulks","lurks","prowls","creeps","stalks")] in the realm of the dead. [message]")
+
+/mob/proc/is_client_active(var/active = 1)
+	return client && client.inactivity < active MINUTES
