@@ -32,7 +32,7 @@
 		level = MIN_SUPERMATTER_LEVEL
 
 	smlevel = level
-	light_color = getSMColor( smlevel )
+	light_color = getSMVar( smlevel, "color" )
 	color = light_color
 
 	if( !set_size )
@@ -43,10 +43,10 @@
 	update_icon()
 
 /obj/item/weapon/shard/supermatter/update_icon()
-	light_color = getSMColor( smlevel )
+	light_color = getSMVar( smlevel, "color" )
 	color = light_color
 
-	name = getSMColorName( smlevel ) + " " + initial(name)
+	name = getSMVar( smlevel, "color_name" ) + " " + initial(name)
 
 	set_light( light_range, light_power, light_color )
 

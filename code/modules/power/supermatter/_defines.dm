@@ -1,32 +1,37 @@
-var/list/SM_COLORS = list( SM_DEFAULT_COLOR = "green", \
-						   "#00FF99" = "cyan", \
-						   "#0099FF" = "blue", \
-						   "#6600FF" = "purple", \
-						   "#FF00FF" = "pink", \
-						   "#FF3399" = "magenta", \
-						   "#FFFF00" = "yellow", \
-						   "#FF6600" = "orange", \
-						   "#FF0000" = "red" )
+// Seeing as none of these will change throughout a round, and we had a fuckton of defines anyways, I made them into defines. For the blood god.
+#define SM_SAFE_ALERT "Crystaline hyperstructure returning to safe operating levels."
+#define SM_WARNING_ALERT "Danger! Crystal hyperstructure instability!"
+#define SM_EMERGENCY_ALERT "CRYSTAL DELAMINATION IMMINENT."
 
+#define TRANSFORM_DISTANCE_MOD 2 // Size/this is maximum distance from SM during burst for transformation to Nucleation
+#define BASE_EXPLOSION_RANGE 15
+#define EXPLOSION_RANGE_INC_PER_LEVEL 10
+#define MAX_SM_INTEGRITY 100
 
+#define CANISTER_MOLARITY 1871.71
+#define OVERCHARGE_LEVEL 1.2 // The level when overcharge effects come into play
 
-/proc/getSMColor( var/level )
-	if( level < 1 )
-		level = 1
+var/global/list/datum/sm_control/sm_levels = list(	  new /datum/sm_control/level_1, \
+													  new /datum/sm_control/level_2, \
+													  new /datum/sm_control/level_3, \
+													  new /datum/sm_control/level_4, \
+													  new /datum/sm_control/level_5, \
+													  new /datum/sm_control/level_6, \
+													  new /datum/sm_control/level_7, \
+													  new /datum/sm_control/level_8, \
+													  new /datum/sm_control/level_9 )
 
-	if( level > 9 )
-		level = 9
+/proc/getSMVar( var/level, var/variable )
+	if( level < MIN_SUPERMATTER_LEVEL )
+		level = MIN_SUPERMATTER_LEVEL
 
-	return SM_COLORS[level]
+	if( level > MAX_SUPERMATTER_LEVEL )
+		level = MAX_SUPERMATTER_LEVEL
 
-/proc/getSMColorName( var/level )
-	if( level < 1 )
-		level = 1
-
-	if( level > 9 )
-		level = 9
-
-	return SM_COLORS[ SM_COLORS[level] ]
+	var/datum/sm_control/sm_level = sm_levels[level]
+	for( var/V in sm_level.vars )
+		if( V == variable )
+			return sm_level.vars[V] // Return the request variable
 
 proc/supermatter_delamination( var/turf/epicenter, var/size = 25, var/smlevel = 1, var/transform_mobs = 0, var/adminlog = 1 )
 	spawn(0)

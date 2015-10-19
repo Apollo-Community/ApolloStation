@@ -50,6 +50,17 @@
 	var/agony = 0
 	var/embed = 0 // whether or not the projectile can embed itself in the mob
 
+/obj/item/projectile/Destroy()
+	yo = null
+	xo = null
+	current = null
+	shot_from = null
+	original = null
+	starting = null
+	firer = null
+
+	..()
+
 /obj/item/projectile/proc/on_hit(var/atom/target, var/blocked = 0)
 	if(blocked >= 2)		return 0//Full block
 	if(!isliving(target))	return 0
