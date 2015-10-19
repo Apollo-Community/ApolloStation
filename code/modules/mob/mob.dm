@@ -799,81 +799,77 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/Stat()
 	..()
+	. = (is_client_active(10 MINUTES))
 
-	if(statpanel("Players"))
-		stat("Total Players: ","[clients.len]")
+	if(.)
+		if(statpanel("Players"))
+			stat("Total Players: ","[clients.len]")
 
-		for(var/client/C in clients)
-			var/entry = ""
-			if (C.holder && (R_MOD & C.holder.rights) && !C.holder.fakekey)
-				entry = "Mod"
-			else if(C.holder && (R_ADMIN & C.holder.rights) && !C.holder.fakekey)
-				entry = "Admin"
-			else if(C.holder && (R_DEBUG & C.holder.rights) && !C.holder.fakekey)
-				entry = "Dev"
-			else if(is_donator(C))
-				entry = "Donator"
-			else if(is_titled(C))
-				if(get_title(C) == 1)
-					entry = "Event"
+			for(var/client/C in clients)
+				var/entry = ""
+				if (C.holder && (R_MOD & C.holder.rights) && !C.holder.fakekey)
+					entry = "Mod"
+				else if(C.holder && (R_ADMIN & C.holder.rights) && !C.holder.fakekey)
+					entry = "Admin"
+				else if(C.holder && (R_DEBUG & C.holder.rights) && !C.holder.fakekey)
+					entry = "Dev"
+				else if(is_donator(C))
+					entry = "Donator"
+				/*else if(is_titled(C))
+					if(get_title(C) == 1)
+						entry = "Event"					Depreciated content
 				else
-					entry = "Spriter"
-			else
-				entry = "Player"
+						entry = "Spriter"
+				*/
+				else
+					entry = "Player"
 
-			if( C.afk )
-				entry += "   AFK"
+				if( C.afk )
+					entry += "   AFK"
 
-			stat("[C.key]", entry)
-
-	if(statpanel("Status"))	//not looking at that panel
+				stat("[C.key]", entry)
 		if(client && client.holder)
-			stat("Location:\t","([x], [y], [z])")
-			stat("CPU:\t","[world.cpu]")
+			if(statpanel("Status"))	//not looking at that panel
+				stat("Location:\t","([x], [y], [z])")
+				stat("Instances:","[world.contents.len]")
+				stat("Commit:\t", "#[config.git_commit_id]")
+			if(ticker && ticker.current_state != GAME_STATE_PREGAME)
+				stat("Station Time", worldtime2text())
+
+		if(statpanel("Processes"))
+			stat("CPU:","[world.cpu]")
 			stat("Instances:","[world.contents.len]")
-
-/*			if(master_controller)
-				stat("MasterController","([master_controller.processing?"On":"Off"]-[controller_iteration])")
-				stat("Previous MC Tick:\t","[last_tick_duration]s")
-				stat("Current MC Tick:\t","[master_controller.total_cost]s")
-				stat("Air:\t","[master_controller.air_cost]")
-				stat("Sun:\t","[master_controller.sun_cost]")
-				stat("Mob:\t","[master_controller.mobs_cost] #[mob_list.len]")
-				stat("Diseases:\t","[master_controller.diseases_cost] #[active_diseases.len]")
-				stat("Machine:\t","[master_controller.machines_cost] #[machines.len]")
-				stat("Objects:\t","[master_controller.objects_cost] #[processing_objects.len]")
-				stat("Power:\t","[master_controller.networks_cost]")
-				stat("Pipes:\t","[master_controller.powernets_cost]")
-				stat("NanoUI:\t","[master_controller.nano_cost] #[nanomanager.processing_uis.len]")
-				stat("Ticker:\t","[master_controller.ticker_cost]")
+			if(processScheduler && processScheduler.getIsRunning())
+				for(var/datum/controller/process/P in processScheduler.processes)
+					stat(P.getStatName(), P.getTickTime())
 			else
-				stat("MasterController:\t","ERROR")
-			*/
-			stat("Commit:\t", "#[config.git_commit_id]")
+				stat("processScheduler is not running.")
 
-	if(listed_turf && client)
-		if(!TurfAdjacent(listed_turf))
-			listed_turf = null
-		else
-			statpanel(listed_turf.name, null, listed_turf)
-			for(var/atom/A in listed_turf)
-				if(A.invisibility > see_invisible)
-					continue
-				if(is_type_in_list(A, shouldnt_see))
-					continue
-				statpanel(listed_turf.name, null, A)
+		if(listed_turf && client)
+			if(!TurfAdjacent(listed_turf))
+				listed_turf = null
+			else
+				statpanel(listed_turf.name, null, listed_turf)
+				for(var/atom/A in listed_turf)
+					if(!A.mouse_opacity)
+						continue
+					if(A.invisibility > see_invisible)
+						continue
+					if(is_type_in_list(A, shouldnt_see))
+						continue
+					statpanel(listed_turf.name, null, A)
 
-	if(spell_list && spell_list.len)
-		for(var/obj/effect/proc_holder/spell/S in spell_list)
-			switch(S.charge_type)
-				if("recharge")
-					statpanel("Spells","[S.charge_counter/10.0]/[S.charge_max/10]",S)
-				if("charges")
-					statpanel("Spells","[S.charge_counter]/[S.charge_max]",S)
-				if("holdervar")
-					statpanel("Spells","[S.holder_var_type] [S.holder_var_amount]",S)
+		if(spell_list && spell_list.len)
+			for(var/obj/effect/proc_holder/spell/S in spell_list)
+				switch(S.charge_type)
+					if("recharge")
+						statpanel("Spells","[S.charge_counter/10.0]/[S.charge_max/10]",S)
+					if("charges")
+						statpanel("Spells","[S.charge_counter]/[S.charge_max]",S)
+					if("holdervar")
+						statpanel("Spells","[S.holder_var_type] [S.holder_var_amount]",S)
 
-
+		sleep(6)	//Stops Mob.Stat() being called as often = profit?
 
 // facing verbs
 /mob/proc/canface()
