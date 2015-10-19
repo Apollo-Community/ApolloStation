@@ -828,9 +828,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 					entry += "   AFK"
 
 				stat("[C.key]", entry)
-
-		if(statpanel("Status"))	//not looking at that panel
-			if(client && client.holder)
+		if(client && client.holder)
+			if(statpanel("Status"))	//not looking at that panel
 				stat("Location:\t","([x], [y], [z])")
 				stat("Instances:","[world.contents.len]")
 				stat("Commit:\t", "#[config.git_commit_id]")
@@ -845,6 +844,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 					stat(P.getStatName(), P.getTickTime())
 			else
 				stat("processScheduler is not running.")
+
 		if(listed_turf && client)
 			if(!TurfAdjacent(listed_turf))
 				listed_turf = null
@@ -869,7 +869,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 					if("holdervar")
 						statpanel("Spells","[S.holder_var_type] [S.holder_var_amount]",S)
 
-		sleep(6)	//Stops Mob.Stat() being called as often = profit
+		sleep(6)	//Stops Mob.Stat() being called as often = profit?
 
 // facing verbs
 /mob/proc/canface()
