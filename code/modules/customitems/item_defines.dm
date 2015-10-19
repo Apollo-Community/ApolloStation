@@ -908,6 +908,15 @@
 	item_state = "mantle-unathi"
 	body_parts_covered = 0
 
+/obj/item/clothing/suit/storage/toggle/labcoat/cmo/fluff/luna_vor //NijiShadow: Luna Vor
+	name = "black chief medical officer's labcoat"
+	desc = "Darker than the standard model and with a dash of rainbow on the back."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "luna_labcoat_cmo"
+	icon_open = "luna_labcoat_cmo_open"
+	icon_closed = "luna_labcoat_cmo"
+	item_state = "luna_labcoat_cmo"
+
 /////////////////////////////// 50_n00b - R.A.N.G.E.'s blue dress //////////////////////////
 
 /obj/item/clothing/suit/fluff/b_dress
