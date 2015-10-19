@@ -28,10 +28,9 @@ var/global/list/datum/sm_control/sm_levels = list(	  new /datum/sm_control/level
 		level = MAX_SUPERMATTER_LEVEL
 
 	var/datum/sm_control/sm_level = sm_levels[level]
-	var/list/variables = sm_level.vars
-	for( var/V in variables )
+	for( var/V in sm_level.vars )
 		if( V == variable )
-			return variables[V] // Return the request variable
+			return sm_level.vars[V] // Return the request variable
 
 proc/supermatter_delamination( var/turf/epicenter, var/size = 25, var/smlevel = 1, var/transform_mobs = 0, var/adminlog = 1 )
 	spawn(0)

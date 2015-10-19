@@ -15,6 +15,7 @@
 	var/n2o_power_loss = 0 // The rate that N2O decreases power output, per mole
 	var/phoron_heal_rate = 0 // The rate that phoron heals the core, per mole
 	var/emitter_damage = 0 // The amount of damage the emitter does per hit
+	var/emitter_power = 40000 // The amount of power added per emitter shot
 	var/heat_damage_level = 1000 // The temperature at which heat will start damaging the crystal
 	var/damage_per_degree = 1 // How much damage per degree over heat_damage_level will cause
 	var/explosions_size = 25 // The size of the explosion
@@ -33,7 +34,7 @@
 	o2_turbo_multiplier = 1.5/CANISTER_MOLARITY
 	n2o_power_loss = 10000
 	phoron_heal_rate = 100/CANISTER_MOLARITY
-	color = "SM_DEFAULT_COLOR"
+	color = SM_DEFAULT_COLOR
 	color_name = "green"
 
 /datum/sm_control/level_2

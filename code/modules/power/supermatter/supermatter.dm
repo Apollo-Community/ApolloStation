@@ -64,7 +64,8 @@
 	if( level != MIN_SUPERMATTER_LEVEL )
 		smlevel = level
 
-	update_icon()
+	spawn(0)
+		update_icon()
 
 	radio = new (src)
 
@@ -206,7 +207,7 @@
 
 		// Oxygen handling
 		if(oxygen)
-			power = power*( oxygen*getSMVar( smlevel, "o2_turbo_multiplier" ))
+			power *= ( oxygen*getSMVar( smlevel, "o2_turbo_multiplier" ))
 			oxygen = 0
 		else
 			if( prob( getSMVar( smlevel, "crit_fail_chance" )) && delayPassed( crit_delay, last_crit_check ))
@@ -232,15 +233,13 @@
 		phoron += (damage/damage_max) * smlevel
 		oxygen += (damage/damage_max) * smlevel
 
-
-
 		//Release reaction gasses
 		removed.gas["phoron"] = phoron
 		removed.gas["oxygen"] = oxygen
 		removed.gas["sleeping_agent"] = sleepy
 		removed.gas["carbon_dioxide"] = carbon
 
-		removed.add_thermal_energy(power*getSMVar( smlevel, "thermal_factor" )*(power_percent**2))
+		removed.add_thermal_energy( power*getSMVar( smlevel, "thermal_factor" )*(power_percent**2))
 		env.merge(removed)
 
 /obj/machinery/power/supermatter/proc/psionicBurst()
