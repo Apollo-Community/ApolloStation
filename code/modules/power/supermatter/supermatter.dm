@@ -51,8 +51,12 @@
 
 	var/debug = 0
 
+	var/settings = null
+
 /obj/machinery/power/supermatter/New( loc as turf, var/level = 1 )
 	. = ..()
+
+	settings = sm_levels
 
 	if( level > MAX_SUPERMATTER_LEVEL )
 		level = MAX_SUPERMATTER_LEVEL
