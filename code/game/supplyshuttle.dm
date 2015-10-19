@@ -154,14 +154,9 @@ var/list/mechtoys = list(
 			var/datum/supply_packs/P = new typepath()
 			supply_packs[P.name] = P
 
-		spawn(0)
-
-			while(1)
-				if(processing)
-					iteration++
-					points += points_per_process
-
-				sleep(processing_interval)
+		if(processing)
+			iteration++
+			points += points_per_process
 
 	//To stop things being sent to centcomm which should not be sent to centcomm. Recursively checks for these types.
 	proc/forbidden_atoms_check(atom/A)
