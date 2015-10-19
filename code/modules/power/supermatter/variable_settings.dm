@@ -3,110 +3,152 @@
 
 */
 
+/datum/sm_control
+	var/base_power = 0 	// The power output that the engine will stabilize at, in kW
+	var/decay = 50 // Percent per minute
+	var/o2_turbo_multiplier = 0 // How much oxygen will multiply power and heat output by, per mole
+	var/o2_requirement = 0 // How much oxygen is required to keep the engine from critically failing, as a percent of the total gas composition
+	var/suffocation_damage = 0 // How much damage will be done if the engine doesn't have enough O2
+	var/crit_fail_chance = 0 // The chance that a critical fail will happen per minute if the engine is starving for oxygen
+	var/crit_fail_damage = 0 // the amount of damage done by a critical failure
+	var/co2_heat_multiplier = 0 // The multiplier that CO2 increases heat production by, per mole
+	var/n2o_power_loss = 0 // The rate that N2O decreases power output, per mole
+	var/phoron_heal_rate = 0 // The rate that phoron heals the core, per mole
+	var/emitter_damage = 0 // The amount of damage the emitter does per hit
+	var/heat_damage_level = 1000 // The temperature at which heat will start damaging the crystal
+	var/damage_per_degree = 1 // How much damage per degree over heat_damage_level will cause
+	var/explosions_size = 25 // The size of the explosion
+	var/delamination_size = 25 // The size of the vorbis wave burst
+	var/vacuum_damage = 0 // The amount of damage done when the SM is sitting in a vacuum
+	var/thermal_factor = 0 // The amount of heat released to the environment this tick
+	var/consumption_rate = 10 // The amount of gas consumed this tick
+	var/psionic_power = 10 // The amount of hallucination that will be added if someone looks at it
+	var/radiation_power = 20 // The amount of radiation released
+	var/pull_time = 15 // the amount of time in seconds that the supermatter will pull in before exploding
+	var/color = ""
+	var/color_name = ""
 
-var/global/sm_control/smvsc = new
+/datum/sm_control/level_1
+	base_power = 500000
+	o2_turbo_multiplier = 1.5/CANISTER_MOLARITY
+	n2o_power_loss = 10000
+	phoron_heal_rate = 100/CANISTER_MOLARITY
+	color = "SM_DEFAULT_COLOR"
+	color_name = "green"
 
-/sm_control
-	var/base_power = 400
-/*	var/base_power_NAME = "Supermatter - Base Power"
-	var/base_power_DESC = "How many kilowatts a standard engine will produce with an ideal setup."
-*/
+/datum/sm_control/level_2
+	base_power = 800000
+	o2_turbo_multiplier = 1.6/CANISTER_MOLARITY
+	n2o_power_loss = 9000
+	phoron_heal_rate = 80/CANISTER_MOLARITY
+	emitter_damage = 10
+	color = "#00FF99"
+	color_name = "cyan"
+	delamination_size = 30
+	vacuum_damage = 10
 
-	var/fusion_power = 1.3
-/*	var/fusion_power_NAME = "Supermatter - Fusion Power"
-	var/fusion_power_DESC = "Rate at which efficiency increases per fusion."
-*/
+/datum/sm_control/level_3
+	base_power = 1400000
+	o2_turbo_multiplier = 1.7/CANISTER_MOLARITY
+	co2_heat_multiplier = 1.1/CANISTER_MOLARITY
+	n2o_power_loss = 8000
+	phoron_heal_rate = 60/CANISTER_MOLARITY
+	emitter_damage = 20
+	color = "#0099FF"
+	color_name = "blue"
+	explosions_size = 25
+	delamination_size = 35
+	vacuum_damage = 25
 
-	var/fusion_stability = 10
-/*	var/fusion_stability_NAME = "Supermatter - Fusion Stability"
-	var/fusion_stability_DESC = "Amount of stability gained during fusion."
-*/
+/datum/sm_control/level_4
+	base_power = 2600000
+	o2_turbo_multiplier = 1.8/CANISTER_MOLARITY
+	co2_heat_multiplier = 1.2/CANISTER_MOLARITY
+	n2o_power_loss = 7000
+	phoron_heal_rate = 40/CANISTER_MOLARITY
+	emitter_damage = 30
+	color = "#6600FF"
+	color_name = "purple"
+	explosions_size = 25
+	delamination_size = 40
+	vacuum_damage = 50
 
-	var/crystal_rate = 10
-/*	var/crystal_rate_NAME = "Supermatter - Growth Rate"
-	var/crystal_rate_DESC = "Rate at which the supermatter crystal is able to regenerate."
-*/
+/datum/sm_control/level_5
+	base_power = 5200000
+	o2_turbo_multiplier = 1.9/CANISTER_MOLARITY
+	o2_requirement = 0.10
+	crit_fail_chance = 0.01
+	co2_heat_multiplier = 1.3/CANISTER_MOLARITY
+	n2o_power_loss = 5000
+	phoron_heal_rate = 20/CANISTER_MOLARITY
+	emitter_damage = 40
+	color = "#FF00FF"
+	color_name = "pink"
+	explosions_size = 45
+	delamination_size = 45
+	vacuum_damage = 60
 
-	var/crit_stability = 100
-/*	var/crit_stability_NAME = "Supermatter - Critical Stability"
-	var/crit_stability_DESC = "How likely the engine is to have a critical failure."
-*/
+/datum/sm_control/level_6
+	base_power = 10400000
+	o2_turbo_multiplier = 2.0/CANISTER_MOLARITY
+	o2_requirement = 0.15
+	crit_fail_chance = 0.05
+	co2_heat_multiplier = 1.4/CANISTER_MOLARITY
+	n2o_power_loss = 3000
+	phoron_heal_rate = 0/CANISTER_MOLARITY
+	emitter_damage = 50
+	color = "#FF3399"
+	color_name = "magenta"
+	explosions_size = 45
+	delamination_size = 55
+	vacuum_damage = 70
 
-	var/thermal_factor = 350
-/*	var/thermal_factor_NAME = "Supermatter - Thermal Factor"
-	var/thermal_factor_DESC = "Amount of heat produced by the engine."
-*/
+/datum/sm_control/level_7
+	base_power = 20800000
+	o2_turbo_multiplier = 2.1/CANISTER_MOLARITY
+	o2_requirement = 0.20
+	crit_fail_chance = 0.1
+	co2_heat_multiplier = 1.5/CANISTER_MOLARITY
+	n2o_power_loss = 1000
+	phoron_heal_rate = 0/CANISTER_MOLARITY
+	emitter_damage = 60
+	color = "#FFFF00"
+	color_name = "yellow"
+	explosions_size = 45
+	delamination_size = 65
+	vacuum_damage = 80
 
-	var/crit_temp = 800
-/*	var/crit_temp_NAME = "Supermatter - Critical Temperature"
-	var/crit_temp_DESC = "Temperature in Kelvin at which the supermatter will start to take damage."
-*/
+/datum/sm_control/level_8
+	base_power = 41600000
+	o2_turbo_multiplier = 2.2/CANISTER_MOLARITY
+	o2_requirement = 0.25
+	crit_fail_chance = 0.5
+	co2_heat_multiplier = 1.6/CANISTER_MOLARITY
+	n2o_power_loss = 0000
+	phoron_heal_rate = 0/CANISTER_MOLARITY
+	emitter_damage = 70
+	color = "#FF6600"
+	color_name = "orange"
+	explosions_size = 45
+	delamination_size = 75
+	vacuum_damage = 90
 
-	var/consumption_rate = 10
-/*	var/consumption_rate_NAME = "Supermatter - Consumption Rate"
-	var/consumption_rate_DESC = "Affects the speed at which the supermatter will consume gasses."
-*/
+/datum/sm_control/level_9
+	base_power = 83200000
+	o2_turbo_multiplier = 2.3/CANISTER_MOLARITY
+	o2_requirement = 0.3
+	crit_fail_chance = 1.0
+	co2_heat_multiplier = 1.7/CANISTER_MOLARITY
+	n2o_power_loss = -2000
+	phoron_heal_rate = -10/CANISTER_MOLARITY
+	emitter_damage = 80
+	color = "#FF0000"
+	color_name = "red"
+	explosions_size = 45
+	delamination_size = 85
+	vacuum_damage = 100
 
-	var/gas_rate = 5
-/*	var/gas_rate_NAME = "Supermatter - Gas Value"
-	var/gas_rate_DESC = "The amount of power produced per mole of gas."
-*/
-
-	var/psionic_power = 10
-/*	var/psionic_power_NAME = "Supermatter - Psionic Power"
-	var/psionic_power_DESC = "How powerful the psionic bursts produced by the engine are."
-*/
-
-	var/radiation_power = 10
-/*	var/radiation_power_NAME = "Supermatter - Radiation Power"
-	var/radiation_power_DESC = "How powerful the radiation bursts produced by the engine are."
-*/
-
-	var/warning_delay = 30
-/*	var/warning_delay_NAME = "Supermatter - Warning Delay"
-	var/warning_delay_DESC = "Time in seconds between supermatter alert messages."
-*/
-
-	var/detonate_delay = 10
-/*	var/detonate_delay_NAME = "Supermatter - Explosion Delay"
-	var/detonate_delay_DESC = "Time in seconds to escape the supermatter blast."
-*/
-
-	var/explosion_size = 5
-/*	var/explosion_size_NAME = "Supermatter - Explosion Size"
-	var/explosion_size_DESC = "The size of the supermatter explosion."
-*/
-
-	var/crit_danger = 100
-/*	var/crit_danger_NAME = "Supermatter - Critical Danger"
-	var/crit_danger_DESC = "The amount of danger presented by a critical failure."
-*/
-
-	var/damage_factor = 1
-/*	var/damage_factor_NAME = "Supermatter - Damage Factor"
-	var/damage_factor_DESC = "How much damage the supermatter is able to take."
-*/
-
-	var/suffocation_moles = 5
-/*	var/suffocation_moles_NAME = "Supermatter - Suffocation Moles"
-	var/suffocation_moles_DESC = "How much oxygen the supermatter requires in order to function."
-*/
-
-	var/heat_damage = 10
-/*	var/heat_damage_NAME = "Supermatter - Heat Damage"
-	var/heat_damage_DESC = "The amount of damage the engine will take from overheating."
-*/
-
-	var/decay_rate = 50
-/*	var/decay_rate_NAME = "Supermatter - Decay Rate"
-	var/decay_rate_DESC = "The rate at which the supermatter loses power."
-*/
-
-	var/safe_level = 2
-/*	var/safe_level_NAME = "Supermatter - Safe Level"
-	var/safe_level_DESC = "The fusion level at which the engine enters advanced mode."
-*/
-
+/*
 /sm_control/var/list/settings = list()
 /sm_control/var/list/bitflags = list("1","2","4","8","16","32","64","128","256","512","1024")
 
@@ -333,3 +375,5 @@ var/global/sm_control/smvsc = new
 
 
 	world << "\blue <b>[key_name(user)] changed the global supermatter settings to \"[def]\"</b>"
+
+*/
