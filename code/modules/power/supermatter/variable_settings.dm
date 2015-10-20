@@ -12,7 +12,7 @@
 
 	var/collector_range = 10 // Max range of collectors, decreaes power output as distance increases
 
-	var/o2_release = 2 // Amount of o2 released if the core is at maximum damage
+	var/o2_release = 0.8 // Amount of o2 released if the core is at maximum damage
 	var/o2_turbo_multiplier = 0 // How much oxygen will multiply power and heat output by, per mole
 	var/o2_requirement = 0 // How much oxygen is required to keep the engine from critically failing, as a percent of the total gas composition
 	var/suffocation_damage = 0 // How much damage will be done if the engine doesn't have enough O2
@@ -24,7 +24,7 @@
 
 	var/n2o_power_loss = 0 // The rate that N2O decreases power output, per mole
 
-	var/phoron_release = 2 // Amount of phoron released if the core is at maximum damage
+	var/phoron_release = 0.5 // Amount of phoron released if the core is at maximum damage
 	var/phoron_heal_rate = 0 // The rate that phoron heals the core, per mole
 
 	var/emitter_damage = 0 // The amount of damage the emitter does per hit
