@@ -61,27 +61,20 @@
 	use_power = 1
 	icon_state = "map_vent_in"
 
-/obj/machinery/atmospherics/unary/vent_pump/siphon/on/atmos
-	use_power = 1
-	icon_state = "map_vent_in"
-	external_pressure_bound = 0
-	external_pressure_bound_default = 0
-	internal_pressure_bound = 2000
-	internal_pressure_bound_default = 2000
-	pressure_checks = 2
-	pressure_checks_default = 2
-
 /obj/machinery/atmospherics/unary/vent_pump/New()
 	..()
 	air_contents.volume = ATMOS_DEFAULT_VOLUME_PUMP
 
 	icon = null
 	initial_loc = get_area(loc)
+
 	area_uid = initial_loc.uid
 	if (!id_tag)
 		assign_uid()
 		id_tag = num2text(uid)
-
+	if(ticker && ticker.current_state == 3)//if the game is running
+		src.initialize()
+		src.broadcast_status()
 
 /obj/machinery/atmospherics/unary/vent_pump/high_volume
 	name = "Large Air Vent"
@@ -160,6 +153,9 @@
 	if (hibernate)
 		return 1
 
+	last_power_draw = 0
+	last_flow_rate = 0
+
 	if (!node)
 		use_power = 0
 	if(!can_pump())
@@ -175,25 +171,21 @@
 
 	if((environment.temperature || air_contents.temperature) && pressure_delta > 0.5)
 		if(pump_direction) //internal -> external
-			var/transfer_moles = calculate_transfer_moles(air_contents, environment, pressure_delta)
+			var/transfer_moles = calculate_transfer_moles(air_contents, environment)
 			power_draw = pump_gas(src, air_contents, environment, transfer_moles, power_rating)
 		else //external -> internal
-			var/transfer_moles = calculate_transfer_moles(environment, air_contents, pressure_delta, (network)? network.volume : 0)
+			var/transfer_moles = calculate_transfer_moles(environment, air_contents, (network)? network.volume : 0)
 
 			//limit flow rate from turfs
 			transfer_moles = min(transfer_moles, environment.total_moles*air_contents.volume/environment.volume)	//group_multiplier gets divided out here
 			power_draw = pump_gas(src, environment, air_contents, transfer_moles, power_rating)
 
 	else
-		//If we're in an area that is fucking ideal, and we don't have to do anything, chances are we won't next tick either so why redo these calculations?
-		//JESUS FUCK.  THERE ARE LITERALLY 250 OF YOU MOTHERFUCKERS ON ZLEVEL ONE AND YOU DO THIS SHIT EVERY TICK WHEN VERY OFTEN THERE IS NO REASON TO
-
 		if(pump_direction && pressure_checks == PRESSURE_CHECK_EXTERNAL && controller_iteration > 10)	//99% of all vents
 			//Fucking hibernate because you ain't doing shit.
 			hibernate = 1
 			spawn(rand(100,200))	//hibernate for 10 or 20 seconds randomly
 				hibernate = 0
-
 
 	if (power_draw >= 0)
 		last_power_draw = power_draw
@@ -219,6 +211,14 @@
 			pressure_delta = min(pressure_delta, internal_pressure_bound - air_contents.return_pressure()) //increasing the pressure here
 
 	return pressure_delta
+
+//Radio remote control
+
+/obj/machinery/atmospherics/unary/vent_pump/proc/set_frequency(new_frequency)
+	radio_controller.remove_object(src, frequency)
+	frequency = new_frequency
+	if(frequency)
+		radio_connection = radio_controller.add_object(src, frequency,radio_filter_in)
 
 /obj/machinery/atmospherics/unary/vent_pump/proc/broadcast_status()
 	if(!radio_connection)
@@ -257,11 +257,11 @@
 /obj/machinery/atmospherics/unary/vent_pump/initialize()
 	..()
 
-	//some vents work his own special way
+	//some vents work his own spesial way
 	radio_filter_in = frequency==1439?(RADIO_FROM_AIRALARM):null
 	radio_filter_out = frequency==1439?(RADIO_TO_AIRALARM):null
 	if(frequency)
-		src.broadcast_status()
+		set_frequency(frequency)
 
 /obj/machinery/atmospherics/unary/vent_pump/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))

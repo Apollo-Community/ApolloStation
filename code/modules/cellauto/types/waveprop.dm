@@ -24,8 +24,8 @@
 	if( master )
 		var/datum/cell_auto_master/v_wave/M = master
 
-		color = getSMColor( M.smlevel )
-		light_color = getSMColor( M.smlevel )
+		color = getSMVar( M.smlevel, "color" )
+		light_color = color
 
 		set_light( light_range, light_power, light_color )
 

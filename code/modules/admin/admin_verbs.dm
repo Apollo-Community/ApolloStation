@@ -143,7 +143,6 @@ var/list/admin_verbs_debug = list(
 	/client/proc/Debug2,
 	/client/proc/kill_air,
 	/client/proc/ZASSettings,
-	/client/proc/SMSettings,
 	/client/proc/cmd_debug_make_powernets,
 	/client/proc/kill_airgroup,
 	/client/proc/debug_controller,
