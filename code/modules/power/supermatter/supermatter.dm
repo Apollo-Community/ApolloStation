@@ -87,7 +87,7 @@
 		explosion(epicenter, \
 		          getSMVar( smlevel, "explosion_size" )/3, \
 		          getSMVar( smlevel, "explosion_size" )/2, \
-		          getSMVar( smlevel, "explosion_size" )/1, \
+		          getSMVar( smlevel, "explosion_size" ), \
 		          getSMVar( smlevel, "explosion_size" )*2, 1)
 
 		supermatter_delamination( epicenter, getSMVar( smlevel, "delamination_size" ), smlevel, 1 )
