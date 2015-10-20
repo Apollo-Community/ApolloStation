@@ -6,4 +6,4 @@
 	cell_auto_manager.fire()
 
 /datum/controller/process/cell_auto/getStatName()
-
+	return ..()
