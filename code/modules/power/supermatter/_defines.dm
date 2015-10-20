@@ -33,6 +33,8 @@ var/global/list/datum/sm_control/sm_levels = list(	  new /datum/sm_control/level
 		if( V == variable )
 			return sm_level.vars[V] // Return the request variable
 
+	log_debug("[variable] doesn't exist in sm_levels!")
+
 proc/supermatter_delamination( var/turf/epicenter, var/size = 25, var/smlevel = 1, var/transform_mobs = 0, var/adminlog = 1 )
 	spawn(0)
 		var/start = world.timeofday
