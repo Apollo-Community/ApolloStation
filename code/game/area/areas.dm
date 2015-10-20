@@ -154,6 +154,10 @@ area/space/atmosalert()
 	ambience = list('sound/ambience/ambbspace.ogg')
 	environment = UNDERWATER
 
+/area/space/moon
+	name = "\improper moon"
+	icon_state = "moon"
+
 /area/engine/
 	music = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg' )
 
