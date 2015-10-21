@@ -106,6 +106,8 @@
 				AddUses(1)
 				total_added += 1
 				qdel(L)
+			else
+				break
 		if(total_added)
 			user << "You inserted [total_added] bulbs into the [src.name]. You have [uses] lights remaining."
 		else
