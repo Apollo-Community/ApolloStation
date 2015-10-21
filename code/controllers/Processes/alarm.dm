@@ -1,6 +1,7 @@
 /datum/controller/process/alarm/setup()
 	name = "alarm"
-	schedule_interval = 20 // every 2 seconds
+	schedule_interval = 40 // every 4 seconds
+	cpu_threshold = 20
 
 /datum/controller/process/alarm/doWork()
 	alarm_manager.fire()

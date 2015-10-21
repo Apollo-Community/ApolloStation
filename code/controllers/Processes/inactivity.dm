@@ -1,6 +1,7 @@
 /datum/controller/process/inactivity/setup()
 	name = "inactivity"
 	schedule_interval = 600 // Once every minute (approx.)
+	cpu_threshold = 10
 
 /datum/controller/process/inactivity/doWork()
 	if(config.kick_inactive)
