@@ -1,8 +1,8 @@
 /datum/paint
 	var/name = "white"
 	var/color = "#BABABA"
-	var/icon = 'icons/effects/effects.dmi'
-	var/icon_state_wall = "paint"
+	var/icon = 'icons/effects/paint.dmi'
+	var/icon_state_wall = "paint_wall"
 
 /datum/paint/red
 	name = "red"
@@ -35,4 +35,7 @@
 /datum/paint/black
 	name = "black"
 	color = "#1A1A1A"
-d
+
+/datum/paint/phoron
+	name = "phoron"
+	color = "#603F7F"

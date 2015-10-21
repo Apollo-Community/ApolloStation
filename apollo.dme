@@ -1387,6 +1387,7 @@
 #include "code\modules\overmap\traveling.dm"
 #include "code\modules\paint\paint.dm"
 #include "code\modules\paint\paint_can.dm"
+#include "code\modules\paint\paint_reagents.dm"
 #include "code\modules\paperwork\carbonpaper.dm"
 #include "code\modules\paperwork\clipboard.dm"
 #include "code\modules\paperwork\faxmachine.dm"

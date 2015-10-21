@@ -62,6 +62,9 @@
 /turf/simulated/wall/examine(mob/user)
 	. = ..(user)
 
+	if(paint)
+		user << "It is painted with a coat of [paint.name] paint."
+
 	if(!damage)
 		user << "<span class='notice'>It looks fully intact.</span>"
 	else
@@ -95,7 +98,7 @@
 		overlays += damage_overlays[overlay]
 
 	if( paint )
-		var/image/img = image(icon = paint.icon, icon_state = paint.icon_state_wall)
+		var/image/img = image(icon = paint.icon, icon_state = "[paint.icon_state_wall][smoothwall_connections]")
 
 		img.color = paint.color
 		img.layer = TURF_LAYER+0.1
@@ -122,6 +125,12 @@
 	qdel( paint_overlay )
 
 	paint = new_paint
+	update_icon()
+
+/turf/simulated/wall/proc/unpaint()
+	qdel( paint )
+	qdel( paint_overlay )
+
 	update_icon()
 
 //Damage

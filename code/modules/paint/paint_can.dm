@@ -56,9 +56,13 @@ var/global/list/cached_icons = list()
 		icon_state = "paint_yellow"
 		paint_type = "yellow"
 
-	violet
-		icon_state = "paint_violet"
-		paint_type = "violet"
+	orange
+		icon_state = "paint_orange"
+		paint_type = "orange"
+
+	purple
+		icon_state = "paint_purple"
+		paint_type = "purple"
 
 	black
 		icon_state = "paint_black"
@@ -68,72 +72,10 @@ var/global/list/cached_icons = list()
 		icon_state = "paint_white"
 		paint_type = "white"
 
+	phoron
+		icon_state = "paint_phoron"
+		paint_type = "phoron"
+
 	remover
 		paint_type = "remover"
 
-datum/reagent/paint
-	name = "Paint"
-	id = "paint_"
-	reagent_state = 2
-
-	var/paint_type = /datum/paint
-
-	description = "This paint will only adhere to floor tiles."
-
-datum/reagent/paint/reaction_turf(var/turf/simulated/wall/T, var/volume)
-	if(!istype(T) || istype(T, /turf/space))
-		return
-	T.paint( PoolOrNew( paint_type ))
-
-datum/reagent/paint/reaction_obj(var/obj/O, var/volume)
-	..()
-	if(istype(O,/obj/item/weapon/light))
-		var/obj/item/weapon/light/L = O
-		L.paint( PoolOrNew( paint_type ))
-
-/datum/reagent/paint/red
-	name = "Red Paint"
-	id = "paint_red"
-	paint_type = /datum/paint/red
-
-/datum/reagent/paint/green
-	name = "Green Paint"
-	id = "paint_green"
-	paint_type = /datum/paint/green
-
-/datum/reagent/paint/blue
-	name = "Blue Paint"
-	id = "paint_blue"
-	paint_type = /datum/paint/blue
-
-/datum/reagent/paint/yellow
-	name = "Yellow Paint"
-	id = "paint_yellow"
-	paint_type = /datum/paint/yellow
-
-/datum/reagent/paint/violet
-	name = "Violet Paint"
-	id = "paint_violet"
-	paint_type = /datum/paint/purple
-
-/datum/reagent/paint/black
-	name = "Black Paint"
-	id = "paint_black"
-	paint_type = /datum/paint/black
-
-/datum/reagent/paint/white
-	name = "White Paint"
-	id = "paint_white"
-	paint_type = /datum/paint
-
-datum/reagent/paint_remover
-	name = "Paint Remover"
-	id = "paint_remover"
-	description = "Paint remover is used to remove floor paint from floor tiles."
-	reagent_state = 2
-	color = "#808080"
-
-	reaction_turf(var/turf/T, var/volume)
-		if(istype(T) && T.icon != initial(T.icon))
-			T.icon = initial(T.icon)
-		return
