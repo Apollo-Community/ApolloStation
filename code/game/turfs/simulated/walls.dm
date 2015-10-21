@@ -2,14 +2,18 @@
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
 	icon = 'icons/turf/walls.dmi'
+
 	var/mineral = "metal"
 	var/rotting = 0
+
+	var/datum/paint/paint = null
+	var/paint_overlay = null
 
 	var/damage = 0
 	var/damage_cap = 100 //Wall will break down to girders if damage reaches this point
 	var/armor = 0.5 // Damage is multiplied by this
 
-	var/damage_overlay
+	var/damage_overlay = 0
 	var/global/damage_overlays[8]
 
 	var/max_temperature = 1800 //K, walls will take damage if they're next to a fire hotter than this
@@ -40,13 +44,17 @@
 
 
 /turf/simulated/wall/Destroy()
-	for(var/obj/effect/E in src) if(E.name == "Wallrot") del E
+	for(var/obj/effect/E in src) if(E.name == "Wallrot") qdel( E )
+	qdel( paint )
+	paint = null
 	processing_turfs -= src
 	dismantle_wall(null,null,1)
 	..()
 
 /turf/simulated/wall/ChangeTurf(var/newtype)
-	for(var/obj/effect/E in src) if(E.name == "Wallrot") del E
+	for(var/obj/effect/E in src) if(E.name == "Wallrot") qdel( E )
+	qdel( paint )
+	paint = null
 	..(newtype)
 
 //Appearance
@@ -72,7 +80,7 @@
 	if(!damage_overlays[1]) //list hasn't been populated
 		generate_overlays()
 
-	if(!damage)
+	if(!damage && !paint )
 		overlays.Cut()
 		return
 
@@ -80,12 +88,21 @@
 	if(overlay > damage_overlays.len)
 		overlay = damage_overlays.len
 
-	if(damage_overlay && overlay == damage_overlay) //No need to update.
-		return
-
 	overlays.Cut()
-	overlays += damage_overlays[overlay]
-	damage_overlay = overlay
+
+	if(!damage_overlay || overlay != damage_overlay) //No need to update.
+		damage_overlay = overlay
+		overlays += damage_overlays[overlay]
+
+	if( paint )
+		var/image/img = image(icon = paint.icon, icon_state = paint.icon_state_wall)
+
+		img.color = paint.color
+		img.layer = TURF_LAYER+0.1
+
+		qdel( paint_overlay )
+		paint_overlay = img
+		overlays += paint_overlay
 
 	return
 
@@ -95,8 +112,17 @@
 	for(var/i = 1; i <= damage_overlays.len; i++)
 		var/image/img = image(icon = 'icons/turf/walls.dmi', icon_state = "overlay_damage")
 		img.blend_mode = BLEND_MULTIPLY
-		img.alpha = (i * alpha_inc) - 1
+		img.alpha = ((i-1) * alpha_inc) - 1
 		damage_overlays[i] = img
+
+/turf/simulated/wall/proc/paint( var/datum/paint/new_paint )
+	if( !istype( new_paint ))
+		return
+	qdel( paint )
+	qdel( paint_overlay )
+
+	paint = new_paint
+	update_icon()
 
 //Damage
 /turf/simulated/wall/proc/take_damage(dam)
