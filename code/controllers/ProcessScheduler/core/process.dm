@@ -319,4 +319,4 @@ datum/controller/process/proc/enable()
 	return name
 
 /datum/controller/process/proc/getTickTime()
-	return "#[getTicks()]\t- [getLastRunTime()]"
+	return "#[getTicks()] | LST:[getLastRunTime()] | AVG:[main.averageRunTime()]"
