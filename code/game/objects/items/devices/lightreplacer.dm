@@ -96,6 +96,23 @@
 			user << "You need a working light."
 			return
 
+	if(istype(W, /obj/item/weapon/storage/box))
+		if (uses >= max_uses)
+			user << "<span class='warning'>[src.name] is full."
+			return
+		var/total_added = 0
+		for (var/obj/item/weapon/light/L in W)
+			if(L.status == 0 && uses < max_uses)
+				AddUses(1)
+				total_added += 1
+				qdel(L)
+		if(total_added)
+			user << "You inserted [total_added] bulbs into the [src.name]. You have [uses] lights remaining."
+		else
+			user << "There doesn't seem to be any working lights inside of the [W.name]."
+		return
+
+
 
 /obj/item/device/lightreplacer/attack_self(mob/user)
 	/* // This would probably be a bit OP. If you want it though, uncomment the code.
