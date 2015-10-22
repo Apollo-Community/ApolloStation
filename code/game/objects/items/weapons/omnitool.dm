@@ -93,6 +93,8 @@
 	throw_range = 4
 	throw_speed = 3
 	w_class = 2
+	origin_tech = "materials=2;engineering=4"
+	matter = list("metal" = 380, "glass" = 30)
 	attack_verb = list("patted", "tapped")
 	icon_action_button = "omnitool_action"
 	action_button_name = "Switch Tool"
@@ -196,7 +198,7 @@
 
 /obj/item/weapon/omnitool/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 	if(active)
-		return 1
+		return
 	else
 		..()
 
@@ -221,6 +223,7 @@
 	desc = "It's like a torture kit in your pocket!"
 	icon_state = "synditool_closed"
 	force = 5
+	origin_tech = "materials=2;engineering=4;syndicate=3"
 	attack_verb = list("whacked", "beat")
 
 /obj/item/weapon/omnitool/syndie/New()
