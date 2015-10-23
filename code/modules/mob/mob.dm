@@ -812,7 +812,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 				else if(C.holder && (R_DEBUG & C.holder.rights))			entry = "Dev"
 				else if(is_donator(C))																entry = "Donator"
 				else																									entry = "Player"
-				if(C.afk)																							entry += "\tAFK"
+				if(C.afk)																							entry += "   AFK"	//pitty tabs ruin the column
 				stat("[C.key]", entry)
 			sleep(5)
 		if(client && client.holder)
