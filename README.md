@@ -1,6 +1,6 @@
-# Apollo Station  [![Build Status](https://travis-ci.org/stuicey/ApolloStation.svg?branch=master)](https://travis-ci.org/stuicey/ApolloStation)
+# Apollo Station  [![Build Status](https://travis-ci.org/Apollo-Community/ApolloStation.svg?branch=master)](https://travis-ci.org/Apollo-Community/ApolloStation)
 
-[Website](https://apollo-community.org/) - [Code](https://github.com/stuicey/ApolloStation) - [IRC](https://apollo-community.org/viewforum.php?f=42)
+[Website](https://apollo-community.org/) - [Code](https://github.com/Apollo-Community/ApolloStation) - [IRC](https://apollo-community.org/viewforum.php?f=42)
 
 ---
 
@@ -18,11 +18,11 @@ See [here](https://www.gnu.org/licenses/why-affero-gpl.html) for more informatio
 ### GETTING THE CODE
 The simplest way to obtain the code is using the github .zip feature.
 
-Click [here](https://github.com/stuicey/ApolloStation/archive/master.zip) to get the latest code as a .zip file, then unzip it to wherever you want.
+Click [here](https://github.com/Apollo-Community/ApolloStation/archive/master.zip) to get the latest code as a .zip file, then unzip it to wherever you want.
 
 The more complicated and easier to update method is using git.  You'll need to download git or some client from [here](http://git-scm.com/).  When that's installed, right click in any folder and click on "Git Bash".  When that opens, type in:
 
-    git clone https://github.com/stuicey/ApolloStation.git
+    git clone https://github.com/Apollo-Community/ApolloStation.git
 
 (hint: hold down ctrl and press insert to paste into git bash)
 
@@ -85,9 +85,3 @@ For a basic setup, simply copy every file from config/example to config.
 ### SQL Setup
 
 The SQL backend for the library and stats tracking requires a MySQL server.  Your server details go in /config/dbconfig.txt, and the SQL schema is in /SQL/tgstation_schema.sql.  More detailed setup instructions arecoming soon, for now ask in our IRC channel.
-
----
-
-### IRC Bot Setup
-
-Included in the repo is an IRC bot capable of relaying adminhelps to a specified IRC channel/server (thanks to Skibiliano).  Instructions for bot setup are included in the /bot/ folder along with the bot/relay script itself.

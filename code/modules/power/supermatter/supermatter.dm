@@ -87,7 +87,7 @@
 		explosion(epicenter, \
 		          getSMVar( smlevel, "explosion_size" )/3, \
 		          getSMVar( smlevel, "explosion_size" )/2, \
-		          getSMVar( smlevel, "explosion_size" )/1, \
+		          getSMVar( smlevel, "explosion_size" ), \
 		          getSMVar( smlevel, "explosion_size" )*2, 1)
 
 		supermatter_delamination( epicenter, getSMVar( smlevel, "delamination_size" ), smlevel, 1 )
@@ -209,38 +209,38 @@
 
 	// Oxygen handling
 	if(oxygen)
-		power *= ( oxygen*getSMVar( smlevel, "o2_turbo_multiplier" ))
+		power = max( 0, power+( power*( oxygen*getSMVar( smlevel, "o2_turbo_multiplier" ))))
 		oxygen = 0
 	else
 		if( prob( getSMVar( smlevel, "crit_fail_chance" )) && delayPassed( crit_delay, last_crit_check ))
 			critFail()
 		last_crit_check = world.timeofday
-		phoron += getSMVar( smlevel, "suffocation_damage" )
-		damage += getSMVar( smlevel, "suffocation_damage" )
+		phoron = max( 0, phoron+getSMVar( smlevel, "suffocation_damage" ))
+		damage = max( 0, damage+getSMVar( smlevel, "suffocation_damage" ))
 
 	// CO2 handling
 	if(carbon)
-		heat *= ( carbon*getSMVar( smlevel, "co2_heat_multiplier" )) // Carbon reacts violently with supermatter, creating heat and leaving O2
+		heat = max( 0, heat+( heat*( carbon*getSMVar( smlevel, "co2_heat_multiplier" )))) // Carbon reacts violently with supermatter, creating heat and leaving O2
 		oxygen += carbon
 		carbon = 0
 
 	// Temperature & phoron handling
 	if (removed.temperature < getSMVar( smlevel, "heat_damage_level" ))
 		if(phoron)
-			damage -= ( phoron*getSMVar( smlevel, "phoron_heal_rate" ))
+			damage = max( 0, damage-( phoron*getSMVar( smlevel, "phoron_heal_rate" )))
 	else
 		var/delta_temp = removed.temperature-getSMVar( smlevel, "heat_damage_level" )
-		damage += ( delta_temp*getSMVar( smlevel, "damage_per_degree" ))
+		damage = max( 0, ( delta_temp*getSMVar( smlevel, "damage_per_degree" )))
 
 	if( power_percent > OVERCHARGE_LEVEL ) // If we're more than 120%
-		heat *= getSMVar( smlevel, "overcharge_heat_multiplier" )
+		heat = max( 0, heat+( heat*getSMVar( smlevel, "overcharge_heat_multiplier" )))
 		if( prob( getSMVar( smlevel, "crit_fail_chance" )))
 			spark()
 
 	// Release phoron & oxygen
 	var/temp_percent = ( removed.temperature/getSMVar( smlevel, "heat_damage_level" ))
-	phoron += temp_percent*getSMVar( smlevel, "phoron_release" )
-	oxygen += temp_percent*getSMVar( smlevel, "oxygen" )
+	phoron = max( 0, phoron+temp_percent*getSMVar( smlevel, "phoron_release" ))
+	oxygen = max( 0, oxygen+temp_percent*getSMVar( smlevel, "o2_release" ))
 
 	//Release reaction gasses
 	removed.gas["phoron"] = phoron
