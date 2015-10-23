@@ -18,7 +18,8 @@ var/list/delayed_garbage = list()
 
 /datum/controller/process/garbage_collector/setup()
 	name = "garbage"
-	schedule_interval = 2 SECONDS
+	schedule_interval = 20	// every 2 seconds
+	cpu_threshold = 70
 
 	if(!garbage_collector)
 		garbage_collector = src
@@ -56,7 +57,9 @@ var/list/delayed_garbage = list()
 		#endif
 		if(A && A.gcDestroyed == GCd_at_time) // So if something else coincidently gets the same ref, it's not deleted by mistake
 			// Something's still referring to the qdel'd object.  Kill it.
+			#ifdef GC_DEBUG
 			testing("GC: -- \ref[A] | [A.type] was unable to be GC'd and was deleted --")
+			#endif
 			logging["[A.type]"]++
 			del(A)
 			++dels
@@ -66,6 +69,7 @@ var/list/delayed_garbage = list()
 			testing("GC: [refID] properly GC'd at [world.time] with timeout [GCd_at_time]")
 		#endif
 		destroyed.Cut(1, 2)
+		scheck()		//Should allow for cpu thresholds
 
 /datum/controller/process/garbage_collector/proc/AddTrash(datum/A)
 	if(!istype(A) || !isnull(A.gcDestroyed))

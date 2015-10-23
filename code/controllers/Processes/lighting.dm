@@ -1,6 +1,7 @@
 /datum/controller/process/lighting/setup()
 	name = "lighting"
-	schedule_interval = 5 // every .5 second
+	schedule_interval = 10 // every .5 second
+	cpu_threshold = 80
 	lighting_controller.initializeLighting()
 
 /datum/controller/process/lighting/doWork()
