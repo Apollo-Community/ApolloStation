@@ -4,15 +4,12 @@ proc/load_donators()
 	donator_list = file2list("config/donators.txt")
 
 proc/is_donator(client/C)
-	if(C.IsByondMember())
-		return 1
 	if(donator_list)
 		for(var/line in donator_list)
-			if(!length(line))				continue
-			if(line && findtext(line, "[C]"))
+			if(findtext(line, "[C]"))
 				return 1
-
-	return 0
+	if(C.IsByondMember())	// unlikely people will be byond members (sorry its tru)
+		return 1
 
 proc/donator_tier(client/C)
 	if(C.IsByondMember())

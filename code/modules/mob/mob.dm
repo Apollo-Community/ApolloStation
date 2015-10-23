@@ -814,7 +814,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 				else																									entry = "Player"
 				if(C.afk)																							entry += "   AFK"	//pitty tabs ruin the column
 				stat("[C.key]", entry)
-			sleep(5)
+			sleep(20)
 		if(client && client.holder)
 			if(statpanel("Status"))	//not looking at that panel
 				stat("Location:\t","([x], [y], [z])")
