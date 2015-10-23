@@ -186,7 +186,7 @@ datum/controller/process/proc/kill()
 
 		del(src) // This should del
 
-datum/controller/process/proc/scheck(var/tickId = 0)
+datum/controller/process/proc/scheck()
 	if (killed)
 		// The kill proc is the only place where killed is set.
 		// The kill proc should have deleted this datum, and all sleeping procs that are
@@ -195,9 +195,9 @@ datum/controller/process/proc/scheck(var/tickId = 0)
 
 	// For each tick the process defers, it increments the cpu_defer_count so we don't
 	// defer indefinitely
-	if (world.cpu >= cpu_threshold + cpu_defer_count * 10)
+	if (world.cpu > cpu_threshold + cpu_defer_count)
 		sleep(1)
-		cpu_defer_count++
+		cpu_defer_count+=5
 		last_slept = world.timeofday
 	else
 		// If world.timeofday has rolled over, then we need to adjust.
