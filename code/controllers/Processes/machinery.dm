@@ -1,9 +1,12 @@
 /var/global/machinery_sort_required = 0
+/var/global/datum/controller/process/machinery/MachineProcess
 
 /datum/controller/process/machinery/setup()
 	name = "machinery"
 	schedule_interval = 40 // every 4 seconds
 	cpu_threshold = 40	// just keep this chugging along
+
+	MachineProcess = src
 
 /datum/controller/process/machinery/doWork()
 	internal_sort()

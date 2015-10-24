@@ -56,8 +56,7 @@
 		usr.client.debug_variables(antag)
 		message_admins("Admin [key_name_admin(usr)] is debugging the [antag.role_text] template.")
 */
-
-/client/proc/debug_controller(controller in list("Master","Ticker","Ticker Process","Air","Jobs","Sun","Radio","Supply","Shuttles","Emergency Shuttle","Configuration","pAI", "Cameras", "Transfer Controller", "Gas Data","Event","Plants","Alarm","Nano"))
+/client/proc/debug_controller(controller in list("Master","Ticker","Ticker Process","Air","Air Process","Machine Process","Lighting Process","Obj Process","Mob Process", "Jobs","Sun","Radio","Supply","Shuttles","Emergency Shuttle","Configuration","pAI", "Cameras", "Transfer Controller", "Gas Data","Event","Plants","Alarm","Nano"))
 	set category = "Debug"
 	set name = "Debug Controller"
 	set desc = "Debug the various periodic loop controllers for the game (be careful!)"
@@ -73,6 +72,21 @@
 		if("Ticker Process")
 			debug_variables(tickerProcess)
 			feedback_add_details("admin_verb","DTickerProcess")
+		if("Air Process")
+			debug_variables(AirProcess)
+			feedback_add_details("admin_verb","DAirProcess")
+		if("Machine Process")
+			debug_variables(MachineProcess)
+			feedback_add_details("admin_verb","DMachineProcess")
+		if("Obj Process")
+			debug_variables(ObjProcess)
+			feedback_add_details("admin_verb","DObjProcess")
+		if("Mob Process")
+			debug_variables(MobProcess)
+			feedback_add_details("admin_verb","DMobProcess")
+		if("Lighting Process")
+			debug_variables(LightingProcess)
+			feedback_add_details("admin_verb","DLightingProcess")
 		if("Air")
 			debug_variables(air_master)
 			feedback_add_details("admin_verb","DAir")
