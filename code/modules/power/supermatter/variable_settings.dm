@@ -12,7 +12,7 @@
 
 	var/collector_range = 10 // Max range of collectors, decreaes power output as distance increases
 
-	var/o2_release = 2 // Amount of o2 released if the core is at maximum damage
+	var/o2_release = 0.8 // Amount of o2 released if the core is at maximum damage
 	var/o2_turbo_multiplier = 0 // How much oxygen will multiply power and heat output by, per mole
 	var/o2_requirement = 0 // How much oxygen is required to keep the engine from critically failing, as a percent of the total gas composition
 	var/suffocation_damage = 0 // How much damage will be done if the engine doesn't have enough O2
@@ -24,7 +24,7 @@
 
 	var/n2o_power_loss = 0 // The rate that N2O decreases power output, per mole
 
-	var/phoron_release = 2 // Amount of phoron released if the core is at maximum damage
+	var/phoron_release = 0.5 // Amount of phoron released if the core is at maximum damage
 	var/phoron_heal_rate = 0 // The rate that phoron heals the core, per mole
 
 	var/emitter_damage = 0 // The amount of damage the emitter does per hit
@@ -34,7 +34,7 @@
 	var/heat_damage_level = 1000 // The temperature at which heat will start damaging the crystal
 	var/damage_per_degree = 1 // How much damage per degree over heat_damage_level will cause
 
-	var/explosions_size = 25 // The size of the explosion
+	var/explosion_size = 25 // The size of the explosion
 	var/delamination_size = 25 // The size of the vorbis wave burst
 
 	var/vacuum_damage = 0 // The amount of damage done when the SM is sitting in a vacuum
@@ -88,7 +88,7 @@
 	emitter_damage = 20
 	color = "#0099FF"
 	color_name = "blue"
-	explosions_size = 25
+	explosion_size = 25
 	delamination_size = 35
 	vacuum_damage = 25
 	emitter_damage = 10
@@ -109,7 +109,7 @@
 	emitter_damage = 30
 	color = "#6600FF"
 	color_name = "purple"
-	explosions_size = 25
+	explosion_size = 25
 	delamination_size = 40
 	vacuum_damage = 50
 	emitter_damage = 15
@@ -133,7 +133,7 @@
 	emitter_damage = 40
 	color = "#FF00FF"
 	color_name = "pink"
-	explosions_size = 45
+	explosion_size = 45
 	delamination_size = 45
 	vacuum_damage = 60
 	emitter_damage = 20
@@ -157,7 +157,7 @@
 	emitter_damage = 50
 	color = "#FF3399"
 	color_name = "magenta"
-	explosions_size = 45
+	explosion_size = 45
 	delamination_size = 55
 	vacuum_damage = 70
 	emitter_damage = 25
@@ -181,7 +181,7 @@
 	emitter_damage = 60
 	color = "#FFFF00"
 	color_name = "yellow"
-	explosions_size = 55
+	explosion_size = 55
 	delamination_size = 65
 	vacuum_damage = 80
 	emitter_damage = 30
@@ -205,7 +205,7 @@
 	emitter_damage = 70
 	color = "#FF6600"
 	color_name = "orange"
-	explosions_size = 55
+	explosion_size = 55
 	delamination_size = 75
 	vacuum_damage = 90
 	emitter_damage = 35
@@ -229,7 +229,7 @@
 	emitter_damage = 80
 	color = "#FF0000"
 	color_name = "red"
-	explosions_size = 60
+	explosion_size = 60
 	delamination_size = 85
 	vacuum_damage = 100
 	emitter_damage = 40

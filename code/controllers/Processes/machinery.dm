@@ -2,7 +2,8 @@
 
 /datum/controller/process/machinery/setup()
 	name = "machinery"
-	schedule_interval = 20 // every 2 seconds
+	schedule_interval = 40 // every 4 seconds
+	cpu_threshold = 40	// just keep this chugging along
 
 /datum/controller/process/machinery/doWork()
 	internal_sort()

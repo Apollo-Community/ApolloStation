@@ -172,6 +172,9 @@
 			winset(src, null, "command=\".configure graphics-hwmode off\"")
 			winset(src, null, "command=\".configure graphics-hwmode on\"")
 
+	if(byond_version < config.recommended_byond)
+		src << "\red This server is running Byond-[config.recommended_byond](BETA). If you experience any lighting issues we suggest you upgrade here - http://www.byond.com/download/"
+
 	log_client_to_db()
 
 	send_resources()

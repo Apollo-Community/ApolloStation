@@ -10,7 +10,7 @@
 		usr.loc = pick(get_area_turfs(A))
 
 		log_admin("[key_name(usr)] jumped to [A]")
-		message_admins("[key_name_admin(usr)] jumped to [A] (<A HREF='?_src_=holder;adminplayerobservejump=\ref[usr]'>JMP</A>)")
+		//message_admins("[key_name_admin(usr)] jumped to [A] (<A HREF='?_src_=holder;adminplayerobservejump=\ref[usr]'>JMP</A>)")		Removed on order of the donnerernrrnrn spam
 		feedback_add_details("admin_verb","JA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
 		alert("Admin jumping disabled")

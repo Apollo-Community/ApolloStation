@@ -87,7 +87,7 @@
 		explosion(epicenter, \
 		          getSMVar( smlevel, "explosion_size" )/3, \
 		          getSMVar( smlevel, "explosion_size" )/2, \
-		          getSMVar( smlevel, "explosion_size" )/1, \
+		          getSMVar( smlevel, "explosion_size" ), \
 		          getSMVar( smlevel, "explosion_size" )*2, 1)
 
 		supermatter_delamination( epicenter, getSMVar( smlevel, "delamination_size" ), smlevel, 1 )
@@ -240,7 +240,7 @@
 	// Release phoron & oxygen
 	var/temp_percent = ( removed.temperature/getSMVar( smlevel, "heat_damage_level" ))
 	phoron = max( 0, phoron+temp_percent*getSMVar( smlevel, "phoron_release" ))
-	oxygen = max( 0, oxygen+temp_percent*getSMVar( smlevel, "oxygen" ))
+	oxygen = max( 0, oxygen+temp_percent*getSMVar( smlevel, "o2_release" ))
 
 	//Release reaction gasses
 	removed.gas["phoron"] = phoron

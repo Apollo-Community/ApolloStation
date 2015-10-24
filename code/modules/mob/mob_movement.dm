@@ -348,34 +348,6 @@
 /mob/proc/SelfMove(turf/n, direct)
 	return Move(n, direct)
 
-
-///Process_Grab()
-///Called by client/Move()
-///Checks to see if you are being grabbed and if so attemps to break it
-/client/proc/Process_Grab()
-	if(locate(/obj/item/weapon/grab, locate(/obj/item/weapon/grab, mob.grabbed_by.len)))
-		var/list/grabbing = list()
-		if(istype(mob.l_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = mob.l_hand
-			grabbing += G.affecting
-		if(istype(mob.r_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = mob.r_hand
-			grabbing += G.affecting
-		for(var/obj/item/weapon/grab/G in mob.grabbed_by)
-			if((G.state == 1)&&(!grabbing.Find(G.assailant)))	qdel(G)
-			if(G.state == 2)
-				move_delay = world.time + 10
-				if(!prob(25))	return 1
-				mob.visible_message("\red [mob] has broken free of [G.assailant]'s grip!")
-				qdel(G)
-			if(G.state == 3)
-				move_delay = world.time + 10
-				if(!prob(5))	return 1
-				mob.visible_message("\red [mob] has broken free of [G.assailant]'s headlock!")
-				qdel(G)
-	return 0
-
-
 ///Process_Incorpmove
 ///Called by client/Move()
 ///Allows mobs to run though walls
