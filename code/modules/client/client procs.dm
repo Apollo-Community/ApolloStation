@@ -122,6 +122,15 @@
 
 	src << "\red If the title screen is black, resources are still downloading. Please be patient until the title screen appears."
 
+	for(var/client/target in clients)
+		if( !target )
+			continue
+
+		if(target.prefs.toggles & CHAT_OOC)
+			target << "<span class='notice'><b>[src.key] has connected to the server.</b></span>"
+
+			if( target.prefs.toggles & SOUND_NOTIFICATIONS )
+				target << sound( 'sound/effects/oocjoin.ogg' )
 
 	clients += src
 	directory[ckey] = src
@@ -163,6 +172,20 @@
 			winset(src, null, "command=\".configure graphics-hwmode off\"")
 			winset(src, null, "command=\".configure graphics-hwmode on\"")
 
+	if(byond_version < config.recommended_byond)
+		src << "\red This server is running Byond-[config.recommended_byond](BETA). If you experience any lighting issues we suggest you upgrade here - http://www.byond.com/download/"
+
+	donator = is_donator(src)
+
+	var/entry = ""
+	if (holder && (R_MOD & holder.rights))						entry = "Mod"
+	else if(holder && (R_ADMIN & holder.rights))			entry = "Admin"
+	else if(holder && (R_DEBUG & holder.rights))			entry = "Dev"
+	else if(donator)																	entry = "Donator"
+	else																							entry = "Player"
+
+	stat_player_list.Add(src.ckey)				//Mostly used to build a list before the game ticker starts and the process scheduler takes over maintenence.
+	stat_player_list[src.ckey] = entry
 	log_client_to_db()
 
 	send_resources()
@@ -178,6 +201,8 @@
 		admins -= src
 	directory -= ckey
 	clients -= src
+
+	stat_player_list.Remove(src)
 	return ..()
 
 

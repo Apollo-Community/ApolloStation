@@ -136,12 +136,6 @@
 /mob/living/silicon/proc/show_malf_ai()
 	return 0
 
-
-// this function displays the station time in the status panel
-/mob/living/silicon/proc/show_station_time()
-	stat("Station Time:\t", "[worldtime2text()]")
-
-
 // this function displays the shuttles ETA in the status panel if the shuttle has been called
 /mob/living/silicon/proc/show_emergency_shuttle_eta()
 	if(emergency_shuttle)
@@ -155,7 +149,6 @@
 	..()
 	statpanel("Status")
 	if (src.client.statpanel == "Status")
-		show_station_time()
 		show_emergency_shuttle_eta()
 		show_system_integrity()
 		show_malf_ai()

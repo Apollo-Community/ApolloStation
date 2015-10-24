@@ -17,9 +17,9 @@
 	var/frequency = 1439
 	var/datum/radio_frequency/radio_connection
 
-	var/hibernate = 0 //Do we even process?
+	var/hibernate = 0
 	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
-	var/list/scrubbing_gas = list("carbon_dioxide")
+	var/list/scrubbing_gas = list("carbon_dioxide", "phoron", "sleeping_agent")
 
 	var/panic = 0 //is this scrubber panicked?
 
@@ -37,10 +37,14 @@
 
 	icon = null
 	initial_loc = get_area(loc)
+
 	area_uid = initial_loc.uid
 	if (!id_tag)
 		assign_uid()
 		id_tag = num2text(uid)
+	if(ticker && ticker.current_state == 3)//if the game is running
+		src.initialize()
+		src.broadcast_status()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/update_icon(var/safety = 0)
 	if(!check_icon_cache())
@@ -117,13 +121,15 @@
 	radio_filter_out = frequency==initial(frequency)?(RADIO_TO_AIRALARM):null
 	if (frequency)
 		set_frequency(frequency)
-		src.broadcast_status()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/process()
 	..()
 
 	if (hibernate)
 		return 1
+
+	last_power_draw = 0
+	last_flow_rate = 0
 
 	if (!node)
 		use_power = 0
@@ -176,7 +182,7 @@
 		use_power = !use_power
 
 	if(signal.data["panic_siphon"]) //must be before if("scrubbing" thing
-		panic = text2num(signal.data["panic_siphon"])
+		panic = text2num(signal.data["panic_siphon"] != null)
 		if(panic)
 			use_power = 1
 			scrubbing = 0

@@ -1,10 +1,15 @@
+/var/global/datum/controller/process/mob/MobProcess
+
 /datum/controller/process/mob
 	var/tmp/datum/updateQueue/updateQueueInstance
 
 /datum/controller/process/mob/setup()
 	name = "mob"
-	schedule_interval = 20 // every 2 seconds
+	schedule_interval = 40 // every 2 seconds
+	cpu_threshold = 50
 	updateQueueInstance = new
+
+	MobProcess = src
 
 /datum/controller/process/mob/started()
 	..()

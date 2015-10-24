@@ -36,3 +36,9 @@ proc/isDay(var/month, var/day)
 		// Uncomment this out when debugging!
 		//else
 			//return 1
+
+// Returns whether or not time since start is greater than delay or less than 0
+/proc/delayPassed( var/delay, var/start )
+	if((( world.timeofday - start) > delay ) || (( world.timeofday - start ) < 0))
+		return 1
+	return 0

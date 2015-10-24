@@ -3,7 +3,8 @@
 
 /datum/controller/process/disease/setup()
 	name = "disease"
-	schedule_interval = 20 // every 2 seconds
+	schedule_interval = 30 // every 3 seconds
+	cpu_threshold = 20
 	updateQueueInstance = new
 
 /datum/controller/process/disease/doWork()

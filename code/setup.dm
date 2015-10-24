@@ -858,6 +858,8 @@ var/list/be_special_flags = list(
 #define STAGE_FIVE	9
 #define STAGE_SUPER	11
 
-// Supermatter defines
+#define TICKS_IN_DAY 864000
+#define TICKS_IN_SECOND 10
+
 #define MIN_SUPERMATTER_LEVEL 1
 #define MAX_SUPERMATTER_LEVEL 9

@@ -30,13 +30,6 @@
 
 		return "[output][and_text][input[index]]"
 
-
-/proc/ConvertReqString2List(var/list/source_list)
-	var/list/temp_list = params2list(source_list)
-	for(var/O in temp_list)
-		temp_list[O] = text2num(temp_list[O])
-	return temp_list
-
 //Returns list element or null. Should prevent "index out of bounds" error.
 proc/listgetindex(var/list/list,index)
 	if(istype(list) && list.len)
@@ -182,9 +175,11 @@ proc/listclearnulls(list/list)
 
 //Return a list with no duplicate entries
 /proc/uniquelist(var/list/L)
-	. = list()
-	for(var/i in L)
-		. |= i
+	var/list/K = list()
+	for(var/item in L)
+		if(!(item in K))
+			K += item
+	return K
 
 //Mergesort: divides up the list into halves to begin the sort
 /proc/sortKey(var/list/client/L, var/order = 1)
@@ -348,12 +343,6 @@ proc/listclearnulls(list/list)
 		return (result + L.Copy(Li, 0))
 	return (result + R.Copy(Ri, 0))
 
-// Macros to test for bits in a bitfield. Note, that this is for use with indexes, not bit-masks!
-#define BITTEST(bitfield,index)  ((bitfield)  &   (1 << (index)))
-#define BITSET(bitfield,index)   (bitfield)  |=  (1 << (index))
-#define BITRESET(bitfield,index) (bitfield)  &= ~(1 << (index))
-#define BITFLIP(bitfield,index)  (bitfield)  ^=  (1 << (index))
-
 //Converts a bitfield to a list of numbers (or words if a wordlist is provided)
 /proc/bitfield2list(bitfield = 0, list/wordlist)
 	var/list/r = list()
@@ -379,12 +368,6 @@ proc/listclearnulls(list/list)
 			return key
 		i++
 	return null
-
-// Returns the key based on the index
-/proc/get_key_by_value(var/list/L, var/value)
-	for(var/key in L)
-		if(L[key] == value)
-			return key
 
 /proc/count_by_type(var/list/L, type)
 	var/i = 0
