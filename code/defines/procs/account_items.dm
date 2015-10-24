@@ -1,15 +1,15 @@
 /proc/log_acc_item_to_db( var/ckey, var/obj_type )
 	if( !ckey )
-		return
+		return 0
 
 	if( !obj_type )
-		return
+		return 0
 
 	if ( IsGuestKey(ckey) )
-		return
+		return 0
 
 	if( !dbcon_old.IsConnected() )
-		return
+		return 0
 
 	var/sql_ckey = ckey(ckey)
 	var/sql_item = sql_sanitize_text(obj_type)
@@ -24,12 +24,14 @@
 
 	// If the given query exists, we dont need to add it again
 	if(sql_id)
-		return
+		return 0
 
 	var/sql_time = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
 
 	var/DBQuery/query_insert = dbcon_old.NewQuery("INSERT INTO acc_items (id, ckey, item, time, donator) VALUES (null, '[sql_ckey]', '[sql_item]', '[sql_time]', 0)")
 	query_insert.Execute()
+
+	return 1
 
 /proc/remove_acc_item_from_db( var/ckey, var/obj_type )
 	if( !ckey )
