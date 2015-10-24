@@ -13,11 +13,11 @@
 		world << "[ckey] is a guest"
 		return
 
-	if(!dbcon_old.IsConnected())
+	if( !dbcon_old.IsConnected() )
 		world << "Database not connected"
 		return
 
-	var/sql_ckey = sql_sanitize_text(ckey)
+	var/sql_ckey = ckey(ckey)
 	var/sql_item = sql_sanitize_text(obj_type)
 
 	var/DBQuery/query = dbcon_old.NewQuery("SELECT id FROM acc_items WHERE ckey = '[sql_ckey]' AND item = '[sql_item]'")
@@ -35,7 +35,9 @@
 
 	world << "Entry not found, adding new account item"
 
-	var/DBQuery/query_insert = dbcon_old.NewQuery("INSERT INTO acc_items (id, ckey, item, time) VALUES (null, '[sql_ckey]', '[sql_item]', null)")
+	var/sql_time = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
+
+	var/DBQuery/query_insert = dbcon_old.NewQuery("INSERT INTO acc_items (id, ckey, item, time) VALUES (null, '[sql_ckey]', '[sql_item]', '[sql_time]')")
 	query_insert.Execute()
 
 /client/proc/add_acc_item()
