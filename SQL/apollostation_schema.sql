@@ -51,6 +51,7 @@ CREATE  TABLE IF NOT EXISTS `apollostation`.`acc_items` (
   `ckey` TEXT NOT NULL ,
   `item` TEXT NOT NULL ,
   `time` DATETIME NOT NULL ,
+  `donator` BIT NOT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = MyISAM
 DEFAULT CHARACTER SET = latin1;
