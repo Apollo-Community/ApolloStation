@@ -16,12 +16,9 @@ proc/donator_tier(client/C)
 		return "BYOND"		// TIER BYOND MASTERRACE?
 	if(donator_list)
 		for(var/line in donator_list)
-			if(!length(line))				continue
 			//Return the tier
-			if(findtext(line,"[C.ckey] - 1"))
-				return 1
-			else if(findtext(line,"[C.ckey] - 2"))
-				return 2
+			if(findtext(line,"[C.ckey] - 1"))				return 1
+			else if(findtext(line,"[C.ckey] - 2"))	return 2
 
 	return 0
 
@@ -30,10 +27,10 @@ proc/donator_tier(client/C)
 	set desc = "Checks your donation status"
 	set category = "OOC"
 
-	if(!is_donator(src))
-		src << "You are not a registered donator. If you have donated please contact a member of staff to enquire."
-	else
+	if(donator)		//swippity swoppity 
 		src << "You are registed as a tier [donator_tier(src)] donator"
+	else
+		src << "You are not a registered donator. If you have donated please contact a member of staff to enquire."
 
 /client/verb/cmd_don_say(msg as text)
 	set category = "OOC"
@@ -43,7 +40,7 @@ proc/donator_tier(client/C)
 	if(!msg)
 		return
 
-	if(!is_donator(src))
+	if(donator)
 		if(!check_rights(R_ADMIN|R_MOD))
 			usr << "Only donators and staff can use this command."
 			return
@@ -52,5 +49,5 @@ proc/donator_tier(client/C)
 
 	log_admin("DON: [key_name(src)] : [msg]")
 	for(var/client/C in clients)
-		if((C.holder && (C.holder.rights & R_ADMIN || C.holder.rights & R_MOD)) || is_donator(C))
+		if((C.holder && (C.holder.rights & R_ADMIN || C.holder.rights & R_MOD)) || C.donator)
 			C << "<span class='donatorsay'>" + create_text_tag("don", "DON:", C) + " <b>[src]: </b><span class='message'>[msg]</span></span>"
