@@ -1090,6 +1090,8 @@
 #include "code\modules\food\recipes_microwave.dm"
 #include "code\modules\games\cards.dm"
 #include "code\modules\genetics\side_effects.dm"
+#include "code\modules\holiday\account_items.dm"
+#include "code\modules\holiday\holloween\items.dm"
 #include "code\modules\hydroponics\biogenerator.dm"
 #include "code\modules\hydroponics\grown_inedible.dm"
 #include "code\modules\hydroponics\hydro_tools.dm"

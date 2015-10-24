@@ -28,42 +28,7 @@ CREATE  TABLE IF NOT EXISTS `apollostation`.`death` (
   `oxyloss` INT(11) NOT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = MyISAM
-AUTO_INCREMENT = 3409
 DEFAULT CHARACTER SET = latin1;
-
-
--- -----------------------------------------------------
--- Table `apollostation`.`karma`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `apollostation`.`karma` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT ,
-  `spendername` TEXT NOT NULL ,
-  `spenderkey` TEXT NOT NULL ,
-  `receivername` TEXT NOT NULL ,
-  `receiverkey` TEXT NOT NULL ,
-  `receiverrole` TEXT NOT NULL ,
-  `receiverspecial` TEXT NOT NULL ,
-  `isnegative` TINYINT(1) NOT NULL ,
-  `spenderip` TEXT NOT NULL ,
-  `time` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = MyISAM
-AUTO_INCREMENT = 943
-DEFAULT CHARACTER SET = latin1;
-
-
--- -----------------------------------------------------
--- Table `apollostation`.`karmatotals`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `apollostation`.`karmatotals` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT ,
-  `byondkey` TEXT NOT NULL ,
-  `karma` INT(11) NOT NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = MyISAM
-AUTO_INCREMENT = 244
-DEFAULT CHARACTER SET = latin1;
-
 
 -- -----------------------------------------------------
 -- Table `apollostation`.`library`
@@ -76,9 +41,19 @@ CREATE  TABLE IF NOT EXISTS `apollostation`.`library` (
   `category` TEXT NOT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = MyISAM
-AUTO_INCREMENT = 184
 DEFAULT CHARACTER SET = latin1;
 
+-- -----------------------------------------------------
+-- Table `apollostation`.`acc_items`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `apollostation`.`acc_items` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `ckey` TEXT NOT NULL ,
+  `item` TEXT NOT NULL ,
+  `time` DATETIME NOT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = latin1;
 
 -- -----------------------------------------------------
 -- Table `apollostation`.`population`
@@ -90,9 +65,7 @@ CREATE  TABLE IF NOT EXISTS `apollostation`.`population` (
   `time` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = MyISAM
-AUTO_INCREMENT = 2544
 DEFAULT CHARACTER SET = latin1;
-
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
