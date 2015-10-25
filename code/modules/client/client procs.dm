@@ -202,7 +202,6 @@
 	directory -= ckey
 	clients -= src
 
-	stat_player_list.Remove(src)
 	return ..()
 
 

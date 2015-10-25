@@ -37,4 +37,4 @@
 		stat_player_list.Add(C.ckey)				//Associated lists are silly, stat_player_list.Add(C.ckey = entry) assumes you're calling .Add() with arguments
 		stat_player_list[C.ckey] = entry
 
-	stat_player_list = sortList(stat_player_list) 	//Prutty. (lets just hope it works)
+	//stat_player_list = sortList(stat_player_list) 	//Other sorts null the list, this one doesnt keep assocoated vals
