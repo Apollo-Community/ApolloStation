@@ -369,4 +369,6 @@ client/proc/loadAccountItems()
 
 	while(query.NextRow())
 		var/item = query.item[1]
-		prefs.account_items += "[item]"
+
+		if( gear_datums[item] )
+			prefs.account_items += "[item]"
