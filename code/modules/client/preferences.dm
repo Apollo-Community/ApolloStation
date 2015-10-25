@@ -989,10 +989,16 @@ datum/preferences
 		else if(href_list["task"] == "clear")
 			gear.Cut()
 	else if(href_list["preference"] == "acc_items")
+		if( !account_items.len )
+			src << "There are no items tied to your account."
+			return
+
 		var/list/valid_gear_choices = list()
 
-		for(var/gear_name in gear_datums)
+		for(var/gear_name in account_items)
 			var/datum/gear/G = gear_datums[gear_name]
+			if( !G )
+				continue
 			if( !G.account )
 				continue
 			valid_gear_choices += gear_name
