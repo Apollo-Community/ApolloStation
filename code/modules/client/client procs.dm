@@ -177,6 +177,7 @@
 
 	log_client_to_db()
 
+	loadAccountItems()
 	send_resources()
 	nanomanager.send_resources(src)
 
@@ -350,3 +351,22 @@ client/proc/MayRespawn()
 
 	// Something went wrong, client is usually kicked or transfered to a new mob at this point
 	return 0
+
+client/proc/loadAccountItems()
+	if(!dbcon_old.IsConnected())
+		return
+	if( !prefs )
+		return
+	if( !prefs.account_items )
+		return
+
+	prefs.account_items.Cut()
+
+	var/sql_ckey = ckey(ckey)
+
+	var/DBQuery/query = dbcon_old.NewQuery("SELECT item FROM acc_items WHERE ckey = '[sql_ckey]'")
+	query.Execute()
+
+	while(query.NextRow())
+		var/item = query.item[1]
+		prefs.account_items += "[item]"
