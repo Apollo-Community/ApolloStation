@@ -800,21 +800,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/Stat()
 	..()
 	if(!client.afk)
-		if(statpanel("Players"))				// TODO: Hook this to login()/logout() instead of re-calculating every Mob.stat() call
+		if(statpanel("Players"))
 			stat("Total Players: ","[clients.len]")
-			for(var/client/C in clients)
-				var/entry = ""
-				if(C.holder && C.holder.fakekey)								//Enables support for stealth mode
-					stat("[C.holder.fakekey]","Player")
-					continue
-				else if (C.holder && (R_MOD & C.holder.rights))				entry = "Mod"
-				else if(C.holder && (R_ADMIN & C.holder.rights))			entry = "Admin"
-				else if(C.holder && (R_DEBUG & C.holder.rights))			entry = "Dev"
-				else if(is_donator(C))																entry = "Donator"
-				else																									entry = "Player"
-				if(C.afk)																							entry += "\tAFK"
-				stat("[C.key]", entry)
-			sleep(5)
+			for(var/L in stat_player_list)
+				var/E = stat_player_list[L]
+				stat(L, E)
+
+			sleep(20)
 		if(client && client.holder)
 			if(statpanel("Status"))	//not looking at that panel
 				stat("Location:\t","([x], [y], [z])")

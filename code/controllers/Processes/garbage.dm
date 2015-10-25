@@ -69,7 +69,6 @@ var/list/delayed_garbage = list()
 			testing("GC: [refID] properly GC'd at [world.time] with timeout [GCd_at_time]")
 		#endif
 		destroyed.Cut(1, 2)
-		scheck()		//Should allow for cpu thresholds
 
 /datum/controller/process/garbage_collector/proc/AddTrash(datum/A)
 	if(!istype(A) || !isnull(A.gcDestroyed))

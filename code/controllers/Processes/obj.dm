@@ -1,4 +1,6 @@
 var/global/list/object_profiling = list()
+/var/global/datum/controller/process/obj/ObjProcess
+
 /datum/controller/process/obj
 	var/tmp/datum/updateQueue/updateQueueInstance
 
@@ -7,6 +9,8 @@ var/global/list/object_profiling = list()
 	schedule_interval = 40 // every 4 seconds
 	cpu_threshold = 50
 	updateQueueInstance = new
+
+	ObjProcess = src
 
 /datum/controller/process/obj/started()
 	..()

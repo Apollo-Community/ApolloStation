@@ -14,13 +14,13 @@
 			entry = "<b>{<font color='#FF3333'>Admin</font>} ~ </b> [C.key]"
 		else if(C.holder && (R_DEBUG & C.holder.rights) && !C.holder.fakekey)
 			entry = "<b>{<font color='#FF9933'>Dev</font>} ~ </b> [C.key]"
-		else if(is_donator(C))
+		else if(C.donator)
 			entry = "<b>{<font color='#990099'>Donator</font>} ~ </b> [C.key]"
-		else if(is_titled(C))
+		/*else if(is_titled(C))
 			if(get_title(C) == 1)
 				entry = "<b>{<font color='#009933'>Event</font>} ~ </b> [C.key]"
 			else
-				entry = "<b>{<font color='#7A411A'>Spriter</font>} ~ </b> [C.key]"
+				entry = "<b>{<font color='#7A411A'>Spriter</font>} ~ </b> [C.key]"*/
 		else
 			entry = "<b>{<font color='#666666'>Player</font>} ~ </b> [C.key]"
 
