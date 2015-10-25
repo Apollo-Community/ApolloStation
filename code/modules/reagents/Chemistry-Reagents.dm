@@ -2879,6 +2879,21 @@ datum
 
 				holder.remove_reagent(src.id, 0.1)
 
+		drink/coffee/pumpkinspice
+			name = "Pumpkin spice Latte"
+			id = "pspice_latte"
+			description = "A drink that is popular with a certain group of humans."
+
+			glass_icon_state = "pumpkinspice"
+			glass_name = "cup of pumpkin spice latte"
+			glass_desc = "A drink that is popular with a certain group of humans."
+
+			on_mob_life(var/mob/living/M as mob)
+				..()
+
+				if( prob( 0.001 ))
+					M << "You are feeling particularily smug."
+
 		drink/coffee/icecoffee
 			name = "Iced Coffee"
 			id = "icecoffee"
