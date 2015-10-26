@@ -27,7 +27,7 @@ proc/donator_tier(client/C)
 	set desc = "Checks your donation status"
 	set category = "OOC"
 
-	if(donator)		//swippity swoppity 
+	if(donator)		//swippity swoppity
 		src << "You are registed as a tier [donator_tier(src)] donator"
 	else
 		src << "You are not a registered donator. If you have donated please contact a member of staff to enquire."
@@ -40,7 +40,7 @@ proc/donator_tier(client/C)
 	if(!msg)
 		return
 
-	if(donator)
+	if(!donator)
 		if(!check_rights(R_ADMIN|R_MOD))
 			usr << "Only donators and staff can use this command."
 			return
