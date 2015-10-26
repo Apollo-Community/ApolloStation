@@ -963,7 +963,7 @@
 "asA" = (/obj/effect/decal/cleanable/dirt,/obj/structure/closet/crate,/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,/turf/simulated/floor/plating,/area/maintenance/evahallway)
 "asB" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/maintenance/evahallway)
 "asC" = (/obj/machinery/camera{c_tag = "Brig West"; dir = 4; network = list("SS13")},/obj/item/device/radio/intercom{freerange = 1; frequency = 1459; name = "Station Intercom (General)"; pixel_x = -30},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden,/turf/simulated/floor{icon_state = "red"; dir = 8},/area/security/brig)
-"asD" = (/obj/machinery/door_timer/cell_1{pixel_x = 32; step_x = 0},/turf/simulated/floor,/area/security/brig)
+"asD" = (/obj/machinery/door_timer/cell_1{pixel_x = 32;},/turf/simulated/floor,/area/security/brig)
 "asE" = (/obj/machinery/alarm{dir = 4; icon_state = "alarm0"; pixel_x = -22; pixel_y = 0},/obj/machinery/librarycomp{pixel_y = 0},/obj/structure/table,/turf/simulated/floor,/area/security/prison)
 "asF" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor,/area/security/prison)
 "asG" = (/obj/structure/table,/obj/item/device/taperecorder{pixel_x = -4; pixel_y = 2},/turf/simulated/floor,/area/security/prison)
