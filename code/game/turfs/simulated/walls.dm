@@ -98,7 +98,7 @@
 		overlays += damage_overlays[overlay]
 
 	if( paint )
-		var/image/img = image(icon = paint.icon, icon_state = "[paint.icon_state_wall][smoothwall_connections]")
+		var/image/img = image(icon = paint.icon, icon_state = "[paint.icon_wall_base][smoothwall_connections]")
 
 		img.color = paint.color
 		img.layer = TURF_LAYER+0.1

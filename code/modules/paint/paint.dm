@@ -2,7 +2,9 @@
 	var/name = "white"
 	var/color = "#BABABA"
 	var/icon = 'icons/effects/paint.dmi'
-	var/icon_state_wall = "paint_wall"
+	var/static/icon_wall_base = "base_wall"
+	var/static/icon_wall_stripe0 = "stripe0_wall"
+	var/static/icon_wall_stripe1 = "stripe1_wall"
 
 /datum/paint/red
 	name = "red"
