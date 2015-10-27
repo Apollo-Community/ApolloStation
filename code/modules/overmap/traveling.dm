@@ -97,16 +97,20 @@
 
 		// Landing on a moon or other planetoid
 		if( sector.metadata && sector.metadata.landing_area )
-			var/area/A = locate( sector.metadata.landing_area in return_areas() )
+			var/area/A = locate( sector.metadata.landing_area ) in return_areas()
 
-			object.loc = pick( get_area_turfs( A ))
-			object.dir = src.dir
+			var/turf/T = pick( get_area_turfs( A ))
+			if( T )
+				object.loc = T
+				object.dir = src.dir
+
+				fadein()
+
+				object = null
+				qdel( src )
+				return
 
 			fadein()
-
-			object = null
-			qdel( src )
-
 			return
 
 		// Put in the local sector based on where they were in the overmap
