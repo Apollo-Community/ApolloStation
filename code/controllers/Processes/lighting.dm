@@ -1,27 +1,40 @@
+//MOVED : from /code/modules/lighting/lighting_process.dm
+/var/global/datum/controller/process/lighting/LightingProcess
+
 /datum/controller/process/lighting/setup()
 	name = "lighting"
-	schedule_interval = 10 // every .5 second
+	schedule_interval = 10		//This was 5, buuut I'm a daredevil
 	cpu_threshold = 80
-	lighting_controller.initializeLighting()
+
+	create_lighting_overlays()
+	LightingProcess = src
 
 /datum/controller/process/lighting/doWork()
-	lighting_controller.lights_workload_max = \
-		max(lighting_controller.lights_workload_max, lighting_controller.lights.len)
+	var/list/lighting_update_lights_old = lighting_update_lights //We use a different list so any additions to the update lists during a delay from scheck() don't cause things to be cut from the list without being updated.
+	lighting_update_lights = null //Nulling it first because of http://www.byond.com/forum/?post=1854520
+	lighting_update_lights = list()
 
-	for(var/datum/light_source/L in lighting_controller.lights)
-		if(L && L.check())
-			lighting_controller.lights.Remove(L)
+	for(var/datum/light_source/L in lighting_update_lights_old)
+		if(L.destroyed || L.check() || L.force_update)
+			L.remove_lum()
+			if(!L.destroyed)
+				L.apply_lum()
+
+		else if(L.vis_update)	//We smartly update only tiles that became (in) visible to use.
+			L.smart_vis_update()
+
+		L.vis_update = 0
+		L.force_update = 0
+		L.needs_update = 0
 
 		scheck()
 
-	lighting_controller.changed_turfs_workload_max = \
-		max(lighting_controller.changed_turfs_workload_max, lighting_controller.changed_turfs.len)
+	var/list/lighting_update_overlays_old = lighting_update_overlays //Same as above.
+	lighting_update_overlays = null //Same as above
+	lighting_update_overlays = list()
 
-	for(var/turf/T in lighting_controller.changed_turfs)
-		if(T && T.lighting_changed)
-			T.shift_to_subarea()
+	for(var/atom/movable/lighting_overlay/O in lighting_update_overlays_old)
+		O.update_overlay()
+		O.needs_update = 0
 
 		scheck()
-
-	if(lighting_controller.changed_turfs && lighting_controller.changed_turfs.len)
-		lighting_controller.changed_turfs.len = 0 // reset the changed list

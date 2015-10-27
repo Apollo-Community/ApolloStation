@@ -486,7 +486,7 @@ var/list/admin_verbs_mentor = list(
 		feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return
 	else
-		if (is_donator(src))
+		if (donator)
 			if (donator_tier(src) == 2)
 				var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
 				if(new_ooccolor)

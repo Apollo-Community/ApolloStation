@@ -175,6 +175,17 @@
 	if(byond_version < config.recommended_byond)
 		src << "\red This server is running Byond-[config.recommended_byond](BETA). If you experience any lighting issues we suggest you upgrade here - http://www.byond.com/download/"
 
+	donator = is_donator(src)
+
+	var/entry = ""
+	if (holder && (R_MOD & holder.rights))						entry = "Mod"
+	else if(holder && (R_ADMIN & holder.rights))			entry = "Admin"
+	else if(holder && (R_DEBUG & holder.rights))			entry = "Dev"
+	else if(donator)																	entry = "Donator"
+	else																							entry = "Player"
+
+	stat_player_list.Add(src.ckey)				//Mostly used to build a list before the game ticker starts and the process scheduler takes over maintenence.
+	stat_player_list[src.ckey] = entry
 	log_client_to_db()
 
 	loadAccountItems()
@@ -191,6 +202,7 @@
 		admins -= src
 	directory -= ckey
 	clients -= src
+
 	return ..()
 
 
