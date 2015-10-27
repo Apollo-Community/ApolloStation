@@ -9,8 +9,6 @@ var/global/list/paint_colors = list( "red" = "#992E2E",
 									 "white" = "#BABABA",
 									 "phoron" = "#603F7F" )
 
-var/global/list/cached_icons = list()
-
 /obj/item/weapon/paint_can
 	desc = "It's a paint bucket."
 	name = "paint bucket"
@@ -72,11 +70,11 @@ var/global/list/cached_icons = list()
 
 /obj/item/weapon/paint_can/afterattack(turf/simulated/wall/target, mob/user, proximity)
 	if(!proximity) return
-	if(istype(target) && reagents.total_volume > 5)
+	if(istype(target) && volume > transfer_amount)
 		for(var/mob/O in viewers(user))
 			O.show_message("\red \The [target] has been splashed with paint by [user]!", 1)
-		spawn(0)
-			target.paint( paint_color )
+
+		target.paint( paint_color )
 	else
 		return ..()
 
