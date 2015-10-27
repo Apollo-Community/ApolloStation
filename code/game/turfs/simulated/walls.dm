@@ -66,8 +66,12 @@
 /turf/simulated/wall/examine(mob/user)
 	. = ..(user)
 
-	if(paint)
-		user << "It is painted with a coat of [paint.name] paint."
+	if(paint.base_color)
+		user << "It is painted with a coat of [paint.base_color] paint."
+	if( paint.stripe0_color )
+		user << "It has a [paint.stripe0_color] horizontal stripe across the bottom."
+	if( paint.stripe1_color )
+		user << "It has a [paint.stripe1_color] horizontal stripe across the top."
 
 	if(!damage)
 		user << "<span class='notice'>It looks fully intact.</span>"
@@ -311,10 +315,21 @@
 	//get the user's location
 	if( !istype(user.loc, /turf) )	return	//can't do this stuff whilst inside objects and such
 
-	if( istype( W, /obj/item/weapon/reagent_containers/glass/paint ))
+	if( istype( W, /obj/item/weapon/paint_can ))
 		if( !paint )
 			paint = new()
 
+		var/obj/item/weapon/paint_can/paint_can = W
+		paint( paint_can.paint_color )
+		paint_can.volume = max( 0, paint_can.volume-5 )
+
+	if( istype( W, /obj/item/weapon/paint_brush ))
+		if( !paint )
+			paint = new()
+
+		var/obj/item/weapon/paint_brush/brush = W
+		paint( brush.paint_color, brush.paint_mode )
+		brush.volume = max( 0, brush.volume-1 )
 
 	if(rotting)
 		if(istype(W, /obj/item/weapon/weldingtool) )

@@ -619,11 +619,9 @@
 	var/brightness_power = 1
 	var/brightness_color = null
 
-/obj/item/weapon/light/proc/paint( var/datum/paint/new_paint )
-	color = new_paint.color
-	light_color = new_paint.color
-
-	qdel( new_paint )
+/obj/item/weapon/light/proc/paint( var/color )
+	color = color
+	light_color = color
 
 /obj/item/weapon/light/candle
 	name = "candle"

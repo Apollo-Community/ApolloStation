@@ -1,6 +1,4 @@
 /datum/paint
-	var/name = ""
-
 	var/static/icon = 'icons/effects/paint.dmi'
 	var/static/base_icon = "base_wall"
 	var/static/stripe0_icon = "stripe0_wall"
@@ -8,7 +6,7 @@
 
 	var/base_color = null
 	var/stripe0_color = null
-	var/streip1_color = null
+	var/stripe1_color = null
 
 /datum/paint/proc/paint( var/color, var/mode = "base" )
 	switch( mode )
@@ -26,7 +24,7 @@
 	if( !mode )
 		base_color = null
 		stripe0_color = null
-		streip1_color = null
+		stripe1_color = null
 	else
 		switch( mode )
 			if( "base" )
@@ -39,38 +37,38 @@
 				stripe1_color = null
 				return
 
+/datum/paint/proc/getColor( var/mode = "base" )
+	switch( mode )
+		if( "base" )
+			return paint_colors[base_color]
+		if( "stripe0" )
+			return paint_colors[stripe0_color]
+		if( "stripe1" )
+			return paint_colors[stripe1_color]
+
 /datum/paint/red
-	name = "red"
-	base_color = "#992E2E"
+	base_color = "red"
 
 /datum/paint/orange
-	name = "orange"
-	base_color = "#CC6A29"
+	base_color = "orange"
 
 /datum/paint/yellow
-	name = "yellow"
-	base_color = "#CCCC3E"
+	base_color = "yellow"
 
 /datum/paint/green
-	name = "green"
-	base_color = "#2E992E"
+	base_color = "green"
 
 /datum/paint/blue
-	name = "blue"
-	base_color = "#2E2E99"
+	base_color = "blue"
 
 /datum/paint/purple
-	name = "purple"
-	base_color = "#62358D"
+	base_color = "purple"
 
 /datum/paint/brown
-	name = "brown"
-	base_color = "#62462B"
+	base_color = "brown"
 
 /datum/paint/black
-	name = "black"
-	base_color = "#1A1A1A"
+	base_color = "black"
 
 /datum/paint/phoron
-	name = "phoron"
-	base_color = "#603F7F"
+	base_color = "phoron"

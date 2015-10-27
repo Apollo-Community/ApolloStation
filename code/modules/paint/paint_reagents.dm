@@ -10,13 +10,13 @@ datum/reagent/paint
 datum/reagent/paint/reaction_turf(var/turf/simulated/wall/T, var/volume)
 	if(!istype(T) || istype(T, /turf/space))
 		return
-	T.paint( PoolOrNew( paint_type ))
+	T.paint( color )
 
 datum/reagent/paint/reaction_obj(var/obj/O, var/volume)
 	..()
 	if(istype(O,/obj/item/weapon/light))
 		var/obj/item/weapon/light/L = O
-		L.paint( PoolOrNew( paint_type ))
+		L.paint( color )
 
 /datum/reagent/paint/red
 	name = "Red Paint"

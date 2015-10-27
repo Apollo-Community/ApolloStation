@@ -1,91 +1,108 @@
-//NEVER USE THIS IT SUX	-PETETHEGOAT
+var/global/list/paint_colors = list( "red" = "#992E2E",
+									 "orange" = "#CC6A29",
+									 "yellow" = "#CCCC3E",
+									 "green" = "#2E992E",
+									 "blue" = "#2E2E99",
+									 "purple" = "#62358D",
+									 "brown" = "#62462B",
+									 "black" = "#1A1A1A",
+									 "white" = "#BABABA",
+									 "phoron" = "#603F7F" )
 
 var/global/list/cached_icons = list()
 
-/obj/item/weapon/reagent_containers/glass/paint
+/obj/item/weapon/paint_can
 	desc = "It's a paint bucket."
 	name = "paint bucket"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "paint_neutral"
 	item_state = "paintcan"
+
 	matter = list("metal" = 200)
+
 	w_class = 3.0
-	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(10,20,30,50,70)
-	volume = 70
-	flags = OPENCONTAINER
-	var/paint_type = ""
 
-/obj/item/weapon/reagent_containers/glass/paint/attackby(obj/item/I, mob/user)
+	var/max_volume = 120
+	var/volume = 120
+	var/transfer_amount = 5
+	var/paint_color = "white"
+
+/obj/item/weapon/paint_can/New()
+	if( paint_color == "remover")
+		name = "paint remover bucket"
+	else if( !paint_color )
+		volume = 0
+	else
+		update_icon()
+
+/obj/item/weapon/paint_can/proc/getColor()
+	return paint_colors[paint_color]
+
+/obj/item/weapon/paint_can/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/paint_brush))
-		if(reagents.total_volume < 1)
-			user << "[src] is out of paint!</span>"
-		else
-			reagents.trans_to(I, 5)
-			user << "<span class='notice'>You wet [I] in [src].</span>"
-			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+		var/obj/item/weapon/paint_brush/brush = I
 
-/obj/item/weapon/reagent_containers/glass/paint/afterattack(turf/simulated/target, mob/user, proximity)
+		var/amount = brush.transferPaint( transfer_amount, paint_color )
+
+		switch( amount )
+			if( -2 )
+				user << "The [I] is already covered with a different color. Wash it off first to change it's color!"
+			if( -1 )
+				user << "The [I] is already covered with enough paint!"
+			if( 0 )
+				user << "[src] is out of paint!</span>"
+			if( 1 )
+				user << "<span class='notice'>You wet [I] in [src].</span>"
+				playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+
+	..()
+
+/obj/item/weapon/paint_can/afterattack(turf/simulated/wall/target, mob/user, proximity)
 	if(!proximity) return
 	if(istype(target) && reagents.total_volume > 5)
 		for(var/mob/O in viewers(user))
 			O.show_message("\red \The [target] has been splashed with paint by [user]!", 1)
-		spawn(5)
-			reagents.reaction(target, TOUCH)
-			reagents.remove_any(5)
+		spawn(0)
+			target.paint( paint_color )
 	else
 		return ..()
 
-/obj/item/weapon/reagent_containers/glass/paint/New()
-	if(paint_type == "remover")
-		name = "paint remover bucket"
-	else if(paint_type && lentext(paint_type) > 0)
-		name = paint_type + " " + name
-	..()
-	reagents.add_reagent("paint_[paint_type]", volume)
-
-/obj/item/weapon/reagent_containers/glass/paint/on_reagent_change() //Until we have a generic "paint", this will give new colours to all paints in the can
-	var/mixedcolor = mix_color_from_reagents(reagents.reagent_list)
-	for(var/datum/reagent/paint/P in reagents.reagent_list)
-		P.color = mixedcolor
-
-
-/obj/item/weapon/reagent_containers/glass/paint/red
+/obj/item/weapon/paint_can/red
 	icon_state = "paint_red"
-	paint_type = "red"
+	paint_color = "red"
 
-/obj/item/weapon/reagent_containers/glass/paint/green
+/obj/item/weapon/paint_can/green
 	icon_state = "paint_green"
-	paint_type = "green"
+	paint_color = "green"
 
-/obj/item/weapon/reagent_containers/glass/paint/blue
+/obj/item/weapon/paint_can/blue
 	icon_state = "paint_blue"
-	paint_type = "blue"
+	paint_color = "blue"
 
-/obj/item/weapon/reagent_containers/glass/paint/yellow
+/obj/item/weapon/paint_can/yellow
 	icon_state = "paint_yellow"
-	paint_type = "yellow"
+	paint_color = "yellow"
 
-/obj/item/weapon/reagent_containers/glass/paint/orange
+/obj/item/weapon/paint_can/orange
 	icon_state = "paint_orange"
-	paint_type = "orange"
+	paint_color = "orange"
 
-/obj/item/weapon/reagent_containers/glass/paint/purple
+/obj/item/weapon/paint_can/purple
 	icon_state = "paint_purple"
-	paint_type = "purple"
+	paint_color = "purple"
 
-/obj/item/weapon/reagent_containers/glass/paint/black
+/obj/item/weapon/paint_can/black
 	icon_state = "paint_black"
-	paint_type = "black"
+	paint_color = "black"
 
-/obj/item/weapon/reagent_containers/glass/paint/white
+/obj/item/weapon/paint_can/white
 	icon_state = "paint_white"
-	paint_type = "white"
+	paint_color = "white"
 
-/obj/item/weapon/reagent_containers/glass/paint/phoron
+/obj/item/weapon/paint_can/phoron
 	icon_state = "paint_phoron"
-	paint_type = "phoron"
+	paint_color = "phoron"
 
-/obj/item/weapon/reagent_containers/glass/paint/remover
-	paint_type = "remover"
+/obj/item/weapon/paint_can/remover
+	paint_color = "remover"
 
