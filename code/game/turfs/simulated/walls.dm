@@ -42,6 +42,10 @@
 	take_damage(Proj.damage * armor)
 	return
 
+/turf/simulated/wall/New()
+	..()
+
+	paint = new()
 
 /turf/simulated/wall/Destroy()
 	for(var/obj/effect/E in src) if(E.name == "Wallrot") qdel( E )
@@ -83,7 +87,7 @@
 	if(!damage_overlays[1]) //list hasn't been populated
 		generate_overlays()
 
-	if(!damage && !paint )
+	if( !damage && !paint )
 		overlays.Cut()
 		return
 
@@ -97,15 +101,7 @@
 		damage_overlay = overlay
 		overlays += damage_overlays[overlay]
 
-	if( paint )
-		var/image/img = image(icon = paint.icon, icon_state = "[paint.icon_wall_base][smoothwall_connections]")
-
-		img.color = paint.color
-		img.layer = TURF_LAYER+0.1
-
-		qdel( paint_overlay )
-		paint_overlay = img
-		overlays += paint_overlay
+	update_paint_icon()
 
 	return
 
@@ -118,27 +114,13 @@
 		img.alpha = ((i-1) * alpha_inc) - 1
 		damage_overlays[i] = img
 
-/turf/simulated/wall/proc/paint( var/datum/paint/new_paint )
-	if( !istype( new_paint ))
-		return
-	qdel( paint )
-	qdel( paint_overlay )
-
-	paint = new_paint
-	update_icon()
-
-/turf/simulated/wall/proc/unpaint()
-	qdel( paint )
-	qdel( paint_overlay )
-
-	update_icon()
-
 //Damage
 /turf/simulated/wall/proc/take_damage(dam)
 	if(dam)
 		damage = max(0, damage + dam)
 		statistics.increase_stat("damage_cost", damage*10)
 		update_damage()
+
 	return
 
 /turf/simulated/wall/proc/update_damage()
@@ -322,13 +304,17 @@
 	return 1
 
 /turf/simulated/wall/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 
 	//get the user's location
 	if( !istype(user.loc, /turf) )	return	//can't do this stuff whilst inside objects and such
+
+	if( istype( W, /obj/item/weapon/reagent_containers/glass/paint ))
+		if( !paint )
+			paint = new()
+
 
 	if(rotting)
 		if(istype(W, /obj/item/weapon/weldingtool) )
