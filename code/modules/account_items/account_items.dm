@@ -8,13 +8,13 @@
 	if ( IsGuestKey(ckey) )
 		return 0
 
-	if( !dbcon_old.IsConnected() )
+	if( !dbcon.IsConnected() )
 		return 0
 
 	var/sql_ckey = ckey(ckey)
 	var/sql_item = sql_sanitize_text(obj_type)
 
-	var/DBQuery/query = dbcon_old.NewQuery("SELECT id FROM acc_items WHERE ckey = '[sql_ckey]' AND item = '[sql_item]'")
+	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM acc_items WHERE ckey = '[sql_ckey]' AND item = '[sql_item]'")
 	query.Execute()
 	var/sql_id = 0
 
@@ -28,7 +28,7 @@
 
 	var/sql_time = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
 
-	var/DBQuery/query_insert = dbcon_old.NewQuery("INSERT INTO acc_items (id, ckey, item, time, donator) VALUES (null, '[sql_ckey]', '[sql_item]', '[sql_time]', 0)")
+	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO acc_items (id, ckey, item, time, donator) VALUES (null, '[sql_ckey]', '[sql_item]', '[sql_time]', 0)")
 	query_insert.Execute()
 
 	return 1
@@ -43,13 +43,13 @@
 	if ( IsGuestKey(ckey) )
 		return 0
 
-	if( !dbcon_old.IsConnected() )
+	if( !dbcon.IsConnected() )
 		return 0
 
 	var/sql_ckey = ckey(ckey)
 	var/sql_item = sql_sanitize_text(obj_type)
 
-	var/DBQuery/query = dbcon_old.NewQuery("SELECT id FROM acc_items WHERE ckey = '[sql_ckey]' AND item = '[sql_item]'")
+	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM acc_items WHERE ckey = '[sql_ckey]' AND item = '[sql_item]'")
 	query.Execute()
 	var/sql_id = 0
 
@@ -61,7 +61,7 @@
 	if(!sql_id)
 		return 0
 
-	var/DBQuery/query_insert = dbcon_old.NewQuery("DELETE FROM acc_items WHERE id ='[sql_id]'")
+	var/DBQuery/query_insert = dbcon.NewQuery("DELETE FROM acc_items WHERE id ='[sql_id]'")
 	query_insert.Execute()
 
 	return 1
