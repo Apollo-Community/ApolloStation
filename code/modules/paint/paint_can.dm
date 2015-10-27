@@ -38,6 +38,19 @@ var/global/list/cached_icons = list()
 /obj/item/weapon/paint_can/proc/getColor()
 	return paint_colors[paint_color]
 
+/obj/item/weapon/paint_can/proc/paint( var/atom/A, var/mob/user )
+	if( !volume )
+		if( user )
+			user << "There's no paint left in \the [src]!"
+		return 0
+
+	if( istype( A, /turf/simulated/wall ))
+		var/turf/simulated/wall/W = A
+		W.paint( paint_color )
+		volume = max( 0, volume-5 )
+		if( user )
+			user << "You splash the wall with [paint_color] paint."
+
 /obj/item/weapon/paint_can/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/paint_brush))
 		var/obj/item/weapon/paint_brush/brush = I

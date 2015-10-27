@@ -51,34 +51,59 @@
 
 	return 1
 
+/obj/item/weapon/paint_brush/proc/paint( var/atom/A, var/mob/user )
+	if( !volume )
+		if( user )
+			user << "There's no paint left on \the [src]!"
+		return 0
+
+	if( istype( A, /turf/simulated/wall ))
+		var/turf/simulated/wall/W = A
+		W.paint( paint_color, paint_mode )
+		volume = max( 0, volume-1 )
+		if( user )
+			user << "You paint the wall with [paint_color] paint."
+
 /turf/simulated/wall/proc/update_paint_icon()
 	if( !paint )
 		return
 
+	var/icon/base = null
+	var/icon/stripe0 = null
+	var/icon/stripe1 = null
+	var/icon/composite = new( paint.icon )
+
 	// Making the various images
-	var/icon/base = image(icon = paint.icon, icon_state = "[paint.base_icon][smoothwall_connections]")
-	base += paint.getColor( "base" )
+	if( paint.getColor( "base" ))
+		base = new( icon = paint.icon, icon_state = "[paint.base_icon][smoothwall_connections]" )
+		base.Blend( paint.getColor( "base" ), ICON_MULTIPLY )
 
-	var/icon/stripe0 = image(icon = paint.icon, icon_state = "[paint.stripe0_icon][smoothwall_connections]")
-	stripe0 += paint.getColor( "stripe0_color" )
+	if( paint.getColor( "stripe0_color" ))
+		stripe0 = new( icon = paint.icon, icon_state = "[paint.stripe0_icon][smoothwall_connections]" )
+		stripe0.Blend( paint.getColor( "stripe0_color" ), ICON_MULTIPLY )
 
-	var/icon/stripe1 = image(icon = paint.icon, icon_state = "[paint.stripe1_icon][smoothwall_connections]")
-	stripe1 += paint.getColor( "stripe1_color" )
+	if( paint.getColor( "stripe1_color" ))
+		stripe1 = new( icon = paint.icon, icon_state = "[paint.stripe1_icon][smoothwall_connections]" )
+		stripe1.Blend( paint.getColor( "stripe1_color" ), ICON_MULTIPLY )
 
 	// Building the composite image
-	var/icon/composite = base
-	composite.Blend( stripe0 )
-	composite.Blend( stripe1 )
 
-	var/image/img = composite
+	if( base )
+		composite.Blend( base, ICON_OVERLAY  )
+	if( stripe0 )
+		composite.Blend( stripe0, ICON_OVERLAY  )
+	if( stripe1 )
+		composite.Blend( stripe1, ICON_OVERLAY )
+
+	var/image/img = image( composite )
 	img.layer = TURF_LAYER+0.1
 
 	// Garbage collecting
 	overlays -= paint_overlay
 	qdel( paint_overlay )
 
-	// Adding new overlay
 	paint_overlay = img
+
 	overlays += paint_overlay
 
 /turf/simulated/wall/proc/paint( var/color, var/mode = "base" )

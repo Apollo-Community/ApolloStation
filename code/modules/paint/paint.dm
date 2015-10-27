@@ -40,11 +40,20 @@
 /datum/paint/proc/getColor( var/mode = "base" )
 	switch( mode )
 		if( "base" )
-			return paint_colors[base_color]
+			if( base_color )
+				return paint_colors[base_color]
+			else
+				return null
 		if( "stripe0" )
-			return paint_colors[stripe0_color]
+			if( stripe0_color )
+				return paint_colors[stripe0_color]
+			else
+				return null
 		if( "stripe1" )
-			return paint_colors[stripe1_color]
+			if( stripe1_color )
+				return paint_colors[stripe1_color]
+			else
+				return null
 
 /datum/paint/red
 	base_color = "red"

@@ -320,16 +320,16 @@
 			paint = new()
 
 		var/obj/item/weapon/paint_can/paint_can = W
-		paint( paint_can.paint_color )
-		paint_can.volume = max( 0, paint_can.volume-5 )
+		paint_can.paint( src, user )
+		return
 
 	if( istype( W, /obj/item/weapon/paint_brush ))
 		if( !paint )
 			paint = new()
 
 		var/obj/item/weapon/paint_brush/brush = W
-		paint( brush.paint_color, brush.paint_mode )
-		brush.volume = max( 0, brush.volume-1 )
+		brush.paint( src, user )
+		return
 
 	if(rotting)
 		if(istype(W, /obj/item/weapon/weldingtool) )
