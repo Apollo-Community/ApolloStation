@@ -95,6 +95,20 @@
 
 			return
 
+		// Landing on a moon or other planetoid
+		if( sector.metadata && sector.metadata.landing_area )
+			var/area/A = locate( sector.metadata.landing_area in return_areas() )
+
+			object.loc = pick( get_area_turfs( A ))
+			object.dir = src.dir
+
+			fadein()
+
+			object = null
+			qdel( src )
+
+			return
+
 		// Put in the local sector based on where they were in the overmap
 		var/obj_x = round((( pixel_x+16 )/32 )*( world.maxx-( 2*OVERMAP_EDGE )))+OVERMAP_EDGE
 		var/obj_y = round((( pixel_y+16 )/32 )*( world.maxy-( 2*OVERMAP_EDGE )))+OVERMAP_EDGE
@@ -118,8 +132,10 @@
 
 			object = null
 			qdel( src )
-	else
-		usr << "It doesn't seem like there's anything of interest in this sector."
+			return
+
+	fadein()
+	usr << "It doesn't seem like there's anything of interest in this sector."
 
 /obj/effect/traveler/proc/alert_user( var/message = "Would you like to answer this question?" )
 	if( istype( object, /obj/spacepod ))
@@ -166,7 +182,7 @@
 	var/safety = 1
 
 	while(move_to_z == src.z)
-		var/obj/effect/map/sector = map_sectors["[pick( config.local_levels )]"]
+		var/obj/effect/map/sector/sector = map_sectors["[pick( config.local_levels )]"]
 		if( sector.isKnown() )
 			move_to_z = sector.map_z
 

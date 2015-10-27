@@ -157,6 +157,7 @@ area/space/atmosalert()
 /area/space/moon
 	name = "\improper moon"
 	icon_state = "moon"
+	lighting_use_dynamic = 1
 
 /area/engine/
 	music = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg' )
@@ -2313,6 +2314,13 @@ area/space/atmosalert()
 	 // the ship doesn't have any lights
 	environment = PLAIN
 
+
+//////////////// CYBERSUN OUTPOST ///////////////////////////////////
+/area/cybersun/landing_zone
+	name = "\improper landing zone"
+	icon_state = "south"
+
+	environment = PLAIN
 
 /////////////////////////////////////////////////////////////////////
 /*

@@ -1393,6 +1393,7 @@
 #include "code\modules\overmap\bluespace_beacon.dm"
 #include "code\modules\overmap\bluespace_gate.dm"
 #include "code\modules\overmap\bluespace_inducer.dm"
+#include "code\modules\overmap\mapinfo.dm"
 #include "code\modules\overmap\recall_console.dm"
 #include "code\modules\overmap\sectors.dm"
 #include "code\modules\overmap\traveling.dm"
