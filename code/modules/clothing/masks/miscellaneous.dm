@@ -101,3 +101,11 @@
 	w_class = 2
 	var/voicechange = 0
 	siemens_coefficient = 0.9
+
+/obj/item/clothing/mask/broodlace
+	name = "Bone necklace"
+	desc = "A necklace made from the bones of a great foe."
+	icon_state = "broodlace"
+	item_state = "broodlace"
+	w_class = 1
+	gas_transfer_coefficient = 0
