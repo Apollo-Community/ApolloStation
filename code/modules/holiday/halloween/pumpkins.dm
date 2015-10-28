@@ -45,7 +45,7 @@
 		if( difference ) // If they haven't already found all of them
 			user << "Found a pumpkin! Go find the remaining [difference] jack-o-lanterns!"
 
-	respawn()
+	respawn( user )
 
 /obj/item/weapon/spec_pumpkin/proc/respawn(mob/user as mob)
 	if( user )
