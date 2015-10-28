@@ -4,6 +4,12 @@
 	icon = 'icons/obj/event_items.dmi'
 	icon_state = "coin_pumpkin"
 
+/datum/gear/pumpkin_zippo
+	display_name = "Pumpkin coin"
+	path = /obj/item/weapon/coin/pumpkin
+	sort_category = "misc"
+	account = 1
+
 /obj/item/weapon/flame/lighter/zippo/pumpkin //mangled: Li Matsuda
 	name = "pumpkin zippo lighter"
 	desc = "A black zippo lighter with a pumpkin painted on the side."

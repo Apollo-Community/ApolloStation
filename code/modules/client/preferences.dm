@@ -989,7 +989,7 @@ datum/preferences
 		else if(href_list["task"] == "clear")
 			gear.Cut()
 	else if(href_list["preference"] == "acc_items")
-		if( !account_items.len )
+		if( !account_items || !account_items.len )
 			src << "There are no items tied to your account."
 			return
 
@@ -1005,11 +1005,21 @@ datum/preferences
 
 		var/choice = input(user, "Select item to add: ") as null|anything in valid_gear_choices
 
-		if(choice && gear_datums[choice])
-			if(isnull(gear) || !islist(gear)) gear = list()
+		if( !choice )
+			return
 
-			gear += choice
-			user << "<span class='notice'>Added \the '[choice]'.</span>"
+		if( choice in gear )
+			user << "<span class='warning'>You already have this item selected.</span>"
+			return
+
+		if( !gear_datums[choice] )
+			return
+
+		if(isnull(gear) || !islist(gear))
+			gear = list()
+
+		gear += choice
+		user << "<span class='notice'>Added \the '[choice]'.</span>"
 
 	else if(href_list["preference"] == "flavor_text")
 		switch(href_list["task"])
