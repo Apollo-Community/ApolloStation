@@ -765,12 +765,14 @@ var/list/gamemode_cache = list()
 				sqllogin = value
 			if ("password")
 				sqlpass = value
+				/*
 			if ("feedback_database")
-				sqlfdbkdb = value
+				sqldb = value
 			if ("feedback_login")
-				sqlfdbklogin = value
+				sqllogin = value
 			if ("feedback_password")
-				sqlfdbkpass = value
+				sqlpass = value
+				*/
 			if ("enable_stat_tracking")
 				sqllogging = 1
 			else

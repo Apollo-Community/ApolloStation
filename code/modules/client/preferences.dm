@@ -114,6 +114,7 @@ datum/preferences
 
 	var/list/flavor_texts = list()
 	var/list/flavour_texts_robot = list()
+	var/list/account_items = list()
 
 	var/med_record = ""
 	var/sec_record = ""
@@ -284,8 +285,14 @@ datum/preferences
 		for(var/i = 1; i <= gear.len; i++)
 			var/datum/gear/G = gear_datums[gear[i]]
 			if(G)
-				total_cost += G.cost
-				dat += "[gear[i]] ([G.cost] points) <a href='byond://?src=\ref[user];preference=loadout;task=remove;gear=[i]'>\[remove\]</a><br>"
+				if( !G.account )
+					total_cost += G.cost
+				dat += "[gear[i]]"
+				if( !G.account )
+					dat += " ([G.cost] points) "
+				else
+					dat += " (Account Item) "
+				dat += "<a href='byond://?src=\ref[user];preference=loadout;task=remove;gear=[i]'>\[remove\]</a><br>"
 
 		dat += "<b>Used:</b> [total_cost] points."
 	else
@@ -295,6 +302,9 @@ datum/preferences
 		dat += " <a href='byond://?src=\ref[user];preference=loadout;task=input'>\[add\]</a>"
 		if(gear && gear.len)
 			dat += " <a href='byond://?src=\ref[user];preference=loadout;task=clear'>\[clear\]</a>"
+	dat += "<br>"
+
+	dat += "\t<a href='byond://?src=\ref[user];preference=acc_items'><b>Account Items</b></a><br>"
 
 	dat += "<br><br><b>Occupation Choices</b><br>"
 	dat += "\t<a href='?_src_=prefs;preference=job;task=menu'><b>Set Preferences</b></a><br>"
@@ -393,9 +403,6 @@ datum/preferences
 		dat += "<b><a href=\"byond://?src=\ref[user];preference=records;record=1\">Character Records</a></b><br>"
 
 	dat += "<b><a href=\"byond://?src=\ref[user];preference=antagoptions;active=0\">Set Antag Options</b></a><br>"
-
-	dat += "\t<a href=\"byond://?src=\ref[user];preference=skills\"><b>Set Skills</b> (<i>[GetSkillClass(used_skillpoints)] [used_skillpoints > 0 ? "[used_skillpoints]" : "0"]</i>)</a><br>"
-
 	dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=open'><b>Set Flavor Text</b></a><br>"
 	dat += "<a href='byond://?src=\ref[user];preference=flavour_text_robot;task=open'><b>Set Robot Flavour Text</b></a><br>"
 
@@ -981,6 +988,28 @@ datum/preferences
 
 		else if(href_list["task"] == "clear")
 			gear.Cut()
+	else if(href_list["preference"] == "acc_items")
+		if( !account_items.len )
+			src << "There are no items tied to your account."
+			return
+
+		var/list/valid_gear_choices = list()
+
+		for(var/gear_name in account_items)
+			var/datum/gear/G = gear_datums[gear_name]
+			if( !G )
+				continue
+			if( !G.account )
+				continue
+			valid_gear_choices += gear_name
+
+		var/choice = input(user, "Select item to add: ") as null|anything in valid_gear_choices
+
+		if(choice && gear_datums[choice])
+			if(isnull(gear) || !islist(gear)) gear = list()
+
+			gear += choice
+			user << "<span class='notice'>Added \the '[choice]'.</span>"
 
 	else if(href_list["preference"] == "flavor_text")
 		switch(href_list["task"])
@@ -1076,7 +1105,8 @@ datum/preferences
 
 			for(var/gear_name in gear_datums)
 				var/datum/gear/G = gear_datums[gear_name]
-				if(G.whitelisted && !is_alien_whitelisted(user, G.whitelisted))
+
+				if(( G.whitelisted && !is_alien_whitelisted( user, G.whitelisted )) || G.account )
 					continue
 				valid_gear_choices += gear_name
 

@@ -7,7 +7,11 @@
 
 	New()
 		..()
-		name = "floor"
+
+		name = initial( name )
+
+/turf/simulated/floor/airless/landing_pad
+	icon = 'icons/turf/special/landingpad.dmi'
 
 /turf/simulated/floor/airless/hull
 	icon_state = "hull"
