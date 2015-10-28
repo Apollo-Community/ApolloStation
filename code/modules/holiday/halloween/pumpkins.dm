@@ -31,7 +31,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if( locate( user ) in mobs_opened )
+	if( user in mobs_opened )
 		var/difference = MAX_PUMPKINS-user.pumpkins_found
 		if( difference ) // If they haven't already found all of them
 			user << "<span class='notice'><b>You've already found this one, go look for the remaining [difference] jack-o-lanterns!</b></span>"
