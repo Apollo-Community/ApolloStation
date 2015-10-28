@@ -109,3 +109,11 @@
 	item_state = "broodlace"
 	w_class = 1
 	gas_transfer_coefficient = 0
+
+/obj/item/clothing/mask/broodmask
+	name = "Broodmother Mask"
+	desc = "A terrifying mask made with the bones of a great foe."
+	icon_state = "broodmask"
+	item_state = "broodmask"
+	w_class = 1
+	gas_transfer_coefficient = 0

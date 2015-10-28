@@ -10,20 +10,29 @@
 				return
 			else
 				pumpkins.Add(W.icon_state)
-			user << "A [pumpkins.len < 4 ? "noise" : "groan"] echo's from the bottom of the pit!"
-			user << "<span class='notice'><b>Halloween Secret - [pumpkins.len] out of 7 have been thrown in!</b></span>"
+			for(var/mob/living/M in hearers(src,7))
+				M << "\blue <b>A [pumpkins.len < 4 ? "noise" : "groan"] echo's from the bottom of the pit!</b>"
+				M << "<span class='notice'><b>Halloween Secret - [pumpkins.len] out of 7 have been thrown in!</b></span>"
+		else if(pumpkins.len==7)
+			user << "\blue <b>The broodmother has already been defeated!</b>"
+			return
 		else
-			user << "The broodmother has surfaced!"
-			user << "<span class='notice'><b>Halloween Secret - Defeat the broodmother to unlock your reward!</b></span>"
+			for(var/mob/living/M in hearers(src,7))	// Same condition to win it
+				M << "<b>The floor begins to shake!</b>"
+				shake_camera(M,15,1)
+				M <<"<h1>The broodmother has surfaced!</h1>"
+				M << "<span class='notice'><b>Halloween Secret - Defeat the broodmother to unlock your reward!</b></span>"
 
 			new /mob/living/simple_animal/hostile/alien/queen/halloween(src.loc)
-			//Woops forgot to reset it
-			pumpkins.Cut()
-		qdel(W)
+
+	else if(istype(W, /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin))	// ooo secretss
+		user << "<span class='notice'><b>Halloween Uber Secret - Congradulations! You've unlocked the broodmother mask! Show it off to your friends or something</b></span>"
+		log_acc_item_to_db(user.ckey,/obj/item/clothing/mask/broodmask)
 	else
-		user << "You don't think whatever is down there will like that.."
+		user << "\red You don't think whatever is down there will like that.."
+		user << "\blue You throw it down anyway!"
 
-
+	qdel(W)
 
 // The boss mob is an alien queen with more health
 /mob/living/simple_animal/hostile/alien/queen/halloween
@@ -32,8 +41,8 @@
 	icon_state = "broodmother"
 	icon_living = "broodmother"
 	icon_dead = "broodmother"
-	maxHealth = 250		//Since it does more damage - reduced health
-	health = 250
+	maxHealth = 300		//Since it does more damage - reduced health
+	health = 300
 
 /mob/living/simple_animal/hostile/alien/queen/halloween/attackby()
 	//Attack back if you get attacked GAWD
@@ -41,7 +50,7 @@
 
 
 /mob/living/simple_animal/hostile/alien/queen/halloween/death()
-	for(var/mob/M in hearers(src,7))	// Should give anyone near broodmo the item
+	for(var/mob/living/M in hearers(src,7))	// Should give anyone near broodmo the item
 		M << "<span class='notice'><b>Halloween Secret - Congratulations! You've defeated the broodmother. The Bone Necklace has been added to your account as a reward.</b></span>"
 		log_acc_item_to_db(M.ckey,/obj/item/clothing/mask/broodlace)
 
