@@ -381,6 +381,7 @@
 	name = "lunar rocks"
 	icon_state = "lunar_rock"
 	side_type = "lunar_rock"
+	has_resources = 0
 
 /turf/simulated/mineral/lunar/MineralSpread()
 	return
@@ -505,3 +506,4 @@
 /turf/simulated/floor/plating/airless/asteroid/lunar_turf
 	name = "lunar regolith"
 	icon_state = "lunar_regolith"
+	has_resources = 0
