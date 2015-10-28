@@ -327,6 +327,7 @@
 #include "code\game\gamemodes\blob\blobs\factory.dm"
 #include "code\game\gamemodes\blob\blobs\node.dm"
 #include "code\game\gamemodes\blob\blobs\shield.dm"
+#include "code\game\gamemodes\broodswarm\hive.dm"
 #include "code\game\gamemodes\broodswarm\station_decay.dm"
 #include "code\game\gamemodes\calamity\calamity.dm"
 #include "code\game\gamemodes\changeling\changeling.dm"
@@ -1719,5 +1720,5 @@
 #include "maps\overmap\active\active-01-EngiPost.dmm"
 #include "maps\overmap\active\active-02-ACE.dmm"
 #include "maps\overmap\active\active-03-CentComm.dmm"
-#include "maps\overmap\active\active-04-cybersun.dmm"
+#include "maps\overmap\active\active-04-Cybersun.dmm"
 // END_INCLUDE
