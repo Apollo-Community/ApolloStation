@@ -1,10 +1,15 @@
+/var/global/datum/controller/process/air/AirProcess
+
 /datum/controller/process/air/setup()
 	name = "air"
-	schedule_interval = 20 // every 2 seconds
+	schedule_interval = 30 // every 3 seconds
+	cpu_threshold = 50
 
 	if(!air_master)
 		air_master = new
 		air_master.Setup()
+
+	AirProcess = src
 
 /datum/controller/process/air/doWork()
 	if(!air_processing_killed)

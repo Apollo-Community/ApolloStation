@@ -213,6 +213,8 @@ var/list/gamemode_cache = list()
 
 	var/git_commit_id = ""
 
+	var/recommended_byond = 501
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for (var/T in L)
@@ -663,7 +665,8 @@ var/list/gamemode_cache = list()
 
 				if("law_zero")
 					law_zero = value
-
+				if("recommended_byond")
+					config.recommended_byond = text2num(value)
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 
@@ -762,12 +765,14 @@ var/list/gamemode_cache = list()
 				sqllogin = value
 			if ("password")
 				sqlpass = value
+				/*
 			if ("feedback_database")
-				sqlfdbkdb = value
+				sqldb = value
 			if ("feedback_login")
-				sqlfdbklogin = value
+				sqllogin = value
 			if ("feedback_password")
-				sqlfdbkpass = value
+				sqlpass = value
+				*/
 			if ("enable_stat_tracking")
 				sqllogging = 1
 			else

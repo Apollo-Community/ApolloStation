@@ -6,6 +6,7 @@
 	var/datum/admins/deadmin_holder = null
 	var/buildmode		= 0
 	var/angry = 0 // toggles madmin
+	var/donator = 0			//Makes mob.stat() much faster.
 
 	var/last_message	= "" //Contains the last message sent by this client - used to protect against copy-paste spamming.
 	var/last_message_count = 0 //contins a number of how many times a message identical to last_message was sent.

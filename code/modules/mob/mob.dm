@@ -799,35 +799,14 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/Stat()
 	..()
-	. = (is_client_active(10 MINUTES))
-
-	if(.)
+	if(!client.afk)
 		if(statpanel("Players"))
 			stat("Total Players: ","[clients.len]")
+			for(var/L in stat_player_list)
+				var/E = stat_player_list[L]
+				stat(L, E)
 
-			for(var/client/C in clients)
-				var/entry = ""
-				if (C.holder && (R_MOD & C.holder.rights) && !C.holder.fakekey)
-					entry = "Mod"
-				else if(C.holder && (R_ADMIN & C.holder.rights) && !C.holder.fakekey)
-					entry = "Admin"
-				else if(C.holder && (R_DEBUG & C.holder.rights) && !C.holder.fakekey)
-					entry = "Dev"
-				else if(is_donator(C))
-					entry = "Donator"
-				/*else if(is_titled(C))
-					if(get_title(C) == 1)
-						entry = "Event"					Depreciated content
-				else
-						entry = "Spriter"
-				*/
-				else
-					entry = "Player"
-
-				if( C.afk )
-					entry += "   AFK"
-
-				stat("[C.key]", entry)
+			sleep(20)
 		if(client && client.holder)
 			if(statpanel("Status"))	//not looking at that panel
 				stat("Location:\t","([x], [y], [z])")
@@ -842,8 +821,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 				else
 					stat("processScheduler is not running.")
 
-		if(ticker && ticker.current_state != GAME_STATE_PREGAME)
-			stat("Station Time", worldtime2text())
+		if(statpanel("Status"))
+			if(ticker && ticker.current_state != GAME_STATE_PREGAME)
+				stat("Station Time", worldtime2text())
 
 		if(listed_turf && client)
 			if(!TurfAdjacent(listed_turf))
@@ -868,9 +848,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 						statpanel("Spells","[S.charge_counter]/[S.charge_max]",S)
 					if("holdervar")
 						statpanel("Spells","[S.holder_var_type] [S.holder_var_amount]",S)
-
-		sleep(6)	//Stops Mob.Stat() being called as often = profit?
-
 // facing verbs
 /mob/proc/canface()
 	if(!canmove)						return 0
