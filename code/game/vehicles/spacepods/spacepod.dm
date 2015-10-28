@@ -170,13 +170,10 @@
 
 /obj/spacepod/proc/explode()
 	spawn(0)
-		occupants_announce( "The pod's console lights up with a hundred different alarms!", 2, 1 )
+		occupants_announce( "The pilot's console lights up with a hundred different alarms! You better bail out now!", 2, 1 )
 
 		for(var/i = 10, i >= 0; --i)
-			occupants_announce( "[i] seconds", 2 )
-
-			if( prob( 10 ))
-				explosion(loc, 0, rand( 0, 1 ), rand( 2, 4 ))
+			occupants_announce( "Alert: [i] seconds until detonation.", 2 )
 
 			if(i == 0)
 				explosion(loc, 2, 4, 8)
