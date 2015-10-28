@@ -44,14 +44,14 @@
 
 	if(( user.pumpkins_found >= MAX_PUMPKINS ))
 		if( log_acc_item_to_db( user.ckey, HALLOWEEN_OBJ ))
-			user << "<span class='notice'><b>Congratulations! You've collected all of the pumpkins! A special halloween item has been added to your account as a reward.</b></span>"
+			user << "<span class='notice'><b>Congratulations! You've collected all of the jack-o-lanterns! The Pumpkin Zippo lighter has been added to your account as a reward.</b></span>"
 		else
 			user << "<span class='notice'><b>You've already recieved the item for this holiday event, come back in a few months for the next one!</b></span>"
 			return
 	else
 		var/difference = MAX_PUMPKINS-user.pumpkins_found
 		if( difference ) // If they haven't already found all of them
-			user << "<span class='notice'><b>Found a pumpkin! Go find the remaining [difference] jack-o-lanterns!</b></span>"
+			user << "<span class='notice'><b>Found a jack-o-lantern! Go find the remaining [difference] jack-o-lanterns!</b></span>"
 
 	respawn( user )
 
