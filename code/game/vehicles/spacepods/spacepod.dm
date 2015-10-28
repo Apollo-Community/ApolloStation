@@ -299,6 +299,21 @@
 
 	return
 
+/obj/spacepod/verb/leave_planet()
+	if(usr == src.pilot)
+		set name = "Leave Planet"
+		set category = "Spacepod"
+		set src = usr.loc
+		set popup_menu = 0
+
+		if( istype( get_area( src ), /area/planet ))
+			occupants_announce( "Leaving the planet surface and returning to space." )
+			overmapTravel()
+		else
+			usr << "Not currently on a planet."
+
+		return
+
 /obj/spacepod/verb/toggle_internal_tank()
 	if(usr == src.pilot)
 		set name = "Toggle internal airtank usage"

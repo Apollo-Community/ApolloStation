@@ -29,14 +29,17 @@
 /turf/simulated/mineral/New()
 	MineralSpread()
 
-	var/side_type = src.side_type
-	spawn(2)
-		var/list/step_overlays = list("s" = NORTH, "n" = SOUTH, "w" = EAST, "e" = WEST)
-		for(var/direction in step_overlays)
-			var/turf/turf_to_check = get_step(src,step_overlays[direction])
+	/*spawn(2)
+		updateNeighbors()
+*/
 
-			if(istype(turf_to_check,/turf/space) || istype(turf_to_check,/turf/simulated/floor))
-				turf_to_check.overlays += image('icons/turf/walls.dmi', "[side_type]_side_[direction]")
+/turf/simulated/mineral/proc/updateNeighbors()
+	var/list/step_overlays = list("s" = NORTH, "n" = SOUTH, "w" = EAST, "e" = WEST)
+	for(var/direction in step_overlays)
+		var/turf/turf_to_check = get_step(src,step_overlays[direction])
+
+		if(istype(turf_to_check,/turf/space) || istype(turf_to_check,/turf/simulated/floor))
+			turf_to_check.overlays += image('icons/turf/walls.dmi', "[side_type]_side_[direction]")
 
 /turf/simulated/mineral/ex_act(severity)
 	switch(severity)
