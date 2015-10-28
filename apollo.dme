@@ -1096,6 +1096,7 @@
 #include "code\modules\games\cards.dm"
 #include "code\modules\genetics\side_effects.dm"
 #include "code\modules\holiday\halloween\_defines.dm"
+#include "code\modules\holiday\halloween\broodmother_pit.dm"
 #include "code\modules\holiday\halloween\items.dm"
 #include "code\modules\holiday\halloween\landmark.dm"
 #include "code\modules\holiday\halloween\pumpkins.dm"
