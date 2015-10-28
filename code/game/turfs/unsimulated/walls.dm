@@ -18,8 +18,3 @@ turf/unsimulated/wall/splashscreen
 
 /turf/unsimulated/wall/other
 	icon_state = "r_wall"
-
-/turf/unsimulated/wall/lunar_rocks
-	name = "rock cliff-face"
-	desc = "These rocks are too tall for you to climb."
-	icon_state = "lunar_rock"

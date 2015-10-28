@@ -186,7 +186,6 @@
 	..()
 
 // candles
-
 /obj/machinery/light/candle
 	icon_state = "wallcandle1"
 	base_state = "wallcandle"
@@ -196,6 +195,13 @@
 	brightness_color = "#FFB27F"
 	desc = "A small candle affixed to a wall stand."
 	light_type = /obj/item/weapon/light/candle
+
+// Fire lights
+/obj/machinery/light/small/firelight
+	icon_state = "firelight1"
+	base_state = "firelight"
+	brightness_color = "#FF6666"
+	light_type = /obj/item/weapon/light/bulb/fire
 
 // create a new lighting fixture
 /obj/machinery/light/New()
@@ -655,6 +661,17 @@
 	brightness_range = 5
 	brightness_power = 2
 	brightness_color = "#a0a080"
+
+/obj/item/weapon/light/bulb/fire
+	name = "fire light bulb"
+	desc = "A replacement fire light bulb."
+	icon_state = "flight"
+	base_state = "flight"
+	item_state = "contvapour"
+	matter = list("glass" = 100)
+	brightness_range = 5
+	brightness_power = 2
+	brightness_color = "#FF6666"
 
 /obj/item/weapon/light/throw_impact(atom/hit_atom)
 	..()

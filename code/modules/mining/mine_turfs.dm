@@ -27,7 +27,6 @@
 	has_resources = 1
 
 /turf/simulated/mineral/New()
-
 	MineralSpread()
 
 	var/side_type = src.side_type
@@ -36,11 +35,7 @@
 		for(var/direction in step_overlays)
 			var/turf/turf_to_check = get_step(src,step_overlays[direction])
 
-			if(istype(turf_to_check,/turf/simulated/floor/plating/airless/asteroid))
-				var/turf/simulated/floor/plating/airless/asteroid/T = turf_to_check
-				T.updateMineralOverlays()
-
-			else if(istype(turf_to_check,/turf/space) || istype(turf_to_check,/turf/simulated/floor))
+			if(istype(turf_to_check,/turf/space) || istype(turf_to_check,/turf/simulated/floor))
 				turf_to_check.overlays += image('icons/turf/walls.dmi', "[side_type]_side_[direction]")
 
 /turf/simulated/mineral/ex_act(severity)
@@ -382,12 +377,13 @@
 	mineralChance = 25
 	mineralSpawnChanceList = list("Uranium" = 10, "Platinum" = 10, "Iron" = 20, "Coal" = 20, "Diamond" = 2, "Gold" = 10, "Silver" = 10, "Phoron" = 20)
 
-/turf/simulated/mineral/random/trash
-	name = "Trash"
-	icon_state = "trash"
-	side_type = "trash"
-	mineralSpawnChanceList = list("Trash" = 35)
-	mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
+/turf/simulated/mineral/lunar
+	name = "lunar rocks"
+	icon_state = "lunar_rock"
+	side_type = "lunar_rock"
+
+/turf/simulated/mineral/lunar/MineralSpread()
+	return
 
 /**********************Asteroid**************************/
 
@@ -403,15 +399,6 @@
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
 	var/overlay_detail
 	has_resources = 1
-
-/turf/simulated/floor/plating/airless/asteroid/New()
-	..()
-
-	spawn(1)
-		updateMineralOverlays(0)
-		if(prob(20))
-			overlay_detail = "asteroid[rand(0,9)]"
-
 
 /turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
 	switch(severity)
@@ -489,28 +476,17 @@
 	icon_state = "asteroid_dug"
 	return
 
-/turf/simulated/floor/plating/airless/asteroid/proc/updateMineralOverlays(var/update_neighbors)
-
+/turf/simulated/floor/plating/airless/asteroid/proc/updateMineralOverlays()
 	overlays.Cut()
-
-	var/list/step_overlays = list("n" = NORTH, "s" = SOUTH, "e" = EAST, "w" = WEST)
-	for(var/direction in step_overlays)
-
-		if(istype(get_step(src, step_overlays[direction]), /turf/space))
-			overlays += image('icons/turf/floors.dmi', "asteroid_edge_[direction]")
-
-		if(istype(get_step(src, step_overlays[direction]), /turf/simulated/mineral))
-			overlays += image('icons/turf/walls.dmi', "rock_side_[direction]")
 
 	if(overlay_detail) overlays += overlay_detail
 
-	if(update_neighbors)
-		var/list/all_step_directions = list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST)
-		for(var/direction in all_step_directions)
-			var/turf/simulated/floor/plating/airless/asteroid/A
-			if(istype(get_step(src, direction), /turf/simulated/floor/plating/airless/asteroid))
-				A = get_step(src, direction)
-				A.updateMineralOverlays()
+	var/list/all_step_directions = list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST)
+	for(var/direction in all_step_directions)
+		var/turf/simulated/floor/plating/airless/asteroid/A
+		if(istype(get_step(src, direction), /turf/simulated/floor/plating/airless/asteroid))
+			A = get_step(src, direction)
+			A.updateMineralOverlays()
 
 /turf/simulated/floor/plating/airless/asteroid/Entered(atom/movable/M as mob|obj)
 	..()
@@ -525,3 +501,7 @@
 				attackby(R.module_state_3,R)
 			else
 				return
+
+/turf/simulated/floor/plating/airless/asteroid/lunar_turf
+	name = "lunar regolith"
+	icon_state = "lunar_regolith"

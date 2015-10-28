@@ -33,11 +33,11 @@
 
 /obj/effect/mapinfo/sector/cybersun
 	name = "Moon"
-	mapx = STATION_X+3
+	mapx = STATION_X+2
 	mapy = STATION_Y
 	obj_type = /obj/effect/map/sector/cybersun
 	sector_flags = SECTOR_KNOWN | SECTOR_LOCAL
-	landing_area = /area/cybersun/landing_zone
+	landing_area = /area/planet/moon/landing_zone
 
 /obj/effect/mapinfo/sector/tcomm_old
 	name = "Abandoned Satellite"
