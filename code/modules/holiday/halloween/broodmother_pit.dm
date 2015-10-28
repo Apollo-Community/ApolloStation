@@ -17,6 +17,8 @@
 			user << "<span class='notice'><b>Halloween Secret - Defeat the broodmother to unlock your reward!</b></span>"
 
 			new /mob/living/simple_animal/hostile/alien/queen/halloween(src.loc)
+			//Woops forgot to reset it
+			pumpkins.Cut()
 		qdel(W)
 	else
 		user << "You don't think whatever is down there will like that.."
@@ -30,12 +32,18 @@
 	icon_state = "broodmother"
 	icon_living = "broodmother"
 	icon_dead = "broodmother"
-	move_to_delay = 3		//Gotta go fast
-	maxHealth = 700			//Gotta be stronk
-	health = 700
+	maxHealth = 250		//Since it does more damage - reduced health
+	health = 250
+
+/mob/living/simple_animal/hostile/alien/queen/halloween/attackby()
+	//Attack back if you get attacked GAWD
+	AttackingTarget()
+
 
 /mob/living/simple_animal/hostile/alien/queen/halloween/death()
+	for(var/mob/M in hearers(src,7))	// Should give anyone near broodmo the item
+		M << "<span class='notice'><b>Halloween Secret - Congratulations! You've defeated the broodmother. The Bone Necklace has been added to your account as a reward.</b></span>"
+		log_acc_item_to_db(M.ckey,/obj/item/clothing/mask/broodlace)
+
 	..()
-	for(var/client/C in orange(src,7))	// Should give anyone near broodmo the item
-		C << "<span class='notice'><b>Halloween Secret - Congratulations! You've defeated the broodmother. The Bone Necklace has been added to your account as a reward.</b></span>"
-		log_acc_item_to_db(C,/obj/item/clothing/mask/broodlace)
+
