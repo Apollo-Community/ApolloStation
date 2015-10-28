@@ -26,8 +26,10 @@
 			new /mob/living/simple_animal/hostile/alien/queen/halloween(src.loc)
 
 	else if(istype(W, /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin))	// ooo secretss
-		user << "<span class='notice'><b>Halloween Uber Secret - Congradulations! You've unlocked the broodmother mask! Show it off to your friends or something</b></span>"
-		log_acc_item_to_db(user.ckey,/obj/item/clothing/mask/broodmask)
+		if( log_acc_item_to_db( user.ckey,"Broodmother mask" ))
+			user << "<span class='notice'><b>Halloween Uber Secret - Congradulations! You've unlocked the broodmother mask! Show it off to your friends or something</b></span>"
+		else
+			user << "<span class='notice'><b>Halloween Uber Secret - You've already collected this item. Sorry!</b></span>"
 	else
 		user << "\red You don't think whatever is down there will like that.."
 		user << "\blue You throw it down anyway!"
@@ -51,8 +53,10 @@
 
 /mob/living/simple_animal/hostile/alien/queen/halloween/death()
 	for(var/mob/living/M in hearers(src,7))	// Should give anyone near broodmo the item
-		M << "<span class='notice'><b>Halloween Secret - Congratulations! You've defeated the broodmother. The Bone Necklace has been added to your account as a reward.</b></span>"
-		log_acc_item_to_db(M.ckey,/obj/item/clothing/mask/broodlace)
+		if( log_acc_item_to_db( M.ckey, "Bone necklace" ))
+			M << "<span class='notice'><b>Halloween Secret - Congratulations! You've defeated the broodmother. The Bone Necklace has been added to your account as a reward.</b></span>"
+		else
+			M << "<span class='notice'><b>Halloween Secret - You've already collected this item. Sorry!</b></span>"
 
 	..()
 
