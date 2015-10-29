@@ -177,15 +177,30 @@
 
 	donator = is_donator(src)
 
-	var/entry = ""
-	if (holder && (R_MOD & holder.rights))						entry = "Mod"
-	else if(holder && (R_ADMIN & holder.rights))			entry = "Admin"
-	else if(holder && (R_DEBUG & holder.rights))			entry = "Dev"
-	else if(donator)																	entry = "Donator"
-	else																							entry = "Player"
+	var/obj/playerlist/O = new()
+	O.icon = icon('./icons/playerlist.dmi')
+	O.player = src
 
-	stat_player_list.Add(src.ckey)				//Mostly used to build a list before the game ticker starts and the process scheduler takes over maintenence.
-	stat_player_list[src.ckey] = entry
+	if (holder && (R_MOD & holder.rights))
+		O.name = "Mod"
+		O.icon_state = "mod"
+	else if(holder && (R_ADMIN & holder.rights))
+		O.name = "Admin"
+		O.icon_state = "admin"
+	else if(holder && (R_DEBUG & holder.rights))
+		O.name = "Dev"
+		O.icon_state = "dev"
+	else if(donator)
+		O.name = "Donator"
+		O.icon_state = "donator"
+	else
+		O.name = "Player"
+		O.icon_state = "player"
+
+	stat_player_list.Add(key)
+	stat_player_list[key] = O
+	stat_player_list = sortAssoc(stat_player_list)
+
 	log_client_to_db()
 
 	loadAccountItems()
