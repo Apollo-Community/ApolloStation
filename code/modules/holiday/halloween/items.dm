@@ -38,7 +38,7 @@
 	sort_category = slot_wear_mask
 	account = 1
 
-/obj/item/clothing/mask/broodmask
+/obj/item/clothing/head/broodmask
 	name = "Broodmother mask"
 	desc = "The terrifying mask of a true horror."
 	icon_state = "broodmask"
@@ -48,6 +48,6 @@
 
 /datum/gear/broodmask
 	display_name = "Broodmother mask"
-	path = /obj/item/clothing/mask/broodmask
-	sort_category = slot_wear_mask
+	path = /obj/item/clothing/head/broodmask
+	sort_category = slot_head
 	account = 1
