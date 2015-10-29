@@ -601,6 +601,7 @@
 #include "code\game\objects\explosion_recursive.dm"
 #include "code\game\objects\items.dm"
 #include "code\game\objects\objs.dm"
+#include "code\game\objects\playerlist.dm"
 #include "code\game\objects\structures.dm"
 #include "code\game\objects\weapons.dm"
 #include "code\game\objects\effects\aliens.dm"
@@ -1724,5 +1725,4 @@
 #include "maps\overmap\active\active-01-EngiPost.dmm"
 #include "maps\overmap\active\active-02-ACE.dmm"
 #include "maps\overmap\active\active-03-CentComm.dmm"
-#include "maps\overmap\active\active-04-Moon.dmm"
 // END_INCLUDE

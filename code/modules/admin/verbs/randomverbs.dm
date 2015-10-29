@@ -982,3 +982,48 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		message_admins("Admin [key_name_admin(usr)] has reset atmospherics in [usr.loc:loc.name].", "DEBUG:")
 	else
 		usr << "You're doing something wierd right now.. stop it."		// <-- probably kwask <-- rood
+
+/proc/get_mob_info(var/mob/M, mob/user as mob)
+	var/location_description = ""
+	var/special_role_description = ""
+	var/health_description = ""
+	var/gender_description = ""
+	var/turf/T = get_turf(M)
+
+	//Location
+	if(isturf(T))
+		if(isarea(T.loc))
+			location_description = "([M.loc == T ? "at coordinates " : "in [M.loc] at coordinates "] [T.x], [T.y], [T.z] in area <b>[T.loc]</b>)"
+		else
+			location_description = "([M.loc == T ? "at coordinates " : "in [M.loc] at coordinates "] [T.x], [T.y], [T.z])"
+
+	//Job + antagonist
+	if(M.mind)
+		special_role_description = "Role: <b>[M.mind.assigned_role]</b>; Antagonist: <font color='red'><b>[M.mind.special_role]</b></font>; Has been rev: [(M.mind.has_been_rev)?"Yes":"No"]"
+	else
+		special_role_description = "Role: <i>Mind datum missing</i> Antagonist: <i>Mind datum missing</i>; Has been rev: <i>Mind datum missing</i>;"
+
+	//Health
+	if(isliving(M))
+		var/mob/living/L = M
+		var/status
+		switch (M.stat)
+			if (0) status = "Alive"
+			if (1) status = "<font color='orange'><b>Unconscious</b></font>"
+			if (2) status = "<font color='red'><b>Dead</b></font>"
+		health_description = "Status = [status]"
+		health_description += "<BR>Oxy: [L.getOxyLoss()] - Tox: [L.getToxLoss()] - Fire: [L.getFireLoss()] - Brute: [L.getBruteLoss()] - Clone: [L.getCloneLoss()] - Brain: [L.getBrainLoss()]"
+	else
+		health_description = "This mob type has no health to speak of."
+
+	//Gener
+	switch(M.gender)
+		if(MALE,FEMALE)	gender_description = "[M.gender]"
+		else			gender_description = "<font color='red'><b>[M.gender]</b></font>"
+
+	user << "<b>Info about [M.name]:</b> "
+	user << "Mob type = [M.type]; Gender = [gender_description] Damage = [health_description]"
+	user << "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Mind_name = [M.mind?"[M.mind.name]":""]; Key = <b>[M.key]</b>;"
+	user << "Location = [location_description];"
+	user << "[special_role_description]"
+	user << "(<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a>) (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];subtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A>) (<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A>)"

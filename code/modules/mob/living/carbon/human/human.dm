@@ -58,7 +58,7 @@
 		if(eta_status)
 			stat(null, eta_status)
 
-	if (client.statpanel == "Status")
+	if (statpanel("Status"))
 
 		if (internal)
 			if (!internal.air_contents)
