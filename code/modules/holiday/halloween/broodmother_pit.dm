@@ -18,9 +18,9 @@
 			return
 		else
 			for(var/mob/living/M in hearers(src,7))	// Same condition to win it
-				M << "<b>The floor begins to shake!</b>"
+				M << "<span class='warning'><b>The floor begins to shake!</b></span>"
 				shake_camera(M,15,1)
-				M <<"<h1>The broodmother has surfaced!</h1>"
+				M <<"<span class='danger'><h1>The broodmother has surfaced!</h1></span>"
 				M << "<span class='notice'><b>Halloween Secret - Defeat the broodmother to unlock your reward!</b></span>"
 
 			new /mob/living/simple_animal/hostile/alien/queen/halloween(src.loc)
@@ -31,7 +31,7 @@
 		else
 			user << "<span class='notice'><b>Halloween Uber Secret - You've already collected this item. Sorry!</b></span>"
 	else
-		user << "\red You don't think whatever is down there will like that.."
+		user << "<span class='warning'>You don't think whatever is down there will like that..</span>"
 		user << "\blue You throw it down anyway!"
 
 	qdel(W)
