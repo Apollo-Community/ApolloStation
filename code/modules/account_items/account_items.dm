@@ -1,3 +1,5 @@
+var/global/list/account_items = list()
+
 /proc/log_acc_item_to_db( var/ckey, var/obj_type )
 	if( !ckey )
 		return 0

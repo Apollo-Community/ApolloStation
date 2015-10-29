@@ -4,6 +4,12 @@
 	icon = 'icons/obj/event_items.dmi'
 	icon_state = "coin_pumpkin"
 
+/datum/gear/pumpkin_zippo
+	display_name = "Pumpkin coin"
+	path = /obj/item/weapon/coin/pumpkin
+	sort_category = "misc"
+	account = 1
+
 /obj/item/weapon/flame/lighter/zippo/pumpkin //mangled: Li Matsuda
 	name = "pumpkin zippo lighter"
 	desc = "A black zippo lighter with a pumpkin painted on the side."
@@ -11,3 +17,37 @@
 	icon_state = "pumpkinzippo"
 	icon_on = "pumpkinzippoon"
 	icon_off = "pumpkinzippo"
+
+/datum/gear/pumpkin_zippo
+	display_name = "Pumpkin zippo"
+	path = /obj/item/weapon/flame/lighter/zippo/pumpkin
+	sort_category = "misc"
+	account = 1
+
+/obj/item/clothing/mask/broodlace
+	name = "bone necklace"
+	desc = "A necklace made from the bones of a great foe."
+	icon_state = "broodlace"
+	item_state = "broodlace"
+	w_class = 1
+	gas_transfer_coefficient = 0
+
+/datum/gear/broodlace
+	display_name = "Bone necklace"
+	path = /obj/item/clothing/mask/broodlace
+	sort_category = slot_wear_mask
+	account = 1
+
+/obj/item/clothing/mask/broodmask
+	name = "Broodmother mask"
+	desc = "The terrifying mask of a true horror."
+	icon_state = "broodmask"
+	item_state = "broodmask"
+	w_class = 1
+	gas_transfer_coefficient = 0
+
+/datum/gear/broodmask
+	display_name = "Broodmother mask"
+	path = /obj/item/clothing/mask/broodmask
+	sort_category = slot_wear_mask
+	account = 1
