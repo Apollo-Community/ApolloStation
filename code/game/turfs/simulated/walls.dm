@@ -6,9 +6,6 @@
 	var/mineral = "metal"
 	var/rotting = 0
 
-	var/datum/paint/paint = null
-	var/paint_overlay = null
-
 	var/damage = 0
 	var/damage_cap = 100 //Wall will break down to girders if damage reaches this point
 	var/armor = 0.5 // Damage is multiplied by this
@@ -17,6 +14,8 @@
 	var/global/damage_overlays[8]
 
 	var/max_temperature = 1800 //K, walls will take damage if they're next to a fire hotter than this
+
+	var/datum/paint/paint = null
 
 	opacity = 1
 	density = 1
@@ -66,12 +65,9 @@
 /turf/simulated/wall/examine(mob/user)
 	. = ..(user)
 
-	if(paint.base_color)
-		user << "It is painted with a coat of [paint.base_color] paint."
-	if( paint.stripe0_color )
-		user << "It has a [paint.stripe0_color] horizontal stripe across the bottom."
-	if( paint.stripe1_color )
-		user << "It has a [paint.stripe1_color] horizontal stripe across the top."
+	var/paint_color = paint.getColorName( "base" )
+	if( paint_color )
+		user << "It is painted with a coat of [paint_color] paint."
 
 	if(!damage)
 		user << "<span class='notice'>It looks fully intact.</span>"
@@ -91,22 +87,20 @@
 	if(!damage_overlays[1]) //list hasn't been populated
 		generate_overlays()
 
-	if( !damage && !paint )
-		qdel( paint_overlay )
+	if( !damage && ( !paint || !paint.paint_icon ))
 		overlays.Cut()
 		return
 
-	var/overlay = round(damage / damage_cap * damage_overlays.len) + 1
-	if(overlay > damage_overlays.len)
-		overlay = damage_overlays.len
+	var/dam_level = round(damage / damage_cap * damage_overlays.len) + 1
+	if(dam_level > damage_overlays.len)
+		dam_level = damage_overlays.len
 
-	overlays.Cut()
+	if(!damage_overlay || dam_level != damage_overlay) //No need to update.
+		overlays -= damage_overlays[damage_overlay]
+		damage_overlay = dam_level
+		overlays += damage_overlays[damage_overlay]
 
-	if(!damage_overlay || overlay != damage_overlay) //No need to update.
-		damage_overlay = overlay
-		overlays += damage_overlays[overlay]
-
-	update_paint_icon()
+	overlays += paint.paint_icon
 
 	return
 
@@ -510,46 +504,6 @@
 /turf/simulated/floor/melt()
 	src.ChangeTurf(/turf/simulated/floor/plating)
 
-/turf/simulated/wall/proc/update_paint_icon()
-	if( !paint )
-		return
-
-	var/icon/base = null
-	var/icon/stripe0 = null
-	var/icon/stripe1 = null
-	var/icon/composite = new( paint.icon )
-
-	// Making the various images
-	if( paint.getColor( "base" ))
-		base = new( icon = paint.icon, icon_state = "[paint.base_icon][smoothwall_connections]" )
-		base.Blend( paint.getColor( "base" ), ICON_MULTIPLY )
-
-	if( paint.getColor( "stripe0" ))
-		stripe0 = new( icon = paint.icon, icon_state = "[paint.stripe0_icon][smoothwall_connections]" )
-		stripe0.Blend( paint.getColor( "stripe0" ), ICON_MULTIPLY )
-
-	if( paint.getColor( "stripe1" ))
-		stripe1 = new( icon = paint.icon, icon_state = "[paint.stripe1_icon][smoothwall_connections]" )
-		stripe1.Blend( paint.getColor( "stripe1" ), ICON_MULTIPLY )
-
-	// Building the composite image
-	if( base )
-		composite.Blend( base, ICON_OVERLAY  )
-	if( stripe0 )
-		composite.Blend( stripe0, ICON_OVERLAY  )
-	if( stripe1 )
-		composite.Blend( stripe1, ICON_OVERLAY )
-
-	var/image/img = image( composite )
-
-	// Garbage collecting
-	overlays -= paint_overlay
-	qdel( paint_overlay )
-
-	// Adding the new generated overlay
-	paint_overlay = img
-	overlays += paint_overlay
-
 /turf/simulated/wall/proc/paint( var/color, var/mode = "base" )
 	if( !color )
 		return
@@ -557,13 +511,11 @@
 		return
 
 	paint.paint( color, mode )
-
-	update_paint_icon()
+	update_icon()
 
 /turf/simulated/wall/proc/unpaint( var/mode = null )
 	if( !paint )
 		return
 
 	paint.unpaint( mode )
-
-	update_paint_icon()
+	update_icon()

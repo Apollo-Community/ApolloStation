@@ -15,6 +15,7 @@
 #define FILE_DIR "icons/apollo/mob"
 #define FILE_DIR "icons/atmos"
 #define FILE_DIR "icons/effects"
+#define FILE_DIR "icons/effects/paint"
 #define FILE_DIR "icons/mecha"
 #define FILE_DIR "icons/misc"
 #define FILE_DIR "icons/mob"

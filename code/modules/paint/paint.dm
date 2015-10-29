@@ -1,83 +1,160 @@
-/datum/paint
-	var/static/icon = 'icons/effects/paint.dmi'
-	var/static/base_icon = "base_wall"
-	var/static/stripe0_icon = "stripe0_wall"
-	var/static/stripe1_icon = "stripe1_wall"
+/datum/paint/
+	var/icon = 'icons/effects/paint/paint.dmi'
+	var/global/list/cached_paint_overlays = list() // Cached icons, so a new icon isn't being generated everytime something changes
 
-	var/base_color = null
-	var/stripe0_color = null
-	var/stripe1_color = null
+	var/icon_modifier = "" // Used for things like object direction, or smoothwall connection
+	var/image/paint_icon = null
+	var/list/layers = list()
 
-/datum/paint/proc/paint( var/color, var/mode = "base" )
-	switch( mode )
-		if( "base" )
-			base_color = color
-			return
-		if( "stripe0" )
-			stripe0_color = color
-			return
-		if( "stripe1" )
-			stripe1_color = color
-			return
+/datum/paint/New( var/modifier = "" )
+	icon_modifier = modifier
 
-/datum/paint/proc/unpaint( var/mode = null )
-	if( !mode )
-		base_color = null
-		stripe0_color = null
-		stripe1_color = null
+	updatePaintIcon()
+
+	..()
+
+/datum/paint/proc/updatePaintIcon()
+	var/updated_icon = getCachedPaintIcon()
+	var/icon_name = getPaintIconName()
+
+	if( updated_icon )
+		world << "Cached icon found for [icon_name]"
+		paint_icon = updated_icon
 	else
-		switch( mode )
-			if( "base" )
-				base_color = null
-				return
-			if( "stripe0" )
-				stripe0_color = null
-				return
-			if( "stripe1" )
-				stripe1_color = null
-				return
+		world << "No cached icon found, creating a new icon for [icon_name]"
+		paint_icon = createPaintIcon()
+		cachePaintIcon()
 
-/datum/paint/proc/getColor( var/mode = "base" )
-	switch( mode )
-		if( "base" )
-			if( base_color )
-				return paint_colors[base_color]
-			else
-				return null
-		if( "stripe0" )
-			if( stripe0_color )
-				return paint_colors[stripe0_color]
-			else
-				return null
-		if( "stripe1" )
-			if( stripe1_color )
-				return paint_colors[stripe1_color]
-			else
-				return null
+/datum/paint/proc/getCachedPaintIcon()
+	var/icon_name = getPaintIconName()
+	if( !( icon_name in cached_paint_overlays ))
+		return null
 
-/datum/paint/red
-	base_color = "red"
+	return cached_paint_overlays[icon_name]
 
-/datum/paint/orange
-	base_color = "orange"
+/datum/paint/proc/getColor( var/layer = "base" )
+	if( !layer || !layers[layer] )
+		return
 
-/datum/paint/yellow
-	base_color = "yellow"
+	return paint_colors[getColorName( layer )]
 
-/datum/paint/green
-	base_color = "green"
+/datum/paint/proc/getColorName( var/layer = "base" )
+	if( !layer || !layers[layer] )
+		return
 
-/datum/paint/blue
-	base_color = "blue"
+	return layers[layer]
 
-/datum/paint/purple
-	base_color = "purple"
+/datum/paint/proc/createPaintIcon()
+	var/icon/composite = new( icon )
 
-/datum/paint/brown
-	base_color = "brown"
+	// Compiling the layers into one image
+	for( var/layer in layers )
+		// If we had a bad layer, skip it
+		if( !layer )
+			continue
 
-/datum/paint/black
-	base_color = "black"
+		var/icon/I = new( icon = icon, icon_state = "[layer][icon_modifier]" )
 
-/datum/paint/phoron
-	base_color = "phoron"
+		// If we had a bad icon, skip it
+		if( !I )
+			qdel( I )
+			continue
+
+		var/color = getColor( layer )
+
+		// If we had a bad color, skip it
+		if( !color )
+			qdel( I )
+			continue
+
+		// Adding the color
+		I.Blend( color, ICON_MULTIPLY )
+
+		// Layering it on the composite image
+		composite.Blend( I, ICON_OVERLAY )
+		qdel( I )
+
+	world << "New icon generated for [getPaintIconName()]"
+	return image( composite )
+
+/datum/paint/proc/cachePaintIcon()
+	world << "Caching new icon for [getPaintIconName()]"
+	cached_paint_overlays[getPaintIconName()] = paint_icon
+	return
+
+/datum/paint/proc/clearPaintCache()
+	world << "Clearing paint cache"
+	for( var/icon in cached_paint_overlays )
+		qdel( icon )
+
+	cached_paint_overlays.Cut()
+
+/datum/paint/proc/getPaintIconName()
+	var/icon_name = "_"
+
+	for( var/layer in layers )
+		if( !layer )
+			continue
+
+		icon_name += layer // The icon_state name
+		icon_name += icon_modifier // Any modifiers, like smoothwall connections, or dir
+		icon_name += "_"
+
+		var/color = layers[layer]
+		if( !color )
+			continue
+
+		icon_name += color
+		icon_name += "_"
+
+	return icon_name
+
+/datum/paint/proc/paint( var/color, var/layer = "base" )
+	if( !color )
+		return
+
+	unpaint( layer ) // Remove the old layer so the new one can be on the top
+
+	layers[layer] = color
+
+	updatePaintIcon()
+
+/datum/paint/proc/unpaint( var/layer = null )
+	if( !layer )
+		layers.Cut()
+	else
+		layers -= layer
+
+	updatePaintIcon()
+
+/datum/paint/wall
+	icon = 'icons/effects/paint/walls.dmi'
+
+/datum/paint/wall/red
+	layers = list( "base" = "red" )
+
+/datum/paint/wall/orange
+	layers = list( "base" = "orange" )
+
+/datum/paint/wall/yellow
+	layers = list( "base" = "yellow" )
+
+/datum/paint/wall/green
+	layers = list( "base" = "green" )
+
+/datum/paint/wall/blue
+	layers = list( "base" = "blue" )
+
+/datum/paint/wall/purple
+	layers = list( "base" = "purple" )
+
+/datum/paint/wall/brown
+	layers = list( "base" = "brown" )
+
+/datum/paint/wall/black
+	layers = list( "base" = "black" )
+
+/datum/paint/wall/phoron
+	layers = list( "base" = "phoron" )
+
+
