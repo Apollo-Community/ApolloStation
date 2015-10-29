@@ -35,7 +35,7 @@
 	update_icon()
 
 /obj/item/weapon/paint_brush/proc/transferPaint( var/amount, var/color )
-	if( !color || color != paint_color )
+	if( !color )
 		return -2
 	if( volume == max_volume )
 		return -1

@@ -44,7 +44,7 @@
 /turf/simulated/wall/New()
 	..()
 
-	paint = new("[smoothwall_connections]")
+	paint = new( smoothwall_connections )
 
 /turf/simulated/wall/Destroy()
 	for(var/obj/effect/E in src) if(E.name == "Wallrot") qdel( E )
@@ -512,7 +512,7 @@
 	if( !paint )
 		return
 
-	paint.paint( color, layer )
+	paint.paint( color, layer, smoothwall_connections )
 	update_icon()
 
 /turf/simulated/wall/proc/unpaint( var/layer = null )

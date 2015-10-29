@@ -7,7 +7,7 @@
 	var/list/layers = list()
 
 /datum/paint/New( var/modifier = "" )
-	icon_modifier = modifier
+	icon_modifier = "[modifier]"
 
 	updatePaintIcon()
 
@@ -92,14 +92,14 @@
 /datum/paint/proc/getPaintIconName()
 	var/icon_name = "_"
 
-	for( var/icon_state in layers )
+	for( var/layer in layers )
 		if( !layer )
 			continue
 
 		// The first part of the name is
-		var/layer_name = "[icon_state][icon_modifier]_"
+		var/layer_name = "[layer][icon_modifier]_"
 
-		var/color = layers[icon_state]
+		var/color = getColorName( layer )
 		if( !color )
 			continue
 
@@ -128,6 +128,11 @@
 
 /datum/paint/wall
 	icon = 'icons/effects/paint/walls.dmi'
+
+/datum/paint/wall/paint( var/color, var/layer = "base", var/connections )
+	icon_modifier = "[connections]"
+
+	..()
 
 /datum/paint/wall/red
 	layers = list( "base" = "red" )

@@ -57,7 +57,7 @@ var/global/list/paint_colors = list( "red" = "#992E2E",
 
 		switch( amount )
 			if( -2 )
-				user << "The [I] is already covered with a different color. Wash it off first to change it's color!"
+				user << "For some reason, you couldn't stick the paintbrush inside the can!"
 			if( -1 )
 				user << "The [I] is already covered with enough paint!"
 			if( 0 )
@@ -73,8 +73,6 @@ var/global/list/paint_colors = list( "red" = "#992E2E",
 	if(istype(target) && volume > transfer_amount)
 		for(var/mob/O in viewers(user))
 			O.show_message("\red \The [target] has been splashed with paint by [user]!", 1)
-
-		target.paint( paint_color )
 	else
 		return ..()
 
