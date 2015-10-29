@@ -799,55 +799,56 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/Stat()
 	..()
-	if(!client.afk)
-		if(statpanel("Players"))
-			stat("Total Players: ","[clients.len]")
+
+	if(statpanel("Players"))
+		stat("Total Players: ","[clients.len]")		//Stop gap for player tab when people AFK
+		if(!client.afk)
 			for(var/L in stat_player_list)
 				var/E = stat_player_list[L]
 				stat(L, E)
 
-			sleep(20)
-		if(client && client.holder)
-			if(statpanel("Status"))	//not looking at that panel
-				stat("Location:\t","([x], [y], [z])")
-				stat("Instances:","[world.contents.len]")
-				stat("Commit:\t", "#[config.git_commit_id]")
-			if(statpanel("Processes"))
-				stat("CPU:","[world.cpu]")
-				stat("Instances:","[world.contents.len]")
-				if(processScheduler && processScheduler.getIsRunning())
-					for(var/datum/controller/process/P in processScheduler.processes)
-						stat(P.getStatName(), P.getTickTime())
-				else
-					stat("processScheduler is not running.")
-
-		if(statpanel("Status"))
-			if(ticker && ticker.current_state != GAME_STATE_PREGAME)
-				stat("Station Time", worldtime2text())
-
-		if(listed_turf && client)
-			if(!TurfAdjacent(listed_turf))
-				listed_turf = null
+		sleep(20)
+	if(client && client.holder && !client.afk)
+		if(statpanel("Status"))	//not looking at that panel
+			stat("Location:\t","([x], [y], [z])")
+			stat("Instances:","[world.contents.len]")
+			stat("Commit:\t", "#[config.git_commit_id]")
+		if(statpanel("Processes"))
+			stat("CPU:","[world.cpu]")
+			stat("Instances:","[world.contents.len]")
+			if(processScheduler && processScheduler.getIsRunning())
+				for(var/datum/controller/process/P in processScheduler.processes)
+					stat(P.getStatName(), P.getTickTime())
 			else
-				statpanel(listed_turf.name, null, listed_turf)
-				for(var/atom/A in listed_turf)
-					if(!A.mouse_opacity)
-						continue
-					if(A.invisibility > see_invisible)
-						continue
-					if(is_type_in_list(A, shouldnt_see))
-						continue
-					statpanel(listed_turf.name, null, A)
+				stat("processScheduler is not running.")
 
-		if(spell_list && spell_list.len)
-			for(var/obj/effect/proc_holder/spell/S in spell_list)
-				switch(S.charge_type)
-					if("recharge")
-						statpanel("Spells","[S.charge_counter/10.0]/[S.charge_max/10]",S)
-					if("charges")
-						statpanel("Spells","[S.charge_counter]/[S.charge_max]",S)
-					if("holdervar")
-						statpanel("Spells","[S.holder_var_type] [S.holder_var_amount]",S)
+	if(statpanel("Status"))
+		if(ticker && ticker.current_state != GAME_STATE_PREGAME)
+			stat("Station Time", worldtime2text())
+
+	if(listed_turf && client)
+		if(!TurfAdjacent(listed_turf))
+			listed_turf = null
+		else
+			statpanel(listed_turf.name, null, listed_turf)
+			for(var/atom/A in listed_turf)
+				if(!A.mouse_opacity)
+					continue
+				if(A.invisibility > see_invisible)
+					continue
+				if(is_type_in_list(A, shouldnt_see))
+					continue
+				statpanel(listed_turf.name, null, A)
+
+	if(spell_list && spell_list.len)
+		for(var/obj/effect/proc_holder/spell/S in spell_list)
+			switch(S.charge_type)
+				if("recharge")
+					statpanel("Spells","[S.charge_counter/10.0]/[S.charge_max/10]",S)
+				if("charges")
+					statpanel("Spells","[S.charge_counter]/[S.charge_max]",S)
+				if("holdervar")
+					statpanel("Spells","[S.holder_var_type] [S.holder_var_amount]",S)
 // facing verbs
 /mob/proc/canface()
 	if(!canmove)						return 0
