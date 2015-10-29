@@ -539,10 +539,6 @@ area/space/atmosalert()
 	name = "\improper south-east of SS13"
 	icon_state = "southeast"
 
-/area/syndicate_station/north
-	name = "\improper north of SS13"
-	icon_state = "north"
-
 /area/syndicate_station/south
 	name = "\improper south of SS13"
 	icon_state = "south"
