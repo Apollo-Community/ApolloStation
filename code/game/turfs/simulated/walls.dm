@@ -15,7 +15,7 @@
 
 	var/max_temperature = 1800 //K, walls will take damage if they're next to a fire hotter than this
 
-	var/datum/paint/paint = null
+	var/datum/paint/wall/paint = null
 
 	opacity = 1
 	density = 1
@@ -44,7 +44,7 @@
 /turf/simulated/wall/New()
 	..()
 
-	paint = new()
+	paint = new("[smoothwall_connections]")
 
 /turf/simulated/wall/Destroy()
 	for(var/obj/effect/E in src) if(E.name == "Wallrot") qdel( E )
@@ -84,6 +84,7 @@
 		user << "<span class='warning'>There is fungus growing on [src].</span>"
 
 /turf/simulated/wall/proc/update_icon()
+/*
 	if(!damage_overlays[1]) //list hasn't been populated
 		generate_overlays()
 
@@ -91,7 +92,7 @@
 		overlays.Cut()
 		return
 
-	var/dam_level = round(damage / damage_cap * damage_overlays.len) + 1
+	var/dam_level = round(( damage/damage_cap )*damage_overlays.len ) + 1
 	if(dam_level > damage_overlays.len)
 		dam_level = damage_overlays.len
 
@@ -99,6 +100,7 @@
 		overlays -= damage_overlays[damage_overlay]
 		damage_overlay = dam_level
 		overlays += damage_overlays[damage_overlay]
+*/
 
 	overlays += paint.paint_icon
 
@@ -504,18 +506,18 @@
 /turf/simulated/floor/melt()
 	src.ChangeTurf(/turf/simulated/floor/plating)
 
-/turf/simulated/wall/proc/paint( var/color, var/mode = "base" )
+/turf/simulated/wall/proc/paint( var/color, var/layer = "base" )
 	if( !color )
 		return
 	if( !paint )
 		return
 
-	paint.paint( color, mode )
+	paint.paint( color, layer )
 	update_icon()
 
-/turf/simulated/wall/proc/unpaint( var/mode = null )
+/turf/simulated/wall/proc/unpaint( var/layer = null )
 	if( !paint )
 		return
 
-	paint.unpaint( mode )
+	paint.unpaint( layer )
 	update_icon()

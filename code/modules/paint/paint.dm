@@ -92,20 +92,19 @@
 /datum/paint/proc/getPaintIconName()
 	var/icon_name = "_"
 
-	for( var/layer in layers )
+	for( var/icon_state in layers )
 		if( !layer )
 			continue
 
-		icon_name += layer // The icon_state name
-		icon_name += icon_modifier // Any modifiers, like smoothwall connections, or dir
-		icon_name += "_"
+		// The first part of the name is
+		var/layer_name = "[icon_state][icon_modifier]_"
 
-		var/color = layers[layer]
+		var/color = layers[icon_state]
 		if( !color )
 			continue
 
-		icon_name += color
-		icon_name += "_"
+		layer_name += "[color]_"
+		icon_name += layer_name
 
 	return icon_name
 
