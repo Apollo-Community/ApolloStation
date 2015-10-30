@@ -10,7 +10,6 @@
 	var/damage_cap = 100 //Wall will break down to girders if damage reaches this point
 	var/armor = 0.5 // Damage is multiplied by this
 
-	var/damage_overlay = 0
 	var/global/damage_overlays[8]
 
 	var/max_temperature = 1800 //K, walls will take damage if they're next to a fire hotter than this
@@ -84,24 +83,19 @@
 		user << "<span class='warning'>There is fungus growing on [src].</span>"
 
 /turf/simulated/wall/proc/update_icon()
-/*
 	if(!damage_overlays[1]) //list hasn't been populated
 		generate_overlays()
 
+	overlays.Cut()
+
 	if( !damage && ( !paint || !paint.paint_icon ))
-		overlays.Cut()
 		return
 
 	var/dam_level = round(( damage/damage_cap )*damage_overlays.len ) + 1
 	if(dam_level > damage_overlays.len)
 		dam_level = damage_overlays.len
 
-	if(!damage_overlay || dam_level != damage_overlay) //No need to update.
-		overlays -= damage_overlays[damage_overlay]
-		damage_overlay = dam_level
-		overlays += damage_overlays[damage_overlay]
-*/
-
+	overlays += damage_overlays[dam_level]
 	overlays += paint.paint_icon
 
 	return
@@ -189,6 +183,9 @@
 			P.roll_and_drop(src)
 		else
 			O.loc = src
+
+	overlays.Cut()
+	qdel( paint )
 
 	ChangeTurf(/turf/simulated/floor/plating)
 

@@ -41,10 +41,8 @@
 		return -1
 	if( amount <=  0 )
 		return 0
-	if( amount+volume > max_volume )
-		amount = max_volume-amount
 
-	volume += amount
+	volume = min( max_volume, max( 0, amount+volume ))
 	paint_color = color
 
 	update_icon()

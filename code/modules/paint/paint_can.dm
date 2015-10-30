@@ -72,7 +72,7 @@ var/global/list/paint_colors = list( "red" = "#992E2E",
 	if(!proximity) return
 	if(istype(target) && volume > transfer_amount)
 		for(var/mob/O in viewers(user))
-			O.show_message("\red \The [target] has been splashed with paint by [user]!", 1)
+			O.show_message("\red \The [target] has been splashed with [paint_color] paint by [user]!", 1)
 	else
 		return ..()
 

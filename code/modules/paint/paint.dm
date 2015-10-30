@@ -112,6 +112,10 @@
 	if( !color )
 		return
 
+	if( color == "remover" )
+		unpaint()
+		return
+
 	unpaint( layer ) // Remove the old layer so the new one can be on the top
 
 	layers[layer] = color
