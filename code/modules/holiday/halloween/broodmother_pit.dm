@@ -45,11 +45,13 @@
 	icon_dead = "broodmother"
 	maxHealth = 300		//Since it does more damage - reduced health
 	health = 300
+	pixel_x = -16
+	bound_height = 64
+	bound_width = 32
 
 /mob/living/simple_animal/hostile/alien/queen/halloween/attackby()
 	//Attack back if you get attacked GAWD
 	AttackingTarget()
-
 
 /mob/living/simple_animal/hostile/alien/queen/halloween/death()
 	for(var/mob/living/M in hearers(src,7))	// Should give anyone near broodmo the item
