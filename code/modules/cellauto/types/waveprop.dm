@@ -69,12 +69,11 @@
 	if( istype( T, /turf/simulated/wall ))
 		if( istype( T, /turf/simulated/wall/r_wall ))
 			return 0
-/*
+
 		var/turf/simulated/wall/W = T
 		if( W.paint )
-			if( istype( W.paint, /datum/paint/phoron ))
+			if( W.paint.getColorName() == "phoron" )
 				return 0
-*/
 
 	if( T.contains_opaque_objects() && level == 1 )
 		return 0
