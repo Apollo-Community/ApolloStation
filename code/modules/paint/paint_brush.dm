@@ -3,6 +3,7 @@
 	name = "paint brush"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "paintbrush"
+	var/icon_overlay = "paintbrush_overlay"
 	force = 3.0
 	throwforce = 6.0
 	throw_speed = 5
@@ -27,6 +28,31 @@
 
 	if( choice )
 		paint_mode = paint_modes[choice]
+
+/obj/item/weapon/paint_brush/update_icon()
+	overlays.Cut()
+
+	if( !paint_color )
+		return
+
+	var/icon/I = new( icon = icon, icon_state = icon_overlay )
+	var/overlay_color = paint_colors[paint_color]
+
+	// Adding the color
+	I.Blend( overlay_color, ICON_MULTIPLY )
+
+	// Layering it on the composite image
+
+	overlays += image( I )
+	qdel( I )
+
+	return
+
+/obj/item/weapon/paint_brush/examine(mob/user)
+	. = ..(user)
+
+	if( paint_color )
+		user << "It is covered with [paint_color] paint."
 
 /obj/item/weapon/paint_brush/proc/wash()
 	paint_color = null
@@ -63,4 +89,5 @@
 			user << "You paint the wall with [paint_color] paint."
 		if( !volume )
 			paint_color = null
+			update_icon()
 

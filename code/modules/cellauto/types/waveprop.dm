@@ -80,7 +80,6 @@
 
 	return 1
 
-
 /datum/cell_auto_master/v_wave/
 	var/smlevel = 1
 	cell_type = /atom/movable/cell/v_wave

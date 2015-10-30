@@ -15,13 +15,10 @@
 
 /datum/paint/proc/updatePaintIcon()
 	var/updated_icon = getCachedPaintIcon()
-	var/icon_name = getPaintIconName()
 
 	if( updated_icon )
-		world << "Cached icon found for [icon_name]"
 		paint_icon = updated_icon
 	else
-		world << "No cached icon found, creating a new icon for [icon_name]"
 		paint_icon = createPaintIcon()
 		cachePaintIcon()
 
@@ -74,16 +71,13 @@
 		composite.Blend( I, ICON_OVERLAY )
 		qdel( I )
 
-	world << "New icon generated for [getPaintIconName()]"
 	return image( composite )
 
 /datum/paint/proc/cachePaintIcon()
-	world << "Caching new icon for [getPaintIconName()]"
 	cached_paint_overlays[getPaintIconName()] = paint_icon
 	return
 
 /datum/paint/proc/clearPaintCache()
-	world << "Clearing paint cache"
 	for( var/icon in cached_paint_overlays )
 		qdel( icon )
 
@@ -164,5 +158,28 @@
 
 /datum/paint/wall/phoron
 	layers = list( "base" = "phoron" )
+
+
+/datum/paint/wall/medical
+	layers = list( "base" = "white",
+				   "stripe0" = "green" )
+
+/datum/paint/wall/engineering
+	layers = list( "stripe0" = "orange",
+				   "stripe1" = "orange" )
+
+/datum/paint/wall/research
+	layers = list( "base" = "white",
+				   "stripe0" = "purple",
+				   "stripe1" = "purple" )
+
+/datum/paint/wall/cargo
+	layers = list( "base" = "orange" )
+
+/datum/paint/wall/security
+	layers = list( "base" = "red" )
+
+
+
 
 

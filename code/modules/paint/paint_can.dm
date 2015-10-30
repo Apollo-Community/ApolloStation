@@ -6,7 +6,7 @@ var/global/list/paint_colors = list( "red" = "#992E2E",
 									 "purple" = "#62358D",
 									 "brown" = "#62462B",
 									 "black" = "#1A1A1A",
-									 "white" = "#BABABA",
+									 "white" = "#F3F3F3",
 									 "phoron" = "#603F7F" )
 
 /obj/item/weapon/paint_can

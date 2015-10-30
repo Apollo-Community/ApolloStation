@@ -915,6 +915,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	/obj/item/weapon/paint_can/black,
 	/obj/item/weapon/paint_can/white,
 	/obj/item/weapon/paint_can/remover,
+	/obj/item/weapon/paint_brush,
 	/obj/item/weapon/contraband/poster,
 	/obj/item/weapon/wrapping_paper,
 	/obj/item/weapon/wrapping_paper,
