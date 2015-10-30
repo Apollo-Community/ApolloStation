@@ -625,6 +625,10 @@
 	var/brightness_power = 1
 	var/brightness_color = null
 
+/obj/item/weapon/light/proc/paint( var/color )
+	color = color
+	light_color = color
+
 /obj/item/weapon/light/candle
 	name = "candle"
 	desc = "A electric candle, used to really set the mood."
