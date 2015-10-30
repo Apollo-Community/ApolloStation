@@ -14,7 +14,8 @@
 
 	var/max_temperature = 1800 //K, walls will take damage if they're next to a fire hotter than this
 
-	var/datum/paint/wall/paint = null
+	var/datum/paint/paint = null
+	var/paint_type = /datum/paint/wall
 
 	opacity = 1
 	density = 1
@@ -43,7 +44,8 @@
 /turf/simulated/wall/New()
 	..()
 
-	paint = new( smoothwall_connections )
+	paint = new paint_type( smoothwall_connections )
+	update_icon()
 
 /turf/simulated/wall/Destroy()
 	for(var/obj/effect/E in src) if(E.name == "Wallrot") qdel( E )
@@ -518,3 +520,20 @@
 
 	paint.unpaint( layer )
 	update_icon()
+
+
+/turf/simulated/wall/medical
+	paint_type = /datum/paint/wall/medical
+
+/turf/simulated/wall/engineering
+	paint_type = /datum/paint/wall/engineering
+
+/turf/simulated/wall/research
+	paint_type = /datum/paint/wall/research
+
+/turf/simulated/wall/cargo
+	paint_type = /datum/paint/wall/cargo
+
+/turf/simulated/wall/security
+	paint_type = /datum/paint/wall/security
+
