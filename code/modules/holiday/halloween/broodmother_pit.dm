@@ -10,14 +10,14 @@
 				return
 			else
 				pumpkins.Add(W.icon_state)
-			for(var/mob/living/M in hearers(src,7))
+			for(var/mob/living/M in orange(src,7))
 				M << "\blue <b>A [pumpkins.len < 4 ? "noise" : "groan"] echo's from the bottom of the pit!</b>"
 				M << "<span class='notice'><b>Halloween Secret - [pumpkins.len] out of 7 have been thrown in!</b></span>"
 		else if(pumpkins.len==7)
 			user << "\blue <b>The broodmother has already been defeated!</b>"
 			return
 		else
-			for(var/mob/living/M in hearers(src,7))	// Same condition to win it
+			for(var/mob/living/M in orange(src,7))	// Same condition to win it
 				M << "<span class='warning'><b>The floor begins to shake!</b></span>"
 				shake_camera(M,15,1)
 				M <<"<span class='danger'><h1>The broodmother has surfaced!</h1></span>"
@@ -54,11 +54,18 @@
 	AttackingTarget()
 
 /mob/living/simple_animal/hostile/alien/queen/halloween/death()
-	for(var/mob/living/M in hearers(src,7))	// Should give anyone near broodmo the item
+	visible_message( "<h2><span class='danger'>[src] explodes in a shower of gore!</span><h2>" )
+
+	new /obj/effect/gibspawner/human( get_turf( src ))
+
+	for(var/mob/living/M in orange(src,7))	// Should give anyone near broodmo the item
 		if( log_acc_item_to_db( M.ckey, "Bone necklace" ))
 			M << "<span class='notice'><b>Halloween Secret - Congratulations! You've defeated the broodmother. The Bone Necklace has been added to your account as a reward.</b></span>"
 		else
 			M << "<span class='notice'><b>Halloween Secret - You've already collected this item. Sorry!</b></span>"
 
-	..()
+	qdel( src )
+
+
+
 
