@@ -214,6 +214,8 @@ var/list/gamemode_cache = list()
 	var/git_commit_id = ""
 
 	var/recommended_byond = 501
+	var/player_soft_cap = 40
+	var/player_hard_cap = 60
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode

@@ -331,8 +331,12 @@ var/world_topic_spam_protect_time = world.timeofday
 
 	if (config && config.server_name)
 		s += "<a href=\"https://apollo-community.org\">" //Change this to wherever you want the hub to link to.
-		s += "<center><big><b>[config.server_name]</b></big></center>"
+		s += "<big><b>[config.server_name]</b></big>"
 		s += "</a>"
+		s += "\]<br>\["
+
+	if( clients )
+		s += "[clients.len] / [config.player_soft_cap]"
 
 /*
 	var/list/features = list()
