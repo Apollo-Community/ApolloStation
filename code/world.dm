@@ -12,6 +12,7 @@ var/global/datum/global_init/init = new ()
 
 
 /world
+	name = "Apollo Station"
 	mob = /mob/new_player
 	turf = /turf/space
 	area = /area/space
@@ -329,21 +330,14 @@ var/world_topic_spam_protect_time = world.timeofday
 	var/s = ""
 
 	if (config && config.server_name)
-		s += "<b>[config.server_name]</b> &#8212; "
+		s += "<a href=\"https://apollo-community.org\">" //Change this to wherever you want the hub to link to.
+		s += "<center><big><b>[config.server_name]</b></big></center>"
+		s += "</a>"
 
-	s += " ("
-	s += "<a href=\"http://apollo-community.org\">" //Change this to wherever you want the hub to link to.
-//	s += "[game_version]"
-	s += "forums"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
-	s += "</a>"
-	s += ")"
-
+/*
 	var/list/features = list()
 
-	if(ticker)
-		if(master_mode)
-			features += master_mode
-	else
+	if( !ticker )
 		features += "<b>STARTING</b>"
 
 	if (!config.enter_allowed)
@@ -357,27 +351,12 @@ var/world_topic_spam_protect_time = world.timeofday
 	if (config && config.allow_ai)
 		features += "AI allowed"
 
-	var/n = 0
-	for (var/mob/M in player_list)
-		if (M.client)
-			n++
-
-	if (n > 1)
-		features += "~[n] players"
-	else if (n > 0)
-		features += "~[n] player"
-
-	/*
-	is there a reason for this? the byond site shows 'hosted by X' when there is a proper host already.
-	if (host)
-		features += "hosted by <b>[host]</b>"
-	*/
-
 	if (!host && config && config.hostedby)
 		features += "hosted by <b>[config.hostedby]</b>"
 
 	if (features)
 		s += ": [list2text(features, ", ")]"
+*/
 
 	/* does this help? I do not know */
 	if (src.status != s)
