@@ -332,35 +332,14 @@ var/world_topic_spam_protect_time = world.timeofday
 	if (config && config.server_name)
 		s += "<a href=\"https://apollo-community.org\">" //Change this to wherever you want the hub to link to.
 		s += "<big><b>[config.server_name]</b></big>"
-		s += "</a>"
-		s += "\]<br>\["
+		s += "</a>\]"
+
+		if( !ticker )
+			s += "  - <b>STARTING</b> -"
+		s += "<br>\["
 
 	if( clients )
-		s += "[clients.len] / [config.player_soft_cap]"
-
-/*
-	var/list/features = list()
-
-	if( !ticker )
-		features += "<b>STARTING</b>"
-
-	if (!config.enter_allowed)
-		features += "closed"
-
-	features += config.abandon_allowed ? "respawn" : "no respawn"
-
-	if (config && config.allow_vote_mode)
-		features += "vote"
-
-	if (config && config.allow_ai)
-		features += "AI allowed"
-
-	if (!host && config && config.hostedby)
-		features += "hosted by <b>[config.hostedby]</b>"
-
-	if (features)
-		s += ": [list2text(features, ", ")]"
-*/
+		s += "Players: [clients.len] / [config.player_soft_cap]"
 
 	/* does this help? I do not know */
 	if (src.status != s)
