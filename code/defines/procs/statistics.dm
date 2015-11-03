@@ -10,7 +10,7 @@ proc/sql_poll_players()
 		log_game("SQL ERROR during player polling. Failed to connect.")
 	else
 		var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
-		var/DBQuery/query = dbcon_old.NewQuery("INSERT INTO population (playercount, time) VALUES ([playercount], '[sqltime]')")
+		var/DBQuery/query = dbcon.NewQuery("INSERT INTO population (playercount, time) VALUES ([playercount], '[sqltime]')")
 		if(!query.Execute())
 			var/err = query.ErrorMsg()
 			log_game("SQL ERROR during player polling. Error : \[[err]\]\n")
@@ -25,7 +25,7 @@ proc/sql_poll_admins()
 		log_game("SQL ERROR during admin polling. Failed to connect.")
 	else
 		var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
-		var/DBQuery/query = dbcon_old.NewQuery("INSERT INTO population (admincount, time) VALUES ([admincount], '[sqltime]')")
+		var/DBQuery/query = dbcon.NewQuery("INSERT INTO population (admincount, time) VALUES ([admincount], '[sqltime]')")
 		if(!query.Execute())
 			var/err = query.ErrorMsg()
 			log_game("SQL ERROR during admin polling. Error : \[[err]\]\n")
@@ -134,7 +134,7 @@ proc/sql_commit_feedback()
 		log_game("SQL ERROR during feedback reporting. Failed to connect.")
 	else
 
-		var/DBQuery/max_query = dbcon.NewQuery("SELECT MAX(roundid) AS max_round_id FROM erro_feedback")
+		var/DBQuery/max_query = dbcon.NewQuery("SELECT MAX(roundid) AS max_round_id FROM feedback")
 		max_query.Execute()
 
 		var/newroundid
@@ -154,7 +154,7 @@ proc/sql_commit_feedback()
 			var/variable = item.get_variable()
 			var/value = item.get_value()
 
-			var/DBQuery/query = dbcon.NewQuery("INSERT INTO erro_feedback (id, roundid, time, variable, value) VALUES (null, [newroundid], Now(), '[variable]', '[value]')")
+			var/DBQuery/query = dbcon.NewQuery("INSERT INTO feedback (id, roundid, time, variable, value) VALUES (null, [newroundid], Now(), '[variable]', '[value]')")
 			if(!query.Execute())
 				var/err = query.ErrorMsg()
 				log_game("SQL ERROR during death reporting. Error : \[[err]\]\n")

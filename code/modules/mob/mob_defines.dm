@@ -229,3 +229,5 @@
 	var/list/active_genes=list()
 
 	var/STUI_log = 1
+
+	var/pumpkins_found = 0
