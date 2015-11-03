@@ -176,30 +176,30 @@
 		src << "\red This server is running Byond-[config.recommended_byond](BETA). If you experience any lighting issues we suggest you upgrade here - http://www.byond.com/download/"
 
 	donator = is_donator(src)
+	if(!stat_player_list.Find(key))			//Don't add the same person twice? How does this even happen
+		var/obj/playerlist/O = new()
+		O.icon = icon('./icons/playerlist.dmi')
+		O.player = src
 
-	var/obj/playerlist/O = new()
-	O.icon = icon('./icons/playerlist.dmi')
-	O.player = src
+		if (holder && (R_MOD & holder.rights))
+			O.name = "Mod"
+			O.icon_state = "mod"
+		else if(holder && (R_ADMIN & holder.rights))
+			O.name = "Admin"
+			O.icon_state = "admin"
+		else if(holder && (R_DEBUG & holder.rights))
+			O.name = "Dev"
+			O.icon_state = "dev"
+		else if(donator)
+			O.name = "Donator"
+			O.icon_state = "donator"
+		else
+			O.name = "Player"
+			O.icon_state = "player"
 
-	if (holder && (R_MOD & holder.rights))
-		O.name = "Mod"
-		O.icon_state = "mod"
-	else if(holder && (R_ADMIN & holder.rights))
-		O.name = "Admin"
-		O.icon_state = "admin"
-	else if(holder && (R_DEBUG & holder.rights))
-		O.name = "Dev"
-		O.icon_state = "dev"
-	else if(donator)
-		O.name = "Donator"
-		O.icon_state = "donator"
-	else
-		O.name = "Player"
-		O.icon_state = "player"
-
-	stat_player_list.Add(key)
-	stat_player_list[key] = O
-	stat_player_list = sortAssoc(stat_player_list)
+		stat_player_list.Add(key)
+		stat_player_list[key] = O
+		stat_player_list = sortAssoc(stat_player_list)
 
 	log_client_to_db()
 
