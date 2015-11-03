@@ -1,5 +1,8 @@
 var/global/list/account_items = list()
 
+/datum/gear/account
+	account = 1
+
 /proc/log_acc_item_to_db( var/ckey, var/obj_type )
 	if( !ckey )
 		return 0

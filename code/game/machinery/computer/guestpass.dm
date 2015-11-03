@@ -107,7 +107,7 @@
 
 /obj/machinery/computer/guestpass/Topic(href, href_list)
 	if(..())
-		return
+		return 1
 	usr.set_machine(src)
 	if (href_list["mode"])
 		mode = text2num(href_list["mode"])
@@ -131,6 +131,11 @@
 						usr << "<span class='warning'>Invalid duration.</span>"
 			if ("access")
 				var/A = text2num(href_list["access"])
+				if( !( A in giver.access ))
+					usr << "\red You are a bad person."
+					message_admins("[usr]/([usr.ckey]) has attempted to use an href exploit on a guest pass machine!", "EXPLOIT:")
+					return
+
 				if (A in accesses)
 					accesses.Remove(A)
 				else

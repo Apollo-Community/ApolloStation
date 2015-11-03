@@ -4,11 +4,10 @@
 	icon = 'icons/obj/event_items.dmi'
 	icon_state = "coin_pumpkin"
 
-/datum/gear/pumpkin_zippo
+/datum/gear/account/pumpkin_zippo
 	display_name = "Pumpkin coin"
 	path = /obj/item/weapon/coin/pumpkin
 	sort_category = "misc"
-	account = 1
 
 /obj/item/weapon/flame/lighter/zippo/pumpkin //mangled: Li Matsuda
 	name = "pumpkin zippo lighter"
@@ -18,11 +17,10 @@
 	icon_on = "pumpkinzippoon"
 	icon_off = "pumpkinzippo"
 
-/datum/gear/pumpkin_zippo
+/datum/gear/account/pumpkin_zippo
 	display_name = "Pumpkin zippo"
 	path = /obj/item/weapon/flame/lighter/zippo/pumpkin
 	sort_category = "misc"
-	account = 1
 
 /obj/item/clothing/mask/broodlace
 	name = "bone necklace"
@@ -32,11 +30,10 @@
 	w_class = 1
 	gas_transfer_coefficient = 0
 
-/datum/gear/broodlace
+/datum/gear/account/broodlace
 	display_name = "Bone necklace"
 	path = /obj/item/clothing/mask/broodlace
 	sort_category = slot_wear_mask
-	account = 1
 
 /obj/item/clothing/head/broodmask
 	name = "Broodmother mask"
@@ -46,8 +43,7 @@
 	w_class = 1
 	gas_transfer_coefficient = 0
 
-/datum/gear/broodmask
+/datum/gear/account/broodmask
 	display_name = "Broodmother mask"
 	path = /obj/item/clothing/head/broodmask
 	sort_category = slot_head
-	account = 1
