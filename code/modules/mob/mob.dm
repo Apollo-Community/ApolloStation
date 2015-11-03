@@ -808,23 +808,22 @@ note dizziness decrements automatically in the mob's Life() proc.
 				stat(L, E)
 
 		sleep(20)
+
+	if(statpanel("Status"))
+		if(ticker && ticker.current_state != GAME_STATE_PREGAME)
+			stat("Station Time", worldtime2text())
+
 	if(client && client.holder && !client.afk)
 		if(statpanel("Status"))	//not looking at that panel
 			stat("Location:\t","([x], [y], [z])")
-			stat("Instances:","[world.contents.len]")
 			stat("Commit:\t", "#[config.git_commit_id]")
-		if(statpanel("Processes"))
-			stat("CPU:","[world.cpu]")
 			stat("Instances:","[world.contents.len]")
+			stat("CPU:","[world.cpu]")
 			if(processScheduler && processScheduler.getIsRunning())
 				for(var/datum/controller/process/P in processScheduler.processes)
 					stat(P.getStatName(), P.getTickTime())
 			else
 				stat("processScheduler is not running.")
-
-	if(statpanel("Status"))
-		if(ticker && ticker.current_state != GAME_STATE_PREGAME)
-			stat("Station Time", worldtime2text())
 
 	if(listed_turf && client)
 		if(!TurfAdjacent(listed_turf))
