@@ -55,6 +55,8 @@
 		cmd_admin_irc_pm(href_list["irc_msg"])
 		return
 
+
+
 	//Logs all hrefs
 	if(config && config.log_hrefs && href_logfile)
 		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
@@ -110,7 +112,7 @@
 
 	if(!config.guests_allowed && IsGuestKey(key))
 		alert(src,"This server doesn't allow guest accounts to play. Please go to http://www.byond.com/ and register for a key.","Guest","OK")
-		del( src )
+		del(src)
 		return
 
 	// Change the way they should download resources.
@@ -120,21 +122,32 @@
 
 	src << "\red If the title screen is black, resources are still downloading. Please be patient until the title screen appears."
 
-	// Adds donator
-	donator = is_donator(src)
+	for(var/client/target in clients)
+		if( !target )
+			continue
 
-	//Admin authorisation
+		if(target.prefs.toggles & CHAT_OOC)
+			target << "<span class='notice'><b>[src.key] has connected to the server.</b></span>"
+
+			if( target.prefs.toggles & SOUND_NOTIFICATIONS )
+				target << sound( 'sound/effects/oocjoin.ogg' )
+
+	clients += src
+	directory[ckey] = src
+
+	//Admin Authorisation
 	holder = admin_datums[ckey]
+	if(holder)
+		admins += src
+		holder.owner = src
 
-	if( !passSoftCap() )
-		alert(src,"This server has currently surpassed its soft cap. Only previous players will be allowed to enter.","Soft Cap","OK")
-		del( src )
-		return
-
-	if( !passHardCap() )
-		alert(src,"This server has currently surpassed its hard cap. Only admins and donators will be allowed to enter.","Hard Cap","OK")
-		del( src )
-		return
+	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
+	prefs = preferences_datums[ckey]
+	if(!prefs)
+		prefs = new /datum/preferences(src)
+		preferences_datums[ckey] = prefs
+	prefs.last_ip = address				//these are gonna be used for banning
+	prefs.last_id = computer_id			//these are gonna be used for banning
 
 	. = ..()	//calls mob.Login()
 
@@ -148,6 +161,10 @@
 		host = key
 		world.update_status()
 
+	if(holder)
+		add_admin_verbs()
+		admin_memo_show()
+
 	// Forcibly enable hardware-accelerated graphics, as we need them for the lighting overlays.
 	// (but turn them off first, since sometimes BYOND doesn't turn them on properly otherwise)
 	spawn(5) // And wait a half-second, since it sounds like you can do this too fast.
@@ -157,6 +174,8 @@
 
 	if(byond_version < config.recommended_byond)
 		src << "\red This server is running Byond-[config.recommended_byond](BETA). If you experience any lighting issues we suggest you upgrade here - http://www.byond.com/download/"
+
+	donator = is_donator(src)
 
 	var/obj/playerlist/O = new()
 	O.icon = icon('./icons/playerlist.dmi')
@@ -178,15 +197,6 @@
 		O.name = "Player"
 		O.icon_state = "player"
 
-	addClient()
-
-	if(holder)
-		addAdmin()
-
-	announceJoin( src )
-
-	loadPreferences()
-
 	stat_player_list.Add(key)
 	stat_player_list[key] = O
 	stat_player_list = sortAssoc(stat_player_list)
@@ -203,9 +213,10 @@
 	//////////////
 /client/Del()
 	if(holder)
-		removeAdmin()
-
-	removeClient()
+		holder.owner = null
+		admins -= src
+	directory -= ckey
+	clients -= src
 
 	return ..()
 
@@ -388,79 +399,3 @@ client/proc/loadAccountItems()
 
 		if( gear_datums[item] )
 			prefs.account_items += "[item]"
-
-// If the client exists in the database
-client/proc/isDBLogged()
-	if(!dbcon.IsConnected())
-		return 0
-
-	var/sql_ckey = sql_sanitize_text(src.ckey)
-	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM player WHERE ckey = '[sql_ckey]'")
-	query.Execute()
-
-	while(query.NextRow())
-		return 1
-
-	return 0
-
-// After soft cap has been passed, only players who have connected before can join
-client/proc/passSoftCap()
-	if( holder || donator )
-		return 1
-
-	if( clients.len < config.player_soft_cap )
-		return 1
-
-	if( isDBLogged() )
-		return 1
-
-	return 0
-
-// After hard cap, only admins and donators can join
-client/proc/passHardCap()
-	if( holder || donator )
-		return 1
-
-	if( clients.len < config.player_hard_cap )
-		return 1
-
-	return 0
-
-client/proc/loadPreferences()
-	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
-	prefs = preferences_datums[ckey]
-	if(!prefs)
-		prefs = new /datum/preferences(src)
-		preferences_datums[ckey] = prefs
-	prefs.last_ip = address				//these are gonna be used for banning
-	prefs.last_id = computer_id			//these are gonna be used for banning
-
-client/proc/addAdmin()
-	add_admin_verbs()
-	admin_memo_show()
-
-	admins += src
-	holder.owner = src
-
-client/proc/removeAdmin()
-	holder.owner = null
-	admins -= src
-
-client/proc/addClient()
-	clients += src
-	directory[ckey] = src
-
-client/proc/removeClient()
-	directory -= ckey
-	clients -= src
-
-/proc/announceJoin( var/client/C )
-	for(var/client/target in clients)
-		if( !target )
-			continue
-
-		if(target.prefs.toggles & CHAT_OOC)
-			target << "<span class='notice'><b>[C.key] has connected to the server.</b></span>"
-
-			if( target.prefs.toggles & SOUND_NOTIFICATIONS )
-				target << sound( 'sound/effects/oocjoin.ogg' )
