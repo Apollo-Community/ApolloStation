@@ -42,6 +42,7 @@
 	if( !A ) return
 	if( !source ) return
 	if( istype( A, /turf )) return // turfs can't go through
+	if( istype( A, /atom/movable/lighting_overlay )) return  // dont want to take our lighting overlays
 
 	if( istype( A, /obj ) && !istype( A, /obj/spacepod/shuttle )) // anything nailed down can't go through
 		var/obj/O = A
