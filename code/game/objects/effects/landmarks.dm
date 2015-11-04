@@ -75,10 +75,6 @@
 			blobstart += loc
 			qdel(src)
 
-		if("pumpkin_spawn")
-			pumpkin_starts += loc
-			qdel(src)
-
 		if("xeno_spawn")
 			xeno_spawn += loc
 			qdel(src)
