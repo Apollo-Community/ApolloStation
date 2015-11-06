@@ -1277,7 +1277,7 @@
 		if(!ismob(M))
 			usr << "This can only be used on instances of type /mob"
 			return
-		get_mob_info(M, src.owner)
+		get_mob_info(M, usr)
 	else if(href_list["adminspawncookie"])
 		if(!check_rights(R_ADMIN|R_FUN))	return
 
