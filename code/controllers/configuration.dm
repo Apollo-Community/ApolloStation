@@ -829,7 +829,7 @@ var/list/gamemode_cache = list()
 		var/datum/game_mode/M = gamemode_cache[game_mode]
 		if (M:config_tag && M:config_tag == mode_name)																			//This won't runtime anymore, but will instead return extended if there is a problem.
 			return M
-	world.log << "BUG: pick_mode returned extended - potential issue with gamemode [M]"		//Since this is difficult to reproduce lets report it as a runtime
+	world.log << "BUG: pick_mode returned extended - potential issue with gamemode [mode_name]"		//Since this is difficult to reproduce lets report it as a runtime
 	return gamemode_cache["extended"]
 
 /datum/configuration/proc/get_runnable_modes()
