@@ -1,4 +1,3 @@
-var/global/machinery_sort_required = 0
 var/global/datum/controller/process/machinery/MachineProcess
 var/list/MachineProcessing = list()
 
@@ -10,16 +9,10 @@ var/list/MachineProcessing = list()
 	MachineProcess = src
 
 /datum/controller/process/machinery/doWork()
-	internal_sort()
 	internal_process_pipenets()
 	internal_process_machinery()
 	internal_process_power()
 	internal_process_power_drain()
-
-/datum/controller/process/machinery/proc/internal_sort()
-	if(machinery_sort_required)
-		machinery_sort_required = 0
-		machines = dd_sortedObjectList(machines)
 
 /datum/controller/process/machinery/proc/internal_process_machinery()
 	for(var/obj/machinery/M in MachineProcessing)
