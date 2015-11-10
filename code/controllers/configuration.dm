@@ -827,7 +827,7 @@ var/list/gamemode_cache = list()
 	// their information, but it is the only way (at least that I know of).
 	for (var/game_mode in gamemode_cache)
 		var/datum/game_mode/M = gamemode_cache[game_mode]
-		if (M:config_tag && M:config_tag == mode_name)																			//This won't runtime anymore, but will instead return extended if there is a problem.
+		if (M && (M:config_tag && M:config_tag == mode_name))																			//This won't runtime anymore, but will instead return extended if there is a problem.
 			return M
 	world.log << "BUG: pick_mode returned extended - potential issue with gamemode [mode_name]"		//Since this is difficult to reproduce lets report it as a runtime
 	return gamemode_cache["extended"]
