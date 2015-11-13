@@ -118,9 +118,11 @@ Class Procs:
 /obj/machinery/New()
 	..()
 	machines += src
+	MachineProcessing += src
 
 /obj/machinery/Destroy()
 	machines -= src
+	MachineProcessing -= src
 	if(component_parts)
 		for(var/atom/A in component_parts)
 			if(A.loc == src) // If the components are inside the machine, delete them.

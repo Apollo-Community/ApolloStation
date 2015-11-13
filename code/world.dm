@@ -12,6 +12,7 @@ var/global/datum/global_init/init = new ()
 
 
 /world
+	name = "Apollo Station"
 	mob = /mob/new_player
 	turf = /turf/space
 	area = /area/space
@@ -329,55 +330,16 @@ var/world_topic_spam_protect_time = world.timeofday
 	var/s = ""
 
 	if (config && config.server_name)
-		s += "<b>[config.server_name]</b> &#8212; "
+		s += "<a href=\"https://apollo-community.org\">" //Change this to wherever you want the hub to link to.
+		s += "<big><b>[config.server_name]</b></big>"
+		s += "</a>\]"
 
-	s += " ("
-	s += "<a href=\"http://apollo-community.org\">" //Change this to wherever you want the hub to link to.
-//	s += "[game_version]"
-	s += "forums"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
-	s += "</a>"
-	s += ")"
+		if( !ticker )
+			s += "  - <b>STARTING</b> -"
+		s += "<br>\["
 
-	var/list/features = list()
-
-	if(ticker)
-		if(master_mode)
-			features += master_mode
-	else
-		features += "<b>STARTING</b>"
-
-	if (!config.enter_allowed)
-		features += "closed"
-
-	features += config.abandon_allowed ? "respawn" : "no respawn"
-
-	if (config && config.allow_vote_mode)
-		features += "vote"
-
-	if (config && config.allow_ai)
-		features += "AI allowed"
-
-	var/n = 0
-	for (var/mob/M in player_list)
-		if (M.client)
-			n++
-
-	if (n > 1)
-		features += "~[n] players"
-	else if (n > 0)
-		features += "~[n] player"
-
-	/*
-	is there a reason for this? the byond site shows 'hosted by X' when there is a proper host already.
-	if (host)
-		features += "hosted by <b>[host]</b>"
-	*/
-
-	if (!host && config && config.hostedby)
-		features += "hosted by <b>[config.hostedby]</b>"
-
-	if (features)
-		s += ": [list2text(features, ", ")]"
+	if( clients )
+		s += "Players: [clients.len] / [config.player_soft_cap]"
 
 	/* does this help? I do not know */
 	if (src.status != s)
@@ -402,9 +364,9 @@ proc/setup_database_connection()
 	if(!dbcon)
 		dbcon = new()
 
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
+	var/user = sqllogin
+	var/pass = sqlpass
+	var/db = sqldb
 	var/address = sqladdress
 	var/port = sqlport
 
@@ -425,49 +387,6 @@ proc/establish_db_connection()
 
 	if(!dbcon || !dbcon.IsConnected())
 		return setup_database_connection()
-	else
-		return 1
-
-
-/hook/startup/proc/connectOldDB()
-	if(!setup_old_database_connection())
-		world.log << "Your server failed to establish a connection with the SQL database."
-	else
-		world.log << "SQL database connection established."
-	return 1
-
-//These two procs are for the old database, while it's being phased out. See the tgstation.sql file in the SQL folder for more information.
-proc/setup_old_database_connection()
-
-	if(failed_old_db_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
-		return 0
-
-	if(!dbcon_old)
-		dbcon_old = new()
-
-	var/user = sqllogin
-	var/pass = sqlpass
-	var/db = sqldb
-	var/address = sqladdress
-	var/port = sqlport
-
-	dbcon_old.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
-	. = dbcon_old.IsConnected()
-	if ( . )
-		failed_old_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
-	else
-		failed_old_db_connections++		//If it failed, increase the failed connections counter.
-		world.log << dbcon.ErrorMsg()
-
-	return .
-
-//This proc ensures that the connection to the feedback database (global variable dbcon) is established
-proc/establish_old_db_connection()
-	if(failed_old_db_connections > FAILED_DB_CONNECTION_CUTOFF)
-		return 0
-
-	if(!dbcon_old || !dbcon_old.IsConnected())
-		return setup_old_database_connection()
 	else
 		return 1
 

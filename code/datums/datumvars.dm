@@ -17,6 +17,12 @@ client
 		var/body = ""
 
 		if(!D)	return
+
+		if(istype(D, /obj/playerlist))
+			D = D:player
+			if(D:mob)
+				D = D:mob
+
 		if(istype(D, /atom))
 			var/atom/A = D
 			title = "[A.name] (\ref[A]) = [A.type]"
@@ -920,4 +926,3 @@ client
 		src.debug_variables(DAT)
 
 	return
-

@@ -13,7 +13,7 @@
 	use_power = 1
 	idle_power_usage = 60
 	active_power_usage = 10000	//10 kW. It's a big all-body scanner.
-	light_color = "#002900"
+	light_color = COMPUTER_GREEN
 	light_range = 2
 
 /*/obj/machinery/bodyscanner/allow_drop()
@@ -188,7 +188,7 @@
 	density = 1
 	anchored = 1
 
-	light_color = COMPUTER_RED
+	light_color = COMPUTER_GREEN
 	light_range = 2
 
 

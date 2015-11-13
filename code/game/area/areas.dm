@@ -42,11 +42,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 #define PSYCHOTIC 25
 
 /area
-	var/fire = null
-	var/atmos = 1
-	var/atmosalm = 0
-	var/poweralm = 1
-	var/party = null
 	level = null
 	name = "Unknown"
 	icon = 'icons/turf/areas.dmi'
@@ -54,13 +49,20 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	layer = 10
 	luminosity = 0
 	mouse_opacity = 0
+
+	var/fire = null
+	var/atmos = 1
+	var/atmosalm = 0
+	var/poweralm = 1
+	var/party = null
+
 	var/lightswitch = 1
 
 	var/eject = null
 
 	var/debug = 0
 	var/requires_power = 1
-	var/always_unpowered = 0	//this gets overriden to 1 for space in area/New()
+	var/always_unpowered = 0	// this gets overriden to 1 for space in area/New()
 
 	var/power_equip = 1
 	var/power_light = 1
@@ -178,7 +180,7 @@ area/space/atmosalert()
 
 /area/shuttle
 	requires_power = 0
-	lighting_use_dynamic = 0
+	lighting_use_dynamic = 1
 	environment = CAVE
 
 /area/podbay
@@ -536,10 +538,6 @@ area/space/atmosalert()
 /area/syndicate_station/southeast
 	name = "\improper south-east of SS13"
 	icon_state = "southeast"
-
-/area/syndicate_station/north
-	name = "\improper north of SS13"
-	icon_state = "north"
 
 /area/syndicate_station/south
 	name = "\improper south of SS13"
@@ -2309,6 +2307,30 @@ area/space/atmosalert()
 	 // the ship doesn't have any lights
 	environment = PLAIN
 
+
+//////////////// PLANET ///////////////////////////////////
+/area/planet/moon
+	name = "\improper moon"
+	icon_state = "moon"
+	environment = PLAIN
+
+	ambience = list( 'sound/ambience/ambience_outpost.ogg' )
+	music = list()
+
+/area/planet/moon/landing_zone
+	name = "\improper landing zone"
+	icon_state = "south"
+	requires_power = 0
+
+/area/planet/moon/explored
+	name = "\improper explored moon"
+	icon_state = "north"
+	requires_power = 0
+
+/area/planet/moon/outpost
+	name = "\improper outpost"
+	icon_state = "south"
+	requires_power = 0
 
 /////////////////////////////////////////////////////////////////////
 /*

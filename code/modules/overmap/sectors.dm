@@ -1,70 +1,12 @@
-// Sector flags
-#define SECTOR_KNOWN 1 // Does this sector start out known?
-#define SECTOR_STATION 2 // Is this sector part of the station?
-#define SECTOR_ALERT 4 // Is this sector affected by alerts such as red alert?
-#define SECTOR_LOCAL 8 // Is this sector accessible from the overmap?
-#define SECTOR_ADMIN 16 // Is this sector accessible only through admoon intervention?
-
-#define MAX_SECTORS 1 // How many unknown sectors are allowed?
-
-//===================================================================================
-//Hook for building overmap
-//===================================================================================
-var/global/list/map_sectors = list()
-
-/*
-/hook/startup/proc/load_sectors()
-	var/map_path = "maps/overmap/random/"
-	var/list/maps = flist( map_path )
-
-	for( var/i = 0, i < MAX_SECTORS, i++ )
-		var/chosen = pick( maps )
-
-		testing( "Loading [chosen] as a random sector" )
-		maploader.load_map( map_path+chosen )
-		testing( "Loaded" )
-		maps.Remove( chosen )
-*/
-
-/hook/startup/proc/build_map()
-	if(!config.use_overmap)
-		return 1
-	//testing("Building overmap...")
-	var/obj/effect/mapinfo/data
-	for(var/level in 1 to world.maxz)
-		data = locate("sector[level]")
-		if( data )
-			//testing("Located sector \"[data.name]\" at [data.mapx],[data.mapy] corresponding to zlevel [level]")
-			map_sectors["[level]"] = new data.obj_type(data)
-
-	generate_sectors_paper() // Making the info for our landmarks paper
-	return 1
-
-//===================================================================================
-//Metaobject for storing information about sector this zlevel is representing.
-//Should be placed only once on every zlevel.
-//===================================================================================
-/obj/effect/mapinfo/
-	name = "map info metaobject"
-	icon = 'icons/mob/screen1.dmi'
-	icon_state = "x2"
-	invisibility = 101
-	var/obj_type		//type of overmap object it spawns
-	var/zlevel
-	var/mapx			//coordinates on the
-	var/mapy			//overmap zlevel
-	var/sector_flags = 0
-
-/obj/effect/mapinfo/New()
-	tag = "sector[z]"
-	zlevel = z
-	loc = null
-
-	reportLevels( sector_flags, zlevel )
-
 /obj/effect/mapinfo/sector
 	name = "generic sector"
 	obj_type = /obj/effect/map/sector
+	var/sector_flags = 0
+
+/obj/effect/mapinfo/sector/New()
+	..()
+
+	reportLevels( sector_flags, zlevel )
 
 /obj/effect/mapinfo/sector/station
 	name = "NSS Apollo"
@@ -89,6 +31,14 @@ var/global/list/map_sectors = list()
 	obj_type = /obj/effect/map/sector/engipost
 	sector_flags = SECTOR_KNOWN | SECTOR_ALERT | SECTOR_LOCAL
 
+/obj/effect/mapinfo/sector/cybersun
+	name = "Moon"
+	mapx = STATION_X+2
+	mapy = STATION_Y
+	obj_type = /obj/effect/map/sector/cybersun
+	sector_flags = SECTOR_KNOWN | SECTOR_LOCAL
+	landing_area = /area/planet/moon/landing_zone
+
 /obj/effect/mapinfo/sector/tcomm_old
 	name = "Abandoned Satellite"
 	sector_flags = SECTOR_LOCAL
@@ -101,10 +51,6 @@ var/global/list/map_sectors = list()
 	name = "Central Command"
 	sector_flags = SECTOR_KNOWN | SECTOR_ALERT
 
-/obj/effect/mapinfo/sector/admin_ship
-	name = "Valan's Ship"
-	sector_flags = SECTOR_ADMIN
-
 /obj/effect/mapinfo/sector/overmap
 	name = "Overmap"
 	sector_flags = SECTOR_ADMIN
@@ -114,55 +60,22 @@ var/global/list/map_sectors = list()
 	sector_flags = SECTOR_KNOWN
 
 
-//===================================================================================
-//Overmap object representing zlevel
-//===================================================================================
+/obj/effect/map/sector
+	real_name = "generic sector"
+	real_desc = "Sector with some stuff in it."
+	anchored = 1
 
-/obj/effect/map
-	name = ""
-	desc = ""
-	icon = 'icons/effects/sectors.dmi'
-
-	var/real_name = ""
-	var/real_desc = ""
-	var/real_icon_state = "unknown"
-	var/map_z = 0
-	var/obj/effect/mapinfo/metadata = null
-
-/obj/effect/map/New(var/obj/effect/mapinfo/data)
-	metadata = data
-
-	if( !metadata )
-		qdel( src )
-
-	map_z = metadata.zlevel
-	real_name = metadata.name
-	real_desc = metadata.desc
-
-	var/turf/T = null
-	for( var/i = 0; i < 50; i++ )
-		var/new_x = metadata.mapx ? metadata.mapx : rand(STATION_X-POPULATE_RADIUS, STATION_X+POPULATE_RADIUS)
-		var/new_y = metadata.mapy ? metadata.mapx : rand(STATION_Y-POPULATE_RADIUS, STATION_Y+POPULATE_RADIUS)
-		T = locate(new_x, new_y, OVERMAP_ZLEVEL)
-
-		if( !sector_exists( T ) || ( metadata.mapx && metadata.mapy ))
-			break
-		else
-			T = null
-
-	if( !T )
-		qdel( src )
-
-	loc = T
+/obj/effect/map/sector/New()
+	..()
 
 	spawn( 5 )
 		if( isKnown() )
 			reveal()
 
-/obj/effect/map/CanPass(atom/movable/A)
+/obj/effect/map/sector/CanPass(atom/movable/A)
 	return 1
 
-/obj/effect/map/Crossed(atom/movable/A)
+/obj/effect/map/sector/Crossed(atom/movable/A)
 	if( !isKnown() )
 		return
 
@@ -170,26 +83,26 @@ var/global/list/map_sectors = list()
 		var/obj/effect/traveler/T = A
 		T.enterLocal()
 
-/obj/effect/map/proc/isKnown()
+/obj/effect/map/sector/proc/isKnown()
 	if(( map_z in config.known_levels ) && ( map_z in config.local_levels ) && !( map_z in config.admin_levels ))
 		return 1
 	else
 		return 0
 
-/obj/effect/map/proc/reveal()
+/obj/effect/map/sector/proc/reveal()
 	icon_state = real_icon_state
 	name = real_name
 	desc = real_desc
 
-	if( !( metadata.sector_flags & SECTOR_KNOWN ))
-		metadata.sector_flags |= SECTOR_KNOWN
+	var/obj/effect/mapinfo/sector/data = metadata
 
-	reportLevels( metadata.sector_flags, map_z )
+	if( !data )
+		return
 
-/obj/effect/map/sector
-	real_name = "generic sector"
-	real_desc = "Sector with some stuff in it."
-	anchored = 1
+	if( !( data.sector_flags & SECTOR_KNOWN ))
+		data.sector_flags |= SECTOR_KNOWN
+
+	reportLevels( data.sector_flags, map_z )
 
 //Space stragglers go here
 
@@ -202,6 +115,9 @@ var/global/list/map_sectors = list()
 
 /obj/effect/map/sector/engipost
 	real_icon_state = "Engi Outpost"
+
+/obj/effect/map/sector/cybersun
+	real_icon_state = "Moon"
 
 /proc/reportLevels( var/flags, var/z )
 	if( flags & SECTOR_KNOWN )

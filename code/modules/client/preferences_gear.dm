@@ -17,7 +17,7 @@ var/global/list/gear_datums = list()
 	)
 
 	//create a list of gear datums to sort
-	for(var/type in typesof(/datum/gear)-/datum/gear)
+	for(var/type in subtypes( /datum/gear ))
 		var/datum/gear/G = new type()
 
 		var/category = (G.sort_category in sort_categories)? G.sort_category : "unknown"
@@ -36,6 +36,7 @@ var/global/list/gear_datums = list()
 	var/list/allowed_roles //Roles that can spawn with this item.
 	var/whitelisted        //Term to check the whitelist for..
 	var/sort_category
+	var/account			   // Is this an account item?
 
 /datum/gear/New()
 	..()

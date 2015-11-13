@@ -112,7 +112,7 @@
 
 	if(!config.guests_allowed && IsGuestKey(key))
 		alert(src,"This server doesn't allow guest accounts to play. Please go to http://www.byond.com/ and register for a key.","Guest","OK")
-		qdel(src)
+		del(src)
 		return
 
 	// Change the way they should download resources.
@@ -176,18 +176,34 @@
 		src << "\red This server is running Byond-[config.recommended_byond](BETA). If you experience any lighting issues we suggest you upgrade here - http://www.byond.com/download/"
 
 	donator = is_donator(src)
+	if(!stat_player_list.Find(key))			//Don't add the same person twice? How does this even happen
+		var/obj/playerlist/O = new()
+		O.icon = icon('./icons/playerlist.dmi')
+		O.player = src
 
-	var/entry = ""
-	if (holder && (R_MOD & holder.rights))						entry = "Mod"
-	else if(holder && (R_ADMIN & holder.rights))			entry = "Admin"
-	else if(holder && (R_DEBUG & holder.rights))			entry = "Dev"
-	else if(donator)																	entry = "Donator"
-	else																							entry = "Player"
+		if (holder && (R_MOD & holder.rights))
+			O.name = "Mod"
+			O.icon_state = "mod"
+		else if(holder && (R_ADMIN & holder.rights))
+			O.name = "Admin"
+			O.icon_state = "admin"
+		else if(holder && (R_DEBUG & holder.rights))
+			O.name = "Dev"
+			O.icon_state = "dev"
+		else if(donator)
+			O.name = "Donator"
+			O.icon_state = "donator"
+		else
+			O.name = "Player"
+			O.icon_state = "player"
 
-	stat_player_list.Add(src.ckey)				//Mostly used to build a list before the game ticker starts and the process scheduler takes over maintenence.
-	stat_player_list[src.ckey] = entry
+		stat_player_list.Add(key)
+		stat_player_list[key] = O
+		stat_player_list = sortAssoc(stat_player_list)
+
 	log_client_to_db()
 
+	loadAccountItems()
 	send_resources()
 	nanomanager.send_resources(src)
 
@@ -216,7 +232,7 @@
 
 	var/sql_ckey = sql_sanitize_text(ckey(key))
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT datediff(Now(),firstseen) as age FROM erro_player WHERE ckey = '[sql_ckey]'")
+	var/DBQuery/query = dbcon.NewQuery("SELECT datediff(Now(),firstseen) as age FROM player WHERE ckey = '[sql_ckey]'")
 	query.Execute()
 
 	if(query.NextRow())
@@ -236,7 +252,7 @@
 
 	var/sql_ckey = sql_sanitize_text(src.ckey)
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM erro_player WHERE ckey = '[sql_ckey]'")
+	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM player WHERE ckey = '[sql_ckey]'")
 	query.Execute()
 	var/sql_id = 0
 	player_age = 0	// New players won't have an entry so knowing we have a connection we set this to zero to be updated if their is a record.
@@ -245,14 +261,14 @@
 		player_age = text2num(query.item[2])
 		break
 
-	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE ip = '[address]'")
+	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM player WHERE ip = '[address]'")
 	query_ip.Execute()
 	related_accounts_ip = ""
 	while(query_ip.NextRow())
 		related_accounts_ip += "[query_ip.item[1]], "
 		break
 
-	var/DBQuery/query_cid = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE computerid = '[computer_id]'")
+	var/DBQuery/query_cid = dbcon.NewQuery("SELECT ckey FROM player WHERE computerid = '[computer_id]'")
 	query_cid.Execute()
 	related_accounts_cid = ""
 	while(query_cid.NextRow())
@@ -277,16 +293,16 @@
 
 	if(sql_id)
 		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
-		var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]' WHERE id = [sql_id]")
+		var/DBQuery/query_update = dbcon.NewQuery("UPDATE player SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]' WHERE id = [sql_id]")
 		query_update.Execute()
 	else
 		//New player!! Need to insert all the stuff
-		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]')")
+		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]')")
 		query_insert.Execute()
 
 	//Logging player access
 	var/serverip = "[world.internet_address]:[world.port]"
-	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `erro_connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
+	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
 	query_accesslog.Execute()
 
 
@@ -362,3 +378,24 @@ client/proc/MayRespawn()
 
 	// Something went wrong, client is usually kicked or transfered to a new mob at this point
 	return 0
+
+client/proc/loadAccountItems()
+	if(!dbcon.IsConnected())
+		return
+	if( !prefs )
+		return
+	if( !prefs.account_items )
+		return
+
+	prefs.account_items.Cut()
+
+	var/sql_ckey = ckey(ckey)
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT item FROM acc_items WHERE ckey = '[sql_ckey]'")
+	query.Execute()
+
+	while(query.NextRow())
+		var/item = query.item[1]
+
+		if( gear_datums[item] )
+			prefs.account_items += "[item]"
