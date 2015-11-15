@@ -33,6 +33,7 @@
 	var/emitter_power = 40 // The amount of power added per emitter shot
 
 	var/thermal_factor = 0 // The amount of heat released to the environment at max power
+	var/heal_rate = 0 // The amount of damage the core will automatically heal
 	var/heat_damage_level = 1000 // The temperature at which heat will start damaging the crystal
 	var/damage_per_degree = 1 // How much damage per degree over heat_damage_level will cause
 
@@ -59,6 +60,7 @@
 	color = SM_DEFAULT_COLOR
 	color_name = "green"
 	thermal_factor = 200
+	heal_rate = 0.5
 
 /datum/sm_control/level_2
 	base_power = 800
@@ -78,6 +80,7 @@
 	damage_per_degree = 1.1
 	psionic_power = 15
 	radiation_power = 30
+	heal_rate = 0.45
 
 /datum/sm_control/level_3
 	base_power = 1400
@@ -99,6 +102,7 @@
 	damage_per_degree = 1.2
 	psionic_power = 20
 	radiation_power = 40
+	heal_rate = 0.40
 
 /datum/sm_control/level_4
 	base_power = 2600
@@ -120,6 +124,7 @@
 	damage_per_degree = 1.3
 	psionic_power = 25
 	radiation_power = 50
+	heal_rate = 0.35
 
 /datum/sm_control/level_5
 	base_power = 5200
@@ -146,6 +151,7 @@
 	damage_per_degree = 1.4
 	psionic_power = 30
 	radiation_power = 60
+	heal_rate = 0.30
 
 /datum/sm_control/level_6
 	base_power = 10400
@@ -172,6 +178,7 @@
 	damage_per_degree = 1.5
 	psionic_power = 50
 	radiation_power = 70
+	heal_rate = 0.20
 
 /datum/sm_control/level_7
 	base_power = 20800
@@ -198,6 +205,7 @@
 	damage_per_degree = 1.6
 	psionic_power = 70
 	radiation_power = 80
+	heal_rate = 0.10
 
 /datum/sm_control/level_8
 	base_power = 41600
@@ -224,6 +232,7 @@
 	damage_per_degree = 1.7
 	psionic_power = 90
 	radiation_power = 90
+	heal_rate = 0.01
 
 /datum/sm_control/level_9
 	base_power = 83200
@@ -250,6 +259,7 @@
 	damage_per_degree = 1.8
 	psionic_power = 110
 	radiation_power = 100
+	heal_rate = 0.0
 
 /*
 /sm_control/var/list/settings = list()

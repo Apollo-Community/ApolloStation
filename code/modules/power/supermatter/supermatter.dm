@@ -264,6 +264,9 @@
 	removed.add_thermal_energy( power*heat*( power_percent**2 ))
 	env.merge(removed)
 
+	// Healing
+	damage = max( 0, damage-getSMVar( smlevel, "heal_rate" ))
+
 /obj/machinery/power/supermatter/proc/psionicBurst()
 	for(var/mob/living/carbon/human/l in oview(src, 7)) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
