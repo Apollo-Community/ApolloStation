@@ -38,7 +38,7 @@
 
 	var/emergency_issued = 0
 	var/lastwarning = 0
-	var/warning_delay = 10 // Once every 10 seconds, announce the status
+	var/warning_delay = 15 // Once every 15 seconds, announce the status
 	var/warning_point = 100
 
 	var/last_crit_check = 0
@@ -188,7 +188,7 @@
 
 	// If we're in a vacuum, heat can't escape the core, so we'll get damaged
 	if(!env || !removed || !removed.total_moles)
-		damage += getSMVar( smlevel, "vacuum_damage" )
+		damage = max( 0, damage+( power_percent*getSMVar( smlevel, "vacuum_damage" )))
 		return
 
 	damage_archived = damage
