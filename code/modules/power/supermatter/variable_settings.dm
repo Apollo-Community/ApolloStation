@@ -13,6 +13,7 @@
 	var/collector_range = 10 // Max range of collectors, decreaes power output as distance increases
 
 	var/o2_release = 0.8 // Amount of o2 released if the core is at maximum damage
+	var/o2_release_heat_limit = 400 // o2 release is scaled down until this temperature, when it entirely stops
 	var/o2_turbo_multiplier = 0 // How much oxygen will multiply power and heat output by, per mole
 	var/o2_requirement = 0 // How much oxygen is required to keep the engine from critically failing, as a percent of the total gas composition
 	var/suffocation_damage = 0 // How much damage will be done if the engine doesn't have enough O2
@@ -25,6 +26,7 @@
 	var/n2o_power_loss = 0 // The rate that N2O decreases power output, per mole
 
 	var/phoron_release = 0.5 // Amount of phoron released if the core is at maximum damage
+	var/phoron_release_heat_limit = 400 // phoron release is scaled down until this temperature
 	var/phoron_heal_rate = 0 // The rate that phoron heals the core, per mole
 
 	var/emitter_damage = 0 // The amount of damage the emitter does per hit
@@ -123,6 +125,8 @@
 	base_power = 5200
 	decay = 0.30
 
+	o2_release_heat_limit = 100
+	phoron_release_heat_limit = 100
 	o2_turbo_multiplier = 1.9/CANISTER_MOLARITY
 	o2_requirement = 0.10
 	crit_fail_chance = 0.01
@@ -147,6 +151,8 @@
 	base_power = 10400
 	decay = 0.20
 
+	o2_release_heat_limit = 100
+	phoron_release_heat_limit = 100
 	o2_turbo_multiplier = 2.0/CANISTER_MOLARITY
 	o2_requirement = 0.15
 	crit_fail_chance = 0.05
@@ -171,6 +177,8 @@
 	base_power = 20800
 	decay = 0.10
 
+	o2_release_heat_limit = 100
+	phoron_release_heat_limit = 100
 	o2_turbo_multiplier = 2.1/CANISTER_MOLARITY
 	o2_requirement = 0.20
 	crit_fail_chance = 0.1
@@ -195,6 +203,8 @@
 	base_power = 41600
 	decay = 0.05
 
+	o2_release_heat_limit = 100
+	phoron_release_heat_limit = 100
 	o2_turbo_multiplier = 2.2/CANISTER_MOLARITY
 	o2_requirement = 0.25
 	crit_fail_chance = 0.5
@@ -219,6 +229,8 @@
 	base_power = 83200
 	decay = 0.01
 
+	o2_release_heat_limit = 4
+	phoron_release_heat_limit = 4
 	o2_turbo_multiplier = 2.3/CANISTER_MOLARITY
 	o2_requirement = 0.3
 	crit_fail_chance = 1.0

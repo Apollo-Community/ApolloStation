@@ -205,24 +205,27 @@
 	// N2O handling
 	if(sleepy)
 		power = max( 0, power-( sleepy*getSMVar( smlevel, "n2o_power_loss" )))
-		sleepy = 0
+
+	sleepy = 0
 
 	// Oxygen handling
-	if(oxygen)
+	if(oxygen >= getSMVar( smlevel, "o2_requirement" ))
 		power = max( 0, power+( power*( oxygen*getSMVar( smlevel, "o2_turbo_multiplier" ))))
-		oxygen = 0
 	else
 		if( prob( getSMVar( smlevel, "crit_fail_chance" )) && delayPassed( crit_delay, last_crit_check ))
 			critFail()
+			spark()
 		last_crit_check = world.timeofday
-		phoron = max( 0, phoron+getSMVar( smlevel, "suffocation_damage" ))
 		damage = max( 0, damage+getSMVar( smlevel, "suffocation_damage" ))
+
+	oxygen = 0
 
 	// CO2 handling
 	if(carbon)
 		heat = max( 0, heat+( heat*( carbon*getSMVar( smlevel, "co2_heat_multiplier" )))) // Carbon reacts violently with supermatter, creating heat and leaving O2
 		oxygen += carbon
-		carbon = 0
+
+	carbon = 0
 
 	// Temperature & phoron handling
 	if (removed.temperature < getSMVar( smlevel, "heat_damage_level" ))
@@ -237,10 +240,20 @@
 		if( prob( getSMVar( smlevel, "crit_fail_chance" )))
 			spark()
 
-	// Release phoron & oxygen
-	var/temp_percent = ( removed.temperature/getSMVar( smlevel, "heat_damage_level" ))
-	phoron = max( 0, phoron+temp_percent*getSMVar( smlevel, "phoron_release" ))
-	oxygen = max( 0, oxygen+temp_percent*getSMVar( smlevel, "o2_release" ))
+	phoron = 0
+
+	// Releasing phoron & oxygenm
+	var/phoron_temp_percent = 1-( removed.temperature/getSMVar( smlevel, "phoron_release_heat_limit" )) // Needs to be taken from 1, so that 0K is max gas production
+	if( phoron_temp_percent )
+		phoron = max( 0, phoron_temp_percent*getSMVar( smlevel, "phoron_release" ))
+	else
+		phoron = 0
+
+	var/o2_temp_percent = 1-( removed.temperature/getSMVar( smlevel, "o2_release_heat_limit" ))
+	if( o2_temp_percent )
+		oxygen = max( 0, o2_temp_percent*getSMVar( smlevel, "o2_release" ))
+	else
+		oxygen = 0
 
 	//Release reaction gasses
 	removed.gas["phoron"] = phoron
@@ -276,7 +289,7 @@
 	damage += crit_damage
 
 	// A wave burst during a critical failure
-	supermatter_delamination( get_turf( src ), smlevel*3, smlevel, 0, 0 )
+	supermatter_delamination( get_turf( src ), smlevel*1.5, smlevel, 0, 0 )
 
 	var/integrity = calc_integrity()
 	radio.autosay("CRITICAL STRUCTURE FAILURE: [MAX_SM_INTEGRITY-integrity]% Integrity Lost!", "Supermatter Monitor")
