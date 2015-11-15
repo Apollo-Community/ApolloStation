@@ -14,6 +14,7 @@ var/global/list/gear_datums = list()
 		"utility"			= list(),
 		"misc"				= list(),
 		"unknown"			= list(),
+		"ID_card"			= list(),
 	)
 
 	//create a list of gear datums to sort

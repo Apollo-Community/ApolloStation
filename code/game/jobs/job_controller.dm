@@ -353,6 +353,7 @@ var/global/datum/controller/occupations/job_master
 		var/datum/job/job = GetJob(rank)
 		var/list/spawn_in_storage = list()
 		var/alt_title = null
+		var/ID_type = /obj/item/weapon/card/id
 
 		if(H.mind)
 			H.mind.assigned_role = rank
@@ -383,6 +384,10 @@ var/global/datum/controller/occupations/job_master
 
 						if(!permitted)
 							H << "\red Your current job or whitelist status does not permit you to spawn with [thing]!"
+							continue
+
+						if(G.sort_category == "ID_card")
+							ID_type = G.path
 							continue
 
 						if(G.slot && !(G.slot in custom_equip_slots))
@@ -529,7 +534,7 @@ var/global/datum/controller/occupations/job_master
 		if(job.req_admin_notify)
 			H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
 
-		spawnId(H, rank, alt_title)
+		spawnId(H, rank, alt_title, ID_type)
 		H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset(H), slot_l_ear)
 
 		//Gives glasses to the vision impaired
@@ -546,7 +551,7 @@ var/global/datum/controller/occupations/job_master
 		return H
 
 
-	proc/spawnId(var/mob/living/carbon/human/H, rank, title)
+	proc/spawnId(var/mob/living/carbon/human/H, rank, title, type = /obj/item/weapon/card/id)
 		if(!H)	return 0
 		var/obj/item/weapon/card/id/C = null
 
@@ -560,10 +565,13 @@ var/global/datum/controller/occupations/job_master
 			if(job.title == "Cyborg")
 				return
 			else
-				C = new job.idtype(H)
+				if( type == /obj/item/weapon/card/id )
+					C = new job.idtype(H)
+				else
+					C = new type
 				C.access = job.get_access()
 		else
-			C = new /obj/item/weapon/card/id(H)
+			C = new type(H)
 		if(C)
 			C.registered_name = H.real_name
 			C.rank = rank
