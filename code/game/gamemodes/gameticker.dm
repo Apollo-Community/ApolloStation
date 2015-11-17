@@ -99,15 +99,11 @@ var/global/datum/controller/gameticker/ticker
 		world << "<span class='danger'>Serious error in mode setup!</span> Reverting to pre-game lobby."
 		return 0
 
-	job_master.ResetOccupations()
-	src.mode.pre_setup()
-	job_master.DivideOccupations() // Apparently important for new antagonist system to register specific job antags properly.
-
 	if(!src.mode.can_start())
 		var/totalPlayersReady = 0
 		for(var/mob/new_player/player in player_list)
 			if(player.ready)	totalPlayersReady++
-		world << "<B><font color='blue'>Silly crew, you're missing [mode.required_players - totalPlayersReady] to play [mode.name].\nPicking random gamemode instead!</B></font>"
+		world << "<B><font color='blue'>Silly crew, you're missing [mode.required_players - totalPlayersReady] crew to play [mode.name].\nPicking random gamemode instead!</B></font>"
 		current_state = GAME_STATE_PREGAME
 		src.mode = pick_random_gamemode(runnable_modes)
 		job_master.ResetOccupations()
@@ -116,6 +112,10 @@ var/global/datum/controller/gameticker/ticker
 		world << "<B>The current game mode is - Hidden!</B>"
 	else
 		src.mode.announce()
+
+	job_master.ResetOccupations()
+	src.mode.pre_setup()
+	job_master.DivideOccupations() // Apparently important for new antagonist system to register specific job antags properly.
 
 	setup_economy()
 	current_state = GAME_STATE_PLAYING
