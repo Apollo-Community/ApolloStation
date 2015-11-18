@@ -778,7 +778,7 @@ datum
 			description = "Most probably know this as Tylenol, but this chemical is a mild, simple painkiller."
 			reagent_state = LIQUID
 			color = "#C8A5DC"
-			overdose = 60
+			overdose = REAGENTS_OVERDOSE*2
 			scannable = 1
 			custom_metabolism = REAGENTS_METABOLISM/2 // Lasts 10 minutes for 15 units
 
@@ -794,7 +794,7 @@ datum
 			description = "A simple, yet effective painkiller."
 			reagent_state = LIQUID
 			color = "#CB68FC"
-			overdose = 30
+			overdose = REAGENTS_OVERDOSE
 			scannable = 1
 			custom_metabolism = REAGENTS_METABOLISM/2
 
@@ -810,7 +810,7 @@ datum
 			description = "An effective and very addictive painkiller."
 			reagent_state = LIQUID
 			color = "#800080"
-			overdose = 20
+			overdose = REAGENTS_OVERDOSE/2
 			custom_metabolism = REAGENTS_METABOLISM/2
 
 			on_mob_life(var/mob/living/M as mob)
@@ -1322,7 +1322,7 @@ datum
 			description = "Used to encourage recovery of internal organs and nervous systems. Medicate cautiously."
 			reagent_state = LIQUID
 			color = "#561EC3" // rgb: 200, 165, 220
-			overdose = 10
+			overdose = REAGENTS_OVERDOSE/3
 			scannable = 1
 
 			on_mob_life(var/mob/living/M as mob)
@@ -1846,7 +1846,6 @@ datum
 			color = "#009CA8" // rgb: 232, 149, 204
 			toxpwr = 0
 			custom_metabolism = REAGENTS_METABOLISM*2
-			overdose = REAGENTS_OVERDOSE
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -1875,7 +1874,7 @@ datum
 			color = "#000067" // rgb: 0, 0, 103
 			toxpwr = 0
 			custom_metabolism = REAGENTS_METABOLISM*10
-			overdose = 15
+			overdose = REAGENTS_OVERDOSE/2
 			overdose_dam = 5
 
 			on_mob_life(var/mob/living/M as mob)
@@ -1901,7 +1900,7 @@ datum
 			reagent_state = SOLID
 			color = "#FFFFFF" // rgb: 255,255,255
 			toxpwr = 0
-			overdose = 30
+			overdose = REAGENTS_OVERDOSE
 
 			on_mob_life(var/mob/living/carbon/M as mob)
 				var/mob/living/carbon/human/H = M
@@ -1921,7 +1920,7 @@ datum
 			reagent_state = SOLID
 			color = "#FFFFFF" // rgb: 255,255,255
 			toxpwr = 2
-			overdose = 20
+			overdose = REAGENTS_OVERDOSE/3
 
 			on_mob_life(var/mob/living/carbon/M as mob)
 				if(ishuman(M))
