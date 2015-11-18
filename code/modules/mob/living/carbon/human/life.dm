@@ -33,8 +33,6 @@
 	var/in_stasis = 0
 
 /mob/living/carbon/human/Life()
-
-
 	set invisibility = 0
 
 
