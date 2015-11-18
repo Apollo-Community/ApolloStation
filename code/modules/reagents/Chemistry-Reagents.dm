@@ -1686,11 +1686,18 @@ datum
 			color = "#CF3600" // rgb: 207, 54, 0
 			toxpwr = 4
 			custom_metabolism = REAGENTS_METABOLISM*10
+			var/visible_messaged = 0
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.adjustOxyLoss(20*REM)
+				M.adjustOxyLoss(30*REM)
 				M.sleeping += 1
+
+				if( !visible_messaged )
+					M.visible_message( "<span class='warning'>[M] begins to foam at the mouth!.</span>" )
+					M << "<span class='warning'>Your mouth fills with the heavy taste of bitter almonds, followed by uncontrollable foaming!</span>"
+					visible_messaged = 1
+
 				..()
 				return
 
@@ -1715,7 +1722,7 @@ datum
 			description = "A deadly neurotoxin produced by the dreaded space carp."
 			reagent_state = LIQUID
 			color = "#003333" // rgb: 0, 51, 51
-			toxpwr = 2
+			toxpwr = 5
 
 		toxin/zombiepowder
 			name = "Zombie Powder"
@@ -1723,7 +1730,7 @@ datum
 			description = "A strong neurotoxin that puts the subject into a death-like state."
 			reagent_state = SOLID
 			color = "#669900" // rgb: 102, 153, 0
-			toxpwr = 0.5
+			toxpwr = 0.1
 
 			on_mob_life(var/mob/living/carbon/M as mob)
 				if(!M) M = holder.my_atom
@@ -1866,7 +1873,7 @@ datum
 			description = "A powerful sedative."
 			reagent_state = SOLID
 			color = "#000067" // rgb: 0, 0, 103
-			toxpwr = 1
+			toxpwr = 0
 			custom_metabolism = REAGENTS_METABOLISM*10
 			overdose = 15
 			overdose_dam = 5
@@ -1910,7 +1917,7 @@ datum
 		toxin/potassium_chlorophoride
 			name = "Potassium Chlorophoride"
 			id = "potassium_chlorophoride"
-			description = "A specific chemical based on Potassium Chloride to stop the heart for surgery. Not safe to eat!"
+			description = "A specific chemical based on Potassium Chloride to stop the heart. Not safe for any consumption!"
 			reagent_state = SOLID
 			color = "#FFFFFF" // rgb: 255,255,255
 			toxpwr = 2
@@ -1922,7 +1929,7 @@ datum
 					if(H.stat != 1)
 						if(H.losebreath >= 10)
 							H.losebreath = max(10, M.losebreath-10)
-						H.adjustOxyLoss(2*REM)
+						H.adjustOxyLoss(20*REM)
 						H.Weaken(10*REM)
 				..()
 				return
