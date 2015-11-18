@@ -77,7 +77,7 @@ datum
 				if(!istype(M, /mob/living))
 					return //Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
 				if( (overdose > 0) && (volume >= overdose))//Overdosing, wooo
-					M.adjustToxLoss(overdose_dam)
+					M.adjustToxLoss(overdose_dam*REM)
 				holder.remove_reagent(src.id, custom_metabolism) //By default it slowly disappears.
 				return
 
@@ -314,7 +314,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				// Toxins are really weak, but without being treated, last very long.
-				M.adjustToxLoss(0.2)
+				M.adjustToxLoss(2*REM)
 				..()
 				return
 
@@ -387,7 +387,7 @@ datum
 				if(!M) M = holder.my_atom
 
 				if(alien && alien == IS_VOX)
-					M.adjustToxLoss(REAGENTS_METABOLISM)
+					M.adjustToxLoss(REM)
 				else
 					if(M.losebreath >= 10)
 						M.losebreath = max(10, M.losebreath-5)
@@ -475,7 +475,7 @@ datum
 			on_mob_life(var/mob/living/M as mob, var/alien)
 				if(M.stat == 2) return
 				if(alien && alien == IS_VOX)
-					M.adjustToxLoss(REAGENTS_METABOLISM)
+					M.adjustToxLoss(REM)
 				else
 					M.adjustOxyLoss(-2*REM) // not an effective way to cure oxygen loss
 
@@ -546,7 +546,7 @@ datum
 				if(M.canmove && !M.restrained() && istype(M.loc, /turf/space))
 					step(M, pick(cardinal))
 				if(prob(5)) M.emote(pick("twitch","drool","moan"))
-				M.adjustBrainLoss(2)
+				M.adjustBrainLoss(2*REM)
 				..()
 				return
 
@@ -709,7 +709,7 @@ datum
 										if(rad_organ && !rad_organ.is_broken())
 											absorbed = 1
 									if(!absorbed)
-										M.adjustToxLoss(100)
+										M.adjustToxLoss(100*REM)
 				..()
 				return
 
@@ -768,7 +768,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.adjustFireLoss(1)
+				M.adjustFireLoss(1*REM)
 				..()
 				return
 
@@ -949,7 +949,7 @@ datum
 				return
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.adjustToxLoss(rand( 0, rand( 0, rand(0, 1))))
+				M.adjustToxLoss(rand( 0, rand( 0, rand(0, 1*REM))))
 				..()
 				return
 
@@ -979,7 +979,7 @@ datum
 						qdel(C)
 
 					for(var/mob/living/carbon/slime/M in T)
-						M.adjustToxLoss(rand(5,10))
+						M.adjustToxLoss(rand(5*REM,10*REM))
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				if(iscarbon(M))
@@ -1127,7 +1127,7 @@ datum
 				if(!M) M = holder.my_atom
 
 				if(alien && alien == IS_VOX)
-					M.adjustOxyLoss()
+					M.adjustOxyLoss(REM)
 				else if(!alien || alien != IS_DIONA)
 					M.adjustOxyLoss(-M.getOxyLoss())
 
@@ -1190,34 +1190,6 @@ datum
 
 			on_mob_life(var/mob/living/carbon/M as mob)
 				M.revive()
-				/*if(!M) M = holder.my_atom ///This can even heal dead people.
-				M.reagents.remove_all_type(/datum/reagent/toxin, 5*REM, 0, 1)
-				M.setCloneLoss(0)
-				M.setOxyLoss(0)
-				M.radiation = 0
-				M.heal_organ_damage(5,5)
-				M.adjustToxLoss(-5)
-				M.hallucination = 0
-				M.setBrainLoss(0)
-				M.disabilities = 0
-				M.sdisabilities = 0
-				M.eye_blurry = 0
-				M.eye_blind = 0
-				M.SetWeakened(0)
-				M.SetStunned(0)
-				M.SetParalysis(0)
-				M.silent = 0
-				M.dizziness = 0
-				M.drowsyness = 0
-				M.stuttering = 0
-				M.confused = 0
-				M.sleeping = 0
-				M.jitteriness = 0
-				for(var/datum/disease/D in M.viruses)
-					D.spread = "Remissive"
-					D.stage--
-					if(D.stage < 1)
-						D.cure()*/
 
 				..()
 				return
@@ -1235,12 +1207,12 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.drowsyness = max(M.drowsyness-5, 0)
-				M.AdjustParalysis(-1)
-				M.AdjustStunned(-1)
-				M.AdjustWeakened(-1)
-				holder.remove_reagent("mindbreaker", 5)
-				M.hallucination = max(0, M.hallucination - 10)
-				if(prob(60))	M.adjustToxLoss(1)
+				M.AdjustParalysis(-1*REM)
+				M.AdjustStunned(-1*REM)
+				M.AdjustWeakened(-1*REM)
+				holder.remove_reagent("mindbreaker", 5*REM)
+				M.hallucination = max(0, M.hallucination - 10*REM)
+				if(prob(60))	M.adjustToxLoss(1*REM)
 				..()
 				return
 
@@ -1413,7 +1385,7 @@ datum
 				if(!M) M = holder.my_atom
 				M.SetParalysis(0)
 				M.SetWeakened(0)
-				M.adjustToxLoss(rand(3))
+				M.adjustToxLoss(rand(3*REM))
 				..()
 				return
 
@@ -1432,10 +1404,10 @@ datum
 						return
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature < 170)
-					M.adjustCloneLoss(-1)
-					M.adjustOxyLoss(-1)
-					M.heal_organ_damage(1,1)
-					M.adjustToxLoss(-1)
+					M.adjustCloneLoss(-1*REM)
+					M.adjustOxyLoss(-1*REM)
+					M.heal_organ_damage(1*REM,1*REM)
+					M.adjustToxLoss(-1*REM)
 				..()
 				return
 
@@ -1454,10 +1426,10 @@ datum
 						return
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature < 170)
-					M.adjustCloneLoss(-3)
-					M.adjustOxyLoss(-3)
-					M.heal_organ_damage(3,3)
-					M.adjustToxLoss(-3)
+					M.adjustCloneLoss(-3*REM)
+					M.adjustOxyLoss(-3*REM)
+					M.heal_organ_damage(3*REM,3*REM)
+					M.adjustToxLoss(-3*REM)
 				..()
 				return
 
@@ -1476,16 +1448,16 @@ datum
 				data++
 				switch(data)
 					if(1 to 15)
-						M.adjustCloneLoss(-1)
-						M.heal_organ_damage(1,1)
+						M.adjustCloneLoss(-1*REM)
+						M.heal_organ_damage(1*REM,1*REM)
 					if(15 to 35)
-						M.adjustCloneLoss(-2)
-						M.heal_organ_damage(2,1)
+						M.adjustCloneLoss(-2*REM)
+						M.heal_organ_damage(2*REM,1*REM)
 						M.status_flags &= ~DISFIGURED
 					if(35 to INFINITY)
-						M.adjustToxLoss(1)
-						M.make_dizzy(5)
-						M.make_jittery(5)
+						M.adjustToxLoss(1*REM)
+						M.make_dizzy(5*REM)
+						M.make_jittery(5*REM)
 
 				..()
 				return
@@ -1684,7 +1656,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(prob(33))
 					M.take_organ_damage(1*REM, 0)
-				M.adjustOxyLoss(3)
+				M.adjustOxyLoss(3*REM)
 				if(prob(20)) M.emote("gasp")
 				..()
 				return
@@ -1852,12 +1824,12 @@ datum
 				if(iscarbon(M))
 					var/mob/living/carbon/C = M
 					if(!C.wear_mask) // If not wearing a mask
-						C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason
+						C.adjustToxLoss(2*REM) // 4 toxic damage per application, doubled for some reason
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
 						if(H.dna)
 							if(H.species.flags & IS_PLANT) //plantmen take a LOT of damage
-								H.adjustToxLoss(50)
+								H.adjustToxLoss(50*REM)
 
 		toxin/stoxin
 			name = "Soporific"
@@ -1908,10 +1880,10 @@ datum
 						M.confused += 2
 						M.drowsyness += 2
 					if(2 to 20)
-						M.Weaken(30)
-						M.eye_blurry = max(M.eye_blurry, 10)
+						M.Weaken(20*REM)
+						M.eye_blurry = max(M.eye_blurry, 10*REM)
 					if(20 to INFINITY)
-						M.sleeping = max(M.sleeping, 30)
+						M.sleeping = max(M.sleeping, 30*REM)
 				..()
 				return
 
@@ -1930,8 +1902,8 @@ datum
 					if (volume >= overdose)
 						if(H.losebreath >= 10)
 							H.losebreath = max(10, H.losebreath-10)
-						H.adjustOxyLoss(2)
-						H.Weaken(10)
+						H.adjustOxyLoss(2*REM)
+						H.Weaken(10*REM)
 				..()
 				return
 
@@ -1950,8 +1922,8 @@ datum
 					if(H.stat != 1)
 						if(H.losebreath >= 10)
 							H.losebreath = max(10, M.losebreath-10)
-						H.adjustOxyLoss(2)
-						H.Weaken(10)
+						H.adjustOxyLoss(2*REM)
+						H.Weaken(10*REM)
 				..()
 				return
 
@@ -2085,7 +2057,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				if(prob(50)) M.heal_organ_damage(1,0)
+				if(prob(50)) M.heal_organ_damage(1*REM,0)
 				M.nutrition += nutriment_factor	// For hunger and fatness
 /*
 				// If overeaten - vomit and fall down
@@ -2283,7 +2255,7 @@ datum
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				for(var/mob/living/carbon/slime/M in T)
-					M.adjustToxLoss(rand(15,30))
+					M.adjustToxLoss(rand(15,30)*REM)
 
 		sodiumchloride
 			name = "Table Salt"
@@ -2381,7 +2353,7 @@ datum
 				M.nutrition += nutriment_factor
 				if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden"))
 					if(!M) M = holder.my_atom
-					M.heal_organ_damage(1,1)
+					M.heal_organ_damage(1*REM,1*REM)
 					M.nutrition += nutriment_factor
 					..()
 					return
@@ -2401,7 +2373,7 @@ datum
 				if(istype(M, /mob/living/carbon/human) && M.mind)
 					if(M.mind.special_role)
 						if(!M) M = holder.my_atom
-						M.heal_organ_damage(1,1)
+						M.heal_organ_damage(1*REM,1*REM)
 						M.nutrition += nutriment_factor
 						..()
 						return
@@ -2639,7 +2611,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				..()
-				if(M.getOxyLoss() && prob(30)) M.adjustOxyLoss(-1)
+				if(M.getOxyLoss() && prob(30)) M.adjustOxyLoss(-1*REM)
 				return
 
 		drink/tomatojuice
@@ -2654,7 +2626,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				..()
-				if(M.getFireLoss() && prob(20)) M.heal_organ_damage(0,1)
+				if(M.getFireLoss() && prob(20)) M.heal_organ_damage(0,1*REM)
 				return
 
 		drink/limejuice
@@ -2739,7 +2711,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				..()
-				M.adjustToxLoss(1)
+				M.adjustToxLoss(1*REM)
 				return
 
 		drink/watermelonjuice
@@ -2803,7 +2775,7 @@ datum
 			glass_desc = "White and nutritious goodness!"
 
 			on_mob_life(var/mob/living/M as mob)
-				if(M.getBruteLoss() && prob(20)) M.heal_organ_damage(1,0)
+				if(M.getBruteLoss() && prob(20)) M.heal_organ_damage(1*REM,0)
 				holder.remove_reagent("capsaicin", 10*REAGENTS_METABOLISM)
 				..()
 				return
@@ -2913,7 +2885,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				..()
 				M.sleeping = 0
-				if(M.getBruteLoss() && prob(20)) M.heal_organ_damage(1,0)
+				if(M.getBruteLoss() && prob(20)) M.heal_organ_damage(1*REM,0)
 				return
 
 		drink/coffee/cafe_latte
@@ -2932,7 +2904,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				..()
 				M.sleeping = 0
-				if(M.getBruteLoss() && prob(20)) M.heal_organ_damage(1,0)
+				if(M.getBruteLoss() && prob(20)) M.heal_organ_damage(1*REM,0)
 				return
 
 		drink/tea
@@ -2952,7 +2924,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				..()
 				if(M.getToxLoss() && prob(20))
-					M.adjustToxLoss(-1)
+					M.adjustToxLoss(-1*REM)
 				return
 
 		drink/tea/icetea
@@ -3173,12 +3145,12 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
 				if(!M) M = holder.my_atom
-				if(M:getOxyLoss() && prob(50)) M:adjustOxyLoss(-2)
-				if(M:getBruteLoss() && prob(60)) M:heal_organ_damage(2,0)
-				if(M:getFireLoss() && prob(50)) M:heal_organ_damage(0,2)
-				if(M:getToxLoss() && prob(50)) M:adjustToxLoss(-2)
-				if(M.dizziness !=0) M.dizziness = max(0,M.dizziness-15)
-				if(M.confused !=0) M.confused = max(0,M.confused - 5)
+				if(M:getOxyLoss() && prob(50)) M:adjustOxyLoss(-2*REM)
+				if(M:getBruteLoss() && prob(60)) M:heal_organ_damage(2*REM,0)
+				if(M:getFireLoss() && prob(50)) M:heal_organ_damage(0,2*REM)
+				if(M:getToxLoss() && prob(50)) M:adjustToxLoss(-2*REM)
+				if(M.dizziness !=0) M.dizziness = max(0,M.dizziness-15*REM)
+				if(M.confused !=0) M.confused = max(0,M.confused - 5*REM)
 				..()
 				return
 
@@ -3209,7 +3181,7 @@ datum
 						M.sleeping += 1
 					if(201 to INFINITY)
 						M.sleeping += 1
-						M.adjustToxLoss(2)
+						M.adjustToxLoss(2*REM)
 				..()
 				return
 
@@ -3238,7 +3210,7 @@ datum
 					if(55 to 200)
 						M.druggy = max(M.druggy, 55)
 					if(200 to INFINITY)
-						M.adjustToxLoss(2)
+						M.adjustToxLoss(2*REM)
 				..()
 
 		neurotoxin
@@ -3268,7 +3240,7 @@ datum
 					if(55 to 200)
 						M.druggy = max(M.druggy, 55)
 					if(200 to INFINITY)
-						M.adjustToxLoss(2)
+						M.adjustToxLoss(2*REM)
 				..()
 
 		hippies_delight
@@ -3311,7 +3283,7 @@ datum
 						M.make_dizzy(60)
 						M.druggy = max(M.druggy, 75)
 						if(prob(40)) M.emote(pick("twitch","giggle"))
-						if(prob(30)) M.adjustToxLoss(2)
+						if(prob(30)) M.adjustToxLoss(2*REM)
 				..()
 				return
 
@@ -3381,10 +3353,10 @@ datum
 						var/mob/living/carbon/human/H = M
 						var/datum/organ/internal/liver/L = H.internal_organs_by_name["liver"]
 						if (!L)
-							H.adjustToxLoss(5)
+							H.adjustToxLoss(5*REM)
 						else if(istype(L))
-							L.take_damage(0.1, 1)
-						H.adjustToxLoss(0.1)
+							L.take_damage(0.1*REM, 1)
+						H.adjustToxLoss(0.1*REM)
 				..()
 				return
 
@@ -3684,7 +3656,7 @@ datum
 						M.make_dizzy(4)
 						M.druggy = max(M.druggy, 60)
 						if(prob(10)) M.emote(pick("twitch","giggle"))
-						if(prob(30)) M.adjustToxLoss(2)
+						if(prob(30)) M.adjustToxLoss(2*REM)
 					if (150 to 300)
 						if (!M.stuttering) M.stuttering = 1
 						M.hallucination = max(M.hallucination, 60)
@@ -3692,7 +3664,7 @@ datum
 						M.make_dizzy(4)
 						M.druggy = max(M.druggy, 60)
 						if(prob(10)) M.emote(pick("twitch","giggle"))
-						if(prob(30)) M.adjustToxLoss(2)
+						if(prob(30)) M.adjustToxLoss(2*REM)
 						if(prob(5)) if(ishuman(M))
 							var/mob/living/carbon/human/H = M
 							var/datum/organ/internal/heart/L = H.internal_organs_by_name["heart"]
