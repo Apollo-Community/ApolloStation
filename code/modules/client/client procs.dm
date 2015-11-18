@@ -126,11 +126,12 @@
 		if( !target )
 			continue
 
-		if(target.prefs.toggles & CHAT_OOC)
-			target << "<span class='notice'><b>[src.key] has connected to the server.</b></span>"
+		if(target.prefs)											//Rare runtime
+			if(target.prefs.toggles & CHAT_OOC)
+				target << "<span class='notice'><b>[src.key] has connected to the server.</b></span>"
 
-			if( target.prefs.toggles & SOUND_NOTIFICATIONS )
-				target << sound( 'sound/effects/oocjoin.ogg' )
+				if( target.prefs.toggles & SOUND_NOTIFICATIONS )
+					target << sound( 'sound/effects/oocjoin.ogg' )
 
 	clients += src
 	directory[ckey] = src

@@ -87,8 +87,10 @@ var/global/datum/controller/gameticker/ticker
 			current_state = GAME_STATE_PREGAME
 			world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
 			return 0
+
 		if(secret_force_mode != "secret")
 			src.mode = config.pick_mode(secret_force_mode)
+
 		if(!src.mode)
 			src.mode = pick_random_gamemode(runnable_modes)
 	else
@@ -100,13 +102,14 @@ var/global/datum/controller/gameticker/ticker
 		return 0
 
 	if(!src.mode.can_start())
+		qdel(mode)
 		var/totalPlayersReady = 0
 		for(var/mob/new_player/player in player_list)
 			if(player.ready)	totalPlayersReady++
-		world << "<B><font color='blue'>Silly crew, you're missing [mode.required_players - totalPlayersReady] crew to play [mode.name].\nPicking random gamemode instead!</B></font>"
+		world << "<B><font color='blue'>Silly crew, you're missing [mode.required_players - totalPlayersReady] crew member(s) to play [mode.name].\nPicking random gamemode instead!</B></font>"
 		current_state = GAME_STATE_PREGAME
+
 		src.mode = pick_random_gamemode(runnable_modes)
-		job_master.ResetOccupations()
 
 	if(hide_mode)
 		world << "<B>The current game mode is - Hidden!</B>"
@@ -114,15 +117,16 @@ var/global/datum/controller/gameticker/ticker
 		src.mode.announce()
 
 	job_master.ResetOccupations()
-	src.mode.pre_setup()
 	job_master.DivideOccupations() // Apparently important for new antagonist system to register specific job antags properly.
+	src.mode.pre_setup()
 
-	setup_economy()
-	current_state = GAME_STATE_PLAYING
 	create_characters() //Create player characters and transfer them
 	collect_minds()
 	equip_characters()
 	data_core.manifest()
+
+	setup_economy()
+	current_state = GAME_STATE_PLAYING
 
 	callHook("roundstart")
 
