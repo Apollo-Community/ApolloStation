@@ -787,8 +787,8 @@ var/list/be_special_flags = list(
 #define MINIMUM_MOLES_TO_FILTER 0.1
 
 // Reagent metabolism defines.
-#define FOOD_METABOLISM 0.4
-#define ALCOHOL_METABOLISM 0.1
+#define FOOD_METABOLISM 4*REAGENTS_METABOLISM
+#define ALCOHOL_METABOLISM REAGENTS_METABOLISM/2
 
 //Chemistry
 

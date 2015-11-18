@@ -196,7 +196,7 @@ datum
 			description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 			reagent_state = LIQUID
 			color = "#0064C8" // rgb: 0, 100, 200
-			custom_metabolism = 0.01
+			custom_metabolism = REAGENTS_METABOLISM/10
 
 			glass_icon_state = "glass_clear"
 			glass_name = "glass of water"
@@ -269,6 +269,7 @@ datum
 			glass_icon_state = "glass_clear"
 			glass_name = "glass of holy water"
 			glass_desc = "An ashen-obsidian-water mix, this solution will alter certain sections of the brain's rationality."
+			custom_metabolism = 10*REAGENTS_METABOLISM //high metabolism to prevent extended uncult rolls.
 
 			on_mob_life(var/mob/living/M as mob)
 				if(ishuman(M))
@@ -277,7 +278,7 @@ datum
 						ticker.mode.remove_cultist(M.mind)
 						for(var/mob/O in viewers(M, null))
 							O.show_message(text("\blue []'s eyes blink and become clearer.", M), 1) // So observers know it worked.
-				holder.remove_reagent(src.id, 10 * REAGENTS_METABOLISM) //high metabolism to prevent extended uncult rolls.
+				..()
 				return
 
 		lube
@@ -308,7 +309,7 @@ datum
 			description = "Liquid plastic, do not eat."
 			reagent_state = LIQUID
 			color = "#CF3600" // rgb: 207, 54, 0
-			custom_metabolism = 0.01
+			custom_metabolism = REAGENTS_METABOLISM
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -380,6 +381,8 @@ datum
 			overdose = REAGENTS_OVERDOSE*2
 			scannable = 1
 
+			custom_metabolism = REAGENTS_METABOLISM
+
 			on_mob_life(var/mob/living/M as mob, var/alien)
 				if(!M) M = holder.my_atom
 
@@ -389,7 +392,7 @@ datum
 					if(M.losebreath >= 10)
 						M.losebreath = max(10, M.losebreath-5)
 
-				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
+				..()
 				return
 
 		space_drugs
@@ -399,6 +402,7 @@ datum
 			reagent_state = LIQUID
 			color = "#60A584" // rgb: 96, 165, 132
 			overdose = REAGENTS_OVERDOSE
+			custom_metabolism = REAGENTS_METABOLISM
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -407,7 +411,7 @@ datum
 					if(M.canmove && !M.restrained())
 						if(prob(10)) step(M, pick(cardinal))
 				if(prob(7)) M.emote(pick("twitch","drool","moan","giggle"))
-				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
+				..()
 				return
 
 		serotrotium
@@ -417,11 +421,12 @@ datum
 			reagent_state = LIQUID
 			color = "#202040" // rgb: 20, 20, 40
 			overdose = REAGENTS_OVERDOSE
+			custom_metabolism = REAGENTS_METABOLISM
 
 			on_mob_life(var/mob/living/M as mob)
 				if(ishuman(M))
 					if(prob(7)) M.emote(pick("twitch","drool","moan","gasp"))
-					holder.remove_reagent(src.id, 0.25 * REAGENTS_METABOLISM)
+					..()
 				return
 
 /*		silicate
@@ -467,18 +472,12 @@ datum
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
 
-			custom_metabolism = 0.01
-
 			on_mob_life(var/mob/living/M as mob, var/alien)
 				if(M.stat == 2) return
 				if(alien && alien == IS_VOX)
 					M.adjustToxLoss(REAGENTS_METABOLISM)
-					holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
-					return
 				else
 					M.adjustOxyLoss(-2*REM) // not an effective way to cure oxygen loss
-					holder.remove_reagent(src.id, REAGENTS_METABOLISM)
-					return
 
 				..()
 
@@ -497,8 +496,6 @@ datum
 				if(M.stat == 2) return
 				if(alien && alien == IS_VOX)
 					M.adjustOxyLoss(-2*REM)
-					holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
-					return
 				..()
 
 			reaction_turf(var/turf/T, var/volume)
@@ -522,8 +519,6 @@ datum
 			description = "A highly ductile metal."
 			color = "#6E3B08" // rgb: 110, 59, 8
 
-			custom_metabolism = 0.01
-
 		hydrogen
 			name = "Hydrogen"
 			id = "hydrogen"
@@ -531,16 +526,12 @@ datum
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
 
-			custom_metabolism = 0.01
-
 		potassium
 			name = "Potassium"
 			id = "potassium"
 			description = "A soft, low-melting solid that can easily be cut with a knife. Reacts violently with water."
 			reagent_state = SOLID
 			color = "#A0A0A0" // rgb: 160, 160, 160
-
-			custom_metabolism = 0.01
 
 		mercury
 			name = "Mercury"
@@ -566,16 +557,12 @@ datum
 			reagent_state = SOLID
 			color = "#BF8C00" // rgb: 191, 140, 0
 
-			custom_metabolism = 0.01
-
 		carbon
 			name = "Carbon"
 			id = "carbon"
 			description = "A chemical element, the builing block of life."
 			reagent_state = SOLID
 			color = "#1C1300" // rgb: 30, 20, 0
-
-			custom_metabolism = 0.01
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
@@ -622,16 +609,12 @@ datum
 			reagent_state = SOLID
 			color = "#808080" // rgb: 128, 128, 128
 
-			custom_metabolism = 0.01
-
 		phosphorus
 			name = "Phosphorus"
 			id = "phosphorus"
 			description = "A chemical element, the backbone of biological energy carriers."
 			reagent_state = SOLID
 			color = "#832828" // rgb: 131, 40, 40
-
-			custom_metabolism = 0.01
 
 		lithium
 			name = "Lithium"
@@ -684,16 +667,12 @@ datum
 			reagent_state = LIQUID
 			color = "#808080" // rgb: 128, 128, 128
 
-			custom_metabolism = 0.01
-
 		nitroglycerin
 			name = "Nitroglycerin"
 			id = "nitroglycerin"
 			description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
 			reagent_state = LIQUID
 			color = "#808080" // rgb: 128, 128, 128
-
-			custom_metabolism = 0.01
 
 		radium
 			name = "Radium"
@@ -801,7 +780,7 @@ datum
 			color = "#C8A5DC"
 			overdose = 60
 			scannable = 1
-			custom_metabolism = 0.025 // Lasts 10 minutes for 15 units
+			custom_metabolism = REAGENTS_METABOLISM/2 // Lasts 10 minutes for 15 units
 
 			on_mob_life(var/mob/living/M as mob)
 				if (volume > overdose)
@@ -817,7 +796,7 @@ datum
 			color = "#CB68FC"
 			overdose = 30
 			scannable = 1
-			custom_metabolism = 0.025 // Lasts 10 minutes for 15 units
+			custom_metabolism = REAGENTS_METABOLISM/2
 
 			on_mob_life(var/mob/living/M as mob)
 				if (volume > overdose)
@@ -832,7 +811,7 @@ datum
 			reagent_state = LIQUID
 			color = "#800080"
 			overdose = 20
-			custom_metabolism = 0.25 // Lasts 10 minutes for 15 units
+			custom_metabolism = REAGENTS_METABOLISM/2
 
 			on_mob_life(var/mob/living/M as mob)
 				if (volume > overdose)
@@ -1062,7 +1041,6 @@ datum
 				M.make_dizzy(1)
 				if(!M.confused) M.confused = 1
 				M.confused = max(M.confused, 20)
-				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
 				..()
 				return
 
@@ -1153,7 +1131,7 @@ datum
 				else if(!alien || alien != IS_DIONA)
 					M.adjustOxyLoss(-M.getOxyLoss())
 
-				holder.remove_reagent("lexorin", 2*REM)
+				holder.remove_reagent("lexorin", 10*REM)
 				..()
 				return
 
@@ -1250,7 +1228,7 @@ datum
 			description = "Synaptizine is used to treat various diseases."
 			reagent_state = LIQUID
 			color = "#99CCFF" // rgb: 200, 165, 220
-			custom_metabolism = 0.01
+			custom_metabolism = REAGENTS_METABOLISM/2
 			overdose = REAGENTS_OVERDOSE
 			scannable = 1
 
@@ -1291,7 +1269,7 @@ datum
 			description = "Hyronalin is a medicinal drug used to counter the effect of radiation poisoning."
 			reagent_state = LIQUID
 			color = "#408000" // rgb: 200, 165, 220
-			custom_metabolism = 0.05
+			custom_metabolism = REAGENTS_METABOLISM*3
 			overdose = REAGENTS_OVERDOSE
 			scannable = 1
 
@@ -1311,7 +1289,7 @@ datum
 			description = "Arithrazine is an unstable medication used for the most extreme cases of radiation poisoning."
 			reagent_state = LIQUID
 			color = "#008000" // rgb: 200, 165, 220
-			custom_metabolism = 0.05
+			custom_metabolism = REAGENTS_METABOLISM/3
 			overdose = REAGENTS_OVERDOSE
 
 			on_mob_life(var/mob/living/M as mob)
@@ -1334,7 +1312,7 @@ datum
 			description = "Alkysine is a drug used to lessen the damage to neurological tissue after a catastrophic injury. Can heal brain tissue."
 			reagent_state = LIQUID
 			color = "#FFFF66" // rgb: 200, 165, 220
-			custom_metabolism = 0.05
+			custom_metabolism = REAGENTS_METABOLISM*3
 			overdose = REAGENTS_OVERDOSE
 			scannable = 1
 
@@ -1415,7 +1393,7 @@ datum
 			description = "Hyperzine is a highly effective, long lasting, muscle stimulant."
 			reagent_state = LIQUID
 			color = "#FF3300" // rgb: 200, 165, 220
-			custom_metabolism = 0.03
+			custom_metabolism = REAGENTS_METABOLISM/2
 			overdose = REAGENTS_OVERDOSE/2
 
 			on_mob_life(var/mob/living/M as mob)
@@ -1518,7 +1496,7 @@ datum
 			description = "An all-purpose antiviral agent."
 			reagent_state = LIQUID
 			color = "#C1C1C1" // rgb: 200, 165, 220
-			custom_metabolism = 0.01
+			custom_metabolism = REAGENTS_METABOLISM*3
 			overdose = REAGENTS_OVERDOSE
 			scannable = 1
 
@@ -1621,7 +1599,7 @@ datum
 			reagent_state = LIQUID
 			color = "#CF3600" // rgb: 207, 54, 0
 			var/toxpwr = 0.7 // Toxins are really weak, but without being treated, last very long.
-			custom_metabolism = 0.1
+			custom_metabolism = REAGENTS_METABOLISM
 
 			on_mob_life(var/mob/living/M as mob,var/alien)
 				if(!M) M = holder.my_atom
@@ -1735,11 +1713,11 @@ datum
 			reagent_state = LIQUID
 			color = "#CF3600" // rgb: 207, 54, 0
 			toxpwr = 4
-			custom_metabolism = 0.4
+			custom_metabolism = REAGENTS_METABOLISM*10
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.adjustOxyLoss(4*REM)
+				M.adjustOxyLoss(20*REM)
 				M.sleeping += 1
 				..()
 				return
@@ -1798,7 +1776,7 @@ datum
 			reagent_state = LIQUID
 			color = "#B31008" // rgb: 139, 166, 233
 			toxpwr = 0
-			custom_metabolism = 0.05
+			custom_metabolism = REAGENTS_METABOLISM/2
 			overdose = REAGENTS_OVERDOSE
 
 			on_mob_life(var/mob/living/M)
@@ -1888,7 +1866,7 @@ datum
 			reagent_state = LIQUID
 			color = "#009CA8" // rgb: 232, 149, 204
 			toxpwr = 0
-			custom_metabolism = 0.1
+			custom_metabolism = REAGENTS_METABOLISM*2
 			overdose = REAGENTS_OVERDOSE
 
 			on_mob_life(var/mob/living/M as mob)
@@ -1917,7 +1895,7 @@ datum
 			reagent_state = SOLID
 			color = "#000067" // rgb: 0, 0, 103
 			toxpwr = 1
-			custom_metabolism = 0.1 //Default 0.2
+			custom_metabolism = REAGENTS_METABOLISM*10
 			overdose = 15
 			overdose_dam = 5
 
@@ -1983,7 +1961,7 @@ datum
 			description = "An alcoholic beverage made from malted grains, hops, yeast, and water. The fermentation appears to be incomplete." //If the players manage to analyze this, they deserve to know something is wrong.
 			reagent_state = LIQUID
 			color = "#664300" // rgb: 102, 67, 0
-			custom_metabolism = 0.15 // Sleep toxins should always be consumed pretty fast
+			custom_metabolism = REAGENTS_METABOLISM
 			overdose = REAGENTS_OVERDOSE/2
 
 			glass_icon_state = "beerglass"
@@ -2103,6 +2081,7 @@ datum
 			reagent_state = SOLID
 			nutriment_factor = 15 * REAGENTS_METABOLISM
 			color = "#664330" // rgb: 102, 67, 48
+			custom_metabolism = FOOD_METABOLISM
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -2132,6 +2111,7 @@ datum
 			nutriment_factor = 10 * REAGENTS_METABOLISM
 			color = "#BBEDA4" // rgb: 187, 237, 164
 			overdose = REAGENTS_OVERDOSE
+			custom_metabolism = FOOD_METABOLISM
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -2149,6 +2129,7 @@ datum
 			reagent_state = LIQUID
 			nutriment_factor = 2 * REAGENTS_METABOLISM
 			color = "#792300" // rgb: 121, 35, 0
+			custom_metabolism = FOOD_METABOLISM
 
 		ketchup
 			name = "Ketchup"
@@ -2157,6 +2138,7 @@ datum
 			reagent_state = LIQUID
 			nutriment_factor = 5 * REAGENTS_METABOLISM
 			color = "#731008" // rgb: 115, 16, 8
+			custom_metabolism = FOOD_METABOLISM
 
 		capsaicin
 			name = "Capsaicin Oil"
@@ -2164,6 +2146,7 @@ datum
 			description = "This is what makes chilis hot."
 			reagent_state = LIQUID
 			color = "#B31008" // rgb: 179, 16, 8
+			custom_metabolism = FOOD_METABOLISM
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M)
@@ -2187,7 +2170,6 @@ datum
 				else if(istype(M, /mob/living/carbon/slime))
 					M.bodytemperature += rand(10,25)
 				holder.remove_reagent("frostoil", 5)
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				data++
 				..()
 				return
@@ -2198,6 +2180,7 @@ datum
 			description = "A chemical agent used for self-defense and in police work."
 			reagent_state = LIQUID
 			color = "#B31008" // rgb: 179, 16, 8
+			custom_metabolism = FOOD_METABOLISM
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 				if(!istype(M, /mob/living))
@@ -2274,7 +2257,6 @@ datum
 				else if(istype(M, /mob/living/carbon/slime))
 					M.bodytemperature += rand(15,30)
 				holder.remove_reagent("frostoil", 5)
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				data++
 				..()
 				return
@@ -2285,6 +2267,7 @@ datum
 			description = "A special oil that noticably chills the body. Extracted from Ice Peppers."
 			reagent_state = LIQUID
 			color = "#B31008" // rgb: 139, 166, 233
+			custom_metabolism = FOOD_METABOLISM
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M)
@@ -2295,7 +2278,6 @@ datum
 				if(istype(M, /mob/living/carbon/slime))
 					M.bodytemperature = max(M.bodytemperature - rand(10,20), 0)
 				holder.remove_reagent("capsaicin", 5)
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				..()
 				return
 
@@ -2310,6 +2292,7 @@ datum
 			reagent_state = SOLID
 			color = "#FFFFFF" // rgb: 255,255,255
 			overdose = REAGENTS_OVERDOSE
+			custom_metabolism = FOOD_METABOLISM
 
 		blackpepper
 			name = "Black Pepper"
@@ -2317,6 +2300,7 @@ datum
 			description = "A powder ground from peppercorns. *AAAACHOOO*"
 			reagent_state = SOLID
 			// no color (ie, black)
+			custom_metabolism = FOOD_METABOLISM
 
 		coco
 			name = "Coco Powder"
@@ -2325,6 +2309,7 @@ datum
 			reagent_state = SOLID
 			nutriment_factor = 5 * REAGENTS_METABOLISM
 			color = "#302000" // rgb: 48, 32, 0
+			custom_metabolism = FOOD_METABOLISM
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
@@ -2338,6 +2323,7 @@ datum
 			reagent_state = LIQUID
 			nutriment_factor = 2 * REAGENTS_METABOLISM
 			color = "#403010" // rgb: 64, 48, 16
+			custom_metabolism = FOOD_METABOLISM
 
 			glass_icon_state  = "chocolateglass"
 			glass_name = "glass of hot chocolate"
@@ -2356,6 +2342,7 @@ datum
 			description = "A strong psycotropic derived from certain species of mushroom."
 			color = "#E700E7" // rgb: 231, 0, 231
 			overdose = REAGENTS_OVERDOSE
+			custom_metabolism = FOOD_METABOLISM
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -2378,7 +2365,6 @@ datum
 						M.make_dizzy(20)
 						M.druggy = max(M.druggy, 40)
 						if(prob(30)) M.emote(pick("twitch","giggle"))
-				holder.remove_reagent(src.id, 0.2)
 				data++
 				..()
 				return
@@ -2389,6 +2375,7 @@ datum
 			description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
 			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#FF00FF" // rgb: 255, 0, 255
+			custom_metabolism = FOOD_METABOLISM
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
@@ -2407,6 +2394,7 @@ datum
 			description = "Delicious cream filling of a mysterious origin. Tastes criminally good."
 			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#FFFFF8" // rgb: 171, 120, 120
+			custom_metabolism = FOOD_METABOLISM
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
@@ -2421,7 +2409,7 @@ datum
 					var/mob/living/carbon/human/H = M
 					for(var/datum/organ/external/E in H.bad_external_organs)
 						if (E.status & ORGAN_BROKEN)
-							if (prob(5))
+							if (prob(10))
 								if (E.mend_fracture())
 									H << "/blue You feel something mend itself inside your [E.display_name].</span>"
 				..()
@@ -2433,6 +2421,7 @@ datum
 			reagent_state = LIQUID
 			nutriment_factor = 20 * REAGENTS_METABOLISM
 			color = "#302000" // rgb: 48, 32, 0
+			custom_metabolism = FOOD_METABOLISM
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
@@ -2472,6 +2461,7 @@ datum
 			reagent_state = LIQUID
 			color = "#365E30" // rgb: 54, 94, 48
 			overdose = REAGENTS_OVERDOSE
+			custom_metabolism = FOOD_METABOLISM
 
 		ammonium_nitrate
 			name = "Ammonium Nitrate"
@@ -2520,6 +2510,7 @@ datum
 			reagent_state = SOLID
 			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#302000" // rgb: 48, 32, 0
+			custom_metabolism = FOOD_METABOLISM
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
@@ -2533,6 +2524,7 @@ datum
 			reagent_state = LIQUID
 			nutriment_factor = 5 * REAGENTS_METABOLISM
 			color = "#302000" // rgb: 48, 32, 0
+			custom_metabolism = FOOD_METABOLISM
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
@@ -2548,6 +2540,7 @@ datum
 			reagent_state = LIQUID
 			nutriment_factor = 5 * REAGENTS_METABOLISM
 			color = "#302000" // rgb: 48, 32, 0
+			custom_metabolism = FOOD_METABOLISM
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
@@ -2582,6 +2575,7 @@ datum
 			reagent_state = SOLID
 			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#FFFFFF" // rgb: 0, 0, 0
+			custom_metabolism = FOOD_METABOLISM
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
@@ -2595,6 +2589,7 @@ datum
 			reagent_state = LIQUID
 			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#801E28" // rgb: 128, 30, 40
+			custom_metabolism = FOOD_METABOLISM
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
@@ -2612,6 +2607,7 @@ datum
 			reagent_state = LIQUID
 			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#E78108" // rgb: 231, 129, 8
+			custom_metabolism = 2*FOOD_METABOLISM
 			var/adj_dizzy = 0
 			var/adj_drowsy = 0
 			var/adj_sleepy = 0
@@ -2620,9 +2616,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.nutrition += nutriment_factor
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				// Drinks should be used up faster than other reagents.
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				if (adj_dizzy) M.dizziness = max(0,M.dizziness + adj_dizzy)
 				if (adj_drowsy)	M.drowsyness = max(0,M.drowsyness + adj_drowsy)
 				if (adj_sleepy) M.sleeping = max(0,M.sleeping + adj_sleepy)
@@ -2876,8 +2870,6 @@ datum
 				M.make_jittery(5)
 				if(adj_temp > 0)
 					holder.remove_reagent("frostoil", 10*REAGENTS_METABOLISM)
-
-				holder.remove_reagent(src.id, 0.1)
 
 		drink/coffee/pumpkinspice
 			name = "Pumpkin spice Latte"
@@ -3145,7 +3137,6 @@ datum
 				if(istype(M, /mob/living/carbon/slime))
 					M.bodytemperature = max(M.bodytemperature - rand(10,20), 0)
 				holder.remove_reagent("capsaicin", 5)
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				..()
 				return
 
@@ -3181,7 +3172,6 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				if(!M) M = holder.my_atom
 				if(M:getOxyLoss() && prob(50)) M:adjustOxyLoss(-2)
 				if(M:getBruteLoss() && prob(60)) M:heal_organ_damage(2,0)
@@ -3322,7 +3312,6 @@ datum
 						M.druggy = max(M.druggy, 75)
 						if(prob(40)) M.emote(pick("twitch","giggle"))
 						if(prob(30)) M.adjustToxLoss(2)
-				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3715,7 +3704,8 @@ datum
 							var/datum/organ/internal/heart/L = H.internal_organs_by_name["heart"]
 							if (L && istype(L))
 								L.take_damage(100, 0)
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
+				..()
+				return
 
 		ethanol/rum
 			name = "Rum"

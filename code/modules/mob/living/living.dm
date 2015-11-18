@@ -215,7 +215,6 @@
 			return 1
 	return 0
 
-
 /mob/living/proc/can_inject()
 	return 1
 
@@ -300,6 +299,9 @@
 	ear_deaf = 0
 	ear_damage = 0
 	heal_overall_damage(getBruteLoss(), getFireLoss())
+
+	// remove chemical reagents
+	reagents.clear_reagents()
 
 	// restore all of a human's blood
 	if(ishuman(src))

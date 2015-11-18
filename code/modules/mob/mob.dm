@@ -134,7 +134,6 @@
 
 	return
 
-
 /mob/proc/restrained()
 	return
 
