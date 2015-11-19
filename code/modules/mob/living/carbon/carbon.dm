@@ -551,3 +551,11 @@
 	statistics.increase_stat("people_slipped")
 
 	return 1
+
+/mob/living/carbon/process_resist()
+	if( handcuffed )
+		if( istype( handcuffed, /obj/item/weapon/handcuffs ))
+			var/obj/item/weapon/handcuffs/H = handcuffed
+			H.resist()
+
+	..()

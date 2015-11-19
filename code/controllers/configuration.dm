@@ -214,6 +214,8 @@ var/list/gamemode_cache = list()
 	var/git_commit_id = ""
 
 	var/recommended_byond = 501
+	var/player_soft_cap = 40
+	var/player_hard_cap = 60
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -765,12 +767,14 @@ var/list/gamemode_cache = list()
 				sqllogin = value
 			if ("password")
 				sqlpass = value
+				/*
 			if ("feedback_database")
-				sqlfdbkdb = value
+				sqldb = value
 			if ("feedback_login")
-				sqlfdbklogin = value
+				sqllogin = value
 			if ("feedback_password")
-				sqlfdbkpass = value
+				sqlpass = value
+				*/
 			if ("enable_stat_tracking")
 				sqllogging = 1
 			else
@@ -823,8 +827,9 @@ var/list/gamemode_cache = list()
 	// their information, but it is the only way (at least that I know of).
 	for (var/game_mode in gamemode_cache)
 		var/datum/game_mode/M = gamemode_cache[game_mode]
-		if (M.config_tag && M.config_tag == mode_name)
+		if (M && (M:config_tag && M:config_tag == mode_name))																			//This won't runtime anymore, but will instead return extended if there is a problem.
 			return M
+	world.log << "BUG: pick_mode returned extended - potential issue with gamemode [mode_name]"		//Since this is difficult to reproduce lets report it as a runtime
 	return gamemode_cache["extended"]
 
 /datum/configuration/proc/get_runnable_modes()

@@ -215,7 +215,6 @@
 			return 1
 	return 0
 
-
 /mob/living/proc/can_inject()
 	return 1
 
@@ -300,6 +299,9 @@
 	ear_deaf = 0
 	ear_damage = 0
 	heal_overall_damage(getBruteLoss(), getFireLoss())
+
+	// remove chemical reagents
+	reagents.clear_reagents()
 
 	// restore all of a human's blood
 	if(ishuman(src))
@@ -451,43 +453,42 @@
 
 	if(can_resist())
 		next_move = world.time + 20
-		resist_grab()
-		if(!weakened && !restrained())
-			process_resist()
+		process_resist()
 
 /mob/living/proc/can_resist()
 	//need to allow !canmove, or otherwise neck grabs can't be resisted
-	//similar thing with weakened and pinning
-	if(stat)
+	//so just check weakened instead.
+	if(stat || weakened)
 		return 0
 	if(next_move > world.time)
 		return 0
 	return 1
 
-
 /mob/living/proc/process_resist()
 	//Getting out of someone's inventory.
-	if(istype(src.loc, /obj/item/weapon/holder))
+	if(istype(src.loc, /obj/item))
 		escape_inventory(src.loc)
 		return
 
+	//resisting grabs (as if it helps anyone...)
+	if (!restrained())
+		resist_grab()
+
 	//unbuckling yourself
 	if(buckled)
-		spawn(0)
-			escape_buckle()
+		spawn() escape_buckle()
 
 	//Breaking out of a locker?
 	if( src.loc && (istype(src.loc, /obj/structure/closet)) )
 		var/obj/structure/closet/C = loc
-		spawn(0)
-			C.mob_breakout(src)
+		spawn() C.mob_breakout(src)
 
-/mob/living/proc/escape_inventory(obj/item/weapon/holder/H)
+/mob/living/proc/escape_inventory( obj/item/H )
 	if(H != src.loc) return
 
 	var/mob/M = H.loc //Get our mob holder (if any).
 
-	if(istype(M))
+	if(istype( M, /obj/item/weapon/holder ))
 		M.drop_from_inventory(H)
 		M << "<span class='warning'>[H] wriggles out of your grip!</span>"
 		src << "<span class='warning'>You wriggle out of [M]'s grip!</span>"

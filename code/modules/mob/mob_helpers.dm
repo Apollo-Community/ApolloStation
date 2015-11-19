@@ -4,6 +4,10 @@
 		return 1
 	return 0
 
+/proc/ismonkey(A)
+	if(istype(A, /mob/living/carbon/human/monkey) | istype(A, /mob/living/carbon/human/stok) | istype(A, /mob/living/carbon/human/farwa) | istype(A, /mob/living/carbon/human/neara))
+		return 1
+	return 0
 /proc/isipc(A)
 	if(istype(A, /mob/living/carbon/human/machine))
 		return 1

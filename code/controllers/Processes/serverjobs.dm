@@ -12,7 +12,7 @@
 					C << "<SPAN CLASS='warning'>You have been inactive for more than [config.kick_inactive] minute\s and have been disconnected.</SPAN>"
 					del(C)	// Don't qdel, cannot override finalize_qdel behaviour for clients.
 			//scheck() 				Not really nessesary
-
+/*
 /datum/controller/process/statplayers/setup()
 	name = "statplayers"
 	schedule_interval = 50 //runs every 5 seconds (subject to change)
@@ -38,3 +38,4 @@
 		stat_player_list[C.ckey] = entry
 
 	//stat_player_list = sortList(stat_player_list) 	//Other sorts null the list, this one doesnt keep assocoated vals
+*/

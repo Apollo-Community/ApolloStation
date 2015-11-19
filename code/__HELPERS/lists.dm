@@ -207,6 +207,7 @@ proc/listclearnulls(list/list)
 
 //Mergesort: divides up the list into halves to begin the sort
 /proc/sortAtom(var/list/atom/L, var/order = 1)
+	testing("new sort from usr = [usr], src = [src], len of L = [L.len]") // hunting sort bug runtime error
 	if(isnull(L) || L.len < 2)
 		return L
 	var/middle = L.len / 2 + 1
@@ -585,10 +586,13 @@ datum/proc/dd_SortValue()
 /obj/machinery/camera/dd_SortValue()
 	return "[c_tag]"
 
+/proc/subtypes( var/prototype )
+	return typesof( prototype ) - prototype
+
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.
 /proc/init_subtypes(prototype, list/L)
 	if(!istype(L))	L = list()
-	for(var/path in (typesof(prototype) - prototype))
+	for(var/path in subtypes( prototype ))
 		L += new path()
 	return L
