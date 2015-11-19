@@ -64,6 +64,9 @@ datum/track/New(var/title_name, var/audio)
 	..()
 	for(var/obj/machinery/media/jukebox in machines)
 		jukebox_id++
+
+	MachineProcessing -= src				//Removes jukebox from processing machinery
+
 //	tracks = sortList(tracks) // sorting for the sake of stuicey's sanity
 
 /obj/machinery/media/jukebox/Destroy()
@@ -220,6 +223,8 @@ datum/track/New(var/title_name, var/audio)
 		kill_sound(M)
 
 	playing = 0
+	MachineProcessing -= src			//Don't process() when not playing
+
 	update_icon()
 
 /obj/machinery/media/jukebox/proc/StartPlaying()
@@ -228,19 +233,13 @@ datum/track/New(var/title_name, var/audio)
 	if(!current_track)
 		return
 
+	MachineProcessing += src			//Start process() back up
 	playing = 1
 	stop_ticks = 0
 
 	update_icon()
 
 /obj/machinery/media/jukebox/process()
-	switch(playing)
-		if(2)	return
-		if(0)
-			stop_ticks++
-			if(stop_ticks > 2)
-				playing = 2		// Caps checking for stopped music at 2 checks.
-
 	for(var/mob/living/M in living_mob_list)
 		var/dist = get_dist(M,src)
 		if(dist <=15 && M.z == src.z)	// Only same z-level
