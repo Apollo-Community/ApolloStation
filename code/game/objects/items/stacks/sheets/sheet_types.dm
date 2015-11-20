@@ -51,13 +51,13 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("metal rod", /obj/item/stack/rods, 1, 2, 60), \
 	null, \
 	new/datum/stack_recipe("wall girders", /obj/structure/girder, 2, time = 50, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe_list("machine frames", list( \
-		new/datum/stack_recipe("machine frame", /obj/machinery/constructable_frame/machine_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("wall frame", /obj/machinery/constructable_frame/machine_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("tall machine frame", /obj/machinery/constructable_frame/machine_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("tile frame", /obj/machinery/constructable_frame/machine_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("computer frame", /obj/structure/computerframe, 5, time = 25, one_per_turf = 1, on_floor = 1), \
-		)
+	null, \
+	new/datum/stack_recipe("machine frame", /obj/machinery/constructable_frame/machine_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
+	//new/datum/stack_recipe("wall frame", /obj/item/wall_frame, 2), \
+	//new/datum/stack_recipe("tall machine frame", /obj/machinery/constructable_frame/machine_frame/tall, 5, time = 25, one_per_turf = 1, on_floor = 1), \
+	/*new/datum/stack_recipe("device frame", /obj/item/device_frame, 2), \ */
+	/*new/datum/stack_recipe("tile frame", /obj/machinery/constructable_frame/machine_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \ */
+	new/datum/stack_recipe("computer frame", /obj/structure/computerframe, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 
 	new/datum/stack_recipe("turret frame", /obj/machinery/porta_turret_construct, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	null, \
@@ -117,6 +117,9 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 
 /obj/item/stack/sheet/metal/New(var/loc, var/amount=null)
 	recipes = metal_recipes
+	return ..()
+
+/obj/item/stack/sheet/metal/update_icon()
 	switch(amount)
 		if(1)
 			icon_state = "[item_state]-1"
@@ -126,15 +129,21 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 			icon_state = "[item_state]-3"
 		if(33 to 49)
 			icon_state = "[item_state]-4"
-		if(50)
+		else
 			icon_state = "[item_state]-5"
-	return ..()
 
 
 /*
  * Plasteel
  */
 var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
+	//new/datum/stack_recipe("machine frame", /obj/machinery/constructable_frame/machine_frame/plasteel, 5, time = 25, one_per_turf = 1, on_floor = 1), \
+	//new/datum/stack_recipe("wall frame", /obj/item/wall_frame/plasteel, 2), \
+	//new/datum/stack_recipe("tall machine frame", /obj/machinery/constructable_frame/machine_frame/tall/plasteel, 5, time = 25, one_per_turf = 1, on_floor = 1), \
+	/*new/datum/stack_recipe("device frame", /obj/item/device_frame/plasteel, 2), \ */
+	/*new/datum/stack_recipe("tile frame", /obj/machinery/constructable_frame/machine_frame/plasteel, 5, time = 25, one_per_turf = 1, on_floor = 1), \ */
+	/*new/datum/stack_recipe("computer frame", /obj/structure/computerframe/plasteel, 5, time = 25, one_per_turf = 1, on_floor = 1), \*/
+	null, \
 	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = 1), \
 	new/datum/stack_recipe("Metal crate", /obj/structure/closet/crate, 10, time = 50, one_per_turf = 1), \
 	new/datum/stack_recipe("RUST fuel assembly port frame", /obj/item/rust_fuel_assembly_port_frame, 12, time = 50, one_per_turf = 1), \
@@ -156,6 +165,9 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 
 /obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
 	recipes = plasteel_recipes
+	return ..()
+
+/obj/item/stack/sheet/plasteel/update_icon()
 	switch(amount)
 		if(1)
 			icon_state = "[item_state]-1"
@@ -165,9 +177,8 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 			icon_state = "[item_state]-3"
 		if(33 to 49)
 			icon_state = "[item_state]-4"
-		if(50)
+		else
 			icon_state = "[item_state]-5"
-	return ..()
 
 /*
  * Wood
