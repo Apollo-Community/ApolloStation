@@ -50,9 +50,15 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/plasteel, 1, 4, 20), \
 	new/datum/stack_recipe("metal rod", /obj/item/stack/rods, 1, 2, 60), \
 	null, \
-	new/datum/stack_recipe("computer frame", /obj/structure/computerframe, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("wall girders", /obj/structure/girder, 2, time = 50, one_per_turf = 1, on_floor = 1), \
+	null, \
 	new/datum/stack_recipe("machine frame", /obj/machinery/constructable_frame/machine_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
+	//new/datum/stack_recipe("wall frame", /obj/item/wall_frame, 2), \
+	//new/datum/stack_recipe("tall machine frame", /obj/machinery/constructable_frame/machine_frame/tall, 5, time = 25, one_per_turf = 1, on_floor = 1), \
+	/*new/datum/stack_recipe("device frame", /obj/item/device_frame, 2), \ */
+	/*new/datum/stack_recipe("tile frame", /obj/machinery/constructable_frame/machine_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \ */
+	new/datum/stack_recipe("computer frame", /obj/structure/computerframe, 5, time = 25, one_per_turf = 1, on_floor = 1), \
+
 	new/datum/stack_recipe("turret frame", /obj/machinery/porta_turret_construct, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	null, \
 	new/datum/stack_recipe_list("airlock assemblies", list( \
@@ -87,20 +93,24 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 )
 
 /obj/item/stack/sheet/metal
-	name = "metal"
-	desc = "Sheets made out off metal. It has been dubbed Metal Sheets."
-	singular_name = "metal sheet"
-	icon_state = "sheet-metal"
+	name = "steel"
+	desc = "Sheets made out off steel, a cheap, but effective construction material."
+	singular_name = "steel sheet"
+	icon = 'icons/obj/items/materials.dmi'
+	icon_state = "steel-1"
+	item_state = "steel"
 	matter = list("metal" = 3750)
 	throwforce = 14.0
 	flags = CONDUCT
 	origin_tech = "materials=1"
 
 /obj/item/stack/sheet/metal/cyborg
-	name = "metal"
-	desc = "Sheets made out off metal. It has been dubbed Metal Sheets."
-	singular_name = "metal sheet"
-	icon_state = "sheet-metal"
+	name = "steel"
+	desc = "Sheets made out off steel, a cheap, but effective construction material."
+	singular_name = "steel sheet"
+	icon = 'icons/obj/items/materials.dmi'
+	icon_state = "steel-1"
+	item_state = "steel"
 	throwforce = 14.0
 	flags = CONDUCT
 	stacktype = /obj/item/stack/sheet/metal
@@ -109,11 +119,31 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	recipes = metal_recipes
 	return ..()
 
+/obj/item/stack/sheet/metal/update_icon()
+	switch(amount)
+		if(1)
+			icon_state = "[item_state]-1"
+		if(2 to 16)
+			icon_state = "[item_state]-2"
+		if(17 to 32)
+			icon_state = "[item_state]-3"
+		if(33 to 49)
+			icon_state = "[item_state]-4"
+		else
+			icon_state = "[item_state]-5"
+
 
 /*
  * Plasteel
  */
 var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
+	//new/datum/stack_recipe("machine frame", /obj/machinery/constructable_frame/machine_frame/plasteel, 5, time = 25, one_per_turf = 1, on_floor = 1), \
+	//new/datum/stack_recipe("wall frame", /obj/item/wall_frame/plasteel, 2), \
+	//new/datum/stack_recipe("tall machine frame", /obj/machinery/constructable_frame/machine_frame/tall/plasteel, 5, time = 25, one_per_turf = 1, on_floor = 1), \
+	/*new/datum/stack_recipe("device frame", /obj/item/device_frame/plasteel, 2), \ */
+	/*new/datum/stack_recipe("tile frame", /obj/machinery/constructable_frame/machine_frame/plasteel, 5, time = 25, one_per_turf = 1, on_floor = 1), \ */
+	/*new/datum/stack_recipe("computer frame", /obj/structure/computerframe/plasteel, 5, time = 25, one_per_turf = 1, on_floor = 1), \*/
+	null, \
 	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = 1), \
 	new/datum/stack_recipe("Metal crate", /obj/structure/closet/crate, 10, time = 50, one_per_turf = 1), \
 	new/datum/stack_recipe("RUST fuel assembly port frame", /obj/item/rust_fuel_assembly_port_frame, 12, time = 50, one_per_turf = 1), \
@@ -124,17 +154,31 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 /obj/item/stack/sheet/plasteel
 	name = "plasteel"
 	singular_name = "plasteel sheet"
-	desc = "This sheet is an alloy of iron and phoron."
-	icon_state = "sheet-plasteel"
-	item_state = "sheet-metal"
+	desc = "This sheet is an alloy of steel and phoron."
+	icon = 'icons/obj/items/materials.dmi'
+	icon_state = "plasteel-1"
+	item_state = "plasteel"
 	matter = list("metal" = 7500)
 	throwforce = 15.0
 	flags = CONDUCT
 	origin_tech = "materials=2"
 
 /obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
-		recipes = plasteel_recipes
-		return ..()
+	recipes = plasteel_recipes
+	return ..()
+
+/obj/item/stack/sheet/plasteel/update_icon()
+	switch(amount)
+		if(1)
+			icon_state = "[item_state]-1"
+		if(2 to 16)
+			icon_state = "[item_state]-2"
+		if(17 to 32)
+			icon_state = "[item_state]-3"
+		if(33 to 49)
+			icon_state = "[item_state]-4"
+		else
+			icon_state = "[item_state]-5"
 
 /*
  * Wood

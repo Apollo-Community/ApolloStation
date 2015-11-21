@@ -24,6 +24,7 @@
 		stacktype = type
 	if (amount)
 		src.amount = amount
+	update_icon()
 	return
 
 /obj/item/stack/Destroy()
@@ -179,6 +180,7 @@
 				if(usr)
 					usr.before_take_item(src)
 				qdel(src)
+	update_icon()
 	return 1
 
 /obj/item/stack/proc/add(var/extra)
@@ -186,6 +188,7 @@
 		return 0
 	else
 		amount += extra
+	update_icon()
 	return 1
 
 /*
