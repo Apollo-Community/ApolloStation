@@ -10,8 +10,6 @@ var/list/admin_verbs_default = list(
 	/client/proc/cmd_mentor_check_new_players,
 //	/client/proc/deadchat				/*toggles deadchat on/off*/
 	/client/proc/admin_ghost
-	/client/proc/cmd_debug_mobs,
-	/client/proc/cmd_debug_view_mob,
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/locate_obj,
