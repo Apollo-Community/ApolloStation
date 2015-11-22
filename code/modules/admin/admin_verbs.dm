@@ -150,7 +150,6 @@ var/list/admin_verbs_debug = list(
 	/client/proc/debug_controller,
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_debug_mobs,
-	/client/proc/cmd_debug_view_mob,
 	/client/proc/cmd_admin_delete,
 	/client/proc/cmd_debug_del_all,
 	/client/proc/cmd_debug_tog_aliens,
