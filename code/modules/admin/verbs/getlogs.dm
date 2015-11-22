@@ -65,12 +65,15 @@
 	set category = null
 
 	var/path = browse_files("data/logs/")
+	testing("[key_name_admin(src)] is requesting file: [path]")
 	if(!path)
 		return
 
+	testing("Path valid, spam check...")
 	if(file_spam_check())
 		return
 
+	testing("Trying to send [key_name_admin(src)] file: [path]")
 	message_admins("[key_name_admin(src)] accessed file: [path]")
 	src << run( file(path) )
 	src << "Attempting to send file, this may take a fair few minutes if the file is very large."
