@@ -23,6 +23,7 @@
 	var/obj/item/weapon/last_find
 	var/datum/artifact_find/artifact_find
 	var/side_type = "rock"
+	var/dug_type = /turf/simulated/floor/plating/airless/asteroid // what is it turned into when it is dug?
 
 	has_resources = 1
 
@@ -271,8 +272,8 @@
 	var/list/step_overlays = list("n" = NORTH, "s" = SOUTH, "e" = EAST, "w" = WEST)
 
 	//Add some rubble,  you did just clear out a big chunk of rock.
-	var/turf/simulated/floor/plating/airless/asteroid/N = ChangeTurf(/turf/simulated/floor/plating/airless/asteroid)
-	N.overlay_detail = "asteroid[rand(0,9)]"
+	var/turf/simulated/floor/plating/airless/asteroid/N = ChangeTurf(dug_type)
+	N.overlay_detail = "[icon_state]_rock[rand(0,9)]"
 
 	// Kill and update the space overlays around us.
 	for(var/direction in step_overlays)
@@ -385,6 +386,7 @@
 	icon_state = "lunar_rock"
 	side_type = "lunar_rock"
 	has_resources = 0
+	dug_type = /turf/simulated/floor/plating/airless/asteroid/lunar_turf
 
 /turf/simulated/mineral/lunar/MineralSpread()
 	return
@@ -393,7 +395,7 @@
 
 
 /turf/simulated/floor/plating/airless/asteroid //floor piece
-	name = "asteroid"
+	name = "dirt"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
 	oxygen = 0
