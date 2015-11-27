@@ -1516,6 +1516,7 @@
 #include "code\modules\reagents\Chemistry-Reagents-Antidepressants.dm"
 #include "code\modules\reagents\Chemistry-Reagents.dm"
 #include "code\modules\reagents\Chemistry-Recipes.dm"
+#include "code\modules\reagents\Chemistry-Spill.dm"
 #include "code\modules\reagents\Chemistry-Xenoarch.dm"
 #include "code\modules\reagents\dartgun.dm"
 #include "code\modules\reagents\grenade_launcher.dm"
