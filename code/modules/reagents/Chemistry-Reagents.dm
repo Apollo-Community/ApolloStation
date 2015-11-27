@@ -27,7 +27,10 @@ datum
 		var/glass_desc = null
 		var/glass_center_of_mass = null
 		//var/list/viruses = list()
-		var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
+		var/color = "#000000" // rgb: 0, 0, 0
+		var/alphavalue = 255
+		var/processme = 0 // Avoid using this. If you use it, make sure the chemical depletes, and never multiplies.
+		var/state = LIQUID
 
 		proc
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume) //By default we have a chance to transfer some
@@ -73,6 +76,13 @@ datum
 				src = null
 				return
 
+			reaction_holder() // Reagents reacting with the object it's in. Currently unused, may even remove completely.
+				return
+
+			reaction_delete() // Should this do anything in particular before it's deleted?
+				src = null
+				return
+
 			on_mob_life(var/mob/living/M as mob, var/alien)
 				if(!istype(M, /mob/living))
 					return //Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
@@ -93,6 +103,14 @@ datum
 				return
 
 			on_update(var/atom/A)
+				return
+
+			process() // For stuff like drying agent, that will evaporate over time.
+				return
+
+			Delete()
+				reaction_delete()
+				src = null
 				return
 
 

@@ -1,3 +1,35 @@
+/proc/mix_alpha_from_reagents(var/list/reagent_list)
+	if(!reagent_list || !length(reagent_list))
+		return 0
+
+	var/contents = length(reagent_list)
+	var/list/weight = new /list(contents)
+	var/list/alpha = new /list(contents)
+	var/i
+
+	for(i=1; i<=contents; i++)
+		var/datum/reagent/re = reagent_list[i]
+		var/reagentweight = re.volume
+
+		weight[i] = reagentweight
+
+	for(i=1; i<=contents; i++)
+		var/datum/reagent/re = reagent_list[i]
+		var/reagentalpha = re.alphavalue
+
+		alpha[i] = reagentalpha
+
+	var/totalalpha = 0
+	var/totalvolume = 0
+
+	for(i=1; i<=contents; i++)
+		totalalpha += alpha[i]*weight[i]
+		totalvolume += weight[i]
+
+	var/finalalpha = totalalpha/totalvolume
+
+	return finalalpha
+
 /proc/mix_color_from_reagents(var/list/reagent_list)
 	if(!reagent_list || !length(reagent_list))
 		return 0
