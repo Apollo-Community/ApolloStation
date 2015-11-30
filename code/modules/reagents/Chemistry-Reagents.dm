@@ -26,10 +26,11 @@ datum
 		var/glass_name = null
 		var/glass_desc = null
 		var/glass_center_of_mass = null
+		var/slippery = 1	// The amount of slipperyness of the chemical. Calculation should be prob(100/x) where x is slipperyness. Slipperyness is calculated as 1 slippery/10units, and can be negative to add traction.
 		//var/list/viruses = list()
 		var/color = "#000000" // rgb: 0, 0, 0
-		var/alphavalue = 255
-		var/processme = 0 // Avoid using this. If you use it, make sure the chemical depletes, and never multiplies.
+		var/maxalpha = 128 // Maximum alpha of this reagent. This means that the reagent alpha will never go above this amount, unless dilluted with something more opaque.
+		var/processme = 0 // Avoid using this for the time being. If you use it, make sure the chemical depletes, and never multiplies. Used in particularly high-danger chems like polyacid.
 		var/state = LIQUID
 
 		proc
@@ -73,14 +74,21 @@ datum
 				return
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
-				return
+				var/obj/effect/decal/chemspill/spill
 
-			reaction_holder() // Reagents reacting with the object it's in. Currently unused, may even remove completely.
+				for(var/obj/effect/decal/chemspill/S in T)
+					spill = S
+				if(!spill)
+					spill = new /obj/effect/decal/chemspill(T)
+				if(spill.reagents.total_volume + volume > spill.reagents.maximum_volume)
+					spill.reagents.maximum_volume = spill.reagents.total_volume + volume
+				spill.reagents.add_reagent(src.id, volume, src.data)
+				spill.update_icon()
+
+				src = null
 				return
 
 			reaction_delete() // Should this do anything in particular before it's deleted?
-				src = null
 				return
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
@@ -121,6 +129,7 @@ datum
 			id = "blood"
 			reagent_state = LIQUID
 			color = "#C80000" // rgb: 200, 0, 0
+			maxalpha = 255
 
 			glass_icon_state = "glass_red"
 			glass_name = "glass of tomato juice"
@@ -163,19 +172,6 @@ datum
 					color = data["blood_colour"]
 				return ..()
 
-			reaction_turf(var/turf/simulated/T, var/volume)//splash the blood all over the place
-				if(!istype(T)) return
-				var/datum/reagent/blood/self = src
-				src = null
-				if(!(volume >= 3)) return
-
-				if(!self.data["donor"] || istype(self.data["donor"], /mob/living/carbon/human))
-					blood_splatter(T,self,1)
-				else if(istype(self.data["donor"], /mob/living/carbon/alien))
-					var/obj/effect/decal/cleanable/blood/B = blood_splatter(T,self,1)
-					if(B) B.blood_DNA["UNKNOWN DNA STRUCTURE"] = "X*"
-				return
-
 /* Must check the transfering of reagents and their data first. They all can point to one disease datum.
 
 			Destroy()
@@ -215,6 +211,7 @@ datum
 			reagent_state = LIQUID
 			color = "#0064C8" // rgb: 0, 100, 200
 			custom_metabolism = 0.01
+			maxalpha = 32
 
 			glass_icon_state = "glass_clear"
 			glass_name = "glass of water"
@@ -233,6 +230,7 @@ datum
 					if (prob(5))
 						T.visible_message("\red The water sizzles as it lands on \the [T]!")
 
+				/*
 				else //otherwise, the turf gets wet
 					if(volume >= 3)
 						if(T.wet >= 1) return
@@ -251,6 +249,7 @@ datum
 							if(T.wet_overlay)
 								T.overlays -= T.wet_overlay
 								T.wet_overlay = null
+				*/
 
 				//Put out fires.
 				var/hotspot = (locate(/obj/fire) in T)
@@ -258,6 +257,8 @@ datum
 					qdel(hotspot)
 					if(environment)
 						environment.react() //react at the new temperature
+
+				..()
 
 			reaction_obj(var/obj/O, var/volume)
 				var/turf/T = get_turf(O)
@@ -306,6 +307,7 @@ datum
 			color = "#009CA8" // rgb: 0, 156, 168
 			overdose = REAGENTS_OVERDOSE
 
+			/*
 			reaction_turf(var/turf/simulated/T, var/volume)
 				if (!istype(T)) return
 				src = null
@@ -319,6 +321,7 @@ datum
 							T.overlays -= T.wet_overlay
 							T.wet_overlay = null
 						return
+			*/
 
 		plasticide
 			name = "Plasticide"
@@ -539,6 +542,7 @@ datum
 			id = "copper"
 			description = "A highly ductile metal."
 			color = "#6E3B08" // rgb: 110, 59, 8
+			maxalpha = 384
 
 			custom_metabolism = 0.01
 
@@ -557,6 +561,7 @@ datum
 			description = "A soft, low-melting solid that can easily be cut with a knife. Reacts violently with water."
 			reagent_state = SOLID
 			color = "#A0A0A0" // rgb: 160, 160, 160
+			maxalpha = 255
 
 			custom_metabolism = 0.01
 
@@ -567,6 +572,7 @@ datum
 			reagent_state = LIQUID
 			color = "#484848" // rgb: 72, 72, 72
 			overdose = REAGENTS_OVERDOSE
+			maxalpha = 384
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -592,9 +598,11 @@ datum
 			description = "A chemical element, the builing block of life."
 			reagent_state = SOLID
 			color = "#1C1300" // rgb: 30, 20, 0
+			maxalpha = 255
 
 			custom_metabolism = 0.01
 
+			/*
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				if(!istype(T, /turf/space))
@@ -604,6 +612,7 @@ datum
 						dirtoverlay.alpha = volume*30
 					else
 						dirtoverlay.alpha = min(dirtoverlay.alpha+volume*30, 255)
+			*/
 
 		chlorine
 			name = "Chlorine"
@@ -673,6 +682,7 @@ datum
 			description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
 			reagent_state = SOLID
 			color = "#FFFFFF" // rgb: 255, 255, 255
+			maxalpha = 255
 
 			glass_icon_state = "iceglass"
 			glass_name = "glass of sugar"
@@ -752,6 +762,7 @@ datum
 				..()
 				return
 
+			/*
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				if(volume >= 3)
@@ -760,6 +771,7 @@ datum
 						if(!glow)
 							new /obj/effect/decal/cleanable/greenglow(T)
 						return
+			*/
 
 
 		ryetalyn
@@ -794,6 +806,7 @@ datum
 			reagent_state = SOLID
 			color = "#673910" // rgb: 103, 57, 16
 
+			/*
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				if(volume >= 5)
@@ -804,6 +817,7 @@ datum
 						message_admins("Thermite place on wall in [W.loc.name] ([W.x],[W.y],[W.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[W.x];Y=[W.y];Z=[W.z]'>JMP</a>)", "LOG:")
 						log_game("Thermite place on wall in [W.loc.name] ([W.x],[W.y],[W.z])")
 				return
+			*/
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -915,6 +929,7 @@ datum
 			reagent_state = SOLID
 			color = "#353535"
 			overdose = REAGENTS_OVERDOSE
+			maxalpha = 384
 
 		gold
 			name = "Gold"
@@ -922,6 +937,7 @@ datum
 			description = "Gold is a dense, soft, shiny metal and the most malleable and ductile metal known."
 			reagent_state = SOLID
 			color = "#F7C430" // rgb: 247, 196, 48
+			maxalpha = 255
 
 		silver
 			name = "Silver"
@@ -929,6 +945,7 @@ datum
 			description = "A soft, white, lustrous transition metal, it has the highest electrical conductivity of any element and the highest thermal conductivity of any metal."
 			reagent_state = SOLID
 			color = "#D0D0D0" // rgb: 208, 208, 208
+			maxalpha = 255
 
 		uranium
 			name ="Uranium"
@@ -936,6 +953,7 @@ datum
 			description = "A silvery-white metallic chemical element in the actinide series, weakly radioactive."
 			reagent_state = SOLID
 			color = "#B8B8C0" // rgb: 184, 184, 192
+			maxalpha = 255
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -958,6 +976,7 @@ datum
 			description = "A silvery white and ductile member of the boron group of chemical elements."
 			reagent_state = SOLID
 			color = "#A8A8A8" // rgb: 168, 168, 168
+			maxalpha = 384
 
 		silicon
 			name = "Silicon"
@@ -965,6 +984,7 @@ datum
 			description = "A tetravalent metalloid, silicon is less reactive than its chemical analog carbon."
 			reagent_state = SOLID
 			color = "#A8A8A8" // rgb: 168, 168, 168
+			maxalpha = 255
 
 		fuel
 			name = "Welding Fuel"
@@ -983,9 +1003,11 @@ datum
 				if(!the_turf)
 					return //No sense trying to start a fire if you don't have a turf to set on fire. --NEO
 				new /obj/effect/decal/cleanable/liquid_fuel(the_turf, volume)
+			/*
 			reaction_turf(var/turf/T, var/volume)
 				new /obj/effect/decal/cleanable/liquid_fuel(T, volume)
 				return
+			*/
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.adjustToxLoss(rand( 0, rand( 0, rand(0, 1))))
@@ -1007,6 +1029,7 @@ datum
 					if(O)
 						O.clean_blood()
 
+			/*
 			reaction_turf(var/turf/T, var/volume)
 				if(volume >= 1)
 					if(istype(T, /turf/simulated))
@@ -1019,6 +1042,7 @@ datum
 
 					for(var/mob/living/carbon/slime/M in T)
 						M.adjustToxLoss(rand(5,10))
+			*/
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				if(iscarbon(M))
@@ -1604,6 +1628,7 @@ datum
 			id = "glue"
 			description = "An extremely powerful bonding agent."
 			color = "#FFFFCC" // rgb: 255, 255, 204
+			maxalpha = 255
 
 		diethylamine
 			name = "Diethylamine"
@@ -1689,6 +1714,7 @@ datum
 			reagent_state = LIQUID
 			color = "#9D14DB"
 			toxpwr = 3
+			maxalpha = 255
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -2506,13 +2532,16 @@ datum
 			reagent_state = LIQUID
 			color = "#0A0A05" // rgb: 54, 94, 48
 			overdose = REAGENTS_OVERDOSE
+			maxalpha = 512
 
+			/*
 			reaction_turf(var/turf/simulated/T, var/volume)//splash the blood all over the place
 				if(!istype(T)) return
 				if(!(volume >= 3)) return
 
 				new /obj/effect/decal/cleanable/blood/oil( T )
 				..()
+			*/
 
 		lithium_hydroxide
 			name = "Lithium Hydroxide"

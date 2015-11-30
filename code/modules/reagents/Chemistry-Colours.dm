@@ -15,7 +15,7 @@
 
 	for(i=1; i<=contents; i++)
 		var/datum/reagent/re = reagent_list[i]
-		var/reagentalpha = re.alphavalue
+		var/reagentalpha = re.maxalpha
 
 		alpha[i] = reagentalpha
 
