@@ -93,9 +93,9 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 )
 
 /obj/item/stack/sheet/metal
-	name = "steel"
+	name = "metal"
 	desc = "Sheets made out off steel, a cheap, but effective construction material."
-	singular_name = "steel sheet"
+	singular_name = "metal sheet"
 	icon = 'icons/obj/items/materials.dmi'
 	icon_state = "steel-1"
 	item_state = "steel"
@@ -105,9 +105,9 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	origin_tech = "materials=1"
 
 /obj/item/stack/sheet/metal/cyborg
-	name = "steel"
+	name = "metal"
 	desc = "Sheets made out off steel, a cheap, but effective construction material."
-	singular_name = "steel sheet"
+	singular_name = "metal sheet"
 	icon = 'icons/obj/items/materials.dmi'
 	icon_state = "steel-1"
 	item_state = "steel"
