@@ -63,27 +63,24 @@
 					playsound(src, 'sound/effects/jingle.ogg', 20, 1)
 
 			// Tracking blood
-			var/list/bloodDNA = null
-			var/bloodcolor=""
-			if(H.shoes)
-				var/obj/item/clothing/shoes/S = H.shoes
-				if(S.track_blood && S.blood_DNA)
-					bloodDNA = S.blood_DNA
-					bloodcolor=S.blood_color
-					S.track_blood--
-			else
-				if(H.track_blood && H.feet_blood_DNA)
-					bloodDNA = H.feet_blood_DNA
-					bloodcolor=H.feet_blood_color
-					H.track_blood--
-
-			if (bloodDNA)
-				src.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,H.dir,0,bloodcolor) // Coming
-				var/turf/simulated/from = get_step(H,reverse_direction(H.dir))
-				if(istype(from) && from)
-					from.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,0,H.dir,bloodcolor) // Going
-
-				bloodDNA = null
+			var/obj/item/clothing/shoes/Hshoes = H.shoes
+			if(Hshoes.track_spill.total_volume || H.track_spill.total_volume)
+				var/obj/effect/decal/chemspill/spill
+				for(var/obj/effect/decal/chemspill/C in src)
+					if(C)
+						spill = C
+						break
+				if(!spill)
+					spill = new/obj/effect/decal/chemspill()
+				spill.AddTracks(H, OL)
+				if(istype(OL, /turf/simulated/floor) && OL)
+					for(var/obj/effect/decal/chemspill/C in OL)
+						if(C)
+							spill = C
+							break
+					if(!spill)
+						spill = new/obj/effect/decal/chemspill(OL)
+					spill.AddTracks(H, src, 1)
 
 		var/noslip = 0
 		for (var/obj/structure/stool/bed/chair/C in loc)

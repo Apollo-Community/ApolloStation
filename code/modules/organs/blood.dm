@@ -160,7 +160,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 /mob/living/carbon/proc/take_blood(obj/item/weapon/reagent_containers/container, var/amount)
 
 	var/datum/reagent/B = get_blood(container.reagents)
-	if(!B) B = new /datum/reagent/blood
+	if(!B) B = new /datum/reagent/complex_reagent/blood
 	B.holder = container
 	B.volume += amount
 
@@ -179,10 +179,10 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	B.data["blood_type"] = copytext(src.dna.b_type,1,0)
 
 	// Putting this here due to return shenanigans.
-	if(istype(src,/mob/living/carbon/human))
+	/*if(istype(src,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src
-		B.data["blood_colour"] = H.species.blood_color
-		B.color = B.data["blood_colour"]
+		B.data["blood_colour"] = H.vessel.reagents.reagent_list["blood"].data["blood_colour"]
+		B.color = B.data["blood_colour"]*/
 
 	var/list/temp_chem = list()
 	for(var/datum/reagent/R in src.reagents.reagent_list)

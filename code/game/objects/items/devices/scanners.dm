@@ -146,7 +146,7 @@ REAGENT SCANNER
 			var/reagentdata[0]
 			for(var/A in M.reagents.reagent_list)
 				var/datum/reagent/R = A
-				if(R.scannable)
+				if(R.scan_level)
 					reagentdata["[R.id]"] = "\t \blue [round(M.reagents.get_reagent_amount(R.id), 1)]u [R.name]"
 				else
 					unknown++

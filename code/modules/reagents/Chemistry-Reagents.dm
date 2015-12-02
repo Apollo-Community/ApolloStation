@@ -1,9 +1,3 @@
-#define SOLID 1
-#define LIQUID 2
-#define GAS 3
-#define REAGENTS_OVERDOSE 30
-#define REM REAGENTS_EFFECT_MULTIPLIER
-
 //The reaction procs must ALWAYS set src = null, this detaches the proc from the object (the reagent)
 //so that it can continue working when the reagent is deleted while the proc is still active.
 
@@ -17,21 +11,20 @@ datum
 		var/reagent_state = SOLID
 		var/list/data = null
 		var/volume = 0
-		var/nutriment_factor = 0
-		var/custom_metabolism = REAGENTS_METABOLISM
-		var/overdose = 0
-		var/overdose_dam = 1
-		var/scannable = 0 //shows up on health analyzers
+		var/nutriment_factor = 0 // This is removed in my new health system
+		var/custom_metabolism = REAGENTS_METABOLISM // This is removed in my new health system
+		var/overdose = 0 // This is removed in my new health system
+		var/overdose_dam = 1 // Im gunna remove this with my new health system.
+		var/scan_level = 0 // The commonness and difficulty of the chemical. Higher tech analyzers will be able to detect it. 0 will never be detected.
 		var/glass_icon_state = null
 		var/glass_name = null
 		var/glass_desc = null
 		var/glass_center_of_mass = null
-		var/slippery = 1	// The amount of slipperyness of the chemical. Calculation should be prob(100/x) where x is slipperyness. Slipperyness is calculated as 1 slippery/10units, and can be negative to add traction.
+		var/slippery = 1	// The amount of slipperyness of the chemical. Calculation should be prob(100/x) where x is slipperyness. Slipperyness is calculated as 1 slippery/10units, and can be negative to add traction, or slow people..
 		//var/list/viruses = list()
 		var/color = "#000000" // rgb: 0, 0, 0
-		var/maxalpha = 128 // Maximum alpha of this reagent. This means that the reagent alpha will never go above this amount, unless dilluted with something more opaque.
-		var/processme = 0 // Avoid using this for the time being. If you use it, make sure the chemical depletes, and never multiplies. Used in particularly high-danger chems like polyacid.
-		var/state = LIQUID
+		var/alpha = 128 // Alpha of this reagent.
+		var/processing = 0 // Avoid using this for the time being. If you use it, make sure the chemical depletes, and never multiplies. Used in particularly high-danger chems like polyacid.
 
 		proc
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume) //By default we have a chance to transfer some
@@ -129,7 +122,7 @@ datum
 			id = "blood"
 			reagent_state = LIQUID
 			color = "#C80000" // rgb: 200, 0, 0
-			maxalpha = 255
+			alpha = 255
 
 			glass_icon_state = "glass_red"
 			glass_name = "glass of tomato juice"
@@ -172,6 +165,11 @@ datum
 					color = data["blood_colour"]
 				return ..()
 
+			on_new()
+				if(data["blood_colour"])
+					color = data["blood_colour"]
+				return
+
 /* Must check the transfering of reagents and their data first. They all can point to one disease datum.
 
 			Destroy()
@@ -211,7 +209,7 @@ datum
 			reagent_state = LIQUID
 			color = "#0064C8" // rgb: 0, 100, 200
 			custom_metabolism = 0.01
-			maxalpha = 32
+			alpha = 32
 
 			glass_icon_state = "glass_clear"
 			glass_name = "glass of water"
@@ -399,7 +397,7 @@ datum
 			reagent_state = LIQUID
 			color = "#00BFFF" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE*2
-			scannable = 1
+			scan_level = 1
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
 				if(!M) M = holder.my_atom
@@ -542,7 +540,7 @@ datum
 			id = "copper"
 			description = "A highly ductile metal."
 			color = "#6E3B08" // rgb: 110, 59, 8
-			maxalpha = 384
+			alpha = 384
 
 			custom_metabolism = 0.01
 
@@ -561,7 +559,7 @@ datum
 			description = "A soft, low-melting solid that can easily be cut with a knife. Reacts violently with water."
 			reagent_state = SOLID
 			color = "#A0A0A0" // rgb: 160, 160, 160
-			maxalpha = 255
+			alpha = 255
 
 			custom_metabolism = 0.01
 
@@ -572,7 +570,7 @@ datum
 			reagent_state = LIQUID
 			color = "#484848" // rgb: 72, 72, 72
 			overdose = REAGENTS_OVERDOSE
-			maxalpha = 384
+			alpha = 384
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -598,7 +596,7 @@ datum
 			description = "A chemical element, the builing block of life."
 			reagent_state = SOLID
 			color = "#1C1300" // rgb: 30, 20, 0
-			maxalpha = 255
+			alpha = 255
 
 			custom_metabolism = 0.01
 
@@ -682,7 +680,7 @@ datum
 			description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
 			reagent_state = SOLID
 			color = "#FFFFFF" // rgb: 255, 255, 255
-			maxalpha = 255
+			alpha = 255
 
 			glass_icon_state = "iceglass"
 			glass_name = "glass of sugar"
@@ -832,7 +830,7 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC"
 			overdose = 60
-			scannable = 1
+			scan_level = 1
 			custom_metabolism = 0.025 // Lasts 10 minutes for 15 units
 
 			on_mob_life(var/mob/living/M as mob)
@@ -848,7 +846,7 @@ datum
 			reagent_state = LIQUID
 			color = "#CB68FC"
 			overdose = 30
-			scannable = 1
+			scan_level = 1
 			custom_metabolism = 0.025 // Lasts 10 minutes for 15 units
 
 			on_mob_life(var/mob/living/M as mob)
@@ -929,7 +927,7 @@ datum
 			reagent_state = SOLID
 			color = "#353535"
 			overdose = REAGENTS_OVERDOSE
-			maxalpha = 384
+			alpha = 384
 
 		gold
 			name = "Gold"
@@ -937,7 +935,7 @@ datum
 			description = "Gold is a dense, soft, shiny metal and the most malleable and ductile metal known."
 			reagent_state = SOLID
 			color = "#F7C430" // rgb: 247, 196, 48
-			maxalpha = 255
+			alpha = 255
 
 		silver
 			name = "Silver"
@@ -945,7 +943,7 @@ datum
 			description = "A soft, white, lustrous transition metal, it has the highest electrical conductivity of any element and the highest thermal conductivity of any metal."
 			reagent_state = SOLID
 			color = "#D0D0D0" // rgb: 208, 208, 208
-			maxalpha = 255
+			alpha = 255
 
 		uranium
 			name ="Uranium"
@@ -953,7 +951,7 @@ datum
 			description = "A silvery-white metallic chemical element in the actinide series, weakly radioactive."
 			reagent_state = SOLID
 			color = "#B8B8C0" // rgb: 184, 184, 192
-			maxalpha = 255
+			alpha = 255
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -976,7 +974,7 @@ datum
 			description = "A silvery white and ductile member of the boron group of chemical elements."
 			reagent_state = SOLID
 			color = "#A8A8A8" // rgb: 168, 168, 168
-			maxalpha = 384
+			alpha = 255
 
 		silicon
 			name = "Silicon"
@@ -984,7 +982,7 @@ datum
 			description = "A tetravalent metalloid, silicon is less reactive than its chemical analog carbon."
 			reagent_state = SOLID
 			color = "#A8A8A8" // rgb: 168, 168, 168
-			maxalpha = 255
+			alpha = 255
 
 		fuel
 			name = "Welding Fuel"
@@ -1080,7 +1078,7 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
-			scannable = 1
+			scan_level = 1
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -1116,7 +1114,7 @@ datum
 			reagent_state = LIQUID
 			color = "#FFA800" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
-			scannable = 1
+			scan_level = 1
 
 			on_mob_life(var/mob/living/M as mob)
 				if( isnucleation( M )) // Nucleation's biology doesn't react to this
@@ -1136,7 +1134,7 @@ datum
 			reagent_state = LIQUID
 			color = "#FF8000" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE/2
-			scannable = 1
+			scan_level = 1
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
 				if( isnucleation( M )) // Nucleation's biology doesn't react to this
@@ -1156,7 +1154,7 @@ datum
 			reagent_state = LIQUID
 			color = "#0080FF" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
-			scannable = 1
+			scan_level = 1
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
 				if( isnucleation( M )) // Nucleation's biology doesn't react to this
@@ -1181,7 +1179,7 @@ datum
 			reagent_state = LIQUID
 			color = "#0040FF" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE/2
-			scannable = 1
+			scan_level = 1
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
 				if( isnucleation( M )) // Nucleation's biology doesn't react to this
@@ -1205,7 +1203,7 @@ datum
 			description = "Tricordrazine is a highly potent stimulant, originally derived from cordrazine. Can be used to treat a wide range of injuries."
 			reagent_state = LIQUID
 			color = "#8040FF" // rgb: 200, 165, 220
-			scannable = 1
+			scan_level = 1
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
 				if( isnucleation( M )) // Nucleation's biology doesn't react to this
@@ -1227,7 +1225,7 @@ datum
 			description = "Dylovene is a broad-spectrum antitoxin."
 			reagent_state = LIQUID
 			color = "#00A000" // rgb: 200, 165, 220
-			scannable = 1
+			scan_level = 1
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
 				if( isnucleation( M )) // Nucleation's biology doesn't react to this
@@ -1294,7 +1292,7 @@ datum
 			color = "#99CCFF" // rgb: 200, 165, 220
 			custom_metabolism = 0.01
 			overdose = REAGENTS_OVERDOSE
-			scannable = 1
+			scan_level = 1
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -1335,7 +1333,7 @@ datum
 			color = "#408000" // rgb: 200, 165, 220
 			custom_metabolism = 0.05
 			overdose = REAGENTS_OVERDOSE
-			scannable = 1
+			scan_level = 1
 
 			on_mob_life(var/mob/living/M as mob)
 				if( isnucleation( M )) // Nucleation's biology doesn't play nice with this
@@ -1378,7 +1376,7 @@ datum
 			color = "#FFFF66" // rgb: 200, 165, 220
 			custom_metabolism = 0.05
 			overdose = REAGENTS_OVERDOSE
-			scannable = 1
+			scan_level = 1
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -1393,7 +1391,7 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
-			scannable = 1
+			scan_level = 1
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -1415,7 +1413,7 @@ datum
 			reagent_state = LIQUID
 			color = "#561EC3" // rgb: 200, 165, 220
 			overdose = 10
-			scannable = 1
+			scan_level = 1
 
 			on_mob_life(var/mob/living/M as mob)
 				if( isnucleation( M )) // Nucleation's biology doesn't react to this
@@ -1438,7 +1436,7 @@ datum
 			reagent_state = LIQUID
 			color = "#BF0000" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
-			scannable = 1
+			scan_level = 1
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
 				if( isnucleation( M )) // Nucleation's biology doesn't react to this
@@ -1487,7 +1485,7 @@ datum
 			description = "A chemical mixture with almost magical healing powers. Its main limitation is that the targets body temperature must be under 170K for it to metabolise correctly."
 			reagent_state = LIQUID
 			color = "#8080FF" // rgb: 200, 165, 220
-			scannable = 1
+			scan_level = 1
 
 			on_mob_life(var/mob/living/M as mob)
 				if(ishuman(M))
@@ -1509,7 +1507,7 @@ datum
 			description = "A liquid compound similar to that used in the cloning process. Can be used to 'finish' the cloning process when used in conjunction with a cryo tube."
 			reagent_state = LIQUID
 			color = "#80BFFF" // rgb: 200, 165, 220
-			scannable = 1
+			scan_level = 1
 
 			on_mob_life(var/mob/living/M as mob)
 				if(ishuman(M))
@@ -1532,7 +1530,7 @@ datum
 			reagent_state = SOLID
 			color = "#669900" // rgb: 102, 153, 0
 			overdose = REAGENTS_OVERDOSE
-			scannable = 1
+			scan_level = 1
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -1562,7 +1560,7 @@ datum
 			color = "#C1C1C1" // rgb: 200, 165, 220
 			custom_metabolism = 0.01
 			overdose = REAGENTS_OVERDOSE
-			scannable = 1
+			scan_level = 1
 
 			on_mob_life(var/mob/living/M as mob)
 				..()
@@ -1628,7 +1626,7 @@ datum
 			id = "glue"
 			description = "An extremely powerful bonding agent."
 			color = "#FFFFCC" // rgb: 255, 255, 204
-			maxalpha = 255
+			alpha = 255
 
 		diethylamine
 			name = "Diethylamine"
@@ -1714,7 +1712,7 @@ datum
 			reagent_state = LIQUID
 			color = "#9D14DB"
 			toxpwr = 3
-			maxalpha = 255
+			alpha = 255
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -2532,7 +2530,7 @@ datum
 			reagent_state = LIQUID
 			color = "#0A0A05" // rgb: 54, 94, 48
 			overdose = REAGENTS_OVERDOSE
-			maxalpha = 512
+			alpha = 512
 
 			/*
 			reaction_turf(var/turf/simulated/T, var/volume)//splash the blood all over the place

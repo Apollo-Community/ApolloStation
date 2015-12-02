@@ -10,6 +10,8 @@ datum
 		var/list/datum/reagent/reagent_list = new/list()
 		var/total_volume = 0
 		var/maximum_volume = 100
+		var/store_trace = 1 // Whether this container should remember its chems. Generally this wont need to change, but it's an option.
+		var/list/trace_chems = new/list() // Chemicals that have been in this container since it was created.
 		var/atom/my_atom = null
 
 		New(maximum=100)
@@ -101,6 +103,27 @@ datum
 						the_id = A.id
 
 				return the_id
+
+			trans_to_holder(var/datum/reagents/H, var/amount=1, var/preserve_data=1)
+				if (!H || !istype(H) || src.total_volume <= 0)
+					return
+				amount = min(min(amount, src.total_volume), H.maximum_volume-H.total_volume)
+				var/part = amount/src.total_volume
+				var/trans_data = null
+				for (var/datum/reagent/cur in src.reagent_list)
+					if(!cur)
+						continue
+					var/cur_transfer = cur.volume*part
+					if(preserve_data)
+						trans_data = copy_data(cur)
+					H.add_reagent(cur.id, cur_transfer, trans_data, safety = 1)
+					src.remove_reagent(cur.id, cur_transfer, safety = 1)
+
+				src.update_total()
+				H.update_total()
+				H.handle_reactions()
+				src.handle_reactions()
+				return amount
 
 			trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 				if (!target )
@@ -518,6 +541,11 @@ datum
 					my_atom.on_reagent_change()
 					if(!safety)
 						handle_reactions()
+					if(store_trace)
+						for(var/found in trace_chems)
+							if (found == reagent)
+								return 0
+						trace_chems += reagent
 					return 0
 				else
 					warning("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")

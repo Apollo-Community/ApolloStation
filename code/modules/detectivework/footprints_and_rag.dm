@@ -2,6 +2,7 @@
 	var/bloody_hands = 0
 	var/mob/living/carbon/human/bloody_hands_mob
 	var/track_blood = 0
+	var/datum/reagents/track_spill = new/datum/reagents(12)
 	var/list/feet_blood_DNA
 	var/track_blood_type
 	var/feet_blood_color
@@ -12,6 +13,7 @@
 
 /obj/item/clothing/shoes/
 	var/track_blood = 0
+	var/datum/reagents/track_spill = new/datum/reagents(12)
 
 /obj/item/weapon/reagent_containers/glass/rag
 	name = "damp rag"
