@@ -442,7 +442,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Orders mobs by type then by name
 /proc/sortmobs()
-	testing("new sort from usr = [usr], src = [src], len of mob_list = [mob_list.len]") // hunting sort bug runtime error
 	var/list/moblist = list()
 	var/list/sortmob = sortAtom(mob_list)
 	for(var/mob/living/silicon/ai/M in sortmob)
