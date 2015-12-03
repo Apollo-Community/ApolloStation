@@ -378,7 +378,7 @@ datum
 			description = "Inaprovaline is a synaptic stimulant and cardiostimulant. Commonly used to stabilize patients."
 			reagent_state = LIQUID
 			color = "#00BFFF" // rgb: 200, 165, 220
-			overdose = REAGENTS_OVERDOSE*2
+			overdose = 0
 			scannable = 1
 
 			custom_metabolism = REAGENTS_METABOLISM
