@@ -207,7 +207,6 @@ proc/listclearnulls(list/list)
 
 //Mergesort: divides up the list into halves to begin the sort
 /proc/sortAtom(var/list/atom/L, var/order = 1)
-	testing("new sort from usr = [usr], src = [src], len of L = [L.len]") // hunting sort bug runtime error
 	if(isnull(L) || L.len < 2)
 		return L
 	var/middle = L.len / 2 + 1

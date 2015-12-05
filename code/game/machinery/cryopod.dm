@@ -454,7 +454,7 @@
 				icon_state = occupied_icon_state
 
 			M << "<span class='notice'>[on_enter_occupant_message]</span>"
-			M << "<span class='notice'><b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b></span>"
+			M << "<span class='notice'><b>If you ghost, log out or close your client now, your character will be permanently removed from the round in about half an hour.</b></span>"
 			occupant = M
 			time_entered = world.time
 

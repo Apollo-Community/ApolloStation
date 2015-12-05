@@ -14,12 +14,27 @@
 	name = "glass"
 	desc = "HOLY SHEET! That is a lot of glass."
 	singular_name = "glass sheet"
-	icon_state = "sheet-glass"
+	icon = 'icons/obj/items/materials.dmi'
+	icon_state = "glass-1"
+	item_state = "glass"
 	matter = list("glass" = 3750)
 	origin_tech = "materials=1"
 	var/created_window = /obj/structure/window/basic
 	var/is_reinforced = 0
 	var/list/construction_options = list("One Direction", "Full Window")
+
+/obj/item/stack/sheet/glass/update_icon()
+	switch(amount)
+		if(1)
+			icon_state = "[item_state]-1"
+		if(2 to 16)
+			icon_state = "[item_state]-2"
+		if(17 to 32)
+			icon_state = "[item_state]-3"
+		if(33 to 49)
+			icon_state = "[item_state]-4"
+		else
+			icon_state = "[item_state]-5"
 
 /obj/item/stack/sheet/glass/cyborg
 	name = "glass"
@@ -141,8 +156,8 @@
 	name = "reinforced glass"
 	desc = "Glass which has been reinforced with metal rods."
 	singular_name = "reinforced glass sheet"
-	icon_state = "sheet-rglass"
-
+	icon_state = "r-glass-1"
+	item_state = "r-glass"
 	matter = list("metal" = 1875,"glass" = 3750)
 	origin_tech = "materials=2"
 
@@ -163,7 +178,8 @@
 	name = "phoron glass"
 	desc = "A very strong and very resistant sheet of a phoron-glass alloy."
 	singular_name = "phoron glass sheet"
-	icon_state = "sheet-phoronglass"
+	icon_state = "pglass-1"
+	item_state = "pglass"
 	matter = list("glass" = 7500)
 	origin_tech = "materials=3;phorontech=2"
 	created_window = /obj/structure/window/phoronbasic
@@ -192,7 +208,8 @@
 	name = "reinforced phoron glass"
 	desc = "Phoron glass which has been reinforced with metal rods."
 	singular_name = "reinforced phoron glass sheet"
-	icon_state = "sheet-phoronrglass"
+	icon_state = "r-pglass-1"
+	item_state = "r-pglass"
 	matter = list("glass" = 7500,"metal" = 1875)
 
 	origin_tech = "materials=4;phorontech=2"

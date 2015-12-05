@@ -814,6 +814,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(client && client.holder && !client.afk)
 		if(statpanel("Status"))	//not looking at that panel
+			stat("World Time:\t","[world.time]")
 			stat("Location:\t","([x], [y], [z])")
 			stat("Commit:\t", "#[config.git_commit_id]")
 			stat("Instances:","[world.contents.len]")

@@ -403,6 +403,10 @@
 					"<span class='userdanger'>[user] was stunned by \his wet [O]!</span>")
 				return
 
+	// Short of a rewrite, this is necessary to stop monkeycubes being washed.
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
+		return
+
 	var/turf/location = user.loc
 	if(!isturf(location)) return
 
