@@ -3006,7 +3006,7 @@
 
 // potato + knife = raw sticks
 /obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/kitchen/utensil/knife))
+	if(istype(W,/obj/item/weapon/kitchenknife))
 		new /obj/item/weapon/reagent_containers/food/snacks/rawsticks(src)
 		user << "You cut the potato."
 		qdel(src)
