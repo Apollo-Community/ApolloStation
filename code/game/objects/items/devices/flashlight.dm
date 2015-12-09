@@ -16,18 +16,14 @@
 
 /obj/item/device/flashlight/initialize()
 	..()
-	if(on)
-		icon_state = "[initial(icon_state)]-on"
-		set_light(brightness_on)
-	else
-		icon_state = initial(icon_state)
-		set_light(0)
+	update_brightness()
 
 /obj/item/device/flashlight/proc/update_brightness(var/mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		set_light(brightness_on)
 	else
+		icon_state = initial(icon_state)
 		set_light(0)
 
 /obj/item/device/flashlight/attack_self(mob/user)
@@ -37,7 +33,6 @@
 	on = !on
 	update_brightness(user)
 	return 1
-
 
 /obj/item/device/flashlight/attack(mob/living/M as mob, mob/living/user as mob)
 	add_fingerprint(user)
