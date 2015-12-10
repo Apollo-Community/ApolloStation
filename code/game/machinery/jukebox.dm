@@ -58,6 +58,7 @@ datum/track/New(var/title_name, var/audio)
 		new/datum/track("NanoTrasen", 'sound/music/jazzy_jazz.ogg'),
 		new/datum/track("Smartest People", 'sound/music/bakerstreet.ogg'),
 		new/datum/track("Careless", 'sound/music/carelesswhisper.ogg'),
+		new/datum/track("Long Ago", 'sound/music/midis/cantina.mid'),
 	)
 
 /obj/machinery/media/jukebox/New()
@@ -249,6 +250,11 @@ datum/track/New(var/title_name, var/audio)
 					M.jukebox_sound.status = SOUND_UPDATE
 				else
 					M.jukebox_sound.volume = 35 - 3*(dist-1)
+
+				var/turf/turf_source = get_turf( src )
+				M.jukebox_sound.x = (turf_source.x - M.x)*3 // Hearing from the west/east
+				M.jukebox_sound.y = (turf_source.y - M.y)*3 // Hearing from north/south
+
 				M << M.jukebox_sound
 		else		// Catch all
 			kill_sound(M)
