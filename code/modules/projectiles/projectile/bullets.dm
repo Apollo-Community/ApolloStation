@@ -7,6 +7,7 @@
 	flag = "bullet"
 	embed = 1
 	sharp = 1
+	can_fall = 0 // bullets won't fall down open spaces
 
 	on_hit(var/atom/target, var/blocked = 0)
 		if (..(target, blocked))
