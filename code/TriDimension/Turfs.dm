@@ -96,6 +96,7 @@
 	// cant destroy empty space with an ordinary bomb
 	return
 
+/*
 //overwrite the attackby of space to transform it to openspace if necessary
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
 	if (istype(C, /obj/item/stack/cable_coil) && src.hasbelow())
@@ -104,6 +105,7 @@
 		W.addToZProcess()
 		return
 	..()
+*/
 
 /turf/simulated/floor/open/attackby(obj/item/C as obj, mob/user as mob)
 	(..)
