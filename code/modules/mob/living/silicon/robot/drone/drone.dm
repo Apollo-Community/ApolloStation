@@ -16,6 +16,10 @@
 	integrated_light_power = 2
 	local_transmit = 1
 
+	static_overlays
+	var/static_choice = "static"
+	var/list/static_choices = list("static", "letter", "blank")
+
 	// We need to keep track of a few module items so we don't need to do list operations
 	// every time we need them. These get set in New() after the module is chosen.
 	var/obj/item/stack/sheet/metal/cyborg/stack_metal = null
@@ -70,6 +74,23 @@
 	//Some tidying-up.
 	flavor_text = "It's a tiny little repair drone. The casing is stamped with an NT logo and the subscript: 'NanoTrasen Recursive Repair Systems: Fixing Tomorrow's Problem, Today!'"
 	updateicon()
+
+/mob/living/silicon/robot/drone/Login()
+	..()
+
+	if(can_see_static())
+		add_static_overlays()
+
+
+/mob/living/silicon/robot/drone/Destroy()
+	..()
+
+	remove_static_overlays()
+
+/mob/living/silicon/robot/drone/generate_static_overlay()
+	if(!istype(static_overlays,/list))
+		static_overlays = list()
+	return
 
 /mob/living/silicon/robot/drone/init()
 	laws = new /datum/ai_laws/drone()
@@ -133,6 +154,7 @@
 		emagged = 1
 		lawupdate = 0
 		connected_ai = null
+		remove_static_overlays()
 		clear_supplied_laws()
 		clear_inherent_laws()
 		laws = new /datum/ai_laws/syndicate_override
@@ -211,6 +233,11 @@
 		self_destruct()
 
 	..()
+
+/mob/living/silicon/robot/drone/handle_regular_hud_updates()
+	if(!can_see_static()) //what lets us avoid the overlay
+		if(static_overlays && static_overlays.len)
+			remove_static_overlays()
 
 /mob/living/silicon/robot/drone/proc/in_operational_zone()
 	var/turf/T = get_turf(src)
@@ -329,6 +356,34 @@
 		src << "<span class='warning'>You are too small to pull that.</span>"
 		return
 
+/mob/living/silicon/robot/drone/proc/can_see_static()
+	return !emagged && !syndicate
+
+/mob/living/silicon/robot/drone/proc/add_static_overlays()
+	remove_static_overlays()
+	for(var/mob/living/living in mob_list)
+		if(istype(living, /mob/living/silicon))
+			continue
+		var/image/chosen
+		if(static_choice in living.static_overlays)
+			chosen = living.static_overlays[static_choice]
+		else
+			chosen = living.static_overlays[1]
+		static_overlays.Add(chosen)
+		client.images.Add(chosen)
+
+/mob/living/silicon/robot/drone/proc/remove_static_overlays()
+	if(client)
+		for(var/image/I in static_overlays)
+			client.images.Remove(I)
+	static_overlays.len = 0
+
+/mob/living/silicon/robot/drone/examinate(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
+	if(ismob(A) && src.can_see_static()) //can't examine what you can't catch!
+		usr << "Your vision module can't determine any of [A]'s features."
+		return
+
+	..()
 
 /mob/living/silicon/robot/drone/add_robot_verbs()
 

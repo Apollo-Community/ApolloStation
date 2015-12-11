@@ -1,3 +1,24 @@
+/mob/living/New()
+	. = ..()
+	generate_static_overlay()
+	if(istype(static_overlays,/list) && static_overlays.len)
+		for(var/mob/living/silicon/robot/drone/D in player_list)
+			if(D.can_see_static())
+				D.static_overlays.Add(static_overlays["static"])
+				D.client.images.Add(static_overlays["static"])
+
+/mob/living/Destroy()
+	for(var/mob/living/silicon/robot/drone/D in player_list)
+		for(var/image/I in static_overlays)
+			D.static_overlays.Remove(I) //no checks, since it's either there or its not
+			D.client.images.Remove(I)
+			qdel(I)
+			I = null
+	if(static_overlays)
+		static_overlays = null
+
+	. = ..()
+
 //mob verbs are faster than object verbs. See mob/verb/examine.
 /mob/living/verb/pulled(atom/movable/AM as mob|obj in oview(1))
 	set name = "Pull"
@@ -680,7 +701,21 @@
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
 	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
 
-
 /mob/living/do_attack_animation(atom/A)
 	..(A, initial(pixel_y))
 
+/mob/living/proc/generate_static_overlay()
+	if(!istype(static_overlays,/list))
+		static_overlays = list()
+	static_overlays.Add(list("static", "blank", "letter"))
+	var/image/static_overlay = image(getStaticIcon(new/icon(src.icon, src.icon_state)), loc = src)
+	static_overlay.override = 1
+	static_overlays["static"] = static_overlay
+
+	static_overlay = image(getBlankIcon(new/icon(src.icon, src.icon_state)), loc = src)
+	static_overlay.override = 1
+	static_overlays["blank"] = static_overlay
+
+	static_overlay = getLetterImage(src)
+	static_overlay.override = 1
+	static_overlays["letter"] = static_overlay
