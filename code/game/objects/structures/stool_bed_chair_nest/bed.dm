@@ -7,45 +7,46 @@
 /*
  * Beds
  */
-/obj/structure/stool/bed
+/obj/structure/bed
 	name = "bed"
 	desc = "This is used to lie in, sleep in or strap on."
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "bed"
 	var/mob/living/buckled_mob
 	var/movable = 0 // For mobility checks
 
-/obj/structure/stool/bed/psych
+/obj/structure/bed/psych
 	name = "psychiatrists couch"
 	desc = "For prime comfort during psychiatric evaluations."
 	icon_state = "psychbed"
 
-/obj/structure/stool/bed/alien
+/obj/structure/bed/alien
 	name = "resting contraption"
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
 	icon_state = "abed"
 
-/obj/structure/stool/bed/Destroy()
+/obj/structure/bed/Destroy()
 	unbuckle()
 	..()
 	return
 
-/obj/structure/stool/bed/attack_hand(mob/user as mob)
+/obj/structure/bed/attack_hand(mob/user as mob)
 	manual_unbuckle(user)
 	return
 
-/obj/structure/stool/bed/MouseDrop(atom/over_object)
+/obj/structure/bed/MouseDrop(atom/over_object)
 	return
 
-/obj/structure/stool/bed/MouseDrop_T(mob/M as mob, mob/user as mob)
+/obj/structure/bed/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if(!istype(M)) return
 	buckle_mob(M, user)
 	return
 
-/obj/structure/stool/bed/proc/afterbuckle(mob/M as mob) // Called after somebody buckled / unbuckled
+/obj/structure/bed/proc/afterbuckle(mob/M as mob) // Called after somebody buckled / unbuckled
 	return
 
 
-/obj/structure/stool/bed/proc/unbuckle()
+/obj/structure/bed/proc/unbuckle()
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)	//this is probably unneccesary, but it doesn't hurt
 			buckled_mob.buckled = null
@@ -58,7 +59,7 @@
 			afterbuckle(M)
 	return
 
-/obj/structure/stool/bed/proc/manual_unbuckle(mob/user as mob)
+/obj/structure/bed/proc/manual_unbuckle(mob/user as mob)
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
 			if(buckled_mob != user)
@@ -77,7 +78,7 @@
 
 	return 0
 
-/obj/structure/stool/bed/proc/buckle_mob(mob/M as mob, mob/user as mob)
+/obj/structure/bed/proc/buckle_mob(mob/M as mob, mob/user as mob)
 	if (!ticker)
 		user << "You can't buckle anyone in before the game starts."
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.lying || user.stat || M.buckled || M.pinned.len || istype(user, /mob/living/silicon/pai) )
@@ -111,13 +112,13 @@
 /*
  * Roller beds
  */
-/obj/structure/stool/bed/roller
+/obj/structure/bed/roller
 	name = "roller bed"
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
 	anchored = 0
 
-/obj/structure/stool/bed/roller/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/bed/roller/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/roller_holder))
 		if(buckled_mob)
 			manual_unbuckle()
@@ -137,7 +138,7 @@
 	w_class = 4.0 // Can't be put in backpacks. Oh well.
 
 /obj/item/roller/attack_self(mob/user)
-		var/obj/structure/stool/bed/roller/R = new /obj/structure/stool/bed/roller(user.loc)
+		var/obj/structure/bed/roller/R = new /obj/structure/bed/roller(user.loc)
 		R.add_fingerprint(user)
 		qdel(src)
 
@@ -171,13 +172,13 @@
 		return
 
 	user << "\blue You deploy the roller bed."
-	var/obj/structure/stool/bed/roller/R = new /obj/structure/stool/bed/roller(user.loc)
+	var/obj/structure/bed/roller/R = new /obj/structure/bed/roller(user.loc)
 	R.add_fingerprint(user)
 	qdel(held)
 	held = null
 
 
-/obj/structure/stool/bed/roller/Move()
+/obj/structure/bed/roller/Move()
 	..()
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
@@ -185,7 +186,7 @@
 		else
 			buckled_mob = null
 
-/obj/structure/stool/bed/roller/buckle_mob(mob/M as mob, mob/user as mob)
+/obj/structure/bed/roller/buckle_mob(mob/M as mob, mob/user as mob)
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.lying || user.stat || M.buckled || istype(usr, /mob/living/silicon/pai) )
 		return
 	M.pixel_y = 6
@@ -195,7 +196,7 @@
 	..()
 	return
 
-/obj/structure/stool/bed/roller/manual_unbuckle(mob/user as mob)
+/obj/structure/bed/roller/manual_unbuckle(mob/user as mob)
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)	//this is probably unneccesary, but it doesn't hurt
 			buckled_mob.pixel_y = 0
@@ -209,7 +210,7 @@
 	..()
 	return
 
-/obj/structure/stool/bed/roller/MouseDrop(over_object, src_location, over_location)
+/obj/structure/bed/roller/MouseDrop(over_object, src_location, over_location)
 	..()
 	if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
 		if(!ishuman(usr))	return

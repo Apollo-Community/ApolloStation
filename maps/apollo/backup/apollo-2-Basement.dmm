@@ -5,7 +5,7 @@
 "ae" = (/turf/simulated/wall/r_wall,/area/basement/civilian/theatre/office)
 "af" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/basement/civilian/theatre/office)
 "ag" = (/obj/structure/closet/cabinet,/obj/item/clothing/head/soft/mime,/obj/item/clothing/mask/gas/mime,/obj/item/clothing/shoes/mime,/obj/item/clothing/under/mime,/obj/item/toy/crayon/mime,/obj/item/weapon/cartridge/mime,/turf/simulated/floor{icon_state = "escape"; dir = 6},/area/basement/civilian/theatre/office)
-"ah" = (/obj/structure/bed,/obj/item/weapon/bedsheet/mime,/turf/simulated/floor{icon_state = "escape"; dir = 6},/area/basement/civilian/theatre/office)
+"ah" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet/mime,/turf/simulated/floor{icon_state = "escape"; dir = 6},/area/basement/civilian/theatre/office)
 "ai" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/snacks/mimeburger,/turf/simulated/floor{icon_state = "escape"; dir = 6},/area/basement/civilian/theatre/office)
 "aj" = (/turf/simulated/wall/r_wall,/area/basement/civilian/theatre/backstage)
 "ak" = (/turf/simulated/wall/r_wall,/area/basement/civilian/theatre)
