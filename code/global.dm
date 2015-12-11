@@ -261,20 +261,6 @@ var/datum/round_stats/statistics = new()
 // STUI
 var/datum/STUI/STUI = new()
 
-#define AFK_TIME 6000 // 10 minutes
-
-// Computer lighting colors
-#define COMPUTER_RED "#FF0000"
-#define COMPUTER ORANGE "#FF9900"
-#define COMPUTER_YELLOW "#FFFF00"
-#define COMPUTER_GREEN "#006600"
-#define COMPUTER_CYAN "#00FFFF"
-#define COMPUTER_BLUE "#0033CC"
-#define COMPUTER_PURPLE "#CC00FF"
-#define COMPUTER_BROWN "#996633"
-#define FIRE_PHORON_COLOR "#CC33FF"
-#define FIRE_COLOR "#FF6600"
-
 // Announcer intercom, because too much stuff creates an intercom for one message then hard qdel()s it.
 var/global/obj/item/device/radio/intercom/global_announcer = new(null)
 
