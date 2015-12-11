@@ -36,7 +36,6 @@
 	holder_type = /obj/item/weapon/holder/drone
 
 /mob/living/silicon/robot/drone/New()
-
 	..()
 
 	verbs += /mob/living/proc/hide
@@ -62,6 +61,8 @@
 	verbs -= /mob/living/silicon/robot/verb/Namepick
 	module = new /obj/item/weapon/robot_module/drone(src)
 
+	id_card = new /obj/item/weapon/card/id/captains_spare(src) // AI gets to do whatever they like
+
 	//Grab stacks.
 	stack_metal = locate(/obj/item/stack/sheet/metal/cyborg) in src.module
 	stack_wood = locate(/obj/item/stack/sheet/wood/cyborg) in src.module
@@ -83,9 +84,15 @@
 
 
 /mob/living/silicon/robot/drone/Destroy()
+	destroyCard()
+
 	..()
 
 	remove_static_overlays()
+
+/mob/living/silicon/robot/drone/proc/destroyCard()
+	qdel( id_card )
+	id_card = null
 
 /mob/living/silicon/robot/drone/generate_static_overlay()
 	if(!istype(static_overlays,/list))
@@ -251,6 +258,8 @@
 	return 1
 
 /mob/living/silicon/robot/drone/self_destruct()
+	destroyCard()
+
 	timeofdeath = world.time
 	death() //Possibly redundant, having trouble making death() cooperate.
 	gib()
