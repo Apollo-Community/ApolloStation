@@ -164,7 +164,7 @@
 "dh" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plating,/area/engioutpost)
 "di" = (/obj/machinery/alarm{frequency = 1441; pixel_y = 22},/turf/simulated/floor{icon_state = "grimy"},/area/engioutpost)
 "dj" = (/obj/machinery/light_switch{pixel_y = 28},/turf/simulated/floor{icon_state = "grimy"},/area/engioutpost)
-"dk" = (/obj/structure/bed,/obj/item/weapon/bedsheet,/turf/simulated/floor{icon_state = "grimy"},/area/engioutpost)
+"dk" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet,/turf/simulated/floor{icon_state = "grimy"},/area/engioutpost)
 "dl" = (/obj/structure/table,/obj/item/device/flashlight/lamp,/turf/simulated/floor{icon_state = "grimy"},/area/engioutpost)
 "dm" = (/obj/machinery/mech_bay_recharge_port,/turf/simulated/floor/plating,/area/engioutpost)
 "dn" = (/turf/simulated/floor/mech_bay_recharge_floor,/area/engioutpost)
