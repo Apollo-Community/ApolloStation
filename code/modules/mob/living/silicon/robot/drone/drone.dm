@@ -206,6 +206,10 @@
 		src << "<span class='warning'>You self-destructed because the drone server was destroyed.</span>"
 		self_destruct()
 
+	if( !client )
+		src << "<span class='warning'>ERROR 405: Sentience not found.</span>"
+		self_destruct()
+
 	..()
 
 /mob/living/silicon/robot/drone/proc/in_operational_zone()
@@ -234,19 +238,19 @@
 /mob/living/silicon/robot/drone/proc/law_resync()
 	if(stat != 2)
 		if(emagged)
-			src << "\red You feel something attempting to modify your programming, but your hacked subroutines are unaffected."
+			src << "<span class='warning'>You feel something attempting to modify your programming, but your hacked subroutines are unaffected.</span>"
 		else
-			src << "\red A reset-to-factory directive packet filters through your data connection, and you obediently modify your programming to suit it."
+			src << "<span class='warning'>A reset-to-factory directive packet filters through your data connection, and you obediently modify your programming to suit it.</span>"
 			full_law_reset()
 			show_laws()
 
 /mob/living/silicon/robot/drone/proc/shut_down()
 	if(stat != 2)
 		if(emagged)
-			src << "\red You feel a system kill order percolate through your tiny brain, but it doesn't seem like a good idea to you."
+			src << "<span class='warning'>You feel a system kill order percolate through your tiny brain, but it doesn't seem like a good idea to you.</span>"
 		else
-			src << "\red You feel a system kill order percolate through your tiny brain, and you obediently destroy yourself."
-			death()
+			src << "<span class='warning'>You feel a system kill order percolate through your tiny brain, and you obediently destroy yourself.</span>"
+			self_destruct()
 
 /mob/living/silicon/robot/drone/proc/full_law_reset()
 	clear_supplied_laws()
@@ -289,12 +293,10 @@
 	lawupdate = 0
 	src << "<b>Systems rebooted</b>. Loading base pattern maintenance protocol... <b>loaded</b>."
 	full_law_reset()
-	src << "<br><b>You are a maintenance drone, a tiny-brained robotic repair machine</b>."
-	src << "You have no individual will, no personality, and no drives or urges other than your laws."
+	src << "<br><b>You are a maintenance drone, a tiny repair robot with no individual will, no personality, and no drives or urges other than your laws."
 	src << "Use <b>:d</b> to talk to other drones and <b>say</b> to speak silently to your nearby fellows."
-	src << "Remember,  you are <b>lawed against interference with the crew</b>. Also remember, <b>you DO NOT take orders from the AI.</b>"
-	src << "<b>Don't invade their worksites, don't steal their resources, don't tell them about the changeling in the toilets.</b>"
-	src << "<b>If a crewmember has noticed you, <i>you are probably breaking your third law</i></b>."
+	src << "Remember, you are <b>lawed against interference with the crew</b>. Also remember, <b>you DO NOT take orders from the AI.</b>"
+	src << "<big><b>If a crewmember has noticed you, <i>you are probably breaking your third law</i></b></big>."
 
 
 /mob/living/silicon/robot/drone/Bump(atom/movable/AM as mob|obj, yes)
