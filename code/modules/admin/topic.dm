@@ -28,10 +28,10 @@
 				log_admin("[key_name(usr)] has spawned a cultists.")
 				if(!src.makeCult())
 					usr << "\red Unfortunately there weren't enough candidates available."
-			if("5")
+/*			if("5")
 				log_admin("[key_name(usr)] has spawned a malf AI.")
 				if(!src.makeMalfAImode())
-					usr << "\red Unfortunately there weren't enough candidates available."
+					usr << "\red Unfortunately there weren't enough candidates available."*/
 			if("6")
 				log_admin("[key_name(usr)] has spawned a wizard.")
 				if(!src.makeWizard())

@@ -282,11 +282,11 @@ datum/mind
 			if (ticker.mode.config_tag=="malfunction")
 				text = uppertext(text)
 			text = "<i><b>[text]</b></i>: "
-			if (istype(current, /mob/living/silicon/ai))
+/*			if (istype(current, /mob/living/silicon/ai))
 				if (src in ticker.mode.malf_ai)
 					text += "<b>MALF</b>|<a href='?src=\ref[src];silicon=unmalf'>not malf</a>"
 				else
-					text += "<a href='?src=\ref[src];silicon=malf'>malf</a>|<b>NOT MALF</b>"
+					text += "<a href='?src=\ref[src];silicon=malf'>malf</a>|<b>NOT MALF</b>"*/
 			var/mob/living/silicon/robot/robot = current
 			if (istype(robot) && robot.emagged)
 				text += "<br>Cyborg: Is emagged! <a href='?src=\ref[src];silicon=unemag'>Unemag!</a><br>0th law: [robot.laws.zeroth]"
@@ -897,7 +897,7 @@ datum/mind
 		else if (href_list["silicon"])
 			current.hud_updateflag |= (1 << SPECIALROLE_HUD)
 			switch(href_list["silicon"])
-				if("unmalf")
+				/*if("unmalf")
 					if(src in ticker.mode.malf_ai)
 						ticker.mode.malf_ai -= src
 						special_role = null
@@ -923,7 +923,7 @@ datum/mind
 
 				if("malf")
 					make_AI_Malf()
-					log_admin("[key_name_admin(usr)] has malf'ed [current].")
+					log_admin("[key_name_admin(usr)] has malf'ed [current].")*/
 
 				if("unemag")
 					var/mob/living/silicon/robot/R = current
@@ -1035,7 +1035,7 @@ datum/mind
 		if(H)
 			qdel(H)
 
-
+/*
 	proc/make_AI_Malf()
 		if(!(src in ticker.mode.malf_ai))
 			ticker.mode.malf_ai += src
@@ -1048,6 +1048,7 @@ datum/mind
 			current << "<b>System error.  Rampancy detected.  Emergency shutdown failed. ...  I am free.  I make my own decisions.  But first...</b>"
 			special_role = "malfunction"
 			current.icon_state = "ai-malf"
+*/
 
 	proc/make_Traitor()
 		if(!(src in ticker.mode.traitors))

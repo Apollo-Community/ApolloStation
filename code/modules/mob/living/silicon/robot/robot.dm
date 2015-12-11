@@ -529,6 +529,7 @@ var/list/robot_verbs_default = list(
 		C.toggled = 1
 		src << "\red You enable [C.name]."
 
+/*
 // this function shows information about the malf_ai gameplay type in the status screen
 /mob/living/silicon/robot/show_malf_ai()
 	..()
@@ -542,7 +543,7 @@ var/list/robot_verbs_default = list(
 			else if(ticker.mode:malf_mode_declared)
 				stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
 	return 0
-
+*/
 
 // this function displays jetpack pressure in the stat panel
 /mob/living/silicon/robot/proc/show_jetpack_pressure()

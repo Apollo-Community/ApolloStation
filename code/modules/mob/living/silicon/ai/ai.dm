@@ -187,9 +187,8 @@ var/list/ai_verbs_default = list(
 
 	src << radio_text
 
-	if (!(ticker && ticker.mode && (mind in ticker.mode.malf_ai)))
-		show_laws()
-		src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
+	show_laws()
+	src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
 
 	job = "AI"
 
@@ -311,6 +310,7 @@ var/list/ai_verbs_default = list(
 			//usr <<"You can only change your display once!"
 			//return
 
+/*
 /mob/living/silicon/ai/proc/is_malf()
 	if(ticker.mode.name == "AI malfunction")
 		var/datum/game_mode/malfunction/malf = ticker.mode
@@ -324,6 +324,7 @@ var/list/ai_verbs_default = list(
 	var/datum/game_mode/malfunction/malf = is_malf()
 	if(malf && malf.apcs >= 3)
 		stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
+*/
 
 /mob/living/silicon/ai/proc/ai_alerts()
 	set category = "AI Commands"
@@ -586,12 +587,13 @@ var/list/ai_verbs_default = list(
 	src << "\blue Switched to [network] camera network."
 //End of code by Mord_Sith
 
-
+/*
 /mob/living/silicon/ai/proc/choose_modules()
 	set category = "Malfunction"
 	set name = "Choose Module"
 
 	malf_picker.use(src)
+*/
 
 /mob/living/silicon/ai/proc/ai_statuschange()
 	set category = "AI Commands"

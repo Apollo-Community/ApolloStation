@@ -15,7 +15,6 @@ client/proc/one_click_antag()
 		<a href='?src=\ref[src];makeAntag=2'>Make Changlings</a><br>
 		<a href='?src=\ref[src];makeAntag=3'>Make Revs</a><br>
 		<a href='?src=\ref[src];makeAntag=4'>Make Cult</a><br>
-		<a href='?src=\ref[src];makeAntag=5'>Make Malf AI</a><br>
 		<a href='?src=\ref[src];makeAntag=6'>Make Wizard (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=11'>Make Vox Raiders (Requires Ghosts)</a><br>
 		"}
@@ -32,7 +31,7 @@ client/proc/one_click_antag()
 	usr << browse(dat, "window=oneclickantag;size=400x400")
 	return
 
-
+/*
 /datum/admins/proc/makeMalfAImode()
 
 	var/list/mob/living/silicon/AIs = list()
@@ -52,7 +51,7 @@ client/proc/one_click_antag()
 		return 1
 
 	return 0
-
+*/
 
 /datum/admins/proc/makeTraitors()
 	var/datum/game_mode/traitor/temp = new
