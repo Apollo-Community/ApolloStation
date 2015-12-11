@@ -19,7 +19,7 @@
 
 /mob/living/silicon/platform/spybug/New()
 	//Generates a semi-unique string
-	real_name = "[name]-[rand(1, 1000)]"
+	real_name = "[initial(real_name)]-[rand(1, 999)]"
 
 	verbs += /mob/living/proc/hide
 
@@ -29,18 +29,18 @@
 	universal_understand = 1
 
 	//Some tidying-up.
-	flavor_text = "An annoying little buzzing bug."
 	updateicon()
 
 	..()
 
+/mob/living/silicon/platform/spybug/examine(mob/user)
+	user << "An annoying little bug"
 
 /mob/living/silicon/platform/spybug/updateicon()
 	return
 
 //spybugs cannot be upgraded with borg modules so we need to catch some items before they get used in ..().
 /mob/living/silicon/platform/spybug/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
 	if(istype(W, /obj/item/borg/upgrade/))
 		user << "\red The spy bug chassis not compatible with \the [W]."
 		return

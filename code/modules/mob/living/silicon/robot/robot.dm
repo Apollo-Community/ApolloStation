@@ -91,6 +91,8 @@ var/list/robot_verbs_default = list(
 		cell.maxcharge = 25000
 		cell.charge = 25000
 
+	id_card = new /obj/item/weapon/card/id/syndicate_command(src)
+
 	..()
 
 /mob/living/silicon/robot/New(loc,var/unfinished = 0)
@@ -108,6 +110,8 @@ var/list/robot_verbs_default = list(
 	ident = rand(1, 999)
 	updatename("Default")
 	updateicon()
+
+	id_card = new /obj/item/weapon/card/id/captains_spare(src)
 
 	radio = new /obj/item/device/radio/borg(src)
 	common_radio = radio
@@ -157,6 +161,11 @@ var/list/robot_verbs_default = list(
 	laws = new /datum/ai_laws/nanotrasen()
 	additional_law_channels += "Binary"
 	connected_ai = select_active_ai_with_fewest_borgs()
+
+	if( id_card )
+		id_card.name = "[src.name]'s ID Card"
+		id_card.assignment = "Cyborg"
+
 	if(connected_ai)
 		connected_ai.connected_robots += src
 		lawupdate = 1
@@ -174,6 +183,10 @@ var/list/robot_verbs_default = list(
 
 	radio.keyslot = new /obj/item/device/encryptionkey/syndicate(radio)
 	radio.recalculateChannels()
+
+	if( id_card )
+		id_card.name = "[src.name]'s ID Card"
+		id_card.assignment = "Syndicate Cyborg"
 
 	playsound(loc, 'sound/mecha/nominalsyndi.ogg', 75, 0)
 

@@ -1322,6 +1322,7 @@
 #include "code\modules\mob\living\silicon\vr_platform\platform_abilities.dm"
 #include "code\modules\mob\living\silicon\vr_platform\platform_damage.dm"
 #include "code\modules\mob\living\silicon\vr_platform\vr_helmet.dm"
+#include "code\modules\mob\living\silicon\vr_platform\spy-bug\holder.dm"
 #include "code\modules\mob\living\silicon\vr_platform\spy-bug\spybug.dm"
 #include "code\modules\mob\living\silicon\vr_platform\spy-bug\spybug_abilities.dm"
 #include "code\modules\mob\living\silicon\vr_platform\spy-bug\spybug_damage.dm"

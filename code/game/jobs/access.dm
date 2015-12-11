@@ -80,7 +80,7 @@
 /var/const/access_cent_captain = 109//Captain's office/ID comp/AI.
 
 	//The Syndicate
-/var/const/access_syndicate = 150//General Syndicate Access
+/var/const/access_syndicate = 150 //General Syndicate Access
 
 	//MONEY
 /var/const/access_crate_cash = 200
@@ -96,12 +96,13 @@
 	if(src.check_access(null))
 		return 1
 	if(istype(M, /mob/living/silicon))
-		//AI can do whatever he wants
-		return 1
+		var/mob/living/silicon/S = M
+		if( src.check_access( S.id_card ))
+			return 1
 	else if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
-		if(src.check_access(H.get_active_hand()) || src.check_access(H.wear_id))
+		if( src.check_access(H.get_active_hand()) || src.check_access( H.wear_id ))
 			return 1
 	return 0
 
@@ -148,7 +149,6 @@
 				return 1
 		return 0
 	return 1
-
 
 /obj/proc/check_access_list(var/list/L)
 	if(!src.req_access  && !src.req_one_access)	return 1
