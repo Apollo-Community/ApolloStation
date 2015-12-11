@@ -271,3 +271,6 @@
 				adjustBruteLoss(30)
 
 	updatehealth()
+
+/mob/living/silicon/generate_static_overlay()
+	return
