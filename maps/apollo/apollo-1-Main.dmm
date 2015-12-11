@@ -7205,7 +7205,7 @@
 "cIC" = (/obj/structure/grille,/obj/structure/grille,/turf/simulated/wall/r_wall,/area/atmos)
 "cID" = (/turf/simulated/floor/plating{icon_state = "platebot"},/area/engine/drone_fabrication)
 "cIE" = (/obj/effect/decal/remains/robot,/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 8},/area/engine/drone_fabrication)
-"cIF" = (/obj/machinery/drone_fabricator,/turf/simulated/floor/plating,/area/engine/drone_fabrication)
+"cIF" = (/obj/machinery/drone_fabricator{fabricator_tag = "NSS Apollo"},/turf/simulated/floor/plating,/area/engine/drone_fabrication)
 "cIG" = (/turf/simulated/floor/plating,/area/engine/drone_fabrication)
 "cIH" = (/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 4},/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 4},/area/engine/drone_fabrication)
 "cII" = (/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/plating,/area/engine/drone_fabrication)

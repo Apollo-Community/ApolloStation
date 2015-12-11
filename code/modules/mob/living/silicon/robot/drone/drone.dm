@@ -194,14 +194,36 @@
 //Standard robots use config for crit, which is somewhat excessive for these guys.
 //Drones killed by damage will gib.
 /mob/living/silicon/robot/drone/handle_regular_status_updates()
+	if( health <= -35 || src.stat == DEAD )
+		src << "<span class='warning'>You self-destructed due to critical damage.</span>"
+		self_destruct()
+
+	if( !in_operational_zone() )
+		src << "<span class='warning'>You self-destructed because you left your operational zone.</span>"
+		self_destruct()
+
+	if( !master_fabricator )
+		src << "<span class='warning'>You self-destructed because the drone server was destroyed.</span>"
+		self_destruct()
+
+	..()
+
+/mob/living/silicon/robot/drone/proc/in_operational_zone()
 	var/turf/T = get_turf(src)
 
-	if((!T || health <= -35 || (master_fabricator && T.z != master_fabricator.z)) && src.stat != DEAD)
-		timeofdeath = world.time
-		death() //Possibly redundant, having trouble making death() cooperate.
-		gib()
-		return
-	..()
+	if( !T )
+		return 0
+
+	if( !isAlertZLevel( T.z ) && !istype( src.loc, /obj/spacepod ))
+		return 0
+
+	return 1
+
+/mob/living/silicon/robot/drone/self_destruct()
+	timeofdeath = world.time
+	death() //Possibly redundant, having trouble making death() cooperate.
+	gib()
+	return
 
 //DRONE MOVEMENT.
 /mob/living/silicon/robot/drone/Process_Spaceslipping(var/prob_slip)

@@ -19,7 +19,7 @@
 	name = "NSS Apollo Basement"
 	mapx = STATION_X
 	mapy = STATION_Y
-	sector_flags = SECTOR_KNOWN | SECTOR_STATION
+	sector_flags = SECTOR_KNOWN | SECTOR_STATION | SECTOR_ALERT
 
 /obj/effect/mapinfo/sector/ace
 	name = "A.C.E."
@@ -58,7 +58,6 @@
 /obj/effect/mapinfo/sector/bluespace
 	name = "Bluespace"
 	sector_flags = SECTOR_KNOWN
-
 
 /obj/effect/map/sector
 	real_name = "generic sector"
