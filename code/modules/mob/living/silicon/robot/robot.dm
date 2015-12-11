@@ -785,6 +785,17 @@ var/list/robot_verbs_default = list(
 			C.brute_damage = 0
 			C.electronics_damage = 0
 
+	else if ( istype( W, /obj/item/weapon/card ) && opened)
+		if(wiresexposed)
+			user << "Close the panel first."
+		else if(id_card)
+			user << "There is already an ID card inside."
+		else
+			user.drop_item()
+			W.loc = src
+			id_card = W
+			user << "You insert the ID card."
+
 	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool))
 		if (wiresexposed)
 			wires.Interact(user)
@@ -907,7 +918,6 @@ var/list/robot_verbs_default = list(
 		return ..()
 
 /mob/living/silicon/robot/attack_hand(mob/user)
-
 	add_fingerprint(user)
 
 	if(istype(user,/mob/living/carbon/human))
@@ -917,21 +927,37 @@ var/list/robot_verbs_default = list(
 			return
 
 	if(opened && !wiresexposed && (!istype(user, /mob/living/silicon)))
-		var/datum/robot_component/cell_component = components["power cell"]
-		if(cell)
-			cell.updateicon()
-			cell.add_fingerprint(user)
-			user.put_in_active_hand(cell)
-			user << "You remove \the [cell]."
-			cell = null
-			cell_component.wrapped = null
-			cell_component.installed = 0
-			updateicon()
-		else if(cell_component.installed == -1)
-			cell_component.installed = 0
-			var/obj/item/broken_device = cell_component.wrapped
-			user << "You remove \the [broken_device]."
-			user.put_in_active_hand(broken_device)
+		var/list/choices = list( "power cell", "ID card" )
+
+		var/choice = input("Choose what you would like to remove.", "Robot", null, null) in choices
+
+		if( choice == "power cell" )
+			var/datum/robot_component/cell_component = components["power cell"]
+			if(cell)
+				cell.updateicon()
+				cell.add_fingerprint(user)
+				user.put_in_active_hand(cell)
+				user << "You remove \the [cell]."
+				cell = null
+				cell_component.wrapped = null
+				cell_component.installed = 0
+				updateicon()
+			else if(cell_component.installed == -1)
+				cell_component.installed = 0
+				var/obj/item/broken_device = cell_component.wrapped
+				user << "You remove \the [broken_device]."
+				user.put_in_active_hand(broken_device)
+			else
+				user << "<span class='warning'>There is no power cell loaded into the cyborg!</span>"
+		else if( choice == "ID card" )
+			if( id_card )
+				id_card.add_fingerprint( user )
+				user.put_in_active_hand( id_card )
+				user << "You remove \the [id_card]."
+				id_card = null
+			else
+				user << "<span class='warning'>There is no ID card loaded into the cyborg!</span>"
+
 
 //Robots take half damage from basic attacks.
 /mob/living/silicon/robot/attack_generic(var/mob/user, var/damage, var/attack_message)
