@@ -102,6 +102,8 @@ var/list/ai_verbs_default = list(
 				possibleNames -= pickedName
 				pickedName = null
 
+	id_card = new /obj/item/weapon/card/id/captains_spare(src) // AI gets to do whatever they like
+
 	aiPDA = new/obj/item/device/pda/ai(src)
 	SetName(pickedName)
 	anchored = 1
@@ -191,6 +193,9 @@ var/list/ai_verbs_default = list(
 	src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
 
 	job = "AI"
+
+	if( id_card )
+		id_card.assignment = "AI"
 
 /mob/living/silicon/ai/Destroy()
 	ai_list -= src
