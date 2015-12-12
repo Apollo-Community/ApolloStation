@@ -20,6 +20,9 @@
 	var/store_items = 1
 	var/store_mobs = 1
 
+	var/can_flip = 1 // Can the closet flip over?
+	var/flipped = 0 // Is it flipped over?
+
 	var/const/default_mob_size = 15
 
 /obj/structure/closet/initialize()
@@ -321,6 +324,36 @@
 	else
 		usr << "<span class='warning'>This mob type can't use this verb.</span>"
 
+/obj/structure/closet/verb/flip()
+	set src in oview(1)
+	set category = "Object"
+	set name = "Flip Closet"
+
+	if(!can_flip)
+		return
+
+	if(anchored)
+		return
+
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return
+
+	toggle_flip(usr)
+
+/obj/structure/closet/proc/toggle_flip( var/mob/user )
+	if( !flipped )
+		if( user )
+			user.visible_message("<span class='warning'>[user] knocks over the closet!</span>")
+		flipped = 1
+	else
+		if( user )
+			user << "You start lifting the closet back up..."
+			if(	do_after( user, 50 ))
+				user.visible_message("[user] lifts the closet upright")
+		flipped = 0
+
+	update_icon()
+
 /obj/structure/closet/update_icon()//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
 	overlays.Cut()
 	if(!opened)
@@ -329,6 +362,17 @@
 			overlays += "welded"
 	else
 		icon_state = icon_opened
+
+	flip_icon()
+
+/obj/structure/closet/proc/flip_icon( var/degrees = 270 )
+	var/matrix/M = matrix()
+
+	if( can_flip && flipped )
+		M.Turn( degrees )
+		M.Translate( 0, -6 )
+
+	src.transform = M
 
 /obj/structure/closet/hear_talk(mob/M as mob, text, verb, datum/language/speaking)
 	for (var/atom/A in src)

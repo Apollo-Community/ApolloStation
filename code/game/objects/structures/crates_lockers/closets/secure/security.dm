@@ -32,8 +32,6 @@
 		new /obj/item/clothing/under/captainformal(src)
 		return
 
-
-
 /obj/structure/closet/secure_closet/hop
 	name = "head of personnel's locker"
 	req_access = list(access_hop)
@@ -84,8 +82,6 @@
 		new /obj/item/clothing/head/helmet/hop(src)
 		return
 
-
-
 /obj/structure/closet/secure_closet/hos
 	name = "head of security's locker"
 	req_access = list(access_hos)
@@ -124,8 +120,6 @@
 		new /obj/item/clothing/head/beret/sec/hos(src)
 		return
 
-
-
 /obj/structure/closet/secure_closet/warden
 	name = "warden's locker"
 	req_access = list(access_armory)
@@ -161,8 +155,6 @@
 		new /obj/item/clothing/head/beret/sec/warden(src)
 		return
 
-
-
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"
 	req_access = list(access_security)
@@ -197,7 +189,6 @@
 		new /obj/item/clothing/under/rank/security/corp(src)
 		return
 
-
 /obj/structure/closet/secure_closet/security/cargo
 
 	New()
@@ -229,7 +220,6 @@
 		new /obj/item/clothing/tie/armband/medgreen(src)
 		new /obj/item/device/encryptionkey/headset_med(src)
 		return
-
 
 /obj/structure/closet/secure_closet/detective
 	name = "detective's cabinet"
@@ -265,18 +255,6 @@
 		new /obj/item/clothing/tie/holster/armpit(src)
 		return
 
-/obj/structure/closet/secure_closet/detective/update_icon()
-	if(broken)
-		icon_state = icon_broken
-	else
-		if(!opened)
-			if(locked)
-				icon_state = icon_locked
-			else
-				icon_state = icon_closed
-		else
-			icon_state = icon_opened
-
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections locker"
 	req_access = list(access_captain)
@@ -287,8 +265,6 @@
 		new /obj/item/weapon/reagent_containers/ld50_syringe/choral(src)
 		new /obj/item/weapon/reagent_containers/ld50_syringe/choral(src)
 		return
-
-
 
 /obj/structure/closet/secure_closet/brig
 	name = "brig locker"
@@ -301,8 +277,6 @@
 		new /obj/item/clothing/under/color/orange( src )
 		new /obj/item/clothing/shoes/orange( src )
 		return
-
-
 
 /obj/structure/closet/secure_closet/courtroom
 	name = "courtroom locker"
@@ -333,6 +307,7 @@
 
 	//too small to put a man in
 	large = 0
+	can_flip = 0
 
 /obj/structure/closet/secure_closet/wall/update_icon()
 	if(broken)

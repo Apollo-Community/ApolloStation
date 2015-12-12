@@ -20,8 +20,6 @@
 		new /obj/item/clothing/mask/gas(src)
 		return
 
-
-
 /obj/structure/closet/secure_closet/RD
 	name = "research director's locker"
 	req_access = list(access_rd)

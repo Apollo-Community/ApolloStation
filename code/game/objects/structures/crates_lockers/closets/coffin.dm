@@ -5,6 +5,8 @@
 	icon_closed = "coffin"
 	icon_opened = "coffin_open"
 
+	can_flip = 0
+
 /obj/structure/closet/coffin/update_icon()
 	if(!opened)
 		icon_state = icon_closed

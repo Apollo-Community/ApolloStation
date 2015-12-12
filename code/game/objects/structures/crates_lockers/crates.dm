@@ -11,6 +11,8 @@
 //	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
 	var/rigged = 0
 
+	can_flip = 0
+
 /obj/structure/closet/crate/can_open()
 	return 1
 
