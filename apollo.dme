@@ -1720,6 +1720,7 @@
 #include "maps\_bluespace.dmm"
 #include "maps\apollo\apollo-1-Main.dmm"
 #include "maps\apollo\apollo-2-Basement.dmm"
+#include "maps\artemis\atermis-1-Main.dmm"
 #include "maps\overmap\active\active-01-EngiPost.dmm"
 #include "maps\overmap\active\active-02-ACE.dmm"
 #include "maps\overmap\active\active-03-CentComm.dmm"
