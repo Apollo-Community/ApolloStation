@@ -21,6 +21,12 @@
 	mapy = STATION_Y
 	sector_flags = SECTOR_KNOWN | SECTOR_STATION | SECTOR_ALERT
 
+/obj/effect/mapinfo/sector/artemis
+	name = "NSS Artemis"
+	mapx = STATION_X+4
+	mapy = STATION_Y
+	sector_flags = SECTOR_KNOWN | SECTOR_STATION | SECTOR_ALERT | SECTOR_LOCAL
+
 /obj/effect/mapinfo/sector/ace
 	name = "A.C.E."
 	obj_type = /obj/effect/map/sector/ace

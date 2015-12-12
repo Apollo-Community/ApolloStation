@@ -5,15 +5,19 @@
 /obj/machinery/telecomms/relay/preset
 	network = "tcomms"
 
-/obj/machinery/telecomms/relay/preset/station
-	id = "Station Relay"
+/obj/machinery/telecomms/relay/preset/apollo
+	id = "NSS Apollo Relay"
+	listening_level = 3
+	autolinkers = list("s_relay")
+
+/obj/machinery/telecomms/relay/preset/artemis
+	id = "NSS Artemis Relay"
 	listening_level = 3
 	autolinkers = list("s_relay")
 
 /obj/machinery/telecomms/relay/preset/telecomms
 	id = "Telecomms Relay"
 	autolinkers = list("relay")
-
 
 /obj/machinery/telecomms/relay/preset/mining
 	id = "Mining Relay"
