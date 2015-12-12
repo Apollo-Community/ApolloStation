@@ -732,7 +732,13 @@ var/list/robot_verbs_default = list(
 				C.r_arm = new/obj/item/robot_parts/r_arm(C)
 				C.updateicon()
 				new/obj/item/robot_parts/chest(loc)
-				qdel()
+
+				var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
+				if(T)	mmi.loc = T
+				if(mind)	mind.transfer_to(mmi.brainmob)
+				mmi = null
+
+				qdel(src)
 			else
 				// Okay we're not removing the cell or an MMI, but maybe something else?
 				var/list/removable_components = list()
