@@ -15,6 +15,8 @@
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough/attackby(obj/item/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/kitchenknife/))
+		return ..()
 	if(!istype(W, /obj/item/weapon/reagent_containers/food/snacks/))
 		user << "<span class='warning'>That doesn't look tasty.</span>"
 		return
