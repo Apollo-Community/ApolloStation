@@ -633,6 +633,10 @@ var/list/robot_verbs_default = list(
 						for(var/obj/structure/window/win in get_step(AM,t))
 							now_pushing = 0
 							return
+				if( istype( AM, /obj/structure/closet )) // I really dont like contributing to this spaghetti
+					if( !AM.Bumped( src ))
+						now_pushing = 0
+						return
 				step(AM, t)
 			now_pushing = null
 		return

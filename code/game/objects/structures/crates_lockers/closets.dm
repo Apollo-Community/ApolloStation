@@ -55,8 +55,8 @@
 			user << "There is still some free space."
 		else
 			user << "It is full."
-
-
+	if( can_flip && flipped )
+		user << "It is flipped over and could be used as cover."
 
 /obj/structure/closet/alter_health()
 	return get_turf(src)
@@ -64,6 +64,12 @@
 /obj/structure/closet/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0 || wall_mounted)) return 1
 	return (!density)
+
+/obj/structure/closet/Bumped(AM as mob|obj)
+	if( istype( AM, /mob ) && can_flip && flipped )
+		AM << "<span class='warning'>You have difficulty pushing the closet! Maybe you should turn it upright first?</span>"
+		return 0
+	return 1
 
 /obj/structure/closet/proc/can_open()
 	if(src.welded)
@@ -202,6 +208,11 @@
 		return
 
 	..()
+
+	if( can_flip && prob( 10 ))
+		src.visible_message("<span class='warning'>The closet is knocked over!</span>")
+		toggle_flip()
+
 	damage(Proj.damage)
 
 	return
@@ -344,14 +355,21 @@
 	if( !flipped )
 		if( user )
 			user.visible_message("<span class='warning'>[user] knocks over the closet!</span>")
-		flipped = 1
+		knockOver()
+		return
 	else
 		if( user )
 			user << "You start lifting the closet back up..."
 			if(	do_after( user, 50 ))
 				user.visible_message("[user] lifts the closet upright")
-		flipped = 0
+		liftUp()
 
+/obj/structure/closet/proc/knockOver()
+	flipped = 1
+	update_icon()
+
+/obj/structure/closet/proc/liftUp()
+	flipped = 0
 	update_icon()
 
 /obj/structure/closet/update_icon()//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
@@ -426,9 +444,13 @@
 		if(!req_breakout())
 			breakout = 0
 			return
+		if( can_flip && prob( 10 ) && !flipped )
+			escapee << "<span class='warning'>In your struggle, you accidentally knock over the closet!</span>"
+			knockOver()
 
 	//Well then break it!
 	breakout = 0
+
 	escapee << "<span class='warning'>You successfully break out!</span>"
 	visible_message("<span class='danger'>\the [escapee] successfully broke out of \the [src]!</span>")
 	playsound(src.loc, 'sound/effects/grillehit.ogg', 100, 1)
