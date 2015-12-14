@@ -1,6 +1,6 @@
 var/global/datum/cell_auto_handler/v_wave_handler = new(2)
 var/global/datum/cell_auto_handler/sm_crystal_handler = new(600)
-var/global/datum/cell_auto_handler/blotch_handler = new(10)
+var/global/datum/cell_auto_handler/blotch_handler = new(300)
 
 /datum/subsystem/cell_auto
 	//things you will want to define

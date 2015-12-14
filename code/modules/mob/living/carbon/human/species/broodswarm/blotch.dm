@@ -6,22 +6,39 @@
 	opacity = 0
 	density = 0
 
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "planner"
+	icon = 'icons/effects/blotch.dmi'
+	icon_state = "5"
 	layer = 2.1
 
-	age_max = 4 // The tile will try to spread 4 times and then sleep until awoken
+	age_max = 0 // The tile will try to spread 4 times and then sleep until awoken
 	master_type = /datum/cell_auto_master/blotch
 
-	var/health = 30
+	var/global/health_per_process = 10
+	var/global/health_states = 5
+	var/health = 10
+	var/max_health = 100
+
+/atom/movable/cell/blotch/Destroy()
+	for( var/direction in cardinal ) // Only gets NWSE
+		var/turf/T = get_step( src,direction )
+		var/atom/movable/cell/blotch/B = locate( type ) in T
+		if( B )
+			B.revive()
+
+	..()
+
+/atom/movable/cell/blotch/proc/update_icon()
+	var/icon_value = round( health/( max_health/health_states ))-1
+	icon_state = "[icon_value]"
 
 /atom/movable/cell/blotch/process()
-	checkDeath()
+	processHealth()
 
-	if( shouldProcess() && master.shouldProcess() ) // If we have not aged at all
+	if( shouldProcess() && master.shouldProcess() )
 		spread()
-
-	age++
+		update_icon()
+	else
+		kill() // fall asleep until something happens
 
 /atom/movable/cell/blotch/spread()
 	for( var/direction in cardinal ) // Only gets NWSE
@@ -30,7 +47,7 @@
 			PoolOrNew( /atom/movable/cell/blotch, list( T, master ))
 
 /atom/movable/cell/blotch/shouldProcess()
-	if( age >= age_max )
+	if( health >= max_health )
 		return 0
 
 	if( !master )
@@ -45,10 +62,14 @@
 
 	checkDeath()
 
+	revive()
+
 /atom/movable/cell/blotch/ex_act(severity)
 	health -= ( 4-severity )*10.0
 
 	checkDeath()
+
+	revive()
 
 /atom/movable/cell/blotch/bullet_act(var/obj/item/projectile/P)
 	..()
@@ -56,6 +77,8 @@
 	health -= P.damage
 
 	checkDeath()
+
+	revive()
 
 /atom/movable/cell/blotch/shouldDie()
 	if( health <= 0 )
@@ -66,8 +89,18 @@
 
 	return 0
 
+/atom/movable/cell/blotch/proc/processHealth()
+	checkDeath()
+
+	health = min( max_health, health+health_per_process )
+
+/atom/movable/cell/blotch/proc/kill()
+	if( src in master.cells )
+		master.cells -= src
+
 /atom/movable/cell/blotch/proc/revive()
-	age = 0
+	if( !( src in master.cells ))
+		master.cells += src
 
 /atom/movable/cell/blotch/proc/checkDeath()
 	if( shouldDie() )
@@ -90,13 +123,6 @@
 
 	return 1
 
-/atom/movable/cell/blotch/proc/kill()
-	for( var/direction in cardinal ) // Only gets NWSE
-		var/turf/T = get_step( src,direction )
-		var/atom/movable/cell/blotch/B = locate( type ) in T
-		if( B )
-			B.revive()
-
 /datum/cell_auto_master/blotch
 	cell_type = /atom/movable/cell/blotch
 	group_age_max = 0
@@ -107,8 +133,12 @@
 	blotch_handler.masters += src
 
 /datum/cell_auto_master/blotch/Destroy()
-	kill()
-
 	blotch_handler.masters -= src
 
 	..()
+
+/datum/cell_auto_master/blotch/process()
+	group_age++
+
+	for( var/atom/movable/cell/cell in cells )
+		cell.process()

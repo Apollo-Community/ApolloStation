@@ -58,8 +58,8 @@
 	var/datum/gas_mixture/environment = T.return_air()
 	if(!environment) return
 
-	if(locate(/obj/effect/alien/weeds) in T)
-		if(!regenerate(H))
+	if(locate(/atom/movable/cell/blotch) in T)
+		regenerate(H)
 
 	..()
 
