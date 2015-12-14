@@ -3,8 +3,8 @@
 	name = "Broodswarm"
 	name_plural = "Broodswarm"
 
-	default_language = "Xenomorph"
-	language = "Hivemind"
+	default_language = "Broodtongue"
+	language = "Broodmind"
 	unarmed_types = list(/datum/unarmed_attack/claws/strong, /datum/unarmed_attack/bite/strong)
 	hud_type = /datum/hud_data/alien
 	rarity_value = 3
@@ -34,11 +34,11 @@
 	speech_chance = 100
 
 	var/swarm_number = 0
-	var/creep_heal_rate = 1     // Health regen on weeds.
+	var/blotch_heal_rate = 1     // Health regen on the blotch
 
 /datum/species/broodswarm/hug(var/mob/living/carbon/human/H,var/mob/living/target)
-	H.visible_message("<span class='notice'>[H] caresses [target] with its scythe-like arm.</span>", \
-					"<span class='notice'>You caress [target] with your scythe-like arm.</span>")
+	H.visible_message("<span class='notice'>\The [H] strokes [target].</span>", \
+					"<span class='notice'>You stroke [target].</span>")
 
 /datum/species/broodswarm/handle_post_spawn(var/mob/living/carbon/human/H)
 
@@ -47,7 +47,7 @@
 		H.mind.special_role = "Brood"
 
 	swarm_number++ //Keep track of how many aliens we've had so far.
-	H.real_name = "alien [caste_name] ([alien_number])"
+	H.real_name = "broodling ([swarm_number])"
 	H.name = H.real_name
 
 	..()
@@ -58,18 +58,16 @@
 	var/datum/gas_mixture/environment = T.return_air()
 	if(!environment) return
 
-	if(environment.gas["phoron"] > 0 || locate(/obj/effect/alien/weeds) in T)
+	if(locate(/obj/effect/alien/weeds) in T)
 		if(!regenerate(H))
-			var/datum/organ/internal/xenos/phoronvessel/P = H.internal_organs_by_name["phoron vessel"]
-			P.stored_phoron += weeds_phoron_rate
-			P.stored_phoron = min(max(P.stored_phoron,0),P.max_phoron)
+
 	..()
 
 /datum/species/broodswarm/proc/regenerate(var/mob/living/carbon/human/H)
-	var/heal_rate = creep_heal_rate
+	var/heal_rate = blotch_heal_rate
 	var/mend_prob = 10
 	if (!H.resting)
-		heal_rate = creep_heal_rate / 3
+		heal_rate = blotch_heal_rate / 3
 		mend_prob = 1
 
 	//first heal damages
@@ -79,7 +77,7 @@
 		H.adjustOxyLoss(-heal_rate)
 		H.adjustToxLoss(-heal_rate)
 		if (prob(5))
-			H << "<span class='alium'>You feel a soothing sensation come over you...</span>"
+			H << "<span class='alium'>A membrane begins to form over your wounds...</span>"
 		return 1
 
 	//next internal organs
@@ -87,7 +85,7 @@
 		if(I.damage > 0)
 			I.damage = max(I.damage - heal_rate, 0)
 			if (prob(5))
-				H << "<span class='alium'>You feel a soothing sensation within your [I.parent_organ]...</span>"
+				H << "<span class='alium'>Your [I.parent_organ] begins to rapidly regenerate...</span>"
 			return 1
 
 	//next mend broken bones, approx 10 ticks each
@@ -95,56 +93,34 @@
 		if (E.status & ORGAN_BROKEN)
 			if (prob(mend_prob))
 				if (E.mend_fracture())
-					H << "<span class='alium'>You feel something mend itself inside your [E.display_name].</span>"
+					H << "<span class='alium'>You feel something mend itself inside your [E.display_name]...</span>"
 			return 1
 
 	return 0
 
 /datum/species/broodswarm/broodmother
 	name = "Broodmother"
-	creep_phoron_rate = 15
+	blotch_phoron_rate = 15
 	slowdown = 1
 	rarity_value = 5
 
 	icobase = 'icons/mob/human_races/xenos/r_xenos_drone.dmi'
-	deform =  'icons/mob/human_races/xenos/r_xenos_drone.dmi'
 
 	has_organ = list(
 		"heart" =           /datum/organ/internal/heart,
-		"brain" =           /datum/organ/internal/brain/xeno,
-		"phoron vessel" =   /datum/organ/internal/xenos/phoronvessel/queen,
-		"acid gland" =      /datum/organ/internal/xenos/acidgland,
-		"hive node" =       /datum/organ/internal/xenos/hivenode,
-		"resin spinner" =   /datum/organ/internal/xenos/resinspinner,
-		"nutrient vessel" = /datum/organ/internal/diona/nutrients
-		)
+		"brain" =           /datum/organ/internal/brain,
+	)
 
-	inherent_verbs = list(
-		/mob/living/proc/ventcrawl,
-		/mob/living/carbon/human/proc/regurgitate,
-		/mob/living/carbon/human/proc/plant,
-		/mob/living/carbon/human/proc/transfer_phoron,
-		/mob/living/carbon/human/proc/evolve,
-		/mob/living/carbon/human/proc/resin,
-		/mob/living/carbon/human/proc/corrosive_acid
-		)
-
-/datum/species/broodswarm/drone/handle_post_spawn(var/mob/living/carbon/human/H)
-
-	var/mob/living/carbon/human/A = H
-	if(!istype(A))
-		return ..()
-	..()
-
+	inherent_verbs = list()
 
 /datum/species/broodswarm/queen/handle_login_special(var/mob/living/carbon/human/H)
 	..()
 	// Make sure only one official queen exists at any point.
 	if(!alien_queen_exists(1,H))
-		H.real_name = "alien queen ([alien_number])"
+		H.real_name = "Broodmother"
 		H.name = H.real_name
 	else
-		H.real_name = "alien princess ([alien_number])"
+		H.real_name = "Brooddaughter"
 		H.name = H.real_name
 
 /datum/hud_data/broodswarm
@@ -157,14 +133,9 @@
 	has_drop =      1
 	has_throw =     1
 	has_resist =    1
-	has_pressure =  0
-	has_nutrition = 0
-	has_bodytemp =  0
+	has_pressure =  1
+	has_nutrition = 1
+	has_bodytemp =  1
 	has_internals = 0
 
-	gear = list(
-		"o_clothing" =   list("loc" = ui_belt,      "slot" = slot_wear_suit, "state" = "equip",  "dir" = SOUTH),
-		"head" =         list("loc" = ui_id,        "slot" = slot_head,      "state" = "hair"),
-		"storage1" =     list("loc" = ui_storage1,  "slot" = slot_l_store,   "state" = "pocket"),
-		"storage2" =     list("loc" = ui_storage2,  "slot" = slot_r_store,   "state" = "pocket"),
-		)
+	gear = list()

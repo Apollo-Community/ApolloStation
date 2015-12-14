@@ -343,10 +343,21 @@
 
 	return 0
 
-/datum/language/ling
-	name = "Changeling"
-	desc = "Although they are normally wary and suspicious of each other, changelings can commune over a distance."
+/datum/language/brood
+	name = "Broodtongue"
+	colour = "brood"
+	desc = "The language of the broodswarm."
 	speech_verb = "says"
+	ask_verb = "asks"
+	exclaim_verb = "screams"
+	key = "b"
+	flags = RESTRICTED
+	syllables = list("mug","shog","drog","fok","dag","mik","shou","ter","pek","scree")
+
+/datum/language/broodmind
+	name = "Broodmind"
+	desc = "The telepathic link between members of the broodswarm allows them to communicate at a distance."
+	speech_verb = "speaks"
 	colour = "changeling"
 	key = "g"
 	flags = RESTRICTED | HIVEMIND

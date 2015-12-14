@@ -90,6 +90,7 @@ h1.alert, h2.alert		{color: #000000;}
 /* Languages */
 
 .alien					{color: #543354;}
+.brood					{color: #800000;}
 .tajaran				{color: #803B56;}
 .tajaran_signlang		{color: #941C1C;}
 .skrell					{color: #00CED1;}
