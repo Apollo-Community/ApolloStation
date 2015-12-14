@@ -399,14 +399,17 @@
 		usr << "That's not a valid tank!"
 		return 0
 
-	if( tank.air_contents.total_moles > 0 )
-		fuel_tank.merge( tank.air_contents.remove( tank.air_contents.total_moles ))
-		playsound( get_turf( my_atom ), 'sound/machines/hiss.ogg', 50, 1 )
-		usr << "You hook the phoron tank up to the fuel hose and with a hiss all of the fuel is added to the pod's fuel tank."
-		return 1
-	else
-		usr << "There's no gas in that tank!"
-		return 0
+	for( var/G in tank.air_contents.gas )
+		world << G
+		if( G == "phoron" && tank.air_contents.gas[G] > 0 )
+			fuel_tank.adjust_gas( "phoron", tank.air_contents.gas[G] )
+			tank.air_contents.adjust_gas( "phoron", -tank.air_contents.gas[G] )
+			playsound( get_turf( my_atom ), 'sound/machines/hiss.ogg', 50, 1 )
+			usr << "You hook the gas tank up to the fuel hose and with a hiss all of the phoron is added to the pod's fuel tank."
+			return 1
+		else
+			usr << "There's no phoron gas in that tank!"
+			return 0
 
 /obj/item/device/spacepod_equipment/engine/proc/get_temp()
 	return fuel_tank.temperature

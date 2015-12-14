@@ -55,7 +55,12 @@
 	if (istype(C, /obj/item/stack/tile/plasteel))
 		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead (for building plating)
 	if(istype(C, /obj/item/stack/rods))
-		T.attackby(C, user) //see above, for building catwalks
+		var/obj/item/stack/rods/R = C
+		if(R.use(2))
+			user << "\blue Constructing catwalk..."
+			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+			new /obj/structure/lattice/catwalk(src.loc)
+			qdel(src)
 	if (istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = C
 		if(WT.remove_fuel(0, user))
@@ -124,6 +129,11 @@
 	..()
 
 /obj/structure/lattice/catwalk/attackby(obj/item/C as obj, mob/user as mob)
+	if(istype(C, /obj/item/weapon/wirecutters))
+		user << "You cut the catwalk apart."
+		var/obj/item/stack/rods/R = new /obj/item/stack/rods(src.loc)
+		R.amount = 2 // only catwalk construction is "refunded"
+		qdel(src)
 	var/turf/Tsrc = get_turf(src)
 	Tsrc.attackby(C, user)
 
