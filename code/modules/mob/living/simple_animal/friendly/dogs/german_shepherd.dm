@@ -7,14 +7,14 @@
 	icon_living = "german_shep"
 	icon_dead = "german_shep_dead"
 
-/mob/living/simple_animal/dog/german_shep/ace
-	name = "\improper Ace"
-	real_name = "Ace"
+/mob/living/simple_animal/dog/german_shep/sirius
+	name = "\improper Sirius"
+	real_name = "Sirius"
 	gender = MALE
 	desc = "Hundreds of years of specialized breeding has led to this spectacle of a creature."
-	var/bff = null // The person Ace protects
+	var/bff = null // The person Sirius protects
 
-/mob/living/simple_animal/dog/german_shep/ace/New()
+/mob/living/simple_animal/dog/german_shep/sirius/New()
 	for( var/mob/living/carbon/human/M in living_mob_list )
 		if (M.mind)
 			if (M.mind.assigned_role == "Head of Security")
