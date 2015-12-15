@@ -86,6 +86,7 @@ h1.alert, h2.alert		{color: #000000;}
 .info					{color: #0000CC;}
 .notice					{color: #000099;}
 .alium					{color: #00ff00;}
+.broodswarm				{color: #cc0066;}
 
 /* Languages */
 

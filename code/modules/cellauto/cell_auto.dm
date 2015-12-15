@@ -21,9 +21,9 @@
 	..()
 
 	var/turf/T = get_turf( src )
-	if( T ) // Checking and setting the turf's automata cell
+	if( T )
 		if( T.containsCell( type ))
-			qdel( src )
+			qdel( src ) // If a cell of the same type already exists, delete us
 			return
 		else
 			T.autocells += src

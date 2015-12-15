@@ -1,4 +1,14 @@
-//Stand-in until this is made more lore-friendly.
+/proc/broodmother_exists(var/ignore_self,var/mob/living/carbon/human/self)
+	for(var/mob/living/carbon/human/Q in living_mob_list)
+		if(self && ignore_self && self == Q)
+			continue
+		if(Q.species.name != "Broodmother")
+			continue
+		if(!Q.key || !Q.client || Q.stat)
+			continue
+		return 1
+	return 0
+
 /datum/species/broodswarm
 	name = "Broodswarm"
 	name_plural = "Broodswarm"
@@ -33,18 +43,18 @@
 	speech_sounds = list('sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg')
 	speech_chance = 100
 
-	var/swarm_number = 0
-	var/blotch_heal_rate = 1     // Health regen on the blotch
+	var/blotch_heal_rate = 3     // Health regen on the blotch
+	var/global/brood_points = 0 // Used for hive and swarm upgrades
+	var/global/swarm_number = 0 // Total population of the broodswarm
 
 /datum/species/broodswarm/hug(var/mob/living/carbon/human/H,var/mob/living/target)
 	H.visible_message("<span class='notice'>\The [H] strokes [target].</span>", \
-					"<span class='notice'>You stroke [target].</span>")
+					  "<span class='notice'>You stroke [target].</span>")
 
 /datum/species/broodswarm/handle_post_spawn(var/mob/living/carbon/human/H)
-
 	if(H.mind)
-		H.mind.assigned_role = "Brood"
-		H.mind.special_role = "Brood"
+		H.mind.assigned_role = "Broodswarm"
+		H.mind.special_role = "Broodswarm"
 
 	swarm_number++ //Keep track of how many aliens we've had so far.
 	H.real_name = "broodling ([swarm_number])"
@@ -55,8 +65,6 @@
 /datum/species/broodswarm/handle_environment_special(var/mob/living/carbon/human/H)
 	var/turf/T = H.loc
 	if(!T) return
-	var/datum/gas_mixture/environment = T.return_air()
-	if(!environment) return
 
 	if(locate(/atom/movable/cell/blotch) in T)
 		regenerate(H)
@@ -77,7 +85,7 @@
 		H.adjustOxyLoss(-heal_rate)
 		H.adjustToxLoss(-heal_rate)
 		if (prob(5))
-			H << "<span class='alium'>A membrane begins to form over your wounds...</span>"
+			H << "<span class='broodswarm'>A membrane forms over your wounds...</span>"
 		return 1
 
 	//next internal organs
@@ -85,7 +93,7 @@
 		if(I.damage > 0)
 			I.damage = max(I.damage - heal_rate, 0)
 			if (prob(5))
-				H << "<span class='alium'>Your [I.parent_organ] begins to rapidly regenerate...</span>"
+				H << "<span class='broodswarm'>Your [I.parent_organ] begins to rapidly regenerate...</span>"
 			return 1
 
 	//next mend broken bones, approx 10 ticks each
@@ -93,30 +101,37 @@
 		if (E.status & ORGAN_BROKEN)
 			if (prob(mend_prob))
 				if (E.mend_fracture())
-					H << "<span class='alium'>You feel something mend itself inside your [E.display_name]...</span>"
+					H << "<span class='broodswarm'>You feel something mend itself inside your [E.display_name]...</span>"
 			return 1
 
 	return 0
 
 /datum/species/broodswarm/broodmother
 	name = "Broodmother"
-	blotch_phoron_rate = 15
 	slowdown = 1
 	rarity_value = 5
 
-	icobase = 'icons/mob/human_races/xenos/r_xenos_drone.dmi'
+	icobase = 'icons/mob/human_races/broodswarm/broodmother.dmi'
+	icon_template = 'icons/mob/human_races/broodswarm/broodmother.dmi'
+
+	damage_overlays = 'icons/mob/human_races/broodswarm/dam_broodmother.dmi'
+	damage_mask = 'icons/mob/human_races/broodswarm/dam_broodmother.dmi'
 
 	has_organ = list(
 		"heart" =           /datum/organ/internal/heart,
 		"brain" =           /datum/organ/internal/brain,
+		"tumor" =			/datum/organ/internal/broodswarm,
 	)
 
 	inherent_verbs = list()
 
-/datum/species/broodswarm/queen/handle_login_special(var/mob/living/carbon/human/H)
+/datum/species/broodswarm/broodmother/handle_login_special(var/mob/living/carbon/human/H)
 	..()
-	// Make sure only one official queen exists at any point.
-	if(!alien_queen_exists(1,H))
+	// Make sure only one official broodmother exists at any point.
+
+	H.pixel_x = -16
+
+	if(!broodmother_exists(1,H))
 		H.real_name = "Broodmother"
 		H.name = H.real_name
 	else
@@ -124,7 +139,6 @@
 		H.name = H.real_name
 
 /datum/hud_data/broodswarm
-
 	icon = 'icons/mob/screen1_alien.dmi'
 	has_a_intent =  1
 	has_m_intent =  1

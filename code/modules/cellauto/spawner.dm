@@ -8,6 +8,6 @@
 /obj/cell_spawner/blotch/New()
 	..()
 
-	new /datum/cell_auto_master/blotch( get_turf( src ))
+	new /obj/structure/broodswam/large/hive_tumor( get_turf( src ))
 
 	qdel( src )

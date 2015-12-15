@@ -7,7 +7,7 @@
 	density = 0
 
 	icon = 'icons/effects/blotch.dmi'
-	icon_state = "5"
+	icon_state = "1"
 	layer = 2.1
 
 	age_max = 0 // The tile will try to spread 4 times and then sleep until awoken
@@ -17,6 +17,12 @@
 	var/global/health_states = 5
 	var/health = 10
 	var/max_health = 100
+	var/min_health = 1
+
+/atom/movable/cell/blotch/New()
+	..()
+
+	update_icon()
 
 /atom/movable/cell/blotch/Destroy()
 	for( var/direction in cardinal ) // Only gets NWSE
@@ -28,7 +34,7 @@
 	..()
 
 /atom/movable/cell/blotch/proc/update_icon()
-	var/icon_value = round( health/( max_health/health_states ))-1
+	var/icon_value = round( health/( max_health/health_states ))
 	icon_state = "[icon_value]"
 
 /atom/movable/cell/blotch/process()
@@ -47,8 +53,9 @@
 			PoolOrNew( /atom/movable/cell/blotch, list( T, master ))
 
 /atom/movable/cell/blotch/shouldProcess()
-	if( health >= max_health )
-		return 0
+	if( max_health )
+		if( health >= max_health )
+			return 0
 
 	if( !master )
 		return 0
@@ -81,8 +88,9 @@
 	revive()
 
 /atom/movable/cell/blotch/shouldDie()
-	if( health <= 0 )
-		return 1
+	if( min_health )
+		if( health < min_health )
+			return 1
 
 	if( !isfloor( get_turf( src )))
 		return 1
@@ -98,9 +106,13 @@
 	if( src in master.cells )
 		master.cells -= src
 
+	update_icon()
+
 /atom/movable/cell/blotch/proc/revive()
 	if( !( src in master.cells ))
 		master.cells += src
+
+	update_icon()
 
 /atom/movable/cell/blotch/proc/checkDeath()
 	if( shouldDie() )
@@ -126,9 +138,12 @@
 /datum/cell_auto_master/blotch
 	cell_type = /atom/movable/cell/blotch
 	group_age_max = 0
+	var/turf/location
 
 /datum/cell_auto_master/blotch/New( var/loc as turf )
 	..()
+
+	location = loc
 
 	blotch_handler.masters += src
 
@@ -142,3 +157,7 @@
 
 	for( var/atom/movable/cell/cell in cells )
 		cell.process()
+
+	if( location && cell_type )
+		if( !( location.containsCell( cell_type )))
+			PoolOrNew( cell_type, list( location, src )) // If our home location doesn't have a cell, add a new one
