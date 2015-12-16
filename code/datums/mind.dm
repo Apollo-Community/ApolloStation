@@ -117,11 +117,9 @@ datum/mind
 			"implant",
 			"revolution",
 			"cult",
-			"wizard",
 			"changeling",
 			"mercenary",
 			"traitor", // "traitorchan",
-			"monkey",
 			"malfunction",
 		)
 		var/text = ""
@@ -184,20 +182,6 @@ datum/mind
 				text += "<b>EMPLOYEE</b>|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
 			sections["cult"] = text
 
-			/** WIZARD ***/
-			text = "wizard"
-			if (ticker.mode.config_tag=="wizard")
-				text = uppertext(text)
-			text = "<i><b>[text]</b></i>: "
-			if (src in ticker.mode.wizards)
-				text += "<b>YES</b>|<a href='?src=\ref[src];wizard=clear'>no</a>"
-				text += "<br><a href='?src=\ref[src];wizard=lair'>To lair</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];wizard=dressup'>dress up</a>, <a href='?src=\ref[src];wizard=name'>let choose name</a>."
-				if (objectives.len==0)
-					text += "<br>Objectives are empty! <a href='?src=\ref[src];wizard=autoobjectives'>Randomize!</a>"
-			else
-				text += "<a href='?src=\ref[src];wizard=wizard'>yes</a>|<b>NO</b>"
-			sections["wizard"] = text
-
 			/** CHANGELING ***/
 			text = "changeling"
 			if (ticker.mode.config_tag=="changeling" || ticker.mode.config_tag=="traitorchan")
@@ -251,29 +235,6 @@ datum/mind
 				else
 					text += "<a href='?src=\ref[src];traitor=traitor'>traitor</a>|<b>Employee</b>"
 		sections["traitor"] = text
-
-		/** MONKEY ***/
-		if (istype(current, /mob/living/carbon))
-			text = "monkey"
-			if (ticker.mode.config_tag=="monkey")
-				text = uppertext(text)
-			text = "<i><b>[text]</b></i>: "
-			if (istype(current, /mob/living/carbon/human))
-				text += "<a href='?src=\ref[src];monkey=healthy'>healthy</a>|<a href='?src=\ref[src];monkey=infected'>infected</a>|<b>HUMAN</b>|other"
-			else if (istype(current, /mob/living/carbon/human/monkey))
-				var/found = 0
-				for(var/datum/disease/D in current.viruses)
-					if(istype(D, /datum/disease/jungle_fever)) found = 1
-
-				if(found)
-					text += "<a href='?src=\ref[src];monkey=healthy'>healthy</a>|<b>INFECTED</b>|<a href='?src=\ref[src];monkey=human'>human</a>|other"
-				else
-					text += "<b>HEALTHY</b>|<a href='?src=\ref[src];monkey=infected'>infected</a>|<a href='?src=\ref[src];monkey=human'>human</a>|other"
-
-			else
-				text += "healthy|infected|human|<b>OTHER</b>"
-			sections["monkey"] = text
-
 
 		/** SILICON ***/
 
@@ -681,42 +642,11 @@ datum/mind
 						if (!where)
 							usr << "\red Spawning tome failed!"
 						else
-		/*
 
 				if("amulet")
 					if (!ticker.mode.equip_cultist(current))
 						usr << "\red Spawning amulet failed!"
 
-		else if (href_list["wizard"])
-			current.hud_updateflag |= (1 << SPECIALROLE_HUD)
-
-			switch(href_list["wizard"])
-				if("clear")
-					if(src in ticker.mode.wizards)
-						ticker.mode.wizards -= src
-						special_role = null
-						current.spellremove(current, config.feature_object_spell_system? "object":"verb")
-						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a wizard!</B></FONT>"
-						log_admin("[key_name_admin(usr)] has de-wizard'ed [current].")
-				if("wizard")
-					if(!(src in ticker.mode.wizards))
-						ticker.mode.wizards += src
-						special_role = "Wizard"
-						//ticker.mode.learn_basic_spells(current)
-						current << "<B>\red You are the Space Wizard!</B>"
-						current << "<h3><B>Make sure to read the rules about ganking and be sure to make the round interesting for everyone!</B></h3>"
-						show_objectives(src)
-						log_admin("[key_name_admin(usr)] has wizard'ed [current].")
-				if("lair")
-					current.loc = pick(wizardstart)
-				if("dressup")
-					ticker.mode.equip_wizard(current)
-				if("name")
-					ticker.mode.name_wizard(current)
-				if("autoobjectives")
-					if(!config.objectives_disabled)
-						ticker.mode.forge_wizard_objectives(src)
-						usr << "\blue The objectives for wizard [key] have been generated. You can edit them and anounce manually."
 
 		else if (href_list["changeling"])
 			current.hud_updateflag |= (1 << SPECIALROLE_HUD)
@@ -844,56 +774,6 @@ datum/mind
 						ticker.mode.forge_traitor_objectives(src)
 						usr << "\blue The objectives for traitor [key] have been generated. You can edit them and anounce manually."
 
-		else if (href_list["monkey"])
-			var/mob/living/L = current
-			if (L.monkeyizing)
-				return
-			switch(href_list["monkey"])
-				if("healthy")
-					if (usr.client.holder.rights & R_ADMIN)
-						var/mob/living/carbon/human/H = current
-						var/mob/living/carbon/monkey/M = current
-						if (istype(H))
-							log_admin("[key_name(usr)] attempting to monkeyize [key_name(current)]")
-							message_admins("[key_name_admin(usr)] attempting to monkeyize [key_name_admin(current)]", "LOG:")
-							src = null
-							M = H.monkeyize()
-							src = M.mind
-							//world << "DEBUG: \"healthy\": M=[M], M.mind=[M.mind], src=[src]!"
-						else if (istype(M) && length(M.viruses))
-							for(var/datum/disease/D in M.viruses)
-								D.cure(0)
-							sleep(0) //because deleting of virus is done through spawn(0)
-				if("infected")
-					if (usr.client.holder.rights & R_ADMIN)
-						var/mob/living/carbon/human/H = current
-						var/mob/living/carbon/monkey/M = current
-						if (istype(H))
-							log_admin("[key_name(usr)] attempting to monkeyize and infect [key_name(current)]")
-							message_admins("[key_name_admin(usr)] attempting to monkeyize and infect [key_name_admin(current)]", "LOG:")
-							src = null
-							M = H.monkeyize()
-							src = M.mind
-							current.contract_disease(new /datum/disease/jungle_fever,1,0)
-						else if (istype(M))
-							current.contract_disease(new /datum/disease/jungle_fever,1,0)
-				if("human")
-					var/mob/living/carbon/monkey/M = current
-					if (istype(M))
-						for(var/datum/disease/D in M.viruses)
-							if (istype(D,/datum/disease/jungle_fever))
-								D.cure(0)
-								sleep(0) //because deleting of virus is doing throught spawn(0)
-						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
-						message_admins("[key_name_admin(usr)] attempting to humanize [key_name_admin(current)]", "LOG:")
-						var/obj/item/weapon/dnainjector/m2h/m2h = new
-						var/obj/item/weapon/implant/mobfinder = new(M) //hack because humanizing deletes mind --rastaf0
-						src = null
-						m2h.inject(M)
-						src = mobfinder.loc:mind
-						qdel(mobfinder)
-						current.radiation -= 50
-		*/
 		else if (href_list["silicon"])
 			current.hud_updateflag |= (1 << SPECIALROLE_HUD)
 			switch(href_list["silicon"])
@@ -1097,26 +977,6 @@ datum/mind
 			if(!config.objectives_disabled)
 				ticker.mode.forge_changeling_objectives(src)
 			ticker.mode.greet_changeling(src)
-
-	proc/make_Wizard()
-		if(!(src in ticker.mode.wizards))
-			ticker.mode.wizards += src
-			special_role = "Wizard"
-			assigned_role = "MODE"
-			//ticker.mode.learn_basic_spells(current)
-			if(!wizardstart.len)
-				current.loc = pick(latejoin)
-				current << "HOT INSERTION, GO GO GO"
-			else
-				current.loc = pick(wizardstart)
-
-			ticker.mode.equip_wizard(current)
-			for(var/obj/item/weapon/spellbook/S in current.contents)
-				S.op = 0
-			ticker.mode.name_wizard(current)
-			ticker.mode.forge_wizard_objectives(src)
-			ticker.mode.greet_wizard(src)
-
 
 	proc/make_Cultist()
 		if(!(src in ticker.mode.cult))

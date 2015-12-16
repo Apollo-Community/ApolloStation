@@ -103,7 +103,7 @@
 
 	alien.transfer_to(new_xeno)
 
-	del original
+	qdel(original)
 	return
 
 
