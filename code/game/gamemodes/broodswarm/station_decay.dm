@@ -1,11 +1,10 @@
 // Makes minor explosions to make the station a little bruised
-proc/station_erosion( var/erosion_level )
-	var/i = 0
-	while( i<erosion_level )
-		var/turf/T = locate( rand(0, 255), rand(0, 255), 1 )
+proc/station_erosion( var/erosion_level = 60 )
+	for( var/i = 0; i < erosion_level;  )
+		var/turf/T = locate( rand(0, 255), rand(0, 255), pick( config.station_levels ))
 
 		if( !istype( T, /turf/space ))
-			var/size = rand( 2, 10 )
+			var/size = rand( 5, 10 )
 			if( !near_space( T, size+1 )) // We want to lower the station structural integrity, yet keep it habitable
 				explosion_rec(T, size, 3)
 				i++
@@ -24,13 +23,16 @@ proc/station_erosion( var/erosion_level )
 // Just adds random items strewn around the map
 proc/populate_random_items( var/max_guns = 20 )
 	for( var/gun_count = 0; gun_count < max_guns;  )
-		var/area/A = pick( all_areas )
-		if( istype( A, /area/space ))
-			continue
-
-		var/turf/simulated/floor/T = pick( A.contents )
+		var/turf/T = locate( rand(0, 255), rand(0, 255), pick( config.station_levels ))
 		if( !T )
 			continue
+
+		if( istype( T, /turf/space ))
+			continue
+
+		if( !isfloor( T ) )
+			continue
+
 		new /obj/random/gun(T)
 		gun_count++
 

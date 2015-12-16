@@ -23,7 +23,6 @@
 	world << "<span class='warning'>The station was brutalized by meteor impacts multiple hours ago. Communication with Central Command has been knocked out, and </span>"
 
 /datum/game_mode/broodswarm/can_start()
-
 	if(!..())
 		return 0
 
@@ -41,10 +40,8 @@
 
 /datum/game_mode/broodswarm/pre_setup()
 	station_erosion( 60 )
-
-	populate_random_items()
-
 	populate_barricades( 40 )
+	populate_random_items()
 
 	return 1
 

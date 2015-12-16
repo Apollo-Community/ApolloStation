@@ -120,10 +120,12 @@
 	has_organ = list(
 		"heart" =           /datum/organ/internal/heart,
 		"brain" =           /datum/organ/internal/brain,
-		"tumor" =			/datum/organ/internal/broodswarm,
+		"hive tumor" =			/datum/organ/internal/broodswarm/hive_tumor,
 	)
 
-	inherent_verbs = list()
+	inherent_verbs = list(
+		/mob/living/carbon/human/proc/expunge_tumor,
+		)
 
 /datum/species/broodswarm/broodmother/handle_login_special(var/mob/living/carbon/human/H)
 	..()
