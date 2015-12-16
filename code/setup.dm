@@ -500,7 +500,6 @@
 //some arbitrary defines to be used by self-pruning global lists. (see master_controller)
 #define PROCESS_KILL 26	//Used to trigger removal from a processing list
 
-
 #define HOSTILE_STANCE_IDLE 1
 #define HOSTILE_STANCE_ALERT 2
 #define HOSTILE_STANCE_ATTACK 3
@@ -592,7 +591,7 @@
 #define BE_OPERATIVE  2
 #define BE_CHANGELING 4
 #define BE_WIZARD     8
-#define BE_MALF       16
+#define BE_BROODSWARM 16
 #define BE_REV        32
 #define BE_ALIEN      64
 #define BE_AI         128
@@ -603,7 +602,6 @@
 #define BE_PLANT      4096
 #define BE_MUTINEER   8192
 #define BE_PAI        16384
-#define BE_BROODSWARM 32768
 
 //Not sure if moving this to global.dm would break the defines.
 var/list/be_special_flags = list(
@@ -611,7 +609,7 @@ var/list/be_special_flags = list(
 	"Operative" = BE_OPERATIVE,
 	"Changeling" = BE_CHANGELING,
 	"Wizard" = BE_WIZARD,
-	"Malf AI" = BE_MALF,
+	"Broodswarm" = BE_BROODSWARM,
 	"Revolutionary" = BE_REV,
 	"Xenomorph" = BE_ALIEN,
 	"Positronic Brain" = BE_AI,

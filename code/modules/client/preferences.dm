@@ -8,7 +8,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"operative" = IS_MODE_COMPILED("nuclear"),           // 1
 	"changeling" = IS_MODE_COMPILED("changeling"),       // 2
 	"wizard" = IS_MODE_COMPILED("wizard"),               // 3
-	"malf AI" = IS_MODE_COMPILED("malfunction"),         // 4
+	"broodswarm" = IS_MODE_COMPILED("broodswarm"),  	 // 4
 	"revolutionary" = IS_MODE_COMPILED("revolution"),    // 5
 	"alien candidate" = 1, //always show                 // 6
 	"positronic brain" = 1,                              // 7
@@ -19,6 +19,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"diona" = 1,                                         // 12
 	"mutineer" = IS_MODE_COMPILED("mutiny"),             // 13
 	"pAI candidate" = 1, // -- TLE                       // 14
+	"malf AI" = IS_MODE_COMPILED("malfunction"),         // 15
 )
 
 //used for alternate_option

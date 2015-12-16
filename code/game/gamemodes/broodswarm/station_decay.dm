@@ -7,7 +7,7 @@ proc/station_erosion( var/erosion_level )
 		if( !istype( T, /turf/space ))
 			var/size = rand( 2, 10 )
 			if( !near_space( T, size+1 )) // We want to lower the station structural integrity, yet keep it habitable
-				explosion(T, 0, 0, size, 0, 0)
+				explosion_rec(T, size, 3)
 				i++
 
 	for( var/area/A in all_areas )
@@ -22,15 +22,19 @@ proc/station_erosion( var/erosion_level )
 	return
 
 // Just adds random items strewn around the map
-proc/populate_random_items()
-	var/gun_count = 0
+proc/populate_random_items( var/max_guns = 20 )
+	for( var/gun_count = 0; gun_count < max_guns;  )
+		var/area/A = pick( all_areas )
+		if( istype( A, /area/space ))
+			continue
 
-	for( var/area/A in all_areas )
-		for( var/turf/T in A )
-			if( prob( 0.001 )) // 1/10000 chance for a gun to spawn on the ground
-				new /obj/random/gun(T)
-				gun_count++
-	world << "Created [gun_count] guns around the map. Go find 'em!"
+		var/turf/simulated/floor/T = pick( A.contents )
+		if( !T )
+			continue
+		new /obj/random/gun(T)
+		gun_count++
+
+	world << "Created [max_guns] guns around the map. Go find 'em!"
 	return
 
 // Spreads all of the guns found on the map around the map
@@ -51,7 +55,7 @@ proc/spread_guns()
 	return
 
 // Makes areas around the map barricaded
-proc/populate_barricades( var/barricade_chance )
+proc/populate_barricades( var/barricade_chance = 10 )
 	var/areas_barricaded = 0
 
 	for( var/area/A in all_areas )

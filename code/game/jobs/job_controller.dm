@@ -193,10 +193,9 @@ var/global/datum/controller/occupations/job_master
 		for(var/i = job.total_positions, i > 0, i--)
 			for(var/level = 1 to 3)
 				var/list/candidates = list()
-				if(ticker.mode.name == "AI malfunction")//Make sure they want to malf if its malf
-					candidates = FindOccupationCandidates(job, level, BE_MALF)
-				else
-					candidates = FindOccupationCandidates(job, level)
+//				if(ticker.mode.name == "AI malfunction")//Make sure they want to malf if its malf
+//					candidates = FindOccupationCandidates(job, level, BE_MALF)
+				candidates = FindOccupationCandidates(job, level)
 				if(candidates.len)
 					var/mob/new_player/candidate = pick(candidates)
 					if(AssignRole(candidate, "AI"))

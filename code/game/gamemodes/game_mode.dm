@@ -298,6 +298,7 @@
 		if(BE_TRAITOR)		roletext="traitor"
 		if(BE_OPERATIVE)	roletext="operative"
 		if(BE_WIZARD)		roletext="wizard"
+		if(BE_BROODSWARM)   roletext="broodswarm"
 		if(BE_REV)			roletext="revolutionary"
 		if(BE_CULTIST)		roletext="cultist"
 		if(BE_NINJA)		roletext="ninja"
@@ -315,7 +316,9 @@
 
 	// Get a list of all the people who want to be the antagonist for this round
 	for(var/mob/new_player/player in players)
+		world << "Checking [player.key]..."
 		if(player.client.prefs.be_special & role)
+			world << "[player.key] had [roletext] enabled, so we are drafting them."
 			log_debug("[player.key] had [roletext] enabled, so we are drafting them.")
 			candidates += player.mind
 			players -= player
@@ -335,6 +338,7 @@
 		for(var/datum/mind/player in candidates)
 			for(var/job in restricted_jobs)
 				if(player.assigned_role == job)
+					world << "[player.key] has a [job] and was removed"
 					candidates -= player
 
 	/*if(candidates.len < recommended_enemies)

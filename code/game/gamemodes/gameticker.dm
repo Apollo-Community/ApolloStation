@@ -111,9 +111,7 @@ var/global/datum/controller/gameticker/ticker
 
 		src.mode = pick_random_gamemode(runnable_modes)
 
-	if(hide_mode)
-		world << "<B>The current game mode is - Hidden!</B>"
-	else
+	if( !hide_mode )
 		src.mode.announce()
 
 	job_master.ResetOccupations()
