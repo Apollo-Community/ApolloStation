@@ -215,6 +215,7 @@
 	name = "Stairs"
 	desc = "Stairs.  You walk up and down them."
 	icon_state = "rampbottom"
+	layer = TURF_LAYER+0.19 // Should be above pipes/wires, under hide layer.
 	var/obj/multiz/stairs/connected
 	var/turf/target
 	var/turf/target2
