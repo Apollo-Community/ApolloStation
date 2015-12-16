@@ -134,7 +134,6 @@
 
 	return
 
-
 /mob/proc/restrained()
 	return
 
@@ -815,6 +814,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(client && client.holder && !client.afk)
 		if(statpanel("Status"))	//not looking at that panel
+			stat("World Time:\t","[world.time]")
 			stat("Location:\t","([x], [y], [z])")
 			stat("Commit:\t", "#[config.git_commit_id]")
 			stat("Instances:","[world.contents.len]")
@@ -871,12 +871,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 			canmove = 1
 			pixel_y = V.mob_offset_y
 	else if(buckled)
-		// var/movable is defined at /obj/structure/stool/bed level
+		// var/movable is defined at /obj/structure/bed level
 		// If we're buckled to something else, such as vines, assume it's stationary.
 		if (!istype(buckled) || !buckled.movable)
 			anchored = 1
 			canmove = 0
-			if(istype(buckled,/obj/structure/stool/bed/chair) )
+			if(istype(buckled,/obj/structure/bed/chair) )
 				lying = 0
 			else
 				lying = 1

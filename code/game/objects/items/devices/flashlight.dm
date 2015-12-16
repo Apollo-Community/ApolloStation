@@ -4,7 +4,6 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	item_state = "flashlight"
-	light_color = null
 	w_class = 2
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -13,34 +12,19 @@
 
 	icon_action_button = "action_flashlight"
 	var/on = 0
-	var/brightness_on = 7 //light_range when on
-	origin_tech = "materials=1;magnets=1"
+	var/brightness_on = 4 //luminosity when on
 
 /obj/item/device/flashlight/initialize()
 	..()
+	update_brightness()
+
+/obj/item/device/flashlight/proc/update_brightness(var/mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		set_light(brightness_on)
 	else
 		icon_state = initial(icon_state)
 		set_light(0)
-
-/obj/item/device/flashlight/proc/update_brightness(var/mob/user = null)
-	user.light_color = null
-
-	if(on)
-		icon_state = "[initial(icon_state)]-on"
-		if(loc == user)
-			user.light_color = light_color
-			user.set_light(user.light_range + brightness_on)
-		else if(isturf(loc))
-			set_light(brightness_on)
-	else
-		icon_state = initial(icon_state)
-		if(loc == user)
-			user.set_light(user.light_range - brightness_on)
-		else if(isturf(loc))
-			set_light(0)
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	if(!isturf(user.loc))
@@ -49,7 +33,6 @@
 	on = !on
 	update_brightness(user)
 	return 1
-
 
 /obj/item/device/flashlight/attack(mob/living/M as mob, mob/living/user as mob)
 	add_fingerprint(user)
@@ -93,26 +76,14 @@
 	else
 		return ..()
 
-
-/obj/item/device/flashlight/pickup(mob/user)
-	if(on)
-		user.set_light(user.light_range + brightness_on)
-		set_light(0)
-
-
-/obj/item/device/flashlight/dropped(mob/user)
-	if(on)
-		user.set_light(user.light_range - brightness_on)
-		set_light(brightness_on)
-
-
 /obj/item/device/flashlight/pen
 	name = "penlight"
 	desc = "A pen-sized light, used by medical staff."
 	icon_state = "penlight"
 	item_state = ""
 	flags = CONDUCT
-	brightness_on = 3
+	slot_flags = SLOT_EARS
+	brightness_on = 2
 	w_class = 1
 
 /obj/item/device/flashlight/drone
@@ -121,7 +92,7 @@
 	icon_state = "penlight"
 	item_state = ""
 	flags = CONDUCT
-	brightness_on = 5
+	brightness_on = 2
 	w_class = 1
 
 
@@ -131,7 +102,7 @@
 	desc = "A desk lamp with an adjustable mount."
 	icon_state = "lamp"
 	item_state = "lamp"
-	brightness_on = 7
+	brightness_on = 5
 	w_class = 4
 	flags = CONDUCT
 
@@ -143,8 +114,8 @@
 	desc = "A classic green-shaded desk lamp."
 	icon_state = "lampgreen"
 	item_state = "lampgreen"
-	brightness_on = 7
-
+	brightness_on = 5
+	light_color = "#FFC58F"
 
 /obj/item/device/flashlight/lamp/verb/toggle_light()
 	set name = "Toggle light"
@@ -161,12 +132,12 @@
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
 	w_class = 2.0
 	brightness_on = 7 // Pretty bright.
-	light_color = "#FF5050"
+	light_color = "#e58775"
 	icon_state = "flare"
 	item_state = "flare"
 	icon_action_button = null	//just pull it manually, neckbeard.
 	var/fuel = 0
-	var/on_damage = 9
+	var/on_damage = 7
 	var/produce_heat = 1500
 
 /obj/item/device/flashlight/flare/New()
@@ -218,7 +189,6 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "floor1" //not a slime extract sprite but... something close enough!
 	item_state = "slime"
-	light_color = "#FFCC66"
 	w_class = 1
 	brightness_on = 6
 	on = 1 //Bio-luminesence has one setting, on.

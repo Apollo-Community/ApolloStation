@@ -87,8 +87,10 @@ var/global/datum/controller/gameticker/ticker
 			current_state = GAME_STATE_PREGAME
 			world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
 			return 0
+
 		if(secret_force_mode != "secret")
 			src.mode = config.pick_mode(secret_force_mode)
+
 		if(!src.mode)
 			src.mode = pick_random_gamemode(runnable_modes)
 	else
@@ -99,30 +101,32 @@ var/global/datum/controller/gameticker/ticker
 		world << "<span class='danger'>Serious error in mode setup!</span> Reverting to pre-game lobby."
 		return 0
 
-	job_master.ResetOccupations()
-	src.mode.pre_setup()
-	job_master.DivideOccupations() // Apparently important for new antagonist system to register specific job antags properly.
-
 	if(!src.mode.can_start())
+		qdel(mode)
 		var/totalPlayersReady = 0
 		for(var/mob/new_player/player in player_list)
 			if(player.ready)	totalPlayersReady++
-		world << "<B><font color='blue'>Silly crew, you're missing [mode.required_players - totalPlayersReady] to play [mode.name].\nPicking random gamemode instead!</B></font>"
+		world << "<B><font color='blue'>Silly crew, you're missing [mode.required_players - totalPlayersReady] crew member(s) to play [mode.name].\nPicking random gamemode instead!</B></font>"
 		current_state = GAME_STATE_PREGAME
+
 		src.mode = pick_random_gamemode(runnable_modes)
-		job_master.ResetOccupations()
 
 	if(hide_mode)
 		world << "<B>The current game mode is - Hidden!</B>"
 	else
 		src.mode.announce()
 
-	setup_economy()
-	current_state = GAME_STATE_PLAYING
+	job_master.ResetOccupations()
+	job_master.DivideOccupations() // Apparently important for new antagonist system to register specific job antags properly.
+	src.mode.pre_setup()
+
 	create_characters() //Create player characters and transfer them
 	collect_minds()
 	equip_characters()
 	data_core.manifest()
+
+	setup_economy()
+	current_state = GAME_STATE_PLAYING
 
 	callHook("roundstart")
 
@@ -179,7 +183,7 @@ var/global/datum/controller/gameticker/ticker
 		cinematic.mouse_opacity = 0
 		cinematic.screen_loc = "1,0"
 
-		var/obj/structure/stool/bed/temp_buckle = new(src)
+		var/obj/structure/bed/temp_buckle = new(src)
 		//Incredibly hackish. It creates a bed within the gameticker (lol) to stop mobs running around
 		if(station_missed)
 			for(var/mob/living/M in living_mob_list)

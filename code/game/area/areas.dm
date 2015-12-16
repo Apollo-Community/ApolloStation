@@ -191,11 +191,13 @@ area/space/atmosalert()
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
 
-/area/shuttle/arrival/pre_game
-	icon_state = "shuttle2"
-
-/area/shuttle/arrival/station
+/area/shuttle/arrival/nssapollo
 	icon_state = "shuttle"
+	name = "\improper NSS Apollo Arrival Shuttle"
+
+/area/shuttle/arrival/nssartemis
+	icon_state = "shuttle"
+	name = "\improper NSS Artemis Arrival Shuttle"
 
 /area/shuttle/escape
 	name = "\improper Emergency Shuttle"
@@ -1045,17 +1047,17 @@ area/space/atmosalert()
 	name = "\improper Fitness Room"
 	icon_state = "fitness"
 
-/area/crew_quarters/cafeteria
-	name = "\improper Cafeteria"
-	icon_state = "cafeteria"
-	environment = QUARRY
-
 /area/crew_quarters/kitchen
 	name = "\improper Kitchen"
 	icon_state = "kitchen"
 
 /area/crew_quarters/bar
 	name = "\improper Bar"
+	icon_state = "bar"
+	environment = QUARRY
+
+/area/crew_quarters/diner
+	name = "\improper Diner"
 	icon_state = "bar"
 	environment = QUARRY
 
@@ -1122,6 +1124,7 @@ area/space/atmosalert()
 	name = "\improper Holodeck"
 	icon_state = "Holodeck"
 	luminosity = 1
+	lighting_use_dynamic = 0
 
 /area/holodeck/alphadeck
 	name = "\improper Holodeck Alpha"
@@ -2033,22 +2036,25 @@ area/space/atmosalert()
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
+	lighting_use_dynamic = 0
 
 /area/turret_protected/AIsatextFS
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
+	lighting_use_dynamic = 0
 
 /area/turret_protected/AIsatextAS
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
+	lighting_use_dynamic = 0
 
 /area/turret_protected/AIsatextAP
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
-
+	lighting_use_dynamic = 0
 
 /area/turret_protected/NewAIMain
 	name = "\improper AI Main New"
@@ -2268,14 +2274,14 @@ area/space/atmosalert()
 	name = "\improper valans shuttle"
 	icon_state = "south"
 	requires_power = 0
-	 // the ship doesn't have any lights
+	lighting_use_dynamic = 0 // the ship doesn't have any lights
 	environment = PLAIN
 
 /area/adminprep/valansshiparrival
 	name = "\improper valans shuttle arrival"
 	icon_state = "south"
 	requires_power = 0
-	 // the ship doesn't have any lights
+	lighting_use_dynamic = 0 // the ship doesn't have any lights
 	environment = PLAIN
 
 /area/adminprep/valanspreparea
@@ -2304,9 +2310,56 @@ area/space/atmosalert()
 /area/asteroidfields/shuttle
 	name = "\improper Pirate Asteroid shuttle area"
 	icon_state = "south"
-	 // the ship doesn't have any lights
+	lighting_use_dynamic = 0 // the ship doesn't have any lights
 	environment = PLAIN
 
+/area/artemis/command
+	name = "NSS Artemis Command"
+	icon_state = "bridge"
+
+/area/artemis/medical
+	name = "NSS Artemis Medical Department"
+	icon_state = "medbay"
+
+/area/artemis/cargo
+	name = "NSS Artemis Cargobay"
+	icon_state = "quartoffice"
+
+/area/artemis/security
+	name = "NSS Artemis Security Department"
+	icon_state = "security"
+
+/area/artemis/science
+	name = "NSS Artemis Science Department"
+	icon_state = "research"
+
+/area/artemis/engineering
+	name = "NSS Artemis Engineering Department"
+	icon_state = "yellow"
+
+/area/artemis/civilian
+	name = "NSS Artemis Civilian Wing"
+	icon_state = "green"
+
+/area/artemis/hallway
+	name = "NSS Artemis Hallway"
+	icon_state = "hallS"
+
+/area/artemis/arrivals
+	name = "NSS Artemis Arrivals"
+	icon_state = "hallP"
+
+/area/artemis/departure
+	name = "NSS Artemis Departures"
+	icon_state = "hallA"
+
+/area/artemis/maint/port
+	name = "NSS Artemis Portside Maintenance"
+	icon_state = "pmaint"
+
+/area/artemis/maint/starboard
+	name = "NSS Artemis Starboard Maintenance"
+	icon_state = "smaint"
 
 //////////////// PLANET ///////////////////////////////////
 /area/planet/moon

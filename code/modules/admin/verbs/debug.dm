@@ -1104,6 +1104,16 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if("Clients")
 			usr << list2text(clients,",")
 
+/client/proc/cmd_debug_mobs()
+	set category = "Debug"
+	set name = "Debug Mobs"
+	set desc = "Show every mob in the round"
+
+	usr << "List of mobs:"
+	for (var/M in mob_list)
+		usr << "<A HREF='?_src_=vars;Vars=\ref[M]'>[M:name]</A> = [M:type]"
+
+
 // DNA2 - Admin Hax
 /client/proc/cmd_admin_toggle_block(var/mob/M,var/block)
 	if(!ticker)

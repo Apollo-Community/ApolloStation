@@ -86,8 +86,8 @@
 // Factor of how fast mob nutrition decreases
 #define HUNGER_FACTOR 0.05
 
-// How many units of reagent are consumed per tick, by default.
-#define REAGENTS_METABOLISM 0.2
+// How many units of reagent are consumed every Life() call, by default
+#define REAGENTS_METABOLISM 1
 
 // By defining the effect multiplier this way, it'll exactly adjust
 // all effects according to how they originally were with the 0.4 metabolism
@@ -787,8 +787,8 @@ var/list/be_special_flags = list(
 #define MINIMUM_MOLES_TO_FILTER 0.1
 
 // Reagent metabolism defines.
-#define FOOD_METABOLISM 0.4
-#define ALCOHOL_METABOLISM 0.1
+#define FOOD_METABOLISM 4*REAGENTS_METABOLISM
+#define ALCOHOL_METABOLISM REAGENTS_METABOLISM/2
 
 //Chemistry
 
@@ -863,3 +863,17 @@ var/list/be_special_flags = list(
 
 #define MIN_SUPERMATTER_LEVEL 1
 #define MAX_SUPERMATTER_LEVEL 9
+
+#define AFK_TIME 6000 // 10 minutes
+
+// Computer lighting colors
+#define COMPUTER_RED "#FF0000"
+#define COMPUTER ORANGE "#FF9900"
+#define COMPUTER_YELLOW "#FFFF00"
+#define COMPUTER_GREEN "#006600"
+#define COMPUTER_CYAN "#00FFFF"
+#define COMPUTER_BLUE "#0033CC"
+#define COMPUTER_PURPLE "#CC00FF"
+#define COMPUTER_BROWN "#996633"
+#define FIRE_PHORON_COLOR "#CC33FF"
+#define FIRE_COLOR "#FF6600"

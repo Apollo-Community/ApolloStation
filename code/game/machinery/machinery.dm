@@ -252,11 +252,27 @@ Class Procs:
 	//apc_override is needed here because AIs use their own APC when powerless
 	if(cameranet && !cameranet.checkTurfVis(get_turf(M)) && !apc_override)
 		return
+
+	// ID card access
+	if( istype( M, /obj ))
+		var/obj/O = M
+		if( !O.allowed( src ))
+			src << "<span class='warning'>You don't have sufficient access!</span>"
+			return
+
 	return 1
 
 /mob/living/silicon/robot/canUseTopic(atom/movable/M)
 	if(stat || lockcharge || stunned || weakened)
 		return
+
+	// ID card access
+	if( istype( M, /obj ))
+		var/obj/O = M
+		if( !O.allowed( src ))
+			src << "<span class='warning'>You don't have sufficient access!</span>"
+			return
+
 	return 1
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -296,6 +312,10 @@ Class Procs:
 			return 1
 
 	src.add_fingerprint(user)
+
+	// ID card access
+	if( !allowed( user ))
+		return 1
 
 	return 0
 

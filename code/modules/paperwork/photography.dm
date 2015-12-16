@@ -260,7 +260,7 @@ var/global/photo_count = 0
 	var/can_see = (dummy in viewers(world.view, viewer)) != null
 
 	dummy.loc = null
-	dummy = null	//Alas, nameless creature	//garbage collect it instead
+	qdel(dummy)
 	return can_see
 
 /obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)

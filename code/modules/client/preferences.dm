@@ -957,6 +957,8 @@ datum/preferences
 				var/datum/gear/G = gear_datums[gear_name]
 				if(G.whitelisted && !is_alien_whitelisted(user, G.whitelisted))
 					continue
+				if( istype( G, /datum/gear/account ))
+					continue
 				valid_gear_choices += gear_name
 
 			var/choice = input(user, "Select gear to add: ") as null|anything in valid_gear_choices

@@ -16,6 +16,10 @@
 	integrated_light_power = 2
 	local_transmit = 1
 
+	static_overlays
+	var/static_choice = "static"
+	var/list/static_choices = list("static", "letter", "blank")
+
 	// We need to keep track of a few module items so we don't need to do list operations
 	// every time we need them. These get set in New() after the module is chosen.
 	var/obj/item/stack/sheet/metal/cyborg/stack_metal = null
@@ -32,7 +36,6 @@
 	holder_type = /obj/item/weapon/holder/drone
 
 /mob/living/silicon/robot/drone/New()
-
 	..()
 
 	verbs += /mob/living/proc/hide
@@ -58,6 +61,8 @@
 	verbs -= /mob/living/silicon/robot/verb/Namepick
 	module = new /obj/item/weapon/robot_module/drone(src)
 
+	id_card = new /obj/item/weapon/card/id/captains_spare(src) // AI gets to do whatever they like
+
 	//Grab stacks.
 	stack_metal = locate(/obj/item/stack/sheet/metal/cyborg) in src.module
 	stack_wood = locate(/obj/item/stack/sheet/wood/cyborg) in src.module
@@ -70,6 +75,29 @@
 	//Some tidying-up.
 	flavor_text = "It's a tiny little repair drone. The casing is stamped with an NT logo and the subscript: 'NanoTrasen Recursive Repair Systems: Fixing Tomorrow's Problem, Today!'"
 	updateicon()
+
+/mob/living/silicon/robot/drone/Login()
+	..()
+
+	if(can_see_static())
+		add_static_overlays()
+
+
+/mob/living/silicon/robot/drone/Destroy()
+	destroyCard()
+
+	..()
+
+	remove_static_overlays()
+
+/mob/living/silicon/robot/drone/proc/destroyCard()
+	qdel( id_card )
+	id_card = null
+
+/mob/living/silicon/robot/drone/generate_static_overlay()
+	if(!istype(static_overlays,/list))
+		static_overlays = list()
+	return
 
 /mob/living/silicon/robot/drone/init()
 	laws = new /datum/ai_laws/drone()
@@ -133,6 +161,7 @@
 		emagged = 1
 		lawupdate = 0
 		connected_ai = null
+		remove_static_overlays()
 		clear_supplied_laws()
 		clear_inherent_laws()
 		laws = new /datum/ai_laws/syndicate_override
@@ -194,14 +223,47 @@
 //Standard robots use config for crit, which is somewhat excessive for these guys.
 //Drones killed by damage will gib.
 /mob/living/silicon/robot/drone/handle_regular_status_updates()
+	if( health <= -35 || src.stat == DEAD )
+		src << "<span class='warning'>You self-destructed due to critical damage.</span>"
+		self_destruct()
+
+	if( !in_operational_zone() )
+		src << "<span class='warning'>You self-destructed because you left your operational zone.</span>"
+		self_destruct()
+
+	if( !master_fabricator )
+		src << "<span class='warning'>You self-destructed because the drone server was destroyed.</span>"
+		self_destruct()
+
+	if( !client )
+		src << "<span class='warning'>ERROR 405: Sentience not found.</span>"
+		self_destruct()
+
+	..()
+
+/mob/living/silicon/robot/drone/handle_regular_hud_updates()
+	if(!can_see_static()) //what lets us avoid the overlay
+		if(static_overlays && static_overlays.len)
+			remove_static_overlays()
+
+/mob/living/silicon/robot/drone/proc/in_operational_zone()
 	var/turf/T = get_turf(src)
 
-	if((!T || health <= -35 || (master_fabricator && T.z != master_fabricator.z)) && src.stat != DEAD)
-		timeofdeath = world.time
-		death() //Possibly redundant, having trouble making death() cooperate.
-		gib()
-		return
-	..()
+	if( !T )
+		return 0
+
+	if( !isAlertZLevel( T.z ) && !istype( src.loc, /obj/spacepod ))
+		return 0
+
+	return 1
+
+/mob/living/silicon/robot/drone/self_destruct()
+	destroyCard()
+
+	timeofdeath = world.time
+	death() //Possibly redundant, having trouble making death() cooperate.
+	gib()
+	return
 
 //DRONE MOVEMENT.
 /mob/living/silicon/robot/drone/Process_Spaceslipping(var/prob_slip)
@@ -212,19 +274,19 @@
 /mob/living/silicon/robot/drone/proc/law_resync()
 	if(stat != 2)
 		if(emagged)
-			src << "\red You feel something attempting to modify your programming, but your hacked subroutines are unaffected."
+			src << "<span class='warning'>You feel something attempting to modify your programming, but your hacked subroutines are unaffected.</span>"
 		else
-			src << "\red A reset-to-factory directive packet filters through your data connection, and you obediently modify your programming to suit it."
+			src << "<span class='warning'>A reset-to-factory directive packet filters through your data connection, and you obediently modify your programming to suit it.</span>"
 			full_law_reset()
 			show_laws()
 
 /mob/living/silicon/robot/drone/proc/shut_down()
 	if(stat != 2)
 		if(emagged)
-			src << "\red You feel a system kill order percolate through your tiny brain, but it doesn't seem like a good idea to you."
+			src << "<span class='warning'>You feel a system kill order percolate through your tiny brain, but it doesn't seem like a good idea to you.</span>"
 		else
-			src << "\red You feel a system kill order percolate through your tiny brain, and you obediently destroy yourself."
-			death()
+			src << "<span class='warning'>You feel a system kill order percolate through your tiny brain, and you obediently destroy yourself.</span>"
+			self_destruct()
 
 /mob/living/silicon/robot/drone/proc/full_law_reset()
 	clear_supplied_laws()
@@ -267,12 +329,10 @@
 	lawupdate = 0
 	src << "<b>Systems rebooted</b>. Loading base pattern maintenance protocol... <b>loaded</b>."
 	full_law_reset()
-	src << "<br><b>You are a maintenance drone, a tiny-brained robotic repair machine</b>."
-	src << "You have no individual will, no personality, and no drives or urges other than your laws."
+	src << "<br><b>You are a maintenance drone, a tiny repair robot with no individual will, no personality, and no drives or urges other than your laws."
 	src << "Use <b>:d</b> to talk to other drones and <b>say</b> to speak silently to your nearby fellows."
-	src << "Remember,  you are <b>lawed against interference with the crew</b>. Also remember, <b>you DO NOT take orders from the AI.</b>"
-	src << "<b>Don't invade their worksites, don't steal their resources, don't tell them about the changeling in the toilets.</b>"
-	src << "<b>If a crewmember has noticed you, <i>you are probably breaking your third law</i></b>."
+	src << "Remember, you are <b>lawed against interference with the crew</b>. Also remember, <b>you DO NOT take orders from the AI.</b>"
+	src << "<big><b>If a crewmember has noticed you, <i>you are probably breaking your third law</i></b></big>."
 
 
 /mob/living/silicon/robot/drone/Bump(atom/movable/AM as mob|obj, yes)
@@ -305,6 +365,34 @@
 		src << "<span class='warning'>You are too small to pull that.</span>"
 		return
 
+/mob/living/silicon/robot/drone/proc/can_see_static()
+	return !emagged && !syndicate
+
+/mob/living/silicon/robot/drone/proc/add_static_overlays()
+	remove_static_overlays()
+	for(var/mob/living/living in mob_list)
+		if(istype(living, /mob/living/silicon))
+			continue
+		var/image/chosen
+		if(static_choice in living.static_overlays)
+			chosen = living.static_overlays[static_choice]
+		else
+			chosen = living.static_overlays[1]
+		static_overlays.Add(chosen)
+		client.images.Add(chosen)
+
+/mob/living/silicon/robot/drone/proc/remove_static_overlays()
+	if(client)
+		for(var/image/I in static_overlays)
+			client.images.Remove(I)
+	static_overlays.len = 0
+
+/mob/living/silicon/robot/drone/examinate(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
+	if(ismob(A) && src.can_see_static()) //can't examine what you can't catch!
+		usr << "Your vision module can't determine any of [A]'s features."
+		return
+
+	..()
 
 /mob/living/silicon/robot/drone/add_robot_verbs()
 

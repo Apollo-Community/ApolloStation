@@ -51,6 +51,9 @@
 /proc/isAdminLevel(var/level)
 	return level in config.admin_levels
 
+/proc/isAlertZLevel(var/level)
+	return level in config.alert_levels
+
 /proc/isNotAdminLevel(var/level)
 	return !isAdminLevel(level)
 

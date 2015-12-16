@@ -80,7 +80,7 @@ var/global/list/account_items = list()
 	if( !account )
 		return
 
-	var/obj_type = sanitizeSafe(input(src, "Enter full object type. Leave blank or as is to cancel.", "Enter Object", null))
+	var/obj_type = sanitizeSafe(input(src, "Enter the object's gear datum name. Leave blank or as is to cancel.", "Enter Object", null))
 	if( !obj_type )
 		return
 
@@ -98,7 +98,7 @@ var/global/list/account_items = list()
 	if( !account )
 		return
 
-	var/obj_type = sanitizeSafe(input(src, "Enter full object type. Leave blank or as is to cancel.", "Enter Object", null))
+	var/obj_type = sanitizeSafe(input(src, "Enter the object's gear datum name. Leave blank or as is to cancel.", "Enter Object", null))
 	if( !obj_type )
 		return
 

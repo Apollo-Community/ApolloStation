@@ -91,6 +91,8 @@ var/list/robot_verbs_default = list(
 		cell.maxcharge = 25000
 		cell.charge = 25000
 
+	id_card = new /obj/item/weapon/card/id/syndicate_command(src)
+
 	..()
 
 /mob/living/silicon/robot/New(loc,var/unfinished = 0)
@@ -108,6 +110,8 @@ var/list/robot_verbs_default = list(
 	ident = rand(1, 999)
 	updatename("Default")
 	updateicon()
+
+	id_card = new /obj/item/weapon/card/id/captains_spare(src)
 
 	radio = new /obj/item/device/radio/borg(src)
 	common_radio = radio
@@ -157,6 +161,11 @@ var/list/robot_verbs_default = list(
 	laws = new /datum/ai_laws/nanotrasen()
 	additional_law_channels += "Binary"
 	connected_ai = select_active_ai_with_fewest_borgs()
+
+	if( id_card )
+		id_card.name = "[src.name]'s ID Card"
+		id_card.assignment = "Cyborg"
+
 	if(connected_ai)
 		connected_ai.connected_robots += src
 		lawupdate = 1
@@ -174,6 +183,10 @@ var/list/robot_verbs_default = list(
 
 	radio.keyslot = new /obj/item/device/encryptionkey/syndicate(radio)
 	radio.recalculateChannels()
+
+	if( id_card )
+		id_card.name = "[src.name]'s ID Card"
+		id_card.assignment = "Syndicate Cyborg"
 
 	playsound(loc, 'sound/mecha/nominalsyndi.ogg', 75, 0)
 
@@ -529,6 +542,7 @@ var/list/robot_verbs_default = list(
 		C.toggled = 1
 		src << "\red You enable [C.name]."
 
+/*
 // this function shows information about the malf_ai gameplay type in the status screen
 /mob/living/silicon/robot/show_malf_ai()
 	..()
@@ -542,7 +556,7 @@ var/list/robot_verbs_default = list(
 			else if(ticker.mode:malf_mode_declared)
 				stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
 	return 0
-
+*/
 
 // this function displays jetpack pressure in the stat panel
 /mob/living/silicon/robot/proc/show_jetpack_pressure()
@@ -718,7 +732,13 @@ var/list/robot_verbs_default = list(
 				C.r_arm = new/obj/item/robot_parts/r_arm(C)
 				C.updateicon()
 				new/obj/item/robot_parts/chest(loc)
-				qdel()
+
+				var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
+				if(T)	mmi.loc = T
+				if(mind)	mind.transfer_to(mmi.brainmob)
+				mmi = null
+
+				qdel(src)
 			else
 				// Okay we're not removing the cell or an MMI, but maybe something else?
 				var/list/removable_components = list()
@@ -770,6 +790,17 @@ var/list/robot_verbs_default = list(
 			//This will mean that removing and replacing a power cell will repair the mount, but I don't care at this point. ~Z
 			C.brute_damage = 0
 			C.electronics_damage = 0
+
+	else if ( istype( W, /obj/item/weapon/card ) && opened)
+		if(wiresexposed)
+			user << "Close the panel first."
+		else if(id_card)
+			user << "There is already an ID card inside."
+		else
+			user.drop_item()
+			W.loc = src
+			id_card = W
+			user << "You insert the ID card."
 
 	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool))
 		if (wiresexposed)
@@ -893,7 +924,6 @@ var/list/robot_verbs_default = list(
 		return ..()
 
 /mob/living/silicon/robot/attack_hand(mob/user)
-
 	add_fingerprint(user)
 
 	if(istype(user,/mob/living/carbon/human))
@@ -903,21 +933,37 @@ var/list/robot_verbs_default = list(
 			return
 
 	if(opened && !wiresexposed && (!istype(user, /mob/living/silicon)))
-		var/datum/robot_component/cell_component = components["power cell"]
-		if(cell)
-			cell.updateicon()
-			cell.add_fingerprint(user)
-			user.put_in_active_hand(cell)
-			user << "You remove \the [cell]."
-			cell = null
-			cell_component.wrapped = null
-			cell_component.installed = 0
-			updateicon()
-		else if(cell_component.installed == -1)
-			cell_component.installed = 0
-			var/obj/item/broken_device = cell_component.wrapped
-			user << "You remove \the [broken_device]."
-			user.put_in_active_hand(broken_device)
+		var/list/choices = list( "power cell", "ID card" )
+
+		var/choice = input("Choose what you would like to remove.", "Robot", null, null) in choices
+
+		if( choice == "power cell" )
+			var/datum/robot_component/cell_component = components["power cell"]
+			if(cell)
+				cell.updateicon()
+				cell.add_fingerprint(user)
+				user.put_in_active_hand(cell)
+				user << "You remove \the [cell]."
+				cell = null
+				cell_component.wrapped = null
+				cell_component.installed = 0
+				updateicon()
+			else if(cell_component.installed == -1)
+				cell_component.installed = 0
+				var/obj/item/broken_device = cell_component.wrapped
+				user << "You remove \the [broken_device]."
+				user.put_in_active_hand(broken_device)
+			else
+				user << "<span class='warning'>There is no power cell loaded into the cyborg!</span>"
+		else if( choice == "ID card" )
+			if( id_card )
+				id_card.add_fingerprint( user )
+				user.put_in_active_hand( id_card )
+				user << "You remove \the [id_card]."
+				id_card = null
+			else
+				user << "<span class='warning'>There is no ID card loaded into the cyborg!</span>"
+
 
 //Robots take half damage from basic attacks.
 /mob/living/silicon/robot/attack_generic(var/mob/user, var/damage, var/attack_message)

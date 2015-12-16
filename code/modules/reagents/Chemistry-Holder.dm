@@ -103,10 +103,12 @@ datum
 				return the_id
 
 			trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+
 				if (!target )
 					return
 				if (!target.reagents || src.total_volume<=0)
 					return
+
 				var/datum/reagents/R = target.reagents
 				amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 				var/part = amount / src.total_volume
@@ -173,11 +175,11 @@ datum
 
 				src.trans_to(B, amount)
 
-				spawn(95)
-					BR.reaction(target, INGEST)
-					spawn(5)
-						BR.trans_to(target, BR.total_volume)
-						qdel(B)
+				//spawn(95)
+				BR.reaction(target, INGEST)
+					//spawn(5)
+				BR.trans_to(target, BR.total_volume)
+				qdel(B)
 
 				return amount
 
@@ -279,7 +281,8 @@ datum
 				update_total()
 
 			handle_reactions()
-				if(my_atom.flags & NOREACT) return //Yup, no reactions here. No siree.
+				if(my_atom.flags & NOREACT)
+					return //Yup, no reactions here. No siree.
 
 				var/reaction_occured = 0
 				do
@@ -337,9 +340,6 @@ datum
 
 									if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
 										matching_other = 1
-
-
-
 
 							if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
 								var/multiplier = min(multipliers)
@@ -459,12 +459,14 @@ datum
 				return
 
 			add_reagent(var/reagent, var/amount, var/list/data=null, var/safety = 0)
-				if(!isnum(amount)) return 1
+				if(!isnum(amount))
+					return 1
+
 				update_total()
+
 				if(total_volume + amount > maximum_volume) amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
 
 				for(var/A in reagent_list)
-
 					var/datum/reagent/R = A
 					if (R.id == reagent)
 						R.volume += amount
@@ -502,7 +504,6 @@ datum
 
 				var/datum/reagent/D = chemical_reagents_list[reagent]
 				if(D)
-
 					var/datum/reagent/R = new D.type()
 					reagent_list += R
 					R.holder = src
@@ -511,8 +512,8 @@ datum
 
 					//debug
 					//world << "Adding data"
-					//for(var/D in R.data)
-					//	world << "Container data: [D] = [R.data[D]]"
+					//for(var/datum in R.data)
+					//	world << "Container data: [datum] = [R.data[D]]"
 					//debug
 					update_total()
 					my_atom.on_reagent_change()
