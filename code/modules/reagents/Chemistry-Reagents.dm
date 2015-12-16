@@ -23,7 +23,7 @@ datum
 		var/slippery = 1	// The amount of slipperyness of the chemical. Calculation should be prob(100/x) where x is slipperyness. Slipperyness is calculated as 1 slippery/10units, and can be negative to add traction, or slow people..
 		//var/list/viruses = list()
 		var/color = "#000000" // rgb: 0, 0, 0
-		var/alpha = 128 // Alpha of this reagent.
+		var/alpha = 64 // Alpha of this reagent.
 		var/processing = 0 // Avoid using this for the time being. If you use it, make sure the chemical depletes, and never multiplies. Used in particularly high-danger chems like polyacid.
 
 		proc

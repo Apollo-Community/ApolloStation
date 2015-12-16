@@ -14,12 +14,6 @@
 	..()
 	levelupdate()
 
-/turf/simulated/proc/AddTracks(var/typepath,var/bloodDNA,var/comingdir,var/goingdir,var/bloodcolor="#A10808")
-	var/obj/effect/decal/cleanable/blood/tracks/tracks = locate(typepath) in src
-	if(!tracks)
-		tracks = new typepath(src)
-	tracks.AddTracks(bloodDNA,comingdir,goingdir,bloodcolor)
-
 /turf/simulated/Entered(atom/A, atom/OL)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
 		usr << "\red Movement is admin-disabled." //This is to identify lag problems
@@ -73,14 +67,6 @@
 				if(!spill)
 					spill = new/obj/effect/decal/chemspill()
 				spill.AddTracks(H, OL)
-				if(istype(OL, /turf/simulated/floor) && OL)
-					for(var/obj/effect/decal/chemspill/C in OL)
-						if(C)
-							spill = C
-							break
-					if(!spill)
-						spill = new/obj/effect/decal/chemspill(OL)
-					spill.AddTracks(H, src, 1)
 
 		var/noslip = 0
 		for (var/obj/structure/stool/bed/chair/C in loc)

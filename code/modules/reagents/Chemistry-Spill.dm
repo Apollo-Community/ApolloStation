@@ -77,7 +77,63 @@
 /obj/effect/decal/chemspill/proc/spillover() // Placeholder for flooding mechanics.
 	return
 
-/obj/effect/decal/chemspill/proc/AddTracks(var/atom/A, var/turf/T, var/going = 0) // Replaces bloody footprints.
+/obj/effect/decal/chemspill/proc/AddTracks(var/atom/A, var/turf/T) // Replaces bloody footprints.
+
+	if(T == get_turf(src))
+		return
+	var/footprint_dir = get_step(src,T)
+	world << "[footprint_dir]"
+
+	if(istype(A, /mob/living/carbon/human))
+		var/mob/living/carbon/human/tracker = A
+		var/datum/organ/external/l_foot = tracker.get_organ("l_foot")
+		var/datum/organ/external/r_foot = tracker.get_organ("r_foot")
+		var/hasfeet = 0
+		if((l_foot || !(l_foot.status & ORGAN_DESTROYED)) && (r_foot || !(r_foot.status & ORGAN_DESTROYED)))
+			hasfeet = 1
+		if(tracker.shoes && hasfeet)
+			var/obj/item/clothing/shoes/S = tracker.shoes
+			if(S.track_spill.total_volume)
+				var/image/footprint = image('icons/effects/effects.dmi', src, "footprint_shoe")
+				footprint.color = mix_color_from_reagents(S.track_spill.reagent_list)
+				footprint.alpha = min(mix_alpha_from_reagents(S.track_spill.reagent_list), 255)
+				S.track_spill.trans_to_holder(reagents, min(1, S.track_spill.total_volume))
+				footprint.dir = footprint_dir
+				for(var/obj/effect/decal/chemspill/C in T)
+					C.overlays += footprint
+				footprint.dir = turn(footprint_dir, 180)
+				overlays += footprint
+
+		else
+			if(tracker.track_spill.total_volume && hasfeet)
+				var/image/footprint = image('icons/effects/effects.dmi', src, "footprint_[tracker.species.footprint_type]")
+				footprint.color = mix_color_from_reagents(tracker.track_spill.reagent_list)
+				footprint.alpha = min(mix_alpha_from_reagents(tracker.track_spill.reagent_list), 255)
+				tracker.track_spill.trans_to_holder(reagents, min(1, tracker.track_spill.total_volume))
+				footprint.dir = footprint_dir
+				for(var/obj/effect/decal/chemspill/C in T)
+					C.overlays += footprint
+				footprint.dir = turn(footprint_dir, 180)
+				overlays += footprint
+	else if(istype(A, /mob/living/silicon))
+		var/mob/living/silicon/tracker = A
+		var/image/footprint = image('icons/effects/effects.dmi', src, "footprint_tracks")
+		footprint.color = mix_color_from_reagents(tracker.track_spill.reagent_list)
+		footprint.alpha = min(mix_alpha_from_reagents(tracker.track_spill.reagent_list), 255)
+		tracker.track_spill.trans_to_holder(reagents, min(1, tracker.track_spill.total_volume))
+		footprint.dir = footprint_dir
+		for(var/obj/effect/decal/chemspill/C in T)
+			C.overlays += footprint
+		footprint.dir = turn(footprint_dir, 180)
+		overlays += footprint
+	//reagents.react()
+
+
+// A is the atom passing through, leaving the tracks. Tracks are left depending on the type and size. Mobs leave footprints, claws, pawprints. Objects or mobs dragged leave smears, etc.
+// T is the turf the atom is coming from. This determines the tracks direction on both.
+// Going determines if the tracks come from, or go to, this turf. This affects a bit of direction stuff, and saves on a few calculations for previous turf tracking.
+// Generally, we want to leave 1 unit for every 2 turfs crossed. Except for large smears, which should leave 3 units per turf crossed (for a total of 3 units per turf.)
+// So: Dragging a bloody corpse leaves thrice as much blood as walking through with wet feet.
 	return
 /*
 				var/obj/item/clothing/shoes/S = H.shoes
