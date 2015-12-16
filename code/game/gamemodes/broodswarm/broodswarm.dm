@@ -22,47 +22,49 @@
 /datum/game_mode/broodswarm/announce()
 	world << "<span class='warning'>The station was brutalized by meteor impacts multiple hours ago. Communication with Central Command has been knocked out, and </span>"
 
-/datum/game_mode/broodswarm/pre_setup()
-	world << "pre_setup() called"
+/datum/game_mode/broodswarm/can_start()
 
+	if(!..())
+		return 0
+
+	var/list/candidates = get_players_for_role( BE_BROODSWARM )
+
+	if(candidates.len < required_enemies)
+		return 0
+
+	for( var/i = 0, ( i < recommended_enemies && candidates.len ), i++ )
+		var/datum/mind/M = pick(candidates)
+		broodswarm += M
+		candidates -= M
+
+	return 1
+
+/datum/game_mode/broodswarm/pre_setup()
 	station_erosion( 60 )
 
 	populate_random_items()
 
 	populate_barricades( 40 )
 
-	create_broodmother()
-
 	return 1
 
 /datum/game_mode/broodswarm/post_setup()
-	world << "post_setup() called"
+	create_broodmother()
 	greet_broodmother()
 
 	return 1
 
 /datum/game_mode/broodswarm/proc/create_broodmother()
-	var/list/possible_broodswarm = get_players_for_role( BE_BROODSWARM )
+	broodmother = pick( broodswarm )
 
-	var/datum/mind/brood = pick(possible_broodswarm)
+	if( !broodmother )
+		return
 
-	world << "[brood.name] chosen as the broodmother!"
+	var/mob/original = broodmother.current
+	var/mob/living/carbon/human/broodmother/new_brood = new( pick( xeno_spawn ))
+	broodmother.transfer_to( new_brood )
 
-	if( !brood )
-		world << "No brood available!"
-		return 0
-
-	broodswarm += brood
-	broodmother = brood
-	var/mob/living/carbon/human/H = brood.current
-	world << "[H] chosen as the broodmother!"
-	H.set_species("Broodmother")
-	H.loc = pick( blobstart )
-	possible_broodswarm.Remove(brood)
-
-	if(!broodswarm.len)
-		world << "No viable broodswarm"
-		return 0
+	qdel(original)
 
 /datum/game_mode/broodswarm/proc/greet_broodmother()
 	broodmother.current << "<B><font size=3 color=red>You are the Broodmother.</font></B>"
