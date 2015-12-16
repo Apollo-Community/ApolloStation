@@ -2,7 +2,6 @@
 #define BARRICADE_LEVEL 40 // Percentage of areas barricaded
 
 /datum/game_mode
-	// this includes admin-appointed traitors and multitraitors. Easy!
 	var/list/datum/mind/broodswarm = list()
 
 /datum/game_mode/broodswarm
@@ -24,6 +23,8 @@
 	world << "<span class='warning'>The station was brutalized by meteor impacts multiple hours ago. Communication with Central Command has been knocked out, and </span>"
 
 /datum/game_mode/broodswarm/pre_setup()
+	world << "pre_setup() called"
+
 	station_erosion( 60 )
 
 	populate_random_items()
@@ -35,12 +36,13 @@
 	return 1
 
 /datum/game_mode/broodswarm/post_setup()
+	world << "post_setup() called"
 	greet_broodmother()
 
 	return 1
 
 /datum/game_mode/broodswarm/proc/create_broodmother()
-	var/list/possible_broodswarm = list( get_players_for_role(BE_BROODSWARM))
+	var/list/possible_broodswarm = get_players_for_role( BE_BROODSWARM )
 
 	var/datum/mind/brood = pick(possible_broodswarm)
 
@@ -65,7 +67,6 @@
 /datum/game_mode/broodswarm/proc/greet_broodmother()
 	broodmother.current << "<B><font size=3 color=red>You are the Broodmother.</font></B>"
 	show_objectives(broodmother)
-
 
 /datum/game_mode/broodswarm/declare_completion()
 	..()

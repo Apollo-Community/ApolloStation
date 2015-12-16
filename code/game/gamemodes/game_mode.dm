@@ -292,6 +292,8 @@
 	//var/list/drafted = list()
 	//var/datum/mind/applicant = null
 
+	world << "[role] passed to get_players_for_role"
+
 	var/roletext
 	switch(role)
 		if(BE_CHANGELING)	roletext="changeling"
