@@ -24,7 +24,7 @@
 		grow()
 
 /obj/item/organ/broodswarm/hive_tumor/proc/grow()
-	new /obj/structure/broodswam/large/hive_tumor( get_turf( src ))
+	new /obj/machinery/broodswam/large/hive_tumor( get_turf( src ))
 
 	src.visible_message("<span class='warning'>The hive tumor embeds itself into the floor, oozing a terrible mess!</span>")
 

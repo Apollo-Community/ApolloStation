@@ -3,6 +3,7 @@
 
 /datum/game_mode
 	var/list/datum/mind/broodswarm = list()
+	var/obj/machinery/broodswam/large/hive_tumor/hive
 
 /datum/game_mode/broodswarm
 	name = "broodswarm"
@@ -70,3 +71,23 @@
 /datum/game_mode/broodswarm/declare_completion()
 	..()
 	return//Traitors will be checked as part of check_extra_completion. Leaving this here as a reminder.
+
+/datum/controller/gameticker/proc/addToHive( var/obj/machinery/M )
+	if( !ticker.mode )
+		return
+
+	var/obj/machinery/broodswam/large/hive_tumor/hive = ticker.mode.hive
+	if( !hive )
+		return
+
+	hive.addStructure( M )
+
+/datum/controller/gameticker/proc/removeFromHive( var/obj/machinery/M )
+	if( !ticker.mode )
+		return
+
+	var/obj/machinery/broodswam/large/hive_tumor/hive = ticker.mode.hive
+	if( !hive )
+		return
+
+	hive.removeStructure( M )

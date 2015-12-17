@@ -8,6 +8,6 @@
 /obj/cell_spawner/blotch/New()
 	..()
 
-	new /obj/structure/broodswam/large/hive_tumor( get_turf( src ))
+	new /obj/machinery/broodswam/large/hive_tumor ( get_turf( src ))
 
 	qdel( src )
