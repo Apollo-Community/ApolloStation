@@ -21,7 +21,7 @@
 		if(!istype(src, /mob/living/carbon/brain))
 			if(!istype(M, /mob/living/carbon/slime))
 				if(stat != 2)
-					if(health > -70)
+					if(health > -maxHealth)
 
 						for(var/mob/living/carbon/slime/met in view())
 							if(met.Victim == M && met != src)
@@ -54,7 +54,7 @@
 	else
 		icon_state = "[colour] baby slime eat"
 
-	while(Victim && M.health > -70 && stat != 2)
+	while(Victim && M.health > -M.maxHealth && stat != 2)
 		canmove = 0
 
 		if(Adjacent(M))
@@ -130,7 +130,7 @@
 	anchored = 0
 
 	if(M)
-		if(M.health <= -70)
+		if(M.health <= -M.maxHealth)
 			M.canmove = 0
 			if(!client)
 				if(Victim && !rabid && !attacked)
