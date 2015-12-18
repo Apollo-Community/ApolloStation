@@ -382,6 +382,7 @@ area/space/atmosalert()
 	name = "\improper Vox Skipjack"
 	icon_state = "yellow"
 	requires_power = 0
+	
 
 /area/shuttle/laborcamp/station
 	name = "\improper Labor Camp Shuttle"
@@ -452,6 +453,7 @@ area/space/atmosalert()
 	name = "\improper Mercenary Base"
 	icon_state = "syndie-ship"
 	requires_power = 0
+	lighting_use_dynamic = 0
 
 /area/syndicate_mothership/control
 	name = "\improper Mercenary Control Room"
@@ -520,6 +522,7 @@ area/space/atmosalert()
 	icon_state = "yellow"
 	requires_power = 0
 	rad_shielded = 1
+	lighting_use_dynamic = 0
 
 /area/syndicate_station/start
 	name = "\improper Mercenary Forward Operating Base"
@@ -571,6 +574,7 @@ area/space/atmosalert()
 /area/vox_station
 	requires_power = 0
 	rad_shielded = 1
+	lighting_use_dynamic = 0
 
 /area/vox_station/transit
 	name = "\improper bluespace"
