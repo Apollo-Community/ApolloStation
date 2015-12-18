@@ -313,6 +313,11 @@ Class Procs:
 
 	src.add_fingerprint(user)
 
+	// Have to check if there's an internal ID, otherwise people can't open UI if they put their card inside
+	var/internal_ID = locate( /obj/item/weapon/card/id ) in src
+	if( check_access( internal_ID ))
+		return 0
+
 	// ID card access
 	if( !allowed( user ))
 		return 1

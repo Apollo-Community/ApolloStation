@@ -20,6 +20,10 @@
 	//TODO: fix husking
 	if( ((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD)
 		ChangeToHusk()
+
+	// HACK: since death threshold is hardcoded for humans (-100) we have to make a special check for monkeys (-75)...
+	if( ismonkey(src) && health <= -maxHealth)
+		health = config.health_threshold_dead
 	return
 
 /mob/living/carbon/human/adjustBrainLoss(var/amount)
