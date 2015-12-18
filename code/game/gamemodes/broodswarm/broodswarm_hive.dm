@@ -7,10 +7,10 @@
 	interact_offline = 1
 
 /obj/machinery/broodswarm/New()
+	..()
+
 	if( !ticker.addToHive( src ))
 		qdel( src )
-
-	..()
 
 /obj/machinery/broodswarm/Destroy()
 	ticker.removeFromHive( src )

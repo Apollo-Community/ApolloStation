@@ -80,14 +80,19 @@
 	if( !hive )
 		return
 
+	world << "Adding [M]"
 	hive.addStructure( M )
+
+	return 1
 
 /datum/controller/gameticker/proc/removeFromHive( var/obj/machinery/M )
 	if( !ticker.mode )
-		return
+		return 0
 
 	var/obj/machinery/broodswam/large/hive_tumor/hive = ticker.mode.hive
 	if( !hive )
-		return
+		return 0
 
 	hive.removeStructure( M )
+
+	return 1
