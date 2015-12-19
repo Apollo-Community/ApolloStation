@@ -29,7 +29,6 @@ var/list/postfix = list("metal" = "metallic", "glass" = "glaseous")
 	icon_state = "polysteel-1"
 	item_state = "polysteel"
 	var/list/materials = list()
-	var/unique_id = ""
 
 /obj/item/stack/sheet/alloy/New(var/list/comp)
 	..()
@@ -49,7 +48,7 @@ var/list/postfix = list("metal" = "metallic", "glass" = "glaseous")
 	name = "[pre][post] alloy"
 	for(var/M in materials)
 		materials[M] /= sum
-		unique_id += "[M][materials[M]]"
+		stacktype += "[M][materials[M]]"
 
 /obj/item/stack/sheet/alloy/update_icon()
 	switch(amount)
