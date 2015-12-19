@@ -67,15 +67,7 @@ var/list/postfix = list("metal" = "metallic", "glass" = "glaseous")
 /obj/item/stack/sheet/alloy/split(var/tamount)
 	var/obj/item/stack/sheet/alloy/stack = ..(tamount)
 	stack.materials = materials.Copy()
-	stack.unique_id = unique_id
-	stack.name = name
-	return stack
-
-// ditto
-/obj/item/stack/sheet/alloy/transfer_to(var/tamount)
-	var/obj/item/stack/sheet/alloy/stack = ..(tamount)
-	stack.materials = materials.Copy()
-	stack.unique_id = unique_id
+	stack.stacktype = stacktype
 	stack.name = name
 	return stack
 
