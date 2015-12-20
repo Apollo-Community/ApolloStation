@@ -12,6 +12,6 @@ datum/controller/transfer_controller/Destroy()
 
 datum/controller/transfer_controller/proc/process()
 	currenttick = currenttick + 1
-	if (world.time >= timerbuffer - 600 && !emergency_shuttle.online())
+	if (world.time >= timerbuffer - 600 && !emergency_shuttle.online() && emergency_shuttle.location())
 		vote.autotransfer()
 		timerbuffer = timerbuffer + config.vote_autotransfer_interval
