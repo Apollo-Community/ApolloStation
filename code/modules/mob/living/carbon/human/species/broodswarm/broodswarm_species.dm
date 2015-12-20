@@ -71,6 +71,11 @@
 
 	..()
 
+/datum/species/broodswarm/handle_death(var/mob/living/carbon/human/H)
+	H.visible_message("<span class='warning>[H] explodes in a shower of gore!</span>")
+	new /obj/effect/gibspawner/human( get_turf( H ))
+	qdel( H )
+
 /datum/species/broodswarm/proc/regenerate(var/mob/living/carbon/human/H)
 	var/heal_rate = blotch_heal_rate
 	var/mend_prob = 10
@@ -110,6 +115,10 @@
 
 	return 0
 
+/datum/species/broodswarm/proc/nodule(var/mob/living/carbon/human/H, var/turf/T)
+	var/obj/machinery/broodswam/nodule/healer/respawn = new( T )
+	respawn.take_occupant( H )
+
 /datum/species/broodswarm/broodmother
 	name = "Broodmother"
 	slowdown = 1
@@ -139,7 +148,7 @@
 
 /datum/species/broodswarm/broodmother/handle_login_special(var/mob/living/carbon/human/H)
 	..()
-	// Make sure only one official broodmother exists at any point.
+	// Make sure only one broodmother exists at any point.
 
 	if(!broodmother_exists(1,H))
 		H.real_name = "Broodmother"
@@ -147,6 +156,20 @@
 	else
 		H.real_name = "Brooddaughter"
 		H.name = H.real_name
+
+/datum/species/broodswarm/broodmother/handle_death(var/mob/living/carbon/human/H)
+	H.visible_message("<span class='warning>[H] explodes in a shower of gore!</span>")
+	new /obj/effect/gibspawner/human( get_turf( H ))
+
+	var/turf/T
+
+	if( !ticker.mode.hive )
+		H << "<span class='warning>Since the hive tumor was never placed, we are regenerating somewhere random...</span>"
+		T = pick( xeno_spawn )
+	else
+		T = get_turf( ticker.mode.hive )
+
+	nodule( H, T )
 
 /datum/hud_data/broodswarm
 	icon = 'icons/mob/screen1_alien.dmi'

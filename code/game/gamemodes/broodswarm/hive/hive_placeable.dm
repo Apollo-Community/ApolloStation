@@ -1,3 +1,7 @@
+/*
+	HIVE CORES
+	These are created by the hive tumor, and are placed on blotch in order to create hive structures
+*/
 /obj/item/broodswarm/placeable
 	var/spawn_type // What kind of structure is created when this is placed?
 	var/uses = 1
