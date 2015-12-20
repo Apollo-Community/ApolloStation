@@ -320,6 +320,7 @@ Class Procs:
 
 	// ID card access
 	if( !allowed( user ))
+		user << "\red Access denied."
 		return 1
 
 	return 0
