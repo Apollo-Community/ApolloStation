@@ -71,7 +71,12 @@ var/list/postfix = list("metal" = "metallic", "glass" = "glaseous")
 	stack.name = name
 	return stack
 
-/obj/item/stack/sheet/alloy/add_to_stacks(var/tamount)
+/obj/item/stack/sheet/alloy/transfer_to(obj/item/stack/S, var/tamount)
+	var/obj/item/stack/sheet/alloy/stack = ..(S, tamount)
+	stack.materials = materials.Copy()
+	stack.stacktype = stacktype
+	stack.name = name
+	return stack
 
 /obj/item/stack/attackby(obj/item/W as obj, mob/user as mob)
 
