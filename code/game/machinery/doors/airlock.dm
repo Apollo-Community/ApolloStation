@@ -974,6 +974,36 @@ About the new airlock wires panel:
 			user << "<span class='notice'>You force open the airlock.</span>"
 			playsound(src.loc, 'sound/effects/xenoDoorForced.ogg', 100, 1)
 			open(1)
+	else if(istype(C, /obj/item/weapon/doorjack))
+		for(var/obj/item/weapon/doorjack/D in get_turf(src))
+			// there's already a doorjack in place
+			if(!isnull(D.door) && D.door == src)
+				return
+		if(locked)
+			user << "\red The airlock's bolts prevent it from being forced open."
+		else if (!welded && !operating)
+			if(density)
+				user << "You slide the door jack in the airlock and start forcing it open."
+				playsound(user.loc, 'sound/effects/xenoDoorForced.ogg', 100, 3)
+				for(var/mob/M in range(2, src))
+					M << "\red [user] begins to force the airlock open!"
+				if(!do_after(user, 250))
+					user << "\red The door jack snaps back into its retracted position!"
+					return
+				user << "With a loud creak, you force the airlock fully open."
+				playsound(user.loc, 'sound/effects/xenoDoorForced.ogg', 100, 3)
+				open(1)
+			else
+				user << "You rapidly deploy the door jack in the doorway."
+				for(var/mob/M in range(2, src))
+					M << "\red [user] places a door jack on the airlock!"
+			var/obj/item/weapon/doorjack/D = C
+			user.drop_item()
+			D.loc = get_turf(src)
+			D.icon_state = "jack_deployed"
+			D.anchored = 1
+			D.door = src
+			autoclose = 0
 	else
 		..()
 	return
@@ -1022,6 +1052,10 @@ About the new airlock wires panel:
 		//despite the name, this wire is for general door control.
 		//Bolts are already covered by the check for locked, above
 		if( !arePowerSystemsOn() || isWireCut(AIRLOCK_WIRE_OPEN_DOOR) )
+			return
+	for(var/obj/item/weapon/doorjack/D in get_turf(src))
+		// don't allow the door to be close if it has a doorjack in it
+		if(!isnull(D.door) && D.door == src)
 			return
 	if(safe)
 		for(var/turf/turf in locs)
