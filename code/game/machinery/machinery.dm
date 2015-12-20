@@ -320,7 +320,7 @@ Class Procs:
 
 	// ID card access
 	if( !allowed( user ))
-		user << "\red Access denied."
+		user << "<span class='warning'>Access denied.</span>"
 		return 1
 
 	return 0
