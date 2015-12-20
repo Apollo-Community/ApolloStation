@@ -127,10 +127,7 @@
 	if( T.containsCell( type ))
 		return 0
 
-	if( !isfloor( T ))
-		return 0
-
-	if( T.contains_dense_objects() )
+	if( !T.Enter( src ))
 		return 0
 
 	return 1
