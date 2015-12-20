@@ -6,7 +6,7 @@
 
 /obj/item/organ/broodswarm
 	name = "broodswarm organ"
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/broodswarm.dmi'
 	icon_state = "hive_tumor"
 	desc = "A repulsive undulating blob of flesh."
 

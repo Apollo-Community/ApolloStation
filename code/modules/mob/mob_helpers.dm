@@ -125,6 +125,13 @@
 			return 1
 	return 0
 
+/proc/isbroodmother(A)
+	if( istype( A, /mob/living/carbon/human ))
+		var/mob/living/carbon/human/H = A
+		if( istype( H.species, /datum/species/broodswarm/broodmother ))
+			return 1
+	return 0
+
 /proc/isliving(A)
 	if(istype(A, /mob/living))
 		return 1

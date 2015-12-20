@@ -337,6 +337,7 @@
 #include "code\game\gamemodes\broodswarm\broodswarm_hive.dm"
 #include "code\game\gamemodes\broodswarm\station_decay.dm"
 #include "code\game\gamemodes\broodswarm\hive\hive_pit.dm"
+#include "code\game\gamemodes\broodswarm\hive\hive_placeable.dm"
 #include "code\game\gamemodes\broodswarm\hive\hive_tumor.dm"
 #include "code\game\gamemodes\calamity\calamity.dm"
 #include "code\game\gamemodes\changeling\changeling.dm"

@@ -45,3 +45,5 @@
 	// Contains icon generation and language information, set during New().
 	// Prevents a bunch of runtime errors if we set it species for all mobs
 	var/datum/species/species = null
+
+	var/brood_flesh = 0 // Used by broodswarm mobs to carry meat around

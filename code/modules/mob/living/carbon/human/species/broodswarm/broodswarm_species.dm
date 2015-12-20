@@ -78,6 +78,10 @@
 		heal_rate = blotch_heal_rate / 3
 		mend_prob = 1
 
+	if (istype( H.loc, /obj/machinery/broodswam/large/hive_pit))
+		heal_rate = blotch_heal_rate*2
+		mend_prob = 50
+
 	//first heal damages
 	if (H.getBruteLoss() || H.getFireLoss() || H.getOxyLoss() || H.getToxLoss())
 		H.adjustBruteLoss(-heal_rate)
@@ -127,11 +131,15 @@
 		/mob/living/carbon/human/proc/expunge_tumor,
 		)
 
+/datum/species/broodswarm/broodmother/handle_post_spawn(var/mob/living/carbon/human/H)
+	..()
+
+	H.mob_size = 20
+	H.pixel_x = -16
+
 /datum/species/broodswarm/broodmother/handle_login_special(var/mob/living/carbon/human/H)
 	..()
 	// Make sure only one official broodmother exists at any point.
-
-	H.pixel_x = -16
 
 	if(!broodmother_exists(1,H))
 		H.real_name = "Broodmother"
