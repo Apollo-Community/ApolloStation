@@ -33,7 +33,7 @@ var/list/postfix = list("metal" = "metallic", "glass" = "glaseous")
 /obj/item/stack/sheet/alloy/New(var/list/comp)
 	..()
 	if(!comp)
-		usr << "\red This should never appear. There HAS to be a composition list!"
+		usr << "<span class='warning'>This should never appear. There HAS to be a composition list!</span>"
 		return
 	materials = comp
 	var/pre = ""
@@ -77,8 +77,6 @@ var/list/postfix = list("metal" = "metallic", "glass" = "glaseous")
 	stack.stacktype = stacktype
 	stack.name = name
 	return stack
-
-/obj/item/stack/attackby(obj/item/W as obj, mob/user as mob)
 
 /*
  * Metal alloy

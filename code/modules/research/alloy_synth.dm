@@ -47,10 +47,10 @@ Creates alloys that can be used to make stronger structures or more complex allo
 
 		if(!isnull(hoppers[hopper_str]))
 			if(!istype(O, hoppers[hopper_str]))
-				user << "\red The [hopper_str] hopper is already loaded with [hopper]!"
+				user << "<span class='warning'>The [hopper_str] hopper is already loaded with [hopper]!</span>"
 				return
 			if(hopper.amount >= 50)
-				user << "\red The [hopper_str] hopper of [src] is full!"
+				user << "<span class='warning'>The [hopper_str] hopper of [src] is full!</span>"
 				return
 
 		var/obj/item/stack/sheet/S = O
