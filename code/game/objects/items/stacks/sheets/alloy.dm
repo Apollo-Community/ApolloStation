@@ -36,12 +36,12 @@ var/global/list/alloy_postfix = list("metal" = "metallic", "glass" = "glaseous")
 	if(!comp)
 		usr << "<span class='warning'>This should never appear. There HAS to be a composition list!</span>"
 		return
-	materials = comp
+	materials = comp.Copy()
 	var/pre = ""
 	var/post = ""
 	var/sum = 0
-	for(var/M in comp)
-		sum += comp[M]
+	for(var/M in materials)
+		sum += materials[M]
 		if(alloy_prefix[M])
 			pre = alloy_prefix[M]
 		else
