@@ -252,8 +252,10 @@ var/list/area/unlogged_areas = list( /area/tdome )
 	Tajara
 	Unathi
 	Wryn */
-var/unwhitelisted_alien = "Skrell"
-var/list/unwhitelisted_aliens = list( unwhitelisted_alien, "Machine", "Nucleation" )
+
+var/list/whitelisted_aliens = list( "Diona", "Skrell", "Tajaran", "Unathi", "Wryn" )
+var/unwhitelisted_alien = "Wryn" // Default if the week calculation screws up for some reason.
+var/list/unwhitelisted_aliens = list( "Machine", "Nucleation" )
 
 // Random round statistics
 var/datum/round_stats/statistics = new()
