@@ -55,3 +55,19 @@
 		if(prob(rot_prob))
 			usr << "Wall is rotting"
 			..()
+
+// osimetallic walls handle explosions much better - they are never guaranteed to get dismantled
+/turf/simulated/wall/ex_act(severity)
+	if(materials["osmium"])
+		var/damage = 150 - (materials["osmium"] * 200)
+		switch(severity)
+			if(1.0)
+				var/damage_prob = 75 + (materials["osmium"] * 50)
+				if(prob(damage))
+					take_damage(rand(damage, damage + 100))
+				else
+					dismantle_wall(1,1)
+			if(2.0)
+				take_damage(rand(0, damage + 100))
+			if(3.0)
+				desc += " It has a few small scorch marks on it."
