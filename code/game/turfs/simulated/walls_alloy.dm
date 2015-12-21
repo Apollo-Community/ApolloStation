@@ -38,6 +38,11 @@
 		damage_cap += 50
 		armor -= materials["diamond"] * 0.75
 
+	// iron - weaker version of diamond
+	if(materials["iron"])
+		damage_cap += 15
+		armor -= materials["iron"] * 0.33
+
 
 
 // urametallic walls give partial or full rot immunity
