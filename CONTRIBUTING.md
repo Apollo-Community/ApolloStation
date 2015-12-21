@@ -7,7 +7,7 @@ Once a developer has read your issue he will usually add some labels to it, in o
 
 - Bug: Actuall bug with the game's code.
 - Mapping: An issue related to the maps and is fixed with the map editor.
-- Missing assets: In game sprites, icons, sounds, maps etc.
+- Assets: Issue related to the in-game sprites, icons, sounds etc.
 - Suggestion: Any new feature request/new idea that needs discussion.
 - Easy to fix: An issue with a theoretical easy fix, good for new coders looking to get started fixing bugs.
 - Priority low/med/high/urgent: Ranks the issue on how important it is to get it fixed and how soon.
