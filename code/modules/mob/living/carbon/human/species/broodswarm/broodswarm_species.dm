@@ -72,7 +72,7 @@
 	..()
 
 /datum/species/broodswarm/handle_death(var/mob/living/carbon/human/H)
-	H.visible_message("<span class='warning>[H] explodes in a shower of gore!</span>")
+	H.visible_message("<span class='warning'>[H] explodes in a shower of gore!</span>")
 	new /obj/effect/gibspawner/human( get_turf( H ))
 	qdel( H )
 
@@ -158,13 +158,13 @@
 		H.name = H.real_name
 
 /datum/species/broodswarm/broodmother/handle_death(var/mob/living/carbon/human/H)
-	H.visible_message("<span class='warning>[H] explodes in a shower of gore!</span>")
+	H.visible_message("<span class='warning'>[H] explodes in a shower of gore!</span>")
 	new /obj/effect/gibspawner/human( get_turf( H ))
 
 	var/turf/T
 
 	if( !ticker.mode.hive )
-		H << "<span class='warning>Since the hive tumor was never placed, we are regenerating somewhere random...</span>"
+		H << "<span class='warning'>Since the hive tumor was never placed, we are regenerating somewhere random...</span>"
 		T = pick( xeno_spawn )
 	else
 		T = get_turf( ticker.mode.hive )

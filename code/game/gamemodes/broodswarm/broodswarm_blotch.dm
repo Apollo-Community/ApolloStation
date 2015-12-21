@@ -1,5 +1,5 @@
 /atom/movable/cell/blotch
-	name = "the blotch"
+	name = "blotch"
 	desc = "A horrible fleshy mess, it sticks to the bottom of your shoes."
 
 	anchored = 1
@@ -10,13 +10,16 @@
 	icon_state = "1"
 	layer = 2.1
 
-	age_max = 0 // The tile will try to spread 4 times and then sleep until awoken
+	light_color = "#660033"
+	light_range = 2
+
+	age_max = 0
 	master_type = /datum/cell_auto_master/blotch
 
 	var/global/health_per_process = 10
 	var/global/health_states = 5
 	var/health = 10
-	var/max_health = 100
+	var/max_health = 100 // The tile will try to spread until its at max health
 	var/min_health = 1
 
 /atom/movable/cell/blotch/New()
@@ -51,6 +54,18 @@
 		var/turf/T = get_step( src,direction )
 		if( checkTurf( T ))
 			PoolOrNew( /atom/movable/cell/blotch, list( T, master ))
+
+/atom/movable/cell/blotch/examine(mob/user)
+	..()
+
+	if( health <= max_health/4 )
+		user << "It appears to be soft."
+	else if( health <= max_health/2 )
+		user << "It appears to be partially hardened."
+	else if( health <= (max_health/4)*3 )
+		user << "It appears to be almost fully hardened."
+	else
+		user << "It appears to be fully hardened."
 
 /atom/movable/cell/blotch/shouldProcess()
 	if( max_health )

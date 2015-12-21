@@ -66,7 +66,7 @@
 	if( !occupant )
 		return
 
-	visible_message( "<span class='warning>[occupant] bursts out from the [src]!</span>" )
+	visible_message( "<span class='warning'>[occupant] bursts out from the [src]!</span>" )
 
 	occupant.Move( get_turf( src ))
 	occupant = null

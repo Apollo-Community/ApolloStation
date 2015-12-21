@@ -36,8 +36,7 @@ proc/populate_random_items( var/max_guns = 20 )
 		new /obj/random/gun(T)
 		gun_count++
 
-	world << "Created [max_guns] guns around the map. Go find 'em!"
-	return
+		return
 
 // Spreads all of the guns found on the map around the map
 proc/spread_guns()
@@ -46,26 +45,20 @@ proc/spread_guns()
 	for( var/area/A in all_areas )
 		for( var/obj/item/weapon/gun/G in A )
 			guns.Add( G )
-			world << "Added [G] to guns."
 
 	for( var/obj/item/weapon/gun/G in guns )
 		var/area/A = pick( all_areas )
 		var/turf/simulated/floor/T = pick( A.contents )
-		world << "Moved [G] from [G.loc] to [T]."
 		G.loc = T
 
 	return
 
 // Makes areas around the map barricaded
 proc/populate_barricades( var/barricade_chance = 10 )
-	var/areas_barricaded = 0
-
 	for( var/area/A in all_areas )
 		if( prob( barricade_chance ))
 			barricade_area( A )
-			areas_barricaded++
 
-	world << "Barricaded [areas_barricaded] areas! Good luck getting inside!"
 	return
 
 // Barricades the given area

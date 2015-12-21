@@ -10,6 +10,9 @@ w/*----------- HIVE TUMOR ------------*/
 	var/max_structures = 6
 	var/brood_flesh = 0
 
+	light_color = "#660033"
+	light_range = 10
+
 /obj/machinery/broodswam/large/hive_tumor/New()
 	controller = new( get_turf( src ))
 
@@ -51,7 +54,8 @@ w/*----------- HIVE TUMOR ------------*/
 		return
 
 	if(href_list["hive_pit"])
-		new /obj/item/broodswarm/placeable/hive_pit( get_turf( src ))
+		var/obj/item/broodswarm/placeable/hive_pit/P = new( get_turf( src ))
+		src.visible_message( "<span class='warning'>The [src] opens up and drops out a [P]</span>" )
 
 	nanomanager.update_uis(src)
 	add_fingerprint(usr)
@@ -93,7 +97,6 @@ w/*----------- HIVE TUMOR ------------*/
 	if( M in hive_structures )
 		return 0
 
-	world << "Addded [M]"
 	hive_structures.Add( M )
 
 	return hive_structures.len

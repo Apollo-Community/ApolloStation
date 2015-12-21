@@ -14,6 +14,12 @@
 	var/heal_rate = 6 // how much health is restored each tick
 	var/mend_chance = 50 // percent chance each tick to mend fractures
 
+/obj/machinery/broodswam/large/hive_pit/New()
+	..()
+
+	if( !ticker.addToHive( src ))
+		qdel( src )
+
 /obj/machinery/broodswam/large/hive_pit/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin))	// ooo secretss
 		user << "You throw the [W.name] into the pit, but feel like this isn't the time for that..."
@@ -132,16 +138,16 @@
 		H.adjustFireLoss(-heal_rate)
 		H.adjustOxyLoss(-heal_rate)
 		H.adjustToxLoss(-heal_rate)
-		if (prob(5))
-			H << "<span class='broodswarm'>A membrane forms over your wounds...</span>"
+		if (prob(10))
+			occupant << "<span class='broodswarm'>A membrane forms over your wounds...</span>"
 		return 1
 
 	//next internal organs
 	for(var/datum/organ/internal/I in H.internal_organs)
 		if(I.damage > 0)
 			I.damage = max(I.damage - heal_rate, 0)
-			if (prob(5))
-				H << "<span class='broodswarm'>Your [I.parent_organ] begins to rapidly regenerate...</span>"
+			if (prob(20))
+				occupant << "<span class='broodswarm'>Your [I.parent_organ] begins to rapidly regenerate...</span>"
 			return 1
 
 	//next mend broken bones
@@ -149,7 +155,7 @@
 		if (E.status & ORGAN_BROKEN)
 			if (prob(mend_prob))
 				if (E.mend_fracture())
-					H << "<span class='broodswarm'>You feel something mend itself inside your [E.display_name]...</span>"
+					occupant << "<span class='broodswarm'>You feel something mend itself inside your [E.display_name]...</span>"
 			return 1
 
 	return 2

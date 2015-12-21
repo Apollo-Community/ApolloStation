@@ -80,7 +80,6 @@
 	if( !hive )
 		return
 
-	world << "Adding [M]"
 	hive.addStructure( M )
 
 	return 1
