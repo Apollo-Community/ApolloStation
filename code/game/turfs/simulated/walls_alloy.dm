@@ -1,6 +1,9 @@
 /turf/simulated/wall/alloy
 	name = "alloy wall"
 	desc = "An alloy wall."
+
+	damage_cap = 300
+
 	var/list/materials = list()
 	var/unique_id = ""
 
@@ -35,18 +38,18 @@
 
 	// diamond - reduces damage and increases health
 	if(materials["diamond"])
-		damage_cap += materials["diamond"] * 200
-		armor -= materials["diamond"] * 0.75
+		damage_cap += materials["diamond"] * 1400
+		armor -= materials["diamond"] * 0.9
 
 	// iron - weaker version of diamond
 	if(materials["iron"])
-		damage_cap += materials["iron"] * 100
-		armor -= materials["iron"] * 0.33
+		damage_cap += materials["iron"] * 700
+		armor -= materials["iron"] * 0.7
 
 // urametallic walls give partial or full rot immunity
 /turf/simulated/wall/alloy/rot()
 	if(materials["uranium"])
-		var/rot_prob = 100 - (materials["uranium"] * 200)
+		var/rot_prob = 100 - (materials["uranium"] * 800)
 		usr << "Uranium percentage: [materials["uranium"]]"
 		usr << "Rot probability: [rot_prob]"
 		if(prob(rot_prob))
