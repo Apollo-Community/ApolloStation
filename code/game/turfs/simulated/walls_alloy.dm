@@ -27,6 +27,12 @@
 		unique_id += "[M][materials[M]]"
 	desc += " This one is plated with a [pre][post] alloy."
 
+	// alloy benefits, woo!
+
+	// phoron - +100 max temp. per %, up to 5000
+	if(materials["solid phoron"])
+		max_temperature = max_temperature + (100 * (2 * materials["solid phoron"] * 100))
+
 
 // urametallic walls give partial or full rot immunity
 /turf/simulated/wall/alloy/rot()
