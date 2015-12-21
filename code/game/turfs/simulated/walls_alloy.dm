@@ -31,8 +31,7 @@
 
 	// phoron - +100 max temp. per %, up to 5000
 	if(materials["solid phoron"])
-		max_temperature = max_temperature + (100 * (2 * materials["solid phoron"] * 100))
-
+		max_temperature += (100 * (2 * materials["solid phoron"] * 100))
 
 // urametallic walls give partial or full rot immunity
 /turf/simulated/wall/alloy/rot()
