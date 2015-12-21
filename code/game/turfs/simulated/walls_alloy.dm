@@ -8,6 +8,9 @@
 /turf/simulated/wall/alloy/proc/set_materials(var/list/comp)
 	if(!comp)
 		return
+	// why set it twice? this has actually proved to be an issue
+	if(materials.len >= 2 && unique_id != "")
+		return
 	materials = comp.Copy()
 	var/pre = ""
 	var/post = ""
@@ -23,3 +26,14 @@
 		materials[M] /= sum
 		unique_id += "[M][materials[M]]"
 	desc += " This one is plated with a [pre][post] alloy."
+
+
+// urametallic walls give partial or full rot immunity
+/turf/simulated/wall/alloy/rot()
+	if(materials["uranium"])
+		var/rot_prob = 100 - (2 * materials["uranium"] * 100)
+		usr << "Uranium percentage: [materials["uranium"]]"
+		usr << "Rot probability: [rot_prob]"
+		if(prob(rot_prob))
+			usr << "Wall is rotting"
+			..()
