@@ -134,6 +134,25 @@
 								qdel(src)
 						return
 
+		if(/obj/item/stack/sheet/alloy/metal)
+			if(!anchored)
+				user << "<span class='info'>You feel as if that would have been a big waste.</span>"
+				return
+			else
+				var/obj/item/stack/sheet/alloy/A = W
+				if(A.get_amount() < 2) return ..()
+				user << "<span class='notice'>Now adding alloy plating...</span>"
+				if(do_after(user, 50))
+					if(A.use(2))
+						user << "<span class='notice'>You added the alloy plating!</span>"
+						var/turf/Tsrc = get_turf(src)
+						Tsrc.ChangeTurf(/turf/simulated/wall/alloy)
+						for(var/turf/simulated/wall/alloy/X in Tsrc.loc)
+							if(X)
+								X.add_hiddenprint(usr)
+								X.set_materials(A.materials)
+						qdel(src)
+
 		if(S.sheettype)
 			var/M = S.sheettype
 			if(!anchored)

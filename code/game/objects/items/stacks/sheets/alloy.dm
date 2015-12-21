@@ -5,18 +5,18 @@
  *
  * Mineral effects:
  * 		Diamond - Physically strengthens the alloy
- *		Uranium - The alloy emits radiation
- *		Phoron - Considerably increased heat resistance
+ *		Uranium - Decreased chance of wall rot/fungi, 50/50 blend makes them immune to rot/fungi
+ *		Phoron - Considerably increased max temperature
  *		Gold
  *		Silver
  *		Iron - Weaker version of diamond
  *		Platinum
  *		Tritium
- *		Osmium
+ *		Osmium - Shock absorbent, increases blast resistance
 */
 
-var/list/prefix = list("diamond" = "ada", "uranium" = "ura", "solid phoron" = "phoro", "gold" = "dives", "silver" = "argent", "iron" = "ferro", "platinum" = "cata", "tritium" = "trit", "osmium" = "osi")
-var/list/postfix = list("metal" = "metallic", "glass" = "glaseous")
+var/global/list/alloy_prefix = list("diamond" = "ada", "uranium" = "ura", "solid phoron" = "phoro", "gold" = "dives", "silver" = "argent", "iron" = "ferro", "platinum" = "cata", "tritium" = "trit", "osmium" = "osi")
+var/global/list/alloy_postfix = list("metal" = "metallic", "glass" = "glaseous")
 
 /*
  * Alloy sheet
@@ -29,6 +29,7 @@ var/list/postfix = list("metal" = "metallic", "glass" = "glaseous")
 	icon_state = "polysteel-1"
 	item_state = "polysteel"
 	var/list/materials = list()
+	var/unique_id = ""
 
 /obj/item/stack/sheet/alloy/New(var/list/comp)
 	..()
@@ -41,14 +42,14 @@ var/list/postfix = list("metal" = "metallic", "glass" = "glaseous")
 	var/sum = 0
 	for(var/M in comp)
 		sum += comp[M]
-		if(prefix[M])
-			pre = prefix[M]
+		if(alloy_prefix[M])
+			pre = alloy_prefix[M]
 		else
-			post = postfix[M]
+			post = alloy_postfix[M]
 	name = "[pre][post] alloy"
 	for(var/M in materials)
 		materials[M] /= sum
-		stacktype += "[M][materials[M]]"
+		unique_id += "[M][materials[M]]"
 
 /obj/item/stack/sheet/alloy/update_icon()
 	switch(amount)
@@ -67,14 +68,14 @@ var/list/postfix = list("metal" = "metallic", "glass" = "glaseous")
 /obj/item/stack/sheet/alloy/split(var/tamount)
 	var/obj/item/stack/sheet/alloy/stack = ..(tamount)
 	stack.materials = materials.Copy()
-	stack.stacktype = stacktype
+	stack.unique_id = unique_id
 	stack.name = name
 	return stack
 
 /obj/item/stack/sheet/alloy/transfer_to(obj/item/stack/S, var/tamount)
 	var/obj/item/stack/sheet/alloy/stack = ..(S, tamount)
 	stack.materials = materials.Copy()
-	stack.stacktype = stacktype
+	stack.unique_id = unique_id
 	stack.name = name
 	return stack
 
