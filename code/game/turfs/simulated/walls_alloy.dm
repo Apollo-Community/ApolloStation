@@ -31,7 +31,14 @@
 
 	// phoron - +100 max temp. per %, up to 5000
 	if(materials["solid phoron"])
-		max_temperature += (100 * (2 * materials["solid phoron"] * 100))
+		max_temperature += 100 * (2 * materials["solid phoron"] * 100)
+
+	// diamond - reduces damage and increases health. static +50 damage cap, and the wall takes less dmg per %
+	if(materials["diamond"])
+		damage_cap += 50
+		armor -= materials["diamond"] * 0.75
+
+
 
 // urametallic walls give partial or full rot immunity
 /turf/simulated/wall/alloy/rot()
