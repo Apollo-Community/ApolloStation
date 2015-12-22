@@ -156,6 +156,17 @@
 		else
 			new /obj/effect/decal/cleanable/blood(src)
 			new /obj/effect/decal/remains/human(src)
+	else if(istype(src,/turf/simulated/wall/alloy))
+		var/turf/simulated/wall/alloy/W = src
+		var/obj/item/stack/sheet/alloy/metal/M = new /obj/item/stack/sheet/alloy/metal(W.materials)
+		M.loc = get_turf(src)
+
+		if(!devastated)
+			playsound(src, 'sound/items/Welder.ogg', 100, 1)
+			new /obj/structure/girder(src)
+		else
+			new /obj/item/stack/sheet/metal(src)
+			new /obj/item/stack/sheet/metal(src)
 
 	else
 		if(!devastated)
