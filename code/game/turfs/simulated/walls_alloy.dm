@@ -1,11 +1,13 @@
 /turf/simulated/wall/alloy
 	name = "alloy wall"
 	desc = "An alloy wall."
+	icon_state = "r_wall"
 
-	damage_cap = 300
+	damage_cap = 350
 
 	var/list/materials = list()
 	var/unique_id = ""
+	var/scorched = 0
 
 // don't think New can be called properly considering how girders handle wall building
 /turf/simulated/wall/alloy/proc/set_materials(var/list/comp)
@@ -34,7 +36,7 @@
 
 	// phoron - +100 max temp. per %, up to 5000
 	if(materials["solid phoron"])
-		max_temperature += 100 * (materials["solid phoron"] * 200)
+		max_temperature += 1000 * (materials["solid phoron"] * 200)
 
 	// diamond - reduces damage and increases health
 	if(materials["diamond"])
@@ -57,17 +59,21 @@
 			..()
 
 // osimetallic walls handle explosions much better - they are never guaranteed to get dismantled
-/turf/simulated/wall/ex_act(severity)
+/turf/simulated/wall/alloy/ex_act(severity)
 	if(materials["osmium"])
-		var/damage = 150 - (materials["osmium"] * 200)
+		var/damage = 100 - (materials["osmium"] * 150)
 		switch(severity)
-			if(1.0)
-				var/damage_prob = 75 + (materials["osmium"] * 50)
-				if(prob(damage))
+			if(1)
+				if(prob(50 + (materials["osmium"] * 100)))
 					take_damage(rand(damage, damage + 100))
 				else
 					dismantle_wall(1,1)
-			if(2.0)
-				take_damage(rand(0, damage + 100))
-			if(3.0)
-				desc += " It has a few small scorch marks on it."
+			if(2)
+				take_damage(rand(damage, damage + 50))
+			if(3)
+				take_damage(rand(0, damage * 2))
+				if(!scorched)
+					scorched = 1
+					desc += " It has some small scorch marks on it."
+	else
+		..()
