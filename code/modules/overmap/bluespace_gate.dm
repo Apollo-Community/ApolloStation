@@ -89,7 +89,7 @@
 
 	var/atom/movable/AM = A
 
-	AM.loc = bluespace
+	AM.Move( bluespace )
 
 	spawn( transit_time )
 		if( !exit )
@@ -97,5 +97,5 @@
 				var/mob/M = AM
 				M << "\red You feel that something went very wrong."
 
-		AM.loc = destination
+		AM.Move( destination )
 		playsound(AM.loc, 'sound/effects/pop1.ogg', 80, 1)
