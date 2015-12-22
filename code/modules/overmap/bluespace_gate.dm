@@ -60,7 +60,7 @@
 	var/turf/destination
 
 	// Getting the amount of time that the object will spend in bluespace
-	var/transit_time = rand( 30, 80 )
+	var/transit_time = rand( 60, 120 )
 
 	if( exit ) // Getting the destination
 		destination = locate( exit.x-x_off, exit.y-y_off, exit.z ) // Getting the destination relative to where the object left
@@ -71,20 +71,6 @@
 	animate(A, transform = matrix()*(-2), transform = turn(matrix(), 360), time = 2)
 	sleep(2)
 	animate(A, transform = null, time = 1)
-*/
-
-/* // Decided this was a bad idea after all
-	// Transporting turfs
-	if( istype( A, /turf/simulated ))
-		var/type = A.type
-		var/turf/simulated/transmit = A
-		transmit.ChangeTurf(/turf/space)
-
-		spawn( transit_time )
-			destination.ChangeTurf(type)
-		return
-	else if( istype( A, /turf ))
-		return
 */
 
 	var/atom/movable/AM = A
