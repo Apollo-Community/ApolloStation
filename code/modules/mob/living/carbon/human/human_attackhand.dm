@@ -13,6 +13,11 @@
 
 	// Should this all be in Touch()?
 	if(istype(H))
+		// no attacking if we're in an alien nest!
+		for(var/obj/structure/bed/nest/N in get_turf(H.loc))
+			if(N.buckled_mob == H)
+				return
+
 		if((H != src) && check_shields(0, H.name))
 			visible_message("\red <B>[H] attempted to touch [src]!</B>")
 			return 0
