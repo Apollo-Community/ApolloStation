@@ -29,7 +29,7 @@
 		qdel( src )
 
 /obj/item/broodswarm/placeable/hive_pit
-	name = "Hive pit core"
+	name = "hive pit core"
 	desc = "Plant this on the blotch in order to grow a hive pit."
 	spawn_type = /obj/machinery/broodswam/large/hive_pit
 

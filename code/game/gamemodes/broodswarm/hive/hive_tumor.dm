@@ -4,14 +4,17 @@ w/*----------- HIVE TUMOR ------------*/
 	desc = "A grotesque lump of flesh, it undulates rhythemically."
 	icon_state = "hive_tumor"
 
+	density = 1
+	anchored = 1
+
+	light_color = "#660033"
+	light_range = 10
+
 	var/ui_title = "Hive Nerve"
 	var/datum/cell_auto_master/blotch/controller
 	var/list/hive_structures = list()
 	var/max_structures = 6
 	var/brood_flesh = 0
-
-	light_color = "#660033"
-	light_range = 10
 
 /obj/machinery/broodswam/large/hive_tumor/New()
 	controller = new( get_turf( src ))

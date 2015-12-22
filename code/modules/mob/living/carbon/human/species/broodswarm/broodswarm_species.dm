@@ -158,18 +158,9 @@
 		H.name = H.real_name
 
 /datum/species/broodswarm/broodmother/handle_death(var/mob/living/carbon/human/H)
+	// faux death
 	H.visible_message("<span class='warning'>[H] explodes in a shower of gore!</span>")
 	new /obj/effect/gibspawner/human( get_turf( H ))
-
-	var/turf/T
-
-	if( !ticker.mode.hive )
-		H << "<span class='warning'>Since the hive tumor was never placed, we are regenerating somewhere random...</span>"
-		T = pick( xeno_spawn )
-	else
-		T = get_turf( ticker.mode.hive )
-
-	nodule( H, T )
 
 /datum/hud_data/broodswarm
 	icon = 'icons/mob/screen1_alien.dmi'

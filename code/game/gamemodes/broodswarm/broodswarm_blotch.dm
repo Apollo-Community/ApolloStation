@@ -1,6 +1,6 @@
 /atom/movable/cell/blotch
 	name = "blotch"
-	desc = "A horrible fleshy mess, it sticks to the bottom of your shoes."
+	desc = "A horrible fleshy mess."
 
 	anchored = 1
 	opacity = 0
@@ -25,14 +25,23 @@
 /atom/movable/cell/blotch/New()
 	..()
 
+	if( master )
+		var/datum/cell_auto_master/blotch/M = master
+		M.living_cells += src
+
 	update_icon()
 
 /atom/movable/cell/blotch/Destroy()
-	for( var/direction in cardinal ) // Only gets NWSE
+	// On death the cells wake up surrounding cells to check if they can spread again
+	for( var/direction in cardinal )
 		var/turf/T = get_step( src,direction )
 		var/atom/movable/cell/blotch/B = locate( type ) in T
 		if( B )
 			B.revive()
+
+	if( master )
+		var/datum/cell_auto_master/blotch/M = master
+		M.living_cells -= src
 
 	..()
 
@@ -65,7 +74,7 @@
 	else if( health <= (max_health/4)*3 )
 		user << "It appears to be almost fully hardened."
 	else
-		user << "It appears to be fully hardened."
+		user << "It appears to be fully hardened and will be unable to spread further."
 
 /atom/movable/cell/blotch/shouldProcess()
 	if( max_health )
@@ -151,6 +160,7 @@
 	cell_type = /atom/movable/cell/blotch
 	group_age_max = 0
 	var/turf/location
+	var/list/living_cells = list()
 
 /datum/cell_auto_master/blotch/New( var/loc as turf )
 	..()
@@ -173,3 +183,12 @@
 	if( location && cell_type )
 		if( !( location.containsCell( cell_type )))
 			PoolOrNew( cell_type, list( location, src )) // If our home location doesn't have a cell, add a new one
+
+/datum/cell_auto_master/blotch/proc/pickOpenBlotch()
+	for( var/i = 0, i < living_cells.len, i++ )
+		var/atom/movable/cell/blotch/B = pick( living_cells )
+		var/turf/T = get_turf( B )
+
+		if( T.Enter( B ))
+			return T
+

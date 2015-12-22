@@ -2,16 +2,46 @@
 	name = "nodule"
 	desc = "It looks like there's something inside."
 	var/mob/living/occupant = null // Whats inside?
+	icon = 'icons/obj/broodswarm.dmi'
+	icon_state = "nodule"
+
+/obj/machinery/broodswam/nodule/proc/take_occupant( var/mob/M )
+	if( !M || !istype( M ))
+		return
+
+	if(M.client)
+		M.client.perspective = EYE_PERSPECTIVE
+		M.client.eye = src
+	M.loc = src
+
+	src.occupant = M
+
+/obj/machinery/broodswam/nodule/proc/eject_occupant()
+	if( !occupant )
+		return
+
+	visible_message( "<span class='warning'>[occupant] bursts out from the [src]!</span>" )
+
+	occupant.Move( get_turf( src ))
+	occupant = null
+
+	explode()
+
+	return
+
+/obj/machinery/broodswam/nodule/proc/explode()
+	new /obj/effect/gibspawner/human( get_turf( src ))
+	qdel( src )
 
 
-
+/* ---- HEALER NODULE ---- */
 /obj/machinery/broodswam/nodule/healer
 	var/heal_rate = 6
 	var/mend_prob = 50
 
 /obj/machinery/broodswam/nodule/healer/process()
 	if( heal_occupant() == 2 )
-		occupant << "<span class='notice'>You feel fully healed, and crawl out of the pit.</span>"
+		occupant << "<span class='notice'>You feel fully healed, and emerge from the [src]!</span>"
 		eject_occupant()
 		return
 
@@ -20,8 +50,6 @@
 		return 0
 
 	var/mob/living/carbon/human/H = occupant
-
-
 
 	//first heal damages
 	if (H.getBruteLoss() || H.getFireLoss() || H.getOxyLoss() || H.getToxLoss())
@@ -51,30 +79,50 @@
 
 	return 2
 
-/obj/machinery/broodswam/nodule/healer/proc/take_occupant( var/mob/M )
-	if( !M || !istype( M ))
-		return
+/obj/machinery/broodswam/nodule/healer/take_occupant( var/mob/M )
+	..()
 
-	if(M.client)
-		M.client.perspective = EYE_PERSPECTIVE
-		M.client.eye = src
-	M.loc = src
+	if( ishuman( occupant ))
+		// shut down various types of badness
+		var/mob/living/carbon/human/H = occupant
 
-	src.occupant = M
+		H.setToxLoss(0)
+		H.setOxyLoss(0)
+		H.setCloneLoss(0)
+		H.setBrainLoss(0)
+		H.SetParalysis(0)
+		H.SetStunned(0)
+		H.SetWeakened(0)
 
-/obj/machinery/broodswam/nodule/healer/proc/eject_occupant()
-	if( !occupant )
-		return
+		// shut down ongoing problems
+		H.radiation = 0
+		H.nutrition = 400
+		H.bodytemperature = T20C
+		H.sdisabilities = 0
+		H.disabilities = 0
 
-	visible_message( "<span class='warning'>[occupant] bursts out from the [src]!</span>" )
+		// fix blindness and deafness
+		H.blinded = 0
+		H.eye_blind = 0
+		H.eye_blurry = 0
+		H.ear_deaf = 0
+		H.ear_damage = 0
 
-	occupant.Move( get_turf( src ))
-	occupant = null
+		// remove chemical reagents
+		H.reagents.clear_reagents()
+		H.restore_blood()
 
-	explode()
+		// remove the character from the list of the dead
+		if(H.stat == 2)
+			dead_mob_list -= H
+			living_mob_list += H
+			H.tod = null
+			H.timeofdeath = 0
 
-	return
+		// restore us to conciousness
+		H.stat = CONSCIOUS
 
-/obj/machinery/broodswam/nodule/healer/proc/explode()
-	new /obj/effect/gibspawner/human( get_turf( src ))
-	qdel( src )
+		// make the icons look correct
+		H.regenerate_icons()
+		H.hud_updateflag |= 1 << HEALTH_HUD
+		H.hud_updateflag |= 1 << STATUS_HUD
