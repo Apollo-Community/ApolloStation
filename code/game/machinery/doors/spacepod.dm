@@ -6,6 +6,7 @@
 	var/id = 1.0
 	density = 0
 	anchored = 1
+	unacidable = 1
 
 	New() //set the turf below the flaps to block air
 		var/turf/T = get_turf(loc)
