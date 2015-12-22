@@ -139,7 +139,18 @@
 	return ..()
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
-	if(istype(src,/turf/simulated/wall/r_wall))
+	if(istype(src,/turf/simulated/wall/r_wall/alloy))
+		var/turf/simulated/wall/r_wall/alloy/W = src
+		var/obj/item/stack/sheet/alloy/metal/M = new /obj/item/stack/sheet/alloy/metal(W.materials)
+		M.loc = get_turf(src)
+
+		if(!devastated)
+			playsound(src, 'sound/items/Welder.ogg', 100, 1)
+			new /obj/structure/girder(src)
+		else
+			new /obj/item/stack/sheet/metal(src)
+			new /obj/item/stack/sheet/metal(src)
+	else if(istype(src,/turf/simulated/wall/r_wall))
 		if(!devastated)
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			new /obj/structure/girder/reinforced(src)
@@ -156,17 +167,6 @@
 		else
 			new /obj/effect/decal/cleanable/blood(src)
 			new /obj/effect/decal/remains/human(src)
-	else if(istype(src,/turf/simulated/wall/alloy))
-		var/turf/simulated/wall/alloy/W = src
-		var/obj/item/stack/sheet/alloy/metal/M = new /obj/item/stack/sheet/alloy/metal(W.materials)
-		M.loc = get_turf(src)
-
-		if(!devastated)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
-			new /obj/structure/girder(src)
-		else
-			new /obj/item/stack/sheet/metal(src)
-			new /obj/item/stack/sheet/metal(src)
 
 	else
 		if(!devastated)

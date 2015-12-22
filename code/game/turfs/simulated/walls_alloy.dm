@@ -1,4 +1,4 @@
-/turf/simulated/wall/alloy
+/turf/simulated/wall/r_wall/alloy
 	name = "alloy wall"
 	desc = "An alloy wall."
 	icon_state = "r_wall"
@@ -10,7 +10,7 @@
 	var/scorched = 0
 
 // don't think New can be called properly considering how girders handle wall building
-/turf/simulated/wall/alloy/proc/set_materials(var/list/comp)
+/turf/simulated/wall/r_wall/alloy/proc/set_materials(var/list/comp)
 	if(!comp)
 		return
 	// why set it twice? this has actually proved to be an issue
@@ -49,7 +49,7 @@
 		armor -= materials["iron"] * 0.7
 
 // urametallic walls give partial or full rot immunity
-/turf/simulated/wall/alloy/rot()
+/turf/simulated/wall/r_wall/alloy/rot()
 	if(materials["uranium"])
 		var/rot_prob = 100 - (materials["uranium"] * 800)
 		usr << "Uranium percentage: [materials["uranium"]]"
@@ -59,7 +59,7 @@
 			..()
 
 // osimetallic walls handle explosions much better - they are never guaranteed to get dismantled
-/turf/simulated/wall/alloy/ex_act(severity)
+/turf/simulated/wall/r_wall/alloy/ex_act(severity)
 	if(materials["osmium"])
 		var/damage = 100 - (materials["osmium"] * 150)
 		switch(severity)
