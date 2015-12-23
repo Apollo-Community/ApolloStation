@@ -25,7 +25,7 @@
 	var/datum/global_iterator/pr_give_air //moves air from tank to cabin
 
 	var/lights = 0
-	var/lights_power = 6
+	var/lights_power = 12
 
 	var/inertia_dir = 0
 	var/hatch_open = 0
@@ -33,8 +33,8 @@
 
 	var/health = 100 // pods without armor are tough as a spongecake
 	var/fire_threshold_health = 0.2 // threshold heat for fires to start
-	var/empcounter = 0 //Used for disabling movement when hit by an EMP
 
+	var/empcounter = 0 //Used for disabling movement when hit by an EMP
 	var/frozen = 0 // Used to stop the spacepod from moving
 
 	var/datum/effect/effect/system/ion_trail_follow/space_trail/ion_trail
@@ -48,7 +48,6 @@
 	bound_height = 64
 
 	equipment_system = new(src)
-//	equipment_system.equip( new /obj/item/device/spacepod_equipment/misc/autopilot )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/seat )
 
 	add_cabin()
@@ -83,19 +82,15 @@
 		processing_objects.Remove(src)
 
 /obj/spacepod/proc/update_icons()
-	if( istype( equipment_system.armor, /obj/item/pod_parts/armor/command ))
-		icon_state = "pod_com"
-	else if( istype( equipment_system.armor, /obj/item/pod_parts/armor/security ))
-		icon_state = "pod_sec"
-	else if( istype( equipment_system.armor, /obj/item/pod_parts/armor/shuttle ))
-		icon_state = "pod_shuttle"
+	if( equipment_system.armor )
+		icon_state = equipment_system.armor.pod_icon
 	else
 		icon_state = "pod"
 
 	if(!pod_overlays)
 		pod_overlays = new/list(2)
-		pod_overlays[DAMAGE] = image(icon, icon_state="pod_damage")
-		pod_overlays[FIRE] = image(icon, icon_state="pod_fire")
+		pod_overlays[DAMAGE] = image(icon, icon_state="[equipment_system.armor ? equipment_system.armor.pod_damage_icon : "pod_damage"]")
+		pod_overlays[FIRE] = image(icon, icon_state="[equipment_system.armor ? equipment_system.armor.pod_fire_icon : "pod_fire"]")
 
 	overlays.Cut()
 

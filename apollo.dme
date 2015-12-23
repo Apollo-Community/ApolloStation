@@ -875,6 +875,7 @@
 #include "code\game\vehicles\spacepods\parts.dm"
 #include "code\game\vehicles\spacepods\pod_fabricator.dm"
 #include "code\game\vehicles\spacepods\spacepod.dm"
+#include "code\game\vehicles\spacepods\parts\armor.dm"
 #include "code\game\vehicles\spacepods\parts\cargohold.dm"
 #include "code\game\vehicles\spacepods\parts\engines.dm"
 #include "code\game\vehicles\spacepods\parts\misc.dm"
