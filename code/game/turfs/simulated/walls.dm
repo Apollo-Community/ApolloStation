@@ -139,8 +139,8 @@
 	return ..()
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
-	if(istype(src,/turf/simulated/wall/r_wall/alloy))
-		var/turf/simulated/wall/r_wall/alloy/W = src
+	if(istype(src,/turf/simulated/wall/alloy))
+		var/turf/simulated/wall/alloy/W = src
 		var/obj/item/stack/sheet/alloy/metal/M = new /obj/item/stack/sheet/alloy/metal(W.materials)
 		M.loc = get_turf(src)
 
@@ -150,7 +150,7 @@
 		else
 			new /obj/item/stack/sheet/metal(src)
 			new /obj/item/stack/sheet/metal(src)
-	else if(istype(src,/turf/simulated/wall/r_wall))
+	else if(istype(src,/turf/simulated/wall/alloy/reinforced))
 		if(!devastated)
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			new /obj/structure/girder/reinforced(src)
@@ -303,7 +303,7 @@
 		user << "You push the wall but nothing happens."
 		return
 
-	if(istype(src,/turf/simulated/wall/r_wall) && !rotting)
+	if(istype(src,/turf/simulated/wall/alloy/reinforced) && !rotting)
 		user << "This wall is far too strong for you to destroy."
 
 	if(rotting || prob(40))

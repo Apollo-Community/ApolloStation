@@ -149,7 +149,7 @@
 			new /obj/item/weapon/shard( src )
 
 
-	else if(istype(src,/turf/simulated/wall/r_wall))
+	else if(istype(src,/turf/simulated/wall/alloy/reinforced))
 		if(!devastated)
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			new /obj/structure/girder/reinforced(src)
@@ -308,7 +308,7 @@
 		user << "You push the wall but nothing happens."
 		return
 
-	if(istype(src,/turf/simulated/wall/r_wall) && !rotting)
+	if(istype(src,/turf/simulated/wall/alloy/reinforced) && !rotting)
 		user << "This wall is far too strong for you to destroy."
 
 	if(rotting || prob(40))

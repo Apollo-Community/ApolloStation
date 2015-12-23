@@ -119,8 +119,8 @@
 							if (S.use(1))
 								user << "<span class='notice'>Wall fully reinforced!</span>"
 								var/turf/Tsrc = get_turf(src)
-								Tsrc.ChangeTurf(/turf/simulated/wall/r_wall)
-								for(var/turf/simulated/wall/r_wall/X in Tsrc.loc)
+								Tsrc.ChangeTurf(/turf/simulated/wall/alloy/reinforced)
+								for(var/turf/simulated/wall/alloy/reinforced/X in Tsrc.loc)
 									if(X)	X.add_hiddenprint(usr)
 								qdel(src)
 						return
@@ -146,8 +146,8 @@
 					if(A.use(2))
 						user << "<span class='notice'>You added the alloy plating!</span>"
 						var/turf/Tsrc = get_turf(src)
-						Tsrc.ChangeTurf(/turf/simulated/wall/r_wall/alloy)
-						for(var/turf/simulated/wall/r_wall/alloy/X in Tsrc.loc)
+						Tsrc.ChangeTurf(/turf/simulated/wall/alloy)
+						for(var/turf/simulated/wall/alloy/X in Tsrc.loc)
 							if(X)
 								X.add_hiddenprint(usr)
 								X.set_materials(A.materials)
