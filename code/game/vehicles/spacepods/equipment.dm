@@ -10,6 +10,7 @@
 	var/obj/item/device/spacepod_equipment/shield/shield_system // shielding system
 	var/obj/item/device/spacepod_equipment/misc/cargo/cargohold // shielding system
 	var/obj/item/weapon/cell/battery // the battery, durh
+	var/obj/item/weapon/card/id/card // the access card for the spacepod, without this it cannot pass energy barriers
 	var/obj/item/pod_parts/armor/armor // what kind of armor it has
 //	var/obj/item/device/spacepod_equipment/misc/autopilot/autopilot // the autopilot
 	var/list/seats = list()
@@ -67,10 +68,6 @@
 		shield_system = equipment
 	else if( istype( equipment, /obj/item/device/spacepod_equipment/seat )) // Assigning seats
 		seats.Add( equipment )
-/*	else if( istype( equipment, /obj/item/device/spacepod_equipment/misc/autopilot )) // Assigning the shield system
-		if( autopilot )
-			return 0
-		autopilot = equipment*/
 	else if( istype( equipment, /obj/item/device/spacepod_equipment/misc/cargo )) // Assigning seats
 		if( cargohold )
 			return 0
@@ -88,7 +85,10 @@
 
 		my_atom.health = 100+armor.health_bonus
 		max_size = armor.equipment_size
-
+	else if( istype( equipment, /obj/item/weapon/card/id ))
+		if( card )
+			return 0
+		card = equipment
 	else if(!istype( equipment, /obj/item/device/spacepod_equipment ))  // If it wasn't any of those systems, and isn't spacepod_equipment, we don't want what you're selling
 		return 0
 
@@ -110,8 +110,8 @@
 		shield_system = null
 	else if( locate( equipment ) in seats ) // Removing the seat
 		seats.Remove( equipment )
-/*	else if( equipment == autopilot ) // Deassigning the battery
-		autopilot = null*/
+	else if( equipment == card ) // Deassigning the card
+		card = null
 	else if( equipment == cargohold ) // Deassigning the cargohold
 		cargohold = null
 	else if( equipment == battery ) // Deassigning the battery

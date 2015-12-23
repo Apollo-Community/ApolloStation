@@ -49,6 +49,7 @@
 
 	equipment_system = new(src)
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/seat )
+	equipment_system.equip( new /obj/item/weapon/card/id/spacepod )
 
 	add_cabin()
 	add_airtank()
@@ -225,56 +226,65 @@
 		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 		user << "<span class='notice'>You [hatch_open ? "open" : "close"] the maintenance hatch.</span>"
 		return
-	if(istype(W, /obj/item/weapon/cell))
+	else if(istype(W, /obj/item/weapon/cell))
 		if(!hatch_open)
-			user << "\red The maintenance hatch is closed!"
+			user << "<span class='warning'>The maintenance hatch is closed!</span>"
 			return
 		if(equipment_system.battery)
-			user << "<span class='notice'>The pod already has a battery.</span>"
+			user << "<span class='warning'>The pod already has a battery.</span>"
 			return
 
 		equipment_system.equip(W, user)
 		return
-	if(istype(W, /obj/item/device/spacepod_equipment))
+	else if(istype(W, /obj/item/device/spacepod_equipment))
 		if(!hatch_open)
-			user << "\red The maintenance hatch is closed!"
+			user << "<span class='warning'>The maintenance hatch is closed!</span>"
 			return
 
 		// Adding the equipment to the system
 		equipment_system.equip(W, user)
 		return
-	if(istype(W, /obj/item/pod_parts/armor))
+	else if(istype(W, /obj/item/pod_parts/armor))
 		if(!hatch_open)
-			user << "\red The maintenance hatch is closed!"
+			user << "<span class='warning'>The maintenance hatch is closed!</span>"
 			return
 		if(equipment_system.armor)
-			user << "<span class='notice'>The pod already has armor.</span>"
+			user << "<span class='warning'>The pod already has armor.</span>"
 			return
 
 		equipment_system.equip(W, user)
 		return
 
-	if(istype(W, /obj/item/weapon/weldingtool))
+	else if(istype( W, /obj/item/weapon/card/id ))
 		if(!hatch_open)
-			user << "\red You must open the maintenance hatch before attempting repairs."
+			user << "<span class='warning'>The maintenance hatch is closed!</span>"
+			return
+		if(equipment_system.card)
+			user << "<span class='warning'>The pod already an access card.</span>"
+			return
+
+		equipment_system.equip(W, user)
+		return
+	else if(istype(W, /obj/item/weapon/weldingtool))
+		if(!hatch_open)
+			user << "<span class='warning'>You must open the maintenance hatch before attempting repairs.</span>"
 			return
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.isOn())
-			user << "\red The welder must be on for this task."
+			user << "<span class='warning'>The welder must be on for this task.</span>"
 			return
 		if (health < initial(health))
-			user << "\blue You start welding the spacepod..."
+			user << "<span class='notice'>You start welding the spacepod...</span>"
 			playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 			if(do_after(user, 20))
 				if(!src || !WT.remove_fuel(3, user)) return
 				repair_damage(10)
-				user << "\blue You mend some [pick("dents","bumps","damage")] with \the [WT]"
+				user << "<span class='notice'>You mend some [pick("dents","bumps","damage")] with \the [WT]</span>"
 				return
 		else
-			user << "\blue <b>\The [src] is fully repaired!</b>"
+			user << "<span class='notice'><b>\The [src] is fully repaired!</b></span>"
 			return
-
-	if( equipment_system.cargohold )
+	else if( equipment_system.cargohold )
 		equipment_system.cargohold.put_inside( W, user )
 
 /obj/spacepod/attack_hand(mob/user as mob)
@@ -299,10 +309,10 @@
 		set popup_menu = 0
 
 		if( istype( get_area( src ), /area/planet ))
-			occupants_announce( "Leaving the planet surface and returning to space." )
+			occupants_announce( "<span class='notice'>Leaving the planet surface and returning to space.</span>" )
 			overmapTravel()
 		else
-			usr << "Not currently on a planet."
+			usr << "<span class='warning'>Not currently on a planet.</span>"
 
 		return
 
@@ -314,7 +324,7 @@
 		set popup_menu = 0
 
 		use_internal_tank = !use_internal_tank
-		occupants_announce( "Now taking air from [use_internal_tank?"internal airtank":"environment"]." )
+		occupants_announce( "<span class='warning'>Now taking air from [use_internal_tank?"internal airtank":"environment"].</span>" )
 		return
 
 /obj/spacepod/proc/add_cabin()
@@ -376,31 +386,12 @@
 
 	return 0
 
-/obj/spacepod/proc/occupants_announce( var/message, var/type = 1, var/big = 0 )
-	var/full_message = ""
-
-	if( big )
-		full_message += "<big>"
-
-	if( type == 1 )
-		full_message += "<span class='notice'>"
-	else if( type == 2 )
-		full_message += "<span class='warning'>"
-
-	if( message )
-		full_message += message
-
-	if( type > 0 ) // if we had a header, better close it
-		full_message += "</span>"
-
-	if( big )
-		full_message += "/<big>"
-
+/obj/spacepod/proc/occupants_announce( var/message )
 	if( pilot )
-		pilot << full_message
+		pilot << message
 
 	for( var/passenger in passengers )
-		passenger << full_message
+		passenger << message
 
 /obj/spacepod/proc/put_in_seat( mob/user as mob )
 	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
@@ -414,7 +405,7 @@
 			fukkendisk = A
 
 	if(fukkendisk)
-		user << "\red <B>The nuke-disk locks the door as you attempt to get in, you evil person.</b>"
+		user << "<span class='warning'>The nuke-disk locks the door as you attempt to get in, you evil person.</span?"
 		return 0
 
 //	if (user.stat || !ishuman(user)) // I'll leave this here in case we wanna be speciest later
@@ -422,7 +413,7 @@
 
 	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == user)
-			user << "You're too busy getting your life sucked out of you."
+			user << "<span class='warning'>You're too busy getting your life sucked out of you.</span>"
 			return 0
 
 	if( !( user in passengers ))
@@ -451,7 +442,7 @@
 
 			return 1
 		else
-			user << "\red [pilot] is already in the pilot's seat!"
+			user << "<span class='warning'>[pilot] is already in the pilot's seat!</span>"
 
 	if( equipment_system )
 		if( equipment_system.seats.len > passengers.len ) // if theres still seats for them
@@ -476,17 +467,17 @@
 				playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 				return 1
 		else
-			user << "\red There's no spare seats!"
+			user << "<span class='warning'>There's no empty seats!</span>"
 
 	return 0
 
 /obj/spacepod/proc/exit( mob/user as mob )
 	if( istype( src.loc, /obj/effect/traveler ))
-		user << pick( "\red Stepping out into the vast emptiness of space isn't a very good idea.",
-					  "\red The void does not call to you.",
-					  "\red Why would you want to do that?",
-					  "\red You reach for the door and pull the handle, but it beeps and locks, stopping you from idiotically floating off into the void.",
-					  "\red Space looks perfectly fine from in here." )
+		user << pick( "<span class='warning'>Stepping out into the vast emptiness of space isn't a very good idea.</span>",
+					  "<span class='warning'>The void does not call to you.</span>",
+					  "<span class='warning'>Why would you want to do that?</span>",
+					  "<span class='warning'>You reach for the door and pull the handle, but it beeps and locks, stopping you from idiotically floating off into the void.</span>",
+					  "<span class='warning'>Space looks perfectly fine from in here.</span>" )
 		return
 
 	if( user == pilot )
@@ -505,7 +496,7 @@
 		if(!isliving(M)) return
 		if(M != user)
 			if(M.stat != 0)
-				visible_message("\red [user.name] starts loading [M.name] into the pod!")
+				visible_message("<span class='warning'>[user.name] starts loading [M.name] into the [src]!</span>")
 				sleep(10)
 				put_in_seat( M )
 			else
@@ -574,7 +565,7 @@
 				if( equipment_system.weapon_system )
 					equipment_system.weapon_system.fire_weapons()
 				else
-					occupants_announce( "ERROR: This pod does not have any active weapon systems.", 2 )
+					occupants_announce( "<span class='warning'>ERROR: This pod does not have any active weapon systems.</span>" )
 
 obj/spacepod/verb/toggleLights()
 	if( src.pilot == usr )
@@ -593,7 +584,7 @@ obj/spacepod/verb/toggleLights()
 		for(var/obj/machinery/computer/gate_beacon_console/C in orange(usr.loc, 3)) // Finding suitable VR platforms in area
 			if(alert(usr, "Would you like to interface with: [C]?", "Confirm", "Yes", "No") == "Yes")
 				C.gate_prompt( pilot )
-				occupants_announce( "Activated charging sequence for nearby bluespace beacon." )
+				occupants_announce( "<span class='notice'>Activated charging sequence for nearby bluespace beacon.</span>" )
 
 /obj/spacepod/verb/dump_cargo()
 	if( src.pilot == usr )
