@@ -55,7 +55,7 @@ CREATE TABLE `population` (
   `playercount` INT(11) NULL DEFAULT NULL ,
   `admincount` INT(11) NULL DEFAULT NULL ,
   `time` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`) 
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
 
 -- -----------------------------------------------------
@@ -195,5 +195,42 @@ CREATE TABLE `poll_vote` (
   `ip` varchar(16) NOT NULL,
   `adminrank` varchar(32) NOT NULL,
   `rating` int(2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+-- -----------------------------------------------------
+-- End Round Stats
+-- -----------------------------------------------------
+CREATE TABLE `round_stats` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `gamemode` varchar(50) NOT NULL,
+  `starttime` datetime NOT NULL,
+  `duration` int(11) NOT NULL,
+
+  -- Yep, breaking the first normal form
+  `antags` varchar(500),
+  `ai_rules` varchar(500),
+
+  -- End round stats shown in game
+  `deaths` int(11) NOT NULL,
+  `clones` int(11) NOT NULL,
+  `dispense_volume` int(11) NOT NULL,
+  `vended` int(11) NOT NULL,
+  `break_time` int(11) NOT NULL,
+  `run_distance` int(11) NOT NULL,
+  `blood_mopped` int(11) NOT NULL,
+  `damage_cost` int(11) NOT NULL,
+  `monkey_deaths` int(11) NOT NULL,
+  `spam_blocked` int(11) NOT NULL,
+  `people_slipped` int(11) NOT NULL,
+  `doors_opened` int(11) NOT NULL,
+  `guns_fired` int(11) NOT NULL,
+  `beepsky_beatings` int(11) NOT NULL,
+  `door_welded` int(11) NOT NULL,
+  `total_kwh` int(11) NOT NULL,
+  `artifacts` int(11) NOT NULL,
+  `cargo_profit` int(11) NOT NULL,
+  `trash_vented` int(11) NOT NULL,
+  `ai_follow` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
