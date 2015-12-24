@@ -10,7 +10,7 @@
 
 /obj/item/rust_fuel_compressor_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/plasteel( get_turf(src.loc), 12 )
+		new /obj/item/stack/sheet/alloy/plasteel( get_turf(src.loc), 12 )
 		qdel(src)
 		return
 	..()

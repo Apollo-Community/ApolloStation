@@ -153,11 +153,11 @@
 		if(!devastated)
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			new /obj/structure/girder/reinforced(src)
-			new /obj/item/stack/sheet/plasteel( src )
+			new /obj/item/stack/sheet/alloy/plasteel( src )
 		else
 			new /obj/item/stack/sheet/metal( src )
 			new /obj/item/stack/sheet/metal( src )
-			new /obj/item/stack/sheet/plasteel( src )
+			new /obj/item/stack/sheet/alloy/plasteel( src )
 
 	else if(istype(src,/turf/simulated/wall/cult))
 		if(!devastated)

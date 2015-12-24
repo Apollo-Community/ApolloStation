@@ -105,7 +105,7 @@
 							qdel(src)
 					return
 
-			if(/obj/item/stack/sheet/plasteel)
+			if(/obj/item/stack/sheet/alloy/plasteel)
 				if(!anchored)
 					if(S.use(2))
 						user << "\blue You create a false wall! Push on it to open or close the passage."

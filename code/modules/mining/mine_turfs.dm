@@ -342,7 +342,7 @@
 				R.amount = rand(5,25)
 
 			if(4)
-				var/obj/item/stack/sheet/plasteel/R = new(src)
+				var/obj/item/stack/sheet/alloy/plasteel/R = new(src)
 				R.amount = rand(5,25)
 
 			if(5)

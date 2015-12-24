@@ -135,9 +135,15 @@ Creates alloys that can be used to make stronger structures or more complex allo
 		comp[mineral.name] = mineral.amount
 		flick("mechfab3", src)
 		spawn(50)
-			var/obj/item/stack/sheet/A = null
+			var/obj/item/stack/sheet/alloy/A = null
 			if(base.name == "metal")
 				A = new /obj/item/stack/sheet/alloy/metal(comp)
+
+				// >= 40% platinum is considered plasteel
+				// can't do this in the alloy New() :(
+				if(A.materials["platinum"] && A.materials["platinum"] >= 0.4)
+					qdel(A)
+					A = new /obj/item/stack/sheet/alloy/plasteel(comp)
 			else
 				A = new /obj/item/stack/sheet/alloy/glass(comp)
 			A.amount = base.amount
