@@ -66,18 +66,19 @@
 /datum/round_stats/proc/increase_stat(var/stat_name, var/amount = 1)
 	stats[stat_name] += amount
 
-/datum/round_stats/proc/display()
+/datum/round_stats/proc/calculate_stats()
 	var/work_time = round( world.time/10 )*living_mob_list.len
 	var/productivity = max(round(100*(1-(stats["break_time"]/work_time))),0) // Productivity is just percentage of time spent not AFK
 	productivity = max(0,min(99.99, productivity - (stats["deaths"]*3 + stats["clones"]*2 + stats["bombs_exploded"]*5 + stats["vended"] + stats["people_slipped"]*2) + (stats["beepsky_beatings"]*2 + stats["blood_mopped"] + stats["spam_blocked"])))
 	stats["productivity"] = productivity
 	stats["cargo_profit"] = supply_controller.points * rand(900, 1100)
 
+/datum/round_stats/proc/display()
 	var/datum/nanoui/ui = null
 	var/data[0]
 
 	data["productivity_desc"] = "Crew Productivity: "
-	data["productivity"] = "[productivity]%"
+	data["productivity"] = "[stats["productivity"]]%"
 	data["structural_desc"] = descriptions["damage_cost"]
 	data["structural"] = stats["damage_cost"]
 	data["deaths_desc"] = descriptions["deaths"]
@@ -109,8 +110,9 @@
 			ui.open()
 
 datum/round_stats/proc/call_stats()
-	statistics.display()
+	statistics.calculate_stats()
 	statistics.save_stats()
+	statistics.display()
 
 datum/round_stats/proc/save_stats()
 	if( !dbcon.IsConnected() )
@@ -122,6 +124,7 @@ datum/round_stats/proc/save_stats()
 		gamemode = ticker.mode.name
 		antags = ""
 		var/list/antag_list = list()
+		var/list/seen_minds = list()
 		antag_list.Add(ticker.mode.aliens)
 		antag_list.Add(ticker.mode.borers)
 		antag_list.Add(ticker.mode.changelings)
@@ -134,14 +137,16 @@ datum/round_stats/proc/save_stats()
 		antag_list.Add(ticker.mode.traitors)
 		antag_list.Add(ticker.mode.wizards)
 		for(var/datum/mind/M in antag_list)
-			antags = antags + "[M.name] the [M.special_role]\n"
+			if(!(M in seen_minds))
+				seen_minds.Add(M)
+				antags = antags + "[M.name] the [M.special_role], "
 
 	var/ai_laws = ""
 	for(var/mob/living/silicon/S in mob_list)
 		if(S.laws.zeroth)
-			ai_laws = ai_laws + "[S.laws.zeroth]\n"
+			ai_laws = ai_laws + "[S.laws.zeroth], "
 		for (var/index = 1, index <= S.laws.ion.len, index++)
-			ai_laws = ai_laws + "[S.laws.ion[index]]\n"
+			ai_laws = ai_laws + "[S.laws.ion[index]], "
 
 	// Due to the size of this query it's easier to debug when it's split up over multiple lines...
 	var/q = "INSERT INTO round_stats ("
