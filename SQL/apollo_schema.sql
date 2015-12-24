@@ -203,8 +203,8 @@ CREATE TABLE `poll_vote` (
 -- -----------------------------------------------------
 CREATE TABLE `round_stats` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `gamemode` varchar(50) NOT NULL,
-  `endtime` datetime NOT NULL,
+  `game_mode` varchar(50) NOT NULL,
+  `end_time` datetime NOT NULL,
   `duration` int(11) NOT NULL,
 
   -- Yep, breaking the first normal form

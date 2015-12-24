@@ -151,8 +151,8 @@ datum/round_stats/proc/save_stats()
 	// Due to the size of this query it's easier to debug when it's split up over multiple lines...
 	var/q = "INSERT INTO round_stats ("
 	q = q + "id,"
-	q = q + "gamemode,"
-	q = q + "starttime,"
+	q = q + "game_mode,"
+	q = q + "start_time,"
 	q = q + "duration,"
 	q = q + "antags,"
 	q = q + "ai_laws,"
