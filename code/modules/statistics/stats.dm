@@ -21,6 +21,7 @@
 								  "cargo_profit" = "Cargo Profit: ",
 								  "trash_vented" = "Space Trash Created: ",
 								  "ai_follow" = "People Watched: ",
+								  "banned" = "People Fired: ",
 								 )
 
 	// The actual stat value
@@ -46,6 +47,7 @@
 						   "cargo_profit" = 0, // Profit made from cargobay
 						   "trash_vented" = 0, // Trash vented to space
 						   "ai_follow" = 0,
+						   "banned" = 0,
 						   )
 
 	// Just add any stats that need units

@@ -234,5 +234,6 @@ CREATE TABLE `round_stats` (
   `cargo_profit` int(11) NOT NULL,
   `trash_vented` int(11) NOT NULL,
   `ai_follow` int(11) NOT NULL,
+  `banned` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
