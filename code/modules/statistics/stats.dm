@@ -71,6 +71,7 @@
 	var/productivity = max(round(100*(1-(stats["break_time"]/work_time))),0) // Productivity is just percentage of time spent not AFK
 	productivity = max(0,min(99.99, productivity - (stats["deaths"]*3 + stats["clones"]*2 + stats["bombs_exploded"]*5 + stats["vended"] + stats["people_slipped"]*2) + (stats["beepsky_beatings"]*2 + stats["blood_mopped"] + stats["spam_blocked"])))
 	stats["productivity"] = productivity
+	stats["cargo_profit"] = supply_controller.points * rand(900, 1100)
 
 	var/datum/nanoui/ui = null
 	var/data[0]
@@ -92,7 +93,9 @@
 			chosen_stats.Add(stat)
 
 			data["stat_[i]_desc"] = descriptions[stat]
-			data["stat_[i]"] = round( stats[stat], 0.01)
+			data["stat_[i]"] = round(stats[stat], 0.01)
+			if(stat == "cargo_profit")
+				data["stat_[i]"] = "$[data["stat_[i]"]]"
 			if( units[stat] )
 				data["stat_[i]_unit"] = units[stat]
 			else
