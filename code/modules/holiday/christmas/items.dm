@@ -18,7 +18,7 @@
 /datum/gear/account/christmas_sweater
 	display_name = "Tacky Sweater"
 	path = /obj/item/clothing/suit/christmas_sweater
-	sort_category = slot_chest
+	sort_category = slot_wear_suit
 
 /obj/item/clothing/mask/holiday_wreath
 	name = "Holiday Wreath"
@@ -30,5 +30,5 @@
 
 /datum/gear/account/party_hat
   display_name = "Holiday Wreath"
-  path = /obj/item/clothing/heat/holiday_wreath
+  path = /obj/item/clothing/mask/holiday_wreath
   sort_category = slot_head
