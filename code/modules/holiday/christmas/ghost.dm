@@ -20,8 +20,8 @@
 /mob/living/simple_animal/hostile/alien/queen/holiday/death()
 		for(var/mob/living/M in orange(src,7))	// Should give anyone near broodmo the item
 		if( log_acc_item_to_db( M.ckey, "Candy Cane Cane" ))
-			M << "<span class='notice'><b>Halloween Secret - Congratulations! You've defeated the Ghost. The Candy Cane Cane has been added to your account as a reward.</b></span>"
+			M << "<span class='notice'><b>Christmas Cheer - Congratulations! You've defeated the Ghost. The Candy Cane Cane has been added to your account as a reward.</b></span>"
 		else
-			M << "<span class='notice'><b>Halloween Secret - You've already collected this item. Sorry!</b></span>"
+			M << "<span class='notice'><b>Christmas Cheer - You've already collected this item. Sorry!</b></span>"
 
 	qdel( src )
