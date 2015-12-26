@@ -207,10 +207,6 @@ CREATE TABLE `round_stats` (
   `end_time` datetime NOT NULL,
   `duration` int(11) NOT NULL,
 
-  -- Yep, breaking the first normal form
-  `antags` varchar(500),
-  `ai_laws` varchar(500),
-
   -- End round stats shown in game
   `productivity` int(11) NOT NULL,
   `deaths` int(11) NOT NULL,
@@ -235,5 +231,22 @@ CREATE TABLE `round_stats` (
   `trash_vented` int(11) NOT NULL,
   `ai_follow` int(11) NOT NULL,
   `banned` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+CREATE TABLE `round_antags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `round_id` int(11) NOT NULL,
+  `name` TEXT NOT NULL,
+  `job` TEXT NOT NULL,
+  `role` TEXT NOT NULL,
+  `success` BOOL NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+CREATE TABLE `round_ai_laws` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `round_id` int(11) NOT NULL,
+  `law` TEXT NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
