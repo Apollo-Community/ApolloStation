@@ -4,8 +4,9 @@ USE `apollo` ;
 -- -----------------------------------------------------
 -- Death Tracking
 -- -----------------------------------------------------
-CREATE TABLE `death` (
+CREATE TABLE `deaths` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `round_id` INT(11) NOT NULL,
   `pod` TEXT NOT NULL COMMENT 'Place of death' ,
   `coord` TEXT NOT NULL COMMENT 'X, Y, Z POD' ,
   `tod` DATETIME NOT NULL COMMENT 'Time of death' ,
