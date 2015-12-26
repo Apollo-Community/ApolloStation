@@ -154,7 +154,7 @@ datum/round_stats/proc/save_stats()
 	var/q = "INSERT INTO round_stats ("
 	q = q + "id,"
 	q = q + "game_mode,"
-	q = q + "start_time,"
+	q = q + "end_time,"
 	q = q + "duration,"
 	q = q + "antags,"
 	q = q + "ai_laws,"
@@ -179,7 +179,8 @@ datum/round_stats/proc/save_stats()
 	q = q + "artifacts,"
 	q = q + "cargo_profit,"
 	q = q + "trash_vented,"
-	q = q + "ai_follow"
+	q = q + "ai_follow,"
+	q = q + "banned"
 	q = q + ") VALUES ("
 	q = q + "null,"
 	q = q + "'[gamemode]',"
@@ -208,6 +209,7 @@ datum/round_stats/proc/save_stats()
 	q = q + "[stats["artifacts"]],"
 	q = q + "[stats["cargo_profit"]],"
 	q = q + "[stats["trash_vented"]],"
-	q = q + "[stats["ai_follow"]])"
+	q = q + "[stats["ai_follow"]],"
+	q = q + "[stats["banned"]])"
 	var/DBQuery/query = dbcon.NewQuery(q)
 	query.Execute()
