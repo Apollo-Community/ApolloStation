@@ -1,4 +1,6 @@
 /datum/round_stats
+	var/list/deaths = list()
+
 	// The description for the stat
 	var/list/descriptions = list( "deaths" = "Crew Deaths: ",
 								  "clones" = "Crew Reconstituted: ",
@@ -64,6 +66,30 @@
 						   "break_time" = " minutes",
 						   "ai_follow" = " people spied on",
 						   )
+
+datum/round_stats/proc/report_death(var/mob/living/H)
+	if(!H)
+		return
+	if(!H.key || !H.mind)
+		return
+
+	var/area/placeofdeath = get_area(H)
+	var/podname = placeofdeath ? placeofdeath.name : "Unknown area"
+
+	var/sqlname = sanitizeSQL(H.real_name)
+	var/sqlkey = sanitizeSQL(H.key)
+	var/sqlpod = sanitizeSQL(podname)
+	var/sqlspecial = sanitizeSQL(H.mind.special_role)
+	var/sqljob = sanitizeSQL(H.mind.assigned_role)
+	var/laname
+	var/lakey
+	if(H.lastattacker)
+		laname = sanitizeSQL(H.lastattacker:real_name)
+		lakey = sanitizeSQL(H.lastattacker:key)
+	var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
+	var/coord = "[H.x], [H.y], [H.z]"
+
+	deaths.Add("'[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[sqltime]', '[laname]', '[lakey]', '[H.gender]', [H.getBruteLoss()], [H.getFireLoss()], [H.brainloss], [H.getOxyLoss()], '[coord]'")
 
 /datum/round_stats/proc/increase_stat(var/stat_name, var/amount = 1)
 	stats[stat_name] += amount
@@ -221,6 +247,8 @@ datum/round_stats/proc/save_stats()
 		for (var/index = 1, index <= S.laws.ion.len, index++)
 			query.Execute("INSERT INTO round_ai_laws (id, round_id, law) VALUES(null, [round_id], '[sanitizeSQL(S.laws.ion[index])]')")
 
+	for(var/text in deaths)
+		query.Execute("INSERT INTO deaths (id, round_id, name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss, coord) VALUES (null, [round_id], [text])")
 
 /proc/call_stats()
 	statistics.call_stats()
