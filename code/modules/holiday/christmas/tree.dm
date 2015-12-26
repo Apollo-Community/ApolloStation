@@ -1,56 +1,78 @@
-/obj/structure/flora/tree/pine/c2015
-  var/decoration_count = 0
-  var/max_decorations = 0
-  var/list/contributers
-  icon = 'icons/obj/flora/pinetrees.dmi'
-  icon_state = "pine_c"
-  name = "Christmas Tree"
-  desc = "A Christmas Tree delivered by CentCom, lacking any decorations. It looks like it is going to die."
+/obj/structure/flora/tree/pine/christmas
+	var/decoration_count = 0
+	var/max_decorations = 0
+	var/list/contributers
+	icon = 'icons/obj/flora/pinetrees.dmi'
+	icon_state = "pine_1"
+	name = "Pine Tree"
+	desc = "A mysterious pine tree. It looks like it is going to die."
 
-/obj.structure/flora/tree/pine/c2015/new()
-  ..()
-  //Don't know how many we'll have so :>
-  for(var/type in subtypes( /obj/item/weapon/spec_decoration ))
-    max_decorations++
+	var/dying = 1
+	var/joyous = 0
+	var/christmas = 0
 
-/obj/structure/flora/tree/pine/c2015/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/spec_decoration))
-    decoration_count++
-    user << "You add the decoration to the Christmas Tree"
+/obj/structure/flora/tree/pine/christmas/New()
+	..()
+	//Don't know how many we'll have so :>
+	for(var/type in subtypes( /obj/item/weapon/spec_decoration ))
+		max_decorations++
 
-    if(icon_tate == "pine_c")
-      desc = "A Christmas Tree delivered by Centcom. It looks like it is going to die."
+	contributers = list()
 
-    if(!contributers.Find(user))
-      contributers.Add(user)
-    for(var/mob/living/M in orange(src,7))
-      if(M != user)
-        M << "You feel the Christmas spirit build up as [user.name] adds the decoration to the Christmas Tree."
-  if(ispath(W, /obj/item/weapon/reagent_containers/glass/fertilizer)
-    user << "You pour the [W.name] onto the tree!"
+	update_icon()
 
-    if(icon_state == "pine_c")
-      desc = "A Glorious Christmas Tree delievered by Centcom!"
+/obj/structure/flora/tree/pine/christmas/update_icon()
+	if( christmas )
+		icon_state = "pine_c"
+		name = "Christmas Tree"
+	else
+		icon_state = "pine_1"
+		name = "Pine Tree"
 
-    if( log_acc_item_to_db( user.ckey, "Christmas Sweater" ))
-      M << "<span class='notice'><b>Christmas Uber Secret - Congratulations! You grew the tree to be big and strong!. A Christmas Sweater has been added to your account as a reward.</b></span>"
-    else
-      M << "<span class='notice'><b>Christmas Uber Secret - You've already collected this item. Sorry!</b></span>"
-  else
-    user << "You don't really think [W.name] is really approprate for decoration"
-    user << "Screw it, you throw it into the tree anyway"
+	desc = "A mysterious [joyous ? "joyous " : ""][src]. [dying ? "It looks like it is going to die" : "" ]!"
 
-    spawn(rand(50,200))
-      W.loc = src.loc
-      user << "The [W.name] slowly gets sucked into the Christmas Tree. Spooky stuff."
+/obj/structure/flora/tree/pine/christmas/attackby( var/obj/item/O as obj, var/mob/user as mob )
+	if( !O )
+		return
 
-  qdel(W)
+	if( !user )
+		return
 
-  if(decoration_count == max_decorations)
-    for(var/mob/M in contributers)
-      if( log_acc_item_to_db( M.ckey, "Party Hat" ))
-        M << "<span class='notice'><b>Christmas Secret - Congratulations! You helped decorate the Christmas Tree. A Party Hat has been added to your account as a reward.</b></span>"
-      else
-        M << "<span class='notice'><b>Christmas Secret - You've already collected this item. Sorry!</b></span>"
-        
-    //Spawn the ghost here
+	if( istype( O, /obj/item/weapon/spec_decoration ))
+		if( !contributers.Find( user ))
+			contributers.Add( user )
+		decoration_count++
+		user << "You add \the [O] to the [src]"
+		qdel( O )
+
+		for( var/mob/living/M in orange( src, 7 ))
+			if( M != user )
+				M << "You feel the holiday spirit build as [user.name] adds \the [O] to the [src]."
+
+	if( dying && ispath( O, /obj/item/weapon/reagent_containers/glass/fertilizer ))
+		joyous = 1
+		dying = 0
+		user << "You pour the [O] onto the [src]!"
+
+		qdel( O )
+
+		if( log_acc_item_to_db( user.ckey, "Christmas Sweater" ))
+			user << "<span class='notice'><b>Christmas Uber Cheer - Congratulations! You grew the tree to be big and strong!. A Christmas Sweater has been added to your account as a reward.</b></span>"
+		else
+			user << "<span class='notice'><b>Christmas Uber Cheer - You've already collected this item. Sorry!</b></span>"
+	else if( !dying && ispath( O, /obj/item/weapon/reagent_containers/glass/fertilizer ))
+		user << "The [src] already looks healthy!"
+
+	if(decoration_count == max_decorations && !christmas)
+		christmas = 1
+
+		for(var/mob/M in contributers)
+			if( log_acc_item_to_db( M.ckey, "Holiday Wreath" ))
+				M << "<span class='notice'><b>Christmas Cheer - Congratulations! You helped decorate the Christmas Tree and raise the holiday spirit! A Holiday Wreath has been added to your account as a reward.</b></span>"
+			else
+				M << "<span class='notice'><b>Christmas Cheer - You've already collected this item. Sorry!</b></span>"
+
+    	//Spawn the ghost here
+		new /mob/living/simple_animal/holiday_spirit( get_turf( src ))
+
+	update_icon()

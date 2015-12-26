@@ -1,8 +1,8 @@
 var/list/decoration_starts = list()
 
 /proc/anounceChristmas()
-	var/input = sanitize("A christmas tree has been installed in the arrivals foyer. Add some decorations to boost crew moral, complient crew will be rewarded.")
-	var/customname = sanitizeSafe("Christmas Tree")
+	var/input = sanitize("A pine tree has mysteriously appeared in the arrivals foyer, and small baubles have appeared around the station. Please investigate.")
+	var/customname = sanitizeSafe("AUTOMATED ALERT: Bluespace Anomalies")
 
 	for (var/obj/machinery/computer/communications/C in machines)
 		if(! (C.stat & (BROKEN|NOPOWER) ) )

@@ -142,7 +142,9 @@ var/global/datum/controller/gameticker/ticker
 		world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
 		world << sound('sound/AI/welcome.ogg') // Skie
 		//Holiday Round-start stuff	~Carn
-		Holiday_Game_Start()
+		//Holiday_Game_Start()
+		spawn( rand( 300, 600 ))
+			anounceChristmas()
 
 	//start_events() //handles random events and space dust.
 	//new random event system is handled from the MC.
