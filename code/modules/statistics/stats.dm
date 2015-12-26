@@ -120,35 +120,7 @@ datum/round_stats/proc/save_stats()
 	if( !dbcon.IsConnected() )
 		return 0
 
-	var/gamemode = ""
-	var/antags = ""
-	if(ticker && ticker.mode)
-		gamemode = ticker.mode.name
-		antags = ""
-		var/list/antag_list = list()
-		var/list/seen_minds = list()
-		antag_list.Add(ticker.mode.aliens)
-		antag_list.Add(ticker.mode.borers)
-		antag_list.Add(ticker.mode.changelings)
-		antag_list.Add(ticker.mode.cult)
-		antag_list.Add(ticker.mode.head_revolutionaries)
-		antag_list.Add(ticker.mode.ninjas)
-		antag_list.Add(ticker.mode.raiders)
-		antag_list.Add(ticker.mode.revolutionaries)
-		antag_list.Add(ticker.mode.syndicates)
-		antag_list.Add(ticker.mode.traitors)
-		antag_list.Add(ticker.mode.wizards)
-		for(var/datum/mind/M in antag_list)
-			if(!(M in seen_minds))
-				seen_minds.Add(M)
-				antags = antags + "[M.name] the [M.special_role], "
-
-	var/ai_laws = ""
-	for(var/mob/living/silicon/S in mob_list)
-		if(S.laws.zeroth)
-			ai_laws = ai_laws + "[S.laws.zeroth], "
-		for (var/index = 1, index <= S.laws.ion.len, index++)
-			ai_laws = ai_laws + "[S.laws.ion[index]], "
+	var/gamemode = ticker.mode.name
 
 	// Due to the size of this query it's easier to debug when it's split up over multiple lines...
 	var/q = "INSERT INTO round_stats ("
@@ -156,8 +128,6 @@ datum/round_stats/proc/save_stats()
 	q = q + "game_mode,"
 	q = q + "end_time,"
 	q = q + "duration,"
-	q = q + "antags,"
-	q = q + "ai_laws,"
 	q = q + "productivity,"
 	q = q + "deaths,"
 	q = q + "clones,"
@@ -186,8 +156,6 @@ datum/round_stats/proc/save_stats()
 	q = q + "'[gamemode]',"
 	q = q + "Now(),"
 	q = q + "[world.time/600],"
-	q = q + "'[sanitizeSQL(antags)]',"
-	q = q + "'[sanitizeSQL(ai_laws)]',"
 	q = q + "[stats["productivity"]],"
 	q = q + "[stats["deaths"]],"
 	q = q + "[stats["clones"]],"
@@ -213,3 +181,46 @@ datum/round_stats/proc/save_stats()
 	q = q + "[stats["banned"]])"
 	var/DBQuery/query = dbcon.NewQuery(q)
 	query.Execute()
+
+	if(query.RowsAffected() != 1)
+		return 0
+
+	// Try to grab the round id for the newly inserted row
+	query.Execute("SELECT id FROM round_stats ORDER BY id DESC LIMIT 1")
+	if(query.RowCount() != 1)
+		return 0
+	query.NextRow()
+	var/data = query.GetRowData()
+	var/round_id = data["id"]
+
+	var/list/antags = list()
+	var/list/antag_list = list()
+	antag_list.Add(ticker.mode.aliens)
+	antag_list.Add(ticker.mode.borers)
+	antag_list.Add(ticker.mode.changelings)
+	antag_list.Add(ticker.mode.cult)
+	antag_list.Add(ticker.mode.head_revolutionaries)
+	antag_list.Add(ticker.mode.ninjas)
+	antag_list.Add(ticker.mode.raiders)
+	antag_list.Add(ticker.mode.revolutionaries)
+	antag_list.Add(ticker.mode.syndicates)
+	antag_list.Add(ticker.mode.traitors)
+	antag_list.Add(ticker.mode.wizards)
+	for(var/datum/mind/M in antag_list)
+		if(!(M in antags))
+			antags.Add(M)
+			var/win = 1
+			for(var/datum/objective/objective in M.objectives)
+				if(!objective.check_completion())
+					win = 0
+			query.Execute("INSERT INTO round_antags (id, round_id, name, job, role, success) VALUES(null, [round_id], '[sanitizeSQL(M.name)]', '[sanitizeSQL(M.assigned_role)]', '[sanitizeSQL(M.special_role)]', [win])")
+
+	for(var/mob/living/silicon/S in mob_list)
+		if(S.laws.zeroth)
+			query.Execute("INSERT INTO round_ai_laws (id, round_id, law) VALUES(null, [round_id], '[sanitizeSQL(S.laws.zeroth)]')")
+		for (var/index = 1, index <= S.laws.ion.len, index++)
+			query.Execute("INSERT INTO round_ai_laws (id, round_id, law) VALUES(null, [round_id], '[sanitizeSQL(S.laws.ion[index])]')")
+
+
+/proc/call_stats()
+	statistics.call_stats()
