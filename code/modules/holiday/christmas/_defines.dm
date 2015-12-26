@@ -1,7 +1,7 @@
 var/list/decoration_starts = list()
 
 /proc/anounceChristmas()
-	var/input = sanitize("A christmas tree has been installed in the arrivals foyer. Add some decorations to raise the holiday spirit, complient crew will be rewarded.")
+	var/input = sanitize("A christmas tree has been installed in the arrivals foyer. Add some decorations to raise the holiday spirit, participating crew will be rewarded.")
 	var/customname = sanitizeSafe("Christmas Tree")
 
 	for (var/obj/machinery/computer/communications/C in machines)

@@ -1099,6 +1099,7 @@
 #include "code\modules\food\recipes_microwave.dm"
 #include "code\modules\games\cards.dm"
 #include "code\modules\genetics\side_effects.dm"
+#include "code\modules\holiday\christmas\ghost.dm"
 #include "code\modules\holiday\christmas\items.dm"
 #include "code\modules\holiday\halloween\items.dm"
 #include "code\modules\hydroponics\biogenerator.dm"
