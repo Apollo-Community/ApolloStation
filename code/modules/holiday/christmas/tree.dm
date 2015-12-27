@@ -61,7 +61,7 @@
 		else
 			user << "<span class='notice'><b>Christmas Uber Cheer - You've already collected this item. Sorry!</b></span>"
 		qdel( O )
-	else if( !dying && ispath( O, /obj/item/weapon/reagent_containers/glass/fertilizer ))
+	else if( !dying && istype( O, /obj/item/weapon/reagent_containers/glass/fertilizer ))
 		user << "The [src] already looks healthy!"
 
 	if(decoration_count == max_decorations && !christmas)
