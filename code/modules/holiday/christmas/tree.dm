@@ -31,6 +31,12 @@
 
 	desc = "A mysterious [joyous ? "joyous " : ""][src]. [dying ? "It looks like it is going to die" : "" ]!"
 
+/examine(mob/user)
+	..(user)
+
+	if( decoration_count )
+		user << "It is covered with [decoration_count] of [max_decorations]."
+
 /obj/structure/flora/tree/pine/christmas/attackby( var/obj/item/O as obj, var/mob/user as mob )
 	if( !O )
 		return
@@ -39,7 +45,7 @@
 		return
 
 	if( istype( O, /obj/item/weapon/spec_decoration ))
-		if( !contributers.Find( user ))
+		if( !( user in contributers ))
 			contributers.Add( user )
 		decoration_count++
 		user << "You add \the [O] to the [src]"
