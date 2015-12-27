@@ -48,24 +48,19 @@
 		if( !( user in contributers ))
 			contributers.Add( user )
 		decoration_count++
-		user << "You add \the [O] to the [src]"
+		src.visible_message( "[user] adds \the [O] to the [src].")
 		qdel( O )
 
-		for( var/mob/living/M in orange( src, 7 ))
-			if( M != user )
-				M << "You feel the holiday spirit build as [user.name] adds \the [O] to the [src]."
-
-	if( dying && ispath( O, /obj/item/weapon/reagent_containers/glass/fertilizer ))
+	if( dying && istype( O, /obj/item/weapon/reagent_containers/glass/fertilizer ))
 		joyous = 1
 		dying = 0
-		user << "You pour the [O] onto the [src]!"
-
-		qdel( O )
+		src.visible_message( "[user] pours the [O] onto \the [src]!" )
 
 		if( log_acc_item_to_db( user.ckey, "Christmas Sweater" ))
 			user << "<span class='notice'><b>Christmas Uber Cheer - Congratulations! You grew the tree to be big and strong!. A Christmas Sweater has been added to your account as a reward.</b></span>"
 		else
 			user << "<span class='notice'><b>Christmas Uber Cheer - You've already collected this item. Sorry!</b></span>"
+		qdel( O )
 	else if( !dying && ispath( O, /obj/item/weapon/reagent_containers/glass/fertilizer ))
 		user << "The [src] already looks healthy!"
 
