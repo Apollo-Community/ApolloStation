@@ -31,7 +31,7 @@
 
 	desc = "A mysterious [joyous ? "joyous " : ""][src]. [dying ? "It looks like it is going to die" : "" ]!"
 
-/examine(mob/user)
+/obj/structure/flora/tree/pine/christmas/examine(mob/user)
 	..(user)
 
 	if( decoration_count )

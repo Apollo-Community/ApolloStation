@@ -32,8 +32,9 @@
 	if( answered )
 		return
 
-	if( lowertext( message ) == questions[question] )
+	if( findtext( lowertext( message ), questions[question] ))
 		answered = 1
+		sleep( 10 )
 		src.visible_message("<b>[src]</b> says, \"[speaker] got the right answer!\"" )
 		if( log_acc_item_to_db( speaker.ckey, "Candy Cane" ))
 			speaker << "<span class='notice'><b>Christmas Cheer - You've answered the spirit's question correctly! An item has been added to your account as a reward.</b></span>"
