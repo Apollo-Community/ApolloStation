@@ -71,6 +71,7 @@ var/global/Holiday = null
 
 		if(6)	//Jun
 			switch(DD)
+				if(6)							Holiday = "Meatballs day"
 				if(14)							Holiday = "Flag Day"
 				if(21)							Holiday = "Summer Solstice"
 		if(7)	//Jul

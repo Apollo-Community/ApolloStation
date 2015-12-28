@@ -168,13 +168,10 @@
 
 	// Forcibly enable hardware-accelerated graphics, as we need them for the lighting overlays.
 	// (but turn them off first, since sometimes BYOND doesn't turn them on properly otherwise)
-	spawn(5) // And wait a half-second, since it sounds like you can do this too fast.
-		if(src)
-			winset(src, null, "command=\".configure graphics-hwmode off\"")
+	if(src)
+		winset(src, null, "command=\".configure graphics-hwmode off\"")
+		spawn(5) // And wait a half-second, since it sounds like you can do this too fast.
 			winset(src, null, "command=\".configure graphics-hwmode on\"")
-
-	if(byond_version < config.recommended_byond)
-		src << "\red This server is running Byond-[config.recommended_byond](BETA). If you experience any lighting issues we suggest you upgrade here - http://www.byond.com/download/"
 
 	donator = is_donator(src)
 	if(!stat_player_list.Find(key))			//Don't add the same person twice? How does this even happen
