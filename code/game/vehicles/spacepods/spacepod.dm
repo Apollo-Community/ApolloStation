@@ -221,11 +221,13 @@
 	if( istype( W, /obj/item/weapon/tank ))
 		equipment_system.fill_engine( W )
 		return
+
 	if(iscrowbar(W))
 		hatch_open = !hatch_open
 		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 		user << "<span class='notice'>You [hatch_open ? "open" : "close"] the maintenance hatch.</span>"
 		return
+
 	else if(istype(W, /obj/item/weapon/cell))
 		if(!hatch_open)
 			user << "<span class='warning'>The maintenance hatch is closed!</span>"
@@ -254,7 +256,6 @@
 
 		equipment_system.equip(W, user)
 		return
-
 	else if(istype( W, /obj/item/weapon/card/id ))
 		if(!hatch_open)
 			user << "<span class='warning'>The maintenance hatch is closed!</span>"
@@ -393,6 +394,41 @@
 	for( var/passenger in passengers )
 		passenger << message
 
+/obj/spacepod/proc/addPilot( mob/user as mob )
+	pilot = user
+	add_HUD(pilot)
+	update_HUD(pilot)
+
+	user.loc = src
+	user.reset_view(src)
+	user.stop_pulling()
+	user.forceMove(src)
+
+/obj/spacepod/proc/removePilot()
+	remove_HUD( pilot )
+	pilot.loc = get_turf( src )
+	pilot.reset_view( pilot )
+	pilot.stop_pulling()
+	pilot.forceMove( get_turf( src ))
+
+	pilot = null
+
+/obj/spacepod/proc/addPassenger( mob/user as mob )
+	passengers.Add( user )
+
+	user.loc = src
+	user.reset_view(src)
+	user.stop_pulling()
+	user.forceMove(src)
+
+/obj/spacepod/proc/removePassenger( mob/user as mob )
+	passengers.Remove( user )
+
+	user.loc = get_turf( src )
+	user.reset_view( user )
+	user.stop_pulling()
+	user.forceMove( get_turf( src ))
+
 /obj/spacepod/proc/put_in_seat( mob/user as mob )
 	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
 		return 0
@@ -420,25 +456,16 @@
 		if( !pilot )
 			visible_message("[user] climbs into the pilot's helm of \the [src]!")
 
-			pilot = user
-			add_HUD(pilot)
-			update_HUD(pilot)
+			addPilot( user )
 
 			playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
-
-			user.loc = src
-			user.reset_view(src)
-			user.stop_pulling()
-			user.forceMove(src)
 			return 1
 	else
 		if( !pilot )
 			occupants_announce( "[user] climbs out of their passenger's seat and into the pilot's helm." )
-			passengers.Remove( user )
 
-			pilot = user
-			add_HUD(pilot)
-			update_HUD(pilot)
+			removePassenger( user )
+			addPilot( user )
 
 			return 1
 		else
@@ -446,23 +473,17 @@
 
 	if( equipment_system )
 		if( equipment_system.seats.len > passengers.len ) // if theres still seats for them
-			user.reset_view(src)
-			user.stop_pulling()
-			user.forceMove(src)
-
 			if( user == pilot )
 				occupants_announce( "[user] climbs out of the pilot's seat and into a passenger's seat" )
-				passengers.Add( user )
 
-				remove_HUD(pilot)
-				pilot = null
+				removePilot()
+				addPassenger( user )
 
 				return 1
 			else
 				visible_message("[user] climbs into the [src]!")
 
-				passengers.Add( user )
-				user.loc = src
+				addPassenger( user )
 
 				playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 				return 1
