@@ -1038,20 +1038,17 @@ var/update_server_sleep = 0
 
 	if(!check_rights(R_SERVER) || !config.update_script || update_server_sleep) return
 
-	//Sucks this only returns exit codes ;(
-	shell("git ls-remote git://github.com/Apollo-Community/ApolloStation | head -1 | cut -f 1 > .git_remote_id")
-	//Compare the current branch and remote branch before syncing
-	if(file2text(".git/refs/heads/master") == file2text(".remote_git_id"))	//Can't use config.git_commit here as there may be multiple updates in one round
-		usr << "<b>This commit is already running on the server./b>"
-		return
+	usr << "<b>Running Update Script<b>"
+	var/result = shell(config.update_script)		//Use exit codes to determine what occured
 
-	usr << "<b>Running Update Script<b>)"
-	if(shell(config.update_script))
+	if(result == 1)
 		usr << "<b>Server updated sucessfully. Currently re-compiling - disabling command for 2 mins</b>"
 		usr << "<b>Update log can be accessed with '.getupdatelog'</b>"
 		update_server_sleep = 1
 		spawn(1200)
 
 			update_server_sleep = 0
+	else if(result ==2)
+		usr << "<b>Server is already running this commit.</b>"
 	else
 		usr << "<b>Server requires the resource file to be re-compiled - update unsucessful.</b>"
