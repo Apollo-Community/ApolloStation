@@ -395,6 +395,12 @@
 		passenger << message
 
 /obj/spacepod/proc/addPilot( mob/user as mob )
+	if( !user || !istype( user ))
+		return 0
+
+	if( pilot )
+		return 0
+
 	pilot = user
 	add_HUD(pilot)
 	update_HUD(pilot)
@@ -404,7 +410,12 @@
 	user.stop_pulling()
 	user.forceMove(src)
 
+	return 1
+
 /obj/spacepod/proc/removePilot()
+	if( !pilot || !istype( pilot ))
+		return 0
+
 	remove_HUD( pilot )
 	pilot.loc = get_turf( src )
 	pilot.reset_view( pilot )
@@ -413,7 +424,16 @@
 
 	pilot = null
 
+	return 1
+
 /obj/spacepod/proc/addPassenger( mob/user as mob )
+	if( equipment_system )
+		if( equipment_system.seats.len <= passengers.len )
+			return 0
+
+	if( !user || !istype( user ))
+		return 0
+
 	passengers.Add( user )
 
 	user.loc = src
@@ -421,13 +441,23 @@
 	user.stop_pulling()
 	user.forceMove(src)
 
+	return 1
+
 /obj/spacepod/proc/removePassenger( mob/user as mob )
+	if( !user && !istype( user ))
+		return 0
+
+	if( !( user in passengers ))
+		return 0
+
 	passengers.Remove( user )
 
 	user.loc = get_turf( src )
 	user.reset_view( user )
 	user.stop_pulling()
 	user.forceMove( get_turf( src ))
+
+	return 1
 
 /obj/spacepod/proc/put_in_seat( mob/user as mob )
 	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
