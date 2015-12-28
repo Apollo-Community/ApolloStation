@@ -13,7 +13,7 @@
 	layer = 3.9
 	infra_luminosity = 15
 
-	var/mob/pilot = null
+	var/mob/living/pilot = null
 	var/list/passengers = list()
 
 	var/datum/spacepod/equipment/equipment_system
@@ -39,6 +39,8 @@
 
 	var/datum/effect/effect/system/ion_trail_follow/space_trail/ion_trail
 	var/list/pod_overlays
+
+	var/global/enter_time = 20 // How much time it takes to move in / out of the spacepod
 
 /obj/spacepod/New()
 	. = ..()
@@ -292,7 +294,7 @@
 	if(!hatch_open)
 		return ..()
 	if(!equipment_system || !istype(equipment_system))
-		user << "<span class='warning'>The pod has no equpment datum, or is the wrong type, yell at pomf.</span>"
+		user << "<span class='warning'>This pod is non-operational. Please contact maintenance.</span>"
 		return
 
 	// Removing the equipment
@@ -426,6 +428,49 @@
 
 	return 1
 
+/obj/spacepod/proc/displacePilot( var/mob/user )
+	if( !pilot || !istype( pilot ))
+		return 0
+
+	var/mob/M = pilot
+	removePilot()
+	if( addPassenger( M ))
+		if( user )
+			visible_message( "[user] moves the pilot, [M], into a passenger's seat!" )
+	else
+		if( user )
+			visible_message( "[user] moves the pilot, [M], out of the shuttle!" )
+
+/obj/spacepod/proc/moveToPilot( mob/user as mob )
+	if( pilot )
+		user << "<span class='warning'>[pilot] is already piloting the shuttle.</span>"
+		return 0
+
+	if( !( user in passengers ))
+		user << "<span class='notice'>You start climbing into the pilot seat of the [src]...</span>"
+		if( !do_after( user, enter_time ))
+			user << "<span class='warning'>You decide you don't want to go into the [src] after all.</span>"
+			return
+
+		visible_message( "<span class='notice'>[user] climbs into the pilot's helm of \the [src].</span>" )
+
+		addPilot( user )
+
+		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
+		return 1
+	else
+		user << "You start moving into the pilot seat..."
+		if( !do_after( user, enter_time ))
+			user << "<span class='warning'>You decide you don't want to pilot \the [src] after all.</span>"
+			return
+
+		occupants_announce( "<span class='notice'>[user] climbs out of their passenger's seat and into the pilot's helm.</span>" )
+
+		removePassenger( user )
+		addPilot( user )
+
+		return 1
+
 /obj/spacepod/proc/addPassenger( mob/user as mob )
 	if( equipment_system )
 		if( equipment_system.seats.len <= passengers.len )
@@ -459,66 +504,60 @@
 
 	return 1
 
-/obj/spacepod/proc/put_in_seat( mob/user as mob )
-	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
+/obj/spacepod/proc/moveToPassenger( mob/user as mob )
+	if( equipment_system )
+		user << "<span class='notice'>You start climbing into a passenger seat...</span>"
+		if( do_after( user, enter_time ))
+			if( equipment_system.seats.len > passengers.len ) // if theres still seats for them
+				if( user == pilot )
+					occupants_announce( "<span class='notice'>[user] climbs out of the pilot's seat and into a passenger's seat.</span>" )
+
+					removePilot()
+					addPassenger( user )
+
+					return 1
+				else
+					visible_message("<span class='notice'>[user] climbs into the [src].</span>")
+
+					addPassenger( user )
+
+					playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
+					return 1
+			else
+				user << "<span class='warning'>There are no empty seats!</span>"
+		else
+			user << "<span class='warning'>You decide you don't want to ride in a passenger seat after all.</span>"
+
+/obj/spacepod/proc/put_in_seat( mob/living/user as mob )
+	if( !user || !istype( user ))
+		return 0
+
+	if( !user.isAble() ) //are you cuffed, dying, lying, stunned or other
 		return 0
 
 	src.add_fingerprint(user)
 
-	var/fukkendisk
 	for( var/obj/A in user.contents )
 		if( istype( A, /obj/item/weapon/disk/nuclear ))
-			fukkendisk = A
-
-	if(fukkendisk)
-		user << "<span class='warning'>The nuke-disk locks the door as you attempt to get in, you evil person.</span?"
-		return 0
-
-//	if (user.stat || !ishuman(user)) // I'll leave this here in case we wanna be speciest later
-//		return
+			user << "<span class='warning'>The [A] locks the door as you attempt to get in.</span?"
+			return 0
 
 	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == user)
 			user << "<span class='warning'>You're too busy getting your life sucked out of you.</span>"
 			return 0
 
-	if( !( user in passengers ))
-		if( !pilot )
-			visible_message("[user] climbs into the pilot's helm of \the [src]!")
-
-			addPilot( user )
-
-			playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
-			return 1
+	if( pilot )
+		if( !pilot.isAble() )
+			displacePilot( user )
+			moveToPilot( user )
+			return
 	else
-		if( !pilot )
-			occupants_announce( "[user] climbs out of their passenger's seat and into the pilot's helm." )
+		moveToPilot( user )
+		return
 
-			removePassenger( user )
-			addPilot( user )
-
-			return 1
-		else
-			user << "<span class='warning'>[pilot] is already in the pilot's seat!</span>"
-
-	if( equipment_system )
-		if( equipment_system.seats.len > passengers.len ) // if theres still seats for them
-			if( user == pilot )
-				occupants_announce( "[user] climbs out of the pilot's seat and into a passenger's seat" )
-
-				removePilot()
-				addPassenger( user )
-
-				return 1
-			else
-				visible_message("[user] climbs into the [src]!")
-
-				addPassenger( user )
-
-				playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
-				return 1
-		else
-			user << "<span class='warning'>There's no empty seats!</span>"
+	if( !( user in passengers ))
+		moveToPassenger( user )
 
 	return 0
 
@@ -538,7 +577,7 @@
 	if( user in passengers )
 		passengers.Remove( user )
 
-	playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
+	playsound( src, 'sound/machines/windowdoor.ogg', 50, 1 )
 	user.loc = src.loc
 
 /obj/spacepod/MouseDrop_T(var/atom/movable/W, mob/user as mob)
