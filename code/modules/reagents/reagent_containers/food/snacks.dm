@@ -1548,7 +1548,7 @@
 
 	proc/Expand()
 		src.visible_message("<span class='notice'>\The [src] expands!</span>")
-		var/mob/living/carbon/human/monkey/H = new(src.loc)
+		var/mob/living/carbon/human/monkey = new(src.loc)
 		src.loc = null
 		qdel(src)
 		return 1
