@@ -1036,19 +1036,30 @@ var/update_server_sleep = 0
 
 	set desc = "Updates the server if possible to latest release on master branch"
 
-	if(!check_rights(R_SERVER) || !config.update_script || update_server_sleep) return
+	if(!check_rights(R_SERVER)) return
 
-	usr << "<b>Running Update Script<b>"
-	var/result = shell(config.update_script)		//Use exit codes to determine what occured
+	if(update_server_sleep)
+		usr << "<span class='danger'> This command is currently disabled. Please try again in a few minutes.</span>"
 
-	if(result == 1)
+	var/command = file2text("config/update_script_command.txt")		//Security measure to stop people changing command via config debug
+	if(!command)
+		usr << "<span class='danger'> The update command could not be found on the server.</span>"
+		return
+
+	message_admins("[src.ckey] is remotely updating the server. Shout at them if something goes horribly wrong.")
+	var/result = shell(command)		//Use exit codes to determine what occured
+
+	if(result == 0)
 		usr << "<b>Server updated sucessfully. Currently re-compiling - disabling command for 2 mins</b>"
 		usr << "<b>Update log can be accessed with '.getupdatelog'</b>"
 		update_server_sleep = 1
 		spawn(1200)
-
 			update_server_sleep = 0
-	else if(result ==2)
+	else if(result == 1)
 		usr << "<b>Server is already running this commit.</b>"
-	else
+	else if(result == 2)
 		usr << "<b>Server requires the resource file to be re-compiled - update unsucessful.</b>"
+	else
+		usr << "<span class='danger'> Error: A catastrphic error has occured. Please contact a developer about this</span>"
+
+	log_debug("IG UPDATE: exit code [result]")
