@@ -1,6 +1,6 @@
-#define UI_SPACEPOD_HEALTH "1:0,2:0"
-#define UI_SPACEPOD_FUEL "1:0,3:0"
-#define UI_SPACEPOD_CHARGE "1:0,4:0"
+#define UI_SPACEPOD_HEALTH "1:0,14:0"
+#define UI_SPACEPOD_FUEL "2:0,14:0"
+#define UI_SPACEPOD_CHARGE "3:0,14:0"
 
 /datum/hud/proc/spacepod_hud()
 
@@ -22,14 +22,12 @@
 	mymob.spacepod_charge.name = "Charge"
 	mymob.spacepod_charge.screen_loc = UI_SPACEPOD_CHARGE
 
-	mymob.client.screen = list(
+	mymob.client.screen += list(
 								mymob.spacepod_health,
 								mymob.spacepod_fuel,
 								mymob.spacepod_charge,
 								mymob.fade
 							)
-
-
 
 /datum/hud/proc/remove_spacepod_hud()
 	mymob.client.screen -= list(

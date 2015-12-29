@@ -333,6 +333,7 @@
 	mymob.flash.icon_state = "blank"
 	mymob.flash.name = "flash"
 	mymob.flash.screen_loc = "1,1 to 15,15"
+	mymob.damageoverlay.mouse_opacity = 0
 	mymob.flash.layer = 17
 	hud_elements |= mymob.flash
 
