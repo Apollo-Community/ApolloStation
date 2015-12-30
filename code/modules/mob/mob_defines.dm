@@ -37,6 +37,7 @@
 	var/obj/screen/spacepod_charge = null
 	var/obj/screen/spacepod_exit = null
 	var/obj/screen/spacepod_fire = null
+	var/obj/screen/spacepod_switch_weapons = null
 	var/obj/screen/spacepod_locate = null
 	var/obj/screen/spacepod_cargo = null
 	var/obj/screen/spacepod_door = null

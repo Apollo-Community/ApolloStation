@@ -602,117 +602,6 @@
 		if( equipment_system.cargohold )
 			equipment_system.cargohold.put_inside( W, user )
 
-/obj/spacepod/verb/move_inside()
-	set category = "Object"
-	set name = "Enter Pod"
-	set src in oview(1)
-
-	put_in_seat( usr )
-
-/obj/spacepod/verb/exit_pod()
-	set name = "Exit Pod"
-	set category = "Spacepod"
-	set src = usr.loc
-
-	exit( usr )
-
-/obj/spacepod/proc/toggleDoors( user as mob )
-	for(var/obj/machinery/door/poddoor/P in oview(3,src))
-		if(istype(P, /obj/machinery/door/poddoor/three_tile_hor) || istype(P, /obj/machinery/door/poddoor/three_tile_ver) || istype(P, /obj/machinery/door/poddoor/four_tile_hor) || istype(P, /obj/machinery/door/poddoor/four_tile_ver))
-			if( P.check_access( equipment_system.card ))
-				if(P.density)
-					P.open()
-					return 1
-				else
-					P.close()
-					return 1
-			else if( user )
-				user << "<span class='warning'>Access denied.</span>"
-			return
-	if( user )
-		user << "<span class='warning'>You are not near any pod doors.</span>"
-	return
-
-/obj/spacepod/verb/useDoors()
-	if(src.pilot)
-		set name = "Toggle Nearby Pod Doors"
-		set category = "Spacepod"
-		set src = usr.loc
-
-		toggleDoors( usr )
-
-/*
-/obj/spacepod/verb/autopilot()
-	if( equipment_system.autopilot )
-		if( src.pilot == usr )
-			set name = "Activate Autopilot"
-			set category = "Spacepod"
-			set src = usr.loc
-
-			equipment_system.autopilot.prompt()
-*/
-
-/obj/spacepod/proc/fireWeapon( user as mob )
-	if( !equipment_system )
-		return
-
-	if( equipment_system.weapon_system )
-		if( user )
-			user << "<span class='warning'>ERROR: This pod does not have any active weapon systems.</span>"
-		return
-
-	equipment_system.weapon_system.fire_weapons()
-
-/obj/spacepod/verb/useWeapon()
-	if( equipment_system.weapon_system )
-		if( src.pilot == usr )
-			set name = "Fire Pod Weapons"
-			set desc = "Fire the weapons."
-			set category = "Spacepod"
-			set src = usr.loc
-
-			fireWeapon( usr )
-
-obj/spacepod/verb/toggleLights()
-	if( src.pilot == usr )
-		set name = "Toggle Lights"
-		set category = "Spacepod"
-		set src = usr.loc
-
-		lightsToggle()
-
-/obj/spacepod/proc/activateWarpBeacon( user as mob )
-	for(var/obj/machinery/computer/gate_beacon_console/C in orange(src.loc, 5)) // Finding suitable VR platforms in area
-		if(alert(user, "Would you like to interface with: [C]?", "Confirm", "Yes", "No") == "Yes")
-			C.gate_prompt( pilot )
-			occupants_announce( "<span class='notice'>Activated charging sequence for nearby bluespace beacon.</span>" )
-
-/obj/spacepod/verb/useWarpBeacon()
-	if( src.pilot == usr )
-		set name = "Use Nearby Warp Beacon"
-		set category = "Spacepod"
-		set src = usr.loc
-
-		activateWarpBeacon( usr )
-
-/obj/spacepod/verb/dumpCargo()
-	if( src.pilot == usr )
-		if( equipment_system.cargohold )
-			set name = "Dump Cargo"
-			set category = "Spacepod"
-			set src = usr.loc
-
-			equipment_system.cargohold.dump_prompt( usr )
-
-/obj/spacepod/proc/lightsToggle()
-	lights = !lights
-	if(lights)
-		set_light(light_range + lights_power)
-	else
-		set_light(light_range - lights_power)
-	occupants_announce( "Spacepod lights toggled [lights?"on":"off"]." )
-	return
-
 /obj/spacepod/proc/enter_after(delay as num, var/mob/user as mob, var/numticks = 5)
 	var/delayfraction = delay/numticks
 
@@ -1012,6 +901,116 @@ obj/spacepod/verb/toggleLights()
 				pilot << "<span class='warning'>There's nothing of interest below you!!</span>"
 		return
 
+/obj/spacepod/verb/move_inside()
+	set category = "Object"
+	set name = "Enter Pod"
+	set src in oview(1)
+
+	put_in_seat( usr )
+
+/obj/spacepod/verb/exit_pod()
+	set name = "Exit Pod"
+	set category = "Spacepod"
+	set src = usr.loc
+
+	exit( usr )
+
+/obj/spacepod/proc/toggleDoors( user as mob )
+	for(var/obj/machinery/door/poddoor/P in oview(3,src))
+		if(istype(P, /obj/machinery/door/poddoor/three_tile_hor) || istype(P, /obj/machinery/door/poddoor/three_tile_ver) || istype(P, /obj/machinery/door/poddoor/four_tile_hor) || istype(P, /obj/machinery/door/poddoor/four_tile_ver))
+			if( P.check_access( equipment_system.card ))
+				if(P.density)
+					P.open()
+					return 1
+				else
+					P.close()
+					return 1
+			else if( user )
+				user << "<span class='warning'>Access denied.</span>"
+			return
+	if( user )
+		user << "<span class='warning'>You are not near any pod doors.</span>"
+	return
+
+/obj/spacepod/verb/useDoors()
+	if(src.pilot)
+		set name = "Toggle Nearby Pod Doors"
+		set category = "Spacepod"
+		set src = usr.loc
+
+		toggleDoors( usr )
+
+/*
+/obj/spacepod/verb/autopilot()
+	if( equipment_system.autopilot )
+		if( src.pilot == usr )
+			set name = "Activate Autopilot"
+			set category = "Spacepod"
+			set src = usr.loc
+
+			equipment_system.autopilot.prompt()
+*/
+
+/obj/spacepod/proc/fireWeapon( user as mob )
+	if( !equipment_system )
+		return
+
+	if( equipment_system.weapon_system )
+		if( user )
+			user << "<span class='warning'>ERROR: This pod does not have any active weapon systems.</span>"
+		return
+
+	equipment_system.weapon_system.fire_weapons()
+
+/obj/spacepod/verb/useWeapon()
+	if( equipment_system.weapon_system )
+		if( src.pilot == usr )
+			set name = "Fire Pod Weapons"
+			set desc = "Fire the weapons."
+			set category = "Spacepod"
+			set src = usr.loc
+
+			fireWeapon( usr )
+
+obj/spacepod/verb/toggleLights()
+	if( src.pilot == usr )
+		set name = "Toggle Lights"
+		set category = "Spacepod"
+		set src = usr.loc
+
+		lightsToggle()
+
+/obj/spacepod/proc/activateWarpBeacon( user as mob )
+	for(var/obj/machinery/computer/gate_beacon_console/C in orange(src.loc, 5)) // Finding suitable VR platforms in area
+		if(alert(user, "Would you like to interface with: [C]?", "Confirm", "Yes", "No") == "Yes")
+			C.gate_prompt( pilot )
+			occupants_announce( "<span class='notice'>Activated charging sequence for nearby bluespace beacon.</span>" )
+
+/obj/spacepod/verb/useWarpBeacon()
+	if( src.pilot == usr )
+		set name = "Use Nearby Warp Beacon"
+		set category = "Spacepod"
+		set src = usr.loc
+
+		activateWarpBeacon( usr )
+
+/obj/spacepod/verb/dumpCargo()
+	if( src.pilot == usr )
+		if( equipment_system.cargohold )
+			set name = "Dump Cargo"
+			set category = "Spacepod"
+			set src = usr.loc
+
+			equipment_system.cargohold.dump_prompt( usr )
+
+/obj/spacepod/proc/lightsToggle()
+	lights = !lights
+	if(lights)
+		set_light(light_range + lights_power)
+	else
+		set_light(light_range - lights_power)
+	occupants_announce( "Spacepod lights toggled [lights?"on":"off"]." )
+	return
 
 /obj/spacepod/proc/sectorLocate( user as mob )
 	usr << "<span class='notice'>Triangulating sector location through bluespace beacons, please standby... (This may take up to 15 seconds)</span>"
@@ -1034,23 +1033,27 @@ obj/spacepod/verb/toggleLights()
 
 	sectorLocate( usr )
 
-/obj/spacepod/verb/switch_weapon()
+/obj/spacepod/proc/switchWeapon( user as mob )
+	var/list/weapons = list()
+	for( var/weapon in equipment_system )
+		if( istype( weapon, /obj/item/device/spacepod_equipment/weaponry ))
+			weapons.Add( weapon )
+	var/selected = equipment_system.weapon_system
+	selected = input( user, "Select your preferred weapon system.", "Select Weapon System", selected ) in weapons
+	equipment_system.weapon_system = selected
+
+/obj/spacepod/verb/useSwitchWeapon()
 	if( src.pilot == usr )
 		if( equipment_system.weapon_system )
 			set category = "Spacepod"
 			set name = "Switch Weapon System"
 			set src = usr.loc
 
-			var/list/weapons = list()
-			for( var/weapon in equipment_system )
-				if( istype( weapon, /obj/item/device/spacepod_equipment/weaponry ))
-					weapons.Add( weapon )
-			var/selected = equipment_system.weapon_system
-			selected = input( usr, "Select your preferred weapon system.", "Select Weapon System", selected ) in weapons
-			equipment_system.weapon_system = selected
+			switchWeapon( usr )
 
 /obj/spacepod/complete/New()
 	..()
+
 	equipment_system.equip( new /obj/item/weapon/cell/super )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine )
 
@@ -1061,10 +1064,12 @@ obj/spacepod/verb/toggleLights()
 
 /obj/spacepod/command/New()
 	..()
+
 	equipment_system.equip( new /obj/item/pod_parts/armor/command )
 
 /obj/spacepod/command/complete/New()
 	..()
+
 	equipment_system.equip( new /obj/item/weapon/cell/super )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine )
 
@@ -1075,10 +1080,12 @@ obj/spacepod/verb/toggleLights()
 
 /obj/spacepod/security/New()
 	..()
+
 	equipment_system.equip( new /obj/item/pod_parts/armor/security )
 
 /obj/spacepod/security/complete/New()
 	..()
+
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine/einstein/galileo )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/shield )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/weaponry/taser )
@@ -1095,10 +1102,12 @@ obj/spacepod/verb/toggleLights()
 
 /obj/spacepod/shuttle/New()
 	..()
+
 	equipment_system.equip( new /obj/item/pod_parts/armor/shuttle )
 
 /obj/spacepod/shuttle/complete/New()
 	..()
+
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine/einstein/fourier )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/misc/tracker )
 	equipment_system.equip( new /obj/item/weapon/cell/super )
@@ -1113,6 +1122,7 @@ obj/spacepod/verb/toggleLights()
 
 /obj/spacepod/dev/New()
 	..()
+
 	equipment_system.max_size = 1000
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine/magic )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/weaponry/taser )

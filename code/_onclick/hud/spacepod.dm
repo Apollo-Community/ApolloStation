@@ -9,6 +9,7 @@
 #define UI_SPACEPOD_LOCATE "4:0,13:0"
 #define UI_SPACEPOD_CARGO "5:0,13:0"
 #define UI_SPACEPOD_FIRE "6:0,13:0"
+#define UI_SPACEPOD_SWITCH_WEAPONS "7:0,13:0"
 
 /obj/screen/spacepod
 	icon = 'icons/mob/screen1_pod.dmi'
@@ -79,6 +80,14 @@
 /obj/screen/spacepod/fire/Click()
 	spacepod.fireWeapon( spacepod.pilot )
 
+/obj/screen/spacepod/switch_weapons
+	icon_state = "switch_weapon"
+	name = "Switch Weapons"
+	screen_loc = UI_SPACEPOD_SWITCH_WEAPONS
+
+/obj/screen/spacepod/switch_weapons/Click()
+	spacepod.switchWeapon( spacepod.pilot )
+
 /obj/screen/spacepod/door
 	icon_state = "door"
 	name = "Toggle Nearby Pod Doors"
@@ -112,6 +121,7 @@
 	mymob.spacepod_locate = new /obj/screen/spacepod/locate( S )
 	mymob.spacepod_cargo = new /obj/screen/spacepod/cargo( S )
 	mymob.spacepod_fire = new /obj/screen/spacepod/fire( S )
+	mymob.spacepod_switch_weapons = new /obj/screen/spacepod/switch_weapons( S )
 	mymob.spacepod_door = new /obj/screen/spacepod/door( S )
 	mymob.spacepod_light = new /obj/screen/spacepod/light( S )
 	mymob.spacepod_bluespace = new /obj/screen/spacepod/bluespace( S )
@@ -124,6 +134,7 @@
 								 mymob.spacepod_locate,
 								 mymob.spacepod_cargo,
 								 mymob.spacepod_fire,
+								 mymob.spacepod_switch_weapons,
 								 mymob.spacepod_door,
 								 mymob.spacepod_light,
 								 mymob.spacepod_bluespace,
@@ -138,6 +149,7 @@
 								 mymob.spacepod_locate,
 								 mymob.spacepod_cargo,
 								 mymob.spacepod_fire,
+								 mymob.spacepod_switch_weapons,
 								 mymob.spacepod_door,
 								 mymob.spacepod_light,
 								 mymob.spacepod_bluespace,
@@ -148,6 +160,10 @@
 #undef UI_SPACEPOD_FUEL
 #undef UI_SPACEPOD_CHARGE
 #undef UI_SPACEPOD_EXIT
+#undef UI_SPACEPOD_DOOR
+#undef UI_SPACEPOD_LIGHT
+#undef UI_SPACEPOD_BLUESPACE
 #undef UI_SPACEPOD_LOCATE
 #undef UI_SPACEPOD_CARGO
 #undef UI_SPACEPOD_FIRE
+#undef UI_SPACEPOD_SWITCH_WEAPONS
