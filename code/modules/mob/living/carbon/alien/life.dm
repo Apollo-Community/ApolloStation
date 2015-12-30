@@ -182,7 +182,7 @@
 	var/turf/T = get_turf(src)
 	if(environment.gas["phoron"] > 0 || (T && locate(/obj/effect/alien/weeds) in T.contents))
 		adjustBruteLoss(-1)
-		adjustFireLoss(-1)
+		adjustFireLoss(-1.75)
 		adjustToxLoss(-1)
 		adjustOxyLoss(-1)
 
