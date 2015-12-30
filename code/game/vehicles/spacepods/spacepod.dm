@@ -1,5 +1,6 @@
 #define DAMAGE			1
 #define FIRE			2
+#define HUD_STATS_STATES 7 // how many levels are in each stat panel
 
 /obj/spacepod
 	name = "\improper space pod"
@@ -32,6 +33,7 @@
 	var/next_firetime = 0 // Used for weapon firing
 
 	var/health = 100 // pods without armor are tough as a spongecake
+	var/max_health = 100
 	var/fire_threshold_health = 0.2 // threshold heat for fires to start
 
 	var/empcounter = 0 //Used for disabling movement when hit by an EMP
@@ -40,7 +42,7 @@
 	var/datum/effect/effect/system/ion_trail_follow/space_trail/ion_trail
 	var/list/pod_overlays
 
-	var/global/enter_time = 20 // How much time it takes to move in / out of the spacepod
+	var/global/enter_time = 15 // How much time it takes to move in / out of the spacepod
 
 /obj/spacepod/New()
 	. = ..()
@@ -898,58 +900,32 @@ obj/spacepod/verb/toggleLights()
 		return
 
 	if( !has_power() ) // Can't read the instruments without power
-		M.spacepod_health.icon_state = "health_off"
-		M.spacepod_fuel.icon_state = "fuel_off"
+		M.spacepod_health.icon_state = "stat_off"
+		M.spacepod_fuel.icon_state = "stat_off"
 		if( equipment_system.battery )
-			M.spacepod_charge.icon_state = "charge0"
+			M.spacepod_charge.icon_state = "stat_0"
 		else
-			M.spacepod_charge.icon_state = "charge-empty"
+			M.spacepod_charge.icon_state = "stat_off"
 		return
-	else
-		var/obj/item/weapon/cell/battery = equipment_system.battery
-		var/charge_percent = battery.charge/battery.maxcharge
 
-		if( charge_percent <= 0.05 )
-			M.spacepod_charge.icon_state = "charge0"
-		else if( charge_percent <= 0.25)
-			M.spacepod_charge.icon_state = "charge1"
-		else if( charge_percent <= 0.5)
-			M.spacepod_charge.icon_state = "charge2"
-		else if( charge_percent <= 0.75)
-			M.spacepod_charge.icon_state = "charge3"
-		else
-			M.spacepod_charge.icon_state = "charge4"
+	var/obj/item/weapon/cell/battery = equipment_system.battery
+	var/charge_percent = battery.charge/battery.maxcharge
+	var/charge_icon_level = round( charge_percent*HUD_STATS_STATES )
 
-	var/health_percent = health/initial(health)
+	M.spacepod_charge.icon_state = "stat_[charge_icon_level]"
 
-	if( health_percent <= 0.1 )
-		M.spacepod_health.icon_state = "health5"
-	else if( health_percent <= 0.3)
-		M.spacepod_health.icon_state = "health4"
-	else if( health_percent <= 0.5)
-		M.spacepod_health.icon_state = "health3"
-	else if( health_percent <= 0.7)
-		M.spacepod_health.icon_state = "health2"
-	else if( health_percent <= 0.8)
-		M.spacepod_health.icon_state = "health1"
-	else
-		M.spacepod_health.icon_state = "health0"
+	var/health_percent = health/max_health
+	var/health_icon_level = round( health_percent*HUD_STATS_STATES )
+
+	M.spacepod_health.icon_state = "stat_[health_icon_level]"
 
 	if( equipment_system.engine_system )
 		var/fuel_percent = equipment_system.engine_system.fuel_tank.return_pressure()/equipment_system.engine_system.max_pressure
+		var/fuel_icon_level = round( fuel_percent*HUD_STATS_STATES )
 
-		if( fuel_percent <= 0.05 )
-			M.spacepod_fuel.icon_state = "fuel0"
-		else if( fuel_percent <= 0.25)
-			M.spacepod_fuel.icon_state = "fuel1"
-		else if( fuel_percent <= 0.5)
-			M.spacepod_fuel.icon_state = "fuel2"
-		else if( fuel_percent <= 0.75)
-			M.spacepod_fuel.icon_state = "fuel3"
-		else
-			M.spacepod_fuel.icon_state = "fuel4"
+		M.spacepod_fuel.icon_state = "stat_[fuel_icon_level]"
 	else
-		M.spacepod_fuel.icon_state = "fuel_off"
+		M.spacepod_fuel.icon_state = "stat_off"
 
 /obj/spacepod/proc/has_power()
 	if( equipment_system )

@@ -83,7 +83,10 @@
 			return 0
 		armor = equipment
 
-		my_atom.health = 100+armor.health_bonus
+		var/health_ratio = my_atom.health/initial( my_atom.health )
+		my_atom.max_health = initial( my_atom.health )+armor.health_bonus
+		my_atom.health = health_ratio*( my_atom.max_health )
+
 		max_size = armor.equipment_size
 	else if( istype( equipment, /obj/item/weapon/card/id ))
 		if( card )
@@ -117,7 +120,12 @@
 	else if( equipment == battery ) // Deassigning the battery
 		battery = null
 	else if( equipment == armor )
+		var/health_ratio = my_atom.health/my_atom.max_health
+		my_atom.max_health = initial( my_atom.health )
+		my_atom.health = health_ratio*( my_atom.max_health )
+
 		reset_default()
+
 		my_atom.update_icon()
 		return 1
 
@@ -130,7 +138,6 @@
 
 /datum/spacepod/equipment/proc/reset_default()
 	armor = null
-	my_atom.health = 100
 	max_size = 5
 
 	spawn( 1 )
