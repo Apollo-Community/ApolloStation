@@ -1614,27 +1614,21 @@
 	proc/handle_ipc_charging()
 		var/datum/species/machine/S = species
 		var/obj/machinery/power/apc/A = S.attached_apc
-		
+
 		if(!A.can_use(src) || !A.cell)
 			if(!in_range(A, src))
 				src << "<span class='warning'>You rip your fingers out of the APC!</span>"
 			S.attached_apc = null
-			A.charging = 1
-			A.update_icon()
 			return
-			
+
 		if(a_intent == I_GRAB)
 			if(A.cell.charge <= 0)
 				src << "<span class='notice'>The power cell dries out, and you remove your fingers from the APC.</span>"
 				S.attached_apc = null
-				A.charging = 1
-				A.update_icon()
 				return
 			else if(nutrition >= 500)
 				src << "<span class='notice'>You remove your fingers from the APC as your power cell is fully charged.</span>"
 				S.attached_apc = null
-				A.charging = 1
-				A.update_icon()
 				return
 			else
 				nutrition += 10
@@ -1643,13 +1637,9 @@
 			if(A.cell.charge >= A.cell.maxcharge)
 				src << "<span class='notice'>You remove your fingers as the APC is fully charged.</span>"
 				S.attached_apc = null
-				A.charging = 1
-				A.update_icon()
 				return
 			else if(nutrition <= 30)
 				src << "<span class='notice'>You remove your fingers as your own power starts to run out.</span>"
-				A.charging = 1
-				A.update_icon()
 				return
 			else
 				nutrition -= 10
@@ -1657,8 +1647,9 @@
 		else
 			src << "<span class='notice'>You remove your fingers from the APC.</span>"
 			S.attached_apc = null
-			A.charging = 1
-			A.update_icon()
+
+		A.charging = 1
+		A.update_icon()
 
 /*
 	Called by life(), instead of having the individual hud items update icons each tick and check for status changes
