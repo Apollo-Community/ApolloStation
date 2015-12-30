@@ -264,7 +264,7 @@
 		if(!hatch_open)
 			user << "<span class='warning'>The maintenance hatch is closed!</span>"
 			return
-		if(equipment_system.card)
+		if( equipment_system.card )
 			user << "<span class='warning'>The pod already an access card.</span>"
 			return
 
@@ -427,6 +427,7 @@
 	pilot.forceMove( get_turf( src ))
 
 	pilot = null
+	inertia_dir = 0 // engage reverse thruster and power down pod
 
 	return 1
 
@@ -564,6 +565,9 @@
 	return 0
 
 /obj/spacepod/proc/exit( mob/user as mob )
+	if( !user )
+		return
+
 	if( istype( src.loc, /obj/effect/traveler ))
 		user << pick( "<span class='warning'>Stepping out into the vast emptiness of space isn't a very good idea.</span>",
 					  "<span class='warning'>The void does not call to you.</span>",
@@ -573,11 +577,9 @@
 		return
 
 	if( user == pilot )
-		remove_HUD(pilot)
-		inertia_dir = 0 // engage reverse thruster and power down pod
-		pilot = null
+		removePilot()
 	if( user in passengers )
-		passengers.Remove( user )
+		removePassenger( user )
 
 	playsound( src, 'sound/machines/windowdoor.ogg', 50, 1 )
 	user.loc = src.loc
@@ -614,26 +616,31 @@
 
 	exit( usr )
 
-/obj/spacepod/verb/toggleDoors()
+/obj/spacepod/proc/toggleDoors()
+	for(var/obj/machinery/door/poddoor/P in oview(3,src))
+		if(istype(P, /obj/machinery/door/poddoor/three_tile_hor) || istype(P, /obj/machinery/door/poddoor/three_tile_ver) || istype(P, /obj/machinery/door/poddoor/four_tile_hor) || istype(P, /obj/machinery/door/poddoor/four_tile_ver))
+			var/mob/living/carbon/human/L = usr
+			if( P.check_access( equipment_system.card ))
+				if(P.density)
+					P.open()
+					return 1
+				else
+					P.close()
+					return 1
+			else if( pilot )
+				pilot << "<span class='warning'>Access denied.</span>"
+			return
+	if( pilot )
+		pilot << "<span class='warning'>You are not near any pod doors.</span>"
+	return
+
+/obj/spacepod/verb/useDoors()
 	if(src.pilot)
 		set name = "Toggle Nearby Pod Doors"
 		set category = "Spacepod"
 		set src = usr.loc
 
-		for(var/obj/machinery/door/poddoor/P in oview(3,src))
-			if(istype(P, /obj/machinery/door/poddoor/three_tile_hor) || istype(P, /obj/machinery/door/poddoor/three_tile_ver) || istype(P, /obj/machinery/door/poddoor/four_tile_hor) || istype(P, /obj/machinery/door/poddoor/four_tile_ver))
-				var/mob/living/carbon/human/L = usr
-				if(P.check_access(L.get_active_hand()) || P.check_access(L.wear_id))
-					if(P.density)
-						P.open()
-						return 1
-					else
-						P.close()
-						return 1
-				pilot << "<span class='warning'>Access denied.</span>"
-				return
-		pilot << "<span class='warning'>You are not close to any pod doors.</span>"
-		return
+		toggleDoors()
 
 /*
 /obj/spacepod/verb/autopilot()
@@ -646,18 +653,26 @@
 			equipment_system.autopilot.prompt()
 */
 
-/obj/spacepod/verb/fireWeapon()
+/obj/spacepod/proc/fireWeapon( user as mob )
+	if( !equipment_system )
+		return
+
+	if( equipment_system.weapon_system )
+		if( user )
+			user << "<span class='warning'>ERROR: This pod does not have any active weapon systems.</span>"
+		return
+
+	equipment_system.weapon_system.fire_weapons()
+
+/obj/spacepod/verb/useWeapon()
 	if( equipment_system.weapon_system )
 		if( src.pilot == usr )
 			set name = "Fire Pod Weapons"
 			set desc = "Fire the weapons."
 			set category = "Spacepod"
 			set src = usr.loc
-			if( equipment_system )
-				if( equipment_system.weapon_system )
-					equipment_system.weapon_system.fire_weapons()
-				else
-					occupants_announce( "<span class='warning'>ERROR: This pod does not have any active weapon systems.</span>" )
+
+			fireWeapon( usr )
 
 obj/spacepod/verb/toggleLights()
 	if( src.pilot == usr )
@@ -667,18 +682,21 @@ obj/spacepod/verb/toggleLights()
 
 		lightsToggle()
 
-/obj/spacepod/verb/use_warp_beacon()
+/obj/spacepod/proc/activateWarpBeacon( user as mob )
+	for(var/obj/machinery/computer/gate_beacon_console/C in orange(src.loc, 5)) // Finding suitable VR platforms in area
+		if(alert(user, "Would you like to interface with: [C]?", "Confirm", "Yes", "No") == "Yes")
+			C.gate_prompt( pilot )
+			occupants_announce( "<span class='notice'>Activated charging sequence for nearby bluespace beacon.</span>" )
+
+/obj/spacepod/verb/useWarpBeacon()
 	if( src.pilot == usr )
 		set name = "Use Nearby Warp Beacon"
 		set category = "Spacepod"
 		set src = usr.loc
 
-		for(var/obj/machinery/computer/gate_beacon_console/C in orange(usr.loc, 3)) // Finding suitable VR platforms in area
-			if(alert(usr, "Would you like to interface with: [C]?", "Confirm", "Yes", "No") == "Yes")
-				C.gate_prompt( pilot )
-				occupants_announce( "<span class='notice'>Activated charging sequence for nearby bluespace beacon.</span>" )
+		activateWarpBeacon( usr )
 
-/obj/spacepod/verb/dump_cargo()
+/obj/spacepod/verb/dumpCargo()
 	if( src.pilot == usr )
 		if( equipment_system.cargohold )
 			set name = "Dump Cargo"
@@ -882,7 +900,7 @@ obj/spacepod/verb/toggleLights()
 /obj/spacepod/proc/add_HUD(var/mob/M)
 	if(!M || !(M.hud_used))	return
 
-	M.hud_used.spacepod_hud()
+	M.hud_used.spacepod_hud( src )
 
 /obj/spacepod/proc/remove_HUD(var/mob/M)
 	if(!M || !(M.hud_used))	return
@@ -995,25 +1013,27 @@ obj/spacepod/verb/toggleLights()
 				pilot << "<span class='warning'>There's nothing of interest below you!!</span>"
 		return
 
-/obj/spacepod/verb/sector_locate()
+
+/obj/spacepod/proc/sectorLocate( user as mob )
+	usr << "<span class='notice'>Triangulating sector location through bluespace beacons, please standby... (This may take up to 15 seconds)</span>"
+
+	if( !do_after( user, rand( 50, 150 )))
+		usr << "<span class='warning'>ERROR: Inaccurate readings, cannot calculate sector. Please stay still next time.</span>"
+		return
+
+	var/obj/effect/map/sector = map_sectors["[z]"]
+	if( !sector )
+		usr << "<span class='warning'>ERROR: Critical error with the bluespace network!</span>"
+		return
+
+	usr << "<span class='notice'>You are currently located in Sector [SYSTEM_DESIGNATION]-[sector.x]-[sector.y]</span>"
+
+/obj/spacepod/verb/useSectorLocate()
 	set category = "Spacepod"
 	set name = "Triangulate Sector"
 	set src = usr.loc
 
-	usr << "<span class='notice'>Triangulating sector location through bluespace beacons, please standby... (This may take up to 15 seconds)</span>"
-	var/cur_z = src.z
-	spawn( rand( 100, 150 ))
-		if( cur_z != src.z )
-			usr << "<span class='warning'>ERROR: Inaccurate readings, cannot calculate sector. Please stay still next time.</span>"
-			return
-
-		var/obj/effect/map/sector = map_sectors["[z]"]
-		if( !sector )
-
-			usr << "<span class='warning'>ERROR: Critical error with the bluespace network!</span>"
-			return
-
-		usr << "<span class='notice'>You are currently located in Sector [SYSTEM_DESIGNATION]-[sector.x]-[sector.y]</span>"
+	sectorLocate( usr )
 
 /obj/spacepod/verb/switch_weapon()
 	if( src.pilot == usr )

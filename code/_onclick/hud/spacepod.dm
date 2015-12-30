@@ -12,6 +12,12 @@
 
 /obj/screen/spacepod
 	icon = 'icons/mob/screen1_pod.dmi'
+	var/obj/spacepod/spacepod
+
+/obj/screen/spacepod/New( var/obj/spacepod/S )
+	spacepod = S
+
+	..()
 
 /obj/screen/spacepod/dashboard
 	icon = 'icons/mob/screen1_pod_dash.dmi'
@@ -39,48 +45,76 @@
 	name = "Exit Spacepod"
 	screen_loc = UI_SPACEPOD_EXIT
 
+/obj/screen/spacepod/exit/Click()
+	spacepod.exit( spacepod.pilot )
+
 /obj/screen/spacepod/locate
 	icon_state = "locate"
 	name = "Locate Sector"
 	screen_loc = UI_SPACEPOD_LOCATE
+
+/obj/screen/spacepod/locate/Click()
+	 spacepod.sectorLocate( spacepod.pilot )
 
 /obj/screen/spacepod/cargo
 	icon_state = "cargo"
 	name = "Access Cargo"
 	screen_loc = UI_SPACEPOD_CARGO
 
+/obj/screen/spacepod/cargo/Click()
+	if( !spacepod.equipment_system )
+		return
+
+	if( !spacepod.equipment_system.cargohold )
+		spacepod.pilot << "<span class='notice'>No cargohold system installed!</span>"
+		return
+
+	spacepod.equipment_system.cargohold.dump_prompt( spacepod.pilot )
+
 /obj/screen/spacepod/fire
 	icon_state = "fire"
 	name = "Fire Spacepod"
 	screen_loc = UI_SPACEPOD_FIRE
+
+/obj/screen/spacepod/fire/Click()
+	spacepod.fireWeapon( spacepod.pilot )
 
 /obj/screen/spacepod/door
 	icon_state = "door"
 	name = "Toggle Nearby Pod Doors"
 	screen_loc = UI_SPACEPOD_DOOR
 
+/obj/screen/spacepod/door/Click()
+	spacepod.toggleDoors()
+
 /obj/screen/spacepod/light
 	icon_state = "light"
 	name = "Toggle Spacepod Lights"
 	screen_loc = UI_SPACEPOD_LIGHT
+
+/obj/screen/spacepod/light/Click()
+	spacepod.lightsToggle()
 
 /obj/screen/spacepod/bluespace
 	icon_state = "bluespace"
 	name = "Use Bluespace Gate"
 	screen_loc = UI_SPACEPOD_BLUESPACE
 
-/datum/hud/proc/spacepod_hud()
-	mymob.spacepod_dash = new /obj/screen/spacepod/dashboard()
-	mymob.spacepod_health = new /obj/screen/spacepod/health()
-	mymob.spacepod_fuel = new /obj/screen/spacepod/fuel()
-	mymob.spacepod_charge = new /obj/screen/spacepod/charge()
-	mymob.spacepod_exit =  new /obj/screen/spacepod/exit()
-	mymob.spacepod_locate = new /obj/screen/spacepod/locate()
-	mymob.spacepod_cargo = new /obj/screen/spacepod/cargo()
-	mymob.spacepod_fire = new /obj/screen/spacepod/fire()
-	mymob.spacepod_door = new /obj/screen/spacepod/door()
-	mymob.spacepod_light = new /obj/screen/spacepod/light()
-	mymob.spacepod_bluespace = new /obj/screen/spacepod/bluespace()
+/obj/screen/spacepod/bluespace/Click()
+	spacepod.activateWarpBeacon( spacepod.pilot )
+
+/datum/hud/proc/spacepod_hud( var/obj/spacepod/S )
+	mymob.spacepod_dash = new /obj/screen/spacepod/dashboard( S )
+	mymob.spacepod_health = new /obj/screen/spacepod/health( S )
+	mymob.spacepod_fuel = new /obj/screen/spacepod/fuel( S )
+	mymob.spacepod_charge = new /obj/screen/spacepod/charge( S )
+	mymob.spacepod_exit =  new /obj/screen/spacepod/exit( S )
+	mymob.spacepod_locate = new /obj/screen/spacepod/locate( S )
+	mymob.spacepod_cargo = new /obj/screen/spacepod/cargo( S )
+	mymob.spacepod_fire = new /obj/screen/spacepod/fire( S )
+	mymob.spacepod_door = new /obj/screen/spacepod/door( S )
+	mymob.spacepod_light = new /obj/screen/spacepod/light( S )
+	mymob.spacepod_bluespace = new /obj/screen/spacepod/bluespace( S )
 
 	mymob.client.screen += list( mymob.spacepod_dash,
 								 mymob.spacepod_health,
