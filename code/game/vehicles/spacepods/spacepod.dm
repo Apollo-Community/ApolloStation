@@ -138,6 +138,7 @@
 		explode()
 
 	update_icons()
+	update_HUD( pilot )
 
 /obj/spacepod/proc/play_interior_sound( var/sound )
 	var/sound/S = sound(sound)
@@ -184,7 +185,7 @@
 	if(health)
 		health = min(initial(health), health + repair_amount)
 		update_icons()
-
+		update_HUD( pilot )
 
 /obj/spacepod/ex_act(severity)
 	switch(severity)
@@ -224,6 +225,7 @@
 /obj/spacepod/attackby(obj/item/W as obj, mob/user as mob, params)
 	if( istype( W, /obj/item/weapon/tank ))
 		equipment_system.fill_engine( W )
+		update_HUD( pilot )
 		return
 
 	if(iscrowbar(W))
@@ -241,6 +243,7 @@
 			return
 
 		equipment_system.equip(W, user)
+		update_HUD( pilot )
 		return
 	else if(istype(W, /obj/item/device/spacepod_equipment))
 		if(!hatch_open)
@@ -249,6 +252,7 @@
 
 		// Adding the equipment to the system
 		equipment_system.equip(W, user)
+		update_HUD( pilot )
 		return
 	else if(istype(W, /obj/item/pod_parts/armor))
 		if(!hatch_open)
@@ -259,6 +263,7 @@
 			return
 
 		equipment_system.equip(W, user)
+		update_HUD( pilot )
 		return
 	else if(istype( W, /obj/item/weapon/card/id ))
 		if(!hatch_open)
@@ -269,6 +274,7 @@
 			return
 
 		equipment_system.equip(W, user)
+		update_HUD( pilot )
 		return
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		if(!hatch_open)
@@ -303,6 +309,7 @@
 	var/obj/item/SPE = input(user, "Remove which equipment?", null, null) as null|anything in equipment_system.spacepod_equipment
 	if( SPE )
 		equipment_system.dequip( SPE, user )
+		update_HUD( pilot )
 
 	return
 
@@ -602,18 +609,6 @@
 		if( equipment_system.cargohold )
 			equipment_system.cargohold.put_inside( W, user )
 
-/obj/spacepod/proc/enter_after(delay as num, var/mob/user as mob, var/numticks = 5)
-	var/delayfraction = delay/numticks
-
-	var/turf/T = user.loc
-
-	for(var/i = 0, i<numticks, i++)
-		sleep(delayfraction)
-		if(!src || !user || !user.canmove || !(user.loc == T))
-			return 0
-
-	return 1
-
 /obj/spacepod/overmapTravel()
 	if( !pilot )
 		return
@@ -804,6 +799,13 @@
 /obj/spacepod/proc/update_HUD(var/mob/M)
 	if( !M )
 		return
+
+	if( !equipment_system.cargohold )
+		M.spacepod_cargo.icon_state = ""
+
+	if( !equipment_system.weapon_system )
+		M.spacepod_fire.icon_state = ""
+		M.spacepod_switch_weapons.icon_state = ""
 
 	if( !has_power() ) // Can't read the instruments without power
 		M.spacepod_health.icon_state = "stat_off"
