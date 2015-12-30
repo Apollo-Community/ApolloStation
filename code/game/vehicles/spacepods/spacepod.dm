@@ -67,7 +67,7 @@
 
 	spacepods_list += src
 
-	update_icons()
+	update_icon()
 
 /obj/spacepod/Destroy()
 	spacepods_list -= src
@@ -86,7 +86,9 @@
 	else
 		processing_objects.Remove(src)
 
-/obj/spacepod/proc/update_icons()
+/obj/spacepod/update_icon()
+	..()
+
 	if( equipment_system.armor )
 		icon_state = equipment_system.armor.pod_icon
 	else
@@ -137,7 +139,7 @@
 	if(!health)
 		explode()
 
-	update_icons()
+	update_icon()
 	update_HUD( pilot )
 
 /obj/spacepod/proc/play_interior_sound( var/sound )
@@ -184,7 +186,7 @@
 /obj/spacepod/proc/repair_damage(var/repair_amount)
 	if(health)
 		health = min(initial(health), health + repair_amount)
-		update_icons()
+		update_icon()
 		update_HUD( pilot )
 
 /obj/spacepod/ex_act(severity)

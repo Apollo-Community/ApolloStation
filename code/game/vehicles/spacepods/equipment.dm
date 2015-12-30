@@ -30,7 +30,7 @@
 				user.drop_item(equipment)
 			playsound( get_turf( my_atom ), 'sound/effects/equip.ogg', 50, 1 )
 			equipment.loc = src
-			my_atom.update_icons()
+			my_atom.update_icon()
 			return 1
 		else
 			if( user )
@@ -44,7 +44,7 @@
 /datum/spacepod/equipment/proc/dequip(var/obj/item/equipment, var/mob/user = null)
 	deassign_system( equipment )
 	spacepod_equipment.Remove( equipment )
-	my_atom.update_icons()
+	my_atom.update_icon()
 
 	if( user )
 		if( user.put_in_any_hand_if_possible(equipment))

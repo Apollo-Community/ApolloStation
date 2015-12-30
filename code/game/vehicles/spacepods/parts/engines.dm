@@ -54,7 +54,7 @@
 				fire = 1
 
 		if( fire != temp_fire )
-			my_atom.update_icons()
+			my_atom.update_icon()
 
 		if( fuel_tank.temperature >= max_temp ) // hurt em a bit for running it too hot
 			my_atom.deal_damage(( fuel_tank.temperature/( 4*max_temp ))*heat_rate )
