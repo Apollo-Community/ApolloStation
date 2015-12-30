@@ -616,10 +616,9 @@
 
 	exit( usr )
 
-/obj/spacepod/proc/toggleDoors()
+/obj/spacepod/proc/toggleDoors( user as mob )
 	for(var/obj/machinery/door/poddoor/P in oview(3,src))
 		if(istype(P, /obj/machinery/door/poddoor/three_tile_hor) || istype(P, /obj/machinery/door/poddoor/three_tile_ver) || istype(P, /obj/machinery/door/poddoor/four_tile_hor) || istype(P, /obj/machinery/door/poddoor/four_tile_ver))
-			var/mob/living/carbon/human/L = usr
 			if( P.check_access( equipment_system.card ))
 				if(P.density)
 					P.open()
@@ -627,11 +626,11 @@
 				else
 					P.close()
 					return 1
-			else if( pilot )
-				pilot << "<span class='warning'>Access denied.</span>"
+			else if( user )
+				user << "<span class='warning'>Access denied.</span>"
 			return
-	if( pilot )
-		pilot << "<span class='warning'>You are not near any pod doors.</span>"
+	if( user )
+		user << "<span class='warning'>You are not near any pod doors.</span>"
 	return
 
 /obj/spacepod/verb/useDoors()
@@ -640,7 +639,7 @@
 		set category = "Spacepod"
 		set src = usr.loc
 
-		toggleDoors()
+		toggleDoors( usr )
 
 /*
 /obj/spacepod/verb/autopilot()
