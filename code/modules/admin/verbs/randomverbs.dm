@@ -1040,6 +1040,7 @@ var/update_server_sleep = 0
 
 	if(update_server_sleep)
 		usr << "<span class='danger'> This command is currently disabled. Please try again in a few minutes.</span>"
+		return
 
 	var/command = file2text("config/update_script_command.txt")		//Security measure to stop people changing command via config debug
 	if(!command)
