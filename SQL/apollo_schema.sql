@@ -4,7 +4,7 @@ USE `apollo` ;
 -- -----------------------------------------------------
 -- Death Tracking
 -- -----------------------------------------------------
-CREATE TABLE `deaths` (
+CREATE TABLE IF NOT EXISTS `deaths` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `round_id` INT(11) NOT NULL,
   `pod` TEXT NOT NULL COMMENT 'Place of death' ,
@@ -27,7 +27,7 @@ CREATE TABLE `deaths` (
 -- -----------------------------------------------------
 -- Library Books
 -- -----------------------------------------------------
-CREATE TABLE `library` (
+CREATE TABLE IF NOT EXISTS `library` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `author` TEXT NOT NULL ,
   `title` TEXT NOT NULL ,
@@ -39,7 +39,7 @@ CREATE TABLE `library` (
 -- -----------------------------------------------------
 -- Account Items
 -- -----------------------------------------------------
-CREATE TABLE `acc_items` (
+CREATE TABLE IF NOT EXISTS `acc_items` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `ckey` TEXT NOT NULL ,
   `item` TEXT NOT NULL ,
@@ -51,7 +51,7 @@ CREATE TABLE `acc_items` (
 -- -----------------------------------------------------
 -- Population Tracking
 -- -----------------------------------------------------
-CREATE TABLE `population` (
+CREATE TABLE IF NOT EXISTS `population` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `playercount` INT(11) NULL DEFAULT NULL ,
   `admincount` INT(11) NULL DEFAULT NULL ,
@@ -62,7 +62,7 @@ CREATE TABLE `population` (
 -- -----------------------------------------------------
 -- Admin Permissions
 -- -----------------------------------------------------
-CREATE TABLE `admins` (
+CREATE TABLE IF NOT EXISTS `admins` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ckey` varchar(32) NOT NULL,
   `rank` varchar(32) NOT NULL DEFAULT 'Administrator',
@@ -74,7 +74,7 @@ CREATE TABLE `admins` (
 -- -----------------------------------------------------
 -- Admin Permissions
 -- -----------------------------------------------------
-CREATE TABLE `admin_log` (
+CREATE TABLE IF NOT EXISTS `admin_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `datetime` datetime NOT NULL,
   `adminckey` varchar(32) NOT NULL,
@@ -86,7 +86,7 @@ CREATE TABLE `admin_log` (
 -- -----------------------------------------------------
 -- Bans
 -- -----------------------------------------------------
-CREATE TABLE `ban` (
+CREATE TABLE IF NOT EXISTS `ban` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bantime` datetime NOT NULL,
   `serverip` varchar(32) NOT NULL,
@@ -116,7 +116,7 @@ CREATE TABLE `ban` (
 -- -----------------------------------------------------
 -- Error logging
 -- -----------------------------------------------------
-CREATE TABLE `feedback` (
+CREATE TABLE IF NOT EXISTS `feedback` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `time` datetime NOT NULL,
   `round_id` int(8) NOT NULL,
@@ -129,7 +129,7 @@ CREATE TABLE `feedback` (
 -- -----------------------------------------------------
 -- Unique Players
 -- -----------------------------------------------------
-CREATE TABLE `player` (
+CREATE TABLE IF NOT EXISTS `player` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ckey` varchar(32) NOT NULL,
   `firstseen` datetime NOT NULL,
@@ -144,7 +144,7 @@ CREATE TABLE `player` (
 -- -----------------------------------------------------
 -- Poll Options
 -- -----------------------------------------------------
-CREATE TABLE `poll_option` (
+CREATE TABLE IF NOT EXISTS `poll_option` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pollid` int(11) NOT NULL,
   `text` varchar(255) NOT NULL,
@@ -160,7 +160,7 @@ CREATE TABLE `poll_option` (
 -- -----------------------------------------------------
 -- Poll Question
 -- -----------------------------------------------------
-CREATE TABLE `poll_question` (
+CREATE TABLE IF NOT EXISTS `poll_question` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `polltype` varchar(16) NOT NULL DEFAULT 'OPTION',
   `starttime` datetime NOT NULL,
@@ -173,7 +173,7 @@ CREATE TABLE `poll_question` (
 -- -----------------------------------------------------
 -- Poll Replies Text
 -- -----------------------------------------------------
-CREATE TABLE `poll_textreply` (
+CREATE TABLE IF NOT EXISTS `poll_textreply` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `datetime` datetime NOT NULL,
   `pollid` int(11) NOT NULL,
@@ -187,7 +187,7 @@ CREATE TABLE `poll_textreply` (
 -- -----------------------------------------------------
 -- Poll Replies Vote
 -- -----------------------------------------------------
-CREATE TABLE `poll_vote` (
+CREATE TABLE IF NOT EXISTS `poll_vote` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `datetime` datetime NOT NULL,
   `pollid` int(11) NOT NULL,
@@ -202,7 +202,7 @@ CREATE TABLE `poll_vote` (
 -- -----------------------------------------------------
 -- End Round Stats
 -- -----------------------------------------------------
-CREATE TABLE `round_stats` (
+CREATE TABLE IF NOT EXISTS `round_stats` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `game_mode` varchar(50) NOT NULL,
   `end_time` datetime NOT NULL,
@@ -235,7 +235,7 @@ CREATE TABLE `round_stats` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
 
-CREATE TABLE `round_antags` (
+CREATE TABLE IF NOT EXISTS `round_antags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `round_id` int(11) NOT NULL,
   `name` TEXT NOT NULL,
@@ -245,7 +245,7 @@ CREATE TABLE `round_antags` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
 
-CREATE TABLE `round_ai_laws` (
+CREATE TABLE IF NOT EXISTS `round_ai_laws` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `round_id` int(11) NOT NULL,
   `law` TEXT NOT NULL,

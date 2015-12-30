@@ -249,6 +249,3 @@ datum/round_stats/proc/save_stats()
 
 	for(var/text in deaths)
 		query.Execute("INSERT INTO deaths (id, round_id, name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss, coord) VALUES (null, [round_id], [text])")
-
-/proc/call_stats()
-	statistics.call_stats()
