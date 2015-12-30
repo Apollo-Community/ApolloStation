@@ -46,6 +46,11 @@
 // Parameters: None
 // Description: This has to be here because we need sensors to remain in Machines list.
 /obj/machinery/power/sensor/process()
+	if(powernet && name_tag == "Engine Output" && powernet.avail > 0)
+		// Machines are processed each 4th second by the machinery controller.
+		// TODO: Should probably be replaced with the actual schedule_interval var from the controller.
+		var/kwh = (powernet.avail / 1000) / 4 / 3600
+		statistics.increase_stat("total_kwh", kwh)
 	return 1
 
 // Proc: reading_to_text()
