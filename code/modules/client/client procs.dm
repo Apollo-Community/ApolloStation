@@ -201,6 +201,11 @@
 
 	log_client_to_db()
 
+	if(related_accounts_ip && !holder && ckey != related_accounts_ip)		//So admin accounts don't generate spam
+		message_admins("[ckey]'s IP has been previously used by [related_accounts_ip]")
+	if(related_accounts_cid && !holder && ckey != related_accounts_cid)
+		message_admins("[ckey]'s CID has been previously used by [related_accounts_cid]")
+
 	loadAccountItems()
 	send_resources()
 	nanomanager.send_resources(src)
