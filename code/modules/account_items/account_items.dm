@@ -17,7 +17,7 @@ var/global/list/account_items = list()
 		return 0
 
 	var/sql_ckey = ckey(ckey)
-	var/sql_item = sql_sanitize_text(obj_type)
+	var/sql_item = sanitizeSQL(obj_type)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM acc_items WHERE ckey = '[sql_ckey]' AND item = '[sql_item]'")
 	query.Execute()
@@ -52,7 +52,7 @@ var/global/list/account_items = list()
 		return 0
 
 	var/sql_ckey = ckey(ckey)
-	var/sql_item = sql_sanitize_text(obj_type)
+	var/sql_item = sanitizeSQL(obj_type)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM acc_items WHERE ckey = '[sql_ckey]' AND item = '[sql_item]'")
 	query.Execute()

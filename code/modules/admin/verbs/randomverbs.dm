@@ -1028,30 +1028,33 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	user << "[special_role_description]"
 	user << "(<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a>) (<A HREF='?src=\ref[user.client.holder];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[user.client.holder];subtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[user.client.holder];adminplayerobservejump=\ref[M]'>JMP</A>) (<A HREF='?src=\ref[user.client.holder];secretsadmin=check_antagonist'>CA</A>)"
 
-var/update_server_sleep = 0
-
 /client/proc/update_server()
 	set category = "Server"
 	set name = "Update Server"
 
 	set desc = "Updates the server if possible to latest release on master branch"
 
-	if(!check_rights(R_SERVER) || !config.update_script || update_server_sleep) return
+	if(!check_rights(R_SERVER)) return
 
-	//Sucks this only returns exit codes ;(
-	shell("git ls-remote git://github.com/Apollo-Community/ApolloStation | head -1 | cut -f 1 > .git_remote_id")
-	//Compare the current branch and remote branch before syncing
-	if(file2text(".git/refs/heads/master") == file2text(".remote_git_id"))	//Can't use config.git_commit here as there may be multiple updates in one round
-		usr << "<b>This commit is already running on the server./b>"
+	var/command = file2text("config/update_script_command.txt")		//Security measure to stop people changing command via config debug
+	if(!command)
+		usr << "<span class='danger'> The update command could not be found on the server.</span>"
 		return
 
-	usr << "<b>Running Update Script<b>)"
-	if(shell(config.update_script))
-		usr << "<b>Server updated sucessfully. Currently re-compiling - disabling command for 2 mins</b>"
-		usr << "<b>Update log can be accessed with '.getupdatelog'</b>"
-		update_server_sleep = 1
-		spawn(1200)
+	var/result = shell(command)		//Use exit codes to determine what occured
 
-			update_server_sleep = 0
-	else
-		usr << "<b>Server requires the resource file to be re-compiled - update unsucessful.</b>"
+	switch(result)
+		if(0)
+			message_admins("[src.ckey] is remotely updating the server. Shout at them if something goes horribly wrong.")
+			usr << "<b>Server updated sucessfully. Currently re-compiling...</b>"
+			usr << "<b>Update log can be accessed with '.getupdatelog'</b>"
+		if(1)
+			usr << "<b>Server is already running this commit.</b>"
+		if(2)
+			usr << "<b>Server requires the resource file to be re-compiled - update unsucessful.</b>"
+		if(3)
+			usr << "<span class='danger'> This server is already compiling. Please try again in a few minutes.</span>"
+		else
+			usr << "<span class='danger'> Error: A catastrphic error has occured. Please contact a developer about this</span>"
+
+	log_debug("IG UPDATE: exit code [result]")

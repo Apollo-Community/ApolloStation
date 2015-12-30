@@ -201,6 +201,11 @@
 
 	log_client_to_db()
 
+	if(related_accounts_ip && !holder && !findtext(related_accounts_ip, "[ckey]"))		//So admin accounts don't generate spam
+		message_admins("[ckey]'s IP has been previously used by [related_accounts_ip]")
+	if(related_accounts_cid && !holder && !findtext(related_accounts_cid, "[ckey]"))
+		message_admins("[ckey]'s CID has been previously used by [related_accounts_cid]")
+
 	loadAccountItems()
 	send_resources()
 	nanomanager.send_resources(src)
@@ -299,9 +304,9 @@
 		query_insert.Execute()
 
 	//Logging player access
-	var/serverip = "[world.internet_address]:[world.port]"
-	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
-	query_accesslog.Execute()
+	//var/serverip = "[world.internet_address]:[world.port]"
+	//var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
+	//query_accesslog.Execute()
 
 
 #undef TOPIC_SPAM_DELAY
