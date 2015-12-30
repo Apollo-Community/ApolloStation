@@ -238,6 +238,7 @@ CREATE TABLE IF NOT EXISTS `round_stats` (
 CREATE TABLE IF NOT EXISTS `round_antags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `round_id` int(11) NOT NULL,
+  `ckey` TEXT NOT NULL,
   `name` TEXT NOT NULL,
   `job` TEXT NOT NULL,
   `role` TEXT NOT NULL,
