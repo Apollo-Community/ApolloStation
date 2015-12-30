@@ -4,8 +4,9 @@ USE `apollo` ;
 -- -----------------------------------------------------
 -- Death Tracking
 -- -----------------------------------------------------
-CREATE TABLE `death` (
+CREATE TABLE `deaths` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `round_id` INT(11) NOT NULL,
   `pod` TEXT NOT NULL COMMENT 'Place of death' ,
   `coord` TEXT NOT NULL COMMENT 'X, Y, Z POD' ,
   `tod` DATETIME NOT NULL COMMENT 'Time of death' ,
@@ -55,7 +56,7 @@ CREATE TABLE `population` (
   `playercount` INT(11) NULL DEFAULT NULL ,
   `admincount` INT(11) NULL DEFAULT NULL ,
   `time` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`) 
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
 
 -- -----------------------------------------------------
@@ -195,5 +196,58 @@ CREATE TABLE `poll_vote` (
   `ip` varchar(16) NOT NULL,
   `adminrank` varchar(32) NOT NULL,
   `rating` int(2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+-- -----------------------------------------------------
+-- End Round Stats
+-- -----------------------------------------------------
+CREATE TABLE `round_stats` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `game_mode` varchar(50) NOT NULL,
+  `end_time` datetime NOT NULL,
+  `duration` int(11) NOT NULL,
+
+  -- End round stats shown in game
+  `productivity` int(11) NOT NULL,
+  `deaths` int(11) NOT NULL,
+  `clones` int(11) NOT NULL,
+  `dispense_volume` int(11) NOT NULL,
+  `bombs_exploded` int(11) NOT NULL,
+  `vended` int(11) NOT NULL,
+  `run_distance` int(11) NOT NULL,
+  `blood_mopped` int(11) NOT NULL,
+  `damage_cost` int(11) NOT NULL,
+  `break_time` int(11) NOT NULL,
+  `monkey_deaths` int(11) NOT NULL,
+  `spam_blocked` int(11) NOT NULL,
+  `people_slipped` int(11) NOT NULL,
+  `doors_opened` int(11) NOT NULL,
+  `guns_fired` int(11) NOT NULL,
+  `beepsky_beatings` int(11) NOT NULL,
+  `doors_welded` int(11) NOT NULL,
+  `total_kwh` int(11) NOT NULL,
+  `artifacts` int(11) NOT NULL,
+  `cargo_profit` int(11) NOT NULL,
+  `trash_vented` int(11) NOT NULL,
+  `ai_follow` int(11) NOT NULL,
+  `banned` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+CREATE TABLE `round_antags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `round_id` int(11) NOT NULL,
+  `name` TEXT NOT NULL,
+  `job` TEXT NOT NULL,
+  `role` TEXT NOT NULL,
+  `success` BOOL NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+CREATE TABLE `round_ai_laws` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `round_id` int(11) NOT NULL,
+  `law` TEXT NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
