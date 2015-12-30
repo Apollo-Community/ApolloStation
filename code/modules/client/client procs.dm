@@ -201,9 +201,9 @@
 
 	log_client_to_db()
 
-	if(related_accounts_ip && !holder && ckey != related_accounts_ip)		//So admin accounts don't generate spam
+	if(related_accounts_ip && !holder && !findtext(related_accounts_ip, "[ckey]"))		//So admin accounts don't generate spam
 		message_admins("[ckey]'s IP has been previously used by [related_accounts_ip]")
-	if(related_accounts_cid && !holder && ckey != related_accounts_cid)
+	if(related_accounts_cid && !holder && !findtext(related_accounts_cid, "[ckey]"))
 		message_admins("[ckey]'s CID has been previously used by [related_accounts_cid]")
 
 	loadAccountItems()
