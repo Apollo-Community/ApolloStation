@@ -239,7 +239,7 @@ datum/round_stats/proc/save_stats()
 			for(var/datum/objective/objective in M.objectives)
 				if(!objective.check_completion())
 					win = 0
-			query.Execute("INSERT INTO round_antags (id, round_id, name, job, role, success) VALUES(null, [round_id], '[sanitizeSQL(M.name)]', '[sanitizeSQL(M.assigned_role)]', '[sanitizeSQL(M.special_role)]', [win])")
+			query.Execute("INSERT INTO round_antags (id, round_id, ckey, name, job, role, success) VALUES(null, [round_id], '[sanitizeSQL(M.key)]', '[sanitizeSQL(M.name)]', '[sanitizeSQL(M.assigned_role)]', '[sanitizeSQL(M.special_role)]', [win])")
 
 	for(var/mob/living/silicon/S in mob_list)
 		if(S.laws.zeroth)
