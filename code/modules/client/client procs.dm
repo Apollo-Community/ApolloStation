@@ -304,9 +304,9 @@
 		query_insert.Execute()
 
 	//Logging player access
-	var/serverip = "[world.internet_address]:[world.port]"
-	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
-	query_accesslog.Execute()
+	//var/serverip = "[world.internet_address]:[world.port]"
+	//var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
+	//query_accesslog.Execute()
 
 
 #undef TOPIC_SPAM_DELAY
