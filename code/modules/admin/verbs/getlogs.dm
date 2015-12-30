@@ -81,15 +81,11 @@
 	set desc = "Fetch update log generated from in-game updates"
 	set category = null
 
-	var/path = browse_files(".update_log")
-	if(!path)
-		return
-
 	if(file_spam_check())
 		return
 
-	message_admins("[key_name_admin(src)] accessed file: [path]")
-	src << run( file(path) )
+	message_admins("[key_name_admin(src)] accessed file: update log")
+	src << run( file(".update_log") )
 	src << "Attempting to send file, this may take a fair few minutes if the file is very large."
 	return
 
