@@ -1046,7 +1046,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	switch(result)
 		if(0)
 			message_admins("[src.ckey] is remotely updating the server. Shout at them if something goes horribly wrong.")
-			usr << "<b>Server updated sucessfully. Currently re-compiling - disabling command for 2 mins</b>"
+			usr << "<b>Server updated sucessfully. Currently re-compiling...</b>"
 			usr << "<b>Update log can be accessed with '.getupdatelog'</b>"
 		if(1)
 			usr << "<b>Server is already running this commit.</b>"
