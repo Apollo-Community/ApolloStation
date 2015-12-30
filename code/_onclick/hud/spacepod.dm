@@ -3,84 +3,84 @@
 #define UI_SPACEPOD_CHARGE "2:0,14:0"
 #define UI_SPACEPOD_HEALTH "3:0,14:0"
 #define UI_SPACEPOD_EXIT "4:0,14:0"
-#define UI_SPACEPOD_LOCATE "5:0,14:0"
-#define UI_SPACEPOD_CARGO "6:0,14:0"
-#define UI_SPACEPOD_FIRE "7:0,14:0"
-#define UI_SPACEPOD_DOOR "4:0,13:0"
-#define UI_SPACEPOD_LIGHT "5:0,13:0"
+#define UI_SPACEPOD_DOOR "5:0,14:0"
+#define UI_SPACEPOD_LIGHT "6:0,14:0"
+#define UI_SPACEPOD_BLUESPACE "7:0,14:0"
+#define UI_SPACEPOD_LOCATE "4:0,13:0"
+#define UI_SPACEPOD_CARGO "5:0,13:0"
+#define UI_SPACEPOD_FIRE "6:0,13:0"
+
+/obj/screen/spacepod
+	icon = 'icons/mob/screen1_pod.dmi'
+
+/obj/screen/spacepod/dashboard
+	icon = 'icons/mob/screen1_pod_dash.dmi'
+	icon_state = "dash"
+	name = "Dashboard"
+	screen_loc = UI_SPACEPOD_DASH
+
+/obj/screen/spacepod/health
+	icon_state = "stat_off"
+	name = "Spacepod Health"
+	screen_loc = UI_SPACEPOD_HEALTH
+
+/obj/screen/spacepod/fuel
+	icon_state = "stat_off"
+	name = "Spacepod Fuel"
+	screen_loc = UI_SPACEPOD_FUEL
+
+/obj/screen/spacepod/charge
+	icon_state = "stat_off"
+	name = "Spacepod Charge"
+	screen_loc = UI_SPACEPOD_CHARGE
+
+/obj/screen/spacepod/exit
+	icon_state = "exit"
+	name = "Exit Spacepod"
+	screen_loc = UI_SPACEPOD_EXIT
+
+/obj/screen/spacepod/locate
+	icon_state = "locate"
+	name = "Locate Sector"
+	screen_loc = UI_SPACEPOD_LOCATE
+
+/obj/screen/spacepod/cargo
+	icon_state = "cargo"
+	name = "Access Cargo"
+	screen_loc = UI_SPACEPOD_CARGO
+
+/obj/screen/spacepod/fire
+	icon_state = "fire"
+	name = "Fire Spacepod"
+	screen_loc = UI_SPACEPOD_FIRE
+
+/obj/screen/spacepod/door
+	icon_state = "door"
+	name = "Toggle Nearby Pod Doors"
+	screen_loc = UI_SPACEPOD_DOOR
+
+/obj/screen/spacepod/light
+	icon_state = "light"
+	name = "Toggle Spacepod Lights"
+	screen_loc = UI_SPACEPOD_LIGHT
+
+/obj/screen/spacepod/bluespace
+	icon_state = "bluespace"
+	name = "Use Bluespace Gate"
+	screen_loc = UI_SPACEPOD_BLUESPACE
 
 /datum/hud/proc/spacepod_hud()
-	var/obj/screen/dash = new /obj/screen()
-	dash.icon = 'icons/mob/screen1_pod_dash.dmi'
-	dash.icon_state = "dash"
-	dash.name = "Dashboard"
-	dash.screen_loc = UI_SPACEPOD_DASH
-	dash.layer -= 0.01
-	mymob.spacepod_dash = dash
-
-	var/obj/screen/health = new /obj/screen()
-	health.icon = 'icons/mob/screen1_pod.dmi'
-	health.icon_state = "stat_off"
-	health.name = "Spacepod Health"
-	health.screen_loc = UI_SPACEPOD_HEALTH
-	mymob.spacepod_health = health
-
-	var/obj/screen/fuel = new /obj/screen()
-	fuel.icon = 'icons/mob/screen1_pod.dmi'
-	fuel.icon_state = "stat_off"
-	fuel.name = "Spacepod Fuel"
-	fuel.screen_loc = UI_SPACEPOD_FUEL
-	mymob.spacepod_fuel = fuel
-
-	var/obj/screen/charge = new /obj/screen()
-	charge = new /obj/screen()
-	charge.icon = 'icons/mob/screen1_pod.dmi'
-	charge.icon_state = "stat_off"
-	charge.name = "Spacepod Charge"
-	charge.screen_loc = UI_SPACEPOD_CHARGE
-	mymob.spacepod_charge = charge
-
-	var/obj/screen/exit = new /obj/screen()
-	exit.icon = 'icons/mob/screen1_pod.dmi'
-	exit.icon_state = "exit"
-	exit.name = "Exit Spacepod"
-	exit.screen_loc = UI_SPACEPOD_EXIT
-	mymob.spacepod_exit = exit
-
-	var/obj/screen/locate = new /obj/screen()
-	locate.icon = 'icons/mob/screen1_pod.dmi'
-	locate.icon_state = "locate"
-	locate.name = "Locate Sector"
-	locate.screen_loc = UI_SPACEPOD_LOCATE
-	mymob.spacepod_locate = locate
-
-	var/obj/screen/cargo = new /obj/screen()
-	cargo.icon = 'icons/mob/screen1_pod.dmi'
-	cargo.icon_state = "cargo"
-	cargo.name = "Access Cargo"
-	cargo.screen_loc = UI_SPACEPOD_CARGO
-	mymob.spacepod_cargo = cargo
-
-	var/obj/screen/fire = new /obj/screen()
-	fire.icon = 'icons/mob/screen1_pod.dmi'
-	fire.icon_state = "fire"
-	fire.name = "Fire Spacepod"
-	fire.screen_loc = UI_SPACEPOD_FIRE
-	mymob.spacepod_fire = fire
-
-	var/obj/screen/door = new /obj/screen()
-	door.icon = 'icons/mob/screen1_pod.dmi'
-	door.icon_state = "door"
-	door.name = "Toggle Nearby Pod Doors"
-	door.screen_loc = UI_SPACEPOD_DOOR
-	mymob.spacepod_door = door
-
-	var/obj/screen/light = new /obj/screen()
-	light.icon = 'icons/mob/screen1_pod.dmi'
-	light.icon_state = "light"
-	light.name = "Toggle Spacepod Lights"
-	light.screen_loc = UI_SPACEPOD_LIGHT
-	mymob.spacepod_light = light
+	mymob.spacepod_dash = new /obj/screen/spacepod/dashboard()
+	mymob.spacepod_health = new /obj/screen/spacepod/health()
+	mymob.spacepod_fuel = new /obj/screen/spacepod/fuel()
+	mymob.spacepod_charge = new /obj/screen/spacepod/charge()
+	mymob.spacepod_exit =  new /obj/screen/spacepod/exit()
+	mymob.spacepod_locate = new /obj/screen/spacepod/locate()
+	mymob.spacepod_cargo = new /obj/screen/spacepod/cargo()
+	mymob.spacepod_fire = new /obj/screen/spacepod/fire()
+	mymob.spacepod_door = new /obj/screen/spacepod/door()
+	mymob.spacepod_light = new /obj/screen/spacepod/light()
+	mymob.spacepod_bluespace = new /obj/screen/spacepod/bluespace()
 
 	mymob.client.screen += list( mymob.spacepod_dash,
 								 mymob.spacepod_health,
@@ -92,6 +92,7 @@
 								 mymob.spacepod_fire,
 								 mymob.spacepod_door,
 								 mymob.spacepod_light,
+								 mymob.spacepod_bluespace,
 								 mymob.fade )
 
 /datum/hud/proc/remove_spacepod_hud()
@@ -105,6 +106,7 @@
 								 mymob.spacepod_fire,
 								 mymob.spacepod_door,
 								 mymob.spacepod_light,
+								 mymob.spacepod_bluespace,
 								 mymob.fade )
 
 #undef UI_SPACEPOD_DASH

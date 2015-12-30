@@ -41,6 +41,7 @@
 	var/obj/screen/spacepod_cargo = null
 	var/obj/screen/spacepod_door = null
 	var/obj/screen/spacepod_light = null
+	var/obj/screen/spacepod_bluespace = null
 	var/obj/screen/fade = null
 
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
