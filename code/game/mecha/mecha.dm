@@ -39,7 +39,7 @@
 	var/datum/effect/effect/system/spark_spread/spark_system = new
 	var/lights = 0
 	var/lights_range = 6
-	var/lights_power = 1
+	var/lights_power = 2
 
 	//inner atmos
 	var/use_internal_tank = 0
