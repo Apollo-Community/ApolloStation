@@ -90,6 +90,10 @@ obj/var/contaminated = 0
 	if(stat >= 2)
 		return
 
+	// Xenos dig this, they don't get damaged by it.
+	if(istype(src.species, /datum/species/xenos))
+		return
+
 	//Burn skin if exposed.
 	if(vsc.plc.SKIN_BURNS)
 		if(!pl_head_protected() || !pl_suit_protected())
