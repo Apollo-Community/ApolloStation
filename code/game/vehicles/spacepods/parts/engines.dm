@@ -1,4 +1,3 @@
-
 /obj/item/device/spacepod_equipment/engine
 	name = "PutPut (engine)"
 	desc = "An extremely basic, but cheap, engine."

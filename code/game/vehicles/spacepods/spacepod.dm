@@ -86,6 +86,8 @@
 	else
 		processing_objects.Remove(src)
 
+	update_HUD( pilot )
+
 /obj/spacepod/update_icon()
 	..()
 
@@ -802,6 +804,30 @@
 	if( !M )
 		return
 
+	var/fuel_percent = 0
+	var/fuel_icon_level = -1
+
+	if( equipment_system.engine_system )
+		fuel_percent = equipment_system.engine_system.fuel_tank.return_pressure()/equipment_system.engine_system.max_pressure
+		fuel_icon_level = round( fuel_percent*HUD_STATS_STATES )
+
+	var/obj/item/weapon/cell/battery = equipment_system.battery
+	var/charge_percent = battery.charge/battery.maxcharge
+	var/charge_icon_level = round( charge_percent*HUD_STATS_STATES )
+
+	var/health_percent = health/max_health
+	var/health_icon_level = round( health_percent*HUD_STATS_STATES )
+
+	if( empcounter > 0 )
+		M.spacepod_dash.icon_state = "dash_emp"
+		health_icon_level = -1
+		charge_icon_level = -1
+		fuel_icon_level = -1
+	else if( health_percent <= 0.25 )
+		M.spacepod_dash.icon_state = "dash_damage"
+	else
+		M.spacepod_dash.icon_state = "dash"
+
 	if( !equipment_system.cargohold )
 		M.spacepod_cargo.icon_state = ""
 
@@ -810,29 +836,24 @@
 		M.spacepod_switch_weapons.icon_state = ""
 
 	if( !has_power() ) // Can't read the instruments without power
-		M.spacepod_health.icon_state = "stat_off"
-		M.spacepod_fuel.icon_state = "stat_off"
+		health_icon_level = -1
+		charge_icon_level = -1
+		fuel_icon_level = -1
+
 		if( equipment_system.battery )
-			M.spacepod_charge.icon_state = "stat_0"
-		else
-			M.spacepod_charge.icon_state = "stat_off"
-		return
+			charge_icon_level = 0
 
-	var/obj/item/weapon/cell/battery = equipment_system.battery
-	var/charge_percent = battery.charge/battery.maxcharge
-	var/charge_icon_level = round( charge_percent*HUD_STATS_STATES )
+	if( fuel_icon_level != -1 )
+		M.spacepod_charge.icon_state = "stat_[charge_icon_level]"
+	else
+		M.spacepod_charge.icon_state = "stat_off"
 
-	M.spacepod_charge.icon_state = "stat_[charge_icon_level]"
+	if( fuel_icon_level != -1 )
+		M.spacepod_health.icon_state = "stat_[health_icon_level]"
+	else
+		M.spacepod_health.icon_state = "stat_off"
 
-	var/health_percent = health/max_health
-	var/health_icon_level = round( health_percent*HUD_STATS_STATES )
-
-	M.spacepod_health.icon_state = "stat_[health_icon_level]"
-
-	if( equipment_system.engine_system )
-		var/fuel_percent = equipment_system.engine_system.fuel_tank.return_pressure()/equipment_system.engine_system.max_pressure
-		var/fuel_icon_level = round( fuel_percent*HUD_STATS_STATES )
-
+	if( fuel_icon_level != -1 )
 		M.spacepod_fuel.icon_state = "stat_[fuel_icon_level]"
 	else
 		M.spacepod_fuel.icon_state = "stat_off"
