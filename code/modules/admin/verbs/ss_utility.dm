@@ -36,9 +36,9 @@
 
 /client/proc/add_whitelist()
     set category = "Admin"
-    set name = "Add User to Whitelist"
+    set name = "Write to Whitelist"
 
-    set desc = "Adds a user either alien or head whitelist mid-round."
+    set desc = "Adds a user to any whitelist available in the directory mid-round."
 
     if(!check_rights(R_ADMIN|R_MOD))    return
 
@@ -51,19 +51,36 @@
         if("data/whitelists/alienwhitelist.txt")
             var/race = input("Which species?") as null|anything in whitelisted_species
             if(!race)   return
-            if(shell("grep '[input] - [race]' [file]" == 0))        //Grep exit code is 0 on sucessful matches
-                usr << "<span class='warning'>This user is already whitelisted for this race.</span>"
-            else
-                shell("echo '[input] - [race]' >> [file]")
-                message_admins("[key_name_admin(src)] has added '[input] - [race]' to : [file]")
+            if(safe_write("[input] - [race]", file, "whitelisted for this race"))
                 call("/proc/load_alienwhitelist")()     //Re-loads the alien-whitelist
 
-        if("data/whitelists/whitelist.txt")
-            if(shell("grep '[input]' [file]" == 0))
-                usr << "<span class='warning'>This user is already head-whitelisted.</span>"
-            else
-                shell("echo '[input]' >> [file]")
-                message_admins("[key_name_admin(src)] has added '[input]' to : [file]")
-                call("/proc/load_whitelist")()         //Re-loads the whitelist
+        if("data/whitelists/donators.txt")
+            var/tier = input("Which tier?") as null|anything in list("1","2")
+            if(!tier)   return
+            if(safe_write("[input] - [tier]", file, "a donator"))
+                call("/proc/load_donators")()          //Re-loads the donator list
 
+        if("data/whitelists/whitelist.txt")
+            if(safe_write(input,file, "Head-whitelisted"))
+                call("/proc/load_whitelist")()         //Re-loads the whitelist
+                
         else    return
+
+/proc/safe_write(var/text, var/file_path, var/type = "in the file")         //In-case we decide to do more with this
+    if(text_exists(text, file_path))
+        usr << "<span class='warning'>This user is already [type].</span>"
+        switch(alert("Delete text instead?","Delete: [text] from [file_path]","Yes","No"))
+            if("Yes")	delete_text(text, file_path)
+    else
+        write_text(text,file_path)
+
+/proc/text_exists(var/message, var/path)
+    return shell("grep '[message]' [path]") ? 0 : 1         //Grep exit code is 0 on sucess, so we flip it here to make sense
+
+/proc/write_text(var/message, var/path)
+    shell("echo '[message]' >> [path]")
+    message_admins("[key_name_admin(src)] has written '[message]' to : [path]")
+
+/proc/delete_text(var/message, var/path)
+    shell("sed '/[message]/d' [path]")
+    message_admins("[key_name_admin(src)] has deleted '[message]' from : [path]")
