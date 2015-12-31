@@ -12,6 +12,7 @@ var/list/admin_verbs_default = list(
 	/client/proc/admin_ghost
 	)
 var/list/admin_verbs_admin = list(
+	/client/proc/add_whitelist,
 	/client/proc/locate_obj,
 	/client/proc/gas_del_zone,
 	/client/proc/gas_reset_zone,
