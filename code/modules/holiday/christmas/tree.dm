@@ -56,8 +56,8 @@
 		dying = 0
 		src.visible_message( "[user] pours the [O] onto \the [src]!" )
 
-		if( log_acc_item_to_db( user.ckey, "Christmas Sweater" ))
-			user << "<span class='notice'><b>Christmas Uber Cheer - Congratulations! You grew the tree to be big and strong!. A Christmas Sweater has been added to your account as a reward.</b></span>"
+		if( log_acc_item_to_db( user.ckey, "Tacky Sweater" ))
+			user << "<span class='notice'><b>Christmas Uber Cheer - Congratulations! You grew the tree to be big and strong!. A Tacky Sweater has been added to your account as a reward.</b></span>"
 		else
 			user << "<span class='notice'><b>Christmas Uber Cheer - You've already collected this item. Sorry!</b></span>"
 		qdel( O )

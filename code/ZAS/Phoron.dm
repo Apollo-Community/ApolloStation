@@ -90,10 +90,14 @@ obj/var/contaminated = 0
 	if(stat >= 2)
 		return
 
+	// Xenos dig this, they don't get damaged by it.
+	if(istype(src.species, /datum/species/xenos))
+		return
+
 	//Burn skin if exposed.
 	if(vsc.plc.SKIN_BURNS)
 		if(!pl_head_protected() || !pl_suit_protected())
-			burn_skin(5)
+			burn_skin(0.75)
 			if(prob(20)) src << pick( "\red Your skin burns!", "\red You feel your skin peeling away!", "\red Blisters begin to form on your skin!", "\red Your skin is unbearably itchy!" )
 			updatehealth()
 
