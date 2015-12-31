@@ -8,10 +8,10 @@
 /obj/item/device/spacepod_equipment/misc/cargo/proc/put_inside(var/obj/O, var/mob/user = usr)
 	if( !O ) return 0
 	if( src.contents.len >= max_size )
-		user << "\red The [my_atom]\'s cargohold is full!"
+		user << "<span class='warning'>The [my_atom]\'s cargohold is full!</span>"
 		return 0
 	if( O.anchored && !istype( O, /obj/mecha ))
-		user << "\red You can't move that!"
+		user << "<span class='warning'>You can't move that!</span>"
 		return 0
 	if ( istype( O, /obj/item/weapon/grab ))
 		return 0
@@ -28,7 +28,7 @@
 
 /obj/item/device/spacepod_equipment/misc/cargo/proc/dump_prompt( var/mob/user = usr )
 	if( !src.contents.len )
-		user << "\red There's nothing to dump!"
+		user << "<span class='warning'>There's nothing to dump!</span>"
 		return 0
 
 	var/list/answers = list( "All" )
@@ -43,7 +43,7 @@
 		if( istype( response, /obj ))
 			dump_item( response )
 		else
-			user << "\red Not a valid object for dumping!"
+			user << "<span class='warning'>Not a valid object for dumping!</span>"
 			return 0
 
 	return 1
