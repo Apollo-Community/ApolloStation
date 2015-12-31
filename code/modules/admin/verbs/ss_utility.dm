@@ -63,7 +63,7 @@
         if("data/whitelists/whitelist.txt")
             if(safe_write(input,file, "Head-whitelisted"))
                 call("/proc/load_whitelist")()         //Re-loads the whitelist
-                
+
         else    return
 
 /proc/safe_write(var/text, var/file_path, var/type = "in the file")         //In-case we decide to do more with this
@@ -75,12 +75,13 @@
         write_text(text,file_path)
 
 /proc/text_exists(var/message, var/path)
-    return shell("grep '[message]' [path]") ? 0 : 1         //Grep exit code is 0 on sucess, so we flip it here to make sense
+	var/code = shell("grep '[message]' [path]")		//Grep exit code is 0 on sucessful match
+	return code ? 0 : 1		//Maybe this will fix the issue?
 
 /proc/write_text(var/message, var/path)
     shell("echo '[message]' >> [path]")
-    message_admins("[key_name_admin(src)] has written '[message]' to : [path]")
+    message_admins("[key_name_admin(usr)] has written '[message]' to : [path]")
 
 /proc/delete_text(var/message, var/path)
     shell("sed '/[message]/d' [path]")
-    message_admins("[key_name_admin(src)] has deleted '[message]' from : [path]")
+    message_admins("[key_name_admin(usr)] has deleted '[message]' from : [path]")
