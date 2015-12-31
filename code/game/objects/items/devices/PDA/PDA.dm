@@ -26,7 +26,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
 	var/fon = 0 //Is the flashlight function on?
 	var/f_lum = 4 //light_range for the flashlight function
-	var/f_pow = 0 //light_power for the flashlight function
+	var/f_pow = 1 //light_power for the flahlight function
 	var/message_silent = 0 //To beep or not to beep, that is the question
 	var/news_silent = 1 //To beep or not to beep, that is the question.  The answer is No.
 	var/toff = 0 //If 1, messenger disabled
@@ -307,16 +307,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /*
  *	The Actual PDA
  */
-/obj/item/device/pda/pickup(mob/user)
-	if(fon)
-		set_light(0)
-		user.set_light(user.light_range + f_lum, user.light_power + f_pow)
-
-/obj/item/device/pda/dropped(mob/user)
-	if(fon)
-		user.set_light(user.light_range - f_lum, user.light_power - f_pow)
-		set_light(f_lum, f_pow)
-
 /obj/item/device/pda/New()
 	..()
 	PDAs += src
@@ -652,12 +642,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if("Light")
 			if(fon)
 				fon = 0
-				if(src in U.contents)	U.set_light(U.light_range - f_lum, user.light_power - f_pow)
-				else					set_light(0)
+				set_light(0)
 			else
 				fon = 1
-				if(src in U.contents)	U.set_light(U.light_range + f_lum, user.light_power + f_pow)
-				else					set_light(f_lum, f_pow)
+				set_light(f_lum, f_pow)
 		if("Medical Scan")
 			if(scanmode == 1)
 				scanmode = 0
