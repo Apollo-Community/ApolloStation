@@ -7,6 +7,7 @@
 	density = 0
 	anchored = 1
 	unacidable = 1
+	req_access_txt = "66"
 
 	New() //set the turf below the flaps to block air
 		var/turf/T = get_turf(loc)
@@ -28,7 +29,8 @@
 
 
 /obj/structure/spacepoddoor/CanPass(atom/A, turf/T)
-	if(istype(A, /obj/spacepod))
-		return ..()
-	else return 0
+	if( allowed( A ))
+		return 1
+
+	return 0
 

@@ -271,6 +271,16 @@
 		..()
 
 
+/obj/item/weapon/card/id/spacepod
+	name = "spacepod access card"
+	desc = "Spacepods use this to bypass energy barriers, and now you can too!"
+	icon_state = "data"
+	registered_name = "spacepod"
+	assignment = "spacepod"
+	New()
+		var/datum/job/captain/J = new/datum/job/captain
+		access = J.get_access()
+		..()
 
 /obj/item/weapon/card/id/syndicate_command
 	name = "syndicate ID card"

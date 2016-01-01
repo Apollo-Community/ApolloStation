@@ -1,3 +1,5 @@
+var/global/list/teleporter_beacons = list()
+
 /obj/item/device/radio/beacon
 	name = "tracking beacon"
 	desc = "A beacon used by a teleporter."
@@ -6,13 +8,19 @@
 	var/code = "electronic"
 	origin_tech = "bluespace=1"
 
+/obj/item/device/radio/beacon/New()
+	..()
+	teleporter_beacons += src
+
+/obj/item/device/radio/beacon/Destroy()
+	teleporter_beacons -= src
+	..()
+
 /obj/item/device/radio/beacon/hear_talk()
 	return
 
-
 /obj/item/device/radio/beacon/send_hear()
 	return null
-
 
 /obj/item/device/radio/beacon/verb/alter_signal(t as text)
 	set name = "Alter Beacon's Signal"
@@ -26,12 +34,10 @@
 	src.add_fingerprint(usr)
 	return
 
-
 /obj/item/device/radio/beacon/bacon //Probably a better way of doing this, I'm lazy.
 	proc/digest_delay()
 		spawn(600)
 			qdel(src)
-
 
 // SINGULO BEACON SPAWNER
 
@@ -42,7 +48,7 @@
 
 /obj/item/device/radio/beacon/syndicate/attack_self(mob/user as mob)
 	if(user)
-		user << "\blue Locked In"
+		user << "<span class='notice'>Locked In</span>"
 		new /obj/machinery/power/singularity_beacon/syndicate( user.loc )
 		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 		qdel(src)
