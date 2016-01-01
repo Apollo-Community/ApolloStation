@@ -66,7 +66,6 @@
 /mob/proc/update_action_buttons()
 	return
 
-
 /obj/screen/grab
 	name = I_GRAB
 
