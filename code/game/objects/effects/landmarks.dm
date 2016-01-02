@@ -16,6 +16,9 @@
 			shuttle_z = z
 			qdel(src)
 
+		if("Observer-Start")
+			observer_start += loc
+
 		if("airtunnel_stop")
 			airtunnel_stop = x
 

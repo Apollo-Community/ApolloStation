@@ -130,7 +130,7 @@
 		else if(istype(target, /obj/machinery/radiocarbon_spectrometer))
 			return
 
-		else if(reagents.total_volume)
+		else if(reagents && reagents.total_volume)
 			user << "\blue You splash the solution onto [target]."
 			src.reagents.reaction(target, TOUCH)
 			spawn(5) src.reagents.clear_reagents()
