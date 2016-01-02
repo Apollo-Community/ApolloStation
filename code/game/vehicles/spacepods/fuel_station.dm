@@ -68,9 +68,13 @@
 		port.fuel_tanks = src.fuel_tanks
 
 /obj/machinery/floor/refueling_floor/process()
-	var/datum/gas_mixture/pod = refueling.equipment_system.engine_system.fuel_tank
+	if( !refueling )
+		return
 
-	if( !refueling.equipment_system.engine_system ) return
+	if( !refueling.equipment_system.engine_system )
+		return
+
+	var/datum/gas_mixture/pod = refueling.equipment_system.engine_system.fuel_tank
 
 	for( var/obj/machinery/atmospherics/pipe/tank/phoron/tank in fuel_tanks )
 		var/datum/gas_mixture/fuel = tank.air_temporary
