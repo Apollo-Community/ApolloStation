@@ -967,6 +967,7 @@
 #include "code\modules\cellauto\handler.dm"
 #include "code\modules\cellauto\master.dm"
 #include "code\modules\cellauto\spawner.dm"
+#include "code\modules\cellauto\types\explosion.dm"
 #include "code\modules\cellauto\types\sm_crystals.dm"
 #include "code\modules\cellauto\types\waveprop.dm"
 #include "code\modules\client\client defines.dm"
