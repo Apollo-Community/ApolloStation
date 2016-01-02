@@ -40,7 +40,11 @@ datum/controller/game_controller/proc/setup()
 	// Pick a new race to unwhitelist for today's week
 	var/deciseconds_in_week = 6048000
 	var/selected_race = ((world.realtime/deciseconds_in_week) % whitelisted_aliens.len)
-	unwhitelisted_alien = whitelisted_aliens[selected_race]
+	if( selected_race < whitelisted_aliens.len )
+		unwhitelisted_alien = whitelisted_aliens[selected_race]
+	else
+		unwhitelisted_alien = "Wryn"
+
 	unwhitelisted_aliens.Add(unwhitelisted_alien)
 
 	setup_objects()
