@@ -492,6 +492,7 @@
 
 //Some mob defines below
 #define AI_CAMERA_light_range 6
+#define AI_CAMERA_light_power 2
 
 #define BORGMESON 1
 #define BORGTHERM 2
