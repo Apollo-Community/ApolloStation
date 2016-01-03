@@ -4,7 +4,7 @@
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "3"
 
-	age_max = 3
+	age_max = 0
 
 	/*
 	light_range = 2
@@ -12,16 +12,23 @@
 	light_power = 2
 	*/
 
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSBLOB
+
 	master_type = /datum/cell_auto_master/explosion
 
 	var/age_process_max = 2
-	var/age_damage_max  = 1 // will do damage until this age
+	var/cached = 0 // have we already cached this turf?
 
 /atom/movable/cell/explosion/New()
 	..()
+	update_icon()
 
 /atom/movable/cell/explosion/proc/update_icon()
 	..()
+
+	var/datum/cell_auto_master/explosion/M = master
+
+	icon_state = "[4-M.getSeverity()]"
 
 /atom/movable/cell/explosion/process()
 	if( shouldDie() )
@@ -34,11 +41,11 @@
 
 	if( shouldProcess() && master.shouldProcess() ) // If we have not aged at all
 		if( !loc.Enter( src ))
-			if( canDamage() )
-				damage()
+			if( canCache() )
+				addToCache()
 		else
-			if( canDamage() )
-				damage()
+			if( canCache() )
+				addToCache()
 			spread()
 
 /atom/movable/cell/explosion/spread()
@@ -47,12 +54,10 @@
 		if( checkTurf( T ))
 			PoolOrNew( /atom/movable/cell/explosion, list( T, master ))
 
-/atom/movable/cell/explosion/proc/canDamage()
-	if( age > age_damage_max )
-		return 0
-	return 1
+/atom/movable/cell/explosion/proc/canCache()
+	return !cached
 
-/atom/movable/cell/explosion/proc/damage()
+/atom/movable/cell/explosion/proc/addToCache()
 	var/turf/T = loc
 
 	if( !T )
@@ -61,12 +66,14 @@
 	var/datum/cell_auto_master/explosion/M = master
 	var/severity = M.getSeverity()
 
-	for( var/atom_movable in T.contents )	//bypass type checking since only atom/movable can be contained by turfs anyway
-		var/atom/movable/AM = atom_movable
-		if( AM && AM.simulated )
-			AM.ex_act( severity )
+	for( var/atom/movable/AM in T.contents )
+		M.ex_act_cache[AM] = severity
 
-	T.ex_act( severity )
+	if( iswall( T )) // Need to break down walls as we get to them so explosions dont get stuck in single rooms
+		T.ex_act( severity )
+	else
+		M.ex_act_cache[T] = severity
+
 	M.affected_turfs += T
 
 /atom/movable/cell/explosion/shouldProcess()
@@ -99,12 +106,14 @@
 	var/light_impact_range
 
 	var/start
+	var/end
 	var/turf/start_loc
 
 	var/powernet_rebuild_deferred
 	var/air_processing_deferred
 
 	var/list/affected_turfs = list()
+	var/list/ex_act_cache = list() // This caches all of the items to be ex_act'd all at once, trust me, its faster
 
 /datum/cell_auto_master/explosion/shouldProcess()
 	if( group_age <= devastation_range || group_age <= heavy_impact_range || group_age <= light_impact_range )
@@ -130,10 +139,12 @@
 	if( !air_processing_deferred )
 		air_processing_killed = 1
 
+/*
 	powernet_rebuild_deferred = defer_powernet_rebuild
 	// Large enough explosion. For performance reasons, powernets will be rebuilt manually
 	if( !defer_powernet_rebuild )
 		defer_powernet_rebuild = 1
+*/
 
 /datum/cell_auto_master/explosion/Destroy()
 	explosion_handler.masters -= src
@@ -142,16 +153,43 @@
 	if( !air_processing_deferred )
 		air_processing_killed = 0
 
+/*
 	if(!powernet_rebuild_deferred && defer_powernet_rebuild)
 		makepowernets()
 		defer_powernet_rebuild = 0
+*/
 
-	var/took = (world.timeofday-start)/10
+
 	//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare
 	//if(Debug2)
-	world << "## DEBUG: Explosion([start_loc.x],[start_loc.y],[start_loc.z])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds."
+
+	world << "## DEBUG: Explosion([start_loc.x],[start_loc.y],[start_loc.z])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]) ended"
 
 	..()
+
+/datum/cell_auto_master/explosion/process()
+	..()
+
+	if( !getSeverity() ) // If we're done expanding, process the cache
+		processCache()
+
+	if( !getSeverity() && !shouldProcess() )
+		if( !end )
+			end = world.timeofday
+			var/took = (end-start)/10
+			world << "## DEBUG: Explosion([start_loc.x],[start_loc.y],[start_loc.z])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds."
+
+		decayExplosion()
+
+/datum/cell_auto_master/explosion/proc/processCache()
+	for( var/atom/AM in ex_act_cache )
+		AM.ex_act( ex_act_cache[AM] )
+
+	ex_act_cache.Cut()
+
+/datum/cell_auto_master/explosion/proc/decayExplosion()
+	for( var/i = 0, i < cells.len/2, i++ )
+		qdel( pick( cells ))
 
 /datum/cell_auto_master/explosion/proc/getSeverity()
 	if( group_age <= devastation_range )
