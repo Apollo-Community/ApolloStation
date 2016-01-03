@@ -407,6 +407,7 @@
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
+
 			//if(!user.mutations & COLD_RESISTANCE)
 			if (prob(75))
 				electrocute_mob(user, get_area(src), src, rand(0.7,1.0))
@@ -561,10 +562,10 @@
 			return
 		if(2.0)
 			if (prob(75))
-				broken()
+				broken(1)
 		if(3.0)
 			if (prob(50))
-				broken()
+				broken(1)
 	return
 
 //blob effect

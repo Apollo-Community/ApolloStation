@@ -6,14 +6,16 @@
 
 	age_max = 3
 
-	light_range = 3
+	/*
+	light_range = 2
 	light_color = FIRE_COLOR
-	light_power = 3
+	light_power = 2
+	*/
 
 	master_type = /datum/cell_auto_master/explosion
 
 	var/age_process_max = 2
-	var/age_damage_max  = 2 // will do damage until this age
+	var/age_damage_max  = 1 // will do damage until this age
 
 /atom/movable/cell/explosion/New()
 	..()
@@ -32,9 +34,11 @@
 
 	if( shouldProcess() && master.shouldProcess() ) // If we have not aged at all
 		if( !loc.Enter( src ))
-			damage()
+			if( canDamage() )
+				damage()
 		else
-			damage()
+			if( canDamage() )
+				damage()
 			spread()
 
 /atom/movable/cell/explosion/spread()
@@ -43,19 +47,27 @@
 		if( checkTurf( T ))
 			PoolOrNew( /atom/movable/cell/explosion, list( T, master ))
 
-/atom/movable/cell/explosion/proc/damage()
-	damageTurf( get_turf( src ))
+/atom/movable/cell/explosion/proc/canDamage()
+	if( age > age_damage_max )
+		return 0
+	return 1
 
-/atom/movable/cell/explosion/proc/damageTurf( var/turf/T )
+/atom/movable/cell/explosion/proc/damage()
+	var/turf/T = loc
+
+	if( !T )
+		return
+
 	var/datum/cell_auto_master/explosion/M = master
 	var/severity = M.getSeverity()
 
+	for( var/atom_movable in T.contents )	//bypass type checking since only atom/movable can be contained by turfs anyway
+		var/atom/movable/AM = atom_movable
+		if( AM && AM.simulated )
+			AM.ex_act( severity )
+
 	T.ex_act( severity )
-	if( T )
-		for( var/atom_movable in T.contents )	//bypass type checking since only atom/movable can be contained by turfs anyway
-			var/atom/movable/AM = atom_movable
-			if( AM && AM.simulated )
-				AM.ex_act( severity )
+	M.affected_turfs += T
 
 /atom/movable/cell/explosion/shouldProcess()
 	if( age > age_process_max )
@@ -69,6 +81,11 @@
 
 	if( T.containsCell( type ))
 		return 0
+
+	var/datum/cell_auto_master/explosion/M = master
+	if( M )
+		if( T in M.affected_turfs )
+			return 0
 
 	return 1
 
@@ -85,6 +102,9 @@
 	var/turf/start_loc
 
 	var/powernet_rebuild_deferred
+	var/air_processing_deferred
+
+	var/list/affected_turfs = list()
 
 /datum/cell_auto_master/explosion/shouldProcess()
 	if( group_age <= devastation_range || group_age <= heavy_impact_range || group_age <= light_impact_range )
@@ -105,14 +125,22 @@
 
 	start = world.timeofday
 
-	var/approximate_intensity = (devastation_range * 3) + (heavy_impact_range * 2) + light_impact_range
+	air_processing_deferred = air_processing_killed
+
+	if( !air_processing_deferred )
+		air_processing_killed = 1
+
 	powernet_rebuild_deferred = defer_powernet_rebuild
 	// Large enough explosion. For performance reasons, powernets will be rebuilt manually
-	if(!defer_powernet_rebuild && (approximate_intensity > 25))
+	if( !defer_powernet_rebuild )
 		defer_powernet_rebuild = 1
 
 /datum/cell_auto_master/explosion/Destroy()
 	explosion_handler.masters -= src
+	affected_turfs.Cut()
+
+	if( !air_processing_deferred )
+		air_processing_killed = 0
 
 	if(!powernet_rebuild_deferred && defer_powernet_rebuild)
 		makepowernets()
@@ -121,16 +149,16 @@
 	var/took = (world.timeofday-start)/10
 	//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare
 	//if(Debug2)
-	world.log << "## DEBUG: Explosion([start_loc.x],[start_loc.y],[start_loc.z])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds."
+	world << "## DEBUG: Explosion([start_loc.x],[start_loc.y],[start_loc.z])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds."
 
 	..()
 
 /datum/cell_auto_master/explosion/proc/getSeverity()
-	if( group_age < devastation_range )
+	if( group_age <= devastation_range )
 		return 1.0
-	else if( group_age < heavy_impact_range )
+	else if( group_age <= heavy_impact_range )
 		return 2.0
-	else if( group_age < light_impact_range )
+	else if( group_age <= light_impact_range )
 		return 3.0
 	else
 		return 0

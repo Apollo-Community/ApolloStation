@@ -14,13 +14,13 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 		epicenter = get_turf(epicenter)
 		if(!epicenter) return
-
+/*
 ///// Z-Level Stuff
 		if(z_transfer && (devastation_range > 0 || heavy_impact_range > 0))
 			//transfer the explosion in both directions
 			explosion_z_transfer(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 ///// Z-Level Stuff
-
+*/
 // Play sounds; we want sounds to be different depending on distance so we will manually do it ourselves.
 // Stereo users will also hear the direction of the explosion!
 // Calculate far explosion sound range. Only allow the sound effect for heavy/devastating explosions.
