@@ -76,7 +76,6 @@
 	var/ear_deaf = null		//Carbon
 	var/ear_damage = null	//Carbon
 	var/stuttering = null	//Carbon
-	var/slurring = null		//Carbon
 	var/real_name = null
 	var/list/trigger_words = list() // mah triggers, warning of triggers, trigger my warnings
 	var/flavor_text = ""
@@ -89,6 +88,7 @@
 	var/ajourn = 0
 	var/druggy = 0			//Carbon
 	var/confused = 0		//Carbon
+	var/slurring = 0		//Carbon
 	var/antitoxs = null
 	var/phoron = null
 	var/sleeping = 0		//Carbon

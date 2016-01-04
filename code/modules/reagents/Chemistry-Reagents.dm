@@ -390,7 +390,7 @@ datum
 					M.adjustToxLoss(REM)
 				else
 					if(M.losebreath >= 10)
-						M.losebreath = max(10, M.losebreath-5)
+						M.losebreath = max(10, M.losebreath-5*REM)
 
 				..()
 				return
@@ -3236,13 +3236,13 @@ datum
 				M.weakened = max(M.weakened, 3)
 				if(!data) data = 1
 				data++
-				M.dizziness +=6
+				M.dizziness += 6*REM
 				switch(data)
 					if(15 to 45)
-						M.stuttering = max(M.stuttering+3,0)
+						M.stuttering = max(M.stuttering+3*REM,0)
 					if(45 to 55)
 						if (prob(50))
-							M.confused = max(M.confused+3,0)
+							M.confused = max(M.confused+3*REM,0)
 					if(55 to 200)
 						M.druggy = max(M.druggy, 55)
 					if(200 to INFINITY)
@@ -3331,7 +3331,7 @@ datum
 				if (adj_sleepy) M.sleeping = max(0,M.sleeping + adj_sleepy)
 
 				if(!src.data || (!isnum(src.data)  && src.data.len)) data = 1   //if it doesn't exist we set it.  if it's a list we're going to set it to 1 as well.  This is to
-				src.data += boozepwr						//avoid a runtime error associated with drinking blood mixed in drinks (demon's blood).
+				src.data += boozepwr*REM*4						//avoid a runtime error associated with drinking blood mixed in drinks (demon's blood).
 
 				var/d = data
 
