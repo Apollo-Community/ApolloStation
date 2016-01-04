@@ -8,9 +8,9 @@
 
 	age_max = 0
 
-	light_range = 2
+	light_range = 1
 	light_color = FIRE_COLOR
-	light_power = 2
+	light_power = 1
 
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSBLOB
 
@@ -144,31 +144,12 @@
 	if( !air_processing_deferred )
 		air_processing_killed = 1
 
-/*
-	powernet_rebuild_deferred = defer_powernet_rebuild
-	// Large enough explosion. For performance reasons, powernets will be rebuilt manually
-	if( !defer_powernet_rebuild )
-		defer_powernet_rebuild = 1
-*/
-
 /datum/cell_auto_master/explosion/Destroy()
 	explosion_handler.masters -= src
 	affected_turfs.Cut()
 
 	if( !air_processing_deferred )
 		air_processing_killed = 0
-
-/*
-	if(!powernet_rebuild_deferred && defer_powernet_rebuild)
-		makepowernets()
-		defer_powernet_rebuild = 0
-*/
-
-
-	//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare
-	//if(Debug2)
-
-	world << "## DEBUG: Explosion([start_loc.x],[start_loc.y],[start_loc.z])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]) ended"
 
 	..()
 
@@ -182,9 +163,11 @@
 		if( !end )
 			end = world.timeofday
 			var/took = (end-start)/10
-			world << "## DEBUG: Explosion([start_loc.x],[start_loc.y],[start_loc.z])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds."
+			if(Debug2)
+				//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare
+				world << "## DEBUG: Explosion([start_loc.x],[start_loc.y],[start_loc.z])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds."
 
-		decayExplosion()
+		decayExplosion() // Makes the explosion fizzle away
 
 /datum/cell_auto_master/explosion/proc/processCache()
 	for( var/atom/AM in ex_act_cache )
