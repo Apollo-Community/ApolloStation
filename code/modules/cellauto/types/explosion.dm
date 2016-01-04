@@ -4,13 +4,13 @@
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "3"
 
+	layer = 9.99
+
 	age_max = 0
 
-	/*
 	light_range = 2
 	light_color = FIRE_COLOR
 	light_power = 2
-	*/
 
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSBLOB
 
@@ -18,6 +18,8 @@
 
 	var/age_process_max = 2
 	var/cached = 0 // have we already cached this turf?
+	var/non_cache_chance = 5 // the chance we'll break now istead of caching
+	var/spread_chance = 85 // Introducing a little randomness to explosion expansion
 
 /atom/movable/cell/explosion/New()
 	..()
@@ -51,7 +53,7 @@
 /atom/movable/cell/explosion/spread()
 	for( var/direction in cardinal ) // Only gets NWSE
 		var/turf/T = get_step( src,direction )
-		if( checkTurf( T ))
+		if( checkTurf( T ) && prob( spread_chance ))
 			PoolOrNew( /atom/movable/cell/explosion, list( T, master ))
 
 /atom/movable/cell/explosion/proc/canCache()
@@ -67,9 +69,12 @@
 	var/severity = M.getSeverity()
 
 	for( var/atom/movable/AM in T.contents )
-		M.ex_act_cache[AM] = severity
+		if( prob( non_cache_chance ) || istype( AM, /mob ))
+			AM.ex_act( severity )
+		else
+			M.ex_act_cache[AM] = severity
 
-	if( iswall( T )) // Need to break down walls as we get to them so explosions dont get stuck in single rooms
+	if( iswall( T ) || prob( non_cache_chance )) // Need to break down walls as we get to them so explosions dont get stuck in single rooms
 		T.ex_act( severity )
 	else
 		M.ex_act_cache[T] = severity
