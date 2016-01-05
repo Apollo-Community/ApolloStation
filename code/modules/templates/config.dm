@@ -68,7 +68,6 @@ var/datum/template_config/template_config
 			newlist += value
 			values[token] = newlist
 			continue
-		values.Add(token)
 		values[token] = value
 	return values
 

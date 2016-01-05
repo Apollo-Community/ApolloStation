@@ -19,6 +19,7 @@ var/datum/template_controller/template_controller
 
 		var/datum/dmm_object_collection/collection = parser.GetCollection(file2list(path))
 		collection.Place(location, name)
+		log_game("TEMPL: Spawned template [name] at ([location.x], [location.y], [location.z]).")
 
 		return collection
 
