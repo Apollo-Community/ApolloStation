@@ -1689,6 +1689,11 @@
 #include "code\modules\surgery\robolimbs.dm"
 #include "code\modules\surgery\slimes.dm"
 #include "code\modules\surgery\surgery.dm"
+#include "code\modules\templates\config.dm"
+#include "code\modules\templates\dmm_parsing.dm"
+#include "code\modules\templates\helper.dm"
+#include "code\modules\templates\template.dm"
+#include "code\modules\templates\verbs.dm"
 #include "code\modules\vehicles\cargo_train.dm"
 #include "code\modules\vehicles\train.dm"
 #include "code\modules\vehicles\vehicle.dm"
@@ -1737,4 +1742,6 @@
 #include "maps\overmap\active\active-02-ACE.dmm"
 #include "maps\overmap\active\active-03-CentComm.dmm"
 #include "maps\overmap\active\active-04-Moon.dmm"
+#include "maps\templates\test\test.dmm"
+#include "maps\templates\test\test2.dmm"
 // END_INCLUDE
