@@ -1690,9 +1690,6 @@
 				message_admins("[key_name_admin(usr)] placed template '[name]' at {[location.x], [location.y], [location.z]}")
 
 			if("upload")
-				if(!check_rights(R_SERVER))
-					return 0
-
 				var/file = input("Upload a .dmm file as a template", "Upload") as file
 				if(!file || !length(file))
 					return 0
@@ -1705,9 +1702,6 @@
 				template_controller.placed_templates += collection
 
 			if("delete")
-				if(!check_rights(R_SERVER))
-					return 0
-
 				var/datum/dmm_object_collection/template = locate(href_list["template"])
 				if(!template)
 					return 0
@@ -1717,9 +1711,6 @@
 				template.Delete(remove_from_list=1)
 
 			if("reset")
-				if(!check_rights(R_SERVER))
-					return 0
-
 				var/datum/dmm_object_collection/template = locate(href_list["template"])
 				if(!template)
 					return 0
