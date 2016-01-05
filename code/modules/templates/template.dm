@@ -87,6 +87,11 @@ var/datum/template_controller/template_controller
 
 		log_game("TEMPL: Picking [pick_num] template(s).")
 
+		// remove chances configured to be 0% because of that scary while loop down there
+		for(var/c in template_config.chances)
+			if(text2num(template_config.chances[c]) == 0)
+				template_config.chances -= c
+
 		if(!length(template_config.chances))
 			log_game("TEMPL: Aborting PickTemplates: no chances configured.")
 			return 0
