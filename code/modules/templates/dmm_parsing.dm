@@ -19,6 +19,10 @@
 
 	proc/HandleEdgeCases()
 		for(var/turf/T in turfs)
+
+			if(istype(T,/turf/simulated))
+				T.update_air_properties()
+
 			for(var/obj/machinery/light/L in T)
 				L.update(0)
 
