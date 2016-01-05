@@ -1,0 +1,24 @@
+place_amount_min 1
+place_amount_max 3
+
+# Spawn chances for the different templates
+# If the chance is 0%, the entire line will be disregarded.
+chances test=0
+
+zs 3
+zs 4
+zs 6
+
+# These objects will be placed last
+place_last /obj/machinery/power/apc
+place_last /obj/machinery/light_switch
+place_last /obj/machinery/disposal
+place_last /obj/machinery/atmospherics/unary/vent_pump
+place_last /obj/machinery/atmospherics/unary/vent_scrubber
+place_last /obj/machinery/disposalpipe/segment
+place_last /obj/effect/spawner/space/set_spawner/master
+place_last /obj/structure/lattice
+
+tries 10
+
+directory maps/templates
