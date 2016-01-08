@@ -66,6 +66,12 @@
 	..()
 
 /mob/living/carbon/attack_hand(mob/M as mob)
+	// no attacking if we're in an alien nest!
+	for(var/obj/structure/bed/nest/N in get_turf(M.loc))
+		if(N.buckled_mob == M)
+			M.visible_message("<span class='warning'>[M.name] struggles to move!</span>", "<span class='warning'>You try to move, but the goo holds you back!</span>")
+			return
+
 	M.do_attack_animation(src)
 
 	if(!istype(M, /mob/living/carbon)) return

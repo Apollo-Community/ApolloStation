@@ -89,5 +89,7 @@
 
 	if( istype( src, /mob/living/carbon/human ))
 		statistics.increase_stat("deaths")
+	if( ismonkey(src))
+		statistics.increase_stat("monkey_deaths")
 
 	return 1

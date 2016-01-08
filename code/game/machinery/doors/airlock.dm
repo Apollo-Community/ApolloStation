@@ -1013,7 +1013,7 @@ About the new airlock wires panel:
 		ignite(is_hot(C))
 	..()
 
-/obj/machinery/door/airlock/set_broken()
+/obj/machinery/door/airlock/set_broken( var/no_sparks = 1 )
 	src.p_open = 1
 	stat |= BROKEN
 	if (secured_wires)
@@ -1022,9 +1022,10 @@ About the new airlock wires panel:
 		if ((O.client && !( O.blinded )))
 			O.show_message("[src.name]'s control panel bursts open, sparks spewing out!")
 
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up(5, 1, src)
-	s.start()
+	if( !no_sparks )
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(5, 1, src)
+		s.start()
 
 	update_icon()
 	return

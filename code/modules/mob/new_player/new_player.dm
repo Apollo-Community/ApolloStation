@@ -115,9 +115,8 @@
 
 				observer.started_as_observer = 1
 				close_spawn_windows()
-				var/obj/O = locate("landmark*Observer-Start")
 				src << "\blue Now teleporting."
-				observer.loc = O.loc
+				observer.loc = observer_start[rand(1,observer_start.len)]
 				observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
 
 				announce_ghost_joinleave(src)

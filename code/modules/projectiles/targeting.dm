@@ -230,7 +230,7 @@ mob/living/proc/NotTargeted(var/obj/item/weapon/gun/I)
 	targeted_by -= I
 	I.target.Remove(src) //De-target them
 	if(!I.target.len)
-		qdel(I.target)
+		del I.target
 	var/mob/living/T = I.loc //Remove the targeting icons
 	if(T && ismob(T) && !I.target)
 		T.client.remove_gun_icons()

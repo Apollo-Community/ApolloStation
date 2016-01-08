@@ -85,14 +85,15 @@
 		return results
 
 	disconnect()
-		qdel(network)
-		node.disconnect(src)
-		node = null
+		if(node)		//sanityyy
+			qdel(network)
+			node.disconnect(src)
+			node = null
 
-		update_icon()
-		update_underlays()
+			update_icon()
+			update_underlays()
 
-		return null
+			return null
 
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 		if (istype(W, /obj/item/weapon/wrench))

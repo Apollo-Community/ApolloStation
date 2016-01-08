@@ -451,3 +451,8 @@ Class Procs:
 		return 1
 	else
 		return 0
+
+/obj/machinery/floor
+	opacity = 0
+	density = 0
+	anchored = 1

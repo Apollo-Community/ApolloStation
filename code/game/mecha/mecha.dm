@@ -38,7 +38,8 @@
 	var/list/proc_res = list() //stores proc owners, like proc_res["functionname"] = owner reference
 	var/datum/effect/effect/system/spark_spread/spark_system = new
 	var/lights = 0
-	var/lights_power = 6
+	var/lights_range = 6
+	var/lights_power = 2
 
 	//inner atmos
 	var/use_internal_tank = 0
@@ -984,8 +985,8 @@
 	set popup_menu = 0
 	if(usr!=occupant)	return
 	lights = !lights
-	if(lights)	set_light(light_range + lights_power)
-	else		set_light(light_range - lights_power)
+	if(lights)	set_light(light_range + lights_range, light_power + lights_power)
+	else		set_light(light_range - lights_range, light_power - lights_power)
 	src.occupant_message("Toggled lights [lights?"on":"off"].")
 	log_message("Toggled lights [lights?"on":"off"].")
 	return

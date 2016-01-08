@@ -168,13 +168,10 @@
 
 	// Forcibly enable hardware-accelerated graphics, as we need them for the lighting overlays.
 	// (but turn them off first, since sometimes BYOND doesn't turn them on properly otherwise)
-	spawn(5) // And wait a half-second, since it sounds like you can do this too fast.
-		if(src)
-			winset(src, null, "command=\".configure graphics-hwmode off\"")
+	if(src)
+		winset(src, null, "command=\".configure graphics-hwmode off\"")
+		spawn(5) // And wait a half-second, since it sounds like you can do this too fast.
 			winset(src, null, "command=\".configure graphics-hwmode on\"")
-
-	if(byond_version < config.recommended_byond)
-		src << "\red This server is running Byond-[config.recommended_byond](BETA). If you experience any lighting issues we suggest you upgrade here - http://www.byond.com/download/"
 
 	donator = is_donator(src)
 	if(!stat_player_list.Find(key))			//Don't add the same person twice? How does this even happen
@@ -203,6 +200,11 @@
 		stat_player_list = sortAssoc(stat_player_list)
 
 	log_client_to_db()
+
+	if(related_accounts_ip && !holder && !findtext(related_accounts_ip, "[ckey]"))		//So admin accounts don't generate spam
+		message_admins("[ckey]'s IP has been previously used by [related_accounts_ip]")
+	if(related_accounts_cid && !holder && !findtext(related_accounts_cid, "[ckey]"))
+		message_admins("[ckey]'s CID has been previously used by [related_accounts_cid]")
 
 	loadAccountItems()
 	send_resources()
@@ -302,9 +304,9 @@
 		query_insert.Execute()
 
 	//Logging player access
-	var/serverip = "[world.internet_address]:[world.port]"
-	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
-	query_accesslog.Execute()
+	//var/serverip = "[world.internet_address]:[world.port]"
+	//var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
+	//query_accesslog.Execute()
 
 
 #undef TOPIC_SPAM_DELAY

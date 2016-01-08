@@ -210,10 +210,8 @@ var/list/gamemode_cache = list()
 
 
 	var/STUI_length = 150
-
 	var/git_commit_id = ""
 
-	var/recommended_byond = 501
 	var/player_soft_cap = 40
 	var/player_hard_cap = 60
 
@@ -667,8 +665,7 @@ var/list/gamemode_cache = list()
 
 				if("law_zero")
 					law_zero = value
-				if("recommended_byond")
-					config.recommended_byond = text2num(value)
+
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 

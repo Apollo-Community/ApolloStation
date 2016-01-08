@@ -1665,6 +1665,60 @@
 					break
 		return
 
+	else if(href_list["template_panel"])
+		if(!check_rights(R_BUILDMODE))
+			return 0
+
+		switch(href_list["action"])
+			if("place")
+				var/list/categories = template_controller.GetCategories(1)
+				var/category = input("Which category?", "Input") as anything in categories + "Cancel"
+				if(category == "Cancel")
+					return 0
+
+				var/list/templates = flist("[template_config.directory]/[category]/")
+				var/name = input("Which Template?", "Selection") in templates
+				var/path = "[template_config.directory]/[category]/[name]"
+
+				if(!fexists(path))
+					usr << "<span class='warning'>Template with name '[name]' does not exist.</span>"
+					return 0
+
+				var/turf/location = get_turf(owner.mob)
+
+				template_controller.placed_templates += template_controller.PlaceTemplateAt(location, path, name)
+				message_admins("[key_name_admin(usr)] placed template '[name]' at {[location.x], [location.y], [location.z]}")
+
+			if("upload")
+				var/file = input("Upload a .dmm file as a template", "Upload") as file
+				if(!file || !length(file))
+					return 0
+
+				var/turf/location = get_turf(owner.mob)
+				var/datum/dmm_object_collection/collection = template_controller.parser.GetCollection(file2list(file))
+
+				collection.Place(location, "uploaded-[owner.ckey]")
+				message_admins("[key_name_admin(usr)] placed an uploaded template at {[location.x], [location.y], [location.z]}")
+				template_controller.placed_templates += collection
+
+			if("delete")
+				var/datum/dmm_object_collection/template = locate(href_list["template"])
+				if(!template)
+					return 0
+
+				message_admins("[key_name_admin(usr)] has deleted template '[template.name]' at {[template.location.x], [template.location.y], [template.location.z]}")
+
+				template.Delete(remove_from_list=1)
+
+			if("reset")
+				var/datum/dmm_object_collection/template = locate(href_list["template"])
+				if(!template)
+					return 0
+
+				message_admins("[key_name_admin(usr)] has reset template '[template.name]' at {[template.location.x], [template.location.y], [template.location.z]}")
+
+				template.Reset()
+
 	else if(href_list["secretsfun"])
 		if(!check_rights(R_FUN))	return
 

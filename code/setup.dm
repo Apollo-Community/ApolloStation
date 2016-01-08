@@ -87,12 +87,11 @@
 #define HUNGER_FACTOR 0.05
 
 // How many units of reagent are consumed every Life() call, by default
-#define REAGENTS_METABOLISM 1
+#define REAGENTS_METABOLISM 0.5
 
 // By defining the effect multiplier this way, it'll exactly adjust
 // all effects according to how they originally were with the 0.4 metabolism
 #define REAGENTS_EFFECT_MULTIPLIER REAGENTS_METABOLISM / 0.4
-
 
 //Minimum ratio of air that must move to/from a tile to suspend group processing
 #define MINIMUM_AIR_RATIO_TO_SUSPEND 0.05
@@ -492,6 +491,7 @@
 
 //Some mob defines below
 #define AI_CAMERA_light_range 6
+#define AI_CAMERA_light_power 2
 
 #define BORGMESON 1
 #define BORGTHERM 2

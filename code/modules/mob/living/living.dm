@@ -727,3 +727,15 @@
 	static_overlay = getLetterImage(src)
 	static_overlay.override = 1
 	static_overlays["letter"] = static_overlay
+
+/mob/living/proc/isConscious()
+	if( stat || stat == DEAD || paralysis || weakened || stunned || sleeping )
+		return 0
+
+	return 1
+
+/mob/living/proc/isAble()
+	if( !isConscious() || restrained() )
+		return 0
+
+	return 1
