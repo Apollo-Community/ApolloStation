@@ -101,7 +101,7 @@
 
 
 /datum/event/infestation/announce()
-	command_announcement.Announce("Bioscans indicate that [vermstring] have been breeding in [locstring]. Clear them out, before this starts to affect productivity.", "Vermin infestation")
+	command_announcement.Announce("Confirmed outbreak of level 1 biohazard aboard [station_name()], located near [locstring]. Janitorial personnel must contain the outbreak.", "AUTOMATED ALERT: Unidentified Lifesigns")
 
 #undef LOC_KITCHEN
 #undef LOC_ATMOS
