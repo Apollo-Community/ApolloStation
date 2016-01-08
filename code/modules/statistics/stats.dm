@@ -221,7 +221,7 @@ datum/round_stats/proc/save_stats()
 
 	var/list/antags = list()
 	var/list/antag_list = list()
-	antag_list.Add(ticker.mode.aliens)
+	antag_list.Add(ticker.mode.broodswarm)
 	antag_list.Add(ticker.mode.borers)
 	antag_list.Add(ticker.mode.changelings)
 	antag_list.Add(ticker.mode.cult)
