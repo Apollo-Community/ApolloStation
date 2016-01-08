@@ -87,9 +87,10 @@
 	if(ticker && ticker.mode)
 		ticker.mode.check_win()
 
-	if( istype( src, /mob/living/carbon/human ))
-		statistics.increase_stat("deaths")
-	if( ismonkey(src))
+	if( ismonkey(src))			//This needs to be first as moneys are a subtype of humans.
 		statistics.increase_stat("monkey_deaths")
+	else if( ishuman(src))
+		statistics.increase_stat("deaths")
+
 
 	return 1
