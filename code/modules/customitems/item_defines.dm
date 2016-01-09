@@ -1419,9 +1419,9 @@
 
 /obj/item/weapon/holder/cat/fluff/bones
 	name = "Bones"
-	desc = "It's Bones! Meow."
+	desc = "Damnit man, I'm a cat, not a doctor!"
 	gender = MALE
-	icon_state = "cat3"
+	icon_state = "bones"
 
 //Use this subtype for spawning in the custom item.
 /obj/item/weapon/holder/cat/fluff/bones/custom_item
@@ -1438,9 +1438,9 @@
 	desc = "That's Bones the cat. He's a laid back, brown stray cat. Meow."
 	gender = MALE
 	icon = 'icons/mob/animal.dmi'
-	icon_state = "cat3"
-	icon_living = "cat3"
-	icon_dead = "cat3_dead"
+	icon_state = "bones"
+	icon_living = "bones"
+	icon_dead = "bones_dead"
 	holder_type = /obj/item/weapon/holder/bones2
 	var/bff_name = "Genma Iroe"
 	var/mob/living/carbon/human/bff
