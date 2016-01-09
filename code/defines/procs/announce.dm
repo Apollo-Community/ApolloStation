@@ -46,10 +46,13 @@
 	Log(message, message_title)
 
 datum/announcement/proc/Message(message as text, message_title as text)
+	var/full_message = "<h2 class='alert'>[title]</h2><br>\
+				   		<span class='alert'>[message]</span>"
+
+
 	for(var/mob/M in player_list)
 		if(!istype(M,/mob/new_player) && !isdeaf(M))
-			M << "<h2 class='alert'>[title]</h2>"
-			M << "<span class='alert'>[message]</span>"
+			M << full_message
 			if (announcer)
 				M << "<span class='alert'> -[html_encode(announcer)]</span>"
 

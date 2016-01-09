@@ -1,5 +1,14 @@
-<h1>Welcome to Space Station 13!</h1>
+<center><h1>Welcome to Apollo Station!</h1></center>
 
--<i>This server is running <a href="http://baystation12.net/">Baystation 12's</a> modification of the <a href="http://ss13.eu/">/tg/station13</a> SS13 code.</i>
-<br><br>
-<strong>Bugtracker:</strong> <a href="http://baystation12.net/forums/viewtopic.php?f=18&t=8185">http://baystation12.net/forums/viewtopic.php?f=18&t=8185</a>
+This is a roleplaying server. Our roleplaying style is defined in the rules and guidelines.<br>
+By joining the game you consent to having read and understood the <a href="http://apollo-community.org/viewtopic.php?f=9&amp;t=6&amp;p=7#p7">full rule list.</a><br>
+<h2>The Golden Rules</h2>
+<b>If you decide to read nothing else, read these:</b><ul>
+	<li>Treat other players with respect. We&#39;re all here to have fun.</li>
+	<li>Never do any of the following: Grief, Gank, ERP, ERG, Metagame or abuse bugs.</li>
+	<li>Be aware that this is a heavy roleplaying server and you are expected to act accordingly.</li>
+	<li>Erotic content of <i>any</i> kind is immediately permabannable. There are no exceptions to this rule.</li>
+	<li>A staff member&#39;s primary role is to help you, however they are not always right. If you have an issue with a member of staff feel free to raise the issue on the forums.</li>
+</ul>
+<hr>
+Find a bug or exploit? Let us know on our <a href="https://github.com/stuicey/AS_Project/issues?q=is%3Aopen+is%3Aissue">bugtracker!</a><br>
