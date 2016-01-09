@@ -1531,3 +1531,24 @@
 	icon_state = "blackzippo"
 	icon_on = "blackzippoon"
 	icon_off = "blackzippo"
+
+/* -------- KEYWEE + LUCIEN93 ---------- */
+/obj/item/clothing/head/helmet/ert/fluff
+	name = "emergency response team helmet"
+	desc = "An in-atmosphere helmet worn by members of the NanoTrasen Emergency Response Team. This one doesn't look very protective."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "erthelmet_cmd"
+	item_state = "syndicate-helm-green"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/head/helmet/ert/fluff/keywee
+	name = "old emergency response team medical helmet"
+	desc = "A white in-atmosphere helmet once worn by a medical officer for emergencies. More of a keepsake than protective headgear by now, it looks like its been through a lot."
+	icon_state = "keywee"
+	item_state = "keywee"
+
+/obj/item/clothing/head/helmet/ert/fluff/lucien93
+	name = "old emergency response team commander helmet"
+	desc = "A blue in-atmosphere helmet once worn by a commander for emergencies. More of a keepsake than protective headgear by now, it looks like its been through a lot."
+	icon_state = "lucien93"
+	item_state = "lucien93"
