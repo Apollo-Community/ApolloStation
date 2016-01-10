@@ -90,6 +90,9 @@
 	if( ismonkey(src))			//This needs to be first as moneys are a subtype of humans.
 		statistics.increase_stat("monkey_deaths")
 	else if( ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if( H.mind && H.mind.assigned_role == "Gladiator" )
+			return
 		statistics.increase_stat("deaths")
 
 
