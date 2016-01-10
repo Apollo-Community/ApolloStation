@@ -1569,7 +1569,7 @@ datum/design/item/chameleon
 	req_tech = list("syndicate" = 2)
 	materials = list("$metal" = 500)
 	build_path = /obj/item/weapon/storage/box/syndie_kit/chameleon
-
+/*
 datum/design/item/omnitool
 	name = "Omnitool"
 	desc = "An advanced tool capable of replacing many of the tools on a toolbelt."
@@ -1577,7 +1577,7 @@ datum/design/item/omnitool
 	req_tech = list("materials" = 3, "engineering" = 5)
 	materials = list("$metal" = 7500, "$glass" = 1000)
 	build_path = /obj/item/weapon/omnitool
-
+*/
 datum/design/item/syndietool
 	name = "Synditool"
 	desc = "An advanced tool capable of replacing many of the tools on a toolbelt."

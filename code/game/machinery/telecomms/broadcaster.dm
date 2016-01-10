@@ -46,55 +46,45 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			return
 		recentmessages.Add(signal_message)
 
-		if(signal.data["slow"] > 0)
+		if(signal.data["slow"])			// Well.. anything greater than 0 will return true here anyway...
 			sleep(signal.data["slow"]) // simulate the network lag if necessary
 
 		signal.data["level"] |= listening_level
 
 	   /** #### - Normal Broadcast - #### **/
-
-		if(signal.data["type"] == 0)
-
-			/* ###### Broadcast a message using signal.data ###### */
-			Broadcast_Message(signal.data["connection"], signal.data["mob"],
-							  signal.data["vmask"], signal.data["vmessage"],
-							  signal.data["radio"], signal.data["message"],
-							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], signal.data["vname"],,
-							  signal.data["compression"], signal.data["level"], signal.frequency,
-							  signal.data["verb"], signal.data["language"]	)
-
-
-	   /** #### - Simple Broadcast - #### **/
-
-		if(signal.data["type"] == 1)
-
-			/* ###### Broadcast a message using signal.data ###### */
-			Broadcast_SimpleMessage(signal.data["name"], signal.frequency,
-								  signal.data["message"],null, null,
-								  signal.data["compression"], listening_level)
-
-
-	   /** #### - Artificial Broadcast - #### **/
-	   			// (Imitates a mob)
-
-		if(signal.data["type"] == 2)
-
-			/* ###### Broadcast a message using signal.data ###### */
-				// Parameter "data" as 4: AI can't track this person/mob
-
-			Broadcast_Message(signal.data["connection"], signal.data["mob"],
-							  signal.data["vmask"], signal.data["vmessage"],
-							  signal.data["radio"], signal.data["message"],
-							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], signal.data["vname"], 4, signal.data["compression"], signal.data["level"], signal.frequency,
-							  signal.data["verb"], signal.data["language"])
+		switch(signal.data["type"])
+			if(0)
+				/* ###### Broadcast a message using signal.data ###### */
+				Broadcast_Message(signal.data["connection"], signal.data["mob"],
+								  signal.data["vmask"], signal.data["vmessage"],
+								  signal.data["radio"], signal.data["message"],
+								  signal.data["name"], signal.data["job"],
+								  signal.data["realname"], signal.data["vname"],,
+								  signal.data["compression"], signal.data["level"], signal.frequency,
+								  signal.data["verb"], signal.data["language"]	)
+		   /** #### - Simple Broadcast - #### **/
+			if(1)
+				/* ###### Broadcast a message using signal.data ###### */
+				Broadcast_SimpleMessage(signal.data["name"], signal.frequency,
+									  signal.data["message"],null, null,
+									  signal.data["compression"], listening_level)
+		   /** #### - Artificial Broadcast - #### **/
+		   			// (Imitates a mob)
+			if(2)
+				/* ###### Broadcast a message using signal.data ###### */
+					// Parameter "data" as 4: AI can't track this person/mob
+				Broadcast_Message(signal.data["connection"], signal.data["mob"],
+								  signal.data["vmask"], signal.data["vmessage"],
+								  signal.data["radio"], signal.data["message"],
+								  signal.data["name"], signal.data["job"],
+								  signal.data["realname"], signal.data["vname"], 4, signal.data["compression"], signal.data["level"], signal.frequency,
+								  signal.data["verb"], signal.data["language"])
 
 		if(!message_delay)
 			message_delay = 1
-			spawn(10)
+			spawn(25)				//Just going to set this to a high value - nobody needs to say the exact same thing twice rapidly anyway...
 				message_delay = 0
-				recentmessages = list()
+				recentmessages.Cut()
 
 		/* --- Do a snazzy animation! --- */
 		flick("broadcaster_send", src)
@@ -235,41 +225,33 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	var/list/obj/item/device/radio/radios = list()
 
 	// --- Broadcast only to intercom devices ---
-
-	if(data == 1)
-
-		for (var/obj/item/device/radio/intercom/R in connection.devices["[RADIO_CHAT]"])
-			if(R.receive_range(display_freq, level) > -1)
-				radios += R
-
-	// --- Broadcast only to intercoms and station-bounced radios ---
-
-	else if(data == 2)
-
-		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
-
-			if(istype(R, /obj/item/device/radio/headset))
-				continue
-
-			if(R.receive_range(display_freq, level) > -1)
-				radios += R
-
-	// --- Broadcast to antag radios! ---
-
-	else if(data == 3)
-		for(var/antag_freq in ANTAG_FREQS)
-			var/datum/radio_frequency/antag_connection = radio_controller.return_frequency(antag_freq)
-			for (var/obj/item/device/radio/R in antag_connection.devices["[RADIO_CHAT]"])
-				if(R.receive_range(antag_freq, level) > -1)
+	switch(data)
+		if(1)
+			for (var/obj/item/device/radio/intercom/R in connection.devices["[RADIO_CHAT]"])
+				if(R.receive_range(display_freq, level) > -1)
 					radios += R
 
-	// --- Broadcast to ALL radio devices ---
+		// --- Broadcast only to intercoms and station-bounced radios ---
+		if(2)
+			for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
+				if(istype(R, /obj/item/device/radio/headset))
+					continue
+				if(R.receive_range(display_freq, level) > -1)
+					radios += R
 
-	else
+		// --- Broadcast to antag radios! ---
+		if(3)
+			for(var/antag_freq in ANTAG_FREQS)
+				var/datum/radio_frequency/antag_connection = radio_controller.return_frequency(antag_freq)
+				for (var/obj/item/device/radio/R in antag_connection.devices["[RADIO_CHAT]"])
+					if(R.receive_range(antag_freq, level) > -1)
+						radios += R
 
-		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
-			if(R.receive_range(display_freq, level) > -1)
-				radios += R
+		// --- Broadcast to ALL radio devices ---
+		else
+			for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
+				if(R.receive_range(display_freq, level) > -1)
+					radios += R
 
 	// Get a list of mobs who can hear from the radios we collected.
 	var/list/receive = get_mobs_in_radio_ranges(radios)
@@ -643,4 +625,3 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	//world.log << "Level: [signal.data["level"]] - Done: [signal.data["done"]]"
 
 	return signal
-
