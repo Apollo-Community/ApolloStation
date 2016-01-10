@@ -403,7 +403,10 @@
 				return
 
 			if (href_list["createpill_multiple"])
-				count = Clamp(isgoodnumber(input("Select the number of pills to make.", 10, pillamount) as num),1,max_pill_count)
+				count = isgoodnumber(input("Select the number of pills to make.", 10, pillamount) as num)
+
+			if(count > max_pill_count)
+				return
 
 			if(reagents.total_volume/count < 1) //Sanity checking.
 				return
