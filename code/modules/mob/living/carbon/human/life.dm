@@ -1522,6 +1522,13 @@
 						if(!(M.status_flags & GODMODE))
 							M.adjustBruteLoss(5)
 						nutrition += 10
+				if(istype(M, /mob/living/simple_animal))
+					var/x = M.oxyloss
+					M.adjustOxyLoss(5)
+					if(x == M.oxyloss)
+						stomach_contents.Remove(M)
+						qdel(M)
+					nutrition += 10
 
 	proc/handle_changeling()
 		if(mind && mind.changeling)
