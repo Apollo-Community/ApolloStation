@@ -158,8 +158,6 @@
 			if (speech_sound)
 				sound_vol *= 0.5
 
-	log_debug("[message], [speaking], [verb], [alt_name], [italics], [message_range], [speech_sound], [sound_vol], [used_radios.len]")
-
 	..(message, speaking, verb, alt_name, italics, message_range, speech_sound, sound_vol,used_radios.len)	//ohgod we should really be passing a datum here.
 
 /mob/living/carbon/human/proc/forcesay(list/append)
