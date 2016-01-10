@@ -12,8 +12,7 @@
 	sent_spiders_to_station = 0
 
 /datum/event/spider_infestation/announce()
-	command_announcement.Announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", new_sound = 'sound/AI/aliens.ogg')
-
+	command_announcement.Announce("Unidentified lifesigns detected aboard [station_name()]. Engineering personnel are required to secure any exterior access, including ducting and ventilation.", "AUTOMATED ALERT: Unidentified Lifesigns", new_sound = 'sound/AI/aliens.ogg')
 
 /datum/event/spider_infestation/start()
 	var/list/vents = list()

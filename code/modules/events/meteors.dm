@@ -12,9 +12,9 @@
 /datum/event/meteor_wave/announce()
 	switch(severity)
 		if(EVENT_LEVEL_MAJOR)
-			command_announcement.Announce("Meteors have been detected on collision course with the station.", "Meteor Alert", new_sound = 'sound/AI/meteors.ogg')
+			command_announcement.Announce("Meteorlogical reports predict a meteor storm is on collision course with the station. Recommended that crew take refuge at the center of the station until the storm has passed.", "AUTOMATED ALERT: Meteor Storm", new_sound = 'sound/AI/meteors.ogg')
 		else
-			command_announcement.Announce("The station is now in a meteor shower.", "Meteor Alert")
+			command_announcement.Announce("Meteorlogical reports predict a meteor shower is on collision course with the station. Recommended that crew take refuge at the center of the station until the shower has passed.", "AUTOMATED ALERT: Meteor Shower")
 
 //meteor showers are lighter and more common,
 /datum/event/meteor_wave/tick()
@@ -27,9 +27,9 @@
 /datum/event/meteor_wave/end()
 	switch(severity)
 		if(EVENT_LEVEL_MAJOR)
-			command_announcement.Announce("The station has cleared the meteor storm.", "Meteor Alert")
+			command_announcement.Announce("The station has cleared the meteor storm. ENGINEERING personnel must repair any resultant breaches.", "AUTOMATED ALERT: Meteor Storm")
 		else
-			command_announcement.Announce("The station has cleared the meteor shower", "Meteor Alert")
+			command_announcement.Announce("The station has cleared the meteor shower. ENGINEERING personnel must repair any resultant breaches.", "AUTOMATED ALERT: Meteor Shower")
 
 /datum/event/meteor_wave/proc/get_meteors()
 	switch(severity)
