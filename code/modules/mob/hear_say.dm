@@ -73,7 +73,7 @@
 		var/sound_played = 0
 
 		for( var/word in trigger_words )
-			if( findtext( message, word ))
+			if( findtext( message, " [word] " ))		//So it only finds whole words.. no more electr/ICIAN/
 				if( !sound_played && ( client.prefs.toggles & SOUND_NOTIFICATIONS ))
 					sound_played = 1
 					src << sound( 'sound/effects/icalert.ogg' )

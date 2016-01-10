@@ -229,6 +229,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 
   /* ###### Prepare the radio connection ###### */
+	log_debug("[M], [message], [name], [realname], [radio], [freq]")
 
 	var/display_freq = freq
 
@@ -643,4 +644,3 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	//world.log << "Level: [signal.data["level"]] - Done: [signal.data["done"]]"
 
 	return signal
-
