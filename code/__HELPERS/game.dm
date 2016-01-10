@@ -30,7 +30,12 @@
 // Like view but bypasses light_range check
 
 /proc/hear(var/range, var/atom/source)
-	var/list/heard = hearers(range, source)
+
+	var/lum = source.light_range
+	source.light_range = 6
+
+	var/list/heard = view(range, source)
+	source.light_range = lum
 
 	return heard
 
