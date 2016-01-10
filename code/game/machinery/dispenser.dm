@@ -10,7 +10,10 @@
 	..()
 	desc = "If you press the button, it will dispense an item!"
 
-/obj/machinery/dispenser/attack_hand(mob/user as mob)
+/obj/machinery/dispenser/attack_hand(mob/living/user as mob)
+	if( !istype( user ))
+		return
+
 	var/obj/D = pick( dispense_items )
 	var/obj/dispensed = new D
 	user.put_in_hands( dispensed )
