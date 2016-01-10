@@ -205,6 +205,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/Stat()
 	..()
+
+	if( !client )
+		return
+
 	statpanel("Status")
 	if (client.statpanel == "Status")
 /*		if(ticker)

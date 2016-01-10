@@ -67,6 +67,9 @@
 	Stat()
 		..()
 
+		if( !client )
+			return
+
 		statpanel("Lobby")
 		if(client.statpanel=="Lobby" && ticker)
 			if(ticker.hide_mode)
