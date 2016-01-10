@@ -998,6 +998,9 @@
 				take_overall_damage(2,0)
 				traumatic_shock++
 
+		if((locate(src.internal_organs_by_name["resonant crystal"]) in src.internal_organs))
+			nutrition = 400
+
 		if(!(species.flags & IS_SYNTHETIC)) handle_trace_chems()
 
 		updatehealth()
