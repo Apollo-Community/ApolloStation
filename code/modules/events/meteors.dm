@@ -27,9 +27,9 @@
 /datum/event/meteor_wave/end()
 	switch(severity)
 		if(EVENT_LEVEL_MAJOR)
-			command_announcement.Announce("The station has cleared the meteor storm. ENGINEERING personnel must repair any resultant breaches.", "AUTOMATED ALERT: Meteor Storm")
+			command_announcement.Announce("The station has cleared the meteor storm. Engineering personnel must repair any resultant breaches.", "AUTOMATED ALERT: Meteor Storm")
 		else
-			command_announcement.Announce("The station has cleared the meteor shower. ENGINEERING personnel must repair any resultant breaches.", "AUTOMATED ALERT: Meteor Shower")
+			command_announcement.Announce("The station has cleared the meteor shower. Engineering personnel must repair any resultant breaches.", "AUTOMATED ALERT: Meteor Shower")
 
 /datum/event/meteor_wave/proc/get_meteors()
 	switch(severity)
