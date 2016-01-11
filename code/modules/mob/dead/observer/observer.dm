@@ -205,15 +205,19 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/Stat()
 	..()
+
+	if( !client )
+		return
+
 	statpanel("Status")
 	if (client.statpanel == "Status")
-		if(ticker)
+/*		if(ticker)
 			if(ticker.mode)
 				//world << "DEBUG: ticker not null"
 				if(ticker.mode.name == "AI malfunction")
 					//world << "DEBUG: malf mode ticker test"
 					if(ticker.mode:malf_mode_declared)
-						stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
+						stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")*/
 		if(emergency_shuttle)
 			var/eta_status = emergency_shuttle.get_status_panel_eta()
 			if(eta_status)
@@ -650,31 +654,34 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(alert(usr, "Do you really want to join the THUNDERDOME?", "Message", "Yes", "No") != "Yes")
 		return
 
-	var/mob/M = usr
+	say_dead_direct( "<span class='name'>[name]</span> no longer [pick("skulks","lurks","prowls","creeps","stalks")] in the realm of the dead. They now fight for honor and glory in the thunderdome.")
+	spawn(50)
+		usr << "<span class='notice'> You have joined as a gladiator in the Thunderdome!"
+	log_admin("[key_name_admin(usr)] has joined the thunderdome!")
 
-	var/new_name = input(usr, "Pick a name","Name") as null|text
-	if(!new_name)//Somebody changed his mind, place is available again.
-		M.name = "Gladiator"
+	var/mob/M = usr
+	create_gladiator( M )
+
+/proc/create_gladiator( var/mob/M )
+	if( !istype( M ))
 		return
 
-	var/mob/living/carbon/human/new_gladiator = create_gladiator( pick(tdome), new_name )
-	new_gladiator.mind.key = usr.key
-	new_gladiator.key = usr.key
+	var/mob/living/carbon/human/new_gladiator = forge_gladiator( pick(tdome) )
 
-	spawn(50)
-		new_gladiator << "\blue You have joined as a gladiator in the Thunderdome!"
-	say_dead_direct( "<span class='name'>[name]</span> no longer [pick("skulks","lurks","prowls","creeps","stalks")] in the realm of the dead. They now fight for honor and glory in the thunderdome.")
-
-	log_admin("[key_name_admin(M)] has joined the thunderdome!")
+	new_gladiator.mind.key = M.key
+	new_gladiator.key = M.key
 	new_gladiator.Paralyse(5)
 
 	qdel(M)
 
-
-/proc/create_gladiator( var/obj/spawn_location, var/gladiator_name )
+/proc/forge_gladiator( var/obj/spawn_location )
 
 	//usr << "\red ERT has been temporarily disabled. Talk to a coder."
 	//return
+
+	var/gladiator_name = input("Pick a name","Name") as null|text
+	if(!gladiator_name)//Somebody changed his mind, place is available again.
+		return
 
 	var/mob/living/carbon/human/M = new(null)
 
@@ -747,8 +754,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	M.mind = new
 	M.mind.current = M
 	M.mind.original = M
-	M.mind.assigned_role = "MODE"
-	M.mind.special_role = "Gladiator"
+	M.mind.assigned_role = "Gladiator"
 	if(!(M.mind in ticker.minds))
 		ticker.minds += M.mind//Adds them to regular mind list.
 	M.equip_gladiator()

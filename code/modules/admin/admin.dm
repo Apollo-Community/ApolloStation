@@ -974,10 +974,10 @@ var/global/floorIsLava = 0
 		if (ticker.mode.config_tag == "cult")
 			return 2
 		return 1
-	if(M.mind in ticker.mode.malf_ai)
+/*	if(M.mind in ticker.mode.malf_ai)
 		if (ticker.mode.config_tag == "malfunction")
 			return 2
-		return 1
+		return 1*/
 	if(M.mind in ticker.mode.syndicates)
 		if (ticker.mode.config_tag == "mercenary")
 			return 2

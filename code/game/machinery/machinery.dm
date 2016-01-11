@@ -118,9 +118,11 @@ Class Procs:
 /obj/machinery/New()
 	..()
 	machines += src
+	MachineProcessing += src
 
 /obj/machinery/Destroy()
 	machines -= src
+	MachineProcessing -= src
 	if(component_parts)
 		for(var/atom/A in component_parts)
 			if(A.loc == src) // If the components are inside the machine, delete them.
@@ -250,11 +252,27 @@ Class Procs:
 	//apc_override is needed here because AIs use their own APC when powerless
 	if(cameranet && !cameranet.checkTurfVis(get_turf(M)) && !apc_override)
 		return
+
+	// ID card access
+	if( istype( M, /obj ))
+		var/obj/O = M
+		if( !O.allowed( src ))
+			src << "<span class='warning'>You don't have sufficient access!</span>"
+			return
+
 	return 1
 
 /mob/living/silicon/robot/canUseTopic(atom/movable/M)
 	if(stat || lockcharge || stunned || weakened)
 		return
+
+	// ID card access
+	if( istype( M, /obj ))
+		var/obj/O = M
+		if( !O.allowed( src ))
+			src << "<span class='warning'>You don't have sufficient access!</span>"
+			return
+
 	return 1
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -277,7 +295,7 @@ Class Procs:
 		return 1
 	if ( ! (istype(usr, /mob/living/carbon/human) || \
 			istype(usr, /mob/living/silicon)))
-		usr << "\red You don't have the dexterity to do this!"
+		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
 /*
 	//distance checks are made by atom/proc/DblClick
@@ -287,13 +305,23 @@ Class Procs:
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
-			visible_message("\red [H] stares cluelessly at [src] and drools.")
+			visible_message("<span class='warning'>[H] stares cluelessly at [src] and drools.</span>")
 			return 1
 		else if(prob(H.getBrainLoss()))
-			user << "\red You momentarily forget how to use [src]."
+			user << "<span class='warning'>You momentarily forget how to use [src].</span>"
 			return 1
 
 	src.add_fingerprint(user)
+
+	// Have to check if there's an internal ID, otherwise people can't open UI if they put their card inside
+	var/internal_ID = locate( /obj/item/weapon/card/id ) in src
+	if( check_access( internal_ID ))
+		return 0
+
+	// ID card access
+	if( !allowed( user ))
+		user << "<span class='warning'>Access denied.</span>"
+		return 1
 
 	return 0
 
@@ -423,3 +451,8 @@ Class Procs:
 		return 1
 	else
 		return 0
+
+/obj/machinery/floor
+	opacity = 0
+	density = 0
+	anchored = 1

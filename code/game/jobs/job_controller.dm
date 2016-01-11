@@ -190,7 +190,6 @@ var/global/datum/controller/occupations/job_master
 		var/datum/job/job = GetJob("AI")
 		if(!job)	return 0
 		if((job.title == "AI") && (config) && (!config.allow_ai))	return 0
-
 		for(var/i = job.total_positions, i > 0, i--)
 			for(var/level = 1 to 3)
 				var/list/candidates = list()
@@ -203,16 +202,16 @@ var/global/datum/controller/occupations/job_master
 					if(AssignRole(candidate, "AI"))
 						ai_selected++
 						break
-			//Malf NEEDS an AI so force one if we didn't get a player who wanted it
-			if((ticker.mode.name == "AI malfunction")&&(!ai_selected))
-				unassigned = shuffle(unassigned)
-				for(var/mob/new_player/player in unassigned)
-					if(jobban_isbanned(player, "AI"))	continue
-					if(AssignRole(player, "AI"))
-						ai_selected++
-						break
-			if(ai_selected)	return 1
-			return 0
+		//Malf NEEDS an AI so force one if we didn't get a player who wanted it
+		if((ticker.mode.config_tag == "malfunction" )&&(!ai_selected))
+			unassigned = shuffle(unassigned)
+			for(var/mob/new_player/player in unassigned)
+				if(jobban_isbanned(player, "AI"))	continue
+				if(AssignRole(player, "AI"))
+					ai_selected++
+					break
+		if(ai_selected)	return 1
+		return 0
 
 
 /** Proc DivideOccupations
@@ -353,6 +352,7 @@ var/global/datum/controller/occupations/job_master
 		var/datum/job/job = GetJob(rank)
 		var/list/spawn_in_storage = list()
 		var/alt_title = null
+		var/ID_type = /obj/item/weapon/card/id
 
 		if(H.mind)
 			H.mind.assigned_role = rank
@@ -383,6 +383,10 @@ var/global/datum/controller/occupations/job_master
 
 						if(!permitted)
 							H << "\red Your current job or whitelist status does not permit you to spawn with [thing]!"
+							continue
+
+						if(G.sort_category == "ID_card")
+							ID_type = G.path
 							continue
 
 						if(G.slot && !(G.slot in custom_equip_slots))
@@ -427,7 +431,7 @@ var/global/datum/controller/occupations/job_master
 			if(istype(S, /obj/effect/landmark/start) && istype(S.loc, /turf))
 				H.loc = S.loc
 			// Moving wheelchair if they have one
-			if(H.buckled && istype(H.buckled, /obj/structure/stool/bed/chair/wheelchair))
+			if(H.buckled && istype(H.buckled, /obj/structure/bed/chair/wheelchair))
 				H.buckled.loc = H.loc
 				H.buckled.set_dir(H.dir)
 
@@ -516,7 +520,7 @@ var/global/datum/controller/occupations/job_master
 			var/datum/organ/external/l_foot = H.get_organ("l_foot")
 			var/datum/organ/external/r_foot = H.get_organ("r_foot")
 			if((!l_foot || l_foot.status & ORGAN_DESTROYED) && (!r_foot || r_foot.status & ORGAN_DESTROYED))
-				var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair(H.loc)
+				var/obj/structure/bed/chair/wheelchair/W = new /obj/structure/bed/chair/wheelchair(H.loc)
 				H.buckled = W
 				H.update_canmove()
 				W.set_dir(H.dir)
@@ -529,7 +533,7 @@ var/global/datum/controller/occupations/job_master
 		if(job.req_admin_notify)
 			H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
 
-		spawnId(H, rank, alt_title)
+		spawnId(H, rank, alt_title, ID_type)
 		H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset(H), slot_l_ear)
 
 		//Gives glasses to the vision impaired
@@ -546,7 +550,7 @@ var/global/datum/controller/occupations/job_master
 		return H
 
 
-	proc/spawnId(var/mob/living/carbon/human/H, rank, title)
+	proc/spawnId(var/mob/living/carbon/human/H, rank, title, type = /obj/item/weapon/card/id)
 		if(!H)	return 0
 		var/obj/item/weapon/card/id/C = null
 
@@ -560,10 +564,13 @@ var/global/datum/controller/occupations/job_master
 			if(job.title == "Cyborg")
 				return
 			else
-				C = new job.idtype(H)
+				if( type == /obj/item/weapon/card/id )
+					C = new job.idtype(H)
+				else
+					C = new type
 				C.access = job.get_access()
 		else
-			C = new /obj/item/weapon/card/id(H)
+			C = new type(H)
 		if(C)
 			C.registered_name = H.real_name
 			C.rank = rank

@@ -68,13 +68,12 @@
 //Virologist relevance
 
 /proc/rng_join_virus()
-
 	spawn(rand(3000,9000))	// 5-15mins
 	//Goes through every player and has a small chance to infect them after 100s -> 1000s waiting.
 		var/list/candidates
 
 		for(var/mob/living/carbon/human/G in living_mob_list)
-			if(G.species.name == "Human")
+			if( istype( G ) && G.species.name == "Human")
 				candidates += G
 
 		candidates = shuffle(candidates)

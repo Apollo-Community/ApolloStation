@@ -1,3 +1,24 @@
+/mob/living/New()
+	. = ..()
+	generate_static_overlay()
+	if(istype(static_overlays,/list) && static_overlays.len)
+		for(var/mob/living/silicon/robot/drone/D in player_list)
+			if(D.can_see_static())
+				D.static_overlays.Add(static_overlays["static"])
+				D.client.images.Add(static_overlays["static"])
+
+/mob/living/Destroy()
+	for(var/mob/living/silicon/robot/drone/D in player_list)
+		for(var/image/I in static_overlays)
+			D.static_overlays.Remove(I) //no checks, since it's either there or its not
+			D.client.images.Remove(I)
+			qdel(I)
+			I = null
+	if(static_overlays)
+		static_overlays = null
+
+	. = ..()
+
 //mob verbs are faster than object verbs. See mob/verb/examine.
 /mob/living/verb/pulled(atom/movable/AM as mob|obj in oview(1))
 	set name = "Pull"
@@ -215,7 +236,6 @@
 			return 1
 	return 0
 
-
 /mob/living/proc/can_inject()
 	return 1
 
@@ -300,6 +320,9 @@
 	ear_deaf = 0
 	ear_damage = 0
 	heal_overall_damage(getBruteLoss(), getFireLoss())
+
+	// remove chemical reagents
+	reagents.clear_reagents()
 
 	// restore all of a human's blood
 	if(ishuman(src))
@@ -451,43 +474,42 @@
 
 	if(can_resist())
 		next_move = world.time + 20
-		resist_grab()
-		if(!weakened && !restrained())
-			process_resist()
+		process_resist()
 
 /mob/living/proc/can_resist()
 	//need to allow !canmove, or otherwise neck grabs can't be resisted
-	//similar thing with weakened and pinning
-	if(stat)
+	//so just check weakened instead.
+	if(stat || weakened)
 		return 0
 	if(next_move > world.time)
 		return 0
 	return 1
 
-
 /mob/living/proc/process_resist()
 	//Getting out of someone's inventory.
-	if(istype(src.loc, /obj/item/weapon/holder))
+	if(istype(src.loc, /obj/item))
 		escape_inventory(src.loc)
 		return
 
+	//resisting grabs (as if it helps anyone...)
+	if (!restrained())
+		resist_grab()
+
 	//unbuckling yourself
 	if(buckled)
-		spawn(0)
-			escape_buckle()
+		spawn() escape_buckle()
 
 	//Breaking out of a locker?
 	if( src.loc && (istype(src.loc, /obj/structure/closet)) )
 		var/obj/structure/closet/C = loc
-		spawn(0)
-			C.mob_breakout(src)
+		spawn() C.mob_breakout(src)
 
-/mob/living/proc/escape_inventory(obj/item/weapon/holder/H)
+/mob/living/proc/escape_inventory( obj/item/H )
 	if(H != src.loc) return
 
 	var/mob/M = H.loc //Get our mob holder (if any).
 
-	if(istype(M))
+	if(istype( M, /obj/item/weapon/holder ))
 		M.drop_from_inventory(H)
 		M << "<span class='warning'>[H] wriggles out of your grip!</span>"
 		src << "<span class='warning'>You wriggle out of [M]'s grip!</span>"
@@ -679,7 +701,33 @@
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
 	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
 
-
 /mob/living/do_attack_animation(atom/A)
 	..(A, initial(pixel_y))
 
+/mob/living/proc/generate_static_overlay()
+	if(!istype(static_overlays,/list))
+		static_overlays = list()
+	static_overlays.Add(list("static", "blank", "letter"))
+	var/image/static_overlay = image(getStaticIcon(new/icon(src.icon, src.icon_state)), loc = src)
+	static_overlay.override = 1
+	static_overlays["static"] = static_overlay
+
+	static_overlay = image(getBlankIcon(new/icon(src.icon, src.icon_state)), loc = src)
+	static_overlay.override = 1
+	static_overlays["blank"] = static_overlay
+
+	static_overlay = getLetterImage(src)
+	static_overlay.override = 1
+	static_overlays["letter"] = static_overlay
+
+/mob/living/proc/isConscious()
+	if( stat || stat == DEAD || paralysis || weakened || stunned || sleeping )
+		return 0
+
+	return 1
+
+/mob/living/proc/isAble()
+	if( !isConscious() || restrained() )
+		return 0
+
+	return 1

@@ -1,5 +1,5 @@
 /obj/item/weapon/tank/jetpack/verb/moveup()
-	set name = "Move Upwards"
+	set name = "Fly Upwards"
 	set category = "Object"
 	if(allow_thrust(0.01, usr))
 		var/turf/controllerlocation = locate(1, 1, usr.z)
@@ -25,7 +25,7 @@
 	return 1
 
 /obj/item/weapon/tank/jetpack/verb/movedown()
-	set name = "Move Downwards"
+	set name = "Fly Downwards"
 	set category = "Object"
 	if(allow_thrust(0.01, usr))
 		var/turf/controllerlocation = locate(1, 1, usr.z)

@@ -2,7 +2,7 @@
 /mob/living/silicon/platform/spybug/verb/set_mail_tag()
 	set name = "Set Mail Tag"
 	set desc = "Tag yourself for delivery through the disposals system."
-	set category = "Platform Abilities"
+	set category = "Abilities"
 
 	var/new_tag = input("Select the desired destination.", "Set Mail Tag", null) as null|anything in tagger_locations
 
@@ -24,7 +24,7 @@
 /mob/living/silicon/platform/spybug/verb/self_destruct()
 	set name = "Self-Destruct"
 	set desc = "Destroys the current platform beyond recovery."
-	set category = "Platform Abilities"
+	set category = "Abilities"
 
 	src.visible_message( \
 			"[src] begins to emit a loud buzzing noise.", \
@@ -37,7 +37,7 @@
 /mob/living/silicon/platform/spybug/ventcrawl()
 	set name = "Crawl through Vent"
 	set desc = "Enter an air vent and crawl through the pipe system."
-	set category = "Platform Abilities"
+	set category = "Abilities"
 
 	if(stat == DEAD || paralysis || weakened || stunned || restrained())
 		return

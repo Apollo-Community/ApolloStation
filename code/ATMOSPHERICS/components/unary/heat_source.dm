@@ -33,20 +33,6 @@
 
 	RefreshParts()
 
-/obj/machinery/atmospherics/unary/heater/initialize()
-	if(node)
-		return
-
-	var/node_connect = dir
-
-	for(var/obj/machinery/atmospherics/target in get_step(src, node_connect))
-		if(target.initialize_directions & get_dir(target, src))
-			node = target
-			break
-
-	update_icon()
-
-
 /obj/machinery/atmospherics/unary/heater/update_icon()
 	if(node)
 		if(use_power && heating)

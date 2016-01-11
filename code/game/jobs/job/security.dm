@@ -134,6 +134,7 @@
 	spawn_positions = 3
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
+	alt_titles = list("Security Cadet")
 	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels, access_morgue)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
 	minimal_player_age = 3

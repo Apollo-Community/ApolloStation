@@ -31,9 +31,18 @@
 	var/obj/screen/gun/move/gun_move_icon = null
 	var/obj/screen/gun/run/gun_run_icon = null
 	var/obj/screen/gun/mode/gun_setting_icon = null
+	var/obj/screen/spacepod_dash = null
 	var/obj/screen/spacepod_health = null
 	var/obj/screen/spacepod_fuel = null
 	var/obj/screen/spacepod_charge = null
+	var/obj/screen/spacepod_exit = null
+	var/obj/screen/spacepod_fire = null
+	var/obj/screen/spacepod_switch_weapons = null
+	var/obj/screen/spacepod_locate = null
+	var/obj/screen/spacepod_cargo = null
+	var/obj/screen/spacepod_door = null
+	var/obj/screen/spacepod_light = null
+	var/obj/screen/spacepod_bluespace = null
 	var/obj/screen/fade = null
 
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
@@ -67,7 +76,6 @@
 	var/ear_deaf = null		//Carbon
 	var/ear_damage = null	//Carbon
 	var/stuttering = null	//Carbon
-	var/slurring = null		//Carbon
 	var/real_name = null
 	var/list/trigger_words = list() // mah triggers, warning of triggers, trigger my warnings
 	var/flavor_text = ""
@@ -80,6 +88,7 @@
 	var/ajourn = 0
 	var/druggy = 0			//Carbon
 	var/confused = 0		//Carbon
+	var/slurring = 0		//Carbon
 	var/antitoxs = null
 	var/phoron = null
 	var/sleeping = 0		//Carbon
@@ -125,7 +134,7 @@
 	var/m_int = null//Living
 	var/m_intent = "run"//Living
 	var/lastKnownIP = null
-	var/obj/structure/stool/bed/buckled = null//Living
+	var/obj/structure/bed/buckled = null//Living
 	var/obj/item/l_hand = null//Living
 	var/obj/item/r_hand = null//Living
 	var/obj/item/weapon/back = null//Human/Monkey
@@ -229,3 +238,5 @@
 	var/list/active_genes=list()
 
 	var/STUI_log = 1
+
+	var/pumpkins_found = 0

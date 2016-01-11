@@ -67,6 +67,8 @@
 	health = maxhealth
 
 	update_nearby_tiles(need_rebuild=1)
+
+	MachineProcessing -= src
 	return
 
 
@@ -104,8 +106,8 @@
 			else
 				do_animate("deny")
 		return
-	if(istype(AM, /obj/structure/stool/bed/chair/wheelchair))
-		var/obj/structure/stool/bed/chair/wheelchair/wheel = AM
+	if(istype(AM, /obj/structure/bed/chair/wheelchair))
+		var/obj/structure/bed/chair/wheelchair/wheel = AM
 		if(density)
 			if(wheel.pulling && (src.allowed(wheel.pulling)))
 				open()
@@ -301,12 +303,10 @@
 	update_icon()
 	return
 
-
 /obj/machinery/door/blob_act()
 	if(prob(40))
 		qdel(src)
 	return
-
 
 /obj/machinery/door/emp_act(severity)
 	if(prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
@@ -329,11 +329,7 @@
 			else
 				take_damage(300)
 		if(3.0)
-			if(prob(80))
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(2, 1, src)
-				s.start()
-			else
+			if(prob(20))
 				take_damage(150)
 	return
 

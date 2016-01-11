@@ -137,11 +137,11 @@
 	if(locate(/mob/living/silicon/ai) in src)
 		user << "\red <b>Transfer failed</b>: \black Existing AI found on remote terminal. Remove existing AI to install a new one."
 		return 0
-
+/*
 	if(ai.is_malf())
 		user << "\red <b>ERROR</b>: \black Remote transfer interface disabled."
 		return 0
-
+*/
 	if(istype(ai.loc, /turf/))
 		new /obj/structure/AIcore/deactivated(get_turf(ai))
 

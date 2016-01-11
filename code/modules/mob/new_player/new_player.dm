@@ -47,7 +47,7 @@
 				var/isadmin = 0
 				if(src.client && src.client.holder)
 					isadmin = 1
-				var/DBQuery/query = dbcon.NewQuery("SELECT id FROM erro_poll_question WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM erro_poll_vote WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM erro_poll_textreply WHERE ckey = \"[ckey]\")")
+				var/DBQuery/query = dbcon.NewQuery("SELECT id FROM poll_question WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM poll_vote WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM poll_textreply WHERE ckey = \"[ckey]\")")
 				query.Execute()
 				var/newpoll = 0
 				while(query.NextRow())
@@ -66,6 +66,9 @@
 
 	Stat()
 		..()
+
+		if( !client )
+			return
 
 		statpanel("Lobby")
 		if(client.statpanel=="Lobby" && ticker)
@@ -115,9 +118,8 @@
 
 				observer.started_as_observer = 1
 				close_spawn_windows()
-				var/obj/O = locate("landmark*Observer-Start")
 				src << "\blue Now teleporting."
-				observer.loc = O.loc
+				observer.loc = observer_start[rand(1,observer_start.len)]
 				observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
 
 				announce_ghost_joinleave(src)
@@ -151,7 +153,18 @@
 				src << alert("Your current species, [client.prefs.species], is not available for play on the station.")
 				return 0
 
-			LateChoices()
+			var/active_mobs = getActiveMobs()
+
+			if( active_mobs >= config.player_hard_cap )
+				var/answer = alert("The server has passed its max player cap. Would you like to join the thunderdome instead?","Thunderdome","Yes","No")
+				if( answer == "Yes" )
+					create_gladiator( src )
+			else if( active_mobs >= config.player_soft_cap && !client.client_exists_in_db())
+				var/answer = alert("The server has passed its new player cap. Since you have not played here before, you cannot join. Would you like to join the thunderdome instead?","Thunderdome","Yes","No")
+				if( answer == "Yes" )
+					create_gladiator( src )
+			else
+				LateChoices()
 
 		if(href_list["manifest"])
 			ViewManifest()
@@ -177,6 +190,7 @@
 			AttemptLateSpawn(href_list["SelectedJob"],client.prefs.spawnpoint)
 			return
 
+/*
 		if(href_list["privacy_poll"])
 			establish_db_connection()
 			if(!dbcon.IsConnected())
@@ -184,7 +198,7 @@
 			var/voted = 0
 
 			//First check if the person has not voted yet.
-			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_privacy WHERE ckey='[src.ckey]'")
+			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM privacy WHERE ckey='[src.ckey]'")
 			query.Execute()
 			while(query.NextRow())
 				voted = 1
@@ -209,11 +223,12 @@
 				return
 
 			if(!voted)
-				var/sql = "INSERT INTO erro_privacy VALUES (null, Now(), '[src.ckey]', '[option]')"
+				var/sql = "INSERT INTO privacy VALUES (null, Now(), '[src.ckey]', '[option]')"
 				var/DBQuery/query_insert = dbcon.NewQuery(sql)
 				query_insert.Execute()
 				usr << "<b>Thank you for your vote!</b>"
 				usr << browse(null,"window=privacypoll")
+*/
 
 		if(!ready && href_list["preference"])
 			if(client)
@@ -329,7 +344,7 @@
 
 		character.lastarea = get_area(loc)
 		// Moving wheelchair if they have one
-		if(character.buckled && istype(character.buckled, /obj/structure/stool/bed/chair/wheelchair))
+		if(character.buckled && istype(character.buckled, /obj/structure/bed/chair/wheelchair))
 			character.buckled.loc = character.loc
 			character.buckled.set_dir(character.dir)
 
@@ -510,3 +525,12 @@
 	if( character.h_style == "Bald" && character.f_style == "Shaved" )
 		return 1
 	return 0
+
+/proc/getActiveMobs()
+	var/active_mobs = 0
+
+	for(var/mob/living/M in mob_list)
+		if( M.client )
+			active_mobs++
+
+	return active_mobs

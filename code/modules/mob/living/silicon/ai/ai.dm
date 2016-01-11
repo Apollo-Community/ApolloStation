@@ -102,6 +102,8 @@ var/list/ai_verbs_default = list(
 				possibleNames -= pickedName
 				pickedName = null
 
+	id_card = new /obj/item/weapon/card/id/captains_spare(src) // AI gets to do whatever they like
+
 	aiPDA = new/obj/item/device/pda/ai(src)
 	SetName(pickedName)
 	anchored = 1
@@ -187,11 +189,13 @@ var/list/ai_verbs_default = list(
 
 	src << radio_text
 
-	if (!(ticker && ticker.mode && (mind in ticker.mode.malf_ai)))
-		show_laws()
-		src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
+	show_laws()
+	src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
 
 	job = "AI"
+
+	if( id_card )
+		id_card.assignment = "AI"
 
 /mob/living/silicon/ai/Destroy()
 	ai_list -= src
@@ -311,6 +315,7 @@ var/list/ai_verbs_default = list(
 			//usr <<"You can only change your display once!"
 			//return
 
+/*
 /mob/living/silicon/ai/proc/is_malf()
 	if(ticker.mode.name == "AI malfunction")
 		var/datum/game_mode/malfunction/malf = ticker.mode
@@ -324,6 +329,7 @@ var/list/ai_verbs_default = list(
 	var/datum/game_mode/malfunction/malf = is_malf()
 	if(malf && malf.apcs >= 3)
 		stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
+*/
 
 /mob/living/silicon/ai/proc/ai_alerts()
 	set category = "AI Commands"
@@ -498,7 +504,7 @@ var/list/ai_verbs_default = list(
 		camera = A
 	..()
 	if(istype(A,/obj/machinery/camera))
-		if(camera_light_on)	A.set_light(AI_CAMERA_light_range)
+		if(camera_light_on)	A.set_light(AI_CAMERA_light_range, AI_CAMERA_light_power)
 		else				A.set_light(0)
 
 
@@ -586,12 +592,13 @@ var/list/ai_verbs_default = list(
 	src << "\blue Switched to [network] camera network."
 //End of code by Mord_Sith
 
-
+/*
 /mob/living/silicon/ai/proc/choose_modules()
 	set category = "Malfunction"
 	set name = "Choose Module"
 
 	malf_picker.use(src)
+*/
 
 /mob/living/silicon/ai/proc/ai_statuschange()
 	set category = "AI Commands"
@@ -688,7 +695,7 @@ var/list/ai_verbs_default = list(
 				src.camera.set_light(0)
 				if(!camera.light_disabled)
 					src.camera = camera
-					src.camera.set_light(AI_CAMERA_light_range)
+					src.camera.set_light(AI_CAMERA_light_range, AI_CAMERA_light_power)
 				else
 					src.camera = null
 			else if(isnull(camera))
@@ -698,7 +705,7 @@ var/list/ai_verbs_default = list(
 			var/obj/machinery/camera/camera = near_range_camera(src.eyeobj)
 			if(camera && !camera.light_disabled)
 				src.camera = camera
-				src.camera.set_light(AI_CAMERA_light_range)
+				src.camera.set_light(AI_CAMERA_light_range, AI_CAMERA_light_power)
 		camera_light_on = world.timeofday + 1 * 20 // Update the light every 2 seconds.
 
 

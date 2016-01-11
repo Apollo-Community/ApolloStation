@@ -156,6 +156,7 @@
 			return
 		qdel(D)
 	cleaning = 0
+	target = null
 	update_icons()
 
 /mob/living/bot/cleanbot/explode()

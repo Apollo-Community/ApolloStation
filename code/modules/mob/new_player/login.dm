@@ -1,11 +1,13 @@
 /mob/new_player/Login()
 	update_Login_details()	//handles setting lastKnownIP and computer_id for use by the ban systems as well as checking for multikeying
-	src << "<div class=\"motd\">"
+
+	var/alien_of_the_week = "This week's de-whitelisted alien: <b>[unwhitelisted_alien]</b>! Go ahead and give them a try, free of charge!"
 
 	if(join_motd)
-		src << "[join_motd]<br>"
-
-	src << "This week's de-whitelisted alien: [unwhitelisted_alien]! Go ahead and give them a try, free of charge!</div>"
+		var/motd = "<div class='motd'><center>[join_motd]<br>[alien_of_the_week]<br></center></div><hr>"
+		src << motd
+	else
+		src << alien_of_the_week
 
 	if(!mind)
 		mind = new /datum/mind(key)
@@ -34,5 +36,4 @@
 	new_player_panel()
 	spawn(40)
 		if(client)
-			handle_privacy_poll()
 			client.playtitlemusic()

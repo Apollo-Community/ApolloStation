@@ -2,6 +2,7 @@
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
 	icon = 'icons/turf/walls.dmi'
+
 	var/mineral = "metal"
 	var/rotting = 0
 
@@ -9,10 +10,12 @@
 	var/damage_cap = 100 //Wall will break down to girders if damage reaches this point
 	var/armor = 0.5 // Damage is multiplied by this
 
-	var/damage_overlay
 	var/global/damage_overlays[8]
 
 	var/max_temperature = 1800 //K, walls will take damage if they're next to a fire hotter than this
+
+	var/datum/paint/paint = null
+	var/paint_type = /datum/paint/wall
 
 	opacity = 1
 	density = 1
@@ -38,21 +41,34 @@
 	take_damage(Proj.damage * armor)
 	return
 
+/turf/simulated/wall/New()
+	..()
+
+	paint = new paint_type( smoothwall_connections )
+	update_icon()
 
 /turf/simulated/wall/Destroy()
-	for(var/obj/effect/E in src) if(E.name == "Wallrot") del E
+	for(var/obj/effect/E in src) if(E.name == "Wallrot") qdel( E )
+	qdel( paint )
+	paint = null
 	processing_turfs -= src
 	dismantle_wall(null,null,1)
 	..()
 
 /turf/simulated/wall/ChangeTurf(var/newtype)
-	for(var/obj/effect/E in src) if(E.name == "Wallrot") del E
+	for(var/obj/effect/E in src) if(E.name == "Wallrot") qdel( E )
+	qdel( paint )
+	paint = null
 	..(newtype)
 
 //Appearance
 
 /turf/simulated/wall/examine(mob/user)
 	. = ..(user)
+
+	var/paint_color = paint.getColorName( "base" )
+	if( paint_color )
+		user << "It is painted with a coat of [paint_color] paint."
 
 	if(!damage)
 		user << "<span class='notice'>It looks fully intact.</span>"
@@ -72,20 +88,17 @@
 	if(!damage_overlays[1]) //list hasn't been populated
 		generate_overlays()
 
-	if(!damage)
-		overlays.Cut()
-		return
-
-	var/overlay = round(damage / damage_cap * damage_overlays.len) + 1
-	if(overlay > damage_overlays.len)
-		overlay = damage_overlays.len
-
-	if(damage_overlay && overlay == damage_overlay) //No need to update.
-		return
-
 	overlays.Cut()
-	overlays += damage_overlays[overlay]
-	damage_overlay = overlay
+
+	if( !damage && ( !paint || !paint.paint_icon ))
+		return
+
+	var/dam_level = round(( damage/damage_cap )*damage_overlays.len ) + 1
+	if(dam_level > damage_overlays.len)
+		dam_level = damage_overlays.len
+
+	overlays += damage_overlays[dam_level]
+	overlays += paint.paint_icon
 
 	return
 
@@ -95,7 +108,7 @@
 	for(var/i = 1; i <= damage_overlays.len; i++)
 		var/image/img = image(icon = 'icons/turf/walls.dmi', icon_state = "overlay_damage")
 		img.blend_mode = BLEND_MULTIPLY
-		img.alpha = (i * alpha_inc) - 1
+		img.alpha = ((i-1) * alpha_inc) - 1
 		damage_overlays[i] = img
 
 //Damage
@@ -104,6 +117,7 @@
 		damage = max(0, damage + dam)
 		statistics.increase_stat("damage_cost", damage*10)
 		update_damage()
+
 	return
 
 /turf/simulated/wall/proc/update_damage()
@@ -171,6 +185,9 @@
 			P.roll_and_drop(src)
 		else
 			O.loc = src
+
+	overlays.Cut()
+	qdel( paint )
 
 	ChangeTurf(/turf/simulated/floor/plating)
 
@@ -287,13 +304,28 @@
 	return 1
 
 /turf/simulated/wall/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 
 	//get the user's location
 	if( !istype(user.loc, /turf) )	return	//can't do this stuff whilst inside objects and such
+
+	if( istype( W, /obj/item/weapon/paint_can ))
+		if( !paint )
+			paint = new()
+
+		var/obj/item/weapon/paint_can/paint_can = W
+		paint_can.paint( src, user )
+		return
+
+	if( istype( W, /obj/item/weapon/paint_brush ))
+		if( !paint )
+			paint = new()
+
+		var/obj/item/weapon/paint_brush/brush = W
+		brush.paint( src, user )
+		return
 
 	if(rotting)
 		if(istype(W, /obj/item/weapon/weldingtool) )
@@ -467,5 +499,41 @@
 		return attack_hand(user)
 	return
 
+/turf/simulated/wall/melt()
+	src.ChangeTurf(/turf/simulated/floor/plating)
+
 /turf/simulated/floor/melt()
 	src.ChangeTurf(/turf/simulated/floor/plating)
+
+/turf/simulated/wall/proc/paint( var/color, var/layer = "base" )
+	if( !color )
+		return
+	if( !paint )
+		return
+
+	paint.paint( color, layer, smoothwall_connections )
+	update_icon()
+
+/turf/simulated/wall/proc/unpaint( var/layer = null )
+	if( !paint )
+		return
+
+	paint.unpaint( layer )
+	update_icon()
+
+
+/turf/simulated/wall/medical
+	paint_type = /datum/paint/wall/medical
+
+/turf/simulated/wall/engineering
+	paint_type = /datum/paint/wall/engineering
+
+/turf/simulated/wall/research
+	paint_type = /datum/paint/wall/research
+
+/turf/simulated/wall/cargo
+	paint_type = /datum/paint/wall/cargo
+
+/turf/simulated/wall/security
+	paint_type = /datum/paint/wall/security
+

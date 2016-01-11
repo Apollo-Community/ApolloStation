@@ -28,6 +28,22 @@
 	//get the user's location
 	if( !istype(user.loc, /turf) )	return	//can't do this stuff whilst inside objects and such
 
+	if( istype( W, /obj/item/weapon/paint_can ))
+		if( !paint )
+			paint = new()
+
+		var/obj/item/weapon/paint_can/paint_can = W
+		paint_can.paint( src, user )
+		return
+
+	if( istype( W, /obj/item/weapon/paint_brush ))
+		if( !paint )
+			paint = new()
+
+		var/obj/item/weapon/paint_brush/brush = W
+		brush.paint( src, user )
+		return
+
 	if(rotting)
 		if(istype(W, /obj/item/weapon/weldingtool) )
 			var/obj/item/weapon/weldingtool/WT = W

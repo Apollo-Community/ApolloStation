@@ -122,6 +122,7 @@ var/list/latejoin = list()
 var/list/latejoin_gateway = list()
 var/list/latejoin_cryo = list()
 var/list/latejoin_cyborg = list()
+var/list/observer_start = list()
 
 var/list/prisonwarp = list()	//prisoners go to these
 var/list/holdingfacility = list()	//captured people go here
@@ -179,22 +180,17 @@ var/list/awaydestinations = list()	//a list of landmarks that the warpgate can t
 // MySQL configuration
 var/sqladdress = "localhost"
 var/sqlport = "3306"
-var/sqldb = "tgstation"
+var/sqldb = "apollo"
 var/sqllogin = "root"
 var/sqlpass = ""
-
-// Feedback gathering sql connection
-var/sqlfdbkdb = "test"
-var/sqlfdbklogin = "root"
-var/sqlfdbkpass = ""
-var/sqllogging = 0 // Should we log deaths, population stats, etc?
+var/sqllogging = 1 // Should we log deaths, population stats, etc?
 
 // Forum MySQL configuration (for use with forum account/key authentication)
 // These are all default values that will load should the forumdbconfig.txt
 // file fail to read for whatever reason.
 var/forumsqladdress = "localhost"
 var/forumsqlport = "3306"
-var/forumsqldb = "tgstation"
+var/forumsqldb = "apollo"
 var/forumsqllogin = "root"
 var/forumsqlpass = ""
 var/forum_activated_group = "2"
@@ -207,8 +203,7 @@ var/custom_event_msg = null
 
 //Database connections
 //A connection is established on world creation. Ideally, the connection dies when the server restarts (After feedback logging.).
-var/DBConnection/dbcon = new()	//Feedback database (New database)
-var/DBConnection/dbcon_old = new()	//Tgstation database (Old database) - See the files in the SQL folder for information what goes where.
+var/DBConnection/dbcon = new()	// SQL Database
 
 // Reference list for disposal sort junctions. Filled up by sorting junction's New()
 /var/list/tagger_locations = list()
@@ -258,28 +253,16 @@ var/list/area/unlogged_areas = list( /area/tdome )
 	Tajara
 	Unathi
 	Wryn */
-var/unwhitelisted_alien = "Diona"
-var/list/unwhitelisted_aliens = list( unwhitelisted_alien, "Machine", "Nucleation" )
+
+var/list/whitelisted_aliens = list( "Diona", "Skrell", "Tajaran", "Unathi", "Wryn" )
+var/unwhitelisted_alien = "Wryn" // Default if the week calculation screws up for some reason.
+var/list/unwhitelisted_aliens = list( "Machine", "Nucleation" )
 
 // Random round statistics
 var/datum/round_stats/statistics = new()
 
 // STUI
 var/datum/STUI/STUI = new()
-
-#define AFK_TIME 6000 // 10 minutes
-
-// Computer lighting colors
-#define COMPUTER_RED "#FF0000"
-#define COMPUTER ORANGE "#FF9900"
-#define COMPUTER_YELLOW "#FFFF00"
-#define COMPUTER_GREEN "#006600"
-#define COMPUTER_CYAN "#00FFFF"
-#define COMPUTER_BLUE "#0033CC"
-#define COMPUTER_PURPLE "#CC00FF"
-#define COMPUTER_BROWN "#996633"
-#define FIRE_PHORON_COLOR "#CC33FF"
-#define FIRE_COLOR "#FF6600"
 
 // Announcer intercom, because too much stuff creates an intercom for one message then hard qdel()s it.
 var/global/obj/item/device/radio/intercom/global_announcer = new(null)

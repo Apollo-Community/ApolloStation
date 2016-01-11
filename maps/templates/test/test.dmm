@@ -1,0 +1,19 @@
+"a" = (/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 9},/area/space)
+"b" = (/turf/space,/area/space)
+"c" = (/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 5},/area/space)
+"d" = (/turf/simulated/floor,/area/space)
+"e" = (/turf/simulated/floor/plating{tag = "icon-warnplate (SOUTHWEST)"; icon_state = "warnplate"; dir = 10; oxygen = 0.01; nitrogen = 0.01},/area/space)
+"f" = (/turf/simulated/floor/plating{tag = "icon-warnplate (SOUTHEAST)"; icon_state = "warnplate"; dir = 6},/area/space)
+
+(1,1,1) = {"
+abbbbbbbbc
+bbbbbbbbbb
+bbdbdbbbbb
+bbdbdbdbbb
+bbdbdbbbbb
+bbdddbdbbb
+bbdbdbdbbb
+bbdbdbdbbb
+bbdbdbdbbb
+ebbbbbbbbf
+"}

@@ -585,10 +585,13 @@ datum/proc/dd_SortValue()
 /obj/machinery/camera/dd_SortValue()
 	return "[c_tag]"
 
+/proc/subtypes( var/prototype )
+	return typesof( prototype ) - prototype
+
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.
 /proc/init_subtypes(prototype, list/L)
 	if(!istype(L))	L = list()
-	for(var/path in (typesof(prototype) - prototype))
+	for(var/path in subtypes( prototype ))
 		L += new path()
 	return L

@@ -184,7 +184,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 
 	MS.destinations = list(
 		"Northwest of the station" = locate(/area/syndicate_station/northwest),
-		"North of the station" = locate(/area/syndicate_station/north),
 		"Northeast of the station" = locate(/area/syndicate_station/northeast),
 		"Southwest of the station" = locate(/area/syndicate_station/southwest),
 		"South of the station" = locate(/area/syndicate_station/south),
@@ -207,7 +206,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 
 	VALS.destinations = list(
 		"Northwest of the station" = locate(/area/syndicate_station/northwest),
-		"North of the station" = locate(/area/syndicate_station/north),
 		"Northeast of the station" = locate(/area/syndicate_station/northeast),
 		"Southwest of the station" = locate(/area/syndicate_station/southwest),
 		"South of the station" = locate(/area/syndicate_station/south),

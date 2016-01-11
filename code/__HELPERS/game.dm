@@ -37,6 +37,8 @@
 	var/list/heard = view(range, source)
 	source.light_range = lum
 
+	heard |= hearers( range, source )
+
 	return heard
 
 /proc/isStationLevel(var/level)
@@ -50,6 +52,9 @@
 
 /proc/isAdminLevel(var/level)
 	return level in config.admin_levels
+
+/proc/isAlertZLevel(var/level)
+	return level in config.alert_levels
 
 /proc/isNotAdminLevel(var/level)
 	return !isAdminLevel(level)

@@ -13,6 +13,7 @@
 	var/collector_range = 10 // Max range of collectors, decreaes power output as distance increases
 
 	var/o2_release = 0.8 // Amount of o2 released if the core is at maximum damage
+	var/o2_release_heat_limit = 400 // o2 release is scaled down until this temperature, when it entirely stops
 	var/o2_turbo_multiplier = 0 // How much oxygen will multiply power and heat output by, per mole
 	var/o2_requirement = 0 // How much oxygen is required to keep the engine from critically failing, as a percent of the total gas composition
 	var/suffocation_damage = 0 // How much damage will be done if the engine doesn't have enough O2
@@ -25,12 +26,14 @@
 	var/n2o_power_loss = 0 // The rate that N2O decreases power output, per mole
 
 	var/phoron_release = 0.5 // Amount of phoron released if the core is at maximum damage
+	var/phoron_release_heat_limit = 400 // phoron release is scaled down until this temperature
 	var/phoron_heal_rate = 0 // The rate that phoron heals the core, per mole
 
 	var/emitter_damage = 0 // The amount of damage the emitter does per hit
 	var/emitter_power = 40 // The amount of power added per emitter shot
 
 	var/thermal_factor = 0 // The amount of heat released to the environment at max power
+	var/heal_rate = 0 // The amount of damage the core will automatically heal
 	var/heat_damage_level = 1000 // The temperature at which heat will start damaging the crystal
 	var/damage_per_degree = 1 // How much damage per degree over heat_damage_level will cause
 
@@ -57,6 +60,7 @@
 	color = SM_DEFAULT_COLOR
 	color_name = "green"
 	thermal_factor = 200
+	heal_rate = 0.5
 
 /datum/sm_control/level_2
 	base_power = 800
@@ -76,6 +80,7 @@
 	damage_per_degree = 1.1
 	psionic_power = 15
 	radiation_power = 30
+	heal_rate = 0.45
 
 /datum/sm_control/level_3
 	base_power = 1400
@@ -97,6 +102,7 @@
 	damage_per_degree = 1.2
 	psionic_power = 20
 	radiation_power = 40
+	heal_rate = 0.40
 
 /datum/sm_control/level_4
 	base_power = 2600
@@ -118,11 +124,14 @@
 	damage_per_degree = 1.3
 	psionic_power = 25
 	radiation_power = 50
+	heal_rate = 0.35
 
 /datum/sm_control/level_5
 	base_power = 5200
 	decay = 0.30
 
+	o2_release_heat_limit = 100
+	phoron_release_heat_limit = 100
 	o2_turbo_multiplier = 1.9/CANISTER_MOLARITY
 	o2_requirement = 0.10
 	crit_fail_chance = 0.01
@@ -142,11 +151,14 @@
 	damage_per_degree = 1.4
 	psionic_power = 30
 	radiation_power = 60
+	heal_rate = 0.30
 
 /datum/sm_control/level_6
 	base_power = 10400
 	decay = 0.20
 
+	o2_release_heat_limit = 100
+	phoron_release_heat_limit = 100
 	o2_turbo_multiplier = 2.0/CANISTER_MOLARITY
 	o2_requirement = 0.15
 	crit_fail_chance = 0.05
@@ -166,11 +178,14 @@
 	damage_per_degree = 1.5
 	psionic_power = 50
 	radiation_power = 70
+	heal_rate = 0.20
 
 /datum/sm_control/level_7
 	base_power = 20800
 	decay = 0.10
 
+	o2_release_heat_limit = 100
+	phoron_release_heat_limit = 100
 	o2_turbo_multiplier = 2.1/CANISTER_MOLARITY
 	o2_requirement = 0.20
 	crit_fail_chance = 0.1
@@ -190,11 +205,14 @@
 	damage_per_degree = 1.6
 	psionic_power = 70
 	radiation_power = 80
+	heal_rate = 0.10
 
 /datum/sm_control/level_8
 	base_power = 41600
 	decay = 0.05
 
+	o2_release_heat_limit = 100
+	phoron_release_heat_limit = 100
 	o2_turbo_multiplier = 2.2/CANISTER_MOLARITY
 	o2_requirement = 0.25
 	crit_fail_chance = 0.5
@@ -214,11 +232,14 @@
 	damage_per_degree = 1.7
 	psionic_power = 90
 	radiation_power = 90
+	heal_rate = 0.01
 
 /datum/sm_control/level_9
 	base_power = 83200
 	decay = 0.01
 
+	o2_release_heat_limit = 4
+	phoron_release_heat_limit = 4
 	o2_turbo_multiplier = 2.3/CANISTER_MOLARITY
 	o2_requirement = 0.3
 	crit_fail_chance = 1.0
@@ -238,6 +259,7 @@
 	damage_per_degree = 1.8
 	psionic_power = 110
 	radiation_power = 100
+	heal_rate = 0.0
 
 /*
 /sm_control/var/list/settings = list()

@@ -13,6 +13,11 @@
 
 	// Should this all be in Touch()?
 	if(istype(H))
+		// no attacking if we're in an alien nest!
+		for(var/obj/structure/bed/nest/N in get_turf(H.loc))
+			if(N.buckled_mob == H)
+				return
+
 		if((H != src) && check_shields(0, H.name))
 			visible_message("\red <B>[H] attempted to touch [src]!</B>")
 			return 0
@@ -231,7 +236,7 @@
 				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
 				if(!issmall(src))
-					msg_admin_attack("[key_name(M)] disarmed [src.name] ([src.ckey]) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[M]'>JMP</A>)")
+					msg_admin_attack("[key_name(M)] disarmed [key_name(src)] (<A HREF='?_src_=holder;adminplayerobservejump=\ref[M]'>JMP</A>)")
 
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)

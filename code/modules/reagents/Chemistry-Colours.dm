@@ -13,8 +13,7 @@
 	for(i=1; i<=contents; i++)
 		var/datum/reagent/re = reagent_list[i]
 		var/reagentweight = re.volume
-		if(istype(re, /datum/reagent/paint))
-			reagentweight *= 20 //Paint colours a mixture twenty times as much
+
 		weight[i] = reagentweight
 
 

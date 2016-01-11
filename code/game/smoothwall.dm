@@ -5,6 +5,9 @@
 var/list/blend_objects = list( /obj/structure/falsewall, /obj/structure/falserwall, /obj/machinery/door, /obj/structure/grille ) // Objects which the walls blend with
 var/list/noblend_objects = list( /obj/machinery/door/blast, /obj/machinery/door/firedoor, /obj/machinery/door/window )
 
+/turf/simulated/wall
+	var/smoothwall_connections = 0
+
 /atom/proc/relativewall() //atom because it should be useable both for walls and false walls
 	if(istype(src,/turf/simulated/floor/vault)||istype(src,/turf/simulated/wall/vault)) //HACK!!!
 		return
@@ -38,6 +41,7 @@ var/list/noblend_objects = list( /obj/machinery/door/blast, /obj/machinery/door/
 
 	if(istype(src,/turf/simulated/wall))
 		var/turf/simulated/wall/wall = src
+		wall.smoothwall_connections = junction
 		wall.icon_state = "[wall.walltype][junction]"
 	else if (istype(src,/obj/structure/falserwall) )
 		src.icon_state = "rwall[junction]"

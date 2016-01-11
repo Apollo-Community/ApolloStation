@@ -335,17 +335,10 @@
 	pictures_left = 30
 
 /obj/item/weapon/id_wallet/fluff/reese_mackenzie  //Reese MacKenzie - ThoseDernSquirrels
-
 	name = "ID wallet"
 	desc = "A wallet made of black leather, holding an ID and a gold badge that reads 'NT.' The ID has a small picture of a man, with the caption Reese James MacKenzie, with other pieces of information to the right of the picture."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "reesemackenzie"
-
-/obj/item/weapon/card/id/fluff/lifetime	//fastler: Fastler Greay; it seemed like something multiple people would have
-	name = "Lifetime ID Card"
-	desc = "A modified ID card given only to those people who have devoted their lives to the better interests of NanoTrasen. It sparkles blue."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "lifetimeid"
 
 /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/shinyflask //lexusjjss: Lexus Langg & Zachary Tomlinson
 	name = "shiny flask"
@@ -1426,9 +1419,9 @@
 
 /obj/item/weapon/holder/cat/fluff/bones
 	name = "Bones"
-	desc = "It's Bones! Meow."
+	desc = "Damnit man, I'm a cat, not a doctor!"
 	gender = MALE
-	icon_state = "cat3"
+	icon_state = "bones"
 
 //Use this subtype for spawning in the custom item.
 /obj/item/weapon/holder/cat/fluff/bones/custom_item
@@ -1445,9 +1438,9 @@
 	desc = "That's Bones the cat. He's a laid back, brown stray cat. Meow."
 	gender = MALE
 	icon = 'icons/mob/animal.dmi'
-	icon_state = "cat3"
-	icon_living = "cat3"
-	icon_dead = "cat3_dead"
+	icon_state = "bones"
+	icon_living = "bones"
+	icon_dead = "bones_dead"
 	holder_type = /obj/item/weapon/holder/bones2
 	var/bff_name = "Genma Iroe"
 	var/mob/living/carbon/human/bff
@@ -1538,3 +1531,24 @@
 	icon_state = "blackzippo"
 	icon_on = "blackzippoon"
 	icon_off = "blackzippo"
+
+/* -------- KEYWEE + LUCIEN93 ---------- */
+/obj/item/clothing/head/helmet/ert/fluff
+	name = "emergency response team helmet"
+	desc = "An in-atmosphere helmet worn by members of the NanoTrasen Emergency Response Team. This one doesn't look very protective."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "erthelmet_cmd"
+	item_state = "syndicate-helm-green"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/head/helmet/ert/fluff/keywee
+	name = "old emergency response team medical helmet"
+	desc = "A white in-atmosphere helmet once worn by a medical officer for emergencies. More of a keepsake than protective headgear by now, it looks like its been through a lot."
+	icon_state = "keywee"
+	item_state = "keywee"
+
+/obj/item/clothing/head/helmet/ert/fluff/lucien93
+	name = "old emergency response team commander helmet"
+	desc = "A blue in-atmosphere helmet once worn by a commander for emergencies. More of a keepsake than protective headgear by now, it looks like its been through a lot."
+	icon_state = "lucien93"
+	item_state = "lucien93"

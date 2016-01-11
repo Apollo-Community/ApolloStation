@@ -157,4 +157,6 @@
 /obj/item/weapon/storage/box/syndie_kit/spybug/New()
 	..()
 	new /obj/item/clothing/head/helmet/virtual(src)
-	new /obj/item/weapon/holder/spybug(src)
+	new /obj/item/weapon/holder/spybug/package(src)
+	new /obj/item/weapon/holder/spybug/package(src)
+	new /obj/item/weapon/holder/spybug/package(src)

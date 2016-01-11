@@ -29,6 +29,7 @@
 #define TIME		12
 #define STRING		13
 #define BLOB		14
+
 // TODO: Investigate more recent type additions and see if I can handle them. - Nadrew
 
 
@@ -102,7 +103,10 @@ DBQuery/proc/Connect(DBConnection/connection_handler) src.db_connection = connec
 
 DBQuery/proc/Execute(sql_query=src.sql,cursor_handler=default_cursor)
 	Close()
-	return _dm_db_execute(_db_query,sql_query,db_connection._db_con,cursor_handler,null)
+	var/ret = _dm_db_execute(_db_query,sql_query,db_connection._db_con,cursor_handler,null)
+	if(!ret)
+		testing("Failed to execute SQL: [sql_query]\n Error: [_dm_db_error_msg(_db_query)]")
+	return ret
 
 DBQuery/proc/NextRow() return _dm_db_next_row(_db_query,item,conversions)
 

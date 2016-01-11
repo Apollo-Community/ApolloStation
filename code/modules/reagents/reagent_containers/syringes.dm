@@ -172,13 +172,17 @@
 					if(istype(target,/mob/living))
 						var/mob/living/M = target
 						var/list/injected = list()
+						var/bad_reagents = 0
 						for(var/datum/reagent/R in src.reagents.reagent_list)
 							injected += R.name
+							if(!R.scannable)
+								bad_reagents++
 						var/contained = english_list(injected)
 						if(!in_unlogged(M))
 							M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
 							user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject [M.name] ([M.key]). Reagents: [contained]</font>")
-							msg_admin_attack("[user.name] ([user.ckey]) injected [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+							if(bad_reagents)		// All the scannable stuff is medicine (yay)
+								msg_admin_attack("[user.name] ([user.ckey]) injected [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 					src.reagents.reaction(target, INGEST)
 				if(ismob(target) && target == user)

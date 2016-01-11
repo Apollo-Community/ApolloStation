@@ -1,5 +1,6 @@
 #define DAMAGE			1
 #define FIRE			2
+#define HUD_STATS_STATES 7 // how many levels are in each stat panel
 
 /obj/spacepod
 	name = "\improper space pod"
@@ -13,7 +14,7 @@
 	layer = 3.9
 	infra_luminosity = 15
 
-	var/mob/pilot = null
+	var/mob/living/pilot = null
 	var/list/passengers = list()
 
 	var/datum/spacepod/equipment/equipment_system
@@ -25,20 +26,23 @@
 	var/datum/global_iterator/pr_give_air //moves air from tank to cabin
 
 	var/lights = 0
-	var/lights_power = 6
+	var/lights_power = 12
 
 	var/inertia_dir = 0
 	var/hatch_open = 0
 	var/next_firetime = 0 // Used for weapon firing
 
 	var/health = 100 // pods without armor are tough as a spongecake
+	var/max_health = 100
 	var/fire_threshold_health = 0.2 // threshold heat for fires to start
-	var/empcounter = 0 //Used for disabling movement when hit by an EMP
 
+	var/empcounter = 0 //Used for disabling movement when hit by an EMP
 	var/frozen = 0 // Used to stop the spacepod from moving
 
 	var/datum/effect/effect/system/ion_trail_follow/space_trail/ion_trail
 	var/list/pod_overlays
+
+	var/global/enter_time = 15 // How much time it takes to move in / out of the spacepod
 
 /obj/spacepod/New()
 	. = ..()
@@ -48,8 +52,8 @@
 	bound_height = 64
 
 	equipment_system = new(src)
-//	equipment_system.equip( new /obj/item/device/spacepod_equipment/misc/autopilot )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/seat )
+	equipment_system.equip( new /obj/item/weapon/card/id/spacepod )
 
 	add_cabin()
 	add_airtank()
@@ -63,7 +67,7 @@
 
 	spacepods_list += src
 
-	update_icons()
+	update_icon()
 
 /obj/spacepod/Destroy()
 	spacepods_list -= src
@@ -82,20 +86,20 @@
 	else
 		processing_objects.Remove(src)
 
-/obj/spacepod/proc/update_icons()
-	if( istype( equipment_system.armor, /obj/item/pod_parts/armor/command ))
-		icon_state = "pod_com"
-	else if( istype( equipment_system.armor, /obj/item/pod_parts/armor/security ))
-		icon_state = "pod_sec"
-	else if( istype( equipment_system.armor, /obj/item/pod_parts/armor/shuttle ))
-		icon_state = "pod_shuttle"
+	update_HUD( pilot )
+
+/obj/spacepod/update_icon()
+	..()
+
+	if( equipment_system.armor )
+		icon_state = equipment_system.armor.pod_icon
 	else
 		icon_state = "pod"
 
 	if(!pod_overlays)
 		pod_overlays = new/list(2)
-		pod_overlays[DAMAGE] = image(icon, icon_state="pod_damage")
-		pod_overlays[FIRE] = image(icon, icon_state="pod_fire")
+		pod_overlays[DAMAGE] = image(icon, icon_state="[equipment_system.armor ? equipment_system.armor.pod_damage_icon : "pod_damage"]")
+		pod_overlays[FIRE] = image(icon, icon_state="[equipment_system.armor ? equipment_system.armor.pod_fire_icon : "pod_fire"]")
 
 	overlays.Cut()
 
@@ -137,7 +141,8 @@
 	if(!health)
 		explode()
 
-	update_icons()
+	update_icon()
+	update_HUD( pilot )
 
 /obj/spacepod/proc/play_interior_sound( var/sound )
 	var/sound/S = sound(sound)
@@ -170,13 +175,10 @@
 
 /obj/spacepod/proc/explode()
 	spawn(0)
-		occupants_announce( "The pod's console lights up with a hundred different alarms!", 2, 1 )
+		occupants_announce( "The pilot's console lights up with a hundred different alarms! You better bail out now!", 2, 1 )
 
 		for(var/i = 10, i >= 0; --i)
-			occupants_announce( "[i] seconds", 2 )
-
-			if( prob( 10 ))
-				explosion(loc, 0, rand( 0, 1 ), rand( 2, 4 ))
+			occupants_announce( "Alert: [i] seconds until detonation.", 2 )
 
 			if(i == 0)
 				explosion(loc, 2, 4, 8)
@@ -186,8 +188,8 @@
 /obj/spacepod/proc/repair_damage(var/repair_amount)
 	if(health)
 		health = min(initial(health), health + repair_amount)
-		update_icons()
-
+		update_icon()
+		update_HUD( pilot )
 
 /obj/spacepod/ex_act(severity)
 	switch(severity)
@@ -227,77 +229,108 @@
 /obj/spacepod/attackby(obj/item/W as obj, mob/user as mob, params)
 	if( istype( W, /obj/item/weapon/tank ))
 		equipment_system.fill_engine( W )
+		update_HUD( pilot )
 		return
+
 	if(iscrowbar(W))
 		hatch_open = !hatch_open
 		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 		user << "<span class='notice'>You [hatch_open ? "open" : "close"] the maintenance hatch.</span>"
 		return
-	if(istype(W, /obj/item/weapon/cell))
+
+	else if(istype(W, /obj/item/weapon/cell))
 		if(!hatch_open)
-			user << "\red The maintenance hatch is closed!"
+			user << "<span class='warning'>The maintenance hatch is closed!</span>"
 			return
 		if(equipment_system.battery)
-			user << "<span class='notice'>The pod already has a battery.</span>"
+			user << "<span class='warning'>The pod already has a battery.</span>"
 			return
 
 		equipment_system.equip(W, user)
+		update_HUD( pilot )
 		return
-	if(istype(W, /obj/item/device/spacepod_equipment))
+	else if(istype(W, /obj/item/device/spacepod_equipment))
 		if(!hatch_open)
-			user << "\red The maintenance hatch is closed!"
+			user << "<span class='warning'>The maintenance hatch is closed!</span>"
 			return
 
 		// Adding the equipment to the system
 		equipment_system.equip(W, user)
+		update_HUD( pilot )
 		return
-	if(istype(W, /obj/item/pod_parts/armor))
+	else if(istype(W, /obj/item/pod_parts/armor))
 		if(!hatch_open)
-			user << "\red The maintenance hatch is closed!"
+			user << "<span class='warning'>The maintenance hatch is closed!</span>"
 			return
 		if(equipment_system.armor)
-			user << "<span class='notice'>The pod already has armor.</span>"
+			user << "<span class='warning'>The pod already has armor.</span>"
 			return
 
 		equipment_system.equip(W, user)
+		update_HUD( pilot )
 		return
-
-	if(istype(W, /obj/item/weapon/weldingtool))
+	else if(istype( W, /obj/item/weapon/card/id ))
 		if(!hatch_open)
-			user << "\red You must open the maintenance hatch before attempting repairs."
+			user << "<span class='warning'>The maintenance hatch is closed!</span>"
+			return
+		if( equipment_system.card )
+			user << "<span class='warning'>The pod already an access card.</span>"
+			return
+
+		equipment_system.equip(W, user)
+		update_HUD( pilot )
+		return
+	else if(istype(W, /obj/item/weapon/weldingtool))
+		if(!hatch_open)
+			user << "<span class='warning'>You must open the maintenance hatch before attempting repairs.</span>"
 			return
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.isOn())
-			user << "\red The welder must be on for this task."
+			user << "<span class='warning'>The welder must be on for this task.</span>"
 			return
 		if (health < initial(health))
-			user << "\blue You start welding the spacepod..."
+			user << "<span class='notice'>You start welding the spacepod...</span>"
 			playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 			if(do_after(user, 20))
 				if(!src || !WT.remove_fuel(3, user)) return
 				repair_damage(10)
-				user << "\blue You mend some [pick("dents","bumps","damage")] with \the [WT]"
+				user << "<span class='notice'>You mend some [pick("dents","bumps","damage")] with \the [WT]</span>"
 				return
 		else
-			user << "\blue <b>\The [src] is fully repaired!</b>"
+			user << "<span class='notice'><b>\The [src] is fully repaired!</b></span>"
 			return
-
-	if( equipment_system.cargohold )
+	else if( equipment_system.cargohold )
 		equipment_system.cargohold.put_inside( W, user )
 
 /obj/spacepod/attack_hand(mob/user as mob)
 	if(!hatch_open)
 		return ..()
 	if(!equipment_system || !istype(equipment_system))
-		user << "<span class='warning'>The pod has no equpment datum, or is the wrong type, yell at pomf.</span>"
+		user << "<span class='warning'>This pod is non-operational. Please contact maintenance.</span>"
 		return
 
 	// Removing the equipment
 	var/obj/item/SPE = input(user, "Remove which equipment?", null, null) as null|anything in equipment_system.spacepod_equipment
 	if( SPE )
 		equipment_system.dequip( SPE, user )
+		update_HUD( pilot )
 
 	return
+
+/obj/spacepod/verb/leave_planet()
+	if(usr == src.pilot)
+		set name = "Leave Planet"
+		set category = "Spacepod"
+		set src = usr.loc
+		set popup_menu = 0
+
+		if( istype( get_area( src ), /area/planet ))
+			occupants_announce( "<span class='notice'>Leaving the planet surface and returning to space.</span>" )
+			overmapTravel()
+		else
+			usr << "<span class='warning'>Not currently on a planet.</span>"
+
+		return
 
 /obj/spacepod/verb/toggle_internal_tank()
 	if(usr == src.pilot)
@@ -307,7 +340,7 @@
 		set popup_menu = 0
 
 		use_internal_tank = !use_internal_tank
-		occupants_announce( "Now taking air from [use_internal_tank?"internal airtank":"environment"]." )
+		occupants_announce( "<span class='warning'>Now taking air from [use_internal_tank?"internal airtank":"environment"].</span>" )
 		return
 
 /obj/spacepod/proc/add_cabin()
@@ -369,127 +402,197 @@
 
 	return 0
 
-/obj/spacepod/proc/occupants_announce( var/message, var/type = 1, var/big = 0 )
-	var/full_message = ""
-
-	if( big )
-		full_message += "<big>"
-
-	if( type == 1 )
-		full_message += "<span class='notice'>"
-	else if( type == 2 )
-		full_message += "<span class='warning'>"
-
-	if( message )
-		full_message += message
-
-	if( type > 0 ) // if we had a header, better close it
-		full_message += "</span>"
-
-	if( big )
-		full_message += "/<big>"
-
+/obj/spacepod/proc/occupants_announce( var/message )
 	if( pilot )
-		pilot << full_message
+		pilot << message
 
 	for( var/passenger in passengers )
-		passenger << full_message
+		passenger << message
 
-/obj/spacepod/proc/put_in_seat( mob/user as mob )
-	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis || user.resting) //are you cuffed, dying, lying, stunned or other
+/obj/spacepod/proc/addPilot( mob/user as mob )
+	if( !user || !istype( user ))
+		return 0
+
+	if( pilot )
+		return 0
+
+	pilot = user
+	add_HUD(pilot)
+	update_HUD(pilot)
+
+	user.loc = src
+	user.reset_view(src)
+	user.stop_pulling()
+	user.forceMove(src)
+
+	return 1
+
+/obj/spacepod/proc/removePilot()
+	if( !pilot || !istype( pilot ))
+		return 0
+
+	remove_HUD( pilot )
+	pilot.loc = get_turf( src )
+	pilot.reset_view( pilot )
+	pilot.stop_pulling()
+	pilot.forceMove( get_turf( src ))
+
+	pilot = null
+	inertia_dir = 0 // engage reverse thruster and power down pod
+
+	return 1
+
+/obj/spacepod/proc/displacePilot( var/mob/user )
+	if( !pilot || !istype( pilot ))
+		return 0
+
+	var/mob/M = pilot
+	removePilot()
+	if( addPassenger( M ))
+		if( user )
+			visible_message( "[user] moves the pilot, [M], into a passenger's seat!" )
+	else
+		if( user )
+			visible_message( "[user] moves the pilot, [M], out of the shuttle!" )
+
+/obj/spacepod/proc/moveToPilot( mob/user as mob )
+	if( pilot )
+		user << "<span class='warning'>[pilot] is already piloting the shuttle.</span>"
+		return 0
+
+	if( !( user in passengers ))
+		user << "<span class='notice'>You start climbing into the pilot seat of the [src]...</span>"
+		if( !do_after( user, enter_time ))
+			user << "<span class='warning'>You decide you don't want to go into the [src] after all.</span>"
+			return
+
+		visible_message( "<span class='notice'>[user] climbs into the pilot's helm of \the [src].</span>" )
+
+		addPilot( user )
+
+		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
+		return 1
+	else
+		user << "You start moving into the pilot seat..."
+		if( !do_after( user, enter_time ))
+			user << "<span class='warning'>You decide you don't want to pilot \the [src] after all.</span>"
+			return
+
+		occupants_announce( "<span class='notice'>[user] climbs out of their passenger's seat and into the pilot's helm.</span>" )
+
+		removePassenger( user )
+		addPilot( user )
+
+		return 1
+
+/obj/spacepod/proc/addPassenger( mob/user as mob )
+	if( equipment_system )
+		if( equipment_system.seats.len <= passengers.len )
+			return 0
+
+	if( !user || !istype( user ))
+		return 0
+
+	passengers.Add( user )
+
+	user.loc = src
+	user.reset_view(src)
+	user.stop_pulling()
+	user.forceMove(src)
+
+	return 1
+
+/obj/spacepod/proc/removePassenger( mob/user as mob )
+	if( !user && !istype( user ))
+		return 0
+
+	if( !( user in passengers ))
+		return 0
+
+	passengers.Remove( user )
+
+	user.loc = get_turf( src )
+	user.reset_view( user )
+	user.stop_pulling()
+	user.forceMove( get_turf( src ))
+
+	return 1
+
+/obj/spacepod/proc/moveToPassenger( mob/user as mob )
+	if( equipment_system )
+		user << "<span class='notice'>You start climbing into a passenger seat...</span>"
+		if( do_after( user, enter_time ))
+			if( equipment_system.seats.len > passengers.len ) // if theres still seats for them
+				if( user == pilot )
+					occupants_announce( "<span class='notice'>[user] climbs out of the pilot's seat and into a passenger's seat.</span>" )
+
+					removePilot()
+					addPassenger( user )
+
+					return 1
+				else
+					visible_message("<span class='notice'>[user] climbs into the [src].</span>")
+
+					addPassenger( user )
+
+					playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
+					return 1
+			else
+				user << "<span class='warning'>There are no empty seats!</span>"
+		else
+			user << "<span class='warning'>You decide you don't want to ride in a passenger seat after all.</span>"
+
+/obj/spacepod/proc/put_in_seat( mob/living/user as mob )
+	if( !user || !istype( user ))
+		return 0
+
+	if( !user.isAble() ) //are you cuffed, dying, lying, stunned or other
 		return 0
 
 	src.add_fingerprint(user)
 
-	var/fukkendisk
 	for( var/obj/A in user.contents )
 		if( istype( A, /obj/item/weapon/disk/nuclear ))
-			fukkendisk = A
-
-	if(fukkendisk)
-		user << "\red <B>The nuke-disk locks the door as you attempt to get in, you evil person.</b>"
-		return 0
-
-//	if (user.stat || !ishuman(user)) // I'll leave this here in case we wanna be speciest later
-//		return
+			user << "<span class='warning'>The [A] locks the door as you attempt to get in.</span?"
+			return 0
 
 	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == user)
-			user << "You're too busy getting your life sucked out of you."
+			user << "<span class='warning'>You're too busy getting your life sucked out of you.</span>"
 			return 0
 
-	if( !( user in passengers ))
-		if( !pilot )
-			visible_message("[user] climbs into the pilot's helm of \the [src]!")
-
-			pilot = user
-			add_HUD(pilot)
-			update_HUD(pilot)
-
-			playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
-
-			user.loc = src
-			user.reset_view(src)
-			user.stop_pulling()
-			user.forceMove(src)
-			return 1
+	if( pilot )
+		if( !pilot.isAble() )
+			displacePilot( user )
+			moveToPilot( user )
+			return
 	else
-		if( !pilot )
-			occupants_announce( "[user] climbs out of their passenger's seat and into the pilot's helm." )
-			passengers.Remove( user )
+		moveToPilot( user )
+		return
 
-			pilot = user
-			add_HUD(pilot)
-			update_HUD(pilot)
-
-			return 1
-		else
-			user << "\red [pilot] is already in the pilot's seat!"
-
-	if( equipment_system )
-		if( equipment_system.seats.len > passengers.len ) // if theres still seats for them
-			user.reset_view(src)
-			user.stop_pulling()
-			user.forceMove(src)
-
-			if( user == pilot )
-				occupants_announce( "[user] climbs out of the pilot's seat and into a passenger's seat" )
-				passengers.Add( user )
-
-				remove_HUD(pilot)
-				pilot = null
-
-				return 1
-			else
-				visible_message("[user] climbs into the [src]!")
-
-				passengers.Add( user )
-				user.loc = src
-
-				playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
-				return 1
-		else
-			user << "\red There's no spare seats!"
+	if( !( user in passengers ))
+		moveToPassenger( user )
 
 	return 0
 
 /obj/spacepod/proc/exit( mob/user as mob )
+	if( !user )
+		return
+
 	if( istype( src.loc, /obj/effect/traveler ))
-		user << pick( "\red Stepping out into the vast emptiness of space isn't a very good idea.",
-					  "\red The void does not call to you.",
-					  "\red Why would you want to do that?",
-					  "\red You reach for the door and pull the handle, but it beeps and locks, stopping you from idiotically floating off into the void.",
-					  "\red Space looks perfectly fine from in here." )
+		user << pick( "<span class='warning'>Stepping out into the vast emptiness of space isn't a very good idea.</span>",
+					  "<span class='warning'>The void does not call to you.</span>",
+					  "<span class='warning'>Why would you want to do that?</span>",
+					  "<span class='warning'>You reach for the door and pull the handle, but it beeps and locks, stopping you from idiotically floating off into the void.</span>",
+					  "<span class='warning'>Space looks perfectly fine from in here.</span>" )
 		return
 
 	if( user == pilot )
-		remove_HUD(pilot)
-		inertia_dir = 0 // engage reverse thruster and power down pod
-		pilot = null
+		removePilot()
 	if( user in passengers )
-		passengers.Remove( user )
+		removePassenger( user )
 
-	playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
+	playsound( src, 'sound/machines/windowdoor.ogg', 50, 1 )
 	user.loc = src.loc
 
 /obj/spacepod/MouseDrop_T(var/atom/movable/W, mob/user as mob)
@@ -498,7 +601,7 @@
 		if(!isliving(M)) return
 		if(M != user)
 			if(M.stat != 0)
-				visible_message("\red [user.name] starts loading [M.name] into the pod!")
+				visible_message("<span class='warning'>[user.name] starts loading [M.name] into the [src]!</span>")
 				sleep(10)
 				put_in_seat( M )
 			else
@@ -509,114 +612,6 @@
 	if( istype( W, /obj ))
 		if( equipment_system.cargohold )
 			equipment_system.cargohold.put_inside( W, user )
-
-/obj/spacepod/verb/move_inside()
-	set category = "Object"
-	set name = "Enter Pod"
-	set src in oview(1)
-
-	put_in_seat( usr )
-
-/obj/spacepod/verb/exit_pod()
-	set name = "Exit Pod"
-	set category = "Spacepod"
-	set src = usr.loc
-
-	exit( usr )
-
-/obj/spacepod/verb/toggleDoors()
-	if(src.pilot)
-		set name = "Toggle Nearby Pod Doors"
-		set category = "Spacepod"
-		set src = usr.loc
-
-		for(var/obj/machinery/door/poddoor/P in oview(3,src))
-			if(istype(P, /obj/machinery/door/poddoor/three_tile_hor) || istype(P, /obj/machinery/door/poddoor/three_tile_ver) || istype(P, /obj/machinery/door/poddoor/four_tile_hor) || istype(P, /obj/machinery/door/poddoor/four_tile_ver))
-				var/mob/living/carbon/human/L = usr
-				if(P.check_access(L.get_active_hand()) || P.check_access(L.wear_id))
-					if(P.density)
-						P.open()
-						return 1
-					else
-						P.close()
-						return 1
-				pilot << "<span class='warning'>Access denied.</span>"
-				return
-		pilot << "<span class='warning'>You are not close to any pod doors.</span>"
-		return
-
-/*
-/obj/spacepod/verb/autopilot()
-	if( equipment_system.autopilot )
-		if( src.pilot == usr )
-			set name = "Activate Autopilot"
-			set category = "Spacepod"
-			set src = usr.loc
-
-			equipment_system.autopilot.prompt()
-*/
-
-/obj/spacepod/verb/fireWeapon()
-	if( equipment_system.weapon_system )
-		if( src.pilot == usr )
-			set name = "Fire Pod Weapons"
-			set desc = "Fire the weapons."
-			set category = "Spacepod"
-			set src = usr.loc
-			if( equipment_system )
-				if( equipment_system.weapon_system )
-					equipment_system.weapon_system.fire_weapons()
-				else
-					occupants_announce( "ERROR: This pod does not have any active weapon systems.", 2 )
-
-obj/spacepod/verb/toggleLights()
-	if( src.pilot == usr )
-		set name = "Toggle Lights"
-		set category = "Spacepod"
-		set src = usr.loc
-
-		lightsToggle()
-
-/obj/spacepod/verb/use_warp_beacon()
-	if( src.pilot == usr )
-		set name = "Use Nearby Warp Beacon"
-		set category = "Spacepod"
-		set src = usr.loc
-
-		for(var/obj/machinery/computer/gate_beacon_console/C in orange(usr.loc, 3)) // Finding suitable VR platforms in area
-			if(alert(usr, "Would you like to interface with: [C]?", "Confirm", "Yes", "No") == "Yes")
-				C.gate_prompt( pilot )
-				occupants_announce( "Activated charging sequence for nearby bluespace beacon." )
-
-/obj/spacepod/verb/dump_cargo()
-	if( src.pilot == usr )
-		if( equipment_system.cargohold )
-			set name = "Dump Cargo"
-			set category = "Spacepod"
-			set src = usr.loc
-
-			equipment_system.cargohold.dump_prompt( usr )
-
-/obj/spacepod/proc/lightsToggle()
-	lights = !lights
-	if(lights)
-		set_light(light_range + lights_power)
-	else
-		set_light(light_range - lights_power)
-	occupants_announce( "Spacepod lights toggled [lights?"on":"off"]." )
-	return
-
-/obj/spacepod/proc/enter_after(delay as num, var/mob/user as mob, var/numticks = 5)
-	var/delayfraction = delay/numticks
-
-	var/turf/T = user.loc
-
-	for(var/i = 0, i<numticks, i++)
-		sleep(delayfraction)
-		if(!src || !user || !user.canmove || !(user.loc == T))
-			return 0
-
-	return 1
 
 /obj/spacepod/overmapTravel()
 	if( !pilot )
@@ -792,7 +787,7 @@ obj/spacepod/verb/toggleLights()
 /obj/spacepod/proc/add_HUD(var/mob/M)
 	if(!M || !(M.hud_used))	return
 
-	M.hud_used.spacepod_hud()
+	M.hud_used.spacepod_hud( src )
 
 /obj/spacepod/proc/remove_HUD(var/mob/M)
 	if(!M || !(M.hud_used))	return
@@ -809,59 +804,59 @@ obj/spacepod/verb/toggleLights()
 	if( !M )
 		return
 
-	if( !has_power() ) // Can't read the instruments without power
-		M.spacepod_health.icon_state = "health_off"
-		M.spacepod_fuel.icon_state = "fuel_off"
-		if( equipment_system.battery )
-			M.spacepod_charge.icon_state = "charge0"
-		else
-			M.spacepod_charge.icon_state = "charge-empty"
-		return
-	else
-		var/obj/item/weapon/cell/battery = equipment_system.battery
-		var/charge_percent = battery.charge/battery.maxcharge
-
-		if( charge_percent <= 0.05 )
-			M.spacepod_charge.icon_state = "charge0"
-		else if( charge_percent <= 0.25)
-			M.spacepod_charge.icon_state = "charge1"
-		else if( charge_percent <= 0.5)
-			M.spacepod_charge.icon_state = "charge2"
-		else if( charge_percent <= 0.75)
-			M.spacepod_charge.icon_state = "charge3"
-		else
-			M.spacepod_charge.icon_state = "charge4"
-
-	var/health_percent = health/initial(health)
-
-	if( health_percent <= 0.1 )
-		M.spacepod_health.icon_state = "health5"
-	else if( health_percent <= 0.3)
-		M.spacepod_health.icon_state = "health4"
-	else if( health_percent <= 0.5)
-		M.spacepod_health.icon_state = "health3"
-	else if( health_percent <= 0.7)
-		M.spacepod_health.icon_state = "health2"
-	else if( health_percent <= 0.8)
-		M.spacepod_health.icon_state = "health1"
-	else
-		M.spacepod_health.icon_state = "health0"
+	var/fuel_percent = 0
+	var/fuel_icon_level = -1
 
 	if( equipment_system.engine_system )
-		var/fuel_percent = equipment_system.engine_system.fuel_tank.return_pressure()/equipment_system.engine_system.max_pressure
+		fuel_percent = equipment_system.engine_system.fuel_tank.return_pressure()/equipment_system.engine_system.max_pressure
+		fuel_icon_level = round( fuel_percent*HUD_STATS_STATES )
 
-		if( fuel_percent <= 0.05 )
-			M.spacepod_fuel.icon_state = "fuel0"
-		else if( fuel_percent <= 0.25)
-			M.spacepod_fuel.icon_state = "fuel1"
-		else if( fuel_percent <= 0.5)
-			M.spacepod_fuel.icon_state = "fuel2"
-		else if( fuel_percent <= 0.75)
-			M.spacepod_fuel.icon_state = "fuel3"
-		else
-			M.spacepod_fuel.icon_state = "fuel4"
+	var/obj/item/weapon/cell/battery = equipment_system.battery
+	var/charge_percent = battery.charge/battery.maxcharge
+	var/charge_icon_level = round( charge_percent*HUD_STATS_STATES )
+
+	var/health_percent = health/max_health
+	var/health_icon_level = round( health_percent*HUD_STATS_STATES )
+
+	if( empcounter > 0 )
+		M.spacepod_dash.icon_state = "dash_emp"
+		health_icon_level = -1
+		charge_icon_level = -1
+		fuel_icon_level = -1
+	else if( health_percent <= 0.25 )
+		M.spacepod_dash.icon_state = "dash_damage"
 	else
-		M.spacepod_fuel.icon_state = "fuel_off"
+		M.spacepod_dash.icon_state = "dash"
+
+	if( !equipment_system.cargohold )
+		M.spacepod_cargo.icon_state = ""
+
+	if( !equipment_system.weapon_system )
+		M.spacepod_fire.icon_state = ""
+		M.spacepod_switch_weapons.icon_state = ""
+
+	if( !has_power() ) // Can't read the instruments without power
+		health_icon_level = -1
+		charge_icon_level = -1
+		fuel_icon_level = -1
+
+		if( equipment_system.battery )
+			charge_icon_level = 0
+
+	if( fuel_icon_level != -1 )
+		M.spacepod_charge.icon_state = "stat_[charge_icon_level]"
+	else
+		M.spacepod_charge.icon_state = "stat_off"
+
+	if( fuel_icon_level != -1 )
+		M.spacepod_health.icon_state = "stat_[health_icon_level]"
+	else
+		M.spacepod_health.icon_state = "stat_off"
+
+	if( fuel_icon_level != -1 )
+		M.spacepod_fuel.icon_state = "stat_[fuel_icon_level]"
+	else
+		M.spacepod_fuel.icon_state = "stat_off"
 
 /obj/spacepod/proc/has_power()
 	if( equipment_system )
@@ -931,43 +926,159 @@ obj/spacepod/verb/toggleLights()
 				pilot << "<span class='warning'>There's nothing of interest below you!!</span>"
 		return
 
-/obj/spacepod/verb/sector_locate()
+/obj/spacepod/verb/move_inside()
+	set category = "Object"
+	set name = "Enter Pod"
+	set src in oview(1)
+
+	put_in_seat( usr )
+
+/obj/spacepod/verb/exit_pod()
+	set name = "Exit Pod"
+	set category = "Spacepod"
+	set src = usr.loc
+
+	exit( usr )
+
+/obj/spacepod/proc/toggleDoors( user as mob )
+	for(var/obj/machinery/door/poddoor/P in oview(3,src))
+		if(istype(P, /obj/machinery/door/poddoor/three_tile_hor) || istype(P, /obj/machinery/door/poddoor/three_tile_ver) || istype(P, /obj/machinery/door/poddoor/four_tile_hor) || istype(P, /obj/machinery/door/poddoor/four_tile_ver))
+			if( P.check_access( equipment_system.card ))
+				if(P.density)
+					P.open()
+					return 1
+				else
+					P.close()
+					return 1
+			else if( user )
+				user << "<span class='warning'>Access denied.</span>"
+			return
+	if( user )
+		user << "<span class='warning'>You are not near any pod doors.</span>"
+	return
+
+/obj/spacepod/verb/useDoors()
+	if(src.pilot)
+		set name = "Toggle Nearby Pod Doors"
+		set category = "Spacepod"
+		set src = usr.loc
+
+		toggleDoors( usr )
+
+/*
+/obj/spacepod/verb/autopilot()
+	if( equipment_system.autopilot )
+		if( src.pilot == usr )
+			set name = "Activate Autopilot"
+			set category = "Spacepod"
+			set src = usr.loc
+
+			equipment_system.autopilot.prompt()
+*/
+
+/obj/spacepod/proc/fireWeapon( user as mob )
+	if( !equipment_system )
+		return
+
+	if( equipment_system.weapon_system )
+		if( user )
+			user << "<span class='warning'>ERROR: This pod does not have any active weapon systems.</span>"
+		return
+
+	equipment_system.weapon_system.fire_weapons()
+
+/obj/spacepod/verb/useWeapon()
+	if( equipment_system.weapon_system )
+		if( src.pilot == usr )
+			set name = "Fire Pod Weapons"
+			set desc = "Fire the weapons."
+			set category = "Spacepod"
+			set src = usr.loc
+
+			fireWeapon( usr )
+
+obj/spacepod/verb/toggleLights()
+	if( src.pilot == usr )
+		set name = "Toggle Lights"
+		set category = "Spacepod"
+		set src = usr.loc
+
+		lightsToggle()
+
+/obj/spacepod/proc/activateWarpBeacon( user as mob )
+	for(var/obj/machinery/computer/gate_beacon_console/C in orange(src.loc, 5)) // Finding suitable VR platforms in area
+		if(alert(user, "Would you like to interface with: [C]?", "Confirm", "Yes", "No") == "Yes")
+			C.gate_prompt( pilot )
+			occupants_announce( "<span class='notice'>Activated charging sequence for nearby bluespace beacon.</span>" )
+
+/obj/spacepod/verb/useWarpBeacon()
+	if( src.pilot == usr )
+		set name = "Use Nearby Warp Beacon"
+		set category = "Spacepod"
+		set src = usr.loc
+
+		activateWarpBeacon( usr )
+
+/obj/spacepod/verb/dumpCargo()
+	if( src.pilot == usr )
+		if( equipment_system.cargohold )
+			set name = "Dump Cargo"
+			set category = "Spacepod"
+			set src = usr.loc
+
+			equipment_system.cargohold.dump_prompt( usr )
+
+/obj/spacepod/proc/lightsToggle()
+	lights = !lights
+	if(lights)
+		set_light(light_range + lights_power)
+	else
+		set_light(light_range - lights_power)
+	occupants_announce( "Spacepod lights toggled [lights?"on":"off"]." )
+	return
+
+/obj/spacepod/proc/sectorLocate( user as mob )
+	usr << "<span class='notice'>Triangulating sector location through bluespace beacons, please standby... (This may take up to 15 seconds)</span>"
+
+	if( !do_after( user, rand( 50, 150 )))
+		usr << "<span class='warning'>ERROR: Inaccurate readings, cannot calculate sector. Please stay still next time.</span>"
+		return
+
+	var/obj/effect/map/sector = map_sectors["[z]"]
+	if( !sector )
+		usr << "<span class='warning'>ERROR: Critical error with the bluespace network!</span>"
+		return
+
+	usr << "<span class='notice'>You are currently located in Sector [SYSTEM_DESIGNATION]-[sector.x]-[sector.y]</span>"
+
+/obj/spacepod/verb/useSectorLocate()
 	set category = "Spacepod"
 	set name = "Triangulate Sector"
 	set src = usr.loc
 
-	usr << "<span class='notice'>Triangulating sector location through bluespace beacons, please standby... (This may take up to 15 seconds)</span>"
-	var/cur_z = src.z
-	spawn( rand( 100, 150 ))
-		if( cur_z != src.z )
-			usr << "<span class='warning'>ERROR: Inaccurate readings, cannot calculate sector. Please stay still next time.</span>"
-			return
+	sectorLocate( usr )
 
-		var/obj/effect/map/sector = map_sectors["[z]"]
-		if( !sector )
+/obj/spacepod/proc/switchWeapon( user as mob )
+	var/list/weapons = list()
+	for( var/weapon in equipment_system )
+		if( istype( weapon, /obj/item/device/spacepod_equipment/weaponry ))
+			weapons.Add( weapon )
+	var/selected = equipment_system.weapon_system
+	selected = input( user, "Select your preferred weapon system.", "Select Weapon System", selected ) in weapons
+	equipment_system.weapon_system = selected
 
-			usr << "<span class='warning'>ERROR: Critical error with the bluespace network!</span>"
-			return
-
-		usr << "<span class='notice'>You are currently located in Sector [SYSTEM_DESIGNATION]-[sector.x]-[sector.y]</span>"
-
-/obj/spacepod/verb/switch_weapon()
+/obj/spacepod/verb/useSwitchWeapon()
 	if( src.pilot == usr )
 		if( equipment_system.weapon_system )
 			set category = "Spacepod"
 			set name = "Switch Weapon System"
 			set src = usr.loc
 
-			var/list/weapons = list()
-			for( var/weapon in equipment_system )
-				if( istype( weapon, /obj/item/device/spacepod_equipment/weaponry ))
-					weapons.Add( weapon )
-			var/selected = equipment_system.weapon_system
-			selected = input( usr, "Select your preferred weapon system.", "Select Weapon System", selected ) in weapons
-			equipment_system.weapon_system = selected
+			switchWeapon( usr )
 
 /obj/spacepod/complete/New()
 	..()
+
 	equipment_system.equip( new /obj/item/weapon/cell/super )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine )
 
@@ -978,10 +1089,12 @@ obj/spacepod/verb/toggleLights()
 
 /obj/spacepod/command/New()
 	..()
+
 	equipment_system.equip( new /obj/item/pod_parts/armor/command )
 
 /obj/spacepod/command/complete/New()
 	..()
+
 	equipment_system.equip( new /obj/item/weapon/cell/super )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine )
 
@@ -992,10 +1105,12 @@ obj/spacepod/verb/toggleLights()
 
 /obj/spacepod/security/New()
 	..()
+
 	equipment_system.equip( new /obj/item/pod_parts/armor/security )
 
 /obj/spacepod/security/complete/New()
 	..()
+
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine/einstein/galileo )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/shield )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/weaponry/taser )
@@ -1012,10 +1127,12 @@ obj/spacepod/verb/toggleLights()
 
 /obj/spacepod/shuttle/New()
 	..()
+
 	equipment_system.equip( new /obj/item/pod_parts/armor/shuttle )
 
 /obj/spacepod/shuttle/complete/New()
 	..()
+
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine/einstein/fourier )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/misc/tracker )
 	equipment_system.equip( new /obj/item/weapon/cell/super )
@@ -1030,6 +1147,7 @@ obj/spacepod/verb/toggleLights()
 
 /obj/spacepod/dev/New()
 	..()
+
 	equipment_system.max_size = 1000
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/engine/magic )
 	equipment_system.equip( new /obj/item/device/spacepod_equipment/weaponry/taser )

@@ -10,6 +10,7 @@
 	var/lawcheck[1]
 	var/ioncheck[1]
 	var/obj/item/device/radio/common_radio
+	var/obj/item/weapon/card/id/centcom/id_card
 
 	var/list/hud_list[9]
 	var/list/speech_synthesizer_langs = list()	//which languages can be vocalized by the speech synthesizer
@@ -271,3 +272,6 @@
 				adjustBruteLoss(30)
 
 	updatehealth()
+
+/mob/living/silicon/generate_static_overlay()
+	return

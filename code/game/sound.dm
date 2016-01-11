@@ -120,12 +120,12 @@ var/const/FALLOFF_SOUNDS = 0.5
 				S.echo[7] = -5000
 			*/
 
-		var/dx = (turf_source.x - T.x)*3 // Hearing from the right/left
+		var/dx = (turf_source.x - T.x)*3 // Hearing from the west/east
 		S.x = dx
-		var/dz = (turf_source.y - T.y)*3 // Hearing from infront/behind
-		S.z = dz
-		// The y value is for above your head, but there is no ceiling in 2d spessmens.
-		S.y = 1
+		var/dy = (turf_source.y - T.y)*3 // Hearing from north/south
+		S.y = dy
+		// Hearing from above/below
+		S.z = 1
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)*5
 	if(!is_global)
 		S.environment = environment

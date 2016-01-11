@@ -66,7 +66,6 @@
 /mob/proc/update_action_buttons()
 	return
 
-
 /obj/screen/grab
 	name = I_GRAB
 
@@ -505,11 +504,17 @@
 		if("r_hand")
 			if(iscarbon(usr))
 				var/mob/living/carbon/C = usr
+				if(C.r_hand && !C.hand)
+					C.r_hand.attack_self(usr)
+					return
 				C.activate_hand("r")
 				usr.next_move = world.time+2
 		if("l_hand")
 			if(iscarbon(usr))
 				var/mob/living/carbon/C = usr
+				if(C.l_hand && C.hand)
+					C.l_hand.attack_self(usr)
+					return
 				C.activate_hand("l")
 				usr.next_move = world.time+2
 		if("swap")

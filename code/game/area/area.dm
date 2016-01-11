@@ -329,7 +329,6 @@ var/list/mob/living/forced_ambiance_list = new
 		else if(src.music && prob(35))
 			if((world.time >= L.client.played + 600))
 				var/musVolume = 25
-				testing( "Played music for [L]" )
 				L << sound( pick(music), repeat = 0, wait = 0, volume = musVolume, channel = 1)
 				L.client.played = world.time
 

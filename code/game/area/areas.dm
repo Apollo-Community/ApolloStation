@@ -42,11 +42,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 #define PSYCHOTIC 25
 
 /area
-	var/fire = null
-	var/atmos = 1
-	var/atmosalm = 0
-	var/poweralm = 1
-	var/party = null
 	level = null
 	name = "Unknown"
 	icon = 'icons/turf/areas.dmi'
@@ -54,13 +49,20 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	layer = 10
 	luminosity = 0
 	mouse_opacity = 0
+
+	var/fire = null
+	var/atmos = 1
+	var/atmosalm = 0
+	var/poweralm = 1
+	var/party = null
+
 	var/lightswitch = 1
 
 	var/eject = null
 
 	var/debug = 0
 	var/requires_power = 1
-	var/always_unpowered = 0	//this gets overriden to 1 for space in area/New()
+	var/always_unpowered = 0	// this gets overriden to 1 for space in area/New()
 
 	var/power_equip = 1
 	var/power_light = 1
@@ -178,7 +180,7 @@ area/space/atmosalert()
 
 /area/shuttle
 	requires_power = 0
-	lighting_use_dynamic = 0
+	lighting_use_dynamic = 1
 	environment = CAVE
 
 /area/podbay
@@ -189,11 +191,13 @@ area/space/atmosalert()
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
 
-/area/shuttle/arrival/pre_game
-	icon_state = "shuttle2"
-
-/area/shuttle/arrival/station
+/area/shuttle/arrival/nssapollo
 	icon_state = "shuttle"
+	name = "\improper NSS Apollo Arrival Shuttle"
+
+/area/shuttle/arrival/nssartemis
+	icon_state = "shuttle"
+	name = "\improper NSS Artemis Arrival Shuttle"
 
 /area/shuttle/escape
 	name = "\improper Emergency Shuttle"
@@ -323,6 +327,7 @@ area/space/atmosalert()
 /area/shuttle/syndicate_elite/mothership
 	name = "\improper Merc Elite Shuttle"
 	icon_state = "shuttlered"
+	lighting_use_dynamic = 0
 
 /area/shuttle/syndicate_elite/station
 	name = "\improper Merc Elite Shuttle"
@@ -378,6 +383,8 @@ area/space/atmosalert()
 	name = "\improper Vox Skipjack"
 	icon_state = "yellow"
 	requires_power = 0
+	lighting_use_dynamic = 0
+
 
 /area/shuttle/laborcamp/station
 	name = "\improper Labor Camp Shuttle"
@@ -448,6 +455,7 @@ area/space/atmosalert()
 	name = "\improper Mercenary Base"
 	icon_state = "syndie-ship"
 	requires_power = 0
+	lighting_use_dynamic = 0
 
 /area/syndicate_mothership/control
 	name = "\improper Mercenary Control Room"
@@ -516,6 +524,7 @@ area/space/atmosalert()
 	icon_state = "yellow"
 	requires_power = 0
 	rad_shielded = 1
+	lighting_use_dynamic = 0
 
 /area/syndicate_station/start
 	name = "\improper Mercenary Forward Operating Base"
@@ -536,10 +545,6 @@ area/space/atmosalert()
 /area/syndicate_station/southeast
 	name = "\improper south-east of SS13"
 	icon_state = "southeast"
-
-/area/syndicate_station/north
-	name = "\improper north of SS13"
-	icon_state = "north"
 
 /area/syndicate_station/south
 	name = "\improper south of SS13"
@@ -571,6 +576,7 @@ area/space/atmosalert()
 /area/vox_station
 	requires_power = 0
 	rad_shielded = 1
+	lighting_use_dynamic = 0
 
 /area/vox_station/transit
 	name = "\improper bluespace"
@@ -1047,17 +1053,17 @@ area/space/atmosalert()
 	name = "\improper Fitness Room"
 	icon_state = "fitness"
 
-/area/crew_quarters/cafeteria
-	name = "\improper Cafeteria"
-	icon_state = "cafeteria"
-	environment = QUARRY
-
 /area/crew_quarters/kitchen
 	name = "\improper Kitchen"
 	icon_state = "kitchen"
 
 /area/crew_quarters/bar
 	name = "\improper Bar"
+	icon_state = "bar"
+	environment = QUARRY
+
+/area/crew_quarters/diner
+	name = "\improper Diner"
 	icon_state = "bar"
 	environment = QUARRY
 
@@ -1124,6 +1130,7 @@ area/space/atmosalert()
 	name = "\improper Holodeck"
 	icon_state = "Holodeck"
 	luminosity = 1
+	lighting_use_dynamic = 0
 
 /area/holodeck/alphadeck
 	name = "\improper Holodeck Alpha"
@@ -2035,22 +2042,25 @@ area/space/atmosalert()
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
+	lighting_use_dynamic = 0
 
 /area/turret_protected/AIsatextFS
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
+	lighting_use_dynamic = 0
 
 /area/turret_protected/AIsatextAS
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
+	lighting_use_dynamic = 0
 
 /area/turret_protected/AIsatextAP
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
-
+	lighting_use_dynamic = 0
 
 /area/turret_protected/NewAIMain
 	name = "\improper AI Main New"
@@ -2270,14 +2280,14 @@ area/space/atmosalert()
 	name = "\improper valans shuttle"
 	icon_state = "south"
 	requires_power = 0
-	 // the ship doesn't have any lights
+	lighting_use_dynamic = 0 // the ship doesn't have any lights
 	environment = PLAIN
 
 /area/adminprep/valansshiparrival
 	name = "\improper valans shuttle arrival"
 	icon_state = "south"
 	requires_power = 0
-	 // the ship doesn't have any lights
+	lighting_use_dynamic = 0 // the ship doesn't have any lights
 	environment = PLAIN
 
 /area/adminprep/valanspreparea
@@ -2306,9 +2316,80 @@ area/space/atmosalert()
 /area/asteroidfields/shuttle
 	name = "\improper Pirate Asteroid shuttle area"
 	icon_state = "south"
-	 // the ship doesn't have any lights
+	lighting_use_dynamic = 0 // the ship doesn't have any lights
 	environment = PLAIN
 
+/area/artemis/command
+	name = "NSS Artemis Command"
+	icon_state = "bridge"
+
+/area/artemis/medical
+	name = "NSS Artemis Medical Department"
+	icon_state = "medbay"
+
+/area/artemis/cargo
+	name = "NSS Artemis Cargobay"
+	icon_state = "quartoffice"
+
+/area/artemis/security
+	name = "NSS Artemis Security Department"
+	icon_state = "security"
+
+/area/artemis/science
+	name = "NSS Artemis Science Department"
+	icon_state = "research"
+
+/area/artemis/engineering
+	name = "NSS Artemis Engineering Department"
+	icon_state = "yellow"
+
+/area/artemis/civilian
+	name = "NSS Artemis Civilian Wing"
+	icon_state = "green"
+
+/area/artemis/hallway
+	name = "NSS Artemis Hallway"
+	icon_state = "hallS"
+
+/area/artemis/arrivals
+	name = "NSS Artemis Arrivals"
+	icon_state = "hallP"
+
+/area/artemis/departure
+	name = "NSS Artemis Departures"
+	icon_state = "hallA"
+
+/area/artemis/maint/port
+	name = "NSS Artemis Portside Maintenance"
+	icon_state = "pmaint"
+
+/area/artemis/maint/starboard
+	name = "NSS Artemis Starboard Maintenance"
+	icon_state = "smaint"
+
+//////////////// PLANET ///////////////////////////////////
+/area/planet/moon
+	name = "\improper moon"
+	icon_state = "moon"
+	environment = PLAIN
+
+	ambience = list( 'sound/ambience/ambience_outpost.ogg' )
+	music = list()
+
+/area/planet/moon/landing_zone
+	name = "\improper landing zone"
+	icon_state = "south"
+	requires_power = 0
+
+/area/planet/moon/explored
+	name = "\improper explored moon"
+	icon_state = "north"
+	requires_power = 0
+
+/area/planet/moon/outpost
+	name = "\improper outpost"
+	icon_state = "south"
+	requires_power = 0
 
 /////////////////////////////////////////////////////////////////////
 /*

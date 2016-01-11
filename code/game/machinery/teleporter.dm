@@ -87,7 +87,7 @@
 	var/list/L = list()
 	var/list/areaindex = list()
 
-	for(var/obj/item/device/radio/beacon/R in world)
+	for(var/obj/item/device/radio/beacon/R in teleporter_beacons)
 		var/turf/T = get_turf(R)
 		if (!T)
 			continue
@@ -126,7 +126,7 @@
 
 	src.locked = L[desc]
 	for(var/mob/O in hearers(src, null))
-		O.show_message("\blue Locked In", 2)
+		O.show_message("<span class='notice'>Locked In</span>", 2)
 	src.add_fingerprint(usr)
 	return
 

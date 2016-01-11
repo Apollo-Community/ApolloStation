@@ -321,6 +321,7 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/proc/isWireCut(var/wireIndex)
 	// You can find the wires in the datum folder.
+	if(!wires)	return 0				//Cheaty runtime fix
 	return wires.IsIndexCut(wireIndex)
 
 /obj/machinery/door/airlock/proc/canAIControl()
@@ -973,6 +974,36 @@ About the new airlock wires panel:
 			user << "<span class='notice'>You force open the airlock.</span>"
 			playsound(src.loc, 'sound/effects/xenoDoorForced.ogg', 100, 1)
 			open(1)
+	else if(istype(C, /obj/item/weapon/doorjack))
+		for(var/obj/item/weapon/doorjack/D in get_turf(src))
+			// there's already a doorjack in place
+			if(!isnull(D.door) && D.door == src)
+				return
+		if(locked)
+			user << "\red The airlock's bolts prevent it from being forced open."
+		else if (!welded && !operating)
+			if(density)
+				user << "You slide the door jack in the airlock and start forcing it open."
+				playsound(user.loc, 'sound/effects/xenoDoorForced.ogg', 100, 3)
+				for(var/mob/M in range(2, src))
+					M << "\red [user] begins to force the airlock open!"
+				if(!do_after(user, 250))
+					user << "\red The door jack snaps back into its retracted position!"
+					return
+				user << "With a loud creak, you force the airlock fully open."
+				playsound(user.loc, 'sound/effects/xenoDoorForced.ogg', 100, 3)
+				open(1)
+			else
+				user << "You rapidly deploy the door jack in the doorway."
+				for(var/mob/M in range(2, src))
+					M << "\red [user] places a door jack on the airlock!"
+			var/obj/item/weapon/doorjack/D = C
+			user.drop_item()
+			D.loc = get_turf(src)
+			D.icon_state = "jack_deployed"
+			D.anchored = 1
+			D.door = src
+			autoclose = 0
 	else
 		..()
 	return
@@ -982,7 +1013,7 @@ About the new airlock wires panel:
 		ignite(is_hot(C))
 	..()
 
-/obj/machinery/door/airlock/set_broken()
+/obj/machinery/door/airlock/set_broken( var/no_sparks = 1 )
 	src.p_open = 1
 	stat |= BROKEN
 	if (secured_wires)
@@ -991,9 +1022,10 @@ About the new airlock wires panel:
 		if ((O.client && !( O.blinded )))
 			O.show_message("[src.name]'s control panel bursts open, sparks spewing out!")
 
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up(5, 1, src)
-	s.start()
+	if( !no_sparks )
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(5, 1, src)
+		s.start()
 
 	update_icon()
 	return
@@ -1021,6 +1053,10 @@ About the new airlock wires panel:
 		//despite the name, this wire is for general door control.
 		//Bolts are already covered by the check for locked, above
 		if( !arePowerSystemsOn() || isWireCut(AIRLOCK_WIRE_OPEN_DOOR) )
+			return
+	for(var/obj/item/weapon/doorjack/D in get_turf(src))
+		// don't allow the door to be close if it has a doorjack in it
+		if(!isnull(D.door) && D.door == src)
 			return
 	if(safe)
 		for(var/turf/turf in locs)

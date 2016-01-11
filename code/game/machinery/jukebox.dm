@@ -21,6 +21,8 @@ datum/track/New(var/title_name, var/audio)
 
 	var/stop_ticks = 0
 
+	var/jukebox_id = 49			//Defines the sound channel to play on
+
 	var/datum/track/current_track
 	var/list/datum/track/tracks = list(
 		new/datum/track("Clouds of Fire", 'sound/music/clouds.s3m'),
@@ -56,10 +58,16 @@ datum/track/New(var/title_name, var/audio)
 		new/datum/track("NanoTrasen", 'sound/music/jazzy_jazz.ogg'),
 		new/datum/track("Smartest People", 'sound/music/bakerstreet.ogg'),
 		new/datum/track("Careless", 'sound/music/carelesswhisper.ogg'),
+		new/datum/track("Long Ago", 'sound/music/midis/cantina.mid'),
 	)
 
 /obj/machinery/media/jukebox/New()
 	..()
+	for(var/obj/machinery/media/jukebox in machines)
+		jukebox_id++
+
+	MachineProcessing -= src				//Removes jukebox from processing machinery
+
 //	tracks = sortList(tracks) // sorting for the sake of stuicey's sanity
 
 /obj/machinery/media/jukebox/Destroy()
@@ -213,11 +221,11 @@ datum/track/New(var/title_name, var/audio)
 
 /obj/machinery/media/jukebox/proc/StopPlaying()
 	for(var/mob/living/M in living_mob_list)
-		if(M.mind && M.jukebox_sound && get_dist(M, src) < 30 && M.z == src.z)	//Shouldn't be able to travel 15 squares in < 2 seconds.
-			M << sound(null, channel = 50)
-			M.jukebox_sound = null
+		kill_sound(M)
 
 	playing = 0
+	MachineProcessing -= src			//Don't process() when not playing
+
 	update_icon()
 
 /obj/machinery/media/jukebox/proc/StartPlaying()
@@ -226,35 +234,35 @@ datum/track/New(var/title_name, var/audio)
 	if(!current_track)
 		return
 
+	MachineProcessing += src			//Start process() back up
 	playing = 1
 	stop_ticks = 0
 
 	update_icon()
 
 /obj/machinery/media/jukebox/process()
-	switch(playing)
-		if(2)	return
-		if(0)
-			stop_ticks++
-			if(stop_ticks > 2)
-				playing = 2		// Caps checking for stopped music at 2 checks.
-
 	for(var/mob/living/M in living_mob_list)
-		if(get_dist(M,src) <=15 && M.z == src.z)	// Only same z-level
+		var/dist = get_dist(M,src)
+		if(dist <=15 && M.z == src.z)	// Only same z-level
 			if(playing)			//Plays the song to people within range while the song is active.
 				if(!M.jukebox_sound)
-					M.jukebox_sound = sound(current_track.sound, channel = 50, repeat = 1, volume = 35 - 3*(get_dist(src,M)-1))
+					M.jukebox_sound = sound(current_track.sound, channel = jukebox_id, repeat = 1, volume = 35 - 3*(dist-1))
 					M.jukebox_sound.status = SOUND_UPDATE
 				else
-					M.jukebox_sound.volume = 35 - 3*(get_dist(src,M)-1)
+					M.jukebox_sound.volume = 35 - 3*(dist-1)
+
+				var/turf/turf_source = get_turf( src )
+				M.jukebox_sound.x = (turf_source.x - M.x)*3 // Hearing from the west/east
+				M.jukebox_sound.y = (turf_source.y - M.y)*3 // Hearing from north/south
+
 				M << M.jukebox_sound
-		else
-			if(M.jukebox_sound && get_dist(M,src) < 30)	//Support for multiple jukeboxes
-				M << sound(null, channel = 50)
-				M.jukebox_sound = null
+		else		// Catch all
+			kill_sound(M)
 
-
-
+/obj/machinery/media/jukebox/proc/kill_sound(var/mob/living/M in living_mob_list)
+	if(M.jukebox_sound && M.jukebox_sound.channel == jukebox_id)	//Support for multiple jukeboxes
+		M << sound(null, channel = jukebox_id)
+		M.jukebox_sound = null
 
 /obj/machinery/media/jukebox/mixer
 	name = "record mixer"

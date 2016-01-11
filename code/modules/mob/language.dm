@@ -19,7 +19,7 @@
 	var/list/syllables               // Used when scrambling text for a non-speaker.
 	var/list/space_chance = 55       // Likelihood of getting a space in the random scramble string.
 
-/datum/language/proc/get_random_name(var/gender, name_count=2, syllable_count=4)
+/datum/language/proc/get_random_name(var/gender, name_count=2, syllable_count=2)
 	if(!syllables || !syllables.len)
 		if(gender==FEMALE)
 			return capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))

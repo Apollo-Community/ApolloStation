@@ -33,9 +33,21 @@ datum/controller/game_controller/New()
 	if(!syndicate_code_response.len )	syndicate_code_response	= generate_code_phrase()
 	if(!emergency_shuttle)			emergency_shuttle = new /datum/emergency_shuttle_controller()
 	if(!shuttle_controller)			shuttle_controller = new /datum/shuttle_controller()
+	if(!template_config)			template_config = new /datum/template_config()
+	if(!template_controller)		template_controller = new /datum/template_controller()
 
 datum/controller/game_controller/proc/setup()
 	world.tick_lag = config.Ticklag
+
+	// Pick a new race to unwhitelist for today's week
+	var/deciseconds_in_week = 6048000
+	var/selected_race = ((world.realtime/deciseconds_in_week) % whitelisted_aliens.len)
+	if( selected_race && selected_race < whitelisted_aliens.len )
+		unwhitelisted_alien = whitelisted_aliens[selected_race]
+	else
+		unwhitelisted_alien = "Wryn"
+
+	unwhitelisted_aliens.Add(unwhitelisted_alien)
 
 	setup_objects()
 	setupgenetics()

@@ -186,7 +186,6 @@
 	..()
 
 // candles
-
 /obj/machinery/light/candle
 	icon_state = "wallcandle1"
 	base_state = "wallcandle"
@@ -196,6 +195,13 @@
 	brightness_color = "#FFB27F"
 	desc = "A small candle affixed to a wall stand."
 	light_type = /obj/item/weapon/light/candle
+
+// Fire lights
+/obj/machinery/light/small/firelight
+	icon_state = "firelight1"
+	base_state = "firelight"
+	brightness_color = "#FF6666"
+	light_type = /obj/item/weapon/light/bulb/fire
 
 // create a new lighting fixture
 /obj/machinery/light/New()
@@ -401,6 +407,7 @@
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
+
 			//if(!user.mutations & COLD_RESISTANCE)
 			if (prob(75))
 				electrocute_mob(user, get_area(src), src, rand(0.7,1.0))
@@ -555,10 +562,10 @@
 			return
 		if(2.0)
 			if (prob(75))
-				broken()
+				broken(1)
 		if(3.0)
 			if (prob(50))
-				broken()
+				broken(1)
 	return
 
 //blob effect
@@ -619,6 +626,10 @@
 	var/brightness_power = 1
 	var/brightness_color = null
 
+/obj/item/weapon/light/proc/paint( var/color )
+	color = color
+	light_color = color
+
 /obj/item/weapon/light/candle
 	name = "candle"
 	desc = "A electric candle, used to really set the mood."
@@ -655,6 +666,17 @@
 	brightness_range = 5
 	brightness_power = 2
 	brightness_color = "#a0a080"
+
+/obj/item/weapon/light/bulb/fire
+	name = "fire light bulb"
+	desc = "A replacement fire light bulb."
+	icon_state = "flight"
+	base_state = "flight"
+	item_state = "contvapour"
+	matter = list("glass" = 100)
+	brightness_range = 5
+	brightness_power = 2
+	brightness_color = "#FF6666"
 
 /obj/item/weapon/light/throw_impact(atom/hit_atom)
 	..()
