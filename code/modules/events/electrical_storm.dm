@@ -4,7 +4,7 @@
 
 
 /datum/event/electrical_storm/announce()
-	command_announcement.Announce("An electrical storm has been detected in your area, please repair potential electronic overloads.", "Electrical Storm Alert")
+	command_announcement.Announce("It has come to our attention that the station passed through an ion storm. Engineering personnel must monitor all electronic equipment for malfunctions.", "AUTOMATED ALERT: Ion Storm")
 
 
 /datum/event/electrical_storm/start()

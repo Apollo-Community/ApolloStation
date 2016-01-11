@@ -21,7 +21,7 @@
 	name = "cult"
 	config_tag = "cult"
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Internal Affairs Agent", "Head of Security", "Captain")
-	protected_jobs = list("Security Officer", "Warden", "Detective")
+	protected_jobs = list("Security Officer", "Warden", "Detective" )//AI", Currently out of the list as malf does not work for shit
 	required_players = 5
 	required_players_secret = 15
 	required_enemies = 3

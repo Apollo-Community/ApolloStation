@@ -309,6 +309,26 @@
 	//query_accesslog.Execute()
 
 
+/client/proc/client_exists_in_db()
+	if ( IsGuestKey(src.key) )
+		return 0
+
+	establish_db_connection()
+	if(!dbcon.IsConnected())
+		return 0
+
+	var/sql_ckey = sql_sanitize_text(src.ckey)
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM player WHERE ckey = '[sql_ckey]'")
+	query.Execute()
+	player_age = 0	// New players won't have an entry so knowing we have a connection we set this to zero to be updated if their is a record.
+	while(query.NextRow())
+		player_age = text2num(query.item[2])
+
+		return player_age
+
+	return 0
+
 #undef TOPIC_SPAM_DELAY
 #undef UPLOAD_LIMIT
 #undef MIN_CLIENT_VERSION

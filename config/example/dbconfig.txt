@@ -8,7 +8,7 @@ ADDRESS localhost
 PORT 3306
 
 # Database the population, death, karma, etc. tables may be found in
-DATABASE tgstation
+DATABASE apollo
 
 # Username/Login used to access the database
 LOGIN mylogin

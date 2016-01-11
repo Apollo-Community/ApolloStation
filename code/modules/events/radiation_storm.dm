@@ -12,7 +12,7 @@
 
 /datum/event/radiation_storm/start()
 	spawn()
-		command_announcement.Announce("High levels of radiation have been detected. Please evacuate into one of the shielded maintenance tunnels.", "Anomaly Alert", new_sound = 'sound/AI/radiation.ogg')
+		command_announcement.Announce("High levels of radiation have been detected. Please evacuate into one of the shielded maintenance tunnels.", "AUTOMATED ALERT: Radiation Anomaly", new_sound = 'sound/AI/radiation.ogg')
 		make_maint_all_access()
 
 
@@ -22,7 +22,7 @@
 
 /datum/event/radiation_storm/tick()
 	if(activeFor == enterBelt)
-		command_announcement.Announce("The station has entered the radiation belt. Please remain in a sheltered area until we have passed the radiation belt.", "Anomaly Alert")
+		command_announcement.Announce("The station has entered the radiation belt. Please remain in a sheltered area until we have passed the radiation belt.", "AUTOMATED ALERT: Radiation Anomaly")
 		radiate()
 
 	if(activeFor >= enterBelt && activeFor <= leaveBelt)
@@ -35,7 +35,7 @@
 			R.receive_pulse(200)
 
 	else if(activeFor == leaveBelt)
-		command_announcement.Announce("The station has passed the radiation belt. Please report to medbay if you experience any unusual symptoms. Maintenance will lose all access again shortly.", "Anomaly Alert")
+		command_announcement.Announce("The station has passed the radiation belt. Please report to medbay if you experience any unusual symptoms. Maintenance will lose all access again shortly.", "AUTOMATED ALERT: Radiation Anomaly")
 
 /datum/event/radiation_storm/proc/radiate()
 	for(var/mob/living/carbon/C in living_mob_list)
