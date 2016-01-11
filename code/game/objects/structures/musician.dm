@@ -31,8 +31,7 @@
 	//world << "Note: [note]"
 	if(!note)
 		return
-	var/file = 'sound/piano/[note].ogg'
-	var/soundfile = '[file]'
+	var/soundfile = "sound/piano/[note].ogg"
 
 	//hearers(15, src) << sound(soundfile)
 	var/turf/source = get_turf(src)
