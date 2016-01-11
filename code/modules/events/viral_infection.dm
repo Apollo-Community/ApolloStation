@@ -4,12 +4,12 @@ datum/event/viral_infection
 datum/event/viral_infection/setup()
 	announceWhen = rand(0, 3000)
 	endWhen = announceWhen + 1
-	
+
 	//generate 1-3 viruses. This way there's an upper limit on how many individual diseases need to be cured if many people are initially infected
 	var/num_diseases = rand(1,3)
 	for (var/i=0, i < num_diseases, i++)
 		var/datum/disease2/disease/D = new /datum/disease2/disease
-		
+
 		var/strength = 1 //whether the disease is of the greater or lesser variety
 		if (severity >= EVENT_LEVEL_MAJOR && prob(75))
 			strength = 2
@@ -24,9 +24,9 @@ datum/event/viral_infection/announce()
 		level = pick("one", "two", "three", "four")
 	else
 		level = "five"
-	
+
 	if (severity == EVENT_LEVEL_MAJOR || prob(60))
-		command_announcement.Announce("Confirmed outbreak of level [level] biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", new_sound = 'sound/AI/outbreak5.ogg')
+		command_announcement.Announce("Confirmed outbreak of level [level] biohazard aboard [station_name()]. Medical personnel must contain the outbreak.", "AUTOMATED ALERT: Biohazard Detected", new_sound = 'sound/AI/outbreak5.ogg')
 
 datum/event/viral_infection/start()
 	if(!viruses.len) return
