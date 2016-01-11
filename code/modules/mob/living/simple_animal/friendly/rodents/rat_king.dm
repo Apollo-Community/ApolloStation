@@ -1,3 +1,5 @@
+var/rat_king_spawned = 0 // I hate globals, but I cant think of a better way to do this
+
 // Since there's no proc for the current object to check crossed objects
 /mob/living/simple_animal/rodent/rat/Crossed( atom/movable/O )
 	..()
@@ -11,6 +13,16 @@
 /*=======  LONG LIVE THE KING  =========*/
 /mob/living/simple_animal/rodent/rat/king
 	var/list/rats = list()
+
+/mob/living/simple_animal/rodent/rat/king/New()
+	..()
+	rat_king_spawned = 1
+	say_dead_direct( "The Rat King has risen, all rejoice and celebrate. The cooldown timer on rodent spawns has been removed." )
+
+/mob/living/simple_animal/rodent/rat/king/death()
+	say_dead_direct( "The Rat King has been slain, these are dark days. The cooldown timer on rodent spawns is active again." )
+	rat_king_spawned = 0
+	..()
 
 /mob/living/simple_animal/rodent/rat/king/Move()
 	..()

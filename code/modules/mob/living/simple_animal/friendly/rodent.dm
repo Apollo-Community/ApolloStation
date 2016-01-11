@@ -80,7 +80,7 @@
 	src.icon_state = "mouse_[body_color]_splat"
 	layer = MOB_LAYER
 	if(client)
-		client.time_died_as_mouse = world.time
+		client.time_died_as_rodent = world.time
 
 /mob/living/simple_animal/rodent/start_pulling(var/atom/movable/AM)//Prevents mouse from pulling things
 	src << "<span class='warning'>You are too small to pull anything.</span>"
@@ -97,7 +97,7 @@
 /mob/living/simple_animal/rodent/death()
 	layer = MOB_LAYER
 	if(client)
-		client.time_died_as_mouse = world.time
+		client.time_died_as_rodent = world.time
 	..()
 
 /*
