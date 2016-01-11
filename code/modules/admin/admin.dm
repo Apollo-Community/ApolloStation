@@ -68,8 +68,8 @@ var/global/floorIsLava = 0
 
 	var/body = "<html><head><title>Options for [M.key]</title></head>"
 	body += "<body>Options panel for <b>[M]</b>"
+	body += " played by <b>[M.key]</b> [M.client ? "(logged out)" : ""]"
 	if(M.client)
-		body += " played by <b>[M.client]</b> "
 		body += "\[<A href='?src=\ref[src];editrights=show'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
 
 	if(istype(M, /mob/new_player))
