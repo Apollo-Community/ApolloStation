@@ -252,6 +252,9 @@
 	if(!istype(M))
 		return
 
+	if(!Adjacent(M)) // should stop long-range beepsky beatdowns
+		return
+
 	if(istype(M, /mob/living/carbon))
 		var/mob/living/carbon/C = M
 		var/cuff = 1
