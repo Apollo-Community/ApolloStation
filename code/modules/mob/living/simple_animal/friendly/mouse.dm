@@ -1,4 +1,4 @@
-/mob/living/simple_animal/mouse
+/mob/living/simple_animal/rodent
 	name = "mouse"
 	real_name = "mouse"
 	desc = "It's a small rodent."
@@ -30,7 +30,7 @@
 	universal_understand = 1
 	mob_size = 1
 
-/mob/living/simple_animal/mouse/Life()
+/mob/living/simple_animal/rodent/Life()
 	..()
 	if(!stat && prob(speak_chance))
 		for(var/mob/M in view())
@@ -53,7 +53,7 @@
 		else if(prob(5))
 			audible_emote("snuffles.")
 
-/mob/living/simple_animal/mouse/New()
+/mob/living/simple_animal/rodent/New()
 	..()
 
 	verbs += /mob/living/proc/ventcrawl
@@ -67,7 +67,7 @@
 	icon_dead = "mouse_[body_color]_dead"
 	desc = "It's a small [body_color] rodent, often seen hiding in maintenance areas and making a nuisance of itself."
 
-/mob/living/simple_animal/mouse/proc/splat()
+/mob/living/simple_animal/rodent/proc/splat()
 	src.health = 0
 	src.stat = DEAD
 	src.icon_dead = "mouse_[body_color]_splat"
@@ -76,11 +76,11 @@
 	if(client)
 		client.time_died_as_mouse = world.time
 
-/mob/living/simple_animal/mouse/start_pulling(var/atom/movable/AM)//Prevents mouse from pulling things
+/mob/living/simple_animal/rodent/start_pulling(var/atom/movable/AM)//Prevents mouse from pulling things
 	src << "<span class='warning'>You are too small to pull anything.</span>"
 	return
 
-/mob/living/simple_animal/mouse/Crossed(AM as mob|obj)
+/mob/living/simple_animal/rodent/Crossed(AM as mob|obj)
 	if( ishuman(AM) )
 		if(!stat)
 			var/mob/M = AM
@@ -88,7 +88,7 @@
 			M << 'sound/effects/mousesqueek.ogg'
 	..()
 
-/mob/living/simple_animal/mouse/death()
+/mob/living/simple_animal/rodent/death()
 	layer = MOB_LAYER
 	if(client)
 		client.time_died_as_mouse = world.time
@@ -98,22 +98,22 @@
  * Mouse types
  */
 
-/mob/living/simple_animal/mouse/white
+/mob/living/simple_animal/rodent/white
 	body_color = "white"
 	icon_state = "mouse_white"
 
-/mob/living/simple_animal/mouse/gray
+/mob/living/simple_animal/rodent/gray
 	body_color = "gray"
 	icon_state = "mouse_gray"
 
-/mob/living/simple_animal/mouse/brown
+/mob/living/simple_animal/rodent/brown
 	body_color = "brown"
 	icon_state = "mouse_brown"
 
 //TOM IS ALIVE! SQUEEEEEEEE~K :)
-/mob/living/simple_animal/mouse/brown/Tom
+/mob/living/simple_animal/rodent/brown/Tom
 	name = "Tom"
 	desc = "Jerry the cat is not amused."
 
-/mob/living/simple_animal/mouse/can_use_vents()
+/mob/living/simple_animal/rodent/can_use_vents()
 	return
