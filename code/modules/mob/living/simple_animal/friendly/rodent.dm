@@ -41,17 +41,23 @@
 
 	if(!ckey && stat == CONSCIOUS && prob(0.5))
 		stat = UNCONSCIOUS
-		icon_state = "mouse_[body_color]_sleep"
+		update_icon()
 		wander = 0
 		speak_chance = 0
 		//snuffles
 	else if(stat == UNCONSCIOUS)
 		if(ckey || prob(1))
 			stat = CONSCIOUS
-			icon_state = "mouse_[body_color]"
+			update_icon()
 			wander = 1
 		else if(prob(5))
 			audible_emote("snuffles.")
+
+/mob/living/simple_animal/rodent/proc/update_icon()
+	if(stat ==  UNCONSCIOUS )
+		icon_state = "mouse_[body_color]_sleep"
+	else if(stat == CONSCIOUS)
+		icon_state = "mouse_[body_color]"
 
 /mob/living/simple_animal/rodent/New()
 	..()
