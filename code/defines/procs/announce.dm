@@ -47,28 +47,28 @@
 
 datum/announcement/proc/Message(message as text, message_title as text)
 	var/full_message = {"<hr><h2 class='alert'>[title]</h2>
-				   		<span class='alert'>[message]</span><br>"}
+<span class='alert'>[message]</span>"}
 
 
 	for(var/mob/M in player_list)
 		if(!istype(M,/mob/new_player) && !isdeaf(M))
 			M << full_message
 			if (announcer)
-				M << "<span class='alert'> -[html_encode(announcer)]</span>"
+				M << "<br><span class='alert'> -[html_encode(announcer)]</span>"
 			M << "<hr><br>"
 
 datum/announcement/minor/Message(message as text, message_title as text)
 	world << "<b>[message]</b>"
 
 datum/announcement/priority/Message(message as text, message_title as text)
-	var/full_message = {"<hr><h1 class='alert'>[message_title]</h1>
-						 <span class='alert'>[message]</span><br>"}
+	var/full_message = {"<hr><h2 class='alert'>[message_title]</h2>
+<span class='alert'>[message]</span>"}
 
 	for(var/mob/M in player_list)
 		if(!istype(M,/mob/new_player) && !isdeaf(M))
 			M << full_message
 			if(announcer)
-				M << "<span class='alert'> -[html_encode(announcer)]</span>"
+				M << "<br><span class='alert'> -[html_encode(announcer)]</span>"
 			M << "<hr><br>"
 
 datum/announcement/priority/command/Message(message as text, message_title as text)
@@ -76,7 +76,7 @@ datum/announcement/priority/command/Message(message as text, message_title as te
 	if (message_title)
 		full_message += "<h2 class='alert'>[message_title]</h2>"
 
-	full_message += "<span class='alert'>[message]</span><br><hr><br>"
+	full_message += "<span class='alert'>[message]</span><hr><br>"
 	for(var/mob/M in player_list)
 		if(!istype(M,/mob/new_player) && !isdeaf(M))
 			M << full_message
@@ -85,7 +85,7 @@ datum/announcement/priority/security/Message(message as text, message_title as t
 	for(var/mob/M in player_list)
 		if(!istype(M,/mob/new_player) && !isdeaf(M))
 			M << {"<hr><h2 class='alert'>[message_title]</h2>
-				   <font color='alert'>[message]</font><br><hr><br>"}
+<font color='alert'>[message]</font><hr><br>"}
 
 datum/announcement/proc/NewsCast(message as text, message_title as text)
 	if(!newscast)
