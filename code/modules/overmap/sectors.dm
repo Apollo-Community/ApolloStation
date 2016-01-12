@@ -42,7 +42,7 @@
 	mapx = STATION_X+2
 	mapy = STATION_Y
 	obj_type = /obj/effect/map/sector/cybersun
-	sector_flags = SECTOR_KNOWN | SECTOR_LOCAL
+	sector_flags = SECTOR_KNOWN | SECTOR_LOCAL | SECTOR_FORBID_RANDOM_TP
 	landing_area = /area/planet/moon/landing_zone
 
 /obj/effect/mapinfo/sector/tcomm_old
@@ -55,15 +55,15 @@
 
 /obj/effect/mapinfo/sector/centcomm
 	name = "Central Command"
-	sector_flags = SECTOR_KNOWN | SECTOR_ALERT
+	sector_flags = SECTOR_KNOWN | SECTOR_ALERT | SECTOR_FORBID_RANDOM_TP
 
 /obj/effect/mapinfo/sector/overmap
 	name = "Overmap"
-	sector_flags = SECTOR_ADMIN
+	sector_flags = SECTOR_ADMIN | SECTOR_FORBID_RANDOM_TP
 
 /obj/effect/mapinfo/sector/bluespace
 	name = "Bluespace"
-	sector_flags = SECTOR_KNOWN
+	sector_flags = SECTOR_KNOWN | SECTOR_FORBID_RANDOM_TP
 
 /obj/effect/map/sector
 	real_name = "generic sector"
@@ -90,6 +90,12 @@
 
 /obj/effect/map/sector/proc/isKnown()
 	if(( map_z in config.known_levels ) && ( map_z in config.local_levels ) && !( map_z in config.admin_levels ))
+		return 1
+	else
+		return 0
+
+/obj/effect/map/sector/proc/canRandomTeleport()
+	if( isKnown() && ( map_z in config.can_random_teleport_levels ))
 		return 1
 	else
 		return 0
@@ -144,6 +150,10 @@
 	if( flags & SECTOR_ADMIN )
 		if( !( z in config.admin_levels ))
 			config.admin_levels.Add( z )
+
+	if( !( flags & SECTOR_FORBID_RANDOM_TP ))
+		if( !( z in config.can_random_teleport_levels ))
+			config.can_random_teleport_levels.Add( z )
 
 /proc/sector_exists( var/turf/T )
 	for( var/obj/effect/map/sec in T )

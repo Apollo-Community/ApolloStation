@@ -41,6 +41,12 @@
 	set category = "Object"
 	set name = "Enter Body Scanner"
 
+	if(!(ishuman(usr) || issmall(usr)))
+		return
+	for(var/mob/living/carbon/slime/M in range(1,usr))
+		if(M.Victim == usr)
+			usr << "You're too busy getting your life sucked out of you."
+			return
 	if (usr.stat != 0)
 		return
 	if (src.occupant)

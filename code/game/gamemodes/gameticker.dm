@@ -40,10 +40,11 @@ var/global/datum/controller/gameticker/ticker
 	var/round_end_announced = 0 // Spam Prevention. Announce round end only once.
 
 /datum/controller/gameticker/proc/pregame()
-	login_music = pick(\
-	/*'sound/music/halloween/skeletons.ogg',\
+	login_music = 'sound/music/space_oddity_bowie.ogg'
+	/*pick(\
+	'sound/music/halloween/skeletons.ogg',\
 	'sound/music/halloween/halloween.ogg',\
-	'sound/music/halloween/ghosts.ogg'*/
+	'sound/music/halloween/ghosts.ogg'
 	'sound/music/space.ogg',\
 	'sound/music/traitor.ogg',\
 	'sound/music/title2.ogg',\
@@ -54,7 +55,8 @@ var/global/datum/controller/gameticker/ticker
 	'sound/music/mining_song1.ogg',\
 	'sound/music/mining_song2.ogg',\
 	'sound/music/mining_song3.ogg',\
-	'sound/music/jazzy_jazz.ogg')
+	'sound/music/jazzy_jazz.ogg'
+	)*/
 	do
 		pregame_timeleft = 180
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
