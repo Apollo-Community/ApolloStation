@@ -596,7 +596,7 @@
 
 				// Enough to make us sleep as well
 				if(SA_pp > SA_sleep_min)
-					sleeping = min(sleeping+2, 10)
+					sleeping = min(sleeping+4, 10)
 
 			// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			else if(SA_pp > 0.15)
@@ -997,6 +997,9 @@
 			if(nutrition < 200)
 				take_overall_damage(2,0)
 				traumatic_shock++
+
+		if((locate(src.internal_organs_by_name["resonant crystal"]) in src.internal_organs))
+			nutrition = 400
 
 		if(!(species.flags & IS_SYNTHETIC)) handle_trace_chems()
 
@@ -1522,6 +1525,13 @@
 						if(!(M.status_flags & GODMODE))
 							M.adjustBruteLoss(5)
 						nutrition += 10
+				if(istype(M, /mob/living/simple_animal))
+					var/x = M.oxyloss
+					M.adjustOxyLoss(5)
+					if(x == M.oxyloss)
+						stomach_contents.Remove(M)
+						qdel(M)
+					nutrition += 10
 
 	proc/handle_changeling()
 		if(mind && mind.changeling)
