@@ -720,8 +720,12 @@
 	static_overlay.override = 1
 	static_overlays["letter"] = static_overlay
 
+/mob/living/proc/isDead()
+	if( stat && stat & DEAD )
+		return 0
+
 /mob/living/proc/isConscious()
-	if( stat || stat == DEAD || paralysis || weakened || stunned || sleeping )
+	if( stat || stat & DEAD || paralysis || weakened || stunned || sleeping )
 		return 0
 
 	return 1

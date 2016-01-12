@@ -416,32 +416,31 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
 
-/mob/dead/observer/verb/become_mouse()
-	set name = "Become mouse"
+/mob/dead/observer/verb/become_rodent()
+	set name = "Become Rodent"
 	set category = "Ghost"
 
 	if(config.disable_player_mice)
-		src << "<span class='warning'>Spawning as a mouse is currently disabled.</span>"
+		src << "<span class='warning'>Spawning as a rodent is currently disabled.</span>"
 		return
 
 	var/mob/dead/observer/M = usr
 	if(config.antag_hud_restricted && M.has_enabled_antagHUD == 1)
-		src << "<span class='warning'>antagHUD restrictions prevent you from spawning in as a mouse.</span>"
+		src << "<span class='warning'>antagHUD restrictions prevent you from spawning in as a rodent.</span>"
 		return
 
-	var/timedifference = world.time - client.time_died_as_mouse
-	if(client.time_died_as_mouse && timedifference <= mouse_respawn_time * 600)
+	var/timedifference = world.time - client.time_died_as_rodent
+	if(client.time_died_as_rodent && timedifference <= rodent_respawn_time * 600 && !rat_king_spawned)
 		var/timedifference_text
-		timedifference_text = time2text(mouse_respawn_time * 600 - timedifference,"mm:ss")
-		src << "<span class='warning'>You may only spawn again as a mouse more than [mouse_respawn_time] minutes after your death. You have [timedifference_text] left.</span>"
+		timedifference_text = time2text(rodent_respawn_time * 600 - timedifference,"mm:ss")
+		src << "<span class='warning'>You may only spawn again as a rodent more than [rodent_respawn_time] minutes after your death. You have [timedifference_text] left.</span>"
 		return
 
-	var/response = alert(src, "Are you -sure- you want to become a mouse?","Are you sure you want to squeek?","Squeek!","Nope!")
+	var/response = alert(src, "Are you -sure- you want to become a rodent?","Are you sure you want to squeek?","Squeek!","Nope!")
 	if(response != "Squeek!") return  //Hit the wrong key...again.
 
-
-	//find a viable mouse candidate
-	var/mob/living/simple_animal/mouse/host
+	//find a viable rodent candidate
+	var/mob/living/simple_animal/rodent/host
 	var/obj/machinery/atmospherics/unary/vent_pump/vent_found
 	var/list/found_vents = list()
 	for(var/obj/machinery/atmospherics/unary/vent_pump/v in world)
@@ -449,16 +448,25 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			found_vents.Add(v)
 	if(found_vents.len)
 		vent_found = pick(found_vents)
-		host = new /mob/living/simple_animal/mouse(vent_found.loc)
+
+		var/rodent_type
+		if( prob( 5 ) && !rat_king_spawned )
+			rodent_type = /mob/living/simple_animal/rodent/rat/king
+		else if( prob( 50 ) || rat_king_spawned )
+			rodent_type = /mob/living/simple_animal/rodent/rat
+		else
+			rodent_type = /mob/living/simple_animal/rodent
+
+		host = new rodent_type(vent_found.loc)
 	else
-		src << "<span class='warning'>Unable to find any unwelded vents to spawn mice at.</span>"
+		src << "<span class='warning'>Unable to find any unwelded vents to spawn a rodent at.</span>"
 
 	if(host)
 		if(config.uneducated_mice)
 			host.universal_understand = 0
-		announce_ghost_joinleave(src, 0, "They are now a mouse.")
+		announce_ghost_joinleave(src, 0, "They are now a rodent.")
 		host.ckey = src.ckey
-		host << "<span class='info'>You are now a mouse. Try to avoid interaction with players, and do not give hints away that you are more than a simple rodent.</span>"
+		host << "<span class='info'>You are now a rodent. Try to avoid interaction with players, and do not give hints away that you are more than a simple rodent.</span>"
 
 /mob/dead/observer/verb/view_manfiest()
 	set name = "View Crew Manifest"

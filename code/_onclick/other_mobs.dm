@@ -22,6 +22,12 @@
 
 	A.attack_hand(src)
 
+/mob/living/UnarmedAttack(var/atom/A, var/proximity)
+	if(!..())
+		return
+
+	A.attack_hand(src)
+
 /atom/proc/attack_hand(mob/user as mob)
 	return
 

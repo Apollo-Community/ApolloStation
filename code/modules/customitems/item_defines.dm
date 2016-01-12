@@ -1462,7 +1462,7 @@
 		var/current_dist = get_dist(src, bff)
 
 		if (movement_target != bff)
-			if (current_dist > follow_dist && !istype(movement_target, /mob/living/simple_animal/mouse) && (bff in oview(src)))
+			if (current_dist > follow_dist && !istype(movement_target, /mob/living/simple_animal/rodent) && (bff in oview(src)))
 				//stop existing movement
 				walk_to(src,0)
 				turns_since_scan = 0
