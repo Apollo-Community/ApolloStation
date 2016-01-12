@@ -29,6 +29,11 @@ var/rat_king_spawned = 0 // I hate globals, but I cant think of a better way to 
 /mob/living/simple_animal/rodent/rat/king
 	attacktext = "bitten"
 
+	icon_state = "rat_king_gray"
+	icon_living = "rat_king_gray"
+	icon_dead = "rat_king_gray_dead"
+	icon_sleeping = "rat_king_gray_sleep"
+
 	var/swarm_name = "peasentry"
 	var/announce_name = "Request"
 	var/list/rats = list()
@@ -43,6 +48,12 @@ var/rat_king_spawned = 0 // I hate globals, but I cant think of a better way to 
 
 	update()
 	createVirus()
+
+	icon_state = initial( icon_state )
+	icon_living = initial( icon_living )
+	icon_dead = initial( icon_dead )
+	icon_sleeping = initial( icon_sleeping )
+	body_color = "gray"
 
 	rat_king_spawned = 1
 	say_dead_direct( "An heir to the rat throne has risen, all rejoice and celebrate. The cooldown timer on rodent spawns has been removed." )

@@ -7,6 +7,7 @@ var/global/list/world_rodents = list()
 	icon_state = "mouse_gray"
 	icon_living = "mouse_gray"
 	icon_dead = "mouse_gray_dead"
+	var/icon_sleeping = "mouse_gray_sleep"
 	speak = list("Squeek!","SQUEEK!","Squeek?")
 	speak_emote = list("squeeks","squeeks","squiks")
 	emote_hear = list("squeeks","squeaks","squiks")
@@ -57,9 +58,9 @@ var/global/list/world_rodents = list()
 
 /mob/living/simple_animal/rodent/proc/update_icon()
 	if(stat ==  UNCONSCIOUS )
-		icon_state = "mouse_[body_color]_sleep"
+		icon_state = icon_sleeping
 	else if(stat == CONSCIOUS)
-		icon_state = "mouse_[body_color]"
+		icon_state = icon_living
 
 /mob/living/simple_animal/rodent/New()
 	..()
@@ -73,6 +74,7 @@ var/global/list/world_rodents = list()
 	icon_state = "mouse_[body_color]"
 	icon_living = "mouse_[body_color]"
 	icon_dead = "mouse_[body_color]_dead"
+	icon_sleeping = "mouse_[body_color]_sleep"
 	desc = "It's a small [body_color] rodent, often seen hiding in maintenance areas and making a nuisance of itself."
 
 	world_rodents += src

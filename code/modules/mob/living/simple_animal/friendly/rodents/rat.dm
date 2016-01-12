@@ -2,9 +2,6 @@
 	name = "rat"
 	real_name = "rat"
 	desc = "It's a smallish rodent."
-	icon_state = "rat_gray"
-	icon_living = "rat_gray"
-	icon_dead = "rat_gray_dead"
 	speak = list("Squeek!","SQUEEK!","Squeek?")
 	speak_emote = list("squeeks","squeeks","squiks")
 	emote_hear = list("squeeks","squeaks","squiks")
