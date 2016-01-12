@@ -37,8 +37,6 @@
 	if(ismob(user)) shock(user, 70)
 
 /obj/structure/grille/attack_hand(mob/user as mob)
-	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
-
 	var/damage_dealt = 1
 	var/attack_message = "kicks"
 	if(istype(user,/mob/living/carbon/human))
@@ -62,6 +60,7 @@
 	else
 		damage_dealt += 1
 
+	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	attack_generic(user,damage_dealt,attack_message)
 
 /obj/structure/grille/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)

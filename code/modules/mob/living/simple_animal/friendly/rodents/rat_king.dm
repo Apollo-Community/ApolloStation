@@ -45,8 +45,8 @@ var/rat_king_spawned = 0 // I hate globals, but I cant think of a better way to 
 	createVirus()
 
 	rat_king_spawned = 1
-	say_dead_direct( "\The [src] has risen, all rejoice and celebrate. The cooldown timer on rodent spawns has been removed." )
-	announceToRodents( "<span class='notice'>An heir to the rat throne has risen! Go at once and join his kingdom, long live the king!</span>" )
+	say_dead_direct( "An heir to the rat throne has risen, all rejoice and celebrate. The cooldown timer on rodent spawns has been removed." )
+	announceToRodents( "<span class='notice'>An heir to the rat throne has risen, all rejoice and celebrate! Go at once and join his kingdom, long live the king!</span>" )
 
 /mob/living/simple_animal/rodent/rat/king/death()
 	announceToRodents( "<span class='notice'>\The [src] has been slain, these are dark days.</span>" )
