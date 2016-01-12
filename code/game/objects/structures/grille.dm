@@ -51,6 +51,8 @@
 		if( R.canSmashGrille() )
 			attack_message = "mangles"
 			damage_dealt = 5
+		else
+			return
 
 	if(shock(user, 70))
 		return
