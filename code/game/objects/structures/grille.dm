@@ -49,8 +49,6 @@
 		if( R.canSmashGrille() )
 			attack_message = "mangles"
 			damage_dealt = 5
-		else
-			return
 
 	if(shock(user, 70))
 		return
@@ -171,7 +169,6 @@
 // returns 1 if shocked, 0 otherwise
 
 /obj/structure/grille/proc/shock(mob/user as mob, prb)
-
 	if(!anchored || destroyed)		// anchored/destroyed grilles are never connected
 		return 0
 	if(!prob(prb))
@@ -180,6 +177,13 @@
 		return 0
 	var/turf/T = get_turf(src)
 	var/obj/structure/cable/C = T.get_cable_node()
+
+	if(istype(user, /mob/living/simple_animal/rodent/rat/king))
+		var/mob/living/simple_animal/rodent/rat/king/R = user
+		user = R.getMobAttacked()
+		spawn(1)
+			R.update()
+
 	if(C)
 		if(electrocute_mob(user, C, src))
 			if(C.powernet)

@@ -276,6 +276,8 @@
 				return 0
 
 			src.visible_message("<span class='warning'>\The [user] chews its way through the door wiring!</span>" )
+
+
 			emag()
 			return 1
 		else

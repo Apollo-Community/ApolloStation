@@ -199,7 +199,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 			src.visible_message("<span class='warning'>\The [user] chews its way through the cable!</span>" )
 
-			if( !shock( R, 90 ))
+			if( !shock( R, 10 ))
 				new/obj/item/stack/cable_coil(src.loc, src.d1 ? 2 : 1, color)
 				qdel(src)
 		else
