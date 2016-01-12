@@ -279,7 +279,7 @@
 			emag()
 			return 1
 		else
-			user << "<span class='warning'>Our kingdom must grow larger before we can chew through wires!</span>"
+			user << "<span class='warning'>Our [K.swarm_name] must grow larger before we can chew through wires!</span>"
 
 	if(src.allowed(user) && operable())
 		if(src.density)

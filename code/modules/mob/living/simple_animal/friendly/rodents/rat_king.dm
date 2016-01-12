@@ -33,10 +33,16 @@ var/rat_king_spawned = 0 // I hate globals, but I cant think of a better way to 
 	var/announce_name = "Request"
 	var/list/rats = list()
 
+	var/roar_charge = 100
+	var/roar_charge_max = 100
+	var/roar_recharge_rate = 10
+	var/datum/disease2/disease/rat_virus
+
 /mob/living/simple_animal/rodent/rat/king/New()
 	..()
 
 	update()
+	createVirus()
 
 	rat_king_spawned = 1
 	say_dead_direct( "\The [src] has risen, all rejoice and celebrate. The cooldown timer on rodent spawns has been removed." )
@@ -46,7 +52,15 @@ var/rat_king_spawned = 0 // I hate globals, but I cant think of a better way to 
 	announceToRodents( "<span class='notice'>\The [src] has been slain, these are dark days.</span>" )
 	say_dead_direct( "\The [src] has been slain, these are dark days. The cooldown timer on rodent spawns is active again." )
 	rat_king_spawned = 0
+
+	qdel( virus )
+
 	..()
+
+/mob/living/simple_animal/rodent/rat/king/Life()
+	..()
+
+	roar_charge = min( roar_charge+roar_recharge_rate, roar_charge_max )
 
 /mob/living/simple_animal/rodent/rat/king/Move()
 	..()
@@ -92,7 +106,7 @@ var/rat_king_spawned = 0 // I hate globals, but I cant think of a better way to 
 
 	..( severity )
 
-/mob/living/simple_animal/rodent/rat/king/verb/update()
+/mob/living/simple_animal/rodent/rat/king/proc/update()
 	if( rats.len >= RAT_GOD_LEVEL )
 		name = "\improper Rat God"
 		swarm_name = "creation"
@@ -172,6 +186,36 @@ var/rat_king_spawned = 0 // I hate globals, but I cant think of a better way to 
 
 	announceToRodents( "[full_message]" )
 
+/mob/living/simple_animal/rodent/rat/king/verb/roar()
+	set category = "Abilities"
+	set name = "Mighty Roar"
+
+	if( !canRoar() )
+		usr << "<span class='warning'>Our [swarm_name] must grow larger before we can use this ability!</span>"
+		return
+
+	if( roar_charge < roar_charge_max )
+		usr << "<span class='warning'>We must wait a little while before we can use this ability again!</span>"
+		return
+
+	src.visible_message("<span class='warning'>[src] lets loose a mighty roar!</span>")
+	for( var/obj/machinery/light/L in range( 3, src ))
+		if( canRoarBreakLights() && prob(( rats.len/RAT_EMPORER_LEVEL )*100 ))
+			L.broken()
+		else
+			L.flicker()
+
+	roar_charge = 0
+
+/mob/living/simple_animal/rodent/rat/king/proc/createVirus()
+	qdel( rat_virus )
+
+	rat_virus = new /datum/disease2/disease
+
+	var/strength = 1 //whether the disease is of the greater or lesser variety
+	rat_virus.makerandom(strength)
+	rat_virus.infectionchance = 0
+
 /mob/living/simple_animal/rodent/rat/king/proc/getMobAttacked()
 	if( rats.len )
 		return rats[rats.len]
@@ -227,34 +271,37 @@ var/rat_king_spawned = 0 // I hate globals, but I cant think of a better way to 
 
 	return .
 
-/mob/living/simple_animal/rodent/rat/king/proc/canNibbleWire()
+/mob/living/simple_animal/rodent/rat/king/proc/canNibbleWire() // implemented
 	if( rats.len >= RAT_MAYOR_LEVEL )
 		return 1
 	return 0
 
-/*
-/mob/living/simple_animal/rodent/rat/king/proc/
+/mob/living/simple_animal/rodent/rat/king/proc/canRoar() // implemented
 	if( rats.len >= RAT_BARON_LEVEL )
 		return 1
 	return 0
-*/
 
-/mob/living/simple_animal/rodent/rat/king/proc/canWalkFaster()
-	if( rats.len >= RAT_DUKE_LEVEL )
-		return 1
-	return 0
-
-/mob/living/simple_animal/rodent/rat/king/proc/canEatCorpse()
-	if( rats.len >= RAT_KING_LEVEL )
-		return 1
-	return 0
-
-/mob/living/simple_animal/rodent/rat/king/proc/canSmashGrille()
+/mob/living/simple_animal/rodent/rat/king/proc/canRoarBreakLights() // implemented
 	if( rats.len >= RAT_EMPORER_LEVEL )
 		return 1
 	return 0
 
-/mob/living/simple_animal/rodent/rat/king/proc/canSpreadDisease()
+/mob/living/simple_animal/rodent/rat/king/proc/canWalkFaster() // implemented
+	if( rats.len >= RAT_DUKE_LEVEL )
+		return 1
+	return 0
+
+/mob/living/simple_animal/rodent/rat/king/proc/canEatCorpse() // implemented
+	if( rats.len >= RAT_KING_LEVEL )
+		return 1
+	return 0
+
+/mob/living/simple_animal/rodent/rat/king/proc/canSmashGrille() // implemented
+	if( rats.len >= RAT_EMPORER_LEVEL )
+		return 1
+	return 0
+
+/mob/living/simple_animal/rodent/rat/king/proc/canSpreadDisease() // implemented
 	if( rats.len >= RAT_SAVIOR_LEVEL )
 		return 1
 	return 0
