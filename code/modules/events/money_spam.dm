@@ -38,6 +38,8 @@
 				return
 			P = pick(viables)
 
+			if(!useMS.active) return
+
 			var/sender
 			var/message
 			switch(pick(1,2,3,4,5,6,7))
