@@ -325,7 +325,7 @@ proc/populate_seed_list()
 			if(0) //Plant cancer!
 				lifespan = max(0,lifespan-rand(1,5))
 				endurance = max(0,endurance-rand(10,20))
-				source_turf.visible_message("\red \The [display_name] withers rapidly!")
+				source_turf.visible_message("<span class='alert'> \The [display_name] withers rapidly!</span>")
 			if(1)
 				nutrient_consumption =      max(0,  min(5,   nutrient_consumption + rand(-(degree*0.1),(degree*0.1))))
 				water_consumption =         max(0,  min(50,  water_consumption    + rand(-degree,degree)))
@@ -574,7 +574,7 @@ proc/populate_seed_list()
 		got_product = 1
 
 	if(!got_product && !harvest_sample)
-		user << "\red You fail to harvest anything useful."
+		user << "<span class='alert'> You fail to harvest anything useful.</span>"
 	else
 		user << "You [harvest_sample ? "take a sample" : "harvest"] from the [display_name]."
 

@@ -143,8 +143,8 @@
 				return
 
 		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
-		usr.visible_message("\red [usr.name] bangs against the [src.name]!", \
-							"\red You bang against the [src.name]!", \
+		usr.visible_message("<span class='alert'> [usr.name] bangs against the [src.name]!</span>", \
+							"<span class='alert'> You bang against the [src.name]!</span>", \
 							"You hear a banging sound.")
 	else
 		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)

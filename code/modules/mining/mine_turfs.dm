@@ -105,7 +105,7 @@
 /turf/simulated/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		usr << "\red You don't have the dexterity to do this!"
+		usr << "<span class='alert'> You don't have the dexterity to do this!</span>"
 		return
 
 	if (istype(W, /obj/item/device/core_sampler))
@@ -146,7 +146,7 @@
 				//Chance to destroy / extract any finds here
 				fail_message = ". <b>[pick("There is a crunching noise","[W] collides with some different rock","Part of the rock face crumbles away","Something breaks under [W]")]</b>"
 
-		user << "\red You start [P.drill_verb][fail_message ? fail_message : ""]."
+		user << "<span class='alert'> You start [P.drill_verb][fail_message ? fail_message : ""].</span>"
 
 		if(fail_message && prob(90))
 			if(prob(25))
@@ -316,7 +316,7 @@
 		var/obj/effect/suspension_field/S = locate() in src
 		if(!S || S.field_type != get_responsive_reagent(F.find_type))
 			if(X)
-				visible_message("\red<b>[pick("[display_name] crumbles away into dust","[display_name] breaks apart")].</b>")
+				visible_message("<span class='alert'><b>[pick("[display_name] crumbles away into dust</span>","[display_name] breaks apart")].</b>")
 				qdel(X)
 
 	finds.Remove(F)
@@ -437,14 +437,14 @@
 
 	if(valid_tool)
 		if (dug)
-			user << "\red This area has already been dug"
+			user << "<span class='alert'> This area has already been dug</span>"
 			return
 
 		var/turf/T = user.loc
 		if (!(istype(T)))
 			return
 
-		user << "\red You start digging."
+		user << "<span class='alert'> You start digging.</span>"
 		playsound(user.loc, 'sound/effects/rustle1.ogg', 50, 1)
 
 		if(!do_after(user,40)) return

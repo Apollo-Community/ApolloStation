@@ -83,7 +83,7 @@
 		spawn(200)		S.color = null
 		return
 	else
-		usr << "\red It does not look like you have enough metal in the [src.name] to make an ingot."
+		usr << "<span class='alert'> It does not look like you have enough metal in the [src.name] to make an ingot.</span>"
 
 
 

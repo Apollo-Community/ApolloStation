@@ -444,7 +444,7 @@ client/proc/one_click_antag()
 
 				new_vox.key = theghost.key
 				new_vox << "<span class='notice'> You are a Vox Primalis, fresh out of the Shoal. Your ship has arrived at a human-meat system hosting the NSV Apollo... or was it the Luna? NSS? Utopia? Nobody is really sure, who cares about stupid meat-names anyway? Everyone is raring to start pillaging! Your current goal is: \red<B> [input]</B></span>"
-				new_vox << "\red Don't forget to turn on your nitrogen internals!"
+				new_vox << "<span class='alert'> Don't forget to turn on your nitrogen internals!</span>"
 
 				raiders--
 			if(raiders > max_raiders)

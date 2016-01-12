@@ -31,7 +31,7 @@
 												  "<span class='notice'> Locking neural clamp...</span>",
 												  "<span class='notice'> The helmet begins to emit an unearthly pitch...</span>",
 												  "<span class='notice'> You begin to feel your senses melt away...</span>",
-												  "\red You panic as you realize you no longer have control over your body!",
+												  "<span class='alert'> You panic as you realize you no longer have control over your body!</span>",
 												  "<b>Locked</b>." )
 
 				for(var/text in descriptive_text)

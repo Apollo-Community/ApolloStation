@@ -81,7 +81,7 @@
 		if( !exit )
 			if( istype( AM, /mob ))
 				var/mob/M = AM
-				M << "\red You feel that something went very wrong."
+				M << "<span class='alert'> You feel that something went very wrong.</span>"
 
 		AM.Move( destination )
 		playsound(AM.loc, 'sound/effects/pop1.ogg', 80, 1)

@@ -305,7 +305,7 @@ About the new airlock wires panel:
 			else /*if(src.justzap)*/
 				return
 		else if(user.hallucination > 50 && prob(10) && src.operating == 0)
-			user << "\red <B>You feel a powerful shock course through your body!</B>"
+			user << "<span class='alert'> <B>You feel a powerful shock course through your body!</B></span>"
 			user.halloss += 10
 			user.stunned += 10
 			return
@@ -635,14 +635,14 @@ About the new airlock wires panel:
 		if(H.getBrainLoss() >= 60)
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
-				visible_message("\red [user] headbutts the airlock.")
+				visible_message("<span class='alert'> [user] headbutts the airlock.</span>")
 				var/datum/organ/external/affecting = H.get_organ("head")
 				H.Stun(8)
 				H.Weaken(5)
 				if(affecting.take_damage(10, 0))
 					H.UpdateDamageIcon()
 			else
-				visible_message("\red [user] headbutts the airlock. Good thing they're wearing a helmet.")
+				visible_message("<span class='alert'> [user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
 			return
 	**/
 
@@ -957,13 +957,13 @@ About the new airlock wires panel:
 				if(F.wielded)
 					spawn(0)	open(1)
 				else
-					user << "\red You need to be wielding \the [C] to do that."
+					user << "<span class='alert'> You need to be wielding \the [C] to do that.</span>"
 			else
 				var/obj/item/weapon/twohanded/fireaxe/F = C
 				if(F.wielded)
 					spawn(0)	close(1)
 				else
-					user << "\red You need to be wielding \the [C] to do that."
+					user << "<span class='alert'> You need to be wielding \the [C] to do that.</span>"
 
 	else if(us.species && us.species.name_plural == "Xenomorphs")
 		user << "<span class='notice'>You begin to force open \the [src].</span>"
@@ -980,15 +980,15 @@ About the new airlock wires panel:
 			if(!isnull(D.door) && D.door == src)
 				return
 		if(locked)
-			user << "\red The airlock's bolts prevent it from being forced open."
+			user << "<span class='alert'> The airlock's bolts prevent it from being forced open.</span>"
 		else if (!welded && !operating)
 			if(density)
 				user << "You slide the door jack in the airlock and start forcing it open."
 				playsound(user.loc, 'sound/effects/xenoDoorForced.ogg', 100, 3)
 				for(var/mob/M in range(2, src))
-					M << "\red [user] begins to force the airlock open!"
+					M << "<span class='alert'> [user] begins to force the airlock open!</span>"
 				if(!do_after(user, 250))
-					user << "\red The door jack snaps back into its retracted position!"
+					user << "<span class='alert'> The door jack snaps back into its retracted position!</span>"
 					return
 				user << "With a loud creak, you force the airlock fully open."
 				playsound(user.loc, 'sound/effects/xenoDoorForced.ogg', 100, 3)
@@ -996,7 +996,7 @@ About the new airlock wires panel:
 			else
 				user << "You rapidly deploy the door jack in the doorway."
 				for(var/mob/M in range(2, src))
-					M << "\red [user] places a door jack on the airlock!"
+					M << "<span class='alert'> [user] places a door jack on the airlock!</span>"
 			var/obj/item/weapon/doorjack/D = C
 			user.drop_item()
 			D.loc = get_turf(src)

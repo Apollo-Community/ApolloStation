@@ -90,7 +90,7 @@
 	user << "<span class='notice'> \The [src] is de-energised. It's just a regular axe now.</span>"
 
 /obj/item/weapon/melee/energy/axe/suicide_act(mob/user)
-	viewers(user) << "\red <b>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</b>"
+	viewers(user) << "<span class='alert'> <b>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</b></span>"
 	return (BRUTELOSS|FIRELOSS)
 
 /*

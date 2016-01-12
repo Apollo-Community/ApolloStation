@@ -65,7 +65,7 @@
 
 	if (!safety)
 		if (src.reagents.total_volume < 1)
-			usr << "\red \The [src] is empty."
+			usr << "<span class='alert'> \The [src] is empty.</span>"
 			return
 
 		if (world.time < src.last_use + 20)

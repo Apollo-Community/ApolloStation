@@ -26,7 +26,7 @@
 
 	attackby(obj/item/weapon/O as obj, mob/user as mob)
 		if ( user.z in config.admin_levels )
-			user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+			user << "<span class='alert'> <b>Unable to establish a connection</b>: \black You're too far away from the station!</span>"
 			return
 		if(istype(O, /obj/item/weapon/aiModule))
 			var/obj/item/weapon/aiModule/M = O

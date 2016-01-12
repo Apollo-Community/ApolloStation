@@ -201,4 +201,4 @@
 	G.synch()
 	G.affecting = src
 
-	M.visible_message("\red [user] has grabbed [M] passively!")
+	M.visible_message("<span class='alert'> [user] has grabbed [M] passively!</span>")

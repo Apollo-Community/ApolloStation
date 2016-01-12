@@ -157,7 +157,7 @@
 
 	if(is_train_head() && istype(load, /mob/living/carbon/human))
 		var/mob/living/carbon/human/D = load
-		D << "\red \b You ran over [H]!"
+		D << "<span class='alert'> \b You ran over [H]!</span>"
 		visible_message("<B>\red \The [src] ran over [H]!</B>")
 		if(!in_unlogged(D))
 			attack_log += text("\[[time_stamp()]\] <font color='red'>ran over [H.name] ([H.ckey]), driven by [D.name] ([D.ckey])</font>")

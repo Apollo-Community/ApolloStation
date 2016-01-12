@@ -29,7 +29,7 @@
 		return
 
 	if(!fexists("sound/easter/[icon_state].ogg"))
-		usr << "\red You slimey cheat! Go find the eggs on the <b>live</b> server!"
+		usr << "<span class='alert'> You slimey cheat! Go find the eggs on the <b>live</b> server!</span>"
 		return
 
 	var/sound/AL = sound("sound/easter/[icon_state].ogg", repeat = 0, wait = 1, channel = 777, volume = 35)
@@ -47,7 +47,7 @@
 
 	if(prob(25))
 		new_egg(icon_state)
-		usr << "\red The egg crumbles away..."
+		usr << "<span class='alert'> The egg crumbles away...</span>"
 		qdel(src)
 
 /obj/item/weapon/easter_egg/proc/new_egg(T as text)

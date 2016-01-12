@@ -137,7 +137,7 @@
 	set src in view(1)
 
 	if(!istype(usr, /mob/living))
-		usr << "\red You can't do that."
+		usr << "<span class='alert'> You can't do that.</span>"
 		return
 
 	if(usr.stat)

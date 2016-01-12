@@ -150,7 +150,7 @@
 
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
 	if(!allowed(user))
-		user << "\red Access Denied."
+		user << "<span class='alert'> Access Denied.</span>"
 		return
 
 	if(..())

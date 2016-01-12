@@ -36,15 +36,15 @@
 	if(on)
 		user << "\green It seems to be online."
 	else
-		user << "\red It seems to be offline"
+		user << "<span class='alert'> It seems to be offline</span>"
 
 /obj/machinery/power/breakerbox/attack_ai(mob/user)
 	if(update_locked)
-		user << "\red System locked. Please try again later."
+		user << "<span class='alert'> System locked. Please try again later.</span>"
 		return
 
 	if(busy)
-		user << "\red System is busy. Please wait until current operation is finished before changing power settings."
+		user << "<span class='alert'> System is busy. Please wait until current operation is finished before changing power settings.</span>"
 		return
 
 	busy = 1
@@ -60,16 +60,16 @@
 
 /obj/machinery/power/breakerbox/attack_hand(mob/user)
 	if(update_locked)
-		user << "\red System locked. Please try again later."
+		user << "<span class='alert'> System locked. Please try again later.</span>"
 		return
 
 	if(busy)
-		user << "\red System is busy. Please wait until current operation is finished before changing power settings."
+		user << "<span class='alert'> System is busy. Please wait until current operation is finished before changing power settings.</span>"
 		return
 
 	busy = 1
 	for(var/mob/O in viewers(user))
-		O.show_message(text("\red [user] started reprogramming [src]!"), 1)
+		O.show_message(text("<span class='alert'> [user] started reprogramming [src]!</span>"), 1)
 
 	if(do_after(user, 50))
 		set_state(!on)

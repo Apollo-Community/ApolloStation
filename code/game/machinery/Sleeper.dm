@@ -120,17 +120,17 @@
 			if (src.connected)
 				if (src.connected.occupant)
 					if (src.connected.occupant.stat == DEAD)
-						usr << "\red \b This person has no life for to preserve anymore. Take them to a department capable of reanimating them."
+						usr << "<span class='alert'> \b This person has no life for to preserve anymore. Take them to a department capable of reanimating them.</span>"
 					else if(src.connected.occupant.health > 0 || href_list["chemical"] == "inaprovaline")
 						var/chem = href_list["chemical"]
 						if( !( chem in connected.available_chemicals ))
-							usr << "\red You are a bad person."
+							usr << "<span class='alert'> You are a bad person.</span>"
 							message_admins("[usr]/([usr.ckey]) has attempted to use an href exploit on a sleeper!", "EXPLOIT:")
 							return
 
 						src.connected.inject_chemical(usr,chem,text2num(href_list["amount"]))
 					else
-						usr << "\red \b This person is not in good enough condition for sleepers to be effective! Use another means of treatment, such as cryogenics!"
+						usr << "<span class='alert'> \b This person is not in good enough condition for sleepers to be effective! Use another means of treatment, such as cryogenics!</span>"
 					src.updateUsrDialog()
 		if (href_list["refresh"])
 			src.updateUsrDialog()
@@ -227,7 +227,7 @@
 				src.updateUsrDialog()
 				return
 			else
-				user << "\red The sleeper has a beaker already."
+				user << "<span class='alert'> The sleeper has a beaker already.</span>"
 				return
 
 		else if(istype(G, /obj/item/weapon/grab))

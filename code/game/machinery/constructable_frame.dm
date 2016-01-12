@@ -32,7 +32,7 @@
 /obj/machinery/constructable_frame/machine_frame
 	attackby(obj/item/P as obj, mob/user as mob)
 		if(P.crit_fail)
-			user << "\red This part is faulty, you cannot add this to the machine!"
+			user << "<span class='alert'> This part is faulty, you cannot add this to the machine!</span>"
 			return
 		switch(state)
 			if(1)
@@ -80,7 +80,7 @@
 							update_desc()
 						user << desc
 					else
-						user << "\red This frame does not accept circuit boards of this type!"
+						user << "<span class='alert'> This frame does not accept circuit boards of this type!</span>"
 				else
 					if(istype(P, /obj/item/weapon/wirecutters))
 						playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
@@ -159,4 +159,4 @@
 									break
 							user << desc
 							if(P && P.loc != src && !istype(P, /obj/item/stack/cable_coil))
-								user << "\red You cannot add that component to the machine!"
+								user << "<span class='alert'> You cannot add that component to the machine!</span>"

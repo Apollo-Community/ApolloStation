@@ -574,7 +574,7 @@
 	weedlevel = 0
 
 	update_icon()
-	visible_message("\red The \blue [previous_plant] \red has suddenly mutated into \blue [seed.display_name]!")
+	visible_message("<span class='alert'> The \blue [previous_plant] \red has suddenly mutated into \blue [seed.display_name]!</span>")
 
 	return
 
@@ -670,16 +670,16 @@
 			update_icon()
 
 		else
-			user << "\red \The [src] already has seeds in it!"
+			user << "<span class='alert'> \The [src] already has seeds in it!</span>"
 
 	else if (istype(O, /obj/item/weapon/minihoe))  // The minihoe
 
 		if(weedlevel > 0)
-			user.visible_message("\red [user] starts uprooting the weeds.", "\red You remove the weeds from the [src].")
+			user.visible_message("<span class='alert'> [user] starts uprooting the weeds.</span>", "<span class='alert'> You remove the weeds from the [src].</span>")
 			weedlevel = 0
 			update_icon()
 		else
-			user << "\red This plot is completely devoid of weeds. It doesn't need uprooting."
+			user << "<span class='alert'> This plot is completely devoid of weeds. It doesn't need uprooting.</span>"
 
 	else if (istype(O, /obj/item/weapon/storage/bag/plants))
 
@@ -718,7 +718,7 @@
 	else if(istype(O, /obj/item/apiary))
 
 		if(seed)
-			user << "\red [src] is already occupied!"
+			user << "<span class='alert'> [src] is already occupied!</span>"
 		else
 			user.drop_item()
 			qdel(O)

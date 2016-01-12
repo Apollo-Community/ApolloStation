@@ -281,12 +281,12 @@
 /obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (!src.check_access(W))
-			user << "\red Access Denied."
+			user << "<span class='alert'> Access Denied.</span>"
 			return
 		if ((!src.locked) || (isnull(src.occupant)))
 			return
 		if ((src.occupant.health < -20) && (src.occupant.stat != 2))
-			user << "\red Access Refused."
+			user << "<span class='alert'> Access Refused.</span>"
 			return
 		else
 			src.locked = 0
@@ -306,7 +306,7 @@
 		return
 	else if (istype(W, /obj/item/weapon/wrench))
 		if(src.locked && (src.anchored || src.occupant))
-			user << "\red Can not do that while [src] is in use."
+			user << "<span class='alert'> Can not do that while [src] is in use.</span>"
 		else
 			if(src.anchored)
 				src.anchored = 0

@@ -126,7 +126,7 @@
 						src.temp = null
 
 				else
-					usr << "\red Access Denied."
+					usr << "<span class='alert'> Access Denied.</span>"
 
 		if ("stop" in href_list)
 			src.temp = {"
@@ -170,7 +170,7 @@
 									R.connected_ai << "<br><br><span class='alert'>ALERT - Cyborg kill-switch activated: [R.name]</span><br>"
 								R.self_destruct()
 			else
-				usr << "\red Access Denied."
+				usr << "<span class='alert'> Access Denied.</span>"
 
 		if ("stopbot" in href_list)
 			if(computer.allowed(usr))
@@ -190,7 +190,7 @@
 								R << "You have been locked down!"
 
 			else
-				usr << "\red Access Denied."
+				usr << "<span class='alert'> Access Denied.</span>"
 
 		if ("magbot" in href_list)
 			if(computer.allowed(usr))

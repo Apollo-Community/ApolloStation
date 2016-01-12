@@ -259,7 +259,7 @@
 
 /obj/machinery/mining/drill/proc/system_error(var/error)
 
-	if(error) src.visible_message("\red \The [src] flashes a '[error]' warning.")
+	if(error) src.visible_message("<span class='alert'> \The [src] flashes a '[error]' warning.</span>")
 	need_player_check = 1
 	active = 0
 	update_icon()
@@ -312,9 +312,9 @@
 	if(B)
 		for(var/obj/item/weapon/ore/O in contents)
 			O.loc = B
-		usr << "\red You unload the drill's storage cache into the ore box."
+		usr << "<span class='alert'> You unload the drill's storage cache into the ore box.</span>"
 	else
-		usr << "\red You must move an ore box up to the drill before you can unload it."
+		usr << "<span class='alert'> You must move an ore box up to the drill before you can unload it.</span>"
 
 
 /obj/machinery/mining/brace
@@ -348,7 +348,7 @@
 	var/turf/T = get_step(get_turf(src), src.dir)
 
 	if(!T.has_resources)
-		src.visible_message("\red The terrain near the brace is unsuitable!")
+		src.visible_message("<span class='alert'> The terrain near the brace is unsuitable!</span>")
 		return
 
 	for(var/thing in T.contents)

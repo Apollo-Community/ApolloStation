@@ -30,11 +30,11 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				affected_mob << "\red Your muscles ache."
+				affected_mob << "<span class='alert'> Your muscles ache.</span>"
 				if(prob(20))
 					affected_mob.take_organ_damage(1)
 			if(prob(1))
-				affected_mob << "\red Your stomach hurts."
+				affected_mob << "<span class='alert'> Your stomach hurts.</span>"
 				if(prob(20))
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
@@ -55,11 +55,11 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				affected_mob << "\red Your muscles ache."
+				affected_mob << "<span class='alert'> Your muscles ache.</span>"
 				if(prob(20))
 					affected_mob.take_organ_damage(1)
 			if(prob(1))
-				affected_mob << "\red Your stomach hurts."
+				affected_mob << "<span class='alert'> Your stomach hurts.</span>"
 				if(prob(20))
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()

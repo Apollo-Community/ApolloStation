@@ -241,7 +241,7 @@
 	if(!powered())
 		return
 	if(!src.allowed(user))
-		user << "\red Access denied."
+		user << "<span class='alert'> Access denied.</span>"
 		return
 	..()
 
@@ -294,12 +294,12 @@
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (istype(src, /obj/machinery/atmospherics/valve/digital))
-		user << "\red You cannot unwrench this [src], it's too complicated."
+		user << "<span class='alert'> You cannot unwrench this [src], it's too complicated.</span>"
 		return 1
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
 	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-		user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
+		user << "<span class='alert'> You cannot unwrench this [src], it too exerted due to internal pressure.</span>"
 		add_fingerprint(user)
 		return 1
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)

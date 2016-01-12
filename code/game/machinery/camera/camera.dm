@@ -212,12 +212,12 @@
 		invalidateCameraCache()
 		set_status( !src.status )
 		if (!(src.status))
-			visible_message("\red [user] has deactivated [src]!")
+			visible_message("<span class='alert'> [user] has deactivated [src]!</span>")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = "[initial(icon_state)]1"
 			add_hiddenprint(user)
 		else
-			visible_message("\red [user] has reactivated [src]!")
+			visible_message("<span class='alert'> [user] has reactivated [src]!</span>")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = initial(icon_state)
 			add_hiddenprint(user)

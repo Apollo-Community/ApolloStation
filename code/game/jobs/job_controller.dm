@@ -17,7 +17,7 @@ var/global/datum/controller/occupations/job_master
 		occupations = list()
 		var/list/all_jobs = typesof(/datum/job)
 		if(!all_jobs.len)
-			world << "\red \b Error setting up jobs, no job datums found"
+			world << "<span class='alert'> \b Error setting up jobs, no job datums found</span>"
 			return 0
 		for(var/J in all_jobs)
 			var/datum/job/job = new J()
@@ -382,7 +382,7 @@ var/global/datum/controller/occupations/job_master
 							permitted = 0
 
 						if(!permitted)
-							H << "\red Your current job or whitelist status does not permit you to spawn with [thing]!"
+							H << "<span class='alert'> Your current job or whitelist status does not permit you to spawn with [thing]!</span>"
 							continue
 
 						if(G.sort_category == "ID_card")
@@ -500,7 +500,7 @@ var/global/datum/controller/occupations/job_master
 								var/datum/gear/G = gear_datums[thing]
 								new G.path(B)
 						else
-							H << "\red Failed to locate a storage object on your mob, either you spawned with no arms and no backpack or this is a bug."
+							H << "<span class='alert'> Failed to locate a storage object on your mob, either you spawned with no arms and no backpack or this is a bug.</span>"
 
 		//TODO: Generalize this by-species
 		if(H.species)

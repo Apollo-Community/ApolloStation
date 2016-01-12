@@ -24,7 +24,7 @@ emp_act
 			if(!(def_zone in list("chest", "groin")))
 				reflectchance /= 2
 			if(prob(reflectchance))
-				visible_message("\red <B>The [P.name] gets reflected by [src]'s [wear_suit.name]!</B>")
+				visible_message("<span class='alert'> <B>The [P.name] gets reflected by [src]'s [wear_suit.name]!</B></span>")
 
 				// Find a turf near or on the original location to bounce to
 				if(P.starting)
@@ -144,17 +144,17 @@ emp_act
 	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
 		var/obj/item/weapon/I = l_hand
 		if(I.IsShield() && (prob(50 - round(damage / 3))))
-			visible_message("\red <B>[src] blocks [attack_text] with the [l_hand.name]!</B>")
+			visible_message("<span class='alert'> <B>[src] blocks [attack_text] with the [l_hand.name]!</B></span>")
 			return 1
 	if(r_hand && istype(r_hand, /obj/item/weapon))
 		var/obj/item/weapon/I = r_hand
 		if(I.IsShield() && (prob(50 - round(damage / 3))))
-			visible_message("\red <B>[src] blocks [attack_text] with the [r_hand.name]!</B>")
+			visible_message("<span class='alert'> <B>[src] blocks [attack_text] with the [r_hand.name]!</B></span>")
 			return 1
 	if(wear_suit && istype(wear_suit, /obj/item/))
 		var/obj/item/I = wear_suit
 		if(I.IsShield() && (prob(35)))
-			visible_message("\red <B>The reactive teleport system flings [src] clear of [attack_text]!</B>")
+			visible_message("<span class='alert'> <B>The reactive teleport system flings [src] clear of [attack_text]!</B></span>")
 			var/list/turfs = new/list()
 			for(var/turf/T in orange(6))
 				if(istype(T,/turf/space)) continue
@@ -191,7 +191,7 @@ emp_act
 	if(user == src) // Attacking yourself can't miss
 		target_zone = user.zone_sel.selecting
 	if(!target_zone)
-		visible_message("\red <B>[user] misses [src] with \the [I]!")
+		visible_message("<span class='alert'> <B>[user] misses [src] with \the [I]!</span>")
 		return 0
 
 	var/datum/organ/external/affecting = get_organ(target_zone)
@@ -207,12 +207,12 @@ emp_act
 
 	if(istype(I,/obj/item/weapon/card/emag))
 		if(!(affecting.status & ORGAN_ROBOT))
-			user << "\red That limb isn't robotic."
+			user << "<span class='alert'> That limb isn't robotic.</span>"
 			return
 		if(affecting.sabotaged)
-			user << "\red [src]'s [affecting.display_name] is already sabotaged!"
+			user << "<span class='alert'> [src]'s [affecting.display_name] is already sabotaged!</span>"
 		else
-			user << "\red You sneakily slide [I] into the dataport on [src]'s [affecting.display_name] and short out the safeties."
+			user << "<span class='alert'> You sneakily slide [I] into the dataport on [src]'s [affecting.display_name] and short out the safeties.</span>"
 			var/obj/item/weapon/card/emag/emag = I
 			emag.uses--
 			affecting.sabotaged = 1
@@ -220,9 +220,9 @@ emp_act
 
 	user.do_attack_animation(src)
 	if(I.attack_verb.len)
-		visible_message("\red <B>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I.name] by [user]!</B>")
+		visible_message("<span class='alert'> <B>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I.name] by [user]!</B></span>")
 	else
-		visible_message("\red <B>[src] has been attacked in the [hit_area] with [I.name] by [user]!</B>")
+		visible_message("<span class='alert'> <B>[src] has been attacked in the [hit_area] with [I.name] by [user]!</B></span>")
 
 	var/armor = run_armor_check(affecting, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
 	var/weapon_sharp = is_sharp(I)
@@ -257,7 +257,7 @@ emp_act
 			if("head")//Harder to score a stun but if you do it lasts a bit longer
 				if(prob(I.force))
 					apply_effect(20, PARALYZE, armor)
-					visible_message("\red <B>[src] has been knocked unconscious!</B>")
+					visible_message("<span class='alert'> <B>[src] has been knocked unconscious!</B></span>")
 					if(src != user && I.damtype == BRUTE)
 						ticker.mode.remove_revolutionary(mind)
 
@@ -275,7 +275,7 @@ emp_act
 			if("chest")//Easier to score a stun but lasts less time
 				if(prob((I.force + 10)))
 					apply_effect(6, WEAKEN, armor)
-					visible_message("\red <B>[src] has been knocked down!</B>")
+					visible_message("<span class='alert'> <B>[src] has been knocked down!</B></span>")
 
 				if(bloody)
 					bloody_body(src)
@@ -343,7 +343,7 @@ emp_act
 		var/datum/organ/external/affecting = get_organ(zone)
 		var/hit_area = affecting.display_name
 
-		src.visible_message("\red [src] has been hit in the [hit_area] by [O].")
+		src.visible_message("<span class='alert'> [src] has been hit in the [hit_area] by [O].</span>")
 		var/armor = run_armor_check(affecting, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].") //I guess "melee" is the best fit here
 
 		if(armor < 2)
@@ -383,7 +383,7 @@ emp_act
 			var/momentum = speed/2
 			var/dir = get_dir(O.throw_source, src)
 
-			visible_message("\red [src] staggers under the impact!","\red You stagger under the impact!")
+			visible_message("<span class='alert'> [src] staggers under the impact!</span>","<span class='alert'> You stagger under the impact!</span>")
 			src.throw_at(get_edge_target_turf(src,dir),1,momentum)
 
 			if(!W || !src) return

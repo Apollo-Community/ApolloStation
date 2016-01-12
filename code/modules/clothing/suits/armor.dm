@@ -210,7 +210,7 @@
 				return
 			var/obj/item/weapon/gun/W = usr.get_active_hand()
 			if (!W.isHandgun())
-				usr << "\red This gun won't fit in \the belt!"
+				usr << "<span class='alert'> This gun won't fit in \the belt!</span>"
 				return
 			holstered = usr.get_active_hand()
 			usr.drop_item()
@@ -218,11 +218,11 @@
 			usr.visible_message("<span class='notice'> \The [usr] holsters \the [holstered].</span>", "You holster \the [holstered].")
 		else
 			if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
-				usr << "\red You need an empty hand to draw the gun!"
+				usr << "<span class='alert'> You need an empty hand to draw the gun!</span>"
 			else
 				if(usr.a_intent == I_HURT)
-					usr.visible_message("\red \The [usr] draws \the [holstered], ready to shoot!", \
-					"\red You draw \the [holstered], ready to shoot!")
+					usr.visible_message("<span class='alert'> \The [usr] draws \the [holstered], ready to shoot!</span>", \
+					"<span class='alert'> You draw \the [holstered], ready to shoot!</span>")
 				else
 					usr.visible_message("<span class='notice'> \The [usr] draws \the [holstered], pointing it at the ground.</span>", \
 					"<span class='notice'> You draw \the [holstered], pointing it at the ground.</span>")

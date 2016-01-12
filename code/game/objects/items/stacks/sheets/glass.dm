@@ -95,11 +95,11 @@
 			for (var/obj/structure/window/win in user.loc)
 				i++
 				if(i >= 4)
-					user << "\red There are too many windows in this location."
+					user << "<span class='alert'> There are too many windows in this location.</span>"
 					return 1
 				directions-=win.dir
 				if(!(win.dir in cardinal))
-					user << "\red Can't let you do that."
+					user << "<span class='alert'> Can't let you do that.</span>"
 					return 1
 
 			//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
@@ -118,10 +118,10 @@
 			if(!src)	return 1
 			if(src.loc != user)	return 1
 			if(src.amount < 4)
-				user << "\red You need more glass to do that."
+				user << "<span class='alert'> You need more glass to do that.</span>"
 				return 1
 			if(locate(/obj/structure/window) in user.loc)
-				user << "\red There is a window in the way."
+				user << "<span class='alert'> There is a window in the way.</span>"
 				return 1
 			new created_window( user.loc, SOUTHWEST, 1 )
 			src.use(4)
@@ -132,15 +132,15 @@
 			if(!src || src.loc != user) return 1
 
 			if(isturf(user.loc) && locate(/obj/structure/windoor_assembly/, user.loc))
-				user << "\red There is already a windoor assembly in that location."
+				user << "<span class='alert'> There is already a windoor assembly in that location.</span>"
 				return 1
 
 			if(isturf(user.loc) && locate(/obj/machinery/door/window/, user.loc))
-				user << "\red There is already a windoor in that location."
+				user << "<span class='alert'> There is already a windoor in that location.</span>"
 				return 1
 
 			if(src.amount < 5)
-				user << "\red You need more glass to do that."
+				user << "<span class='alert'> You need more glass to do that.</span>"
 				return 1
 
 			new /obj/structure/windoor_assembly(user.loc, user.dir, 1)

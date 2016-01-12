@@ -1142,7 +1142,7 @@ datum/preferences
 					gear += choice
 					user << "<span class='notice'> Added [choice] for [C.cost] points ([MAX_GEAR_COST - total_cost] points remaining).</span>"
 				else
-					user << "\red That item will exceed the maximum loadout cost of [MAX_GEAR_COST] points."
+					user << "<span class='alert'> That item will exceed the maximum loadout cost of [MAX_GEAR_COST] points.</span>"
 
 		else if(href_list["task"] == "remove")
 

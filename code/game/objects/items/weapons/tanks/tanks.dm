@@ -87,7 +87,7 @@
 
 	if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
 		for (var/mob/O in viewers(user, null))
-			O << "\red [user] has used [W] on \icon[icon] [src]"
+			O << "<span class='alert'> [user] has used [W] on \icon[icon] [src]</span>"
 
 		var/pressure = air_contents.return_pressure()
 		manipulated_by = user.real_name			//This person is aware of the contents of the tank.

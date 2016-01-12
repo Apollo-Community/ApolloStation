@@ -69,7 +69,7 @@
 
 /obj/item/toy/balloon/throw_impact(atom/hit_atom)
 	if(src.reagents.total_volume >= 1)
-		src.visible_message("\red The [src] bursts!","You hear a pop and a splash.")
+		src.visible_message("<span class='alert'> The [src] bursts!</span>","You hear a pop and a splash.")
 		src.reagents.reaction(get_turf(hit_atom))
 		for(var/atom/A in get_turf(hit_atom))
 			src.reagents.reaction(A)
@@ -148,14 +148,14 @@
 				user << "<span class='notice'> It's already fully loaded!</span>"
 				return 1
 			if (A.amount_left <= 0)
-				user << "\red There is no more caps!"
+				user << "<span class='alert'> There is no more caps!</span>"
 				return 1
 			if (A.amount_left < (7 - src.bullets))
 				src.bullets += A.amount_left
-				user << text("\red You reload [] caps\s!", A.amount_left)
+				user << text("<span class='alert'> You reload [] caps\s!</span>", A.amount_left)
 				A.amount_left = 0
 			else
-				user << text("\red You reload [] caps\s!", 7 - src.bullets)
+				user << text("<span class='alert'> You reload [] caps\s!</span>", 7 - src.bullets)
 				A.amount_left -= 7 - src.bullets
 				src.bullets = 7
 			A.update_icon()
@@ -166,17 +166,17 @@
 		if (flag)
 			return
 		if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-			usr << "\red You don't have the dexterity to do this!"
+			usr << "<span class='alert'> You don't have the dexterity to do this!</span>"
 			return
 		src.add_fingerprint(user)
 		if (src.bullets < 1)
-			user.show_message("\red *click* *click*", 2)
+			user.show_message("<span class='alert'> *click* *click*</span>", 2)
 			playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 			return
 		playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
 		src.bullets--
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red <B>[] fires a cap gun at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
+			O.show_message(text("<span class='alert'> <B>[] fires a cap gun at []!</B></span>", user, target), 1, "<span class='alert'> You hear a gunshot</span>", 2)
 
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"
@@ -221,7 +221,7 @@
 				bullets++
 				user << "<span class='notice'> You load the foam dart into the crossbow.</span>"
 			else
-				usr << "\red It's already fully loaded."
+				usr << "<span class='alert'> It's already fully loaded.</span>"
 
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
@@ -247,7 +247,7 @@
 						if(!istype(M,/mob/living)) continue
 						if(M == user) continue
 						for(var/mob/O in viewers(world.view, D))
-							O.show_message(text("\red [] was hit by the foam dart!", M), 1)
+							O.show_message(text("<span class='alert'> [] was hit by the foam dart!</span>", M), 1)
 						new /obj/item/toy/ammo/crossbow(M.loc)
 						qdel(D)
 						return
@@ -269,7 +269,7 @@
 		else if (bullets == 0)
 			user.Weaken(5)
 			for(var/mob/O in viewers(world.view, user))
-				O.show_message(text("\red [] realized they were out of ammo and starting scrounging for some!", user), 1)
+				O.show_message(text("<span class='alert'> [] realized they were out of ammo and starting scrounging for some!</span>", user), 1)
 
 
 	attack(mob/M as mob, mob/user as mob)
@@ -281,15 +281,15 @@
 
 			for(var/mob/O in viewers(M, null))
 				if(O.client)
-					O.show_message(text("\red <B>[] casually lines up a shot with []'s head and pulls the trigger!</B>", user, M), 1, "\red You hear the sound of foam against skull", 2)
-					O.show_message(text("\red [] was hit in the head by the foam dart!", M), 1)
+					O.show_message(text("<span class='alert'> <B>[] casually lines up a shot with []'s head and pulls the trigger!</B></span>", user, M), 1, "<span class='alert'> You hear the sound of foam against skull</span>", 2)
+					O.show_message(text("<span class='alert'> [] was hit in the head by the foam dart!</span>", M), 1)
 
 			playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
 			new /obj/item/toy/ammo/crossbow(M.loc)
 			src.bullets--
 		else if (M.lying && src.bullets == 0)
 			for(var/mob/O in viewers(M, null))
-				if (O.client)	O.show_message(text("\red <B>[] casually lines up a shot with []'s head, pulls the trigger, then realizes they are out of ammo and drops to the floor in search of some!</B>", user, M), 1, "\red You hear someone fall", 2)
+				if (O.client)	O.show_message(text("<span class='alert'> <B>[] casually lines up a shot with []'s head, pulls the trigger, then realizes they are out of ammo and drops to the floor in search of some!</B></span>", user, M), 1, "<span class='alert'> You hear someone fall</span>", 2)
 			user.Weaken(5)
 		return
 
@@ -377,7 +377,7 @@
 	var/colourName = "red" //for updateIcon purposes
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='alert'> <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b></span>"
 		return (BRUTELOSS|OXYLOSS)
 
 /*
@@ -396,7 +396,7 @@
 		s.set_up(3, 1, src)
 		s.start()
 		new /obj/effect/decal/cleanable/ash(src.loc)
-		src.visible_message("\red The [src.name] explodes!","\red You hear a snap!")
+		src.visible_message("<span class='alert'> The [src.name] explodes!</span>","<span class='alert'> You hear a snap!</span>")
 		playsound(src, 'sound/effects/snap.ogg', 50, 1)
 		qdel(src)
 
@@ -404,13 +404,13 @@
 	if((ishuman(H))) //i guess carp and shit shouldn't set them off
 		var/mob/living/carbon/M = H
 		if(M.m_intent == "run")
-			M << "\red You step on the snap pop!"
+			M << "<span class='alert'> You step on the snap pop!</span>"
 
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(2, 0, src)
 			s.start()
 			new /obj/effect/decal/cleanable/ash(src.loc)
-			src.visible_message("\red The [src.name] explodes!","\red You hear a snap!")
+			src.visible_message("<span class='alert'> The [src.name] explodes!</span>","<span class='alert'> You hear a snap!</span>")
 			playsound(src, 'sound/effects/snap.ogg', 50, 1)
 			qdel(src)
 
@@ -472,7 +472,7 @@
 				for(var/atom/T in get_turf(D))
 					D.reagents.reaction(T)
 					if(ismob(T) && T:client)
-						T:client << "\red [user] has sprayed you with water!"
+						T:client << "<span class='alert'> [user] has sprayed you with water!</span>"
 				sleep(4)
 			qdel(D)
 

@@ -338,9 +338,9 @@
 			M.mutations.Add(HULK)
 	if (isblockon(getblock(M.dna.struc_enzymes, HEADACHEBLOCK,3),HEADACHEBLOCK))
 		M.disabilities |= EPILEPSY
-		M << "\red You get a headache."
+		M << "<span class='alert'> You get a headache.</span>"
 	if (isblockon(getblock(M.dna.struc_enzymes, FAKEBLOCK,3),FAKEBLOCK))
-		M << "\red You feel strange."
+		M << "<span class='alert'> You feel strange.</span>"
 		if (prob(95))
 			if(prob(50))
 				randmutb(M)
@@ -350,13 +350,13 @@
 			randmutg(M)
 	if (isblockon(getblock(M.dna.struc_enzymes, COUGHBLOCK,3),COUGHBLOCK))
 		M.disabilities |= COUGHING
-		M << "\red You start coughing."
+		M << "<span class='alert'> You start coughing.</span>"
 	if (isblockon(getblock(M.dna.struc_enzymes, CLUMSYBLOCK,3),CLUMSYBLOCK))
-		M << "\red You feel lightheaded."
+		M << "<span class='alert'> You feel lightheaded.</span>"
 		M.mutations.Add(CLUMSY)
 	if (isblockon(getblock(M.dna.struc_enzymes, TWITCHBLOCK,3),TWITCHBLOCK))
 		M.disabilities |= TOURETTES
-		M << "\red You twitch."
+		M << "<span class='alert'> You twitch.</span>"
 	if (isblockon(getblock(M.dna.struc_enzymes, XRAYBLOCK,3),XRAYBLOCK))
 		if(probinj(30,inj) || (XRAY in old_mutations))
 			M << "<span class='notice'> The walls suddenly disappear.</span>"
@@ -366,14 +366,14 @@
 			M.mutations.Add(XRAY)
 	if (isblockon(getblock(M.dna.struc_enzymes, NERVOUSBLOCK,3),NERVOUSBLOCK))
 		M.disabilities |= NERVOUS
-		M << "\red You feel nervous."
+		M << "<span class='alert'> You feel nervous.</span>"
 	if (isblockon(getblock(M.dna.struc_enzymes, FIREBLOCK,3),FIREBLOCK))
 		if(probinj(30,inj) || (COLD_RESISTANCE in old_mutations))
 			M << "<span class='notice'> Your body feels warm.</span>"
 			M.mutations.Add(COLD_RESISTANCE)
 	if (isblockon(getblock(M.dna.struc_enzymes, BLINDBLOCK,3),BLINDBLOCK))
 		M.sdisabilities |= BLIND
-		M << "\red You can't seem to see anything."
+		M << "<span class='alert'> You can't seem to see anything.</span>"
 	if (isblockon(getblock(M.dna.struc_enzymes, TELEBLOCK,3),TELEBLOCK))
 		if(probinj(15,inj) || (TK in old_mutations))
 			M << "<span class='notice'> You feel smarter.</span>"
@@ -381,7 +381,7 @@
 	if (isblockon(getblock(M.dna.struc_enzymes, DEAFBLOCK,3),DEAFBLOCK))
 		M.sdisabilities |= DEAF
 		M.ear_deaf = 1
-		M << "\red Its kinda quiet.."
+		M << "<span class='alert'> Its kinda quiet..</span>"
 	if (isblockon(getblock(M.dna.struc_enzymes, GLASSESBLOCK,3),GLASSESBLOCK))
 		M.disabilities |= NEARSIGHTED
 		M << "Your eyes feel weird..."

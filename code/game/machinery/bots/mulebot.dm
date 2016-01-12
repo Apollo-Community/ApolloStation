@@ -120,7 +120,7 @@
 		if (src.health < maxhealth)
 			src.health = min(maxhealth, src.health+25)
 			user.visible_message(
-				"\red [user] repairs [src]!",
+				"<span class='alert'> [user] repairs [src]!</span>",
 				"<span class='notice'> You repair [src]!</span>"
 			)
 		else
@@ -128,7 +128,7 @@
 	else if(load && ismob(load))  // chance to knock off rider
 		if(prob(1+I.force * 2))
 			unload(0)
-			user.visible_message("\red [user] knocks [load] off [src] with \the [I]!", "\red You knock [load] off [src] with \the [I]!")
+			user.visible_message("<span class='alert'> [user] knocks [load] off [src] with \the [I]!</span>", "<span class='alert'> You knock [load] off [src] with \the [I]!</span>")
 		else
 			user << "You hit [src] with \the [I] but to no effect."
 	else
@@ -152,7 +152,7 @@
 	if(prob(50) && !isnull(load))
 		unload(0)
 	if(prob(25))
-		src.visible_message("\red Something shorts out inside [src]!")
+		src.visible_message("<span class='alert'> Something shorts out inside [src]!</span>")
 		var/index = 1<< (rand(0,9))
 		if(wires & index)
 			wires &= ~index
@@ -252,14 +252,14 @@
 					locked = !locked
 					updateDialog()
 				else
-					usr << "\red Access denied."
+					usr << "<span class='alert'> Access denied.</span>"
 					return
 			if("power")
 				if (src.on)
 					turn_off()
 				else if (cell && !open)
 					if (!turn_on())
-						usr << "\red You can't switch on [src]."
+						usr << "<span class='alert'> You can't switch on [src].</span>"
 						return
 				else
 					return
@@ -697,9 +697,9 @@
 		var/mob/M = obs
 		if(ismob(M))
 			if(istype(M,/mob/living/silicon/robot))
-				src.visible_message("\red [src] bumps into [M]!")
+				src.visible_message("<span class='alert'> [src] bumps into [M]!</span>")
 			else
-				src.visible_message("\red [src] knocks over [M]!")
+				src.visible_message("<span class='alert'> [src] knocks over [M]!</span>")
 				M.stop_pulling()
 				M.Stun(8)
 				M.Weaken(5)
@@ -713,7 +713,7 @@
 // called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
 /obj/machinery/bot/mulebot/proc/RunOver(var/mob/living/carbon/human/H)
-	src.visible_message("\red [src] drives over [H]!")
+	src.visible_message("<span class='alert'> [src] drives over [H]!</span>")
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 
 	var/damage = rand(5,15)
@@ -866,7 +866,7 @@
 
 
 /obj/machinery/bot/mulebot/explode()
-	src.visible_message("\red <B>[src] blows apart!</B>", 1)
+	src.visible_message("<span class='alert'> <B>[src] blows apart!</B></span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)

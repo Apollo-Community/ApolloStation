@@ -28,7 +28,7 @@
 								src << "<i>The [met.name] is already feeding on this subject...</i>"
 								return
 						src << "<span class='notice'> <i>I have latched onto the subject and begun feeding...</i></span>"
-						M << "\red <b>The [src.name] has latched onto your head!</b>"
+						M << "<span class='alert'> <b>The [src.name] has latched onto your head!</b></span>"
 						Feedon(M)
 
 					else

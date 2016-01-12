@@ -169,10 +169,10 @@
 		var/obj/item/device/mmi/M = W
 		if(check_completion())
 			if(!istype(loc,/turf))
-				user << "\red You can't put \the [W] in, the frame has to be standing on the ground to be perfectly precise."
+				user << "<span class='alert'> You can't put \the [W] in, the frame has to be standing on the ground to be perfectly precise.</span>"
 				return
 			if(!M.brainmob)
-				user << "\red Sticking an empty [W] into the frame would sort of defeat the purpose."
+				user << "<span class='alert'> Sticking an empty [W] into the frame would sort of defeat the purpose.</span>"
 				return
 			if(!M.brainmob.key)
 				var/ghost_can_reenter = 0
@@ -186,15 +186,15 @@
 					return
 
 			if(M.brainmob.stat == DEAD)
-				user << "\red Sticking a dead [W] into the frame would sort of defeat the purpose."
+				user << "<span class='alert'> Sticking a dead [W] into the frame would sort of defeat the purpose.</span>"
 				return
 
 			if(M.brainmob.mind in ticker.mode.head_revolutionaries)
-				user << "\red The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the [W]."
+				user << "<span class='alert'> The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the [W].</span>"
 				return
 
 			if(jobban_isbanned(M.brainmob, "Cyborg"))
-				user << "\red This [W] does not seem to fit."
+				user << "<span class='alert'> This [W] does not seem to fit.</span>"
 				return
 
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc), unfinished = 1)
@@ -270,7 +270,7 @@
 	..()
 	if(istype(W, /obj/item/device/flash))
 		if(istype(user,/mob/living/silicon/robot))
-			user << "\red How do you propose to do that?"
+			user << "<span class='alert'> How do you propose to do that?</span>"
 			return
 		else if(src.flash1 && src.flash2)
 			user << "<span class='notice'> You have already inserted the eyes!</span>"
@@ -297,9 +297,9 @@
 /obj/item/robot_parts/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/card/emag))
 		if(sabotaged)
-			user << "\red [src] is already sabotaged!"
+			user << "<span class='alert'> [src] is already sabotaged!</span>"
 		else
-			user << "\red You slide [W] into the dataport on [src] and short out the safeties."
+			user << "<span class='alert'> You slide [W] into the dataport on [src] and short out the safeties.</span>"
 			sabotaged = 1
 		return
 	..()

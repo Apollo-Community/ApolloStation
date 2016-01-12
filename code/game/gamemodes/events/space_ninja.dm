@@ -99,7 +99,7 @@ var/ninja_confirmed_selection = 0
 /proc/space_ninja_arrival(var/assign_key = null, var/assign_mission = null)
 
 	if(ninja_selection_active)
-		usr << "\red Ninja selection already in progress. Please wait until it ends."
+		usr << "<span class='alert'> Ninja selection already in progress. Please wait until it ends.</span>"
 		return
 
 	var/datum/game_mode/current_mode = ticker.mode
@@ -177,7 +177,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 				break
 
 	if(!candidate_mob)
-		usr << "\red The randomly chosen mob was not found in the second check."
+		usr << "<span class='alert'> The randomly chosen mob was not found in the second check.</span>"
 		return
 
 	ninja_selection_active = 1
@@ -186,7 +186,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 
 	spawn(1)
 		if(alert(candidate_mob, "You have been selected to play as a space ninja. Would you like to play as this role? (You have 30 seconds to accept - You will spawn in 30 seconds if you accept)",,"Yes","No")!="Yes")
-			usr << "\red The selected candidate for space ninja declined."
+			usr << "<span class='alert'> The selected candidate for space ninja declined.</span>"
 			return
 
 		ninja_confirmed_selection = this_selection_id
@@ -194,12 +194,12 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 	spawn(300)
 		if(!ninja_selection_active || (this_selection_id != ninja_selection_id ))
 			ninja_selection_active = 0
-			candidate_mob << "\red Sorry, you were too late. You only had 30 seconds to accept."
+			candidate_mob << "<span class='alert'> Sorry, you were too late. You only had 30 seconds to accept.</span>"
 			return
 
 		if(ninja_confirmed_selection != ninja_selection_id)
 			ninja_selection_active = 0
-			usr << "\red The ninja did not accept the role in time."
+			usr << "<span class='alert'> The ninja did not accept the role in time.</span>"
 			return
 
 		ninja_selection_active = 0

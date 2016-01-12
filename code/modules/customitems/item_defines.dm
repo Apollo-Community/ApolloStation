@@ -176,11 +176,11 @@
 
 /obj/item/fluff/ana_issek_2/attack_self(mob/user as mob)
 	if(isliving(user))
-		user.visible_message("\red [user] flashes their golden security badge.\nIt reads: Ana Issek, NT Security.","\red You display the faded bage.\nIt reads: Ana Issek, NT Security.")
+		user.visible_message("<span class='alert'> [user] flashes their golden security badge.\nIt reads: Ana Issek, NT Security.</span>","<span class='alert'> You display the faded bage.\nIt reads: Ana Issek, NT Security.</span>")
 
 /obj/item/fluff/ana_issek_2/attack(mob/living/carbon/human/M, mob/living/user)
 	if(isliving(user))
-		user.visible_message("\red [user] invades [M]'s personal space, thrusting [src] into their face insistently.","\red You invade [M]'s personal space, thrusting [src] into their face insistently. You are the law.")
+		user.visible_message("<span class='alert'> [user] invades [M]'s personal space, thrusting [src] into their face insistently.</span>","<span class='alert'> You invade [M]'s personal space, thrusting [src] into their face insistently. You are the law.</span>")
 
 /obj/item/weapon/soap/fluff/azare_siraj_1 //mister fox: Azare Siraj
 	name = "S'randarr's Tongue Leaf"
@@ -431,7 +431,7 @@
 		user << "<span class='notice'> You click \the [src] but get no reaction. Must be dead.</span>"
 		return
 	if(!reagents.total_volume)
-		user << "\red \The [src] is empty."
+		user << "<span class='alert'> \The [src] is empty.</span>"
 		return
 	if (!( istype(M, /mob) ))
 		return

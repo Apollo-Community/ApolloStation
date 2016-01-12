@@ -51,13 +51,13 @@
 		return
 
 	if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
-		usr << "\red You do not have permission to do this!"
+		usr << "<span class='alert'> You do not have permission to do this!</span>"
 		return
 
 	establish_db_connection()
 
 	if(!dbcon.IsConnected())
-		usr << "\red Failed to establish database connection"
+		usr << "<span class='alert'> Failed to establish database connection</span>"
 		return
 
 	if(!adm_ckey || !new_rank)
@@ -101,12 +101,12 @@
 		return
 
 	if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
-		usr << "\red You do not have permission to do this!"
+		usr << "<span class='alert'> You do not have permission to do this!</span>"
 		return
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())
-		usr << "\red Failed to establish database connection"
+		usr << "<span class='alert'> Failed to establish database connection</span>"
 		return
 
 	if(!adm_ckey || !new_permission)

@@ -143,8 +143,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/datum/gas_mixture/env = T.return_air()
 
 	var/t = "<span class='notice'> Coordinates: [T.x],[T.y],[T.z]\n</span>"
-	t += "\red Temperature: [env.temperature]\n"
-	t += "\red Pressure: [env.return_pressure()]kPa\n"
+	t += "<span class='alert'> Temperature: [env.temperature]\n</span>"
+	t += "<span class='alert'> Pressure: [env.return_pressure()]kPa\n</span>"
 	for(var/g in env.gas)
 		t += "<span class='notice'> [g]: [env.gas[g]] / [env.gas[g] * R_IDEAL_GAS_EQUATION * env.temperature / env.volume]kPa\n</span>"
 
@@ -310,28 +310,28 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			return
 		else
 			if(alert("Spawn that person a tome?",,"Yes","No")=="Yes")
-				M << "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie. A tome, a message from your new master, appears on the ground."
+				M << "<span class='alert'> You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie. A tome, a message from your new master, appears on the ground.</span>"
 				new /obj/item/weapon/book/tome(M.loc)
 			else
-				M << "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie."
+				M << "<span class='alert'> You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</span>"
 			var/glimpse=pick("1","2","3","4","5","6","7","8")
 			switch(glimpse)
 				if("1")
-					M << "\red You remembered one thing from the glimpse... [cultwords["travel"]] is travel..."
+					M << "<span class='alert'> You remembered one thing from the glimpse... [cultwords["travel"]] is travel...</span>"
 				if("2")
-					M << "\red You remembered one thing from the glimpse... [cultwords["blood"]] is blood..."
+					M << "<span class='alert'> You remembered one thing from the glimpse... [cultwords["blood"]] is blood...</span>"
 				if("3")
-					M << "\red You remembered one thing from the glimpse... [cultwords["join"]] is join..."
+					M << "<span class='alert'> You remembered one thing from the glimpse... [cultwords["join"]] is join...</span>"
 				if("4")
-					M << "\red You remembered one thing from the glimpse... [cultwords["hell"]] is Hell..."
+					M << "<span class='alert'> You remembered one thing from the glimpse... [cultwords["hell"]] is Hell...</span>"
 				if("5")
-					M << "\red You remembered one thing from the glimpse... [cultwords["destroy"]] is destroy..."
+					M << "<span class='alert'> You remembered one thing from the glimpse... [cultwords["destroy"]] is destroy...</span>"
 				if("6")
-					M << "\red You remembered one thing from the glimpse... [cultwords["technology"]] is technology..."
+					M << "<span class='alert'> You remembered one thing from the glimpse... [cultwords["technology"]] is technology...</span>"
 				if("7")
-					M << "\red You remembered one thing from the glimpse... [cultwords["self"]] is self..."
+					M << "<span class='alert'> You remembered one thing from the glimpse... [cultwords["self"]] is self...</span>"
 				if("8")
-					M << "\red You remembered one thing from the glimpse... [cultwords["see"]] is see..."
+					M << "<span class='alert'> You remembered one thing from the glimpse... [cultwords["see"]] is see...</span>"
 
 			if(M.mind)
 				M.mind.special_role = "Cultist"
@@ -1072,7 +1072,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				SMES.output_level = 75000
 
 	if(!found_the_pump && response == "Setup Completely")
-		src << "\red Unable to locate air supply to fill up with coolant, adding some coolant around the supermatter"
+		src << "<span class='alert'> Unable to locate air supply to fill up with coolant, adding some coolant around the supermatter</span>"
 		var/turf/simulated/T = SM.loc
 		T.zone.air.gas["nitrogen"] += 450
 		T.zone.air.temperature = 50

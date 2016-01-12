@@ -81,7 +81,7 @@
 		usr << text("<span class='notice'> You kick the display case.</span>")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << text("\red [] kicks the display case.", usr)
+				O << text("<span class='alert'> [] kicks the display case.</span>", usr)
 		src.health -= 2
 		healthcheck()
 		return

@@ -47,7 +47,7 @@
 					user.drop_item()
 					P.loc = src
 				else
-					user << "\red This frame does not accept circuit boards of this type!"
+					user << "<span class='alert'> This frame does not accept circuit boards of this type!</span>"
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "<span class='notice'> You screw the circuit board into place.</span>"

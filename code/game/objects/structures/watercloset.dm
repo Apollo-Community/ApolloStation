@@ -356,7 +356,7 @@
 		return
 
 	if(busy)
-		user << "\red Someone's already washing here."
+		user << "<span class='alert'> Someone's already washing here.</span>"
 		return
 
 	usr << "<span class='notice'> You start washing your hands.</span>"
@@ -376,7 +376,7 @@
 
 /obj/structure/sink/attackby(obj/item/O as obj, mob/user as mob)
 	if(busy)
-		user << "\red Someone's already washing here."
+		user << "<span class='alert'> Someone's already washing here.</span>"
 		return
 
 	var/obj/item/weapon/reagent_containers/RG = O

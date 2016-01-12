@@ -48,8 +48,8 @@
 	attack_verb = list("stabbed")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</b>")
+		viewers(user) << pick("<span class='alert'> <b>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</b></span>", \
+							"<span class='alert'> <b>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</b></span>")
 		return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New()
@@ -121,15 +121,15 @@
 			var/turf/p_loc_m = C.loc
 
 			user.visible_message("<span class='notice'> [user] begins to cut off [C]'s antennae.</span>")
-			C << "\red <B>[user] begins to cut off your antennae!<B>"
+			C << "<span class='alert'> <B>[user] begins to cut off your antennae!<B></span>"
 			do_after(C, 150)
 			if(p_loc == user.loc && p_loc_m == C.loc)
 				qdel(C.internal_organs_by_name["antennae"])
 				C.remove_language("Wryn Hivemind")
 				new /obj/item/organ/wryn/hivenode(user.loc)
 				user << "<span class='notice'> You hear a loud crunch as you mercilessly off cut [C]'s antennae.</span>"
-				C << "\red <B>You hear a loud crunch as the wirecutters rip through your antennae.</B>"
-				C << "\red <B>Its so quiet...</B>"
+				C << "<span class='alert'> <B>You hear a loud crunch as the wirecutters rip through your antennae.</B></span>"
+				C << "<span class='alert'> <B>Its so quiet...</B></span>"
 				C.h_style = "Bald"
 				C.update_hair()
 		else
@@ -192,7 +192,7 @@
 /obj/item/weapon/weldingtool/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/screwdriver))
 		if(welding)
-			user << "\red Stop welding first!"
+			user << "<span class='alert'> Stop welding first!</span>"
 			return
 		status = !status
 		if(status)
@@ -275,7 +275,7 @@
 	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.welding)
 		message_admins("[key_name_admin(user)] triggered a fueltank explosion with a welding tool.")
 		log_game("[key_name(user)] triggered a fueltank explosion with a welding tool.")
-		user << "\red You begin welding on the fueltank and with a moment of lucidity you realize, this might not have been the smartest thing you've ever done."
+		user << "<span class='alert'> You begin welding on the fueltank and with a moment of lucidity you realize, this might not have been the smartest thing you've ever done.</span>"
 		var/obj/structure/reagent_dispensers/fueltank/tank = O
 		tank.explode()
 		return
@@ -387,29 +387,29 @@
 			return
 		switch(safety)
 			if(1)
-				usr << "\red Your eyes sting a little."
+				usr << "<span class='alert'> Your eyes sting a little.</span>"
 				E.damage += rand(1, 2)
 				if(E.damage > 12)
 					user.eye_blurry += rand(3,6)
 			if(0)
-				usr << "\red Your eyes burn."
+				usr << "<span class='alert'> Your eyes burn.</span>"
 				E.damage += rand(2, 4)
 				if(E.damage > 10)
 					E.damage += rand(4,10)
 			if(-1)
-				usr << "\red Your thermals intensify the welder's glow. Your eyes itch and burn severely."
+				usr << "<span class='alert'> Your thermals intensify the welder's glow. Your eyes itch and burn severely.</span>"
 				user.eye_blurry += rand(12,20)
 				E.damage += rand(12, 16)
 		if(safety<2)
 
 			if(E.damage > 10)
-				user << "\red Your eyes are really starting to hurt. This can't be good for you!"
+				user << "<span class='alert'> Your eyes are really starting to hurt. This can't be good for you!</span>"
 
 			if (E.damage >= E.min_broken_damage)
-				user << "\red You go blind!"
+				user << "<span class='alert'> You go blind!</span>"
 				user.sdisabilities |= BLIND
 			else if (E.damage >= E.min_bruised_damage)
-				user << "\red You go blind!"
+				user << "<span class='alert'> You go blind!</span>"
 				user.eye_blind = 5
 				user.eye_blurry = 5
 				user.disabilities |= NEARSIGHTED
@@ -485,12 +485,12 @@
 			var/mob/living/carbon/human/H = M
 			if(H.species.flags & IS_SYNTHETIC)
 				if(M == user)
-					user << "\red You can't repair damage to your own body - it's against OH&S."
+					user << "<span class='alert'> You can't repair damage to your own body - it's against OH&S.</span>"
 					return
 
 		if(S.brute_dam)
 			S.heal_damage(15,0,0,1)
-			user.visible_message("\red \The [user] patches some dents on \the [M]'s [S.display_name] with \the [src].")
+			user.visible_message("<span class='alert'> \The [user] patches some dents on \the [M]'s [S.display_name] with \the [src].</span>")
 			return
 		else
 			user << "Nothing to fix!"

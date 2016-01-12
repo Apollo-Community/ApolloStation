@@ -211,7 +211,7 @@
 		H << "<span class='notice'> You retract your hardsuit helmet.</span>"
 	else
 		if(H.head)
-			H << "\red You cannot deploy your helmet while wearing another helmet."
+			H << "<span class='alert'> You cannot deploy your helmet while wearing another helmet.</span>"
 			return
 		//TODO: Species check, skull damage for forcing an unfitting helmet on?
 		helmet.loc = H

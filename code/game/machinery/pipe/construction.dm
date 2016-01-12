@@ -435,11 +435,11 @@ Buildable meters
 
 	for(var/obj/machinery/atmospherics/M in src.loc)
 		if((M.initialize_directions & pipe_dir) && M.check_connect_types_construction(M,src))	// matches at least one direction on either type of pipe & same connection type
-			user << "\red There is already a pipe of the same type at this location."
+			user << "<span class='alert'> There is already a pipe of the same type at this location.</span>"
 			return 1
 	// no conflicts found
 
-	var/pipefailtext = "\red There's nothing to connect this pipe section to!" //(with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
+	var/pipefailtext = "<span class='alert'> There's nothing to connect this pipe section to!</span>" //(with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
 
 	//TODO: Move all of this stuff into the various pipe constructors.
 	switch(pipe_type)
@@ -1140,7 +1140,7 @@ Buildable meters
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if(!locate(/obj/machinery/atmospherics/pipe, src.loc))
-		user << "\red You need to fasten it to a pipe"
+		user << "<span class='alert'> You need to fasten it to a pipe</span>"
 		return 1
 	new/obj/machinery/meter( src.loc )
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)

@@ -38,7 +38,7 @@
 			prisoner.equip_to_slot_or_qdel(new /obj/item/clothing/under/color/orange(prisoner), slot_w_uniform)
 			prisoner.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/orange(prisoner), slot_shoes)
 		spawn(50)
-			M << "\red You have been sent to the prison station!"
+			M << "<span class='alert'> You have been sent to the prison station!</span>"
 		log_admin("[key_name(usr)] sent [key_name(M)] to the prison station.")
 		message_admins("<span class='notice'> [key_name_admin(usr)] sent [key_name_admin(M)] to the prison station.</span>")
 		feedback_add_details("admin_verb","PRISON") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -296,9 +296,9 @@ Ccomp's first proc.
 			if(g.antagHUD)
 				g.antagHUD = 0						// Disable it on those that have it enabled
 				g.has_enabled_antagHUD = 2				// We'll allow them to respawn
-				g << "\red <B>The Administrator has disabled AntagHUD </B>"
+				g << "<span class='alert'> <B>The Administrator has disabled AntagHUD </B></span>"
 		config.antag_hud_allowed = 0
-		src << "\red <B>AntagHUD usage has been disabled</B>"
+		src << "<span class='alert'> <B>AntagHUD usage has been disabled</B></span>"
 		action = "disabled"
 	else
 		for(var/mob/dead/observer/g in get_ghosts())
@@ -330,13 +330,13 @@ Ccomp's first proc.
 		src << "<span class='notice'> <B>AntagHUD restrictions have been lifted</B></span>"
 	else
 		for(var/mob/dead/observer/g in get_ghosts())
-			g << "\red <B>The administrator has placed restrictions on joining the round if you use AntagHUD</B>"
-			g << "\red <B>Your AntagHUD has been disabled, you may choose to re-enabled it but will be under restrictions </B>"
+			g << "<span class='alert'> <B>The administrator has placed restrictions on joining the round if you use AntagHUD</B></span>"
+			g << "<span class='alert'> <B>Your AntagHUD has been disabled, you may choose to re-enabled it but will be under restrictions </B></span>"
 			g.antagHUD = 0
 			g.has_enabled_antagHUD = 0
 		action = "placed restrictions"
 		config.antag_hud_restricted = 1
-		src << "\red <B>AntagHUD restrictions have been enabled</B>"
+		src << "<span class='alert'> <B>AntagHUD restrictions have been enabled</B></span>"
 
 	log_admin("[key_name(usr)] has [action] on joining the round if they use AntagHUD")
 	message_admins("Admin [key_name_admin(usr)] has [action] on joining the round if they use AntagHUD")
@@ -510,7 +510,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		else
 			M.add_ion_law(input)
 			for(var/mob/living/silicon/ai/O in mob_list)
-				O << "<span class='alert'></span>" + input + "\red...LAWS UPDATED"
+				O << "<span class='alert'></span>" + input + "<span class='alert'>...LAWS UPDATED</span>"
 				O.show_laws()
 
 	log_admin("Admin [key_name(usr)] has added a new AI law - [input]")
@@ -536,7 +536,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		M.revive()
 
 		log_admin("[key_name(usr)] healed / revived [key_name(M)]")
-		message_admins("\red Admin [key_name_admin(usr)] healed / revived [key_name_admin(M)]!")
+		message_admins("<span class='alert'> Admin [key_name_admin(usr)] healed / revived [key_name_admin(M)]!</span>")
 	else
 		alert("Admin revive disabled")
 	feedback_add_details("admin_verb","REJU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -566,7 +566,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if("Yes")
 			command_announcement.Announce(input, customname, new_sound = 'sound/AI/commandreport.ogg');
 		if("No")
-			world << "\red New NanoTrasen Update available at all communication consoles."
+			world << "<span class='alert'> New NanoTrasen Update available at all communication consoles.</span>"
 			world << sound('sound/AI/commandreport.ogg')
 
 	log_admin("[key_name(src)] has created a command report: [input]")
@@ -716,9 +716,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			return
 		if(M)
 			AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
-			M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>"
-			M << "\red This is a temporary ban, it will be removed in [mins] minutes."
-			M << "\red To try to resolve this matter head to http://ss13.donglabs.com/forum/"
+			M << "<span class='alert'><BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG></span>"
+			M << "<span class='alert'> This is a temporary ban, it will be removed in [mins] minutes.</span>"
+			M << "<span class='alert'> To try to resolve this matter head to http://ss13.donglabs.com/forum/</span>"
 			log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 			message_admins("<span class='notice'>[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.</span>")
 			world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[html_decode(reason)]&time=[mins]&server=[replacetext(config.server_name, "#", "")]")
@@ -731,9 +731,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if(!reason)
 			return
 		AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
-		M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>"
-		M << "\red This is a permanent ban."
-		M << "\red To try to resolve this matter head to http://ss13.donglabs.com/forum/"
+		M << "<span class='alert'><BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG></span>"
+		M << "<span class='alert'> This is a permanent ban.</span>"
+		M << "<span class='alert'> To try to resolve this matter head to http://ss13.donglabs.com/forum/</span>"
 		log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
 		message_admins("<span class='notice'>[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.</span>")
 		world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[html_decode(reason)]&time=perma&server=[replacetext(config.server_name, "#", "")]")
@@ -870,7 +870,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "Attack Log"
 
-	usr << text("\red <b>Attack Log for []</b>", mob)
+	usr << text("<span class='alert'> <b>Attack Log for []</b></span>", mob)
 	for(var/t in M.attack_log)
 		usr << t
 	feedback_add_details("admin_verb","ATTL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -945,7 +945,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			switch(alert("Is this the correct object?","Object found!","No","Yes"))
 				if("Yes")	return
 
-	src << "\red No more instances of <b>[type_text]</b> exist on the current map"
+	src << "<span class='alert'> No more instances of <b>[type_text]</b> exist on the current map</span>"
 
 /client/proc/gas_del_zone()
 	set category = "Admin"
@@ -962,7 +962,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			message_admins("Admin [key_name_admin(usr)] has deleted [del_gas] from [usr.loc:loc.name].", "DEBUG:")
 			spawn(35)
 				if(del_gas in G)
-					usr << "\red <b>The [del_gas] purge in [usr.loc:loc.name] was not successful. Make sure gas sources are closed.</b>"
+					usr << "<span class='alert'> <b>The [del_gas] purge in [usr.loc:loc.name] was not successful. Make sure gas sources are closed.</b></span>"
 	else
 		usr << "You're doing something wierd right now.. stop it."		// <-- probably kwask
 

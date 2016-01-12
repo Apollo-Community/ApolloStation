@@ -18,19 +18,19 @@
 
 /obj/item/device/robotanalyzer/attack(mob/living/M as mob, mob/living/user as mob)
 	if(( (CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
-		user << text("\red You try to analyze the floor's vitals!")
+		user << text("<span class='alert'> You try to analyze the floor's vitals!</span>")
 		for(var/mob/O in viewers(M, null))
-			O.show_message(text("\red [user] has analyzed the floor's vitals!"), 1)
+			O.show_message(text("<span class='alert'> [user] has analyzed the floor's vitals!</span>"), 1)
 		user.show_message(text("<span class='notice'> Analyzing Results for The floor:\n\t Overall Status: Healthy</span>"), 1)
 		user.show_message(text("<span class='notice'> \t Damage Specifics: [0]-[0]-[0]-[0]</span>"), 1)
 		user.show_message("<span class='notice'> Key: Suffocation/Toxin/Burns/Brute</span>", 1)
 		user.show_message("<span class='notice'> Body Temperature: ???</span>", 1)
 		return
 	if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		user << "\red You don't have the dexterity to do this!"
+		user << "<span class='alert'> You don't have the dexterity to do this!</span>"
 		return
 	if(!istype(M, /mob/living/silicon/robot) && !(ishuman(M) && (M:species.flags & IS_SYNTHETIC)))
-		user << "\red You can't analyze non-robotic things!"
+		user << "<span class='alert'> You can't analyze non-robotic things!</span>"
 		return
 
 	user.visible_message("<span class='notice'> [user] has analyzed [M]'s components.","<span class='notice'> You have analyzed [M]'s components.")
@@ -58,7 +58,7 @@
 		else
 			user.show_message("<span class='notice'> \t Components are OK.</span>",1)
 		if(H.emagged && prob(5))
-			user.show_message("\red \t ERROR: INTERNAL SYSTEMS COMPROMISED",1)
+			user.show_message("<span class='alert'> \t ERROR: INTERNAL SYSTEMS COMPROMISED</span>",1)
 
 	if (ishuman(M) && (M:species.flags & IS_SYNTHETIC))
 		var/mob/living/carbon/human/H = M
@@ -68,7 +68,7 @@
 			for(var/datum/organ/external/org in damaged)
 				user.show_message(text("<span class='notice'> \t []: [] - []</span>",	\
 				capitalize(org.display_name),					\
-				(org.brute_dam > 0)	?	"\red [org.brute_dam]"							:0,		\
+				(org.brute_dam > 0)	?	"<span class='alert'> [org.brute_dam]</span>"							:0,		\
 				(org.burn_dam > 0)	?	"<font color='#FFA500'>[org.burn_dam]</font>"	:0),1)
 		else
 			user.show_message("<span class='notice'> \t Components are OK.</span>",1)

@@ -44,7 +44,7 @@
 		grown_reagents = H.reagents
 
 	if(!grown_seed)
-		user << "\red [src] can tell you nothing about [target]."
+		user << "<span class='alert'> [src] can tell you nothing about [target].</span>"
 		return
 
 	var/dat = "<h3>Plant data for [target]</h3>"

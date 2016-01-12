@@ -222,9 +222,9 @@
 
 	var/text = ""
 	if(finished == 1)
-		world << "\red <FONT size = 3><B> The heads of staff were relieved of their posts! The revolutionaries win!</B></FONT>"
+		world << "<span class='alert'> <FONT size = 3><B> The heads of staff were relieved of their posts! The revolutionaries win!</B></FONT></span>"
 	else if(finished == 2)
-		world << "\red <FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT>"
+		world << "<span class='alert'> <FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT></span>"
 
 	world << "<FONT size = 2><B>The head revolutionaries were: </B></FONT>"
 	for(var/datum/mind/rev_mind in head_revolutionaries)
@@ -279,22 +279,22 @@ mob/living/carbon/human/proc
 		set name = "Rev-Convert"
 		if(((src.mind in ticker.mode:head_revolutionaries) || (src.mind in ticker.mode:revolutionaries)))
 			if((M.mind in ticker.mode:head_revolutionaries) || (M.mind in ticker.mode:revolutionaries))
-				src << "\red <b>[M] is already be a revolutionary!</b>"
+				src << "<span class='alert'> <b>[M] is already be a revolutionary!</b></span>"
 			else if(src.mind in ticker.mode:get_unconvertables())
-				src << "\red <b>[M] cannot be a revolutionary!</b>"
+				src << "<span class='alert'> <b>[M] cannot be a revolutionary!</b></span>"
 			else
 				if(world.time < M.mind.rev_cooldown)
-					src << "\red Wait five seconds before reconversion attempt."
+					src << "<span class='alert'> Wait five seconds before reconversion attempt.</span>"
 					return
-				src << "\red Attempting to convert [M]..."
+				src << "<span class='alert'> Attempting to convert [M]...</span>"
 				log_admin("[src]([src.ckey]) attempted to convert [M].")
-				message_admins("\red [src]([src.ckey]) attempted to convert [M].")
+				message_admins("<span class='alert'> [src]([src.ckey]) attempted to convert [M].</span>")
 				var/choice = alert(M,"Asked by [src]: Do you want to join the revolution?","Align Thyself with the Revolution!","No!","Yes!")
 				if(choice == "Yes!")
 					ticker.mode:add_revolutionary(M.mind)
 					M << "<span class='notice'> You join the revolution!</span>"
 					src << "<span class='notice'> <b>[M] joins the revolution!</b></span>"
 				else if(choice == "No!")
-					M << "\red You reject this traitorous cause!"
-					src << "\red <b>[M] does not support the revolution!</b>"
+					M << "<span class='alert'> You reject this traitorous cause!</span>"
+					src << "<span class='alert'> <b>[M] does not support the revolution!</b></span>"
 				M.mind.rev_cooldown = world.time+50

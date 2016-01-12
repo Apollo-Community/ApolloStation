@@ -153,7 +153,7 @@
 		var/mob/living/carbon/human/H = user
 		if(H.species.can_shred(H))
 			playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-			visible_message("\red <B>[user] smashes against the [src.name].</B>", 1)
+			visible_message("<span class='alert'> <B>[user] smashes against the [src.name].</B></span>", 1)
 			take_damage(25)
 			return
 	return src.attackby(user, user)
@@ -222,7 +222,7 @@
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
 		var/aforce = I.force
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		visible_message("\red <B>[src] was hit by [I].</B>")
+		visible_message("<span class='alert'> <B>[src] was hit by [I].</B></span>")
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			take_damage(aforce)
 		return

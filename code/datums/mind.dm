@@ -474,15 +474,15 @@ datum/mind
 
 				if("add")
 					H.implant_loyalty(H, override = TRUE)
-					H << "\red <Font size =3><B>You somehow have become the recepient of a loyalty transplant, and it just activated!</B></FONT>"
+					H << "<span class='alert'> <Font size =3><B>You somehow have become the recepient of a loyalty transplant, and it just activated!</B></FONT></span>"
 					if(src in ticker.mode.revolutionaries)
 						special_role = null
 						ticker.mode.revolutionaries -= src
-						src << "\red <Font size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a revolutionary.  Get back to work!</B></Font>"
+						src << "<span class='alert'> <Font size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a revolutionary.  Get back to work!</B></Font></span>"
 					if(src in ticker.mode.head_revolutionaries)
 						special_role = null
 						ticker.mode.head_revolutionaries -=src
-						src << "\red <Font size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a revolutionary.  Get back to work!</B></Font>"
+						src << "<span class='alert'> <Font size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a revolutionary.  Get back to work!</B></Font></span>"
 					if(src in ticker.mode.cult)
 						ticker.mode.cult -= src
 						ticker.mode.update_cult_icons_removed(src)
@@ -490,12 +490,12 @@ datum/mind
 						var/datum/game_mode/cult/cult = ticker.mode
 						if (istype(cult))
 							cult.memorize_cult_objectives(src)
-						current << "\red <FONT size = 3><B>The nanobots in the loyalty implant remove all thoughts about being in a cult.  Have a productive day!</B></FONT>"
+						current << "<span class='alert'> <FONT size = 3><B>The nanobots in the loyalty implant remove all thoughts about being in a cult.  Have a productive day!</B></FONT></span>"
 						memory = ""
 					if(src in ticker.mode.traitors)
 						ticker.mode.traitors -= src
 						special_role = null
-						current << "\red <FONT size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a traitor to Nanotrasen.  Have a nice day!</B></FONT>"
+						current << "<span class='alert'> <FONT size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a traitor to Nanotrasen.  Have a nice day!</B></FONT></span>"
 						log_admin("[key_name_admin(usr)] has de-traitor'ed [current].")
 				else
 
@@ -507,12 +507,12 @@ datum/mind
 				if("clear")
 					if(src in ticker.mode.revolutionaries)
 						ticker.mode.revolutionaries -= src
-						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary!</B></FONT>"
+						current << "<span class='alert'> <FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary!</B></FONT></span>"
 						ticker.mode.update_rev_icons_removed(src)
 						special_role = null
 					if(src in ticker.mode.head_revolutionaries)
 						ticker.mode.head_revolutionaries -= src
-						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a head revolutionary!</B></FONT>"
+						current << "<span class='alert'> <FONT size = 3><B>You have been brainwashed! You are no longer a head revolutionary!</B></FONT></span>"
 						ticker.mode.update_rev_icons_removed(src)
 						special_role = null
 						current.verbs -= /mob/living/carbon/human/proc/RevConvert
@@ -522,9 +522,9 @@ datum/mind
 					if(src in ticker.mode.head_revolutionaries)
 						ticker.mode.head_revolutionaries -= src
 						ticker.mode.update_rev_icons_removed(src)
-						current << "\red <FONT size = 3><B>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</B></FONT>"
+						current << "<span class='alert'> <FONT size = 3><B>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</B></FONT></span>"
 					else if(!(src in ticker.mode.revolutionaries))
-						current << "\red <FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT>"
+						current << "<span class='alert'> <FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>"
 						current << "<h3><B>Make sure to read the rules about ganking and be sure to make the round interesting for everyone!</B></h3>"
 						show_objectives(src)
 					else
@@ -538,7 +538,7 @@ datum/mind
 					if(src in ticker.mode.revolutionaries)
 						ticker.mode.revolutionaries -= src
 						ticker.mode.update_rev_icons_removed(src)
-						current << "\red <FONT size = 3><B>You have proved your devotion to revoltion! You are a head revolutionary now!</B></FONT>"
+						current << "<span class='alert'> <FONT size = 3><B>You have proved your devotion to revoltion! You are a head revolutionary now!</B></FONT></span>"
 						current << "<h3><B>Make sure to read the rules about ganking and be sure to make the round interesting for everyone!</B></h3>"
 						show_objectives(src)
 					else if(!(src in ticker.mode.head_revolutionaries))
@@ -569,20 +569,20 @@ datum/mind
 
 				if("flash")
 					if (!ticker.mode.equip_revolutionary(current))
-						usr << "\red Spawning flash failed!"
+						usr << "<span class='alert'> Spawning flash failed!</span>"
 
 				if("takeflash")
 					var/list/L = current.get_contents()
 					var/obj/item/device/flash/flash = locate() in L
 					if (!flash)
-						usr << "\red Deleting flash failed!"
+						usr << "<span class='alert'> Deleting flash failed!</span>"
 					qdel(flash)
 
 				if("repairflash")
 					var/list/L = current.get_contents()
 					var/obj/item/device/flash/flash = locate() in L
 					if (!flash)
-						usr << "\red Repairing flash failed!"
+						usr << "<span class='alert'> Repairing flash failed!</span>"
 					else
 						flash.broken = 0
 
@@ -595,7 +595,7 @@ datum/mind
 					fail |= !ticker.mode.equip_traitor(current, 1)
 					fail |= !ticker.mode.equip_revolutionary(current)
 					if (fail)
-						usr << "\red Reequipping revolutionary goes wrong!"
+						usr << "<span class='alert'> Reequipping revolutionary goes wrong!</span>"
 
 		else if (href_list["cult"])
 			current.hud_updateflag |= (1 << SPECIALROLE_HUD)
@@ -609,7 +609,7 @@ datum/mind
 						if (istype(cult))
 							if(!config.objectives_disabled)
 								cult.memorize_cult_objectives(src)
-						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a cultist!</B></FONT>"
+						current << "<span class='alert'> <FONT size = 3><B>You have been brainwashed! You are no longer a cultist!</B></FONT></span>"
 						memory = ""
 						log_admin("[key_name_admin(usr)] has de-cult'ed [current].")
 				if("cultist")
@@ -640,12 +640,12 @@ datum/mind
 						)
 						var/where = H.equip_in_one_of_slots(T, slots)
 						if (!where)
-							usr << "\red Spawning tome failed!"
+							usr << "<span class='alert'> Spawning tome failed!</span>"
 						else
 
 				if("amulet")
 					if (!ticker.mode.equip_cultist(current))
-						usr << "\red Spawning amulet failed!"
+						usr << "<span class='alert'> Spawning amulet failed!</span>"
 
 
 		else if (href_list["changeling"])
@@ -676,7 +676,7 @@ datum/mind
 
 				if("initialdna")
 					if( !changeling || !changeling.absorbed_dna.len )
-						usr << "\red Resetting DNA failed!"
+						usr << "<span class='alert'> Resetting DNA failed!</span>"
 					else
 						current.dna = changeling.absorbed_dna[1]
 						current.real_name = current.dna.real_name
@@ -696,7 +696,7 @@ datum/mind
 						special_role = null
 						for (var/datum/objective/nuclear/O in objectives)
 							objectives-=O
-						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer an operative!</B></FONT>"
+						current << "<span class='alert'> <FONT size = 3><B>You have been brainwashed! You are no longer an operative!</B></FONT></span>"
 						log_admin("[key_name_admin(usr)] has de-merc'd [current].")
 				if("mercenary")
 					if(!(src in ticker.mode.syndicates))
@@ -727,7 +727,7 @@ datum/mind
 					qdel(H.w_uniform)
 
 					if (!ticker.mode.equip_syndicate(current))
-						usr << "\red Equipping an operative failed!"
+						usr << "<span class='alert'> Equipping an operative failed!</span>"
 				if("tellcode")
 					var/code
 					for (var/obj/machinery/nuclearbomb/bombue in machines)
@@ -738,7 +738,7 @@ datum/mind
 						store_memory("<B>Nuclear Bomb Code</B>: [code]", 0, 0)
 						current << "The nuclear authorization code is: <B>[code]</B>"
 					else
-						usr << "\red No valid nuke found!"
+						usr << "<span class='alert'> No valid nuke found!</span>"
 
 		else if (href_list["traitor"])
 			current.hud_updateflag |= (1 << SPECIALROLE_HUD)
@@ -747,7 +747,7 @@ datum/mind
 					if(src in ticker.mode.traitors)
 						ticker.mode.traitors -= src
 						special_role = null
-						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT>"
+						current << "<span class='alert'> <FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT></span>"
 						log_admin("[key_name_admin(usr)] has de-traitor'ed [current].")
 						if(isAI(current))
 							var/mob/living/silicon/ai/A = current
@@ -798,7 +798,7 @@ datum/mind
 						current:show_laws()
 						current.icon_state = "ai"
 
-						current << "\red <FONT size = 3><B>You have been patched! You are no longer malfunctioning!</B></FONT>"
+						current << "<span class='alert'> <FONT size = 3><B>You have been patched! You are no longer malfunctioning!</B></FONT></span>"
 						log_admin("[key_name_admin(usr)] has de-malf'ed [current].")
 
 				if("malf")
@@ -861,7 +861,7 @@ datum/mind
 								suplink.uses = crystals
 				if("uplink")
 					if (!ticker.mode.equip_traitor(current, !(src in ticker.mode.traitors)))
-						usr << "\red Equipping an operative failed!"
+						usr << "<span class='alert'> Equipping an operative failed!</span>"
 
 		else if (href_list["obj_announce"])
 			var/obj_count = 1

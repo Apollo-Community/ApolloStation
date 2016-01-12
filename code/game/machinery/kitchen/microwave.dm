@@ -82,7 +82,7 @@
 				src.dirty = 0 // just to be sure
 				src.flags = OPENCONTAINER
 		else
-			user << "\red It's broken!"
+			user << "<span class='alert'> It's broken!</span>"
 			return 1
 	else if( istype( O, /obj/item/weapon/wrench ))
 		if( anchored )
@@ -117,11 +117,11 @@
 				src.icon_state = "mw"
 				src.flags = OPENCONTAINER
 		else //Otherwise bad luck!!
-			user << "\red It's dirty!"
+			user << "<span class='alert'> It's dirty!</span>"
 			return 1
 	else if(is_type_in_list(O,acceptable_items))
 		if (contents.len>=max_n_of_items)
-			user << "\red This [src] is full of ingredients, you cannot put more."
+			user << "<span class='alert'> This [src] is full of ingredients, you cannot put more.</span>"
 			return 1
 		if(istype(O, /obj/item/stack) && O:get_amount() > 1) // This is bad, but I can't think of how to change it
 			var/obj/item/stack/S = O
@@ -145,15 +145,15 @@
 			return 1
 		for (var/datum/reagent/R in O.reagents.reagent_list)
 			if (!(R.id in acceptable_reagents))
-				user << "\red Your [O] contains components unsuitable for cookery."
+				user << "<span class='alert'> Your [O] contains components unsuitable for cookery.</span>"
 				return 1
 		//G.reagents.trans_to(src,G.amount_per_transfer_from_this)
 	else if(istype(O,/obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
-		user << "\red This is ridiculous. You can not fit \the [G.affecting] in this [src]."
+		user << "<span class='alert'> This is ridiculous. You can not fit \the [G.affecting] in this [src].</span>"
 		return 1
 	else
-		user << "\red You have no idea what you can cook with this [O]."
+		user << "<span class='alert'> You have no idea what you can cook with this [O].</span>"
 		return 1
 	src.updateUsrDialog()
 
@@ -340,7 +340,7 @@
 
 /obj/machinery/microwave/proc/muck_finish()
 	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-	src.visible_message("\red The microwave gets covered in muck!")
+	src.visible_message("<span class='alert'> The microwave gets covered in muck!</span>")
 	src.dirty = 100 // Make it dirty so it can't be used util cleaned
 	src.flags = null //So you can't add condiments
 	src.icon_state = "mwbloody" // Make it look dirty too
@@ -352,7 +352,7 @@
 	s.set_up(2, 1, src)
 	s.start()
 	src.icon_state = "mwb" // Make it look all busted up and shit
-	src.visible_message("\red The microwave breaks!") //Let them know they're stupid
+	src.visible_message("<span class='alert'> The microwave breaks!</span>") //Let them know they're stupid
 	src.broken = 2 // Make it broken so it can't be used util fixed
 	src.flags = null //So you can't add condiments
 	src.operating = 0 // Turn it off again aferwards

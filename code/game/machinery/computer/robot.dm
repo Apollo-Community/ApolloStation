@@ -23,7 +23,7 @@
 	if(..())
 		return
 	if (src.z in config.admin_levels)
-		user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+		user << "<span class='alert'> <b>Unable to establish a connection</b>: \black You're too far away from the station!</span>"
 		return
 	user.set_machine(src)
 	var/dat
@@ -122,7 +122,7 @@
 						src.temp = null
 
 				else
-					usr << "\red Access Denied."
+					usr << "<span class='alert'> Access Denied.</span>"
 
 		else if (href_list["stop"])
 			src.temp = {"
@@ -164,7 +164,7 @@
 								log_game("<span class='notice'> [key_name_admin(usr)] detonated [R.name]!</span>")
 								R.self_destruct()
 			else
-				usr << "\red Access Denied."
+				usr << "<span class='alert'> Access Denied.</span>"
 
 		else if (href_list["stopbot"])
 			if(src.allowed(usr))
@@ -186,7 +186,7 @@
 								R << "You have been locked down!"
 
 			else
-				usr << "\red Access Denied."
+				usr << "<span class='alert'> Access Denied.</span>"
 
 		else if (href_list["magbot"])
 			if(src.allowed(usr))

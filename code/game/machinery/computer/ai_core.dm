@@ -127,14 +127,14 @@
 			if(istype(P, /obj/item/device/mmi))
 				var/obj/item/device/mmi/M = P
 				if(!M.brainmob)
-					user << "\red Sticking an empty [P] into the frame would sort of defeat the purpose."
+					user << "<span class='alert'> Sticking an empty [P] into the frame would sort of defeat the purpose.</span>"
 					return
 				if(M.brainmob.stat == 2)
-					user << "\red Sticking a dead [P] into the frame would sort of defeat the purpose."
+					user << "<span class='alert'> Sticking a dead [P] into the frame would sort of defeat the purpose.</span>"
 					return
 
 				if(jobban_isbanned(M.brainmob, "AI"))
-					user << "\red This [P] does not seem to fit."
+					user << "<span class='alert'> This [P] does not seem to fit.</span>"
 					return
 
 				if(M.brainmob.mind)
@@ -220,7 +220,7 @@
 		if(transfer)
 			load_ai(transfer,card,user)
 		else
-			user << "\red <b>ERROR</b>: \black Unable to locate artificial intelligence."
+			user << "<span class='alert'> <b>ERROR</b>: \black Unable to locate artificial intelligence.</span>"
 		return
 
 	..()

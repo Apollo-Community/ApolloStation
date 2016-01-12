@@ -78,7 +78,7 @@
 		return ..()
 	var/turf/T = src.loc
 	if (level==1 && isturf(T) && T.intact)
-		user << "\red You must remove the plating first."
+		user << "<span class='alert'> You must remove the plating first.</span>"
 		return 1
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
@@ -210,7 +210,7 @@
 	else return 1
 
 /obj/machinery/atmospherics/pipe/simple/proc/burst()
-	src.visible_message("\red \bold [src] bursts!");
+	src.visible_message("<span class='alert'> \bold [src] bursts!</span>");
 	playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 	var/datum/effect/effect/system/smoke_spread/smoke = new
 	smoke.set_up(1,0, src.loc, 0)
@@ -1117,7 +1117,7 @@
 
 	if(istype(W, /obj/item/device/analyzer) && in_range(user, src))
 		for (var/mob/O in viewers(user, null))
-			O << "\red [user] has used the analyzer on \icon[icon]"
+			O << "<span class='alert'> [user] has used the analyzer on \icon[icon]</span>"
 
 		var/pressure = parent.air.return_pressure()
 		var/total_moles = parent.air.total_moles

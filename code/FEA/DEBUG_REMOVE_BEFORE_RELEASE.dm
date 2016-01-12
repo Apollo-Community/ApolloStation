@@ -48,7 +48,7 @@ obj/item/weapon/tank
 		adjust_mixture(temperature as num, target_toxin_pressure as num, target_oxygen_pressure as num)
 			set src in world
 			if(!air_contents)
-				usr << "\red ERROR: no gas_mixture associated with this tank"
+				usr << "<span class='alert'> ERROR: no gas_mixture associated with this tank</span>"
 				return null
 
 			air_contents.temperature = temperature
@@ -406,7 +406,7 @@ turf/simulated
 			set src in world
 			set category = "Minor"
 			var/datum/gas_mixture/GM = return_air()
-			usr << "<span class='notice'> @[x],[y] ([GM.group_multiplier]): O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] w [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(active_hotspot)?(</span>"\red BURNING"):(null)]"
+			usr << "<span class='notice'> @[x],[y] ([GM.group_multiplier]): O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] w [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(active_hotspot)?(</span>"<span class='alert'> BURNING</span>"):(null)]"
 			for(var/datum/gas/trace_gas in GM.trace_gases)
 				usr << "[trace_gas.type]: [trace_gas.moles]"
 

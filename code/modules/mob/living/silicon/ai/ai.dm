@@ -492,7 +492,7 @@ var/list/ai_verbs_default = list(
 		if(target && (!istype(target, /mob/living/carbon/human) || html_decode(href_list["trackname"]) == target:get_face_name()))
 			ai_actual_track(target)
 		else
-			src << "\red System error. Cannot locate [html_decode(href_list["trackname"])]."
+			src << "<span class='alert'> System error. Cannot locate [html_decode(href_list["trackname</span>"])]."
 		return
 
 	return
@@ -755,14 +755,14 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/proc/check_unable(var/flags = 0)
 	if(stat == DEAD)
-		usr << "\red You are dead!"
+		usr << "<span class='alert'> You are dead!</span>"
 		return 1
 
 	if((flags & AI_CHECK_WIRELESS) && src.control_disabled)
-		usr << "\red Wireless control is disabled!"
+		usr << "<span class='alert'> Wireless control is disabled!</span>"
 		return 1
 	if((flags & AI_CHECK_RADIO) && src.aiRadio.disabledAi)
-		src << "\red System Error - Transceiver Disabled!"
+		src << "<span class='alert'> System Error - Transceiver Disabled!</span>"
 		return 1
 	return 0
 

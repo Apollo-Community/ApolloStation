@@ -61,7 +61,7 @@
 
 				if(istype(comp_ai))
 					if(busy)
-						user << "\red <b>ERROR</b>: \black Reconstruction in progress."
+						user << "<span class='alert'> <b>ERROR</b>: \black Reconstruction in progress.</span>"
 						return
 					card.grab_ai(comp_ai, user)
 					if(!(locate(/mob/living/silicon/ai) in src)) occupant = null

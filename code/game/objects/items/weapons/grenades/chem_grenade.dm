@@ -50,10 +50,10 @@
 		if(istype(W,/obj/item/device/assembly_holder) && (!stage || stage==1) && path != 2)
 			var/obj/item/device/assembly_holder/det = W
 			if(istype(det.a_left,det.a_right.type) || (!isigniter(det.a_left) && !isigniter(det.a_right)))
-				user << "\red Assembly must contain one igniter."
+				user << "<span class='alert'> Assembly must contain one igniter.</span>"
 				return
 			if(!det.secured)
-				user << "\red Assembly must be secured with screwdriver."
+				user << "<span class='alert'> Assembly must be secured with screwdriver.</span>"
 				return
 			path = 1
 			user << "<span class='notice'> You add [W] to the metal casing.</span>"
@@ -71,7 +71,7 @@
 					user << "<span class='notice'> You lock the assembly.</span>"
 					name = "grenade"
 				else
-//					user << "\red You need to add at least one beaker before locking the assembly."
+//					user << "<span class='alert'> You need to add at least one beaker before locking the assembly.</span>"
 					user << "<span class='notice'> You lock the empty assembly.</span>"
 					name = "fake grenade"
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, -3)
@@ -79,7 +79,7 @@
 				stage = 2
 			else if(stage == 2)
 				if(active && prob(95))
-					user << "\red You trigger the assembly!"
+					user << "<span class='alert'> You trigger the assembly!</span>"
 					prime()
 					return
 				else
@@ -92,7 +92,7 @@
 		else if(is_type_in_list(W, allowed_containers) && (!stage || stage==1) && path != 2)
 			path = 1
 			if(beakers.len == 2)
-				user << "\red The grenade can not hold more containers."
+				user << "<span class='alert'> The grenade can not hold more containers.</span>"
 				return
 			else
 				if(W.reagents.total_volume)
@@ -103,7 +103,7 @@
 					stage = 1
 					name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 				else
-					user << "\red \the [W] is empty."
+					user << "<span class='alert'> \the [W] is empty.</span>"
 
 	examine(mob/user)
 		..(user)

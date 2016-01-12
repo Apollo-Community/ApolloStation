@@ -237,10 +237,10 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(!connected || (connected.stat & (NOPOWER|BROKEN)))
-		user << "\red This console is not connected to a functioning body scanner."
+		user << "<span class='alert'> This console is not connected to a functioning body scanner.</span>"
 		return
 	if(!ishuman(connected.occupant))
-		user << "\red This device can only scan compatible lifeforms."
+		user << "<span class='alert'> This device can only scan compatible lifeforms.</span>"
 		return
 
 	var/dat

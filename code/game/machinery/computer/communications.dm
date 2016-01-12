@@ -50,7 +50,7 @@
 	if(..())
 		return
 	if ( !( src.z in config.station_levels ))
-		usr << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+		usr << "<span class='alert'> <b>Unable to establish a connection</b>: \black You're too far away from the station!</span>"
 		return
 	usr.set_machine(src)
 
@@ -186,7 +186,7 @@
 		if("MessageCentcomm")
 			if(src.authenticated==2)
 				if(centcomm_message_cooldown)
-					usr << "\red Arrays recycling.  Please stand by."
+					usr << "<span class='alert'> Arrays recycling.  Please stand by.</span>"
 					return
 				var/input = sanitize(input("Please choose a message to transmit to Centcomm via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", ""))
 				if(!input || !(usr in view(1,src)))
@@ -203,7 +203,7 @@
 		if("MessageSyndicate")
 			if((src.authenticated==2) && (src.emagged))
 				if(centcomm_message_cooldown)
-					usr << "\red Arrays recycling.  Please stand by."
+					usr << "<span class='alert'> Arrays recycling.  Please stand by.</span>"
 					return
 				var/input = sanitize(input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", ""))
 				if(!input || !(usr in view(1,src)))
@@ -281,7 +281,7 @@
 	if(..())
 		return
 	if ( src.z in config.admin_levels )
-		user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+		user << "<span class='alert'> <b>Unable to establish a connection</b>: \black You're too far away from the station!</span>"
 		return
 
 	user.set_machine(src)

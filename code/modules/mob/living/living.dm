@@ -412,7 +412,7 @@
 							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
 							if (istype(G, /obj/item/weapon/grab))
 								for(var/mob/O in viewers(M, null))
-									O.show_message(text("\red [] has been pulled from []'s grip by []", G.affecting, G.assailant, src), 1)
+									O.show_message(text("<span class='alert'> [] has been pulled from []'s grip by []</span>", G.affecting, G.assailant, src), 1)
 								//G = null
 								qdel(G)
 						else
@@ -431,11 +431,11 @@
 						//pull damage with injured people
 							if(!istype(src.loc, /turf/space) && prob(25))
 								M.adjustBruteLoss(1)
-								visible_message("\red \The [M]'s wounds open more from being dragged!")
+								visible_message("<span class='alert'> \The [M]'s wounds open more from being dragged!</span>")
 						if(M.pull_damage())
 							if(prob(25))
 								M.adjustBruteLoss(2)
-								visible_message("\red \The [M]'s wounds worsen terribly from being dragged!")
+								visible_message("<span class='alert'> \The [M]'s wounds worsen terribly from being dragged!</span>")
 								var/turf/location = M.loc
 								if (istype(location, /turf/simulated))
 									location.add_blood(M)
@@ -568,7 +568,7 @@
 
 	var/special_fail_msg = can_use_vents()
 	if(special_fail_msg)
-		src << "\red [special_fail_msg]"
+		src << "<span class='alert'> [special_fail_msg]</span>"
 		return
 
 	if(vent_found) // one was passed in, probably from vent/AltClick()
@@ -608,7 +608,7 @@
 			index = "[T.loc.name]\[[i]\]"
 		vents[index] = temp_vent
 	if(!vents.len)
-		src << "\red There are no available vents to travel to, they could be welded."
+		src << "<span class='alert'> There are no available vents to travel to, they could be welded.</span>"
 		return
 
 	var/obj/selection = input("Select a destination.", "Duct System") as null|anything in sortAssoc(vents)
@@ -621,13 +621,13 @@
 	if(!ignore_items)
 		for(var/obj/item/carried_item in contents)//If the monkey got on objects.
 			if( !istype(carried_item, /obj/item/weapon/implant) && !istype(carried_item, /obj/item/clothing/mask/facehugger) )//If it's not an implant or a facehugger
-				src << "\red You can't be carrying items or have items equipped when vent crawling!"
+				src << "<span class='alert'> You can't be carrying items or have items equipped when vent crawling!</span>"
 				return
 
 	if(isslime(src))
 		var/mob/living/carbon/slime/S = src
 		if(S.Victim)
-			src << "\red You'll have to let [S.Victim] go or finish eating \him first."
+			src << "<span class='alert'> You'll have to let [S.Victim] go or finish eating \him first.</span>"
 			return
 
 	var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection]
@@ -651,7 +651,7 @@
 		if(!target_vent)	return
 		if(target_vent.welded)			//the vent can be welded while alien scrolled through the list or travelled.
 			target_vent = vent_found 	//travel back. No additional time required.
-			src << "\red The vent you were heading to appears to be welded."
+			src << "<span class='alert'> The vent you were heading to appears to be welded.</span>"
 		loc = target_vent.loc
 		var/area/new_area = get_area(loc)
 		if(new_area)

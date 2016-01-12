@@ -207,7 +207,7 @@
 
 /obj/machinery/computer/pod/old/syndicate/attack_hand(var/mob/user as mob)
 	if(!allowed(user))
-		user << "\red Access Denied"
+		user << "<span class='alert'> Access Denied</span>"
 		return
 	else
 		..()

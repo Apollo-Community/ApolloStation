@@ -130,7 +130,7 @@
 				return
 
 	else if ((istype(W, /obj/item/device/analyzer)) && Adjacent(user))
-		visible_message("\red [user] has used [W] on \icon[icon]")
+		visible_message("<span class='alert'> [user] has used [W] on \icon[icon]</span>")
 		if(air_contents)
 			var/pressure = air_contents.return_pressure()
 			var/total_moles = air_contents.total_moles
@@ -174,7 +174,7 @@
 
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(!cell)
-			user << "\red There is no power cell installed."
+			user << "<span class='alert'> There is no power cell installed.</span>"
 			return
 
 		user.visible_message("<span class='notice'> [user] opens the panel on [src] and removes [cell].</span>", "<span class='notice'> You open the panel on [src] and remove [cell].</span>")

@@ -253,10 +253,10 @@
 			if(suplink)
 				var/extra = 4
 				suplink.uses += extra
-				man << "\red We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity."
+				man << "<span class='alert'> We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity.</span>"
 			else
 				// Give them a warning!
-				man << "\red They are on to you!"
+				man << "<span class='alert'> They are on to you!</span>"
 
 		// Some poor people who were just in the wrong place at the wrong time..
 		else if(prob(10))

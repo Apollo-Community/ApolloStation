@@ -52,8 +52,8 @@
 				M.take_overall_damage(dam_force)
 				M.adjustOxyLoss(round(dam_force/2))
 				M.updatehealth()
-				occupant_message("\red You squeeze [target] with [src.name]. Something cracks.")
-				chassis.visible_message("\red [chassis] squeezes [target].")
+				occupant_message("<span class='alert'> You squeeze [target] with [src.name]. Something cracks.</span>")
+				chassis.visible_message("<span class='alert'> [chassis] squeezes [target].</span>")
 			else
 				step_away(M,chassis)
 				occupant_message("You push [target] out of the way.")
@@ -197,7 +197,7 @@
 				return
 
 			if (src.reagents.total_volume < 1)
-				occupant_message("\red \The [src] is empty.")
+				occupant_message("<span class='alert'> \The [src] is empty.</span>")
 				return
 
 			playsound(chassis, 'sound/effects/extinguish.ogg', 75, 1, -3)
@@ -530,7 +530,7 @@
 			return chassis.dynattackby(W,user)
 		chassis.log_message("Attacked by [W]. Attacker - [user]")
 		if(prob(chassis.deflect_chance*deflect_coeff))
-			user << "\red The [W] bounces off [chassis] armor."
+			user << "<span class='alert'> The [W] bounces off [chassis] armor.</span>"
 			chassis.log_append_to_last("Armor saved.")
 		else
 			chassis.occupant_message("<font color='red'><b>[user] hits [chassis] with [W].</b></font>")
@@ -1037,11 +1037,11 @@
 			var/mob/living/M = target
 			if(M.stat>1) return
 			if(chassis.occupant.a_intent == I_HURT)
-				chassis.occupant_message("\red You obliterate [target] with [src.name], leaving blood and guts everywhere.")
-				chassis.visible_message("\red [chassis] destroys [target] in an unholy fury.")
+				chassis.occupant_message("<span class='alert'> You obliterate [target] with [src.name], leaving blood and guts everywhere.</span>")
+				chassis.visible_message("<span class='alert'> [chassis] destroys [target] in an unholy fury.</span>")
 			if(chassis.occupant.a_intent == I_DISARM)
-				chassis.occupant_message("\red You tear [target]'s limbs off with [src.name].")
-				chassis.visible_message("\red [chassis] rips [target]'s arms off.")
+				chassis.occupant_message("<span class='alert'> You tear [target]'s limbs off with [src.name].</span>")
+				chassis.visible_message("<span class='alert'> [chassis] rips [target]'s arms off.</span>")
 			else
 				step_away(M,chassis)
 				chassis.occupant_message("You smash into [target], sending them flying.")
@@ -1099,7 +1099,7 @@
 			log_message("[user] boarded.")
 			occupant_message("[user] boarded.")
 		else if(src.occupant != user)
-			user << "\red [src.occupant] was faster. Try better next time, loser."
+			user << "<span class='alert'> [src.occupant] was faster. Try better next time, loser.</span>"
 	else
 		user << "You stop entering the exosuit."
 
@@ -1174,18 +1174,18 @@
 		return
 
 	if (!isturf(usr.loc))
-		usr << "\red You can't reach the passenger compartment from here."
+		usr << "<span class='alert'> You can't reach the passenger compartment from here.</span>"
 		return
 
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		if(C.handcuffed)
-			usr << "\red Kinda hard to climb in while handcuffed don't you think?"
+			usr << "<span class='alert'> Kinda hard to climb in while handcuffed don't you think?</span>"
 			return
 
 	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == usr)
-			usr << "\red You're too busy getting your life sucked out of you."
+			usr << "<span class='alert'> You're too busy getting your life sucked out of you.</span>"
 			return
 
 	//search for a valid passenger compartment
@@ -1205,10 +1205,10 @@
 	//didn't find anything
 	switch (feedback)
 		if (OCCUPIED)
-			usr << "\red The passenger compartment is already occupied!"
+			usr << "<span class='alert'> The passenger compartment is already occupied!</span>"
 		if (LOCKED)
-			usr << "\red The passenger compartment hatch is locked!"
+			usr << "<span class='alert'> The passenger compartment hatch is locked!</span>"
 		if (OCCUPIED|LOCKED)
-			usr << "\red All of the passenger compartments are already occupied or locked!"
+			usr << "<span class='alert'> All of the passenger compartments are already occupied or locked!</span>"
 		if (0)
-			usr << "\red \The [src] doesn't have a passenger compartment."
+			usr << "<span class='alert'> \The [src] doesn't have a passenger compartment.</span>"

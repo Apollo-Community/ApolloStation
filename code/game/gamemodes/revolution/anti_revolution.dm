@@ -155,9 +155,9 @@
 
 	var/text = ""
 	if(finished == 2)
-		world << "\red <FONT size = 3><B> The heads of staff were relieved of their posts! The crew wins!</B></FONT>"
+		world << "<span class='alert'> <FONT size = 3><B> The heads of staff were relieved of their posts! The crew wins!</B></FONT></span>"
 	else if(finished == 1)
-		world << "\red <FONT size = 3><B> The heads of staff managed to meet the goals set for them by CentComm!</B></FONT>"
+		world << "<span class='alert'> <FONT size = 3><B> The heads of staff managed to meet the goals set for them by CentComm!</B></FONT></span>"
 
 
 
@@ -219,4 +219,4 @@
 
 	src.verbs -= /mob/proc/ResignFromHeadPosition
 
-	src << "\red You resigned from your position, now you have the consequences."
+	src << "<span class='alert'> You resigned from your position, now you have the consequences.</span>"

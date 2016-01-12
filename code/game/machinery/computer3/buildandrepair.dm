@@ -113,7 +113,7 @@
 					user.drop_item()
 					P.loc = src
 				else
-					user << "\red This frame does not accept circuit boards of this type!"
+					user << "<span class='alert'> This frame does not accept circuit boards of this type!</span>"
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "<span class='notice'> You screw the circuit board into place.</span>"
@@ -141,7 +141,7 @@
 						user << "<span class='notice'> You remove [battery].</span>"
 						battery = null
 				else
-					user << "\red There's no battery to remove!"
+					user << "<span class='alert'> There's no battery to remove!</span>"
 
 			if(istype(P, /obj/item/weapon/cell))
 				if(!battery)
@@ -151,7 +151,7 @@
 						P.loc = src
 						user << "<span class='notice'> You insert [battery].</span>"
 				else
-					user << "\red There's already \an [battery] in [src]!"
+					user << "<span class='alert'> There's already \an [battery] in [src]!</span>"
 
 
 			if(istype(P, /obj/item/stack/cable_coil))
@@ -220,7 +220,7 @@
 */
 /obj/structure/computer3frame/proc/remove_peripheral(var/obj/item/I = null)
 	if(!components || !components.len)
-		usr << "\red There are no components in [src] to take out!"
+		usr << "<span class='alert'> There are no components in [src] to take out!</span>"
 		return 0
 	if(!I)
 		I = input(usr, "Remove which component?","Remove component", null) as null|obj in components
