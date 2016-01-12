@@ -336,7 +336,7 @@
 	if( isnucleation( user )) // Nucleation's can touch it to heal!
 		var/mob/living/L = user
 		user.visible_message("<span class=\"warning\">\The [user] reaches out and touches \the [src], inducing a resonance... \his body starts to glow before they calmly pull away from it.</span>",\
-		"\blue You reach out and touch \the [src]. Everything seems to go quiet and slow down as you feel your crystal structures mending.\"</span>", \
+		"<span class='notice'> You reach out and touch \the [src]. Everything seems to go quiet and slow down as you feel your crystal structures mending.\"</span></span>", \
 		"<span class=\"danger\">Everything suddenly goes silent.\"</span>")
 		L.rejuvenate()
 		L.sleeping = max(L.sleeping+2, 10)

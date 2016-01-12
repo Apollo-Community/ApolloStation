@@ -144,7 +144,7 @@
 	if(istype(W,/obj/item/weapon/screwdriver))
 		if(active) return
 		open = !open
-		user << "\blue You [open ? "open" : "close"] the maintenance panel." //TODO: Sprite.
+		user << "<span class='notice'> You [open ? "open" : "close"] the maintenance panel.</span>" //TODO: Sprite.
 		return
 	else
 		if(!open || active) return ..()
@@ -219,14 +219,14 @@
 		if(use_cell_power())
 			active = !active
 			if(active)
-				user << "\blue You engage \the [src] and it lurches downwards, grinding noisily."
+				user << "<span class='notice'> You engage \the [src] and it lurches downwards, grinding noisily.</span>"
 				need_update_field = 1
 			else
-				user << "\blue You disengage \the [src] and it shudders to a grinding halt."
+				user << "<span class='notice'> You disengage \the [src] and it shudders to a grinding halt.</span>"
 		else
-			user << "\blue The drill is unpowered."
+			user << "<span class='notice'> The drill is unpowered.</span>"
 	else
-		user << "\blue Turning on a piece of industrial machinery without sufficient bracing is a bad idea."
+		user << "<span class='notice'> Turning on a piece of industrial machinery without sufficient bracing is a bad idea.</span>"
 
 	update_icon()
 
@@ -327,15 +327,15 @@
 	if(istype(W,/obj/item/weapon/wrench))
 
 		if(istype(get_turf(src),/turf/space))
-			user << "\blue You can't anchor something to empty space. Idiot."
+			user << "<span class='notice'> You can't anchor something to empty space. Idiot.</span>"
 			return
 
 		if(connected && connected.active)
-			user << "\blue You can't unanchor the brace of a running drill!"
+			user << "<span class='notice'> You can't unanchor the brace of a running drill!</span>"
 			return
 
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-		user << "\blue You [anchored ? "un" : ""]anchor the brace."
+		user << "<span class='notice'> You [anchored ? "un" : ""]anchor the brace.</span>"
 
 		anchored = !anchored
 		if(anchored)

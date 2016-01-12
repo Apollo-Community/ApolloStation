@@ -68,7 +68,7 @@
 
 	if (!aiming)
 		if(user && user.a_intent == I_HELP) //regardless of what happens, refuse to shoot if help intent is on
-			user << "\red You refrain from firing your [src] as your intent is set to help."
+			user << "<span class='alert'> You refrain from firing your [src] as your intent is set to help.</span>"
 		else
 			Fire(A,user,params) //Otherwise, fire normally.
 
@@ -184,7 +184,7 @@
 
 /obj/item/weapon/gun/proc/click_empty(mob/user = null)
 	if (user)
-		user.visible_message("*click click*", "\red <b>*click*</b>")
+		user.visible_message("*click click*", "<span class='alert'> <b>*click*</b></span>")
 		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	else
 		src.visible_message("*click click*")
@@ -194,9 +194,9 @@
 	//Suicide handling.
 	if (M == user && user.zone_sel.selecting == "mouth" && !mouthshoot)
 		mouthshoot = 1
-		M.visible_message("\red [user] sticks their gun in their mouth, ready to pull the trigger...")
+		M.visible_message("<span class='alert'> [user] sticks their gun in their mouth, ready to pull the trigger...</span>")
 		if(!do_after(user, 40))
-			M.visible_message("\blue [user] decided life was worth living")
+			M.visible_message("<span class='notice'> [user] decided life was worth living</span>")
 			mouthshoot = 0
 			return
 		if (load_into_chamber())
@@ -228,7 +228,7 @@
 	if (load_into_chamber())
 		//Point blank shooting if on harm intent or target we were targeting.
 		if(user.a_intent == I_HURT)
-			user.visible_message("\red <b> \The [user] fires \the [src] point blank at [M]!</b>")
+			user.visible_message("<span class='alert'> <b> \The [user] fires \the [src] point blank at [M]!</b></span>")
 			if(istype(in_chamber)) in_chamber.damage *= 1.3
 			Fire(M,user)
 			return

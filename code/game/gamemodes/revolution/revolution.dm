@@ -124,7 +124,7 @@
 	rev_mind.special_role = "Head Revolutionary"
 
 	if (you_are)
-		rev_mind.current << "\blue You are a member of the revolutionaries' leadership!"
+		rev_mind.current << "<span class='notice'> You are a member of the revolutionaries' leadership!</span>"
 
 	show_objectives(rev_mind)
 

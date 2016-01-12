@@ -121,9 +121,9 @@
 
 	if (istype(W, /obj/item/device/measuring_tape))
 		var/obj/item/device/measuring_tape/P = W
-		user.visible_message("\blue[user] extends [P] towards [src].","\blue You extend [P] towards [src].")
+		user.visible_message("<span class='notice'>[user] extends [P] towards [src].</span>","<span class='notice'> You extend [P] towards [src].</span>")
 		if(do_after(user,25))
-			user << "\blue \icon[P] [src] has been excavated to a depth of [2*excavation_level]cm."
+			user << "<span class='notice'> \icon[P] [src] has been excavated to a depth of [2*excavation_level]cm.</span>"
 		return
 
 	if (istype(W, /obj/item/weapon/pickaxe))
@@ -157,7 +157,7 @@
 					artifact_debris()
 
 		if(do_after(user,P.digspeed))
-			user << "\blue You finish [P.drill_verb] the rock."
+			user << "<span class='notice'> You finish [P.drill_verb] the rock.</span>"
 
 			if(finds && finds.len)
 				var/datum/find/F = finds[1]
@@ -449,7 +449,7 @@
 
 		if(!do_after(user,40)) return
 
-		user << "\blue You dug a hole."
+		user << "<span class='notice'> You dug a hole.</span>"
 		gets_dug()
 
 	else if(istype(W,/obj/item/weapon/storage/bag/ore))

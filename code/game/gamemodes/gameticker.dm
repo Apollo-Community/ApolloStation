@@ -334,11 +334,11 @@ var/global/datum/controller/gameticker/ticker
 				if (mode.station_was_nuked)
 					feedback_set_details("end_proper","nuke")
 					if(!delay_end)
-						world << "\blue <B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B>"
+						world << "<span class='notice'> <B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B></span>"
 				else
 					feedback_set_details("end_proper","proper completion")
 					if(!delay_end)
-						world << "\blue <B>Restarting in [restart_timeout/10] seconds</B>"
+						world << "<span class='notice'> <B>Restarting in [restart_timeout/10] seconds</B></span>"
 
 
 				if(blackbox)
@@ -349,9 +349,9 @@ var/global/datum/controller/gameticker/ticker
 					if(!delay_end)
 						world.Reboot()
 					else
-						world << "\blue <B>An admin has delayed the round end</B>"
+						world << "<span class='notice'> <B>An admin has delayed the round end</B></span>"
 				else
-					world << "\blue <B>An admin has delayed the round end</B>"
+					world << "<span class='notice'> <B>An admin has delayed the round end</B></span>"
 
 		else if (mode_finished)
 			post_game = 1

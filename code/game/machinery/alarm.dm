@@ -934,7 +934,7 @@ table tr:first-child th:first-child { border: none;}
 				else
 					if(allowed(usr) && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
 						locked = !locked
-						user << "\blue You [ locked ? "lock" : "unlock"] the Air Alarm interface."
+						user << "<span class='notice'> You [ locked ? "lock" : "unlock"] the Air Alarm interface.</span>"
 						updateUsrDialog()
 					else
 						user << "\red Access denied."

@@ -65,7 +65,7 @@
 				src.update_inv_r_hand()
 				usr.update_inv_l_hand()
 				usr.update_inv_r_hand()
-				src.visible_message("\blue [usr.name] handed \the [I.name] to [src.name].")
+				src.visible_message("<span class='notice'> [usr.name] handed \the [I.name] to [src.name].</span>")
 			if("No")
 				src.visible_message("\red [usr.name] tried to hand [I.name] to [src.name] but [src.name] didn't want it.")
 	else

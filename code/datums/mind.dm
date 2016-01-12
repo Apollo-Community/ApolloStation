@@ -470,7 +470,7 @@ datum/mind
 							if(I in organs.implants)
 								qdel(I)
 								break
-					H << "\blue <Font size =3><B>Your loyalty implant has been deactivated.</B></FONT>"
+					H << "<span class='notice'> <Font size =3><B>Your loyalty implant has been deactivated.</B></FONT></span>"
 
 				if("add")
 					H.implant_loyalty(H, override = TRUE)
@@ -542,7 +542,7 @@ datum/mind
 						current << "<h3><B>Make sure to read the rules about ganking and be sure to make the round interesting for everyone!</B></h3>"
 						show_objectives(src)
 					else if(!(src in ticker.mode.head_revolutionaries))
-						current << "\blue You are a member of the revolutionaries' leadership now!"
+						current << "<span class='notice'> You are a member of the revolutionaries' leadership now!</span>"
 					else
 						return
 					if (ticker.mode.head_revolutionaries.len>0)
@@ -565,7 +565,7 @@ datum/mind
 				if("autoobjectives")
 					ticker.mode.forge_revolutionary_objectives(src)
 					ticker.mode.greet_revolutionary(src,0)
-					usr << "\blue The objectives for revolution have been generated and shown to [key]"
+					usr << "<span class='notice'> The objectives for revolution have been generated and shown to [key]</span>"
 
 				if("flash")
 					if (!ticker.mode.equip_revolutionary(current))
@@ -672,7 +672,7 @@ datum/mind
 				if("autoobjectives")
 					if(!config.objectives_disabled)
 						ticker.mode.forge_changeling_objectives(src)
-					usr << "\blue The objectives for changeling [key] have been generated. You can edit them and anounce manually."
+					usr << "<span class='notice'> The objectives for changeling [key] have been generated. You can edit them and anounce manually.</span>"
 
 				if("initialdna")
 					if( !changeling || !changeling.absorbed_dna.len )
@@ -707,7 +707,7 @@ datum/mind
 						else
 							current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
 						special_role = "Mercenary"
-						current << "\blue You are a [syndicate_name()] agent!"
+						current << "<span class='notice'> You are a [syndicate_name()] agent!</span>"
 						current << "<h3><B>Make sure to read the rules about ganking and be sure to make the round interesting for everyone!</B></h3>"
 						ticker.mode.forge_syndicate_objectives(src)
 						ticker.mode.greet_syndicate(src)
@@ -772,7 +772,7 @@ datum/mind
 				if("autoobjectives")
 					if (!config.objectives_disabled)
 						ticker.mode.forge_traitor_objectives(src)
-						usr << "\blue The objectives for traitor [key] have been generated. You can edit them and anounce manually."
+						usr << "<span class='notice'> The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>"
 
 		else if (href_list["silicon"])
 			current.hud_updateflag |= (1 << SPECIALROLE_HUD)
@@ -865,7 +865,7 @@ datum/mind
 
 		else if (href_list["obj_announce"])
 			var/obj_count = 1
-			current << "\blue Your current objectives:"
+			current << "<span class='notice'> Your current objectives:</span>"
 			for(var/datum/objective/objective in objectives)
 				current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 				obj_count++
@@ -949,7 +949,7 @@ datum/mind
 				current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
 			special_role = "Mercenary"
 			assigned_role = "MODE"
-			current << "\blue You are a [syndicate_name()] mercenary!"
+			current << "<span class='notice'> You are a [syndicate_name()] mercenary!</span>"
 			ticker.mode.forge_syndicate_objectives(src)
 			ticker.mode.greet_syndicate(src)
 

@@ -74,7 +74,7 @@ turf/simulated/floor
 				else
 					usr << "Space Borders: None"
 			else
-				usr << "\blue [x],[y] has no parent air group."
+				usr << "<span class='notice'> [x],[y] has no parent air group.</span>"
 
 	verb
 		create_wall()
@@ -329,7 +329,7 @@ obj/machinery/atmospherics
 				set src in world
 				set category = "Minor"
 
-				world << "\blue [x],[y]"
+				world << "<span class='notice'> [x],[y]</span>"
 				world << "network 1: [network_node1.normal_members.len], [network_node1.line_members.len]"
 				for(var/obj/O in network_node1.normal_members)
 					world << "member: [O.x], [O.y]"
@@ -406,7 +406,7 @@ turf/simulated
 			set src in world
 			set category = "Minor"
 			var/datum/gas_mixture/GM = return_air()
-			usr << "\blue @[x],[y] ([GM.group_multiplier]): O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] w [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(active_hotspot)?("\red BURNING"):(null)]"
+			usr << "<span class='notice'> @[x],[y] ([GM.group_multiplier]): O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] w [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(active_hotspot)?(</span>"\red BURNING"):(null)]"
 			for(var/datum/gas/trace_gas in GM.trace_gases)
 				usr << "[trace_gas.type]: [trace_gas.moles]"
 

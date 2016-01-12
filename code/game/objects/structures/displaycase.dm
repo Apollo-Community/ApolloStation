@@ -78,7 +78,7 @@
 		update_icon()
 		return
 	else
-		usr << text("\blue You kick the display case.")
+		usr << text("<span class='notice'> You kick the display case.</span>")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
 				O << text("\red [] kicks the display case.", usr)

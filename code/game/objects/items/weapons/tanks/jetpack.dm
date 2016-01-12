@@ -164,7 +164,7 @@
 			usr.loc = upwards
 			if( istype( upwards, /turf/space ) || istype( upwards, /turf/simulated/floor/open ))
 				usr.loc = upwards
-				usr << "\blue You fly upwards."
+				usr << "<span class='notice'> You fly upwards.</span>"
 			else
 				usr << "\red \The [upwards] is in the way!"
 		else
@@ -187,7 +187,7 @@
 			var/turf/below = locate(src.x, src.y, controller.down_target)
 			if( !below.density )
 				usr.loc = below
-				usr << "\blue You fly downwards."
+				usr << "<span class='notice'> You fly downwards.</span>"
 			else
 				usr << "\red There is a [below] in the way!"
 		else

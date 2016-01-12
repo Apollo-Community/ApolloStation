@@ -120,14 +120,14 @@
 			var/turf/p_loc = user.loc
 			var/turf/p_loc_m = C.loc
 
-			user.visible_message("\blue [user] begins to cut off [C]'s antennae.")
+			user.visible_message("<span class='notice'> [user] begins to cut off [C]'s antennae.</span>")
 			C << "\red <B>[user] begins to cut off your antennae!<B>"
 			do_after(C, 150)
 			if(p_loc == user.loc && p_loc_m == C.loc)
 				qdel(C.internal_organs_by_name["antennae"])
 				C.remove_language("Wryn Hivemind")
 				new /obj/item/organ/wryn/hivenode(user.loc)
-				user << "\blue You hear a loud crunch as you mercilessly off cut [C]'s antennae."
+				user << "<span class='notice'> You hear a loud crunch as you mercilessly off cut [C]'s antennae.</span>"
 				C << "\red <B>You hear a loud crunch as the wirecutters rip through your antennae.</B>"
 				C << "\red <B>Its so quiet...</B>"
 				C.h_style = "Bald"
@@ -196,9 +196,9 @@
 			return
 		status = !status
 		if(status)
-			user << "\blue You resecure the welder."
+			user << "<span class='notice'> You resecure the welder.</span>"
 		else
-			user << "\blue The welder can now be attached and modified."
+			user << "<span class='notice'> The welder can now be attached and modified.</span>"
 		src.add_fingerprint(user)
 		return
 
@@ -269,7 +269,7 @@
 	if(!proximity) return
 	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && !src.welding)
 		O.reagents.trans_to(src, max_fuel)
-		user << "\blue Welder refueled"
+		user << "<span class='notice'> Welder refueled</span>"
 		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 		return
 	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.welding)
@@ -308,7 +308,7 @@
 		return 1
 	else
 		if(M)
-			M << "\blue You need more welding fuel to complete this task."
+			M << "<span class='notice'> You need more welding fuel to complete this task.</span>"
 		return 0
 
 //Returns whether or not the welding tool is currently on.
@@ -321,18 +321,18 @@
 	//If we're turning it on
 	if(temp_welding > 0)
 		if (remove_fuel(1))
-			usr << "\blue The [src] switches on."
+			usr << "<span class='notice'> The [src] switches on.</span>"
 			src.force = 15
 			src.damtype = "fire"
 			src.icon_state = "welder1"
 			processing_objects.Add(src)
 		else
-			usr << "\blue Need more fuel!"
+			usr << "<span class='notice'> Need more fuel!</span>"
 			src.welding = 0
 			return
 	//Otherwise
 	else
-		usr << "\blue The [src] switches off."
+		usr << "<span class='notice'> The [src] switches off.</span>"
 		src.force = 3
 		src.damtype = "brute"
 		src.icon_state = "welder"
@@ -352,21 +352,21 @@
 	src.welding = !( src.welding )
 	if (src.welding)
 		if (remove_fuel(1))
-			usr << "\blue You switch the [src] on."
+			usr << "<span class='notice'> You switch the [src] on.</span>"
 			src.force = 15
 			src.damtype = "fire"
 			src.icon_state = "welder1"
 			src.w_class = 4
 			processing_objects.Add(src)
 		else
-			usr << "\blue Need more fuel!"
+			usr << "<span class='notice'> Need more fuel!</span>"
 			src.welding = 0
 			return
 	else
 		if(!message)
-			usr << "\blue You switch the [src] off."
+			usr << "<span class='notice'> You switch the [src] off.</span>"
 		else
-			usr << "\blue The [src] shuts off!"
+			usr << "<span class='notice'> The [src] shuts off!</span>"
 		src.force = 3
 		src.damtype = "brute"
 		src.icon_state = "welder"

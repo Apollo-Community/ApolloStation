@@ -196,7 +196,7 @@
 /obj/machinery/washing_machine/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	/*if(istype(W,/obj/item/weapon/screwdriver))
 		panel = !panel
-		user << "\blue you [panel ? "open" : "close"] the [src]'s maintenance panel"*/
+		user << "<span class='notice'> you [panel ? "open" : "close"] the [src]'s maintenance panel</span>"*/
 	if(istype(W,/obj/item/toy/crayon) ||istype(W,/obj/item/weapon/stamp))
 		if( state in list(	1, 3, 6 ) )
 			if(!crayon)
@@ -269,9 +269,9 @@
 				W.loc = src
 				state = 3
 			else
-				user << "\blue You can't put the item in right now."
+				user << "<span class='notice'> You can't put the item in right now.</span>"
 		else
-			user << "\blue The washing machine is full."
+			user << "<span class='notice'> The washing machine is full.</span>"
 	else
 		..()
 	update_icon()

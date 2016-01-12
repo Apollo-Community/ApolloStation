@@ -173,7 +173,7 @@
 			spark_system.start()
 			playsound(src.loc, "sparks", 50, 1)
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			visible_message("\blue The glass door was sliced open by [user]!")
+			visible_message("<span class='notice'> The glass door was sliced open by [user]!</span>")
 		flick("[src.base_state]spark", src)
 		sleep(6)
 		open()
@@ -184,7 +184,7 @@
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 		user.visible_message("[user] removes the electronics from the windoor.", "You start to remove electronics from the windoor.")
 		if (do_after(user,40))
-			user << "\blue You removed the windoor electronics!"
+			user << "<span class='notice'> You removed the windoor electronics!</span>"
 
 			var/obj/structure/windoor_assembly/wa = new/obj/structure/windoor_assembly(src.loc)
 			if (istype(src, /obj/machinery/door/window/brigdoor))

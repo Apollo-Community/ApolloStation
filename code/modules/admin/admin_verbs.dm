@@ -412,7 +412,7 @@ var/list/admin_verbs_mentor = list(
 			mob.alpha = max(mob.alpha + 100, 255)
 		else
 			mob.invisibility = INVISIBILITY_OBSERVER
-			mob << "\blue <b>Invisimin on. You are now as invisible as a ghost.</b>"
+			mob << "<span class='notice'> <b>Invisimin on. You are now as invisible as a ghost.</b></span>"
 			mob.alpha = max(mob.alpha - 100, 0)
 
 
@@ -585,7 +585,7 @@ var/list/admin_verbs_mentor = list(
 			var/light_impact_range = input("Light impact range (in tiles):") as num
 			var/flash_range = input("Flash range (in tiles):") as num
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
-	message_admins("\blue [ckey] creating an admin explosion at [epicenter.loc].")
+	message_admins("<span class='notice'> [ckey] creating an admin explosion at [epicenter.loc].</span>")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/give_spell(mob/T as mob in mob_list) // -- Urist
@@ -602,7 +602,7 @@ var/list/admin_verbs_mentor = list(
 	T.spell_list += new path
 	feedback_add_details("admin_verb","GS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
-	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the spell [S].")
+	message_admins("<span class='notice'> [key_name_admin(usr)] gave [key_name(T)] the spell [S].</span>")
 
 /client/proc/give_disease(mob/T as mob in mob_list) // -- Giacom
 	set category = "Fun"
@@ -618,7 +618,7 @@ var/list/admin_verbs_mentor = list(
 	T.contract_disease(new path, 1)
 	feedback_add_details("admin_verb","GD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
-	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the disease [D].")
+	message_admins("<span class='notice'> [key_name_admin(usr)] gave [key_name(T)] the disease [D].</span>")
 
 /client/proc/give_disease2(mob/T as mob in mob_list) // -- Giacom
 	set category = "Fun"
@@ -649,7 +649,7 @@ var/list/admin_verbs_mentor = list(
 
 	feedback_add_details("admin_verb","GD2") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] a [greater] disease2 with infection chance [D.infectionchance].")
-	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] a [greater] disease2 with infection chance [D.infectionchance].")
+	message_admins("<span class='notice'> [key_name_admin(usr)] gave [key_name(T)] a [greater] disease2 with infection chance [D.infectionchance].</span>")
 
 /client/proc/make_sound(var/obj/O in world) // -- TLE
 	set category = "Special Verbs"
@@ -662,7 +662,7 @@ var/list/admin_verbs_mentor = list(
 		for (var/mob/V in hearers(O))
 			V.show_message(message, 2)
 		log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound")
-		message_admins("\blue [key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound")
+		message_admins("<span class='notice'> [key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound</span>")
 		feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -696,7 +696,7 @@ var/list/admin_verbs_mentor = list(
 		usr << "<b>Disabled air processing.</b>"
 	feedback_add_details("admin_verb","KA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] used 'kill air'.")
-	message_admins("\blue [key_name_admin(usr)] used 'kill air'.")
+	message_admins("<span class='notice'> [key_name_admin(usr)] used 'kill air'.</span>")
 
 /client/proc/readmin_self()
 	set name = "Re-Admin self"
@@ -906,11 +906,11 @@ var/list/admin_verbs_mentor = list(
 	if( angry )
 		angry = 0
 		log_admin("[key_name(usr)] has CALMED DOWN!")
-		message_admins("\blue [key_name_admin(usr)] has CALMED DOWN!")
+		message_admins("<span class='notice'> [key_name_admin(usr)] has CALMED DOWN!</span>")
 	else
 		angry = 1
 		log_admin("[key_name(usr)] has become ANGRY!")
-		message_admins("\blue [key_name_admin(usr)] has become ANGRY!")
+		message_admins("<span class='notice'> [key_name_admin(usr)] has become ANGRY!</span>")
 
 /* This is the worst frickin verb, why did anyone ever think it was a good idea?
 /client/proc/man_up(mob/T as mob in mob_list)
@@ -922,7 +922,7 @@ var/list/admin_verbs_mentor = list(
 	T << "<span class='notice'>Move on.</span>"
 
 	log_admin("[key_name(usr)] told [key_name(T)] to man up and deal with it.")
-	message_admins("\blue [key_name_admin(usr)] told [key_name(T)] to man up and deal with it.", 1)
+	message_admins("<span class='notice'> [key_name_admin(usr)] told [key_name(T)] to man up and deal with it.</span>", 1)
 
 /client/proc/global_man_up()
 	set category = "Fun"
@@ -934,5 +934,5 @@ var/list/admin_verbs_mentor = list(
 		T << 'sound/voice/ManUp1.ogg'
 
 	log_admin("[key_name(usr)] told everyone to man up and deal with it.")
-	message_admins("\blue [key_name_admin(usr)] told everyone to man up and deal with it.", 1)
+	message_admins("<span class='notice'> [key_name_admin(usr)] told everyone to man up and deal with it.</span>", 1)
 */

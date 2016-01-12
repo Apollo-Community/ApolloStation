@@ -17,7 +17,7 @@
 	hulk_destroy_prob = 10
 	hulk_take_damage = 0
 	rotting_destroy_touch = 0
-	rotting_touch_message = "\blue This wall feels rather unstable."
+	rotting_touch_message = "<span class='notice'> This wall feels rather unstable.</span>"
 
 /turf/simulated/wall/r_wall/attackby(obj/item/W as obj, mob/user as mob)
 

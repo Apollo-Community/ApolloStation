@@ -52,11 +52,11 @@
 		reagents.trans_to_ingest(M, reagents.total_volume)
 		if(M == user)
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\blue [] eats some [] from \the [].", user, loaded, src), 1)
+				O.show_message(text("<span class='notice'> [] eats some [] from \the [].</span>", user, loaded, src), 1)
 				M.reagents.add_reagent("nutriment", 1)
 		else
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\blue [] feeds [] some [] from \the []", user, M, loaded, src), 1)
+				O.show_message(text("<span class='notice'> [] feeds [] some [] from \the []</span>", user, M, loaded, src), 1)
 				M.reagents.add_reagent("nutriment", 1)
 		playsound(M.loc,'sound/items/eatfood.ogg', rand(10,40), 1)
 		overlays.Cut()

@@ -236,10 +236,10 @@
 
 		if(I_HELP)
 			if (health > 0)
-				M.visible_message("\blue [M] [response_help] \the [src]")
+				M.visible_message("<span class='notice'> [M] [response_help] \the [src]</span>")
 
 		if(I_DISARM)
-			M.visible_message("\blue [M] [response_disarm] \the [src]")
+			M.visible_message("<span class='notice'> [M] [response_disarm] \the [src]</span>")
 			//TODO: Push the mob away or something
 
 		if(I_GRAB)
@@ -256,11 +256,11 @@
 			G.affecting = src
 			LAssailant = M
 
-			M.visible_message("\red [M] has grabbed [src] passively!")
+			M.visible_message("<span class='alert'> [M] has grabbed [src] passively!</span>")
 
 		if(I_HURT)
 			adjustBruteLoss(harm_intent_damage)
-			M.visible_message("\red [M] [response_harm] \the [src]")
+			M.visible_message("<span class='alert'> [M] [response_harm] \the [src]</span>")
 
 	return
 

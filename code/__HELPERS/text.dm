@@ -34,7 +34,7 @@
 		input = replace_characters(input, list("\n"=" ","\t"=" "))
 
 	if(encode)
-		//In addition to processing html, html_encode removes byond formatting codes like "\red", "\i" and other.
+		//In addition to processing html, html_encode removes byond formatting codes like "<span class='alert'></span>", "\i" and other.
 		//It is important to avoid double-encode text, it can "break" quotes and some other characters.
 		//Also, keep in mind that escaped characters don't work in the interface (window titles, lower left corner of the main window, etc.)
 		input = html_encode(input)

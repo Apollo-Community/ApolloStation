@@ -692,7 +692,7 @@ It can still be worn/put on as normal.
 				target.updatehealth()
 				for(var/mob/O in viewers(source, null))
 					O.show_message("\red [source] performs CPR on [target]!", 1)
-				target << "\blue <b>You feel a breath of fresh air enter your lungs. It feels good.</b>"
+				target << "<span class='notice'> <b>You feel a breath of fresh air enter your lungs. It feels good.</b></span>"
 				source << "\red Repeat at least every 7 seconds."
 		if("dnainjector")
 			var/obj/item/weapon/dnainjector/S = item

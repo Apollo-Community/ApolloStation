@@ -80,7 +80,7 @@
 /datum/game_mode/revolution/rp_revolution/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)
 	rev_mind.special_role = "Head Revolutionary"
 	if (you_are)
-		rev_mind.current << "\blue You are a member of the revolutionaries' leadership!"
+		rev_mind.current << "<span class='notice'> You are a member of the revolutionaries' leadership!</span>"
 	show_objectives(rev_mind)
 
 	// Show each head revolutionary up to 3 candidates
@@ -183,8 +183,8 @@
 			var/choice = alert(M,"Asked by [src]: Do you want to join the revolution?","Align Thyself with the Revolution!","No!","Yes!")
 			if(choice == "Yes!")
 				ticker.mode:add_revolutionary(M.mind)
-				M << "\blue You join the revolution!"
-				src << "\blue <b>[M] joins the revolution!</b>"
+				M << "<span class='notice'> You join the revolution!</span>"
+				src << "<span class='notice'> <b>[M] joins the revolution!</b></span>"
 			else if(choice == "No!")
 				M << "\red You reject this traitorous cause!"
 				src << "\red <b>[M] does not support the revolution!</b>"

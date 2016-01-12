@@ -32,16 +32,16 @@
 /turf/simulated/wall/g_wall/attack_hand(mob/user as mob)
 	if (HULK in user.mutations)
 		if (prob(5) || rotting)
-			usr << text("\blue You shatter the glass wall!")
+			usr << text("<span class='notice'> You shatter the glass wall!</span>")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1, 0)
 			return
 		else
-			usr << text("\blue Your punch cracks the glass!.")
+			usr << text("<span class='notice'> Your punch cracks the glass!.</span>")
 			take_damage( 20 )
 
 	if(rotting)
-		user << "\blue This glass wall is a little too flexible."
+		user << "<span class='notice'> This glass wall is a little too flexible.</span>"
 
 	if (usr.a_intent == "hurt")
 		playsound(src, 'sound/effects/glassknock.ogg', 80, 1)

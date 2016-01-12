@@ -45,7 +45,7 @@
 	if(!proximity) return
 	if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
 		A.reagents.trans_to(src, 10)
-		user << "\blue You fill the balloon with the contents of [A]."
+		user << "<span class='notice'> You fill the balloon with the contents of [A].</span>"
 		src.desc = "A translucent balloon with some form of liquid sloshing around in it."
 		src.update_icon()
 	return
@@ -62,7 +62,7 @@
 					qdel(src)
 				else
 					src.desc = "A translucent balloon with some form of liquid sloshing around in it."
-					user << "\blue You fill the balloon with the contents of [O]."
+					user << "<span class='notice'> You fill the balloon with the contents of [O].</span>"
 					O.reagents.trans_to(src, 10)
 	src.update_icon()
 	return
@@ -145,7 +145,7 @@
 
 		if (istype(A, /obj/item/toy/ammo/gun))
 			if (src.bullets >= 7)
-				user << "\blue It's already fully loaded!"
+				user << "<span class='notice'> It's already fully loaded!</span>"
 				return 1
 			if (A.amount_left <= 0)
 				user << "\red There is no more caps!"
@@ -211,7 +211,7 @@
 
 	examine(mob/user)
 		if(..(user, 2) && bullets)
-			user << "\blue It is loaded with [bullets] foam darts!"
+			user << "<span class='notice'> It is loaded with [bullets] foam darts!</span>"
 
 	attackby(obj/item/I as obj, mob/user as mob)
 		if(istype(I, /obj/item/toy/ammo/crossbow))
@@ -219,7 +219,7 @@
 				user.drop_item()
 				qdel(I)
 				bullets++
-				user << "\blue You load the foam dart into the crossbow."
+				user << "<span class='notice'> You load the foam dart into the crossbow.</span>"
 			else
 				usr << "\red It's already fully loaded."
 
@@ -326,13 +326,13 @@
 	attack_self(mob/user as mob)
 		src.active = !( src.active )
 		if (src.active)
-			user << "\blue You extend the plastic blade with a quick flick of your wrist."
+			user << "<span class='notice'> You extend the plastic blade with a quick flick of your wrist.</span>"
 			playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 			src.icon_state = "swordblue"
 			src.item_state = "swordblue"
 			src.w_class = 4
 		else
-			user << "\blue You push the plastic blade back down into the handle."
+			user << "<span class='notice'> You push the plastic blade back down into the handle.</span>"
 			playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 			src.icon_state = "sword0"
 			src.item_state = "sword0"
@@ -445,12 +445,12 @@
 
 	else if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
 		A.reagents.trans_to(src, 10)
-		user << "\blue You refill your flower!"
+		user << "<span class='notice'> You refill your flower!</span>"
 		return
 
 	else if (src.reagents.total_volume < 1)
 		src.empty = 1
-		user << "\blue Your flower has run dry!"
+		user << "<span class='notice'> Your flower has run dry!</span>"
 		return
 
 	else

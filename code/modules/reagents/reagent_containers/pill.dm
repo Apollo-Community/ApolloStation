@@ -24,10 +24,10 @@
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				if(H.species.flags & IS_SYNTHETIC)
-					H << "\red You have a monitor for a head, where do you think you're going to put that?"
+					H << "<span class='alert'> You have a monitor for a head, where do you think you're going to put that?</span>"
 					return
 
-			M << "\blue You swallow [src]."
+			M << "<span class='notice'> You swallow [src].</span>"
 			M.drop_from_inventory(src) //icon update
 			if(reagents.total_volume)
 				reagents.trans_to_ingest(M, reagents.total_volume)
@@ -40,17 +40,17 @@
 
 			var/mob/living/carbon/human/H = M
 			if(H.species.flags & IS_SYNTHETIC)
-				H << "\red They have a monitor for a head, where do you think you're going to put that?"
+				H << "<span class='alert'> They have a monitor for a head, where do you think you're going to put that?</span>"
 				return
 
 			for(var/mob/O in viewers(world.view, user))
-				O.show_message("\red [user] attempts to force [M] to swallow [src].", 1)
+				O.show_message("<span class='alert'> [user] attempts to force [M] to swallow [src].</span>", 1)
 
 			if(!do_mob(user, M)) return
 
 			user.drop_from_inventory(src) //icon update
 			for(var/mob/O in viewers(world.view, user))
-				O.show_message("\red [user] forces [M] to swallow [src].", 1)
+				O.show_message("<span class='alert'> [user] forces [M] to swallow [src].</span>", 1)
 			if(!in_unlogged(user))
 				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
 				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
@@ -76,9 +76,9 @@
 
 		if(target.is_open_container() != 0 && target.reagents)
 			if(!target.reagents.total_volume)
-				user << "\red [target] is empty. Cant dissolve pill."
+				user << "<span class='alert'> [target] is empty. Cant dissolve pill.</span>"
 				return
-			user << "\blue You dissolve the pill in [target]"
+			user << "<span class='notice'> You dissolve the pill in [target]</span>"
 
 			if(!in_unlogged(user))
 				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Spiked \a [target] with a pill. Reagents: [reagentlist(src)]</font>")
@@ -86,7 +86,7 @@
 
 			reagents.trans_to(target, reagents.total_volume)
 			for(var/mob/O in viewers(2, user))
-				O.show_message("\red [user] puts something in \the [target].", 1)
+				O.show_message("<span class='alert'> [user] puts something in \the [target].</span>", 1)
 
 			spawn(5)
 				qdel(src)

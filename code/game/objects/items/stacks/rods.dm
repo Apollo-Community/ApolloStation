@@ -55,15 +55,15 @@
 
 	else if(!in_use)
 		if(amount < 2)
-			user << "\blue You need at least two rods to do this."
+			user << "<span class='notice'> You need at least two rods to do this.</span>"
 			return
-		usr << "\blue Assembling grille..."
+		usr << "<span class='notice'> Assembling grille...</span>"
 		in_use = 1
 		if (!do_after(usr, 10))
 			in_use = 0
 			return
 		var/obj/structure/grille/F = new /obj/structure/grille/ ( usr.loc )
-		usr << "\blue You assemble a grille"
+		usr << "<span class='notice'> You assemble a grille</span>"
 		in_use = 0
 		F.add_fingerprint(usr)
 		use(2)

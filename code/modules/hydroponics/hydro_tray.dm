@@ -517,7 +517,7 @@
 	pestlevel = 0
 	sampled = 0
 	update_icon()
-	visible_message("\blue [src] has been overtaken by [seed.display_name].")
+	visible_message("<span class='notice'> [src] has been overtaken by [seed.display_name].</span>")
 
 	return
 

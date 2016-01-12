@@ -53,10 +53,10 @@
 				G.loc = src
 				i++
 				if(i >= 10)
-					user << "\blue You fill the biogenerator to its capacity."
+					user << "<span class='notice'> You fill the biogenerator to its capacity.</span>"
 					break
 			if(i<10)
-				user << "\blue You empty the plant bag into the biogenerator."
+				user << "<span class='notice'> You empty the plant bag into the biogenerator.</span>"
 
 
 	else if(!istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
@@ -70,7 +70,7 @@
 		else
 			user.before_take_item(O)
 			O.loc = src
-			user << "\blue You put [O.name] in [src.name]"
+			user << "<span class='notice'> You put [O.name] in [src.name]</span>"
 	update_icon()
 	return
 

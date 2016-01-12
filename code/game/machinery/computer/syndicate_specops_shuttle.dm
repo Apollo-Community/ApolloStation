@@ -187,7 +187,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 
 /obj/machinery/computer/syndicate_elite_shuttle/attackby(I as obj, user as mob)
 	if(istype(I,/obj/item/weapon/card/emag))
-		user << "\blue The electronic systems in this console are far too advanced for your primitive hacking peripherals."
+		user << "<span class='notice'> The electronic systems in this console are far too advanced for your primitive hacking peripherals.</span>"
 	else
 		return attack_hand(user)
 
@@ -227,7 +227,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 	if (href_list["sendtodock"])
 		if(!syndicate_elite_shuttle_at_station|| syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership) return
 
-		usr << "\blue The Syndicate will not allow the Elite Squad shuttle to return."
+		usr << "<span class='notice'> The Syndicate will not allow the Elite Squad shuttle to return.</span>"
 		return
 
 	else if (href_list["sendtostation"])
@@ -237,7 +237,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 			usr << "\red The Syndicate Elite shuttle is unable to leave."
 			return
 
-		usr << "\blue The Syndicate Elite shuttle will arrive on [station_name] in [(SYNDICATE_ELITE_MOVETIME/10)] seconds."
+		usr << "<span class='notice'> The Syndicate Elite shuttle will arrive on [station_name] in [(SYNDICATE_ELITE_MOVETIME/10)] seconds.</span>"
 
 		temp  = "Shuttle departing.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 		updateUsrDialog()

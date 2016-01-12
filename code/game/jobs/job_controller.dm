@@ -395,7 +395,7 @@ var/global/datum/controller/occupations/job_master
 							if(G.slot == slot_wear_mask || G.slot == slot_wear_suit || G.slot == slot_head)
 								custom_equip_leftovers += thing
 							else if(H.equip_to_slot_or_qdel(new G.path(H), G.slot))
-								H << "\blue Equipping you with [thing]!"
+								H << "<span class='notice'> Equipping you with [thing]!</span>"
 								custom_equip_slots.Add(G.slot)
 							else
 								custom_equip_leftovers.Add(thing)
@@ -411,7 +411,7 @@ var/global/datum/controller/occupations/job_master
 					spawn_in_storage += thing
 				else
 					if(H.equip_to_slot_or_qdel(new G.path(H), G.slot))
-						H << "\blue Equipping you with [thing]!"
+						H << "<span class='notice'> Equipping you with [thing]!</span>"
 						custom_equip_slots.Add(G.slot)
 					else
 						spawn_in_storage += thing
@@ -463,7 +463,7 @@ var/global/datum/controller/occupations/job_master
 			H.mind.store_memory(remembered_info)
 
 		spawn(0)
-			H << "\blue<b>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</b>"
+			H << "<span class='notice'><b>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</b></span>"
 
 		if(H.mind)
 			switch(rank)
@@ -496,7 +496,7 @@ var/global/datum/controller/occupations/job_master
 
 						if(!isnull(B))
 							for(var/thing in spawn_in_storage)
-								H << "\blue Placing [thing] in your [B]!"
+								H << "<span class='notice'> Placing [thing] in your [B]!</span>"
 								var/datum/gear/G = gear_datums[thing]
 								new G.path(B)
 						else

@@ -46,7 +46,7 @@
 	if ((src.health < 0 && src.health > -95.0))
 		src.adjustOxyLoss(src.health + 200)
 		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
-		src << "\blue You have given up life and succumbed to death."
+		src << "<span class='notice'> You have given up life and succumbed to death.</span>"
 
 
 /mob/living/proc/updatehealth()
@@ -556,7 +556,7 @@
 	set category = "IC"
 
 	resting = !resting
-	src << "\blue You are now [resting ? "resting" : "getting up"]"
+	src << "<span class='notice'> You are now [resting ? "resting" : "getting up"]</span>"
 
 /mob/living/proc/handle_ventcrawl(var/obj/machinery/atmospherics/unary/vent_pump/vent_found = null, var/ignore_items = 0) // -- TLE -- Merged by Carn
 	if(stat)

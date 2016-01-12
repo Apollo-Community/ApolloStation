@@ -98,7 +98,7 @@
 		equip_cultist(cult_mind.current)
 		grant_runeword(cult_mind.current)
 		update_cult_icons_added(cult_mind)
-		cult_mind.current << "\blue You are a member of the cult!"
+		cult_mind.current << "<span class='notice'> You are a member of the cult!</span>"
 		if(!config.objectives_disabled)
 			memorize_cult_objectives(cult_mind)
 		show_objectives(cult_mind)

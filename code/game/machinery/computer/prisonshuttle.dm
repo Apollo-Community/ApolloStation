@@ -37,19 +37,19 @@ var/prison_shuttle_timeleft = 0
 				A.anchored = 1
 
 				if (src.stat & BROKEN)
-					user << "\blue The broken glass falls out."
+					user << "<span class='notice'> The broken glass falls out.</span>"
 					new /obj/item/weapon/shard( src.loc )
 					A.state = 3
 					A.icon_state = "3"
 				else
-					user << "\blue You disconnect the monitor."
+					user << "<span class='notice'> You disconnect the monitor.</span>"
 					A.state = 4
 					A.icon_state = "4"
 
 				qdel(src)
 		else if(istype(I,/obj/item/weapon/card/emag) && (!hacked))
 			hacked = 1
-			user << "\blue You disable the lock."
+			user << "<span class='notice'> You disable the lock.</span>"
 		else
 			return src.attack_hand(user)
 
@@ -92,7 +92,7 @@ var/prison_shuttle_timeleft = 0
 				return
 			if(!prison_shuttle_at_station|| prison_shuttle_moving_to_station || prison_shuttle_moving_to_prison) return
 			post_signal("prison")
-			usr << "\blue The prison shuttle has been called and will arrive in [(PRISON_MOVETIME/10)] seconds."
+			usr << "<span class='notice'> The prison shuttle has been called and will arrive in [(PRISON_MOVETIME/10)] seconds.</span>"
 			src.temp += "Shuttle sent.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 			src.updateUsrDialog()
 			prison_shuttle_moving_to_prison = 1
@@ -106,7 +106,7 @@ var/prison_shuttle_timeleft = 0
 				return
 			if(prison_shuttle_at_station || prison_shuttle_moving_to_station || prison_shuttle_moving_to_prison) return
 			post_signal("prison")
-			usr << "\blue The prison shuttle has been called and will arrive in [(PRISON_MOVETIME/10)] seconds."
+			usr << "<span class='notice'> The prison shuttle has been called and will arrive in [(PRISON_MOVETIME/10)] seconds.</span>"
 			src.temp += "Shuttle sent.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 			src.updateUsrDialog()
 			prison_shuttle_moving_to_station = 1

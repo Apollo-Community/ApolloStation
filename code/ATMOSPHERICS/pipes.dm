@@ -87,11 +87,11 @@
 		add_fingerprint(user)
 		return 1
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	user << "\blue You begin to unfasten \the [src]..."
+	user << "<span class='notice'> You begin to unfasten \the [src]...</span>"
 	if (do_after(user, 40))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
-			"\blue You have unfastened \the [src].", \
+			"<span class='notice'> You have unfastened \the [src].</span>", \
 			"You hear ratchet.")
 		new /obj/item/pipe(loc, make_from=src)
 		for (var/obj/machinery/meter/meter in T)
@@ -1122,14 +1122,14 @@
 		var/pressure = parent.air.return_pressure()
 		var/total_moles = parent.air.total_moles
 
-		user << "\blue Results of analysis of \icon[icon]"
+		user << "<span class='notice'> Results of analysis of \icon[icon]</span>"
 		if (total_moles>0)
-			user << "\blue Pressure: [round(pressure,0.1)] kPa"
+			user << "<span class='notice'> Pressure: [round(pressure,0.1)] kPa</span>"
 			for(var/g in parent.air.gas)
-				user << "\blue [gas_data.name[g]]: [round((parent.air.gas[g] / total_moles) * 100)]%"
-			user << "\blue Temperature: [round(parent.air.temperature-T0C)]&deg;C"
+				user << "<span class='notice'> [gas_data.name[g]]: [round((parent.air.gas[g] / total_moles) * 100)]%</span>"
+			user << "<span class='notice'> Temperature: [round(parent.air.temperature-T0C)]&deg;C</span>"
 		else
-			user << "\blue Tank is empty!"
+			user << "<span class='notice'> Tank is empty!</span>"
 
 /obj/machinery/atmospherics/pipe/tank/air
 	name = "Pressure Tank (Air)"

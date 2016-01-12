@@ -55,10 +55,10 @@
 			if(istype(H) && health < config.health_threshold_crit)
 
 				if((H.head && (H.head.flags & HEADCOVERSMOUTH)) || (H.wear_mask && (H.wear_mask.flags & MASKCOVERSMOUTH)))
-					H << "\blue <B>Remove your mask!</B>"
+					H << "<span class='notice'> <B>Remove your mask!</B></span>"
 					return 0
 				if((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)))
-					H << "\blue <B>Remove [src]'s mask!</B>"
+					H << "<span class='notice'> <B>Remove [src]'s mask!</B></span>"
 					return 0
 
 				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
@@ -100,14 +100,14 @@
 					var/turf/p_loc = M.loc
 					var/turf/p_loc_m = src.loc
 
-					M.visible_message("\blue [M] begins to violently pull off [src]'s antennae.")
+					M.visible_message("<span class='notice'> [M] begins to violently pull off [src]'s antennae.</span>")
 					src << "\red <B>[M] grips your antennae and starts violently pulling!<B>"
 					do_after(src, 250)
 					if(p_loc == M.loc && p_loc_m == src.loc)
 						qdel(src.internal_organs_by_name["antennae"])
 						src.remove_language("Wryn Hivemind")
 						new /obj/item/organ/wryn/hivenode(M.loc)
-						M << "\blue You hear a loud crunch as you mercilessly pull off [src]'s antennae."
+						M << "<span class='notice'> You hear a loud crunch as you mercilessly pull off [src]'s antennae.</span>"
 						src << "\red <B>You hear a loud crunch as your antennae is ripped off your head by [M].</B>"
 						src << "\red <B>Its so quiet...</B>"
 						src.h_style = "Bald"

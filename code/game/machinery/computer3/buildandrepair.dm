@@ -82,7 +82,7 @@
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20))
-					user << "\blue You wrench the frame into place."
+					user << "<span class='notice'> You wrench the frame into place.</span>"
 					src.anchored = 1
 					src.state = 1
 			if(istype(P, /obj/item/weapon/weldingtool))
@@ -93,21 +93,21 @@
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if(do_after(user, 20))
 					if(!src || !WT.isOn()) return
-					user << "\blue You deconstruct the frame."
+					user << "<span class='notice'> You deconstruct the frame.</span>"
 					new /obj/item/stack/sheet/metal( src.loc, 5 )
 					qdel(src)
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20))
-					user << "\blue You unfasten the frame."
+					user << "<span class='notice'> You unfasten the frame.</span>"
 					src.anchored = 0
 					src.state = 0
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "computer")
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					user << "\blue You place the circuit board inside the frame."
+					user << "<span class='notice'> You place the circuit board inside the frame.</span>"
 					src.icon_state = "1"
 					src.circuit = P
 					user.drop_item()
@@ -116,12 +116,12 @@
 					user << "\red This frame does not accept circuit boards of this type!"
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "\blue You screw the circuit board into place."
+				user << "<span class='notice'> You screw the circuit board into place.</span>"
 				src.state = 2
 				src.icon_state = "2"
 			if(istype(P, /obj/item/weapon/crowbar) && circuit)
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				user << "\blue You remove the circuit board."
+				user << "<span class='notice'> You remove the circuit board.</span>"
 				src.state = 1
 				src.icon_state = "0"
 				circuit.loc = src.loc
@@ -129,7 +129,7 @@
 		if(2)
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "\blue You unfasten the circuit board."
+				user << "<span class='notice'> You unfasten the circuit board.</span>"
 				src.state = 1
 				src.icon_state = "1"
 
@@ -138,7 +138,7 @@
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 					if(do_after(10))
 						battery.loc = loc
-						user << "\blue You remove [battery]."
+						user << "<span class='notice'> You remove [battery].</span>"
 						battery = null
 				else
 					user << "\red There's no battery to remove!"
@@ -149,7 +149,7 @@
 					if(do_after(5))
 						battery = P
 						P.loc = src
-						user << "\blue You insert [battery]."
+						user << "<span class='notice'> You insert [battery].</span>"
 				else
 					user << "\red There's already \an [battery] in [src]!"
 
@@ -161,7 +161,7 @@
 						if(P)
 							P:amount -= 5
 							if(!P:amount) qdel(P)
-							user << "\blue You add cables to the frame."
+							user << "<span class='notice'> You add cables to the frame.</span>"
 							src.state = 3
 							src.icon_state = "3"
 		if(3)
@@ -170,7 +170,7 @@
 					user << "There are parts in the way!"
 					return
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-				user << "\blue You remove the cables."
+				user << "<span class='notice'> You remove the cables.</span>"
 				src.state = 2
 				src.icon_state = "2"
 				var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( src.loc )
@@ -185,19 +185,19 @@
 					if(do_after(user, 20))
 						if(P)
 							P:use(2)
-							user << "\blue You put in the glass panel."
+							user << "<span class='notice'> You put in the glass panel.</span>"
 							src.state = 4
 							src.icon_state = "4"
 		if(4)
 			if(istype(P, /obj/item/weapon/crowbar))
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				user << "\blue You remove the glass panel."
+				user << "<span class='notice'> You remove the glass panel.</span>"
 				src.state = 3
 				src.icon_state = "3"
 				new /obj/item/stack/sheet/glass( src.loc, 2 )
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "\blue You connect the monitor."
+				user << "<span class='notice'> You connect the monitor.</span>"
 				var/obj/machinery/computer3/B = new src.circuit.build_path ( src.loc, built=1 )
 				/*if(circuit.powernet) B:powernet = circuit.powernet
 				if(circuit.id) B:id = circuit.id
@@ -259,7 +259,7 @@
 			else
 				warning("Erronous component in computerframe/remove_peripheral: [I]")
 				I.loc = loc
-			usr << "\blue You remove [I]"
+			usr << "<span class='notice'> You remove [I]</span>"
 			return 1
 	return 0
 /obj/structure/computer3frame/proc/insert_peripheral(var/obj/item/I)

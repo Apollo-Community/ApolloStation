@@ -123,11 +123,11 @@
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user as mob)
 	src.active = !( src.active )
 	if (src.active)
-		user << "\blue The reactive armor is now active."
+		user << "<span class='notice'> The reactive armor is now active.</span>"
 		src.icon_state = "reactive"
 		src.item_state = "reactive"
 	else
-		user << "\blue The reactive armor is now inactive."
+		user << "<span class='notice'> The reactive armor is now inactive.</span>"
 		src.icon_state = "reactiveoff"
 		src.item_state = "reactiveoff"
 		src.add_fingerprint(user)
@@ -206,7 +206,7 @@
 
 		if(!holstered)
 			if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
-				usr << "\blue You need your gun equiped to holster it."
+				usr << "<span class='notice'> You need your gun equiped to holster it.</span>"
 				return
 			var/obj/item/weapon/gun/W = usr.get_active_hand()
 			if (!W.isHandgun())
@@ -215,7 +215,7 @@
 			holstered = usr.get_active_hand()
 			usr.drop_item()
 			holstered.loc = src
-			usr.visible_message("\blue \The [usr] holsters \the [holstered].", "You holster \the [holstered].")
+			usr.visible_message("<span class='notice'> \The [usr] holsters \the [holstered].</span>", "You holster \the [holstered].")
 		else
 			if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
 				usr << "\red You need an empty hand to draw the gun!"
@@ -224,8 +224,8 @@
 					usr.visible_message("\red \The [usr] draws \the [holstered], ready to shoot!", \
 					"\red You draw \the [holstered], ready to shoot!")
 				else
-					usr.visible_message("\blue \The [usr] draws \the [holstered], pointing it at the ground.", \
-					"\blue You draw \the [holstered], pointing it at the ground.")
+					usr.visible_message("<span class='notice'> \The [usr] draws \the [holstered], pointing it at the ground.</span>", \
+					"<span class='notice'> You draw \the [holstered], pointing it at the ground.</span>")
 				usr.put_in_hands(holstered)
 			holstered = null
 

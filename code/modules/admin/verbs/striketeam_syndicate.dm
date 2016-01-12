@@ -81,7 +81,7 @@ var/global/sent_syndicate_strike_team = 0
 				new_syndicate_commando.mind.store_memory("<B>Nuke Code:</B> \red [nuke_code].")
 			new_syndicate_commando.mind.store_memory("<B>Mission:</B> \red [input].")
 
-			new_syndicate_commando << "\blue You are an Elite Mercenary. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of criminal elements hostile to NanoTrasen. \nYour current mission is: \red<B>[input]</B>"
+			new_syndicate_commando << "<span class='notice'> You are an Elite Mercenary. [!syndicate_leader_selected?"commando":"<B>LEADER</B></span>"] in the service of criminal elements hostile to NanoTrasen. \nYour current mission is: \red<B>[input]</B>"
 
 			syndicate_commando_number--
 
@@ -98,7 +98,7 @@ var/global/sent_syndicate_strike_team = 0
 			new /obj/effect/spawner/newbomb/timer/syndicate(L.loc)
 			qdel(L)
 
-	message_admins("\blue [key_name_admin(usr)] has spawned a mercenary strike squad.")
+	message_admins("<span class='notice'> [key_name_admin(usr)] has spawned a mercenary strike squad.</span>")
 	log_admin("[key_name(usr)] used Spawn Mercenary Squad.")
 	feedback_add_details("admin_verb","SDTHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

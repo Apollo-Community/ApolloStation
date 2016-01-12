@@ -69,11 +69,11 @@
 		var/mob/living/killer = src.lastattacker
 
 		if( is_special_character(killer) )
-			src << "\blue [killer.real_name] was the last person to attack you. They were an antagonist."
+			src << "<span class='notice'> [killer.real_name] was the last person to attack you. They were an antagonist.</span>"
 		else
-			src << "\blue [killer.real_name] was the last person to attack you. \red <b>They were NOT an antagonist.</b>"
+			src << "<span class='notice'> [killer.real_name] was the last person to attack you. \red <b>They were NOT an antagonist.</b></span>"
 
-		src << "\blue If you believe that your death wasn't properly roleplayed, ahelp it now."
+		src << "<span class='notice'> If you believe that your death wasn't properly roleplayed, ahelp it now.</span>"
 
 	return ..(gibbed,species.death_message)
 

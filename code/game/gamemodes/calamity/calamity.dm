@@ -452,7 +452,7 @@
 		equip_cultist(player.current)
 		grant_runeword(player.current)
 		update_cult_icons_added(player)
-		player.current << "\blue <b>You are a member of the cult!<b> Your dark masters have sent you forth to serve their vile will."
+		player.current << "<span class='notice'> <b>You are a member of the cult!<b> Your dark masters have sent you forth to serve their vile will.</span>"
 		player.current << "\red <b>This station sails above a weeping tear in the Cosmos. Bring the Geometer of Blood forth.</b>"
 
 		if(!config.objectives_disabled)

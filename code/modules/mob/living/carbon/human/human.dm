@@ -716,7 +716,7 @@
 
 /mob/living/carbon/human/proc/play_xylophone()
 	if(!src.xylophone)
-		visible_message("\red [src] begins playing his ribcage like a xylophone. It's quite spooky.","\blue You begin to play a spooky refrain on your ribcage.","\red You hear a spooky xylophone melody.")
+		visible_message("\red [src] begins playing his ribcage like a xylophone. It's quite spooky.","<span class='notice'> You begin to play a spooky refrain on your ribcage.</span>","\red You hear a spooky xylophone melody.")
 		var/song = pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg')
 		playsound(loc, song, 50, 1, -1)
 		xylophone = 1
@@ -826,7 +826,7 @@
 	regenerate_icons()
 	check_dna()
 
-	visible_message("\blue \The [src] morphs and changes [get_visible_gender() == MALE ? "his" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!", "\blue You change your appearance!", "\red Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!")
+	visible_message("<span class='notice'> \The [src] morphs and changes [get_visible_gender() == MALE ? "his</span>" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!", "<span class='notice'> You change your appearance!</span>", "\red Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!")
 
 /mob/living/carbon/human/proc/remotesay()
 	set name = "Project mind"
@@ -849,10 +849,10 @@
 
 	var/say = input ("What do you wish to say")
 	if(mRemotetalk in target.mutations)
-		target.show_message("\blue You hear [src.real_name]'s voice: [say]")
+		target.show_message("<span class='notice'> You hear [src.real_name]'s voice: [say]</span>")
 	else
-		target.show_message("\blue You hear a voice that seems to echo around the room: [say]")
-	usr.show_message("\blue You project your mind into [target.real_name]: [say]")
+		target.show_message("<span class='notice'> You hear a voice that seems to echo around the room: [say]</span>")
+	usr.show_message("<span class='notice'> You project your mind into [target.real_name]: [say]</span>")
 	log_say("[key_name(usr)] sent a telepathic message to [key_name(target)]: [say]")
 	for(var/mob/dead/observer/G in world)
 		G.show_message("<i>Telepathic message from <b>[src]</b> to <b>[target]</b>: [say]</i>")
@@ -1059,14 +1059,14 @@
 	if(usr == src)
 		self = 1
 	if(!self)
-		usr.visible_message("\blue [usr] kneels down, puts \his hand on [src]'s wrist and begins counting their pulse.",\
+		usr.visible_message("<span class='notice'> [usr] kneels down, puts \his hand on [src]'s wrist and begins counting their pulse.</span>",\
 		"You begin counting [src]'s pulse")
 	else
-		usr.visible_message("\blue [usr] begins counting their pulse.",\
+		usr.visible_message("<span class='notice'> [usr] begins counting their pulse.</span>",\
 		"You begin counting your pulse.")
 
 	if(src.pulse)
-		usr << "\blue [self ? "You have a" : "[src] has a"] pulse! Counting..."
+		usr << "<span class='notice'> [self ? "You have a" : "[src] has a"] pulse! Counting...</span>"
 	else
 		usr << "\red [src] has no pulse!"	//it is REALLY UNLIKELY that a dead person would check his own pulse
 		return
@@ -1077,7 +1077,7 @@
 	if(usr.l_move_time >= time)	//checks if our mob has moved during the sleep()
 		usr << "You moved while counting. Try again."
 	else
-		usr << "\blue [self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)]."
+		usr << "<span class='notice'> [self ? "Your" : "[src]'s</span>"] pulse is [src.get_pulse(GETPULSE_HAND)]."
 
 /mob/living/carbon/human/proc/set_species(var/new_species, var/default_colour)
 

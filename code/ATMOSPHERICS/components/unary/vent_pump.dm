@@ -354,7 +354,7 @@
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))
-			user << "\blue Now welding the vent."
+			user << "<span class='notice'> Now welding the vent.</span>"
 			if(do_after(user, 20))
 				if(!src || !WT.isOn()) return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -367,9 +367,9 @@
 					welded = 0
 					update_icon()
 			else
-				user << "\blue The welding tool needs to be on to start this task."
+				user << "<span class='notice'> The welding tool needs to be on to start this task.</span>"
 		else
-			user << "\blue You need more welding fuel to complete this task."
+			user << "<span class='notice'> You need more welding fuel to complete this task.</span>"
 			return 1
 	else
 		..()
@@ -405,11 +405,11 @@
 		add_fingerprint(user)
 		return 1
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	user << "\blue You begin to unfasten \the [src]..."
+	user << "<span class='notice'> You begin to unfasten \the [src]...</span>"
 	if (do_after(user, 40))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
-			"\blue You have unfastened \the [src].", \
+			"<span class='notice'> You have unfastened \the [src].</span>", \
 			"You hear ratchet.")
 		new /obj/item/pipe(loc, make_from=src)
 		qdel(src)

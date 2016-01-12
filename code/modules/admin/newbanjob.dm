@@ -226,7 +226,7 @@ var/savefile/Banlistjob
 		else
 			M << "\red No ban appeals URL has been set."
 		log_admin("[usr.client.ckey] has banned from [job] [ckey].\nReason: [reason]\nThis is a permanent ban.")
-		message_admins("\blue[usr.client.ckey] has banned from [job] [ckey].\nReason: [reason]\nThis is a permanent ban.")
+		message_admins("<span class='notice'>[usr.client.ckey] has banned from [job] [ckey].\nReason: [reason]\nThis is a permanent ban.</span>")
 /datum/admins/proc/timejobban(ckey, computerid, reason, bannedby, temp, minutes, rank)
 	if(AddBanjob(ckey, computerid, reason, usr.ckey, 1, mins, job))
 		M << "\red<BIG><B>You have been jobbanned from [job] by [usr.client.ckey].\nReason: [reason].</B></BIG>"
@@ -236,7 +236,7 @@ var/savefile/Banlistjob
 		else
 			M << "\red No ban appeals URL has been set."
 		log_admin("[usr.client.ckey] has jobbanned from [job] [ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
-		message_admins("\blue[usr.client.ckey] has banned from [job] [ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")*/
+		message_admins("<span class='notice'>[usr.client.ckey] has banned from [job] [ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.</span>")*/
 //////////////////////////////////// DEBUG ////////////////////////////////////
 
 /proc/CreateBansjob()

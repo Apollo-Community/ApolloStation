@@ -117,7 +117,7 @@
 		return
 
 	if (recipe.time)
-		user << "\blue Building [recipe.title] ..."
+		user << "<span class='notice'> Building [recipe.title] ...</span>"
 		if (!do_after(user, recipe.time))
 			return
 

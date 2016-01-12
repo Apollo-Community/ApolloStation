@@ -911,7 +911,7 @@ About the new airlock wires panel:
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
 			if(do_after(user,40))
-				user << "\blue You removed the airlock electronics!"
+				user << "<span class='notice'> You removed the airlock electronics!</span>"
 
 				var/obj/structure/door_assembly/da = new assembly_type(src.loc)
 				if (istype(da, /obj/structure/door_assembly/multi_tile))
@@ -939,9 +939,9 @@ About the new airlock wires panel:
 				qdel(src)
 				return
 		else if(arePowerSystemsOn())
-			user << "\blue The airlock's motors resist your efforts to force it."
+			user << "<span class='notice'> The airlock's motors resist your efforts to force it.</span>"
 		else if(locked)
-			user << "\blue The airlock's bolts prevent it from being forced."
+			user << "<span class='notice'> The airlock's bolts prevent it from being forced.</span>"
 		else if( !welded && !operating )
 			if(density)
 				spawn(0)	open(1)
@@ -950,7 +950,7 @@ About the new airlock wires panel:
 
 	else if(istype(C, /obj/item/weapon/twohanded/fireaxe) && !arePowerSystemsOn())
 		if(locked)
-			user << "\blue The airlock's bolts prevent it from being forced."
+			user << "<span class='notice'> The airlock's bolts prevent it from being forced.</span>"
 		else if( !welded && !operating )
 			if(density)
 				var/obj/item/weapon/twohanded/fireaxe/F = C

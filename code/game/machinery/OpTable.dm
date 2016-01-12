@@ -47,7 +47,7 @@
 
 /obj/machinery/optable/attack_hand(mob/user as mob)
 	if (HULK in usr.mutations)
-		usr << text("\blue You destroy the table.")
+		usr << text("<span class='notice'> You destroy the table.</span>")
 		visible_message("\red [usr] destroys the operating table!")
 		src.density = 0
 		qdel(src)
@@ -124,11 +124,11 @@
 
 /obj/machinery/optable/proc/check_table(mob/living/carbon/patient as mob)
 	if(src.victim)
-		usr << "\blue <B>The table is already occupied!</B>"
+		usr << "<span class='notice'> <B>The table is already occupied!</B></span>"
 		return 0
 
 	if(patient.buckled)
-		usr << "\blue <B>Unbuckle first!</B>"
+		usr << "<span class='notice'> <B>Unbuckle first!</B></span>"
 		return 0
 
 	return 1

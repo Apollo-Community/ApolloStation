@@ -112,7 +112,7 @@
 					T.attackby(W,user)
 				qdel(src)
 	else
-		user << "\blue You can't reach, close it first!"
+		user << "<span class='notice'> You can't reach, close it first!</span>"
 
 	if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
 		var/turf/T = get_turf(src)

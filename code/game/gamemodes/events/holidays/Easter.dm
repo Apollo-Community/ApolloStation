@@ -22,10 +22,10 @@
 	set category = "Object"
 	set src in oview(1)
 
-	usr << "\blue You stroke the egg gently.."
+	usr << "<span class='notice'> You stroke the egg gently..</span>"
 
 	if(listening || !iscarbon(usr))
-		usr << "\blue the egg does not respond.."
+		usr << "<span class='notice'> the egg does not respond..</span>"
 		return
 
 	if(!fexists("sound/easter/[icon_state].ogg"))
@@ -37,7 +37,7 @@
 
 	log_admin("[key_name(usr)] is listening to [icon_state].ogg")
 	message_admins("[key_name(usr)] is listening to [icon_state].ogg", 1)
-	usr << "\blue The egg vibrates for a brief moment and begins to play an audio log."
+	usr << "<span class='notice'> The egg vibrates for a brief moment and begins to play an audio log.</span>"
 
 	usr << AL
 

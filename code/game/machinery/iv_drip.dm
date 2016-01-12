@@ -154,10 +154,10 @@
 
 	if(beaker)
 		if(beaker.reagents && beaker.reagents.reagent_list.len)
-			usr << "\blue Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid."
+			usr << "<span class='notice'> Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>"
 		else
-			usr << "\blue Attached is an empty [beaker]."
+			usr << "<span class='notice'> Attached is an empty [beaker].</span>"
 	else
-		usr << "\blue No chemicals are attached."
+		usr << "<span class='notice'> No chemicals are attached.</span>"
 
-	usr << "\blue [attached ? attached : "No one"] is attached."
+	usr << "<span class='notice'> [attached ? attached : "No one"] is attached.</span>"

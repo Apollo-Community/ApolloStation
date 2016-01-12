@@ -566,7 +566,7 @@
 			src << "blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough,\ncry, custom, deathgasp, drool, eyebrow, frown, gasp, giggle, groan, grumble, handshake, hug-(none)/mob, glare-(none)/mob,\ngrin, laugh, look-(none)/mob, moan, mumble, nod, pale, point-atom, raise, salute, shake, shiver, shrug,\nsigh, signal-#1-10, smile, sneeze, sniff, snore, stare-(none)/mob, tremble, twitch, twitch_s, whimper,\nwink, yawn"
 
 		else
-			src << "\blue Unusable emote '[act]'. Say *help for a list."
+			src << "<span class='notice'> Unusable emote '[act]'. Say *help for a list.</span>"
 
 	if (message && src.mind)		//Don't log autosay messages
 		log_emote("[name]/[key] : [message]")

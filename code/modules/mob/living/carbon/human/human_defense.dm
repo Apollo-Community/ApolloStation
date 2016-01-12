@@ -332,7 +332,7 @@ emp_act
 			zone = get_zone_with_miss_chance(zone, src, 15)
 
 		if(!zone)
-			visible_message("\blue \The [O] misses [src] narrowly!")
+			visible_message("<span class='notice'> \The [O] misses [src] narrowly!</span>")
 			return
 
 		O.throwing = 0		//it hit, so stop moving

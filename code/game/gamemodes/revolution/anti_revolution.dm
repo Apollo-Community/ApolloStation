@@ -99,8 +99,8 @@
 /datum/game_mode/proc/greet_head(var/datum/mind/head_mind, var/you_are=1)
 	var/obj_count = 1
 	if (you_are)
-		head_mind.current << "\blue It looks like this shift CentComm has some special orders for you.. check your objectives."
-		head_mind.current << "\blue Note that you can ignore these objectives, but resisting NT's orders probably means demotion or worse."
+		head_mind.current << "<span class='notice'> It looks like this shift CentComm has some special orders for you.. check your objectives.</span>"
+		head_mind.current << "<span class='notice'> Note that you can ignore these objectives, but resisting NT's orders probably means demotion or worse.</span>"
 	for(var/datum/objective/objective in head_mind.objectives)
 		head_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		head_mind.special_role = "Corrupt Head"

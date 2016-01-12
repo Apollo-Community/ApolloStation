@@ -61,7 +61,7 @@
 				if("Description")
 					var/str = sanitize(input(usr,"Label text?","Set label",""))
 					if(!str || !length(str))
-						usr << "\red Invalid text."
+						usr << "<span class='alert'> Invalid text.</span>"
 						return
 					if(!examtext && !nameset)
 						examtext = str
@@ -169,7 +169,7 @@
 				if("Description")
 					var/str = sanitize(input(usr,"Label text?","Set label",""))
 					if(!str || !length(str))
-						usr << "\red Invalid text."
+						usr << "<span class='alert'> Invalid text.</span>"
 						return
 					if(!examtext && !nameset)
 						examtext = str
@@ -296,7 +296,7 @@
 			else if(src.amount < 3)
 				user << "<span class='warning'>You need more paper.</span>"
 		else
-			user << "\blue The object you are trying to wrap is unsuitable for the sorting machinery!"
+			user << "<span class='notice'> The object you are trying to wrap is unsuitable for the sorting machinery!</span>"
 		if (src.amount <= 0)
 			new /obj/item/weapon/c_tube( src.loc )
 			qdel(src)
@@ -305,7 +305,7 @@
 
 	examine(mob/user)
 		if(..(user, 0))
-			user << "\blue There are [amount] units of package wrap left!"
+			user << "<span class='notice'> There are [amount] units of package wrap left!</span>"
 
 		return
 

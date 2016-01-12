@@ -299,7 +299,7 @@
 	M.stop_pulling()
 	M.loc = src
 	if(M.health > -100 && (M.health < 0 || M.sleeping))
-		M << "\blue <b>You feel a cold liquid surround you. Your skin starts to freeze up.</b>"
+		M << "<span class='notice'> <b>You feel a cold liquid surround you. Your skin starts to freeze up.</b></span>"
 	occupant = M
 	current_heat_capacity = HEAT_CAPACITY_HUMAN
 	update_use_power(2)
@@ -315,7 +315,7 @@
 	if(usr == occupant)//If the user is inside the tube...
 		if (usr.stat == 2)//and he's not dead....
 			return
-		usr << "\blue Release sequence activated. This will take two minutes."
+		usr << "<span class='notice'> Release sequence activated. This will take two minutes.</span>"
 		sleep(1200)
 		if(!src || !usr || !occupant || (occupant != usr)) //Check if someone's released/replaced/bombed him already
 			return

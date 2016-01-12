@@ -53,7 +53,7 @@
 				return
 
 			for(var/mob/V in viewers(src, null))
-				V.show_message(text("\blue [user] sticks \a [O] into \the [src]."))
+				V.show_message(text("<span class='notice'> [user] sticks \a [O] into \the [src].</span>"))
 
 			brainmob = O:brainmob
 			O:brainmob = null
@@ -78,7 +78,7 @@
 		if((istype(O,/obj/item/weapon/card/id)||istype(O,/obj/item/device/pda)) && brainmob)
 			if(allowed(user))
 				locked = !locked
-				user << "\blue You [locked ? "lock" : "unlock"] the brain holder."
+				user << "<span class='notice'> You [locked ? "lock" : "unlock"] the brain holder.</span>"
 			else
 				user << "\red Access denied."
 			return
@@ -94,7 +94,7 @@
 		else if(locked)
 			user << "\red You upend the MMI, but the brain is clamped into place."
 		else
-			user << "\blue You upend the MMI, spilling the brain onto the floor."
+			user << "<span class='notice'> You upend the MMI, spilling the brain onto the floor.</span>"
 			var/obj/item/organ/brain/brain = new(user.loc)
 			brainmob.container = null//Reset brainmob mmi var.
 			brainmob.loc = brain//Throw mob into brain.
@@ -142,7 +142,7 @@
 				brainmob << "Can't do that while incapacitated or dead."
 
 			radio.broadcasting = radio.broadcasting==1 ? 0 : 1
-			brainmob << "\blue Radio is [radio.broadcasting==1 ? "now" : "no longer"] broadcasting."
+			brainmob << "<span class='notice'> Radio is [radio.broadcasting==1 ? "now" : "no longer"] broadcasting.</span>"
 
 		Toggle_Listening()
 			set name = "Toggle Listening"
@@ -155,7 +155,7 @@
 				brainmob << "Can't do that while incapacitated or dead."
 
 			radio.listening = radio.listening==1 ? 0 : 1
-			brainmob << "\blue Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast."
+			brainmob << "<span class='notice'> Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>"
 
 /obj/item/device/mmi/emp_act(severity)
 	if(!brainmob)

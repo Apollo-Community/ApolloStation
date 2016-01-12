@@ -71,7 +71,7 @@
 			user << "\red [O] does not seem to fit."
 			return
 
-		user << "\blue You install [O] in [src]!"
+		user << "<span class='notice'> You install [O] in [src]!</span>"
 
 		user.drop_item()
 		src.mmi = O
@@ -92,7 +92,7 @@
 				for(var/mob/W in viewers(user, null))
 					W.show_message(text("\red [user] has spot-welded some of the damage to [src]!"), 1)
 			else
-				user << "\blue [src] is undamaged!"
+				user << "<span class='notice'> [src] is undamaged!</span>"
 		else
 			user << "Need more welding fuel!"
 			return
@@ -110,7 +110,7 @@
 			id_card = pda.id
 
 		if(access_robotics in id_card.access)
-			user << "\blue You swipe your access card and pop the brain out of [src]."
+			user << "<span class='notice'> You swipe your access card and pop the brain out of [src].</span>"
 			eject_brain()
 
 			if(held_item)
@@ -129,7 +129,7 @@
 			var/obj/item/weapon/card/emag/emag = O
 			emag.uses--
 			emagged = 1
-			user << "\blue You short out the security protocols and overload [src]'s cell, priming it to explode in a short time."
+			user << "<span class='notice'> You short out the security protocols and overload [src]'s cell, priming it to explode in a short time.</span>"
 			spawn(100)	src << "\red Your cell seems to be outputting a lot of power..."
 			spawn(200)	src << "\red Internal heat sensors are spiking! Something is badly wrong with your cell!"
 			spawn(300)	src.explode()
@@ -234,7 +234,7 @@
 		held_item = null
 		return 1
 
-	visible_message("\blue [src] drops \the [held_item]!", "\blue You drop \the [held_item]!", "You hear a skittering noise and a soft thump.")
+	visible_message("<span class='notice'> [src] drops \the [held_item]!</span>", "<span class='notice'> You drop \the [held_item]!</span>", "You hear a skittering noise and a soft thump.")
 
 	held_item.loc = src.loc
 	held_item = null
@@ -266,7 +266,7 @@
 			if(selection == I)
 				held_item = selection
 				selection.loc = src
-				visible_message("\blue [src] scoops up \the [held_item]!", "\blue You grab \the [held_item]!", "You hear a skittering noise and a clink.")
+				visible_message("<span class='notice'> [src] scoops up \the [held_item]!</span>", "<span class='notice'> You grab \the [held_item]!</span>", "You hear a skittering noise and a clink.")
 				return held_item
 		src << "\red \The [selection] is too far away."
 		return 0

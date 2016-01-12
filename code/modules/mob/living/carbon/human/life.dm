@@ -284,7 +284,7 @@
 				radiation -= 1 * RADIATION_SPEED_COEFFICIENT
 				reagents.add_reagent("radium", rads/10)
 				if( prob(3) )
-					src << pick( "\blue You feel relaxed.", "\blue You feel soothed.", "\blue A warm, calming wave rolls over you." )
+					src << pick( "<span class='notice'> You feel relaxed.</span>", "<span class='notice'> You feel soothed.</span>", "<span class='notice'> A warm, calming wave rolls over you.</span>" )
 				return
 
 			var/datum/organ/internal/diona/nutrients/rad_organ = locate() in internal_organs

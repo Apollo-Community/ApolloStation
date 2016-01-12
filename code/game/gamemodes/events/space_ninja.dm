@@ -221,7 +221,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 
 		if(assign_mission)
 			new_ninja.mind.store_memory("<B>Mission:</B> \red [assign_mission].<br>")
-			new_ninja << "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: \red <B>[assign_mission]</B>"
+			new_ninja << "<span class='notice'> \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: \red <B>[assign_mission]</B></span>"
 		else
 			if(xeno_list.len>3)//If there are more than three humanoid xenos on the station, time to get dangerous.
 				//Here we want the ninja to murder all the queens. The other aliens don't really matter.
@@ -369,7 +369,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 			ninja_mind.objectives += ninja_objective
 
 			var/directive = generate_ninja_directive(side)
-			new_ninja << "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it)! \nYour current directive is: \red <B>[directive]</B>"
+			new_ninja << "<span class='notice'> \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it)! \nYour current directive is: \red <B>[directive]</B></span>"
 			new_ninja.mind.store_memory("<B>Directive:</B> \red [directive]<br>")
 			show_objectives(new_ninja.mind)
 
@@ -483,7 +483,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 	space_ninja_arrival(input, mission)
 
-	message_admins("\blue [key_name_admin(key)] has spawned [input] as a Space Ninja.\nTheir <b>mission</b> is: [mission]", "EVENT:")
+	message_admins("<span class='notice'> [key_name_admin(key)] has spawned [input] as a Space Ninja.\nTheir <b>mission</b> is: [mission]</span>", "EVENT:")
 	log_admin("[key] used Spawn Space Ninja.")
 
 	return

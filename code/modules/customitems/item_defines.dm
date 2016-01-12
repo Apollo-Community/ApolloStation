@@ -424,11 +424,11 @@
 	return
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack_self(mob/user as mob)
-	user << "\blue You click \the [src] but get no reaction. Must be dead."
+	user << "<span class='notice'> You click \the [src] but get no reaction. Must be dead.</span>"
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack(mob/M as mob, mob/user as mob)
 	if (user.ckey != "nerezza") //Because this can end up in the wrong hands, let's make it useless for them!
-		user << "\blue You click \the [src] but get no reaction. Must be dead."
+		user << "<span class='notice'> You click \the [src] but get no reaction. Must be dead.</span>"
 		return
 	if(!reagents.total_volume)
 		user << "\red \The [src] is empty."
@@ -439,15 +439,15 @@
 		if (M == user && user.ckey == "nerezza") //Make sure this is being used by the right person, for the right reason (self injection)
 			visible_message("\blue [user] presses their \
 				penlight against their skin, quickly clicking the button once.", \
-				"\blue You press the disguised autoinjector against your skin and click the button. There's a sharp pain at the injection site that rapidly fades.", \
+				"<span class='notice'> You press the disguised autoinjector against your skin and click the button. There's a sharp pain at the injection site that rapidly fades.</span>", \
 				"You hear a rustle as someone moves nearby, then a sharp click.")
 		if (M != user && user.ckey == "nerezza") //Woah now, you better be careful partner
-			user << "\blue You don't want to contaminate the autoinjector."
+			user << "<span class='notice'> You don't want to contaminate the autoinjector.</span>"
 			return
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
-			user << "\blue [trans] units injected. [reagents.total_volume] units remaining in \the [src]."
+			user << "<span class='notice'> [trans] units injected. [reagents.total_volume] units remaining in \the [src].</span>"
 	return
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/examine(mob/user as mob)
@@ -455,9 +455,9 @@
 	if(user.ckey != "nerezza") return //Only the owner knows how to examine the contents.
 	if(reagents && reagents.reagent_list.len)
 		for(var/datum/reagent/R in reagents.reagent_list)
-			usr << "\blue You examine the penlight closely and see that it has [R.volume] units of [R.name] stored."
+			usr << "<span class='notice'> You examine the penlight closely and see that it has [R.volume] units of [R.name] stored.</span>"
 	else
-		usr << "\blue You examine the penlight closely and see that it is currently empty."
+		usr << "<span class='notice'> You examine the penlight closely and see that it is currently empty.</span>"
 
 //End strange penlight
 

@@ -80,7 +80,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			qdel(src)
 			return
 		else if(istype(I, /obj/item/weapon/nullrod))
-			user << "\blue You disrupt the vile magic with the deadening field of the null rod!"
+			user << "<span class='notice'> You disrupt the vile magic with the deadening field of the null rod!</span>"
 			qdel(src)
 			return
 		return

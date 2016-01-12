@@ -676,7 +676,7 @@ var/list/robot_verbs_default = list(
 					C.brute_damage = WC.brute
 					C.electronics_damage = WC.burn
 
-				usr << "\blue You install the [W.name]."
+				usr << "<span class='notice'> You install the [W.name].</span>"
 
 				return
 

@@ -195,10 +195,10 @@
 	for(var/mob/M in world)
 		if(M.client)
 			M << 'sound/machines/Alarm.ogg'
-	world << "\blue<b>Incoming missile detected.. Impact in 10..</b>"
+	world << "<span class='notice'><b>Incoming missile detected.. Impact in 10..</b></span>"
 	for (var/i=9 to 1 step -1)
 		sleep(10)
-		world << "\blue<b>[i]..</b>"
+		world << "<span class='notice'><b>[i]..</b></span>"
 	sleep(10)
 	enter_allowed = 0
 	if(ticker)

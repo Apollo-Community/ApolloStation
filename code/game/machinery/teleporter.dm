@@ -67,7 +67,7 @@
 				//
 			else
 				for(var/mob/O in hearers(src, null))
-					O.show_message("\blue Locked In", 2)
+					O.show_message("<span class='notice'> Locked In</span>", 2)
 				src.locked = L
 				one_time_use = 1
 
@@ -205,7 +205,7 @@
 		accurate = 1
 		spawn(3000)	accurate = 0 //Accurate teleporting for 5 minutes
 		for(var/mob/B in hearers(src, null))
-			B.show_message("\blue Test fire completed.")
+			B.show_message("<span class='notice'> Test fire completed.</span>")
 	return
 /*
 /proc/do_teleport(atom/movable/M as mob|obj, atom/destination, precision)
@@ -331,7 +331,7 @@
 		com.icon_state = "tele1"
 		use_power(5000)
 		for(var/mob/O in hearers(src, null))
-			O.show_message("\blue Teleporter engaged!", 2)
+			O.show_message("<span class='notice'> Teleporter engaged!</span>", 2)
 	src.add_fingerprint(usr)
 	src.engaged = 1
 	return
@@ -344,7 +344,7 @@
 		com.icon_state = "tele0"
 		com.accurate = 0
 		for(var/mob/O in hearers(src, null))
-			O.show_message("\blue Teleporter disengaged!", 2)
+			O.show_message("<span class='notice'> Teleporter disengaged!</span>", 2)
 	src.add_fingerprint(usr)
 	src.engaged = 0
 	return
@@ -360,7 +360,7 @@
 	if (com && !active)
 		active = 1
 		for(var/mob/O in hearers(src, null))
-			O.show_message("\blue Test firing!", 2)
+			O.show_message("<span class='notice'> Test firing!</span>", 2)
 		com.teleport()
 		use_power(5000)
 

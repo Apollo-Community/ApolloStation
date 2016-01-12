@@ -83,7 +83,7 @@
 
 	// Transfer over the AI.
 	transfer << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
-	user << "\blue <b>Transfer successful</b>: \black [transfer.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+	user << "<span class='notice'> <b>Transfer successful</b>: \black [transfer.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.</span>"
 
 	transfer.loc = src
 	transfer.cancel_camera()

@@ -251,7 +251,7 @@ var/specops_shuttle_timeleft = 0
 
 /obj/machinery/computer/specops_shuttle/attackby(I as obj, user as mob)
 	if(istype(I,/obj/item/weapon/card/emag))
-		user << "\blue The electronic systems in this console are far too advanced for your primitive hacking peripherals."
+		user << "<span class='notice'> The electronic systems in this console are far too advanced for your primitive hacking peripherals.</span>"
 	else
 		return attack_hand(user)
 
@@ -293,14 +293,14 @@ var/specops_shuttle_timeleft = 0
 		if(!specops_shuttle_at_station|| specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
 
 		if (!specops_can_move())
-			usr << "\blue Central Command will not allow the Special Operations shuttle to return yet."
+			usr << "<span class='notice'> Central Command will not allow the Special Operations shuttle to return yet.</span>"
 			if(world.timeofday <= specops_shuttle_timereset)
 				if (((world.timeofday - specops_shuttle_timereset)/10) > 60)
-					usr << "\blue [-((world.timeofday - specops_shuttle_timereset)/10)/60] minutes remain!"
-				usr << "\blue [-(world.timeofday - specops_shuttle_timereset)/10] seconds remain!"
+					usr << "<span class='notice'> [-((world.timeofday - specops_shuttle_timereset)/10)/60] minutes remain!</span>"
+				usr << "<span class='notice'> [-(world.timeofday - specops_shuttle_timereset)/10] seconds remain!</span>"
 			return
 
-		usr << "\blue The Special Operations shuttle will arrive at Central Command in [(SPECOPS_MOVETIME/10)] seconds."
+		usr << "<span class='notice'> The Special Operations shuttle will arrive at Central Command in [(SPECOPS_MOVETIME/10)] seconds.</span>"
 
 		temp += "Shuttle departing.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 		updateUsrDialog()
@@ -317,7 +317,7 @@ var/specops_shuttle_timeleft = 0
 			usr << "\red The Special Operations shuttle is unable to leave."
 			return
 
-		usr << "\blue The Special Operations shuttle will arrive on [station_name] in [(SPECOPS_MOVETIME/10)] seconds."
+		usr << "<span class='notice'> The Special Operations shuttle will arrive on [station_name] in [(SPECOPS_MOVETIME/10)] seconds.</span>"
 
 		temp += "Shuttle departing.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 		updateUsrDialog()
@@ -510,7 +510,7 @@ var/specops_shuttle_timeleft = 0
 
 /obj/machinery/computer/specops_shuttle/attackby(I as obj, user as mob)
 	if(istype(I,/obj/item/weapon/card/emag))
-		user << "\blue The electronic systems in this console are far too advanced for your primitive hacking peripherals."
+		user << "<span class='notice'> The electronic systems in this console are far too advanced for your primitive hacking peripherals.</span>"
 	else
 		return attack_hand(user)
 
@@ -550,7 +550,7 @@ var/specops_shuttle_timeleft = 0
 	if (href_list["sendtodock"])
 		if(!specops_shuttle_at_station|| specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
 
-		usr << "\blue Central Command will not allow the Special Operations shuttle to return."
+		usr << "<span class='notice'> Central Command will not allow the Special Operations shuttle to return.</span>"
 		return
 
 	else if (href_list["sendtostation"])
@@ -560,7 +560,7 @@ var/specops_shuttle_timeleft = 0
 			usr << "\red The Special Operations shuttle is unable to leave."
 			return
 
-		usr << "\blue The Special Operations shuttle will arrive on [station_name] in [(SPECOPS_MOVETIME/10)] seconds."
+		usr << "<span class='notice'> The Special Operations shuttle will arrive on [station_name] in [(SPECOPS_MOVETIME/10)] seconds.</span>"
 
 		temp += "Shuttle departing.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 		updateUsrDialog()

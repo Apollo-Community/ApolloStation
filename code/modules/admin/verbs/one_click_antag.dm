@@ -332,7 +332,7 @@ client/proc/one_click_antag()
 				//So they don't forget their code or mission.
 
 
-				new_syndicate_commando << "\blue You are an Elite Mercenary. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of criminal elements hostile to NanoTrasen. \nYour current mission is: \red<B> [input]</B>"
+				new_syndicate_commando << "<span class='notice'> You are an Elite Mercenary. [!syndicate_leader_selected?"commando":"<B>LEADER</B></span>"] in the service of criminal elements hostile to NanoTrasen. \nYour current mission is: \red<B> [input]</B>"
 
 				numagents--
 		if(numagents >= 6)
@@ -443,7 +443,7 @@ client/proc/one_click_antag()
 					break
 
 				new_vox.key = theghost.key
-				new_vox << "\blue You are a Vox Primalis, fresh out of the Shoal. Your ship has arrived at a human-meat system hosting the NSV Apollo... or was it the Luna? NSS? Utopia? Nobody is really sure, who cares about stupid meat-names anyway? Everyone is raring to start pillaging! Your current goal is: \red<B> [input]</B>"
+				new_vox << "<span class='notice'> You are a Vox Primalis, fresh out of the Shoal. Your ship has arrived at a human-meat system hosting the NSV Apollo... or was it the Luna? NSS? Utopia? Nobody is really sure, who cares about stupid meat-names anyway? Everyone is raring to start pillaging! Your current goal is: \red<B> [input]</B></span>"
 				new_vox << "\red Don't forget to turn on your nitrogen internals!"
 
 				raiders--

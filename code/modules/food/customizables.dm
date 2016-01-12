@@ -355,7 +355,7 @@
 
 		user.visible_message( \
 			"[user] scoops up some [src] with \the [U]!", \
-			"\blue You scoop up some [src] with \the [U]!" \
+			"<span class='notice'> You scoop up some [src] with \the [U]!</span>" \
 		)
 
 		src.bitecount++

@@ -90,12 +90,12 @@
 /obj/item/weapon/storage/bible/afterattack(atom/A, mob/user as mob, proximity)
 	if(!proximity) return
 /*	if (istype(A, /turf/simulated/floor))
-		user << "\blue You hit the floor with the bible."
+		user << "<span class='notice'> You hit the floor with the bible.</span>"
 		if(user.mind && (user.mind.assigned_role == "Chaplain"))
 			call(/obj/effect/rune/proc/revealrunes)(src)*/
 	if(user.mind && (user.mind.assigned_role == "Chaplain"))
 		if(A.reagents && A.reagents.has_reagent("water")) //blesses all the water in the holder
-			user << "\blue You bless [A]."
+			user << "<span class='notice'> You bless [A].</span>"
 			var/water2holy = A.reagents.get_reagent_amount("water")
 			A.reagents.del_reagent("water")
 			A.reagents.add_reagent("holywater",water2holy)

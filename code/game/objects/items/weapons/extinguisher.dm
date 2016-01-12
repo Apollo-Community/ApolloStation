@@ -59,7 +59,7 @@
 	if( istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
 		var/obj/o = target
 		var/amount = o.reagents.trans_to(src, 50)
-		user << "\blue You fill [src] with [amount] units of the contents of [target]."
+		user << "<span class='notice'> You fill [src] with [amount] units of the contents of [target].</span>"
 		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 		return
 

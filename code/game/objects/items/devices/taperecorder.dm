@@ -217,7 +217,7 @@
 			return
 		icon_state = "taperecorderrecording"
 		if(timerecorded < 3600 && playing == 0)
-			usr << "\blue Recording started."
+			usr << "<span class='notice'> Recording started.</span>"
 			recording = 1
 			timestamp+= timerecorded
 			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] Recording started."
@@ -239,7 +239,7 @@
 			recording = 0
 			timestamp+= timerecorded
 			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] Recording stopped."
-			usr << "\blue Recording stopped."
+			usr << "<span class='notice'> Recording stopped.</span>"
 			icon_state = "taperecorderidle"
 			return
 		else if(playing == 1)

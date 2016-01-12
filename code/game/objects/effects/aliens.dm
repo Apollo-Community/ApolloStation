@@ -99,7 +99,7 @@
 
 /obj/effect/alien/resin/attack_hand()
 	if (HULK in usr.mutations)
-		usr << "\blue You easily destroy the [name]."
+		usr << "<span class='notice'> You easily destroy the [name].</span>"
 		for(var/mob/O in oviewers(src))
 			O.show_message("\red [usr] destroys the [name]!", 1)
 		health = 0
@@ -115,7 +115,7 @@
 				healthcheck()
 				return
 
-		usr << "\blue You claw at the [name]."
+		usr << "<span class='notice'> You claw at the [name].</span>"
 		for(var/mob/O in oviewers(src))
 			O.show_message("\red [usr] claws at the [name]!", 1)
 		health -= rand(5,10)

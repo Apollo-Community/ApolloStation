@@ -83,7 +83,7 @@
 		update_rev_icons_added(rev_mind)
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
-		rev_mind.current << "\blue You are a member of the revolutionaries' leadership!"
+		rev_mind.current << "<span class='notice'> You are a member of the revolutionaries' leadership!</span>"
 		show_objectives(rev_mind)
 
 	spawn (rand(waittime_l, waittime_h))
@@ -292,8 +292,8 @@ mob/living/carbon/human/proc
 				var/choice = alert(M,"Asked by [src]: Do you want to join the revolution?","Align Thyself with the Revolution!","No!","Yes!")
 				if(choice == "Yes!")
 					ticker.mode:add_revolutionary(M.mind)
-					M << "\blue You join the revolution!"
-					src << "\blue <b>[M] joins the revolution!</b>"
+					M << "<span class='notice'> You join the revolution!</span>"
+					src << "<span class='notice'> <b>[M] joins the revolution!</b></span>"
 				else if(choice == "No!")
 					M << "\red You reject this traitorous cause!"
 					src << "\red <b>[M] does not support the revolution!</b>"

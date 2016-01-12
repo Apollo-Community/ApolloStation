@@ -287,54 +287,54 @@
 
 	if(ismuton(NOBREATHBLOCK,M))
 		if(probinj(45,inj) || (mNobreath in old_mutations))
-			M << "\blue You feel no need to breathe."
+			M << "<span class='notice'> You feel no need to breathe.</span>"
 			M.mutations.Add(mNobreath)
 	if(ismuton(REMOTEVIEWBLOCK,M))
 		if(probinj(45,inj) || (mRemote in old_mutations))
-			M << "\blue Your mind expands"
+			M << "<span class='notice'> Your mind expands</span>"
 			M.mutations.Add(mRemote)
 	if(ismuton(REGENERATEBLOCK,M))
 		if(probinj(45,inj) || (mRegen in old_mutations))
-			M << "\blue You feel strange"
+			M << "<span class='notice'> You feel strange</span>"
 			M.mutations.Add(mRegen)
 	if(ismuton(INCREASERUNBLOCK,M))
 		if(probinj(45,inj) || (mRun in old_mutations))
-			M << "\blue You feel quick"
+			M << "<span class='notice'> You feel quick</span>"
 			M.mutations.Add(mRun)
 	if(ismuton(REMOTETALKBLOCK,M))
 		if(probinj(45,inj) || (mRemotetalk in old_mutations))
-			M << "\blue You expand your mind outwards"
+			M << "<span class='notice'> You expand your mind outwards</span>"
 			M.mutations.Add(mRemotetalk)
 	if(ismuton(MORPHBLOCK,M))
 		if(probinj(45,inj) || (mMorph in old_mutations))
 			M.mutations.Add(mMorph)
-			M << "\blue Your skin feels strange"
+			M << "<span class='notice'> Your skin feels strange</span>"
 	if(ismuton(BLENDBLOCK,M))
 		if(probinj(45,inj) || (mBlend in old_mutations))
 			M.mutations.Add(mBlend)
-			M << "\blue You feel alone"
+			M << "<span class='notice'> You feel alone</span>"
 	if(ismuton(HALLUCINATIONBLOCK,M))
 		if(probinj(45,inj) || (mHallucination in old_mutations))
 			M.mutations.Add(mHallucination)
-			M << "\blue Your mind says 'Hello'"
+			M << "<span class='notice'> Your mind says 'Hello'</span>"
 	if(ismuton(NOPRINTSBLOCK,M))
 		if(probinj(45,inj) || (mFingerprints in old_mutations))
 			M.mutations.Add(mFingerprints)
-			M << "\blue Your fingers feel numb"
+			M << "<span class='notice'> Your fingers feel numb</span>"
 	if(ismuton(SHOCKIMMUNITYBLOCK,M))
 		if(probinj(45,inj) || (mShock in old_mutations))
 			M.mutations.Add(mShock)
-			M << "\blue You feel strange"
+			M << "<span class='notice'> You feel strange</span>"
 	if(ismuton(SMALLSIZEBLOCK,M))
 		if(probinj(45,inj) || (mSmallsize in old_mutations))
-			M << "\blue Your skin feels rubbery"
+			M << "<span class='notice'> Your skin feels rubbery</span>"
 			M.mutations.Add(mSmallsize)
 
 
 
 	if (isblockon(getblock(M.dna.struc_enzymes, HULKBLOCK,3),HULKBLOCK))
 		if(probinj(5,inj) || (HULK in old_mutations))
-			M << "\blue Your muscles hurt."
+			M << "<span class='notice'> Your muscles hurt.</span>"
 			M.mutations.Add(HULK)
 	if (isblockon(getblock(M.dna.struc_enzymes, HEADACHEBLOCK,3),HEADACHEBLOCK))
 		M.disabilities |= EPILEPSY
@@ -359,7 +359,7 @@
 		M << "\red You twitch."
 	if (isblockon(getblock(M.dna.struc_enzymes, XRAYBLOCK,3),XRAYBLOCK))
 		if(probinj(30,inj) || (XRAY in old_mutations))
-			M << "\blue The walls suddenly disappear."
+			M << "<span class='notice'> The walls suddenly disappear.</span>"
 //			M.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 //			M.see_in_dark = 8
 //			M.see_invisible = 2
@@ -369,14 +369,14 @@
 		M << "\red You feel nervous."
 	if (isblockon(getblock(M.dna.struc_enzymes, FIREBLOCK,3),FIREBLOCK))
 		if(probinj(30,inj) || (COLD_RESISTANCE in old_mutations))
-			M << "\blue Your body feels warm."
+			M << "<span class='notice'> Your body feels warm.</span>"
 			M.mutations.Add(COLD_RESISTANCE)
 	if (isblockon(getblock(M.dna.struc_enzymes, BLINDBLOCK,3),BLINDBLOCK))
 		M.sdisabilities |= BLIND
 		M << "\red You can't seem to see anything."
 	if (isblockon(getblock(M.dna.struc_enzymes, TELEBLOCK,3),TELEBLOCK))
 		if(probinj(15,inj) || (TK in old_mutations))
-			M << "\blue You feel smarter."
+			M << "<span class='notice'> You feel smarter.</span>"
 			M.mutations.Add(TK)
 	if (isblockon(getblock(M.dna.struc_enzymes, DEAFBLOCK,3),DEAFBLOCK))
 		M.sdisabilities |= DEAF

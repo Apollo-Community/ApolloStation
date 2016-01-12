@@ -64,7 +64,7 @@
 				var/mob/living/carbon/human/monkey/O = what
 				if (O.client) //grief-proof
 					O.loc = loc
-					O.visible_message("\blue Suddenly [O] jumps out from the processor!", \
+					O.visible_message("<span class='notice'> Suddenly [O] jumps out from the processor!</span>", \
 							"You jump out from the processor", \
 							"You hear chimp")
 					return
@@ -136,7 +136,7 @@
 			log_admin("DEBUG: [O] in processor havent suitable recipe. How do you put it in?") //-rastaf0
 			continue
 		src.processing = 1
-		user.visible_message("\blue [user] turns on \a [src].", \
+		user.visible_message("<span class='notice'> [user] turns on \a [src].</span>", \
 			"You turn on \a [src].", \
 			"You hear a food processor.")
 		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
@@ -144,6 +144,6 @@
 		sleep(P.time)
 		P.process(src.loc, O)
 		src.processing = 0
-	src.visible_message("\blue \the [src] finished processing.", \
+	src.visible_message("<span class='notice'> \the [src] finished processing.</span>", \
 		"You hear the food processor stopping/")
 
