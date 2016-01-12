@@ -74,7 +74,7 @@
 	var/extra_law = "Crew authorized to know of pathogen [virus_name]'s existence are: Heads of command. Do not allow unauthorized personnel to gain knowledge of [virus_name]. Aid authorized personnel in quarantining and neutrlizing the outbreak. This law overrides all other laws."
 	for(var/mob/living/silicon/ai/M in world)
 		M.add_ion_law(extra_law)
-		M << "\red " + extra_law
+		M << "<span class='alert'></span>" + extra_law
 
 /datum/game_mode/epidemic/proc/announce_to_kill_crew()
 	var/intercepttext = "<FONT size = 3 color='red'><B>CONFIDENTIAL REPORT</FONT><HR>"

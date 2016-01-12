@@ -376,12 +376,12 @@
 				if(2.0)
 					t1 = "*dead*"
 				else
-			user << text("[]\t Health %: [] ([])", (src.occupant.health > 50 ? "\blue " : "\red "), src.occupant.health, t1)
+			user << text("[]\t Health %: [] ([])", (src.occupant.health > 50 ? "<span class='notice'></span>" : "<span class='alert'></span>"), src.occupant.health, t1)
 			user << text("[]\t -Core Temperature: []&deg;C ([]&deg;F)</FONT><BR>", (src.occupant.bodytemperature > 50 ? "<font color='blue'>" : "<font color='red'>"), src.occupant.bodytemperature-T0C, src.occupant.bodytemperature*1.8-459.67)
-			user << text("[]\t -Brute Damage %: []", (src.occupant.getBruteLoss() < 60 ? "\blue " : "\red "), src.occupant.getBruteLoss())
-			user << text("[]\t -Respiratory Damage %: []", (src.occupant.getOxyLoss() < 60 ? "\blue " : "\red "), src.occupant.getOxyLoss())
-			user << text("[]\t -Toxin Content %: []", (src.occupant.getToxLoss() < 60 ? "\blue " : "\red "), src.occupant.getToxLoss())
-			user << text("[]\t -Burn Severity %: []", (src.occupant.getFireLoss() < 60 ? "\blue " : "\red "), src.occupant.getFireLoss())
+			user << text("[]\t -Brute Damage %: []", (src.occupant.getBruteLoss() < 60 ? "<span class='notice'></span>" : "<span class='alert'></span>"), src.occupant.getBruteLoss())
+			user << text("[]\t -Respiratory Damage %: []", (src.occupant.getOxyLoss() < 60 ? "<span class='notice'></span>" : "<span class='alert'></span>"), src.occupant.getOxyLoss())
+			user << text("[]\t -Toxin Content %: []", (src.occupant.getToxLoss() < 60 ? "<span class='notice'></span>" : "<span class='alert'></span>"), src.occupant.getToxLoss())
+			user << text("[]\t -Burn Severity %: []", (src.occupant.getFireLoss() < 60 ? "<span class='notice'></span>" : "<span class='alert'></span>"), src.occupant.getFireLoss())
 			user << "\blue Expected time till occupant can safely awake: (note: If health is below 20% these times are inaccurate)"
 			user << text("\blue \t [] second\s (if around 1 or 2 the sleeper is keeping them asleep.)", src.occupant.paralysis / 5)
 			if(src.beaker)
