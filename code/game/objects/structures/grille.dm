@@ -37,7 +37,6 @@
 	if(ismob(user)) shock(user, 70)
 
 /obj/structure/grille/attack_hand(mob/user as mob)
-
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 
 	var/damage_dealt = 1
@@ -45,6 +44,11 @@
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		if(H.species.can_shred(H))
+			attack_message = "mangles"
+			damage_dealt = 5
+	else if(istype(user, /mob/living/simple_animal/rodent/rat/king)) // NONE STAND BEFORE THE MIGHT OF THE KINGDOM
+		var/mob/living/simple_animal/rodent/rat/king/R = user
+		if( R.canSmashGrille() )
 			attack_message = "mangles"
 			damage_dealt = 5
 
@@ -93,7 +97,6 @@
 			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] the grille.</span>", \
 								 "<span class='notice'>You have [anchored ? "fastened the grille to" : "unfastened the grill from"] the floor.</span>")
 			return
-
 //window placing begin
 	else if(istype(W,/obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/ST = W

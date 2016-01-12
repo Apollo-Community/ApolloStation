@@ -439,7 +439,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/response = alert(src, "Are you -sure- you want to become a rodent?","Are you sure you want to squeek?","Squeek!","Nope!")
 	if(response != "Squeek!") return  //Hit the wrong key...again.
 
-
 	//find a viable rodent candidate
 	var/mob/living/simple_animal/rodent/host
 	var/obj/machinery/atmospherics/unary/vent_pump/vent_found

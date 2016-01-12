@@ -1,3 +1,5 @@
+var/global/list/world_rodents = list()
+
 /mob/living/simple_animal/rodent
 	name = "mouse"
 	real_name = "mouse"
@@ -73,6 +75,8 @@
 	icon_dead = "mouse_[body_color]_dead"
 	desc = "It's a small [body_color] rodent, often seen hiding in maintenance areas and making a nuisance of itself."
 
+	world_rodents += src
+
 /mob/living/simple_animal/rodent/proc/splat()
 	src.health = 0
 	src.stat = DEAD
@@ -98,6 +102,9 @@
 	layer = MOB_LAYER
 	if(client)
 		client.time_died_as_rodent = world.time
+
+	world_rodents -= src
+
 	..()
 
 /*
