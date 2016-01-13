@@ -10,6 +10,7 @@
 	w_class = 3.0
 	sharp = 1
 	edge = 0
+	var/fired_by
 
 /obj/item/weapon/arrow/proc/removed() //Helper for metal rods falling apart.
 	return
@@ -76,7 +77,8 @@
 	release_force = tension*release_speed
 
 /obj/item/weapon/gun/launcher/crossbow/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0)
-
+	var/obj/item/weapon/arrow/A = in_chamber
+	A.fired_by = user
 	if(!..()) return //Only do this on a successful shot.
 	icon_state = "crossbow"
 	tension = 0
