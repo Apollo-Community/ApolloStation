@@ -13,5 +13,5 @@
 	hitsound = 'sound/weapons/whip.ogg'
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "<span class='alert'> <b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b></span>"
 		return (OXYLOSS)

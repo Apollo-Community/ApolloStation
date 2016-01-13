@@ -44,12 +44,12 @@
 			if (O.damtype == HALLOSS)
 				damage = 0
 			health -= damage
-			visible_message("\red \b [src] has been attacked with the [O] by [user]. ")
+			visible_message("<span class='alert'> \b [src] has been attacked with the [O] by [user]. </span>")
 		else
-			visible_message("\red \b [src] absorbs the hit from [O], taking no visible damage! ")
+			visible_message("<span class='alert'> \b [src] absorbs the hit from [O], taking no visible damage! </span>")
 	else
-		usr << "\red This weapon is ineffective, it does no damage."
-		visible_message("\red [user] gently taps [src] with the [O]. ")
+		usr << "<span class='alert'> This weapon is ineffective, it does no damage.</span>"
+		visible_message("<span class='alert'> [user] gently taps [src] with the [O]. </span>")
 
 
 /mob/living/simple_animal/hostile/broodswarm/broodling/melee/bullet_act(var/obj/item/projectile/Proj)
@@ -57,5 +57,5 @@
 	if(Proj.damage >= health/2) // Gotta soften them up a bit first before you can knock em down
 		src.health -= Proj.damage
 	else
-		visible_message("\blue <B>[Proj] bounces off of [src], leaving it unharmed!</B>")
+		visible_message("<span class='notice'> <B>[Proj] bounces off of [src], leaving it unharmed!</B></span>")
 	return 0

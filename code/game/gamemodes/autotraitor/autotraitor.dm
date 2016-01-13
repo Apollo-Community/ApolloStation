@@ -133,7 +133,7 @@
 					equip_traitor(newtraitor)
 
 				traitors += newtraitor.mind
-				newtraitor << "\red <B>No time like the present.</B> \black It's time to take matters into your own hands..."
+				newtraitor << "<span class='alert'> <B>No time like the present.</B> </span><span class='black'> It's time to take matters into your own hands...</span>>"
 				newtraitor << "<B>You are now a traitor.</B>"
 				newtraitor.mind.special_role = "traitor"
 				newtraitor.hud_updateflag |= 1 << SPECIALROLE_HUD
@@ -191,7 +191,7 @@
 					forge_traitor_objectives(character.mind)
 				equip_traitor(character)
 				traitors += character.mind
-				character << "\red <B>You are the traitor.</B>"
+				character << "<span class='alert'> <B>You are the traitor.</B></span>"
 				character.mind.special_role = "traitor"
 				character << "<i>You have been selected this round as an antagonist</i>!"
 				show_objectives(character.mind)

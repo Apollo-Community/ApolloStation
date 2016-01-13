@@ -143,7 +143,7 @@
 			qdel(src)
 			return 1
 		else
-			user << "\red You can't load the [src.name] while its panel is opened."
+			user << "<span class='alert'> You can't load the [src.name] while its panel is opened.</span>"
 			return 1
 
 	if(istype(O, /obj/item/weapon/paper) || istype(O, /obj/item/weapon/photo) || istype(O, /obj/item/weapon/paper_bundle))

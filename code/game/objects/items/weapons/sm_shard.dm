@@ -76,7 +76,7 @@
 /obj/item/weapon/shard/supermatter/Crossed(AM as mob|obj)
 	if(ismob(AM))
 		var/mob/M = AM
-		M << "\red <B>You step on \the [src]!</B>"
+		M << "<span class='alert'> <B>You step on \the [src]!</B></span>"
 		playsound(src.loc, 'sound/effects/glass_step_sm.ogg', 70, 1) // not sure how to handle metal shards with sounds
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -98,13 +98,13 @@
 
 /obj/item/weapon/shard/supermatter/attack_hand(var/mob/user)
 	if( !user.smSafeCheck() )
-		user << pick( "\red You think twice before touching that without protection.",
-					  "\red You don't want to touch that without some protection.",
-					  "\red You probably should get something else to pick that up.",
-					  "\red You aren't sure that's a good idea.",
-					  "\red You aren't in the mood to get vaporized today.",
-					  "\red You really don't feel like frying your hand off.",
-					  "\red You assume that's a bad idea." )
+		user << pick( "<span class='alert'> You think twice before touching that without protection.</span>",
+					  "<span class='alert'> You don't want to touch that without some protection.</span>",
+					  "<span class='alert'> You probably should get something else to pick that up.</span>",
+					  "<span class='alert'> You aren't sure that's a good idea.</span>",
+					  "<span class='alert'> You aren't in the mood to get vaporized today.</span>",
+					  "<span class='alert'> You really don't feel like frying your hand off.</span>",
+					  "<span class='alert'> You assume that's a bad idea.</span>" )
 		return
 
 	..()
