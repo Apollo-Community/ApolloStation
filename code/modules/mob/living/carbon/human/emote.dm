@@ -568,7 +568,7 @@
 		else
 			src << "\blue Unusable emote '[act]'. Say *help for a list."
 
-	if (message && !findtext(message," snores."))
+	if (message && src.mind)		//Don't log autosay messages
 		log_emote("[name]/[key] : [message]")
 
  //Hearing gasp and such every five seconds is not good emotes were not global for a reason.

@@ -1,4 +1,4 @@
-/mob/living/carbon/human/attack_hand(mob/living/carbon/M as mob)
+/mob/living/carbon/human/attack_hand(mob/living/M as mob)
 
 	var/mob/living/carbon/human/H = M
 	if(istype(H))
@@ -9,10 +9,30 @@
 			H << "\red You can't use your [temp.display_name]."
 			return
 
+	if( istype( M, /mob/living/simple_animal/rodent/rat/king ))
+		var/mob/living/simple_animal/rodent/rat/king/K = M
+		if( stat && K.canEatCorpse() && !( SKELETON in mutations ))
+			src.visible_message("<span class='warning'>\The [K] swarms the body of [src], ripping flesh from bone!</span>" )
+
+			if( !do_after( K, 200 ))
+				K << "<span class='warning'>You need to wait longer to consume the body of [src]!</span>"
+				return 0
+
+			src.visible_message("<span class='warning'>\The [K] consumed the body of [src]!</span>" )
+			ChangeToSkeleton()
+			return
+		if( K.canSpreadDisease() )
+			infect_virus2( src, K.rat_virus, 1 )
+
 	..()
 
 	// Should this all be in Touch()?
 	if(istype(H))
+		// no attacking if we're in an alien nest!
+		for(var/obj/structure/bed/nest/N in get_turf(H.loc))
+			if(N.buckled_mob == H)
+				return
+
 		if((H != src) && check_shields(0, H.name))
 			visible_message("\red <B>[H] attempted to touch [src]!</B>")
 			return 0
@@ -42,7 +62,8 @@
 			return
 
 	if(istype(M,/mob/living/carbon))
-		M.spread_disease_to(src, "Contact")
+		var/mob/living/carbon/C = M
+		C.spread_disease_to(src, "Contact")
 
 	switch(M.a_intent)
 		if(I_HELP)

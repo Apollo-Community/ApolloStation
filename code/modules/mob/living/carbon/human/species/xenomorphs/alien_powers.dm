@@ -19,6 +19,9 @@
 	I.stored_phoron = max(0,min(I.stored_phoron,I.max_phoron))
 
 /mob/living/carbon/human/proc/check_alien_ability(var/cost,var/needs_foundation,var/needs_organ)
+	// If it's dead it should stay dead. Might want to prevent stunned aliens too.
+	if(src.stat == 2)
+		return
 
 	var/datum/organ/internal/xenos/phoronvessel/P = internal_organs_by_name["phoron vessel"]
 	if(!istype(P))

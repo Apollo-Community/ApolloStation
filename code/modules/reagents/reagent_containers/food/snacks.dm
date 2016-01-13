@@ -1533,13 +1533,21 @@
 		reagents.add_reagent("nutriment",10)
 
 	afterattack(obj/O as obj, var/mob/living/carbon/human/user as mob, proximity)
-		if(!proximity) return
-		if(istype(O,/obj/structure/sink) && !wrapped)
+		if((istype(O,/obj/structure/sink) || istype(O,/obj/structure/reagent_dispensers/watertank)) && !wrapped && proximity)
 			user << "You place \the [name] under a stream of water..."
 			if(istype(user))
 				user.unEquip(src)
 			src.loc = get_turf(src)
 			return Expand()
+		..()
+
+	attackby(obj/O as obj, var/mob/living/carbon/human/user as mob)
+		if((istype(O, /obj/item/weapon/reagent_containers/glass/beaker) || istype(O, /obj/item/weapon/reagent_containers/glass/beaker/large)) && !wrapped)
+			if(O.reagents.get_master_reagent_name() == "Water")
+				if(user == src.loc)
+					user.unEquip(src)
+					src.loc = get_turf(src)
+				Expand()
 		..()
 
 	attack_self(mob/user as mob)
@@ -1548,10 +1556,7 @@
 
 	proc/Expand()
 		src.visible_message("<span class='notice'>\The [src] expands!</span>")
-		var/mob/living/carbon/human/H = new(src.loc)
-		H.set_species(monkey_type)
-		H.real_name = H.species.get_random_name()
-		H.name = H.real_name
+		new /mob/living/carbon/human/monkey(src.loc)
 		src.loc = null
 		qdel(src)
 		return 1
@@ -3022,4 +3027,3 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
-

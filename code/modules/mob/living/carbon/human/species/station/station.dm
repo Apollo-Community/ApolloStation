@@ -212,6 +212,8 @@
 
 	has_organ = list( "eyes" =     /datum/organ/internal/eyes ) //TODO: Positronic brain.
 
+	var/obj/machinery/power/apc/attached_apc = null
+
 /datum/species/machine/handle_death(var/mob/living/carbon/human/H)
 	..()
 	if(flags & IS_SYNTHETIC)

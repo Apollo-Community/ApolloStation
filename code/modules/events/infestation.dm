@@ -73,7 +73,7 @@
 	vermin = rand(0,2)
 	switch(vermin)
 		if(VERM_MICE)
-			spawn_types = list(/mob/living/simple_animal/mouse/gray, /mob/living/simple_animal/mouse/brown, /mob/living/simple_animal/mouse/white)
+			spawn_types = list(/mob/living/simple_animal/rodent/gray, /mob/living/simple_animal/rodent/brown, /mob/living/simple_animal/rodent/white)
 			max_number = 12
 			vermstring = "mice"
 		if(VERM_LIZARDS)
@@ -101,7 +101,7 @@
 
 
 /datum/event/infestation/announce()
-	command_announcement.Announce("Bioscans indicate that [vermstring] have been breeding in [locstring]. Clear them out, before this starts to affect productivity.", "Vermin infestation")
+	command_announcement.Announce("Confirmed outbreak of level 1 biohazard aboard [station_name()], located near [locstring]. Janitorial personnel must contain the outbreak.", "AUTOMATED ALERT: Unidentified Lifesigns")
 
 #undef LOC_KITCHEN
 #undef LOC_ATMOS

@@ -175,6 +175,7 @@
 		interpreter.SetProc("round", /proc/n_round)
 		interpreter.SetProc("clamp", /proc/n_clamp)
 		interpreter.SetProc("inrange", /proc/n_inrange)
+		interpreter.SetProc("random", /proc/n_random)
 		// End of Donkie~
 
 

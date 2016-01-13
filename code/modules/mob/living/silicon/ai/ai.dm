@@ -504,7 +504,7 @@ var/list/ai_verbs_default = list(
 		camera = A
 	..()
 	if(istype(A,/obj/machinery/camera))
-		if(camera_light_on)	A.set_light(AI_CAMERA_light_range)
+		if(camera_light_on)	A.set_light(AI_CAMERA_light_range, AI_CAMERA_light_power)
 		else				A.set_light(0)
 
 
@@ -695,7 +695,7 @@ var/list/ai_verbs_default = list(
 				src.camera.set_light(0)
 				if(!camera.light_disabled)
 					src.camera = camera
-					src.camera.set_light(AI_CAMERA_light_range)
+					src.camera.set_light(AI_CAMERA_light_range, AI_CAMERA_light_power)
 				else
 					src.camera = null
 			else if(isnull(camera))
@@ -705,7 +705,7 @@ var/list/ai_verbs_default = list(
 			var/obj/machinery/camera/camera = near_range_camera(src.eyeobj)
 			if(camera && !camera.light_disabled)
 				src.camera = camera
-				src.camera.set_light(AI_CAMERA_light_range)
+				src.camera.set_light(AI_CAMERA_light_range, AI_CAMERA_light_power)
 		camera_light_on = world.timeofday + 1 * 20 // Update the light every 2 seconds.
 
 

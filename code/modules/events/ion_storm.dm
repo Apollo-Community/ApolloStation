@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
 
 /datum/event/ionstorm
-	var/botEmagChance = 0.5
+	var/botEmagChance = 20
 	var/list/players = list()
 
 /datum/event/ionstorm/announce()
@@ -96,7 +96,7 @@
 /datum/event/ionstorm/end()
 	spawn(rand(5000,8000))
 		if(prob(50))
-			command_announcement.Announce("It has come to our attention that the station passed through an ion storm.  Please monitor all electronic equipment for malfunctions.", "Anomaly Alert")
+			command_announcement.Announce("It has come to our attention that the station passed through an ion storm. Engineering personnel must monitor all electronic equipment for malfunctions.", "AUTOMATED ALERT: Ion Storm")
 
 /*
 /proc/IonStorm(botEmagChance = 10)

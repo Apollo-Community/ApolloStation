@@ -243,6 +243,9 @@ proc/n_clamp(var/num, var/min=-1, var/max=1)
 proc/n_inrange(var/num, var/min=-1, var/max=1)
 	if(isnum(num)&&isnum(min)&&isnum(max))
 		return ((min <= num) && (num <= max))
+		
+proc/n_random(var/min=1, var/max=5)
+	return rand(min, max)
 // END OF BY DONKIE :(
 
 // Non-recursive

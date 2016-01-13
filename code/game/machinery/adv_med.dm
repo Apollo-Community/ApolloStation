@@ -41,6 +41,12 @@
 	set category = "Object"
 	set name = "Enter Body Scanner"
 
+	if(!(ishuman(usr) || issmall(usr)))
+		return
+	for(var/mob/living/carbon/slime/M in range(1,usr))
+		if(M.Victim == usr)
+			usr << "You're too busy getting your life sucked out of you."
+			return
 	if (usr.stat != 0)
 		return
 	if (src.occupant)
@@ -304,7 +310,8 @@
 		"lung_ruptured" = H.is_lung_ruptured(),
 		"external_organs" = H.organs.Copy(),
 		"internal_organs" = H.internal_organs.Copy(),
-		"species_organs" = H.species.has_organ //Just pass a reference for this, it shouldn't ever be modified outside of the datum.
+		"species_organs" = H.species.has_organ, //Just pass a reference for this, it shouldn't ever be modified outside of the datum.
+		"xeno_host" = H.status_flags & XENO_HOST
 		)
 	return occupant_data
 
@@ -367,6 +374,7 @@
 		var/splint = ""
 		var/internal_bleeding = ""
 		var/lung_ruptured = ""
+		var/embryo = ""
 
 		dat += "<tr>"
 
@@ -375,6 +383,8 @@
 			break
 		if(istype(e, /datum/organ/external/chest) && occ["lung_ruptured"])
 			lung_ruptured = "Lung ruptured:"
+		if(istype(e, /datum/organ/external/chest) && occ["xeno_host"])
+			embryo = "<font color='red'>Unknown biological lifeform detected:</font>"
 		if(e.status & ORGAN_SPLINTED)
 			splint = "Splinted:"
 		if(e.status & ORGAN_BLEEDING)
@@ -412,10 +422,10 @@
 			if(unknown_body || e.hidden)
 				imp += "Unknown body present:"
 
-		if(!AN && !open && !infected & !imp)
+		if(!AN && !open && !infected & !imp && !embryo)
 			AN = "None:"
 		if(!(e.status & ORGAN_DESTROYED))
-			dat += "<td>[e.display_name]</td><td>[e.burn_dam]</td><td>[e.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
+			dat += "<td>[e.display_name]</td><td>[e.burn_dam]</td><td>[e.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured][embryo]</td>"
 		else
 			dat += "<td>[e.display_name]</td><td>-</td><td>-</td><td>Not Found</td>"
 		dat += "</tr>"

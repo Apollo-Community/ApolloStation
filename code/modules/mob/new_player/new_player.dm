@@ -67,6 +67,9 @@
 	Stat()
 		..()
 
+		if( !client )
+			return
+
 		statpanel("Lobby")
 		if(client.statpanel=="Lobby" && ticker)
 			if(ticker.hide_mode)
@@ -115,9 +118,8 @@
 
 				observer.started_as_observer = 1
 				close_spawn_windows()
-				var/obj/O = locate("landmark*Observer-Start")
 				src << "\blue Now teleporting."
-				observer.loc = O.loc
+				observer.loc = observer_start[rand(1,observer_start.len)]
 				observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
 
 				announce_ghost_joinleave(src)
@@ -151,7 +153,18 @@
 				src << alert("Your current species, [client.prefs.species], is not available for play on the station.")
 				return 0
 
-			LateChoices()
+			var/active_mobs = getActiveMobs()
+
+			if( active_mobs >= config.player_hard_cap )
+				var/answer = alert("The server has passed its max player cap. Would you like to join the thunderdome instead?","Thunderdome","Yes","No")
+				if( answer == "Yes" )
+					create_gladiator( src )
+			else if( active_mobs >= config.player_soft_cap && !client.client_exists_in_db())
+				var/answer = alert("The server has passed its new player cap. Since you have not played here before, you cannot join. Would you like to join the thunderdome instead?","Thunderdome","Yes","No")
+				if( answer == "Yes" )
+					create_gladiator( src )
+			else
+				LateChoices()
 
 		if(href_list["manifest"])
 			ViewManifest()
@@ -512,3 +525,12 @@
 	if( character.h_style == "Bald" && character.f_style == "Shaved" )
 		return 1
 	return 0
+
+/proc/getActiveMobs()
+	var/active_mobs = 0
+
+	for(var/mob/living/M in mob_list)
+		if( M.client )
+			active_mobs++
+
+	return active_mobs

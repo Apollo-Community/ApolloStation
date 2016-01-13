@@ -185,6 +185,28 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	src.add_fingerprint(user)
 
+/obj/structure/cable/attack_hand(var/mob/user as mob)
+	if( istype( user, /mob/living/simple_animal/rodent/rat/king ))
+		var/mob/living/simple_animal/rodent/rat/king/K = user
+		if( K.canNibbleWire() )
+			var/mob/living/simple_animal/rodent/rat/R = K.getMobAttacked()
+
+			src.visible_message("<span class='warning'>\The [user] begins to nibble the cable!</span>" )
+
+			if( !do_after( R, 100 ))
+				user << "<span class='warning'>You need to wait longer to chew through the cable!</span>"
+				return 0
+
+			src.visible_message("<span class='warning'>\The [user] chews its way through the cable!</span>" )
+
+			if( !shock( R, 10 ))
+				new/obj/item/stack/cable_coil(src.loc, src.d1 ? 2 : 1, color)
+				qdel(src)
+		else
+			user << "<span class='warning'>Our kingdom must grow larger before we can chew through wires!</span>"
+
+	..()
+
 // shock the user with probability prb
 /obj/structure/cable/proc/shock(mob/user, prb, var/siemens_coeff = 1.0, var/max_damage = 50)
 	if(!prob(prb))
@@ -193,7 +215,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
-		if(usr.stunned)
+		if(!user || user.stunned) // If the user was either vaporized or stunned
 			return 1
 	return 0
 

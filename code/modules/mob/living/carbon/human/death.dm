@@ -60,7 +60,7 @@
 		playsound(loc, species.death_sound, 80, 1, 1)
 
 	if(ticker && ticker.mode)
-		sql_report_death(src)
+		statistics.report_death(src)
 		ticker.mode.check_win()
 		if(istype(ticker.mode,/datum/game_mode/heist))
 			vox_kills++ //Bad vox. Shouldn't be killing humans.
@@ -103,9 +103,9 @@
 		f_style = "Shaved"
 	if(h_style)
 		h_style = "Bald"
-	update_hair(0)
+	update_hair(1)
 
 	mutations.Add(SKELETON)
 	status_flags |= DISFIGURED
-	update_body(0)
+	update_body(1)
 	return

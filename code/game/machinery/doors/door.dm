@@ -176,7 +176,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/door/attack_hand(mob/user as mob)
-	return src.attackby(user, user)
+	return src.attackby( user, user )
 
 /obj/machinery/door/attack_tk(mob/user as mob)
 	if(requiresID() && !allowed(null))
@@ -263,11 +263,25 @@
 	if(src.operating) return
 
 	if(src.density && (operable() && istype(I, /obj/item/weapon/card/emag)))
-		flick("door_spark", src)
-		sleep(6)
-		open()
-		operating = -1
+		emag()
 		return 1
+
+	if(istype( user, /mob/living/simple_animal/rodent/rat/king ))
+		var/mob/living/simple_animal/rodent/rat/king/K = user
+		if( K.canNibbleWire() )
+			src.visible_message("<span class='warning'>\The [user] begins to nibble on the door wiring!</span>" )
+
+			if( !do_after( user, 100 ))
+				user << "<span class='warning'>You need to wait longer to chew through the door's wiring!</span>"
+				return 0
+
+			src.visible_message("<span class='warning'>\The [user] chews its way through the door wiring!</span>" )
+
+
+			emag()
+			return 1
+		else
+			user << "<span class='warning'>Our [K.swarm_name] must grow larger before we can chew through wires!</span>"
 
 	if(src.allowed(user) && operable())
 		if(src.density)
@@ -280,6 +294,12 @@
 		do_animate("deny")
 
 	return
+
+/obj/machinery/door/proc/emag()
+	flick("door_spark", src)
+	sleep(6)
+	open()
+	operating = -1
 
 /obj/machinery/door/proc/take_damage(var/damage)
 	var/initialhealth = src.health
@@ -303,12 +323,10 @@
 	update_icon()
 	return
 
-
 /obj/machinery/door/blob_act()
 	if(prob(40))
 		qdel(src)
 	return
-
 
 /obj/machinery/door/emp_act(severity)
 	if(prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
@@ -331,11 +349,7 @@
 			else
 				take_damage(300)
 		if(3.0)
-			if(prob(80))
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(2, 1, src)
-				s.start()
-			else
+			if(prob(20))
 				take_damage(150)
 	return
 

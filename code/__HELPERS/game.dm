@@ -37,6 +37,8 @@
 	var/list/heard = view(range, source)
 	source.light_range = lum
 
+	heard |= hearers( range, source )
+
 	return heard
 
 /proc/isStationLevel(var/level)

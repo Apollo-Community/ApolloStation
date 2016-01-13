@@ -1419,9 +1419,9 @@
 
 /obj/item/weapon/holder/cat/fluff/bones
 	name = "Bones"
-	desc = "It's Bones! Meow."
+	desc = "Damnit man, I'm a cat, not a doctor!"
 	gender = MALE
-	icon_state = "cat3"
+	icon_state = "bones"
 
 //Use this subtype for spawning in the custom item.
 /obj/item/weapon/holder/cat/fluff/bones/custom_item
@@ -1438,9 +1438,9 @@
 	desc = "That's Bones the cat. He's a laid back, brown stray cat. Meow."
 	gender = MALE
 	icon = 'icons/mob/animal.dmi'
-	icon_state = "cat3"
-	icon_living = "cat3"
-	icon_dead = "cat3_dead"
+	icon_state = "bones"
+	icon_living = "bones"
+	icon_dead = "bones_dead"
 	holder_type = /obj/item/weapon/holder/bones2
 	var/bff_name = "Genma Iroe"
 	var/mob/living/carbon/human/bff
@@ -1462,7 +1462,7 @@
 		var/current_dist = get_dist(src, bff)
 
 		if (movement_target != bff)
-			if (current_dist > follow_dist && !istype(movement_target, /mob/living/simple_animal/mouse) && (bff in oview(src)))
+			if (current_dist > follow_dist && !istype(movement_target, /mob/living/simple_animal/rodent) && (bff in oview(src)))
 				//stop existing movement
 				walk_to(src,0)
 				turns_since_scan = 0
@@ -1531,3 +1531,24 @@
 	icon_state = "blackzippo"
 	icon_on = "blackzippoon"
 	icon_off = "blackzippo"
+
+/* -------- KEYWEE + LUCIEN93 ---------- */
+/obj/item/clothing/head/helmet/ert/fluff
+	name = "emergency response team helmet"
+	desc = "An in-atmosphere helmet worn by members of the NanoTrasen Emergency Response Team. This one doesn't look very protective."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "erthelmet_cmd"
+	item_state = "syndicate-helm-green"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/head/helmet/ert/fluff/keywee
+	name = "old emergency response team medical helmet"
+	desc = "A white in-atmosphere helmet once worn by a medical officer for emergencies. More of a keepsake than protective headgear by now, it looks like its been through a lot."
+	icon_state = "keywee"
+	item_state = "keywee"
+
+/obj/item/clothing/head/helmet/ert/fluff/lucien93
+	name = "old emergency response team commander helmet"
+	desc = "A blue in-atmosphere helmet once worn by a commander for emergencies. More of a keepsake than protective headgear by now, it looks like its been through a lot."
+	icon_state = "lucien93"
+	item_state = "lucien93"

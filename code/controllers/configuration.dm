@@ -180,7 +180,8 @@ var/list/gamemode_cache = list()
 	var/list/station_levels = list()  // Defines which Z-levels the station exists on.
 	var/list/alert_levels = list()	// Defines which Z-levels which, for example, a Code Red announcement may affect including such areas as Central Command and the Syndicate Shuttle
 	var/list/local_levels = list()	// Defines all Z-levels a character can typically reach
-	var/list/admin_levels= list()  // Defines which Z-levels which are for admin functionality, for example
+	var/list/admin_levels = list()  // Defines which Z-levels which are for admin functionality, for example
+	var/list/can_random_teleport_levels = list()
 
 	// Event settings
 	var/expected_round_length = 3 * 60 * 60 * 10 // 3 hours
@@ -210,10 +211,8 @@ var/list/gamemode_cache = list()
 
 
 	var/STUI_length = 150
-
 	var/git_commit_id = ""
 
-	var/recommended_byond = 501
 	var/player_soft_cap = 40
 	var/player_hard_cap = 60
 
@@ -667,8 +666,7 @@ var/list/gamemode_cache = list()
 
 				if("law_zero")
 					law_zero = value
-				if("recommended_byond")
-					config.recommended_byond = text2num(value)
+
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 

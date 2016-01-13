@@ -181,6 +181,7 @@
 	if(!istype(target))	return
 	var/mob/living/silicon/ai/U = usr
 
+	statistics.increase_stat("ai_follow")
 	U.cameraFollow = target
 	U << "Now tracking [target.name] on camera."
 

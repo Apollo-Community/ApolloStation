@@ -26,6 +26,9 @@
 		if (src.machine)
 			if (!( src.machine.check_eye(src) ))
 				src.reset_view(null)
+		// update camera light to the new nearest one
+		if(camera_light_on)
+			lightNearbyCamera()
 
 		// Handle power damage (oxy)
 		if(src:aiRestorePowerRoutine != 0)

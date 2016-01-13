@@ -424,12 +424,33 @@
 
 /obj/item/weapon/robot_module/drone/respawn_consumable(var/mob/living/silicon/robot/R)
 	var/obj/item/weapon/reagent_containers/spray/cleaner/C = locate() in src.modules
-	C.reagents.add_reagent("cleaner", 3)
+	C.reagents.add_reagent("cleaner", 15)
 
 	var/obj/item/device/lightreplacer/LR = locate() in src.modules
-	LR.Charge(R)
+	for(var/i = 1 to 5)
+		if(LR.charge != 10)
+			LR.Charge(R)
 
-	..()
+	if(!stacktypes || !stacktypes.len) return
+
+	for(var/T in stacktypes)
+		var/obj/item/stack/S
+		for(var/obj/O in src.modules)
+			if(O.type == T)
+				S = O
+				break
+
+		if(!S)
+			src.modules -= null
+			S = new T(src)
+			src.modules |= S
+			S.amount = 5
+
+		if(!istype(S))
+			continue
+
+		if(S && S.amount < stacktypes[T])
+			S.amount += min(5, stacktypes[T]-S.amount)
 	return
 
 //checks whether this item is a module of the robot it is located in.

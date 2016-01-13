@@ -1,7 +1,7 @@
 var/list/donator_list = list()
 
 proc/load_donators()
-	donator_list = file2list("config/donators.txt")
+	donator_list = file2list("data/whitelists/donators.txt")
 
 proc/is_donator(client/C)
 	if(donator_list)

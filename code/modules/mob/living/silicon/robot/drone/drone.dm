@@ -330,7 +330,7 @@
 	src << "<b>Systems rebooted</b>. Loading base pattern maintenance protocol... <b>loaded</b>."
 	full_law_reset()
 	src << "<br><b>You are a maintenance drone, a tiny repair robot with no individual will, no personality, and no drives or urges other than your laws."
-	src << "Use <b>:d</b> to talk to other drones and <b>say</b> to speak silently to your nearby fellows."
+	src << "Use <b>;</b> to talk to other drones and <b>say</b> to speak silently to your nearby fellows."
 	src << "Remember, you are <b>lawed against interference with the crew</b>. Also remember, <b>you DO NOT take orders from the AI.</b>"
 	src << "<big><b>If a crewmember has noticed you, <i>you are probably breaking your third law</i></b></big>."
 

@@ -45,7 +45,7 @@
 /obj/item/weapon/melee/baton/update_icon()
 	if(status)
 		icon_state = "[initial(name)]_active"
-	else if(!bcell)
+	else if(!bcell || bcell.charge < hitcost)
 		icon_state = "[initial(name)]_nocell"
 	else
 		icon_state = "[initial(name)]"
@@ -87,13 +87,13 @@
 		status = !status
 		user << "<span class='notice'>[src] is now [status ? "on" : "off"].</span>"
 		playsound(loc, "sparks", 75, 1, -1)
-		update_icon()
 	else
 		status = 0
 		if(!bcell)
 			user << "<span class='warning'>[src] does not have a power source!</span>"
 		else
 			user << "<span class='warning'>[src] is out of charge.</span>"
+	update_icon()
 	add_fingerprint(user)
 
 

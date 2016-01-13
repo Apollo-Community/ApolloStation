@@ -482,17 +482,27 @@
 	icon_state = "asteroid_dug"
 	return
 
-/turf/simulated/floor/plating/airless/asteroid/proc/updateMineralOverlays()
+/turf/simulated/floor/plating/airless/asteroid/proc/updateMineralOverlays(var/update_neighbors)
 	overlays.Cut()
+
+	var/list/step_overlays = list("n" = NORTH, "s" = SOUTH, "e" = EAST, "w" = WEST)
+	for(var/direction in step_overlays)
+
+		if(istype(get_step(src, step_overlays[direction]), /turf/space))
+			overlays += image('icons/turf/floors.dmi', "asteroid_edge_[direction]")
+
+		if(istype(get_step(src, step_overlays[direction]), /turf/simulated/mineral))
+			overlays += image('icons/turf/walls.dmi', "rock_side_[direction]")
 
 	if(overlay_detail) overlays += overlay_detail
 
-	var/list/all_step_directions = list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST)
-	for(var/direction in all_step_directions)
-		var/turf/simulated/floor/plating/airless/asteroid/A
-		if(istype(get_step(src, direction), /turf/simulated/floor/plating/airless/asteroid))
-			A = get_step(src, direction)
-			A.updateMineralOverlays()
+	if(update_neighbors)
+		var/list/all_step_directions = list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST)
+		for(var/direction in all_step_directions)
+			var/turf/simulated/floor/plating/airless/asteroid/A
+			if(istype(get_step(src, direction), /turf/simulated/floor/plating/airless/asteroid))
+				A = get_step(src, direction)
+				A.updateMineralOverlays()
 
 /turf/simulated/floor/plating/airless/asteroid/Entered(atom/movable/M as mob|obj)
 	..()
