@@ -179,7 +179,7 @@ var/rat_king_spawned = 0 // I hate globals, but I cant think of a better way to 
 	real_name = name
 
 	if( canWalkFaster() )
-		speed = -3
+		speed = -1
 	else
 		speed = 0
 
