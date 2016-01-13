@@ -304,12 +304,12 @@ datum/controller/vote
 		else
 			. += "<h2>Start a vote:</h2><hr><ul><li>"
 			//restart
-			if(trialmin || config.allow_vote_restart)
+			if((trialmin || config.allow_vote_restart) && ticker.current_state != GAME_STATE_PREGAME)
 				. += "<a href='?src=\ref[src];vote=restart'>Restart</a>"
 			else
 				. += "<font color='grey'>Restart (Disallowed)</font>"
 			. += "</li><li>"
-			if((trialmin || config.allow_vote_restart) && emergency_shuttle.can_call())
+			if((trialmin || config.allow_vote_restart) && emergency_shuttle.can_call() && ticker.current_state != GAME_STATE_PREGAME)
 				. += "<a href='?src=\ref[src];vote=crew_transfer'>Crew Transfer</a>"
 			else
 				. += "<font color='grey'>Crew Transfer (Disallowed)</font>"
@@ -349,10 +349,10 @@ datum/controller/vote
 				if(usr.client.holder)
 					config.allow_vote_mode = !config.allow_vote_mode
 			if("restart")
-				if(config.allow_vote_restart || usr.client.holder)
+				if((config.allow_vote_restart || usr.client.holder) && ticker.current_state != GAME_STATE_PREGAME)
 					initiate_vote("restart",usr.key)
 			if("gamemode")
-				if(config.allow_vote_mode || usr.client.holder)
+				if((config.allow_vote_mode || usr.client.holder) && ticker.current_state == GAME_STATE_PREGAME)
 					initiate_vote("gamemode",usr.key)
 			if("crew_transfer")
 				if((config.allow_vote_restart || usr.client.holder) && emergency_shuttle.can_call() )
