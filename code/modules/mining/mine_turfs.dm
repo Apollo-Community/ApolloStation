@@ -228,6 +228,15 @@
 				var/obj/item/weapon/ore/O = new(src)
 				geologic_data.UpdateNearbyArtifactInfo(src)
 				O.geologic_data = geologic_data
+		else if(P.name == "pickaxe")
+			if(finds && finds.len)
+				finds.Remove(finds[1])
+				user << "\red You interrupted your dig and accidentally butchered an artifact!"
+				user << "You wonder if you should have used a finer digging instrument.."
+				if( !finds || !finds.len )
+					archaeo_overlay = ""
+					excav_overlay = ""
+					overlays.Cut()
 
 	else
 		return attack_hand(user)
