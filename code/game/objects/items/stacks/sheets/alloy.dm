@@ -1,22 +1,18 @@
 /* Alloys
  * Alloys have different properties depending on their composition
- * The "strength" of these properties depends on the metal/glass:mineral ratio
+ * The "strength" of these properties depends on the metal/glass:mineral ratio, as well as the mineral
  * A 50/50 ratio gives full strength properties
  *
- * Mineral effects:
- * 		Diamond - Physically strengthens the alloy
- *		Uranium - Decreased chance of wall rot/fungi, 50/50 blend makes them immune to rot/fungi
- *		Phoron - Considerably increased max temperature
- *		Gold
- *		Silver
- *		Iron - Weaker version of diamond
- *		Platinum
- *		Tritium
- *		Osmium - Shock absorbent, increases blast resistance
+ * Mineral sheets have a list of effects. This is a list of all used effects. Most are multipliers
+ * These multipliers are only used in full in a 50:50 alloy. So a mineral with str = 3 in a 30:80 alloy would give a multiplier of 2.25, not 3.
+ * 		rot - determines chance of wallrot appearing. 1 gives full immunity. UNUSED so far
+ *		str - determines wall strength/damage cap, this is a multiplier for an ADDITION to the damage cap, not a multiplier to the damage cap itself. 0.5 = 50% higher cap
+ *		blastarmor - determines resistance against explosions
+ *		rad - how much radiation the alloy sends out
+ *		tempres - determines maximum temperature
+ *		acidres - 1 or 0, determines whether or not the alloy resists acid
+ *		projarmor - damage reduction (or increase) from projectiles
 */
-
-var/global/list/alloy_prefix = list("diamond" = "ada", "uranium" = "ura", "solid phoron" = "phoro", "gold" = "dives", "silver" = "argent", "iron" = "ferro", "platinum" = "cata", "tritium" = "trit", "osmium" = "osi")
-var/global/list/alloy_postfix = list("metal" = "metallic", "glass" = "glaseous")
 
 /*
  * Alloy sheet
@@ -28,8 +24,11 @@ var/global/list/alloy_postfix = list("metal" = "metallic", "glass" = "glaseous")
 	icon = 'icons/obj/items/materials.dmi'
 	icon_state = "polysteel-1"
 	item_state = "polysteel"
+	origin_tech = "materials=3"
+
 	var/list/materials = list()
 	var/unique_id = ""
+	var/list/effects = list()
 
 /obj/item/stack/sheet/alloy/New(var/list/comp)
 	..()
@@ -107,11 +106,10 @@ var/global/list/alloy_postfix = list("metal" = "metallic", "glass" = "glaseous")
 
 /obj/item/stack/sheet/alloy/plasteel
 	name = "catametallic alloy"
-	desc = "Alloys made of platinum and metal, often refered to as \"plasteel\""
+	desc = "Rich alloys made of platinum and metal, often refered to as \"plasteel\""
 	icon_state = "plasteel-1"
 	item_state = "plasteel"
-	matter = list("platinum" = 7500, "metal" = 7500)
-	origin_tech = "materials=2"
+	origin_tech = "materials=2" // plasteel gets a lower tech level because it's very common & accessible already
 	flags = CONDUCT
 
 	recipes = list(new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = 1), \

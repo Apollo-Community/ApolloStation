@@ -13,21 +13,31 @@
 
 	var/list/materials = list()
 	var/unique_id = ""
+	var/list/effects = list()
+	var/mineral_multiplier = 1
 
 	var/d_state = 0
 
-// don't think New can be called properly considering how girders handle wall building
-// override is for reinforced walls, and forces a materials update
-/turf/simulated/wall/alloy/proc/set_materials(var/list/comp, var/override=0)
-	if(!comp)
+/turf/simulated/wall/alloy/New(var/loc)
+	..(loc)
+
+	// for mapped walls more than anything, so that they get their effects/name applied
+	// it'll fail at the sanity check if materials/effects aren't set anyways
+	set_materials(materials, effects, 1)
+
+// don't think New can be called "properly" considering how girders handle wall building
+// that's why this proc is a thing
+// override is for reinforced walls, it forces a materials update
+/turf/simulated/wall/alloy/proc/set_materials(var/list/comp, var/list/effs)
+	if(!comp || !effs)
 		return
-	// why set it twice? this has actually proved to be an issue
-	if(materials.len >= 2 && unique_id != "" && !override)
-		return
+
+	effects = effs.Copy()
 	materials = comp.Copy()
+
+	var/sum = 0
 	var/pre = ""
 	var/post = ""
-	var/sum = 0
 	for(var/M in materials)
 		sum += materials[M]
 		if(alloy_prefix[M])
@@ -37,34 +47,35 @@
 	// need a name. this is also an indicator that something isn't right with the comp list
 	if(pre == "" && post == "")
 		return
-	name = "[pre][post] wall"
+	if(!istype(src, /turf/simulated/wall/alloy/reinforced))
+		name = "[pre][post] wall"
+		desc = "A big chunk of [pre][post] alloy used to separate rooms."
+
 	for(var/M in materials)
 		materials[M] /= sum
 		unique_id += "[M][materials[M]]"
-	desc = "A big chunk of [pre][post] alloy used to separate rooms."
+		if(M != "metal" || M != "glass")
+			mineral_multiplier = materials[M] * 2
 
-	// catametallic = reinforced
-	if(name == "catametallic wall")
+	// catametallic = reinforced, if platinum amount is >= 40%
+	// in honor of being lazy we'll use mineral_multiplier, which is why we check for 0.8 instead of 0.4
+	if(name == "catametallic wall" && mineral_multiplier >= 0.8)
 		var/turf/simulated/wall/alloy/reinforced/R = new(get_turf(src))
 		R.set_materials(materials)
 		qdel(src)
 		return
 
 	// alloy benefits, woo!
-
-	// phoron - +100 max temp. per %, up to 5000
-	if(materials["solid phoron"])
-		max_temperature += 1000 * (materials["solid phoron"] * 200)
-
-	// diamond - reduces damage and increases health
-	if(materials["diamond"])
-		damage_cap += materials["diamond"] * 1400
-		armor -= materials["diamond"] * 0.9
-
-	// iron - weaker version of diamond
-	if(materials["iron"])
-		damage_cap += materials["iron"] * 700
-		armor -= materials["iron"] * 0.7
+	for(var/E in effects)
+		switch(E)
+			if("str")
+				damage_cap += (damage_cap * mineral_multiplier * effects[E])
+			if("tempres")
+				max_temperature *= mineral_multiplier * effects[E]
+			if("projarmor")
+				armor = effects[E]
+			if("acidres")
+				unacidable = effects[E]
 
 /turf/simulated/wall/alloy/attackby(obj/item/W as obj, mob/user as mob)
 
@@ -360,20 +371,21 @@
 		return attack_hand(user)
 	return
 
-// urametallic walls give partial or full rot immunity
+// Urametallic walls give partial or full rot immunity
 /turf/simulated/wall/alloy/rot()
-	if(materials["uranium"])
-		var/rot_prob = 100 - (materials["uranium"] * 800)
+	if(effects["rot"])
+		var/rot_prob = 100 - (effects["rot"] * 100)
 		if(prob(rot_prob))
 			..()
 
-// osimetallic walls handle explosions much better - they are never guaranteed to get dismantled
+// Osimetallic walls handle explosions much better - they are never guaranteed to get dismantled
 /turf/simulated/wall/alloy/ex_act(severity)
-	if(materials["osmium"])
-		var/damage = 100 - (materials["osmium"] * 150)
+	if(effects["blastres"])
+		// !!! this needs to be changed by someone better at maths. done this way, you won't see any benefit from the blast resistance until you pass 10% mineral !!!
+		var/damage = Clamp(250 / (mineral_multiplier * effects["blastres"]), 0, 250)
 		switch(severity)
 			if(1)
-				if(prob(50 + (materials["osmium"] * 100)))
+				if(prob(50 + (mineral_multiplier * 50)))
 					take_damage(rand(damage, damage + 100))
 				else
 					dismantle_wall(1,1)
@@ -393,13 +405,9 @@
 	name = "reinforced wall"
 	desc = "A big chunk of catametallic alloy used to separate rooms."
 
-	damage_cap = 500
-	max_temperature = 6000
-	armor = 0.15
-
 	materials = list("platinum" = 0.5, "metal" = 0.5)
-	unique_id = "platinum0.5metal0.5"
+	effects = list("str" = 0.67, "blastres" = 1.5, "projarmor" = 0.15, "tempres" = 5)
 
-/turf/simulated/wall/alloy/reinforced/New(var/list/comp)
-	..()
-	set_materials(comp, 1)
+/turf/simulated/wall/alloy/reinforced/New(var/turf/loc, var/list/comp)
+	..(loc)
+	set_materials(comp, effects)

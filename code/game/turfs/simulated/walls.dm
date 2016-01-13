@@ -5,6 +5,7 @@
 
 	var/mineral = "metal"
 	var/rotting = 0
+	var/unacidable = 0
 
 	var/damage = 0
 	var/damage_cap = 100 //Wall will break down to girders if damage reaches this point
@@ -142,6 +143,7 @@
 	if(istype(src,/turf/simulated/wall/alloy))
 		var/turf/simulated/wall/alloy/W = src
 		var/obj/item/stack/sheet/alloy/metal/M = new /obj/item/stack/sheet/alloy/metal(W.materials)
+		M.effects = W.effects
 		M.loc = get_turf(src)
 
 		if(!devastated)

@@ -122,6 +122,7 @@ Creates alloys that can be used to make stronger structures or more complex allo
 	var/obj/item/stack/sheet
 		base = hoppers["base"]
 		mineral = hoppers["mineral"]
+
 	if(href_list["eject_base"]) // eject base material
 		base.loc = get_turf(src)
 		hoppers["base"] = null
@@ -136,6 +137,7 @@ Creates alloys that can be used to make stronger structures or more complex allo
 		flick("mechfab3", src)
 		spawn(50)
 			var/obj/item/stack/sheet/alloy/A = null
+			var/obj/item/stack/sheet/mineral/M = mineral
 			if(base.name == "metal")
 				A = new /obj/item/stack/sheet/alloy/metal(comp)
 
@@ -146,6 +148,7 @@ Creates alloys that can be used to make stronger structures or more complex allo
 					A = new /obj/item/stack/sheet/alloy/plasteel(comp)
 			else
 				A = new /obj/item/stack/sheet/alloy/glass(comp)
+			A.effects = M.mineral_effect
 			A.amount = base.amount
 			A.loc = get_turf(src)
 			A.update_icon()
