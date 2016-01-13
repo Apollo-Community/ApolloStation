@@ -50,7 +50,7 @@
 						usr << "<span class='warning'> Invalid text.</span>"
 						return
 					user.visible_message("\The [user] titles \the [src] with \a [W], marking down: \"[str]\"",\
-					"<span class='notice'>You title \the [src]: \"[str]\"</span>",\
+					"<span class='notice'>You title \the [src]: \"[str]\</span>",\
 					"You hear someone scribbling a note.")
 					name = "[name] ([str])"
 					if(!examtext && !nameset)
@@ -61,7 +61,7 @@
 				if("Description")
 					var/str = sanitize(input(usr,"Label text?","Set label",""))
 					if(!str || !length(str))
-						usr << "\red Invalid text."
+						usr << "<span class='alert'> Invalid text.</span>"
 						return
 					if(!examtext && !nameset)
 						examtext = str
@@ -69,7 +69,7 @@
 					else
 						examtext = str
 					user.visible_message("\The [user] labels \the [src] with \a [W], scribbling down: \"[examtext]\"",\
-					"<span class='notice'>You label \the [src]: \"[examtext]\"</span>",\
+					"<span class='notice'>You label \the [src]: \"[examtext]\</span>",\
 					"You hear someone scribbling a note.")
 		return
 
@@ -105,9 +105,9 @@
 	examine(mob/user)
 		if(..(user, 4))
 			if(sortTag)
-				user << "<span class='notice'>It is labeled \"[sortTag]\"</span>"
+				user << "<span class='notice'>It is labeled \"[sortTag]\</span>"
 			if(examtext)
-				user << "<span class='notice'>It has a note attached which reads, \"[examtext]\"</span>"
+				user << "<span class='notice'>It has a note attached which reads, \"[examtext]\</span>"
 		return
 
 /obj/item/smallDelivery
@@ -157,7 +157,7 @@
 						usr << "<span class='warning'> Invalid text.</span>"
 						return
 					user.visible_message("\The [user] titles \the [src] with \a [W], marking down: \"[str]\"",\
-					"<span class='notice'>You title \the [src]: \"[str]\"</span>",\
+					"<span class='notice'>You title \the [src]: \"[str]\</span>",\
 					"You hear someone scribbling a note.")
 					name = "[name] ([str])"
 					if(!examtext && !nameset)
@@ -169,7 +169,7 @@
 				if("Description")
 					var/str = sanitize(input(usr,"Label text?","Set label",""))
 					if(!str || !length(str))
-						usr << "\red Invalid text."
+						usr << "<span class='alert'> Invalid text.</span>"
 						return
 					if(!examtext && !nameset)
 						examtext = str
@@ -177,7 +177,7 @@
 					else
 						examtext = str
 					user.visible_message("\The [user] labels \the [src] with \a [W], scribbling down: \"[examtext]\"",\
-					"<span class='notice'>You label \the [src]: \"[examtext]\"</span>",\
+					"<span class='notice'>You label \the [src]: \"[examtext]\</span>",\
 					"You hear someone scribbling a note.")
 		return
 
@@ -209,9 +209,9 @@
 	examine(mob/user)
 		if(..(user, 4))
 			if(sortTag)
-				user << "<span class='notice'>It is labeled \"[sortTag]\"</span>"
+				user << "<span class='notice'>It is labeled \"[sortTag]\</span>"
 			if(examtext)
-				user << "<span class='notice'>It has a note attached which reads, \"[examtext]\"</span>"
+				user << "<span class='notice'>It has a note attached which reads, \"[examtext]\</span>"
 		return
 
 /obj/item/weapon/packageWrap
@@ -296,7 +296,7 @@
 			else if(src.amount < 3)
 				user << "<span class='warning'>You need more paper.</span>"
 		else
-			user << "\blue The object you are trying to wrap is unsuitable for the sorting machinery!"
+			user << "<span class='notice'> The object you are trying to wrap is unsuitable for the sorting machinery!</span>"
 		if (src.amount <= 0)
 			new /obj/item/weapon/c_tube( src.loc )
 			qdel(src)
@@ -305,7 +305,7 @@
 
 	examine(mob/user)
 		if(..(user, 0))
-			user << "\blue There are [amount] units of package wrap left!"
+			user << "<span class='notice'> There are [amount] units of package wrap left!</span>"
 
 		return
 

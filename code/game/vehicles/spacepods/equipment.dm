@@ -34,11 +34,11 @@
 			return 1
 		else
 			if( user )
-				user << "\red Could not add [equipment] to \the [my_atom]."
+				user << "<span class='alert'> Could not add [equipment] to \the [my_atom].</span>"
 			return 0
 	else
 		if( user )
-			user << "\red There's no space left for \the [equipment]!"
+			user << "<span class='alert'> There's no space left for \the [equipment]!</span>"
 		return 0
 
 /datum/spacepod/equipment/proc/dequip(var/obj/item/equipment, var/mob/user = null)

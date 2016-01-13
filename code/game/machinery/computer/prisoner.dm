@@ -96,7 +96,7 @@
 				var/mob/user = locate(href_list["user"])
 				if((I)&&(I.imp_in))
 					var/mob/living/carbon/R = I.imp_in
-					R << "\green You hear a voice in your head saying: '[warning]'"
+					R << "<span class='green'> You hear a voice in your head saying: '[warning]'</span>"
 					STUI.game.Add("\[[time_stamp()]]PRISON_IMPLANT: [key_name(user)] to [key_name(R)] : [warning]<br>")
 					STUI.processing |= 5
 					for(var/mob/M in player_list)

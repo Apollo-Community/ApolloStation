@@ -57,7 +57,7 @@
 	if(istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
 		if(R.use(2))
-			user << "\blue Constructing catwalk..."
+			user << "<span class='notice'> Constructing catwalk...</span>"
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			new /obj/structure/lattice/catwalk(src.loc)
 			qdel(src)
