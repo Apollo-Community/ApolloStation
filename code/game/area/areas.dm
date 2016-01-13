@@ -1708,6 +1708,10 @@ area/space/atmosalert()
 	name = "\improper Toxins Mixing Room"
 	icon_state = "toxmix"
 
+/area/rnd/alloy_lab
+	name = "\improper Alloy Research"
+	icon_state = "alloylab"
+
 /area/rnd/misc_lab
 	name = "\improper Miscellaneous Research"
 	icon_state = "toxmisc"
