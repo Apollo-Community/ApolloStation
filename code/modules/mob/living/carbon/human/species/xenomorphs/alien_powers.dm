@@ -143,7 +143,7 @@
 			src << "<span class='alium'>You cannot dissolve this object.</span>"
 			return
 	// TURF CHECK
-	else if(istype(O, /turf/simulated/wall/r_wall) || istype(O, /turf/simulated/floor/engine))
+	else if(istype(O, /turf/simulated/wall/alloy/reinforced) || istype(O, /turf/simulated/floor/engine))
 		src << "<span class='alium'>You cannot dissolve this object.</span>"
 		return
 

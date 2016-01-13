@@ -195,7 +195,7 @@
 					return
 				else if(istype(object,/turf/simulated/wall))
 					var/turf/T = object
-					T.ChangeTurf(/turf/simulated/wall/r_wall)
+					T.ChangeTurf(/turf/simulated/wall/alloy/reinforced)
 					return
 			else if(pa.Find("right"))
 				if(istype(object,/turf/simulated/wall))
@@ -206,7 +206,7 @@
 					var/turf/T = object
 					T.ChangeTurf(/turf/space)
 					return
-				else if(istype(object,/turf/simulated/wall/r_wall))
+				else if(istype(object,/turf/simulated/wall/alloy/reinforced))
 					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/wall)
 					return

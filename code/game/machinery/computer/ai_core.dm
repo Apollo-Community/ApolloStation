@@ -30,7 +30,7 @@
 				if(do_after(user, 20))
 					if(!src || !WT.remove_fuel(0, user)) return
 					user << "<span class='notice'> You deconstruct the frame.</span>"
-					new /obj/item/stack/sheet/plasteel( loc, 4)
+					new /obj/item/stack/sheet/alloy/plasteel( loc, 4)
 					qdel(src)
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))

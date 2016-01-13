@@ -1086,7 +1086,7 @@ datum
 				var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal
 				M.amount = 15
 				M.loc = get_turf(holder.my_atom)
-				var/obj/item/stack/sheet/plasteel/P = new /obj/item/stack/sheet/plasteel
+				var/obj/item/stack/sheet/alloy/plasteel/P = new /obj/item/stack/sheet/alloy/plasteel
 				P.amount = 5
 				P.loc = get_turf(holder.my_atom)
 

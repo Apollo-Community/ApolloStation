@@ -100,12 +100,12 @@
 							user << "<span class='notice'>You added the plating!</span>"
 							var/turf/Tsrc = get_turf(src)
 							Tsrc.ChangeTurf(/turf/simulated/wall)
-							for(var/turf/simulated/wall/X in Tsrc.loc)
+							for(var/turf/simulated/wall/X in Tsrc)
 								if(X)	X.add_hiddenprint(usr)
 							qdel(src)
 					return
 
-			if(/obj/item/stack/sheet/plasteel)
+			if(/obj/item/stack/sheet/alloy/plasteel)
 				if(!anchored)
 					if(S.use(2))
 						user << "<span class='notice'> You create a false wall! Push on it to open or close the passage.</span>"
@@ -119,8 +119,8 @@
 							if (S.use(1))
 								user << "<span class='notice'>Wall fully reinforced!</span>"
 								var/turf/Tsrc = get_turf(src)
-								Tsrc.ChangeTurf(/turf/simulated/wall/r_wall)
-								for(var/turf/simulated/wall/r_wall/X in Tsrc.loc)
+								Tsrc.ChangeTurf(/turf/simulated/wall/alloy/reinforced)
+								for(var/turf/simulated/wall/alloy/reinforced/X in Tsrc)
 									if(X)	X.add_hiddenprint(usr)
 								qdel(src)
 						return
@@ -133,6 +133,26 @@
 								new/obj/structure/girder/reinforced( src.loc )
 								qdel(src)
 						return
+
+			if(/obj/item/stack/sheet/alloy/metal)
+				if(!anchored)
+					if(S.use(2))
+						user << "\blue You create a false wall! Push on it to open or close the passage."
+						new /obj/structure/falserwall (src.loc)
+						qdel(src)
+				else
+					var/obj/item/stack/sheet/alloy/A = W
+					if(A.get_amount() < 2) return ..()
+					user << "<span class='notice'>Now adding alloy plating...</span>"
+					if(do_after(user, 50))
+						if(A.use(2))
+							user << "<span class='notice'>You added the alloy plating!</span>"
+							var/turf/Tsrc = get_turf(src)
+							Tsrc.ChangeTurf(/turf/simulated/wall/alloy)
+							var/turf/simulated/wall/alloy/wall = Tsrc
+							wall.add_hiddenprint(usr)
+							wall.set_materials(A.materials, A.effects)
+							qdel(src)
 
 		if(S.sheettype)
 			var/M = S.sheettype
