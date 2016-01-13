@@ -1743,6 +1743,4 @@
 #include "maps\overmap\active\active-02-ACE.dmm"
 #include "maps\overmap\active\active-03-CentComm.dmm"
 #include "maps\overmap\active\active-04-Moon.dmm"
-#include "maps\templates\test\test.dmm"
-#include "maps\templates\test\test2.dmm"
 // END_INCLUDE

@@ -223,7 +223,7 @@ var/rat_king_spawned = 0 // I hate globals, but I cant think of a better way to 
 
 	rat_virus = new /datum/disease2/disease
 
-	var/strength = 1 //whether the disease is of the greater or lesser variety
+	var/strength = 1
 	rat_virus.makerandom(strength)
 	rat_virus.infectionchance = 0
 
