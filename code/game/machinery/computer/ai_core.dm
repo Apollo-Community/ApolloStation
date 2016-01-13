@@ -197,7 +197,7 @@
 	transfer.aiRadio.disabledAi = 0
 	transfer.loc = get_turf(src)
 	transfer.cancel_camera()
-	user << "<span class='notice'> <b>Transfer successful</b>: \black [transfer.name] ([rand(1000,9999)].exe) downloaded to host terminal. Local copy wiped.</span>"
+	user << "<span class='notice'> <b>Transfer successful</b>: </span><span class='black'> [transfer.name] ([rand(1000,9999)].exe) downloaded to host terminal. Local copy wiped.</span>>"
 	transfer << "You have been uploaded to a stationary terminal. Remote device connection restored."
 
 	if(card)
@@ -220,7 +220,7 @@
 		if(transfer)
 			load_ai(transfer,card,user)
 		else
-			user << "<span class='alert'> <b>ERROR</b>: \black Unable to locate artificial intelligence.</span>"
+			user << "<span class='alert'> <b>ERROR</b>: </span><span class='black'> Unable to locate artificial intelligence.</span>>"
 		return
 
 	..()

@@ -34,7 +34,7 @@
 /obj/machinery/power/breakerbox/examine(mob/user)
 	user << "Large machine with heavy duty switching circuits used for advanced grid control"
 	if(on)
-		user << "\green It seems to be online."
+		user << "<span class='green'> It seems to be online.</span>"
 	else
 		user << "<span class='alert'> It seems to be offline</span>"
 
@@ -48,10 +48,10 @@
 		return
 
 	busy = 1
-	user << "\green Updating power settings.."
+	user << "<span class='green'> Updating power settings..</span>"
 	if(do_after(user, 50))
 		set_state(!on)
-		user << "\green Update Completed. New setting:[on ? "on": "off"]"
+		user << "<span class='green'> Update Completed. New setting:[on ? "on": "off"]</span>"
 		update_locked = 1
 		spawn(600)
 			update_locked = 0

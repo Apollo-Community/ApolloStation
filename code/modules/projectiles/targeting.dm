@@ -174,10 +174,10 @@ mob/living/proc/Targeted(var/obj/item/weapon/gun/I) //Self explanitory.
 	if(!targeted_by) targeted_by = list()
 	targeted_by += I
 	I.lock_time = world.time + 20 //Target has 2 second to realize they're targeted and stop (or target the opponent).
-	src << "((<span class='alert'> <b>Your character is being targeted. They have 2 seconds to stop any click or move actions.</b> </span>\black While targeted, they may \
+	src << "((<span class='alert'> <b>Your character is being targeted. They have 2 seconds to stop any click or move actions.</b> </span><span class='black'> While targeted, they may \
 	drag and drop items in or into the map, speak, and click on interface buttons. Clicking on the map objects (floors and walls are fine), their items \
-	 (other than a weapon to de-target), or moving will result in being fired upon. <span class='alert'> The aggressor may also fire manually, </span>\
-	 so try not to get on their bad side.\black ))"
+	 (other than a weapon to de-target), or moving will result in being fired upon. </span><span class='alert'> The aggressor may also fire manually, </span>\
+	 so try not to get on their bad side.))"
 
 	if(targeted_by.len == 1)
 		spawn(0)

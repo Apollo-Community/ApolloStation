@@ -68,7 +68,7 @@
 	// Update mode specific HUD icons.
 	callHook("harvest_podman", list(host))
 
-	host << "\green <B>You awaken slowly, stirring into sluggish motion as the air caresses you.</B>"
+	host << "<span class='green'> <B>You awaken slowly, stirring into sluggish motion as the air caresses you.</B></span>"
 
 	// This is a hack, replace with some kind of species blurb proc.
 	if(istype(host,/mob/living/carbon/alien/diona))

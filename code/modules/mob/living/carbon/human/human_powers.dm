@@ -216,6 +216,6 @@
 	var/msg = sanitize(input("Message:", "Psychic Whisper") as text|null)
 	if(msg)
 		log_say("PsychicWhisper: [key_name(src)]->[M.key] : [msg]")
-		M << "\green You hear a strange, alien voice in your head... \italic [msg]"
-		src << "\green You said: \"[msg]\" to [M]"
+		M << "<span class='green'> You hear a strange, alien voice in your head... </span>\italic [msg]"
+		src << "<span class='green'> You said: </span>\"[msg]\" to [M]"
 	return

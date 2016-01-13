@@ -750,7 +750,7 @@
 
 	else
 		if(seed && !dead)
-			usr << "[src] has <span class='notice'> [seed.display_name] </span>\black planted."
+			usr << "[src] has <span class='notice'> [seed.display_name] </span><span class='black'>planted.</span>"
 			if(health <= (seed.endurance / 2))
 				usr << "The plant looks <span class='alert'> unhealthy.</span>"
 		else

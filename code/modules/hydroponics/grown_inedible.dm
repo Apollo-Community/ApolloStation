@@ -130,7 +130,7 @@
 
 /obj/item/weapon/grown/nettle/death // -- Skie
 	plantname = "deathnettle"
-	desc = "The <span class='alert'> glowing </span>\black nettle incites <span class='alert'><B>rage</B></span>\black in you just from looking at it!"
+	desc = "The <span class='alert'> glowing </span></span><span class='black'> nettle incites </span><span class='alert'><B>rage</B></span><span class='black'> in you just from looking at it!</span>"
 	name = "deathnettle"
 	icon_state = "deathnettle"
 	origin_tech = "combat=3"

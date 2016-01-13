@@ -131,15 +131,15 @@
 /obj/item/device/aicard/proc/grab_ai(var/mob/living/silicon/ai/ai, var/mob/living/user)
 
 	if(!ai.client)
-		user << "<span class='alert'> <b>ERROR</b>: \black [name] data core is offline. Unable to download.</span>"
+		user << "<span class='alert'> <b>ERROR</b>: </span><span class='black'> [name] data core is offline. Unable to download.</span>>"
 		return 0
 
 	if(locate(/mob/living/silicon/ai) in src)
-		user << "<span class='alert'> <b>Transfer failed</b>: \black Existing AI found on remote terminal. Remove existing AI to install a new one.</span>"
+		user << "<span class='alert'> <b>Transfer failed</b>: </span><span class='black'> Existing AI found on remote terminal. Remove existing AI to install a new one.</span>>"
 		return 0
 /*
 	if(ai.is_malf())
-		user << "<span class='alert'> <b>ERROR</b>: \black Remote transfer interface disabled.</span>"
+		user << "<span class='alert'> <b>ERROR</b>: </span><span class='black'> Remote transfer interface disabled.</span>>"
 		return 0
 */
 	if(istype(ai.loc, /turf/))
@@ -163,7 +163,7 @@
 	if(ai.client)
 		ai << "You have been downloaded to a mobile storage device. Remote access lost."
 	if(user.client)
-		user << "<span class='notice'> <b>Transfer successful</b>: \black [ai.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.</span>"
+		user << "<span class='notice'> <b>Transfer successful</b>: </span><span class='black'> [ai.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.</span>>"
 
 	update_icon()
 	return 1

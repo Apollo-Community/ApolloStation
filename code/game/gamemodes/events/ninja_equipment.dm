@@ -172,7 +172,7 @@ ________________________________________________________________________________
 						break
 					lock_suit(U,1)//Check for icons.
 					U.regenerate_icons()
-					U << "<span class='notice'> Linking neural-net interface...\nPattern \green <B>GREEN</B><span class='notice'>, continuing operation.</span>"</span>
+					U << "<span class='notice'> Linking neural-net interface...\nPattern </span><span class='green'> <B>GREEN</B></span><span class='notice'>, continuing operation.</span>"</span>
 				if(4)
 					U << "<span class='notice'> VOID-shift device status: <B>ONLINE</B>.\nCLOAK-tech device status: <B>ONLINE</B>.</span>"
 				if(5)
@@ -188,9 +188,9 @@ ________________________________________________________________________________
 		if(!U.mind||U.mind.assigned_role!="MODE")//Your run of the mill persons shouldn't know what it is. Or how to turn it on.
 			U << "You do not understand how this suit functions. Where the heck did it even come from?"
 		else if(s_initialized)
-			U << "<span class='alert'> The suit is already functioning. \black <b>Please report this bug.</b></span>"
+			U << "<span class='alert'> The suit is already functioning. </span><span class='black'> <b>Please report this bug.</b></span>>"
 		else
-			U << "<span class='alert'> <B>ERROR</B>: \black You cannot use this function at this time.</span>"
+			U << "<span class='alert'> <B>ERROR</B>: </span><span class='black'> You cannot use this function at this time.</span>>"
 	return
 
 //=======//DEINITIALIZE//=======//
@@ -199,12 +199,12 @@ ________________________________________________________________________________
 	if(affecting==loc&&!s_busy)
 		var/mob/living/carbon/human/U = affecting
 		if(!s_initialized)
-			U << "<span class='alert'> The suit is not initialized. \black <b>Please report this bug.</b></span>"
+			U << "<span class='alert'> The suit is not initialized. </span><span class='black'> <b>Please report this bug.</b></span>>"
 			return
 		if(alert("Are you certain you wish to remove the suit? This will take time and remove all abilities.",,"Yes","No")=="No")
 			return
 		if(s_busy||flush)
-			U << "<span class='alert'> <B>ERROR</B>: \black You cannot use this function at this time.</span>"
+			U << "<span class='alert'> <B>ERROR</B>: </span><span class='black'> You cannot use this function at this time.</span>>"
 			return
 		s_busy = 1
 		for(var/i = 0,i<7,i++)
@@ -222,9 +222,9 @@ ________________________________________________________________________________
 					U << "<span class='notice'> VOID-shift device status: <B>OFFLINE</B>.\nCLOAK-tech device status: <B>OFFLINE</B>.</span>"
 					cancel_stealth()//Shutdowns stealth.
 				if(4)
-					U << "<span class='notice'> Disconnecting neural-net interface...\green<B>Success</B><span class='notice'>.</span>"</span>
+					U << "<span class='notice'> Disconnecting neural-net interface...</span><span class='green'><B>Success</B></span><span class='notice'>.</span>"</span>
 				if(5)
-					U << "<span class='notice'> Disengaging neural-net interface...\green<B>Success</B><span class='notice'>.</span>"</span>
+					U << "<span class='notice'> Disengaging neural-net interface...</span><span class='green'><B>Success</B></span><span class='notice'>.</span>"</span>
 				if(6)
 					U << "<span class='notice'> Unsecuring external locking mechanism...\nNeural-net abolished.\nOperation status: <B>FINISHED</B>.</span>"
 					blade_check(U,2)
@@ -516,7 +516,7 @@ ________________________________________________________________________________
 				else
 					cell.use(damage)
 			else
-				A << "<span class='alert'> <b>ERROR</b>: \black Not enough energy remaining.</span>"
+				A << "<span class='alert'> <b>ERROR</b>: </span><span class='black'> Not enough energy remaining.</span>>"
 
 		if("Message")
 			var/obj/item/device/pda/P = locate(href_list["target"])
@@ -578,7 +578,7 @@ ________________________________________________________________________________
 						for(var/i, i<4, i++)
 							switch(i)
 								if(0)
-									U << "<span class='notice'> Engaging mode...\n\black<b>CODE NAME</b>: <span class='alert'> <b>KAMIKAZE</b></span>"</span>
+									U << "<span class='notice'> Engaging mode...\n</span><span class='black'><b>CODE NAME</b>: </span><span class='alert'> <b>KAMIKAZE</b></span>"</span>
 								if(1)
 									U << "<span class='notice'> Re-routing power nodes... \nUnlocking limiter...</span>"
 								if(2)
@@ -592,7 +592,7 @@ ________________________________________________________________________________
 									return
 							sleep(s_delay)
 					else
-						U << "<span class='alert'> <b>ERROR<b>: \black Unable to initiate mode.</span>"
+						U << "<span class='alert'> <b>ERROR<b>: </span><span class='black'> Unable to initiate mode.</span>>"
 				else
 					U << browse(null, "window=spideros")
 					s_busy = 0
@@ -614,7 +614,7 @@ ________________________________________________________________________________
 					t_disk.loc = T
 					t_disk = null
 				else
-					U << "<span class='alert'> <b>ERROR<b>: \black Could not eject disk.</span>"
+					U << "<span class='alert'> <b>ERROR<b>: </span><span class='black'> Could not eject disk.</span>>"
 
 		if("Copy to Disk")
 			var/datum/tech/current_data = locate(href_list["target"])
@@ -639,7 +639,7 @@ ________________________________________________________________________________
 							pai.loc = T
 							pai = null
 						else
-							U << "<span class='alert'> <b>ERROR<b>: \black Could not eject pAI card.</span>"
+							U << "<span class='alert'> <b>ERROR<b>: </span><span class='black'> Could not eject pAI card.</span>>"
 
 		if("Override AI Laws")
 			var/law_zero = A.laws.zeroth//Remembers law zero, if there is one.
@@ -660,7 +660,7 @@ ________________________________________________________________________________
 						if(AI==A)
 							switch(i)
 								if(0)
-									A << "<span class='alert'> <b>WARNING</b>: \black purge procedure detected. \nNow hacking host...</span>"
+									A << "<span class='alert'> <b>WARNING</b>: </span><span class='black'> purge procedure detected. \nNow hacking host...</span>>"
 									U << "<span class='alert'> <b>WARNING</b>: HACKING AT��TEMP� IN PR0GRESs!</span>"
 									spideros = 0
 									k_unlock = 0
@@ -732,9 +732,9 @@ ________________________________________________________________________________
 
 			ai_holo_process()//Move to initialize
 		else
-			AI << "<span class='alert'> ERROR: \black Image feed in progress.</span>"
+			AI << "<span class='alert'> ERROR: </span><span class='black'> Image feed in progress.</span>>"
 	else
-		AI << "<span class='alert'> ERROR: \black Unable to project image.</span>"
+		AI << "<span class='alert'> ERROR: </span><span class='black'> Unable to project image.</span>>"
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_process()
@@ -799,7 +799,7 @@ ________________________________________________________________________________
 			if(s_control)
 				I:transfer_ai("NINJASUIT","AICARD",src,U)
 			else
-				U << "<span class='alert'> <b>ERROR</b>: \black Remote access channel disabled.</span>"
+				U << "<span class='alert'> <b>ERROR</b>: </span><span class='black'> Remote access channel disabled.</span>>"
 			return//Return individually so that ..() can run properly at the end of the proc.
 		else if(istype(I, /obj/item/device/paicard) && !pai)//If it's a pai card.
 			U:drop_item()
@@ -854,7 +854,7 @@ ________________________________________________________________________________
 					TD.stored = null
 					U << "<span class='notice'> Data analyzed and updated. Disk erased.</span>"
 				else
-					U << "<span class='alert'> <b>ERROR</b>: \black Procedure interrupted. Process terminated.</span>"
+					U << "<span class='alert'> <b>ERROR</b>: </span><span class='black'> Procedure interrupted. Process terminated.</span>>"
 			else
 				I.loc = src
 				t_disk = I
@@ -1073,7 +1073,7 @@ ________________________________________________________________________________
 						for(var/datum/tech/analyzing_data in A:files.known_tech)
 							if(current_data.id==analyzing_data.id)
 								if(analyzing_data.level>current_data.level)
-									U << "<span class='notice'> Database: \black <b>UPDATED</b>.</span>"
+									U << "<span class='notice'> Database: </span><span class='black'> <b>UPDATED</b>.</span>>"
 									current_data.level = analyzing_data.level
 								break//Move on to next.
 					else	break//Otherwise, quit processing.
@@ -1349,7 +1349,7 @@ It is possible to destroy the net by the occupant or someone else.
 					for(var/mob/O in viewers(src, 3))
 						O.show_message(text("[] was recovered from the energy net!", M.name), 1, text("You hear a grunt."), 2)
 					if(!isnull(master))//As long as they still exist.
-						master << "<span class='alert'> <b>ERROR</b>: \black unable to initiate transport protocol. Procedure terminated.</span>"
+						master << "<span class='alert'> <b>ERROR</b>: </span><span class='black'> unable to initiate transport protocol. Procedure terminated.</span>>"
 				qdel(src)
 			return
 
@@ -1363,7 +1363,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 		if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
 			if(!isnull(master))//As long as they still exist.
-				master << "<span class='alert'> <b>ERROR</b>: \black unable to locate \the [mob_name]. Procedure terminated.</span>"
+				master << "<span class='alert'> <b>ERROR</b>: </span><span class='black'> unable to locate \the [mob_name]. Procedure terminated.</span>>"
 			qdel(src)//Get rid of the net.
 			return
 
@@ -1400,7 +1400,7 @@ It is possible to destroy the net by the occupant or someone else.
 					O.show_message(text("[] vanished!", M), 1, text("You hear sparks flying!"), 2)
 
 				if(!isnull(master))//As long as they still exist.
-					master << "<span class='notice'> <b>SUCCESS</b>: \black transport procedure of \the [affecting] complete.</span>"
+					master << "<span class='notice'> <b>SUCCESS</b>: </span><span class='black'> transport procedure of \the [affecting] complete.</span>>"
 
 				M.captured = 0 //Important.
 				M.anchored = initial(M.anchored) //Changes the mob's anchored status to the original one; this is not handled by the can_move proc.
@@ -1461,7 +1461,7 @@ It is possible to destroy the net by the occupant or someone else.
 			var/mob/living/carbon/human/H = usr
 			if(H.species.can_shred(H))
 
-				H << text("\green You claw at the net.")
+				H << text("<span class='green'> You claw at the net.</span>")
 				for(var/mob/O in oviewers(src))
 					O.show_message(text("<span class='alert'> [] claws at the energy net!</span>", H), 1)
 
@@ -1469,7 +1469,7 @@ It is possible to destroy the net by the occupant or someone else.
 				health -= rand(10, 20)
 
 				if(health <= 0)
-					H << text("\green You slice the energy net to pieces.")
+					H << text("<span class='green'> You slice the energy net to pieces.</span>")
 					for(var/mob/O in oviewers(src))
 						O.show_message(text("<span class='alert'> [] slices the energy net apart!</span>", H), 1)
 

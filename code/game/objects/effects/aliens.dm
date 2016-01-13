@@ -297,7 +297,7 @@ Alien plants should do something if theres a lot of poison
 	if(ticks >= target_strength)
 
 		for(var/mob/O in hearers(src, null))
-			O.show_message("\green <B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B>", 1)
+			O.show_message("<span class='green'> <B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B></span>", 1)
 
 		if(istype(target, /turf/simulated/wall)) // I hate turf code.
 			var/turf/simulated/wall/W = target
@@ -309,13 +309,13 @@ Alien plants should do something if theres a lot of poison
 
 	switch(target_strength - ticks)
 		if(6)
-			visible_message("\green <B>[src.target] is holding up against the acid!</B>")
+			visible_message("<span class='green'> <B>[src.target] is holding up against the acid!</B></span>")
 		if(4)
-			visible_message("\green <B>[src.target]\s structure is being melted by the acid!</B>")
+			visible_message("<span class='green'> <B>[src.target]</span>\s structure is being melted by the acid!</B>")
 		if(2)
-			visible_message("\green <B>[src.target] is struggling to withstand the acid!</B>")
+			visible_message("<span class='green'> <B>[src.target] is struggling to withstand the acid!</B></span>")
 		if(0 to 1)
-			visible_message("\green <B>[src.target] begins to crumble under the acid!</B>")
+			visible_message("<span class='green'> <B>[src.target] begins to crumble under the acid!</B></span>")
 	spawn(rand(150, 200)) tick()
 
 /*

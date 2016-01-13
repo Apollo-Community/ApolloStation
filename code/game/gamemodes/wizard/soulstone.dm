@@ -103,16 +103,16 @@
 			var/mob/living/carbon/human/T = target
 			var/obj/item/device/soulstone/C = src
 			if(C.imprinted != "empty")
-				U << "<span class='alert'> <b>Capture failed!</b>: \black The soul stone has already been imprinted with [C.imprinted]'s mind!</span>"
+				U << "<span class='alert'> <b>Capture failed!</b>: </span><span class='black'> The soul stone has already been imprinted with [C.imprinted]'s mind!</span>>"
 			else
 				if (T.stat == 0)
-					U << "<span class='alert'> <b>Capture failed!</b>: \black Kill or maim the victim first!</span>"
+					U << "<span class='alert'> <b>Capture failed!</b>: </span><span class='black'> Kill or maim the victim first!</span>>"
 				else
 					if(T.client == null)
-						U << "<span class='alert'> <b>Capture failed!</b>: \black The soul has already fled it's mortal frame.</span>"
+						U << "<span class='alert'> <b>Capture failed!</b>: </span><span class='black'> The soul has already fled it's mortal frame.</span>>"
 					else
 						if(C.contents.len)
-							U << "<span class='alert'> <b>Capture failed!</b>: \black The soul stone is full! Use or free an existing soul to make room.</span>"
+							U << "<span class='alert'> <b>Capture failed!</b>: </span><span class='black'> The soul stone is full! Use or free an existing soul to make room.</span>>"
 						else
 							for(var/obj/item/W in T)
 								T.drop_from_inventory(W)
@@ -136,7 +136,7 @@
 							C.icon_state = "soulstone2"
 							C.name = "Soul Stone: [S.real_name]"
 							S << "Your soul has been captured! You are now bound to [U.name]'s will, help them suceed in their goals at all costs."
-							U << "<span class='notice'> <b>Capture successful!</b>: \black [T.real_name]'s soul has been ripped from their body and stored within the soul stone.</span>"
+							U << "<span class='notice'> <b>Capture successful!</b>: </span><span class='black'> [T.real_name]'s soul has been ripped from their body and stored within the soul stone.</span>>"
 							U << "The soulstone has been imprinted with [S.real_name]'s mind, it will no longer react to other souls."
 							C.imprinted = "[S.name]"
 							del T
@@ -144,13 +144,13 @@
 			var/mob/living/simple_animal/shade/T = target
 			var/obj/item/device/soulstone/C = src
 			if (T.stat == DEAD)
-				U << "<span class='alert'> <b>Capture failed!</b>: \black The shade has already been banished!</span>"
+				U << "<span class='alert'> <b>Capture failed!</b>: </span><span class='black'> The shade has already been banished!</span>>"
 			else
 				if(C.contents.len)
-					U << "<span class='alert'> <b>Capture failed!</b>: \black The soul stone is full! Use or free an existing soul to make room.</span>"
+					U << "<span class='alert'> <b>Capture failed!</b>: </span><span class='black'> The soul stone is full! Use or free an existing soul to make room.</span>>"
 				else
 					if(T.name != C.imprinted)
-						U << "<span class='alert'> <b>Capture failed!</b>: \black The soul stone has already been imprinted with [C.imprinted]'s mind!</span>"
+						U << "<span class='alert'> <b>Capture failed!</b>: </span><span class='black'> The soul stone has already been imprinted with [C.imprinted]'s mind!</span>>"
 					else
 						T.loc = C //put shade in stone
 						T.status_flags |= GODMODE
@@ -158,7 +158,7 @@
 						T.health = T.maxHealth
 						C.icon_state = "soulstone2"
 						T << "Your soul has been recaptured by the soul stone, its arcane energies are reknitting your ethereal form"
-						U << "<span class='notice'> <b>Capture successful!</b>: \black [T.name]'s has been recaptured and stored within the soul stone.</span>"
+						U << "<span class='notice'> <b>Capture successful!</b>: </span><span class='black'> [T.name]'s has been recaptured and stored within the soul stone.</span>>"
 		if("CONSTRUCT")
 			var/obj/structure/constructshell/T = target
 			var/obj/item/device/soulstone/C = src
@@ -211,5 +211,5 @@
 						Z.cancel_camera()
 						qdel(C)
 			else
-				U << "<span class='alert'> <b>Creation failed!</b>: \black The soul stone is empty! Go kill someone!</span>"
+				U << "<span class='alert'> <b>Creation failed!</b>: </span><span class='black'> The soul stone is empty! Go kill someone!</span>>"
 	return

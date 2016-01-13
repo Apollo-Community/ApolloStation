@@ -23,7 +23,7 @@
 	if(..())
 		return
 	if (src.z in config.admin_levels)
-		user << "<span class='alert'> <b>Unable to establish a connection</b>: \black You're too far away from the station!</span>"
+		user << "<span class='alert'> <b>Unable to establish a connection</b>: </span><span class='black'> You're too far away from the station!</span>>"
 		return
 	user.set_machine(src)
 	var/dat
