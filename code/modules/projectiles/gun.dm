@@ -192,6 +192,7 @@
 
 /obj/item/weapon/gun/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 	//Suicide handling.
+	msg_admin_attack("[usr] ([usr.ckey]) has placed a gun in their mouth. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
 	if (M == user && user.zone_sel.selecting == "mouth" && !mouthshoot)
 		mouthshoot = 1
 		M.visible_message("<span class='alert'> [user] sticks their gun in their mouth, ready to pull the trigger...</span>")

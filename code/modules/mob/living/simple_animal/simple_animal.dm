@@ -230,16 +230,18 @@
 	return 0
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M as mob)
+	if (health <= 0)
+		return
+
 	..()
 
 	switch(M.a_intent)
 
 		if(I_HELP)
-			if (health > 0)
-				M.visible_message("<span class='notice'> [M] [response_help] \the [src]</span>")
+			M.visible_message("<span class='notice'>[M] [response_help] \the [src]</span>")
 
 		if(I_DISARM)
-			M.visible_message("<span class='notice'> [M] [response_disarm] \the [src]</span>")
+			M.visible_message("<span class='notice'>[M] [response_disarm] \the [src]</span>")
 			//TODO: Push the mob away or something
 
 		if(I_GRAB)
@@ -256,11 +258,11 @@
 			G.affecting = src
 			LAssailant = M
 
-			M.visible_message("<span class='alert'> [M] has grabbed [src] passively!</span>")
+			M.visible_message("<span class='warning'>[M] has grabbed [src] passively!</span>")
 
 		if(I_HURT)
 			adjustBruteLoss(harm_intent_damage)
-			M.visible_message("<span class='alert'> [M] [response_harm] \the [src]</span>")
+			M.visible_message("<span class='danger'>[M] [response_harm] \the [src]</span>")
 
 	return
 
