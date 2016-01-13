@@ -402,8 +402,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		src << "<span class='alert'> Pressure: [round(pressure,0.1)] kPa</span>"
 	if(total_moles)
 		for(var/g in environment.gas)
-			src << "\blue [gas_data.name[g]]: [round((environment.gas[g] / total_moles) * 100)]% ([round(environment.gas[g], 0.01)] moles)"
-		src << "\blue Temperature: [round(environment.temperature-T0C,0.1)]&deg;C ([round(environment.temperature,0.1)]K)"
+			src << "<span class='notice'> [gas_data.name[g]]: [round((environment.gas[g] / total_moles) * 100)]% ([round(environment.gas[g], 0.01)] moles)</span>"
+		src << "<span class='notice'> Temperature: [round(environment.temperature-T0C,0.1)]&deg;C ([round(environment.temperature,0.1)]K)</span>"
 		src << "<span class='notice'> Heat Capacity: [round(environment.heat_capacity(),0.1)]</span>"
 
 

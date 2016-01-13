@@ -84,11 +84,11 @@ datum/genesequence
 
 		var/outmsg = ""
 		if(numaccepted)
-			outmsg += " \blue[numaccepted] fossils were accepted and consumed as [src] extracts genetic data from them."
+			outmsg += " <span class='notice'>[numaccepted] fossils were accepted and consumed as [src] extracts genetic data from them.</span>"
 		if(numrejected)
-			outmsg += " \red[numrejected] fossils were rejected."
+			outmsg += " <span class='alert'>[numrejected] fossils were rejected.</span>"
 		if(full)
-			outmsg += " \red[src] can not extract any more genetic data from new fossils."
+			outmsg += " <span class='alert'>[src] can not extract any more genetic data from new fossils.</span>"
 		user << outmsg
 
 	else

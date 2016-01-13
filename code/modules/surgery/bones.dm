@@ -68,8 +68,8 @@
 				"<span class='notice'> You set the bone in [target]'s [affected.display_name] in place with \the [tool].</span>")
 			affected.stage = 2
 		else
-			user.visible_message("<span class='notice'> [user] sets the bone in [target]'s [affected.display_name]\red in the WRONG place with \the [tool].</span>", \
-				"<span class='notice'> You set the bone in [target]'s [affected.display_name]\red in the WRONG place with \the [tool].</span>")
+			user.visible_message("<span class='notice'> [user] sets the bone in [target]'s [affected.display_name]</span><span class='alert'> in the WRONG place with \the [tool].</span>", \
+				"<span class='notice'> You set the bone in [target]'s [affected.display_name]</span><span class='alert'> in the WRONG place with \the [tool].</span>")
 			affected.fracture()
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
