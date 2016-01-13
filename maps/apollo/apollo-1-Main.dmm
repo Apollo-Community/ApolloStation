@@ -344,7 +344,7 @@
 "agF" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor,/area/security/warden)
 "agG" = (/obj/structure/table/rack,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/doorjack,/obj/item/weapon/doorjack,/turf/simulated/floor{icon_state = "bot"; dir = 1},/area/security/warden)
 "agH" = (/obj/structure/dispenser/oxygen,/turf/simulated/floor{icon_state = "bot"; dir = 1},/area/security/warden)
-"agI" = (/obj/machinery/light{dir = 8},/obj/item/device/radio/intercom{broadcasting = 1; freerange = 0; frequency = 1475; listening = 0; name = "Station Intercom (Security)"; pixel_x = -30; pixel_y = 0},/turf/simulated/floor,/area/security/main)
+"agI" = (/obj/machinery/light{dir = 8},/obj/item/device/radio/intercom{broadcasting = 0; freerange = 0; frequency = 1475; listening = 1; name = "Station Intercom (Security)"; pixel_x = -30; pixel_y = 0},/turf/simulated/floor,/area/security/main)
 "agJ" = (/turf/simulated/floor{icon_state = "red"; dir = 1},/area/security/main)
 "agK" = (/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/turf/simulated/floor{icon_state = "red"; dir = 1},/area/security/main)
 "agL" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor{icon_state = "red"; dir = 1},/area/security/main)
