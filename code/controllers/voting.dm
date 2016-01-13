@@ -160,8 +160,10 @@ datum/controller/vote
 						else
 							master_mode = .
 				if("crew_transfer")
-					if(. == "Initiate Crew Transfer")
+					if(. == "Initiate Crew Transfer" && emergency_shuttle.can_call())
 						init_shift_change(null, 1)
+					else
+						world << "<font color='red'><b>The vote has been cancelled. The shuttle is currently in transit or disabled.</b></font>"
 
 		if(mode == "gamemode") //fire this even if the vote fails.
 			if(!going)
@@ -307,7 +309,7 @@ datum/controller/vote
 			else
 				. += "<font color='grey'>Restart (Disallowed)</font>"
 			. += "</li><li>"
-			if(trialmin || config.allow_vote_restart)
+			if((trialmin || config.allow_vote_restart) && emergency_shuttle.can_call())
 				. += "<a href='?src=\ref[src];vote=crew_transfer'>Crew Transfer</a>"
 			else
 				. += "<font color='grey'>Crew Transfer (Disallowed)</font>"
@@ -353,7 +355,7 @@ datum/controller/vote
 				if(config.allow_vote_mode || usr.client.holder)
 					initiate_vote("gamemode",usr.key)
 			if("crew_transfer")
-				if(config.allow_vote_restart || usr.client.holder)
+				if((config.allow_vote_restart || usr.client.holder) && emergency_shuttle.can_call() )
 					initiate_vote("crew_transfer",usr.key)
 			if("custom")
 				if(usr.client.holder)
