@@ -515,7 +515,7 @@ mob
 
 		fire_report()
 			set category = "Debug"
-			usr << "\b \red Fire Report"
+			usr << "\b <span class='alert'> Fire Report"</span>
 			for(var/obj/effect/hotspot/flame in world)
 				usr << "[flame.x],[flame.y]: [flame.temperature]K, [flame.volume] L - [flame.loc:air:temperature]"
 

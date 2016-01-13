@@ -71,7 +71,7 @@
 		if( is_special_character(killer) )
 			src << "<span class='notice'> [killer.real_name] was the last person to attack you. They were an antagonist.</span>"
 		else
-			src << "<span class='notice'> [killer.real_name] was the last person to attack you. \red <b>They were NOT an antagonist.</b></span>"
+			src << "<span class='notice'> [killer.real_name] was the last person to attack you. </span><span class='alert'> <b>They were NOT an antagonist.</b></span>"
 
 		src << "<span class='notice'> If you believe that your death wasn't properly roleplayed, ahelp it now.</span>"
 

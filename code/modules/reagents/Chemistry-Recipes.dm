@@ -1135,7 +1135,7 @@ datum
 						for(var/j = 1, j <= rand(1, 3), j++)
 							step(C, pick(NORTH,SOUTH,EAST,WEST))*/
 				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
-					O.show_message(text("\red The slime core fizzles disappointingly,"), 1)
+					O.show_message(text("<span class='alert'> The slime core fizzles disappointingly,</span>"), 1)
 
 //Silver
 		slimebork

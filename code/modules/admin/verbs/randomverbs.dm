@@ -447,16 +447,16 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if("Ninja")
 			new_character.equip_space_ninja()
 			if(ninjastart.len == 0)
-				new_character << "<B>\red A proper starting location for you could not be found, please report this bug!</B>"
-				new_character << "<B>\red Attempting to place at a carpspawn.</B>"
+				new_character << "<B><span class='alert'> A proper starting location for you could not be found, please report this bug!</B></span>"
+				new_character << "<B><span class='alert'> Attempting to place at a carpspawn.</B></span>"
 				for(var/obj/effect/landmark/L in landmarks_list)
 					if(L.name == "carpspawn")
 						ninjastart.Add(L)
 				if(ninjastart.len == 0 && latejoin.len > 0)
-					new_character << "<B>\red Still no spawneable locations could be found. Defaulting to latejoin.</B>"
+					new_character << "<B><span class='alert'> Still no spawneable locations could be found. Defaulting to latejoin.</B></span>"
 					new_character.loc = pick(latejoin)
 				else if (ninjastart.len == 0)
-					new_character << "<B>\red Still no spawneable locations could be found. Aborting.</B>"
+					new_character << "<B><span class='alert'> Still no spawneable locations could be found. Aborting.</B></span>"
 
 		if("Death Commando")//Leaves them at late-join spawn.
 			new_character.equip_death_commando()

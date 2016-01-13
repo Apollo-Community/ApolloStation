@@ -437,7 +437,7 @@
 		return
 	if (reagents.total_volume)
 		if (M == user && user.ckey == "nerezza") //Make sure this is being used by the right person, for the right reason (self injection)
-			visible_message("\blue [user] presses their \
+			visible_message("<span class='notice'> [user] presses their </span>\
 				penlight against their skin, quickly clicking the button once.", \
 				"<span class='notice'> You press the disguised autoinjector against your skin and click the button. There's a sharp pain at the injection site that rapidly fades.</span>", \
 				"You hear a rustle as someone moves nearby, then a sharp click.")

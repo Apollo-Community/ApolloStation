@@ -121,5 +121,5 @@
 			listening|=M
 
 	for(var/mob/M in listening)
-		M << "\icon[holder_atom] <b>[holder_atom]</b> reverberates, \blue\"[msg]\""
+		M << "\icon[holder_atom] <b>[holder_atom]</b> reverberates, <span class='notice'>\"[msg]</span>\""
 	last_talk_time = world.time

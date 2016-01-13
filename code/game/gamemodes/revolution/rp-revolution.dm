@@ -58,7 +58,7 @@
 	var/rev_number = 0
 
 	if(!revs_possible || !heads)
-		world << "<B> \red Not enough players for RP revolution game mode. Restarting world in 5 seconds."
+		world << "<B> <span class='alert'> Not enough players for RP revolution game mode. Restarting world in 5 seconds."</span>
 		sleep(50)
 		world.Reboot()
 		return

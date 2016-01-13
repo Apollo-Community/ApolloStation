@@ -73,7 +73,7 @@
 		else
 			user.show_message("<span class='notice'> \t Components are OK.</span>",1)
 
-	user.show_message("\blue Operating Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)", 1)
+	user.show_message("<span class='notice'> Operating Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F</span>)", 1)
 
 	src.add_fingerprint(user)
 	return

@@ -220,8 +220,8 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 				xeno_list += xeno
 
 		if(assign_mission)
-			new_ninja.mind.store_memory("<B>Mission:</B> \red [assign_mission].<br>")
-			new_ninja << "<span class='notice'> \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: \red <B>[assign_mission]</B></span>"
+			new_ninja.mind.store_memory("<B>Mission:</B> <span class='alert'> [assign_mission].</span><br>")
+			new_ninja << "<span class='notice'> \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded </span><span class='alert'> <B>SPACE NINJA</B>!</span>s<span class='notice'> You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! </span>\nYour current mission is: <span class='alert'> <B>[assign_mission]</B></span>"
 		else
 			if(xeno_list.len>3)//If there are more than three humanoid xenos on the station, time to get dangerous.
 				//Here we want the ninja to murder all the queens. The other aliens don't really matter.
@@ -369,8 +369,8 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 			ninja_mind.objectives += ninja_objective
 
 			var/directive = generate_ninja_directive(side)
-			new_ninja << "<span class='notice'> \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it)! \nYour current directive is: \red <B>[directive]</B></span>"
-			new_ninja.mind.store_memory("<B>Directive:</B> \red [directive]<br>")
+			new_ninja << "<span class='notice'> \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded </span><span class='alert'> <B>SPACE NINJA</B>!</span><span class='notice'> You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it!)</span> \nYour current directive is: <span class='alert'> <B>[directive]</B></span>"
+			new_ninja.mind.store_memory("<B>Directive:</B> <span class='alert'> [directive]</span><br>")
 			show_objectives(new_ninja.mind)
 
 		sent_ninja_to_station = 1//And we're done.

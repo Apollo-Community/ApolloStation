@@ -168,7 +168,7 @@ var/savefile/Banlist
 /datum/admins/proc/unbanpanel()
 	var/count = 0
 	var/dat
-	//var/dat = "<HR><B>Unban Player:</B> \blue(U) = Unban , (E) = Edit Ban\green (Total<HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >"
+	//var/dat = "<HR><B>Unban Player:</B> <span class='notice'>(U</span>) = Unban , (E) = Edit Ban\green (Total<HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >"
 	Banlist.cd = "/base"
 	for (var/A in Banlist.dir)
 		count++

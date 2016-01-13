@@ -382,8 +382,8 @@
 			user << text("[]\t -Respiratory Damage %: []", (src.occupant.getOxyLoss() < 60 ? "<span class='notice'></span>" : "<span class='alert'></span>"), src.occupant.getOxyLoss())
 			user << text("[]\t -Toxin Content %: []", (src.occupant.getToxLoss() < 60 ? "<span class='notice'></span>" : "<span class='alert'></span>"), src.occupant.getToxLoss())
 			user << text("[]\t -Burn Severity %: []", (src.occupant.getFireLoss() < 60 ? "<span class='notice'></span>" : "<span class='alert'></span>"), src.occupant.getFireLoss())
-			user << "\blue Expected time till occupant can safely awake: (note: If health is below 20% these times are inaccurate)"
-			user << text("\blue \t [] second\s (if around 1 or 2 the sleeper is keeping them asleep.)", src.occupant.paralysis / 5)
+			user << "<span class='notice'> Expected time till occupant can safely awake: (note: If health is below 20% these times are inaccurate</span>)"
+			user << text("<span class='notice'> </span>\t [] second\s (if around 1 or 2 the sleeper is keeping them asleep.)", src.occupant.paralysis / 5)
 			if(src.beaker)
 				user << text("<span class='notice'> \t Dialysis Output Beaker has [] of free space remaining.</span>", src.beaker.reagents.maximum_volume - src.beaker.reagents.total_volume)
 			else

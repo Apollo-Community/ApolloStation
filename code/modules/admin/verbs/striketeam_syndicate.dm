@@ -78,10 +78,10 @@ var/global/sent_syndicate_strike_team = 0
 
 			//So they don't forget their code or mission.
 			if(nuke_code)
-				new_syndicate_commando.mind.store_memory("<B>Nuke Code:</B> \red [nuke_code].")
-			new_syndicate_commando.mind.store_memory("<B>Mission:</B> \red [input].")
+				new_syndicate_commando.mind.store_memory("<B>Nuke Code:</B> <span class='alert'> [nuke_code].</span>")
+			new_syndicate_commando.mind.store_memory("<B>Mission:</B> <span class='alert'> [input].</span>")
 
-			new_syndicate_commando << "<span class='notice'> You are an Elite Mercenary. [!syndicate_leader_selected?"commando":"<B>LEADER</B></span>"] in the service of criminal elements hostile to NanoTrasen. \nYour current mission is: \red<B>[input]</B>"
+			new_syndicate_commando << "<span class='notice'> You are an Elite Mercenary. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of criminal elements hostile to NanoTrasen. \nYour current mission is: </span><span class='alert'><B>[input]</B></span>"
 
 			syndicate_commando_number--
 

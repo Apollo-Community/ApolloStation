@@ -172,7 +172,7 @@ ________________________________________________________________________________
 						break
 					lock_suit(U,1)//Check for icons.
 					U.regenerate_icons()
-					U << "<span class='notice'> Linking neural-net interface...\nPattern \green <B>GREEN</B>\blue, continuing operation.</span>"
+					U << "<span class='notice'> Linking neural-net interface...\nPattern \green <B>GREEN</B><span class='notice'>, continuing operation.</span>"</span>
 				if(4)
 					U << "<span class='notice'> VOID-shift device status: <B>ONLINE</B>.\nCLOAK-tech device status: <B>ONLINE</B>.</span>"
 				if(5)
@@ -222,9 +222,9 @@ ________________________________________________________________________________
 					U << "<span class='notice'> VOID-shift device status: <B>OFFLINE</B>.\nCLOAK-tech device status: <B>OFFLINE</B>.</span>"
 					cancel_stealth()//Shutdowns stealth.
 				if(4)
-					U << "<span class='notice'> Disconnecting neural-net interface...\green<B>Success</B>\blue.</span>"
+					U << "<span class='notice'> Disconnecting neural-net interface...\green<B>Success</B><span class='notice'>.</span>"</span>
 				if(5)
-					U << "<span class='notice'> Disengaging neural-net interface...\green<B>Success</B>\blue.</span>"
+					U << "<span class='notice'> Disengaging neural-net interface...\green<B>Success</B><span class='notice'>.</span>"</span>
 				if(6)
 					U << "<span class='notice'> Unsecuring external locking mechanism...\nNeural-net abolished.\nOperation status: <B>FINISHED</B>.</span>"
 					blade_check(U,2)
@@ -578,7 +578,7 @@ ________________________________________________________________________________
 						for(var/i, i<4, i++)
 							switch(i)
 								if(0)
-									U << "<span class='notice'> Engaging mode...\n\black<b>CODE NAME</b>: \red <b>KAMIKAZE</b></span>"
+									U << "<span class='notice'> Engaging mode...\n\black<b>CODE NAME</b>: <span class='alert'> <b>KAMIKAZE</b></span>"</span>
 								if(1)
 									U << "<span class='notice'> Re-routing power nodes... \nUnlocking limiter...</span>"
 								if(2)

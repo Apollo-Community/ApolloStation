@@ -759,7 +759,7 @@ datum/mind
 					if(!(src in ticker.mode.traitors))
 						ticker.mode.traitors += src
 						special_role = "traitor"
-						current << "<B>\red You are a traitor!</B>"
+						current << "<B><span class='alert'> You are a traitor!</span></B>"
 						current << "<h3><B>Make sure to read the rules about ganking and be sure to make the round interesting for everyone!</B></h3>"
 						log_admin("[key_name_admin(usr)] has traitor'ed [current].")
 						show_objectives()

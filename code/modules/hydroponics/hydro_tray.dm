@@ -574,7 +574,7 @@
 	weedlevel = 0
 
 	update_icon()
-	visible_message("<span class='alert'> The \blue [previous_plant] \red has suddenly mutated into \blue [seed.display_name]!</span>")
+	visible_message("<span class='alert'> The </span><span class='notice'> [previous_plant] </span><span class='alert'> has suddenly mutated into </span><span class='notice'> [seed.display_name]!</span>")
 
 	return
 
@@ -750,17 +750,17 @@
 
 	else
 		if(seed && !dead)
-			usr << "[src] has \blue [seed.display_name] \black planted."
+			usr << "[src] has <span class='notice'> [seed.display_name] </span>\black planted."
 			if(health <= (seed.endurance / 2))
-				usr << "The plant looks \red unhealthy."
+				usr << "The plant looks <span class='alert'> unhealthy.</span>"
 		else
 			usr << "[src] is empty."
 		usr << "Water: [round(waterlevel,0.1)]/100"
 		usr << "Nutrient: [round(nutrilevel,0.1)]/10"
 		if(weedlevel >= 5)
-			usr << "[src] is \red filled with weeds!"
+			usr << "[src] is <span class='alert'> filled with weeds!</span>"
 		if(pestlevel >= 5)
-			usr << "[src] is \red filled with tiny worms!"
+			usr << "[src] is <span class='alert'> filled with tiny worms!</span>"
 
 		if(!istype(src,/obj/machinery/portable_atmospherics/hydroponics/soil))
 
