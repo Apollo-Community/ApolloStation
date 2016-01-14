@@ -5,9 +5,6 @@
 
 	var/propelled = 0 // Check for fire-extinguisher-driven chairs
 
-/obj/structure/stool/MouseDrop(atom/over_object)
-	return
-
 /obj/structure/bed/chair/New()
 	..()
 	spawn(3)	//sorry. i don't think there's a better way to do this.
