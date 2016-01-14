@@ -78,7 +78,7 @@ log transactions
 
 			//display a message to the user
 			var/response = pick("Initiating withdraw. Have a nice day!", "CRITICAL ERROR: Activating cash chamber panic siphon.","PIN Code accepted! Emptying account balance.", "Jackpot!")
-			user << "<span class='alert'> \icon[src] The [src] beeps: \"[response]\</span>"
+			user << "<span class='alert'> \icon[src] The [src] beeps: \"[response]\"</span>"
 			return
 
 		var/obj/item/weapon/card/id/idcard = I

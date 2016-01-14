@@ -50,7 +50,7 @@
 						usr << "<span class='warning'> Invalid text.</span>"
 						return
 					user.visible_message("\The [user] titles \the [src] with \a [W], marking down: \"[str]\"",\
-					"<span class='notice'>You title \the [src]: \"[str]\</span>",\
+					"<span class='notice'>You title \the [src]: \"[str]\"</span>",\
 					"You hear someone scribbling a note.")
 					name = "[name] ([str])"
 					if(!examtext && !nameset)
@@ -69,7 +69,7 @@
 					else
 						examtext = str
 					user.visible_message("\The [user] labels \the [src] with \a [W], scribbling down: \"[examtext]\"",\
-					"<span class='notice'>You label \the [src]: \"[examtext]\</span>",\
+					"<span class='notice'>You label \the [src]: \"[examtext]\"</span>",\
 					"You hear someone scribbling a note.")
 		return
 
@@ -105,9 +105,9 @@
 	examine(mob/user)
 		if(..(user, 4))
 			if(sortTag)
-				user << "<span class='notice'>It is labeled \"[sortTag]\</span>"
+				user << "<span class='notice'>It is labeled \"[sortTag]\"</span>"
 			if(examtext)
-				user << "<span class='notice'>It has a note attached which reads, \"[examtext]\</span>"
+				user << "<span class='notice'>It has a note attached which reads, \"[examtext]\"</span>"
 		return
 
 /obj/item/smallDelivery
@@ -157,7 +157,7 @@
 						usr << "<span class='warning'> Invalid text.</span>"
 						return
 					user.visible_message("\The [user] titles \the [src] with \a [W], marking down: \"[str]\"",\
-					"<span class='notice'>You title \the [src]: \"[str]\</span>",\
+					"<span class='notice'>You title \the [src]: \"[str]\"</span>",\
 					"You hear someone scribbling a note.")
 					name = "[name] ([str])"
 					if(!examtext && !nameset)
@@ -177,7 +177,7 @@
 					else
 						examtext = str
 					user.visible_message("\The [user] labels \the [src] with \a [W], scribbling down: \"[examtext]\"",\
-					"<span class='notice'>You label \the [src]: \"[examtext]\</span>",\
+					"<span class='notice'>You label \the [src]: \"[examtext]\"</span>",\
 					"You hear someone scribbling a note.")
 		return
 
@@ -209,9 +209,9 @@
 	examine(mob/user)
 		if(..(user, 4))
 			if(sortTag)
-				user << "<span class='notice'>It is labeled \"[sortTag]\</span>"
+				user << "<span class='notice'>It is labeled \"[sortTag]\"</span>"
 			if(examtext)
-				user << "<span class='notice'>It has a note attached which reads, \"[examtext]\</span>"
+				user << "<span class='notice'>It has a note attached which reads, \"[examtext]\"</span>"
 		return
 
 /obj/item/weapon/packageWrap
