@@ -660,35 +660,44 @@
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 
-		if(H.species.flags & IS_SYNTHETIC && H.a_intent == I_GRAB)
+		if(H.species.flags & IS_SYNTHETIC)
+			if(!src.cell)
+				user << "<span class='notice'>This APC has no power cell!</span>"
+				return
 			if(emagged || stat & BROKEN)
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(3, 1, src)
 				s.start()
-				H << "\red The APC power currents surge eratically, damaging your chassis!"
+				H << "<span class='alert'> The APC power currents surge eratically, damaging your chassis!</span>"
 				H.adjustFireLoss(10,0)
-			else if(src.cell && src.cell.charge > 0)
-				if(H.nutrition < 450)
+				return
+				
+			var/datum/species/machine/S = H.species
 
-					if(src.cell.charge >= 500)
-						H.nutrition += 50
-						src.cell.charge -= 500
-					else
-						H.nutrition += src.cell.charge/10
-						src.cell.charge = 0
+			if(S.attached_apc && S.attached_apc == src)
+				H << "<span class='notice'>You remove your fingers from the APC.</span>"
+				S.attached_apc = null
+				charging = 1
+				update_icon()
+				return
 
-					user << "\blue You slot your fingers into the APC interface and siphon off some of the stored charge for your own use."
-					if(src.cell.charge < 0) src.cell.charge = 0
-					if(H.nutrition > 500) H.nutrition = 500
-					src.charging = 1
-
-				else
-					user << "\blue You are already fully charged."
-			else
-				user << "There is no charge to draw from that APC."
-			return
+			// The actual power draining is handled in the life ticker
+			if(H.a_intent == I_GRAB)
+				if(H.nutrition >= 500)
+					H << "<span class='notice'>You're already fully charged!</span>"
+					return
+				H << "<span class='notice'>You slot your fingers in the APC and begin draining power from it.</span>"
+				S.attached_apc = src
+				return
+			else if(H.a_intent == I_DISARM)
+				if(cell.charge >= cell.maxcharge)
+					H << "<span class='notice'>The APC is already fully charged!</span>"
+					return
+				H << "<span class='notice'>You slot your fingers in the APC and begin transferring power to it.</span>"
+				S.attached_apc = src
+				return
 		else if(H.species.can_shred(H))
-			user.visible_message("\red [user.name] slashes at the [src.name]!", "\blue You slash at the [src.name]!")
+			user.visible_message("<span class='alert'> [user.name] slashes at the [src.name]!</span>", "<span class='notice'> You slash at the [src.name]!</span>")
 			playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 
 			var/allcut = wires.IsAllCut()
@@ -696,12 +705,12 @@
 			if(beenhit >= pick(3, 4) && wiresexposed != 1)
 				wiresexposed = 1
 				src.update_icon()
-				src.visible_message("\red The [src.name]'s cover flies open, exposing the wires!")
+				src.visible_message("<span class='alert'> The [src.name]'s cover flies open, exposing the wires!</span>")
 
 			else if(wiresexposed == 1 && allcut == 0)
 				wires.CutAll()
 				src.update_icon()
-				src.visible_message("\red The [src.name]'s wires are shredded!")
+				src.visible_message("<span class='alert'> The [src.name]'s wires are shredded!</span>")
 			else
 				beenhit += 1
 			return
@@ -1046,7 +1055,7 @@
 		if(prob(3))
 			src.locked = 1
 			if (src.cell.charge > 0)
-//				world << "\red blew APC in [src.loc.loc]"
+//				world << "<span class='alert'> blew APC in [src.loc.loc]</span>"
 				src.cell.charge = 0
 				cell.corrupt()
 				src.malfhack = 1

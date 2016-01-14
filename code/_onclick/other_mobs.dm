@@ -22,6 +22,12 @@
 
 	A.attack_hand(src)
 
+/mob/living/UnarmedAttack(var/atom/A, var/proximity)
+	if(!..())
+		return
+
+	A.attack_hand(src)
+
 /atom/proc/attack_hand(mob/user as mob)
 	return
 
@@ -108,7 +114,7 @@
 
 		if(prob(stunprob))
 			powerlevel = max(0,powerlevel-3)
-			src.visible_message("\red <B>The [name] has shocked [M]!</B>")
+			src.visible_message("<span class='alert'> <B>The [name] has shocked [M]!</B></span>")
 			M.Weaken(power)
 			M.Stun(power)
 			if (M.stuttering < power) M.stuttering = power

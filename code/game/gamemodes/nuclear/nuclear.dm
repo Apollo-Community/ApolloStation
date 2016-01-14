@@ -197,7 +197,7 @@ var/global/list/turf/synd_spawn = list()
 
 /datum/game_mode/proc/greet_syndicate(var/datum/mind/syndicate, var/you_are=1)
 	if (you_are)
-		syndicate.current << "\blue You are a [syndicate_name()] operative!"
+		syndicate.current << "<span class='notice'> You are a [syndicate_name()] operative!</span>"
 	show_objectives(syndicate)
 
 /datum/game_mode/proc/random_radio_frequency()

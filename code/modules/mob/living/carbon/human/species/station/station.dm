@@ -174,7 +174,7 @@
 		else
 			qdel(D)
 
-	H.visible_message("\red[H] splits apart with a wet slithering noise!")
+	H.visible_message("<span class='alert'>[H] splits apart with a wet slithering noise!</span>")
 
 /datum/species/machine
 	name = "Machine"
@@ -211,6 +211,8 @@
 	flesh_color = "#575757"
 
 	has_organ = list( "eyes" =     /datum/organ/internal/eyes ) //TODO: Positronic brain.
+
+	var/obj/machinery/power/apc/attached_apc = null
 
 /datum/species/machine/handle_death(var/mob/living/carbon/human/H)
 	..()
@@ -270,8 +272,8 @@
 /datum/species/wryn/handle_death(var/mob/living/carbon/human/H)
 	for(var/mob/living/carbon/C in world)
 		if(locate(/datum/organ/internal/wryn/hivenode) in C.internal_organs)
-			C << "\red <B>Your antennae tingle as you are overcome with pain...</B>"
-			C << "\red It feels like part of you has died."
+			C << "<span class='alert'> <B>Your antennae tingle as you are overcome with pain...</B></span>"
+			C << "<span class='alert'> It feels like part of you has died.</span>"
 
 /datum/unarmed_attack/punch/weak
 	attack_verb = list("flail")
@@ -316,6 +318,6 @@
 
 /datum/species/nucleation/handle_death(var/mob/living/carbon/human/H)
 	var/turf/T = get_turf(H)
-	H.visible_message("\red[H]'s body explodes, leaving behind a pile of microscopic crystals!")
+	H.visible_message("<span class='alert'>[H]'s body explodes, leaving behind a pile of microscopic crystals!</span>")
 	supermatter_delamination( T, 4, 1, 0, 0 ) // Create a small supermatter burst upon death
 	qdel(H)

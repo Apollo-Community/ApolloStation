@@ -187,7 +187,7 @@
 
 	while(move_to_z == src.z)
 		var/obj/effect/map/sector/sector = map_sectors["[pick( config.local_levels )]"]
-		if( sector.isKnown() )
+		if( sector.canRandomTeleport() )
 			move_to_z = sector.map_z
 
 		safety++

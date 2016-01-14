@@ -36,7 +36,7 @@
 		set src in view(1)
 
 		if(usr.stat || usr.restrained() || usr.lying || !istype(usr, /mob/living))
-			usr << "\red You can't do that."
+			usr << "<span class='alert'> You can't do that.</span>"
 			return
 
 		if(!Adjacent(usr))
@@ -68,7 +68,7 @@
 				stored_computer.manipulating = 0
 				del src
 		else
-			usr << "\red You are already opening the computer!"
+			usr << "<span class='alert'> You are already opening the computer!</span>"
 
 
 	AltClick()
@@ -132,7 +132,7 @@
 		set src in view(1)
 
 		if(usr.stat || usr.restrained() || usr.lying || !istype(usr, /mob/living))
-			usr << "\red You can't do that."
+			usr << "<span class='alert'> You can't do that.</span>"
 			return
 
 		if(!Adjacent(usr))

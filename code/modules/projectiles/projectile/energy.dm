@@ -59,6 +59,13 @@
 	damage_type = TOX
 	weaken = 5
 
+/obj/item/projectile/energy/neurotoxin/on_hit(var/atom/target, var/blocked = 0)
+	if(istype(target, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = target
+		if(H.wear_suit && (H.wear_suit.flags & THICKMATERIAL))
+			weaken = 0
+		..(target, blocked)
+
 /obj/item/projectile/energy/phoron
 	name = "phoron bolt"
 	icon_state = "energy"

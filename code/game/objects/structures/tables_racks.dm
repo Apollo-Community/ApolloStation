@@ -45,7 +45,7 @@
 	if(usr.a_intent == I_HURT)
 		health -= W.force
 		playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
-		usr.visible_message("\red <b>[usr]</b> hits the [src] violently with [W]!")
+		usr.visible_message("<span class='alert'> <b>[usr]</b> hits the [src] violently with [W]!</span>")
 		if(health<=0)
 			new /obj/item/weapon/shard(src.loc)
 			qdel(src)
@@ -122,34 +122,39 @@
 		var/dir_sum = 0
 		for(var/direction in list(1,2,4,8,5,6,9,10))
 			var/skip_sum = 0
-			for(var/obj/structure/window/W in src.loc)
-				if(W.dir == direction) //So smooth tables don't go smooth through windows
+
+			var/cached_step = get_step(src,direction)		//Cache this for later.
+
+			for(var/obj/structure/table/T in cached_step)
+				if(T.type != type)	//Fixes different table types connecting together
 					skip_sum = 1
-					continue
-			var/inv_direction //inverse direction
-			switch(direction)
-				if(1)
-					inv_direction = 2
-				if(2)
-					inv_direction = 1
-				if(4)
-					inv_direction = 8
-				if(8)
-					inv_direction = 4
-				if(5)
-					inv_direction = 10
-				if(6)
-					inv_direction = 9
-				if(9)
-					inv_direction = 6
-				if(10)
-					inv_direction = 5
-			for(var/obj/structure/window/W in get_step(src,direction))
-				if(W.dir == inv_direction) //So smooth tables don't go smooth through windows when the window is on the other table's tile
-					skip_sum = 1
-					continue
-			if(!skip_sum) //means there is a window between the two tiles in this direction
-				var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
+					break
+
+			if(!skip_sum)		// No need to check this if skip_sum is already set
+				for(var/obj/structure/window/W in src.loc)
+					if(W.dir == direction) //So smooth tables don't go smooth through windows
+						skip_sum = 1
+						break
+
+			if(!skip_sum)
+				var/inv_direction //inverse direction
+				switch(direction)
+					if(1)				inv_direction = 2
+					if(2)				inv_direction = 1
+					if(4)				inv_direction = 8
+					if(8)				inv_direction = 4
+					if(5)				inv_direction = 10
+					if(6)				inv_direction = 9
+					if(9)				inv_direction = 6
+					if(10)				inv_direction = 5
+
+				for(var/obj/structure/window/W in cached_step)
+					if(W.dir == inv_direction) //So smooth tables don't go smooth through windows when the window is on the other table's tile
+						skip_sum = 1
+						break
+
+			if(!skip_sum) //means there is a window between the two tiles in this direction OR table types do not match
+				var/obj/structure/table/T = locate(/obj/structure/table,cached_step)
 				if(T && T.flipped == 0) // This should let us ignore racks for table icons/flipping. Should.
 					if(direction <5)
 						dir_sum += direction
@@ -322,7 +327,7 @@
 
 /obj/structure/table/glass/flip(var/direction)
 	playsound(loc, 'sound/effects/Glassbr2.ogg', 100, 1)
-	src.visible_message("\red The [src] shatters!")
+	src.visible_message("<span class='alert'> The [src] shatters!</span>")
 	new /obj/item/weapon/shard(src.loc)
 	qdel(src)
 	return

@@ -19,7 +19,7 @@
 /obj/item/weapon/gun/rocketlauncher/examine(mob/user)
 	if(!..(user, 2))
 		return
-	user << "\blue [rockets.len] / [max_rockets] rockets."
+	user << "<span class='notice'> [rockets.len] / [max_rockets] rockets.</span>"
 
 /obj/item/weapon/gun/rocketlauncher/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/ammo_casing/rocket))
@@ -27,10 +27,10 @@
 			user.drop_item()
 			I.loc = src
 			rockets += I
-			user << "\blue You put the rocket in [src]."
-			user << "\blue [rockets.len] / [max_rockets] rockets."
+			user << "<span class='notice'> You put the rocket in [src].</span>"
+			user << "<span class='notice'> [rockets.len] / [max_rockets] rockets.</span>"
 		else
-			usr << "\red [src] cannot hold more rockets."
+			usr << "<span class='alert'> [src] cannot hold more rockets.</span>"
 
 /obj/item/weapon/gun/rocketlauncher/can_fire()
 	return rockets.len
@@ -48,4 +48,4 @@
 		qdel(I)
 		return
 	else
-		usr << "\red [src] is empty."
+		usr << "<span class='alert'> [src] is empty.</span>"

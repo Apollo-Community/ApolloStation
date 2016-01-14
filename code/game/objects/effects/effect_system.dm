@@ -31,7 +31,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	//	T.firelevel = 0 //TODO: FIX
 	if (--src.life < 1)
 		//SN src = null
-		Destroy()
+		qdel( src )
 	if(newloc.density)
 		return 0
 	.=..()
@@ -132,7 +132,7 @@ steam.start() -- spawns the effect
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
 	spawn (100)
-		Destroy()
+		qdel( src )
 	return
 
 /obj/effect/effect/sparks/Destroy()
@@ -210,7 +210,7 @@ steam.start() -- spawns the effect
 /obj/effect/effect/smoke/New()
 	..()
 	spawn (time_to_live)
-		Destroy()
+		qdel( src )
 	return
 
 /obj/effect/effect/smoke/Crossed(mob/living/carbon/M as mob )
@@ -398,11 +398,12 @@ steam.start() -- spawns the effect
 				var/turf/T = get_turf(src.holder)
 				if(T != src.oldposition)
 					if(istype(T, /turf/space))
-						var/obj/effect/effect/ion_trails/I = new /obj/effect/effect/ion_trails(src.oldposition)
+						var/obj/effect/effect/ion_trails/I = PoolOrNew( /obj/effect/effect/ion_trails, list( src.oldposition ))
 						src.oldposition = T
 						I.set_dir(src.holder.dir)
 						flick("ion_fade", I)
-						I.icon_state = "blank"
+						I.icon_state = ""
+						sleep(6)
 						qdel(I)
 					spawn(2)
 						if(src.on)
@@ -454,15 +455,16 @@ steam.start() -- spawns the effect
 						src.oldloc = get_step(oldposition,NORTH)
 						//src.oldloc = get_step(oldloc,EAST)
 				if(istype(T, /turf/space))
-					var/obj/effect/effect/ion_trails/I = new /obj/effect/effect/ion_trails(src.oldposition)
-					var/obj/effect/effect/ion_trails/II = new /obj/effect/effect/ion_trails(src.oldloc)
+					var/obj/effect/effect/ion_trails/I = PoolOrNew( /obj/effect/effect/ion_trails, list( src.oldposition ))
+					var/obj/effect/effect/ion_trails/II = PoolOrNew( /obj/effect/effect/ion_trails, list( src.oldloc ))
 					//src.oldposition = T
 					I.dir = src.holder.dir
 					II.dir = src.holder.dir
 					flick("ion_fade", I)
 					flick("ion_fade", II)
-					I.icon_state = "blank"
-					II.icon_state = "blank"
+					I.icon_state = ""
+					II.icon_state = ""
+					sleep(6)
 					if(I) qdel(I)
 					if(II) qdel(II)
 				spawn(2)
@@ -499,7 +501,7 @@ steam.start() -- spawns the effect
 			src.processing = 0
 			spawn(0)
 				if(src.number < 3)
-					var/obj/effect/effect/steam/I = new /obj/effect/effect/steam(src.oldposition)
+					var/obj/effect/effect/steam/I = PoolOrNew( /obj/effect/effect/steam, list( src.oldposition ))
 					src.number++
 					src.oldposition = get_turf(holder)
 					I.set_dir(src.holder.dir)
@@ -553,13 +555,13 @@ steam.start() -- spawns the effect
 		sleep(30)
 
 		if(metal)
-			var/obj/structure/foamedmetal/M = new(src.loc)
+			var/obj/structure/foamedmetal/M = PoolOrNew( /obj/structure/foamedmetal, list( src.loc ))
 			M.metal = metal
 			M.updateicon()
 
 		flick("[icon_state]-disolve", src)
 		sleep(5)
-		Destroy()
+		qdel( src )
 	return
 
 // transfer any reagents to the floor
@@ -574,10 +576,7 @@ steam.start() -- spawns the effect
 	if(--amount < 0)
 		return
 
-
 	for(var/direction in cardinal)
-
-
 		var/turf/T = get_step(src,direction)
 		if(!T)
 			continue
@@ -589,7 +588,7 @@ steam.start() -- spawns the effect
 		if(F)
 			continue
 
-		F = new(T, metal)
+		F = PoolOrNew( /obj/effect/effect/foam, list( T, metal ))
 		F.amount = amount
 		if(!metal)
 			F.create_reagents(10)
@@ -604,7 +603,7 @@ steam.start() -- spawns the effect
 		flick("[icon_state]-disolve", src)
 
 		spawn(5)
-			Destroy()
+			qdel( src )
 
 
 /obj/effect/effect/foam/Crossed(var/atom/movable/AM)
@@ -618,9 +617,6 @@ steam.start() -- spawns the effect
 	var/amount = 5				// the size of the foam spread.
 	var/list/carried_reagents	// the IDs of reagents present when the foam was mixed
 	var/metal = 0				// 0=foam, 1=metalfoam, 2=ironfoam
-
-
-
 
 	set_up(amt=5, loca, var/datum/reagents/carry = null, var/metalfoam = 0)
 		amount = round(sqrt(amt / 3), 1)
@@ -649,7 +645,7 @@ steam.start() -- spawns the effect
 				F.amount += amount
 				return
 
-			F = new(src.location, metal)
+			F = PoolOrNew( /obj/effect/effect/foam, list( src.location, metal ))
 			F.amount = amount
 
 			if(!metal)			// don't carry other chemicals if a metal foam
@@ -705,14 +701,14 @@ steam.start() -- spawns the effect
 
 	attack_hand(var/mob/user)
 		if ((HULK in user.mutations) || (prob(75 - metal*25)))
-			user << "\blue You smash through the metal foam wall."
+			user << "<span class='notice'> You smash through the metal foam wall.</span>"
 			for(var/mob/O in oviewers(user))
 				if ((O.client && !( O.blinded )))
-					O << "\red [user] smashes through the foamed metal."
+					O << "<span class='alert'> [user] smashes through the foamed metal.</span>"
 
 			qdel(src)
 		else
-			user << "\blue You hit the metal foam but bounce off it."
+			user << "<span class='notice'> You hit the metal foam but bounce off it.</span>"
 		return
 
 
@@ -723,19 +719,19 @@ steam.start() -- spawns the effect
 			G.affecting.loc = src.loc
 			for(var/mob/O in viewers(src))
 				if (O.client)
-					O << "\red [G.assailant] smashes [G.affecting] through the foamed metal wall."
+					O << "<span class='alert'> [G.assailant] smashes [G.affecting] through the foamed metal wall.</span>"
 			qdel(I)
 			qdel(src)
 			return
 
 		if(prob(I.force*20 - metal*25))
-			user << "\blue You smash through the foamed metal with \the [I]."
+			user << "<span class='notice'> You smash through the foamed metal with \the [I].</span>"
 			for(var/mob/O in oviewers(user))
 				if ((O.client && !( O.blinded )))
-					O << "\red [user] smashes through the foamed metal."
+					O << "<span class='alert'> [user] smashes through the foamed metal.</span>"
 			qdel(src)
 		else
-			user << "\blue You hit the metal foam to no effect."
+			user << "<span class='notice'> You hit the metal foam to no effect.</span>"
 
 	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 		if(air_group) return 0
@@ -760,15 +756,15 @@ steam.start() -- spawns the effect
 
 	start()
 		if (amount <= 2)
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			var/datum/effect/effect/system/spark_spread/s = PoolOrNew( /datum/effect/effect/system/spark_spread )
 			s.set_up(2, 1, location)
 			s.start()
 
 			for(var/mob/M in viewers(5, location))
-				M << "\red The solution violently explodes."
+				M << "<span class='alert'> The solution violently explodes.</span>"
 			for(var/mob/M in viewers(1, location))
 				if (prob (50 * amount))
-					M << "\red The explosion knocks you down."
+					M << "<span class='alert'> The explosion knocks you down.</span>"
 					M.Weaken(rand(1,5))
 			return
 		else
@@ -791,7 +787,7 @@ steam.start() -- spawns the effect
 				flash += (round(amount/4) * flashing_factor)
 
 			for(var/mob/M in viewers(8, location))
-				M << "\red The solution violently explodes."
+				M << "<span class='alert'> The solution violently explodes.</span>"
 
 			explosion(location, devastation, heavy, light, flash)
 

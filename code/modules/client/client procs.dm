@@ -73,11 +73,11 @@
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
-			src << "\red You have exceeded the spam filter limit for identical messages. An auto-mute was applied."
+			src << "<span class='alert'> You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>"
 			cmd_admin_mute(src.mob, mute_type, 1)
 			return 1
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
-			src << "\red You are nearing the spam filter limit for identical messages."
+			src << "<span class='alert'> You are nearing the spam filter limit for identical messages.</span>"
 			return 0
 	else
 		last_message = message
@@ -120,7 +120,7 @@
 		src.preload_rsc = pick(config.resource_urls)
 	else src.preload_rsc = 1 // If config.resource_urls is not set, preload like normal.
 
-	src << "\red If the title screen is black, resources are still downloading. Please be patient until the title screen appears."
+	src << "<span class='alert'> If the title screen is black, resources are still downloading. Please be patient until the title screen appears.</span>"
 
 	for(var/client/target in clients)
 		if( !target )
@@ -168,13 +168,10 @@
 
 	// Forcibly enable hardware-accelerated graphics, as we need them for the lighting overlays.
 	// (but turn them off first, since sometimes BYOND doesn't turn them on properly otherwise)
-	spawn(5) // And wait a half-second, since it sounds like you can do this too fast.
-		if(src)
-			winset(src, null, "command=\".configure graphics-hwmode off\"")
+	if(src)
+		winset(src, null, "command=\".configure graphics-hwmode off\"")
+		spawn(5) // And wait a half-second, since it sounds like you can do this too fast.
 			winset(src, null, "command=\".configure graphics-hwmode on\"")
-
-	if(byond_version < config.recommended_byond)
-		src << "\red This server is running Byond-[config.recommended_byond](BETA). If you experience any lighting issues we suggest you upgrade here - http://www.byond.com/download/"
 
 	donator = is_donator(src)
 	if(!stat_player_list.Find(key))			//Don't add the same person twice? How does this even happen
@@ -203,6 +200,11 @@
 		stat_player_list = sortAssoc(stat_player_list)
 
 	log_client_to_db()
+
+	if(related_accounts_ip && !holder && !findtext(related_accounts_ip, "[ckey]"))		//So admin accounts don't generate spam
+		message_admins("[ckey]'s IP has been previously used by [related_accounts_ip]")
+	if(related_accounts_cid && !holder && !findtext(related_accounts_cid, "[ckey]"))
+		message_admins("[ckey]'s CID has been previously used by [related_accounts_cid]")
 
 	loadAccountItems()
 	send_resources()
@@ -302,10 +304,30 @@
 		query_insert.Execute()
 
 	//Logging player access
-	var/serverip = "[world.internet_address]:[world.port]"
-	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
-	query_accesslog.Execute()
+	//var/serverip = "[world.internet_address]:[world.port]"
+	//var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
+	//query_accesslog.Execute()
 
+
+/client/proc/client_exists_in_db()
+	if ( IsGuestKey(src.key) )
+		return 0
+
+	establish_db_connection()
+	if(!dbcon.IsConnected())
+		return 0
+
+	var/sql_ckey = sql_sanitize_text(src.ckey)
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM player WHERE ckey = '[sql_ckey]'")
+	query.Execute()
+	player_age = 0	// New players won't have an entry so knowing we have a connection we set this to zero to be updated if their is a record.
+	while(query.NextRow())
+		player_age = text2num(query.item[2])
+
+		return player_age
+
+	return 0
 
 #undef TOPIC_SPAM_DELAY
 #undef UPLOAD_LIMIT

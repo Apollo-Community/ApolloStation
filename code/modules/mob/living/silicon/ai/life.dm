@@ -14,7 +14,7 @@
 
 		if (src.malfhack)
 			if (src.malfhack.aidisabled)
-				src << "\red ERROR: APC access disabled, hack attempt canceled."
+				src << "<span class='alert'> ERROR: APC access disabled, hack attempt canceled.</span>"
 				src.malfhacking = 0
 				src.malfhack = null
 
@@ -26,6 +26,9 @@
 		if (src.machine)
 			if (!( src.machine.check_eye(src) ))
 				src.reset_view(null)
+		// update camera light to the new nearest one
+		if(camera_light_on)
+			lightNearbyCamera()
 
 		// Handle power damage (oxy)
 		if(src:aiRestorePowerRoutine != 0)

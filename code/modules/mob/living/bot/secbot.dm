@@ -252,6 +252,9 @@
 	if(!istype(M))
 		return
 
+	if(!Adjacent(M)) // should stop long-range beepsky beatdowns
+		return
+
 	if(istype(M, /mob/living/carbon))
 		var/mob/living/carbon/C = M
 		var/cuff = 1
@@ -263,6 +266,7 @@
 			cuff = 0
 		if(!cuff)
 			C.stun_effect_act(0, 60, null)
+			statistics.increase_stat("beepsky_beatings")
 			playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 			is_attacking = 1
 			update_icons()
@@ -283,6 +287,7 @@
 		var/mob/living/simple_animal/S = M
 		S.AdjustStunned(10)
 		S.adjustBruteLoss(15)
+		statistics.increase_stat("beepsky_beatings")
 		playsound(loc, "swing_hit", 50, 1, -1)
 		is_attacking = 1
 		update_icons()

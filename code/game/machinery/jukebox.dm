@@ -59,6 +59,7 @@ datum/track/New(var/title_name, var/audio)
 		new/datum/track("Smartest People", 'sound/music/bakerstreet.ogg'),
 		new/datum/track("Careless", 'sound/music/carelesswhisper.ogg'),
 		new/datum/track("Long Ago", 'sound/music/midis/cantina.mid'),
+		new/datum/track("Peace", 'sound/music/midis/manwhosoldtheworld.mid'),
 	)
 
 /obj/machinery/media/jukebox/New()

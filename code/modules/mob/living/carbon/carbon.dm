@@ -28,7 +28,7 @@
 		if(prob(40))
 			for(var/mob/M in hearers(4, src))
 				if(M.client)
-					M.show_message(text("\red You hear something rumbling inside [src]'s stomach..."), 2)
+					M.show_message(text("<span class='alert'> You hear something rumbling inside [src]'s stomach...</span>"), 2)
 			var/obj/item/I = user.get_active_hand()
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
@@ -44,7 +44,7 @@
 					src.take_organ_damage(d)
 				for(var/mob/M in viewers(user, null))
 					if(M.client)
-						M.show_message(text("\red <B>[user] attacks [src]'s stomach wall with the [I.name]!"), 2)
+						M.show_message(text("<span class='alert'> <B>[user] attacks [src]'s stomach wall with the [I.name]!</span>"), 2)
 				playsound(user.loc, 'sound/effects/attackblob.ogg', 50, 1)
 
 				if(prob(src.getBruteLoss() - 50))
@@ -62,10 +62,16 @@
 		M.loc = src.loc
 		for(var/mob/N in viewers(src, null))
 			if(N.client)
-				N.show_message(text("\red <B>[M] bursts out of [src]!</B>"), 2)
+				N.show_message(text("<span class='alert'> <B>[M] bursts out of [src]!</B></span>"), 2)
 	..()
 
 /mob/living/carbon/attack_hand(mob/M as mob)
+	// no attacking if we're in an alien nest!
+	for(var/obj/structure/bed/nest/N in get_turf(M.loc))
+		if(N.buckled_mob == M)
+			M.visible_message("<span class='warning'>[M.name] struggles to move!</span>", "<span class='warning'>You try to move, but the goo holds you back!</span>")
+			return
+
 	M.do_attack_animation(src)
 
 	if(!istype(M, /mob/living/carbon)) return
@@ -74,7 +80,7 @@
 		if (M.hand)
 			temp = M:organs_by_name["l_hand"]
 		if(temp && !temp.is_usable())
-			M << "\red You can't use your [temp.display_name]"
+			M << "<span class='alert'> You can't use your [temp.display_name]</span>"
 			return
 
 	for(var/datum/disease/D in viruses)
@@ -105,15 +111,15 @@
 			dir = turn(dir, 180)
 			src.throw_at(get_distant_turf(get_turf(src), shock_damage, dir), min( max( 1, round(shock_damage/10)), 4 ), throw_speed, null)
 			src.visible_message(
-				"\red [src] was tossed by the an electric shock from [source]!", \
-				"\red <B>You're tossed back by the electric shock!</B>", \
-				"\red You hear a loud WHUMP!" \
+				"<span class='alert'> [src] was tossed by the an electric shock from [source]!</span>", \
+				"<span class='alert'> <B>You're tossed back by the electric shock!</B></span>", \
+				"<span class='alert'> You hear a loud WHUMP!</span>" \
 			)
 
 		src.visible_message(
-			"\red [src] was shocked by the [source]!", \
-			"\red <B>You feel a powerful shock course through your body!</B>", \
-			"\red You hear a heavy electrical crack." \
+			"<span class='alert'> [src] was shocked by the [source]!</span>", \
+			"<span class='alert'> <B>You feel a powerful shock course through your body!</B></span>", \
+			"<span class='alert'> You hear a heavy electrical crack.</span>" \
 		)
 		playsound(src.loc, pick( 'sound/effects/electr1.ogg', 'sound/effects/electr2.ogg', 'sound/effects/electr3.ogg'), 100, 1)
 
@@ -122,9 +128,9 @@
 
 	else
 		src.visible_message(
-			"\red [src] was mildly shocked by the [source].", \
-			"\red You feel a mild shock course through your body.", \
-			"\red You hear a light zapping." \
+			"<span class='alert'> [src] was mildly shocked by the [source].</span>", \
+			"<span class='alert'> You feel a mild shock course through your body.</span>", \
+			"<span class='alert'> You hear a light zapping.</span>" \
 		)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -173,8 +179,8 @@
 		if(src == M && istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = src
 			src.visible_message( \
-				text("\blue [src] examines [].",src.gender==MALE?"himself":"herself"), \
-				"\blue You check yourself for injuries." \
+				text("<span class='notice'> [src] examines [].</span>",src.gender==MALE?"himself":"herself"), \
+				"<span class='notice'> You check yourself for injuries.</span>" \
 				)
 
 			for(var/datum/organ/external/org in H.organs)
@@ -208,7 +214,7 @@
 					status = "weirdly shapen."
 				if(status == "")
 					status = "OK"
-				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",org.display_name,status),1)
+				src.show_message(text("\t []My [] is [].",status=="OK"?"<span class='notice'></span>":"<span class='alert'></span>",org.display_name,status),1)
 			if((SKELETON in H.mutations) && (!H.w_uniform) && (!H.wear_suit))
 				H.play_xylophone()
 		else
@@ -337,7 +343,7 @@
 
 	//actually throw it!
 	if (item)
-		src.visible_message("\red [src] has thrown [item].")
+		src.visible_message("<span class='alert'> [src] has thrown [item].</span>")
 
 		if(!src.lastarea)
 			src.lastarea = get_area(src.loc)
@@ -432,7 +438,7 @@
 	set category = "IC"
 
 	if(usr.sleeping)
-		usr << "\red You are already sleeping"
+		usr << "<span class='alert'> You are already sleeping</span>"
 		return
 	if(alert(src,"You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
 		usr.sleeping = 20 //Short nap
@@ -453,7 +459,7 @@
 
 				if(HULK in tmob.mutations)
 					if(prob(70))
-						usr << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
+						usr << "<span class='alert'> <B>You fail to push [tmob]'s fat ass out of the way.</B></span>"
 						now_pushing = 0
 						return
 				if(!(tmob.status_flags & CANPUSH))
@@ -463,12 +469,12 @@
 				for(var/mob/M in range(tmob, 1))
 					if(tmob.pinned.len ||  ((M.pulling == tmob && ( tmob.restrained() && !( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, tmob.grabbed_by.len)) )
 						if ( !(world.time % 5) )
-							src << "\red [tmob] is restrained, you cannot push past"
+							src << "<span class='alert'> [tmob] is restrained, you cannot push past</span>"
 						now_pushing = 0
 						return
 					if( tmob.pulling == M && ( M.restrained() && !( tmob.restrained() ) && tmob.stat == 0) )
 						if ( !(world.time % 5) )
-							src << "\red [tmob] is restraining [M], you cannot push past"
+							src << "<span class='alert'> [tmob] is restraining [M], you cannot push past</span>"
 						now_pushing = 0
 						return
 
@@ -498,7 +504,7 @@
 
 			if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
 				if(prob(40) && !(FAT in src.mutations))
-					src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
+					src << "<span class='alert'> <B>You fail to push [tmob]'s fat ass out of the way.</B></span>"
 					now_pushing = 0
 					return
 			if(tmob.r_hand && istype(tmob.r_hand, /obj/item/weapon/shield/riot))

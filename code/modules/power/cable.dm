@@ -132,7 +132,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			return
 ///// Z-Level Stuff
 		if(breaker_box)
-			user << "\red This cable is connected to nearby breaker box. Use breaker box to interact with it."
+			user << "<span class='alert'> This cable is connected to nearby breaker box. Use breaker box to interact with it.</span>"
 			return
 
 		if (shock(user, 50))
@@ -185,6 +185,28 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	src.add_fingerprint(user)
 
+/obj/structure/cable/attack_hand(var/mob/user as mob)
+	if( istype( user, /mob/living/simple_animal/rodent/rat/king ))
+		var/mob/living/simple_animal/rodent/rat/king/K = user
+		if( K.canNibbleWire() )
+			var/mob/living/simple_animal/rodent/rat/R = K.getMobAttacked()
+
+			src.visible_message("<span class='warning'>\The [user] begins to nibble the cable!</span>" )
+
+			if( !do_after( R, 100 ))
+				user << "<span class='warning'>You need to wait longer to chew through the cable!</span>"
+				return 0
+
+			src.visible_message("<span class='warning'>\The [user] chews its way through the cable!</span>" )
+
+			if( !shock( R, 10 ))
+				new/obj/item/stack/cable_coil(src.loc, src.d1 ? 2 : 1, color)
+				qdel(src)
+		else
+			user << "<span class='warning'>Our kingdom must grow larger before we can chew through wires!</span>"
+
+	..()
+
 // shock the user with probability prb
 /obj/structure/cable/proc/shock(mob/user, prb, var/siemens_coeff = 1.0, var/max_damage = 50)
 	if(!prob(prb))
@@ -193,7 +215,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
-		if(usr.stunned)
+		if(!user || user.stunned) // If the user was either vaporized or stunned
 			return 1
 	return 0
 
@@ -519,12 +541,12 @@ obj/structure/cable/proc/cableColor(var/colorC)
 
 		if(H.species.flags & IS_SYNTHETIC)
 			if(M == user)
-				user << "\red You can't repair damage to your own body - it's against OH&S."
+				user << "<span class='alert'> You can't repair damage to your own body - it's against OH&S.</span>"
 				return
 
 		if(S.burn_dam > 0 && use(1))
 			S.heal_damage(0,15,0,1)
-			user.visible_message("\red \The [user] repairs some burn damage on \the [M]'s [S.name] with \the [src].")
+			user.visible_message("<span class='alert'> \The [user] repairs some burn damage on \the [M]'s [S.name] with \the [src].</span>")
 			return
 		else
 			user << "Nothing to fix!"
@@ -572,14 +594,14 @@ obj/structure/cable/proc/cableColor(var/colorC)
 	if(ishuman(M) && !M.restrained() && !M.stat && !M.paralysis && ! M.stunned)
 		if(!istype(usr.loc,/turf)) return
 		if(src.amount <= 14)
-			usr << "\red You need at least 15 lengths to make restraints!"
+			usr << "<span class='alert'> You need at least 15 lengths to make restraints!</span>"
 			return
 		var/obj/item/weapon/handcuffs/cable/B = new /obj/item/weapon/handcuffs/cable(usr.loc)
 		B.color = color
 		usr << "<span class='notice'>You wind some cable together to make some restraints.</span>"
 		src.use(15)
 	else
-		usr << "\blue You cannot do that."
+		usr << "<span class='notice'> You cannot do that.</span>"
 	..()
 
 /obj/item/stack/cable_coil/cyborg/verb/set_colour()

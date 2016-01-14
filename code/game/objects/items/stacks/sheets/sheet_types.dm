@@ -1,7 +1,6 @@
 /* Diffrent misc types of sheets
  * Contains:
  *		Metal
- *		Plasteel
  *		Wood
  *		Cloth
  *		Cardboard
@@ -120,54 +119,6 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	return ..()
 
 /obj/item/stack/sheet/metal/update_icon()
-	switch(amount)
-		if(1)
-			icon_state = "[item_state]-1"
-		if(2 to 16)
-			icon_state = "[item_state]-2"
-		if(17 to 32)
-			icon_state = "[item_state]-3"
-		if(33 to 49)
-			icon_state = "[item_state]-4"
-		else
-			icon_state = "[item_state]-5"
-
-
-/*
- * Plasteel
- */
-var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
-	//new/datum/stack_recipe("machine frame", /obj/machinery/constructable_frame/machine_frame/plasteel, 5, time = 25, one_per_turf = 1, on_floor = 1), \
-	//new/datum/stack_recipe("wall frame", /obj/item/wall_frame/plasteel, 2), \
-	//new/datum/stack_recipe("tall machine frame", /obj/machinery/constructable_frame/machine_frame/tall/plasteel, 5, time = 25, one_per_turf = 1, on_floor = 1), \
-	/*new/datum/stack_recipe("device frame", /obj/item/device_frame/plasteel, 2), \ */
-	/*new/datum/stack_recipe("tile frame", /obj/machinery/constructable_frame/machine_frame/plasteel, 5, time = 25, one_per_turf = 1, on_floor = 1), \ */
-	/*new/datum/stack_recipe("computer frame", /obj/structure/computerframe/plasteel, 5, time = 25, one_per_turf = 1, on_floor = 1), \*/
-	null, \
-	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = 1), \
-	new/datum/stack_recipe("Metal crate", /obj/structure/closet/crate, 10, time = 50, one_per_turf = 1), \
-	new/datum/stack_recipe("RUST fuel assembly port frame", /obj/item/rust_fuel_assembly_port_frame, 12, time = 50, one_per_turf = 1), \
-	new/datum/stack_recipe("RUST fuel compressor frame", /obj/item/rust_fuel_compressor_frame, 12, time = 50, one_per_turf = 1), \
-	new/datum/stack_recipe("knife grip", /obj/item/butterflyhandle, 4, time = 20, one_per_turf = 0, on_floor = 1),
-	)
-
-/obj/item/stack/sheet/plasteel
-	name = "plasteel"
-	singular_name = "plasteel sheet"
-	desc = "This sheet is an alloy of steel and phoron."
-	icon = 'icons/obj/items/materials.dmi'
-	icon_state = "plasteel-1"
-	item_state = "plasteel"
-	matter = list("metal" = 7500)
-	throwforce = 15.0
-	flags = CONDUCT
-	origin_tech = "materials=2"
-
-/obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
-	recipes = plasteel_recipes
-	return ..()
-
-/obj/item/stack/sheet/plasteel/update_icon()
 	switch(amount)
 		if(1)
 			icon_state = "[item_state]-1"

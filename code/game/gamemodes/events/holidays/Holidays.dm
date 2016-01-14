@@ -67,10 +67,13 @@ var/global/Holiday = null
 			switch(DD)
 				if(1)							Holiday = "Labour Day"
 				if(4)							Holiday = "FireFighter's Day"
-				if(12)							Holiday = "Owl and Pussycat Day"	//what a dumb day of observence...but we -do- have costumes already :3
+				if(12)							Holiday = "Grilled Chese Sandwich Day"	//what a dumb day of observence...but we -do- have costumes already :3
 
 		if(6)	//Jun
-
+			switch(DD)
+				if(6)							Holiday = "Meatballs day"
+				if(14)							Holiday = "Flag Day"
+				if(21)							Holiday = "Summer Solstice"
 		if(7)	//Jul
 			switch(DD)
 				if(1)							Holiday = "Doctor's Day"
@@ -81,7 +84,9 @@ var/global/Holiday = null
 		if(8)	//Aug
 			switch(DD)
 				if(5)							Holiday = "Beer Day"
-
+				if(10)							Holiday = "Lazy Day"
+				if(15)							Holiday = "Relaxation Day"
+				if(19)							Holiday = "Aviation Day"
 		if(9)	//Sep
 			switch(DD)
 				if(19)							Holiday = "Talk-Like-a-Pirate Day"
@@ -105,8 +110,7 @@ var/global/Holiday = null
 			switch(DD)
 				if(10)							Holiday = "Human-Rights Day"
 				if(14)							Holiday = "Monkey Day"
-				if(21)							if(YY==12)	Holiday = "End of the World"
-				if(22)							Holiday = "Orgasming Day"		//lol. These all actually exist
+				if(22)							Holiday = "Winter Solstice"
 				if(24)							Holiday = "Christmas Eve"
 				if(25)							Holiday = "Christmas"
 				if(26)							Holiday = "Boxing Day"
@@ -133,7 +137,7 @@ var/global/Holiday = null
 	world.update_status()
 	Holiday_Game_Start()
 
-	message_admins("\blue [key_name(src)] force-set Holiday to \"[Holiday]\"", "EVENT:")
+	message_admins("<span class='notice'> [key_name(src)] force-set Holiday to \"[Holiday]\</span>", "EVENT:")
 	log_admin("[key_name(src)] force-set Holiday to \"[Holiday]\"")
 
 
@@ -174,7 +178,7 @@ var/global/Holiday = null
 				if(isNotStationLevel(S.z))	continue
 				containers += S
 
-			message_admins("\blue DEBUG: Event: Egg spawned at [Egg.loc] ([Egg.x],[Egg.y],[Egg.z])")*/
+			message_admins("<span class='notice'> DEBUG: Event: Egg spawned at [Egg.loc] ([Egg.x],[Egg.y],[Egg.z]</span>)")*/
 		if("End of the World")
 			if(prob(eventchance))	GameOver()
 

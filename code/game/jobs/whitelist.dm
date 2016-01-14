@@ -1,4 +1,4 @@
-#define WHITELISTFILE "data/whitelist.txt"
+#define WHITELISTFILE "data/whitelists/whitelist.txt"
 
 var/list/whitelist = list()
 
@@ -24,9 +24,9 @@ var/list/whitelist = list()
 	return 1
 
 /proc/load_alienwhitelist()
-	var/text = file2text("config/alienwhitelist.txt")
+	var/text = file2text("data/whitelists/alienwhitelist.txt")
 	if (!text)
-		log_misc("Failed to load config/alienwhitelist.txt")
+		log_misc("Failed to load data/whitelists/alienwhitelist.txt")
 	else
 		alien_whitelist = text2list(text, "\n")
 

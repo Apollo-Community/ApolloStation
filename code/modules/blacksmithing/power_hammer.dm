@@ -45,7 +45,7 @@
 			user.put_in_hands(I)
 			return
 	else
-		user << "\blue You place [I.name] into the power hammer and turn the machine on."
+		user << "<span class='notice'> You place [I.name] into the power hammer and turn the machine on.</span>"
 		user.anchored = 1
 		on = 1
 		sleep(150)	//make those smart asses wait a little longer!

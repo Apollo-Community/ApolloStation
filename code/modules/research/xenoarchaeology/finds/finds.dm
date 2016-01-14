@@ -236,7 +236,7 @@
 			apply_material_decorations = 0
 			var/list/possible_spawns = list()
 			possible_spawns += /obj/item/stack/sheet/metal
-			possible_spawns += /obj/item/stack/sheet/plasteel
+			possible_spawns += /obj/item/stack/sheet/alloy/plasteel
 			possible_spawns += /obj/item/stack/sheet/glass
 			possible_spawns += /obj/item/stack/sheet/glass/reinforced
 			possible_spawns += /obj/item/stack/sheet/mineral/phoron

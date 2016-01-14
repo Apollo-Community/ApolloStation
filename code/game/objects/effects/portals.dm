@@ -44,10 +44,24 @@
 	if (!( target ))
 		qdel(src)
 		return
+	if(src.loc.type == /turf/space/bluespace)
+		if(ishuman(M))		// Harm humans for being silly.
+			var/mob/living/carbon/human/H = M
+			if(prob(80))
+				usr << "<span class='warning'>As you touch the portal a violent shock rushes through your arm!</span>"
+				var/datum/organ/external/E = H.get_organ(pick("l_arm","r_arm"))
+				E.take_damage(15, 10, 5)
+				E.fracture()
+			/*else					Apprently TK is bugged :(
+				usr << "<span class='info'>You feel the power of the portal enter your body!</span>"
+				H.active_genes |= /datum/dna/gene/basic/tk
+				H.update_icon = 1
+			*/
+		qdel(src)
+		return
 	if (istype(M, /atom/movable))
 		if(prob(failchance)) //oh dear a problem, put em in deep space
 			src.icon_state = "portal1"
 			do_teleport_rand( M )
 		else
 			do_teleport( M, target ) ///You will appear adjacent to the beacon
-

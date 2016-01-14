@@ -1,5 +1,5 @@
 //Alium nests. Essentially beds with an unbuckle delay that only aliums can buckle mobs to.
-#define NEST_RESIST_TIME 1200
+#define NEST_RESIST_TIME 1800
 
 /obj/structure/bed/nest
 	name = "alien nest"

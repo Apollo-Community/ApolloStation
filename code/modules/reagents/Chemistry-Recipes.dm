@@ -610,12 +610,12 @@ datum
 
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in viewers(5, location))
-					M << "\red The solution violently bubbles!"
+					M << "<span class='alert'> The solution violently bubbles!</span>"
 
 				location = get_turf(holder.my_atom)
 
 				for(var/mob/M in viewers(5, location))
-					M << "\red The solution spews out foam!"
+					M << "<span class='alert'> The solution spews out foam!</span>"
 
 				//world << "Holder volume is [holder.total_volume]"
 				//for(var/datum/reagent/R in holder.reagent_list)
@@ -640,7 +640,7 @@ datum
 				var/location = get_turf(holder.my_atom)
 
 				for(var/mob/M in viewers(5, location))
-					M << "\red The solution spews out a metalic foam!"
+					M << "<span class='alert'> The solution spews out a metalic foam!</span>"
 
 				var/datum/effect/effect/system/foam_spread/s = new()
 				s.set_up(created_volume, location, holder, 1)
@@ -660,7 +660,7 @@ datum
 				var/location = get_turf(holder.my_atom)
 
 				for(var/mob/M in viewers(5, location))
-					M << "\red The solution spews out a metalic foam!"
+					M << "<span class='alert'> The solution spews out a metalic foam!</span>"
 
 				var/datum/effect/effect/system/foam_spread/s = new()
 				s.set_up(created_volume, location, holder, 2)
@@ -1015,12 +1015,12 @@ datum
 
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in viewers(5, location))
-					M << "\red The solution violently bubbles!"
+					M << "<span class='alert'> The solution violently bubbles!</span>"
 
 				location = get_turf(holder.my_atom)
 
 				for(var/mob/M in viewers(5, location))
-					M << "\red The solution spews out foam!"
+					M << "<span class='alert'> The solution spews out foam!</span>"
 
 				//world << "Holder volume is [holder.total_volume]"
 				//for(var/datum/reagent/R in holder.reagent_list)
@@ -1045,7 +1045,7 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
-					O.show_message(text("\red Infused with phoron, the core begins to quiver and grow, and soon a new baby slime emerges from it!"), 1)
+					O.show_message(text("<span class='alert'> Infused with phoron, the core begins to quiver and grow, and soon a new baby slime emerges from it!</span>"), 1)
 				var/mob/living/carbon/slime/S = new /mob/living/carbon/slime
 				S.loc = get_turf(holder.my_atom)
 
@@ -1086,7 +1086,7 @@ datum
 				var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal
 				M.amount = 15
 				M.loc = get_turf(holder.my_atom)
-				var/obj/item/stack/sheet/plasteel/P = new /obj/item/stack/sheet/plasteel
+				var/obj/item/stack/sheet/alloy/plasteel/P = new /obj/item/stack/sheet/alloy/plasteel
 				P.amount = 5
 				P.loc = get_turf(holder.my_atom)
 
@@ -1135,7 +1135,7 @@ datum
 						for(var/j = 1, j <= rand(1, 3), j++)
 							step(C, pick(NORTH,SOUTH,EAST,WEST))*/
 				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
-					O.show_message(text("\red The slime core fizzles disappointingly,"), 1)
+					O.show_message(text("<span class='alert'> The slime core fizzles disappointingly,</span>"), 1)
 
 //Silver
 		slimebork
@@ -1187,12 +1187,12 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
-					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
+					O.show_message(text("<span class='alert'> The slime extract begins to vibrate violently !</span>"), 1)
 				sleep(50)
 				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 				for(var/mob/living/M in range (get_turf(holder.my_atom), 7))
 					M.bodytemperature -= 140
-					M << "\blue You feel a chill!"
+					M << "<span class='notice'> You feel a chill!</span>"
 
 //Orange
 		slimecasp
@@ -1214,7 +1214,7 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
-					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
+					O.show_message(text("<span class='alert'> The slime extract begins to vibrate violently !</span>"), 1)
 				sleep(50)
 				var/turf/location = get_turf(holder.my_atom.loc)
 				for(var/turf/simulated/floor/target_tile in range(0,location))
@@ -1256,7 +1256,7 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
-					O.show_message(text("\red The contents of the slime core harden and begin to emit a warm, bright light."), 1)
+					O.show_message(text("<span class='alert'> The contents of the slime core harden and begin to emit a warm, bright light.</span>"), 1)
 				var/obj/item/device/flashlight/slime/F = new /obj/item/device/flashlight/slime
 				F.loc = get_turf(holder.my_atom)
 
@@ -1323,7 +1323,7 @@ datum
 				for(var/mob/living/carbon/slime/slime in viewers(get_turf(holder.my_atom), null))
 					slime.rabid = 1
 					for(var/mob/O in viewers(get_turf(holder.my_atom), null))
-						O.show_message(text("\red The [slime] is driven into a frenzy!"), 1)
+						O.show_message(text("<span class='alert'> The [slime] is driven into a frenzy!</span>"), 1)
 
 //Pink
 		slimeppotion
@@ -1360,7 +1360,7 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
-					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
+					O.show_message(text("<span class='alert'> The slime extract begins to vibrate violently !</span>"), 1)
 				sleep(50)
 				explosion(get_turf(holder.my_atom), 1 ,3, 6)
 //Light Pink

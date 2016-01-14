@@ -120,7 +120,7 @@
 		var/datum/cell_auto_master/v_wave/M = master
 
 		if( M.smlevel >= 4 && prob( min( 100, M.smlevel*10 )))
-			visible_message("\red <B>\The [src] explodes!</B>")
+			visible_message("<span class='alert'> <B>\The [src] explodes!</B></span>")
 			playsound(loc, 'sound/effects/Glassbr2.ogg', 100, 1)
 			supermatter_delamination( get_turf( src ), M.smlevel/2, M.smlevel, 0, 0 )
 		else
@@ -131,10 +131,10 @@
 				l.apply_effect(rads, IRRADIATE)
 
 			if( drop )
-				visible_message("\red <B>\The [src] shatters!</B>")
+				visible_message("<span class='alert'> <B>\The [src] shatters!</B></span>")
 				new /obj/item/weapon/shard/supermatter( get_turf( src ), M.smlevel )
 			else
-				visible_message("\red <B>\The [src] shatters to dust!</B>")
+				visible_message("<span class='alert'> <B>\The [src] shatters to dust!</B></span>")
 
 	qdel( src )
 

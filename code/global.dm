@@ -103,7 +103,7 @@ var/list/lawchanges = list(  ) //Stores who uploaded laws to which silicon-based
 var/list/reg_dna = list(  )
 //	list/traitobj = list(  )
 
-var/mouse_respawn_time = 5 //Amount of time that must pass between a player dying as a mouse and repawning as a mouse. In minutes.
+var/rodent_respawn_time = 5 //Amount of time that must pass between a player dying as a mouse and repawning as a mouse. In minutes.
 
 var/CELLRATE = 0.002	// multiplier for watts per tick <> cell storage (eg: 0.02 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)
 						//It's a conversion constant. power_used*CELLRATE = charge_provided, or charge_used/CELLRATE = power_provided
@@ -122,6 +122,7 @@ var/list/latejoin = list()
 var/list/latejoin_gateway = list()
 var/list/latejoin_cryo = list()
 var/list/latejoin_cyborg = list()
+var/list/observer_start = list()
 
 var/list/prisonwarp = list()	//prisoners go to these
 var/list/holdingfacility = list()	//captured people go here
@@ -252,8 +253,10 @@ var/list/area/unlogged_areas = list( /area/tdome )
 	Tajara
 	Unathi
 	Wryn */
-var/unwhitelisted_alien = "Skrell"
-var/list/unwhitelisted_aliens = list( unwhitelisted_alien, "Machine", "Nucleation" )
+
+var/list/whitelisted_aliens = list( "Diona", "Skrell", "Tajaran", "Unathi", "Wryn" )
+var/unwhitelisted_alien = "Wryn" // Default if the week calculation screws up for some reason.
+var/list/unwhitelisted_aliens = list( "Machine", "Nucleation" )
 
 // Random round statistics
 var/datum/round_stats/statistics = new()

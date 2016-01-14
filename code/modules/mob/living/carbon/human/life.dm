@@ -117,6 +117,12 @@
 	handle_regular_status_updates()		//Optimized a bit
 	update_canmove()
 
+	//IPCs charging from APCs
+	if(istype(species, /datum/species/machine))
+		var/datum/species/machine/S = species
+		if(S.attached_apc)
+			handle_ipc_charging()
+
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
@@ -183,11 +189,11 @@
 	proc/handle_disabilities()
 		if (disabilities & EPILEPSY)
 			if ((prob(1) && paralysis < 1))
-				src << "\red You have a seizure!"
+				src << "<span class='alert'> You have a seizure!</span>"
 				for(var/mob/O in viewers(src, null))
 					if(O == src)
 						continue
-					O.show_message(text("\red <B>[src] starts having a seizure!"), 1)
+					O.show_message(text("<span class='alert'> <B>[src] starts having a seizure!</span>"), 1)
 				Paralyse(10)
 				make_jittery(1000)
 		if (disabilities & COUGHING)
@@ -230,15 +236,15 @@
 					custom_pain("Your head feels numb and painful.")
 			if(getBrainLoss() >= 15)
 				if(4 <= rn && rn <= 6) if(eye_blurry <= 0)
-					src << "\red It becomes hard to see for some reason."
+					src << "<span class='alert'> It becomes hard to see for some reason.</span>"
 					eye_blurry = 10
 			if(getBrainLoss() >= 35)
 				if(7 <= rn && rn <= 9) if(hand && equipped())
-					src << "\red Your hand won't respond properly, you drop what you're holding."
+					src << "<span class='alert'> Your hand won't respond properly, you drop what you're holding.</span>"
 					drop_item()
 			if(getBrainLoss() >= 50)
 				if(10 <= rn && rn <= 12) if(!lying)
-					src << "\red Your legs won't respond properly, you fall down."
+					src << "<span class='alert'> Your legs won't respond properly, you fall down.</span>"
 					resting = 1
 
 	proc/handle_stasis_bag()
@@ -278,7 +284,7 @@
 				radiation -= 1 * RADIATION_SPEED_COEFFICIENT
 				reagents.add_reagent("radium", rads/10)
 				if( prob(3) )
-					src << pick( "\blue You feel relaxed.", "\blue You feel soothed.", "\blue A warm, calming wave rolls over you." )
+					src << pick( "<span class='notice'> You feel relaxed.</span>", "<span class='notice'> You feel soothed.</span>", "<span class='notice'> A warm, calming wave rolls over you.</span>" )
 				return
 
 			var/datum/organ/internal/diona/nutrients/rad_organ = locate() in internal_organs
@@ -590,7 +596,7 @@
 
 				// Enough to make us sleep as well
 				if(SA_pp > SA_sleep_min)
-					sleeping = min(sleeping+2, 10)
+					sleeping = min(sleeping+4, 10)
 
 			// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			else if(SA_pp > 0.15)
@@ -991,6 +997,9 @@
 			if(nutrition < 200)
 				take_overall_damage(2,0)
 				traumatic_shock++
+
+		if((locate(src.internal_organs_by_name["resonant crystal"]) in src.internal_organs))
+			nutrition = 400
 
 		if(!(species.flags & IS_SYNTHETIC)) handle_trace_chems()
 
@@ -1516,6 +1525,13 @@
 						if(!(M.status_flags & GODMODE))
 							M.adjustBruteLoss(5)
 						nutrition += 10
+				if(istype(M, /mob/living/simple_animal))
+					var/x = M.oxyloss
+					M.adjustOxyLoss(5)
+					if(x == M.oxyloss)
+						stomach_contents.Remove(M)
+						qdel(M)
+					nutrition += 10
 
 	proc/handle_changeling()
 		if(mind && mind.changeling)
@@ -1604,6 +1620,46 @@
 					temp = PULSE_NONE
 
 		return temp
+
+	proc/handle_ipc_charging()
+		var/datum/species/machine/S = species
+		var/obj/machinery/power/apc/A = S.attached_apc
+
+		if(!A.can_use(src) || !A.cell)
+			if(!in_range(A, src))
+				src << "<span class='warning'>You rip your fingers out of the APC!</span>"
+			S.attached_apc = null
+			return
+
+		if(a_intent == I_GRAB)
+			if(A.cell.charge <= 0)
+				src << "<span class='notice'>The power cell dries out, and you remove your fingers from the APC.</span>"
+				S.attached_apc = null
+				return
+			else if(nutrition >= 500)
+				src << "<span class='notice'>You remove your fingers from the APC as your power cell is fully charged.</span>"
+				S.attached_apc = null
+				return
+			else
+				nutrition += 10
+				A.cell.charge -= 100
+		else if(a_intent == I_DISARM)
+			if(A.cell.charge >= A.cell.maxcharge)
+				src << "<span class='notice'>You remove your fingers as the APC is fully charged.</span>"
+				S.attached_apc = null
+				return
+			else if(nutrition <= 30)
+				src << "<span class='notice'>You remove your fingers as your own power starts to run out.</span>"
+				return
+			else
+				nutrition -= 10
+				A.cell.charge += 100
+		else
+			src << "<span class='notice'>You remove your fingers from the APC.</span>"
+			S.attached_apc = null
+
+		A.charging = 1
+		A.update_icon()
 
 /*
 	Called by life(), instead of having the individual hud items update icons each tick and check for status changes

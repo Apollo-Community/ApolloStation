@@ -106,7 +106,7 @@ Note: Must be placed west/left of and R&D console to function.
 			qdel(src)
 			return 1
 		else
-			user << "\red You can't load the [src.name] while it's opened."
+			user << "<span class='alert'> You can't load the [src.name] while it's opened.</span>"
 			return 1
 	if (disabled)
 		return
@@ -114,20 +114,21 @@ Note: Must be placed west/left of and R&D console to function.
 		user << "\The protolathe must be linked to an R&D console first!"
 		return 1
 	if (busy)
-		user << "\red The protolathe is busy. Please wait for completion of previous operation."
+		user << "<span class='alert'> The protolathe is busy. Please wait for completion of previous operation.</span>"
 		return 1
 	if (!istype(O, /obj/item/stack/sheet))
-		user << "\red You cannot insert this item into the protolathe!"
+		user << "<span class='alert'> You cannot insert this item into the protolathe!</span>"
 		return 1
 	if (stat)
 		return 1
 	if(istype(O,/obj/item/stack/sheet))
 		var/obj/item/stack/sheet/S = O
 		if (TotalMaterials() + S.perunit > max_material_storage)
-			user << "\red The protolathe's material bin is full. Please remove material before adding more."
+			user << "<span class='alert'> The protolathe's material bin is full. Please remove material before adding more.</span>"
 			return 1
 
 	var/obj/item/stack/sheet/stack = O
+	var/turf/T = get_turf(user)			//So they can only add sheets adjacent to the protolathe
 	var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
 	if(!O)
 		return
@@ -149,26 +150,28 @@ Note: Must be placed west/left of and R&D console to function.
 	use_power(max(1000, (3750*amount/10)))
 	var/stacktype = stack.type
 	stack.use(amount)
-	if (do_after(user, 16))
-		user << "\blue You add [amount] sheets to the [src.name]."
-		icon_state = "protolathe"
-		switch(stacktype)
-			if(/obj/item/stack/sheet/metal)
-				m_amount += amount * 3750
-			if(/obj/item/stack/sheet/glass)
-				g_amount += amount * 3750
-			if(/obj/item/stack/sheet/mineral/gold)
-				gold_amount += amount * 2000
-			if(/obj/item/stack/sheet/mineral/silver)
-				silver_amount += amount * 2000
-			if(/obj/item/stack/sheet/mineral/phoron)
-				phoron_amount += amount * 2000
-			if(/obj/item/stack/sheet/mineral/uranium)
-				uranium_amount += amount * 2000
-			if(/obj/item/stack/sheet/mineral/diamond)
-				diamond_amount += amount * 2000
-	else
-		new stacktype(src.loc, amount)
+
+	spawn(16)					// do_after isn't really needed here, and is causing issues.
+		if(T == get_turf(user))
+			user << "<span class='notice'> You add [amount] sheets to the [src.name].</span>"
+			icon_state = "protolathe"
+			switch(stacktype)
+				if(/obj/item/stack/sheet/metal)
+					m_amount += amount * 3750
+				if(/obj/item/stack/sheet/glass)
+					g_amount += amount * 3750
+				if(/obj/item/stack/sheet/mineral/gold)
+					gold_amount += amount * 2000
+				if(/obj/item/stack/sheet/mineral/silver)
+					silver_amount += amount * 2000
+				if(/obj/item/stack/sheet/mineral/phoron)
+					phoron_amount += amount * 2000
+				if(/obj/item/stack/sheet/mineral/uranium)
+					uranium_amount += amount * 2000
+				if(/obj/item/stack/sheet/mineral/diamond)
+					diamond_amount += amount * 2000
+		else
+			new stacktype(src.loc, amount)
 	busy = 0
 	src.updateUsrDialog()
 	return
