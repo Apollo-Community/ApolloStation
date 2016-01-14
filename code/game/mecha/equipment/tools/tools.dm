@@ -15,7 +15,7 @@
 	action(atom/target)
 		if(!action_checks(target)) return
 		if(!cargo_holder) return
-		if(istype(target, /obj/structure/stool)) return
+		if(istype(target, /obj/item/weapon/stool)) return
 		for(var/M in target.contents)
 			if(istype(M, /mob/living))
 				return

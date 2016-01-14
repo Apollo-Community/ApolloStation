@@ -167,7 +167,7 @@
 "dk" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 1},/turf/simulated/floor{icon_state = "grimy"},/area/basement/civilian/dancefloor)
 "dl" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{tag = "icon-intact-scrubbers (NORTH)"; icon_state = "intact-scrubbers"; dir = 1},/turf/simulated/floor{icon_state = "grimy"},/area/basement/civilian/dancefloor)
 "dm" = (/obj/structure/table/reinforced,/obj/machinery/door/blast/shutters{dir = 4; id = "wetbar"; layer = 3.1; name = "Wet Bar Shutters"},/obj/machinery/door/firedoor,/turf/simulated/floor{icon_state = "grimy"},/area/basement/civilian/dancefloor)
-"dn" = (/obj/structure/stool,/turf/simulated/floor{icon_state = "dark"},/area/basement/civilian/dancefloor)
+"dn" = (/obj/item/weapon/stool,/turf/simulated/floor{icon_state = "dark"},/area/basement/civilian/dancefloor)
 "do" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{tag = "icon-intact-scrubbers (NORTH)"; icon_state = "intact-scrubbers"; dir = 1},/turf/simulated/floor{icon_state = "dark"},/area/basement/civilian/dancefloor)
 "dp" = (/obj/machinery/alarm{frequency = 1441; pixel_y = 22},/turf/simulated/floor{icon_state = "dark"},/area/basement/civilian/dancefloor)
 "dq" = (/obj/machinery/light{dir = 1},/obj/machinery/camera{c_tag = "Dance Floor"; dir = 2},/turf/simulated/floor{icon_state = "dark"},/area/basement/civilian/dancefloor)
