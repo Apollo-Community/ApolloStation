@@ -48,8 +48,6 @@ var/global/datum/global_init/init = new ()
 	load_mods()
 	//end-emergency fix
 
-	//loads donators
-	load_donators()
 	//loads custom titles
 	load_titles()
 

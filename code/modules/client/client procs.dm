@@ -173,7 +173,9 @@
 		spawn(5) // And wait a half-second, since it sounds like you can do this too fast.
 			winset(src, null, "command=\".configure graphics-hwmode on\"")
 
-	donator = is_donator(src)
+	donator = get_donator( src )
+
+
 	if(!stat_player_list.Find(key))			//Don't add the same person twice? How does this even happen
 		var/obj/playerlist/O = new()
 		O.icon = icon('./icons/playerlist.dmi')
