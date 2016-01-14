@@ -1,24 +1,29 @@
-var/list/donator_list = list()
+proc/get_donator(client/C)
+	establish_db_connection()
+	if(!dbcon.IsConnected())
+		return null
 
-proc/load_donators()
-	donator_list = file2list("data/whitelists/donators.txt")
+	var/donator = 0
+	var/sql_ckey = sql_sanitize_text(ckey(C.key))
 
-proc/is_donator(client/C)
-	if(donator_list)
-		for(var/line in donator_list)
-			if(findtext(line, "[C]"))
-				return 1
+	var/DBQuery/query = dbcon.NewQuery("SELECT donator_flags FROM player WHERE ckey = '[sql_ckey]'")
+	query.Execute()
+
+	if(query.NextRow())
+		donator |= text2num(query.item[1])
+
 	if(C.IsByondMember())	// unlikely people will be byond members (sorry its tru)
-		return 1
+		donator |= DONATOR_TIER_BYOND
+
+	return donator
 
 proc/donator_tier(client/C)
-	if(C.IsByondMember())
+	if( C.donator & DONATOR_TIER_BYOND )
 		return "BYOND"		// TIER BYOND MASTERRACE?
-	if(donator_list)
-		for(var/line in donator_list)
-			//Return the tier
-			if(findtext(line,"[C.ckey] - 1"))				return 1
-			else if(findtext(line,"[C.ckey] - 2"))	return 2
+	else if( C.donator & DONATOR_TIER_2 )
+		return 2
+	else if( C.donator & DONATOR_TIER_1 )
+		return 1
 
 	return 0
 
