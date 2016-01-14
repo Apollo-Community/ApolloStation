@@ -78,4 +78,31 @@
 
 	return 0
 
+#define WHITELISTFILE "data/whitelists/whitelist.txt"
+
+/proc/convert_whitelist()
+	var/list/whitelist = list()
+	whitelist = file2list(WHITELISTFILE)
+
+	if( !whitelist.len )
+		return
+
+	for( var/key in whitelist )
+		var/ckey = ckey(key)
+
+		var/DBQuery/query = dbcon.NewQuery("SELECT id FROM player WHERE ckey = '[ckey]'")
+		query.Execute()
+
+		var/validckey = 0
+		if( query.NextRow() )
+			validckey = 1
+
+		if(!validckey)
+			world << "Could not find [ckey] in the player database, and so could not add their whitelist status"
+			continue
+
+		var/sql = "UPDATE player SET whitelist_flags='1' WHERE ckey = '[ckey]'"
+		var/DBQuery/query_insert = dbcon.NewQuery(sql)
+		query_insert.Execute()
+
 #undef WHITELISTFILE
