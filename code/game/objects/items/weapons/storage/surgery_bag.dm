@@ -8,7 +8,7 @@
 /obj/item/weapon/storage/surgery_bag
     name = "Surgery Bag"
     desc = "Contains all the surgical tools you'll need."
-    icon = 'icons/apollo/objects.dmi'
+    icon = 'icons/obj/objects.dmi'
     icon_state = "sbag_rolled"
     can_hold = list("/obj/item/weapon/scalpel",
                     "/obj/item/weapon/hemostat",
@@ -80,11 +80,11 @@
         usr << "<span class='warning'>There are only slots for one of each item! Damn budget cuts</span>"
     else
         if(..())
-            src.overlays += image('icons/apollo/objects.dmi', "sb_[W.name]")
+            src.overlays += image('icons/obj/objects.dmi', "sb_[W.name]")
 
 /obj/item/weapon/storage/surgery_bag/remove_from_storage(obj/item/W as obj, atom/new_location)
     if(..())
-        src.overlays -= image('icons/apollo/objects.dmi', "sb_[W.name]")
+        src.overlays -= image('icons/obj/objects.dmi', "sb_[W.name]")
 
 /obj/item/weapon/storage/surgery_bag/verb/toggle_roll(mob/user)
     set name = "Roll/Unroll surgery bag "
@@ -106,4 +106,4 @@
             user << "<span class='info'>You unroll the [src.name]. Time to get to work!"
             icon_state = "sbag_unrolled"
             for(var/obj/O in contents)
-                src.overlays += image('icons/apollo/objects.dmi', "sb_[O.name]")
+                src.overlays += image('icons/obj/objects.dmi', "sb_[O.name]")
