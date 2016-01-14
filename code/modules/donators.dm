@@ -56,3 +56,41 @@ proc/donator_tier(client/C)
 	for(var/client/C in clients)
 		if((C.holder && (C.holder.rights & R_ADMIN || C.holder.rights & R_MOD)) || C.donator)
 			C << "<span class='donatorsay'>" + create_text_tag("don", "DON:", C) + " <b>[src]: </b><span class='message'>[msg]</span></span>"
+
+#define DONATORSTFILE "data/whitelists/donators.txt"
+/proc/convert_donators()
+	establish_db_connection()
+	if(!dbcon.IsConnected())
+		world << "Database not connected!"
+		return null
+
+	var/list/raw_donators = list()
+	raw_donators = file2list( DONATORSTFILE, "\n" )
+
+	if( !raw_donators.len )
+		return
+
+	var/list/donators = list()
+	for( var/line in raw_donators )
+		var/list/item = list()
+		item = text2list( line, " - " ) // please dont break
+		if( item.len == 2 )
+			donators[item[1]] = item[2]
+
+	for( var/key in donators )
+		var/ckey = ckey(key)
+
+		var/DBQuery/query = dbcon.NewQuery("SELECT id FROM player WHERE ckey = '[ckey]'")
+		query.Execute()
+
+		var/flags = donators[key]
+		if( !query.NextRow() )
+			world << "Could not find '[ckey]' in the player database, and so could not add their tier '[flags]' donator status"
+			continue
+		else
+			world << "<b>Found '[ckey]' in the player database, and are adding their tier '[flags]' donator status</b>"
+
+		var/sql = "UPDATE player SET donator_flags = '[flags]' WHERE ckey = '[ckey]'"
+		var/DBQuery/query_insert = dbcon.NewQuery(sql)
+		query_insert.Execute()
+#undef DONATORSTFILE
