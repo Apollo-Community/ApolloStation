@@ -194,7 +194,7 @@
 	desc = "It looks ugly."
 	icon_state = "chair"
 
-/obj/structure/bed/chair
+/obj/structure/bed/chair/cushion
 	name = "chair"
 	desc = "You sit in this. This one has a cushioned seat."
 	icon_state = "chair2"
