@@ -62,6 +62,9 @@
 	if( !M )
 		return 0
 
+	if(!config.usewhitelist)
+		return 1
+
 	var/list/roles = list( "command" = WHITELIST_COMMAND )
 
 	var/whitelist = 0
@@ -137,6 +140,15 @@
 /proc/is_alien_whitelisted(mob/M, var/species)
 	if( !M )
 		return 0
+
+	if(!config.usealienwhitelist)
+		return 1
+
+	if( species == "human" || species == "Human")
+		return 1
+
+	if( species in unwhitelisted_aliens )
+		return 1
 
 	var/a_whitelist = 0
 	if( M.client )
