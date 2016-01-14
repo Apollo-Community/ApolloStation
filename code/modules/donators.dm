@@ -1,24 +1,29 @@
-var/list/donator_list = list()
+proc/get_donator(client/C)
+	establish_db_connection()
+	if(!dbcon.IsConnected())
+		return null
 
-proc/load_donators()
-	donator_list = file2list("data/whitelists/donators.txt")
+	var/donator = 0
+	var/sql_ckey = sql_sanitize_text(ckey(C.key))
 
-proc/is_donator(client/C)
-	if(donator_list)
-		for(var/line in donator_list)
-			if(findtext(line, "[C]"))
-				return 1
+	var/DBQuery/query = dbcon.NewQuery("SELECT donator_flags FROM player WHERE ckey = '[sql_ckey]'")
+	query.Execute()
+
+	if(query.NextRow())
+		donator |= text2num(query.item[1])
+
 	if(C.IsByondMember())	// unlikely people will be byond members (sorry its tru)
-		return 1
+		donator |= DONATOR_TIER_BYOND
+
+	return donator
 
 proc/donator_tier(client/C)
-	if(C.IsByondMember())
-		return "BYOND"		// TIER BYOND MASTERRACE?
-	if(donator_list)
-		for(var/line in donator_list)
-			//Return the tier
-			if(findtext(line,"[C.ckey] - 1"))				return 1
-			else if(findtext(line,"[C.ckey] - 2"))	return 2
+	if( C.donator & DONATOR_TIER_BYOND )
+		return "BYOND" // TIER BYOND MASTERRACE?
+	else if( C.donator & DONATOR_TIER_2 )
+		return 2
+	else if( C.donator & DONATOR_TIER_1 )
+		return 1
 
 	return 0
 
@@ -51,3 +56,48 @@ proc/donator_tier(client/C)
 	for(var/client/C in clients)
 		if((C.holder && (C.holder.rights & R_ADMIN || C.holder.rights & R_MOD)) || C.donator)
 			C << "<span class='donatorsay'>" + create_text_tag("don", "DON:", C) + " <b>[src]: </b><span class='message'>[msg]</span></span>"
+
+/proc/setDonator( var/key, var/flags = 0 )
+	if( !key )
+		return 0
+
+	var/ckey = ckey(key)
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM player WHERE ckey = '[ckey]'")
+	query.Execute()
+
+	if( !query.NextRow() )
+		return 0
+
+	var/sql = "UPDATE player SET donator_flags = '[flags]' WHERE ckey = '[ckey]'"
+	var/DBQuery/query_insert = dbcon.NewQuery(sql)
+	query_insert.Execute()
+
+	return 1
+
+#define DONATORSTFILE "data/whitelists/donators.txt"
+/proc/convert_donators()
+	establish_db_connection()
+	if(!dbcon.IsConnected())
+		world << "Database not connected!"
+		return null
+
+	var/list/raw_donators = list()
+	raw_donators = file2list( DONATORSTFILE, "\n" )
+
+	if( !raw_donators.len )
+		return
+
+	var/list/donators = list()
+	for( var/line in raw_donators )
+		var/list/item = list()
+		item = text2list( line, " - " ) // please dont break
+		if( item.len == 2 )
+			donators[item[1]] = item[2]
+
+	for( var/key in donators )
+		if( setDonator( key, donators[key] ))
+			world << "<b>Found '[key]' in the player database, and are adding their tier '[donators[key]]' donator status</b>"
+		else
+			world << "Could not find '[key]' in the player database, and so could not add their tier '[donators[key]]' donator status"
+#undef DONATORSTFILE

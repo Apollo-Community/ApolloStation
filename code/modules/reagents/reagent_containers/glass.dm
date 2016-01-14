@@ -51,11 +51,11 @@
 		if(!..(user, 2))
 			return
 		if(reagents && reagents.reagent_list.len)
-			user << "\blue It contains [src.reagents.total_volume] units of liquid."
+			user << "<span class='notice'> It contains [src.reagents.total_volume] units of liquid.</span>"
 		else
-			user << "\blue It is empty."
+			user << "<span class='notice'> It is empty.</span>"
 		if (!is_open_container())
-			user << "\blue Airtight lid seals it completely."
+			user << "<span class='notice'> Airtight lid seals it completely.</span>"
 
 	attack_self()
 		..()
@@ -77,7 +77,7 @@
 				return
 
 		if(ismob(target) && target.reagents && reagents.total_volume)
-			user << "\blue You splash the solution onto [target]."
+			user << "<span class='notice'> You splash the solution onto [target].</span>"
 
 			var/mob/living/M = target
 			var/list/injected = list()
@@ -90,7 +90,7 @@
 				msg_admin_attack("[user.name] ([user.ckey]) splashed [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 			for(var/mob/O in viewers(world.view, user))
-				O.show_message(text("\red [] has been splashed with something by []!", target, user), 1)
+				O.show_message(text("<span class='alert'> [] has been splashed with something by []!</span>", target, user), 1)
 			src.reagents.reaction(target, TOUCH)
 			spawn(5) src.reagents.clear_reagents()
 			return
@@ -98,28 +98,28 @@
 			target.add_fingerprint(user)
 
 			if(!target.reagents.total_volume && target.reagents)
-				user << "\red [target] is empty."
+				user << "<span class='alert'> [target] is empty.</span>"
 				return
 
 			if(reagents.total_volume >= reagents.maximum_volume)
-				user << "\red [src] is full."
+				user << "<span class='alert'> [src] is full.</span>"
 				return
 
 			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-			user << "\blue You fill [src] with [trans] units of the contents of [target]."
+			user << "<span class='notice'> You fill [src] with [trans] units of the contents of [target].</span>"
 
 		else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 
 			if(!reagents.total_volume)
-				user << "\red [src] is empty."
+				user << "<span class='alert'> [src] is empty.</span>"
 				return
 
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)
-				user << "\red [target] is full."
+				user << "<span class='alert'> [target] is full.</span>"
 				return
 
 			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-			user << "\blue You transfer [trans] units of the solution to [target]."
+			user << "<span class='notice'> You transfer [trans] units of the solution to [target].</span>"
 
 		else if(istype(target, /obj/machinery/bunsen_burner))
 			return
@@ -131,7 +131,7 @@
 			return
 
 		else if(reagents && reagents.total_volume)
-			user << "\blue You splash the solution onto [target]."
+			user << "<span class='notice'> You splash the solution onto [target].</span>"
 			src.reagents.reaction(target, TOUCH)
 			spawn(5) src.reagents.clear_reagents()
 			return
@@ -140,9 +140,9 @@
 		if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/device/flashlight/pen))
 			var/tmp_label = sanitizeSafe(input(user, "Enter a label for [src.name]","Label",src.label_text), MAX_NAME_LEN)
 			if(length(tmp_label) > 10)
-				user << "\red The label can be at most 10 characters long."
+				user << "<span class='alert'> The label can be at most 10 characters long.</span>"
 			else
-				user << "\blue You set the label to \"[tmp_label]\"."
+				user << "<span class='notice'> You set the label to \"[tmp_label]\".</span>"
 				src.label_text = tmp_label
 				src.update_name_label()
 

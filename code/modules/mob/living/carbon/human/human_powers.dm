@@ -47,7 +47,7 @@
 
 	for(var/mob/O in viewers(src, null))
 		if ((O.client && !( O.blinded )))
-			O.show_message(text("\red <B>[] [failed ? "tried to tackle" : "has tackled"] down []!</B>", src, T), 1)
+			O.show_message(text("<span class='alert'> <B>[] [failed ? "tried to tackle" : "has tackled"] down []!</B></span>", src, T), 1)
 
 /mob/living/carbon/human/proc/leap()
 	set category = "Abilities"
@@ -92,7 +92,7 @@
 	if(status_flags & LEAPING) status_flags &= ~LEAPING
 
 	if(!src.Adjacent(T))
-		src << "\red You miss!"
+		src << "<span class='alert'> You miss!</span>"
 		return
 
 	T.Weaken(5)
@@ -131,16 +131,16 @@
 		return
 
 	if(stat || paralysis || stunned || weakened || lying)
-		src << "\red You cannot do that in your current state."
+		src << "<span class='alert'> You cannot do that in your current state.</span>"
 		return
 
 	var/obj/item/weapon/grab/G = locate() in src
 	if(!G || !istype(G))
-		src << "\red You are not grabbing anyone."
+		src << "<span class='alert'> You are not grabbing anyone.</span>"
 		return
 
 	if(G.state < GRAB_AGGRESSIVE)
-		src << "\red You must have an aggressive grab to gut your prey!"
+		src << "<span class='alert'> You must have an aggressive grab to gut your prey!</span>"
 		return
 
 	last_special = world.time + 50
@@ -187,12 +187,12 @@
 
 	log_say("[key_name(src)] communed to [key_name(M)]: [text]")
 
-	M << "\blue Like lead slabs crashing into the ocean, alien thoughts drop into your mind: [text]"
+	M << "<span class='notice'> Like lead slabs crashing into the ocean, alien thoughts drop into your mind: [text]</span>"
 	if(istype(M,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		if(H.species.name == src.species.name)
 			return
-		H << "\red Your nose begins to bleed..."
+		H << "<span class='alert'> Your nose begins to bleed...</span>"
 		H.drip(1)
 
 /mob/living/carbon/human/proc/regurgitate()
@@ -205,7 +205,7 @@
 			if(M in stomach_contents)
 				stomach_contents.Remove(M)
 				M.loc = loc
-		src.visible_message("\red <B>[src] hurls out the contents of their stomach!</B>")
+		src.visible_message("<span class='alert'> <B>[src] hurls out the contents of their stomach!</B></span>")
 	return
 
 /mob/living/carbon/human/proc/psychic_whisper(mob/M as mob in oview())
@@ -216,6 +216,6 @@
 	var/msg = sanitize(input("Message:", "Psychic Whisper") as text|null)
 	if(msg)
 		log_say("PsychicWhisper: [key_name(src)]->[M.key] : [msg]")
-		M << "\green You hear a strange, alien voice in your head... \italic [msg]"
-		src << "\green You said: \"[msg]\" to [M]"
+		M << "<span class='green'> You hear a strange, alien voice in your head... </span>\italic [msg]"
+		src << "<span class='green'> You said: </span>\"[msg]\" to [M]"
 	return

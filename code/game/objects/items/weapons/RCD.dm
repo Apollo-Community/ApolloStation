@@ -107,7 +107,7 @@
 	else if(deconstruct && istype(T,/turf/simulated/wall))
 		build_delay = deconstruct ? 50 : 40
 		build_cost =  5
-		build_type =  (!canRwall && istype(T,/turf/simulated/wall/r_wall)) ? null : "wall"
+		build_type =  (!canRwall && istype(T,/turf/simulated/wall/alloy/reinforced)) ? null : "wall"
 		build_turf =  /turf/simulated/floor
 	else if(istype(T,/turf/simulated/floor))
 		build_delay = deconstruct ? 50 : 20

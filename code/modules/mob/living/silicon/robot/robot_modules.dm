@@ -165,7 +165,7 @@
 
 	stacktypes = list(
 		/obj/item/stack/sheet/metal = 50,
-		/obj/item/stack/sheet/plasteel = 10,
+		/obj/item/stack/sheet/alloy/plasteel = 10,
 		/obj/item/stack/sheet/glass/reinforced = 50,
 		/obj/item/stack/rods = 50
 		)

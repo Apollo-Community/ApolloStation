@@ -119,10 +119,10 @@
 		if(M.client)
 			spawn(0)
 				if(M.buckled)
-					M << "\red Sudden acceleration presses you into your chair!"
+					M << "<span class='alert'> Sudden acceleration presses you into your chair!</span>"
 					shake_camera(M, 3, 1)
 				else
-					M << "\red The floor lurches beneath you!"
+					M << "<span class='alert'> The floor lurches beneath you!</span>"
 					shake_camera(M, 10, 1)
 		if(istype(M, /mob/living/carbon))
 			if(!M.buckled)

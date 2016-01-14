@@ -1,0 +1,37 @@
+<!-- 
+Title: Alloy Synthesizer
+Used In File(s): \code\modules\research\alloy_synth.dm
+-->
+
+<h3>Contents</h3>
+<div class="item">
+	<div class="itemLabel">
+		<span>Base hopper</span><br>
+		{{:data.base_name}}
+	</div>
+	<div class="itemContent">
+		{{:helper.link('Eject Base', 'eject', {'eject_base' : 1}, (data.base == null) ? 'disabled' : data.busy ? 'disabled' : null)}}<br>
+		{{:helper.displayBar(data.base_amount, 0, 50, 'good')}} 
+		<div class="statusValue">
+			{{:data.base_amount*100/50}}%
+		</div>
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel">
+		<span>Mineral hopper</span><br>
+		{{:data.mineral_name}}
+	</div>
+	<div class="itemContent">
+		{{:helper.link('Eject Mineral', 'eject', {'eject_mineral' : 1}, (data.mineral == null) ? 'disabled' : data.busy ? 'disabled' : null)}}<br>
+		{{:helper.displayBar(data.mineral_amount, 0, 50, 'good')}} 
+		<div class="statusValue">
+			{{:data.mineral_amount*100/50}}%
+		</div>
+	</div>
+</div>
+<hr>
+
+<div class="item">
+	{{:helper.link('Combine', null, {'combine' : 1}, data.busy ? 'disabled' : data.base == null ? 'disabled' : data.mineral == null ? 'disabled' : null)}}
+</div>

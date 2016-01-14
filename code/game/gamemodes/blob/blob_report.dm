@@ -77,7 +77,7 @@
 				else
 					src.wall += 1
 
-			if(istype(T, /turf/simulated/wall/r_wall))
+			if(istype(T, /turf/simulated/wall/alloy/reinforced))
 				if(T:intact)
 					src.r_wall += 2
 				else
