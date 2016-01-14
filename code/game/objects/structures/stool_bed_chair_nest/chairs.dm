@@ -1,7 +1,7 @@
-/obj/structure/bed/chair	//YES, chairs are a type of bed, which are a type of stool. This works, believe me.	-Pete
+/obj/structure/bed/chair
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
-	icon_state = "chair"
+	icon_state = "chair1"
 
 	var/propelled = 0 // Check for fire-extinguisher-driven chairs
 
@@ -189,6 +189,16 @@
 /obj/structure/bed/chair/office/dark
 	icon_state = "officechair_dark"
 
+/obj/structure/bed/chair/old
+	name = "chair"
+	desc = "It looks ugly."
+	icon_state = "chair"
+
+/obj/structure/bed/chair
+	name = "chair"
+	desc = "You sit in this. This one has a cushioned seat."
+	icon_state = "chair2"
+
 /obj/structure/bed/chair/shuttle
 	name = "shuttle chair"
 	desc = "It looks uncomfortable."
@@ -200,3 +210,9 @@
 	armrest.layer = MOB_LAYER + 0.1
 
 	return ..()
+
+/obj/structure/bed/chair/shuttle/afterbuckle()
+	if(buckled_mob)
+		overlays += armrest
+	else
+		overlays -= armrest
