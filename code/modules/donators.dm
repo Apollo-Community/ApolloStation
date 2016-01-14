@@ -57,6 +57,24 @@ proc/donator_tier(client/C)
 		if((C.holder && (C.holder.rights & R_ADMIN || C.holder.rights & R_MOD)) || C.donator)
 			C << "<span class='donatorsay'>" + create_text_tag("don", "DON:", C) + " <b>[src]: </b><span class='message'>[msg]</span></span>"
 
+/proc/setDonator( var/key, var/flags = 0 )
+	if( !key )
+		return 0
+
+	var/ckey = ckey(key)
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM player WHERE ckey = '[ckey]'")
+	query.Execute()
+
+	if( !query.NextRow() )
+		return 0
+
+	var/sql = "UPDATE player SET donator_flags = '[flags]' WHERE ckey = '[ckey]'"
+	var/DBQuery/query_insert = dbcon.NewQuery(sql)
+	query_insert.Execute()
+
+	return 1
+
 #define DONATORSTFILE "data/whitelists/donators.txt"
 /proc/convert_donators()
 	establish_db_connection()
@@ -78,19 +96,8 @@ proc/donator_tier(client/C)
 			donators[item[1]] = item[2]
 
 	for( var/key in donators )
-		var/ckey = ckey(key)
-
-		var/DBQuery/query = dbcon.NewQuery("SELECT id FROM player WHERE ckey = '[ckey]'")
-		query.Execute()
-
-		var/flags = donators[key]
-		if( !query.NextRow() )
-			world << "Could not find '[ckey]' in the player database, and so could not add their tier '[flags]' donator status"
-			continue
+		if( setDonator( key, donators[key] ))
+			world << "<b>Found '[key]' in the player database, and are adding their tier '[donators[key]]' donator status</b>"
 		else
-			world << "<b>Found '[ckey]' in the player database, and are adding their tier '[flags]' donator status</b>"
-
-		var/sql = "UPDATE player SET donator_flags = '[flags]' WHERE ckey = '[ckey]'"
-		var/DBQuery/query_insert = dbcon.NewQuery(sql)
-		query_insert.Execute()
+			world << "Could not find '[key]' in the player database, and so could not add their tier '[donators[key]]' donator status"
 #undef DONATORSTFILE

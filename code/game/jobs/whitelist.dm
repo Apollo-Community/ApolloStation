@@ -1,3 +1,41 @@
+/client/proc/add_whitelist()
+	set category = "Admin"
+	set name = "Write to Whitelist"
+	set desc = "Adds a user to any whitelist available in the directory mid-round."
+
+	if(!check_rights(R_ADMIN|R_MOD))
+		return
+
+	var/client/input = input("Please, select a player!", "Add User to Whitelist") as null|anything in sortKey(clients)
+	if(!input)
+		return
+	else
+		input = input.ckey
+
+	var/type = input("Select what type of whitelist", "Add User to Whitelist") as null|anything in list( "Whitelist", "Alien Whitelist", "Donators" )
+	switch(type)
+		if("Whitelist")
+			if( add_command_whitelist( input, WHITELIST_COMMAND ))
+				message_admins("[key_name_admin(usr)] has whitelisted [input].")
+			else
+				usr << "<span class='danger'>Could not add [input] to the whitelist. Perhaps they're already whitelisted?</span>"
+		if("Alien Whitelist")
+			var/race = input("Which species?") as null|anything in whitelisted_species
+			if(!race)
+				return
+			if( add_alien_whitelist( input, get_alien_flag( race )))
+				message_admins("[key_name_admin(usr)] has whitelisted [input] for [race].")
+			else
+				usr << "<span class='danger'>Could not add [race] to the whitelist of [input]. Perhaps they've already got that one?</span>"
+		if("Donators")
+			var/tier = input("Which tier?") as null|anything in list( 1, 2 )
+			if( !tier )
+				return
+			if( setDonator( input, tier ))
+				message_admins("[key_name_admin(usr)] has added [input] as a donator.")
+			else
+				usr << "<span class='danger'>Could not add [input] to donators. Perhaps they're already set?</span>"
+
 /proc/get_whitelist( client/C /*, var/rank*/)
 	if( !C )
 		return 0
@@ -34,6 +72,24 @@
 		return 1
 	return 0
 
+/proc/add_command_whitelist( var/key, var/flags = 0 )
+	if( !key )
+		return 0
+
+	var/ckey = ckey(key)
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM player WHERE ckey = '[ckey]'")
+	query.Execute()
+
+	if( !query.NextRow() )
+		return 0
+
+	var/sql = "UPDATE player SET whitelist_flags = '[flags]' WHERE ckey = '[ckey]'"
+	var/DBQuery/query_insert = dbcon.NewQuery(sql)
+	query_insert.Execute()
+
+	return 1
+
 /proc/get_alien_flag( var/species )
 	var/list/aliens = list( "diona" = A_WHITELSIT_DIONA,
 							"skrell" = A_WHITELSIT_SKRELL,
@@ -61,8 +117,14 @@
 	if(!dbcon.IsConnected())
 		return null
 
+	return get_alien_whitelist_flags( C.ckey )
+
+/proc/get_alien_whitelist_flags( var/key )
+	if( !key )
+		return 0
+
 	var/a_whitelist = 0
-	var/sql_ckey = sql_sanitize_text(ckey(C.key))
+	var/sql_ckey = sql_sanitize_text(ckey(key))
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT species_flags FROM player WHERE ckey = '[sql_ckey]'")
 	query.Execute()
@@ -85,6 +147,31 @@
 
 	return 0
 
+/proc/add_alien_whitelist( var/key, var/flags = 0)
+	if( !key )
+		return 0
+
+	var/ckey = ckey(key)
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT species_flags FROM player WHERE ckey = '[ckey]'")
+	query.Execute()
+
+	if( !query.NextRow() )
+		return 0
+
+	var/existing_flags = get_alien_whitelist_flags( key )
+
+	if( existing_flags & flags )
+		return 0
+
+	existing_flags |= flags
+
+	var/sql = "UPDATE player SET species_flags = '[existing_flags]' WHERE ckey = '[ckey]'"
+	var/DBQuery/query_insert = dbcon.NewQuery(sql)
+	query_insert.Execute()
+
+	return 1
+
 #define WHITELISTFILE "data/whitelists/whitelist.txt"
 /proc/convert_whitelist()
 	establish_db_connection()
@@ -99,20 +186,12 @@
 		return
 
 	for( var/key in whitelist )
-		var/ckey = ckey(key)
-
-		var/DBQuery/query = dbcon.NewQuery("SELECT id FROM player WHERE ckey = '[ckey]'")
-		query.Execute()
-
-		if( !query.NextRow() )
-			world << "Could not find '[ckey]' in the player database, and so could not add their whitelist status"
-			continue
+		if( add_command_whitelist( key, WHITELIST_COMMAND ))
+			world << "<b>Found '[key]' in the player database, and are adding their whitelist</b>"
 		else
-			world << "<b>Found '[ckey]' in the player database, and are adding their whitelist</b>"
+			world << "Could not find '[key]' in the player database, and so could not add their whitelist status"
 
-		var/sql = "UPDATE player SET whitelist_flags = '1' WHERE ckey = '[ckey]'"
-		var/DBQuery/query_insert = dbcon.NewQuery(sql)
-		query_insert.Execute()
+
 #undef WHITELISTFILE
 
 #define A_WHITELISTFILE "data/whitelists/alienwhitelist.txt"
@@ -129,29 +208,16 @@
 		return
 
 	var/list/whitelist = list()
-	var/empty_lines = 0
 	for( var/line in raw_whitelist )
 		var/list/item = list()
 		item = text2list( line, " - " ) // please dont break
 		if( item.len == 2 )
 			whitelist[item[1]] |= get_alien_flag( "[item[2]]" )
-		else
-			empty_lines++
 
 	for( var/key in whitelist )
-		var/ckey = ckey(key)
-
-		var/DBQuery/query = dbcon.NewQuery("SELECT id FROM player WHERE ckey = '[ckey]'")
-		query.Execute()
-
-		var/flags = whitelist[key]
-		if( !query.NextRow() )
-			world << "Could not find '[ckey]' in the player database, and so could not add their species status of '[flags]'"
-			continue
+		if( add_alien_whitelist( key, whitelist[key] ))
+			world << "<b>Found '[key]' in the player database, and are adding their species status of '[whitelist[key]]'</b>"
 		else
-			world << "<b>Found '[ckey]' in the player database, and are adding their species status of '[flags]'</b>"
+			world << "Could not find '[key]' in the player database, and so could not add their species status of '[whitelist[key]]'"
 
-		var/sql = "UPDATE player SET species_flags = '[flags]' WHERE ckey = '[ckey]'"
-		var/DBQuery/query_insert = dbcon.NewQuery(sql)
-		query_insert.Execute()
 #undef A_WHITELISTFILE
