@@ -133,7 +133,7 @@
 					equip_traitor(newtraitor)
 
 				traitors += newtraitor.mind
-				newtraitor << "<span class='alert'> <B>No time like the present.</B> </span><span class='black'> It's time to take matters into your own hands...</span>>"
+				newtraitor << "<span class='alert'> <B>No time like the present.</B> </span><span class='black'> It's time to take matters into your own hands...</span>"
 				newtraitor << "<B>You are now a traitor.</B>"
 				newtraitor.mind.special_role = "traitor"
 				newtraitor.hud_updateflag |= 1 << SPECIALROLE_HUD

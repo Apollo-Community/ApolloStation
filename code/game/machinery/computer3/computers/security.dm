@@ -60,7 +60,7 @@
 			return
 
 		if (computer.z in config.admin_levels)
-			usr << "<span class='alert'> <b>Unable to establish a connection</b>: </span><span class='black'> You're too far away from the station!</span>>"
+			usr << "<span class='alert'> <b>Unable to establish a connection</b>: </span><span class='black'> You're too far away from the station!</span>"
 			return
 		var/dat
 
