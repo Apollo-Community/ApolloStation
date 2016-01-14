@@ -93,7 +93,7 @@
 /proc/get_alien_flag( var/species )
 	var/list/aliens = list( "diona" = A_WHITELSIT_DIONA,
 							"skrell" = A_WHITELSIT_SKRELL,
-							"tajaran" = A_WHITELSIT_TAJARA,
+							"tajara" = A_WHITELSIT_TAJARA,
 							"unathi" = A_WHITELSIT_UNATHI,
 							"wryn" = A_WHITELSIT_WRYN )
 	var/alien_flag = 0
