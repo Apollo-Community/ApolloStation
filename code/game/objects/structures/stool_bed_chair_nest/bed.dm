@@ -10,7 +10,7 @@
 /obj/structure/bed
 	name = "bed"
 	desc = "This is used to lie in, sleep in or strap on."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/furniture.dmi'
 	icon_state = "bed"
 	var/mob/living/buckled_mob
 	var/movable = 0 // For mobility checks

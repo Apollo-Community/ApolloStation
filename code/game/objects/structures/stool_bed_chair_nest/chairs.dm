@@ -74,7 +74,7 @@
 	return
 
 // Chair types
-/obj/structure/bed/chair/wood/normal
+/obj/structure/bed/chair/wood
 	icon_state = "wooden_chair"
 	name = "wooden chair"
 	desc = "Old is never too old to not be in fashion."
@@ -100,7 +100,7 @@
 	var/image/armrest = null
 
 /obj/structure/bed/chair/comfy/New()
-	armrest = image("icons/obj/objects.dmi", "comfychair_armrest")
+	armrest = image("icons/obj/furniture.dmi", "comfychair_armrest")
 	armrest.layer = MOB_LAYER + 0.1
 
 	return ..()
@@ -188,3 +188,15 @@
 
 /obj/structure/bed/chair/office/dark
 	icon_state = "officechair_dark"
+
+/obj/structure/bed/chair/shuttle
+	name = "shuttle chair"
+	desc = "It looks uncomfortable."
+	icon_state = "chair3"
+	var/image/armrest = null
+
+/obj/structure/bed/chair/shuttle/New()
+	armrest = image("icons/obj/furniture.dmi", "chair3_overlay")
+	armrest.layer = MOB_LAYER + 0.1
+
+	return ..()
