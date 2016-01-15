@@ -121,7 +121,7 @@ var/rat_king_spawned = 0 // I hate globals, but I cant think of a better way to 
 
 	..( severity )
 
-/mob/living/UnarmedAttack(var/atom/A, var/proximity)
+/mob/living/simple_animal/rodent/rat/king/UnarmedAttack(var/atom/A, var/proximity)
 	if( !health )
 		return
 
