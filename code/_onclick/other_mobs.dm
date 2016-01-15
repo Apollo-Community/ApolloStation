@@ -22,12 +22,6 @@
 
 	A.attack_hand(src)
 
-/mob/living/UnarmedAttack(var/atom/A, var/proximity)
-	if(!..())
-		return
-
-	A.attack_hand(src)
-
 /atom/proc/attack_hand(mob/user as mob)
 	return
 
@@ -137,11 +131,10 @@
 	Animals
 */
 /mob/living/simple_animal/UnarmedAttack(var/atom/A, var/proximity)
-
 	if(!..())
 		return
 
-	if(melee_damage_upper == 0 && istype(A,/mob/living))
+	if(melee_damage_upper == 0 && istype( A,/mob/living ))
 		custom_emote(1,"[friendly] [A]!")
 		return
 

@@ -266,6 +266,13 @@
 		emag()
 		return 1
 
+	if(src.allowed(user) && operable())
+		if(src.density)
+			open()
+		else
+			close()
+		return
+
 	if(istype( user, /mob/living/simple_animal/rodent/rat/king ))
 		var/mob/living/simple_animal/rodent/rat/king/K = user
 		if( K.canNibbleWire() )
@@ -277,18 +284,10 @@
 
 			src.visible_message("<span class='warning'>\The [user] chews its way through the door wiring!</span>" )
 
-
 			emag()
 			return 1
 		else
 			user << "<span class='warning'>Our [K.swarm_name] must grow larger before we can chew through wires!</span>"
-
-	if(src.allowed(user) && operable())
-		if(src.density)
-			open()
-		else
-			close()
-		return
 
 	if(src.density && !(stat & (NOPOWER|BROKEN)))
 		do_animate("deny")

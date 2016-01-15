@@ -21,6 +21,9 @@ var/rat_king_spawned = 0 // I hate globals, but I cant think of a better way to 
 
 	if( istype( O, /mob/living/simple_animal/rodent/rat/king ))
 		var/mob/living/simple_animal/rodent/rat/king/K = O
+		if( !K.health )
+			return
+
 		src.visible_message("<span class='warning'>[src] joins the [K.swarm_name] of \the [K]</span>", \
 							"<span class='notice'>We join our brethren in \the [K.swarm_name]. Long live \the [K].<span>")
 		K.absorb( src )
@@ -28,6 +31,7 @@ var/rat_king_spawned = 0 // I hate globals, but I cant think of a better way to 
 /*=======  LONG LIVE THE KING  =========*/
 /mob/living/simple_animal/rodent/rat/king
 	attacktext = "bitten"
+	a_intent = "harm"
 
 	icon_state = "rat_king_gray"
 	icon_living = "rat_king_gray"
@@ -117,6 +121,16 @@ var/rat_king_spawned = 0 // I hate globals, but I cant think of a better way to 
 
 	..( severity )
 
+/mob/living/UnarmedAttack(var/atom/A, var/proximity)
+	if( !health )
+		return
+
+	if( istype( A, /obj/machinery/door ) || istype( A, /obj/structure/cable ))
+		A.attack_hand( src )
+		return
+
+	..()
+
 /mob/living/simple_animal/rodent/rat/king/proc/update()
 	if( rats.len >= RAT_GOD_LEVEL )
 		name = "\improper Rat God"
@@ -190,7 +204,14 @@ var/rat_king_spawned = 0 // I hate globals, but I cant think of a better way to 
 	set category = "Abilities"
 	set name = "Decree"
 
+	if( !health )
+		usr << "<span class='notice'>You are dead, you cannot use any abilities!</span>"
+		return
+
 	var/input = sanitize(input(usr, "Please enter the [lowertext( announce_name )] for your whole kingdom.", "What?", "") as message|null, extra = 0)
+
+	if( !input )
+		return
 
 	var/full_message = {"<hr><h2 class='alert'>[src]\'s [announce_name]</h2>
 <span class='alert'>[input]</span><hr><br>"}
@@ -200,6 +221,10 @@ var/rat_king_spawned = 0 // I hate globals, but I cant think of a better way to 
 /mob/living/simple_animal/rodent/rat/king/verb/roar()
 	set category = "Abilities"
 	set name = "Mighty Roar"
+
+	if( !health )
+		usr << "<span class='notice'>You are dead, you cannot use any abilities!</span>"
+		return
 
 	if( !canRoar() )
 		usr << "<span class='warning'>Our [swarm_name] must grow larger before we can use this ability!</span>"
