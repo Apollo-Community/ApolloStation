@@ -136,6 +136,20 @@
 					if(!istype(src,/mob/living/simple_animal/rodent))
 						msg_admin_attack("[src.name] ([src.ckey]) was hit by a [O], thrown by [M.name] ([assailant.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
+		if(istype(O, /obj/item/weapon/arrow))
+			var/obj/item/weapon/arrow/P = O
+			var/mob/M = src
+			var/mob/firer = P.fired_by
+			if(istype(M, /mob))
+				if(!in_unlogged(firer))
+					M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[O.type]</b>"
+					firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[O.type]</b>"
+					msg_admin_attack("[firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [O] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
+			else
+				if(!in_unlogged(M))
+					M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[O]</b>"
+					msg_admin_attack("UNKNOWN shot [M] ([M.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
+
 		// Begin BS12 momentum-transfer code.
 		if(O.throw_source && speed >= 15)
 			var/obj/item/weapon/W = O
