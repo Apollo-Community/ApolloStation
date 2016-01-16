@@ -292,8 +292,8 @@
 	f3.set_opacity(1)
 	f4.density = 1
 	f4.set_opacity(1)
-	f4.density = 1
-	f4.set_opacity(1)
+	f5.density = 1
+	f5.set_opacity(1)
 
 	if (src.visible)
 		src.set_opacity(1)
