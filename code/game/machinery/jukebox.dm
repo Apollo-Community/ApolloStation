@@ -60,6 +60,7 @@ datum/track/New(var/title_name, var/audio)
 		new/datum/track("Careless", 'sound/music/carelesswhisper.ogg'),
 		new/datum/track("Long Ago", 'sound/music/midis/cantina.mid'),
 		new/datum/track("Peace", 'sound/music/midis/manwhosoldtheworld.mid'),
+		new/datum/track("Thunderdome", 'sound/music/THUNDERDOME.ogg'),
 	)
 
 /obj/machinery/media/jukebox/New()
@@ -247,10 +248,10 @@ datum/track/New(var/title_name, var/audio)
 		if(dist <=15 && M.z == src.z)	// Only same z-level
 			if(playing)			//Plays the song to people within range while the song is active.
 				if(!M.jukebox_sound)
-					M.jukebox_sound = sound(current_track.sound, channel = jukebox_id, repeat = 1, volume = 35 - 3*(dist-1))
+					M.jukebox_sound = sound(current_track.sound, channel = jukebox_id, repeat = 1, volume = 60 - 3*(dist-1))
 					M.jukebox_sound.status = SOUND_UPDATE
 				else
-					M.jukebox_sound.volume = 35 - 3*(dist-1)
+					M.jukebox_sound.volume = 60 - 3*(dist-1)
 
 				var/turf/turf_source = get_turf( src )
 				M.jukebox_sound.x = (turf_source.x - M.x)*3 // Hearing from the west/east

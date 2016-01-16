@@ -493,12 +493,12 @@ area/space/atmosalert()
 	name = "\improper Thunderdome"
 	icon_state = "thunder"
 	requires_power = 0
+	ambience = list('sound/music/THUNDERDOME.ogg')
 
 /area/tdome/arena
 	name = "\improper Thunderdome Arena"
 	icon_state = "thunder"
 	requires_power = 0
-	music = list( 'sound/music/THUNDERDOME.ogg' )
 
 /area/tdome/tdome1
 	name = "\improper Thunderdome (Team 1)"
