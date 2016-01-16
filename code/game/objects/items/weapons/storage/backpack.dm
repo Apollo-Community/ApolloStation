@@ -49,11 +49,11 @@
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(crit_fail)
-			user << "\red The Bluespace generator isn't working."
+			user << "<span class='alert'> The Bluespace generator isn't working.</span>"
 			return
 		if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
 			investigate_log("has become a singularity. Caused by [user.key]","singulo")
-			user << "\red The Bluespace interfaces of the two devices catastrophically malfunction!"
+			user << "<span class='alert'> The Bluespace interfaces of the two devices catastrophically malfunction!</span>"
 			qdel(W)
 
 			new /obj/singularity/mostly_harmless( src.loc )
@@ -64,9 +64,9 @@
 	proc/failcheck(mob/user as mob)
 		if (prob(src.reliability)) return 1 //No failure
 		if (prob(src.reliability))
-			user << "\red The Bluespace portal resists your attempt to add another item." //light failure
+			user << "<span class='alert'> The Bluespace portal resists your attempt to add another item.</span>" //light failure
 		else
-			user << "\red The Bluespace generator malfunctions!"
+			user << "<span class='alert'> The Bluespace generator malfunctions!</span>"
 			for (var/obj/O in src.contents) //it broke, delete what was in it
 				qdel(O)
 			crit_fail = 1

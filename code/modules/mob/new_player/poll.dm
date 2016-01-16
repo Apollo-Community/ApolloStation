@@ -105,7 +105,7 @@
 			break
 
 		if(!found)
-			usr << "\red Poll question details not found."
+			usr << "<span class='alert'> Poll question details not found.</span>"
 			return
 
 		switch(polltype)
@@ -362,7 +362,7 @@
 			break
 
 		if(!validpoll)
-			usr << "\red Poll is not valid."
+			usr << "<span class='alert'> Poll is not valid.</span>"
 			return
 
 		var/DBQuery/select_query2 = dbcon.NewQuery("SELECT id FROM poll_option WHERE id = [optionid] AND pollid = [pollid]")
@@ -375,7 +375,7 @@
 			break
 
 		if(!validoption)
-			usr << "\red Poll option is not valid."
+			usr << "<span class='alert'> Poll option is not valid.</span>"
 			return
 
 		var/alreadyvoted = 0
@@ -389,11 +389,11 @@
 				break
 
 		if(!multichoice && alreadyvoted)
-			usr << "\red You already voted in this poll."
+			usr << "<span class='alert'> You already voted in this poll.</span>"
 			return
 
 		if(multichoice && (alreadyvoted >= multiplechoiceoptions))
-			usr << "\red You already have more than [multiplechoiceoptions] logged votes on this poll. Enough is enough. Contact the database admin if this is an error."
+			usr << "<span class='alert'> You already have more than [multiplechoiceoptions] logged votes on this poll. Enough is enough. Contact the database admin if this is an error.</span>"
 			return
 
 		var/adminrank = "Player"
@@ -404,7 +404,7 @@
 		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO poll_vote (id ,datetime ,pollid ,optionid ,ckey ,ip ,adminrank) VALUES (null, Now(), [pollid], [optionid], '[usr.ckey]', '[usr.client.address]', '[adminrank]')")
 		insert_query.Execute()
 
-		usr << "\blue Vote successful."
+		usr << "<span class='notice'> Vote successful.</span>"
 		usr << browse(null,"window=playerpoll")
 
 
@@ -429,7 +429,7 @@
 			break
 
 		if(!validpoll)
-			usr << "\red Poll is not valid."
+			usr << "<span class='alert'> Poll is not valid.</span>"
 			return
 
 		var/alreadyvoted = 0
@@ -442,7 +442,7 @@
 			break
 
 		if(alreadyvoted)
-			usr << "\red You already sent your feedback for this poll."
+			usr << "<span class='alert'> You already sent your feedback for this poll.</span>"
 			return
 
 		var/adminrank = "Player"
@@ -462,7 +462,7 @@
 		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO poll_textreply (id ,datetime ,pollid ,ckey ,ip ,replytext ,adminrank) VALUES (null, Now(), [pollid], '[usr.ckey]', '[usr.client.address]', '[replytext]', '[adminrank]')")
 		insert_query.Execute()
 
-		usr << "\blue Feedback logging successful."
+		usr << "<span class='notice'> Feedback logging successful.</span>"
 		usr << browse(null,"window=playerpoll")
 
 
@@ -487,7 +487,7 @@
 			break
 
 		if(!validpoll)
-			usr << "\red Poll is not valid."
+			usr << "<span class='alert'> Poll is not valid.</span>"
 			return
 
 		var/DBQuery/select_query2 = dbcon.NewQuery("SELECT id FROM poll_option WHERE id = [optionid] AND pollid = [pollid]")
@@ -500,7 +500,7 @@
 			break
 
 		if(!validoption)
-			usr << "\red Poll option is not valid."
+			usr << "<span class='alert'> Poll option is not valid.</span>"
 			return
 
 		var/alreadyvoted = 0
@@ -513,7 +513,7 @@
 			break
 
 		if(alreadyvoted)
-			usr << "\red You already voted in this poll."
+			usr << "<span class='alert'> You already voted in this poll.</span>"
 			return
 
 		var/adminrank = "Player"
@@ -524,5 +524,5 @@
 		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO poll_vote (id ,datetime ,pollid ,optionid ,ckey ,ip ,adminrank, rating) VALUES (null, Now(), [pollid], [optionid], '[usr.ckey]', '[usr.client.address]', '[adminrank]', [(isnull(rating)) ? "null" : rating])")
 		insert_query.Execute()
 
-		usr << "\blue Vote successful."
+		usr << "<span class='notice'> Vote successful.</span>"
 		usr << browse(null,"window=playerpoll")

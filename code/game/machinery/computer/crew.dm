@@ -42,7 +42,7 @@
 /obj/machinery/computer/crew/Topic(href, href_list)
 	if(..()) return
 	if (src.z in  config.admin_levels)
-		usr << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+		usr << "<span class='alert'> <b>Unable to establish a connection</b>: </span><span class='black'> You're too far away from the station!</span>"
 		return 0
 	if( href_list["close"] )
 		var/mob/user = usr

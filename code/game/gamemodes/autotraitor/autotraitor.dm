@@ -6,6 +6,9 @@
 	name = "AutoTraitor"
 	config_tag = "extend-a-traitormongous"
 
+	restricted_jobs = list("Cyborg", "AI")//They are part of the AI if he is traitor so are they, they use to get double chances
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Internal Affairs Agent", "Head of Security", "Captain")//AI", Currently out of the list as malf does not work for shit
+
 	var/list/possible_traitors
 	var/num_players = 0
 
@@ -26,7 +29,6 @@
 		for(var/job in restricted_jobs)
 			if(player.assigned_role == job)
 				possible_traitors -= player
-
 
 	for(var/mob/new_player/P in world)
 		if(P.client && P.ready)
@@ -91,9 +93,8 @@
 			if (player.client && player.mind && !player.mind.special_role && player.stat != 2 && (player.client && player.client.prefs.be_special & BE_TRAITOR) && !jobban_isbanned(player, "Syndicate"))
 				possible_traitors += player
 		for(var/datum/mind/player in possible_traitors)
-			for(var/job in restricted_jobs)
-				if(player.assigned_role == job)
-					possible_traitors -= player
+			if(player.assigned_role in restricted_jobs)
+				possible_traitors -= player
 
 		//message_admins("Live Players: [playercount]")
 		//message_admins("Live Traitors: [traitorcount]")
@@ -109,7 +110,6 @@
 		traitor_prob = (playercount - (max_traitors - 1) * 10) * 5
 		if(traitorcount < max_traitors - 1)
 			traitor_prob += 50
-
 
 		if(traitorcount < max_traitors)
 			//message_admins("Number of Traitors is below maximum.  Rolling for new Traitor.")
@@ -133,7 +133,7 @@
 					equip_traitor(newtraitor)
 
 				traitors += newtraitor.mind
-				newtraitor << "\red <B>No time like the present.</B> \black It's time to take matters into your own hands..."
+				newtraitor << "<span class='alert'> <B>No time like the present.</B> </span><span class='black'> It's time to take matters into your own hands...</span>"
 				newtraitor << "<B>You are now a traitor.</B>"
 				newtraitor.mind.special_role = "traitor"
 				newtraitor.hud_updateflag |= 1 << SPECIALROLE_HUD
@@ -147,18 +147,21 @@
 
 		traitorcheckloop()
 
-
-
 /datum/game_mode/traitor/autotraitor/latespawn(mob/living/carbon/human/character)
 	..()
 	if(emergency_shuttle.departed)
 		return
 	//message_admins("Late Join Check")
 	if((character.client && character.client.prefs.be_special & BE_TRAITOR) && !jobban_isbanned(character, "Syndicate"))
+		if( character.mind ) // We dont want to select people who shouldn't be traitor
+			if( character.mind.assigned_role in restricted_jobs)
+				return
+
 		//message_admins("Late Joiner has Be Syndicate")
 		//message_admins("Checking number of players")
 		var/playercount = 0
 		var/traitorcount = 0
+
 		for(var/mob/living/player in mob_list)
 
 			if (player.client && player.stat != 2)
@@ -188,7 +191,7 @@
 					forge_traitor_objectives(character.mind)
 				equip_traitor(character)
 				traitors += character.mind
-				character << "\red <B>You are the traitor.</B>"
+				character << "<span class='alert'> <B>You are the traitor.</B></span>"
 				character.mind.special_role = "traitor"
 				character << "<i>You have been selected this round as an antagonist</i>!"
 				show_objectives(character.mind)

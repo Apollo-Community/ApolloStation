@@ -32,13 +32,13 @@
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			if( O.force )
-				usr << "\red [src.name] is wearing too much armor. You can't cause /him any damage."
+				usr << "<span class='alert'> [src.name] is wearing too much armor. You can't cause /him any damage.</span>"
 				for (var/mob/M in viewers(src, null))
-					M.show_message("\red \b [user] hits [src] with the [O], however [src] is too armored.")
+					M.show_message("<span class='alert'> \b [user] hits [src] with the [O], however [src] is too armored.</span>")
 			else
-				usr << "\red [src.name] is wearing too much armor. You can't reach /his skin."
+				usr << "<span class='alert'> [src.name] is wearing too much armor. You can't reach /his skin.</span>"
 				for (var/mob/M in viewers(src, null))
-					M.show_message("\red [user] gently taps [src] with the [O]. ")
+					M.show_message("<span class='alert'> [user] gently taps [src] with the [O]. </span>")
 			if(prob(15))
 				visible_emote("looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression on \his face")
 			return
@@ -66,14 +66,14 @@
 					inventory_head.loc = src.loc
 					inventory_head = null
 				else
-					usr << "\red There is nothing to remove from [src.name]\'s [remove_from]."
+					usr << "<span class='alert'> There is nothing to remove from [src.name]\'s [remove_from].</span>"
 					return
 			if("back")
 				if(inventory_back)
 					inventory_back.loc = src.loc
 					inventory_back = null
 				else
-					usr << "\red There is nothing to remove from [src.name]\'s [remove_from]."
+					usr << "<span class='alert'> There is nothing to remove from [src.name]\'s [remove_from].</span>"
 					return
 
 		//show_inv(usr) //Commented out because changing Ian's  name and then calling up his inventory opens a new inventory...which is annoying.
@@ -84,12 +84,12 @@
 			return
 		var/add_to = href_list["add_inv"]
 		if(!usr.get_active_hand())
-			usr << "\red You have nothing in your hand to put on [src.name]\'s [add_to]."
+			usr << "<span class='alert'> You have nothing in your hand to put on [src.name]\'s [add_to].</span>"
 			return
 		switch(add_to)
 			if("head")
 				if(inventory_head)
-					usr << "\red [src.name] is already wearing something."
+					usr << "<span class='alert'> [src.name] is already wearing something.</span>"
 					return
 				else
 					//Corgis are supposed to be simpler, so only a select few objects can actually be put
@@ -133,7 +133,7 @@
 						return
 
 					if( ! ( item_to_add.type in allowed_types ) )
-						usr << "\red [src.name] doesn't seem too keen on wearing that item."
+						usr << "<span class='alert'> [src.name] doesn't seem too keen on wearing that item.</span>"
 						return
 
 					usr.drop_item()
@@ -141,7 +141,7 @@
 
 			if("back")
 				if(inventory_back)
-					usr << "\red [src.name] is already wearing something."
+					usr << "<span class='alert'> [src.name] is already wearing something.</span>"
 					return
 				else
 					var/obj/item/item_to_add = usr.get_active_hand()
@@ -157,7 +157,7 @@
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
-						usr << "\red This object won't fit."
+						usr << "<span class='alert'> This object won't fit.</span>"
 						return
 
 					usr.drop_item()
@@ -314,7 +314,7 @@
 			var/mob/tmob = AM
 			if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
 				if(prob(70))
-					src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
+					src << "<span class='alert'> <B>You fail to push [tmob]'s fat ass out of the way.</B></span>"
 					now_pushing = 0
 					return
 			if(!(tmob.status_flags & CANPUSH))
@@ -383,7 +383,7 @@
 //pupplies cannot wear anything.
 /mob/living/simple_animal/dog/corgi/puppy/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		usr << "\red You can't fit this on [src]"
+		usr << "<span class='alert'> You can't fit this on [src]</span>"
 		return
 	..()
 
@@ -406,7 +406,7 @@
 //Lisa already has a cute bow!
 /mob/living/simple_animal/dog/corgi/Lisa/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		usr << "\red [src] already has a cute bow!"
+		usr << "<span class='alert'> [src] already has a cute bow!</span>"
 		return
 	..()
 

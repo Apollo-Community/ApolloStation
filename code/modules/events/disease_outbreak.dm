@@ -1,9 +1,8 @@
 /datum/event/disease_outbreak
 	announceWhen	= 15
 
-
 /datum/event/disease_outbreak/announce()
-	command_announcement.Announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", new_sound = 'sound/AI/outbreak7.ogg')
+	command_announcement.Announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. Medical personnel must contain the outbreak.", "AUTOMATED ALERT: Biohazard Detected", new_sound = 'sound/AI/outbreak7.ogg')
 
 /datum/event/disease_outbreak/setup()
 	announceWhen = rand(15, 30)

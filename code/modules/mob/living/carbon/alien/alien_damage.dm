@@ -48,7 +48,7 @@
 
 		//paralysis += 1
 
-	show_message("\red The blob attacks you!")
+	show_message("<span class='alert'> The blob attacks you!</span>")
 
 	adjustFireLoss(damage)
 

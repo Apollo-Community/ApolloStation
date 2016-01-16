@@ -105,7 +105,7 @@
 /turf/simulated/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		usr << "\red You don't have the dexterity to do this!"
+		usr << "<span class='alert'> You don't have the dexterity to do this!</span>"
 		return
 
 	if (istype(W, /obj/item/device/core_sampler))
@@ -121,9 +121,9 @@
 
 	if (istype(W, /obj/item/device/measuring_tape))
 		var/obj/item/device/measuring_tape/P = W
-		user.visible_message("\blue[user] extends [P] towards [src].","\blue You extend [P] towards [src].")
+		user.visible_message("<span class='notice'>[user] extends [P] towards [src].</span>","<span class='notice'> You extend [P] towards [src].</span>")
 		if(do_after(user,25))
-			user << "\blue \icon[P] [src] has been excavated to a depth of [2*excavation_level]cm."
+			user << "<span class='notice'> \icon[P] [src] has been excavated to a depth of [2*excavation_level]cm.</span>"
 		return
 
 	if (istype(W, /obj/item/weapon/pickaxe))
@@ -146,7 +146,7 @@
 				//Chance to destroy / extract any finds here
 				fail_message = ". <b>[pick("There is a crunching noise","[W] collides with some different rock","Part of the rock face crumbles away","Something breaks under [W]")]</b>"
 
-		user << "\red You start [P.drill_verb][fail_message ? fail_message : ""]."
+		user << "<span class='alert'> You start [P.drill_verb][fail_message ? fail_message : ""].</span>"
 
 		if(fail_message && prob(90))
 			if(prob(25))
@@ -157,7 +157,7 @@
 					artifact_debris()
 
 		if(do_after(user,P.digspeed))
-			user << "\blue You finish [P.drill_verb] the rock."
+			user << "<span class='notice'> You finish [P.drill_verb] the rock.</span>"
 
 			if(finds && finds.len)
 				var/datum/find/F = finds[1]
@@ -325,7 +325,7 @@
 		var/obj/effect/suspension_field/S = locate() in src
 		if(!S || S.field_type != get_responsive_reagent(F.find_type))
 			if(X)
-				visible_message("\red<b>[pick("[display_name] crumbles away into dust","[display_name] breaks apart")].</b>")
+				visible_message("<span class='alert'><b>[pick("[display_name] crumbles away into dust</span>","[display_name] breaks apart")].</b>")
 				qdel(X)
 
 	finds.Remove(F)
@@ -351,7 +351,7 @@
 				R.amount = rand(5,25)
 
 			if(4)
-				var/obj/item/stack/sheet/plasteel/R = new(src)
+				var/obj/item/stack/sheet/alloy/plasteel/R = new(src)
 				R.amount = rand(5,25)
 
 			if(5)
@@ -446,19 +446,19 @@
 
 	if(valid_tool)
 		if (dug)
-			user << "\red This area has already been dug"
+			user << "<span class='alert'> This area has already been dug</span>"
 			return
 
 		var/turf/T = user.loc
 		if (!(istype(T)))
 			return
 
-		user << "\red You start digging."
+		user << "<span class='alert'> You start digging.</span>"
 		playsound(user.loc, 'sound/effects/rustle1.ogg', 50, 1)
 
 		if(!do_after(user,40)) return
 
-		user << "\blue You dug a hole."
+		user << "<span class='notice'> You dug a hole.</span>"
 		gets_dug()
 
 	else if(istype(W,/obj/item/weapon/storage/bag/ore))

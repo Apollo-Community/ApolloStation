@@ -94,7 +94,7 @@
 
 		//Plasteel (common ore) Because it has a million more uses then phoron
 		if(pickednum >= 10)
-			new /obj/item/stack/sheet/plasteel(src, rand(common_min, common_max))
+			new /obj/item/stack/sheet/alloy/plasteel(src, rand(common_min, common_max))
 
 		//Phoron (rare ore)
 		if(pickednum >= 15)
@@ -134,7 +134,7 @@
 		/obj/item/stack/sheet/mineral/phoron,
 		/obj/item/stack/sheet/mineral/uranium,
 		/obj/item/stack/sheet/mineral/diamond,
-		/obj/item/stack/sheet/plasteel,
+		/obj/item/stack/sheet/alloy/plasteel,
 		/obj/item/stack/rods
 		)
 

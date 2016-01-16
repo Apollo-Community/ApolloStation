@@ -137,6 +137,10 @@ CREATE TABLE IF NOT EXISTS `player` (
   `ip` varchar(18) NOT NULL,
   `computerid` varchar(32) NOT NULL,
   `lastadminrank` varchar(32) NOT NULL DEFAULT 'Player',
+  `whitelist_flags` int(16) NOT NULL DEFAULT '0',
+  `species_flags` int(16) NOT NULL DEFAULT '0',
+  `donator_flags` int(16) NOT NULL DEFAULT '0',
+  `admin_notes` LONGTEXT,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ckey` (`ckey`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;

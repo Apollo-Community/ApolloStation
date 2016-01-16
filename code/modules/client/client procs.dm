@@ -73,11 +73,11 @@
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
-			src << "\red You have exceeded the spam filter limit for identical messages. An auto-mute was applied."
+			src << "<span class='alert'> You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>"
 			cmd_admin_mute(src.mob, mute_type, 1)
 			return 1
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
-			src << "\red You are nearing the spam filter limit for identical messages."
+			src << "<span class='alert'> You are nearing the spam filter limit for identical messages.</span>"
 			return 0
 	else
 		last_message = message
@@ -120,7 +120,7 @@
 		src.preload_rsc = pick(config.resource_urls)
 	else src.preload_rsc = 1 // If config.resource_urls is not set, preload like normal.
 
-	src << "\red If the title screen is black, resources are still downloading. Please be patient until the title screen appears."
+	src << "<span class='alert'> If the title screen is black, resources are still downloading. Please be patient until the title screen appears.</span>"
 
 	for(var/client/target in clients)
 		if( !target )
@@ -173,7 +173,9 @@
 		spawn(5) // And wait a half-second, since it sounds like you can do this too fast.
 			winset(src, null, "command=\".configure graphics-hwmode on\"")
 
-	donator = is_donator(src)
+	donator = get_donator( src )
+
+
 	if(!stat_player_list.Find(key))			//Don't add the same person twice? How does this even happen
 		var/obj/playerlist/O = new()
 		O.icon = icon('./icons/playerlist.dmi')

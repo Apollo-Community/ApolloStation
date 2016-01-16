@@ -1,0 +1,65 @@
+"a" = (/turf/simulated/wall,/area/centcom)
+"b" = (/turf/simulated/floor/plating,/area/centcom)
+"c" = (/obj/structure/barricade/wooden,/obj/structure/grille,/turf/simulated/floor/plating,/area/centcom)
+"d" = (/turf/simulated/floor,/area/centcom)
+"e" = (/obj/machinery/light{dir = 1},/turf/simulated/floor,/area/centcom)
+"f" = (/obj/machinery/light{dir = 8},/turf/simulated/floor,/area/centcom)
+"g" = (/obj/structure/table/rack,/obj/item/weapon/gun/energy/laser/bluetag,/obj/item/weapon/gun/energy/laser/redtag,/turf/simulated/floor,/area/centcom)
+"h" = (/obj/structure/table/reinforced,/turf/simulated/floor,/area/centcom)
+"i" = (/turf/simulated/floor{dir = 8; icon_state = "brown"},/area/centcom)
+"j" = (/obj/structure/window/reinforced{dir = 1; maxhealth = 1.#INF},/obj/structure/window/reinforced{dir = 8},/obj/structure/flora/pottedplant{tag = "icon-plant-21"; icon_state = "plant-21"},/turf/simulated/floor/grass,/area/centcom)
+"k" = (/obj/structure/window/reinforced{dir = 1; maxhealth = 1.#INF},/turf/simulated/floor/grass,/area/centcom)
+"l" = (/turf/simulated/floor/grass,/area/centcom)
+"m" = (/obj/structure/window/reinforced{dir = 1; maxhealth = 1.#INF},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/grass,/area/centcom)
+"n" = (/obj/structure/table/rack,/obj/item/weapon/gun/energy/laser,/obj/item/weapon/gun/energy/lasercannon,/turf/simulated/floor,/area/centcom)
+"o" = (/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/grass,/area/centcom)
+"p" = (/obj/structure/flora/ausbushes/ppflowers,/turf/simulated/floor/grass,/area/centcom)
+"q" = (/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/grass,/area/centcom)
+"r" = (/obj/machinery/light{dir = 4},/turf/simulated/floor,/area/centcom)
+"s" = (/obj/structure/table/rack,/obj/item/weapon/gun/projectile/silenced,/obj/item/weapon/gun/projectile/russian,/obj/item/weapon/gun/projectile/mateba,/turf/simulated/floor,/area/centcom)
+"t" = (/obj/structure/flora/tree/apple,/turf/simulated/floor/grass,/area/centcom)
+"u" = (/obj/structure/table/rack,/obj/item/weapon/gun/rocketlauncher,/turf/simulated/floor,/area/centcom)
+"v" = (/obj/structure/flora/ausbushes/ywflowers,/turf/simulated/floor/grass,/area/centcom)
+"w" = (/obj/structure/flora/ausbushes/brflowers,/turf/simulated/floor/grass,/area/centcom)
+"x" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/flora/pottedplant{tag = "icon-plant-10"; icon_state = "plant-10"},/turf/simulated/floor/grass,/area/centcom)
+"y" = (/obj/structure/window/reinforced,/turf/simulated/floor/grass,/area/centcom)
+"z" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/flora/ausbushes/leafybush,/turf/simulated/floor/grass,/area/centcom)
+"A" = (/obj/structure/table,/obj/machinery/microwave,/turf/simulated/floor,/area/centcom)
+"B" = (/obj/structure/table/reinforced,/obj/item/weapon/reagent_containers/food/snacks/grilledcheese,/turf/simulated/floor,/area/centcom)
+"C" = (/obj/structure/sink{icon_state = "sink"; dir = 8; pixel_x = -12; pixel_y = 2},/turf/simulated/floor,/area/centcom)
+"D" = (/obj/structure/table/reinforced,/obj/item/weapon/reagent_containers/food/snacks/fries,/turf/simulated/floor,/area/centcom)
+"E" = (/obj/structure/bed/chair/couch/left,/turf/simulated/floor,/area/centcom)
+"F" = (/obj/structure/bed/chair/couch/middle,/turf/simulated/floor,/area/centcom)
+"G" = (/obj/structure/bed/chair/couch/right,/turf/simulated/floor,/area/centcom)
+"H" = (/obj/structure/table,/obj/item/weapon/storage/fancy/egg_box,/obj/machinery/light{dir = 8},/turf/simulated/floor,/area/centcom)
+"I" = (/obj/structure/table/reinforced,/obj/item/weapon/reagent_containers/food/snacks/flatbread,/turf/simulated/floor,/area/centcom)
+"J" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/flour,/turf/simulated/floor,/area/centcom)
+"K" = (/obj/structure/table/woodentable,/turf/simulated/floor,/area/centcom)
+"L" = (/obj/effect/decal/cleanable/cobweb2,/turf/simulated/floor/plating,/area/centcom)
+"M" = (/obj/structure/bed/chair/couch/left{tag = "icon-couch_left (NORTH)"; icon_state = "couch_left"; dir = 1},/turf/simulated/floor,/area/centcom)
+"N" = (/obj/structure/bed/chair/couch/middle{tag = "icon-couch_middle (NORTH)"; icon_state = "couch_middle"; dir = 1},/turf/simulated/floor,/area/centcom)
+"O" = (/obj/structure/bed/chair/couch/right{tag = "icon-couch_right (NORTH)"; icon_state = "couch_right"; dir = 1},/turf/simulated/floor,/area/centcom)
+"P" = (/obj/machinery/light,/turf/simulated/floor,/area/centcom)
+"Q" = (/turf/space,/area/space)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaa
+abbbbbbcdeddedddeda
+abaaaaaafddddddddda
+abagddhidddjklkmdda
+abanddhidddopllqdra
+abafddhidddlplpldda
+abasddhidddlltlldda
+abauddhidddovlwqdda
+abaaaaaafddxylyzdra
+abaAddBidddddddddda
+abaCddDidddEFFFGdda
+abaHddIidddddddddda
+abaJddhiddddKKKddra
+abaaaaaafddddddddda
+abLaddhidddMNNNOdda
+abbafdhiddPddPddPda
+abbaddhiddaaaaaaaaa
+abbaddhiddaQQQQQQQQ
+aaaaaaaaaaaQQQQQQQQ
+"}

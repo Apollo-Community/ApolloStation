@@ -43,5 +43,5 @@
 		W.registered_name = H.real_name
 		H.equip_to_slot_or_qdel(W, slot_wear_id)
 
-	message_admins("\blue [key_name_admin(usr)] used THERE CAN BE ONLY ONE!", "ADMINBUS:")
+	message_admins("<span class='notice'> [key_name_admin(usr)] used THERE CAN BE ONLY ONE!</span>", "ADMINBUS:")
 	log_admin("[key_name(usr)] used there can be only one.")

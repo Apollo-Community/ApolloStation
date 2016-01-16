@@ -108,7 +108,7 @@
 
 		if(prob(stunprob))
 			powerlevel = max(0,powerlevel-3)
-			src.visible_message("\red <B>The [name] has shocked [M]!</B>")
+			src.visible_message("<span class='alert'> <B>The [name] has shocked [M]!</B></span>")
 			M.Weaken(power)
 			M.Stun(power)
 			if (M.stuttering < power) M.stuttering = power
@@ -131,11 +131,10 @@
 	Animals
 */
 /mob/living/simple_animal/UnarmedAttack(var/atom/A, var/proximity)
-
 	if(!..())
 		return
 
-	if(melee_damage_upper == 0 && istype(A,/mob/living))
+	if(melee_damage_upper == 0 && istype( A,/mob/living ))
 		custom_emote(1,"[friendly] [A]!")
 		return
 

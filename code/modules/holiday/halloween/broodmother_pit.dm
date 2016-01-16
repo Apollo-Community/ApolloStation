@@ -11,10 +11,10 @@
 			else
 				pumpkins.Add(W.icon_state)
 			for(var/mob/living/M in orange(src,7))
-				M << "\blue <b>A [pumpkins.len < 4 ? "noise" : "groan"] echo's from the bottom of the pit!</b>"
+				M << "<span class='notice'> <b>A [pumpkins.len < 4 ? "noise" : "groan"] echo's from the bottom of the pit!</b></span>"
 				M << "<span class='notice'><b>Halloween Secret - [pumpkins.len] out of 7 have been thrown in!</b></span>"
 		else if(pumpkins.len==7)
-			user << "\blue <b>The broodmother has already been defeated!</b>"
+			user << "<span class='notice'> <b>The broodmother has already been defeated!</b></span>"
 			return
 		else
 			for(var/mob/living/M in orange(src,7))	// Same condition to win it
@@ -32,7 +32,7 @@
 			user << "<span class='notice'><b>Halloween Uber Secret - You've already collected this item. Sorry!</b></span>"
 	else
 		user << "<span class='warning'>You don't think whatever is down there will like that..</span>"
-		user << "\blue You throw it down anyway!"
+		user << "<span class='notice'> You throw it down anyway!</span>"
 
 	qdel(W)
 
