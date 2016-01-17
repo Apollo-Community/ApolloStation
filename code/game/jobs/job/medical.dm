@@ -75,9 +75,6 @@
 						if(2) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/virology(H), slot_back)
 						if(3) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel_vir(H), slot_back)
 						if(4) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
-				if("Medical Doctor")
-					H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
-					H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/labcoat(H), slot_wear_suit)
 				if("Nurse")
 					if(H.gender == FEMALE)
 						if(prob(50))
@@ -87,6 +84,9 @@
 						H.equip_to_slot_or_qdel(new /obj/item/clothing/head/nursehat(H), slot_head)
 					else
 						H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/medical/purple(H), slot_w_uniform)
+				else	//Catch all for medical titles.
+					H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
+					H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/labcoat(H), slot_wear_suit)
 		else
 			H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 			H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/labcoat(H), slot_wear_suit)
