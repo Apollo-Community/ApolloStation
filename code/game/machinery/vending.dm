@@ -169,7 +169,7 @@
 		user.drop_item()
 		W.loc = src
 		coin = W
-		user << "<span class='notice'> You insert the [W] into the [src]</span>"
+		user << "<span class='notice'>You insert the [W] into the [src]</span>"
 		return
 	else if(istype(W, /obj/item/weapon/card) && currently_vending)
 		var/obj/item/weapon/card/I = W
@@ -178,7 +178,7 @@
 		user.drop_item()
 		W.loc = src
 		ewallet = W
-		user << "<span class='notice'> You insert the [W] into the [src]</span>"
+		user << "<span class='notice'>You insert the [W] into the [src]</span>"
 
 	else if(istype(W, /obj/item/weapon/wrench))
 
@@ -377,7 +377,7 @@
 		coin.loc = src.loc
 		if(!usr.get_active_hand())
 			usr.put_in_hands(coin)
-		usr << "<span class='notice'> You remove the [coin] from the [src]</span>"
+		usr << "<span class='notice'>You remove the [coin] from the [src]</span>"
 		coin = null
 
 	if(href_list["remove_ewallet"] && !istype(usr,/mob/living/silicon))
@@ -387,7 +387,7 @@
 		ewallet.loc = src.loc
 		if(!usr.get_active_hand())
 			usr.put_in_hands(ewallet)
-		usr << "<span class='notice'> You remove the [ewallet] from the [src]</span>"
+		usr << "<span class='notice'>You remove the [ewallet] from the [src]</span>"
 		ewallet = null
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
@@ -398,10 +398,10 @@
 				if(istype(usr,/mob/living/silicon/robot))
 					var/mob/living/silicon/robot/R = usr
 					if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))
-						usr << "<span class='alert'> The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
+						usr << "<span class='alert'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
 						return
 				else
-					usr << "<span class='alert'> The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
+					usr << "<span class='alert'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
 					return
 
 			if((!allowed(usr)) && !emagged && scan_id)	//For SECURE VENDING MACHINES YEAH
@@ -424,7 +424,7 @@
 						ewallet.worth -= R.price
 						src.vend(R, usr)
 					else
-						usr << "<span class='alert'> The ewallet doesn't have enough money to pay for that.</span>"
+						usr << "<span class='alert'>The ewallet doesn't have enough money to pay for that.</span>"
 						src.currently_vending = R
 						src.updateUsrDialog()
 				else
@@ -456,13 +456,13 @@
 
 	if (R in coin_records)
 		if(!coin)
-			user << "<span class='notice'> You need to insert a coin to get this item.</span>"
+			user << "<span class='notice'>You need to insert a coin to get this item.</span>"
 			return
 		if(coin.string_attached)
 			if(prob(50))
-				user << "<span class='notice'> You successfully pull the coin out before the [src] could swallow it.</span>"
+				user << "<span class='notice'>You successfully pull the coin out before the [src] could swallow it.</span>"
 			else
-				user << "<span class='notice'> You weren't able to pull the coin out fast enough, the machine ate it, string and all.</span>"
+				user << "<span class='notice'>You weren't able to pull the coin out fast enough, the machine ate it, string and all.</span>"
 				qdel(coin)
 		else
 			qdel(coin)
@@ -486,7 +486,7 @@
 
 /obj/machinery/vending/proc/stock(var/datum/data/vending_product/R, var/mob/user)
 	if(src.panel_open)
-		user << "<span class='notice'> You stock the [src] with \a [R.product_name]</span>"
+		user << "<span class='notice'>You stock the [src] with \a [R.product_name]</span>"
 		R.amount++
 
 	src.updateUsrDialog()
@@ -573,7 +573,7 @@
 		return 0
 	spawn(0)
 		throw_item.throw_at(target, 16, 3, src)
-	src.visible_message("<span class='alert'> <b>[src] launches [throw_item.name] at [target.name]!</b></span>")
+	src.visible_message("<span class='alert'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
 	return 1
 
 /*

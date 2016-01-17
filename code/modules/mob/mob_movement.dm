@@ -42,7 +42,7 @@
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
 	else
-		usr << "<span class='alert'> This mob type cannot throw items.</span>"
+		usr << "<span class='alert'>This mob type cannot throw items.</span>"
 	return
 
 
@@ -50,11 +50,11 @@
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		if(!C.get_active_hand())
-			usr << "<span class='alert'> You have nothing to drop in your hand.</span>"
+			usr << "<span class='alert'>You have nothing to drop in your hand.</span>"
 			return
 		drop_item()
 	else
-		usr << "<span class='alert'> This mob type cannot drop items.</span>"
+		usr << "<span class='alert'>This mob type cannot drop items.</span>"
 	return
 
 //This gets called when you press the delete button.
@@ -62,7 +62,7 @@
 	set hidden = 1
 
 	if(!usr.pulling)
-		usr << "<span class='notice'> You are not pulling anything.</span>"
+		usr << "<span class='notice'>You are not pulling anything.</span>"
 		return
 	usr.stop_pulling()
 
@@ -242,13 +242,13 @@
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
 					if(!M.restrained() && M.stat == 0 && M.canmove && mob.Adjacent(M))
-						src << "<span class='notice'> You're restrained! You can't move!</span>"
+						src << "<span class='notice'>You're restrained! You can't move!</span>"
 						return 0
 					else
 						M.stop_pulling()
 
 		if(mob.pinned.len)
-			src << "<span class='notice'> You're pinned to a wall by [mob.pinned[1]]!</span>"
+			src << "<span class='notice'>You're pinned to a wall by [mob.pinned[1]]!</span>"
 			return 0
 
 		move_delay = world.time//set move delay
@@ -427,7 +427,7 @@
 
 	//Check to see if we slipped
 	if(prob(Process_Spaceslipping(5)))
-		src << "<span class='notice'> <B>You slipped!</B></span>"
+		src << "<span class='notice'><B>You slipped!</B></span>"
 		src.inertia_dir = src.last_move
 		step(src, src.inertia_dir)
 		return 0
@@ -493,7 +493,7 @@
 		if(istype(src, /mob/living))
 			var/mob/living/MM = src
 			if(MM.client && !MM.stat)
-				MM << "<span class='alert'> Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is.</span>"
+				MM << "<span class='alert'>Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is.</span>"
 				if(MM.x <= TRANSITIONEDGE)
 					MM.inertia_dir = 4
 				else if(MM.x >= world.maxx -TRANSITIONEDGE)

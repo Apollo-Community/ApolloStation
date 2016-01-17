@@ -12,32 +12,32 @@
 /obj/machinery/bunsen_burner/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/reagent_containers))
 		if(held_container)
-			user << "<span class='alert'> You must remove the [held_container] first.</span>"
+			user << "<span class='alert'>You must remove the [held_container] first.</span>"
 		else
 			user.drop_item(src)
 			held_container = W
 			held_container.loc = src
-			user << "<span class='notice'> You put the [held_container] onto the [src].</span>"
+			user << "<span class='notice'>You put the [held_container] onto the [src].</span>"
 			var/image/I = image("icon"=W, "layer"=FLOAT_LAYER)
 			underlays += I
 			if(heating)
 				spawn(heat_time)
 					try_heating()
 	else
-		user << "<span class='alert'> You can't put the [W] onto the [src].</span>"
+		user << "<span class='alert'>You can't put the [W] onto the [src].</span>"
 
 /obj/machinery/bunsen_burner/attack_hand(mob/user as mob)
 	if(held_container)
 		underlays = null
-		user << "<span class='notice'> You remove the [held_container] from the [src].</span>"
+		user << "<span class='notice'>You remove the [held_container] from the [src].</span>"
 		held_container.loc = src.loc
 		held_container.attack_hand(user)
 		held_container = null
 	else
-		user << "<span class='alert'> There is nothing on the [src].</span>"
+		user << "<span class='alert'>There is nothing on the [src].</span>"
 
 /obj/machinery/bunsen_burner/proc/try_heating()
-	src.visible_message("<span class='notice'> \icon[src] [src] hisses.</span>")
+	src.visible_message("<span class='notice'>\icon[src] [src] hisses.</span>")
 	if(held_container && heating)
 		heated = 1
 		held_container.reagents.handle_reactions()

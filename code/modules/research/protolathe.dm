@@ -106,7 +106,7 @@ Note: Must be placed west/left of and R&D console to function.
 			qdel(src)
 			return 1
 		else
-			user << "<span class='alert'> You can't load the [src.name] while it's opened.</span>"
+			user << "<span class='alert'>You can't load the [src.name] while it's opened.</span>"
 			return 1
 	if (disabled)
 		return
@@ -114,17 +114,17 @@ Note: Must be placed west/left of and R&D console to function.
 		user << "\The protolathe must be linked to an R&D console first!"
 		return 1
 	if (busy)
-		user << "<span class='alert'> The protolathe is busy. Please wait for completion of previous operation.</span>"
+		user << "<span class='alert'>The protolathe is busy. Please wait for completion of previous operation.</span>"
 		return 1
 	if (!istype(O, /obj/item/stack/sheet))
-		user << "<span class='alert'> You cannot insert this item into the protolathe!</span>"
+		user << "<span class='alert'>You cannot insert this item into the protolathe!</span>"
 		return 1
 	if (stat)
 		return 1
 	if(istype(O,/obj/item/stack/sheet))
 		var/obj/item/stack/sheet/S = O
 		if (TotalMaterials() + S.perunit > max_material_storage)
-			user << "<span class='alert'> The protolathe's material bin is full. Please remove material before adding more.</span>"
+			user << "<span class='alert'>The protolathe's material bin is full. Please remove material before adding more.</span>"
 			return 1
 
 	var/obj/item/stack/sheet/stack = O
@@ -153,7 +153,7 @@ Note: Must be placed west/left of and R&D console to function.
 
 	spawn(16)					// do_after isn't really needed here, and is causing issues.
 		if(T == get_turf(user))
-			user << "<span class='notice'> You add [amount] sheets to the [src.name].</span>"
+			user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
 			icon_state = "protolathe"
 			switch(stacktype)
 				if(/obj/item/stack/sheet/metal)

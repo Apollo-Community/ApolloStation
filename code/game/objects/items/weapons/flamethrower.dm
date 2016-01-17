@@ -118,14 +118,14 @@
 		var/pressure = ptank.air_contents.return_pressure()
 		var/total_moles = ptank.air_contents.total_moles
 
-		user << "<span class='notice'> Results of analysis of \icon[icon]</span>"
+		user << "<span class='notice'>Results of analysis of \icon[icon]</span>"
 		if(total_moles>0)
-			user << "<span class='notice'> Pressure: [round(pressure,0.1)] kPa</span>"
+			user << "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>"
 			for(var/g in ptank.air_contents.gas)
-				user << "<span class='notice'> [gas_data.name[g]]: [round((ptank.air_contents.gas[g] / total_moles) * 100)]%</span>"
-			user << "<span class='notice'> Temperature: [round(ptank.air_contents.temperature-T0C)]&deg;C</span>"
+				user << "<span class='notice'>[gas_data.name[g]]: [round((ptank.air_contents.gas[g] / total_moles) * 100)]%</span>"
+			user << "<span class='notice'>Temperature: [round(ptank.air_contents.temperature-T0C)]&deg;C</span>"
 		else
-			user << "<span class='notice'> Tank is empty!</span>"
+			user << "<span class='notice'>Tank is empty!</span>"
 		return
 	..()
 	return

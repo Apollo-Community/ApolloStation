@@ -150,7 +150,7 @@
 
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
 	if(!allowed(user))
-		user << "<span class='alert'> Access Denied.</span>"
+		user << "<span class='alert'>Access Denied.</span>"
 		return
 
 	if(..())
@@ -209,7 +209,7 @@
 
 /obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
 	if(istype(I,/obj/item/weapon/card/emag) && !hacked)
-		user << "<span class='notice'> Special supplies unlocked.</span>"
+		user << "<span class='notice'>Special supplies unlocked.</span>"
 		hacked = 1
 		return
 	else

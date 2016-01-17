@@ -15,7 +15,7 @@
 
 	examine(mob/user)
 		if(..(user, 2))
-			user << "<span class='notice'> [grenades] / [max_grenades] Grenades.</span>"
+			user << "<span class='notice'>[grenades] / [max_grenades] Grenades.</span>"
 
 	attackby(obj/item/I as obj, mob/user as mob)
 
@@ -24,10 +24,10 @@
 				user.drop_item()
 				I.loc = src
 				grenades += I
-				user << "<span class='notice'> You put the grenade in the grenade launcher.</span>"
-				user << "<span class='notice'> [grenades.len] / [max_grenades] Grenades.</span>"
+				user << "<span class='notice'>You put the grenade in the grenade launcher.</span>"
+				user << "<span class='notice'>[grenades.len] / [max_grenades] Grenades.</span>"
 			else
-				usr << "<span class='alert'> The grenade launcher cannot hold more grenades.</span>"
+				usr << "<span class='alert'>The grenade launcher cannot hold more grenades.</span>"
 
 	afterattack(obj/target, mob/user , flag)
 
@@ -43,13 +43,13 @@
 		if(grenades.len)
 			spawn(0) fire_grenade(target,user)
 		else
-			usr << "<span class='alert'> The grenade launcher is empty.</span>"
+			usr << "<span class='alert'>The grenade launcher is empty.</span>"
 
 	proc
 		fire_grenade(atom/target, mob/user)
 			for(var/mob/O in viewers(world.view, user))
-				O.show_message(text("<span class='alert'> [] fired a grenade!</span>", user), 1)
-			user << "<span class='alert'> You fire the grenade launcher!</span>"
+				O.show_message(text("<span class='alert'>[] fired a grenade!</span>", user), 1)
+			user << "<span class='alert'>You fire the grenade launcher!</span>"
 			var/obj/item/weapon/grenade/chem_grenade/F = grenades[1] //Now with less copypasta!
 			grenades -= F
 			F.loc = user.loc

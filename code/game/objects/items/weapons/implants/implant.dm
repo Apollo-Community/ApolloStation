@@ -35,7 +35,7 @@
 		return 0
 
 	proc/meltdown()	//breaks it down, making implant unrecongizible
-		imp_in << "<span class='alert'> You feel something melting inside [part ? "your [part.display_name]" : "you"]!</span>"
+		imp_in << "<span class='alert'>You feel something melting inside [part ? "your [part.display_name]" : "you"]!</span>"
 		if (part)
 			part.take_damage(burn = 15, used_weapon = "Electronics meltdown")
 		else
@@ -171,7 +171,7 @@ Implant Specifics:<BR>"}
 			if(ishuman(imp_in))
 				if (elevel == "Localized Limb")
 					if(part) //For some reason, small_boom() didn't work. So have this bit of working copypaste.
-						imp_in.visible_message("<span class='alert'> Something beeps inside [imp_in][part ? "'s [part.display_name]" : ""]!</span>")
+						imp_in.visible_message("<span class='alert'>Something beeps inside [imp_in][part ? "'s [part.display_name]" : ""]!</span>")
 						playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
 						sleep(25)
 						if (istype(part,/datum/organ/external/chest) ||	\
@@ -236,7 +236,7 @@ Implant Specifics:<BR>"}
 
 	proc/small_boom()
 		if (ishuman(imp_in) && part)
-			imp_in.visible_message("<span class='alert'> Something beeps inside [imp_in][part ? "'s [part.display_name]" : ""]!</span>")
+			imp_in.visible_message("<span class='alert'>Something beeps inside [imp_in][part ? "'s [part.display_name]" : ""]!</span>")
 			playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
 			spawn(25)
 				if (ishuman(imp_in) && part)
@@ -341,7 +341,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 			return 0
 		else if(H.mind in ticker.mode:revolutionaries)
 			ticker.mode:remove_revolutionary(H.mind)
-		H << "<span class='notice'> You feel a surge of loyalty towards Nanotrasen.</span>"
+		H << "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>"
 		return 1
 
 
@@ -368,7 +368,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		if (src.uses < 1)	return 0
 		if (emote == "pale")
 			src.uses--
-			source << "<span class='notice'> You feel a sudden surge of energy!</span>"
+			source << "<span class='notice'>You feel a sudden surge of energy!</span>"
 			source.SetStunned(0)
 			source.SetWeakened(0)
 			source.SetParalysis(0)

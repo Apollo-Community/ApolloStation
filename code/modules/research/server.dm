@@ -209,7 +209,7 @@
 	add_fingerprint(usr)
 	usr.set_machine(src)
 	if(!src.allowed(usr) && !emagged)
-		usr << "<span class='alert'> You do not have the required access level</span>"
+		usr << "<span class='alert'>You do not have the required access level</span>"
 		return
 
 	if(href_list["main"])
@@ -338,7 +338,7 @@
 	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
-		user << "<span class='notice'> You you disable the security protocols</span>"
+		user << "<span class='notice'>You you disable the security protocols</span>"
 	src.updateUsrDialog()
 	return ..()
 

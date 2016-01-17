@@ -445,7 +445,7 @@ Class Procs:
 		else
 			user << "<span class='notice'>Following parts detected in the machine:</span>"
 			for(var/var/obj/item/C in component_parts)
-				user << "<span class='notice'>    [C.name]</span>"
+				user << "<span class='notice'>[C.name]</span>"
 		if(shouldplaysound)
 			W.play_rped_sound()
 		return 1

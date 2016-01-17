@@ -8,7 +8,7 @@
 
 	if (src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)
-			src << "<span class='alert'> You cannot talk in deadchat (muted).</span>"
+			src << "<span class='alert'>You cannot talk in deadchat (muted).</span>"
 			return
 
 		if (src.client.handle_spam_prevention(message,MUTE_DEADCHAT))
@@ -30,7 +30,7 @@
 
 	if(src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)
-			src << "<span class='alert'> You cannot emote in deadchat (muted).</span>"
+			src << "<span class='alert'>You cannot emote in deadchat (muted).</span>"
 			return
 
 		if(src.client.handle_spam_prevention(message, MUTE_DEADCHAT))

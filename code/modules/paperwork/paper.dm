@@ -121,7 +121,7 @@
 /obj/item/weapon/paper/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(user.zone_sel.selecting == "eyes")
 		user.visible_message("<span class='notice'>You show the paper to [M]. </span>", \
-			"<span class='notice'> [user] holds up a paper and shows it to [M]. </span>")
+			"<span class='notice'>[user] holds up a paper and shows it to [M]. </span>")
 		M.examinate(src)
 
 	else if(user.zone_sel.selecting == "mouth") // lipstick wiping
@@ -318,7 +318,7 @@
 				qdel(src)
 
 			else
-				user << "<span class='alert'> You must hold \the [P] steady to burn \the [src].</span>"
+				user << "<span class='alert'>You must hold \the [P] steady to burn \the [src].</span>"
 
 
 /obj/item/weapon/paper/Topic(href, href_list)
@@ -354,7 +354,7 @@
 		// check for exploits
 		for(var/bad in paper_blacklist)
 			if(findtext(t,bad))
-				usr << "<span class='notice'> You think to yourself, \"Hm.. this is only paper...\"</span>"
+				usr << "<span class='notice'>You think to yourself, \"Hm.. this is only paper...\"</span>"
 				log_admin("PAPER: [usr] ([usr.ckey]) tried to use forbidden word in [src]: [bad].")
 				message_admins("PAPER: [usr] ([usr.ckey]) tried to use forbidden word in [src]: [bad].")
 				return

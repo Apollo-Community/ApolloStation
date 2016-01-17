@@ -23,7 +23,7 @@
 		if(user==pulling)
 			pulling = null
 			user.pulledby = null
-			user << "<span class='alert'> You lost your grip!</span>"
+			user << "<span class='alert'>You lost your grip!</span>"
 		return
 	if(buckled_mob && pulling && user == buckled_mob)
 		if(pulling.stat || pulling.stunned || pulling.weakened || pulling.paralysis || pulling.lying || pulling.restrained())
@@ -41,10 +41,10 @@
 		if(user==pulling)
 			return
 	if(pulling && (get_dir(src.loc, pulling.loc) == direction))
-		user << "<span class='alert'> You cannot go there.</span>"
+		user << "<span class='alert'>You cannot go there.</span>"
 		return
 	if(pulling && buckled_mob && (buckled_mob == user))
-		user << "<span class='alert'> You cannot drive while being pushed.</span>"
+		user << "<span class='alert'>You cannot drive while being pushed.</span>"
 		return
 
 	// Let's roll
@@ -95,7 +95,7 @@
 					unbuckle()
 			if (pulling && (get_dist(src, pulling) > 1))
 				pulling.pulledby = null
-				pulling << "<span class='alert'> You lost your grip!</span>"
+				pulling << "<span class='alert'>You lost your grip!</span>"
 				pulling = null
 		else
 			if (occupant && (src.loc != occupant.loc))
@@ -113,7 +113,7 @@
 	if(over_object == usr && in_range(src, usr))
 		if(!ishuman(usr))	return
 		if(usr == buckled_mob)
-			usr << "<span class='alert'> You realize you are unable to push the wheelchair you sit in.</span>"
+			usr << "<span class='alert'>You realize you are unable to push the wheelchair you sit in.</span>"
 			return
 		if(!pulling)
 			pulling = usr
@@ -125,7 +125,7 @@
 		else
 			if(usr != pulling)
 				for(var/mob/O in viewers(pulling, null))
-					O.show_message("<span class='alert'> [usr] breaks [pulling]'s grip on the wheelchair.</span>", 1)
+					O.show_message("<span class='alert'>[usr] breaks [pulling]'s grip on the wheelchair.</span>", 1)
 			else
 				usr << "You let go of \the [name]'s handles."
 			pulling.pulledby = null

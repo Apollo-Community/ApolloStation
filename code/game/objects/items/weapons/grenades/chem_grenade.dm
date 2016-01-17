@@ -50,13 +50,13 @@
 		if(istype(W,/obj/item/device/assembly_holder) && (!stage || stage==1) && path != 2)
 			var/obj/item/device/assembly_holder/det = W
 			if(istype(det.a_left,det.a_right.type) || (!isigniter(det.a_left) && !isigniter(det.a_right)))
-				user << "<span class='alert'> Assembly must contain one igniter.</span>"
+				user << "<span class='alert'>Assembly must contain one igniter.</span>"
 				return
 			if(!det.secured)
-				user << "<span class='alert'> Assembly must be secured with screwdriver.</span>"
+				user << "<span class='alert'>Assembly must be secured with screwdriver.</span>"
 				return
 			path = 1
-			user << "<span class='notice'> You add [W] to the metal casing.</span>"
+			user << "<span class='notice'>You add [W] to the metal casing.</span>"
 			playsound(src.loc, 'sound/items/Screwdriver2.ogg', 25, -3)
 			user.remove_from_mob(det)
 			det.loc = src
@@ -68,22 +68,22 @@
 			if(stage == 1)
 				path = 1
 				if(beakers.len)
-					user << "<span class='notice'> You lock the assembly.</span>"
+					user << "<span class='notice'>You lock the assembly.</span>"
 					name = "grenade"
 				else
-//					user << "<span class='alert'> You need to add at least one beaker before locking the assembly.</span>"
-					user << "<span class='notice'> You lock the empty assembly.</span>"
+//					user << "<span class='alert'>You need to add at least one beaker before locking the assembly.</span>"
+					user << "<span class='notice'>You lock the empty assembly.</span>"
 					name = "fake grenade"
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, -3)
 				icon_state = initial(icon_state) +"_locked"
 				stage = 2
 			else if(stage == 2)
 				if(active && prob(95))
-					user << "<span class='alert'> You trigger the assembly!</span>"
+					user << "<span class='alert'>You trigger the assembly!</span>"
 					prime()
 					return
 				else
-					user << "<span class='notice'> You unlock the assembly.</span>"
+					user << "<span class='notice'>You unlock the assembly.</span>"
 					playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, -3)
 					name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 					icon_state = initial(icon_state) + (detonator?"_ass":"")
@@ -92,18 +92,18 @@
 		else if(is_type_in_list(W, allowed_containers) && (!stage || stage==1) && path != 2)
 			path = 1
 			if(beakers.len == 2)
-				user << "<span class='alert'> The grenade can not hold more containers.</span>"
+				user << "<span class='alert'>The grenade can not hold more containers.</span>"
 				return
 			else
 				if(W.reagents.total_volume)
-					user << "<span class='notice'> You add \the [W] to the assembly.</span>"
+					user << "<span class='notice'>You add \the [W] to the assembly.</span>"
 					user.drop_item()
 					W.loc = src
 					beakers += W
 					stage = 1
 					name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 				else
-					user << "<span class='alert'> \the [W] is empty.</span>"
+					user << "<span class='alert'>\the [W] is empty.</span>"
 
 	examine(mob/user)
 		..(user)

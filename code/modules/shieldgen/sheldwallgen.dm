@@ -28,13 +28,13 @@
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user as mob)
 	if(state != 1)
-		user << "<span class='alert'> The shield generator needs to be firmly secured to the floor first.</span>"
+		user << "<span class='alert'>The shield generator needs to be firmly secured to the floor first.</span>"
 		return 1
 	if(src.locked && !istype(user, /mob/living/silicon))
-		user << "<span class='alert'> The controls are locked!</span>"
+		user << "<span class='alert'>The controls are locked!</span>"
 		return 1
 	if(power != 1)
-		user << "<span class='alert'> The shield generator needs to be powered by wire underneath.</span>"
+		user << "<span class='alert'>The shield generator needs to be powered by wire underneath.</span>"
 		return 1
 
 	if(src.active >= 1)
@@ -106,7 +106,7 @@
 		src.active = 2
 	if(src.active >= 1)
 		if(src.power == 0)
-			src.visible_message("<span class='alert'> The [src.name] shuts down due to lack of power!</span>", \
+			src.visible_message("<span class='alert'>The [src.name] shuts down due to lack of power!</span>", \
 				"You hear heavy droning fade out")
 			icon_state = "Shield_Gen"
 			src.active = 0
@@ -182,11 +182,11 @@
 			src.locked = !src.locked
 			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
 		else
-			user << "<span class='alert'> Access denied.</span>"
+			user << "<span class='alert'>Access denied.</span>"
 
 	else
 		src.add_fingerprint(user)
-		visible_message("<span class='alert'> The [src.name] has been hit with \the [W.name] by [user.name]!</span>")
+		visible_message("<span class='alert'>The [src.name] has been hit with \the [W.name] by [user.name]!</span>")
 
 /obj/machinery/shieldwallgen/proc/cleanup(var/NSEW)
 	var/obj/machinery/shieldwall/F

@@ -104,7 +104,7 @@
 
 /obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user as mob)
 	if(istype(user) && !user.gloves)
-		user << "<span class='alert'> The nettle burns your bare hand!</span>"
+		user << "<span class='alert'>The nettle burns your bare hand!</span>"
 		if(istype(user, /mob/living/carbon/human))
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
 			var/datum/organ/external/affecting = user.get_organ(organ)
@@ -130,7 +130,7 @@
 
 /obj/item/weapon/grown/nettle/death // -- Skie
 	plantname = "deathnettle"
-	desc = "The <span class='alert'> glowing </span></span><span class='black'> nettle incites </span><span class='alert'><B>rage</B></span><span class='black'> in you just from looking at it!</span>"
+	desc = "The <span class='alert'>glowing </span></span><span class='black'>nettle incites </span><span class='alert'><B>rage</B></span><span class='black'>in you just from looking at it!</span>"
 	name = "deathnettle"
 	icon_state = "deathnettle"
 	origin_tech = "combat=3"
@@ -140,7 +140,7 @@
 
 	if(..() && prob(50))
 		user.Paralyse(5)
-		user << "<span class='alert'> You are stunned by the deathnettle when you try picking it up!</span>"
+		user << "<span class='alert'>You are stunned by the deathnettle when you try picking it up!</span>"
 
 /obj/item/weapon/grown/nettle/attack(mob/living/carbon/M as mob, mob/user as mob)
 
@@ -153,7 +153,7 @@
 	if(!..()) return
 
 	if(istype(M, /mob/living))
-		M << "<span class='alert'> You are stunned by the powerful acid of the deathnettle!</span>"
+		M << "<span class='alert'>You are stunned by the powerful acid of the deathnettle!</span>"
 
 		if(!in_unlogged(user))
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had the [src.name] used on them by [user.name] ([user.ckey])</font>")

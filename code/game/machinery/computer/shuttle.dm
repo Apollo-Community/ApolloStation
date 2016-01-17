@@ -36,11 +36,11 @@
 					if (src.auth_need - src.authorized.len > 0)
 						message_admins("[key_name_admin(user)] has authorized early shuttle launch")
 						log_game("[user.ckey] has authorized early shuttle launch")
-						world << text("<span class='notice'> <B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len)
+						world << text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len)
 					else
 						message_admins("[key_name_admin(user)] has launched the shuttle")
 						log_game("[user.ckey] has launched the shuttle early")
-						world << "<span class='notice'> <B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>"
+						world << "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>"
 						emergency_shuttle.set_launch_countdown(10)
 						//src.authorized = null
 						qdel(src.authorized)
@@ -48,10 +48,10 @@
 
 				if("Repeal")
 					src.authorized -= W:registered_name
-					world << text("<span class='notice'> <B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len)
+					world << text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len)
 
 				if("Abort")
-					world << "<span class='notice'> <B>All authorizations to shortening time for shuttle launch have been revoked!</B></span>"
+					world << "<span class='notice'><B>All authorizations to shortening time for shuttle launch have been revoked!</B></span>"
 					src.authorized.len = 0
 					src.authorized = list(  )
 
@@ -61,7 +61,7 @@
 			if(!emagged && !emergency_shuttle.location() && user.get_active_hand() == W)
 				switch(choice)
 					if("Launch")
-						world << "<span class='notice'> <B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>"
+						world << "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>"
 						emergency_shuttle.set_launch_countdown(10)
 						emagged = 1
 					if("Cancel")

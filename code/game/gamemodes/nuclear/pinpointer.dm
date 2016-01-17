@@ -17,11 +17,11 @@
 		if(!active)
 			active = 1
 			workdisk()
-			usr << "<span class='notice'> You activate the pinpointer</span>"
+			usr << "<span class='notice'>You activate the pinpointer</span>"
 		else
 			active = 0
 			icon_state = "pinoff"
-			usr << "<span class='notice'> You deactivate the pinpointer</span>"
+			usr << "<span class='notice'>You deactivate the pinpointer</span>"
 
 	proc/workdisk()
 		if(!active) return
@@ -69,11 +69,11 @@
 				worklocation()
 			if(mode == 2)
 				workobj()
-			usr << "<span class='notice'> You activate the pinpointer</span>"
+			usr << "<span class='notice'>You activate the pinpointer</span>"
 		else
 			active = 0
 			icon_state = "pinoff"
-			usr << "<span class='notice'> You deactivate the pinpointer</span>"
+			usr << "<span class='notice'>You deactivate the pinpointer</span>"
 
 
 	proc/worklocation()

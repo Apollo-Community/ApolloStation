@@ -190,7 +190,7 @@
 		usr << "You lost control over self-destruct system. It seems to be behind firewall. Unable to hack"
 		return
 
-	usr << "<span class='alert'> Self-Destruct sequence initialised!</span>"
+	usr << "<span class='alert'>Self-Destruct sequence initialised!</span>"
 
 	ticker.mode:to_nuke_or_not_to_nuke = 0
 	ticker.mode.explosion_in_progress = 1

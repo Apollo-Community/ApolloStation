@@ -24,13 +24,13 @@
 
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/M as mob, mob/user as mob)
 	if(!reagents.total_volume)
-		user << "<span class='alert'> [src] is empty.</span>"
+		user << "<span class='alert'>[src] is empty.</span>"
 		return
 	if (!( istype(M, /mob) ))
 		return
 	if (reagents.total_volume)
-		user << "<span class='notice'> You inject [M] with [src].</span>"
-		M << "<span class='alert'> You feel a tiny prick!</span>"
+		user << "<span class='notice'>You inject [M] with [src].</span>"
+		M << "<span class='alert'>You feel a tiny prick!</span>"
 
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
@@ -45,7 +45,7 @@
 				msg_admin_attack("[user.name] ([user.ckey]) injected [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
-			user << "<span class='notice'> [trans] units injected. [reagents.total_volume] units remaining in [src].</span>"
+			user << "<span class='notice'>[trans] units injected. [reagents.total_volume] units remaining in [src].</span>"
 
 	return
 
@@ -75,9 +75,9 @@
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/examine(mob/user)
 	..(user)
 	if(reagents && reagents.reagent_list.len)
-		user << "<span class='notice'> It is currently loaded.</span>"
+		user << "<span class='notice'>It is currently loaded.</span>"
 	else
-		user << "<span class='notice'> It is spent.</span>"
+		user << "<span class='notice'>It is spent.</span>"
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/adminorazine
 	name = "BK5 Injector"

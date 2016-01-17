@@ -153,7 +153,7 @@
 		var/mob/living/carbon/human/H = user
 		if(H.species.can_shred(H))
 			playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-			visible_message("<span class='alert'> <B>[user] smashes against the [src.name].</B></span>", 1)
+			visible_message("<span class='alert'><B>[user] smashes against the [src.name].</B></span>", 1)
 			take_damage(25)
 			return
 	return src.attackby(user, user)
@@ -173,7 +173,7 @@
 			spark_system.start()
 			playsound(src.loc, "sparks", 50, 1)
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			visible_message("<span class='notice'> The glass door was sliced open by [user]!</span>")
+			visible_message("<span class='notice'>The glass door was sliced open by [user]!</span>")
 		flick("[src.base_state]spark", src)
 		sleep(6)
 		open()
@@ -184,7 +184,7 @@
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 		user.visible_message("[user] removes the electronics from the windoor.", "You start to remove electronics from the windoor.")
 		if (do_after(user,40))
-			user << "<span class='notice'> You removed the windoor electronics!</span>"
+			user << "<span class='notice'>You removed the windoor electronics!</span>"
 
 			var/obj/structure/windoor_assembly/wa = new/obj/structure/windoor_assembly(src.loc)
 			if (istype(src, /obj/machinery/door/window/brigdoor))
@@ -222,7 +222,7 @@
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
 		var/aforce = I.force
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		visible_message("<span class='alert'> <B>[src] was hit by [I].</B></span>")
+		visible_message("<span class='alert'><B>[src] was hit by [I].</B></span>")
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			take_damage(aforce)
 		return

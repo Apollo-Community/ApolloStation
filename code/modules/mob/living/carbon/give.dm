@@ -5,14 +5,14 @@
 	if(src.stat == 2 || usr.stat == 2 || src.client == null)
 		return
 	if(src == usr)
-		usr << "<span class='alert'> I feel stupider, suddenly.</span>"
+		usr << "<span class='alert'>I feel stupider, suddenly.</span>"
 		return
 	var/obj/item/I
 	if(!usr.hand && usr.r_hand == null)
-		usr << "<span class='alert'> You don't have anything in your right hand to give to [src.name]</span>"
+		usr << "<span class='alert'>You don't have anything in your right hand to give to [src.name]</span>"
 		return
 	if(usr.hand && usr.l_hand == null)
-		usr << "<span class='alert'> You don't have anything in your left hand to give to [src.name]</span>"
+		usr << "<span class='alert'>You don't have anything in your left hand to give to [src.name]</span>"
 		return
 	if(usr.hand)
 		I = usr.l_hand
@@ -26,17 +26,17 @@
 				if(!I)
 					return
 				if(!Adjacent(usr))
-					usr << "<span class='alert'> You need to stay in reaching distance while giving an object.</span>"
-					src << "<span class='alert'> [usr.name] moved too far away.</span>"
+					usr << "<span class='alert'>You need to stay in reaching distance while giving an object.</span>"
+					src << "<span class='alert'>[usr.name] moved too far away.</span>"
 					return
 
 				if((usr.hand && usr.l_hand != I) || (!usr.hand && usr.r_hand != I))
-					usr << "<span class='alert'> You need to keep the item in your active hand.</span>"
-					src << "<span class='alert'> [usr.name] seem to have given up on giving \the [I.name] to you.</span>"
+					usr << "<span class='alert'>You need to keep the item in your active hand.</span>"
+					src << "<span class='alert'>[usr.name] seem to have given up on giving \the [I.name] to you.</span>"
 					return
 				if(src.r_hand != null && src.l_hand != null)
-					src << "<span class='alert'> Your hands are full.</span>"
-					usr << "<span class='alert'> Their hands are full.</span>"
+					src << "<span class='alert'>Your hands are full.</span>"
+					usr << "<span class='alert'>Their hands are full.</span>"
 					return
 				else
 					var/mob/living/carbon/human/M = src
@@ -65,8 +65,8 @@
 				src.update_inv_r_hand()
 				usr.update_inv_l_hand()
 				usr.update_inv_r_hand()
-				src.visible_message("<span class='notice'> [usr.name] handed \the [I.name] to [src.name].</span>")
+				src.visible_message("<span class='notice'>[usr.name] handed \the [I.name] to [src.name].</span>")
 			if("No")
-				src.visible_message("<span class='alert'> [usr.name] tried to hand [I.name] to [src.name] but [src.name] didn't want it.</span>")
+				src.visible_message("<span class='alert'>[usr.name] tried to hand [I.name] to [src.name] but [src.name] didn't want it.</span>")
 	else
-		usr << "<span class='alert'> [src.name]'s hands are full.</span>"
+		usr << "<span class='alert'>[src.name]'s hands are full.</span>"

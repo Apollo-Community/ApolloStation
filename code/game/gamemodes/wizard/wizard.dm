@@ -22,7 +22,7 @@
 /datum/game_mode/wizard/announce()
 /*
 	world << "<B>The current game mode is - Wizard!</B>"
-	world << "<B>There is a <span class='alert'> SPACE WIZARD</span>\black on the station. You can't let him achieve his objective!</B>"
+	world << "<B>There is a <span class='alert'>SPACE WIZARD</span>\black on the station. You can't let him achieve his objective!</B>"
 */
 
 /datum/game_mode/wizard/can_start()//This could be better, will likely have to recode it later
@@ -38,7 +38,7 @@
 	wizard.special_role = "Wizard"
 	wizard.original = wizard.current
 	if(wizardstart.len == 0)
-		wizard.current << "<B><span class='alert'> A starting location for you could not be found, please report this bug!</span></B>"
+		wizard.current << "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>"
 		return 0
 	return 1
 
@@ -135,7 +135,7 @@
 
 /datum/game_mode/proc/greet_wizard(var/datum/mind/wizard, var/you_are=1)
 	if (you_are)
-		wizard.current << "<B><span class='alert'> You are the Space Wizard!</span></B>"
+		wizard.current << "<B><span class='alert'>You are the Space Wizard!</span></B>"
 	show_objectives(wizard)
 
 /*/datum/game_mode/proc/learn_basic_spells(mob/living/carbon/human/wizard_mob)
@@ -204,7 +204,7 @@
 /datum/game_mode/wizard/declare_completion()
 	if(finished)
 		feedback_set_details("round_end_result","loss - wizard killed")
-		world << "<span class='alert'> <FONT size = 3><B> The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</B></FONT></span>"
+		world << "<span class='alert'><FONT size = 3><B> The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</B></FONT></span>"
 	..()
 	return 1
 

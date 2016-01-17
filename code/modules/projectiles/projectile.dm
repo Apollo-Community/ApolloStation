@@ -106,13 +106,13 @@
 		def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier + 15*distance)
 
 		if(!def_zone)
-			visible_message("<span class='notice'> \The [src] misses [M] narrowly!</span>")
+			visible_message("<span class='notice'>\The [src] misses [M] narrowly!</span>")
 			forcedodge = -1
 		else
 			if(silenced)
-				M << "<span class='alert'> You've been shot in the [parse_zone(def_zone)]!</span>"
+				M << "<span class='alert'>You've been shot in the [parse_zone(def_zone)]!</span>"
 			else
-				visible_message("<span class='alert'> [A.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+				visible_message("<span class='alert'>[A.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 			if(istype(firer, /mob))
 				if(!in_unlogged(firer))
 					M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"

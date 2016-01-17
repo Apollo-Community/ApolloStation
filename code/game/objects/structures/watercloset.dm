@@ -356,10 +356,10 @@
 		return
 
 	if(busy)
-		user << "<span class='alert'> Someone's already washing here.</span>"
+		user << "<span class='alert'>Someone's already washing here.</span>"
 		return
 
-	usr << "<span class='notice'> You start washing your hands.</span>"
+	usr << "<span class='notice'>You start washing your hands.</span>"
 
 	busy = 1
 	sleep(40)
@@ -371,18 +371,18 @@
 	if(ishuman(user))
 		user:update_inv_gloves()
 	for(var/mob/V in viewers(src, null))
-		V.show_message("<span class='notice'> [user] washes their hands using \the [src].</span>")
+		V.show_message("<span class='notice'>[user] washes their hands using \the [src].</span>")
 
 
 /obj/structure/sink/attackby(obj/item/O as obj, mob/user as mob)
 	if(busy)
-		user << "<span class='alert'> Someone's already washing here.</span>"
+		user << "<span class='alert'>Someone's already washing here.</span>"
 		return
 
 	var/obj/item/weapon/reagent_containers/RG = O
 	if (istype(RG) && RG.is_open_container())
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
-		user.visible_message("<span class='notice'> [user] fills \the [RG] using \the [src].</span>","<span class='notice'> You fill \the [RG] using \the [src].</span>")
+		user.visible_message("<span class='notice'>[user] fills \the [RG] using \the [src].</span>","<span class='notice'>You fill \the [RG] using \the [src].</span>")
 		return
 
 	else if (istype(O, /obj/item/weapon/melee/baton))
@@ -413,7 +413,7 @@
 	var/obj/item/I = O
 	if(!I || !istype(I,/obj/item)) return
 
-	usr << "<span class='notice'> You start washing \the [I].</span>"
+	usr << "<span class='notice'>You start washing \the [I].</span>"
 
 	busy = 1
 	sleep(40)
@@ -425,8 +425,8 @@
 
 	O.clean_blood()
 	user.visible_message( \
-		"<span class='notice'> [user] washes \a [I] using \the [src].</span>", \
-		"<span class='notice'> You wash \a [I] using \the [src].</span>")
+		"<span class='notice'>[user] washes \a [I] using \the [src].</span>", \
+		"<span class='notice'>You wash \a [I] using \the [src].</span>")
 
 
 /obj/structure/sink/kitchen

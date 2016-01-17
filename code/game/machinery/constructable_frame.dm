@@ -32,7 +32,7 @@
 /obj/machinery/constructable_frame/machine_frame
 	attackby(obj/item/P as obj, mob/user as mob)
 		if(P.crit_fail)
-			user << "<span class='alert'> This part is faulty, you cannot add this to the machine!</span>"
+			user << "<span class='alert'>This part is faulty, you cannot add this to the machine!</span>"
 			return
 		switch(state)
 			if(1)
@@ -51,7 +51,7 @@
 				else
 					if(istype(P, /obj/item/weapon/wrench))
 						playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-						user << "<span class='notice'> You dismantle the frame</span>"
+						user << "<span class='notice'>You dismantle the frame</span>"
 						new /obj/item/stack/sheet/metal(src.loc, 5)
 						qdel(src)
 			if(2)
@@ -59,7 +59,7 @@
 					var/obj/item/weapon/circuitboard/B = P
 					if(B.board_type == "machine")
 						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-						user << "<span class='notice'> You add the circuit board to the frame.</span>"
+						user << "<span class='notice'>You add the circuit board to the frame.</span>"
 						circuit = P
 						user.drop_item()
 						P.loc = src
@@ -80,11 +80,11 @@
 							update_desc()
 						user << desc
 					else
-						user << "<span class='alert'> This frame does not accept circuit boards of this type!</span>"
+						user << "<span class='alert'>This frame does not accept circuit boards of this type!</span>"
 				else
 					if(istype(P, /obj/item/weapon/wirecutters))
 						playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-						user << "<span class='notice'> You remove the cables.</span>"
+						user << "<span class='notice'>You remove the cables.</span>"
 						state = 1
 						icon_state = "box_0"
 						var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( src.loc )
@@ -97,9 +97,9 @@
 					circuit.loc = src.loc
 					circuit = null
 					if(components.len == 0)
-						user << "<span class='notice'> You remove the circuit board.</span>"
+						user << "<span class='notice'>You remove the circuit board.</span>"
 					else
-						user << "<span class='notice'> You remove the circuit board and other components.</span>"
+						user << "<span class='notice'>You remove the circuit board and other components.</span>"
 						for(var/obj/item/weapon/W in components)
 							W.loc = src.loc
 					desc = initial(desc)
@@ -159,4 +159,4 @@
 									break
 							user << desc
 							if(P && P.loc != src && !istype(P, /obj/item/stack/cable_coil))
-								user << "<span class='alert'> You cannot add that component to the machine!</span>"
+								user << "<span class='alert'>You cannot add that component to the machine!</span>"

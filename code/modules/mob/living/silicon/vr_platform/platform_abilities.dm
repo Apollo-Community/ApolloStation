@@ -3,7 +3,7 @@
 	user_body = M
 	M.mind.transfer_to(src)
 	add_platform_verbs()
-	src << "<span class='notice'> <b>Platform ready.</b></span>"
+	src << "<span class='notice'><b>Platform ready.</b></span>"
 
 /mob/living/silicon/platform/verb/platform_disconnect()
 	set name = "Disconnect"

@@ -27,7 +27,7 @@
 
 		if (isrobot(usr) || src.locked)
 			if(istype(O, /obj/item/device/multitool))
-				user << "<span class='alert'> Resetting circuitry...</span>"
+				user << "<span class='alert'>Resetting circuitry...</span>"
 				playsound(user, 'sound/machines/lockreset.ogg', 50, 1)
 				if(do_after(user, 20))
 					src.locked = 0
@@ -45,7 +45,7 @@
 				else
 					playsound(user, 'sound/effects/Glasshit.ogg', 100, 1) //We don't want this playing every time
 				if(W.force < 15)
-					user << "<span class='notice'> The cabinet's protective glass glances off the hit.</span>"
+					user << "<span class='notice'>The cabinet's protective glass glances off the hit.</span>"
 				else
 					src.hitstaken++
 					if(src.hitstaken == 4)
@@ -58,12 +58,12 @@
 		if (istype(O, /obj/item/weapon/twohanded/fireaxe) && src.localopened)
 			if(!fireaxe)
 				if(O:wielded)
-					user << "<span class='alert'> Unwield the axe first.</span>"
+					user << "<span class='alert'>Unwield the axe first.</span>"
 					return
 				fireaxe = O
 				user.drop_item(O)
 				src.contents += O
-				user << "<span class='notice'> You place the fire axe back in the [src.name].</span>"
+				user << "<span class='notice'>You place the fire axe back in the [src.name].</span>"
 				update_icon()
 			else
 				if(src.smashed)
@@ -86,10 +86,10 @@
 					spawn(10) update_icon()
 					return
 				else
-					user << "<span class='alert'> Resetting circuitry...</span>"
+					user << "<span class='alert'>Resetting circuitry...</span>"
 					sleep(50)
 					src.locked = 1
-					user << "<span class='notice'> You re-enable the locking modules.</span>"
+					user << "<span class='notice'>You re-enable the locking modules.</span>"
 					playsound(user, 'sound/machines/lockenable.ogg', 50, 1)
 					if(do_after(user,20))
 						src.locked = 1
@@ -114,13 +114,13 @@
 			hasaxe = 1
 
 		if(src.locked)
-			user <<"<span class='alert'> The cabinet won't budge!</span>"
+			user <<"<span class='alert'>The cabinet won't budge!</span>"
 			return
 		if(localopened)
 			if(fireaxe)
 				user.put_in_hands(fireaxe)
 				fireaxe = null
-				user << "<span class='notice'> You take the fire axe from the [name].</span>"
+				user << "<span class='notice'>You take the fire axe from the [name].</span>"
 				src.add_fingerprint(user)
 				update_icon()
 			else
@@ -147,7 +147,7 @@
 	attack_tk(mob/user as mob)
 		if(localopened && fireaxe)
 			fireaxe.loc = loc
-			user << "<span class='notice'> You telekinetically remove the fire axe.</span>"
+			user << "<span class='notice'>You telekinetically remove the fire axe.</span>"
 			fireaxe = null
 			update_icon()
 			return
@@ -159,9 +159,9 @@
 
 		if (isrobot(usr) || src.locked || src.smashed)
 			if(src.locked)
-				usr << "<span class='alert'> The cabinet won't budge!</span>"
+				usr << "<span class='alert'>The cabinet won't budge!</span>"
 			else if(src.smashed)
-				usr << "<span class='notice'> The protective glass is broken!</span>"
+				usr << "<span class='notice'>The protective glass is broken!</span>"
 			return
 
 		localopened = !localopened
@@ -178,23 +178,23 @@
 			if(fireaxe)
 				usr.put_in_hands(fireaxe)
 				fireaxe = null
-				usr << "<span class='notice'> You take the Fire axe from the [name].</span>"
+				usr << "<span class='notice'>You take the Fire axe from the [name].</span>"
 			else
-				usr << "<span class='notice'> The [src.name] is empty.</span>"
+				usr << "<span class='notice'>The [src.name] is empty.</span>"
 		else
-			usr << "<span class='notice'> The [src.name] is closed.</span>"
+			usr << "<span class='notice'>The [src.name] is closed.</span>"
 		update_icon()
 
 	attack_ai(mob/user as mob)
 		if(src.smashed)
-			user << "<span class='alert'> The security of the cabinet is compromised.</span>"
+			user << "<span class='alert'>The security of the cabinet is compromised.</span>"
 			return
 		else
 			locked = !locked
 			if(locked)
-				user << "<span class='alert'> Cabinet locked.</span>"
+				user << "<span class='alert'>Cabinet locked.</span>"
 			else
-				user << "<span class='notice'> Cabinet unlocked.</span>"
+				user << "<span class='notice'>Cabinet unlocked.</span>"
 			return
 
 	update_icon() //Template: fireaxe[has fireaxe][is opened][hits taken][is smashed]. If you want the opening or closing animations, add "opening" or "closing" right after the numbers

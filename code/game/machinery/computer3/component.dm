@@ -61,7 +61,7 @@
 
 				if(istype(comp_ai))
 					if(busy)
-						user << "<span class='alert'> <b>ERROR</b>: </span><span class='black'> Reconstruction in progress.</span>"
+						user << "<span class='alert'><b>ERROR</b>: </span><span class='black'>Reconstruction in progress.</span>"
 						return
 					card.grab_ai(comp_ai, user)
 					if(!(locate(/mob/living/silicon/ai) in src)) occupant = null
@@ -83,7 +83,7 @@
 
 	// Transfer over the AI.
 	transfer << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
-	user << "<span class='notice'> <b>Transfer successful</b>: </span><span class='black'> [transfer.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.</span>"
+	user << "<span class='notice'><b>Transfer successful</b>: </span><span class='black'>[transfer.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.</span>"
 
 	transfer.loc = src
 	transfer.cancel_camera()

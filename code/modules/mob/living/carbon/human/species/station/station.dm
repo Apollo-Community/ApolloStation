@@ -272,8 +272,8 @@
 /datum/species/wryn/handle_death(var/mob/living/carbon/human/H)
 	for(var/mob/living/carbon/C in world)
 		if(locate(/datum/organ/internal/wryn/hivenode) in C.internal_organs)
-			C << "<span class='alert'> <B>Your antennae tingle as you are overcome with pain...</B></span>"
-			C << "<span class='alert'> It feels like part of you has died.</span>"
+			C << "<span class='alert'><B>Your antennae tingle as you are overcome with pain...</B></span>"
+			C << "<span class='alert'>It feels like part of you has died.</span>"
 
 /datum/unarmed_attack/punch/weak
 	attack_verb = list("flail")

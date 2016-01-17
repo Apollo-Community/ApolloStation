@@ -9,7 +9,7 @@ client
 
 
 		if(!usr.client || !usr.client.holder)
-			usr << "<span class='alert'> You need to be an administrator to access this.</span>"
+			usr << "<span class='alert'>You need to be an administrator to access this.</span>"
 			return
 
 

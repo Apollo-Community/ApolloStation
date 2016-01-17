@@ -9,9 +9,9 @@ mob/proc/airflow_stun()
 		return 0
 	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)	return 0
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
-		src << "<span class='notice'> You stay upright as the air rushes past you.</span>"
+		src << "<span class='notice'>You stay upright as the air rushes past you.</span>"
 		return 0
-	if(weakened <= 0) src << "<span class='alert'> The sudden rush of air knocks you over!</span>"
+	if(weakened <= 0) src << "<span class='alert'>The sudden rush of air knocks you over!</span>"
 	weakened = max(weakened,5)
 	last_airflow_stun = world.time
 
@@ -27,9 +27,9 @@ mob/living/carbon/human/airflow_stun()
 	if(shoes)
 		if(shoes.flags & NOSLIP) return 0
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
-		src << "<span class='notice'> You stay upright as the air rushes past you.</span>"
+		src << "<span class='notice'>You stay upright as the air rushes past you.</span>"
 		return 0
-	if(weakened <= 0) src << "<span class='alert'> The sudden rush of air knocks you over!</span>"
+	if(weakened <= 0) src << "<span class='alert'>The sudden rush of air knocks you over!</span>"
 	weakened = max(weakened,rand(1,5))
 	last_airflow_stun = world.time
 
@@ -88,7 +88,7 @@ obj/item/check_airflow_movable(n)
 				if(istype(src:shoes, /obj/item/clothing/shoes/magboots))
 					if(src:shoes:magpulse)
 						return
-		src << "<span class='alert'> You are sucked away by airflow!</span>"
+		src << "<span class='alert'>You are sucked away by airflow!</span>"
 	var/airflow_falloff = 9 - sqrt((x - airflow_dest.x) ** 2 + (y - airflow_dest.y) ** 2)
 	if(airflow_falloff < 1)
 		airflow_dest = null
@@ -152,7 +152,7 @@ obj/item/check_airflow_movable(n)
 				if(istype(src:shoes, /obj/item/clothing/shoes/magboots))
 					if(src:shoes.flags & NOSLIP)
 						return
-		src << "<span class='alert'> You are pushed away by airflow!</span>"
+		src << "<span class='alert'>You are pushed away by airflow!</span>"
 		last_airflow = world.time
 	var/airflow_falloff = 9 - sqrt((x - airflow_dest.x) ** 2 + (y - airflow_dest.y) ** 2)
 	if(airflow_falloff < 1)
@@ -205,14 +205,14 @@ atom/movable/proc/airflow_hit(atom/A)
 
 mob/airflow_hit(atom/A)
 	for(var/mob/M in hearers(src))
-		M.show_message("<span class='alert'> <B>\The [src] slams into \a [A]!</B></span>",1,"<span class='alert'> You hear a loud slam!</span>",2)
+		M.show_message("<span class='alert'><B>\The [src] slams into \a [A]!</B></span>",1,"<span class='alert'>You hear a loud slam!</span>",2)
 	playsound(src.loc, "smash.ogg", 25, 1, -1)
 	weakened = max(weakened, (istype(A,/obj/item) ? A:w_class : rand(1,5))) //Heheheh
 	. = ..()
 
 obj/airflow_hit(atom/A)
 	for(var/mob/M in hearers(src))
-		M.show_message("<span class='alert'> <B>\The [src] slams into \a [A]!</B></span>",1,"<span class='alert'> You hear a loud slam!</span>",2)
+		M.show_message("<span class='alert'><B>\The [src] slams into \a [A]!</B></span>",1,"<span class='alert'>You hear a loud slam!</span>",2)
 	playsound(src.loc, "smash.ogg", 25, 1, -1)
 	. = ..()
 
@@ -222,7 +222,7 @@ obj/item/airflow_hit(atom/A)
 
 mob/living/carbon/human/airflow_hit(atom/A)
 //	for(var/mob/M in hearers(src))
-//		M.show_message("<span class='alert'> <B>[src] slams into [A]!</B></span>",1,"<span class='alert'> You hear a loud slam!</span>",2)
+//		M.show_message("<span class='alert'><B>[src] slams into [A]!</B></span>",1,"<span class='alert'>You hear a loud slam!</span>",2)
 	playsound(src.loc, "punch", 25, 1, -1)
 	if (prob(33))
 		loc:add_blood(src)

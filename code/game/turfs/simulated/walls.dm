@@ -270,18 +270,18 @@
 	var/hulk_destroy_prob = 40
 	var/hulk_take_damage = 1
 	var/rotting_destroy_touch = 1
-	var/rotting_touch_message = "<span class='notice'> The wall crumbles under your touch.</span>"
+	var/rotting_touch_message = "<span class='notice'>The wall crumbles under your touch.</span>"
 
 //Interactions
 /turf/simulated/wall/attack_hand(mob/user as mob)
 	if (HULK in user.mutations)
 		if (prob(hulk_destroy_prob) || rotting)
-			usr << text("<span class='notice'> You smash through the wall.</span>")
+			usr << text("<span class='notice'>You smash through the wall.</span>")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
 			return 1
 		else
-			usr << text("<span class='notice'> You punch the wall.</span>")
+			usr << text("<span class='notice'>You punch the wall.</span>")
 			if(hulk_take_damage)
 				take_damage(rand(25, 75))
 			return 1
@@ -294,7 +294,7 @@
 
 	if(..()) return 1
 
-	user << "<span class='notice'> You push the wall but nothing happens!</span>"
+	user << "<span class='notice'>You push the wall but nothing happens!</span>"
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
 	return 0

@@ -13,7 +13,7 @@
 		return
 	//src.add_fingerprint(user)	//shouldn't need fingerprints just for looking at it.
 	if(!allowed(user))
-		user << "<span class='alert'> Access Denied.</span>"
+		user << "<span class='alert'>Access Denied.</span>"
 		return 1
 	
 	ui_interact(user)

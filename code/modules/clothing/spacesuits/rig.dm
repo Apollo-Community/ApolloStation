@@ -208,17 +208,17 @@
 		helmet.canremove = 1
 		H.drop_from_inventory(helmet)
 		helmet.loc = src
-		H << "<span class='notice'> You retract your hardsuit helmet.</span>"
+		H << "<span class='notice'>You retract your hardsuit helmet.</span>"
 	else
 		if(H.head)
-			H << "<span class='alert'> You cannot deploy your helmet while wearing another helmet.</span>"
+			H << "<span class='alert'>You cannot deploy your helmet while wearing another helmet.</span>"
 			return
 		//TODO: Species check, skull damage for forcing an unfitting helmet on?
 		helmet.loc = H
 		helmet.pickup(H)
 		H.equip_to_slot(helmet, slot_head)
 		helmet.canremove = 0
-		H << "<span class='notice'> You deploy your hardsuit helmet, sealing you off from the world.</span>"
+		H << "<span class='notice'>You deploy your hardsuit helmet, sealing you off from the world.</span>"
 
 /obj/item/clothing/suit/space/rig/attackby(obj/item/W as obj, mob/user as mob)
 
@@ -392,7 +392,7 @@
 		camera.network = list("NUKE")
 		cameranet.removeCamera(camera)
 		camera.c_tag = user.name
-		user << "<span class='notice'> User scanned as [camera.c_tag]. Camera activated.</span>"
+		user << "<span class='notice'>User scanned as [camera.c_tag]. Camera activated.</span>"
 
 /obj/item/clothing/head/helmet/space/rig/syndi/examine()
 	..()

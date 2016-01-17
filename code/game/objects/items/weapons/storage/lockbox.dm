@@ -20,20 +20,20 @@
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/weapon/card/id))
 			if(src.broken)
-				user << "<span class='alert'> It appears to be broken.</span>"
+				user << "<span class='alert'>It appears to be broken.</span>"
 				return
 			if(src.allowed(user))
 				src.locked = !( src.locked )
 				if(src.locked)
 					src.icon_state = src.icon_locked
-					user << "<span class='alert'> You lock the [src.name]!</span>"
+					user << "<span class='alert'>You lock the [src.name]!</span>"
 					return
 				else
 					src.icon_state = src.icon_closed
-					user << "<span class='alert'> You unlock the [src.name]!</span>"
+					user << "<span class='alert'>You unlock the [src.name]!</span>"
 					return
 			else
-				user << "<span class='alert'> Access Denied</span>"
+				user << "<span class='alert'>Access Denied</span>"
 		else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
 			broken = 1
 			locked = 0
@@ -46,21 +46,21 @@
 				playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 				playsound(src.loc, "sparks", 50, 1)
 				for(var/mob/O in viewers(user, 3))
-					O.show_message(text("<span class='notice'> The locker has been sliced open by [] with an energy blade!</span>", user), 1, text("<span class='alert'> You hear metal being sliced and sparks flying.</span>"), 2)
+					O.show_message(text("<span class='notice'>The locker has been sliced open by [] with an energy blade!</span>", user), 1, text("<span class='alert'>You hear metal being sliced and sparks flying.</span>"), 2)
 			else
 				for(var/mob/O in viewers(user, 3))
-					O.show_message(text("<span class='notice'> The locker has been broken by [] with an electromagnetic card!</span>", user), 1, text("You hear a faint electrical spark."), 2)
+					O.show_message(text("<span class='notice'>The locker has been broken by [] with an electromagnetic card!</span>", user), 1, text("You hear a faint electrical spark."), 2)
 
 		if(!locked)
 			..()
 		else
-			user << "<span class='alert'> Its locked!</span>"
+			user << "<span class='alert'>Its locked!</span>"
 		return
 
 
 	show_to(mob/user as mob)
 		if(locked)
-			user << "<span class='alert'> Its locked!</span>"
+			user << "<span class='alert'>Its locked!</span>"
 		else
 			..()
 		return

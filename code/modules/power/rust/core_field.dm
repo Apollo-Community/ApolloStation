@@ -142,7 +142,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	//have a max of 1000 moles suspended
 	if(held_phoron.gas["phoron"] < transfer_ratio * 1000)
 		var/moles_covered = environment.return_pressure()*volume_covered/(environment.temperature * R_IDEAL_GAS_EQUATION)
-		//world << "<span class='notice'> moles_covered: [moles_covered]</span>"
+		//world << "<span class='notice'>moles_covered: [moles_covered]</span>"
 		//
 		var/datum/gas_mixture/gas_covered = environment.remove(moles_covered)
 		var/datum/gas_mixture/phoron_captured = new /datum/gas_mixture()

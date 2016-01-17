@@ -98,12 +98,12 @@
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 		if (istype(W, /obj/item/weapon/wrench))
 			if (!(stat & NOPOWER) && use_power)
-				user << "<span class='alert'> You cannot unwrench this [src], turn it off first.</span>"
+				user << "<span class='alert'>You cannot unwrench this [src], turn it off first.</span>"
 				return 1
 
 			var/turf/T = src.loc
 			if (node && node.level==1 && isturf(T) && T.intact)
-				user << "<span class='alert'> You must remove the plating first.</span>"
+				user << "<span class='alert'>You must remove the plating first.</span>"
 				return 1
 
 			var/datum/gas_mixture/int_air = return_air()
@@ -112,26 +112,26 @@
 			add_fingerprint(user)
 
 			if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-				user << "<span class='alert'> You cannot unwrench this [src], it too exerted due to internal pressure.</span>"
+				user << "<span class='alert'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>"
 				return 1
 
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 
 			if( anchored )
-				user << "<span class='notice'> You begin to unfasten \the [src]...</span>"
+				user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
 				if (do_after(user, 40))
 					user.visible_message( \
 						"[user] unfastens \the [src].", \
-						"<span class='notice'> You have unfastened \the [src].</span>", \
+						"<span class='notice'>You have unfastened \the [src].</span>", \
 						"You hear ratchet.")
 					anchored = 0
 					disconnect()
 			else
-				user << "<span class='notice'> You begin to fasten \the [src]...</span>"
+				user << "<span class='notice'>You begin to fasten \the [src]...</span>"
 				if (do_after(user, 40))
 					user.visible_message( \
 						"[user] fastens \the [src].", \
-						"<span class='notice'> You have fastened \the [src].</span>", \
+						"<span class='notice'>You have fastened \the [src].</span>", \
 						"You hear ratchet.")
 					anchored = 1
 					initialize()

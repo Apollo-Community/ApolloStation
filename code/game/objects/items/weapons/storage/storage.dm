@@ -329,7 +329,7 @@
 	..()
 
 	if(isrobot(user))
-		user << "<span class='notice'> You're a robot. No.</span>"
+		user << "<span class='notice'>You're a robot. No.</span>"
 		return //Robots can't interact with storage items.
 
 	if(!can_be_inserted(W))
@@ -339,14 +339,14 @@
 		var/obj/item/weapon/tray/T = W
 		if(T.calc_carry() > 0)
 			if(prob(85))
-				user << "<span class='alert'> The tray won't fit in [src].</span>"
+				user << "<span class='alert'>The tray won't fit in [src].</span>"
 				return
 			else
 				W.loc = user.loc
 				if ((user.client && user.s_active != src))
 					user.client.screen -= W
 				W.dropped(user)
-				user << "<span class='alert'> God damnit!</span>"
+				user << "<span class='alert'>God damnit!</span>"
 
 	W.add_fingerprint(user)
 	return handle_item_insertion(W)

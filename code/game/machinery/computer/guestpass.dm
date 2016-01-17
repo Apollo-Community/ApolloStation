@@ -132,7 +132,7 @@
 			if ("access")
 				var/A = text2num(href_list["access"])
 				if( !( A in giver.access ))
-					usr << "<span class='alert'> You are a bad person.</span>"
+					usr << "<span class='alert'>You are a bad person.</span>"
 					message_admins("[usr]/([usr.ckey]) has attempted to use an href exploit on a guest pass machine!", "EXPLOIT:")
 					return
 
@@ -190,6 +190,6 @@
 					pass.reason = reason
 					pass.name = "guest pass #[number]"
 				else
-					usr << "<span class='alert'> Cannot issue pass without issuing ID.</span>"
+					usr << "<span class='alert'>Cannot issue pass without issuing ID.</span>"
 	updateUsrDialog()
 	return

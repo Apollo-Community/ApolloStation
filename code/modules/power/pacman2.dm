@@ -56,8 +56,8 @@
 
 	examine(mob/user)
 		..(user)
-		user << "<span class='notice'> The generator has [P.air_contents.phoron] units of fuel left, producing [power_gen] per cycle.</span>"
-		if(crit_fail) user << "<span class='alert'> The generator seems to have broken down.</span>"
+		user << "<span class='notice'>The generator has [P.air_contents.phoron] units of fuel left, producing [power_gen] per cycle.</span>"
+		if(crit_fail) user << "<span class='alert'>The generator seems to have broken down.</span>"
 
 	handleInactive()
 		heat -= 2
@@ -75,12 +75,12 @@
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if(istype(O, /obj/item/weapon/tank/phoron))
 			if(P)
-				user << "<span class='alert'> The generator already has a phoron tank loaded!</span>"
+				user << "<span class='alert'>The generator already has a phoron tank loaded!</span>"
 				return
 			P = O
 			user.drop_item()
 			O.loc = src
-			user << "<span class='notice'> You add the phoron tank to the generator.</span>"
+			user << "<span class='notice'>You add the phoron tank to the generator.</span>"
 		else if (istype(O, /obj/item/weapon/card/emag))
 			var/obj/item/weapon/card/emag/E = O
 			if(E.uses)
@@ -94,17 +94,17 @@
 				anchored = !anchored
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				if(anchored)
-					user << "<span class='notice'> You secure the generator to the floor.</span>"
+					user << "<span class='notice'>You secure the generator to the floor.</span>"
 				else
-					user << "<span class='notice'> You unsecure the generator from the floor.</span>"
+					user << "<span class='notice'>You unsecure the generator from the floor.</span>"
 				makepowernets()
 			else if(istype(O, /obj/item/weapon/screwdriver))
 				open = !open
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				if(open)
-					user << "<span class='notice'> You open the access panel.</span>"
+					user << "<span class='notice'>You open the access panel.</span>"
 				else
-					user << "<span class='notice'> You close the access panel.</span>"
+					user << "<span class='notice'>You close the access panel.</span>"
 			else if(istype(O, /obj/item/weapon/crowbar) && !open)
 				var/obj/machinery/constructable_frame/machine_frame/new_frame = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 				for(var/obj/item/I in component_parts)

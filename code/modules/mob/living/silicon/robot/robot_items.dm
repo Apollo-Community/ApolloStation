@@ -39,7 +39,7 @@
 				overlays += image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer)
 				addedSomething = 1
 		if ( addedSomething )
-			user.visible_message("<span class='notice'> [user] load some items onto their service tray.</span>")
+			user.visible_message("<span class='notice'>[user] load some items onto their service tray.</span>")
 
 		return
 
@@ -79,9 +79,9 @@
 							sleep(rand(2,4))
 		if ( droppedSomething )
 			if ( foundtable )
-				user.visible_message("<span class='notice'> [user] unloads their service tray.</span>")
+				user.visible_message("<span class='notice'>[user] unloads their service tray.</span>")
 			else
-				user.visible_message("<span class='notice'> [user] drops all the items on their tray.</span>")
+				user.visible_message("<span class='notice'>[user] drops all the items on their tray.</span>")
 
 	return ..()
 
@@ -157,7 +157,7 @@
 	deploy_paper(get_turf(src))
 
 /obj/item/weapon/form_printer/proc/deploy_paper(var/turf/T)
-	T.visible_message("<span class='notice'> \The [src.loc] dispenses a sheet of crisp white paper.</span>")
+	T.visible_message("<span class='notice'>\The [src.loc] dispenses a sheet of crisp white paper.</span>")
 	new /obj/item/weapon/paper(T)
 
 
@@ -201,4 +201,4 @@
 	G.synch()
 	G.affecting = src
 
-	M.visible_message("<span class='alert'> [user] has grabbed [M] passively!</span>")
+	M.visible_message("<span class='alert'>[user] has grabbed [M] passively!</span>")

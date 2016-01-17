@@ -30,7 +30,7 @@
 		user.put_in_active_hand(gift)
 		src.gift.add_fingerprint(user)
 	else
-		user << "<span class='notice'> The gift was empty!</span>"
+		user << "<span class='notice'>The gift was empty!</span>"
 	qdel(src)
 	return
 
@@ -41,16 +41,16 @@
 /obj/effect/spresent/relaymove(mob/user as mob)
 	if (user.stat)
 		return
-	user << "<span class='notice'> You cant move.</span>"
+	user << "<span class='notice'>You cant move.</span>"
 
 /obj/effect/spresent/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 
 	if (!istype(W, /obj/item/weapon/wirecutters))
-		user << "<span class='notice'> I need wirecutters for that.</span>"
+		user << "<span class='notice'>I need wirecutters for that.</span>"
 		return
 
-	user << "<span class='notice'> You cut open the present.</span>"
+	user << "<span class='notice'>You cut open the present.</span>"
 
 	for(var/mob/M in src) //Should only be one but whatever.
 		M.loc = src.loc
@@ -128,12 +128,12 @@
 /obj/item/weapon/wrapping_paper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if (!( locate(/obj/structure/table, src.loc) ))
-		user << "<span class='notice'> You MUST put the paper on a table!</span>"
+		user << "<span class='notice'>You MUST put the paper on a table!</span>"
 	if (W.w_class < 4)
 		if ((istype(user.l_hand, /obj/item/weapon/wirecutters) || istype(user.r_hand, /obj/item/weapon/wirecutters)))
 			var/a_used = 2 ** (src.w_class - 1)
 			if (src.amount < a_used)
-				user << "<span class='notice'> You need more paper!</span>"
+				user << "<span class='notice'>You need more paper!</span>"
 				return
 			else
 				if(istype(W, /obj/item/smallDelivery) || istype(W, /obj/item/weapon/gift)) //No gift wrapping gifts!
@@ -155,9 +155,9 @@
 				qdel(src)
 				return
 		else
-			user << "<span class='notice'> You need scissors!</span>"
+			user << "<span class='notice'>You need scissors!</span>"
 	else
-		user << "<span class='notice'> The object is FAR too large!</span>"
+		user << "<span class='notice'>The object is FAR too large!</span>"
 	return
 
 
@@ -185,6 +185,6 @@
 				msg_admin_attack("[key_name(user)] used [src] to wrap [key_name(H)]")
 
 		else
-			user << "<span class='notice'> You need more paper.</span>"
+			user << "<span class='notice'>You need more paper.</span>"
 	else
 		user << "They are moving around too much. A straightjacket would help."

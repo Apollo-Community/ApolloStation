@@ -46,8 +46,8 @@
 			src.take_organ_damage(10)
 			Stun(rand(1,5))
 	flick("noise", src:flash)
-	src << "<span class='alert'> <B>*BZZZT*</B></span>"
-	src << "<span class='alert'> Warning: Electromagnetic pulse detected.</span>"
+	src << "<span class='alert'><B>*BZZZT*</B></span>"
+	src << "<span class='alert'>Warning: Electromagnetic pulse detected.</span>"
 	..()
 
 /mob/living/silicon/stun_effect_act(var/stun_amount, var/agony_amount)
@@ -62,9 +62,9 @@
 
 		shock_damage *= 0.75	//take reduced damage
 		take_overall_damage(0, shock_damage)
-		visible_message("<span class='alert'> [src] was shocked by \the [source]!</span>", \
-			"<span class='alert'> <B>Energy pulse detected, system damaged!</B></span>", \
-			"<span class='alert'> You hear an electrical crack</span>")
+		visible_message("<span class='alert'>[src] was shocked by \the [source]!</span>", \
+			"<span class='alert'><B>Energy pulse detected, system damaged!</B></span>", \
+			"<span class='alert'>You hear an electrical crack</span>")
 		if(prob(20))
 			Stun(2)
 		return

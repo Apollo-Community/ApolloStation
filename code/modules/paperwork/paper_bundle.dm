@@ -94,7 +94,7 @@
 				qdel(src)
 
 			else
-				user << "<span class='alert'> You must hold \the [P] steady to burn \the [src].</span>"
+				user << "<span class='alert'>You must hold \the [P] steady to burn \the [src].</span>"
 
 /obj/item/weapon/paper_bundle/examine(mob/user)
 	if(..(user, 1))

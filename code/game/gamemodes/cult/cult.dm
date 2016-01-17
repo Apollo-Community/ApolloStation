@@ -98,7 +98,7 @@
 		equip_cultist(cult_mind.current)
 		grant_runeword(cult_mind.current)
 		update_cult_icons_added(cult_mind)
-		cult_mind.current << "<span class='notice'> You are a member of the cult!</span>"
+		cult_mind.current << "<span class='notice'>You are a member of the cult!</span>"
 		if(!config.objectives_disabled)
 			memorize_cult_objectives(cult_mind)
 		show_objectives(cult_mind)
@@ -169,7 +169,7 @@
 	if (!word)
 		word=pick(allwords)
 	var/wordexp = "[cultwords[word]] is [word]..."
-	cult_mob << "<span class='alert'> You remember one thing from the dark teachings of your master... [wordexp]</span>"
+	cult_mob << "<span class='alert'>You remember one thing from the dark teachings of your master... [wordexp]</span>"
 	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
 
 
@@ -192,7 +192,7 @@
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1)
 	if(cult_mind in cult)
 		cult -= cult_mind
-		cult_mind.current << "<span class='alert'> <FONT size = 3><B>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</B></FONT></span>"
+		cult_mind.current << "<span class='alert'><FONT size = 3><B>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</B></FONT></span>"
 		cult_mind.memory = ""
 		update_cult_icons_removed(cult_mind)
 		if(show_message)
@@ -286,11 +286,11 @@
 	if(!check_cult_victory())
 		feedback_set_details("round_end_result","win - cult win")
 		feedback_set("round_end_result",acolytes_survived)
-		world << "<span class='alert'> <FONT size = 3><B> The cult wins! It has succeeded in serving its dark masters!</B></FONT></span>"
+		world << "<span class='alert'><FONT size = 3><B> The cult wins! It has succeeded in serving its dark masters!</B></FONT></span>"
 	else
 		feedback_set_details("round_end_result","loss - staff stopped the cult")
 		feedback_set("round_end_result",acolytes_survived)
-		world << "<span class='alert'> <FONT size = 3><B> The staff managed to stop the cult!</B></FONT></span>"
+		world << "<span class='alert'><FONT size = 3><B> The staff managed to stop the cult!</B></FONT></span>"
 
 	var/text = "<b>Cultists escaped:</b> [acolytes_survived]"
 	if(!config.objectives_disabled)

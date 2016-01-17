@@ -54,7 +54,7 @@ datum/announcement/proc/Message(message as text, message_title as text)
 		if(!istype(M,/mob/new_player) && !isdeaf(M))
 			M << full_message
 			if (announcer)
-				M << "<br><span class='alert'> -[html_encode(announcer)]</span>"
+				M << "<br><span class='alert'>-[html_encode(announcer)]</span>"
 			M << "<hr><br>"
 
 datum/announcement/minor/Message(message as text, message_title as text)
@@ -68,7 +68,7 @@ datum/announcement/priority/Message(message as text, message_title as text)
 		if(!istype(M,/mob/new_player) && !isdeaf(M))
 			M << full_message
 			if(announcer)
-				M << "<br><span class='alert'> -[html_encode(announcer)]</span>"
+				M << "<br><span class='alert'>-[html_encode(announcer)]</span>"
 			M << "<hr><br>"
 
 datum/announcement/priority/command/Message(message as text, message_title as text)

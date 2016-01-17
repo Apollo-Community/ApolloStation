@@ -208,7 +208,7 @@
 								jobdatum = J
 								break
 						if(!jobdatum)
-							usr << "<span class='alert'> No log exists for this job: [t1]</span>"
+							usr << "<span class='alert'>No log exists for this job: [t1]</span>"
 							return
 
 						access = jobdatum.get_access()

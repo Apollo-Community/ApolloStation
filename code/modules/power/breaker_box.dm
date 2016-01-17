@@ -34,24 +34,24 @@
 /obj/machinery/power/breakerbox/examine(mob/user)
 	user << "Large machine with heavy duty switching circuits used for advanced grid control"
 	if(on)
-		user << "<span class='green'> It seems to be online.</span>"
+		user << "<span class='green'>It seems to be online.</span>"
 	else
-		user << "<span class='alert'> It seems to be offline</span>"
+		user << "<span class='alert'>It seems to be offline</span>"
 
 /obj/machinery/power/breakerbox/attack_ai(mob/user)
 	if(update_locked)
-		user << "<span class='alert'> System locked. Please try again later.</span>"
+		user << "<span class='alert'>System locked. Please try again later.</span>"
 		return
 
 	if(busy)
-		user << "<span class='alert'> System is busy. Please wait until current operation is finished before changing power settings.</span>"
+		user << "<span class='alert'>System is busy. Please wait until current operation is finished before changing power settings.</span>"
 		return
 
 	busy = 1
-	user << "<span class='green'> Updating power settings..</span>"
+	user << "<span class='green'>Updating power settings..</span>"
 	if(do_after(user, 50))
 		set_state(!on)
-		user << "<span class='green'> Update Completed. New setting:[on ? "on": "off"]</span>"
+		user << "<span class='green'>Update Completed. New setting:[on ? "on": "off"]</span>"
 		update_locked = 1
 		spawn(600)
 			update_locked = 0
@@ -60,16 +60,16 @@
 
 /obj/machinery/power/breakerbox/attack_hand(mob/user)
 	if(update_locked)
-		user << "<span class='alert'> System locked. Please try again later.</span>"
+		user << "<span class='alert'>System locked. Please try again later.</span>"
 		return
 
 	if(busy)
-		user << "<span class='alert'> System is busy. Please wait until current operation is finished before changing power settings.</span>"
+		user << "<span class='alert'>System is busy. Please wait until current operation is finished before changing power settings.</span>"
 		return
 
 	busy = 1
 	for(var/mob/O in viewers(user))
-		O.show_message(text("<span class='alert'> [user] started reprogramming [src]!</span>"), 1)
+		O.show_message(text("<span class='alert'>[user] started reprogramming [src]!</span>"), 1)
 
 	if(do_after(user, 50))
 		set_state(!on)

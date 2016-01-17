@@ -13,7 +13,7 @@
 
 	var/command = file2text("config/update_script_command.txt")		//Security measure to stop people changing command via config debug
 	if(!command)
-		usr << "<span class='danger'> The update command could not be found on the server.</span>"
+		usr << "<span class='danger'>The update command could not be found on the server.</span>"
 		return
 
 	var/result = shell(command)		//Use exit codes to determine what occured
@@ -28,9 +28,9 @@
 		if(2)
 			usr << "<b>Server requires the resource file to be re-compiled - update unsucessful.</b>"
 		if(3)
-			usr << "<span class='danger'> This server is already compiling. Please try again in a few minutes.</span>"
+			usr << "<span class='danger'>This server is already compiling. Please try again in a few minutes.</span>"
 		else
-			usr << "<span class='danger'> Error: A catastrphic error has occured. Please contact a developer about this</span>"
+			usr << "<span class='danger'>Error: A catastrphic error has occured. Please contact a developer about this</span>"
 
 	log_debug("IG UPDATE: exit code [result]")
 

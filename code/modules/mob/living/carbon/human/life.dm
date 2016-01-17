@@ -189,11 +189,11 @@
 	proc/handle_disabilities()
 		if (disabilities & EPILEPSY)
 			if ((prob(1) && paralysis < 1))
-				src << "<span class='alert'> You have a seizure!</span>"
+				src << "<span class='alert'>You have a seizure!</span>"
 				for(var/mob/O in viewers(src, null))
 					if(O == src)
 						continue
-					O.show_message(text("<span class='alert'> <B>[src] starts having a seizure!</span>"), 1)
+					O.show_message(text("<span class='alert'><B>[src] starts having a seizure!</span>"), 1)
 				Paralyse(10)
 				make_jittery(1000)
 		if (disabilities & COUGHING)
@@ -236,15 +236,15 @@
 					custom_pain("Your head feels numb and painful.")
 			if(getBrainLoss() >= 15)
 				if(4 <= rn && rn <= 6) if(eye_blurry <= 0)
-					src << "<span class='alert'> It becomes hard to see for some reason.</span>"
+					src << "<span class='alert'>It becomes hard to see for some reason.</span>"
 					eye_blurry = 10
 			if(getBrainLoss() >= 35)
 				if(7 <= rn && rn <= 9) if(hand && equipped())
-					src << "<span class='alert'> Your hand won't respond properly, you drop what you're holding.</span>"
+					src << "<span class='alert'>Your hand won't respond properly, you drop what you're holding.</span>"
 					drop_item()
 			if(getBrainLoss() >= 50)
 				if(10 <= rn && rn <= 12) if(!lying)
-					src << "<span class='alert'> Your legs won't respond properly, you fall down.</span>"
+					src << "<span class='alert'>Your legs won't respond properly, you fall down.</span>"
 					resting = 1
 
 	proc/handle_stasis_bag()
@@ -284,7 +284,7 @@
 				radiation -= 1 * RADIATION_SPEED_COEFFICIENT
 				reagents.add_reagent("radium", rads/10)
 				if( prob(3) )
-					src << pick( "<span class='notice'> You feel relaxed.</span>", "<span class='notice'> You feel soothed.</span>", "<span class='notice'> A warm, calming wave rolls over you.</span>" )
+					src << pick( "<span class='notice'>You feel relaxed.</span>", "<span class='notice'>You feel soothed.</span>", "<span class='notice'>A warm, calming wave rolls over you.</span>" )
 				return
 
 			var/datum/organ/internal/diona/nutrients/rad_organ = locate() in internal_organs

@@ -170,29 +170,29 @@
 			precision = max(rand(1,100)*bagholding.len,100)
 			if(istype(teleatom, /mob/living))
 				var/mob/living/MM = teleatom
-				MM << "<span class='alert'> The Bluespace interface on your Bag of Holding interferes with the teleport!</span>"
+				MM << "<span class='alert'>The Bluespace interface on your Bag of Holding interferes with the teleport!</span>"
 		return 1
 
 	teleportChecks()
 		if(istype(teleatom, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks get teleported --NeoFite
-			teleatom.visible_message("<span class='alert'> <B>The [teleatom] bounces off of the portal!</B></span>")
+			teleatom.visible_message("<span class='alert'><B>The [teleatom] bounces off of the portal!</B></span>")
 			return 0
 
 		if(!isemptylist(teleatom.search_contents_for(/obj/item/weapon/disk/nuclear)))
 			if(istype(teleatom, /mob/living))
 				var/mob/living/MM = teleatom
-				MM.visible_message("<span class='alert'> <B>The [MM] bounces off of the portal!</B></span>","<span class='alert'> Something you are carrying seems to be unable to pass through the portal. Better drop it if you want to go through.</span>")
+				MM.visible_message("<span class='alert'><B>The [MM] bounces off of the portal!</B></span>","<span class='alert'>Something you are carrying seems to be unable to pass through the portal. Better drop it if you want to go through.</span>")
 			else
-				teleatom.visible_message("<span class='alert'> <B>The [teleatom] bounces off of the portal!</B></span>")
+				teleatom.visible_message("<span class='alert'><B>The [teleatom] bounces off of the portal!</B></span>")
 			return 0
 
 		if(destination.z == 2) //centcomm z-level
 			if(istype(teleatom, /obj/mecha))
 				var/obj/mecha/MM = teleatom
-				MM.occupant << "<span class='alert'> <B>The mech would not survive the jump to a location so far away!</B></span>"
+				MM.occupant << "<span class='alert'><B>The mech would not survive the jump to a location so far away!</B></span>"
 				return 0
 			if(!isemptylist(teleatom.search_contents_for(/obj/item/weapon/storage/backpack/holding)))
-				teleatom.visible_message("<span class='alert'> <B>The Bag of Holding bounces off of the portal!</B></span>")
+				teleatom.visible_message("<span class='alert'><B>The Bag of Holding bounces off of the portal!</B></span>")
 				return 0
 
 

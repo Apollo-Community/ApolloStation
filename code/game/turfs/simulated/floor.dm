@@ -469,23 +469,23 @@ turf/simulated/floor/proc/update_icon()
 				qdel(C)
 				set_lightfloor_state(0) //fixing it by bashing it with a light bulb, fun eh?
 				update_icon()
-				user << "<span class='notice'> You replace the light bulb.</span>"
+				user << "<span class='notice'>You replace the light bulb.</span>"
 			else
-				user << "<span class='notice'> The lightbulb seems fine, no need to replace it.</span>"
+				user << "<span class='notice'>The lightbulb seems fine, no need to replace it.</span>"
 
 	if(istype(C, /obj/item/weapon/crowbar) && (!(is_plating())))
 		if(broken || burnt)
-			user << "<span class='alert'> You remove the broken plating.</span>"
+			user << "<span class='alert'>You remove the broken plating.</span>"
 		else
 			if(is_wood_floor())
-				user << "<span class='alert'> You forcefully pry off the planks, destroying them in the process.</span>"
+				user << "<span class='alert'>You forcefully pry off the planks, destroying them in the process.</span>"
 			else
 				var/obj/item/I = new floor_type(src)
 				if(is_light_floor())
 					var/obj/item/stack/tile/light/L = I
 					L.on = get_lightfloor_on()
 					L.state = get_lightfloor_state()
-				user << "<span class='alert'> You remove the [I.name].</span>"
+				user << "<span class='alert'>You remove the [I.name].</span>"
 
 		make_plating()
 		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
@@ -497,7 +497,7 @@ turf/simulated/floor/proc/update_icon()
 			return
 		else
 			if(is_wood_floor())
-				user << "<span class='alert'> You unscrew the planks.</span>"
+				user << "<span class='alert'>You unscrew the planks.</span>"
 				new floor_type(src)
 
 		make_plating()
@@ -511,7 +511,7 @@ turf/simulated/floor/proc/update_icon()
 			if (R.get_amount() < 2)
 				user << "<span class='warning'>You need more rods.</span>"
 				return
-			user << "<span class='notice'> Reinforcing the floor...</span>"
+			user << "<span class='notice'>Reinforcing the floor...</span>"
 			if(do_after(user, 30) && is_plating())
 				if (R.use(2))
 					ChangeTurf(/turf/simulated/floor/engine)
@@ -519,7 +519,7 @@ turf/simulated/floor/proc/update_icon()
 				return
 			else
 		else
-			user << "<span class='alert'> You must remove the plating first.</span>"
+			user << "<span class='alert'>You must remove the plating first.</span>"
 		return
 
 	if(istype(C, /obj/item/stack/tile))
@@ -549,7 +549,7 @@ turf/simulated/floor/proc/update_icon()
 				levelupdate()
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			else
-				user << "<span class='notice'> This section is too damaged to support a tile. Use a welder to fix the damage.</span>"
+				user << "<span class='notice'>This section is too damaged to support a tile. Use a welder to fix the damage.</span>"
 
 
 	if(istype(C, /obj/item/stack/cable_coil))
@@ -557,29 +557,29 @@ turf/simulated/floor/proc/update_icon()
 			var/obj/item/stack/cable_coil/coil = C
 			coil.turf_place(src, user)
 		else
-			user << "<span class='alert'> You must remove the plating first.</span>"
+			user << "<span class='alert'>You must remove the plating first.</span>"
 
 	if(istype(C, /obj/item/weapon/shovel))
 		if(is_grass_floor())
 			new /obj/item/weapon/ore/glass(src)
 			new /obj/item/weapon/ore/glass(src) //Make some sand if you shovel grass
-			user << "<span class='notice'> You shovel the grass.</span>"
+			user << "<span class='notice'>You shovel the grass.</span>"
 			make_plating()
 		else
-			user << "<span class='alert'> You cannot shovel this.</span>"
+			user << "<span class='alert'>You cannot shovel this.</span>"
 
 	if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/welder = C
 		if(welder.isOn() && (is_plating()))
 			if(broken || burnt)
 				if(welder.remove_fuel(0,user))
-					user << "<span class='alert'> You fix some dents on the broken plating.</span>"
+					user << "<span class='alert'>You fix some dents on the broken plating.</span>"
 					playsound(src, 'sound/items/Welder.ogg', 80, 1)
 					icon_state = "plating"
 					burnt = 0
 					broken = 0
 				else
-					user << "<span class='notice'> You need more welding fuel to complete this task.</span>"
+					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 
 /turf/simulated/floor/melt()
 	if( prob( 80 ))

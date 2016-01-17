@@ -168,7 +168,7 @@
 
 /mob/living/carbon/human/blob_act()
 	if(stat == 2)	return
-	show_message("<span class='alert'> The blob attacks you!</span>")
+	show_message("<span class='alert'>The blob attacks you!</span>")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
 	apply_damage(rand(30,40), BRUTE, affecting, run_armor_check(affecting, "melee"))
@@ -409,7 +409,7 @@
 												U.handle_regular_hud_updates()
 
 			if(!modified)
-				usr << "<span class='alert'> Unable to locate a data core entry for this person.</span>"
+				usr << "<span class='alert'>Unable to locate a data core entry for this person.</span>"
 
 	if (href_list["secrecord"])
 		if(hasHUD(usr,"security"))
@@ -439,7 +439,7 @@
 								read = 1
 
 			if(!read)
-				usr << "<span class='alert'> Unable to locate a data core entry for this person.</span>"
+				usr << "<span class='alert'>Unable to locate a data core entry for this person.</span>"
 
 	if (href_list["secrecordComment"])
 		if(hasHUD(usr,"security"))
@@ -469,7 +469,7 @@
 								usr << "<a href='?src=\ref[src];secrecordadd=`'>\[Add comment\]</a>"
 
 			if(!read)
-				usr << "<span class='alert'> Unable to locate a data core entry for this person.</span>"
+				usr << "<span class='alert'>Unable to locate a data core entry for this person.</span>"
 
 	if (href_list["secrecordadd"])
 		if(hasHUD(usr,"security"))
@@ -537,7 +537,7 @@
 											U.handle_regular_hud_updates()
 
 			if(!modified)
-				usr << "<span class='alert'> Unable to locate a data core entry for this person.</span>"
+				usr << "<span class='alert'>Unable to locate a data core entry for this person.</span>"
 
 	if (href_list["medrecord"])
 		if(hasHUD(usr,"medical"))
@@ -568,7 +568,7 @@
 								read = 1
 
 			if(!read)
-				usr << "<span class='alert'> Unable to locate a data core entry for this person.</span>"
+				usr << "<span class='alert'>Unable to locate a data core entry for this person.</span>"
 
 	if (href_list["medrecordComment"])
 		if(hasHUD(usr,"medical"))
@@ -598,7 +598,7 @@
 								usr << "<a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>"
 
 			if(!read)
-				usr << "<span class='alert'> Unable to locate a data core entry for this person.</span>"
+				usr << "<span class='alert'>Unable to locate a data core entry for this person.</span>"
 
 	if (href_list["medrecordadd"])
 		if(hasHUD(usr,"medical"))
@@ -716,7 +716,7 @@
 
 /mob/living/carbon/human/proc/play_xylophone()
 	if(!src.xylophone)
-		visible_message("<span class='alert'> [src] begins playing his ribcage like a xylophone. It's quite spooky.</span>","<span class='notice'> You begin to play a spooky refrain on your ribcage.</span>","<span class='alert'> You hear a spooky xylophone melody.</span>")
+		visible_message("<span class='alert'>[src] begins playing his ribcage like a xylophone. It's quite spooky.</span>","<span class='notice'>You begin to play a spooky refrain on your ribcage.</span>","<span class='alert'>You hear a spooky xylophone melody.</span>")
 		var/song = pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg')
 		playsound(loc, song, 50, 1, -1)
 		xylophone = 1
@@ -826,7 +826,7 @@
 	regenerate_icons()
 	check_dna()
 
-	visible_message("<span class='notice'> \The [src] morphs and changes [get_visible_gender() == MALE ? "his</span>" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!", "<span class='notice'> You change your appearance!</span>", "<span class='alert'> Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!</span>")
+	visible_message("<span class='notice'>\The [src] morphs and changes [get_visible_gender() == MALE ? "his</span>" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!", "<span class='notice'>You change your appearance!</span>", "<span class='alert'>Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!</span>")
 
 /mob/living/carbon/human/proc/remotesay()
 	set name = "Project mind"
@@ -849,10 +849,10 @@
 
 	var/say = input ("What do you wish to say")
 	if(mRemotetalk in target.mutations)
-		target.show_message("<span class='notice'> You hear [src.real_name]'s voice: [say]</span>")
+		target.show_message("<span class='notice'>You hear [src.real_name]'s voice: [say]</span>")
 	else
-		target.show_message("<span class='notice'> You hear a voice that seems to echo around the room: [say]</span>")
-	usr.show_message("<span class='notice'> You project your mind into [target.real_name]: [say]</span>")
+		target.show_message("<span class='notice'>You hear a voice that seems to echo around the room: [say]</span>")
+	usr.show_message("<span class='notice'>You project your mind into [target.real_name]: [say]</span>")
 	log_say("[key_name(usr)] sent a telepathic message to [key_name(target)]: [say]")
 	for(var/mob/dead/observer/G in world)
 		G.show_message("<i>Telepathic message from <b>[src]</b> to <b>[target]</b>: [say]</i>")
@@ -1059,16 +1059,16 @@
 	if(usr == src)
 		self = 1
 	if(!self)
-		usr.visible_message("<span class='notice'> [usr] kneels down, puts \his hand on [src]'s wrist and begins counting their pulse.</span>",\
+		usr.visible_message("<span class='notice'>[usr] kneels down, puts \his hand on [src]'s wrist and begins counting their pulse.</span>",\
 		"You begin counting [src]'s pulse")
 	else
-		usr.visible_message("<span class='notice'> [usr] begins counting their pulse.</span>",\
+		usr.visible_message("<span class='notice'>[usr] begins counting their pulse.</span>",\
 		"You begin counting your pulse.")
 
 	if(src.pulse)
-		usr << "<span class='notice'> [self ? "You have a" : "[src] has a"] pulse! Counting...</span>"
+		usr << "<span class='notice'>[self ? "You have a" : "[src] has a"] pulse! Counting...</span>"
 	else
-		usr << "<span class='alert'> [src] has no pulse!</span>"	//it is REALLY UNLIKELY that a dead person would check his own pulse
+		usr << "<span class='alert'>[src] has no pulse!</span>"	//it is REALLY UNLIKELY that a dead person would check his own pulse
 		return
 
 	usr << "Don't move until counting is finished."
@@ -1077,7 +1077,7 @@
 	if(usr.l_move_time >= time)	//checks if our mob has moved during the sleep()
 		usr << "You moved while counting. Try again."
 	else
-		usr << "<span class='notice'> [self ? "Your" : "[src]'s</span>"] pulse is [src.get_pulse(GETPULSE_HAND)]."
+		usr << "<span class='notice'>[self ? "Your" : "[src]'s</span>"] pulse is [src.get_pulse(GETPULSE_HAND)]."
 
 /mob/living/carbon/human/proc/set_species(var/new_species, var/default_colour)
 

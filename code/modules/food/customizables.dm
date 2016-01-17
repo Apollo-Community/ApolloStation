@@ -350,12 +350,12 @@
 			U.create_reagents(5)
 
 		if (U.reagents.total_volume > 0)
-			user << "<span class='alert'> You already have something on your [U].</span>"
+			user << "<span class='alert'>You already have something on your [U].</span>"
 			return
 
 		user.visible_message( \
 			"[user] scoops up some [src] with \the [U]!", \
-			"<span class='notice'> You scoop up some [src] with \the [U]!</span>" \
+			"<span class='notice'>You scoop up some [src] with \the [U]!</span>" \
 		)
 
 		src.bitecount++
@@ -382,9 +382,9 @@
 			// will be put straight in just like any other items.
 			var/msg = ""
 			if(istype(I, /obj/item/weapon/reagent_containers/syringe))
-				msg = text("<span class='alert'> [] injects [] with the syringe!</span>", user, src)
+				msg = text("<span class='alert'>[] injects [] with the syringe!</span>", user, src)
 			else
-				msg = text("<span class='alert'> [] adds [] to [].</span>", user, I, src)
+				msg = text("<span class='alert'>[] adds [] to [].</span>", user, I, src)
 			for(var/mob/O in viewers(world.view, user))
 				O.show_message(msg, 1)
 			F.reagents.trans_to(src, F.reagents.total_volume)
@@ -444,7 +444,7 @@
 	..()
 	var/whatsinside = pick(ingredients)
 
-	usr << "<span class='notice'> You think you can see [whatsinside] in there.</span>"
+	usr << "<span class='notice'>You think you can see [whatsinside] in there.</span>"
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/attack(mob/M as mob, mob/user as mob, def_zone)
 
@@ -459,7 +459,7 @@
 		H = M
 
 	if(H && shard && M == user) //This needs a check for feeding the food to other people, but that could be abusable.
-		H << "<span class='alert'> You lacerate your mouth on a [shard.name] in the sandwich!</span>"
+		H << "<span class='alert'>You lacerate your mouth on a [shard.name] in the sandwich!</span>"
 		H.adjustBruteLoss(5) //TODO: Target head if human.
 	..()
 

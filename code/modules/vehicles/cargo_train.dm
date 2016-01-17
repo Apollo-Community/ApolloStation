@@ -157,8 +157,8 @@
 
 	if(is_train_head() && istype(load, /mob/living/carbon/human))
 		var/mob/living/carbon/human/D = load
-		D << "<span class='alert'> \b You ran over [H]!</span>"
-		visible_message("<B><span class='alert'> \The [src] ran over [H]!</B></span>")
+		D << "<span class='alert'>\b You ran over [H]!</span>"
+		visible_message("<B><span class='alert'>\The [src] ran over [H]!</B></span>")
 		if(!in_unlogged(D))
 			attack_log += text("\[[time_stamp()]\] <font color='red'>ran over [H.name] ([H.ckey]), driven by [D.name] ([D.ckey])</font>")
 			msg_admin_attack("[D.name] ([D.ckey]) ran over [H.name] ([H.ckey]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")

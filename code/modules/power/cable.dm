@@ -132,7 +132,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			return
 ///// Z-Level Stuff
 		if(breaker_box)
-			user << "<span class='alert'> This cable is connected to nearby breaker box. Use breaker box to interact with it.</span>"
+			user << "<span class='alert'>This cable is connected to nearby breaker box. Use breaker box to interact with it.</span>"
 			return
 
 		if (shock(user, 50))
@@ -541,12 +541,12 @@ obj/structure/cable/proc/cableColor(var/colorC)
 
 		if(H.species.flags & IS_SYNTHETIC)
 			if(M == user)
-				user << "<span class='alert'> You can't repair damage to your own body - it's against OH&S.</span>"
+				user << "<span class='alert'>You can't repair damage to your own body - it's against OH&S.</span>"
 				return
 
 		if(S.burn_dam > 0 && use(1))
 			S.heal_damage(0,15,0,1)
-			user.visible_message("<span class='alert'> \The [user] repairs some burn damage on \the [M]'s [S.name] with \the [src].</span>")
+			user.visible_message("<span class='alert'>\The [user] repairs some burn damage on \the [M]'s [S.name] with \the [src].</span>")
 			return
 		else
 			user << "Nothing to fix!"
@@ -594,14 +594,14 @@ obj/structure/cable/proc/cableColor(var/colorC)
 	if(ishuman(M) && !M.restrained() && !M.stat && !M.paralysis && ! M.stunned)
 		if(!istype(usr.loc,/turf)) return
 		if(src.amount <= 14)
-			usr << "<span class='alert'> You need at least 15 lengths to make restraints!</span>"
+			usr << "<span class='alert'>You need at least 15 lengths to make restraints!</span>"
 			return
 		var/obj/item/weapon/handcuffs/cable/B = new /obj/item/weapon/handcuffs/cable(usr.loc)
 		B.color = color
 		usr << "<span class='notice'>You wind some cable together to make some restraints.</span>"
 		src.use(15)
 	else
-		usr << "<span class='notice'> You cannot do that.</span>"
+		usr << "<span class='notice'>You cannot do that.</span>"
 	..()
 
 /obj/item/stack/cable_coil/cyborg/verb/set_colour()

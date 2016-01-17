@@ -354,7 +354,7 @@
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))
-			user << "<span class='notice'> Now welding the vent.</span>"
+			user << "<span class='notice'>Now welding the vent.</span>"
 			if(do_after(user, 20))
 				if(!src || !WT.isOn()) return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -367,9 +367,9 @@
 					welded = 0
 					update_icon()
 			else
-				user << "<span class='notice'> The welding tool needs to be on to start this task.</span>"
+				user << "<span class='notice'>The welding tool needs to be on to start this task.</span>"
 		else
-			user << "<span class='notice'> You need more welding fuel to complete this task.</span>"
+			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 			return 1
 	else
 		..()
@@ -392,24 +392,24 @@
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && use_power)
-		user << "<span class='alert'> You cannot unwrench this [src], turn it off first.</span>"
+		user << "<span class='alert'>You cannot unwrench this [src], turn it off first.</span>"
 		return 1
 	var/turf/T = src.loc
 	if (node && node.level==1 && isturf(T) && T.intact)
-		user << "<span class='alert'> You must remove the plating first.</span>"
+		user << "<span class='alert'>You must remove the plating first.</span>"
 		return 1
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
 	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-		user << "<span class='alert'> You cannot unwrench this [src], it too exerted due to internal pressure.</span>"
+		user << "<span class='alert'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>"
 		add_fingerprint(user)
 		return 1
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	user << "<span class='notice'> You begin to unfasten \the [src]...</span>"
+	user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
 	if (do_after(user, 40))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
-			"<span class='notice'> You have unfastened \the [src].</span>", \
+			"<span class='notice'>You have unfastened \the [src].</span>", \
 			"You hear ratchet.")
 		new /obj/item/pipe(loc, make_from=src)
 		qdel(src)

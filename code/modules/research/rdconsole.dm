@@ -150,15 +150,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(istype(D, /obj/item/weapon/disk/tech_disk)) t_disk = D
 		else if (istype(D, /obj/item/weapon/disk/design_disk)) d_disk = D
 		else
-			user << "<span class='alert'> Machine cannot accept disks in that format.</span>"
+			user << "<span class='alert'>Machine cannot accept disks in that format.</span>"
 			return
 		user.drop_item()
 		D.loc = src
-		user << "<span class='notice'> You add the disk to the machine!</span>"
+		user << "<span class='notice'>You add the disk to the machine!</span>"
 	else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
-		user << "<span class='notice'> You you disable the security protocols</span>"
+		user << "<span class='notice'>You you disable the security protocols</span>"
 	else
 		//The construction/deconstruction of the console code.
 		..()
@@ -235,7 +235,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["eject_item"]) //Eject the item inside the destructive analyzer.
 		if(linked_destroy)
 			if(linked_destroy.busy)
-				usr << "<span class='alert'> The destructive analyzer is busy at the moment.</span>"
+				usr << "<span class='alert'>The destructive analyzer is busy at the moment.</span>"
 
 			else if(linked_destroy.loaded_item)
 				linked_destroy.loaded_item.loc = linked_destroy.loc
@@ -246,7 +246,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["deconstruct"]) //Deconstruct the item in the destructive analyzer and update the research holder.
 		if(linked_destroy)
 			if(linked_destroy.busy)
-				usr << "<span class='alert'> The destructive analyzer is busy at the moment.</span>"
+				usr << "<span class='alert'>The destructive analyzer is busy at the moment.</span>"
 			else
 				if(alert("Proceeding will destroy loaded item. Continue?", "Destructive analyzer confirmation", "Yes", "No") == "No" || !linked_destroy) return
 				linked_destroy.busy = 1
@@ -258,7 +258,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						linked_destroy.busy = 0
 						if(!linked_destroy.hacked)
 							if(!linked_destroy.loaded_item)
-								usr <<"<span class='alert'> The destructive analyzer appears to be empty.</span>"
+								usr <<"<span class='alert'>The destructive analyzer appears to be empty.</span>"
 								screen = 1.0
 								return
 							if(linked_destroy.loaded_item.reliability >= 90)
@@ -299,7 +299,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["sync"]) //Sync the research holder with all the R&D consoles in the game that aren't sync protected.
 		screen = 0.0
 		if(!sync)
-			usr << "<span class='alert'> You must connect to the network first!</span>"
+			usr << "<span class='alert'>You must connect to the network first!</span>"
 		else
 			griefProtection() //Putting this here because I dont trust the sync process
 			spawn(30)

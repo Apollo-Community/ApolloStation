@@ -14,16 +14,16 @@
 			active = 1
 			target = mutiny.captains_key
 			workobj()
-			usr << "<span class='notice'> You calibrate \the [src] to locate the Captain's Authentication Key.</span>"
+			usr << "<span class='notice'>You calibrate \the [src] to locate the Captain's Authentication Key.</span>"
 		if (1)
 			mode = 2
 			target = mutiny.secondary_key
-			usr << "<span class='notice'> You calibrate \the [src] to locate the Emergency Secondary Authentication Key.</span>"
+			usr << "<span class='notice'>You calibrate \the [src] to locate the Emergency Secondary Authentication Key.</span>"
 		else
 			mode = 0
 			active = 0
 			icon_state = "pinoff"
-			usr << "<span class='notice'> You switch \the [src] off.</span>"
+			usr << "<span class='notice'>You switch \the [src] off.</span>"
 
 /obj/item/weapon/pinpointer/advpinpointer/auth_key/examine(mob/user)
 	switch(mode)

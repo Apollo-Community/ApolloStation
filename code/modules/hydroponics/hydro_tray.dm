@@ -517,7 +517,7 @@
 	pestlevel = 0
 	sampled = 0
 	update_icon()
-	visible_message("<span class='notice'> [src] has been overtaken by [seed.display_name].</span>")
+	visible_message("<span class='notice'>[src] has been overtaken by [seed.display_name].</span>")
 
 	return
 
@@ -574,7 +574,7 @@
 	weedlevel = 0
 
 	update_icon()
-	visible_message("<span class='alert'> The </span><span class='notice'> [previous_plant] </span><span class='alert'> has suddenly mutated into </span><span class='notice'> [seed.display_name]!</span>")
+	visible_message("<span class='alert'>The </span><span class='notice'>[previous_plant] </span><span class='alert'>has suddenly mutated into </span><span class='notice'>[seed.display_name]!</span>")
 
 	return
 
@@ -670,16 +670,16 @@
 			update_icon()
 
 		else
-			user << "<span class='alert'> \The [src] already has seeds in it!</span>"
+			user << "<span class='alert'>\The [src] already has seeds in it!</span>"
 
 	else if (istype(O, /obj/item/weapon/minihoe))  // The minihoe
 
 		if(weedlevel > 0)
-			user.visible_message("<span class='alert'> [user] starts uprooting the weeds.</span>", "<span class='alert'> You remove the weeds from the [src].</span>")
+			user.visible_message("<span class='alert'>[user] starts uprooting the weeds.</span>", "<span class='alert'>You remove the weeds from the [src].</span>")
 			weedlevel = 0
 			update_icon()
 		else
-			user << "<span class='alert'> This plot is completely devoid of weeds. It doesn't need uprooting.</span>"
+			user << "<span class='alert'>This plot is completely devoid of weeds. It doesn't need uprooting.</span>"
 
 	else if (istype(O, /obj/item/weapon/storage/bag/plants))
 
@@ -718,7 +718,7 @@
 	else if(istype(O, /obj/item/apiary))
 
 		if(seed)
-			user << "<span class='alert'> [src] is already occupied!</span>"
+			user << "<span class='alert'>[src] is already occupied!</span>"
 		else
 			user.drop_item()
 			qdel(O)
@@ -750,17 +750,17 @@
 
 	else
 		if(seed && !dead)
-			usr << "[src] has <span class='notice'> [seed.display_name] </span><span class='black'>planted.</span>"
+			usr << "[src] has <span class='notice'>[seed.display_name] </span><span class='black'>planted.</span>"
 			if(health <= (seed.endurance / 2))
-				usr << "The plant looks <span class='alert'> unhealthy.</span>"
+				usr << "The plant looks <span class='alert'>unhealthy.</span>"
 		else
 			usr << "[src] is empty."
 		usr << "Water: [round(waterlevel,0.1)]/100"
 		usr << "Nutrient: [round(nutrilevel,0.1)]/10"
 		if(weedlevel >= 5)
-			usr << "[src] is <span class='alert'> filled with weeds!</span>"
+			usr << "[src] is <span class='alert'>filled with weeds!</span>"
 		if(pestlevel >= 5)
-			usr << "[src] is <span class='alert'> filled with tiny worms!</span>"
+			usr << "[src] is <span class='alert'>filled with tiny worms!</span>"
 
 		if(!istype(src,/obj/machinery/portable_atmospherics/hydroponics/soil))
 

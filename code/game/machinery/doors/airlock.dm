@@ -281,7 +281,7 @@
 About the new airlock wires panel:
 *	An airlock wire dialog can be accessed by the normal way or by using wirecutters or a multitool on the door while the wire-panel is open. This would show the following wires, which you can either wirecut/mend or send a multitool pulse through. There are 9 wires.
 *		one wire from the ID scanner. Sending a pulse through this flashes the red light on the door (if the door has power). If you cut this wire, the door will stop recognizing valid IDs. (If the door has 0000 access, it still opens and closes, though)
-*		two wires for power. Sending a pulse through either one causes a breaker to trip, disabling the door for 10 seconds if backup power is connected, or 1 minute if not (or until backup power comes back on, whichever is shorter). Cutting either one disables the main door power, but unless backup power is also cut, the backup power re-powers the door in 10 seconds. While unpowered, the door may be <span class='alert'> open, but bolts-raising will not work. Cutting these wires may electrocute the user.</span>
+*		two wires for power. Sending a pulse through either one causes a breaker to trip, disabling the door for 10 seconds if backup power is connected, or 1 minute if not (or until backup power comes back on, whichever is shorter). Cutting either one disables the main door power, but unless backup power is also cut, the backup power re-powers the door in 10 seconds. While unpowered, the door may be <span class='alert'>open, but bolts-raising will not work. Cutting these wires may electrocute the user.</span>
 *		one wire for door bolts. Sending a pulse through this drops door bolts (whether the door is powered or not) or raises them (if it is). Cutting this wire also drops the door bolts, and mending it does not raise them. If the wire is cut, trying to raise the door bolts will not work.
 *		two wires for backup power. Sending a pulse through either one causes a breaker to trip, but this does not disable it unless main power is down too (in which case it is disabled for 1 minute or however long it takes main power to come back, whichever is shorter). Cutting either one disables the backup door power (allowing it to be crowbarred open, but disabling bolts-raising), but may electocute the user.
 *		one wire for opening the door. Sending a pulse through this while the door has power makes it open the door if no access is required.
@@ -305,7 +305,7 @@ About the new airlock wires panel:
 			else /*if(src.justzap)*/
 				return
 		else if(user.hallucination > 50 && prob(10) && src.operating == 0)
-			user << "<span class='alert'> <B>You feel a powerful shock course through your body!</B></span>"
+			user << "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>"
 			user.halloss += 10
 			user.stunned += 10
 			return
@@ -635,14 +635,14 @@ About the new airlock wires panel:
 		if(H.getBrainLoss() >= 60)
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
-				visible_message("<span class='alert'> [user] headbutts the airlock.</span>")
+				visible_message("<span class='alert'>[user] headbutts the airlock.</span>")
 				var/datum/organ/external/affecting = H.get_organ("head")
 				H.Stun(8)
 				H.Weaken(5)
 				if(affecting.take_damage(10, 0))
 					H.UpdateDamageIcon()
 			else
-				visible_message("<span class='alert'> [user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
+				visible_message("<span class='alert'>[user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
 			return
 	**/
 
@@ -911,7 +911,7 @@ About the new airlock wires panel:
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
 			if(do_after(user,40))
-				user << "<span class='notice'> You removed the airlock electronics!</span>"
+				user << "<span class='notice'>You removed the airlock electronics!</span>"
 
 				var/obj/structure/door_assembly/da = new assembly_type(src.loc)
 				if (istype(da, /obj/structure/door_assembly/multi_tile))
@@ -939,9 +939,9 @@ About the new airlock wires panel:
 				qdel(src)
 				return
 		else if(arePowerSystemsOn())
-			user << "<span class='notice'> The airlock's motors resist your efforts to force it.</span>"
+			user << "<span class='notice'>The airlock's motors resist your efforts to force it.</span>"
 		else if(locked)
-			user << "<span class='notice'> The airlock's bolts prevent it from being forced.</span>"
+			user << "<span class='notice'>The airlock's bolts prevent it from being forced.</span>"
 		else if( !welded && !operating )
 			if(density)
 				spawn(0)	open(1)
@@ -950,20 +950,20 @@ About the new airlock wires panel:
 
 	else if(istype(C, /obj/item/weapon/twohanded/fireaxe) && !arePowerSystemsOn())
 		if(locked)
-			user << "<span class='notice'> The airlock's bolts prevent it from being forced.</span>"
+			user << "<span class='notice'>The airlock's bolts prevent it from being forced.</span>"
 		else if( !welded && !operating )
 			if(density)
 				var/obj/item/weapon/twohanded/fireaxe/F = C
 				if(F.wielded)
 					spawn(0)	open(1)
 				else
-					user << "<span class='alert'> You need to be wielding \the [C] to do that.</span>"
+					user << "<span class='alert'>You need to be wielding \the [C] to do that.</span>"
 			else
 				var/obj/item/weapon/twohanded/fireaxe/F = C
 				if(F.wielded)
 					spawn(0)	close(1)
 				else
-					user << "<span class='alert'> You need to be wielding \the [C] to do that.</span>"
+					user << "<span class='alert'>You need to be wielding \the [C] to do that.</span>"
 
 	else if(us.species && us.species.name_plural == "Xenomorphs")
 		user << "<span class='notice'>You begin to force open \the [src].</span>"
@@ -980,15 +980,15 @@ About the new airlock wires panel:
 			if(!isnull(D.door) && D.door == src)
 				return
 		if(locked)
-			user << "<span class='alert'> The airlock's bolts prevent it from being forced open.</span>"
+			user << "<span class='alert'>The airlock's bolts prevent it from being forced open.</span>"
 		else if (!welded && !operating)
 			if(density)
 				user << "You slide the door jack in the airlock and start forcing it open."
 				playsound(user.loc, 'sound/effects/xenoDoorForced.ogg', 100, 3)
 				for(var/mob/M in range(2, src))
-					M << "<span class='alert'> [user] begins to force the airlock open!</span>"
+					M << "<span class='alert'>[user] begins to force the airlock open!</span>"
 				if(!do_after(user, 250))
-					user << "<span class='alert'> The door jack snaps back into its retracted position!</span>"
+					user << "<span class='alert'>The door jack snaps back into its retracted position!</span>"
 					return
 				user << "With a loud creak, you force the airlock fully open."
 				playsound(user.loc, 'sound/effects/xenoDoorForced.ogg', 100, 3)
@@ -996,7 +996,7 @@ About the new airlock wires panel:
 			else
 				user << "You rapidly deploy the door jack in the doorway."
 				for(var/mob/M in range(2, src))
-					M << "<span class='alert'> [user] places a door jack on the airlock!</span>"
+					M << "<span class='alert'>[user] places a door jack on the airlock!</span>"
 			var/obj/item/weapon/doorjack/D = C
 			user.drop_item()
 			D.loc = get_turf(src)

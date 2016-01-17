@@ -4,7 +4,7 @@
 
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
-			src << "<span class='alert'> You cannot speak in IC (Muted).</span>"
+			src << "<span class='alert'>You cannot speak in IC (Muted).</span>"
 			return
 
 	message = sanitize(message)

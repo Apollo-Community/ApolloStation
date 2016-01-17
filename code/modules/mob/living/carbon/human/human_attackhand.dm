@@ -6,7 +6,7 @@
 		if(H.hand)
 			temp = H.organs_by_name["l_hand"]
 		if(temp && !temp.is_usable())
-			H << "<span class='alert'> You can't use your [temp.display_name].</span>"
+			H << "<span class='alert'>You can't use your [temp.display_name].</span>"
 			return
 
 	if( istype( M, /mob/living/simple_animal/rodent/rat/king ))
@@ -34,7 +34,7 @@
 				return
 
 		if((H != src) && check_shields(0, H.name))
-			visible_message("<span class='alert'> <B>[H] attempted to touch [src]!</B></span>")
+			visible_message("<span class='alert'><B>[H] attempted to touch [src]!</B></span>")
 			return 0
 
 		if(istype(H.gloves, /obj/item/clothing/gloves/boxing/hologlove))
@@ -42,7 +42,7 @@
 			var/damage = rand(0, 9)
 			if(!damage)
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-				visible_message("<span class='alert'> <B>[H] has attempted to punch [src]!</B></span>")
+				visible_message("<span class='alert'><B>[H] has attempted to punch [src]!</B></span>")
 				return 0
 			var/datum/organ/external/affecting = get_organ(ran_zone(H.zone_sel.selecting))
 			var/armor_block = run_armor_check(affecting, "melee")
@@ -52,11 +52,11 @@
 
 			playsound(loc, "punch", 25, 1, -1)
 
-			visible_message("<span class='alert'> <B>[H] has punched [src]!</B></span>")
+			visible_message("<span class='alert'><B>[H] has punched [src]!</B></span>")
 
 			apply_damage(damage, HALLOSS, affecting, armor_block)
 			if(damage >= 9)
-				visible_message("<span class='alert'> <B>[H] has weakened [src]!</B></span>")
+				visible_message("<span class='alert'><B>[H] has weakened [src]!</B></span>")
 				apply_effect(4, WEAKEN, armor_block)
 
 			return
@@ -71,10 +71,10 @@
 			if(istype(H) && health < config.health_threshold_crit)
 
 				if((H.head && (H.head.flags & HEADCOVERSMOUTH)) || (H.wear_mask && (H.wear_mask.flags & MASKCOVERSMOUTH)))
-					H << "<span class='notice'> <B>Remove your mask!</B></span>"
+					H << "<span class='notice'><B>Remove your mask!</B></span>"
 					return 0
 				if((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)))
-					H << "<span class='notice'> <B>Remove [src]'s mask!</B></span>"
+					H << "<span class='notice'><B>Remove [src]'s mask!</B></span>"
 					return 0
 
 				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
@@ -116,16 +116,16 @@
 					var/turf/p_loc = M.loc
 					var/turf/p_loc_m = src.loc
 
-					M.visible_message("<span class='notice'> [M] begins to violently pull off [src]'s antennae.</span>")
-					src << "<span class='alert'> <B>[M] grips your antennae and starts violently pulling!<B></span>"
+					M.visible_message("<span class='notice'>[M] begins to violently pull off [src]'s antennae.</span>")
+					src << "<span class='alert'><B>[M] grips your antennae and starts violently pulling!<B></span>"
 					do_after(src, 250)
 					if(p_loc == M.loc && p_loc_m == src.loc)
 						qdel(src.internal_organs_by_name["antennae"])
 						src.remove_language("Wryn Hivemind")
 						new /obj/item/organ/wryn/hivenode(M.loc)
-						M << "<span class='notice'> You hear a loud crunch as you mercilessly pull off [src]'s antennae.</span>"
-						src << "<span class='alert'> <B>You hear a loud crunch as your antennae is ripped off your head by [M].</B></span>"
-						src << "<span class='alert'> <B>Its so quiet...</B></span>"
+						M << "<span class='notice'>You hear a loud crunch as you mercilessly pull off [src]'s antennae.</span>"
+						src << "<span class='alert'><B>You hear a loud crunch as your antennae is ripped off your head by [M].</B></span>"
+						src << "<span class='alert'><B>Its so quiet...</B></span>"
 						src.h_style = "Bald"
 						src.update_hair()
 
@@ -282,7 +282,7 @@
 			if(!(species.flags & NO_SLIP) && randn <= 25)
 				apply_effect(3, WEAKEN, run_armor_check(affecting, "melee"))
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-				visible_message("<span class='alert'> <B>[M] has pushed [src]!</B></span>")
+				visible_message("<span class='alert'><B>[M] has pushed [src]!</B></span>")
 				return
 
 			var/talked = 0	// BubbleWrap
@@ -290,7 +290,7 @@
 			if(randn <= 60)
 				//BubbleWrap: Disarming breaks a pull
 				if(pulling)
-					visible_message("<span class='alert'> <b>[M] has broken [src]'s grip on [pulling]!</B></span>")
+					visible_message("<span class='alert'><b>[M] has broken [src]'s grip on [pulling]!</B></span>")
 					talked = 1
 					stop_pulling()
 
@@ -298,14 +298,14 @@
 				if(istype(l_hand, /obj/item/weapon/grab))
 					var/obj/item/weapon/grab/lgrab = l_hand
 					if(lgrab.affecting)
-						visible_message("<span class='alert'> <b>[M] has broken [src]'s grip on [lgrab.affecting]!</B></span>")
+						visible_message("<span class='alert'><b>[M] has broken [src]'s grip on [lgrab.affecting]!</B></span>")
 						talked = 1
 					spawn(1)
 						qdel(lgrab)
 				if(istype(r_hand, /obj/item/weapon/grab))
 					var/obj/item/weapon/grab/rgrab = r_hand
 					if(rgrab.affecting)
-						visible_message("<span class='alert'> <b>[M] has broken [src]'s grip on [rgrab.affecting]!</B></span>")
+						visible_message("<span class='alert'><b>[M] has broken [src]'s grip on [rgrab.affecting]!</B></span>")
 						talked = 1
 					spawn(1)
 						qdel(rgrab)
@@ -313,13 +313,13 @@
 
 				if(!talked)	//BubbleWrap
 					drop_item()
-					visible_message("<span class='alert'> <B>[M] has disarmed [src]!</B></span>")
+					visible_message("<span class='alert'><B>[M] has disarmed [src]!</B></span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 				return
 
 
 			playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-			visible_message("<span class='alert'> <B>[M] attempted to disarm [src]!</B></span>")
+			visible_message("<span class='alert'><B>[M] attempted to disarm [src]!</B></span>")
 	return
 
 /mob/living/carbon/human/proc/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, inrange, params)

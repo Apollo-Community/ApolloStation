@@ -118,7 +118,7 @@
 
 				observer.started_as_observer = 1
 				close_spawn_windows()
-				src << "<span class='notice'> Now teleporting.</span>"
+				src << "<span class='notice'>Now teleporting.</span>"
 				observer.loc = observer_start[rand(1,observer_start.len)]
 				observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
 
@@ -141,7 +141,7 @@
 		if(href_list["late_join"])
 
 			if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-				usr << "<span class='alert'> The round is either not ready, or has already finished...</span>"
+				usr << "<span class='alert'>The round is either not ready, or has already finished...</span>"
 				return
 
 			if( !is_alien_whitelisted(src, client.prefs.species ))
@@ -304,7 +304,7 @@
 		if (src != usr)
 			return 0
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-			usr << "<span class='alert'> The round is either not ready, or has already finished...</span>"
+			usr << "<span class='alert'>The round is either not ready, or has already finished...</span>"
 			return 0
 		if(!config.enter_allowed)
 			usr << "<span class='notice'>There is an administrative lock on entering the game!</span>"
