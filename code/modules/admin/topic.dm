@@ -1152,6 +1152,7 @@
 
 		message_admins("<span class='alert'> Admin [key_name_admin(usr)] AIized [key_name_admin(H)]!</span>")
 		log_admin("[key_name(usr)] AIized [key_name(H)]")
+		command_announcement.Announce("A new station AI has been downloaded to [station_name()].", "AUTOMATED ALERT: AI Installed", new_sound = 'sound/AI/newAI.ogg')
 		H.AIize()
 
 	else if(href_list["makealien"])
