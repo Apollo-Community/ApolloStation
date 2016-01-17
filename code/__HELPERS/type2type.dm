@@ -369,3 +369,22 @@ proc/tg_list2text(list/list, glue=",")
 		if("Orange")	return 'icons/mob/screen1_Orange.dmi'
 		if("Midnight")	return 'icons/mob/screen1_Midnight.dmi'
 		else			return 'icons/mob/screen1_White.dmi'
+
+/proc/text2days(time) //	YYYY-MM-DD for format
+	var/month = text2num(copytext(time,6,8))
+	var/day = text2num(copytext(time,9))
+	var/year = text2num(copytext(time,3,5))
+	var/days = day + (year*365) + round(year/4) // the extra 1 is for leep year in 2000
+	if(year/4 == round(year/4) && month < 3)        days -= 1
+	if(month > 1)        days+=31
+	if(month > 2)        days+=28
+	if(month > 3)        days+=31
+	if(month > 4)        days+=30
+	if(month > 5)        days+=31
+	if(month > 6)        days+=30
+	if(month > 7)        days+=31
+	if(month > 8)        days+=31
+	if(month > 9)        days+=30
+	if(month > 10)       days+=31
+	if(month > 11)       days+=30
+	return days
