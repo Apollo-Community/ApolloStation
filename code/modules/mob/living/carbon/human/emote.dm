@@ -568,7 +568,7 @@
 		else
 			src << "<span class='notice'> Unusable emote '[act]'. Say *help for a list.</span>"
 
-	if (message && src.mind)		//Don't log autosay messages
+	if (message && src.mind && src.client)		//Don't log autosay messages
 		log_emote("[name]/[key] : [message]")
 
  //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
