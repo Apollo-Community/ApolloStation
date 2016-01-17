@@ -13,6 +13,7 @@ var/savefile/Banlist
 	if(config && config.banappeals)
 		appeal = "\nFor more information on your ban, or to appeal, head to <a href='[config.banappeals]'>[config.banappeals]</a>"
 	Banlist.cd = "/base"
+	ckey = ckey( ckey )
 	if( "[ckey][id]" in Banlist.dir )
 		Banlist.cd = "[ckey][id]"
 		if (Banlist["temp"])
@@ -103,6 +104,8 @@ var/savefile/Banlist
 	if (temp)
 		UpdateTime()
 		bantimestamp = CMinutes + minutes
+
+	ckey = ckey(ckey)
 
 	Banlist.cd = "/base"
 	if ( Banlist.dir.Find("[ckey][computerid]") )
