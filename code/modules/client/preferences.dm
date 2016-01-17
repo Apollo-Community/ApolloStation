@@ -129,6 +129,9 @@ datum/preferences
 		// OOC Metadata:
 	var/metadata = ""
 	var/slot_name = ""
+	//Ckey join date
+	var/joined_date = ""
+	var/passed_date = 0			//So we don't have to keep aquiring joined_date
 
 /datum/preferences/New(client/C)
 	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
