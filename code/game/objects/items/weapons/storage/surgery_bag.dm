@@ -86,24 +86,26 @@
     if(..())
         src.overlays -= image('icons/obj/objects.dmi', "sb_[W.name]")
 
-/obj/item/weapon/storage/surgery_bag/verb/toggle_roll(mob/user)
+/obj/item/weapon/storage/surgery_bag/verb/toggle_roll()
     set name = "Roll/Unroll surgery bag "
     set category = "Object"
-    set src in view(1)
+    set src in oview(1)
     set desc = "Roll/Unroll surgical bag."
 
+    if(usr.stat)    return      //Stops ghosts being spooky
+
     if(anchored)    //Roll it up
-        user << "<span class='info'>You roll the [src.name] up into a tidy little bag.</span>"
+        usr << "<span class='info'>You roll the [src.name] up into a tidy little bag.</span>"
         anchored = 0
         overlays.Cut()          //Removes overlays
-        src.close(user)         //Closes the bag UI
+        src.close(usr)         //Closes the bag UI
         icon_state = "sbag_rolled"
     else            //Unroll it
         if(!isturf(src.loc))      // You're only allowed to unroll on turfs
-            user << "<span class='warning'>You fumble around but don't have enough space to unroll the [src.name]</span>"
+            usr << "<span class='warning'>You fumble around but don't have enough space to unroll the [src.name]</span>"
         else
             anchored = 1          // So people can't move it
-            user << "<span class='info'>You unroll the [src.name]. Time to get to work!"
+            usr << "<span class='info'>You unroll the [src.name]. Time to get to work!"
             icon_state = "sbag_unrolled"
             for(var/obj/O in contents)
                 src.overlays += image('icons/obj/objects.dmi', "sb_[O.name]")
