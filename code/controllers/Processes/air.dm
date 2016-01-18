@@ -2,7 +2,7 @@
 
 /datum/controller/process/air/setup()
 	name = "air"
-	schedule_interval = 30 // every 3 seconds
+	schedule_interval = 10 // every 1 second, originally every 3 seconds
 	cpu_threshold = 50
 
 	if(!air_master)
