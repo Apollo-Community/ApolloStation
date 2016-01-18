@@ -2,7 +2,7 @@
 	name = "Pipe Dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
-	req_access = list(access_atmospherics)
+	req_access = list(access_atmospherics,access_tox_storage)
 	density = 1
 	anchored = 1
 	var/unwrenched = 0
