@@ -127,7 +127,6 @@ datum/preferences
 	var/uplinklocation = "PDA"
 
 		// OOC Metadata:
-	var/metadata = ""
 	var/slot_name = ""
 	//Ckey join date
 	var/joined_date = ""
@@ -274,9 +273,6 @@ datum/preferences
 	dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'><b>[(toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</b></a><br>"
 	dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'><b>[(toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</b></a><br>"
 	dat += "<b>Ghost radio:</b> <a href='?_src_=prefs;preference=ghost_radio'><b>[(toggles & CHAT_GHOSTRADIO) ? "All Chatter" : "Nearest Speakers"]</b></a><br>"
-
-	if(config.allow_Metadata)
-		dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'> Edit </a><br>"
 
 	dat += "<br><b>Custom Loadout:</b> "
 	var/total_cost = 0
@@ -795,7 +791,6 @@ datum/preferences
 	job_engsec_med = 0
 	job_engsec_low = 0
 
-
 /datum/preferences/proc/GetJobDepartment(var/datum/job/job, var/level)
 	if(!job || !level)	return 0
 	switch(job.department_flag)
@@ -1298,11 +1293,6 @@ datum/preferences
 								new_languages += lang.name
 
 					language = input("Please select a secondary language", "Character Generation", null) in new_languages
-
-				if("metadata")
-					var/new_metadata = input(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata)  as message|null
-					if(new_metadata)
-						metadata = sanitize(new_metadata)
 
 				if("b_type")
 					var/new_b_type = input(user, "Choose your character's blood-type:", "Character Preference") as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )

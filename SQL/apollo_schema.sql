@@ -140,7 +140,6 @@ CREATE TABLE IF NOT EXISTS `player` (
   `whitelist_flags` int(16) NOT NULL DEFAULT '0',
   `species_flags` int(16) NOT NULL DEFAULT '0',
   `donator_flags` int(16) NOT NULL DEFAULT '0',
-  `admin_notes` LONGTEXT,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ckey` (`ckey`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
@@ -254,5 +253,71 @@ CREATE TABLE IF NOT EXISTS `round_ai_laws` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `round_id` int(11) NOT NULL,
   `law` TEXT NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+CREATE TABLE IF NOT EXISTS `characters` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ckey` varchar(32) NOT NULL,
+  `real_name` varchar(100) NOT NULL,
+  `gender` varchar(11) NOT NULL,
+  `age` smallint(4) NOT NULL,
+  `species` varchar(100) NOT NULL,
+  `additional_language` varchar(100) NOT NULL DEFAULT "None",
+  `eyes_red` smallint(4) NOT NULL,
+  `eyes_green` smallint(4) NOT NULL,
+  `eyes_blue` smallint(4) NOT NULL,
+  `hair_red` smallint(4) NOT NULL,
+  `hair_green` smallint(4) NOT NULL,
+  `hair_blue` smallint(4) NOT NULL,
+  `facial_red` smallint(4) NOT NULL,
+  `facial_green` smallint(4) NOT NULL,
+  `facial_blue` smallint(4) NOT NULL,
+  `skin_tone` smallint(4) NOT NULL,
+  `skin_red` smallint(4) NOT NULL,
+  `skin_green` smallint(4) NOT NULL,
+  `skin_blue` smallint(4) NOT NULL,
+  `hair_style` varchar(50) NOT NULL DEFAULT "Bald", -- Different
+  `facial_style` varchar(50) NOT NULL,  -- Different
+  `underwear` varchar(50) NOT NULL,
+  `undershirt` varchar(50) NOT NULL,
+  `backpack` smallint(4) NOT NULL, -- Different
+  `backpack_type` varchar(50) NOT NULL, -- Different
+  `spawnpoint` varchar(100) NOT NULL DEFAULT "Arrivals Shuttle",
+  `alternate_option` smallint(4) NOT NULL,
+  `job_civilian_high` int(16) NOT NULL DEFAULT '0', -- These are all bitflags
+  `job_civilian_med` int(16) NOT NULL DEFAULT '0',
+  `job_civilian_low` int(16) NOT NULL DEFAULT '0',
+  `job_medsci_high` int(16) NOT NULL DEFAULT '0',
+  `job_medsci_med` int(16) NOT NULL DEFAULT '0',
+  `job_medsci_low` int(16) NOT NULL DEFAULT '0',
+  `job_engsec_high` int(16) NOT NULL DEFAULT '0',
+  `job_engsec_med` int(16) NOT NULL DEFAULT '0',
+  `job_engsec_low` int(16) NOT NULL DEFAULT '0',
+  `flavor_texts_general` mediumtext NOT NULL,
+  `flavor_texts_head` mediumtext NOT NULL,
+  `flavor_texts_face` mediumtext NOT NULL,
+  `flavor_texts_eyes` mediumtext NOT NULL,
+  `flavor_texts_torso` mediumtext NOT NULL,
+  `flavor_texts_arms` mediumtext NOT NULL,
+  `flavor_texts_hands` mediumtext NOT NULL,
+  `flavor_texts_legs` mediumtext NOT NULL,
+  `flavor_texts_feet` mediumtext NOT NULL,
+  `flavour_texts_robot` mediumtext NOT NULL, -- Different
+  `med_record` mediumtext NOT NULL,
+  `sec_record` mediumtext NOT NULL,
+  `gen_record` mediumtext NOT NULL,
+  `player_alt_titles` mediumtext NOT NULL,
+  `be_special` int(16) NOT NULL DEFAULT '0',
+  `disabilities` mediumtext NOT NULL,
+  `organ_data` mediumtext NOT NULL,
+  `gear` mediumtext NOT NULL,
+  `home_system` varchar(100) NOT NULL DEFAULT "Unset",
+  `citizenship` varchar(50) NOT NULL DEFAULT "None",
+  `faction` varchar(50) NOT NULL DEFAULT "NanoTrasen",
+  `religion` varchar(50) NOT NULL DEFAULT "None",
+  `nanotrasen_relation` varchar(50) NOT NULL,
+  `uplinklocation` varchar(50) NOT NULL,
+  `exploit_record` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;

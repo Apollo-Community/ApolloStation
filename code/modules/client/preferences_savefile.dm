@@ -49,10 +49,10 @@
 
 	//general preferences
 	S["ooccolor"]			>> ooccolor
-	S["UI_style"]			>> UI_style
 	S["be_special"]			>> be_special
 	S["default_slot"]		>> default_slot
 	S["toggles"]			>> toggles
+	S["UI_style"]			>> UI_style
 	S["UI_style_color"]		>> UI_style_color
 	S["UI_style_alpha"]		>> UI_style_alpha
 
@@ -78,6 +78,8 @@
 	//general preferences
 	S["ooccolor"]			<< ooccolor
 	S["UI_style"]			<< UI_style
+	S["UI_style_color"]		<< UI_style_color
+	S["UI_style_alpha"]		<< UI_style_alpha
 	S["be_special"]			<< be_special
 	S["default_slot"]		<< default_slot
 	S["toggles"]			<< toggles
@@ -98,9 +100,7 @@
 	S.cd = "/character[slot]"
 
 	//Character
-	S["OOC_Notes"]			>> metadata
 	S["real_name"]			>> real_name
-	S["name_is_always_random"] >> be_random_name
 	S["gender"]				>> gender
 	S["age"]				>> age
 	S["species"]			>> species
@@ -178,12 +178,7 @@
 
 	S["uplinklocation"] >> uplinklocation
 	S["exploit_record"]	>> exploit_record
-
-	S["UI_style_color"]		<< UI_style_color
-	S["UI_style_alpha"]		<< UI_style_alpha
-
 	//Sanitize
-	metadata		= sanitize_text(metadata, initial(metadata))
 	real_name		= sanitizeName(real_name)
 
 	if(isnull(species) || !(species in playable_species))
@@ -234,7 +229,6 @@
 	if(!organ_data) src.organ_data = list()
 	if(!gear) src.gear = list()
 	if(!h_style) h_style = "Bald"
-	//if(!skin_style) skin_style = "Default"
 
 	if(!home_system) home_system = "Unset"
 	if(!citizenship) citizenship = "None"
@@ -250,7 +244,6 @@
 	S.cd = "/character[default_slot]"
 
 	//Character
-	S["OOC_Notes"]			<< metadata
 	S["real_name"]			<< real_name
 	S["name_is_always_random"] << be_random_name
 	S["gender"]				<< gender
