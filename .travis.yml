@@ -22,4 +22,7 @@ script:
   - DreamMaker apollo.dme
 
 notifications:
-  slack: apollo-community:Azcc0VmKiy1iPBk4QR0SWkU0
+  slack:
+    rooms:
+      - apollo-community:dH9RTFscSKHIs2EK6Sb1oMUv#development
+      - apollo-community:dH9RTFscSKHIs2EK6Sb1oMUv#dev-announcements
