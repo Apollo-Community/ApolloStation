@@ -162,7 +162,7 @@ datum/controller/vote
 				if("crew_transfer")
 					if(. == "Initiate Crew Transfer" && emergency_shuttle.can_call())
 						init_shift_change(null, 1)
-					else
+					else if(. != "Continue The Round")
 						world << "<font color='red'><b>The vote has been cancelled. The shuttle is currently in transit or disabled.</b></font>"
 
 		if(mode == "gamemode") //fire this even if the vote fails.
