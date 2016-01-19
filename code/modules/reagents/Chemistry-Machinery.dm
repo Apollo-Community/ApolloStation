@@ -11,6 +11,7 @@
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
+	req_access = list(access_chemistry)
 	use_power = 1
 	idle_power_usage = 40
 	var/ui_title = "Chem Dispenser 5000"

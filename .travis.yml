@@ -20,3 +20,6 @@ script:
   - shopt -s globstar
   - (! grep 'step_[xy]' maps/**/*.dmm)
   - DreamMaker apollo.dme
+
+notifications:
+  slack: apollo-community:Azcc0VmKiy1iPBk4QR0SWkU0
