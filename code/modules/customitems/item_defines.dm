@@ -1218,6 +1218,7 @@
 		return
 	..()
 
+
 //////  Medallion - Nasir Khayyam - Jamini
 
 /obj/item/clothing/tie/fluff/nasir_khayyam_1
@@ -1326,6 +1327,14 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "retpoluniform"
 	item_color = "retpoluniform"
+
+//////  Nijishadow - Aya's Formal uniform
+
+/obj/item/clothing/under/hosformalfem/fluff/aya_formal
+	name = "Aya's Formal Uniform"
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "aya_formal"
+	item_state = "aya_formal"
 
 //////////// Weapons ////////////
 
