@@ -113,6 +113,13 @@
 	icon_state = "cat3"
 	origin_tech = null
 
+/obj/item/weapon/holder/runtime
+	name = "Runtime"
+	desc = "Her fur has the look and feel of velvet, and her tail quivers occasionally."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "cat"
+	origin_tech = null
+
 /obj/item/weapon/holder/danton
 	name = "Danton"
 	desc = "Its the great Danton! Perhaps he could fit in the entertainer's hat?"

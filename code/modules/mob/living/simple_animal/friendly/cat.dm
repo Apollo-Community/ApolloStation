@@ -94,6 +94,7 @@
 	icon_state = "cat"
 	icon_living = "cat"
 	icon_dead = "cat_dead"
+	holder_type = /obj/item/weapon/holder/runtime
 
 /mob/living/simple_animal/cat/kitten
 	name = "kitten"
