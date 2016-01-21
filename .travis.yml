@@ -24,5 +24,4 @@ script:
 notifications:
   slack:
     rooms:
-      - apollo-community:$SLACK_TRAVIS#development
-      - apollo-community:$SLACK_TRAVIS#dev-announcements
+      - apollo-community:$SLACK_TRAVIS
