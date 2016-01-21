@@ -663,7 +663,7 @@
 "mM" = (/obj/machinery/atmospherics/pipe/manifold/hidden/yellow,/turf/simulated/floor{icon_state = "vault"; dir = 5},/area/research_outpost/iso1)
 "mN" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 8},/turf/simulated/floor{icon_state = "vault"; dir = 5},/area/research_outpost/iso1)
 "mO" = (/obj/machinery/atmospherics/pipe/simple/hidden/purple,/obj/structure/bed/chair{dir = 1},/obj/machinery/camera{c_tag = "Isolation Room"; dir = 8; network = list("Research","SS13","Anomaly Isolation")},/turf/simulated/floor{icon_state = "vault"; dir = 5},/area/research_outpost/iso1)
-"mP" = (/obj/structure/table,/obj/machinery/firealarm{dir = 8; pixel_x = -16},/turf/simulated/floor{dir = 2; icon_state = "whitegreen"},/area/research_outpost/spectro)
+"mP" = (/obj/structure/table,/obj/machinery/firealarm{dir = 8; pixel_x = -16},/obj/item/stack/nanopaste,/turf/simulated/floor{dir = 2; icon_state = "whitegreen"},/area/research_outpost/spectro)
 "mQ" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 5},/obj/item/weapon/stool,/obj/machinery/light,/turf/simulated/floor{dir = 2; icon_state = "whitegreen"},/area/research_outpost/spectro)
 "mR" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/power/apc{dir = 4; name = "east bump"; pixel_x = 24},/obj/structure/cable,/turf/simulated/floor{dir = 6; icon_state = "whitegreen"},/area/research_outpost/spectro)
 "mS" = (/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/simulated/floor{tag = "icon-whitegreen (WEST)"; icon_state = "whitegreen"; dir = 8},/area/research_outpost/hallway)
