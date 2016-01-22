@@ -229,6 +229,9 @@
 			return
 		if(!affecting.lying)
 			assailant.visible_message("<span class='warning'>[assailant] has grabbed [affecting] aggressively (now hands)!</span>")
+			if(istype(affecting, /mob/living/carbon/human/monkey/punpun))
+				var/mob/living/carbon/human/monkey/punpun/P = affecting
+				P.handle_attack(assailant,1)
 		else
 			assailant.visible_message("<span class='warning'>[assailant] pins [affecting] down to the ground (now hands)!</span>")
 			apply_pinning(affecting, assailant)
