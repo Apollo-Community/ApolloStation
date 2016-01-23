@@ -213,7 +213,7 @@
 		stat_player_list = sortAssoc(stat_player_list)
 
 	log_client_to_db()
-	
+
 	if(!prefs.passed_date)
 		src << "<span class='admin_channel'>We have detected that your ckey is less than one month old. To help get you started we strongly recommend \
 		that you read this wiki page: <a></a>http://wiki.apollo-community.org/index.php?title=The_Basics</a>\nIn addition feel free to a member of staff \
