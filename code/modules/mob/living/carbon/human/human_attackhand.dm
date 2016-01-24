@@ -231,7 +231,7 @@
 				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
 				if(!issmall(src))
-					msg_admin_attack("[key_name(M)] disarmed [src.name] ([src.ckey]) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[M]'>JMP</A>)")
+					msg_admin_attack("[key_name(M)] disarmed [key_name(src)] (<A HREF='?_src_=holder;adminplayerobservejump=\ref[M]'>JMP</A>)")
 
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)

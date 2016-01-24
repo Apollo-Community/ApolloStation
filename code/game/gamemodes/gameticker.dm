@@ -78,70 +78,57 @@ var/global/datum/controller/gameticker/ticker
 
 
 /datum/controller/gameticker/proc/setup()
-	//Create and announce mode
 	if(master_mode=="secret")
 		src.hide_mode = 1
 
-	var/list/datum/game_mode/runnable_modes
-
+	var/list/runnable_modes = config.get_runnable_modes()
 	if((master_mode=="random") || (master_mode=="secret"))
-		runnable_modes = config.get_runnable_modes()
-		if (runnable_modes.len==0)
+		if(!runnable_modes.len)
 			current_state = GAME_STATE_PREGAME
 			world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
 			return 0
 
 		if(secret_force_mode != "secret")
-			var/datum/game_mode/M = config.pick_mode(secret_force_mode)
-			if(M.can_start())
-				src.mode = config.pick_mode(secret_force_mode)
-
-		job_master.ResetOccupations()
+			src.mode = config.pick_mode(secret_force_mode)
 
 		if(!src.mode)
-			src.mode = pickweight(runnable_modes)
-
-		if(src.mode)
-			var/mtype = src.mode.type
-			src.mode = new mtype
+			src.mode = pick_random_gamemode(runnable_modes)
 	else
 		src.mode = config.pick_mode(master_mode)
 
-	if (!src.mode.can_start())
-		world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players needed. Reverting to pre-game lobby."
-		qdel(mode)
+	if(!src.mode)
 		current_state = GAME_STATE_PREGAME
-		job_master.ResetOccupations()
+		world << "<span class='danger'>Serious error in mode setup!</span> Reverting to pre-game lobby."
 		return 0
 
-	//Configure mode and assign player to special mode stuff
-	job_master.DivideOccupations() //Distribute jobs
-	var/can_continue = src.mode.pre_setup()//Setup special modes
-	if(!can_continue)
+	if(!src.mode.can_start())
 		qdel(mode)
+		var/totalPlayersReady = 0
+		for(var/mob/new_player/player in player_list)
+			if(player.ready)	totalPlayersReady++
+		world << "<B><font color='blue'>Silly crew, you're missing [mode.required_players - totalPlayersReady] crew member(s) to play [mode.name].\nPicking random gamemode instead!</B></font>"
 		current_state = GAME_STATE_PREGAME
-		world << "<B>Error setting up gamemode.</B> Reverting to pre-game lobby."
-		job_master.ResetOccupations()
-		return 0
+
+		src.mode = pick_random_gamemode(runnable_modes)
 
 	if(hide_mode)
-		var/list/modes = new
-		for (var/datum/game_mode/M in runnable_modes)
-			modes+=M.name
-		modes = sortList(modes)
+		world << "<B>The current game mode is - Hidden!</B>"
 	else
 		src.mode.announce()
+
+	job_master.ResetOccupations()
+	job_master.DivideOccupations() // Apparently important for new antagonist system to register specific job antags properly.
+	src.mode.pre_setup()
 
 	create_characters() //Create player characters and transfer them
 	collect_minds()
 	equip_characters()
 	data_core.manifest()
+
+	setup_economy()
 	current_state = GAME_STATE_PLAYING
 
 	callHook("roundstart")
-
-	//here to initialize the random events nicely at round start
-	setup_economy()
 
 	shuttle_controller.setup_shuttle_docks()
 
@@ -172,7 +159,6 @@ var/global/datum/controller/gameticker/ticker
 	for(var/obj/multiz/ladder/L in world) L.connect() //Lazy hackfix for ladders. TODO: move this to an actual controller. ~ Z
 
 	if(config.sql_enabled)
-		spawn(3000)
 		statistic_cycle() // Polls population totals regularly and stores them in an SQL DB -- TLE
 
 	//god awful cheaky way of smoothing in-game movement
@@ -476,3 +462,9 @@ var/global/datum/controller/gameticker/ticker
 	statistics.call_stats() // Show the end-round stats
 
 	return 1
+
+/proc/pick_random_gamemode(runnable_modes)
+	var/list/weighted_modes = list()
+	for(var/datum/game_mode/GM in runnable_modes)
+		weighted_modes[GM.config_tag] = config.probabilities[GM.config_tag]
+	return gamemode_cache[pickweight(weighted_modes)]

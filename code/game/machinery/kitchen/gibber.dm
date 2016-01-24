@@ -127,8 +127,9 @@
 		return
 
 	if(istype(victim,/mob/living/carbon/human) && !emagged)
-		user << "<span class='danger'>The gibber safety guard is engaged!</span>"
-		return
+		if(!ismonkey(victim))		//Monkeys can be gibbed!
+			user << "<span class='danger'>The gibber safety guard is engaged!</span>"
+			return
 
 
 	if(victim.abiotic(1))

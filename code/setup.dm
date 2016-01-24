@@ -86,8 +86,8 @@
 // Factor of how fast mob nutrition decreases
 #define HUNGER_FACTOR 0.05
 
-// How many units of reagent are consumed per tick, by default.
-#define REAGENTS_METABOLISM 0.2
+// How many units of reagent are consumed every Life() call, by default
+#define REAGENTS_METABOLISM 1
 
 // By defining the effect multiplier this way, it'll exactly adjust
 // all effects according to how they originally were with the 0.4 metabolism
@@ -787,8 +787,8 @@ var/list/be_special_flags = list(
 #define MINIMUM_MOLES_TO_FILTER 0.1
 
 // Reagent metabolism defines.
-#define FOOD_METABOLISM 0.4
-#define ALCOHOL_METABOLISM 0.1
+#define FOOD_METABOLISM 4*REAGENTS_METABOLISM
+#define ALCOHOL_METABOLISM REAGENTS_METABOLISM/2
 
 //Chemistry
 

@@ -11,7 +11,6 @@
 	faction = "blob"
 	use_me = 0 //Blobs can't emote
 
-
 	New()
 		real_name += " [pick(rand(1, 99))]"
 		name = real_name
@@ -25,10 +24,8 @@
 	emote(var/act,var/m_type=1,var/message = null)
 		return
 
-
 	Life()
 		set invisibility = 0
-
 
 		clamp_values()
 		UpdateDamage()

@@ -67,6 +67,8 @@
 	health = maxhealth
 
 	update_nearby_tiles(need_rebuild=1)
+
+	MachineProcessing -= src
 	return
 
 

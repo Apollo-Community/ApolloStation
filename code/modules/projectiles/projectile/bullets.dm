@@ -34,7 +34,7 @@
 	sharp = 0
 
 /obj/item/projectile/bullet/weakbullet/BB // "rubber" bullets
-	damage = 3
+	damage = 0
 	agony = 8
 	embed = 0
 	sharp = 0

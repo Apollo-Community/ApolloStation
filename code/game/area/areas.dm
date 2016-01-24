@@ -1045,17 +1045,17 @@ area/space/atmosalert()
 	name = "\improper Fitness Room"
 	icon_state = "fitness"
 
-/area/crew_quarters/cafeteria
-	name = "\improper Cafeteria"
-	icon_state = "cafeteria"
-	environment = QUARRY
-
 /area/crew_quarters/kitchen
 	name = "\improper Kitchen"
 	icon_state = "kitchen"
 
 /area/crew_quarters/bar
 	name = "\improper Bar"
+	icon_state = "bar"
+	environment = QUARRY
+
+/area/crew_quarters/diner
+	name = "\improper Diner"
 	icon_state = "bar"
 	environment = QUARRY
 
