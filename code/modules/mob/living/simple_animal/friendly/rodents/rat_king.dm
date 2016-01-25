@@ -68,6 +68,9 @@ var/rat_king_spawned = 0 // I hate globals, but I cant think of a better way to 
 	say_dead_direct( "\The [src] has been slain, these are dark days. The cooldown timer on rodent spawns is active again." )
 	rat_king_spawned = 0
 
+	while(rats.len)
+		eject(rats[1], 1)
+
 	qdel( virus )
 
 	..()

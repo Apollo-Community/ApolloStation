@@ -16,13 +16,13 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 	active_power_usage = 200
 
 	New()
-		..()
 		component_parts = list()
 		component_parts += new /obj/item/weapon/circuitboard/fax_machine(src)
 		component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
 		component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
 		component_parts += new /obj/item/weapon/stock_parts/subspace/transmitter(src)
 		component_parts += new /obj/item/weapon/stock_parts/subspace/amplifier(src)
+		component_parts += new /obj/item/weapon/light/tube(src)
 		RefreshParts()
 
 	RefreshParts()	// If you add better parts, you can spam the admins as a reward. The shortest the delay can be is 12 seconds.

@@ -76,10 +76,10 @@ obj/item/weapon/circuitboard/rdserver
 	origin_tech = "programming=3;engineering=3"
 	frame_desc = "Requires 3 Matter Bins, 2 Manipulators, 2 Micro-Lasers, and 1 Console Screen."
 	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 3,
-							/obj/item/weapon/stock_parts/manipulator = 2,
-							/obj/item/weapon/stock_parts/micro_laser = 2,
-							/obj/item/weapon/stock_parts/console_screen = 1)
+							"/obj/item/weapon/stock_parts/matter_bin" = 3,
+							"/obj/item/weapon/stock_parts/manipulator" = 2,
+							"/obj/item/weapon/stock_parts/micro_laser" = 2,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)
 
 /obj/item/weapon/circuitboard/alloy_synth
 	name = "Circuit board (Alloy Synthesizer)"
@@ -88,6 +88,6 @@ obj/item/weapon/circuitboard/rdserver
 	origin_tech = "programming=2;engineering=2"
 	frame_desc = "Requires 2 Matter Bins, 1 Micro Manipulator, and 1 Scanning module"
 	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 2,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/scanning_module = 1)
+							"/obj/item/weapon/stock_parts/matter_bin" = 2,
+							"/obj/item/weapon/stock_parts/manipulator" = 1,
+							"/obj/item/weapon/stock_parts/scanning_module" = 1)
