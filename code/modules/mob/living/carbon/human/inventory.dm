@@ -511,7 +511,7 @@
 				if (!target.cpr_time)
 					qdel(src)
 				target.cpr_time = 0
-				message = "<span class='alert'><B>[source] is trying perform CPR on [target]!</B></span>"
+				message = "<span class='alert'><B>[source] is trying to perform CPR on [target]!</B></span>"
 			if("internal")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their internals toggled by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to toggle [target.name]'s ([target.ckey]) internals</font>")
