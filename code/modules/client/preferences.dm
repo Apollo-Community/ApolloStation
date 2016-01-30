@@ -15,16 +15,16 @@ var/list/preferences_datums = list()
 	var/last_ip
 	var/last_id
 
+	// Ckey join date
+	var/joined_date = ""
+	var/passed_date = 0			//So we don't have to keep aquiring joined_date
+
 	// game-preferences
 	var/ooccolor = "#010000"			//Whatever this is set to acts as 'reset' color and is thus unusable as an actual custom color
 	var/UI_style = "Midnight"
 	var/toggles = TOGGLES_DEFAULT
 	var/UI_style_color = "#ffffff"
 	var/UI_style_alpha = 255
-
-	// Ckey join date
-	var/joined_date = ""
-	var/passed_date = 0			//So we don't have to keep aquiring joined_date
 
 	// Saved characters
 	var/list/characters = list()

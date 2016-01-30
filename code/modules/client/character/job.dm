@@ -1,10 +1,9 @@
-
-/datum/preferences/proc/GetPlayerAltTitle(datum/job/job)
+/datum/character/proc/GetPlayerAltTitle(datum/job/job)
 	return player_alt_titles.Find(job.title) > 0 \
 		? player_alt_titles[job.title] \
 		: job.title
 
-/datum/preferences/proc/SetPlayerAltTitle(datum/job/job, new_title)
+/datum/character/proc/SetPlayerAltTitle(datum/job/job, new_title)
 	// remove existing entry
 	if(player_alt_titles.Find(job.title))
 		player_alt_titles -= job.title
@@ -12,7 +11,7 @@
 	if(job.title != new_title)
 		player_alt_titles[job.title] = new_title
 
-/datum/preferences/proc/SetJob(mob/user, role)
+/datum/character/proc/SetJob(mob/user, role)
 	var/datum/job/job = job_master.GetJob(role)
 	if(!job)
 		user << browse(null, "window=mob_occupation")
@@ -39,7 +38,7 @@
 	SetChoices(user)
 	return 1
 
-/datum/preferences/proc/ResetJobs()
+/datum/character/proc/ResetJobs()
 	job_civilian_high = 0
 	job_civilian_med = 0
 	job_civilian_low = 0
@@ -52,7 +51,7 @@
 	job_engsec_med = 0
 	job_engsec_low = 0
 
-/datum/preferences/proc/GetJobDepartment(var/datum/job/job, var/level)
+/datum/character/proc/GetJobDepartment(var/datum/job/job, var/level)
 	if(!job || !level)	return 0
 	switch(job.department_flag)
 		if(CIVILIAN)
@@ -81,7 +80,7 @@
 					return job_engsec_low
 	return 0
 
-/datum/preferences/proc/SetJobDepartment(var/datum/job/job, var/level)
+/datum/character/proc/SetJobDepartment(var/datum/job/job, var/level)
 	if(!job || !level)	return 0
 	switch(level)
 		if(1)//Only one of these should ever be active at once so clear them all here

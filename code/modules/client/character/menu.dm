@@ -254,7 +254,7 @@
 	user << browse(HTML, "window=antagoptions")
 	return
 
-/datum/preferences/proc/ShowChoices(mob/user)
+/datum/character/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return
 	update_preview_icon()
 	user << browse_rsc(preview_icon_front, "previewicon.png")
@@ -473,7 +473,7 @@
 	user << browse(dat, "window=preferences;size=560x736")
 
 
-/datum/preferences/proc/process_link(mob/user, list/href_list)
+/datum/character/proc/process_link(mob/user, list/href_list)
 	if(!user)	return
 
 	if(!istype(user, /mob/new_player))	return

@@ -9,6 +9,8 @@
 //This is mainly for format changes, such as the bitflags in toggles changing order or something.
 //if a file can't be updated, return 0 to delete it and start again
 //if a file was updated, return 1
+
+/*
 /datum/preferences/proc/savefile_update()
 	if(savefile_version < 8)	//lazily delete everything + additional files so they can be saved in the new format
 		for(var/ckey in preferences_datums)
@@ -25,6 +27,7 @@
 		save_character()
 		return 1
 	return 0
+*/
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)	return

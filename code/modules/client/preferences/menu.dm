@@ -2,7 +2,7 @@
 	if( !user || !istype( user ))
 		return
 
-	if( IsGuestKey( user.key )))
+	if( IsGuestKey( user.key ))
 		return
 
 	var/menu_name = "client_menu"

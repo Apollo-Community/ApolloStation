@@ -99,9 +99,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	var/uplinklocation = "PDA"
 
-	// OOC Metadata:
-	var/slot_name = ""
-
 /datum/character/New(client/C)
 	blood_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 
@@ -110,7 +107,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	gear = list()
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, safety = 0)
+/datum/character/proc/copy_to(mob/living/carbon/human/character, safety = 0)
 	if(config.humans_need_surnames)
 		var/firstspace = findtext(name, " ")
 		var/name_length = length(name)
