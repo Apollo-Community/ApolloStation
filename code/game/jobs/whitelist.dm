@@ -13,6 +13,8 @@
 		input = input.ckey
 
 	var/type = input("Select what type of whitelist", "Add User to Whitelist") as null|anything in list( "Whitelist", "Alien Whitelist", "Donators" )
+
+	input = ckey(input)
 	switch(type)
 		if("Whitelist")
 			if( add_command_whitelist( input, WHITELIST_COMMAND ))
@@ -48,7 +50,7 @@
 		return null
 
 	var/whitelist = 0
-	var/sql_ckey = sql_sanitize_text(ckey(C.key))
+	var/sql_ckey = ckey(C.key)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT whitelist_flags FROM player WHERE ckey = '[sql_ckey]'")
 	query.Execute()
@@ -127,7 +129,7 @@
 		return 0
 
 	var/a_whitelist = 0
-	var/sql_ckey = sql_sanitize_text(ckey(key))
+	var/sql_ckey = ckey(key)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT species_flags FROM player WHERE ckey = '[sql_ckey]'")
 	query.Execute()

@@ -28,18 +28,18 @@
 				var/tmp_label = ""
 				var/label_text = sanitizeSafe(input(user, "Inscribe some text into \the [initial(BB.name)]","Inscription",tmp_label), MAX_NAME_LEN)
 				if(length(label_text) > 20)
-					user << "<span class='alert'> The inscription can be at most 20 characters long.</span>"
+					user << "<span class='alert'>The inscription can be at most 20 characters long.</span>"
 				else
 					if(label_text == "")
-						user << "<span class='notice'> You scratch the inscription off of [initial(BB)].</span>"
+						user << "<span class='notice'>You scratch the inscription off of [initial(BB)].</span>"
 						BB.name = initial(BB.name)
 					else
-						user << "<span class='notice'> You inscribe \"[label_text]\" into \the [initial(BB.name)].</span>"
+						user << "<span class='notice'>You inscribe \"[label_text]\" into \the [initial(BB.name)].</span>"
 						BB.name = "[initial(BB.name)] \"[label_text]\""
 			else
-				user << "<span class='notice'> You can only inscribe a metal bullet.</span>"	//because inscribing beanbags is silly
+				user << "<span class='notice'>You can only inscribe a metal bullet.</span>"	//because inscribing beanbags is silly
 		else
-			user << "<span class='notice'> There is no bullet in the casing to inscribe anything into.</span>"
+			user << "<span class='notice'>There is no bullet in the casing to inscribe anything into.</span>"
 
 /obj/item/ammo_casing/examine(mob/user)
 	..()

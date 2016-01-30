@@ -53,7 +53,7 @@
 		src.has_power = 1
 	else
 		if (src.has_power)
-			src << "<span class='alert'> You are now running on emergency backup power.</span>"
+			src << "<span class='alert'>You are now running on emergency backup power.</span>"
 		src.has_power = 0
 		if(lights_on) // Light is on but there is no power!
 			lights_on = 0
@@ -312,7 +312,7 @@
 		killswitch_time --
 		if(killswitch_time <= 0)
 			if(src.client)
-				src << "<span class='alert'> <B>Killswitch Activated</span>"
+				src << "<span class='alert'><B>Killswitch Activated</span>"
 			killswitch = 0
 			spawn(5)
 				gib()
@@ -323,7 +323,7 @@
 		weaponlock_time --
 		if(weaponlock_time <= 0)
 			if(src.client)
-				src << "<span class='alert'> <B>Weapon Lock Timed Out!</span>"
+				src << "<span class='alert'><B>Weapon Lock Timed Out!</span>"
 			weapon_lock = 0
 			weaponlock_time = 120
 

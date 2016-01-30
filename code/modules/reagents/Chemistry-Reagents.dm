@@ -213,7 +213,7 @@ datum
 					var/removed_heat = between(0, volume*WATER_LATENT_HEAT, -environment.get_thermal_energy_change(min_temperature))
 					environment.add_thermal_energy(-removed_heat)
 					if (prob(5))
-						T.visible_message("<span class='alert'> The water sizzles as it lands on \the [T]!</span>")
+						T.visible_message("<span class='alert'>The water sizzles as it lands on \the [T]!</span>")
 
 				else //otherwise, the turf gets wet
 					if(volume >= 3)
@@ -274,10 +274,10 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(ishuman(M))
 					if((M.mind in ticker.mode.cult) && prob(10))
-						M << "<span class='notice'> A cooling sensation from inside you brings you an untold calmness.</span>"
+						M << "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>"
 						ticker.mode.remove_cultist(M.mind)
 						for(var/mob/O in viewers(M, null))
-							O.show_message(text("<span class='notice'> []'s eyes blink and become clearer.</span>", M), 1) // So observers know it worked.
+							O.show_message(text("<span class='notice'>[]'s eyes blink and become clearer.</span>", M), 1) // So observers know it worked.
 				..()
 				return
 
@@ -347,7 +347,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(istype(M, /mob/living/carbon) && M.stat != DEAD)
-					M << "<span class='alert'> Your flesh rapidly mutates!</span>"
+					M << "<span class='alert'>Your flesh rapidly mutates!</span>"
 					if(M.monkeyizing)	return
 					M.monkeyizing = 1
 					M.canmove = 0
@@ -1671,7 +1671,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(prob(10))
-					M << "<span class='alert'> Your insides are burning!</span>"
+					M << "<span class='alert'>Your insides are burning!</span>"
 					M.adjustToxLoss(rand(20,60)*REM)
 				else if(prob(40))
 					M.heal_organ_damage(5*REM,0)
@@ -1802,7 +1802,7 @@ datum
 						for(var/obj/effect/E in W) if(E.name == "Wallrot") del E
 
 						for(var/mob/O in viewers(W, null))
-							O.show_message(text("<span class='notice'> The fungi are completely dissolved by the solution!</span>"), 1)
+							O.show_message(text("<span class='notice'>The fungi are completely dissolved by the solution!</span>"), 1)
 
 			reaction_obj(var/obj/O, var/volume)
 				if(istype(O,/obj/effect/alien/weeds/))
@@ -2037,7 +2037,7 @@ datum
 						var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 						I.desc = "Looks like this was \an [O] some time ago."
 						for(var/mob/M in viewers(5, O))
-							M << "<span class='alert'> \the [O] melts.</span>"
+							M << "<span class='alert'>\the [O] melts.</span>"
 						qdel(O)
 
 		toxin/caustic/polyacid
@@ -2136,15 +2136,15 @@ datum
 					if(H.species && !(H.species.flags & (NO_PAIN | IS_SYNTHETIC)) )
 						switch(data)
 							if(1 to 2)
-								H << "<span class='alert'> <b>Your insides feel uncomfortably hot !</b></span>"
+								H << "<span class='alert'><b>Your insides feel uncomfortably hot !</b></span>"
 							if(2 to 20)
 								if(prob(5))
-									H << "<span class='alert'> <b>Your insides feel uncomfortably hot !</b></span>"
+									H << "<span class='alert'><b>Your insides feel uncomfortably hot !</b></span>"
 							if(20 to INFINITY)
 								H.apply_effect(2,AGONY,0)
 								if(prob(5))
 									H.visible_message("<span class='warning'>[H] [pick("dry heaves!","coughs!","splutters!")]</span>")
-									H << "<span class='alert'> <b>You feel like your insides are burning !</b></span>"
+									H << "<span class='alert'><b>You feel like your insides are burning !</b></span>"
 				else if(istype(M, /mob/living/carbon/slime))
 					M.bodytemperature += rand(10,25)
 				holder.remove_reagent("frostoil", 5)
@@ -2188,10 +2188,10 @@ datum
 							if ( !safe_thing )
 								safe_thing = victim.glasses
 						if ( eyes_covered && mouth_covered )
-							victim << "<span class='alert'> Your [safe_thing] protects you from the pepperspray!</span>"
+							victim << "<span class='alert'>Your [safe_thing] protects you from the pepperspray!</span>"
 							return
 						else if ( eyes_covered )	// Reduced effects if partially protected
-							victim << "<span class='alert'> Your [safe_thing] protect you from most of the pepperspray!</span>"
+							victim << "<span class='alert'>Your [safe_thing] protect you from most of the pepperspray!</span>"
 							victim.eye_blurry = max(M.eye_blurry, 15)
 							victim.eye_blind = max(M.eye_blind, 5)
 							victim.Stun(5)
@@ -2200,7 +2200,7 @@ datum
 							//victim.drop_item()
 							return
 						else if ( mouth_covered ) // Mouth cover is better than eye cover
-							victim << "<span class='alert'> Your [safe_thing] protects your face from the pepperspray!</span>"
+							victim << "<span class='alert'>Your [safe_thing] protects your face from the pepperspray!</span>"
 							if (!(victim.species && (victim.species.flags & NO_PAIN)))
 								victim.emote("scream")
 							victim.eye_blurry = max(M.eye_blurry, 5)
@@ -2208,7 +2208,7 @@ datum
 						else // Oh dear :D
 							if (!(victim.species && (victim.species.flags & NO_PAIN)))
 								victim.emote("scream")
-							victim << "<span class='alert'> You're sprayed directly in the eyes with pepperspray!</span>"
+							victim << "<span class='alert'>You're sprayed directly in the eyes with pepperspray!</span>"
 							victim.eye_blurry = max(M.eye_blurry, 25)
 							victim.eye_blind = max(M.eye_blind, 10)
 							victim.Stun(5)
@@ -2226,12 +2226,12 @@ datum
 					if(H.species && !(H.species.flags & (NO_PAIN | IS_SYNTHETIC)) )
 						switch(data)
 							if(1)
-								H << "<span class='alert'> <b>You feel like your insides are burning !</b></span>"
+								H << "<span class='alert'><b>You feel like your insides are burning !</b></span>"
 							if(2 to INFINITY)
 								H.apply_effect(4,AGONY,0)
 								if(prob(5))
 									H.visible_message("<span class='warning'>[H] [pick("dry heaves!","coughs!","splutters!")]</span>")
-									H << "<span class='alert'> <b>You feel like your insides are burning !</b></span>"
+									H << "<span class='alert'><b>You feel like your insides are burning !</b></span>"
 				else if(istype(M, /mob/living/carbon/slime))
 					M.bodytemperature += rand(15,30)
 				holder.remove_reagent("frostoil", 5)

@@ -28,7 +28,7 @@
 				if("blind")
 					call(/obj/effect/rune/proc/blind)()
 				if("runestun")
-					user << "<span class='alert'> To use this talisman, attack your target directly.</span>"
+					user << "<span class='alert'>To use this talisman, attack your target directly.</span>"
 					return
 				if("supply")
 					supply()

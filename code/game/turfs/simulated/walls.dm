@@ -49,11 +49,10 @@
 	update_icon()
 
 /turf/simulated/wall/Destroy()
-	for(var/obj/effect/E in src) if(E.name == "Wallrot") qdel( E )
-	qdel( paint )
-	paint = null
 	processing_turfs -= src
-	dismantle_wall(null,null,1)
+	for(var/obj/O in src.contents)
+		qdel(O) // no mercy
+	ChangeTurf(/turf/simulated/floor/plating)
 	..()
 
 /turf/simulated/wall/ChangeTurf(var/newtype)
@@ -140,7 +139,7 @@
 	return ..()
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
-	if(istype(src,/turf/simulated/wall/alloy))
+	if(istype(src,/turf/simulated/wall/alloy) && !istype(src,/turf/simulated/wall/alloy/reinforced))
 		var/turf/simulated/wall/alloy/W = src
 		var/obj/item/stack/sheet/alloy/metal/M = new /obj/item/stack/sheet/alloy/metal(W.materials)
 		M.effects = W.effects
@@ -156,11 +155,10 @@
 		if(!devastated)
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			new /obj/structure/girder/reinforced(src)
-			new /obj/item/stack/sheet/alloy/plasteel( src )
 		else
 			new /obj/item/stack/sheet/metal( src )
 			new /obj/item/stack/sheet/metal( src )
-			new /obj/item/stack/sheet/alloy/plasteel( src )
+		new /obj/item/stack/sheet/alloy/plasteel( src )
 	else if(istype(src,/turf/simulated/wall/cult))
 		if(!devastated)
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
@@ -270,18 +268,18 @@
 	var/hulk_destroy_prob = 40
 	var/hulk_take_damage = 1
 	var/rotting_destroy_touch = 1
-	var/rotting_touch_message = "<span class='notice'> The wall crumbles under your touch.</span>"
+	var/rotting_touch_message = "<span class='notice'>The wall crumbles under your touch.</span>"
 
 //Interactions
 /turf/simulated/wall/attack_hand(mob/user as mob)
 	if (HULK in user.mutations)
 		if (prob(hulk_destroy_prob) || rotting)
-			usr << text("<span class='notice'> You smash through the wall.</span>")
+			usr << text("<span class='notice'>You smash through the wall.</span>")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
 			return 1
 		else
-			usr << text("<span class='notice'> You punch the wall.</span>")
+			usr << text("<span class='notice'>You punch the wall.</span>")
 			if(hulk_take_damage)
 				take_damage(rand(25, 75))
 			return 1
@@ -294,7 +292,7 @@
 
 	if(..()) return 1
 
-	user << "<span class='notice'> You push the wall but nothing happens!</span>"
+	user << "<span class='notice'>You push the wall but nothing happens!</span>"
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
 	return 0

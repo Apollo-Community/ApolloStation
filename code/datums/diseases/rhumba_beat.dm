@@ -22,29 +22,29 @@
 				affected_mob.adjustToxLoss(5)
 				affected_mob.updatehealth()
 			if(prob(1))
-				affected_mob << "<span class='alert'> You feel strange...</span>"
+				affected_mob << "<span class='alert'>You feel strange...</span>"
 		if(3)
 			if(affected_mob.ckey == "rosham")
 				src.cure()
 			if(prob(5))
-				affected_mob << "<span class='alert'> You feel the urge to dance...</span>"
+				affected_mob << "<span class='alert'>You feel the urge to dance...</span>"
 			else if(prob(5))
 				affected_mob.emote("gasp")
 			else if(prob(10))
-				affected_mob << "<span class='alert'> You feel the need to chick chicky boom...</span>"
+				affected_mob << "<span class='alert'>You feel the need to chick chicky boom...</span>"
 		if(4)
 			if(affected_mob.ckey == "rosham")
 				src.cure()
 			if(prob(10))
 				affected_mob.emote("gasp")
-				affected_mob << "<span class='alert'> You feel a burning beat inside...</span>"
+				affected_mob << "<span class='alert'>You feel a burning beat inside...</span>"
 			if(prob(20))
 				affected_mob.adjustToxLoss(5)
 				affected_mob.updatehealth()
 		if(5)
 			if(affected_mob.ckey == "rosham")
 				src.cure()
-			affected_mob << "<span class='alert'> Your body is unable to contain the Rhumba Beat...</span>"
+			affected_mob << "<span class='alert'>Your body is unable to contain the Rhumba Beat...</span>"
 			if(prob(50))
 				affected_mob.gib()
 		else

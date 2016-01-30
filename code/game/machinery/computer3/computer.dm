@@ -77,7 +77,7 @@
 		set src in view(1)
 
 		if(usr.stat || usr.restrained() || usr.lying || !istype(usr, /mob/living))
-			usr << "<span class='alert'> You can't do that.</span>"
+			usr << "<span class='alert'>You can't do that.</span>"
 			return
 
 		if(!Adjacent(usr))

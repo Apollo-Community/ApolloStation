@@ -163,7 +163,7 @@
 		return
 
 	if (MS.moving_status != SHUTTLE_IDLE)
-		usr << "<span class='notice'> [shuttle_tag] vessel is moving.</span>"
+		usr << "<span class='notice'>[shuttle_tag] vessel is moving.</span>"
 		return
 	
 	if(href_list["dock_command"])
@@ -176,11 +176,11 @@
 
 	if(href_list["start"])
 		if(MS.at_origin)
-			usr << "<span class='alert'> You are already at your home base.</span>"
+			usr << "<span class='alert'>You are already at your home base.</span>"
 			return
 	
 		if((MS.last_move + MS.cooldown*10) > world.time)
-			usr << "<span class='alert'> The ship's drive is inoperable while the engines are charging.</span>"
+			usr << "<span class='alert'>The ship's drive is inoperable while the engines are charging.</span>"
 			return
 
 		if(!check_docking(MS))
@@ -188,7 +188,7 @@
 			return
 		
 		if(!MS.return_warning)
-			usr << "<span class='alert'> Returning to your home base will end your mission. If you are sure, press the button again.</span>"
+			usr << "<span class='alert'>Returning to your home base will end your mission. If you are sure, press the button again.</span>"
 			//TODO: Actually end the mission.
 			MS.return_warning = 1
 			return
@@ -201,11 +201,11 @@
 	if(href_list["toggle_cloak"])
 
 		MS.cloaked = !MS.cloaked
-		usr << "<span class='alert'> Ship stealth systems have been [(MS.cloaked ? "activated. The station will not" : "deactivated. The station will</span>")] be warned of our arrival."
+		usr << "<span class='alert'>Ship stealth systems have been [(MS.cloaked ? "activated. The station will not" : "deactivated. The station will</span>")] be warned of our arrival."
 
 	if(href_list["move_multi"])
 		if((MS.last_move + MS.cooldown*10) > world.time)
-			usr << "<span class='alert'> The ship's drive is inoperable while the engines are charging.</span>"
+			usr << "<span class='alert'>The ship's drive is inoperable while the engines are charging.</span>"
 			return
 		
 		if(!check_docking(MS))
@@ -215,7 +215,7 @@
 		var/choice = input("Select a destination.") as null|anything in MS.destinations
 		if(!choice) return
 
-		usr << "<span class='notice'> [shuttle_tag] main computer recieved message.</span>"
+		usr << "<span class='notice'>[shuttle_tag] main computer recieved message.</span>"
 
 		if(MS.at_origin)
 			MS.announce_arrival()

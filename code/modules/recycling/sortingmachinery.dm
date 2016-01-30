@@ -47,7 +47,7 @@
 				if("Title")
 					var/str = sanitizeSafe(input(usr,"Label text?","Set label",""), MAX_NAME_LEN)
 					if(!str || !length(str))
-						usr << "<span class='warning'> Invalid text.</span>"
+						usr << "<span class='warning'>Invalid text.</span>"
 						return
 					user.visible_message("\The [user] titles \the [src] with \a [W], marking down: \"[str]\"",\
 					"<span class='notice'>You title \the [src]: \"[str]\"</span>",\
@@ -61,7 +61,7 @@
 				if("Description")
 					var/str = sanitize(input(usr,"Label text?","Set label",""))
 					if(!str || !length(str))
-						usr << "<span class='alert'> Invalid text.</span>"
+						usr << "<span class='alert'>Invalid text.</span>"
 						return
 					if(!examtext && !nameset)
 						examtext = str
@@ -154,7 +154,7 @@
 				if("Title")
 					var/str = sanitizeSafe(input(usr,"Label text?","Set label",""), MAX_NAME_LEN)
 					if(!str || !length(str))
-						usr << "<span class='warning'> Invalid text.</span>"
+						usr << "<span class='warning'>Invalid text.</span>"
 						return
 					user.visible_message("\The [user] titles \the [src] with \a [W], marking down: \"[str]\"",\
 					"<span class='notice'>You title \the [src]: \"[str]\"</span>",\
@@ -169,7 +169,7 @@
 				if("Description")
 					var/str = sanitize(input(usr,"Label text?","Set label",""))
 					if(!str || !length(str))
-						usr << "<span class='alert'> Invalid text.</span>"
+						usr << "<span class='alert'>Invalid text.</span>"
 						return
 					if(!examtext && !nameset)
 						examtext = str
@@ -296,7 +296,7 @@
 			else if(src.amount < 3)
 				user << "<span class='warning'>You need more paper.</span>"
 		else
-			user << "<span class='notice'> The object you are trying to wrap is unsuitable for the sorting machinery!</span>"
+			user << "<span class='notice'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>"
 		if (src.amount <= 0)
 			new /obj/item/weapon/c_tube( src.loc )
 			qdel(src)
@@ -305,7 +305,7 @@
 
 	examine(mob/user)
 		if(..(user, 0))
-			user << "<span class='notice'> There are [amount] units of package wrap left!</span>"
+			user << "<span class='notice'>There are [amount] units of package wrap left!</span>"
 
 		return
 

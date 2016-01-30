@@ -10,7 +10,7 @@
 	set name = "Say"
 	set category = "IC"
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "<span class='alert'> Speech is currently admin-disabled.</span>"
+		usr << "<span class='alert'>Speech is currently admin-disabled.</span>"
 		return
 	//Let's try to make users fix their errors - we try to detect single, out-of-place letters and 'unintended' words
 	/*
@@ -33,7 +33,7 @@
 	set category = "IC"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "<span class='alert'> Speech is currently admin-disabled.</span>"
+		usr << "<span class='alert'>Speech is currently admin-disabled.</span>"
 		return
 
 	message = sanitize(message)

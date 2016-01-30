@@ -441,22 +441,22 @@
 	if(!usr.canmove || usr.stat || usr.restrained() || !Adjacent(usr))
 		return
 	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))//Is humanoid, and is not a brain
-		usr << "<span class='alert'> You can't pick things up!</span>"
+		usr << "<span class='alert'>You can't pick things up!</span>"
 		return
 	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained
-		usr << "<span class='alert'> You can't pick things up!</span>"
+		usr << "<span class='alert'>You can't pick things up!</span>"
 		return
 	if(src.anchored) //Object isn't anchored
-		usr << "<span class='alert'> You can't pick that up!</span>"
+		usr << "<span class='alert'>You can't pick that up!</span>"
 		return
 	if(!usr.hand && usr.r_hand) //Right hand is not full
-		usr << "<span class='alert'> Your right hand is full.</span>"
+		usr << "<span class='alert'>Your right hand is full.</span>"
 		return
 	if(usr.hand && usr.l_hand) //Left hand is not full
-		usr << "<span class='alert'> Your left hand is full.</span>"
+		usr << "<span class='alert'>Your left hand is full.</span>"
 		return
 	if(!istype(src.loc, /turf)) //Object is on a turf
-		usr << "<span class='alert'> You can't pick that up!</span>"
+		usr << "<span class='alert'>You can't pick that up!</span>"
 		return
 	//All checks are done, time to pick it up!
 	usr.UnarmedAttack(src)
@@ -489,11 +489,11 @@
 			(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
 		))
 		// you can't stab someone in the eyes wearing a mask!
-		user << "<span class='alert'> You're going to need to remove the eye covering first.</span>"
+		user << "<span class='alert'>You're going to need to remove the eye covering first.</span>"
 		return
 
 	if(!M.has_eyes())
-		user << "<span class='alert'> You cannot locate any eyes on [M]!</span>"
+		user << "<span class='alert'>You cannot locate any eyes on [M]!</span>"
 		return
 	if(!in_unlogged(user))
 		user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
@@ -504,7 +504,7 @@
 	//if((CLUMSY in user.mutations) && prob(50))
 	//	M = user
 		/*
-		M << "<span class='alert'> You stab yourself in the eye.</span>"
+		M << "<span class='alert'>You stab yourself in the eye.</span>"
 		M.sdisabilities |= BLIND
 		M.weakened += 4
 		M.adjustBruteLoss(10)
@@ -516,30 +516,30 @@
 
 		if(M != user)
 			for(var/mob/O in (viewers(M) - user - M))
-				O.show_message("<span class='alert'> [M] has been stabbed in the eye with [src] by [user].</span>", 1)
-			M << "<span class='alert'> [user] stabs you in the eye with [src]!</span>"
-			user << "<span class='alert'> You stab [M] in the eye with [src]!</span>"
+				O.show_message("<span class='alert'>[M] has been stabbed in the eye with [src] by [user].</span>", 1)
+			M << "<span class='alert'>[user] stabs you in the eye with [src]!</span>"
+			user << "<span class='alert'>You stab [M] in the eye with [src]!</span>"
 		else
 			user.visible_message( \
-				"<span class='alert'> [user] has stabbed themself with [src]!</span>", \
-				"<span class='alert'> You stab yourself in the eyes with [src]!</span>" \
+				"<span class='alert'>[user] has stabbed themself with [src]!</span>", \
+				"<span class='alert'>You stab yourself in the eyes with [src]!</span>" \
 			)
 
 		eyes.damage += rand(3,4)
 		if(eyes.damage >= eyes.min_bruised_damage)
 			if(M.stat != 2)
 				if(eyes.robotic <= 1) //robot eyes bleeding might be a bit silly
-					M << "<span class='alert'> Your eyes start to bleed profusely!</span>"
+					M << "<span class='alert'>Your eyes start to bleed profusely!</span>"
 			if(prob(50))
 				if(M.stat != 2)
-					M << "<span class='alert'> You drop what you're holding and clutch at your eyes!</span>"
+					M << "<span class='alert'>You drop what you're holding and clutch at your eyes!</span>"
 					M.drop_item()
 				M.eye_blurry += 10
 				M.Paralyse(1)
 				M.Weaken(4)
 			if (eyes.damage >= eyes.min_broken_damage)
 				if(M.stat != 2)
-					M << "<span class='alert'> You go blind!</span>"
+					M << "<span class='alert'>You go blind!</span>"
 		var/datum/organ/external/affecting = M:get_organ("head")
 		if(affecting.take_damage(7))
 			M:UpdateDamageIcon()

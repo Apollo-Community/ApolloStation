@@ -50,20 +50,20 @@
 
 	loc = sanitize(loc)
 	if(!loc)
-		src << "<span class='alert'> Must supply a location name</span>"
+		src << "<span class='alert'>Must supply a location name</span>"
 		return
 
 	if(stored_locations.len >= max_locations)
-		src << "<span class='alert'> Cannot store additional locations. Remove one first</span>"
+		src << "<span class='alert'>Cannot store additional locations. Remove one first</span>"
 		return
 
 	if(loc in stored_locations)
-		src << "<span class='alert'> There is already a stored location by this name</span>"
+		src << "<span class='alert'>There is already a stored location by this name</span>"
 		return
 
 	var/L = src.eyeobj.getLoc()
 	if (InvalidTurf(get_turf(L)))
-		src << "<span class='alert'> Unable to store this location</span>"
+		src << "<span class='alert'>Unable to store this location</span>"
 		return
 
 	stored_locations[loc] = L
@@ -78,7 +78,7 @@
 	set desc = "Returns to the selected camera location"
 
 	if (!(loc in stored_locations))
-		src << "<span class='alert'> Location [loc] not found</span>"
+		src << "<span class='alert'>Location [loc] not found</span>"
 		return
 
 	var/L = stored_locations[loc]
@@ -90,7 +90,7 @@
 	set desc = "Deletes the selected camera location"
 
 	if (!(loc in stored_locations))
-		src << "<span class='alert'> Location [loc] not found</span>"
+		src << "<span class='alert'>Location [loc] not found</span>"
 		return
 
 	stored_locations.Remove(loc)

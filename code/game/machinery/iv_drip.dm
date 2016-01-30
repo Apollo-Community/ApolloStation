@@ -137,7 +137,7 @@
 	set src in view(1)
 
 	if(!istype(usr, /mob/living))
-		usr << "<span class='alert'> You can't do that.</span>"
+		usr << "<span class='alert'>You can't do that.</span>"
 		return
 
 	if(usr.stat)
@@ -154,10 +154,10 @@
 
 	if(beaker)
 		if(beaker.reagents && beaker.reagents.reagent_list.len)
-			usr << "<span class='notice'> Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>"
+			usr << "<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>"
 		else
-			usr << "<span class='notice'> Attached is an empty [beaker].</span>"
+			usr << "<span class='notice'>Attached is an empty [beaker].</span>"
 	else
-		usr << "<span class='notice'> No chemicals are attached.</span>"
+		usr << "<span class='notice'>No chemicals are attached.</span>"
 
-	usr << "<span class='notice'> [attached ? attached : "No one"] is attached.</span>"
+	usr << "<span class='notice'>[attached ? attached : "No one"] is attached.</span>"

@@ -19,14 +19,14 @@
 		var/obj/item/weapon/weldingtool/WT = W
 
 		if(amount < 2)
-			user << "<span class='alert'> You need at least two rods to do this.</span>"
+			user << "<span class='alert'>You need at least two rods to do this.</span>"
 			return
 
 		if(WT.remove_fuel(0,user))
 			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
 			new_item.add_to_stacks(usr)
 			for (var/mob/M in viewers(src))
-				M.show_message("<span class='alert'> [src] is shaped into metal by [user.name] with the weldingtool.</span>", 3, "<span class='alert'> You hear welding.</span>", 2)
+				M.show_message("<span class='alert'>[src] is shaped into metal by [user.name] with the weldingtool.</span>", 3, "<span class='alert'>You hear welding.</span>", 2)
 			var/obj/item/stack/rods/R = src
 			src = null
 			var/replace = (user.get_inactive_hand()==R)
@@ -55,15 +55,15 @@
 
 	else if(!in_use)
 		if(amount < 2)
-			user << "<span class='notice'> You need at least two rods to do this.</span>"
+			user << "<span class='notice'>You need at least two rods to do this.</span>"
 			return
-		usr << "<span class='notice'> Assembling grille...</span>"
+		usr << "<span class='notice'>Assembling grille...</span>"
 		in_use = 1
 		if (!do_after(usr, 10))
 			in_use = 0
 			return
 		var/obj/structure/grille/F = new /obj/structure/grille/ ( usr.loc )
-		usr << "<span class='notice'> You assemble a grille</span>"
+		usr << "<span class='notice'>You assemble a grille</span>"
 		in_use = 0
 		F.add_fingerprint(usr)
 		use(2)

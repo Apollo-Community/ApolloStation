@@ -161,7 +161,7 @@
 
 /obj/item/weapon/gun/projectile/russian/attack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj)
 	if(!loaded.len)
-		user.visible_message("<span class='alert'> *click*</span>", "<span class='alert'> *click*</span>")
+		user.visible_message("<span class='alert'>*click*</span>", "<span class='alert'>*click*</span>")
 		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 		return
 
@@ -172,7 +172,7 @@
 
 				var/obj/item/ammo_casing/AC = loaded[1]
 				if(!load_into_chamber())
-					user.visible_message("<span class='alert'> *click*</span>", "<span class='alert'> *click*</span>")
+					user.visible_message("<span class='alert'>*click*</span>", "<span class='alert'>*click*</span>")
 					playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 					return
 				if(!in_chamber)

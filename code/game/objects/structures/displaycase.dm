@@ -78,10 +78,10 @@
 		update_icon()
 		return
 	else
-		usr << text("<span class='notice'> You kick the display case.</span>")
+		usr << text("<span class='notice'>You kick the display case.</span>")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << text("<span class='alert'> [] kicks the display case.</span>", usr)
+				O << text("<span class='alert'>[] kicks the display case.</span>", usr)
 		src.health -= 2
 		healthcheck()
 		return

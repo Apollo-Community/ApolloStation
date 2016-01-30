@@ -103,21 +103,21 @@
 
 	if (!can_use(required))
 		if (produced>1)
-			user << "<span class='alert'> You haven't got enough [src] to build \the [produced] [recipe.title]\s!</span>"
+			user << "<span class='alert'>You haven't got enough [src] to build \the [produced] [recipe.title]\s!</span>"
 		else
-			user << "<span class='alert'> You haven't got enough [src] to build \the [recipe.title]!</span>"
+			user << "<span class='alert'>You haven't got enough [src] to build \the [recipe.title]!</span>"
 		return
 
 	if (recipe.one_per_turf && (locate(recipe.result_type) in user.loc))
-		user << "<span class='alert'> There is another [recipe.title] here!</span>"
+		user << "<span class='alert'>There is another [recipe.title] here!</span>"
 		return
 
 	if (recipe.on_floor && !isfloor(user.loc))
-		user << "<span class='alert'> \The [recipe.title] must be constructed on the floor!</span>"
+		user << "<span class='alert'>\The [recipe.title] must be constructed on the floor!</span>"
 		return
 
 	if (recipe.time)
-		user << "<span class='notice'> Building [recipe.title] ...</span>"
+		user << "<span class='notice'>Building [recipe.title] ...</span>"
 		if (!do_after(user, recipe.time))
 			return
 

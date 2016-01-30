@@ -26,12 +26,12 @@
 	examine(mob/user)
 		if(!..(user, 2))
 			return
-		user << "<span class='notice'> It contains:</span>"
+		user << "<span class='notice'>It contains:</span>"
 		if(reagents && reagents.reagent_list.len)
 			for(var/datum/reagent/R in reagents.reagent_list)
-				user << "<span class='notice'> [R.volume] units of [R.name]</span>"
+				user << "<span class='notice'>[R.volume] units of [R.name]</span>"
 		else
-			user << "<span class='notice'> Nothing.</span>"
+			user << "<span class='notice'>Nothing.</span>"
 
 	verb/set_APTFT() //set amount_per_transfer_from_this
 		set name = "Set transfer amount"
@@ -97,7 +97,7 @@
 	if(!..(user, 2))
 		return
 	if (modded)
-		user << "<span class='alert'> Fuel faucet is wrenched open, leaking the fuel!</span>"
+		user << "<span class='alert'>Fuel faucet is wrenched open, leaking the fuel!</span>"
 	if(rig)
 		user << "<span class='notice'>There is some kind of device rigged to the tank."
 
@@ -105,7 +105,7 @@
 	if (rig)
 		usr.visible_message("[usr] begins to detach [rig] from \the [src].", "You begin to detach [rig] from \the [src]")
 		if(do_after(usr, 20))
-			usr.visible_message("<span class='notice'> [usr] detaches [rig] from \the [src].</span>", "<span class='notice'>  You detach [rig] from \the [src]</span>")
+			usr.visible_message("<span class='notice'>[usr] detaches [rig] from \the [src].</span>", "<span class='notice'>You detach [rig] from \the [src]</span>")
 			rig.loc = get_turf(usr)
 			rig = null
 			overlays = new/list()
@@ -122,11 +122,11 @@
 			leak_fuel(amount_per_transfer_from_this)
 	if (istype(W,/obj/item/device/assembly_holder))
 		if (rig)
-			user << "<span class='alert'> There is another device in the way.</span>"
+			user << "<span class='alert'>There is another device in the way.</span>"
 			return ..()
 		user.visible_message("[user] begins rigging [W] to \the [src].", "You begin rigging [W] to \the [src]")
 		if(do_after(user, 20))
-			user.visible_message("<span class='notice'> [user] rigs [W] to \the [src].</span>", "<span class='notice'>  You rig [W] to \the [src]</span>")
+			user.visible_message("<span class='notice'>[user] rigs [W] to \the [src].</span>", "<span class='notice'>You rig [W] to \the [src]</span>")
 
 			var/obj/item/device/assembly_holder/H = W
 			if (istype(H.a_left,/obj/item/device/assembly/igniter) || istype(H.a_right,/obj/item/device/assembly/igniter))

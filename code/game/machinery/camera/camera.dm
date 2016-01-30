@@ -183,13 +183,13 @@
 
 	else if (istype(W, /obj/item/weapon/camera_bug))
 		if (!src.can_use())
-			user << "<span class='notice'> Camera non-functional</span>"
+			user << "<span class='notice'>Camera non-functional</span>"
 			return
 		if (src.bugged)
-			user << "<span class='notice'> Camera bug removed.</span>"
+			user << "<span class='notice'>Camera bug removed.</span>"
 			src.bugged = 0
 		else
-			user << "<span class='notice'> Camera bugged.</span>"
+			user << "<span class='notice'>Camera bugged.</span>"
 			src.bugged = 1
 
 	else if(W.damtype == BRUTE || W.damtype == BURN) //bashing cameras
@@ -212,12 +212,12 @@
 		invalidateCameraCache()
 		set_status( !src.status )
 		if (!(src.status))
-			visible_message("<span class='alert'> [user] has deactivated [src]!</span>")
+			visible_message("<span class='alert'>[user] has deactivated [src]!</span>")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = "[initial(icon_state)]1"
 			add_hiddenprint(user)
 		else
-			visible_message("<span class='alert'> [user] has reactivated [src]!</span>")
+			visible_message("<span class='alert'>[user] has reactivated [src]!</span>")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = initial(icon_state)
 			add_hiddenprint(user)

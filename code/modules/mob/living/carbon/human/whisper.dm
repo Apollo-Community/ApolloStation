@@ -3,7 +3,7 @@
 	var/alt_name = ""
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "<span class='alert'> Speech is currently admin-disabled.</span>"
+		usr << "<span class='alert'>Speech is currently admin-disabled.</span>"
 		return
 
 	message = sanitize(message)
@@ -11,7 +11,7 @@
 
 	if (src.client)
 		if (src.client.prefs.muted & MUTE_IC)
-			src << "<span class='alert'> You cannot whisper (muted).</span>"
+			src << "<span class='alert'>You cannot whisper (muted).</span>"
 			return
 
 		if (src.client.handle_spam_prevention(message,MUTE_IC))

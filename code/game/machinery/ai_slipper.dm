@@ -49,7 +49,7 @@
 				if (user.machine==src)
 					src.attack_hand(usr)
 		else
-			user << "<span class='alert'> Access denied.</span>"
+			user << "<span class='alert'>Access denied.</span>"
 			return
 	return
 

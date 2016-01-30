@@ -253,10 +253,10 @@
 			if(suplink)
 				var/extra = 4
 				suplink.uses += extra
-				man << "<span class='alert'> We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity.</span>"
+				man << "<span class='alert'>We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity.</span>"
 			else
 				// Give them a warning!
-				man << "<span class='alert'> They are on to you!</span>"
+				man << "<span class='alert'>They are on to you!</span>"
 
 		// Some poor people who were just in the wrong place at the wrong time..
 		else if(prob(10))
@@ -441,7 +441,7 @@
 //Reports player logouts//
 //////////////////////////
 proc/display_roundstart_logout_report()
-	var/msg = "<span class='notice'> <b>Roundstart logout report\n\n</span>"
+	var/msg = "<span class='notice'><b>Roundstart logout report\n\n</span>"
 	for(var/mob/living/L in mob_list)
 
 		if(L.ckey)
@@ -525,7 +525,7 @@ proc/get_nt_opposed()
 		return
 
 	var/obj_count = 1
-	player.current << "<span class='notice'> Your current objectives:</span>"
+	player.current << "<span class='notice'>Your current objectives:</span>"
 	for(var/datum/objective/objective in player.objectives)
 		player.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++

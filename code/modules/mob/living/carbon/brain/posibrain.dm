@@ -18,7 +18,7 @@
 /obj/item/device/mmi/digital/posibrain/attack_self(mob/user as mob)
 	if(brainmob && !brainmob.key && searching == 0)
 		//Start the process of searching for a new user.
-		user << "<span class='notice'> You carefully locate the manual activation switch and start the positronic brain's boot process.</span>"
+		user << "<span class='notice'>You carefully locate the manual activation switch and start the positronic brain's boot process.</span>"
 		icon_state = "posibrain-searching"
 		src.searching = 1
 		src.request_player()
@@ -69,7 +69,7 @@
 
 	var/turf/T = get_turf_or_move(src.loc)
 	for (var/mob/M in viewers(T))
-		M.show_message("<span class='notice'> The positronic brain chimes quietly.</span>")
+		M.show_message("<span class='notice'>The positronic brain chimes quietly.</span>")
 	icon_state = "posibrain-occupied"
 
 /obj/item/device/mmi/digital/posibrain/proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
@@ -81,7 +81,7 @@
 
 	var/turf/T = get_turf_or_move(src.loc)
 	for (var/mob/M in viewers(T))
-		M.show_message("<span class='notice'> The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>")
+		M.show_message("<span class='notice'>The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>")
 
 /obj/item/device/mmi/digital/posibrain/examine(mob/user)
 	if(!..(user))

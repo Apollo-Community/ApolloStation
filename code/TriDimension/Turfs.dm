@@ -120,7 +120,7 @@
 			return
 		var/obj/item/stack/rods/R = C
 		if (R.use(1))
-			user << "<span class='notice'> Constructing support lattice ...</span>"
+			user << "<span class='notice'>Constructing support lattice ...</span>"
 			playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
 			ReplaceWithLattice()
 		return
@@ -137,5 +137,5 @@
 			S.use(1)
 			return
 		else
-			user << "<span class='alert'> The plating is going to need some support.</span>"
+			user << "<span class='alert'>The plating is going to need some support.</span>"
 	return

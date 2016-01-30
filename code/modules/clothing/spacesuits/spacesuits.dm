@@ -35,7 +35,7 @@
 		camera.network = camera_networks
 		cameranet.removeCamera(camera)
 		camera.c_tag = user.name
-		user << "<span class='notice'> User scanned as [camera.c_tag]. Camera activated.</span>"
+		user << "<span class='notice'>User scanned as [camera.c_tag]. Camera activated.</span>"
 		return 1
 
 	..()

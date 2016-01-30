@@ -127,7 +127,7 @@
 	if(H.wear_suit != src) return
 
 	if(H.head == helmet)
-		H << "<span class='notice'> You retract your suit helmet.</span>"
+		H << "<span class='notice'>You retract your suit helmet.</span>"
 		helmet.canremove = 1
 		H.drop_from_inventory(helmet)
 		helmet.loc = src

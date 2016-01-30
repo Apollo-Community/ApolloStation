@@ -19,19 +19,19 @@
 		if(T.welding & prob(50))
 			message_admins("[key_name_admin(user)] triggered a fueltank explosion.")
 			log_game("[key_name(user)] triggered a fueltank explosion.")
-			user << "<span class='alert'> That was stupid of you.</span>"
+			user << "<span class='alert'>That was stupid of you.</span>"
 			explosion(get_turf(src),-1,0,2)
 			if(src)
 				qdel(src)
 			return
 		else
 			if(T.welding)
-				user << "<span class='alert'> That was close!</span>"
+				user << "<span class='alert'>That was close!</span>"
 			src.reagents.trans_to(W, T.max_fuel)
-			user << "<span class='notice'> Welder refilled!</span>"
+			user << "<span class='notice'>Welder refilled!</span>"
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 			return
-	user << "<span class='notice'> The tank scoffs at your insolence.  It only provides services to welders.</span>"
+	user << "<span class='notice'>The tank scoffs at your insolence.  It only provides services to welders.</span>"
 	return
 
 /obj/item/weapon/weldpack/afterattack(obj/O as obj, mob/user as mob, proximity)
@@ -39,11 +39,11 @@
 		return
 	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && src.reagents.total_volume < max_fuel)
 		O.reagents.trans_to(src, max_fuel)
-		user << "<span class='notice'> You crack the cap off the top of the pack and fill it back up again from the tank.</span>"
+		user << "<span class='notice'>You crack the cap off the top of the pack and fill it back up again from the tank.</span>"
 		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 		return
 	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && src.reagents.total_volume == max_fuel)
-		user << "<span class='notice'> The pack is already full!</span>"
+		user << "<span class='notice'>The pack is already full!</span>"
 		return
 
 /obj/item/weapon/weldpack/examine(mob/user)

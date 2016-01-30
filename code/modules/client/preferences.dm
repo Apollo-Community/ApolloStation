@@ -129,6 +129,9 @@ datum/preferences
 		// OOC Metadata:
 	var/metadata = ""
 	var/slot_name = ""
+	//Ckey join date
+	var/joined_date = ""
+	var/passed_date = 0			//So we don't have to keep aquiring joined_date
 
 /datum/preferences/New(client/C)
 	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
@@ -1140,9 +1143,9 @@ datum/preferences
 				total_cost += C.cost
 				if(C && total_cost <= MAX_GEAR_COST)
 					gear += choice
-					user << "<span class='notice'> Added [choice] for [C.cost] points ([MAX_GEAR_COST - total_cost] points remaining).</span>"
+					user << "<span class='notice'>Added [choice] for [C.cost] points ([MAX_GEAR_COST - total_cost] points remaining).</span>"
 				else
-					user << "<span class='alert'> That item will exceed the maximum loadout cost of [MAX_GEAR_COST] points.</span>"
+					user << "<span class='alert'>That item will exceed the maximum loadout cost of [MAX_GEAR_COST] points.</span>"
 
 		else if(href_list["task"] == "remove")
 

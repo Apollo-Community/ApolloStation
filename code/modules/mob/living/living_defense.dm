@@ -21,13 +21,13 @@
 		if(absorb_text)
 			show_message("[absorb_text]")
 		else
-			show_message("<span class='alert'> Your armor absorbs the blow!</span>")
+			show_message("<span class='alert'>Your armor absorbs the blow!</span>")
 		return 2
 	if(absorb == 1)
 		if(absorb_text)
 			show_message("[soften_text]",4)
 		else
-			show_message("<span class='alert'> Your armor softens the blow!</span>")
+			show_message("<span class='alert'>Your armor softens the blow!</span>")
 		return 1
 	return 0
 
@@ -45,20 +45,20 @@
 	if(C && C.active)
 		C.attack_self(src)//Should shut it off
 		update_icons()
-		src << "<span class='notice'> Your [C.name] was disrupted!</span>"
+		src << "<span class='notice'>Your [C.name] was disrupted!</span>"
 		Stun(2)
 
 	//Being hit while using a deadman switch
 	if(istype(equipped(),/obj/item/device/assembly/signaler))
 		var/obj/item/device/assembly/signaler/signaler = equipped()
 		if(signaler.deadman && prob(80))
-			src.visible_message("<span class='alert'> [src] triggers their deadman's switch!</span>")
+			src.visible_message("<span class='alert'>[src] triggers their deadman's switch!</span>")
 			signaler.signal()
 
 	//Stun Beams
 	if(istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunshot))
 		stun_effect_act(0, P.agony, def_zone, P)
-		src <<"<span class='alert'> You have been hit by [P]!</span>"
+		src <<"<span class='alert'>You have been hit by [P]!</span>"
 		qdel(P)
 		return
 
@@ -115,10 +115,10 @@
 			miss_chance = min(15*(distance-2), 0)
 
 		if (prob(miss_chance))
-			visible_message("<span class='notice'> \The [O] misses [src] narrowly!</span>")
+			visible_message("<span class='notice'>\The [O] misses [src] narrowly!</span>")
 			return
 
-		src.visible_message("<span class='alert'> [src] has been hit by [O].</span>")
+		src.visible_message("<span class='alert'>[src] has been hit by [O].</span>")
 		var/armor = run_armor_check(null, "melee")
 
 		if(armor < 2)
@@ -156,7 +156,7 @@
 			var/momentum = speed/2
 			var/dir = get_dir(O.throw_source, src)
 
-			visible_message("<span class='alert'> [src] staggers under the impact!</span>","<span class='alert'> You stagger under the impact!</span>")
+			visible_message("<span class='alert'>[src] staggers under the impact!</span>","<span class='alert'>You stagger under the impact!</span>")
 			src.throw_at(get_edge_target_turf(src,dir),1,momentum)
 
 			if(!W || !src) return

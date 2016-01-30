@@ -31,7 +31,7 @@
 		report("Antibodies detected: [antigens2string(C.antibodies)]", user)
 
 /obj/item/device/antibody_scanner/proc/report(var/text, mob/user as mob)
-	user << "<span class='notice'> \icon[src] \The [src] beeps, \"[text]\"</span>"
+	user << "<span class='notice'>\icon[src] \The [src] beeps, \"[text]\"</span>"
 
 ///////////////VIRUS DISH///////////////
 
@@ -65,10 +65,10 @@
 	if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/device/flashlight/pen))
 		var/tmp_label = sanitize(copytext(input(user, "Enter a label for [src.name]","Label",src.label_text), 1, MAX_NAME_LEN))
 		if(length(tmp_label) > 14)
-			user << "<span class='alert'> The label can be at most 14 characters long.</span>"
+			user << "<span class='alert'>The label can be at most 14 characters long.</span>"
 			return
 		else
-			user << "<span class='notice'> You set the label to \"[tmp_label]\".</span>"
+			user << "<span class='notice'>You set the label to \"[tmp_label]\".</span>"
 			src.label_text = tmp_label
 			src.update_name_label()
 			return

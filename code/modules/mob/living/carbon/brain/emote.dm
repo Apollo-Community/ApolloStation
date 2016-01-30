@@ -17,7 +17,7 @@
 				return
 			if (src.client)
 				if (client.prefs.muted & MUTE_IC)
-					src << "<span class='alert'> You cannot send IC messages (muted).</span>"
+					src << "<span class='alert'>You cannot send IC messages (muted).</span>"
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
 					return
@@ -62,7 +62,7 @@
 		if (I_HELP)
 			src << "alarm,alert,notice,flash,blink,whistle,beep,boop"
 		else
-			src << "<span class='notice'> Unusable emote '[act]'. Say *help for a list.</span>"
+			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
 
 	if (message)
 		log_emote("[name]/[key] : [message]")

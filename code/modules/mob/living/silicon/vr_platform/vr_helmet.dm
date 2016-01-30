@@ -25,13 +25,13 @@
 			usr << "<b>Attempting connection...</b>"
 			if(O.active != 1)
 				var/list/descriptive_text = list( "<b>Please hold still.</b>",
-												  "<span class='notice'> Loading beta-wave profile...</span>",
-												  "<span class='notice'> The helmet vibrates softly..</span>",
+												  "<span class='notice'>Loading beta-wave profile...</span>",
+												  "<span class='notice'>The helmet vibrates softly..</span>",
 												  "<b>Loaded</b>.",
-												  "<span class='notice'> Locking neural clamp...</span>",
-												  "<span class='notice'> The helmet begins to emit an unearthly pitch...</span>",
-												  "<span class='notice'> You begin to feel your senses melt away...</span>",
-												  "<span class='alert'> You panic as you realize you no longer have control over your body!</span>",
+												  "<span class='notice'>Locking neural clamp...</span>",
+												  "<span class='notice'>The helmet begins to emit an unearthly pitch...</span>",
+												  "<span class='notice'>You begin to feel your senses melt away...</span>",
+												  "<span class='alert'>You panic as you realize you no longer have control over your body!</span>",
 												  "<b>Locked</b>." )
 
 				for(var/text in descriptive_text)

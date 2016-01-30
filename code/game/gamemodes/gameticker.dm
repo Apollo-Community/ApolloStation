@@ -109,9 +109,7 @@ var/global/datum/controller/gameticker/ticker
 
 		src.mode = pick_random_gamemode(runnable_modes)
 
-	if(hide_mode)
-		world << "<B>The current game mode is - Hidden!</B>"
-	else
+	if(!hide_mode)
 		src.mode.announce()
 
 	job_master.ResetOccupations()
@@ -330,11 +328,11 @@ var/global/datum/controller/gameticker/ticker
 				if (mode.station_was_nuked)
 					feedback_set_details("end_proper","nuke")
 					if(!delay_end)
-						world << "<span class='notice'> <B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B></span>"
+						world << "<span class='notice'><B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B></span>"
 				else
 					feedback_set_details("end_proper","proper completion")
 					if(!delay_end)
-						world << "<span class='notice'> <B>Restarting in [restart_timeout/10] seconds</B></span>"
+						world << "<span class='notice'><B>Restarting in [restart_timeout/10] seconds</B></span>"
 
 
 				if(blackbox)
@@ -345,9 +343,9 @@ var/global/datum/controller/gameticker/ticker
 					if(!delay_end)
 						world.Reboot()
 					else
-						world << "<span class='notice'> <B>An admin has delayed the round end</B></span>"
+						world << "<span class='notice'><B>An admin has delayed the round end</B></span>"
 				else
-					world << "<span class='notice'> <B>An admin has delayed the round end</B></span>"
+					world << "<span class='notice'><B>An admin has delayed the round end</B></span>"
 
 		else if (mode_finished)
 			post_game = 1
@@ -357,7 +355,7 @@ var/global/datum/controller/gameticker/ticker
 			//call a transfer shuttle vote
 			spawn(50)
 				if(!round_end_announced) // Spam Prevention. Now it should announce only once.
-					world << "<span class='alert'> The round has ended!</span>"
+					world << "<span class='alert'>The round has ended!</span>"
 					round_end_announced = 1
 				vote.autotransfer()
 

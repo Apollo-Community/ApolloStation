@@ -24,15 +24,15 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("<span class='notice'> [user] takes out all the bone chips in [target]'s brain with \the [tool].</span>",	\
-		"<span class='notice'> You take out all the bone chips in [target]'s brain with \the [tool].</span>")
+		user.visible_message("<span class='notice'>[user] takes out all the bone chips in [target]'s brain with \the [tool].</span>",	\
+		"<span class='notice'>You take out all the bone chips in [target]'s brain with \the [tool].</span>")
 		var/datum/organ/internal/brain/sponge = target.internal_organs_by_name["brain"]
 		if (sponge)
 			sponge.damage = 0
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("<span class='alert'> [user]'s hand slips, jabbing \the [tool] in [target]'s brain!</span>", \
-		"<span class='alert'> Your hand slips, jabbing \the [tool] in [target]'s brain!</span>")
+		user.visible_message("<span class='alert'>[user]'s hand slips, jabbing \the [tool] in [target]'s brain!</span>", \
+		"<span class='alert'>Your hand slips, jabbing \the [tool] in [target]'s brain!</span>")
 		target.apply_damage(30, BRUTE, "head", 1, sharp=1)
 
 /datum/surgery_step/brain/hematoma
@@ -56,13 +56,13 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("<span class='notice'> [user] mends hematoma in [target]'s brain with \the [tool].</span>",	\
-		"<span class='notice'> You mend hematoma in [target]'s brain with \the [tool].</span>")
+		user.visible_message("<span class='notice'>[user] mends hematoma in [target]'s brain with \the [tool].</span>",	\
+		"<span class='notice'>You mend hematoma in [target]'s brain with \the [tool].</span>")
 		var/datum/organ/internal/brain/sponge = target.internal_organs_by_name["brain"]
 		if (sponge)
 			sponge.damage = 20
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("<span class='alert'> [user]'s hand slips, bruising [target]'s brain with \the [tool]!</span>", \
-		"<span class='alert'> Your hand slips, bruising [target]'s brain with \the [tool]!</span>")
+		user.visible_message("<span class='alert'>[user]'s hand slips, bruising [target]'s brain with \the [tool]!</span>", \
+		"<span class='alert'>Your hand slips, bruising [target]'s brain with \the [tool]!</span>")
 		target.apply_damage(20, BRUTE, "head", 1, sharp=1)

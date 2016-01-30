@@ -256,10 +256,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	if(medHUD)
 		medHUD = 0
-		src << "<span class='notice'> <B>Medical HUD Disabled</B></span>"
+		src << "<span class='notice'><B>Medical HUD Disabled</B></span>"
 	else
 		medHUD = 1
-		src << "<span class='notice'> <B>Medical HUD Enabled</B></span>"
+		src << "<span class='notice'><B>Medical HUD Enabled</B></span>"
 
 /mob/dead/observer/verb/toggle_antagHUD()
 	set category = "Ghost"
@@ -270,11 +270,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	var/mentor = is_mentor(usr.client)
 	if(!config.antag_hud_allowed && (!client.holder || mentor))
-		src << "<span class='alert'> Admins have disabled this for this round.</span>"
+		src << "<span class='alert'>Admins have disabled this for this round.</span>"
 		return
 	var/mob/dead/observer/M = src
 	if(jobban_isbanned(M, "AntagHUD"))
-		src << "<span class='alert'> <B>You have been banned from using this feature</B></span>"
+		src << "<span class='alert'><B>You have been banned from using this feature</B></span>"
 		return
 	if(config.antag_hud_restricted && !M.has_enabled_antagHUD && (!client.holder || mentor))
 		var/response = alert(src, "If you turn this on, you will not be able to take any part in the round.","Are you sure you want to turn this feature on?","Yes","No")
@@ -284,10 +284,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		M.has_enabled_antagHUD = 1
 	if(M.antagHUD)
 		M.antagHUD = 0
-		src << "<span class='notice'> <B>AntagHUD Disabled</B></span>"
+		src << "<span class='notice'><B>AntagHUD Disabled</B></span>"
 	else
 		M.antagHUD = 1
-		src << "<span class='notice'> <B>AntagHUD Enabled</B></span>"
+		src << "<span class='notice'><B>AntagHUD Enabled</B></span>"
 
 /mob/dead/observer/proc/dead_tele(A in ghostteleportlocs)
 	set category = "Ghost"
@@ -327,7 +327,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(following && following == target)
 			return
 		following = target
-		src << "<span class='notice'> Now following [target]</span>"
+		src << "<span class='notice'>Now following [target]</span>"
 		spawn(0)
 			while(target && following == target && client)
 				var/turf/T = get_turf(target)
@@ -374,11 +374,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/memory()
 	set hidden = 1
-	src << "<span class='alert'> You are dead! You have no mind to store memory!</span>"
+	src << "<span class='alert'>You are dead! You have no mind to store memory!</span>"
 
 /mob/dead/observer/add_memory()
 	set hidden = 1
-	src << "<span class='alert'> You are dead! You have no mind to store memory!</span>"
+	src << "<span class='alert'>You are dead! You have no mind to store memory!</span>"
 
 /mob/dead/observer/verb/analyze_air()
 	set name = "Analyze Air"
@@ -395,16 +395,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/pressure = environment.return_pressure()
 	var/total_moles = environment.total_moles
 
-	src << "<span class='notice'> <B>Results:</B></span>"
+	src << "<span class='notice'><B>Results:</B></span>"
 	if(abs(pressure - ONE_ATMOSPHERE) < 10)
-		src << "<span class='notice'> Pressure: [round(pressure,0.1)] kPa</span>"
+		src << "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>"
 	else
-		src << "<span class='alert'> Pressure: [round(pressure,0.1)] kPa</span>"
+		src << "<span class='alert'>Pressure: [round(pressure,0.1)] kPa</span>"
 	if(total_moles)
 		for(var/g in environment.gas)
-			src << "<span class='notice'> [gas_data.name[g]]: [round((environment.gas[g] / total_moles) * 100)]% ([round(environment.gas[g], 0.01)] moles)</span>"
-		src << "<span class='notice'> Temperature: [round(environment.temperature-T0C,0.1)]&deg;C ([round(environment.temperature,0.1)]K)</span>"
-		src << "<span class='notice'> Heat Capacity: [round(environment.heat_capacity(),0.1)]</span>"
+			src << "<span class='notice'>[gas_data.name[g]]: [round((environment.gas[g] / total_moles) * 100)]% ([round(environment.gas[g], 0.01)] moles)</span>"
+		src << "<span class='notice'>Temperature: [round(environment.temperature-T0C,0.1)]&deg;C ([round(environment.temperature,0.1)]K)</span>"
+		src << "<span class='notice'>Heat Capacity: [round(environment.heat_capacity(),0.1)]</span>"
 
 
 /mob/dead/observer/verb/toggle_darkness()
@@ -486,7 +486,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "If the round is sufficiently spooky, write a short message in blood on the floor or a wall. Remember, no IC in OOC or OOC in IC."
 
 	if(!(config.cult_ghostwriter))
-		src << "<span class='alert'> That verb is not currently permitted.</span>"
+		src << "<span class='alert'>That verb is not currently permitted.</span>"
 		return
 
 	if (!src.stat)
@@ -502,7 +502,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			ghosts_can_write = 1
 
 	if(!ghosts_can_write)
-		src << "<span class='alert'> The veil is not thin enough for you to do that.</span>"
+		src << "<span class='alert'>The veil is not thin enough for you to do that.</span>"
 		return
 
 	var/list/choices = list()
@@ -552,7 +552,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		W.update_icon()
 		W.message = message
 		W.add_hiddenprint(src)
-		W.visible_message("<span class='alert'> Invisible fingers crudely paint something in blood on [T]...</span>")
+		W.visible_message("<span class='alert'>Invisible fingers crudely paint something in blood on [T]...</span>")
 
 /mob/dead/observer/pointed(atom/A as mob|obj|turf in view())
 	if(!..())
@@ -664,7 +664,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	say_dead_direct( "<span class='name'>[name]</span> no longer [pick("skulks","lurks","prowls","creeps","stalks")] in the realm of the dead. They now fight for honor and glory in the thunderdome.")
 	spawn(50)
-		usr << "<span class='notice'> You have joined as a gladiator in the Thunderdome!"
+		usr << "<span class='notice'>You have joined as a gladiator in the Thunderdome!"
 	log_admin("[key_name_admin(usr)] has joined the thunderdome!")
 
 	var/mob/M = usr
@@ -684,7 +684,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /proc/forge_gladiator( var/obj/spawn_location )
 
-	//usr << "<span class='alert'> ERT has been temporarily disabled. Talk to a coder.</span>"
+	//usr << "<span class='alert'>ERT has been temporarily disabled. Talk to a coder.</span>"
 	//return
 
 	var/gladiator_name = input("Pick a name","Name") as null|text

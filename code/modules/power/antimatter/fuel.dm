@@ -76,7 +76,7 @@
 		if("Anti-Hydrogen")
 			M.gib()
 		if("Hydrogen")
-			M << "<span class='notice'> You feel very light, as if you might just float away...</span>"
+			M << "<span class='notice'>You feel very light, as if you might just float away...</span>"
 	qdel(src)
 	return
 
@@ -95,5 +95,5 @@
 			return
 	else
 		for(var/mob/O in viewers(M, null))
-			O.show_message(text("<span class='alert'> [M] ate the [content ? content : "empty canister"]!</span>"), 1)
+			O.show_message(text("<span class='alert'>[M] ate the [content ? content : "empty canister"]!</span>"), 1)
 		src.injest(M)

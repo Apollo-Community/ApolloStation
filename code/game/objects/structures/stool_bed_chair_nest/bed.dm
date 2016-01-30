@@ -65,12 +65,12 @@
 		if(buckled_mob.buckled == src)
 			if(buckled_mob != user)
 				buckled_mob.visible_message(\
-					"<span class='notice'> [buckled_mob.name] was unbuckled by [user.name]!</span>",\
+					"<span class='notice'>[buckled_mob.name] was unbuckled by [user.name]!</span>",\
 					"You were unbuckled from [src] by [user.name].",\
 					"You hear metal clanking")
 			else
 				buckled_mob.visible_message(\
-					"<span class='notice'> [buckled_mob.name] unbuckled \himself!</span>",\
+					"<span class='notice'>[buckled_mob.name] unbuckled \himself!</span>",\
 					"You unbuckle yourself from [src].",\
 					"You hear metal clanking")
 			unbuckle()
@@ -93,12 +93,12 @@
 
 	if (M == usr)
 		M.visible_message(\
-			"<span class='notice'> [M.name] buckles in!</span>",\
+			"<span class='notice'>[M.name] buckles in!</span>",\
 			"You buckle yourself to [src].",\
 			"You hear metal clanking")
 	else
 		M.visible_message(\
-			"<span class='notice'> [M.name] is buckled in to [src] by [user.name]!</span>",\
+			"<span class='notice'>[M.name] is buckled in to [src] by [user.name]!</span>",\
 			"You are buckled in to [src] by [user.name].",\
 			"You hear metal clanking")
 	M.buckled = src
@@ -148,7 +148,7 @@
 	if(istype(W,/obj/item/roller_holder))
 		var/obj/item/roller_holder/RH = W
 		if(!RH.held)
-			user << "<span class='notice'> You collect the roller bed.</span>"
+			user << "<span class='notice'>You collect the roller bed.</span>"
 			src.loc = RH
 			RH.held = src
 			return
@@ -169,10 +169,10 @@
 /obj/item/roller_holder/attack_self(mob/user as mob)
 
 	if(!held)
-		user << "<span class='notice'> The rack is empty.</span>"
+		user << "<span class='notice'>The rack is empty.</span>"
 		return
 
-	user << "<span class='notice'> You deploy the roller bed.</span>"
+	user << "<span class='notice'>You deploy the roller bed.</span>"
 	var/obj/structure/bed/roller/R = new /obj/structure/bed/roller(user.loc)
 	R.add_fingerprint(user)
 	qdel(held)

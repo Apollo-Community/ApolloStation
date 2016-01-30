@@ -1,7 +1,6 @@
 proc/get_donator(client/C)
 	establish_db_connection()
-	if(!dbcon.IsConnected())
-		return null
+	if(!dbcon.IsConnected())		return 0	//null would generate runtimes.
 
 	var/donator = 0
 	var/sql_ckey = sql_sanitize_text(ckey(C.key))
@@ -9,8 +8,7 @@ proc/get_donator(client/C)
 	var/DBQuery/query = dbcon.NewQuery("SELECT donator_flags FROM player WHERE ckey = '[sql_ckey]'")
 	query.Execute()
 
-	if(query.NextRow())
-		donator |= text2num(query.item[1])
+	if(query.NextRow())		donator |= text2num(query.item[1])
 
 	if(C.IsByondMember())	// unlikely people will be byond members (sorry its tru)
 		donator |= DONATOR_TIER_BYOND

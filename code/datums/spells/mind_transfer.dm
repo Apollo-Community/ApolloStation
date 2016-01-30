@@ -113,4 +113,4 @@ Also, you never added distance checking after target is selected. I've went ahea
 
 	//After a certain amount of time the victim gets a message about being in a different body.
 	spawn(msg_wait)
-		caster << "<span class='alert'> You feel woozy and lightheaded. <b>Your body doesn't seem like your own.</b></span>"
+		caster << "<span class='alert'>You feel woozy and lightheaded. <b>Your body doesn't seem like your own.</b></span>"

@@ -4,7 +4,7 @@
 
 /datum/game_mode/xenomorph
 	name = "xenomorph"
-	config_tag = "xenomorph"
+	config_tag = null
 //	restricted_jobs = list("Cyborg", "AI")//They are part of the AI if he is alien so are they, they use to get double chances
 //	protected_jobs = list("Security Officer", "Warden", "Detective", "Internal Affairs Agent", "Head of Security", "Captain")//AI", Currently out of the list as malf does not work for shit
 	required_players = 5
@@ -169,4 +169,3 @@
 
 /datum/game_mode/proc/equip_alien(mob/living/carbon/human/alien_mob, var/safety = 0)
 	return
-

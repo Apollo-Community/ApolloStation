@@ -13,16 +13,16 @@ var/can_call_ert
 	set desc = "Send an emergency response team to the station"
 
 	if(!holder)
-		usr << "<span class='alert'> Only administrators may use this command.</span>"
+		usr << "<span class='alert'>Only administrators may use this command.</span>"
 		return
 	if(!ticker)
-		usr << "<span class='alert'> The game hasn't started yet!</span>"
+		usr << "<span class='alert'>The game hasn't started yet!</span>"
 		return
 	if(ticker.current_state == 1)
-		usr << "<span class='alert'> The round hasn't started yet!</span>"
+		usr << "<span class='alert'>The round hasn't started yet!</span>"
 		return
 	if(send_emergency_team)
-		usr << "<span class='alert'> Central Command has already dispatched an emergency response team!</span>"
+		usr << "<span class='alert'>Central Command has already dispatched an emergency response team!</span>"
 		return
 	if(alert("Do you want to dispatch an Emergency Response Team?",,"Yes","No") != "Yes")
 		return
@@ -31,7 +31,7 @@ var/can_call_ert
 			if("No")
 				return
 	if(send_emergency_team)
-		usr << "<span class='alert'> Looks like somebody beat you to it!</span>"
+		usr << "<span class='alert'>Looks like somebody beat you to it!</span>"
 		return
 
 	message_admins("[key_name_admin(usr)] is dispatching an Emergency Response Team.")
@@ -69,7 +69,7 @@ client/verb/JoinResponseTeam()
 			new_commando.mind.key = usr.key
 			new_commando.key = usr.key
 
-			new_commando << "<span class='notice'> You are [!leader_selected?"a member":"the <B>LEADER</B></span>"] of an Emergency Response Team, a type of military division, under CentComm's service. There is a code red alert on [station_name()], you are tasked to go and fix the problem."
+			new_commando << "<span class='notice'>You are [!leader_selected?"a member":"the <B>LEADER</B></span>"] of an Emergency Response Team, a type of military division, under CentComm's service. There is a code red alert on [station_name()], you are tasked to go and fix the problem."
 			new_commando << "<b>You should first gear up and discuss a plan with your team. More members may be joining, don't move out before you're ready."
 			if(!leader_selected)
 				new_commando << "<b>As member of the Emergency Response Team, you answer only to your leader and CentComm officials.</b>"
@@ -162,7 +162,7 @@ proc/trigger_armed_response_team(var/force = 0)
 
 /client/proc/create_response_team(obj/spawn_location, leader_selected = 0, commando_name)
 
-	//usr << "<span class='alert'> ERT has been temporarily disabled. Talk to a coder.</span>"
+	//usr << "<span class='alert'>ERT has been temporarily disabled. Talk to a coder.</span>"
 	//return
 
 	var/mob/living/carbon/human/M = new(null)

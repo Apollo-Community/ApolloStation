@@ -53,7 +53,7 @@
 		if(!target.reagents) return
 
 		if(mode == SYRINGE_BROKEN)
-			user << "<span class='alert'> This syringe is broken!</span>"
+			user << "<span class='alert'>This syringe is broken!</span>"
 			return
 
 		if (user.a_intent == I_HURT && ismob(target))
@@ -67,15 +67,15 @@
 			if(SYRINGE_DRAW)
 
 				if(reagents.total_volume >= reagents.maximum_volume)
-					user << "<span class='alert'> The syringe is full.</span>"
+					user << "<span class='alert'>The syringe is full.</span>"
 					return
 
 				if(ismob(target))//Blood!
 					if(istype(target, /mob/living/carbon/slime))
-						user << "<span class='alert'> You are unable to locate any blood.</span>"
+						user << "<span class='alert'>You are unable to locate any blood.</span>"
 						return
 					if(src.reagents.has_reagent("blood"))
-						user << "<span class='alert'> There is already a blood sample in this syringe</span>"
+						user << "<span class='alert'>There is already a blood sample in this syringe</span>"
 						return
 					if(istype(target, /mob/living/carbon))//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
 						var/amount = src.reagents.maximum_volume - src.reagents.total_volume
@@ -84,7 +84,7 @@
 							usr << "You are unable to locate any blood. (To be specific, your target seems to be missing their DNA datum)"
 							return
 						if(NOCLONE in T.mutations) //target done been et, no more blood in him
-							user << "<span class='alert'> You are unable to locate any blood.</span>"
+							user << "<span class='alert'>You are unable to locate any blood.</span>"
 							return
 
 						var/datum/reagent/B
@@ -102,22 +102,22 @@
 							src.reagents.update_total()
 							src.on_reagent_change()
 							src.reagents.handle_reactions()
-						user << "<span class='notice'> You take a blood sample from [target]</span>"
+						user << "<span class='notice'>You take a blood sample from [target]</span>"
 						for(var/mob/O in viewers(4, user))
-							O.show_message("<span class='alert'> [user] takes a blood sample from [target].</span>", 1)
+							O.show_message("<span class='alert'>[user] takes a blood sample from [target].</span>", 1)
 
 				else //if not mob
 					if(!target.reagents.total_volume)
-						user << "<span class='alert'> [target] is empty.</span>"
+						user << "<span class='alert'>[target] is empty.</span>"
 						return
 
 					if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers) && !istype(target,/obj/item/slime_extract))
-						user << "<span class='alert'> You cannot directly remove reagents from this object.</span>"
+						user << "<span class='alert'>You cannot directly remove reagents from this object.</span>"
 						return
 
 					var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this) // transfer from, transfer to - who cares?
 
-					user << "<span class='notice'> You fill the syringe with [trans] units of the solution.</span>"
+					user << "<span class='notice'>You fill the syringe with [trans] units of the solution.</span>"
 				if (reagents.total_volume >= reagents.maximum_volume)
 					mode=!mode
 					update_icon()
@@ -127,16 +127,16 @@
 					return
 
 				if(!reagents.total_volume)
-					user << "<span class='alert'> The syringe is empty.</span>"
+					user << "<span class='alert'>The syringe is empty.</span>"
 					return
 				if(istype(target, /obj/item/weapon/implantcase/chem))
 					return
 
 				if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/storage/fancy/cigarettes))
-					user << "<span class='alert'> You cannot directly fill this object.</span>"
+					user << "<span class='alert'>You cannot directly fill this object.</span>"
 					return
 				if(target.reagents.total_volume >= target.reagents.maximum_volume)
-					user << "<span class='alert'> [target] is full.</span>"
+					user << "<span class='alert'>[target] is full.</span>"
 					return
 
 				if(ismob(target) && target != user)
@@ -160,14 +160,14 @@
 
 					for(var/mob/O in viewers(world.view, user))
 						if(time == 30)
-							O.show_message(text("<span class='alert'> <B>[] is trying to inject []!</B></span>", user, target), 1)
+							O.show_message(text("<span class='alert'><B>[] is trying to inject []!</B></span>", user, target), 1)
 						else
-							O.show_message(text("<span class='alert'> <B>[] begins hunting for an injection port on []'s suit!</B></span>", user, target), 1)
+							O.show_message(text("<span class='alert'><B>[] begins hunting for an injection port on []'s suit!</B></span>", user, target), 1)
 
 					if(!do_mob(user, target, time)) return
 
 					for(var/mob/O in viewers(world.view, user))
-						O.show_message(text("<span class='alert'> [] injects [] with the syringe!</span>", user, target), 1)
+						O.show_message(text("<span class='alert'>[] injects [] with the syringe!</span>", user, target), 1)
 
 					if(istype(target,/mob/living))
 						var/mob/living/M = target
@@ -198,7 +198,7 @@
 						C.inject_blood(src,5)
 					else
 						trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-					user << "<span class='notice'> You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>"
+					user << "<span class='notice'>You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>"
 					if (reagents.total_volume <= 0 && mode==SYRINGE_INJECT)
 						mode = SYRINGE_DRAW
 						update_icon()
@@ -256,20 +256,20 @@
 
 			if (target != user && target.getarmor(target_zone, "melee") > 5 && prob(50))
 				for(var/mob/O in viewers(world.view, user))
-					O.show_message(text("<span class='alert'> <B>[user] tries to stab [target] in \the [hit_area] with [src.name], but the attack is deflected by armor!</B></span>"), 1)
+					O.show_message(text("<span class='alert'><B>[user] tries to stab [target] in \the [hit_area] with [src.name], but the attack is deflected by armor!</B></span>"), 1)
 				user.u_equip(src)
 				qdel(src)
 				return
 
 			for(var/mob/O in viewers(world.view, user))
-				O.show_message(text("<span class='alert'> <B>[user] stabs [target] in \the [hit_area] with [src.name]!</B></span>"), 1)
+				O.show_message(text("<span class='alert'><B>[user] stabs [target] in \the [hit_area] with [src.name]!</B></span>"), 1)
 
 			if(affecting.take_damage(3))
 				target:UpdateDamageIcon()
 
 		else
 			for(var/mob/O in viewers(world.view, user))
-				O.show_message(text("<span class='alert'> <B>[user] stabs [target] with [src.name]!</B></span>"), 1)
+				O.show_message(text("<span class='alert'><B>[user] stabs [target] with [src.name]!</B></span>"), 1)
 			target.take_organ_damage(3)// 7 is the same as crowbar punch
 
 		src.reagents.reaction(target, INGEST)
@@ -323,7 +323,7 @@
 			if(SYRINGE_DRAW)
 
 				if(reagents.total_volume >= reagents.maximum_volume)
-					user << "<span class='alert'> The syringe is full.</span>"
+					user << "<span class='alert'>The syringe is full.</span>"
 					return
 
 				if(ismob(target))
@@ -332,45 +332,45 @@
 						return
 				else //if not mob
 					if(!target.reagents.total_volume)
-						user << "<span class='alert'> [target] is empty.</span>"
+						user << "<span class='alert'>[target] is empty.</span>"
 						return
 
 					if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers))
-						user << "<span class='alert'> You cannot directly remove reagents from this object.</span>"
+						user << "<span class='alert'>You cannot directly remove reagents from this object.</span>"
 						return
 
 					var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this) // transfer from, transfer to - who cares?
 
-					user << "<span class='notice'> You fill the syringe with [trans] units of the solution.</span>"
+					user << "<span class='notice'>You fill the syringe with [trans] units of the solution.</span>"
 				if (reagents.total_volume >= reagents.maximum_volume)
 					mode=!mode
 					update_icon()
 
 			if(SYRINGE_INJECT)
 				if(!reagents.total_volume)
-					user << "<span class='alert'> The Syringe is empty.</span>"
+					user << "<span class='alert'>The Syringe is empty.</span>"
 					return
 				if(istype(target, /obj/item/weapon/implantcase/chem))
 					return
 				if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food))
-					user << "<span class='alert'> You cannot directly fill this object.</span>"
+					user << "<span class='alert'>You cannot directly fill this object.</span>"
 					return
 				if(target.reagents.total_volume >= target.reagents.maximum_volume)
-					user << "<span class='alert'> [target] is full.</span>"
+					user << "<span class='alert'>[target] is full.</span>"
 					return
 
 				if(ismob(target) && target != user)
 					for(var/mob/O in viewers(world.view, user))
-						O.show_message(text("<span class='alert'> <B>[] is trying to inject [] with a giant syringe!</B></span>", user, target), 1)
+						O.show_message(text("<span class='alert'><B>[] is trying to inject [] with a giant syringe!</B></span>", user, target), 1)
 					if(!do_mob(user, target, 300)) return
 					for(var/mob/O in viewers(world.view, user))
-						O.show_message(text("<span class='alert'> [] injects [] with a giant syringe!</span>", user, target), 1)
+						O.show_message(text("<span class='alert'>[] injects [] with a giant syringe!</span>", user, target), 1)
 					src.reagents.reaction(target, INGEST)
 				if(ismob(target) && target == user)
 					src.reagents.reaction(target, INGEST)
 				spawn(5)
 					var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-					user << "<span class='notice'> You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>"
+					user << "<span class='notice'>You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>"
 					if (reagents.total_volume >= reagents.maximum_volume && mode==SYRINGE_INJECT)
 						mode = SYRINGE_DRAW
 						update_icon()

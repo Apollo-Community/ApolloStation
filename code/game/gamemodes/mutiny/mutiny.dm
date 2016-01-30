@@ -152,8 +152,8 @@ datum/game_mode/mutiny
 
 	proc/add_faction(datum/mind/M, faction, list/faction_list)
 		if(!can_be_recruited(M, faction))
-			M.current << "<span class='alert'> Recruitment canceled; your role has already changed.</span>"
-			head_mutineer.current << "<span class='alert'> Could not recruit [M]. Their role has changed.</span>"
+			M.current << "<span class='alert'>Recruitment canceled; your role has already changed.</span>"
+			head_mutineer.current << "<span class='alert'>Could not recruit [M]. Their role has changed.</span>"
 			return
 
 		if(M in loyalists)
@@ -267,17 +267,17 @@ datum/game_mode/mutiny
 /datum/game_mode/mutiny/pre_setup()
 	var/list/loyalist_candidates = get_head_loyalist_candidates()
 	if(!loyalist_candidates || loyalist_candidates.len == 0)
-		world << "<span class='alert'> Mutiny mode aborted: no valid candidates for head loyalist.</span>"
+		world << "<span class='alert'>Mutiny mode aborted: no valid candidates for head loyalist.</span>"
 		return 0
 
 	var/list/mutineer_candidates = get_head_mutineer_candidates()
 	if(!mutineer_candidates || mutineer_candidates.len == 0)
-		world << "<span class='alert'> Mutiny mode aborted: no valid candidates for head mutineer.</span>"
+		world << "<span class='alert'>Mutiny mode aborted: no valid candidates for head mutineer.</span>"
 		return 0
 
 	var/list/directive_candidates = get_directive_candidates()
 	if(!directive_candidates || directive_candidates.len == 0)
-		world << "<span class='alert'> Mutiny mode aborted: no valid candidates for Directive X.</span>"
+		world << "<span class='alert'>Mutiny mode aborted: no valid candidates for Directive X.</span>"
 		return 0
 
 	head_loyalist = pick(loyalist_candidates)
@@ -317,11 +317,11 @@ datum/game_mode/mutiny
 			candidates += P
 
 	if(!candidates.len)
-		src << "<span class='alert'> You aren't close enough to anybody that can be recruited.</span>"
+		src << "<span class='alert'>You aren't close enough to anybody that can be recruited.</span>"
 		return
 
 	if(world.time < mode.recruit_loyalist_cooldown)
-		src << "<span class='alert'> Wait [MUTINY_RECRUITMENT_COOLDOWN] seconds before recruiting again.</span>"
+		src << "<span class='alert'>Wait [MUTINY_RECRUITMENT_COOLDOWN] seconds before recruiting again.</span>"
 		return
 
 	mode.recruit_loyalist_cooldown = world.time + (MUTINY_RECRUITMENT_COOLDOWN SECONDS)
@@ -331,14 +331,14 @@ datum/game_mode/mutiny
 	if (M)
 		src << "Attempting to recruit [M]..."
 		log_admin("[src]([src.ckey]) attempted to recruit [M] as a loyalist.")
-		message_admins("<span class='alert'> [src]([src.ckey]) attempted to recruit [M] as a loyalist.</span>")
+		message_admins("<span class='alert'>[src]([src.ckey]) attempted to recruit [M] as a loyalist.</span>")
 
 		var/choice = alert(M, "Asked by [src]: Will you help me complete Directive X?", "Loyalist recruitment", "No", "Yes")
 		if(choice == "Yes")
 			mode.add_loyalist(M.mind)
 		else if(choice == "No")
-			M << "<span class='alert'> You declined to join the loyalists.</span>"
-			mode.head_loyalist.current << "<span class='alert'> <b>[M] declined to support the loyalists.</b></span>"
+			M << "<span class='alert'>You declined to join the loyalists.</span>"
+			mode.head_loyalist.current << "<span class='alert'><b>[M] declined to support the loyalists.</b></span>"
 
 /mob/living/carbon/human/proc/recruit_mutineer()
 	set name = "Recruit Mutineer"
@@ -354,11 +354,11 @@ datum/game_mode/mutiny
 			candidates += P
 
 	if(!candidates.len)
-		src << "<span class='alert'> You aren't close enough to anybody that can be recruited.</span>"
+		src << "<span class='alert'>You aren't close enough to anybody that can be recruited.</span>"
 		return
 
 	if(world.time < mode.recruit_mutineer_cooldown)
-		src << "<span class='alert'> Wait [MUTINY_RECRUITMENT_COOLDOWN] seconds before recruiting again.</span>"
+		src << "<span class='alert'>Wait [MUTINY_RECRUITMENT_COOLDOWN] seconds before recruiting again.</span>"
 		return
 
 	mode.recruit_mutineer_cooldown = world.time + (MUTINY_RECRUITMENT_COOLDOWN SECONDS)
@@ -368,14 +368,14 @@ datum/game_mode/mutiny
 	if (M)
 		src << "Attempting to recruit [M]..."
 		log_admin("[src]([src.ckey]) attempted to recruit [M] as a mutineer.")
-		message_admins("<span class='alert'> [src]([src.ckey]) attempted to recruit [M] as a mutineer.</span>")
+		message_admins("<span class='alert'>[src]([src.ckey]) attempted to recruit [M] as a mutineer.</span>")
 
 		var/choice = alert(M, "Asked by [src]: Will you help me stop Directive X?", "Mutineer recruitment", "No", "Yes")
 		if(choice == "Yes")
 			mode.add_mutineer(M.mind)
 		else if(choice == "No")
-			M << "<span class='alert'> You declined to join the mutineers.</span>"
-			mode.head_mutineer.current << "<span class='alert'> <b>[M] declined to support the mutineers.</b></span>"
+			M << "<span class='alert'>You declined to join the mutineers.</span>"
+			mode.head_mutineer.current << "<span class='alert'><b>[M] declined to support the mutineers.</b></span>"
 
 /proc/get_mutiny_mode()
 	if(!ticker || !istype(ticker.mode, /datum/game_mode/mutiny))

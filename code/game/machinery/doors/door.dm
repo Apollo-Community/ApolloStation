@@ -152,7 +152,7 @@
 		else
 			emitter_hits ++
 			if(emitter_hits >= emitter_resistance)
-				visible_message("<span class='alert'> <B>[src.name] breaks apart!</B></span>", 1)
+				visible_message("<span class='alert'><B>[src.name] breaks apart!</B></span>", 1)
 				new /obj/effect/decal/cleanable/ash(src.loc) // Turn it to ashes!
 				qdel(src)
 
@@ -162,7 +162,7 @@
 
 /obj/machinery/door/hitby(AM as mob|obj, var/speed=5)
 	..()
-	visible_message("<span class='alert'> <B>[src.name] was hit by [AM].</B></span>")
+	visible_message("<span class='alert'><B>[src.name] was hit by [AM].</B></span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 15 * (speed/5)
@@ -253,9 +253,9 @@
 		var/obj/item/weapon/W = I
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			if(W.force < min_force)
-				user.visible_message("<span class='alert'> <B>\The [user] hits \the [src] with \the [W] with no visible effect.</B></span>" )
+				user.visible_message("<span class='alert'><B>\The [user] hits \the [src] with \the [W] with no visible effect.</B></span>" )
 			else
-				user.visible_message("<span class='alert'> <B>\The [user] forcefully strikes \the [src] with \the [W]!</B></span>" )
+				user.visible_message("<span class='alert'><B>\The [user] forcefully strikes \the [src] with \the [W]!</B></span>" )
 				playsound(src.loc, hitsound, 100, 1)
 				take_damage(W.force)
 		return

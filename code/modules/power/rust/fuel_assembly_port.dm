@@ -15,13 +15,13 @@
 /obj/machinery/rust_fuel_assembly_port/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I,/obj/item/weapon/fuel_assembly) && !opened)
 		if(cur_assembly)
-			user << "<span class='alert'> There is already a fuel rod assembly in there!</span>"
+			user << "<span class='alert'>There is already a fuel rod assembly in there!</span>"
 		else
 			cur_assembly = I
 			user.drop_item()
 			I.loc = src
 			icon_state = "port1"
-			user << "<span class='notice'> You insert [I] into [src]. Touch the panel again to insert [I] into the injector.</span>"
+			user << "<span class='notice'>You insert [I] into [src]. Touch the panel again to insert [I] into the injector.</span>"
 
 /obj/machinery/rust_fuel_assembly_port/attack_hand(mob/user)
 	add_fingerprint(user)
@@ -30,16 +30,16 @@
 
 	if(cur_assembly)
 		if(try_insert_assembly())
-			user << "<span class='notice'> \icon[src] [src] inserts it's fuel rod assembly into an injector.</span>"
+			user << "<span class='notice'>\icon[src] [src] inserts it's fuel rod assembly into an injector.</span>"
 		else
 			if(eject_assembly())
-				user << "<span class='alert'> \icon[src] [src] ejects it's fuel assembly. Check the fuel injector status.</span>"
+				user << "<span class='alert'>\icon[src] [src] ejects it's fuel assembly. Check the fuel injector status.</span>"
 			else if(try_draw_assembly())
-				user << "<span class='notice'> \icon[src] [src] draws a fuel rod assembly from an injector.</span>"
+				user << "<span class='notice'>\icon[src] [src] draws a fuel rod assembly from an injector.</span>"
 	else if(try_draw_assembly())
-		user << "<span class='notice'> \icon[src] [src] draws a fuel rod assembly from an injector.</span>"
+		user << "<span class='notice'>\icon[src] [src] draws a fuel rod assembly from an injector.</span>"
 	else
-		user << "<span class='alert'> \icon[src] [src] was unable to draw a fuel rod assembly from an injector.</span>"
+		user << "<span class='alert'>\icon[src] [src] was unable to draw a fuel rod assembly from an injector.</span>"
 
 /obj/machinery/rust_fuel_assembly_port/proc/try_insert_assembly()
 	var/success = 0

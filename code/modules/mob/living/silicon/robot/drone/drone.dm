@@ -129,7 +129,7 @@
 /mob/living/silicon/robot/drone/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if(istype(W, /obj/item/borg/upgrade/))
-		user << "<span class='alert'> The maintenance drone chassis not compatible with \the [W].</span>"
+		user << "<span class='alert'>The maintenance drone chassis not compatible with \the [W].</span>"
 		return
 
 	else if (istype(W, /obj/item/weapon/crowbar))
@@ -139,16 +139,16 @@
 	else if (istype(W, /obj/item/weapon/card/emag))
 
 		if(!client || stat == 2)
-			user << "<span class='alert'> There's not much point subverting this heap of junk.</span>"
+			user << "<span class='alert'>There's not much point subverting this heap of junk.</span>"
 			return
 
 		if(emagged)
-			src << "<span class='alert'> [user] attempts to load subversive software into you, but your hacked subroutined ignore the attempt.</span>"
-			user << "<span class='alert'> You attempt to subvert [src], but the sequencer has no effect.</span>"
+			src << "<span class='alert'>[user] attempts to load subversive software into you, but your hacked subroutined ignore the attempt.</span>"
+			user << "<span class='alert'>You attempt to subvert [src], but the sequencer has no effect.</span>"
 			return
 
-		user << "<span class='alert'> You swipe the sequencer across [src]'s interface and watch its eyes flicker.</span>"
-		src << "<span class='alert'> You feel a sudden burst of malware loaded into your execute-as-root buffer. Your tiny brain methodically parses, loads and executes the script.</span>"
+		user << "<span class='alert'>You swipe the sequencer across [src]'s interface and watch its eyes flicker.</span>"
+		src << "<span class='alert'>You feel a sudden burst of malware loaded into your execute-as-root buffer. Your tiny brain methodically parses, loads and executes the script.</span>"
 
 		var/obj/item/weapon/card/emag/emag = W
 		emag.uses--
@@ -169,7 +169,7 @@
 
 		src << "<b>Obey these laws:</b>"
 		laws.show_laws(src)
-		src << "<span class='alert'> \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</span>"
+		src << "<span class='alert'>\b ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</span>"
 		return
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
@@ -177,14 +177,14 @@
 		if(stat == 2)
 
 			if(!config.allow_drone_spawn || emagged || health < -35) //It's dead, Dave.
-				user << "<span class='alert'> The interface is fried, and a distressing burned smell wafts from the robot's interior. You're not rebooting this one.</span>"
+				user << "<span class='alert'>The interface is fried, and a distressing burned smell wafts from the robot's interior. You're not rebooting this one.</span>"
 				return
 
 			if(!allowed(usr))
-				user << "<span class='alert'> Access denied.</span>"
+				user << "<span class='alert'>Access denied.</span>"
 				return
 
-			user.visible_message("<span class='alert'> \the [user] swipes \his ID card through \the [src], attempting to reboot it.</span>", "<span class='alert'> You swipe your ID card through \the [src], attempting to reboot it.</span>")
+			user.visible_message("<span class='alert'>\the [user] swipes \his ID card through \the [src], attempting to reboot it.</span>", "<span class='alert'>You swipe your ID card through \the [src], attempting to reboot it.</span>")
 			var/drones = 0
 			for(var/mob/living/silicon/robot/drone/D in world)
 				if(D.key && D.client)
@@ -194,7 +194,7 @@
 			return
 
 		else
-			user.visible_message("<span class='alert'> \the [user] swipes \his ID card through \the [src], attempting to shut it down.</span>", "<span class='alert'> You swipe your ID card through \the [src], attempting to shut it down.</span>")
+			user.visible_message("<span class='alert'>\the [user] swipes \his ID card through \the [src], attempting to shut it down.</span>", "<span class='alert'>You swipe your ID card through \the [src], attempting to shut it down.</span>")
 
 			if(emagged)
 				return
@@ -202,7 +202,7 @@
 			if(allowed(usr))
 				shut_down()
 			else
-				user << "<span class='alert'> Access denied.</span>"
+				user << "<span class='alert'>Access denied.</span>"
 
 		return
 

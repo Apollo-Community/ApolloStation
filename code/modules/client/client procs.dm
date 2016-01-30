@@ -73,11 +73,11 @@
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
-			src << "<span class='alert'> You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>"
+			src << "<span class='alert'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>"
 			cmd_admin_mute(src.mob, mute_type, 1)
 			return 1
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
-			src << "<span class='alert'> You are nearing the spam filter limit for identical messages.</span>"
+			src << "<span class='alert'>You are nearing the spam filter limit for identical messages.</span>"
 			return 0
 	else
 		last_message = message
@@ -120,7 +120,7 @@
 		src.preload_rsc = pick(config.resource_urls)
 	else src.preload_rsc = 1 // If config.resource_urls is not set, preload like normal.
 
-	src << "<span class='alert'> If the title screen is black, resources are still downloading. Please be patient until the title screen appears.</span>"
+	src << "<span class='alert'>If the title screen is black, resources are still downloading. Please be patient until the title screen appears.</span>"
 
 	for(var/client/target in clients)
 		if( !target )
@@ -150,6 +150,17 @@
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 
+	if(!prefs.joined_date)				//So this is only called once to generate it.
+		var/list/http[] = world.Export("http://www.byond.com/members/[key]?format=text")  // Retrieve information from BYOND
+		if(http && http.len && ("CONTENT" in http))
+			var/String = file2text(http["CONTENT"])  //  Convert the HTML file to text
+			var/JoinPos = findtext(String, "joined")+10  //  Parse for the joined date
+			prefs.joined_date = copytext(String, JoinPos, JoinPos+10)  //  Get the date in the YYYY-MM-DD format
+
+	if(!prefs.passed_date)		//Re-calculate this each round until it passes
+		if(round(world.realtime/864000)- text2days(prefs.joined_date) >= 30)
+			prefs.passed_date = 1
+
 	. = ..()	//calls mob.Login()
 
 	if(custom_event_msg && custom_event_msg != "")
@@ -170,7 +181,7 @@
 	// (but turn them off first, since sometimes BYOND doesn't turn them on properly otherwise)
 	if(src)
 		winset(src, null, "command=\".configure graphics-hwmode off\"")
-		spawn(5) // And wait a half-second, since it sounds like you can do this too fast.
+		spawn(10) // Lets wait 1 second instead, 0.5 doesn't seem like enough
 			winset(src, null, "command=\".configure graphics-hwmode on\"")
 
 	donator = get_donator( src )
@@ -202,11 +213,13 @@
 		stat_player_list = sortAssoc(stat_player_list)
 
 	log_client_to_db()
+	
+	if(!prefs.passed_date)
+		src << "<span class='admin_channel'>We have detected that your ckey is less than one month old. To help get you started we strongly recommend \
+		that you read this wiki page: <a></a>http://wiki.apollo-community.org/index.php?title=The_Basics</a>\nIn addition feel free to a member of staff \
+		for help by using the \"ahelp\" command.\n\n~Apollo Team</span>"
 
-	if(related_accounts_ip && !holder && !findtext(related_accounts_ip, "[ckey]"))		//So admin accounts don't generate spam
-		message_admins("[ckey]'s IP has been previously used by [related_accounts_ip]")
-	if(related_accounts_cid && !holder && !findtext(related_accounts_cid, "[ckey]"))
-		message_admins("[ckey]'s CID has been previously used by [related_accounts_cid]")
+	gen_infraction_table()
 
 	loadAccountItems()
 	send_resources()
@@ -227,6 +240,10 @@
 
 
 // here because it's similar to below
+
+/client/proc/gen_infraction_table()
+	if(!prefs.passed_date || (related_accounts_ip && !holder && !findtext(related_accounts_ip, "[ckey]")) || (related_accounts_cid && !holder && !findtext(related_accounts_cid, "[ckey]")))
+		message_admins("\nCkey\t\t\tJoined Date\t\tRelated Accounts\t\t\tRelated IPs\n<a href='?src=\ref[usr];priv_msg=\ref[src.mob]'>[ckey]</a>(<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</a>)\t\t[prefs.passed_date ? "[prefs.joined_date]" : "<span class='danger'>[prefs.joined_date]</span>"]\t\t[related_accounts_cid]\t\t\t[related_accounts_ip]<hr>")
 
 // Returns null if no DB connection can be established, or -1 if the requested key was not found in the database
 
@@ -255,7 +272,7 @@
 	if(!dbcon.IsConnected())
 		return
 
-	var/sql_ckey = sql_sanitize_text(src.ckey)
+	var/sql_ckey = ckey(src.ckey)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM player WHERE ckey = '[sql_ckey]'")
 	query.Execute()
@@ -319,7 +336,7 @@
 	if(!dbcon.IsConnected())
 		return 0
 
-	var/sql_ckey = sql_sanitize_text(src.ckey)
+	var/sql_ckey = ckey(src.ckey)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM player WHERE ckey = '[sql_ckey]'")
 	query.Execute()

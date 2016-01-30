@@ -157,7 +157,7 @@
 					creating_new_account = 0
 					ui.close()
 				else
-					usr << "<span class='alert'> There's not enough funds in the station's account to create this new account!</span>"
+					usr << "<span class='alert'>There's not enough funds in the station's account to create this new account!</span>"
 					return 0
 
 				creating_new_account = 0

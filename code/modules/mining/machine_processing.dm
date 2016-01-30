@@ -30,7 +30,7 @@
 		return
 
 	if(!allowed(user))
-		user << "<span class='alert'> Access denied.</span>"
+		user << "<span class='alert'>Access denied.</span>"
 		return
 
 	user.set_machine(src)

@@ -120,17 +120,17 @@
 			if (src.connected)
 				if (src.connected.occupant)
 					if (src.connected.occupant.stat == DEAD)
-						usr << "<span class='alert'> \b This person has no life for to preserve anymore. Take them to a department capable of reanimating them.</span>"
+						usr << "<span class='alert'>\b This person has no life for to preserve anymore. Take them to a department capable of reanimating them.</span>"
 					else if(src.connected.occupant.health > 0 || href_list["chemical"] == "inaprovaline")
 						var/chem = href_list["chemical"]
 						if( !( chem in connected.available_chemicals ))
-							usr << "<span class='alert'> You are a bad person.</span>"
+							usr << "<span class='alert'>You are a bad person.</span>"
 							message_admins("[usr]/([usr.ckey]) has attempted to use an href exploit on a sleeper!", "EXPLOIT:")
 							return
 
 						src.connected.inject_chemical(usr,chem,text2num(href_list["amount"]))
 					else
-						usr << "<span class='alert'> \b This person is not in good enough condition for sleepers to be effective! Use another means of treatment, such as cryogenics!</span>"
+						usr << "<span class='alert'>\b This person is not in good enough condition for sleepers to be effective! Use another means of treatment, such as cryogenics!</span>"
 					src.updateUsrDialog()
 		if (href_list["refresh"])
 			src.updateUsrDialog()
@@ -227,7 +227,7 @@
 				src.updateUsrDialog()
 				return
 			else
-				user << "<span class='alert'> The sleeper has a beaker already.</span>"
+				user << "<span class='alert'>The sleeper has a beaker already.</span>"
 				return
 
 		else if(istype(G, /obj/item/weapon/grab))
@@ -235,7 +235,7 @@
 				return
 
 			if(src.occupant)
-				user << "<span class='notice'> <B>The sleeper is already occupied!</B></span>"
+				user << "<span class='notice'><B>The sleeper is already occupied!</B></span>"
 				return
 
 			for(var/mob/living/carbon/slime/M in range(1,G:affecting))
@@ -247,7 +247,7 @@
 
 			if(do_after(user, 20))
 				if(src.occupant)
-					user << "<span class='notice'> <B>The sleeper is already occupied!</B></span>"
+					user << "<span class='notice'><B>The sleeper is already occupied!</B></span>"
 					return
 				if(!G || !G:affecting) return
 				var/mob/M = G:affecting
@@ -366,7 +366,7 @@
 
 	proc/check(mob/living/user as mob)
 		if(src.occupant)
-			user << text("<span class='notice'> <B>Occupant ([]) Statistics:</B></span>", src.occupant)
+			user << text("<span class='notice'><B>Occupant ([]) Statistics:</B></span>", src.occupant)
 			var/t1
 			switch(src.occupant.stat)
 				if(0.0)
@@ -382,14 +382,14 @@
 			user << text("[]\t -Respiratory Damage %: []", (src.occupant.getOxyLoss() < 60 ? "<span class='notice'></span>" : "<span class='alert'></span>"), src.occupant.getOxyLoss())
 			user << text("[]\t -Toxin Content %: []", (src.occupant.getToxLoss() < 60 ? "<span class='notice'></span>" : "<span class='alert'></span>"), src.occupant.getToxLoss())
 			user << text("[]\t -Burn Severity %: []", (src.occupant.getFireLoss() < 60 ? "<span class='notice'></span>" : "<span class='alert'></span>"), src.occupant.getFireLoss())
-			user << "<span class='notice'> Expected time till occupant can safely awake: (note: If health is below 20% these times are inaccurate</span>)"
-			user << text("<span class='notice'> </span>\t [] second\s (if around 1 or 2 the sleeper is keeping them asleep.)", src.occupant.paralysis / 5)
+			user << "<span class='notice'>Expected time till occupant can safely awake: (note: If health is below 20% these times are inaccurate</span>)"
+			user << text("<span class='notice'></span>\t [] second\s (if around 1 or 2 the sleeper is keeping them asleep.)", src.occupant.paralysis / 5)
 			if(src.beaker)
-				user << text("<span class='notice'> \t Dialysis Output Beaker has [] of free space remaining.</span>", src.beaker.reagents.maximum_volume - src.beaker.reagents.total_volume)
+				user << text("<span class='notice'>\t Dialysis Output Beaker has [] of free space remaining.</span>", src.beaker.reagents.maximum_volume - src.beaker.reagents.total_volume)
 			else
-				user << "<span class='notice'> No Dialysis Output Beaker loaded.</span>"
+				user << "<span class='notice'>No Dialysis Output Beaker loaded.</span>"
 		else
-			user << "<span class='notice'> There is no one inside!</span>"
+			user << "<span class='notice'>There is no one inside!</span>"
 		return
 
 
@@ -428,7 +428,7 @@
 			return
 
 		if(src.occupant)
-			usr << "<span class='notice'> <B>The sleeper is already occupied!</B></span>"
+			usr << "<span class='notice'><B>The sleeper is already occupied!</B></span>"
 			return
 
 		for(var/mob/living/carbon/slime/M in range(1,usr))
@@ -438,7 +438,7 @@
 		visible_message("[usr] starts climbing into the sleeper.", 3)
 		if(do_after(usr, 20))
 			if(src.occupant)
-				usr << "<span class='notice'> <B>The sleeper is already occupied!</B></span>"
+				usr << "<span class='notice'><B>The sleeper is already occupied!</B></span>"
 				return
 			usr.stop_pulling()
 			usr.client.perspective = EYE_PERSPECTIVE

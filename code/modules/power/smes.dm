@@ -8,6 +8,7 @@
 /obj/machinery/power/smes
 	name = "power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
+	req_one_access = list(access_atmospherics, access_engine_equip)
 	icon_state = "smes"
 	density = 1
 	anchored = 1
@@ -387,7 +388,7 @@
 	if(src.z in config.station_levels)
 		if(prob(1)) //explosion
 			for(var/mob/M in viewers(src))
-				M.show_message("<span class='alert'> The [src.name] is making strange noises!</span>", 3, "<span class='alert'> You hear sizzling electronics.</span>", 2)
+				M.show_message("<span class='alert'>The [src.name] is making strange noises!</span>", 3, "<span class='alert'>You hear sizzling electronics.</span>", 2)
 			sleep(10*pick(4,5,6,7,10,14))
 			var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 			smoke.set_up(3, 0, src.loc)

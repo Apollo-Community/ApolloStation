@@ -34,43 +34,43 @@
 /obj/machinery/biogenerator/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
-			user << "<span class='alert'> The biogenerator is already loaded.</span>"
+			user << "<span class='alert'>The biogenerator is already loaded.</span>"
 		else
 			user.before_take_item(O)
 			O.loc = src
 			beaker = O
 			updateUsrDialog()
 	else if(processing)
-		user << "<span class='alert'> The biogenerator is currently processing.</span>"
+		user << "<span class='alert'>The biogenerator is currently processing.</span>"
 	else if(istype(O, /obj/item/weapon/storage/bag/plants))
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
 		if(i >= 10)
-			user << "<span class='alert'> The biogenerator is already full! Activate it.</span>"
+			user << "<span class='alert'>The biogenerator is already full! Activate it.</span>"
 		else
 			for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
 				G.loc = src
 				i++
 				if(i >= 10)
-					user << "<span class='notice'> You fill the biogenerator to its capacity.</span>"
+					user << "<span class='notice'>You fill the biogenerator to its capacity.</span>"
 					break
 			if(i<10)
-				user << "<span class='notice'> You empty the plant bag into the biogenerator.</span>"
+				user << "<span class='notice'>You empty the plant bag into the biogenerator.</span>"
 
 
 	else if(!istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
-		user << "<span class='alert'> You cannot put this in [src.name]</span>"
+		user << "<span class='alert'>You cannot put this in [src.name]</span>"
 	else
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
 		if(i >= 10)
-			user << "<span class='alert'> The biogenerator is full! Activate it.</span>"
+			user << "<span class='alert'>The biogenerator is full! Activate it.</span>"
 		else
 			user.before_take_item(O)
 			O.loc = src
-			user << "<span class='notice'> You put [O.name] in [src.name]</span>"
+			user << "<span class='notice'>You put [O.name] in [src.name]</span>"
 	update_icon()
 	return
 
@@ -127,7 +127,7 @@
 	if (src.stat != 0) //NOPOWER etc
 		return
 	if(src.processing)
-		usr << "<span class='alert'> The biogenerator is in the process of working.</span>"
+		usr << "<span class='alert'>The biogenerator is in the process of working.</span>"
 		return
 	var/S = 0
 	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/I in contents)

@@ -19,7 +19,7 @@
 		S.hide_from(usr)
 		for(var/obj/item/weapon/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
-		user << "<span class='notice'> You empty the satchel into the box.</span>"
+		user << "<span class='notice'>You empty the satchel into the box.</span>"
 
 	update_ore_count()
 
@@ -69,7 +69,7 @@
 	set src in view(1)
 
 	if(!istype(usr, /mob/living/carbon/human)) //Only living, intelligent creatures with hands can empty ore boxes.
-		usr << "<span class='alert'> You are physically incapable of emptying the ore box.</span>"
+		usr << "<span class='alert'>You are physically incapable of emptying the ore box.</span>"
 		return
 
 	if( usr.stat || usr.restrained() )
@@ -82,13 +82,13 @@
 	add_fingerprint(usr)
 
 	if(contents.len < 1)
-		usr << "<span class='alert'> The ore box is empty</span>"
+		usr << "<span class='alert'>The ore box is empty</span>"
 		return
 
 	for (var/obj/item/weapon/ore/O in contents)
 		contents -= O
 		O.loc = src.loc
-	usr << "<span class='notice'> You empty the ore box</span>"
+	usr << "<span class='notice'>You empty the ore box</span>"
 
 	return
 

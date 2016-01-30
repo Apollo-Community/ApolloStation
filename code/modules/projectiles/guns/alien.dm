@@ -44,7 +44,7 @@
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		if(H.species && H.species.name != "Vox" && H.species.name != "Vox Armalis")
-			user << "<span class='alert'> \The [src] does not respond to you!</span>"
+			user << "<span class='alert'>\The [src] does not respond to you!</span>"
 			return 0
 	return 1
 
@@ -91,7 +91,7 @@
 			if(H.species.name == "Vox Armalis")
 				..()
 				return
-		user << "<span class='alert'> \The [src] is far too large for you to pick up.</span>"
+		user << "<span class='alert'>\The [src] is far too large for you to pick up.</span>"
 		return
 
 /obj/item/weapon/gun/energy/noisecannon/load_into_chamber() //Does not have ammo.

@@ -15,6 +15,7 @@
 	var/bff = null // The person Sirius protects
 
 /mob/living/simple_animal/dog/german_shep/sirius/New()
+	..()
 	for( var/mob/living/carbon/human/M in living_mob_list )
 		if (M.mind)
 			if (M.mind.assigned_role == "Head of Security")

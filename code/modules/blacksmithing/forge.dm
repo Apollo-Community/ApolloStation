@@ -115,7 +115,7 @@
 	//Allows you to get the metal out with tongs.
 	if(istype(I, /obj/item/weapon/tongs))
 		if(on)
-			usr << "<span class='notice'> You worry you will burn your hands with those raging flames.</span>"
+			usr << "<span class='notice'>You worry you will burn your hands with those raging flames.</span>"
 			return
 		if(heating)
 			var/obj/item/weapon/tongs/T = I

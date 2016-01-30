@@ -95,7 +95,7 @@
 		return 1
 
 	if(message_mode && bot_type == IS_ROBOT && !R.is_component_functioning("radio"))
-		src << "<span class='alert'> Your radio isn't functional at this time.</span>"
+		src << "<span class='alert'>Your radio isn't functional at this time.</span>"
 		return 0
 
 	switch(message_mode)
@@ -115,7 +115,7 @@
 			switch(bot_type)
 				if(IS_AI)
 					if (AI.aiRadio.disabledAi || AI.aiRestorePowerRoutine || AI.stat)
-						src << "<span class='alert'> System Error - Transceiver Disabled</span>"
+						src << "<span class='alert'>System Error - Transceiver Disabled</span>"
 						return 0
 					else
 						log_say("[key_name(src)] : [message]")
@@ -133,7 +133,7 @@
 				switch(bot_type)
 					if(IS_AI)
 						if (AI.aiRadio.disabledAi || AI.aiRestorePowerRoutine || AI.stat)
-							src << "<span class='alert'> System Error - Transceiver Disabled</span>"
+							src << "<span class='alert'>System Error - Transceiver Disabled</span>"
 							return 0
 						else
 							log_say("[key_name(src)] : [message]")

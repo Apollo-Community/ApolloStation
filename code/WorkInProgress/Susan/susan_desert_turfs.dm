@@ -206,9 +206,9 @@ Alien plants should do something if theres a lot of poison
 
 /obj/effect/alien/flesh/weeds/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(W.attack_verb.len)
-		visible_message("<span class='alert'> <B>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".</span>")]")
+		visible_message("<span class='alert'><B>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".</span>")]")
 	else
-		visible_message("<span class='alert'> <B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".</span>")]")
+		visible_message("<span class='alert'><B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".</span>")]")
 
 	var/damage = W.force / 4.0
 
@@ -419,7 +419,7 @@ Alien plants should do something if theres a lot of poison
 		src.target = thing
 		src.oldtarget_name = thing:name
 		for(var/mob/O in viewers(src, null))
-			O.show_message("<span class='alert'> <b>[src]</b> spits a glob at [src.target]!</span>", 1)
+			O.show_message("<span class='alert'><b>[src]</b> spits a glob at [src.target]!</span>", 1)
 
 		var/tturf = get_turf(target)
 		if(rapid)

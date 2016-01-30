@@ -141,7 +141,7 @@ var/savefile/Banlistjob
 
 	Banlistjob.cd = "/base"
 	if ( Banlistjob.dir.Find("[ckey][computerid][rank]") )
-		usr << text("<span class='alert'> Banjob already exists.</span>")
+		usr << text("<span class='alert'>Banjob already exists.</span>")
 		return 0
 	else
 		Banlistjob.dir.Add("[ckey][computerid][rank]")
@@ -206,7 +206,7 @@ var/savefile/Banlistjob
 /datum/admins/proc/unjobbanpanel()
 	var/count = 0
 	var/dat
-	//var/dat = "<HR><B>Unban Player:</B> <span class='notice'>(U</span>) = Unban , (E) = Edit Ban<span class='green'> (Total<HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 ></span>"
+	//var/dat = "<HR><B>Unban Player:</B> <span class='notice'>(U</span>) = Unban , (E) = Edit Ban<span class='green'>(Total<HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 ></span>"
 	Banlistjob.cd = "/base"
 	for (var/A in Banlistjob.dir)
 		count++
@@ -220,21 +220,21 @@ var/savefile/Banlistjob
 /*/datum/admins/proc/permjobban(ckey, computerid, reason, bannedby, temp, minutes, rank)
 	if(AddBanjob(ckey, computerid, reason, usr.ckey, 0, 0, job))
 		M << "<span class='alert'><BIG><B>You have been banned from [job] by [usr.client.ckey].\nReason: [reason].</B></BIG></span>"
-		M << "<span class='alert'> This is a permanent ban.</span>"
+		M << "<span class='alert'>This is a permanent ban.</span>"
 		if(config.banappeals)
-			M << "<span class='alert'> To try to resolve this matter head to [config.banappeals]</span>"
+			M << "<span class='alert'>To try to resolve this matter head to [config.banappeals]</span>"
 		else
-			M << "<span class='alert'> No ban appeals URL has been set.</span>"
+			M << "<span class='alert'>No ban appeals URL has been set.</span>"
 		log_admin("[usr.client.ckey] has banned from [job] [ckey].\nReason: [reason]\nThis is a permanent ban.")
 		message_admins("<span class='notice'>[usr.client.ckey] has banned from [job] [ckey].\nReason: [reason]\nThis is a permanent ban.</span>")
 /datum/admins/proc/timejobban(ckey, computerid, reason, bannedby, temp, minutes, rank)
 	if(AddBanjob(ckey, computerid, reason, usr.ckey, 1, mins, job))
 		M << "<span class='alert'><BIG><B>You have been jobbanned from [job] by [usr.client.ckey].\nReason: [reason].</B></BIG></span>"
-		M << "<span class='alert'> This is a temporary ban, it will be removed in [mins] minutes.</span>"
+		M << "<span class='alert'>This is a temporary ban, it will be removed in [mins] minutes.</span>"
 		if(config.banappeals)
-			M << "<span class='alert'> To try to resolve this matter head to [config.banappeals]</span>"
+			M << "<span class='alert'>To try to resolve this matter head to [config.banappeals]</span>"
 		else
-			M << "<span class='alert'> No ban appeals URL has been set.</span>"
+			M << "<span class='alert'>No ban appeals URL has been set.</span>"
 		log_admin("[usr.client.ckey] has jobbanned from [job] [ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 		message_admins("<span class='notice'>[usr.client.ckey] has banned from [job] [ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.</span>")*/
 //////////////////////////////////// DEBUG ////////////////////////////////////

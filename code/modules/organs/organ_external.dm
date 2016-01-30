@@ -29,7 +29,7 @@
 	// Internal organs of this body part
 	var/list/datum/organ/internal/internal_organs
 
-	var/damage_msg = "<span class='alert'> You feel an intense pain</span>"
+	var/damage_msg = "<span class='alert'>You feel an intense pain</span>"
 	var/broken_description
 
 	var/open = 0
@@ -248,8 +248,8 @@ This function completely restores a damaged organ to perfect condition.
 				W.open_wound(damage)
 				if(prob(25))
 					//maybe have a separate message for BRUISE type damage?
-					owner.visible_message("<span class='alert'> The wound on [owner.name]'s [display_name] widens with a nasty ripping noise.</span>",\
-					"<span class='alert'> The wound on your [display_name] widens with a nasty ripping noise.</span>",\
+					owner.visible_message("<span class='alert'>The wound on [owner.name]'s [display_name] widens with a nasty ripping noise.</span>",\
+					"<span class='alert'>The wound on your [display_name] widens with a nasty ripping noise.</span>",\
 					"You hear a nasty ripping noise, as if flesh is being torn apart.")
 				return
 
@@ -644,8 +644,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 		destspawn = 1
 		//Robotic limbs explode if sabotaged.
 		if(status & ORGAN_ROBOT && !no_explode && sabotaged)
-			owner.visible_message("<span class='alert'> \The [owner]'s [display_name] explodes violently!</span>",\
-			"<span class='alert'> <b>Your [display_name] explodes!</b></span>",\
+			owner.visible_message("<span class='alert'>\The [owner]'s [display_name] explodes violently!</span>",\
+			"<span class='alert'><b>Your [display_name] explodes!</b></span>",\
 			"You hear an explosion!")
 			explosion(get_turf(owner),-1,-1,2,3)
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
@@ -655,7 +655,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			spawn(10)
 				qdel(spark_system)
 
-		owner.visible_message("<span class='alert'> [owner.name]'s [display_name] flies off in an arc.</span>",\
+		owner.visible_message("<span class='alert'>[owner.name]'s [display_name] flies off in an arc.</span>",\
 		"<span class='moderate'><b>Your [display_name] goes flying off!</b></span>",\
 		"You hear a terrible sound of ripping tendons and flesh.")
 
@@ -730,8 +730,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 		return
 
 	owner.visible_message(\
-		"<span class='alert'> You hear a loud cracking sound coming from \the [owner].</span>",\
-		"<span class='alert'> <b>Something feels like it shattered in your [display_name]!</b></span>",\
+		"<span class='alert'>You hear a loud cracking sound coming from \the [owner].</span>",\
+		"<span class='alert'><b>Something feels like it shattered in your [display_name]!</b></span>",\
 		"You hear a sickening crack.")
 
 	if(owner.species && !(owner.species.flags & NO_PAIN))
@@ -994,13 +994,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if (disfigured)
 		return
 	if(type == "brute")
-		owner.visible_message("<span class='alert'> You hear a sickening cracking sound coming from \the [owner]'s face.</span>",	\
-		"<span class='alert'> <b>Your face becomes unrecognizible mangled mess!</b></span>",	\
-		"<span class='alert'> You hear a sickening crack.</span>")
+		owner.visible_message("<span class='alert'>You hear a sickening cracking sound coming from \the [owner]'s face.</span>",	\
+		"<span class='alert'><b>Your face becomes unrecognizible mangled mess!</b></span>",	\
+		"<span class='alert'>You hear a sickening crack.</span>")
 	else
-		owner.visible_message("<span class='alert'> [owner]'s face melts away, turning into mangled mess!</span>",	\
-		"<span class='alert'> <b>Your face melts off!</b></span>",	\
-		"<span class='alert'> You hear a sickening sizzle.</span>")
+		owner.visible_message("<span class='alert'>[owner]'s face melts away, turning into mangled mess!</span>",	\
+		"<span class='alert'><b>Your face melts off!</b></span>",	\
+		"<span class='alert'>You hear a sickening sizzle.</span>")
 	disfigured = 1
 
 /****************************************************

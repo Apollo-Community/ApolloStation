@@ -934,10 +934,10 @@ table tr:first-child th:first-child { border: none;}
 				else
 					if(allowed(usr) && !wires.IsIndexCut(AALARM_WIRE_IDSCAN))
 						locked = !locked
-						user << "<span class='notice'> You [ locked ? "lock" : "unlock"] the Air Alarm interface.</span>"
+						user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the Air Alarm interface.</span>"
 						updateUsrDialog()
 					else
-						user << "<span class='alert'> Access denied.</span>"
+						user << "<span class='alert'>Access denied.</span>"
 			return
 
 		if(1)
@@ -1034,14 +1034,14 @@ Code shamelessly copied from apc_frame
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
 	if (!istype(loc, /turf/simulated/floor))
-		usr << "<span class='alert'> Air Alarm cannot be placed on this spot.</span>"
+		usr << "<span class='alert'>Air Alarm cannot be placed on this spot.</span>"
 		return
 	if (A.requires_power == 0 || A.name == "Space")
-		usr << "<span class='alert'> Air Alarm cannot be placed in this area.</span>"
+		usr << "<span class='alert'>Air Alarm cannot be placed in this area.</span>"
 		return
 
 	if(gotwallitem(loc, ndir))
-		usr << "<span class='alert'> There's already an item on this wall!</span>"
+		usr << "<span class='alert'>There's already an item on this wall!</span>"
 		return
 
 	new /obj/machinery/alarm(loc, ndir, 1)
@@ -1121,11 +1121,11 @@ FIRE ALARM
 				if (istype(W, /obj/item/device/multitool))
 					src.detecting = !( src.detecting )
 					if (src.detecting)
-						user.visible_message("<span class='alert'> [user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
+						user.visible_message("<span class='alert'>[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
 					else
-						user.visible_message("<span class='alert'> [user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
+						user.visible_message("<span class='alert'>[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
 				else if (istype(W, /obj/item/weapon/wirecutters))
-					user.visible_message("<span class='alert'> [user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
+					user.visible_message("<span class='alert'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
 					playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 					buildstage = 1
 					update_icon()
@@ -1374,14 +1374,14 @@ Code shamelessly copied from apc_frame
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
 	if (!istype(loc, /turf/simulated/floor))
-		usr << "<span class='alert'> Fire Alarm cannot be placed on this spot.</span>"
+		usr << "<span class='alert'>Fire Alarm cannot be placed on this spot.</span>"
 		return
 	if (A.requires_power == 0 || A.name == "Space")
-		usr << "<span class='alert'> Fire Alarm cannot be placed in this area.</span>"
+		usr << "<span class='alert'>Fire Alarm cannot be placed in this area.</span>"
 		return
 
 	if(gotwallitem(loc, ndir))
-		usr << "<span class='alert'> There's already an item on this wall!</span>"
+		usr << "<span class='alert'>There's already an item on this wall!</span>"
 		return
 
 	new /obj/machinery/firealarm(loc, ndir, 1)

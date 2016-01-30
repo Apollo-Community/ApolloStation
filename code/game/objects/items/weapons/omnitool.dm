@@ -37,19 +37,19 @@
 	src.welding = !( src.welding )
 	if (src.welding)
 		if (remove_fuel(1))
-			usr << "<span class='notice'> You switch the [src] on.</span>"
+			usr << "<span class='notice'>You switch the [src] on.</span>"
 			src.force = 15
 			src.damtype = "fire"
 			processing_objects.Add(src)
 		else
-			usr << "<span class='notice'> Need more fuel!</span>"
+			usr << "<span class='notice'>Need more fuel!</span>"
 			src.welding = 0
 			return
 	else
 		if(!message)
-			usr << "<span class='notice'> You switch the [src] off.</span>"
+			usr << "<span class='notice'>You switch the [src] off.</span>"
 		else
-			usr << "<span class='notice'> The [src] shuts off!</span>"
+			usr << "<span class='notice'>The [src] shuts off!</span>"
 		src.force = 3
 		src.damtype = "brute"
 		src.welding = 0

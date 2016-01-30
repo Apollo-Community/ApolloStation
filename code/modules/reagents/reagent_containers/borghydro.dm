@@ -70,19 +70,19 @@
 /obj/item/weapon/reagent_containers/borghypo/attack(mob/living/M as mob, mob/user as mob)
 	var/datum/reagents/R = reagent_list[mode]
 	if(!R.total_volume)
-		user << "<span class='alert'> The injector is empty.</span>"
+		user << "<span class='alert'>The injector is empty.</span>"
 		return
 	if (!(istype(M)))
 		return
 
 	if (R.total_volume && M.can_inject(user,1))
-		user << "<span class='notice'> You inject [M] with the injector.</span>"
-		M << "<span class='alert'> You feel a tiny prick!</span>"
+		user << "<span class='notice'>You inject [M] with the injector.</span>"
+		M << "<span class='alert'>You feel a tiny prick!</span>"
 
 		R.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = R.trans_to(M, amount_per_transfer_from_this)
-			user << "<span class='notice'> [trans] units injected. [R.total_volume] units remaining.</span>"
+			user << "<span class='notice'>[trans] units injected. [R.total_volume] units remaining.</span>"
 	return
 
 /obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user as mob)
@@ -93,7 +93,7 @@
 
 	charge_tick = 0 //Prevents wasted chems/cell charge if you're cycling through modes.
 	var/datum/reagent/R = chemical_reagents_list[reagent_ids[mode]]
-	user << "<span class='notice'> Synthesizer is now producing '[R.name]'.</span>"
+	user << "<span class='notice'>Synthesizer is now producing '[R.name]'.</span>"
 	return
 
 /obj/item/weapon/reagent_containers/borghypo/examine(mob/user)
@@ -105,8 +105,8 @@
 	for(var/datum/reagents/RS in reagent_list)
 		var/datum/reagent/R = locate() in RS.reagent_list
 		if(R)
-			user << "<span class='notice'> It currently has [R.volume] units of [R.name] stored.</span>"
+			user << "<span class='notice'>It currently has [R.volume] units of [R.name] stored.</span>"
 			empty = 0
 
 	if(empty)
-		user << "<span class='notice'> It is currently empty. Allow some time for the internal syntheszier to produce more.</span>"
+		user << "<span class='notice'>It is currently empty. Allow some time for the internal syntheszier to produce more.</span>"

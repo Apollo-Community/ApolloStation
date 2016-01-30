@@ -28,16 +28,11 @@
 		icon_state = "piano"
 
 /obj/structure/device/piano/proc/playnote(var/note as text)
-	//world << "Note: [note]"
-	if(!note)
-		return
+	if(!note)		return
 	var/soundfile = "sound/piano/[note].ogg"
 
-	//hearers(15, src) << sound(soundfile)
-	var/turf/source = get_turf(src)
-	for(var/mob/M in hearers(15, source))
-		M.playsound_local(source, file(soundfile), 100, falloff = 5)
-
+	for(var/mob/M in ohearers(15, src))
+		M.playsound_local(src, file(soundfile), 100, falloff = 5)
 
 /obj/structure/device/piano/proc/playsong()
 	do
@@ -244,20 +239,20 @@
 	if (istype(O, /obj/item/weapon/wrench))
 		if (anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "<span class='notice'> You begin to loosen \the [src]'s casters...</span>"
+			user << "<span class='notice'>You begin to loosen \the [src]'s casters...</span>"
 			if (do_after(user, 40))
 				user.visible_message( \
 					"[user] loosens \the [src]'s casters.", \
-					"<span class='notice'> You have loosened \the [src]. Now it can be pulled somewhere else.</span>", \
+					"<span class='notice'>You have loosened \the [src]. Now it can be pulled somewhere else.</span>", \
 					"You hear ratchet.")
 				src.anchored = 0
 		else
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "<span class='notice'> You begin to tighten \the [src] to the floor...</span>"
+			user << "<span class='notice'>You begin to tighten \the [src] to the floor...</span>"
 			if (do_after(user, 20))
 				user.visible_message( \
 					"[user] tightens \the [src]'s casters.", \
-					"<span class='notice'> You have tightened \the [src]'s casters. Now it can be played again.</span>", \
+					"<span class='notice'>You have tightened \the [src]'s casters. Now it can be played again.</span>", \
 					"You hear ratchet.")
 				src.anchored = 1
 	else
