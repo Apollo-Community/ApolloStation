@@ -44,7 +44,7 @@
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 	if (!in_range(src, user))
-		if (icon == src) user << "<span class='notice'> It's \a \icon[icon][src]! If you want any more information you'll need to get closer.</span>"
+		if (icon == src) user << "<span class='notice'>\icon[icon]\A [src]! If you want any more information you'll need to get closer.</span>"
 		return
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
@@ -63,7 +63,7 @@
 	else
 		descriptive = "furiously hot"
 
-	user << "<span class='notice'> \The \icon[icon][src] feels [descriptive]</span>"
+	user << "<span class='notice'>\icon[icon]\The [src] feels [descriptive].</span>"
 
 	return
 
