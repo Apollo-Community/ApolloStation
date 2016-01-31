@@ -193,6 +193,7 @@
 //spears, bay edition
 /obj/item/weapon/twohanded/spear
 	icon_state = "spearglass"
+	item_state = "spearglass0"
 	name = "spear"
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 14
