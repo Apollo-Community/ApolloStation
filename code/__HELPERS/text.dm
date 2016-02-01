@@ -174,16 +174,16 @@
 /*
  * Text modification
  */
-
+/*
 /proc/replacetext(text, find, replacement)
 	return list2text(text2list(text, find), replacement)
 
 /proc/replacetextEx(text, find, replacement)
 	return list2text(text2listEx(text, find), replacement)
-
+*/
 /proc/replace_characters(var/t,var/list/repl_chars)
 	for(var/char in repl_chars)
-		replacetext(t, char, repl_chars[char])
+		t = replacetext(t, char, repl_chars[char])
 	return t
 
 //Adds 'u' number of zeros ahead of the text 't'
