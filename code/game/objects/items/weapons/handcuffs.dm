@@ -113,7 +113,7 @@
 var/last_chew = 0
 /mob/living/carbon/human/RestrainedClickOn(var/atom/A)
 	if (A != src) return ..()
-	if (last_chew + 26 > world.time) return
+	if (last_chew + 65 > world.time) return
 
 	var/mob/living/carbon/human/H = A
 	if (!H.handcuffed) return
@@ -125,12 +125,15 @@ var/last_chew = 0
 	var/datum/organ/external/O = H.organs_by_name[H.hand?"l_hand":"r_hand"]
 	if (!O) return
 
-	var/s = "<span class='alert'>[H.name] chews on \his [O.name]!</span>"
-	H.visible_message(s, "<span class='alert'>You chew on your [O.name]!</span>")
+	var/s = "<span class='alert'>[H.name] chews on \his [O.display_name]!</span>"
+	H.visible_message(s, "<span class='alert'>You chew on your [O.display_name]!</span>")
 	H.attack_log += text("\[[time_stamp()]\] <font color='red'>[s] ([H.ckey])</font>")
 	log_attack("[s] ([H.ckey])")
 
-	if(O.take_damage(3,0,1,1,"teeth marks"))
+	var/can_cut = 0
+	if( prob( 20 ))
+		can_cut = 1
+	if(O.take_damage(3,0,can_cut,1,"teeth marks"))
 		H:UpdateDamageIcon()
 
 	last_chew = world.time
