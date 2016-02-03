@@ -2,7 +2,8 @@
 	name = "inflatable spacesuit"
 	desc = "A single-use spacesuit made for emergencies. The instructions read, \"Put the inflatable pack on your back, and pull the cord to inflate. Quality not guaranteed.\""
 	icon = 'icons/obj/items.dmi'
-	icon_state = "inflate_space_init"
+	icon_state = "inflatable_space"
+	item_state = "inflatable_space"
 	w_class = 2.0
 
 	slot_flags = SLOT_BACK
@@ -116,7 +117,7 @@
 	icon_state = "inflatable_space"
 	item_state = "inflatable_space"
 	desc = "An inflatable spacesuit. It looks rediculous."
-	resilience = 2
+	resilience = 5
 	breach_threshold = 1
 	bouncy = 1
 	var/removed = 0
