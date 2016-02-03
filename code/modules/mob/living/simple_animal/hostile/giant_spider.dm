@@ -63,6 +63,13 @@
 	poison_per_bite = 5
 	move_to_delay = 4
 
+/mob/living/simple_animal/hostile/giant_spider/attack_hand(mob/living/carbon/human/M as mob)
+	if(stat == 2 || !M.species.unarmed_types.Find(/datum/unarmed_attack/claws)) return ..()
+	var/attack_verb = list("scratched", "clawed", "slashed")
+	visible_message("<span class='alert'>[M] has [pick(attack_verb)] the [src]!</span>")
+	health -= 20 // Default claw dmg * 4 for maximum robustitude ( spiders are strong )
+
+
 /mob/living/simple_animal/hostile/giant_spider/AttackingTarget()
 	..()
 	if(isliving(target_mob))
