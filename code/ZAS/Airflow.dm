@@ -223,6 +223,11 @@ obj/item/airflow_hit(atom/A)
 mob/living/carbon/human/airflow_hit(atom/A)
 //	for(var/mob/M in hearers(src))
 //		M.show_message("<span class='alert'><B>[src] slams into [A]!</B></span>",1,"<span class='alert'>You hear a loud slam!</span>",2)
+	if( src.canBounce() && ( airflow_speed < 10 ))
+		src.visible_message("<span class='danger'>[A] bounces off [src] harmlessly!</span>")
+		src.bounce()
+		return
+
 	playsound(src.loc, "punch", 25, 1, -1)
 	if (prob(33))
 		loc:add_blood(src)

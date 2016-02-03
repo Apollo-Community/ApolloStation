@@ -17,7 +17,7 @@
 	..()
 
 	if(istype(M) && M.back == src)
-		M.visible_message("<span class='alert'>[M] starts putting on \the [src]...</font>", "<font color='blue'>You start putting on \the [src]...</span>")
+		M.visible_message("<span class='notice'>[M] starts putting on \the [src]...</span>", "<span class='notice'>You start putting on \the [src]...</span>")
 
 		if(!do_after(M, equip_delay))
 			if(M && M.back == src)
@@ -27,7 +27,7 @@
 			return
 
 	if(istype(M) && M.back == src)
-		M.visible_message("<span class='alert'><b>[M] struggles into \the [src].</b></span>", "<span class='alert'><b>You struggle into \the [src]. Make sure to remove any headgear and suits before deploying.</b></span>")
+		M.visible_message("<span class='notice'><b>[M] struggles into \the [src].</b></span>", "<span class='notice'>You struggle into \the [src]. Make sure to remove any headgear and suits before deploying.</span>")
 		wearer = M
 		update_icon()
 
@@ -109,6 +109,8 @@
 		qdel( src )
 		H.update_icons()
 
+/obj/item/clothing/suit/var/bouncy = 0
+
 /obj/item/clothing/suit/space/inflatable
 	name = "inflatable spacesuit"
 	icon_state = "inflatable_space"
@@ -116,6 +118,7 @@
 	desc = "An inflatable spacesuit. It looks rediculous."
 	resilience = 2
 	breach_threshold = 1
+	bouncy = 1
 	var/removed = 0
 
 /obj/item/clothing/suit/space/inflatable/dropped(mob/M as mob)
