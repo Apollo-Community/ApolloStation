@@ -1,6 +1,6 @@
 /obj/item/inflatable/spacesuit
 	name = "inflatable spacesuit"
-	desc = "A single-use spacesuit made for emergencies. The instructions read, \"Put the inflatable pack on your back, and pull the cord to inflate. Quality not guaranteed.\""
+	desc = "A single-use spacesuit made for emergencies. The instructions read, \"Put the inflatable pack on your back, and pull the cord to inflate.\""
 	icon = 'icons/obj/items.dmi'
 	icon_state = "inflatable_space"
 	item_state = "inflatable_space"
@@ -10,6 +10,7 @@
 
 	var/equip_delay = 20
 	var/mob/living/carbon/human/wearer // The person currently wearing the rig.
+	var/success_chance = 100 // how likely is it that the suit will successfully open?
 
 /obj/item/inflatable/spacesuit/attack_self(mob/user)
 	return
@@ -52,19 +53,18 @@
 
 	var/mob/living/carbon/human/H = M
 	src.add_fingerprint( M )
-	playsound(loc, 'sound/items/zip.ogg', 75, 1)
 
 	if( H.head )
-		M << "<span class='alert'>You pull the inflation cord, but the suit failed to deploy as \the [H.head] was in the way!</span>"
-		pop(M)
+		M.visible_message("<span class='alert'>[M] pulls the cord on \the [src], but it fails to deploy and pops!</span>", "<span class='alert'>You pull the inflation cord, but \the [src] fails to deploy as \the [H.head] was in the way!</span>")
+		pop( M )
 		return
 	else if( H.wear_suit )
-		M << "<span class='alert'>You pull the inflation cord, but the suit failed to deploy as \the [H.wear_suit] was in the way!</span>"
-		pop(M)
+		M.visible_message("<span class='alert'>[M] pulls the cord on \the [src], but it fails to deploy and pops!</span>", "<span class='alert'>You pull the inflation cord, but \the [src] fails to deploy as \the [H.wear_suit] was in the way!</span>")
+		pop( M )
 		return
-	else
-		M << "<span class='notice'>You pull the inflation cord and the inflatable suit expands rapidly around your body, forming an airtight seal!</span>"
-		//TODO: Species check, skull damage for forcing an unfitting helmet on?
+	else if( prob( success_chance ))
+		playsound(loc, 'sound/items/zip.ogg', 75, 1)
+		M.visible_message("<span class='alert'>[M] pulls the cord on \the [src] and it rapidly expands around their body!!</span>", "<span class='notice'>You pull the inflation cord and \the [src] expands rapidly around your body, forming an airtight seal!</span>" )
 
 		var/obj/item/clothing/head/helmet/space/inflatable/helmet = new( H )
 		H.equip_to_slot( helmet, slot_head )
@@ -73,13 +73,19 @@
 		var/obj/item/clothing/suit/space/inflatable/suit = new( H )
 		H.equip_to_slot( suit, slot_wear_suit )
 		src.transfer_fingerprints_to( suit )
+		qdel( src )
+	else
+		M.visible_message("<span class='alert'>[M] pulls the cord on \the [src], but it fails to deploy and pops!</span>", "<span class='alert'>You pull the inflation cord, but \the [src] fails to deploy and pops!</span>")
+		pop( M )
 
-	qdel( src )
-
-/obj/item/inflatable/spacesuit/proc/pop( mob/M )
-	M.visible_message("<span class='alert'>[M] pulls the cord on \the [src], but it fails to deploy and pops!</span>", "<span class='alert'>Your inflatable suit pops!</span>")
+/obj/item/inflatable/spacesuit/proc/pop()
 	playsound(loc, 'sound/effects/snap.ogg', 75, 1)
 	qdel( src )
+
+/obj/item/inflatable/spacesuit/budget
+	name = "budget inflatable spacesuit"
+	desc = "A single-use spacesuit made for emergencies. The instructions read, \"Put the inflatable pack on your back, and pull the cord to inflate. Quality not gauranteed.\""
+	success_chance = 40 // how likely is it that the suit will successfully open?
 
 /obj/item/clothing/head/helmet/space/inflatable
 	name = "inflatable spacesuit helmet"
