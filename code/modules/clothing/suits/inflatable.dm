@@ -69,6 +69,7 @@
 		var/obj/item/clothing/head/helmet/space/inflatable/helmet = new( H )
 		H.equip_to_slot( helmet, slot_head )
 		src.transfer_fingerprints_to( helmet )
+		helmet.canremove = 0
 
 		var/obj/item/clothing/suit/space/inflatable/suit = new( H )
 		H.equip_to_slot( suit, slot_wear_suit )
@@ -92,29 +93,6 @@
 	icon_state = "inflatable_space"
 	item_state = "inflatable_space"
 	desc = "An inflatable spacesuit helmet. Its visor appears to be made of plastic wrap."
-	var/removed = 0
-
-/obj/item/clothing/head/helmet/space/inflatable/dropped(mob/M as mob)
-	if( !removed )
-		playsound(loc, 'sound/effects/snap.ogg', 75, 1)
-		M << "<span class='alert'>You pop your inflatable suit!</span>"
-		removed = 1
-
-	var/mob/living/carbon/human/H = M
-
-	if( !istype( H ))
-		return
-
-	if( H.wear_suit )
-		if( istype( H.wear_suit, /obj/item/clothing/suit/space/inflatable ))
-			var/obj/item/clothing/suit/space/inflatable/I = H.head
-			I.removed = 1
-			qdel( H.wear_suit )
-
-	spawn(0)
-		H.u_equip( src )
-		qdel( src )
-		H.update_icons()
 
 /obj/item/clothing/suit/var/bouncy = 0
 
@@ -142,7 +120,6 @@
 	if( H.head )
 		if( istype( H.head, /obj/item/clothing/head/helmet/space/inflatable ))
 			var/obj/item/clothing/head/helmet/space/inflatable/I = H.head
-			I.removed = 1
 			H.u_equip( I )
 			qdel( I )
 
