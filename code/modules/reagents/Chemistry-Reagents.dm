@@ -2040,6 +2040,36 @@ datum
 							M << "<span class='alert'>\the [O] melts.</span>"
 						qdel(O)
 
+			reaction_turf(var/turf/simulated/T, var/volume)
+				if(!istype(T, /turf/simulated/floor)) return
+
+				var/turf/simulated/floor/F = T
+
+				if( !F.burnt && !F.is_plating() && prob(meltprob*4) )
+					F.burn_tile()
+					spawn(50)
+						for(var/mob/M in viewers(5, F))
+							M << "<span class='alert'>The floor tile has melted!</span>"
+						F.make_plating()
+					return
+
+				if( F.is_plating() && !F.burnt && prob(meltprob) )
+					F.burn_tile()
+					for(var/mob/M in viewers(5, F))
+						M << "<span class='alert'>The acid scorches the plating!</span>"
+					return
+
+/* No destroying turfs :<
+				if( F.burnt && !F.intact && meltprob > 10 && prob(meltprob/3) ) // Acid as strong as polyacid and only 10% chance
+					for(var/mob/M in viewers(5, F))
+						M << "<span class='danger'>The acid starts to destroy the plating!</span>"
+					spawn(50)
+						T.ReplaceWithLattice()
+						for(var/mob/M in viewers(5, F))
+							M << "<span class='danger'>The acid eats away the plating!</span>"
+					return
+*/
+
 		toxin/caustic/polyacid
 			name = "Polytrinic acid"
 			id = "pacid"

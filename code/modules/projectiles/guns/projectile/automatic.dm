@@ -134,6 +134,10 @@
 		user << "<span class='notice'>[src] already has a magazine inserted!</span>"
 		return
 	else if(cover_open && !mag_inserted)
+		var/obj/item/ammo_magazine/AM = A
+		if(AM.stored_ammo.len <= 0)
+			user << "<span class='warning'>The magazine is empty!</span>"
+			return
 		mag_inserted = 1
 		user << "<span class='notice'>You insert the magazine!</span>"
 		update_icon()
