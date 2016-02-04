@@ -85,6 +85,10 @@
 			G.fields["notes"] = H.gen_record
 		else
 			G.fields["notes"] = "No notes found."
+		if( is_whitelisted( H ))
+			G.fields["command_training"] = "Completed"
+		else
+			G.fields["command_training"] = "Untrained"
 		general += G
 
 
@@ -146,6 +150,10 @@
 			L.fields["exploit_record"] = H.exploit_record
 		else
 			L.fields["exploit_record"] = "No additional information acquired."
+		if( is_whitelisted( H ))
+			L.fields["command_training"] = "Completed"
+		else
+			L.fields["command_training"] = "Untrained"
 		locked += L
 
 		manifest_sort()

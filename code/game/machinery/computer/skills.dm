@@ -96,7 +96,8 @@
 						Rank: <A href='?src=\ref[src];choice=Edit Field;field=rank'>[active1.fields["rank"]]</A><BR>\n	\
 						Fingerprint: <A href='?src=\ref[src];choice=Edit Field;field=fingerprint'>[active1.fields["fingerprint"]]</A><BR>\n	\
 						Physical Status: [active1.fields["p_stat"]]<BR>\n	\
-						Mental Status: [active1.fields["m_stat"]]<BR><BR>\n	\
+						Mental Status: [active1.fields["m_stat"]]<BR>\n	\
+						Command Training: [active1.fields["command_training"]]<BR><BR>\n	\
 						Employment/skills summary:<BR> [decode(active1.fields["notes"])]<BR></td>	\
 						<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4>	\
 						<img src=side.png height=80 width=80 border=4></td></tr></table>")
