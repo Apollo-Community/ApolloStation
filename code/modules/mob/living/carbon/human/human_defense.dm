@@ -447,3 +447,18 @@ emp_act
 	var/obj/item/clothing/suit/space/SS = wear_suit
 	var/penetrated_dam = max(0,(damage - SS.breach_threshold))
 	if(penetrated_dam) SS.create_breaches(damtype, penetrated_dam)
+
+/mob/living/carbon/human/turf_collision(var/turf/T, var/speed)
+	if( src.canBounce() )
+		src.visible_message("<span class='warning'>[src] bounces off the wall harmlessly!</span>")
+		bounce()
+		return
+
+	..()
+
+/mob/living/carbon/human/proc/canBounce()
+	if( istype( src.wear_suit, /obj/item/clothing/suit ))
+		var/obj/item/clothing/suit/S = src.wear_suit
+		if( S.bouncy )
+			return 1
+	return 0
