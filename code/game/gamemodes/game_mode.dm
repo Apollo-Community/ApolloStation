@@ -238,8 +238,8 @@
 		var/special_role = man.mind.special_role
 		if (special_role == "Wizard" || special_role == "Ninja" || special_role == "Mercenary" || special_role == "Vox Raider")
 			continue	//NT intelligence ruled out possiblity that those are too classy to pretend to be a crew.
-		if(man.client.prefs.nanotrasen_relation == "Opposed" && prob(50) || \
-		   man.client.prefs.nanotrasen_relation == "Skeptical" && prob(20))
+		if(man.client.prefs.selected_character.nanotrasen_relation == "Opposed" && prob(50) || \
+		   man.client.prefs.selected_character.nanotrasen_relation == "Skeptical" && prob(20))
 			suspects += man
 		// Antags
 		else if(special_role == "traitor" && prob(40) || \
@@ -315,7 +315,7 @@
 
 	// Get a list of all the people who want to be the antagonist for this round
 	for(var/mob/new_player/player in players)
-		if(player.client.prefs.be_special & role)
+		if(player.client.prefs.beSpecial() & role)
 			log_debug("[player.key] had [roletext] enabled, so we are drafting them.")
 			candidates += player.mind
 			players -= player
@@ -340,7 +340,7 @@
 	/*if(candidates.len < recommended_enemies)
 		for(var/mob/new_player/player in players)
 			if(player.client && player.ready)
-				if(!(player.client.prefs.be_special & role)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
+				if(!(player.client.prefs.beSpecial() & role)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
 					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
 						drafted += player.mind
 
@@ -398,7 +398,7 @@
 
 /*
 /datum/game_mode/proc/check_player_role_pref(var/role, var/mob/new_player/player)
-	if(player.preferences.be_special & role)
+	if(player.preferences.beSpecial() & role)
 		return 1
 	return 0
 */
@@ -498,9 +498,9 @@ proc/get_nt_opposed()
 	var/list/dudes = list()
 	for(var/mob/living/carbon/human/man in player_list)
 		if(man.client)
-			if(man.client.prefs.nanotrasen_relation == "Opposed")
+			if(man.client.prefs.selected_character.nanotrasen_relation == "Opposed")
 				dudes += man
-			else if(man.client.prefs.nanotrasen_relation == "Skeptical" && prob(50))
+			else if(man.client.prefs.selected_character.nanotrasen_relation == "Skeptical" && prob(50))
 				dudes += man
 	if(dudes.len == 0) return null
 	return pick(dudes)

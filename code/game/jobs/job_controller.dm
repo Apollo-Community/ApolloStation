@@ -82,10 +82,10 @@ var/global/datum/controller/occupations/job_master
 			if(!job.player_old_enough(player.client))
 				Debug("FOC player not old enough, Player: [player]")
 				continue
-			if(flag && (!player.client.prefs.be_special & flag))
+			if(flag && (!player.client.prefs.beSpecial() & flag))
 				Debug("FOC flag failed, Player: [player], Flag: [flag], ")
 				continue
-			if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
+			if(player.client.prefs.selected_character.GetJobDepartment(job, level) & job.flag)
 				Debug("FOC pass, Player: [player], Level:[level]")
 				candidates += player
 		return candidates
@@ -148,7 +148,7 @@ var/global/datum/controller/occupations/job_master
 				for(var/mob/V in candidates)
 					// Log-out during round-start? What a bad boy, no head position for you!
 					if(!V.client) continue
-					var/age = V.client.prefs.age
+					var/age = V.client.prefs.selected_character.age
 					switch(age)
 						if(good_age_minimal - 10 to good_age_minimal)
 							weightedCandidates[V] = 3 // Still a bit young.
@@ -294,7 +294,7 @@ var/global/datum/controller/occupations/job_master
 						continue
 
 					// If the player wants that job on this level, then try give it to him.
-					if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
+					if(player.client.prefs.selected_character.GetJobDepartment(job, level) & job.flag)
 
 						// If the job isn't filled
 						if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
@@ -306,7 +306,7 @@ var/global/datum/controller/occupations/job_master
 		// Hand out random jobs to the people who didn't get any in the last check
 		// Also makes sure that they got their preference correct
 		for(var/mob/new_player/player in unassigned)
-			if(player.client.prefs.alternate_option == GET_RANDOM_JOB)
+			if(player.client.prefs.selected_character.alternate_option == GET_RANDOM_JOB)
 				GiveRandomJob(player)
 		/*
 		Old job system
@@ -332,13 +332,13 @@ var/global/datum/controller/occupations/job_master
 
 		// For those who wanted to be assistant if their preferences were filled, here you go.
 		for(var/mob/new_player/player in unassigned)
-			if(player.client.prefs.alternate_option == BE_ASSISTANT)
+			if(player.client.prefs.selected_character.alternate_option == BE_ASSISTANT)
 				Debug("AC2 Assistant located, Player: [player]")
 				AssignRole(player, "Assistant")
 
 		//For ones returning to lobby
 		for(var/mob/new_player/player in unassigned)
-			if(player.client.prefs.alternate_option == RETURN_TO_LOBBY)
+			if(player.client.prefs.selected_character.alternate_option == RETURN_TO_LOBBY)
 				player.ready = 0
 				player.new_player_panel_proc()
 				unassigned -= player
@@ -365,9 +365,9 @@ var/global/datum/controller/occupations/job_master
 			//Equip custom gear loadout.
 			var/list/custom_equip_slots = list() //If more than one item takes the same slot, all after the first one spawn in storage.
 			var/list/custom_equip_leftovers = list()
-			if(H.client.prefs.gear && H.client.prefs.gear.len && job.title != "Cyborg" && job.title != "AI")
+			if(H.client.prefs.selected_character.gear && H.client.prefs.selected_character.gear.len && job.title != "Cyborg" && job.title != "AI")
 
-				for(var/thing in H.client.prefs.gear)
+				for(var/thing in H.client.prefs.selected_character.gear)
 					var/datum/gear/G = gear_datums[thing]
 					if(G)
 						var/permitted

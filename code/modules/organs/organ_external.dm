@@ -1042,10 +1042,10 @@ obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 	if(base)
 		//Changing limb's skin tone to match owner
 		if(!H.species || H.species.flags & HAS_SKIN_TONE)
-			if (H.s_tone >= 0)
-				base.Blend(rgb(H.s_tone, H.s_tone, H.s_tone), ICON_ADD)
+			if (H.skin_tone >= 0)
+				base.Blend(rgb(H.skin_tone, H.skin_tone, H.skin_tone), ICON_ADD)
 			else
-				base.Blend(rgb(-H.s_tone,  -H.s_tone,  -H.s_tone), ICON_SUBTRACT)
+				base.Blend(rgb(-H.skin_tone,  -H.skin_tone,  -H.skin_tone), ICON_SUBTRACT)
 
 	if(base)
 		//Changing limb's skin color to match owner

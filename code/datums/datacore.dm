@@ -191,10 +191,10 @@ proc/get_id_photo(var/mob/living/carbon/human/H)
 
 	// Skin tone
 	if(H.species.flags & HAS_SKIN_TONE)
-		if (H.s_tone >= 0)
-			preview_icon.Blend(rgb(H.s_tone, H.s_tone, H.s_tone), ICON_ADD)
+		if (H.skin_tone >= 0)
+			preview_icon.Blend(rgb(H.skin_tone, H.skin_tone, H.skin_tone), ICON_ADD)
 		else
-			preview_icon.Blend(rgb(-H.s_tone,  -H.s_tone,  -H.s_tone), ICON_SUBTRACT)
+			preview_icon.Blend(rgb(-H.skin_tone,  -H.skin_tone,  -H.skin_tone), ICON_SUBTRACT)
 
 	// Skin color
 	if(H.species.flags & HAS_SKIN_TONE)

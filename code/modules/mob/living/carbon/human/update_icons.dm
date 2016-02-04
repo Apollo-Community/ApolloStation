@@ -2,7 +2,7 @@
 	Global associative list for caching humanoid icons.
 	Index format m or f, followed by a string of 0 and 1 to represent bodyparts followed by husk fat hulk skeleton 1 or 0.
 	TODO: Proper documentation
-	icon_key is [species.race_key][g][husk][fat][hulk][skeleton][s_tone]
+	icon_key is [species.race_key][g][husk][fat][hulk][skeleton][skin_tone]
 */
 var/global/list/human_icon_cache = list()
 var/global/list/light_overlay_cache = list()
@@ -252,7 +252,7 @@ var/global/list/damage_icon_parts = list()
 
 	stand_icon = new(species.icon_template ? species.icon_template : 'icons/mob/human.dmi',"blank")
 
-	var/icon_key = "[species.race_key][g][s_tone]"
+	var/icon_key = "[species.race_key][g][skin_tone]"
 	for(var/datum/organ/external/part in organs)
 
 		if(istype(part,/datum/organ/external/head) && !(part.status & ORGAN_DESTROYED))
@@ -267,7 +267,7 @@ var/global/list/damage_icon_parts = list()
 		else
 			icon_key = "[icon_key]1"
 
-	icon_key = "[icon_key][husk ? 1 : 0][fat ? 1 : 0][hulk ? 1 : 0][skeleton ? 1 : 0][s_tone]"
+	icon_key = "[icon_key][husk ? 1 : 0][fat ? 1 : 0][hulk ? 1 : 0][skeleton ? 1 : 0][skin_tone]"
 
 	var/icon/base_icon
 	if(human_icon_cache[icon_key])
@@ -355,10 +355,10 @@ var/global/list/damage_icon_parts = list()
 		//Skin tone.
 		if(!husk && !hulk)
 			if(species.flags & HAS_SKIN_TONE)
-				if(s_tone >= 0)
-					base_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
+				if(skin_tone >= 0)
+					base_icon.Blend(rgb(skin_tone, skin_tone, skin_tone), ICON_ADD)
 				else
-					base_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
+					base_icon.Blend(rgb(-skin_tone,  -skin_tone,  -skin_tone), ICON_SUBTRACT)
 
 		human_icon_cache[icon_key] = base_icon
 

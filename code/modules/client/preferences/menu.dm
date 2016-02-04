@@ -8,14 +8,21 @@
 	var/menu_name = "client_menu"
 
 	. = "Client Menu<br>"
-	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=select_character'>Select Character</a><br>"
-	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=edit_character'>Edit Character</a><br>"
-	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=new_character'>Create Character</a><br>"
-	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=delete_character'>Delete Character</a><br>"
+	if( selected_character )
+		selected_character.update_preview_icon()
+		user << browse_rsc(selected_character.preview_icon_front, "previewicon.png")
+		user << browse_rsc(selected_character.preview_icon_side, "previewicon2.png")
+		. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=select_character'>Selected Character: [selected_character.name]</a><br>"
+		. += "<b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64>"
+	else
+		. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=select_character'>Select a Character</a><br>"
+	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=new_character'>Create</a>  "
+	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=edit_character'>Edit </a>  "
+	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=delete_character'>Delete</a><br>"
 	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=client_prefs'>Client Preferences</a><br>"
 
 	user << browse(null, "window=[menu_name]")
-	user << browse(HTML, "window=[menu_name];size=350x300")
+	user << browse( ., "window=[menu_name];size=350x300")
 
 /datum/preferences/proc/ClientMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )
@@ -49,8 +56,8 @@
 
 	. += "<br>"
 
-	user << browse(null, "window=[menu_name]")
-	user << browse(HTML, "window=[menu_name];size=350x300")
+	user << browse( null, "window=[menu_name]" )
+	user << browse( ., "window=[menu_name];size=350x300" )
 
 /datum/preferences/proc/PreferencesMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )
@@ -94,8 +101,8 @@
 
 		. += "<a href='byond://?src=\ref[user];preference=[menu_name];number=[i]>[character.name]</a><br>"
 
-	user << browse(null, "window=[menu_name]")
-	user << browse(HTML, "window=[menu_name];size=350x300")
+	user << browse( null, "window=[menu_name]" )
+	user << browse( ., "window=[menu_name];size=350x300" )
 
 /datum/preferences/proc/SelectCharacterMenuProcess( mob/user, list/href_list )
 	var/number = text2num( href_list["number"] )

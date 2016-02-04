@@ -87,7 +87,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	var/list/flavor_texts = list()
 	var/list/flavour_texts_robot = list()
-	var/list/account_items = list()
 
 	var/med_record = ""
 	var/sec_record = ""
@@ -172,7 +171,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		character.g_skin = rand( 0, 255 )
 		character.b_skin = rand( 0, 255 )
 
-	character.s_tone = skin_tone
+	character.skin_tone = skin_tone
 
 	character.h_style = hair_style
 	character.f_style = hair_face_style

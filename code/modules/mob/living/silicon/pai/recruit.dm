@@ -358,7 +358,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 			else
 				asked.Remove(O.key)
 		if(O.client)
-			if(O.client.prefs.be_special & BE_PAI)
+			if(O.client.prefs.beSpecial() & BE_PAI)
 				question(O.client)
 
 /datum/paiController/proc/question(var/client/C)
@@ -371,4 +371,4 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		if(response == "Yes")
 			recruitWindow(C.mob)
 		else if (response == "Never for this round")
-			C.prefs.be_special ^= BE_PAI
+			C.prefs.selected_character.job_antag ^= BE_PAI

@@ -192,8 +192,8 @@ proc/trigger_armed_response_team(var/force = 0)
 
 	if (!new_tone)
 		new_tone = 35
-	M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
-	M.s_tone =  -M.s_tone + 35
+	M.skin_tone = max(min(round(text2num(new_tone)), 220), 1)
+	M.skin_tone =  -M.skin_tone + 35
 
 	// hair
 	var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair

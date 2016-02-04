@@ -166,9 +166,10 @@ proc/setup_skills()
 				var/list/L = SKILLS[S.field]
 				L += S
 
-
+/*
 mob/living/carbon/human/proc/GetSkillClass(points)
 	return CalculateSkillClass(points, age)
+
 
 proc/show_skill_window(var/mob/user, var/mob/living/carbon/human/M)
 	if(!istype(M)) return
@@ -210,3 +211,4 @@ mob/living/carbon/human/verb/show_skills()
 	set name = "Show Own Skills"
 
 	show_skill_window(src, src)
+*/

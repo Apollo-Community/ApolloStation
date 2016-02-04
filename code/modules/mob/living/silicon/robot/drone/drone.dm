@@ -303,7 +303,7 @@
 		if(jobban_isbanned(O, "Cyborg"))
 			continue
 		if(O.client)
-			if(O.client.prefs.be_special & BE_PAI)
+			if(O.client.prefs.beSpecial() & BE_PAI)
 				question(O.client)
 
 /mob/living/silicon/robot/drone/proc/question(var/client/C)
@@ -315,7 +315,7 @@
 		if(response == "Yes")
 			transfer_personality(C)
 		else if (response == "Never for this round")
-			C.prefs.be_special ^= BE_PAI
+			C.prefs.selected_character.job_antag ^= BE_PAI
 
 /mob/living/silicon/robot/drone/proc/transfer_personality(var/client/player)
 

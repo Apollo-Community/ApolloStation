@@ -30,12 +30,5 @@ var/list/preferences_datums = list()
 	var/list/characters = list()
 	var/datum/character/selected_character
 
-/datum/preferences/New( client/C )
-	if(istype(C))
-		client = C
-		if(!IsGuestKey(client.key))
-			if(load_preferences())
-				return
-			if(load_characters())
-				return
-
+	// Items tied to the account
+	var/list/account_items = list()

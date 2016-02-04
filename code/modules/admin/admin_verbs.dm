@@ -76,10 +76,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggledebuglogs,
 	/client/proc/toggleghostwriters,
 	/client/proc/toggledrones,
-	/datum/admins/proc/show_skills,
+//	/datum/admins/proc/show_skills,
 	/client/proc/check_customitem_activity,
-	///client/proc/man_up,
-	///client/proc/global_man_up,
 	/client/proc/response_team, // Response Teams admin verb
 	/client/proc/toggle_antagHUD_use,
 	/client/proc/toggle_antagHUD_restrictions,
@@ -266,7 +264,7 @@ var/list/admin_verbs_mod = list(
 	/datum/admins/proc/show_player_info,
 	/client/proc/player_panel_new,
 	/client/proc/dsay,
-	/datum/admins/proc/show_skills,
+//	/datum/admins/proc/show_skills,
 	/datum/admins/proc/show_player_panel,
 	/client/proc/check_antagonists,
 	/client/proc/jobbans,
@@ -487,7 +485,7 @@ var/list/admin_verbs_mentor = list(
 		var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
 		if(new_ooccolor)
 			prefs.ooccolor = new_ooccolor
-			prefs.save_preferences()
+			prefs.savePreferences()
 		feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return
 	else
@@ -496,7 +494,7 @@ var/list/admin_verbs_mentor = list(
 				var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
 				if(new_ooccolor)
 					prefs.ooccolor = new_ooccolor
-					prefs.save_preferences()
+					prefs.savePreferences()
 				feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 				return
 			else
@@ -801,8 +799,8 @@ var/list/admin_verbs_mentor = list(
 	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
 
 	if (new_tone)
-		M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
-		M.s_tone =  -M.s_tone + 35
+		M.skin_tone = max(min(round(text2num(new_tone)), 220), 1)
+		M.skin_tone =  -M.skin_tone + 35
 
 	// hair
 	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in hair_styles_list
