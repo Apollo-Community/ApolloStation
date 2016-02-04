@@ -1,28 +1,19 @@
 /var/global/datum/controller/process/mob/MobProcess
 
-/datum/controller/process/mob
-	var/tmp/datum/updateQueue/updateQueueInstance
-
 /datum/controller/process/mob/setup()
-	name = "mob"
-	schedule_interval = 20 // every 2 seconds
-	cpu_threshold = 50
-	updateQueueInstance = new
+    name = "mob"
+    schedule_interval = 20 // every 2 seconds
+    cpu_threshold = 50
 
-	MobProcess = src
-
-/datum/controller/process/mob/started()
-	..()
-	if(!updateQueueInstance)
-		if(!mob_list)
-			mob_list = list()
-		else if(mob_list.len)
-			updateQueueInstance = new
+    MobProcess = src
 
 /datum/controller/process/mob/doWork()
-	if(updateQueueInstance)
-		updateQueueInstance.init(mob_list, "Life")
-		updateQueueInstance.Run()
+    for(var/mob/M in mob_list)
+        if(M)
+            M.Life()
+            continue
+        mob_list.Remove(M)
+        scheck()
 
 /datum/controller/process/mob/getStatName()
-	return ..()+"([mob_list.len])"
+    return ..()+"([mob_list.len])"
