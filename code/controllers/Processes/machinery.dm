@@ -3,7 +3,7 @@ var/list/MachineProcessing = list()
 
 /datum/controller/process/machinery/setup()
 	name = "machinery"
-	schedule_interval = 40 // every 4 seconds
+	schedule_interval = 50 // every 5 seconds
 	cpu_threshold = 40	// just keep this chugging along
 
 	MachineProcess = src
@@ -15,15 +15,20 @@ var/list/MachineProcessing = list()
 	internal_process_power_drain()
 
 /datum/controller/process/machinery/proc/internal_process_machinery()
-	for(var/obj/machinery/M in MachineProcessing)
-		if(M && !M.gcDestroyed)
-			if(M.process() == PROCESS_KILL)
-				MachineProcessing -= M
-				continue
-			if(M.use_power)
-				M.auto_use_power()
-
-			scheck()
+	//Going to try processing in batches of 400
+	for(var/i = 1; i < Ceiling(MachineProcessing.len/400); i++)	//have to ceiling this so we don't miss out on extras
+		var/adjusted_i = i > 1 ? i*400 : i
+		spawn(5*i)
+			for(var/x = adjusted_i; x < 400+adjusted_i; x++)
+				if(x > MachineProcessing.len)		break
+				var/obj/machinery/M = MachineProcessing[x]
+				if(M && !M.gcDestroyed)
+					if(M.process() == PROCESS_KILL)
+						MachineProcessing -= M
+						scheck()
+						continue
+					if(M.use_power)
+						M.auto_use_power()
 
 /datum/controller/process/machinery/proc/internal_process_power()
 	for(var/datum/powernet/powerNetwork in powernets)

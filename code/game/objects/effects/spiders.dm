@@ -106,6 +106,11 @@
 		if(prob(50))
 			amount_grown = 1
 
+/obj/effect/spider/spiderling/attack_hand(mob/user as mob)
+	visible_message("<span class='alert'><B>\The [src] has been stomped on by [user]</span>")
+	health -= 1 // 3 stomps, these are robust bastards.
+	healthcheck()
+
 /obj/effect/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
 		src.loc = user.loc

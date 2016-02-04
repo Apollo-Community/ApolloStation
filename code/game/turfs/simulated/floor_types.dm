@@ -115,6 +115,10 @@
 	New()
 		. = ..()
 
+/turf/simulated/floor/freezer
+	icon_state = "showroomfloor"
+	temperature = T20C-20
+
 /turf/simulated/floor/plating
 	name = "plating"
 	icon_state = "plating"
