@@ -30,7 +30,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/blood_type = "A+"				//blood type (not-chooseable)
 	var/underwear = 1					//underwear type
 	var/undershirt = 1					//undershirt type
-	var/backbag = 2						//backpack type
+	var/backpack = 2					//backpack type
 	var/hair_style = "Bald"				//Hair type
 	var/hair_face_style = "Shaved"		//Facial hair type
 	var/hair_color						//Hair color
@@ -212,9 +212,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		undershirt = 0
 	character.undershirt = undershirt
 
-	if(backbag > 4 || backbag < 1)
-		backbag = 1 //Same as above
-	character.backbag = backbag
+	if(backpack > 4 || backpack < 1)
+		backpack = 1 //Same as above
+	character.backpack = backpack
 
 	//Debugging report to track down a bug, which randomly assigned the plural gender to people.
 	if(character.gender in list(PLURAL, NEUTER))

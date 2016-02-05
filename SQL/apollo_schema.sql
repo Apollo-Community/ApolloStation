@@ -279,6 +279,11 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `name` varchar(100) NOT NULL,
   `gender` varchar(11) NOT NULL,
   `age` smallint(4) NOT NULL,
+  `spawnpoint` varchar(100) NOT NULL DEFAULT "Arrivals Shuttle",
+  `blood_type` varchar(4) NOT NULL,
+  `underwear` varchar(50) NOT NULL,
+  `undershirt` varchar(50) NOT NULL,
+  `backpack` smallint(4) NOT NULL, -- Different
   `species` varchar(100) NOT NULL,
   `additional_language` varchar(100) NOT NULL DEFAULT "None",
   `hair_style` varchar(50) NOT NULL,
@@ -288,11 +293,6 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `skin_tone` smallint(4) NOT NULL,
   `skin_color` varchar(7) NOT NULL,
   `eye_color` varchar(7) NOT NULL,
-  `underwear` varchar(50) NOT NULL,
-  `undershirt` varchar(50) NOT NULL,
-  `backpack` smallint(4) NOT NULL, -- Different
-  `backpack_type` varchar(50) NOT NULL, -- Different
-  `spawnpoint` varchar(100) NOT NULL DEFAULT "Arrivals Shuttle",
   `alternate_option` smallint(4) NOT NULL,
   `job_civilian_high` int(16) NOT NULL DEFAULT '0', -- These are all bitflags
   `job_civilian_med` int(16) NOT NULL DEFAULT '0',

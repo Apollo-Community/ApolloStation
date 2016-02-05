@@ -391,7 +391,7 @@
 
 	dat += "Undershirt: <a href='byond://?src=\ref[user];preference=undershirt;task=input'><b>[undershirt_t[undershirt]]</b></a><br>"
 
-	dat += "Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
+	dat += "Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backpacklist[backpack]]</b></a><br>"
 
 	dat += "Nanotrasen Relation:<br><a href ='?_src_=prefs;preference=nt_relation;task=input'><b>[nanotrasen_relation]</b></a><br>"
 
@@ -780,7 +780,7 @@
 				if("skin_color")
 					skin_color = rgb( rand( 0, 255 ), rand( 0, 255 ), rand( 0, 255 ))
 				if("bag")
-					backbag = rand(1,4)
+					backpack = rand(1,4)
 				if("all")
 					randomize_appearance_for()	//no params needed
 		if("input")
@@ -959,9 +959,9 @@
 						OOC_color = new_OOC_color
 */
 				if("bag")
-					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
-					if(new_backbag)
-						backbag = backbaglist.Find(new_backbag)
+					var/new_backpack = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backpacklist
+					if(new_backpack)
+						backpack = backpacklist.Find(new_backpack)
 
 				if("nt_relation")
 					var/new_relation = input(user, "Choose your relation to NT. Note that this represents what others can find out about your character by researching your background, not what your character actually thinks.", "Character Preference")  as null|anything in list("Loyal", "Supportive", "Neutral", "Skeptical", "Opposed")

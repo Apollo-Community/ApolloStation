@@ -49,7 +49,7 @@ var/global/list/underwear_f = list("Red", "White", "Yellow", "Blue", "Black", "T
 	//undershirt
 var/global/list/undershirt_t = list("Black Tank top", "White Tank top", "Black shirt", "White shirt", "None")
 	//Backpacks
-var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Alt")
+var/global/list/backpacklist = list("Nothing", "Backpack", "Satchel", "Satchel Alt")
 
 // pre- and postfixes for alloys
 var/global/list/alloy_prefix = list("diamond" = "ada", "uranium" = "ura", "solid phoron" = "phoro", "gold" = "dives", "silver" = "argent", "iron" = "ferro", "platinum" = "cata", "tritium" = "trit", "osmium" = "osi", "sandstone" = "saso", "plastic" = "plast")
