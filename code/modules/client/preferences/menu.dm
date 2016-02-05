@@ -132,7 +132,7 @@
 /datum/preferences/proc/SelectCharacterMenuProcess( mob/user, list/href_list )
 	var/number = text2num( href_list["number"] )
 
-	if( !number || number > characters.len)
+	if( !number || number < 1 || number > characters.len)
 		user << "Could not select character!"
 		return
 
