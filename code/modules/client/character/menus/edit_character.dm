@@ -135,7 +135,7 @@
 
 	dat += "Undershirt: <a href='byond://?src=\ref[user];character=[menu_name];task=undershirt'><b>[undershirt_t[undershirt]]</b></a><br>"
 
-	dat += "Backpack Type:<br><a href ='?_src_=prefs;character=[menu_name];task=bag'><b>[backpacklist[backpack]]</b></a><br>"
+	dat += "Backpack Type:<br><a href ='?_src_=prefs;character=[menu_name];task=backpack'><b>[backpacklist[backpack]]</b></a><br>"
 
 	dat += "Nanotrasen Relation:<br><a href ='?_src_=prefs;character=[menu_name];task=nt_relation'><b>[nanotrasen_relation]</b></a><br>"
 
@@ -148,8 +148,8 @@
 	else
 		dat += "<b><a href='byond://?src=\ref[user];character=[menu_name];task=records_menu'>Character Records</a></b><br>"
 
-	dat += "<b><a href='byond://?src=\ref[user];character=[menu_name];task=antagoptions_menu'>Set Antag Options</b></a><br>"
-	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=flavor_text'><b>Set Flavor Text</b></a><br>"
+	dat += "<b><a href='byond://?src=\ref[user];character=[menu_name];task=antag_options_menu'>Set Antag Options</b></a><br>"
+	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=flavor_text_human'><b>Set Flavor Text</b></a><br>"
 	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=flavour_text_robot'><b>Set Robot Flavour Text</b></a><br>"
 
 	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=pAI'><b>pAI Configuration</b></a><br>"
@@ -160,7 +160,7 @@
 	dat += " Style: <a href='byond://?src=\ref[user];character=[menu_name];task=hair_style'>[hair_style]</a><br>"
 
 	dat += "<br><b>Facial</b><br>"
-	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=hair_facial_color'>Change Color</a> <font face='fixedsys' size='3' color='[hair_face_color]'><table  style='display:inline;' bgcolor='[hair_face_color]'><tr><td>__</td></tr></table></font> "
+	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=hair_face_color'>Change Color</a> <font face='fixedsys' size='3' color='[hair_face_color]'><table  style='display:inline;' bgcolor='[hair_face_color]'><tr><td>__</td></tr></table></font> "
 	dat += " Style: <a href='byond://?src=\ref[user];character=[menu_name];task=hair_face_style'>[hair_face_style]</a><br>"
 
 	dat += "<br><b>Eyes</b><br>"
@@ -192,10 +192,9 @@
 	dat += "</td></tr></table><hr><center>"
 
 	if(!IsGuestKey(user.key))
-		dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=load'>Undo</a> - "
 		dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=save'>Save Setup</a> - "
 
-	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=reset_all'>Reset Setup</a>"
+	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=reset'>Reset Changes</a>"
 	dat += "</center></body></html>"
 
 	user << browse(dat, "window=[menu_name];size=560x736")
@@ -286,7 +285,7 @@
 
 			language = input("Please select a secondary language", "Character Generation", null) in new_languages
 
-		if("hair")
+		if("hair_color")
 			if(species == "Human" || species == "Unathi" || species == "Tajara" || species == "Skrell" || species == "Wryn")
 				var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference", hair_color ) as color|null
 				if( new_hair )
@@ -305,7 +304,7 @@
 			if(new_hair_style)
 				hair_style = new_hair_style
 
-		if("facial")
+		if("hair_face_color")
 			var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference", hair_face_color ) as color|null
 			if(new_facial)
 				hair_face_color = new_facial
@@ -348,7 +347,7 @@
 				undershirt = undershirt_options.Find(new_undershirt)
 			ShowChoices(user)
 
-		if("eyes")
+		if("eye_color")
 			var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference", eye_color ) as color|null
 			if(new_eyes)
 				eye_color = new_eyes
@@ -360,13 +359,13 @@
 			if(new_skin_tone)
 				skin_tone = 35 - max(min( round(new_skin_tone), 220),1)
 
-		if("skin")
+		if("skin_color")
 			if(species == "Unathi" || species == "Tajara" || species == "Skrell" || species == "Wryn")
 				var/new_skin = input(user, "Choose your character's skin colour: ", "Character Preference", skin_color ) as color|null
 				if(new_skin)
 					skin_color = new_skin
 
-		if("bag")
+		if("backpack")
 			var/new_backpack = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backpacklist
 			if(new_backpack)
 				backpack = backpacklist.Find(new_backpack)
@@ -385,7 +384,7 @@
 			else
 				user << browse(null, "window=disabil")
 
-		if("limbs")
+		if("limbs_adjust")
 			var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Left Leg","Right Leg","Left Arm","Right Arm","Left Foot","Right Foot","Left Hand","Right Hand")
 			if(!limb_name) return
 
@@ -436,7 +435,7 @@
 						organ_data[second_limb] = "cyborg"
 					if(third_limb && organ_data[third_limb] == "amputated")
 						organ_data[third_limb] = null
-		if("organs")
+		if("organs_adjust")
 			var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes")
 			if(!organ_name) return
 
@@ -457,10 +456,6 @@
 					organ_data[organ] = "assisted"
 				if("Mechanical")
 					organ_data[organ] = "mechanical"
-
-		if("skin_style")
-			var/skin_style_name = input(user, "Select a new skin style") as null|anything in list("default1", "default2", "default3")
-			if(!skin_style_name) return
 
 		if("spawnpoint")
 			var/list/spawnkeys = list()
@@ -512,3 +507,45 @@
 					religion = sanitize(raw_choice)
 				return
 			religion = choice
+
+		if( "loadout_add" )
+
+			var/list/valid_gear_choices = list()
+
+			for(var/gear_name in gear_datums)
+				var/datum/gear/G = gear_datums[gear_name]
+				if(G.whitelisted && !is_alien_whitelisted(user, G.whitelisted))
+					continue
+				if( istype( G, /datum/gear/account ))
+					continue
+				valid_gear_choices += gear_name
+
+			var/choice = input(user, "Select gear to add: ") as null|anything in valid_gear_choices
+
+			if(choice && gear_datums[choice])
+
+				var/total_cost = 0
+
+				if(isnull(gear) || !islist(gear)) gear = list()
+
+				if(gear && gear.len)
+					for(var/gear_name in gear)
+						if(gear_datums[gear_name])
+							var/datum/gear/G = gear_datums[gear_name]
+							total_cost += G.cost
+
+				var/datum/gear/C = gear_datums[choice]
+				total_cost += C.cost
+				if(C && total_cost <= MAX_GEAR_COST)
+					gear += choice
+					user << "<span class='notice'>Added \the '[choice]' for [C.cost] points ([MAX_GEAR_COST - total_cost] points remaining).</span>"
+				else
+					user << "<span class='warning'>Adding \the '[choice]' will exceed the maximum loadout cost of [MAX_GEAR_COST] points.</span>"
+
+		if( "loadout_remove" )
+			var/i_remove = text2num(href_list["gear"])
+			if(i_remove < 1 || i_remove > gear.len) return
+			gear.Cut(i_remove, i_remove + 1)
+
+		if( "loadout_clear" )
+			gear.Cut()
