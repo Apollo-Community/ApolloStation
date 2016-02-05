@@ -6,9 +6,6 @@ var/list/preferences_datums = list()
 	// our holder client
 	var/client/client
 
-	// doohickeys for savefiles
-	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
-
 	// non-preference stuff
 	var/warns = 0
 	var/muted = 0
@@ -20,7 +17,7 @@ var/list/preferences_datums = list()
 	var/passed_date = 0			//So we don't have to keep aquiring joined_date
 
 	// game-preferences
-	var/ooccolor = "#010000"			//Whatever this is set to acts as 'reset' color and is thus unusable as an actual custom color
+	var/OOC_color = "#010000"			//Whatever this is set to acts as 'reset' color and is thus unusable as an actual custom color
 	var/UI_style = "Midnight"
 	var/toggles = TOGGLES_DEFAULT
 	var/UI_style_color = "#ffffff"

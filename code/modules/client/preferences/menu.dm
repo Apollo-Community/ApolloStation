@@ -7,32 +7,33 @@
 
 	var/menu_name = "client_menu"
 
-	. = "Client Menu<br>"
+	. = "<h2>Client Menu</h2><br>"
 	if( selected_character )
 		selected_character.update_preview_icon()
 		user << browse_rsc(selected_character.preview_icon_front, "previewicon.png")
 		user << browse_rsc(selected_character.preview_icon_side, "previewicon2.png")
 		. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=select_character'>Selected Character: [selected_character.name]</a><br>"
 		. += "<b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64>"
+		. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=edit_character'>Edit </a>  "
+		. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=delete_character'>Delete</a><br>"
 	else
 		. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=select_character'>Select a Character</a><br>"
-	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=new_character'>Create</a>  "
-	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=edit_character'>Edit </a>  "
-	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=delete_character'>Delete</a><br>"
+	. += "<br>"
+	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=new_character'>Create New Character</a><br>"
+
 	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=client_prefs'>Client Preferences</a><br>"
 
-	user << browse(null, "window=[menu_name]")
 	user << browse( ., "window=[menu_name];size=350x300")
 
 /datum/preferences/proc/ClientMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )
 		if( "select_character" )
-
+			SelectCharacterMenu( user )
 		if( "edit_character" )
-
-		if( "new_character" )
-
+			return 0
 		if( "delete_character" )
+			return 0
+		if( "new_character" )
 
 		if( "client_prefs" )
 			PreferencesMenu( user )
@@ -43,28 +44,33 @@
 
 	var/menu_name = "pref_menu"
 
-	. = "Client Preference Menu<br>"
-	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=OOC_color>OOC Color</a><br>"
-	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=UI_style>UI Style: [UI_style]</a><br>"
-
+	. = "<h2>Client Preference Menu</h2><br>"
+	. += "<b>OOC Color:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=OOC_color'>[OOC_color]</a><br><br>"
+	. += "<b>UI Style:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=UI_style'>[UI_style]</a><br>"
+	. += "<b>UI Transparency:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=UI_trans'>[UI_style_alpha]</a><br>"
 	if( UI_style == "White" ) // Only white UI gets custom colors
-		. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=UI_color>UI Color: [UI_style_color]</a><br>"
+		. += "<b>UI Color:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=UI_color'>[UI_style_color]</a><br>"
 	else
 		UI_style_color = initial( UI_style_color )
 
-	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=UI_trans>UI Transparency: [UI_style_alpha]</a><br>"
+	. += "<br>"
+	. += "<b>Admin Midis:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=hear_midis'>[(toggles & SOUND_MIDI) ? "On" : "Off"]</a><br>"
+	. += "<b>Lobby Music:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=lobby_music'>[(toggles & SOUND_LOBBY) ? "On" : "Off"]</a><br>"
+	. += "<br>"
+	. += "<b>Ghost Ears:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=ghost_ears'>[(toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearby Speech"]</a><br>"
+	. += "<b>Ghost Sight:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=ghost_sight'>[(toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearby Emotes"]</a><br>"
+	. += "<b>Ghost Radio:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=ghost_radio'>[(toggles & CHAT_GHOSTRADIO) ? "All Radio" : "Nearby Radio"]</a><br>"
 
 	. += "<br>"
 
-	user << browse( null, "window=[menu_name]" )
 	user << browse( ., "window=[menu_name];size=350x300" )
 
 /datum/preferences/proc/PreferencesMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )
 		if( "OOC_color" )
-			var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference") as color|null
-			if(new_ooccolor)
-				ooccolor = new_ooccolor
+			var/new_OOC_color = input(user, "Choose your OOC colour:", "Game Preference") as color|null
+			if(new_OOC_color)
+				OOC_color = new_OOC_color
 		if( "UI_style" )
 			switch(UI_style)
 				if("Midnight")
@@ -85,6 +91,26 @@
 			if(!UI_style_alpha_new | !(UI_style_alpha_new <= 255 && UI_style_alpha_new >= 50))
 				return
 			UI_style_alpha = UI_style_alpha_new
+		if("hear_midis")
+			toggles ^= SOUND_MIDI
+
+		if("lobby_music")
+			toggles ^= SOUND_LOBBY
+			if(toggles & SOUND_LOBBY)
+				user << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
+			else
+				user << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
+
+		if("ghost_ears")
+			toggles ^= CHAT_GHOSTEARS
+
+		if("ghost_sight")
+			toggles ^= CHAT_GHOSTSIGHT
+
+		if("ghost_radio")
+			toggles ^= CHAT_GHOSTRADIO
+
+	PreferencesMenu( user )
 
 /datum/preferences/proc/SelectCharacterMenu( mob/user )
 	if( !user || !istype( user ))
@@ -93,13 +119,13 @@
 	var/menu_name = "select_character_menu"
 
 	. = ""
-	. += "Character Selection Menu<br>"
+	. += "<h2>Character Selection Menu</h2><br>"
 	for( var/i = 1, i <= characters.len, i++ )
 		var/datum/character/character = characters[i]
 		if( !character )
 			continue
 
-		. += "<a href='byond://?src=\ref[user];preference=[menu_name];number=[i]>[character.name]</a><br>"
+		. += "<a href='byond://?src=\ref[user];preference=[menu_name];number=[i]'>[character.name]</a><br>"
 
 	user << browse( null, "window=[menu_name]" )
 	user << browse( ., "window=[menu_name];size=350x300" )
@@ -113,7 +139,9 @@
 
 	selected_character = characters[number]
 
-/datum/preferences/proc/process_link( mob/user, list/href_list )
+	SelectCharacterMenu( user )
+
+/datum/preferences/proc/process_links( mob/user, list/href_list )
 	if( !user )	return
 
 	if( !istype( user, /mob/new_player ))	return

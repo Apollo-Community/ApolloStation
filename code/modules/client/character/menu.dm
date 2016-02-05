@@ -146,7 +146,7 @@
 	var/HTML = "<body>"
 	HTML += "<tt><center>"
 	HTML += "<b>Choose occupation chances</b><br>Unavailable occupations are crossed out.<br><br>"
-	HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>\[Done\]</a></center><br>" // Easier to press up here.
+	HTML += "<center><a href='byond://?src=\ref[user];preference=job;task=close'>\[Done\]</a></center><br>" // Easier to press up here.
 	HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
 	HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
 	var/index = -1
@@ -186,7 +186,7 @@
 
 		HTML += "</td><td width='40%'>"
 
-		HTML += "<a href='?_src_=prefs;preference=job;task=input;text=[rank]'>"
+		HTML += "<a href='byond://?src=\ref[user];preference=job;task=input;text=[rank]'>"
 
 		if(rank == "Assistant")//Assistant is special
 			if(job_civilian_low & ASSISTANT)
@@ -216,13 +216,13 @@
 
 	switch(alternate_option)
 		if(GET_RANDOM_JOB)
-			HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=green>Get random job if preferences unavailable</font></a></u></center><br>"
+			HTML += "<center><br><u><a href='byond://?src=\ref[user];preference=job;task=random'><font color=green>Get random job if preferences unavailable</font></a></u></center><br>"
 		if(BE_ASSISTANT)
-			HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=red>Be assistant if preference unavailable</font></a></u></center><br>"
+			HTML += "<center><br><u><a href='byond://?src=\ref[user];preference=job;task=random'><font color=red>Be assistant if preference unavailable</font></a></u></center><br>"
 		if(RETURN_TO_LOBBY)
-			HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=purple>Return to lobby if preference unavailable</font></a></u></center><br>"
+			HTML += "<center><br><u><a href='byond://?src=\ref[user];preference=job;task=random'><font color=purple>Return to lobby if preference unavailable</font></a></u></center><br>"
 
-	HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>\[Reset\]</a></center>"
+	HTML += "<center><a href='byond://?src=\ref[user];preference=job;task=reset'>\[Reset\]</a></center>"
 	HTML += "</tt>"
 
 	user << browse(null, "window=preferences")
@@ -255,7 +255,10 @@
 	return
 
 /datum/character/proc/ShowChoices(mob/user)
-	if(!user || !user.client)	return
+	if(!istype( user ) || !user.client)	return
+
+	var/menu_name = "client_menu"
+
 	update_preview_icon()
 	user << browse_rsc(preview_icon_front, "previewicon.png")
 	user << browse_rsc(preview_icon_side, "previewicon2.png")
@@ -266,12 +269,12 @@
 	dat += "</center><hr><table><tr><td width='340px' height='320px'>"
 
 	dat += "<b>Name:</b> "
-	dat += "<a href='?_src_=prefs;preference=name;task=input'><b>[name]</b></a><br>"
-	dat += "(<a href='?_src_=prefs;preference=name;task=random'>Random Name</A>) "
+	dat += "<a href='byond://?src=\ref[user];preference=name;task=input'><b>[name]</b></a><br>"
+	dat += "(<a href='byond://?src=\ref[user];preference=name;task=random'>Random Name</A>) "
 	dat += "<br>"
 
-	dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a><br>"
-	dat += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a><br>"
+	dat += "<b>Gender:</b> <a href='byond://?src=\ref[user];preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a><br>"
+	dat += "<b>Age:</b> <a href='byond://?src=\ref[user];preference=age;task=input'>[age]</a><br>"
 	dat += "<b>Spawn Point</b>: <a href='byond://?src=\ref[user];preference=spawnpoint;task=input'>[spawnpoint]</a>"
 	dat += "<br>"
 
@@ -307,16 +310,16 @@
 	dat += "\t<a href='byond://?src=\ref[user];preference=acc_items'><b>Account Items</b></a><br>"
 
 	dat += "<br><br><b>Occupation Choices</b><br>"
-	dat += "\t<a href='?_src_=prefs;preference=job;task=menu'><b>Set Preferences</b></a><br>"
+	dat += "\t<a href='byond://?src=\ref[user];preference=job;task=menu'><b>Set Preferences</b></a><br>"
 
 	dat += "<br><table><tr><td><b>Body</b> "
-	dat += "(<a href='?_src_=prefs;preference=all;task=random'>&reg;</A>)"
+	dat += "(<a href='byond://?src=\ref[user];preference=all;task=random'>&reg;</A>)"
 	dat += "<br>"
 	dat += "Species: <a href='?src=\ref[user];preference=species;task=change'>[species]</a><br>"
 	dat += "Secondary Language:<br><a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a><br>"
 	dat += "Blood Type: [blood_type]<br>"
-	dat += "Skin Tone: <a href='?_src_=prefs;preference=skin_tone;task=input'>[-skin_tone + 35]/220<br></a>"
-	dat += "Needs Glasses: <a href='?_src_=prefs;preference=disabilities'><b>[disabilities == 0 ? "No" : "Yes"]</b></a><br>"
+	dat += "Skin Tone: <a href='byond://?src=\ref[user];preference=skin_tone;task=input'>[-skin_tone + 35]/220<br></a>"
+	dat += "Needs Glasses: <a href='byond://?src=\ref[user];preference=disabilities'><b>[disabilities == 0 ? "No" : "Yes"]</b></a><br>"
 	dat += "Limbs: <a href='byond://?src=\ref[user];preference=limbs;task=input'>Adjust</a><br>"
 	dat += "Internal Organs: <a href='byond://?src=\ref[user];preference=organs;task=input'>Adjust</a><br>"
 
@@ -386,7 +389,7 @@
 	else
 		dat += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'><b>[underwear_f[underwear]]</b></a><br>"
 
-	dat += "Undershirt: <a href='?_src_=prefs;preference=undershirt;task=input'><b>[undershirt_t[undershirt]]</b></a><br>"
+	dat += "Undershirt: <a href='byond://?src=\ref[user];preference=undershirt;task=input'><b>[undershirt_t[undershirt]]</b></a><br>"
 
 	dat += "Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
 
@@ -409,18 +412,18 @@
 	dat += "<br>"
 
 	dat += "<br><b>Hair</b><br>"
-	dat += "<a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='[hair_color]'><table style='display:inline;' bgcolor='[hair_color]'><tr><td>__</td></tr></table></font> "
-	dat += " Style: <a href='?_src_=prefs;preference=hair_style;task=input'>[hair_style]</a><br>"
+	dat += "<a href='byond://?src=\ref[user];preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='[hair_color]'><table style='display:inline;' bgcolor='[hair_color]'><tr><td>__</td></tr></table></font> "
+	dat += " Style: <a href='byond://?src=\ref[user];preference=hair_style;task=input'>[hair_style]</a><br>"
 
 	dat += "<br><b>Facial</b><br>"
-	dat += "<a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> <font face='fixedsys' size='3' color='[hair_face_color]'><table  style='display:inline;' bgcolor='[hair_face_color]'><tr><td>__</td></tr></table></font> "
-	dat += " Style: <a href='?_src_=prefs;preference=hair_face_style;task=input'>[hair_face_style]</a><br>"
+	dat += "<a href='byond://?src=\ref[user];preference=facial;task=input'>Change Color</a> <font face='fixedsys' size='3' color='[hair_face_color]'><table  style='display:inline;' bgcolor='[hair_face_color]'><tr><td>__</td></tr></table></font> "
+	dat += " Style: <a href='byond://?src=\ref[user];preference=hair_face_style;task=input'>[hair_face_style]</a><br>"
 
 	dat += "<br><b>Eyes</b><br>"
-	dat += "<a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> <font face='fixedsys' size='3' color='[eye_color]'><table  style='display:inline;' bgcolor='[eye_color]'><tr><td>__</td></tr></table></font><br>"
+	dat += "<a href='byond://?src=\ref[user];preference=eyes;task=input'>Change Color</a> <font face='fixedsys' size='3' color='[eye_color]'><table  style='display:inline;' bgcolor='[eye_color]'><tr><td>__</td></tr></table></font><br>"
 
 	dat += "<br><b>Body Color</b><br>"
-	dat += "<a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> <font face='fixedsys' size='3' color='[skin_color]'><table style='display:inline;' bgcolor='[skin_color]'><tr><td>__</td></tr></table></font>"
+	dat += "<a href='byond://?src=\ref[user];preference=skin;task=input'>Change Color</a> <font face='fixedsys' size='3' color='[skin_color]'><table style='display:inline;' bgcolor='[skin_color]'><tr><td>__</td></tr></table></font>"
 
 	dat += "<br><br><b>Background Information</b><br>"
 	dat += "<b>Home system</b>: <a href='byond://?src=\ref[user];preference=home_system;task=input'>[home_system]</a><br/>"
@@ -440,21 +443,20 @@
 				if(jobban_isbanned(user, i) || (i == "positronic brain" && jobban_isbanned(user, "AI") && jobban_isbanned(user, "Cyborg")) || (i == "pAI candidate" && jobban_isbanned(user, "pAI")))
 					dat += "<b>Be [i]:<b> <font color=red><b> \[BANNED]</b></font><br>"
 				else
-					dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=job_antag;num=[n]'><b>[src.job_antag&(1<<n) ? "Yes" : "No"]</b></a><br>"
+					dat += "<b>Be [i]:</b> <a href='byond://?src=\ref[user];preference=job_antag;num=[n]'><b>[src.job_antag&(1<<n) ? "Yes" : "No"]</b></a><br>"
 			n++
 	dat += "</td></tr></table><hr><center>"
 
 	if(!IsGuestKey(user.key))
-		dat += "<a href='?_src_=prefs;preference=load'>Undo</a> - "
-		dat += "<a href='?_src_=prefs;preference=save'>Save Setup</a> - "
+		dat += "<a href='byond://?src=\ref[user];preference=load'>Undo</a> - "
+		dat += "<a href='byond://?src=\ref[user];preference=save'>Save Setup</a> - "
 
-	dat += "<a href='?_src_=prefs;preference=reset_all'>Reset Setup</a>"
+	dat += "<a href='byond://?src=\ref[user];preference=reset_all'>Reset Setup</a>"
 	dat += "</center></body></html>"
 
-	user << browse(dat, "window=preferences;size=560x736")
+	user << browse(dat, "window=[menu_name];size=560x736")
 
-
-/datum/character/proc/process_link(mob/user, list/href_list)
+/datum/character/proc/process_links(mob/user, list/href_list)
 	if(!user)	return
 
 	if(!istype(user, /mob/new_player))	return
@@ -951,10 +953,10 @@
 						if(new_skin)
 							skin_color = new_skin
 /*
-				if("ooccolor")
-					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference") as color|null
-					if(new_ooccolor)
-						ooccolor = new_ooccolor
+				if("OOC_color")
+					var/new_OOC_color = input(user, "Choose your OOC colour:", "Game Preference") as color|null
+					if(new_OOC_color)
+						OOC_color = new_OOC_color
 */
 				if("bag")
 					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
