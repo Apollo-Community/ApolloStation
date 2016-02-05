@@ -16,7 +16,7 @@ var/list/preferences_datums = list()
 	var/passed_date = 0			//So we don't have to keep aquiring joined_date
 
 	// game-preferences
-	var/OOC_color = "#010000"			//Whatever this is set to acts as 'reset' color and is thus unusable as an actual custom color
+	var/OOC_color = "#0033CC"			//Whatever this is set to acts as 'reset' color and is thus unusable as an actual custom color
 
 	// UI prefs
 	var/UI_style = "Midnight"

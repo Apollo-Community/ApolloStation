@@ -23,25 +23,38 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 #define RETURN_TO_LOBBY 2
 
 /datum/character
+	// Basic information
 	var/name							//our character's name
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
 	var/spawnpoint = "Arrivals Shuttle" //where this character will spawn (0-2).
 	var/blood_type = "A+"				//blood type (not-chooseable)
+
+	// Default clothing
 	var/underwear = 1					//underwear type
 	var/undershirt = 1					//undershirt type
 	var/backpack = 2					//backpack type
+
+	// Cosmetic features
 	var/hair_style = "Bald"				//Hair type
 	var/hair_face_style = "Shaved"		//Facial hair type
 	var/hair_color						//Hair color
 	var/hair_face_color					//Face hair color
+
 	var/skin_tone						//Skin tone
 	var/skin_color						//Skin color
+
 	var/eye_color						//Eye color
-	var/species = "Human"               //Species datum to use.
+
+	// Character species
+	var/species = "Human"               //Species to use.
 	var/species_preview                 //Used for the species selection window.
-	var/language = "None"				//Secondary language
-	var/list/gear						//Custom/fluff item loadout.
+
+	// Secondary language
+	var/language = "None"
+
+	// Custom spawn gear
+	var/list/gear
 
 	// Some faction information.
 	var/home_system = "Unset"           //System of birth.
@@ -78,24 +91,30 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/skill_specialization = null
 	var/list/skills = list() // skills can range from 0 to 3
 
-	// maps each organ to either null(intact), "cyborg" or "amputated"
+	// Maps each organ to either null(intact), "cyborg" or "amputated"
 	// will probably not be able to do this for head and torso ;)
 	var/list/organ_data = list()
 
-	// the default name of a job like "Medical Doctor"
+	// The default name of a job like "Medical Doctor"
 	var/list/player_alt_titles = new()
 
-	var/list/flavor_texts = list()
-	var/list/flavour_texts_robot = list()
+	// Flavor texts
+	var/list/flavor_texts_human = list()
+	var/list/flavor_texts_robot = list()
 
+	// Character records
 	var/med_record = ""
 	var/sec_record = ""
 	var/gen_record = ""
 	var/exploit_record = ""
-	var/disabilities = 0
 
+	// Relation to NanoTrasen
 	var/nanotrasen_relation = "Neutral"
 
+	// Character disabilities
+	var/disabilities = 0
+
+	// Location of traitor uplink
 	var/uplinklocation = "PDA"
 
 /datum/character/New(client/C)
