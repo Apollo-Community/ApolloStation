@@ -256,10 +256,27 @@ CREATE TABLE IF NOT EXISTS `round_ai_laws` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
 
+-- -----------------------------------------------------
+-- Player Preferences
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `preferences` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ckey` varchar(32) NOT NULL,
+  `joined_date` date NOT NULL,
+  `OOC_color` varchar(7) NOT NULL,
+  `UI_style` varchar(50) NOT NULL,
+  `UI_style_color` varchar(7) NOT NULL,
+  `UI_style_alpha` smallint(4) NOT NULL,
+  `toggles` int(16) NOT NULL DEFAULT '0',
+  `last_character` varchar(100) DEFAULT "",
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ckey` (`ckey`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
 CREATE TABLE IF NOT EXISTS `characters` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ckey` varchar(32) NOT NULL,
-  `real_name` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
   `gender` varchar(11) NOT NULL,
   `age` smallint(4) NOT NULL,
   `species` varchar(100) NOT NULL,
@@ -292,7 +309,7 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `sec_record` mediumtext NOT NULL,
   `gen_record` mediumtext NOT NULL,
   `player_alt_titles` mediumtext NOT NULL,
-  `be_special` int(16) NOT NULL DEFAULT '0',
+  `job_antag` int(16) NOT NULL DEFAULT '0',
   `disabilities` mediumtext NOT NULL,
   `organ_data` mediumtext NOT NULL,
   `gear` mediumtext NOT NULL,

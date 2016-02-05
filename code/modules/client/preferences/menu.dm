@@ -60,7 +60,6 @@
 	. += "<b>Ghost Ears:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=ghost_ears'>[(toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearby Speech"]</a><br>"
 	. += "<b>Ghost Sight:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=ghost_sight'>[(toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearby Emotes"]</a><br>"
 	. += "<b>Ghost Radio:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=ghost_radio'>[(toggles & CHAT_GHOSTRADIO) ? "All Radio" : "Nearby Radio"]</a><br>"
-
 	. += "<br>"
 
 	user << browse( ., "window=[menu_name];size=350x300" )
@@ -110,6 +109,7 @@
 		if("ghost_radio")
 			toggles ^= CHAT_GHOSTRADIO
 
+	savePreferences()
 	PreferencesMenu( user )
 
 /datum/preferences/proc/SelectCharacterMenu( mob/user )

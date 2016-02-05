@@ -7,7 +7,6 @@ var/list/preferences_datums = list()
 	var/client/client
 
 	// non-preference stuff
-	var/warns = 0
 	var/muted = 0
 	var/last_ip
 	var/last_id
@@ -18,10 +17,14 @@ var/list/preferences_datums = list()
 
 	// game-preferences
 	var/OOC_color = "#010000"			//Whatever this is set to acts as 'reset' color and is thus unusable as an actual custom color
+
+	// UI prefs
 	var/UI_style = "Midnight"
-	var/toggles = TOGGLES_DEFAULT
 	var/UI_style_color = "#ffffff"
 	var/UI_style_alpha = 255
+
+	// Preference toggleables
+	var/toggles = TOGGLES_DEFAULT
 
 	// Saved characters
 	var/list/characters = list()
