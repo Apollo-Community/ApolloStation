@@ -139,7 +139,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	if(character.dna)
 		character.dna.real_name = character.real_name
 
-	character.flavor_texts["general"] = flavor_texts["general"]
+	character.flavor_texts["general"] = flavor_texts_human["general"]
 
 	character.med_record = med_record
 	character.sec_record = sec_record

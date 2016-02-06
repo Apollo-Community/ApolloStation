@@ -429,7 +429,7 @@ var/list/robot_verbs_default = list(
 
 	//Flavour text.
 	if(client)
-		flavor_text = client.prefs.selected_character.flavour_texts_robot["Default"]
+		flavor_text = client.prefs.selected_character.flavor_texts_robot["Default"]
 
 /mob/living/silicon/robot/verb/Namepick()
 	set category = "Robot Commands"

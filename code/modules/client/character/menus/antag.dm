@@ -25,3 +25,17 @@
 	return
 
 /datum/character/proc/AntagOptionsMenuProcess( mob/user, list/href_list )
+	if(text2num(href_list["active"]) == 0)
+		AntagOptionsMenu(user)
+		return
+	if (href_list["antagtask"] == "uplinktype")
+		if (uplinklocation == "PDA")
+			uplinklocation = "Headset"
+		else if(uplinklocation == "Headset")
+			uplinklocation = "None"
+		else
+			uplinklocation = "PDA"
+		AntagOptionsMenu(user)
+	if (href_list["antagtask"] == "done")
+		user << browse(null, "window=antagoptions")
+		EditCharacterMenu(user)

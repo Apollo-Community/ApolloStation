@@ -149,8 +149,7 @@
 		dat += "<b><a href='byond://?src=\ref[user];character=[menu_name];task=records_menu'>Character Records</a></b><br>"
 
 	dat += "<b><a href='byond://?src=\ref[user];character=[menu_name];task=antag_options_menu'>Set Antag Options</b></a><br>"
-	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=flavor_text_human'><b>Set Flavor Text</b></a><br>"
-	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=flavour_text_robot'><b>Set Robot Flavour Text</b></a><br>"
+	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=flavor_text_menu'><b>Set Flavor Text</b></a><br>"
 
 	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=pAI'><b>pAI Configuration</b></a><br>"
 	dat += "<br>"
@@ -336,7 +335,7 @@
 			var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_options
 			if(new_underwear)
 				underwear = underwear_options.Find(new_underwear)
-			ShowChoices(user)
+			EditCharacterMenu(user)
 
 		if("undershirt")
 			var/list/undershirt_options
@@ -345,7 +344,7 @@
 			var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_options
 			if (new_undershirt)
 				undershirt = undershirt_options.Find(new_undershirt)
-			ShowChoices(user)
+			EditCharacterMenu(user)
 
 		if("eye_color")
 			var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference", eye_color ) as color|null
@@ -376,13 +375,14 @@
 				nanotrasen_relation = new_relation
 
 		if("disabilities")
-			if(text2num(href_list["disabilities"]) >= -1)
+			return
+			/*if(text2num(href_list["disabilities"]) >= -1)
 				if(text2num(href_list["disabilities"]) >= 0)
 					disabilities ^= (1<<text2num(href_list["disabilities"])) //MAGIC
 				SetDisabilities(user)
 				return
 			else
-				user << browse(null, "window=disabil")
+				user << browse(null, "window=disabil")*/
 
 		if("limbs_adjust")
 			var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Left Leg","Right Leg","Left Arm","Right Arm","Left Foot","Right Foot","Left Hand","Right Hand")
@@ -509,14 +509,12 @@
 			religion = choice
 
 		if( "loadout_add" )
-
 			var/list/valid_gear_choices = list()
 
 			for(var/gear_name in gear_datums)
 				var/datum/gear/G = gear_datums[gear_name]
-				if(G.whitelisted && !is_alien_whitelisted(user, G.whitelisted))
-					continue
-				if( istype( G, /datum/gear/account ))
+
+				if(( G.whitelisted && !is_alien_whitelisted( user, G.whitelisted )) || G.account )
 					continue
 				valid_gear_choices += gear_name
 
@@ -538,14 +536,92 @@
 				total_cost += C.cost
 				if(C && total_cost <= MAX_GEAR_COST)
 					gear += choice
-					user << "<span class='notice'>Added \the '[choice]' for [C.cost] points ([MAX_GEAR_COST - total_cost] points remaining).</span>"
+					user << "<span class='notice'>Added [choice] for [C.cost] points ([MAX_GEAR_COST - total_cost] points remaining).</span>"
 				else
-					user << "<span class='warning'>Adding \the '[choice]' will exceed the maximum loadout cost of [MAX_GEAR_COST] points.</span>"
+					user << "<span class='alert'>That item will exceed the maximum loadout cost of [MAX_GEAR_COST] points.</span>"
 
 		if( "loadout_remove" )
-			var/i_remove = text2num(href_list["gear"])
-			if(i_remove < 1 || i_remove > gear.len) return
-			gear.Cut(i_remove, i_remove + 1)
+			if(isnull(gear) || !islist(gear))
+				gear = list()
+			if(!gear.len)
+				return
+
+			var/choice = input(user, "Select gear to remove: ") as null|anything in gear
+			if(!choice)
+				return
+
+			gear -= choice
 
 		if( "loadout_clear" )
 			gear.Cut()
+
+		if( "acc_items" )
+			if( !account_items || !account_items.len )
+				src << "There are no items tied to your account."
+				return
+
+			var/list/valid_gear_choices = list()
+
+			for(var/gear_name in account_items)
+				var/datum/gear/G = gear_datums[gear_name]
+				if( !G )
+					continue
+				if( !G.account )
+					continue
+				valid_gear_choices += gear_name
+
+			var/choice = input(user, "Select item to add: ") as null|anything in valid_gear_choices
+
+			if( !choice )
+				return
+
+			if( choice in gear )
+				user << "<span class='warning'>You already have this item selected.</span>"
+				return
+
+			if( !gear_datums[choice] )
+				return
+
+			if(isnull(gear) || !islist(gear))
+				gear = list()
+
+			gear += choice
+			user << "<span class='notice'>Added \the '[choice]'.</span>"
+		if( "name_random" )
+			name = random_name(gender,species)
+
+		if( "all_random" )
+			randomize_appearance_for()	//no params needed
+
+		if("gender")
+			if(gender == MALE)
+				gender = FEMALE
+			else
+				gender = MALE
+
+		if("job_antag")
+			var/num = text2num(href_list["num"])
+			job_antag ^= (1<<num)
+
+		if( "species" )
+			// Actual whitelist checks are handled elsewhere, this is just for accessing the preview window.
+			var/choice = input("Which species would you like to look at?") as null|anything in playable_species
+			if(!choice) return
+			species_preview = choice
+			SpeciesMenu(user)
+
+		if( "pAI" )
+			paiController.recruitWindow(user, 0)
+			return 1
+
+		if( "records_menu" )
+			RecordsMenu( user )
+
+		if( "antag_options_menu" )
+			AntagOptionsMenu( user )
+
+		if( "flavor_text_menu" )
+			FlavorTextMenu( user )
+
+		if( "job_menu" )
+			EditCharacterMenu( user )

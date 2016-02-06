@@ -100,11 +100,11 @@
 /datum/character/proc/JobChoicesMenuProcess( mob/user, list/href_list )
 	switch(href_list["task"])
 		if("close")
-			user << browse(null, "window=mob_occupation")
-			ShowChoices(user)
+			user << browse(null, "window=job_choices_menu")
+			EditCharacterMenu(user)
 		if("reset")
 			ResetJobs()
-			SetChoices(user)
+			JobChoicesMenu(user)
 		if("random")
 			if(alternate_option == GET_RANDOM_JOB || alternate_option == BE_ASSISTANT)
 				alternate_option += 1
@@ -112,7 +112,7 @@
 				alternate_option = 0
 			else
 				return 0
-			SetChoices(user)
+			JobChoicesMenu(user)
 		if ("alt_title")
 			var/datum/job/job = locate(href_list["job"])
 			if (job)
@@ -120,8 +120,8 @@
 				var/choice = input("Pick a title for [job.title].", "Character Generation", GetPlayerAltTitle(job)) as anything in choices | null
 				if(choice)
 					SetPlayerAltTitle(job, choice)
-					SetChoices(user)
+					JobChoicesMenu(user)
 		if("input")
 			SetJob(user, href_list["text"])
 		else
-			SetChoices(user)
+			JobChoicesMenu(user)

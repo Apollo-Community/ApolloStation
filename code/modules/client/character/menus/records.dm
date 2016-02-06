@@ -34,22 +34,22 @@
 			var/medmsg = sanitize(input(usr,"Set your medical notes here.","Medical Records",html_decode(med_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
 			if(medmsg != null)
 				med_record = medmsg
-				SetRecords(user)
+				RecordsMenu(user)
 
 		if( "sec_record")
 			var/secmsg = sanitize(input(usr,"Set your security notes here.","Security Records",html_decode(sec_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
 			if(secmsg != null)
 				sec_record = secmsg
-				SetRecords(user)
+				RecordsMenu(user)
 
 		if( "gen_record")
 			var/genmsg = sanitize(input(usr,"Set your employment notes here.","Employment Records",html_decode(gen_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
 			if(genmsg != null)
 				gen_record = genmsg
-				SetRecords(user)
+				RecordsMenu(user)
 
 		if( "exploitable_record")
 			var/exploitmsg = sanitize(input(usr,"Set exploitable information about you here.","Exploitable Information",html_decode(exploit_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
 			if(exploitmsg != null)
 				exploit_record = exploitmsg
-				SetAntagoptions(user)
+				AntagOptionsMenu(user)

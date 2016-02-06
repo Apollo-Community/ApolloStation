@@ -15,7 +15,7 @@
 	var/datum/job/job = job_master.GetJob(role)
 	if(!job)
 		user << browse(null, "window=mob_occupation")
-		ShowChoices(user)
+		EditCharacterMenu(user)
 		return
 
 	if(role == "Assistant")
@@ -23,7 +23,7 @@
 			job_civilian_low &= ~job.flag
 		else
 			job_civilian_low |= job.flag
-		SetChoices(user)
+		JobChoicesMenu(user)
 		return 1
 
 	if(GetJobDepartment(job, 1) & job.flag)
@@ -35,7 +35,7 @@
 	else//job = Never
 		SetJobDepartment(job, 4)
 
-	SetChoices(user)
+	JobChoicesMenu(user)
 	return 1
 
 /datum/character/proc/ResetJobs()

@@ -30,11 +30,20 @@
 		if( "select_character" )
 			SelectCharacterMenu( user )
 		if( "edit_character" )
-			return 0
-		if( "delete_character" )
-			return 0
-		if( "new_character" )
+			if( !selected_character )
+				selected_character = new()
+				characters.Add( selected_character )
 
+			selected_character.EditCharacterMenu( selected_character )
+		if( "delete_character" )
+			characters.Remove( selected_character )
+			qdel( selected_character )
+			selected_character = null
+		if( "new_character" )
+			selected_character = new()
+			characters.Add( selected_character )
+
+			selected_character.EditCharacterMenu( selected_character )
 		if( "client_prefs" )
 			PreferencesMenu( user )
 
