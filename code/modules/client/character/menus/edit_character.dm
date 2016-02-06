@@ -6,6 +6,7 @@
 	update_preview_icon()
 	user << browse_rsc(preview_icon_front, "previewicon.png")
 	user << browse_rsc(preview_icon_side, "previewicon2.png")
+
 	var/dat = "<html><body><center>"
 
 	dat += "IMPLEMENT LOADING AND SAVING KWASK"
@@ -625,3 +626,5 @@
 
 		if( "job_menu" )
 			EditCharacterMenu( user )
+
+	EditCharacterMenu( user )

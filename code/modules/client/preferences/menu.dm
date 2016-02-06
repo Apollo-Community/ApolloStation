@@ -12,7 +12,7 @@
 		selected_character.update_preview_icon()
 		user << browse_rsc(selected_character.preview_icon_front, "previewicon.png")
 		user << browse_rsc(selected_character.preview_icon_side, "previewicon2.png")
-		. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=select_character'>Selected Character: [selected_character.name]</a><br>"
+		. += "Selected Character: <a href='byond://?src=\ref[user];preference=[menu_name];task=select_character'>[selected_character.name]</a><br>"
 		. += "<b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64>"
 		. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=edit_character'>Edit </a>  "
 		. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=delete_character'>Delete</a><br>"
@@ -33,17 +33,18 @@
 			if( !selected_character )
 				selected_character = new()
 				characters.Add( selected_character )
-
-			selected_character.EditCharacterMenu( selected_character )
+			ClientMenu( user )
+			selected_character.EditCharacterMenu( user )
 		if( "delete_character" )
 			characters.Remove( selected_character )
 			qdel( selected_character )
 			selected_character = null
+			ClientMenu( user )
 		if( "new_character" )
 			selected_character = new()
 			characters.Add( selected_character )
-
-			selected_character.EditCharacterMenu( selected_character )
+			ClientMenu( user )
+			selected_character.EditCharacterMenu( user )
 		if( "client_prefs" )
 			PreferencesMenu( user )
 
