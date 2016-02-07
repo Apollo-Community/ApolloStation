@@ -31,24 +31,24 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/blood_type = "A+"				//blood type (not-chooseable)
 
 	// Default clothing
-	var/underwear = 1					//underwear type
-	var/undershirt = 1					//undershirt type
-	var/backpack = 2					//backpack type
+	var/underwear = 1					// underwear type
+	var/undershirt = 1					// undershirt type
+	var/backpack = 2					// backpack type
 
 	// Cosmetic features
-	var/hair_style = "Bald"				//Hair type
-	var/hair_face_style = "Shaved"		//Facial hair type
-	var/hair_color						//Hair color
-	var/hair_face_color					//Face hair color
+	var/hair_style = "Bald"				// Hair type
+	var/hair_face_style = "Shaved"		// Facial hair type
+	var/hair_color = "#000000"			// Hair color
+	var/hair_face_color	= "#000000"		// Face hair color
 
-	var/skin_tone						//Skin tone
-	var/skin_color						//Skin color
+	var/skin_tone = 35						// Skin tone
+	var/skin_color = "#000000"			// Skin color
 
-	var/eye_color						//Eye color
+	var/eye_color = "#000000"			// Eye color
 
 	// Character species
-	var/species = "Human"               //Species to use.
-	var/species_preview                 //Used for the species selection window.
+	var/species = "Human"               // Species to use.
+	var/species_preview                 // Used for the species selection window.
 
 	// Secondary language
 	var/language = "None"

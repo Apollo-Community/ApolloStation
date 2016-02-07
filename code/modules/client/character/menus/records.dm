@@ -17,7 +17,11 @@
 
 	HTML += TextPreview(sec_record,40)
 
-	HTML += "<br>"
+	HTML += "<br><br><a href='byond://?src=\ref[user];character=[menu_name];task=exploitable_record'>Exploitable Information</a><br>"
+
+	HTML += TextPreview(exploit_record,40)
+
+	HTML += "<br><br>"
 	HTML += "<a href='byond://?src=\ref[user];character=[menu_name];task=close'>\[Done\]</a>"
 	HTML += "</center></tt>"
 
@@ -28,28 +32,29 @@
 	switch( href_list["task"] )
 		if( "close" )
 			user << browse(null, "window=records_menu")
+			EditCharacterMenu( user )
 			return
 
-		if( "med_record")
-			var/medmsg = sanitize(input(usr,"Set your medical notes here.","Medical Records",html_decode(med_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
+		if( "med_record" )
+			var/medmsg = sanitize(input(usr,"Set your medical notes here. This information is used by medical staff.","Medical Records",html_decode(med_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
 			if(medmsg != null)
 				med_record = medmsg
 				RecordsMenu(user)
 
-		if( "sec_record")
-			var/secmsg = sanitize(input(usr,"Set your security notes here.","Security Records",html_decode(sec_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
+		if( "sec_record" )
+			var/secmsg = sanitize(input(usr,"Set your security notes here. This information is used by security staff.","Security Records",html_decode(sec_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
 			if(secmsg != null)
 				sec_record = secmsg
 				RecordsMenu(user)
 
-		if( "gen_record")
-			var/genmsg = sanitize(input(usr,"Set your employment notes here.","Employment Records",html_decode(gen_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
+		if( "gen_record" )
+			var/genmsg = sanitize(input(usr,"Set your employment notes here. This information is used by command staff.","Employment Records",html_decode(gen_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
 			if(genmsg != null)
 				gen_record = genmsg
 				RecordsMenu(user)
 
-		if( "exploitable_record")
-			var/exploitmsg = sanitize(input(usr,"Set exploitable information about you here.","Exploitable Information",html_decode(exploit_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
+		if( "exploitable_record" )
+			var/exploitmsg = sanitize(input(usr,"Set your exploitable information here. This information is used by antags.","Exploitable Information",html_decode(exploit_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
 			if(exploitmsg != null)
 				exploit_record = exploitmsg
-				AntagOptionsMenu(user)
+				RecordsMenu(user)

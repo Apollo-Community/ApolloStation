@@ -24,11 +24,22 @@
 	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=client_prefs'>Client Preferences</a><br>"
 
 	user << browse( ., "window=[menu_name];size=350x300")
+	winshow( user, "client_menu", 1)
+
+/datum/preferences/proc/ClientMenuDisable( mob/user )
+	winshow( user, "client_menu", 0)
 
 /datum/preferences/proc/ClientMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )
 		if( "select_character" )
-			SelectCharacterMenu( user )
+			if( !selected_character && !characters.len )
+				selected_character = new()
+				characters.Add( selected_character )
+				selected_character.EditCharacterMenu( user )
+				ClientMenuDisable( user )
+			else
+				SelectCharacterMenu( user )
+				ClientMenuDisable( user )
 		if( "edit_character" )
 			if( !selected_character )
 				selected_character = new()
@@ -70,6 +81,7 @@
 	. += "<b>Ghost Ears:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=ghost_ears'>[(toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearby Speech"]</a><br>"
 	. += "<b>Ghost Sight:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=ghost_sight'>[(toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearby Emotes"]</a><br>"
 	. += "<b>Ghost Radio:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=ghost_radio'>[(toggles & CHAT_GHOSTRADIO) ? "All Radio" : "Nearby Radio"]</a><br>"
+	. += "<br><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>Close</a><br>"
 
 	user << browse( ., "window=[menu_name];size=350x300" )
 
@@ -118,6 +130,10 @@
 		if("ghost_radio")
 			toggles ^= CHAT_GHOSTRADIO
 
+		if( "close" )
+			ClientMenu( user )
+			user << browse( null, "window=pref_menu" )
+
 	savePreferences()
 	PreferencesMenu( user )
 
@@ -134,21 +150,26 @@
 		if( !character )
 			continue
 
-		. += "<a href='byond://?src=\ref[user];preference=[menu_name];number=[i]'>[character.name]</a><br>"
+		. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=choose;number=[i]'>[character.name]</a><br>"
+
+	. += "<br><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>Done</a><br>"
 
 	user << browse( null, "window=[menu_name]" )
 	user << browse( ., "window=[menu_name];size=350x300" )
 
 /datum/preferences/proc/SelectCharacterMenuProcess( mob/user, list/href_list )
-	var/number = text2num( href_list["number"] )
+	switch( href_list["task"] )
+		if( "choose" )
+			var/number = text2num( href_list["number"] )
+			if( !number || number < 1 || number > characters.len)
+				user << "Could not select character!"
+				return
 
-	if( !number || number < 1 || number > characters.len)
-		user << "Could not select character!"
-		return
-
-	selected_character = characters[number]
-
-	SelectCharacterMenu( user )
+			selected_character = characters[number]
+			SelectCharacterMenu( user )
+		if( "close" )
+			ClientMenu( user )
+			user << browse( null, "window=select_character_menu" )
 
 /datum/preferences/proc/process_links( mob/user, list/href_list )
 	if( !user )	return

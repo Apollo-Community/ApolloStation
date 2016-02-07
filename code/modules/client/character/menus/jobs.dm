@@ -62,7 +62,7 @@
 			if(job.alt_titles) //Blatantly cloned from a few lines down.
 				HTML += {"</a></td></tr><tr bgcolor='[lastJob.selection_color]'>
 <td width='60%' align='center'><a>&nbsp</a></td>
-<td><a href=\"byond://?src=\ref[user];character=[menu_name];task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"}
+<td><a href='byond://?src=\ref[user];character=[menu_name];task=alt_title;job=\ref[job]'>\[[GetPlayerAltTitle(job)]\]</a></td></tr>"}
 			HTML += "</a></td></tr>"
 			continue
 
@@ -76,7 +76,7 @@
 			HTML += " <font color=red>\[NEVER]</font>"
 		if(job.alt_titles)
 			HTML += {"</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td>
-<td><a href=\"byond://?src=\ref[user];character=[menu_name];task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"}
+<td><a href='byond://?src=\ref[user];character=[menu_name];task=alt_title;job=\ref[job]'>\[[GetPlayerAltTitle(job)]\]</a></td></tr>"}
 		HTML += "</a></td></tr>"
 
 	HTML += "</td'></tr></table>"
@@ -95,16 +95,17 @@
 	HTML += "</tt>"
 
 	user << browse(HTML, "window=[menu_name];size=[width]x[height]")
+	winshow( user, "[menu_name]", 1)
 	return
 
 /datum/character/proc/JobChoicesMenuProcess( mob/user, list/href_list )
 	switch(href_list["task"])
 		if("close")
-			user << browse(null, "window=job_choices_menu")
+			winshow( user, "job_choices_menu", 0)
 			EditCharacterMenu(user)
+			return
 		if("reset")
 			ResetJobs()
-			JobChoicesMenu(user)
 		if("random")
 			if(alternate_option == GET_RANDOM_JOB || alternate_option == BE_ASSISTANT)
 				alternate_option += 1
@@ -112,7 +113,6 @@
 				alternate_option = 0
 			else
 				return 0
-			JobChoicesMenu(user)
 		if ("alt_title")
 			var/datum/job/job = locate(href_list["job"])
 			if (job)
@@ -120,8 +120,7 @@
 				var/choice = input("Pick a title for [job.title].", "Character Generation", GetPlayerAltTitle(job)) as anything in choices | null
 				if(choice)
 					SetPlayerAltTitle(job, choice)
-					JobChoicesMenu(user)
 		if("input")
 			SetJob(user, href_list["text"])
-		else
-			JobChoicesMenu(user)
+
+	JobChoicesMenu( user )

@@ -5,7 +5,7 @@
 		species_preview = "Human"
 	var/datum/species/current_species = all_species[species_preview]
 	var/dat = "<body>"
-	dat += "<center><h2>[current_species.name] \[<a href='byond://?src=\ref[user];character=[menu_name];task=change'>change</a>\]</h2></center><hr/>"
+	dat += "<center><h2>[current_species.name] \[<a href='byond://?src=\ref[user];character=[menu_name];task=change_selection'>change</a>\]</h2></center><hr/>"
 	dat += "<table padding='8px'>"
 	dat += "<tr>"
 	dat += "<td width = 400>[current_species.blurb]</td>"
@@ -55,10 +55,65 @@
 		else if(!(current_species.flags & CAN_JOIN) && !check_rights(R_ADMIN, 0))
 			dat += "<font color='red'><b>You cannot play as this species.</br><small>This species is not available for play as a station race..</small></b></font></br>"
 		else
-			dat += "\[<a href='byond://?src=\ref[user];character=[menu_name];task=input;newspecies=[species_preview]'>select</a>\]"
+			dat += "\[<a href='byond://?src=\ref[user];character=[menu_name];task=select_species;species=[species_preview]'>select</a>\]"
 	dat += "</center></body>"
 
 	user << browse(dat, "window=[menu_name];size=700x400")
 
 /datum/character/proc/SpeciesMenuProcess( mob/user, list/href_list )
+	switch( href_list["task"] )
+		if( "select_species" )
+			user << browse(null, "window=species_menu")
+			var/prev_species = species
+			species = href_list["species"]
+			if(prev_species != species)
+				//grab one of the valid hair styles for the newly chosen species
+				var/list/valid_hairstyles = list()
+				for(var/hairstyle in hair_styles_list)
+					var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
+					if(gender == MALE && S.gender == FEMALE)
+						continue
+					if(gender == FEMALE && S.gender == MALE)
+						continue
+					if( !(species in S.species_allowed))
+						continue
+					valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
+
+				if(valid_hairstyles.len)
+					hair_style = pick(valid_hairstyles)
+				else
+					//this shouldn't happen
+					hair_style = hair_styles_list["Bald"]
+
+				//grab one of the valid facial hair styles for the newly chosen species
+				var/list/valid_facialhairstyles = list()
+				for(var/facialhairstyle in facial_hair_styles_list)
+					var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
+					if(gender == MALE && S.gender == FEMALE)
+						continue
+					if(gender == FEMALE && S.gender == MALE)
+						continue
+					if( !(species in S.species_allowed))
+						continue
+
+					valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
+
+				if(valid_facialhairstyles.len)
+					hair_face_style = pick(valid_facialhairstyles)
+				else
+					//this shouldn't happen
+					hair_face_style = facial_hair_styles_list["Shaved"]
+
+				//reset hair colour and skin colour
+				hair_color = rgb( 0, 0, 0 )
+
+				skin_tone = 0
+			EditCharacterMenu(user)
+		if( "change_selection" )
+			// Actual whitelist checks are handled elsewhere, this is just for accessing the preview window.
+			var/choice = input("Which species would you like to look at?") as null|anything in playable_species
+			if(!choice) return
+			species_preview = choice
+			user.client.prefs.ClientMenu( user )
+			SpeciesMenu(user)
 

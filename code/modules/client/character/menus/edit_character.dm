@@ -58,7 +58,7 @@
 	dat += "\t<a href='byond://?src=\ref[user];character=[menu_name];task=job_menu'><b>Set Preferences</b></a><br>"
 
 	dat += "<br><table><tr><td><b>Body</b> "
-	dat += "(<a href='byond://?src=\ref[user];character=[menu_name];task=all_random'>&reg;</A>)"
+	dat += "(<a href='byond://?src=\ref[user];character=[menu_name];task=all_random'>Randomize</A>)"
 	dat += "<br>"
 	dat += "Species: <a href='byond://?src=\ref[user];character=[menu_name];task=species_menu'>[species]</a><br>"
 	dat += "Secondary Language:<br><a href='byond://?src=\ref[user];character=[menu_name];task=language'>[language]</a><br>"
@@ -130,15 +130,15 @@
 		dat += "<br><br>"
 
 	if(gender == MALE)
-		dat += "Underwear: <a href ='?_src_=prefs;character=[menu_name];task=underwear'><b>[underwear_m[underwear]]</b></a><br>"
+		dat += "Underwear: <a href='byond://?src=\ref[user];character=[menu_name];task=underwear'><b>[underwear_m[underwear]]</b></a><br>"
 	else
-		dat += "Underwear: <a href ='?_src_=prefs;character=[menu_name];task=underwear'><b>[underwear_f[underwear]]</b></a><br>"
+		dat += "Underwear: <a href='byond://?src=\ref[user];character=[menu_name];task=underwear'><b>[underwear_f[underwear]]</b></a><br>"
 
 	dat += "Undershirt: <a href='byond://?src=\ref[user];character=[menu_name];task=undershirt'><b>[undershirt_t[undershirt]]</b></a><br>"
 
-	dat += "Backpack Type:<br><a href ='?_src_=prefs;character=[menu_name];task=backpack'><b>[backpacklist[backpack]]</b></a><br>"
+	dat += "Backpack Type:<br><a href='byond://?src=\ref[user];character=[menu_name];task=backpack'><b>[backpacklist[backpack]]</b></a><br>"
 
-	dat += "Nanotrasen Relation:<br><a href ='?_src_=prefs;character=[menu_name];task=nt_relation'><b>[nanotrasen_relation]</b></a><br>"
+	dat += "Nanotrasen Relation:<br><a href='byond://?src=\ref[user];character=[menu_name];task=nt_relation'><b>[nanotrasen_relation]</b></a><br>"
 
 	dat += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></td></tr></table>"
 
@@ -194,10 +194,16 @@
 	if(!IsGuestKey(user.key))
 		dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=save'>Save Setup</a> - "
 
-	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=reset'>Reset Changes</a>"
+	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=reset'>Reset Changes</a> - "
+
+	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=close'>Close</a>"
 	dat += "</center></body></html>"
 
 	user << browse(dat, "window=[menu_name];size=560x736")
+	winshow( user, "edit_character", 1)
+
+/datum/character/proc/EditCharacterMenuDisable( mob/user )
+	winshow( user, "edit_character", 0)
 
 /datum/character/proc/EditCharacterMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )
@@ -214,53 +220,6 @@
 			var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
 			if(new_age)
 				age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
-
-		if("species")
-			user << browse(null, "window=species")
-			var/prev_species = species
-			species = href_list["newspecies"]
-			if(prev_species != species)
-				//grab one of the valid hair styles for the newly chosen species
-				var/list/valid_hairstyles = list()
-				for(var/hairstyle in hair_styles_list)
-					var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-					if(gender == MALE && S.gender == FEMALE)
-						continue
-					if(gender == FEMALE && S.gender == MALE)
-						continue
-					if( !(species in S.species_allowed))
-						continue
-					valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
-
-				if(valid_hairstyles.len)
-					hair_style = pick(valid_hairstyles)
-				else
-					//this shouldn't happen
-					hair_style = hair_styles_list["Bald"]
-
-				//grab one of the valid facial hair styles for the newly chosen species
-				var/list/valid_facialhairstyles = list()
-				for(var/facialhairstyle in facial_hair_styles_list)
-					var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-					if(gender == MALE && S.gender == FEMALE)
-						continue
-					if(gender == FEMALE && S.gender == MALE)
-						continue
-					if( !(species in S.species_allowed))
-						continue
-
-					valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
-
-				if(valid_facialhairstyles.len)
-					hair_face_style = pick(valid_facialhairstyles)
-				else
-					//this shouldn't happen
-					hair_face_style = facial_hair_styles_list["Shaved"]
-
-				//reset hair colour and skin colour
-				hair_color = rgb( 0, 0, 0 )
-
-				skin_tone = 0
 
 		if("language")
 			var/languages_available
@@ -336,7 +295,6 @@
 			var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_options
 			if(new_underwear)
 				underwear = underwear_options.Find(new_underwear)
-			EditCharacterMenu(user)
 
 		if("undershirt")
 			var/list/undershirt_options
@@ -345,7 +303,6 @@
 			var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_options
 			if (new_undershirt)
 				undershirt = undershirt_options.Find(new_undershirt)
-			EditCharacterMenu(user)
 
 		if("eye_color")
 			var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference", eye_color ) as color|null
@@ -465,6 +422,7 @@
 			var/choice = input(user, "Where would you like to spawn when latejoining?") as null|anything in spawnkeys
 			if(!choice || !spawntypes[choice])
 				spawnpoint = "Arrivals Shuttle"
+				EditCharacterMenu( user )
 				return
 			spawnpoint = choice
 
@@ -486,6 +444,7 @@
 				var/raw_choice = input(user, "Please enter your current citizenship.", "Character Preference") as text|null
 				if(raw_choice)
 					citizenship = sanitize(raw_choice)
+				EditCharacterMenu( user )
 				return
 			citizenship = choice
 		if("faction")
@@ -496,6 +455,7 @@
 				var/raw_choice = input(user, "Please enter a faction.")  as text|null
 				if(raw_choice)
 					faction = sanitize(raw_choice)
+				EditCharacterMenu( user )
 				return
 			faction = choice
 		if("religion")
@@ -506,6 +466,7 @@
 				var/raw_choice = input(user, "Please enter a religon.")  as text|null
 				if(raw_choice)
 					religion = sanitize(raw_choice)
+				EditCharacterMenu( user )
 				return
 			religion = choice
 
@@ -547,6 +508,14 @@
 			if(!gear.len)
 				return
 
+			var/i_remove = text2num(href_list["gear"])
+
+			if( i_remove )
+				if(i_remove < 1 || i_remove > gear.len) return
+				gear.Cut(i_remove, i_remove + 1)
+				EditCharacterMenu( user )
+				return
+
 			var/choice = input(user, "Select gear to remove: ") as null|anything in gear
 			if(!choice)
 				return
@@ -557,10 +526,6 @@
 			gear.Cut()
 
 		if( "acc_items" )
-			if( !account_items || !account_items.len )
-				src << "There are no items tied to your account."
-				return
-
 			var/list/valid_gear_choices = list()
 
 			for(var/gear_name in account_items)
@@ -570,6 +535,10 @@
 				if( !G.account )
 					continue
 				valid_gear_choices += gear_name
+
+			if( !valid_gear_choices || !valid_gear_choices.len )
+				src << "There are no valid items tied to your account."
+				return
 
 			var/choice = input(user, "Select item to add: ") as null|anything in valid_gear_choices
 
@@ -604,12 +573,18 @@
 			var/num = text2num(href_list["num"])
 			job_antag ^= (1<<num)
 
-		if( "species" )
+		if( "close" )
+			user.client.prefs.ClientMenu( user )
+			EditCharacterMenuDisable( user )
+
+		if( "species_menu" )
 			// Actual whitelist checks are handled elsewhere, this is just for accessing the preview window.
 			var/choice = input("Which species would you like to look at?") as null|anything in playable_species
 			if(!choice) return
 			species_preview = choice
-			SpeciesMenu(user)
+			SpeciesMenu( user )
+			EditCharacterMenuDisable( user )
+			return 1
 
 		if( "pAI" )
 			paiController.recruitWindow(user, 0)
@@ -617,14 +592,23 @@
 
 		if( "records_menu" )
 			RecordsMenu( user )
+			EditCharacterMenuDisable( user )
+			return 1
 
 		if( "antag_options_menu" )
 			AntagOptionsMenu( user )
+			EditCharacterMenuDisable( user )
+			return 1
 
 		if( "flavor_text_menu" )
 			FlavorTextMenu( user )
+			EditCharacterMenuDisable( user )
+			return 1
 
 		if( "job_menu" )
-			EditCharacterMenu( user )
+			JobChoicesMenu( user )
+			EditCharacterMenuDisable( user )
+			return 1
 
+	user.client.prefs.ClientMenu( user )
 	EditCharacterMenu( user )

@@ -23,7 +23,7 @@
 			FlavorTextMenuProcess( user, href_list )
 			return 1
 
-		if( "job_menu")
+		if( "job_choices_menu")
 			JobChoicesMenuProcess( user, href_list )
 			return 1
 
@@ -35,5 +35,8 @@
 			EditCharacterMenuProcess( user, href_list )
 			return 1
 
-	EditCharacterMenu(user)
+		if( "species_menu" )
+			SpeciesMenuProcess( user, href_list )
+			return 1
+
 	return 1
