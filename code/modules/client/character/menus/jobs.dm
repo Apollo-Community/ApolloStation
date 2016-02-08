@@ -91,10 +91,12 @@
 		if(RETURN_TO_LOBBY)
 			HTML += "<center><br><u><a href='byond://?src=\ref[user];character=[menu_name];task=random'><font color=purple>Return to lobby if preference unavailable</font></a></u></center><br>"
 
-	HTML += "<center><a href='byond://?src=\ref[user];character=[menu_name];task=reset'>\[Reset\]</a></center>"
+	HTML += "<center>"
+	HTML += "<a href='byond://?src=\ref[user];character=[menu_name];task=reset'>\[Reset\]</a>"
+	HTML += "</center>"
 	HTML += "</tt>"
 
-	user << browse(HTML, "window=[menu_name];size=[width]x[height]")
+	user << browse(HTML, "window=[menu_name];size=[width]x[height];titlebar=0")
 	winshow( user, "[menu_name]", 1)
 	return
 

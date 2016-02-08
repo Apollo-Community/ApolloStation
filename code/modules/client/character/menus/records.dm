@@ -3,7 +3,7 @@
 
 	var/HTML = "<body>"
 	HTML += "<tt><center>"
-	HTML += "<b>Set Character Records</b><br>"
+	HTML += "<h3>Set Character Records</h3><hr>"
 
 	HTML += "<a href='byond://?src=\ref[user];character=[menu_name];task=med_record'>Medical Records</a><br>"
 
@@ -25,13 +25,14 @@
 	HTML += "<a href='byond://?src=\ref[user];character=[menu_name];task=close'>\[Done\]</a>"
 	HTML += "</center></tt>"
 
-	user << browse(HTML, "window=[menu_name];size=350x300")
+	user << browse(HTML, "window=[menu_name];size=350x300;titlebar=0")
+	winshow( user, "[menu_name]", 1)
 	return
 
 /datum/character/proc/RecordsMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )
 		if( "close" )
-			user << browse(null, "window=records_menu")
+			winshow( user, "records_menu", 0)
 			EditCharacterMenu( user )
 			return
 

@@ -107,9 +107,10 @@
 		toggles = text2num( query.item[6] )
 		var/selected_char_name = query.item[7]
 
-		selected_character = new( client )
-		characters.Add( selected_character )
-		selected_character.loadCharacter( selected_char_name )
+		if( selected_char_name )
+			selected_character = new( client )
+			characters.Add( selected_character )
+			selected_character.loadCharacter( selected_char_name )
 
 	return 1
 

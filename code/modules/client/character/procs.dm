@@ -1,6 +1,6 @@
 /datum/character/proc/saveCharacter()
 	if( !client )
-		return
+		return 0
 
 	var/list/variables = list()
 
@@ -121,11 +121,11 @@
 		if(istext(sql_id))
 			sql_id = text2num(sql_id)
 		if(!isnum(sql_id))
-			return
+			return 0
 
 	if(sql_id)
 		if( names.len != values.len )
-			return
+			return 0
 
 		var/query_params = ""
 		for( var/i = 1; i < names.len; i++ )
@@ -135,7 +135,8 @@
 
 		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
 		var/DBQuery/query_update = dbcon.NewQuery("UPDATE characters SET [query_params] WHERE ckey = '[variables["ckey"]]' AND name = '[variables["name"]]'")
-		query_update.Execute()
+		if( !query_update.Execute())
+			return 0
 	else
 		var/query_names = list2text( names, "," )
 		query_names += sql_sanitize_text( ", id" )
@@ -145,9 +146,18 @@
 
 		// This needs a single quote before query_values because otherwise there will be an odd number of single quotes
 		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO characters ([query_names]) VALUES ('[query_values])")
-		query_insert.Execute()
+		if( !query_insert.Execute() )
+			return 0
+
+	return 1
 
 /datum/character/proc/loadCharacter( var/character_name )
+	if( !client )
+		return 0
+
+	if( !character_name )
+		return 0
+
 	var/list/variables = list()
 
 	// Base information
@@ -236,10 +246,11 @@
 	var/sql_character_name = sql_sanitize_text( character_name )
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT [query_names] FROM characters WHERE ckey = '[sql_ckey]' AND name = '[sql_character_name]'")
-	query.Execute()
+	if( !query.Execute() )
+		return 0
 
 	if( !query.NextRow() )
-		return
+		return 0
 
 	for( var/i = 1; i < variables.len; i++ )
 		var/value = query.item[i]
@@ -260,6 +271,8 @@
 					value = "None"
 
 		vars[variables[i]] = value
+
+	return 1
 
 /datum/character/proc/randomize_appearance_for(var/mob/living/carbon/human/H)
 	if(H)

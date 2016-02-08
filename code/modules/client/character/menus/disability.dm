@@ -3,7 +3,7 @@
 
 	var/HTML = "<body>"
 	HTML += "<tt><center>"
-	HTML += "<b>Choose disabilities</b><br>"
+	HTML += "<h3>Disabilities</h3><hr>"
 
 	HTML += "Need Glasses? <a href=\"byond://?src=\ref[user];character=[menu_name];disabilities=0\">[disabilities & (1<<0) ? "Yes" : "No"]</a><br>"
 	HTML += "Seizures? <a href=\"byond://?src=\ref[user];character=[menu_name];disabilities=1\">[disabilities & (1<<1) ? "Yes" : "No"]</a><br>"
@@ -16,7 +16,7 @@
 	HTML += "<a href=\"byond://?src=\ref[user];character=[menu_name];disabilities=-1\">\[Done\]</a>"
 	HTML += "</center></tt>"
 
-	user << browse(HTML, "window=[menu_name];size=350x300")
+	user << browse(HTML, "window=[menu_name];size=350x300;titlebar=0")
 	return
 
 /datum/character/proc/DisabilitiesMenuProcess( mob/user, list/href_list )

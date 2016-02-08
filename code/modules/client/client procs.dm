@@ -229,6 +229,8 @@
 	//DISCONNECT//
 	//////////////
 /client/Del()
+	prefs.savePreferences()
+
 	if(holder)
 		holder.owner = null
 		admins -= src

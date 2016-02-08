@@ -58,12 +58,13 @@
 			dat += "\[<a href='byond://?src=\ref[user];character=[menu_name];task=select_species;species=[species_preview]'>select</a>\]"
 	dat += "</center></body>"
 
-	user << browse(dat, "window=[menu_name];size=700x400")
+	user << browse(dat, "window=[menu_name];size=700x400;titlebar=0")
+	winshow( user, "[menu_name]", 1)
 
 /datum/character/proc/SpeciesMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )
 		if( "select_species" )
-			user << browse(null, "window=species_menu")
+			winshow( user, "species_menu", 0)
 			var/prev_species = species
 			species = href_list["species"]
 			if(prev_species != species)

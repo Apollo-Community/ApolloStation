@@ -7,66 +7,62 @@
 	user << browse_rsc(preview_icon_front, "previewicon.png")
 	user << browse_rsc(preview_icon_side, "previewicon2.png")
 
-	var/dat = "<html><body><center>"
+	. = "<html><body><table><tr><td width='340px' height='320px'>"
 
-	dat += "IMPLEMENT LOADING AND SAVING KWASK"
+	. += "<b>Name:</b> "
+	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=name'><b>[name]</b></a><br>"
+	. += "(<a href='byond://?src=\ref[user];character=[menu_name];task=name_random'>Random Name</A>) "
+	. += "<br>"
 
-	dat += "</center><hr><table><tr><td width='340px' height='320px'>"
+	. += "<b>Gender:</b> <a href='byond://?src=\ref[user];character=[menu_name];task=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a><br>"
+	. += "<b>Age:</b> <a href='byond://?src=\ref[user];character=[menu_name];task=age'>[age]</a><br>"
+	. += "<b>Spawn Point</b>: <a href='byond://?src=\ref[user];character=[menu_name];task=spawnpoint'>[spawnpoint]</a>"
+	. += "<br>"
 
-	dat += "<b>Name:</b> "
-	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=name'><b>[name]</b></a><br>"
-	dat += "(<a href='byond://?src=\ref[user];character=[menu_name];task=name_random'>Random Name</A>) "
-	dat += "<br>"
-
-	dat += "<b>Gender:</b> <a href='byond://?src=\ref[user];character=[menu_name];task=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a><br>"
-	dat += "<b>Age:</b> <a href='byond://?src=\ref[user];character=[menu_name];task=age'>[age]</a><br>"
-	dat += "<b>Spawn Point</b>: <a href='byond://?src=\ref[user];character=[menu_name];task=spawnpoint'>[spawnpoint]</a>"
-	dat += "<br>"
-
-	dat += "<br><b>Custom Loadout:</b> "
+	. += "<br><b>Custom Loadout:</b> "
 	var/total_cost = 0
 
 	if(!islist(gear)) gear = list()
 
 	if(gear && gear.len)
-		dat += "<br>"
+		. += "<br>"
 		for(var/i = 1; i <= gear.len; i++)
 			var/datum/gear/G = gear_datums[gear[i]]
 			if(G)
 				if( !G.account )
 					total_cost += G.cost
-				dat += "[gear[i]]"
+				. += "[gear[i]]"
 				if( !G.account )
-					dat += " ([G.cost] points) "
+					. += " ([G.cost] points) "
 				else
-					dat += " (Account Item) "
-				dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=loadout_remove;gear=[i]'>\[remove\]</a><br>"
+					. += " (Account Item) "
+				. += "<a href='byond://?src=\ref[user];character=[menu_name];task=loadout_remove;gear=[i]'>\[remove\]</a><br>"
 
-		dat += "<b>Used:</b> [total_cost] points."
+		. += "<b>Used:</b> [total_cost] points."
 	else
-		dat += "none."
+		. += "none."
 
 	if(total_cost < MAX_GEAR_COST)
-		dat += " <a href='byond://?src=\ref[user];character=[menu_name];task=loadout_add'>\[add\]</a>"
+		. += " <a href='byond://?src=\ref[user];character=[menu_name];task=loadout_add'>\[add\]</a>"
 		if(gear && gear.len)
-			dat += " <a href='byond://?src=\ref[user];character=[menu_name];task=loadout_clear'>\[clear\]</a>"
-	dat += "<br>"
+			. += " <a href='byond://?src=\ref[user];character=[menu_name];task=loadout_clear'>\[clear\]</a>"
+	. += "<br>"
 
-	dat += "\t<a href='byond://?src=\ref[user];character=[menu_name];task=acc_items'><b>Account Items</b></a><br>"
+	. += "\t<a href='byond://?src=\ref[user];character=[menu_name];task=acc_items'><b>Account Items</b></a><br>"
 
-	dat += "<br><br><b>Occupation Choices</b><br>"
-	dat += "\t<a href='byond://?src=\ref[user];character=[menu_name];task=job_menu'><b>Set Preferences</b></a><br>"
+	. += "<br><br><b>Occupation Choices</b><br>"
+	. += "\t<a href='byond://?src=\ref[user];character=[menu_name];task=job_menu'><b>Set Preferences</b></a><br>"
 
-	dat += "<br><table><tr><td><b>Body</b> "
-	dat += "(<a href='byond://?src=\ref[user];character=[menu_name];task=all_random'>Randomize</A>)"
-	dat += "<br>"
-	dat += "Species: <a href='byond://?src=\ref[user];character=[menu_name];task=species_menu'>[species]</a><br>"
-	dat += "Secondary Language:<br><a href='byond://?src=\ref[user];character=[menu_name];task=language'>[additional_language]</a><br>"
-	dat += "Blood Type: [blood_type]<br>"
-	dat += "Skin Tone: <a href='byond://?src=\ref[user];character=[menu_name];task=skin_tone'>[-skin_tone+SKIN_TONE_DEFAULT]/[SKIN_TONE_MAX]<br></a>"
-	dat += "Needs Glasses: <a href='byond://?src=\ref[user];character=[menu_name];task=disabilities'><b>[disabilities == 0 ? "No" : "Yes"]</b></a><br>"
-	dat += "Limbs: <a href='byond://?src=\ref[user];character=[menu_name];task=limbs_adjust'>Adjust</a><br>"
-	dat += "Internal Organs: <a href='byond://?src=\ref[user];character=[menu_name];task=organs_adjust'>Adjust</a><br>"
+	. += "<br><table><tr><td><b>Body</b> "
+	. += "(<a href='byond://?src=\ref[user];character=[menu_name];task=all_random'>Randomize</A>)"
+	. += "<br>"
+	. += "Species: <a href='byond://?src=\ref[user];character=[menu_name];task=species_menu'>[species]</a><br>"
+	. += "Secondary Language:<br><a href='byond://?src=\ref[user];character=[menu_name];task=language'>[additional_language]</a><br>"
+	. += "Blood Type: [blood_type]<br>"
+	. += "Skin Tone: <a href='byond://?src=\ref[user];character=[menu_name];task=skin_tone'>[-skin_tone+SKIN_TONE_DEFAULT]/[SKIN_TONE_MAX]<br></a>"
+	. += "Needs Glasses: <a href='byond://?src=\ref[user];character=[menu_name];task=disabilities'><b>[disabilities == 0 ? "No" : "Yes"]</b></a><br>"
+	. += "Limbs: <a href='byond://?src=\ref[user];character=[menu_name];task=limbs_adjust'>Adjust</a><br>"
+	. += "Internal Organs: <a href='byond://?src=\ref[user];character=[menu_name];task=organs_adjust'>Adjust</a><br>"
 
 	//display limbs below
 	var/ind = 0
@@ -99,108 +95,108 @@
 		if(status == "cyborg")
 			++ind
 			if(ind > 1)
-				dat += ", "
-			dat += "\tMechanical [organ_name] prothesis"
+				. += ", "
+			. += "\tMechanical [organ_name] prothesis"
 		else if(status == "amputated")
 			++ind
 			if(ind > 1)
-				dat += ", "
-			dat += "\tAmputated [organ_name]"
+				. += ", "
+			. += "\tAmputated [organ_name]"
 		else if(status == "mechanical")
 			++ind
 			if(ind > 1)
-				dat += ", "
-			dat += "\tMechanical [organ_name]"
+				. += ", "
+			. += "\tMechanical [organ_name]"
 		else if(status == "assisted")
 			++ind
 			if(ind > 1)
-				dat += ", "
+				. += ", "
 			switch(organ_name)
 				if("heart")
-					dat += "\tPacemaker-assisted [organ_name]"
+					. += "\tPacemaker-assisted [organ_name]"
 				if("voicebox") //on adding voiceboxes for speaking skrell/similar replacements
-					dat += "\tSurgically altered [organ_name]"
+					. += "\tSurgically altered [organ_name]"
 				if("eyes")
-					dat += "\tRetinal overlayed [organ_name]"
+					. += "\tRetinal overlayed [organ_name]"
 				else
-					dat += "\tMechanically assisted [organ_name]"
+					. += "\tMechanically assisted [organ_name]"
 	if(!ind)
-		dat += "\[...\]<br><br>"
+		. += "\[...\]<br><br>"
 	else
-		dat += "<br><br>"
+		. += "<br><br>"
 
 	if(gender == MALE)
-		dat += "Underwear: <a href='byond://?src=\ref[user];character=[menu_name];task=underwear'><b>[underwear_m[underwear]]</b></a><br>"
+		. += "Underwear: <a href='byond://?src=\ref[user];character=[menu_name];task=underwear'><b>[underwear_m[underwear]]</b></a><br>"
 	else
-		dat += "Underwear: <a href='byond://?src=\ref[user];character=[menu_name];task=underwear'><b>[underwear_f[underwear]]</b></a><br>"
+		. += "Underwear: <a href='byond://?src=\ref[user];character=[menu_name];task=underwear'><b>[underwear_f[underwear]]</b></a><br>"
 
-	dat += "Undershirt: <a href='byond://?src=\ref[user];character=[menu_name];task=undershirt'><b>[undershirt_t[undershirt]]</b></a><br>"
+	. += "Undershirt: <a href='byond://?src=\ref[user];character=[menu_name];task=undershirt'><b>[undershirt_t[undershirt]]</b></a><br>"
 
-	dat += "Backpack Type:<br><a href='byond://?src=\ref[user];character=[menu_name];task=backpack'><b>[backpacklist[backpack]]</b></a><br>"
+	. += "Backpack Type:<br><a href='byond://?src=\ref[user];character=[menu_name];task=backpack'><b>[backpacklist[backpack]]</b></a><br>"
 
-	dat += "Nanotrasen Relation:<br><a href='byond://?src=\ref[user];character=[menu_name];task=nt_relation'><b>[nanotrasen_relation]</b></a><br>"
+	. += "Nanotrasen Relation:<br><a href='byond://?src=\ref[user];character=[menu_name];task=nt_relation'><b>[nanotrasen_relation]</b></a><br>"
 
-	dat += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></td></tr></table>"
+	. += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></td></tr></table>"
 
-	dat += "</td><td width='300px' height='300px'>"
+	. += "</td><td width='300px' height='300px'>"
 
 	if(jobban_isbanned(user, "Records"))
-		dat += "<b>You are banned from using character records.</b><br>"
+		. += "<b>You are banned from using character records.</b><br>"
 	else
-		dat += "<b><a href='byond://?src=\ref[user];character=[menu_name];task=records_menu'>Character Records</a></b><br>"
+		. += "<b><a href='byond://?src=\ref[user];character=[menu_name];task=records_menu'>Character Records</a></b><br>"
 
-	dat += "<b><a href='byond://?src=\ref[user];character=[menu_name];task=antag_options_menu'>Set Antag Options</b></a><br>"
-	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=flavor_text_menu'><b>Set Flavor Text</b></a><br>"
+	. += "<b><a href='byond://?src=\ref[user];character=[menu_name];task=antag_options_menu'>Set Antag Options</b></a><br>"
+	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=flavor_text_menu'><b>Set Flavor Text</b></a><br>"
 
-	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=pAI'><b>pAI Configuration</b></a><br>"
-	dat += "<br>"
+	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=pAI'><b>pAI Configuration</b></a><br>"
+	. += "<br>"
 
-	dat += "<br><b>Hair</b><br>"
-	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=hair_color'>Change Color</a> <font face='fixedsys' size='3' color='[hair_color]'><table style='display:inline;' bgcolor='[hair_color]'><tr><td>__</td></tr></table></font> "
-	dat += " Style: <a href='byond://?src=\ref[user];character=[menu_name];task=hair_style'>[hair_style]</a><br>"
+	. += "<br><b>Hair</b><br>"
+	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=hair_color'>Change Color</a> <table style='display:inline;' bgcolor='[hair_color]'><tr><td><font face='fixedsys' size='3' color='[hair_color]'>__</font></td></tr></table> "
+	. += "<br>Style: <a href='byond://?src=\ref[user];character=[menu_name];task=hair_style'>[hair_style]</a><br>"
 
-	dat += "<br><b>Facial</b><br>"
-	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=hair_face_color'>Change Color</a> <font face='fixedsys' size='3' color='[hair_face_color]'><table  style='display:inline;' bgcolor='[hair_face_color]'><tr><td>__</td></tr></table></font> "
-	dat += " Style: <a href='byond://?src=\ref[user];character=[menu_name];task=hair_face_style'>[hair_face_style]</a><br>"
+	. += "<br><b>Facial</b><br>"
+	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=hair_face_color'>Change Color</a> <table  style='display:inline;' bgcolor='[hair_face_color]'><tr><td><font face='fixedsys' size='3' color='[hair_face_color]'>__</font></td></tr></table> "
+	. += "<br>Style: <a href='byond://?src=\ref[user];character=[menu_name];task=hair_face_style'>[hair_face_style]</a><br>"
 
-	dat += "<br><b>Eyes</b><br>"
-	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=eye_color'>Change Color</a> <font face='fixedsys' size='3' color='[eye_color]'><table  style='display:inline;' bgcolor='[eye_color]'><tr><td>__</td></tr></table></font><br>"
+	. += "<br><b>Eyes</b><br>"
+	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=eye_color'>Change Color</a> <table style='display:inline;'bgcolor='[eye_color]'><tr><td><font face='fixedsys' size='3' color='[eye_color]'>__</font></td></tr></table><br>"
 
-	dat += "<br><b>Body Color</b><br>"
-	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=skin_color'>Change Color</a> <font face='fixedsys' size='3' color='[skin_color]'><table style='display:inline;' bgcolor='[skin_color]'><tr><td>__</td></tr></table></font>"
+	. += "<br><b>Body Color</b><br>"
+	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=skin_color'>Change Color</a> <table style='display:inline;'bgcolor='[skin_color]'><tr><td><font face='fixedsys' size='3' color='[skin_color]'>__</font></td></tr></table>"
 
-	dat += "<br><br><b>Background Information</b><br>"
-	dat += "<b>Home system</b>: <a href='byond://?src=\ref[user];character=[menu_name];task=home_system'>[home_system]</a><br/>"
-	dat += "<b>Citizenship</b>: <a href='byond://?src=\ref[user];character=[menu_name];task=citizenship'>[citizenship]</a><br/>"
-	dat += "<b>Faction</b>: <a href='byond://?src=\ref[user];character=[menu_name];task=faction'>[faction]</a><br/>"
-	dat += "<b>Religion</b>: <a href='byond://?src=\ref[user];character=[menu_name];task=religion'>[religion]</a><br/>"
+	. += "<br><br><b>Background Information</b><br>"
+	. += "<b>Home system</b>: <a href='byond://?src=\ref[user];character=[menu_name];task=home_system'>[home_system]</a><br/>"
+	. += "<b>Citizenship</b>: <a href='byond://?src=\ref[user];character=[menu_name];task=citizenship'>[citizenship]</a><br/>"
+	. += "<b>Faction</b>: <a href='byond://?src=\ref[user];character=[menu_name];task=faction'>[faction]</a><br/>"
+	. += "<b>Religion</b>: <a href='byond://?src=\ref[user];character=[menu_name];task=religion'>[religion]</a><br/>"
 
-	dat += "<br><br>"
+	. += "<br><br>"
 
 	if(jobban_isbanned(user, "Syndicate"))
-		dat += "<b>You are banned from antagonist roles.</b>"
+		. += "<b>You are banned from antagonist roles.</b>"
 		src.job_antag = 0
 	else
 		var/n = 0
 		for (var/i in special_roles)
 			if(special_roles[i]) //if mode is available on the server
 				if(jobban_isbanned(user, i) || (i == "positronic brain" && jobban_isbanned(user, "AI") && jobban_isbanned(user, "Cyborg")) || (i == "pAI candidate" && jobban_isbanned(user, "pAI")))
-					dat += "<b>Be [i]:<b> <font color=red><b> \[BANNED]</b></font><br>"
+					. += "<b>Be [i]:<b> <font color=red><b> \[BANNED]</b></font><br>"
 				else
-					dat += "<b>Be [i]:</b> <a href='byond://?src=\ref[user];character=[menu_name];task=job_antag;num=[n]'><b>[src.job_antag&(1<<n) ? "Yes" : "No"]</b></a><br>"
+					. += "<b>Be [i]:</b> <a href='byond://?src=\ref[user];character=[menu_name];task=job_antag;num=[n]'><b>[src.job_antag&(1<<n) ? "Yes" : "No"]</b></a><br>"
 			n++
-	dat += "</td></tr></table><hr><center>"
+	. += "</td></tr></table><hr><center>"
 
 	if(!IsGuestKey(user.key))
-		dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=save'>Save Setup</a> - "
+		. += "<a href='byond://?src=\ref[user];character=[menu_name];task=save'>\[Save Setup\]</a> - "
 
-	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=reset'>Reset Changes</a> - "
+	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=reset'>\[Reset Changes\]</a> - "
 
-	dat += "<a href='byond://?src=\ref[user];character=[menu_name];task=close'>Close</a>"
-	dat += "</center></body></html>"
+	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=close'>\[Done\]</a>"
+	. += "</center></body></html>"
 
-	user << browse(dat, "window=[menu_name];size=560x736")
-	winshow( user, "edit_character", 1)
+	user << browse( ., "window=[menu_name];size=560x736;titlebar=0" )
+	winshow( user, "edit_character", 1 )
 
 /datum/character/proc/EditCharacterMenuDisable( mob/user )
 	winshow( user, "edit_character", 0)
@@ -208,7 +204,13 @@
 /datum/character/proc/EditCharacterMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )
 		if( "save" )
-			saveCharacter()
+			if( !saveCharacter() )
+				alert( user, "Character could not be saved to the database, please contact an admin." )
+			return 1
+
+		if( "reset" )
+			if( !loadCharacter( name ))
+				alert( user, "No savepoint to reset from. You need to save your character first before you can reset." )
 
 		if("name")
 			var/raw_name = input(user, "Choose your character's name:", "Character Preference")  as text|null
@@ -579,6 +581,7 @@
 		if( "close" )
 			user.client.prefs.ClientMenu( user )
 			EditCharacterMenuDisable( user )
+			return 1
 
 		if( "species_menu" )
 			// Actual whitelist checks are handled elsewhere, this is just for accessing the preview window.
@@ -613,5 +616,4 @@
 			EditCharacterMenuDisable( user )
 			return 1
 
-	user.client.prefs.ClientMenu( user )
 	EditCharacterMenu( user )

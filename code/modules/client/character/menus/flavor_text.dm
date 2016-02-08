@@ -14,13 +14,14 @@
 	HTML +="<a href='byond://?src=\ref[user];character=[menu_name];task=close'>\[Done\]</a>"
 	HTML += "<tt>"
 
-	user << browse(HTML, "window=[menu_name];size=430x300")
+	user << browse(HTML, "window=[menu_name];size=430x300;titlebar=0")
+	winshow( user, "[menu_name]", 1)
 	return
 
 /datum/character/proc/FlavorTextMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )
 		if( "close" )
-			user << browse(null, "window=flavor_text_menu")
+			winshow( user, "flavor_text_menu", 0)
 			EditCharacterMenu( user )
 			return
 		if( "human" )

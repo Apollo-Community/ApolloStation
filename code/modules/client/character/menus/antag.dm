@@ -5,15 +5,16 @@
 		uplink_location = "PDA"
 	var/HTML = "<body>"
 	HTML += "<tt><center>"
-	HTML += "<b>Antagonist Options</b> <hr />"
+	HTML += "<h3>Antagonist Options</h3><hr>"
 	HTML += "<br>"
-	HTML +="Uplink Type : <b><a href='byond://?src=\ref[user];character=[menu_name];task=uplinktype;active=1'>[uplink_location]</a></b>"
-	HTML +="<br>"
+	HTML += "Uplink Type : <b><a href='byond://?src=\ref[user];character=[menu_name];task=uplinktype;active=1'>[uplink_location]</a></b>"
+	HTML += "<br>"
 
 	if(jobban_isbanned(user, "Records"))
 		HTML += "<b>You are banned from using character records.</b><br>"
 	else
-		HTML +="<b><a href='byond://?src=\ref[user];character=[menu_name];task=exploitable_record'>Exploitable information</a></b>:"
+		HTML += "<br>"
+		HTML +="<b><a href='byond://?src=\ref[user];character=[menu_name];task=exploitable_record'>Exploitable information</a></b><br>"
 		HTML +="[TextPreview(exploit_record,40)]"
 	HTML +="<br>"
 	HTML +="<hr />"
@@ -21,7 +22,7 @@
 
 	HTML += "</center></tt>"
 
-	user << browse(HTML, "window=[menu_name]")
+	user << browse(HTML, "window=[menu_name];titlebar=0")
 	return
 
 /datum/character/proc/AntagOptionsMenuProcess( mob/user, list/href_list )

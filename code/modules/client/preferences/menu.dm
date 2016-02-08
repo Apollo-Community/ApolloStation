@@ -22,8 +22,9 @@
 	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=new_character'>Create New Character</a><br>"
 
 	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=client_prefs'>Client Preferences</a><br>"
+	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=close'>\[Done\]</a><br>"
 
-	user << browse( ., "window=[menu_name];size=350x300")
+	user << browse( ., "window=[menu_name];size=350x300;titlebar=0")
 	winshow( user, "client_menu", 1)
 
 /datum/preferences/proc/ClientMenuDisable( mob/user )
@@ -38,7 +39,7 @@
 			if( !selected_character )
 				selected_character = new( client )
 				characters.Add( selected_character )
-			ClientMenu( user )
+			ClientMenuDisable( user )
 			selected_character.EditCharacterMenu( user )
 		if( "delete_character" )
 			characters.Remove( selected_character )
@@ -48,10 +49,13 @@
 		if( "new_character" )
 			selected_character = new( client )
 			characters.Add( selected_character )
-			ClientMenu( user )
+			ClientMenuDisable( user )
 			selected_character.EditCharacterMenu( user )
 		if( "client_prefs" )
+			ClientMenuDisable( user )
 			PreferencesMenu( user )
+		if( "close" )
+			ClientMenuDisable( user )
 
 /datum/preferences/proc/PreferencesMenu( mob/user )
 	if( !user || !istype( user ))
@@ -59,7 +63,7 @@
 
 	var/menu_name = "pref_menu"
 
-	. = "<h2>Client Preference Menu</h2><br>"
+	. = "<h3>Client Preference Menu</h3><hr>"
 	. += "<b>OOC Color:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=OOC_color'>[OOC_color]</a><br><br>"
 	. += "<b>UI Style:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=UI_style'>[UI_style]</a><br>"
 	. += "<b>UI Transparency:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=UI_trans'>[UI_style_alpha]</a><br>"
@@ -75,9 +79,10 @@
 	. += "<b>Ghost Ears:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=ghost_ears'>[(toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearby Speech"]</a><br>"
 	. += "<b>Ghost Sight:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=ghost_sight'>[(toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearby Emotes"]</a><br>"
 	. += "<b>Ghost Radio:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=ghost_radio'>[(toggles & CHAT_GHOSTRADIO) ? "All Radio" : "Nearby Radio"]</a><br>"
-	. += "<br><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>Close</a><br>"
+	. += "<br><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>\[Done\]</a><br>"
 
-	user << browse( ., "window=[menu_name];size=350x300" )
+	user << browse( ., "window=[menu_name];size=350x300;titlebar=0" )
+	winshow( user, "[menu_name]", 1)
 
 /datum/preferences/proc/PreferencesMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )
@@ -126,7 +131,8 @@
 
 		if( "close" )
 			ClientMenu( user )
-			user << browse( null, "window=pref_menu" )
+			winshow( user, "pref_menu", 0)
+			return
 
 	savePreferences()
 	PreferencesMenu( user )
@@ -138,7 +144,7 @@
 	var/menu_name = "select_character_menu"
 
 	. = ""
-	. += "<h2>Character Selection Menu</h2><br>"
+	. += "<h3>Character Selection Menu</h3><hr>"
 
 	var/sql_ckey = ckey( user.client.ckey )
 
@@ -151,10 +157,10 @@
 		else
 			. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=choose;name=[query.item[1]]'>[query.item[1]]</a><br>"
 
-	. += "<br><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>Done</a><br>"
+	. += "<br><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>\[Done\]</a><br>"
 
-	user << browse( null, "window=[menu_name]" )
-	user << browse( ., "window=[menu_name];size=350x300" )
+	user << browse( ., "window=[menu_name];size=350x300;titlebar=0" )
+	winshow( user, "[menu_name]", 1)
 
 /datum/preferences/proc/SelectCharacterMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )
@@ -164,16 +170,21 @@
 				if( C.name == chosen_name )
 					selected_character = C
 					SelectCharacterMenu( user )
+					winshow( user, "select_character_menu", 0)
+					ClientMenu( user )
 					return
 
 			selected_character = new( client )
 			characters.Add( selected_character )
-			selected_character.loadCharacter( chosen_name )
+			if( !selected_character.loadCharacter( chosen_name ))
+				qdel( selected_character )
 
-			SelectCharacterMenu( user )
-		if( "close" )
+			winshow( user, "select_character_menu", 0)
 			ClientMenu( user )
-			user << browse( null, "window=select_character_menu" )
+		if( "close" )
+			winshow( user, "select_character_menu", 0)
+			ClientMenu( user )
+			return
 
 /datum/preferences/proc/process_links( mob/user, list/href_list )
 	if( !user )	return
