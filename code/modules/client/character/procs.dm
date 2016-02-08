@@ -175,7 +175,7 @@
 	variables["species"] = "text"
 
 	// Secondary language
-	variables["additional_language"] = "text"
+	variables["additional_language"] = "language"
 
 	// Custom spawn gear
 	variables["gear"] = "params"
@@ -246,11 +246,18 @@
 
 		switch( variables[variables[i]] )
 			if( "text" )
-				value = value // lol
+				value = sanitize_text( value, "ERROR" )
 			if( "number" )
 				value = text2num( value )
 			if( "params" )
 				value = params2list( value )
+				if( !value )
+					value = list()
+			if( "language" )
+				if( value in all_languages )
+					value = all_languages[value]
+				else
+					value = "None"
 
 		vars[variables[i]] = value
 
