@@ -149,21 +149,27 @@
 
 		if(href_list["late_join"])
 			if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-				usr << "<span class='alert'>The round is either not ready, or has already finished...</span>"
+				usr << alert( "The round is either not ready, or has already finished..." )
 				return
 
-			var/datum/species/S = client.prefs.selected_character.species
+			var/species = client.prefs.selected_character.species
 
-			if( !S )
+			if( !is_alien_whitelisted(src, species ))
+				src << alert("You are currently not whitelisted to play [species].")
+				return 0
+
+			if( !client.prefs.selected_character )
+				usr << alert("You have not selected a character to join as!")
+				return
+
+			var/datum/species/S = all_species[species]
+
+			if( !istype( S ))
 				src << alert("Your select species does not exist!")
 				return 0
 
-			if( !is_alien_whitelisted(src, S ))
-				src << alert("You are currently not whitelisted to play [S].")
-				return 0
-
 			if(!(S.flags & CAN_JOIN))
-				src << alert("Your current species, [S], is not available for play on the station.")
+				src << alert("Your current species, [species], is not available for play on the station.")
 				return 0
 
 			var/active_mobs = getActiveMobs()
@@ -184,21 +190,27 @@
 
 		if(href_list["SelectedJob"])
 			if(!config.enter_allowed)
-				usr << "<span class='notice'>There is an administrative lock on entering the game!</span>"
+				usr << alert("There is an administrative lock on entering the game!")
 				return
 
-			else if(ticker && ticker.mode && ticker.mode.explosion_in_progress)
-				usr << "<span class='danger'>The station is currently exploding. Joining would go poorly.</span>"
+			if(ticker && ticker.mode && ticker.mode.explosion_in_progress)
+				usr << alert("The station is currently exploding. Joining would go poorly.")
 				return
 
-			var/datum/species/S = all_species[client.prefs.selected_character.species]
+			if( !client.prefs.selected_character )
+				usr << alert("You have not selected a character to join as!")
+				return
+
+			var/species = client.prefs.selected_character.species
+
+			if( !is_alien_whitelisted( src, species ))
+				src << alert("You are currently not whitelisted to play [species]!")
+				return 0
+
+			var/datum/species/S = all_species[species]
 
 			if( !S )
 				src << alert("Your select species does not exist!")
-				return 0
-
-			if( !is_alien_whitelisted( src, S ))
-				src << alert("You are currently not whitelisted to play [S].")
 				return 0
 
 			if(!(S.flags & CAN_JOIN))

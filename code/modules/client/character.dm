@@ -90,8 +90,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/list/player_alt_titles = new()
 
 	// Flavor texts
-	var/list/flavor_texts_human = list()
-	var/list/flavor_texts_robot = list()
+	var/flavor_texts_human
+	var/flavor_texts_robot
 
 	// Character records
 	var/med_record = ""
@@ -143,7 +143,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	if(character.dna)
 		character.dna.real_name = character.real_name
 
-	character.flavor_texts["general"] = flavor_texts_human["general"]
+	character.flavor_texts["general"] = flavor_texts_human
 
 	character.med_record = med_record
 	character.sec_record = sec_record
