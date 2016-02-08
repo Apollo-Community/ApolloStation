@@ -410,11 +410,11 @@
 		new_character.lastarea = get_area(loc)
 
 		var/datum/language/chosen_language
-		if(client.prefs.selected_character.language)
-			chosen_language = all_languages["[client.prefs.selected_character.language]"]
+		if(client.prefs.selected_character.additional_language)
+			chosen_language = all_languages["[client.prefs.selected_character.additional_language]"]
 		if(chosen_language)
-			if(is_alien_whitelisted(src, client.prefs.selected_character.language) || !config.usealienwhitelist || !(chosen_language.flags & WHITELISTED) || (new_character.species && (chosen_language.name in new_character.species.secondary_langs)))
-				new_character.add_language("[client.prefs.selected_character.language]")
+			if(is_alien_whitelisted(src, client.prefs.selected_character.additional_language) || !config.usealienwhitelist || !(chosen_language.flags & WHITELISTED) || (new_character.species && (chosen_language.name in new_character.species.secondary_langs)))
+				new_character.add_language("[client.prefs.selected_character.additional_language]")
 
 		if(ticker.random_players)
 			new_character.gender = pick(MALE, FEMALE)

@@ -1,13 +1,13 @@
 /datum/character/proc/AntagOptionsMenu(mob/user)
 	var/menu_name = "antag_options_menu"
 
-	if(uplinklocation == "" || !uplinklocation)
-		uplinklocation = "PDA"
+	if(uplink_location == "" || !uplink_location)
+		uplink_location = "PDA"
 	var/HTML = "<body>"
 	HTML += "<tt><center>"
 	HTML += "<b>Antagonist Options</b> <hr />"
 	HTML += "<br>"
-	HTML +="Uplink Type : <b><a href='byond://?src=\ref[user];character=[menu_name];task=uplinktype;active=1'>[uplinklocation]</a></b>"
+	HTML +="Uplink Type : <b><a href='byond://?src=\ref[user];character=[menu_name];task=uplinktype;active=1'>[uplink_location]</a></b>"
 	HTML +="<br>"
 
 	if(jobban_isbanned(user, "Records"))
@@ -32,12 +32,12 @@
 				exploit_record = expmsg
 				AntagOptionsMenu(user)
 		if( "uplinktype" )
-			if (uplinklocation == "PDA")
-				uplinklocation = "Headset"
-			else if(uplinklocation == "Headset")
-				uplinklocation = "None"
+			if (uplink_location == "PDA")
+				uplink_location = "Headset"
+			else if(uplink_location == "Headset")
+				uplink_location = "None"
 			else
-				uplinklocation = "PDA"
+				uplink_location = "PDA"
 			AntagOptionsMenu(user)
 		if( "done" )
 			user << browse(null, "window=antagoptions")

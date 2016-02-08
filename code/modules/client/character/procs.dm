@@ -1,4 +1,7 @@
 /datum/character/proc/saveCharacter()
+
+
+/datum/character/proc/loadCharacter()
 	return 0
 
 /datum/character/proc/randomize_appearance_for(var/mob/living/carbon/human/H)

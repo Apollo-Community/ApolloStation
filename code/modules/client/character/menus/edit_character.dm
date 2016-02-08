@@ -61,7 +61,7 @@
 	dat += "(<a href='byond://?src=\ref[user];character=[menu_name];task=all_random'>Randomize</A>)"
 	dat += "<br>"
 	dat += "Species: <a href='byond://?src=\ref[user];character=[menu_name];task=species_menu'>[species]</a><br>"
-	dat += "Secondary Language:<br><a href='byond://?src=\ref[user];character=[menu_name];task=language'>[language]</a><br>"
+	dat += "Secondary Language:<br><a href='byond://?src=\ref[user];character=[menu_name];task=language'>[additional_language]</a><br>"
 	dat += "Blood Type: [blood_type]<br>"
 	dat += "Skin Tone: <a href='byond://?src=\ref[user];character=[menu_name];task=skin_tone'>[-skin_tone + 35]/220<br></a>"
 	dat += "Needs Glasses: <a href='byond://?src=\ref[user];character=[menu_name];task=disabilities'><b>[disabilities == 0 ? "No" : "Yes"]</b></a><br>"
@@ -242,7 +242,7 @@
 					if(!(lang.flags & RESTRICTED))
 						new_languages += lang.name
 
-			language = input("Please select a secondary language", "Character Generation", null) in new_languages
+			additional_language = input("Please select a secondary language", "Character Generation", null) in new_languages
 
 		if("hair_color")
 			if(species == "Human" || species == "Unathi" || species == "Tajara" || species == "Skrell" || species == "Wryn")

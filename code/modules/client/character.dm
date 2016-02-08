@@ -41,17 +41,16 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/hair_color = "#000000"			// Hair color
 	var/hair_face_color	= "#000000"		// Face hair color
 
-	var/skin_tone = 35						// Skin tone
+	var/skin_tone = 0						// Skin tone
 	var/skin_color = "#000000"			// Skin color
 
 	var/eye_color = "#000000"			// Eye color
 
 	// Character species
 	var/species = "Human"               // Species to use.
-	var/species_preview                 // Used for the species selection window.
 
 	// Secondary language
-	var/language = "None"
+	var/additional_language = "None"
 
 	// Custom spawn gear
 	var/list/gear
@@ -61,11 +60,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/citizenship = "None"            //Current home system.
 	var/faction = "None"                //Antag faction/general associated faction.
 	var/religion = "None"               //Religious association.
-
-	// Mob preview
-	var/icon/preview_icon = null
-	var/icon/preview_icon_front = null
-	var/icon/preview_icon_side = null
 
 	// Jobs, uses bitflags
 	var/job_civilian_high = 0
@@ -85,11 +79,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	// Keeps track of preferrence for not getting any wanted jobs
 	var/alternate_option = 0
-
-	// Skills
-	var/used_skillpoints = 0
-	var/skill_specialization = null
-	var/list/skills = list() // skills can range from 0 to 3
 
 	// Maps each organ to either null(intact), "cyborg" or "amputated"
 	// will probably not be able to do this for head and torso ;)
@@ -115,7 +104,18 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/disabilities = 0
 
 	// Location of traitor uplink
-	var/uplinklocation = "PDA"
+	var/uplink_location = "PDA"
+
+	// Skills
+	var/used_skillpoints = 0
+	var/skill_specialization = null
+	var/list/skills = list() // skills can range from 0 to 3
+
+	// Mob preview
+	var/icon/preview_icon = null
+	var/icon/preview_icon_front = null
+	var/icon/preview_icon_side = null
+	var/species_preview   // Used for the species selection window.
 
 /datum/character/New(client/C)
 	blood_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
