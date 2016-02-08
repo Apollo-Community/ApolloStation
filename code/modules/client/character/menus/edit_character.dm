@@ -63,7 +63,7 @@
 	dat += "Species: <a href='byond://?src=\ref[user];character=[menu_name];task=species_menu'>[species]</a><br>"
 	dat += "Secondary Language:<br><a href='byond://?src=\ref[user];character=[menu_name];task=language'>[additional_language]</a><br>"
 	dat += "Blood Type: [blood_type]<br>"
-	dat += "Skin Tone: <a href='byond://?src=\ref[user];character=[menu_name];task=skin_tone'>[skin_tone]/[SKIN_TONE_MAX]<br></a>"
+	dat += "Skin Tone: <a href='byond://?src=\ref[user];character=[menu_name];task=skin_tone'>[-skin_tone+SKIN_TONE_DEFAULT]/[SKIN_TONE_MAX]<br></a>"
 	dat += "Needs Glasses: <a href='byond://?src=\ref[user];character=[menu_name];task=disabilities'><b>[disabilities == 0 ? "No" : "Yes"]</b></a><br>"
 	dat += "Limbs: <a href='byond://?src=\ref[user];character=[menu_name];task=limbs_adjust'>Adjust</a><br>"
 	dat += "Internal Organs: <a href='byond://?src=\ref[user];character=[menu_name];task=organs_adjust'>Adjust</a><br>"
@@ -316,8 +316,8 @@
 			if(species != "Human")
 				return
 			var/new_skin_tone = input(user, "Choose your character's skin-tone:\n(Light [SKIN_TONE_MIN] - [SKIN_TONE_MAX] Dark)", "Character Preference")  as num|null
-			if(new_skin_tone)
-				skin_tone = max( min( round( new_skin_tone ), SKIN_TONE_MAX ), SKIN_TONE_MIN )
+			if( new_skin_tone || new_skin_tone == 0 )
+				skin_tone = SKIN_TONE_DEFAULT-max( min( round( new_skin_tone ), SKIN_TONE_MAX ), SKIN_TONE_MIN )
 
 		if("skin_color")
 			if(species == "Unathi" || species == "Tajara" || species == "Skrell" || species == "Wryn")

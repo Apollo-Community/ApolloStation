@@ -610,10 +610,9 @@ var/list/be_special_flags = list(
 	"Traitor" = BE_TRAITOR,
 	"Operative" = BE_OPERATIVE,
 	"Changeling" = BE_CHANGELING,
-	"Wizard" = BE_WIZARD,
 	"Malf AI" = BE_MALF,
 	"Revolutionary" = BE_REV,
-	"Xenomorph" = BE_ALIEN,
+	"Alien" = BE_ALIEN,
 	"Positronic Brain" = BE_AI,
 	"Cultist" = BE_CULTIST,
 	"Monkey" = BE_MONKEY,
@@ -628,9 +627,9 @@ var/list/be_special_flags = list(
 #define AGE_MAX 95			//oldest a character can be
 #define AGE_DEFAULT 30
 
-#define SKIN_TONE_MIN 1
+#define SKIN_TONE_MIN 0
 #define SKIN_TONE_MAX 200
-#define SKIN_TONE_DEFAULT 1
+#define SKIN_TONE_DEFAULT 35
 
 //Languages!
 #define LANGUAGE_HUMAN		1

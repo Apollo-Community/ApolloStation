@@ -29,7 +29,7 @@
 	variables["hair_color"] = sanitize_hexcolor( hair_color )
 	variables["hair_face_color"] = sanitize_hexcolor( hair_face_color )
 
-	variables["skin_tone"] = sanitize_integer( skin_tone, SKIN_TONE_MIN, SKIN_TONE_MAX, SKIN_TONE_DEFAULT )
+	variables["skin_tone"] = sanitize_integer( skin_tone, SKIN_TONE_DEFAULT-SKIN_TONE_MAX, SKIN_TONE_DEFAULT-SKIN_TONE_MIN, SKIN_TONE_DEFAULT )
 	variables["skin_color"] = sanitize_hexcolor( skin_color )
 
 	variables["eye_color"] = sanitize_hexcolor( eye_color )
@@ -39,7 +39,7 @@
 
 	// Secondary language
 	var/datum/language/L = additional_language
-	if( L )
+	if( istype( L ))
 		variables["additional_language"] = sql_sanitize_text( L.name )
 
 	// Custom spawn gear
