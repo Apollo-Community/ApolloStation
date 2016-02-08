@@ -4,8 +4,6 @@
 		if(!IsGuestKey(client.key))
 			if(!loadPreferences())
 				return
-			if(!loadCharacters())
-				return
 
 /datum/preferences/proc/GetJobDepartment(var/datum/job/job, var/level)
 	if( !selected_character )
@@ -109,10 +107,9 @@
 		toggles = text2num( query.item[6] )
 		var/selected_char_name = query.item[7]
 
-		if( selected_char_name in characters )
-			selected_character = characters[selected_char_name]
-		else
-			selected_character = null
+		selected_character = new( client )
+		characters.Add( selected_character )
+		selected_character.loadCharacter( selected_char_name )
 
 	return 1
 
@@ -121,6 +118,3 @@
 		return
 
 	return selected_character.saveCharacter()
-
-/datum/preferences/proc/loadCharacters()
-	return 1
