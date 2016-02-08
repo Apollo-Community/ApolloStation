@@ -1,5 +1,142 @@
 /datum/character/proc/saveCharacter()
+	if( !client )
+		return
 
+	var/list/variables = list()
+
+	variables["ckey"] = ckey( client.ckey )
+	variables["name"] = sql_sanitize_text( name )
+	variables["gender"] = sql_sanitize_text( gender )
+	variables["age"] = sanitize_integer( age, AGE_MIN, AGE_MAX, AGE_DEFAULT )
+	variables["spawnpoint"] = sql_sanitize_text( spawnpoint )
+	variables["blood_type"] = sql_sanitize_text( blood_type )
+
+	// Default clothing
+
+	var/list/underwear_options
+	if(gender == MALE)
+		underwear_options = underwear_m
+	else
+		underwear_options = underwear_f
+
+	variables["underwear"] = sanitize_integer( underwear, 1, underwear_options.len, initial(underwear))
+	variables["undershirt"] = sanitize_integer( undershirt, 1, undershirt_t.len, initial(undershirt))
+	variables["backpack"] = sanitize_integer( backpack, 1, backpacklist.len, initial(backpack))
+
+	// Cosmetic features
+	variables["hair_style"] = sql_sanitize_text( hair_style )
+	variables["hair_face_style"] = sql_sanitize_text( hair_face_style )
+	variables["hair_color"] = sanitize_hexcolor( hair_color )
+	variables["hair_face_color"] = sanitize_hexcolor( hair_face_color )
+
+	variables["skin_tone"] = sanitize_integer( skin_tone, SKIN_TONE_MIN, SKIN_TONE_MAX, SKIN_TONE_DEFAULT )
+	variables["skin_color"] = sanitize_hexcolor( skin_color )
+
+	variables["eye_color"] = sanitize_hexcolor( eye_color )
+
+	// Character species
+	variables["species"] = sql_sanitize_text( species )
+
+	// Secondary language
+	var/datum/language/L = additional_language
+	if( L )
+		variables["additional_language"] = sql_sanitize_text( L.name )
+
+	// Custom spawn gear
+	variables["gear"] = list2params( gear )
+
+	// Some faction information.
+	variables["home_system"] = sql_sanitize_text( home_system )
+	variables["citizenship"] = sql_sanitize_text( citizenship )
+	variables["faction"] = sql_sanitize_text( faction )
+	variables["religion"] = sql_sanitize_text( religion )
+
+	// Jobs, uses bitflags
+	variables["job_civilian_high"] = sanitize_integer( job_civilian_high, 0, BITFLAGS_MAX, 0 )
+	variables["job_civilian_med"] = sanitize_integer( job_civilian_med, 0, BITFLAGS_MAX, 0 )
+	variables["job_civilian_low"] = sanitize_integer( job_civilian_low, 0, BITFLAGS_MAX, 0 )
+
+	variables["job_medsci_high"] = sanitize_integer( job_medsci_high, 0, BITFLAGS_MAX, 0 )
+	variables["job_medsci_med"] = sanitize_integer( job_medsci_med, 0, BITFLAGS_MAX, 0 )
+	variables["job_medsci_low"] = sanitize_integer( job_medsci_low, 0, BITFLAGS_MAX, 0 )
+
+	variables["job_engsec_high"] = sanitize_integer( job_engsec_high, 0, BITFLAGS_MAX, 0 )
+	variables["job_engsec_med"] = sanitize_integer( job_engsec_med, 0, BITFLAGS_MAX, 0 )
+	variables["job_engsec_low"] = sanitize_integer( job_engsec_low, 0, BITFLAGS_MAX, 0 )
+
+	// Special role selection
+	variables["job_antag"] = sanitize_integer( job_antag, 0, BITFLAGS_MAX, 0 )
+
+	// Keeps track of preferrence for not getting any wanted jobs
+	variables["alternate_option"] = sanitize_integer( alternate_option, 0, BITFLAGS_MAX, 0 )
+
+	// Maps each organ to either null(intact), "cyborg" or "amputated"
+	// will probably not be able to do this for head and torso ;)
+	variables["organ_data"] = list2params( organ_data )
+
+	// The default name of a job like "Medical Doctor"
+	variables["player_alt_titles"] = list2params( player_alt_titles )
+
+	// Flavor texts
+	variables["flavor_texts_human"] = sql_sanitize_text( flavor_texts_human )
+	variables["flavor_texts_robot"] = sql_sanitize_text( flavor_texts_robot )
+
+	// Character records
+	variables["med_record"] = sql_sanitize_text( med_record )
+	variables["sec_record"] = sql_sanitize_text( sec_record )
+	variables["gen_record"] = sql_sanitize_text( gen_record )
+	variables["exploit_record"] = sql_sanitize_text( exploit_record )
+
+	// Relation to NanoTrasen
+	variables["nanotrasen_relation"] = sql_sanitize_text( nanotrasen_relation )
+
+	// Character disabilities
+	variables["disabilities"] = sanitize_integer( disabilities, 0, BITFLAGS_MAX, 0 )
+
+	// Location of traitor uplink
+	variables["uplink_location"] = sql_sanitize_text( uplink_location )
+
+	var/list/names = list()
+	var/list/values = list()
+	for( var/name in variables )
+		names += sql_sanitize_text( name )
+		values += variables[name]
+
+	var/query_names = list2text( names, "," )
+	query_names += sql_sanitize_text( ", id" )
+	var/query_values = list2text( values, "','" )
+	query_values += "', null"
+
+
+	if ( IsGuestKey( client.ckey ))
+		return 0
+
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return 0
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM characters WHERE ckey = '[variables["ckey"]]' AND name = '[variables["name"]]'")
+	query.Execute()
+	var/sql_id = 0
+	while(query.NextRow())
+		sql_id = query.item[1]
+		break
+
+	//Just the standard check to see if it's actually a number
+	if(sql_id)
+		if(istext(sql_id))
+			sql_id = text2num(sql_id)
+		if(!isnum(sql_id))
+			return
+
+/*	if(sql_id)
+		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
+		var/DBQuery/query_update = dbcon.NewQuery("UPDATE characters SET OOC_color = '[sql_OOC_color]', UI_style = '[sql_UI_style]', UI_style_color = '[sql_UI_color]', UI_style_alpha = '[sql_UI_alpha]', toggles = '[sql_toggles]', last_character = '[sql_select_char]' WHERE id = [sql_id]")
+		query_update.Execute()
+	else*/
+	// This needs a single quote before query_values because otherwise there will be an odd number of single quotes
+	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO characters ([query_names]) VALUES ('[query_values])")
+	query_insert.Execute()
 
 /datum/character/proc/loadCharacter()
 	return 0

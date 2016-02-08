@@ -23,10 +23,12 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 #define RETURN_TO_LOBBY 2
 
 /datum/character
+	var/client/client
+
 	// Basic information
 	var/name							//our character's name
 	var/gender = MALE					//gender of character (well duh)
-	var/age = 30						//age of character
+	var/age = AGE_DEFAULT				//age of character
 	var/spawnpoint = "Arrivals Shuttle" //where this character will spawn (0-2).
 	var/blood_type = "A+"				//blood type (not-chooseable)
 
@@ -41,7 +43,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/hair_color = "#000000"			// Hair color
 	var/hair_face_color	= "#000000"		// Face hair color
 
-	var/skin_tone = 0						// Skin tone
+	var/skin_tone = SKIN_TONE_DEFAULT	// Skin tone
 	var/skin_color = "#000000"			// Skin color
 
 	var/eye_color = "#000000"			// Eye color
@@ -118,6 +120,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/species_preview   // Used for the species selection window.
 
 /datum/character/New(client/C)
+	client = C
+
 	blood_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 
 	gender = pick(MALE, FEMALE)

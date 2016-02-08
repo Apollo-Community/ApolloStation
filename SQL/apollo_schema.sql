@@ -280,9 +280,9 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `gender` varchar(11) NOT NULL,
   `age` smallint(4) UNSIGNED NOT NULL DEFAULT '30',
   `spawnpoint` varchar(100) NOT NULL DEFAULT "Arrivals Shuttle",
-  `blood_type` varchar(4) NOT NULL,
-  `underwear` varchar(50) NOT NULL DEFAULT '1',
-  `undershirt` varchar(50) NOT NULL DEFAULT '1',
+  `blood_type` varchar(10) NOT NULL,
+  `underwear` smallint(4) UNSIGNED NOT NULL DEFAULT '1',
+  `undershirt` smallint(4) UNSIGNED NOT NULL DEFAULT '1',
   `backpack` smallint(4) UNSIGNED NOT NULL DEFAULT '2', -- Different
   `hair_style` varchar(50) NOT NULL DEFAULT "Bald",
   `hair_face_style` varchar(50) NOT NULL DEFAULT "Shaved",
@@ -292,7 +292,7 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `skin_color` varchar(7) NOT NULL DEFAULT "#FFFFFF",
   `eye_color` varchar(7) NOT NULL DEFAULT "#FFFFFF",
   `species` varchar(100) NOT NULL DEFAULT "Human",
-  `additional_language` varchar(100) NOT NULL DEFAULT "None",
+  `additional_language` varchar(100),
   `gear` text,
   `home_system` varchar(100) NOT NULL DEFAULT "Unset",
   `citizenship` varchar(50) NOT NULL DEFAULT "None",
@@ -319,7 +319,9 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `exploit_record` mediumtext,
   `nanotrasen_relation` varchar(50) NOT NULL DEFAULT "Neutral",
   `disabilities` int UNSIGNED NOT NULL DEFAULT '0',
-  `uplinklocation` varchar(50) NOT NULL DEFAULT "PDA",
+  `uplink_location` varchar(50) NOT NULL DEFAULT "PDA",
 
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+

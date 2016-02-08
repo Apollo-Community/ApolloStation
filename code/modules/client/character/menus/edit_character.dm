@@ -63,7 +63,7 @@
 	dat += "Species: <a href='byond://?src=\ref[user];character=[menu_name];task=species_menu'>[species]</a><br>"
 	dat += "Secondary Language:<br><a href='byond://?src=\ref[user];character=[menu_name];task=language'>[additional_language]</a><br>"
 	dat += "Blood Type: [blood_type]<br>"
-	dat += "Skin Tone: <a href='byond://?src=\ref[user];character=[menu_name];task=skin_tone'>[-skin_tone + 35]/220<br></a>"
+	dat += "Skin Tone: <a href='byond://?src=\ref[user];character=[menu_name];task=skin_tone'>[skin_tone]/[SKIN_TONE_MAX]<br></a>"
 	dat += "Needs Glasses: <a href='byond://?src=\ref[user];character=[menu_name];task=disabilities'><b>[disabilities == 0 ? "No" : "Yes"]</b></a><br>"
 	dat += "Limbs: <a href='byond://?src=\ref[user];character=[menu_name];task=limbs_adjust'>Adjust</a><br>"
 	dat += "Internal Organs: <a href='byond://?src=\ref[user];character=[menu_name];task=organs_adjust'>Adjust</a><br>"
@@ -207,6 +207,9 @@
 
 /datum/character/proc/EditCharacterMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )
+		if( "save" )
+			saveCharacter()
+
 		if("name")
 			var/raw_name = input(user, "Choose your character's name:", "Character Preference")  as text|null
 			if (!isnull(raw_name)) // Check to ensure that the user entered text (rather than cancel.)
@@ -312,9 +315,9 @@
 		if("skin_tone")
 			if(species != "Human")
 				return
-			var/new_skin_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference")  as num|null
+			var/new_skin_tone = input(user, "Choose your character's skin-tone:\n(Light [SKIN_TONE_MIN] - [SKIN_TONE_MAX] Dark)", "Character Preference")  as num|null
 			if(new_skin_tone)
-				skin_tone = 35 - max(min( round(new_skin_tone), 220),1)
+				skin_tone = max( min( round( new_skin_tone ), SKIN_TONE_MAX ), SKIN_TONE_MIN )
 
 		if("skin_color")
 			if(species == "Unathi" || species == "Tajara" || species == "Skrell" || species == "Wryn")
