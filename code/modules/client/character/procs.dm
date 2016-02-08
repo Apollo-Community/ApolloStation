@@ -102,12 +102,6 @@
 		names += sql_sanitize_text( name )
 		values += variables[name]
 
-	var/query_names = list2text( names, "," )
-	query_names += sql_sanitize_text( ", id" )
-	var/query_values = list2text( values, "','" )
-	query_values += "', null"
-
-
 	if ( IsGuestKey( client.ckey ))
 		return 0
 
@@ -129,14 +123,29 @@
 		if(!isnum(sql_id))
 			return
 
-/*	if(sql_id)
+	if(sql_id)
+		if( names.len != values.len )
+			return
+
+		var/query_params = ""
+		for( var/i = 1; i < names.len; i++ )
+			query_params += "[names[i]]='[values[i]]'"
+			if( i != names.len-1 )
+				query_params += ","
+
 		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
-		var/DBQuery/query_update = dbcon.NewQuery("UPDATE characters SET OOC_color = '[sql_OOC_color]', UI_style = '[sql_UI_style]', UI_style_color = '[sql_UI_color]', UI_style_alpha = '[sql_UI_alpha]', toggles = '[sql_toggles]', last_character = '[sql_select_char]' WHERE id = [sql_id]")
+		var/DBQuery/query_update = dbcon.NewQuery("UPDATE characters SET [query_params] WHERE ckey = '[variables["ckey"]]' AND name = '[variables["name"]]'")
 		query_update.Execute()
-	else*/
-	// This needs a single quote before query_values because otherwise there will be an odd number of single quotes
-	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO characters ([query_names]) VALUES ('[query_values])")
-	query_insert.Execute()
+	else
+		var/query_names = list2text( names, "," )
+		query_names += sql_sanitize_text( ", id" )
+
+		var/query_values = list2text( values, "','" )
+		query_values += "', null"
+
+		// This needs a single quote before query_values because otherwise there will be an odd number of single quotes
+		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO characters ([query_names]) VALUES ('[query_values])")
+		query_insert.Execute()
 
 /datum/character/proc/loadCharacter()
 	return 0
