@@ -32,14 +32,8 @@
 /datum/preferences/proc/ClientMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )
 		if( "select_character" )
-			if( !selected_character && !characters.len )
-				selected_character = new( client )
-				characters.Add( selected_character )
-				selected_character.EditCharacterMenu( user )
-				ClientMenuDisable( user )
-			else
-				SelectCharacterMenu( user )
-				ClientMenuDisable( user )
+			SelectCharacterMenu( user )
+			ClientMenuDisable( user )
 		if( "edit_character" )
 			if( !selected_character )
 				selected_character = new( client )
@@ -138,19 +132,24 @@
 	PreferencesMenu( user )
 
 /datum/preferences/proc/SelectCharacterMenu( mob/user )
-	if( !user || !istype( user ))
+	if( !user || !istype( user ) || !user.client)
 		return
 
 	var/menu_name = "select_character_menu"
 
 	. = ""
 	. += "<h2>Character Selection Menu</h2><br>"
-	for( var/i = 1, i <= characters.len, i++ )
-		var/datum/character/character = characters[i]
-		if( !character )
-			continue
 
-		. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=choose;number=[i]'>[character.name]</a><br>"
+	var/sql_ckey = ckey( user.client.ckey )
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT name FROM characters WHERE ckey = '[sql_ckey]'")
+	query.Execute()
+
+	while( query.NextRow() )
+		if( selected_character && selected_character.name == query.item[1] )
+			. += "<b>[query.item[1]]</b> - Selected<br>"
+		else
+			. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=choose;name=[query.item[1]]'>[query.item[1]]</a><br>"
 
 	. += "<br><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>Done</a><br>"
 
@@ -160,12 +159,17 @@
 /datum/preferences/proc/SelectCharacterMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )
 		if( "choose" )
-			var/number = text2num( href_list["number"] )
-			if( !number || number < 1 || number > characters.len)
-				user << "Could not select character!"
-				return
+			var/chosen_name = href_list["name"]
+			for( var/datum/character/C in characters)
+				if( C.name == chosen_name )
+					selected_character = C
+					SelectCharacterMenu( user )
+					return
 
-			selected_character = characters[number]
+			selected_character = new( client )
+			characters.Add( selected_character )
+			selected_character.loadCharacter( chosen_name )
+
 			SelectCharacterMenu( user )
 		if( "close" )
 			ClientMenu( user )

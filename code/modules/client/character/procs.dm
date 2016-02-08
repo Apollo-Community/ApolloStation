@@ -147,8 +147,112 @@
 		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO characters ([query_names]) VALUES ('[query_values])")
 		query_insert.Execute()
 
-/datum/character/proc/loadCharacter()
-	return 0
+/datum/character/proc/loadCharacter( var/character_name )
+	var/list/variables = list()
+
+	// Base information
+	variables["name"] = "text"
+	variables["gender"] = "text"
+	variables["age"] = "number"
+	variables["spawnpoint"] = "text"
+	variables["blood_type"] = "text"
+
+	// Default clothing
+	variables["underwear"] = "number"
+	variables["undershirt"] = "number"
+	variables["backpack"] = "number"
+
+	// Cosmetic features
+	variables["hair_style"] = "text"
+	variables["hair_face_style"] = "text"
+	variables["hair_color"] = "text"
+	variables["hair_face_color"] = "text"
+	variables["skin_tone"] = "number"
+	variables["skin_color"] = "text"
+	variables["eye_color"] = "text"
+
+	// Character species
+	variables["species"] = "text"
+
+	// Secondary language
+	variables["additional_language"] = "text"
+
+	// Custom spawn gear
+	variables["gear"] = "params"
+
+	// Some faction information.
+	variables["home_system"] = "text"
+	variables["citizenship"] = "text"
+	variables["faction"] = "text"
+	variables["religion"] = "text"
+
+	// Jobs, uses bitflags
+	variables["job_civilian_high"] = "number"
+	variables["job_civilian_med"] = "number"
+	variables["job_civilian_low"] = "number"
+
+	variables["job_medsci_high"] = "number"
+	variables["job_medsci_med"] = "number"
+	variables["job_medsci_low"] = "number"
+
+	variables["job_engsec_high"] = "number"
+	variables["job_engsec_med"] = "number"
+	variables["job_engsec_low"] = "number"
+
+	// Special role selection
+	variables["job_antag"] = "number"
+
+	// Keeps track of preferrence for not getting any wanted jobs
+	variables["alternate_option"] = "number"
+
+	// Maps each organ to either null(intact), "cyborg" or "amputated"
+	// will probably not be able to do this for head and torso ;)
+	variables["organ_data"] = "params"
+
+	// The default name of a job like "Medical Doctor"
+	variables["player_alt_titles"] = "params"
+
+	// Flavor texts
+	variables["flavor_texts_human"] = "text"
+	variables["flavor_texts_robot"] = "text"
+
+	// Character records
+	variables["med_record"] = "text"
+	variables["sec_record"] = "text"
+	variables["gen_record"] = "text"
+	variables["exploit_record"] = "text"
+
+	// Relation to NanoTrasen
+	variables["nanotrasen_relation"] = "text"
+
+	// Character disabilities
+	variables["disabilities"] = "number"
+
+	// Location of traitor uplink
+	variables["uplink_location"] = "text"
+
+	var/query_names = list2text( variables, "," )
+	var/sql_ckey = ckey( client.ckey )
+	var/sql_character_name = sql_sanitize_text( character_name )
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT [query_names] FROM characters WHERE ckey = '[sql_ckey]' AND name = '[sql_character_name]'")
+	query.Execute()
+
+	if( !query.NextRow() )
+		return
+
+	for( var/i = 1; i < variables.len; i++ )
+		var/value = query.item[i]
+
+		switch( variables[variables[i]] )
+			if( "text" )
+				value = value // lol
+			if( "number" )
+				value = text2num( value )
+			if( "params" )
+				value = params2list( value )
+
+		vars[variables[i]] = value
 
 /datum/character/proc/randomize_appearance_for(var/mob/living/carbon/human/H)
 	if(H)
