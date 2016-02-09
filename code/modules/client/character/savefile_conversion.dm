@@ -135,7 +135,7 @@
 		S["uplinklocation"] >> C.uplink_location
 		S["exploit_record"]	>> C.exploit_record
 
-		if(isnull(C.species) || !(C.species in playable_species))
+		if(isnull(C.species) || !(C.species in all_species))
 			C.species = "Human"
 
 		if(!C.name) continue // If even the name couldn't be read, the character is a lost cause
