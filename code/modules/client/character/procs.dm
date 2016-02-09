@@ -1,10 +1,13 @@
-/datum/character/proc/saveCharacter()
-	if( !client )
+/datum/character/proc/saveCharacter( var/ckey )
+	if( !istype( client ) && !ckey )
 		return 0
+
+	if( !ckey )
+		ckey = client.ckey
 
 	var/list/variables = list()
 
-	variables["ckey"] = ckey( client.ckey )
+	variables["ckey"] = ckey( ckey )
 	variables["name"] = sql_sanitize_text( name )
 	variables["gender"] = sql_sanitize_text( gender )
 	variables["age"] = sanitize_integer( age, AGE_MIN, AGE_MAX, AGE_DEFAULT )
@@ -102,7 +105,7 @@
 		names += sql_sanitize_text( name )
 		values += variables[name]
 
-	if ( IsGuestKey( client.ckey ))
+	if ( IsGuestKey( ckey ))
 		return 0
 
 	establish_db_connection()

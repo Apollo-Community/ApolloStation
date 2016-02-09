@@ -979,6 +979,7 @@
 #include "code\modules\client\character\job.dm"
 #include "code\modules\client\character\menu.dm"
 #include "code\modules\client\character\procs.dm"
+#include "code\modules\client\character\savefile_conversion.dm"
 #include "code\modules\client\character\skills.dm"
 #include "code\modules\client\character\spawnpoints.dm"
 #include "code\modules\client\character\menus\antag.dm"
