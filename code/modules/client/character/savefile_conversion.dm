@@ -1,22 +1,55 @@
-/proc/convert_savefile_to_SQL()
+/proc/convert_savefiles_to_SQL()
 	var/DBQuery/query = dbcon.NewQuery( "SELECT ckey FROM player" )
 	query.Execute()
 
 	while( query.NextRow() )
 		var/ckey = query.item[1]
-		var/path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/preferences.sav"
-		if( !fexists( path ))
+		convert_ckey_savefile_to_SQL( ckey )
+
+/client/verb/convert_savefiles()
+	set name = "Convert Savefiles"
+	set category = "OOC"
+	set desc = "Convert your text savefiles into SQL savefiles."
+
+	var/input_ckey = input( usr, "Input your ckey, with underscores and spaces included:", "Savefile Conversion" )  as text|null
+
+	if( !input_ckey )
+		return
+	if( convert_ckey_savefile_to_SQL( input_ckey, usr ))
+		usr << "Savefiles successfully converted for [input_ckey]!"
+		src.verbs -= /client/verb/convert_savefiles
+	else
+		usr << "Failed to convert savefiles for [input_ckey]"
+
+/proc/convert_ckey_savefile_to_SQL( var/ckey, var/mob/user = null )
+	var/path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/preferences.sav"
+	if( !fexists( path ))
+		if( !user )
 			world << "[ckey]'s character saves do not exist!"
-			continue
+		else
+			user << "[ckey]'s character saves do not exist!"
+		return 0
 
-		var/list/characters = loadCharactersFromSavefile( path )
-		if( !characters || !characters.len )
-			world << "[ckey]'s character saves could not be loaded!"
-			continue
+	var/list/characters = loadCharactersFromSavefile( path )
+	if( !characters || !characters.len )
+		if( !user )
+			world << "[ckey]'s character saves could not be converted!"
+		else
+			user << "[ckey]'s character saves could not be converted!"
+		return 0
 
+	if( !user )
 		world << "[characters.len] characters found for [ckey]"
-		for( var/datum/character/character in characters )
-			character.saveCharacter( ckey )
+	else
+		user << "[characters.len] characters found for [ckey]"
+
+	if( user && user.client )
+		ckey = user.client.ckey
+
+	for( var/datum/character/character in characters )
+		character.saveCharacter( ckey )
+
+	return 1
 
 /proc/loadCharactersFromSavefile( var/path )
 	if(!path)
