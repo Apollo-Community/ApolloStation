@@ -143,72 +143,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	if(character.dna)
 		character.dna.real_name = character.real_name
 
-	character.flavor_texts["general"] = flavor_texts_human
-
-	character.med_record = med_record
-	character.sec_record = sec_record
-	character.gen_record = gen_record
-	character.exploit_record = exploit_record
-
-	character.gender = gender
-	character.age = age
-	character.b_type = blood_type
-
-	var/list/eyes_rgb = ReadRGB( hair_face_color )
-	if( eyes_rgb && eyes_rgb.len > 2 ) // if there's a skin color selected
-		character.r_eyes = eyes_rgb[1]
-		character.g_eyes = eyes_rgb[2]
-		character.b_eyes = eyes_rgb[3]
-	else
-		character.r_eyes = rand( 0, 255 )
-		character.g_eyes = rand( 0, 255 )
-		character.b_eyes = rand( 0, 255 )
-
-	var/list/hair_rgb = ReadRGB( hair_face_color )
-	if( hair_rgb && hair_rgb.len > 2 ) // if there's a skin color selected
-		character.r_hair = hair_rgb[1]
-		character.g_hair = hair_rgb[2]
-		character.b_hair = hair_rgb[3]
-	else
-		character.r_hair = rand( 0, 255 )
-		character.g_hair = rand( 0, 255 )
-		character.b_hair = rand( 0, 255 )
-
-	var/list/hair_face_rgb = ReadRGB( hair_face_color )
-	if( hair_face_rgb && hair_face_rgb.len > 2 ) // if there's a skin color selected
-		character.r_facial = hair_face_rgb[1]
-		character.g_facial = hair_face_rgb[2]
-		character.b_facial = hair_face_rgb[3]
-	else
-		character.r_facial = rand( 0, 255 )
-		character.g_facial = rand( 0, 255 )
-		character.b_facial = rand( 0, 255 )
-
-	var/list/skin_rgb = ReadRGB( skin_color )
-	if( skin_rgb && skin_rgb.len > 2 ) // if there's a skin color selected
-		character.r_skin = skin_rgb[1]
-		character.g_skin = skin_rgb[2]
-		character.b_skin = skin_rgb[3]
-	else
-		character.r_skin = rand( 0, 255 )
-		character.g_skin = rand( 0, 255 )
-		character.b_skin = rand( 0, 255 )
-
-	character.skin_tone = skin_tone
-
-	character.h_style = hair_style
-	character.f_style = hair_face_style
-
-	character.home_system = home_system
-	character.citizenship = citizenship
-	character.personal_faction = faction
-	character.religion = religion
-
-	character.skills = skills
-	character.used_skillpoints = used_skillpoints
+	character.character = src
 
 	// Destroy/cyborgize organs
-
 	for(var/name in organ_data)
 		var/status = organ_data[name]
 		var/datum/organ/external/O = character.organs_by_name[name]
@@ -229,21 +166,18 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	if(underwear > underwear_m.len || underwear < 1)
 		underwear = 0 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me. //HAH NOW NO MORE MAGIC CLONING UNDIES
-	character.underwear = underwear
 
 	if(undershirt > undershirt_t.len || undershirt < 1)
 		undershirt = 0
-	character.undershirt = undershirt
 
 	if(backpack > 4 || backpack < 1)
 		backpack = 1 //Same as above
-	character.backpack = backpack
 
 	//Debugging report to track down a bug, which randomly assigned the plural gender to people.
-	if(character.gender in list(PLURAL, NEUTER))
-		if(isliving(src)) //Ghosts get neuter by default
+	if(gender in list(PLURAL, NEUTER))
+		if(isliving(character)) //Ghosts get neuter by default
 			message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
-			character.gender = MALE
+			gender = MALE
 
 /datum/character/proc/setHairColor( var/r, var/g, var/b )
 	hair_color = rgb( r, g, b )

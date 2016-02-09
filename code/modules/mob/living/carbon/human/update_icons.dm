@@ -252,7 +252,7 @@ var/global/list/damage_icon_parts = list()
 
 	stand_icon = new(species.icon_template ? species.icon_template : 'icons/mob/human.dmi',"blank")
 
-	var/icon_key = "[species.race_key][g][skin_tone]"
+	var/icon_key = "[species.race_key][g][character.skin_tone]"
 	for(var/datum/organ/external/part in organs)
 
 		if(istype(part,/datum/organ/external/head) && !(part.status & ORGAN_DESTROYED))
@@ -267,7 +267,7 @@ var/global/list/damage_icon_parts = list()
 		else
 			icon_key = "[icon_key]1"
 
-	icon_key = "[icon_key][husk ? 1 : 0][fat ? 1 : 0][hulk ? 1 : 0][skeleton ? 1 : 0][skin_tone]"
+	icon_key = "[icon_key][husk ? 1 : 0][fat ? 1 : 0][hulk ? 1 : 0][skeleton ? 1 : 0][character.skin_tone]"
 
 	var/icon/base_icon
 	if(human_icon_cache[icon_key])
@@ -355,10 +355,10 @@ var/global/list/damage_icon_parts = list()
 		//Skin tone.
 		if(!husk && !hulk)
 			if(species.flags & HAS_SKIN_TONE)
-				if(skin_tone >= 0)
-					base_icon.Blend(rgb(skin_tone, skin_tone, skin_tone), ICON_ADD)
+				if(character.skin_tone >= 0)
+					base_icon.Blend(rgb(character.skin_tone, character.skin_tone, character.skin_tone), ICON_ADD)
 				else
-					base_icon.Blend(rgb(-skin_tone,  -skin_tone,  -skin_tone), ICON_SUBTRACT)
+					base_icon.Blend(rgb(-character.skin_tone,  -character.skin_tone,  -character.skin_tone), ICON_SUBTRACT)
 
 		human_icon_cache[icon_key] = base_icon
 
@@ -370,27 +370,27 @@ var/global/list/damage_icon_parts = list()
 
 	//Skin colour. Not in cache because highly variable (and relatively benign).
 	if (species.flags & HAS_SKIN_COLOR)
-		stand_icon.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
+		stand_icon.Blend( character.skin_color, ICON_ADD )
 
 	if(has_head)
 		//Eyes
 		if(!skeleton)
 			var/icon/eyes = new/icon('icons/mob/human_face.dmi', species.eyes)
 			if (species.flags & HAS_EYE_COLOR)
-				eyes.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
-			stand_icon.Blend(eyes, ICON_OVERLAY)
+				eyes.Blend( character.eye_color, ICON_ADD )
+			stand_icon.Blend( eyes, ICON_OVERLAY )
 
 		//Mouth	(lipstick!)
 		if(lip_style && (species && species.flags & HAS_LIPS))	//skeletons are allowed to wear lipstick no matter what you think, agouri.
 			stand_icon.Blend(new/icon('icons/mob/human_face.dmi', "lips_[lip_style]_s"), ICON_OVERLAY)
 
 	//Underwear
-	if(underwear >0 && underwear < 12 && species.flags & HAS_UNDERWEAR)
+	if(character.underwear >0 && character.underwear < 12 && species.flags & HAS_UNDERWEAR)
 		if(!fat && !skeleton)
-			stand_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
+			stand_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[character.underwear]_[g]_s"), ICON_OVERLAY)
 
-	if(undershirt>0 && undershirt < 5 && species.flags & HAS_UNDERWEAR)
-		stand_icon.Blend(new /icon('icons/mob/human.dmi', "undershirt[undershirt]_s"), ICON_OVERLAY)
+	if(character.undershirt>0 && character.undershirt < 5 && species.flags & HAS_UNDERWEAR)
+		stand_icon.Blend(new /icon('icons/mob/human.dmi', "undershirt[character.undershirt]_s"), ICON_OVERLAY)
 
 	if(update_icons)
 		update_icons()
@@ -416,21 +416,21 @@ var/global/list/damage_icon_parts = list()
 	//base icons
 	var/icon/face_standing	= new /icon('icons/mob/human_face.dmi',"bald_s")
 
-	if(f_style)
-		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[f_style]
+	if(character.hair_face_style)
+		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[character.hair_face_style]
 		if(facial_hair_style && facial_hair_style.species_allowed && (src.species.name in facial_hair_style.species_allowed))
 			var/icon/facial_s = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s")
 			if(facial_hair_style.do_colouration)
-				facial_s.Blend(rgb(r_facial, g_facial, b_facial), ICON_ADD)
+				facial_s.Blend(character.hair_face_color, ICON_ADD)
 
 			face_standing.Blend(facial_s, ICON_OVERLAY)
 
-	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)))
-		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
-		if(hair_style && src.species.name in hair_style.species_allowed)
-			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
-			if(hair_style.do_colouration)
-				hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
+	if(character.hair_style && !(head && (head.flags & BLOCKHEADHAIR)))
+		var/datum/sprite_accessory/h_style = hair_styles_list[character.hair_style]
+		if(h_style && src.species.name in h_style.species_allowed)
+			var/icon/hair_s = new/icon("icon" = h_style.icon, "icon_state" = "[h_style.icon_state]_s")
+			if(h_style.do_colouration)
+				hair_s.Blend(character.hair_color, ICON_ADD)
 
 			face_standing.Blend(hair_s, ICON_OVERLAY)
 
@@ -891,7 +891,7 @@ var/global/list/damage_icon_parts = list()
 	if(species.tail)
 		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space))
 			var/icon/tail_s = new/icon("icon" = species.effect_icons, "icon_state" = "[species.tail]_s")
-			tail_s.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
+			tail_s.Blend(character.skin_color, ICON_ADD)
 
 			overlays_standing[TAIL_LAYER]	= image(tail_s)
 
@@ -923,24 +923,24 @@ var/global/list/damage_icon_parts = list()
 	//base icons
 	var/icon/face_lying		= new /icon('icons/mob/human_face.dmi',"bald_l")
 
-	if(f_style)
-		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[f_style]
+	if(character.hair_face_style)
+		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[character.hair_face_style]
 		if(facial_hair_style)
 			var/icon/facial_l = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_l")
-			facial_l.Blend(rgb(r_facial, g_facial, b_facial), ICON_ADD)
+			facial_l.Blend(character.hair_face_color, ICON_ADD)
 			face_lying.Blend(facial_l, ICON_OVERLAY)
 
-	if(h_style)
-		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
-		if(hair_style)
-			var/icon/hair_l = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_l")
-			hair_l.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
+	if(character.hair_style)
+		var/datum/sprite_accessory/h_style = hair_styles_list[character.hair_style]
+		if(h_style)
+			var/icon/hair_l = new/icon("icon" = h_style.icon, "icon_state" = "[h_style.icon_state]_l")
+			hair_l.Blend(character.hair_color, ICON_ADD)
 			face_lying.Blend(hair_l, ICON_OVERLAY)
 
 	//Eyes
 	// Note: These used to be in update_face(), and the fact they're here will make it difficult to create a disembodied head
 	var/icon/eyes_l = new/icon('icons/mob/human_face.dmi', "eyes_l")
-	eyes_l.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
+	eyes_l.Blend(character.eye_color, ICON_ADD)
 	face_lying.Blend(eyes_l, ICON_OVERLAY)
 
 	if(lip_style)

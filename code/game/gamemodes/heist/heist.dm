@@ -104,15 +104,15 @@ var/global/list/obj/cortical_stacks = list() //Stacks for 'leave nobody behind' 
 	vox.real_name = capitalize(newname)
 	vox.name = vox.real_name
 	newraider.name = vox.name
-	vox.age = rand(12,20)
+	vox.character.age = rand(12,20)
 	vox.set_species("Vox")
 	vox.languages = list() // Removing language from chargen.
-	vox.flavor_text = ""
+	vox.character.flavor_texts_human = ""
 	vox.add_language("Vox-pidgin")
 	vox.add_language("Galactic Common")
 	vox.add_language("Tradeband")
-	vox.h_style = "Short Vox Quills"
-	vox.f_style = "Shaved"
+	vox.character.hair_style = "Short Vox Quills"
+	vox.character.hair_face_style = "Shaved"
 
 	for(var/datum/organ/external/limb in vox.organs)
 		limb.status &= ~(ORGAN_DESTROYED | ORGAN_ROBOT)

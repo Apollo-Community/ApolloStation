@@ -471,7 +471,7 @@ var/global/datum/controller/occupations/job_master
 					return H.Robotize()
 				if("AI","Clown")	//don't need bag preference stuff!
 				else
-					switch(H.backpack) //BS12 EDIT
+					switch(H.character.backpack) //BS12 EDIT
 						if(1)
 							H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 						if(2)

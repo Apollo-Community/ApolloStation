@@ -217,7 +217,7 @@
 /datum/species/machine/handle_death(var/mob/living/carbon/human/H)
 	..()
 	if(flags & IS_SYNTHETIC)
-		H.h_style = ""
+		H.character.hair_style = ""
 		spawn(100)
 			if(H) H.update_hair()
 

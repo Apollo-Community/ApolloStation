@@ -120,32 +120,32 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	ResetUI(1)
 	// Hair
 	// FIXME:  Species-specific defaults pls
-	if(!character.h_style)
-		character.h_style = "Skinhead"
-	var/hair = hair_styles_list.Find(character.h_style)
+	if(!character.character.hair_style)
+		character.character.hair_style = "Skinhead"
+	var/hair = hair_styles_list.Find(character.character.hair_style)
 
 	// Facial Hair
-	if(!character.f_style)
-		character.f_style = "Shaved"
-	var/beard	= facial_hair_styles_list.Find(character.f_style)
+	if(!character.character.hair_face_style)
+		character.character.hair_face_style = "Shaved"
+	var/beard	= facial_hair_styles_list.Find(character.character.hair_face_style)
 
-	SetUIValueRange(DNA_UI_HAIR_R,    character.r_hair,    255,    1)
-	SetUIValueRange(DNA_UI_HAIR_G,    character.g_hair,    255,    1)
-	SetUIValueRange(DNA_UI_HAIR_B,    character.b_hair,    255,    1)
+	SetUIValueRange(DNA_UI_HAIR_R,    hex2num(copytext(character.character.hair_color, 2, 4)),    255,    1)
+	SetUIValueRange(DNA_UI_HAIR_G,    hex2num(copytext(character.character.hair_color, 4, 6)),    255,    1)
+	SetUIValueRange(DNA_UI_HAIR_B,    hex2num(copytext(character.character.hair_color, 6, 8)),    255,    1)
 
-	SetUIValueRange(DNA_UI_BEARD_R,   character.r_facial,  255,    1)
-	SetUIValueRange(DNA_UI_BEARD_G,   character.g_facial,  255,    1)
-	SetUIValueRange(DNA_UI_BEARD_B,   character.b_facial,  255,    1)
+	SetUIValueRange(DNA_UI_BEARD_R,   hex2num(copytext(character.character.hair_face_color, 2, 4)),  255,    1)
+	SetUIValueRange(DNA_UI_BEARD_G,   hex2num(copytext(character.character.hair_face_color, 4, 6)),  255,    1)
+	SetUIValueRange(DNA_UI_BEARD_B,   hex2num(copytext(character.character.hair_face_color, 6, 8)),  255,    1)
 
-	SetUIValueRange(DNA_UI_EYES_R,    character.r_eyes,    255,    1)
-	SetUIValueRange(DNA_UI_EYES_G,    character.g_eyes,    255,    1)
-	SetUIValueRange(DNA_UI_EYES_B,    character.b_eyes,    255,    1)
+	SetUIValueRange(DNA_UI_EYES_R,    hex2num(copytext(character.character.eye_color, 2, 4)),    255,    1)
+	SetUIValueRange(DNA_UI_EYES_G,    hex2num(copytext(character.character.eye_color, 4, 6)),    255,    1)
+	SetUIValueRange(DNA_UI_EYES_B,    hex2num(copytext(character.character.eye_color, 6, 8)),    255,    1)
 
-	SetUIValueRange(DNA_UI_SKIN_R,    character.r_skin,    255,    1)
-	SetUIValueRange(DNA_UI_SKIN_G,    character.g_skin,    255,    1)
-	SetUIValueRange(DNA_UI_SKIN_B,    character.b_skin,    255,    1)
+	SetUIValueRange(DNA_UI_SKIN_R,    hex2num(copytext(character.character.skin_color, 2, 4)),    255,    1)
+	SetUIValueRange(DNA_UI_SKIN_G,    hex2num(copytext(character.character.skin_color, 4, 6)),    255,    1)
+	SetUIValueRange(DNA_UI_SKIN_B,    hex2num(copytext(character.character.skin_color, 6, 8)),    255,    1)
 
-	SetUIValueRange(DNA_UI_SKIN_TONE, 35-character.skin_tone, 220,    1) // Value can be negative.
+	SetUIValueRange(DNA_UI_SKIN_TONE, 35-character.character.skin_tone, 220,    1) // Value can be negative.
 
 	SetUIState(DNA_UI_GENDER,         character.gender!=MALE,        1)
 

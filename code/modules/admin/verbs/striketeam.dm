@@ -109,7 +109,7 @@ var/global/sent_strike_team = 0
 	C.randomize_appearance_for(new_commando)
 
 	new_commando.real_name = "[!leader_selected ? commando_rank : commando_leader_rank] [commando_name]"
-	new_commando.age = !leader_selected ? rand(23,35) : rand(35,45)
+	new_commando.character.age = !leader_selected ? rand(23,35) : rand(35,45)
 
 	new_commando.dna.ready_dna(new_commando)//Creates DNA.
 

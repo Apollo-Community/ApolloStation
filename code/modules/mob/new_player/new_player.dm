@@ -511,8 +511,8 @@
 /mob/new_player/hear_radio(var/message, var/verb="says", var/datum/language/language=null, var/part_a, var/part_b, var/mob/speaker = null, var/hard_to_hear = 0)
 	return
 
-/proc/isBaldie( var/mob/living/carbon/human/character )
-	if( character.h_style == "Bald" && character.f_style == "Shaved" )
+/proc/isBaldie( var/mob/living/carbon/human/C )
+	if( C.character.hair_style == "Bald" && C.character.hair_face_style == "Shaved" )
 		return 1
 	return 0
 

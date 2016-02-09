@@ -172,28 +172,22 @@ proc/trigger_armed_response_team(var/force = 0)
 	//make it a panel, like in character creation
 	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
 	if(new_facial)
-		M.r_facial = hex2num(copytext(new_facial, 2, 4))
-		M.g_facial = hex2num(copytext(new_facial, 4, 6))
-		M.b_facial = hex2num(copytext(new_facial, 6, 8))
+		M.character.hair_face_color = new_facial
 
 	var/new_hair = input("Please select hair color.", "Character Generation") as color
-	if(new_facial)
-		M.r_hair = hex2num(copytext(new_hair, 2, 4))
-		M.g_hair = hex2num(copytext(new_hair, 4, 6))
-		M.b_hair = hex2num(copytext(new_hair, 6, 8))
+	if(new_hair)
+		M.character.hair_color = new_hair
 
 	var/new_eyes = input("Please select eye color.", "Character Generation") as color
 	if(new_eyes)
-		M.r_eyes = hex2num(copytext(new_eyes, 2, 4))
-		M.g_eyes = hex2num(copytext(new_eyes, 4, 6))
-		M.b_eyes = hex2num(copytext(new_eyes, 6, 8))
+		M.character.eye_color = new_eyes
 
 	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
 
 	if (!new_tone)
 		new_tone = 35
-	M.skin_tone = max(min(round(text2num(new_tone)), 220), 1)
-	M.skin_tone =  -M.skin_tone + 35
+	M.character.skin_tone = max(min(round(text2num(new_tone)), 220), 1)
+	M.character.skin_tone =  -M.character.skin_tone + 35
 
 	// hair
 	var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
@@ -209,21 +203,21 @@ proc/trigger_armed_response_team(var/force = 0)
 //hair
 	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in hair_styles_list
 	if(new_hstyle)
-		M.h_style = new_hstyle
+		M.character.hair_style = new_hstyle
 
 	// facial hair
 	var/new_fstyle = input(usr, "Select a facial hair style", "Grooming")  as null|anything in facial_hair_styles_list
 	if(new_fstyle)
-		M.f_style = new_fstyle
+		M.character.hair_face_style = new_fstyle
 
 	// if new style selected (not cancel)
 /*	if (new_style)
-		M.h_style = new_style
+		M.hair_style = new_style
 
 		for(var/x in all_hairs) // loop through all_hairs again. Might be slightly CPU expensive, but not significantly.
 			var/datum/sprite_accessory/hair/H = new x // create new hair datum
 			if(H.name == new_style)
-				M.h_style = H // assign the hair_style variable a new hair datum
+				M.hair_style = H // assign the hair_style variable a new hair datum
 				break
 			else
 				qdel(H) // if hair H not used, delete. BYOND can garbage collect, but better safe than sorry
@@ -240,11 +234,11 @@ proc/trigger_armed_response_team(var/force = 0)
 	new_style = input("Please select facial style", "Character Generation")  as null|anything in fhairs
 
 	if(new_style)
-		M.f_style = new_style
+		M.hair_face_style = new_style
 		for(var/x in all_fhairs)
 			var/datum/sprite_accessory/facial_hair/H = new x
 			if(H.name == new_style)
-				M.f_style = H
+				M.hair_face_style = H
 				break
 			else
 				qdel(H)
@@ -262,7 +256,7 @@ proc/trigger_armed_response_team(var/force = 0)
 
 	M.real_name = commando_name
 	M.name = commando_name
-	M.age = !leader_selected ? rand(23,35) : rand(35,45)
+	M.character.age = !leader_selected ? rand(23,35) : rand(35,45)
 
 	M.dna.ready_dna(M)//Creates DNA.
 

@@ -697,28 +697,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	//make it a panel, like in character creation
 	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
 	if(new_facial)
-		M.r_facial = hex2num(copytext(new_facial, 2, 4))
-		M.g_facial = hex2num(copytext(new_facial, 4, 6))
-		M.b_facial = hex2num(copytext(new_facial, 6, 8))
+		M.character.hair_face_color = new_facial
 
 	var/new_hair = input("Please select hair color.", "Character Generation") as color
-	if(new_facial)
-		M.r_hair = hex2num(copytext(new_hair, 2, 4))
-		M.g_hair = hex2num(copytext(new_hair, 4, 6))
-		M.b_hair = hex2num(copytext(new_hair, 6, 8))
+	if(new_hair)
+		M.character.hair_color = new_hair
 
 	var/new_eyes = input("Please select eye color.", "Character Generation") as color
 	if(new_eyes)
-		M.r_eyes = hex2num(copytext(new_eyes, 2, 4))
-		M.g_eyes = hex2num(copytext(new_eyes, 4, 6))
-		M.b_eyes = hex2num(copytext(new_eyes, 6, 8))
+		M.character.eye_color = new_eyes
 
 	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
 
 	if (!new_tone)
 		new_tone = 35
-	M.skin_tone = max(min(round(text2num(new_tone)), 220), 1)
-	M.skin_tone =  -M.skin_tone + 35
+	M.character.skin_tone = max(min(round(text2num(new_tone)), 220), 1)
+	M.character.skin_tone =  -M.character.skin_tone + 35
 
 	// hair
 	var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
@@ -734,19 +728,19 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 //hair
 	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in hair_styles_list
 	if(new_hstyle)
-		M.h_style = new_hstyle
+		M.character.hair_style = new_hstyle
 
 	// facial hair
 	var/new_fstyle = input(usr, "Select a facial hair style", "Grooming")  as null|anything in facial_hair_styles_list
 	if(new_fstyle)
-		M.f_style = new_fstyle
+		M.character.hair_face_style = new_fstyle
 
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
 	if (new_gender)
 		if(new_gender == "Male")
-			M.gender = MALE
+			M.character.gender = MALE
 		else
-			M.gender = FEMALE
+			M.character.gender = FEMALE
 
 	M.update_hair()
 	M.update_body()
@@ -754,7 +748,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	M.real_name = gladiator_name
 	M.name = gladiator_name
-	M.age = rand(23,35)
+	M.character.age = rand(23,35)
 
 	M.dna.ready_dna(M)//Creates DNA.
 
