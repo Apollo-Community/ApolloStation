@@ -583,3 +583,11 @@ proc/is_blind(A)
 
 /mob/proc/is_client_active(var/active = 1)
 	return client && client.inactivity < active MINUTES
+	
+/proc/isCrit(var/mob/living/M)
+    if(M.health < config.health_threshold_softcrit && M.health > config.health_threshold_crit)
+        return 1
+
+/proc/isDying(var/mob/living/M)
+    if(isCrit(M) && M.stat == 1)
+        return 1
