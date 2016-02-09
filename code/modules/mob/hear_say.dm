@@ -98,9 +98,11 @@
 	if(!client)
 		return
 		
-	if(isDying(src))
-		hear_dying(message,speaker)
-		return
+	if(isDying())   
+    		if(prob(30))
+        		src << "<span class = 'game_say'>...You hear...[lentext(message) > 20 ? "[copytext(message,1,20)]..." : "[message]..."] hiss in your ear.</span>"
+    		else
+        		src << "<span class = 'game_say'>...You hear a hiss in your ear...</span>"
 		
 	if(sleeping || stat==1) //If unconscious or sleeping
 		hear_sleep(message)
@@ -256,3 +258,4 @@
 		message = "span class = 'game_say'>...You hear someone say...\"[message]\"</span>"
 	else
 		message = "<span class = 'game_say'>...<i>You almost hear someone talking</i>...</span>"
+	src << message
