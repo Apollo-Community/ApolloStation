@@ -284,19 +284,12 @@ var/global/datum/controller/gameticker/ticker
 
 
 	proc/equip_characters()
-		var/captainless=1
 		for(var/mob/living/carbon/human/player in player_list)
 			if(player && player.mind && player.mind.assigned_role)
-				if(player.mind.assigned_role == "Captain")
-					captainless=0
 				if(player.mind.assigned_role != "MODE")
 					job_master.EquipRank(player, player.mind.assigned_role, 0)
 					UpdateFactionList(player)
 					EquipCustomItems(player)
-		if(captainless)
-			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
-					M << "Captainship not forced on anyone."
 
 
 	proc/process()
