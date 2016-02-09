@@ -8,8 +8,6 @@
 		if( !fexists( path ))
 			world << "[ckey]'s character saves do not exist!"
 			continue
-		else
-			world << "Converting [ckey]'s character saves..."
 
 		var/list/characters = loadCharactersFromSavefile( path )
 		if( !characters || !characters.len )
@@ -18,7 +16,6 @@
 
 		world << "[characters.len] characters found for [ckey]"
 		for( var/datum/character/character in characters )
-			world << "Saving [character.name]"
 			character.saveCharacter( ckey )
 
 /proc/loadCharactersFromSavefile( var/path )
@@ -34,7 +31,6 @@
 		world << "Save file could not be read!"
 		return 0
 
-	world << "Reading [path]"
 	S.cd = "/"
 
 	var/list/characters = list()
@@ -77,18 +73,26 @@
 		S["hair_red"]			>> r_hair
 		S["hair_green"]			>> g_hair
 		S["hair_blue"]			>> b_hair
+		C.hair_color = rgb( r_hair, g_hair, b_hair )
+
 		S["facial_red"]			>> r_facial
 		S["facial_green"]		>> g_facial
 		S["facial_blue"]		>> b_facial
+		C.hair_face_color = rgb( r_facial, g_facial, b_facial )
+
 		S["skin_tone"]			>> C.skin_tone
 		S["skin_red"]			>> r_skin
 		S["skin_green"]			>> g_skin
 		S["skin_blue"]			>> b_skin
+		C.skin_color = rgb( r_skin, g_skin, b_skin )
+
 		S["hair_style_name"]	>> C.hair_style
 		S["facial_style_name"]	>> C.hair_face_style
 		S["eyes_red"]			>> r_eyes
 		S["eyes_green"]			>> g_eyes
 		S["eyes_blue"]			>> b_eyes
+		C.eye_color = rgb( r_eyes, g_eyes, b_eyes )
+
 		S["underwear"]			>> C.underwear
 		S["undershirt"]			>> C.undershirt
 		S["backbag"]			>> C.backpack
