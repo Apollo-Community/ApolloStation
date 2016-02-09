@@ -21,13 +21,14 @@
 			italics = 1
 			sound_vol *= 0.5 //muffle the sound a bit, so it's like we're actually talking through contact
 
-	if(sleeping || stat == 1)
-		hear_sleep(message)
-		return
-		
 	if(isDying(src))
 		hear_dying(message,speaker)
 		return
+		
+	if(sleeping || stat == 1)
+		hear_sleep(message)
+		return
+
 	//non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
 	if (language && (language.flags & NONVERBAL))
 		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
@@ -96,12 +97,13 @@
 
 	if(!client)
 		return
-
-	if(sleeping || stat==1) //If unconscious or sleeping
-		hear_sleep(message)
-		return
+		
 	if(isDying(src))
 		hear_dying(message,speaker)
+		return
+		
+	if(sleeping || stat==1) //If unconscious or sleeping
+		hear_sleep(message)
 		return
 	var/track = null
 
