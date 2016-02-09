@@ -24,7 +24,10 @@
 	if(sleeping || stat == 1)
 		hear_sleep(message)
 		return
-
+		
+	if(isDying(src))
+		hear_dying(message,speaker)
+		return
 	//non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
 	if (language && (language.flags & NONVERBAL))
 		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
@@ -97,7 +100,9 @@
 	if(sleeping || stat==1) //If unconscious or sleeping
 		hear_sleep(message)
 		return
-
+	if(isDying(src))
+		hear_dying(message,speaker)
+		return
 	var/track = null
 
 	//non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
@@ -243,3 +248,9 @@
 		heard = "<span class = 'game_say'>...<i>You almost hear someone talking</i>...</span>"
 
 	src << heard
+
+/mob/proc/hear_dying(var/message, var/mob/M)
+	if(get_dist(src, M) <= 2)
+		message = "span class = 'game_say'>...You hear someone say...\"[message]\"</span>"
+	else
+		message = "<span class = 'game_say'>...<i>You almost hear someone talking</i>...</span>"
