@@ -44,7 +44,7 @@
 //Last words.
 /mob/living/verb/succumb()
     set hidden = 1
-    if ((src.health < 0 && src.health > -95.0))
+    if (isCrit())
         src.adjustOxyLoss(src.health + 200)
         src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
         src << "<span class='notice'>You have given up life and succumbed to death.</span>"
