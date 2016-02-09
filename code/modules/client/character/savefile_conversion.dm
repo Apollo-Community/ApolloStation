@@ -18,6 +18,7 @@
 
 		world << "[characters.len] characters found for [ckey]"
 		for( var/datum/character/character in characters )
+			world << "Saving [character.name]"
 			character.saveCharacter( ckey )
 
 /proc/loadCharactersFromSavefile( var/path )
@@ -27,19 +28,23 @@
 	if(!fexists(path))
 		world << "Path does not exist!"
 		return 0
+
 	var/savefile/S = new /savefile(path)
 	if(!S)
 		world << "Save file could not be read!"
 		return 0
 
-	var/list/characters = list()
+	world << "Reading [path]"
+	S.cd = "/"
 
+	var/list/characters = list()
 	var/list/directories = S.dir
 
 	for( var/directory in directories )
 		if( !findtext( directory, "character" ))
 			continue
 
+		S.cd = "/"
 		S.cd = "[directory]"
 
 		var/datum/character/C = new()
@@ -129,10 +134,10 @@
 		if(isnull(C.species) || !(C.species in playable_species))
 			C.species = "Human"
 
+		if(!C.name) continue // If even the name couldn't be read, the character is a lost cause
 		if(isnull(C.additional_language)) C.additional_language = "None"
 		if(isnull(C.spawnpoint)) C.spawnpoint = "Arrivals Shuttle"
 		if(isnull(C.nanotrasen_relation)) C.nanotrasen_relation = initial(C.nanotrasen_relation)
-		if(!C.name) C.name = random_name(C.gender)
 
 		if(isnull(C.disabilities)) C.disabilities = 0
 		if(!C.player_alt_titles) C.player_alt_titles = new()
