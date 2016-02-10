@@ -64,7 +64,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/religion = "None"               //Religious association.
 
 	// Job vars, these are used in the job selection screen and hiring computer
-	var/department = 0
+	var/datum/department/department
 	var/roles = list( "Assistant" = "High" ) // Roles that the player has unlocked
 
 	// Special role selection
@@ -119,6 +119,10 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	name = random_name(gender,species)
 
 	gear = list()
+
+	spawn(5)
+		if( !department )
+			LoadDepartment( CIVILIAN )
 
 /datum/character/proc/copy_to(mob/living/carbon/human/character, safety = 0)
 	if(config.humans_need_surnames)

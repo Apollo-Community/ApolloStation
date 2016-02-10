@@ -9,17 +9,15 @@
 	//width	 - Screen' width. Defaults to 550 to make it look nice.
 	//height 	 - Screen's height. Defaults to 500 to make it look nice.
 
-	var/datum/department/chosen_department = job_master.GetDepartment( department )
-	if( !chosen_department )
+	if( !department )
 		ResetJobs()
-		chosen_department = job_master.GetDepartment( department )
 
 	var/HTML = "<body>"
 	HTML += "<tt><center>"
-	if( !chosen_department.department_id )
-		HTML += "<b>Branch: </b><a href='byond://?src=\ref[user];character=[menu_name];task=change_branch'>\[[chosen_department.name]\]</a><br><br>"
+	if( !department.department_id )
+		HTML += "<b>Branch: </b><a href='byond://?src=\ref[user];character=[menu_name];task=change_branch'>\[[department.name]\]</a><br><br>"
 	else
-		HTML += "<b>Branch: </b>[chosen_department.name]<br><br>"
+		HTML += "<b>Branch: </b>[department.name]<br><br>"
 	HTML += "<center><a href='byond://?src=\ref[user];character=[menu_name];task=close'>\[Done\]</a></center><br>" // Easier to press up here.
 	HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
 	HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
@@ -119,11 +117,11 @@
 		if("change_branch")
 			var/list/choices = list()
 			for( var/datum/department/D in job_master.departments )
-				choices[D.name] = D.department_id
+				choices[D.name] = D
 
-			var/choice = input("Select your desire department.", "Branch Selection", null) in choices
+			var/choice = input("Select your desired department.", "Branch Selection", null) in choices
 			if( choice )
-				department = choices[choice]
+				SetDepartment( choices[choice] )
 		if("random")
 			if(alternate_option == GET_RANDOM_JOB || alternate_option == BE_ASSISTANT)
 				alternate_option += 1

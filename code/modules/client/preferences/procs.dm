@@ -5,11 +5,18 @@
 			if(!loadPreferences())
 				return
 
-/datum/preferences/proc/GetJobDepartment(var/datum/job/job, var/level)
+/datum/preferences/proc/GetJobLevel( var/role )
 	if( !selected_character )
 		return
 
-	return selected_character.GetJobDepartment( job, level )
+	return selected_character.GetJobLevel( role )
+
+
+/datum/preferences/proc/GetJobLevelNum( var/role )
+	if( !selected_character )
+		return
+
+	return selected_character.GetJobLevelNum( role )
 
 /datum/preferences/proc/GetPlayerAltTitle(datum/job/job)
 	if( !selected_character )

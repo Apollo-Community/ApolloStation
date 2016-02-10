@@ -129,7 +129,7 @@
 		S["underwear"]			>> C.underwear
 		S["undershirt"]			>> C.undershirt
 		S["backbag"]			>> C.backpack
-		S["b_type"]				>> C.blood_type
+		C.blood_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 
 		//Jobs
 		S["alternate_option"]	>> C.alternate_option

@@ -22,6 +22,35 @@
 	if(job.title != new_title)
 		player_alt_titles[job.title] = new_title
 
+/datum/character/proc/SelectDepartment( mob/user )
+	var/list/choices = list()
+	for( var/datum/department/D in job_master.departments )
+		choices[D.name] = D
+
+	var/choice = input("Select your desire department.", "Branch Selection", null) in choices
+	if( !choice )
+		return null
+
+	SetDepartment( choices[choice] )
+
+/datum/character/proc/SetDepartment( var/datum/department/new_department )
+	if( !new_department )
+		return
+
+	var/datum/department/old_department
+	if( department && department.department_id != CIVILIAN ) // If we were in a department that wasn't civilian
+		old_department = department
+
+	if( old_department )
+		roles -= old_department.positions // Removing all old departmental roles
+
+	department = new_department
+	roles |= new_department.starting_positions
+
+/datum/character/proc/LoadDepartment( var/id )
+	var/D = job_master.GetDepartment( id )
+	SetDepartment( D )
+
 /datum/character/proc/SetJob(mob/user, role)
 	var/datum/job/job = job_master.GetJob(role)
 	if(!job)
@@ -39,10 +68,10 @@
 
 // This checks if the given job is part of our department
 /datum/character/proc/DepartmentCheck( var/datum/job/job )
-	if( !job.department_id )
+	if( job.department_id == CIVILIAN )
 		return 1 // If the job isn't in a department, a la civilian roles
 
-	return department == job.department_id
+	return department.department_id == job.department_id
 
 /datum/character/proc/ChangeJobLevel( var/role )
 	if( !( role in roles ))
@@ -68,6 +97,20 @@
 
 	return roles[role]
 
+/datum/character/proc/GetJobLevelNum( var/role )
+	if( !( role in roles ))
+		return 0
+
+	switch( roles[role] )
+		if( "High" )
+			return 1
+		if( "Medium" )
+			return 2
+		if( "Low" )
+			return 3
+		else
+			return 0
+
 /datum/character/proc/GetHighestLevelJob()
 	var/list/levels = list( "High", "Medium", "Low", "None" )
 
@@ -86,11 +129,7 @@
 				return role
 
 /datum/character/proc/ResetJobs()
-	department = 0
-	roles = list( "Assistant" = "High" )
-
-/datum/character/proc/GetJobDepartment()
-	return department
+	LoadDepartment( CIVILIAN )
 
 /datum/character/proc/SetJobDepartment( var/datum/job/job )
 	department = job.department_id

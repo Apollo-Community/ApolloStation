@@ -46,9 +46,9 @@
 
 	return clothes_s
 
-/datum/job/cargo_tech
-	title = "Cargo Technician"
-	flag = CARGOTECH
+/datum/job/supply_tech
+	title = "Supply Technician"
+	flag = SUPPLYTECH
 	department_id = SUPPLY
 	faction = "Station"
 	total_positions = 2
@@ -58,7 +58,7 @@
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
 	minimal_access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 
-	rank_succesion_level = 4
+	rank_succesion_level = 3
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -66,14 +66,13 @@
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/cargotech(H), slot_w_uniform)
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/black(H), slot_shoes)
 		H.equip_to_slot_or_qdel(new /obj/item/device/pda/cargo(H), slot_belt)
-//		H.equip_to_slot_or_qdel(new /obj/item/clothing/gloves/black(H), slot_gloves)
 		if(H.character.backpack == 1)
 			H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 		else
 			H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		return 1
 
-/datum/job/cargo_tech/make_preview_icon( var/backpack )
+/datum/job/supply_tech/make_preview_icon( var/backpack )
 	var/icon/clothes_s = null
 
 	clothes_s = new /icon('icons/mob/uniform.dmi', "cargotech_s")

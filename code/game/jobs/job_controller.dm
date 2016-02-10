@@ -99,7 +99,7 @@ var/global/datum/controller/occupations/job_master
 			if(flag && (!player.client.prefs.beSpecial() & flag))
 				Debug("FOC flag failed, Player: [player], Flag: [flag], ")
 				continue
-			if(player.client.prefs.selected_character.GetJobDepartment(job, level) & job.flag)
+			if( player.client.prefs.GetJobLevelNum( job.title ) == level )
 				Debug("FOC pass, Player: [player], Level:[level]")
 				candidates += player
 		return candidates
@@ -308,10 +308,10 @@ var/global/datum/controller/occupations/job_master
 						continue
 
 					// If the player wants that job on this level, then try give it to him.
-					if(player.client.prefs.selected_character.GetJobDepartment(job, level) & job.flag)
+					if( player.client.prefs.GetJobLevelNum( job.title ) == level)
 
 						// If the job isn't filled
-						if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
+						if(( job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
 							Debug("DO pass, Player: [player], Level:[level], Job:[job.title]")
 							AssignRole(player, job.title)
 							unassigned -= player
@@ -662,13 +662,15 @@ var/global/datum/controller/occupations/job_master
 				if(!job.player_old_enough(player.client))
 					level6++
 					continue
-				if(player.client.prefs.GetJobDepartment(job, 1) & job.flag)
-					level1++
-				else if(player.client.prefs.GetJobDepartment(job, 2) & job.flag)
-					level2++
-				else if(player.client.prefs.GetJobDepartment(job, 3) & job.flag)
-					level3++
-				else level4++ //not selected
+				switch( player.client.prefs.GetJobLevel( job.title ))
+					if( "High" )
+						level1++
+					if( "Medium" )
+						level2++
+					if( "Low" )
+						level3++
+					else
+						level4++ //not selected
 
 			tmp_str += "HIGH=[level1]|MEDIUM=[level2]|LOW=[level3]|NEVER=[level4]|BANNED=[level5]|YOUNG=[level6]|-"
 			feedback_add_details("job_preferences",tmp_str)

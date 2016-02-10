@@ -11,7 +11,7 @@
 	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue)
 	minimal_access = list(access_bar)
 
-	rank_succesion_level = 4
+	rank_succesion_level = 3
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -72,7 +72,7 @@
 	minimal_access = list(access_kitchen)
 	alt_titles = list("Cook", "Gardener")
 
-	rank_succesion_level = 4
+	rank_succesion_level = 3
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -211,7 +211,7 @@
 	minimal_access = list(access_mime, access_theatre)
 	alt_titles = list("Mime", "Jester")
 
-	rank_succesion_level = 4
+	rank_succesion_level = 2
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -296,7 +296,7 @@
 	access = list(access_janitor, access_maint_tunnels)
 	minimal_access = list(access_janitor, access_maint_tunnels)
 
-	rank_succesion_level = 4
+	rank_succesion_level = 3
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -341,7 +341,7 @@
 	minimal_access = list(access_library)
 	alt_titles = list("Journalist")
 
-	rank_succesion_level = 4
+	rank_succesion_level = 3
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0

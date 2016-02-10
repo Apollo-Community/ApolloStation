@@ -60,7 +60,7 @@
 	variables["religion"] = sql_sanitize_text( religion )
 
 	// Jobs, uses bitflags
-	variables["department"] = sanitize_integer( department, 0, BITFLAGS_MAX, 0 )
+	variables["department"] = sanitize_integer( department.department_id, 0, 255, 0 )
 	variables["roles"] = list2params( roles )
 
 	// Special role selection
@@ -200,8 +200,8 @@
 	variables["religion"] = "text"
 
 	// Jobs, uses bitflags
-	variables["department"] = "number"
 	variables["roles"] = "params"
+	variables["department"] = "department"
 
 	// Special role selection
 	variables["job_antag"] = "number"
@@ -265,6 +265,9 @@
 					value = all_languages[value]
 				else
 					value = "None"
+			if( "department" )
+				LoadDepartment( value )
+				continue // Dont need to set the variable on this one
 
 		vars[variables[i]] = value
 
@@ -289,7 +292,6 @@
 	age = rand(AGE_MIN,AGE_MAX)
 	if(H)
 		copy_to(H,1)
-
 
 /datum/character/proc/randomize_hair_color(var/target = "hair")
 	if(prob (75) && target == "facial") // Chance to inherit hair color
