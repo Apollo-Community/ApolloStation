@@ -266,7 +266,7 @@
 				else
 					value = "None"
 			if( "department" )
-				LoadDepartment( value )
+				LoadDepartment( text2num( value ))
 				continue // Dont need to set the variable on this one
 
 		vars[variables[i]] = value

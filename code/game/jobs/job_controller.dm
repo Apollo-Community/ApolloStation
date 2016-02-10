@@ -442,8 +442,12 @@ var/global/datum/controller/occupations/job_master
 				break
 			if(!S)
 				S = locate("start*[rank]") // use old stype
+
 			if(istype(S, /obj/effect/landmark/start) && istype(S.loc, /turf))
 				H.loc = S.loc
+			else
+				H.loc = pick( latejoin )
+
 			// Moving wheelchair if they have one
 			if(H.buckled && istype(H.buckled, /obj/structure/bed/chair/wheelchair))
 				H.buckled.loc = H.loc
