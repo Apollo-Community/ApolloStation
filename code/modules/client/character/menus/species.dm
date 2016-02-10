@@ -58,7 +58,7 @@
 			dat += "\[<a href='byond://?src=\ref[user];character=[menu_name];task=select_species;species=[species_preview]'>select</a>\]"
 	dat += "</center></body>"
 
-	user << browse(dat, "window=[menu_name];size=700x400;titlebar=0")
+	user << browse(dat, "window=[menu_name];size=700x400;can_close=0")
 	winshow( user, "[menu_name]", 1)
 
 /datum/character/proc/SpeciesMenuProcess( mob/user, list/href_list )

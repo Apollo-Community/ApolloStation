@@ -22,7 +22,7 @@
 
 	HTML += "</center></tt>"
 
-	user << browse(HTML, "window=[menu_name];titlebar=0")
+	user << browse(HTML, "window=[menu_name];can_close=0")
 	return
 
 /datum/character/proc/AntagOptionsMenuProcess( mob/user, list/href_list )

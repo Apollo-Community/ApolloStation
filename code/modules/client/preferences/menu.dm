@@ -24,7 +24,7 @@
 	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=client_prefs'>Client Preferences</a><br>"
 	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=close'>\[Done\]</a><br>"
 
-	user << browse( ., "window=[menu_name];size=350x300;titlebar=0")
+	user << browse( ., "window=[menu_name];size=350x300;can_close=0")
 	winshow( user, "client_menu", 1)
 
 /datum/preferences/proc/ClientMenuDisable( mob/user )
@@ -81,7 +81,7 @@
 	. += "<b>Ghost Radio:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=ghost_radio'>[(toggles & CHAT_GHOSTRADIO) ? "All Radio" : "Nearby Radio"]</a><br>"
 	. += "<br><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>\[Done\]</a><br>"
 
-	user << browse( ., "window=[menu_name];size=350x300;titlebar=0" )
+	user << browse( ., "window=[menu_name];size=350x300;can_close=0" )
 	winshow( user, "[menu_name]", 1)
 
 /datum/preferences/proc/PreferencesMenuProcess( mob/user, list/href_list )
@@ -159,7 +159,7 @@
 
 	. += "<br><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>\[Done\]</a><br>"
 
-	user << browse( ., "window=[menu_name];size=350x300;titlebar=0" )
+	user << browse( ., "window=[menu_name];size=350x300;can_close=0" )
 	winshow( user, "[menu_name]", 1)
 
 /datum/preferences/proc/SelectCharacterMenuProcess( mob/user, list/href_list )

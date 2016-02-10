@@ -25,7 +25,7 @@
 	HTML += "<a href='byond://?src=\ref[user];character=[menu_name];task=close'>\[Done\]</a>"
 	HTML += "</center></tt>"
 
-	user << browse(HTML, "window=[menu_name];size=350x300;titlebar=0")
+	user << browse(HTML, "window=[menu_name];size=350x300;can_close=0")
 	winshow( user, "[menu_name]", 1)
 	return
 

@@ -299,7 +299,7 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `faction` varchar(50) NOT NULL DEFAULT "None",
   `religion` varchar(50) NOT NULL DEFAULT "None",
   `department` tinyint NOT NULL DEFAULT '0',
-  `roles` text DEFAULT "Assistant=High",
+  `roles` text,
   `job_antag` int UNSIGNED NOT NULL DEFAULT '0',
   `alternate_option` int UNSIGNED,
   `organ_data` text,
@@ -313,8 +313,8 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `nanotrasen_relation` varchar(50) NOT NULL DEFAULT "Neutral",
   `disabilities` int UNSIGNED NOT NULL DEFAULT '0',
   `uplink_location` varchar(50) NOT NULL DEFAULT "PDA",
-
+  `fingerprints` varchar(32) NOT NULL,
+  `DNA` varchar(32) NOT NULL,
+  `unique_identifier` varchar(32) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
-
-

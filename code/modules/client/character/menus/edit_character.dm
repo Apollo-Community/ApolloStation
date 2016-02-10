@@ -195,7 +195,7 @@
 	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=close'>\[Done\]</a>"
 	. += "</center></body></html>"
 
-	user << browse( ., "window=[menu_name];size=560x736;titlebar=0" )
+	user << browse( ., "window=[menu_name];size=560x736;can_close=0" )
 	winshow( user, "edit_character", 1 )
 
 /datum/character/proc/EditCharacterMenuDisable( mob/user )

@@ -102,7 +102,7 @@
 	HTML += "</center>"
 	HTML += "</tt>"
 
-	user << browse(HTML, "window=[menu_name];size=[width]x[height];titlebar=0")
+	user << browse(HTML, "window=[menu_name];size=[width]x[height];can_close=0")
 	winshow( user, "[menu_name]", 1)
 	return
 

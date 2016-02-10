@@ -99,6 +99,11 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	// Location of traitor uplink
 	var/uplink_location = "PDA"
 
+	var/fingerprints
+	var/DNA
+
+	var/unique_identifier
+
 	// Skills
 	var/used_skillpoints = 0
 	var/skill_specialization = null
@@ -120,9 +125,12 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	gear = list()
 
-	spawn(5)
-		if( !department )
-			LoadDepartment( CIVILIAN )
+	fingerprints = md5( "fingerprint[name][blood_type][gender][time2text(world.timeofday,"hh:mm")]" )
+	DNA = md5( "DNA[name][blood_type][gender][time2text(world.timeofday,"hh:mm")]" )
+	unique_identifier = md5( "unique_identifier[name][blood_type][gender][time2text(world.timeofday,"hh:mm")]" )
+
+	if( !department )
+		LoadDepartment( CIVILIAN )
 
 /datum/character/proc/copy_to(mob/living/carbon/human/character, safety = 0)
 	if(config.humans_need_surnames)

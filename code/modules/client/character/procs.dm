@@ -95,6 +95,11 @@
 	// Location of traitor uplink
 	variables["uplink_location"] = sql_sanitize_text( uplink_location )
 
+	// Unique identifiers
+	variables["fingerprints"] = sql_sanitize_text( fingerprints )
+	variables["DNA"] = sql_sanitize_text( DNA )
+	variables["unique_identifier"] = sql_sanitize_text( unique_identifier )
+
 	var/list/names = list()
 	var/list/values = list()
 	for( var/name in variables )
@@ -234,6 +239,10 @@
 
 	// Location of traitor uplink
 	variables["uplink_location"] = "text"
+
+	variables["fingerprints"] = "text"
+	variables["DNA"] = "text"
+	variables["unique_identifier"] = "text"
 
 	var/query_names = list2text( variables, "," )
 	var/sql_ckey = ckey( client.ckey )
