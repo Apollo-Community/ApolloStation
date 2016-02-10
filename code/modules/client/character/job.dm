@@ -29,7 +29,7 @@
 		EditCharacterMenu(user)
 		return
 
-	if( job.title in roles && DepartmentCheck( job ) )
+	if(( job.title in roles ) && DepartmentCheck( job ))
 		ChangeJobLevel( job.title )
 	else if( DepartmentCheck( job ))
 		roles[job.title] = "None" // Adding the new roles
@@ -39,6 +39,9 @@
 
 // This checks if the given job is part of our department
 /datum/character/proc/DepartmentCheck( var/datum/job/job )
+	if( !job.department_id )
+		return 1 // If the job isn't in a department, a la civilian roles
+
 	return department == job.department_id
 
 /datum/character/proc/ChangeJobLevel( var/role )

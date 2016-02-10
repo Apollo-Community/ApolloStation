@@ -110,7 +110,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/icon/preview_icon_side = null
 	var/species_preview   // Used for the species selection window.
 
-/datum/character/New(client/C)
+/datum/character/New( var/client/C )
 	client = C
 
 	blood_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")

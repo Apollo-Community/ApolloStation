@@ -5,11 +5,13 @@ var/global/datum/controller/occupations/job_master
 #define RETURN_TO_LOBBY 2
 
 /datum/controller/occupations
-		//List of all jobs
+		// List of all jobs
 	var/list/occupations = list()
-		//Players who need jobs
+		// List of departments
+	var/list/departments = list()
+		// Players who need jobs
 	var/list/unassigned = list()
-		//Debug info
+		// Debug info
 	var/list/job_debug = list()
 
 
@@ -25,9 +27,13 @@ var/global/datum/controller/occupations/job_master
 			if(job.faction != faction)	continue
 			occupations += job
 
+		for( var/type in subtypes( /datum/department ))
+			var/datum/department/D = new type()
+			if( !D ) continue
+			if( D.faction != faction )	continue
+			departments += D
 
 		return 1
-
 
 	proc/Debug(var/text)
 		if(!Debug2)	return 0
@@ -40,6 +46,14 @@ var/global/datum/controller/occupations/job_master
 		for(var/datum/job/J in occupations)
 			if(!J)	continue
 			if(J.title == rank)	return J
+		return null
+
+	proc/GetDepartment(var/id)
+		for(var/datum/department/D in departments)
+			if(!D)
+				continue
+			if(D.department_id == id)
+				return D
 		return null
 
 	proc/GetPlayerAltTitle(mob/new_player/player, rank)

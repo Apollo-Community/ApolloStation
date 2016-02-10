@@ -1,4 +1,4 @@
-/datum/preferences/New( client/C )
+/datum/preferences/New( var/client/C )
 	if(istype(C))
 		client = C
 		if(!IsGuestKey(client.key))
