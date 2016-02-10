@@ -1,7 +1,7 @@
 /datum/job/hos
 	title = "Head of Security"
 	flag = HOS
-	department_flag = ENGSEC
+	department_id = SECURITY
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
@@ -18,6 +18,8 @@
 			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
 			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway)
 	minimal_player_age = 14
+
+	rank_succesion_level = 10
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -42,12 +44,28 @@
 		H.implant_loyalty(H)
 		return 1
 
+/datum/job/hos/make_preview_icon( var/backpack )
+	var/icon/clothes_s = null
 
+	clothes_s = new /icon('icons/mob/uniform.dmi', "hosred_s")
+	clothes_s.Blend(new /icon('icons/mob/feet.dmi', "jackboots"), ICON_UNDERLAY)
+	clothes_s.Blend(new /icon('icons/mob/hands.dmi', "bgloves"), ICON_UNDERLAY)
+	if(prob(1))
+		clothes_s.Blend(new /icon('icons/mob/head.dmi', "hosberet"), ICON_OVERLAY)
+	switch(backpack)
+		if(2)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "securitypack"), ICON_OVERLAY)
+		if(3)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-sec"), ICON_OVERLAY)
+		if(4)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+
+	return clothes_s
 
 /datum/job/warden
 	title = "Warden"
 	flag = WARDEN
-	department_flag = ENGSEC
+	department_id = SECURITY
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
@@ -56,6 +74,8 @@
 	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels, access_morgue)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels)
 	minimal_player_age = 5
+
+	rank_succesion_level = 4
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -79,18 +99,37 @@
 			H.equip_to_slot_or_qdel(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
 		return 1
 
+/datum/job/warden/make_preview_icon( var/backpack )
+	var/icon/clothes_s = null
 
+	clothes_s = new /icon('icons/mob/uniform.dmi', "warden_s")
+	if(prob(1))
+		clothes_s.Blend(new /icon('icons/mob/feet.dmi', "slippers_worn"), ICON_OVERLAY)
+	else
+		clothes_s.Blend(new /icon('icons/mob/feet.dmi', "jackboots"), ICON_UNDERLAY)
+	clothes_s.Blend(new /icon('icons/mob/hands.dmi', "bgloves"), ICON_UNDERLAY)
+	switch(backpack)
+		if(2)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "securitypack"), ICON_OVERLAY)
+		if(3)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-sec"), ICON_OVERLAY)
+		if(4)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+
+	return clothes_s
 
 /datum/job/detective
 	title = "Detective"
 	flag = DETECTIVE
-	department_flag = ENGSEC
+	department_id = SECURITY
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	alt_titles = list("Forensic Technician")
+
+	rank_succesion_level = 4
 
 	access = list(access_security, access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 	minimal_access = list(access_security, access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
@@ -123,12 +162,30 @@
 			H.equip_to_slot_or_qdel(new /obj/item/clothing/head/det_hat(H), slot_head)
 		return 1
 
+/datum/job/detective/make_preview_icon( var/backpack )
+	var/icon/clothes_s = null
 
+	clothes_s = new /icon('icons/mob/uniform.dmi', "detective_s")
+	clothes_s.Blend(new /icon('icons/mob/feet.dmi', "brown"), ICON_UNDERLAY)
+	clothes_s.Blend(new /icon('icons/mob/hands.dmi', "bgloves"), ICON_UNDERLAY)
+	if(prob(1))
+		clothes_s.Blend(new /icon('icons/mob/mask.dmi', "cigaron"), ICON_OVERLAY)
+	clothes_s.Blend(new /icon('icons/mob/head.dmi', "detective"), ICON_OVERLAY)
+	clothes_s.Blend(new /icon('icons/mob/suit.dmi', "detective"), ICON_OVERLAY)
+	switch(backpack)
+		if(2)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
+		if(3)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-norm"), ICON_OVERLAY)
+		if(4)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+
+	return clothes_s
 
 /datum/job/officer
 	title = "Security Officer"
 	flag = OFFICER
-	department_flag = ENGSEC
+	department_id = SECURITY
 	faction = "Station"
 	total_positions = 3
 	spawn_positions = 3
@@ -138,6 +195,9 @@
 	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels, access_morgue)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
 	minimal_player_age = 3
+
+	rank_succesion_level = 4
+
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/headset_sec(H), slot_l_ear)
@@ -157,3 +217,21 @@
 			H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 			H.equip_to_slot_or_qdel(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
 		return 1
+
+/datum/job/officer/make_preview_icon( var/backpack )
+	var/icon/clothes_s = null
+
+	clothes_s = new /icon('icons/mob/uniform.dmi', "secred_s")
+	clothes_s.Blend(new /icon('icons/mob/feet.dmi', "jackboots"), ICON_UNDERLAY)
+	if(prob(1))
+		clothes_s.Blend(new /icon('icons/mob/head.dmi', "officerberet"), ICON_OVERLAY)
+	switch(backpack)
+		if(2)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "securitypack"), ICON_OVERLAY)
+		if(3)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-sec"), ICON_OVERLAY)
+		if(4)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+
+	return clothes_s
+

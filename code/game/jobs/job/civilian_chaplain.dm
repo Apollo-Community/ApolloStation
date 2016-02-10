@@ -2,7 +2,7 @@
 /datum/job/chaplain
 	title = "Chaplain"
 	flag = CHAPLAIN
-	department_flag = CIVILIAN
+	department_id = CIVILIAN
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
@@ -12,6 +12,7 @@
 	minimal_access = list(access_morgue, access_chapel_office, access_crematorium)
 	alt_titles = list("Counselor")
 
+	rank_succesion_level = 4
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -153,3 +154,20 @@
 			feedback_set_details("religion_deity","[new_deity]")
 			feedback_set_details("religion_book","[new_book_style]")
 		return 1
+
+/datum/job/chaplain/make_preview_icon( var/backpack )
+	var/icon/clothes_s = null
+
+	clothes_s = new /icon('icons/mob/uniform.dmi', "chapblack_s")
+	clothes_s.Blend(new /icon('icons/mob/feet.dmi', "black"), ICON_UNDERLAY)
+	if(prob(1))
+		clothes_s.Blend(new /icon('icons/mob/suit.dmi', "imperium_monk"), ICON_OVERLAY)
+	switch(backpack)
+		if(2)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
+		if(3)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-norm"), ICON_OVERLAY)
+		if(4)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+
+	return clothes_s

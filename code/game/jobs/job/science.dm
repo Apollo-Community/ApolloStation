@@ -1,7 +1,7 @@
 /datum/job/rd
 	title = "Research Director"
 	flag = RD
-	department_flag = MEDSCI
+	department_id = SCIENCE
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
@@ -19,6 +19,8 @@
 			            access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch)
 	minimal_player_age = 14
 
+	rank_succesion_level = 10
+
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/heads/rd(H), slot_l_ear)
@@ -35,12 +37,28 @@
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/labcoat(H), slot_wear_suit)
 		return 1
 
+/datum/job/rd/make_preview_icon( var/backpack )
+	var/icon/clothes_s = null
 
+	clothes_s = new /icon('icons/mob/uniform.dmi', "director_s")
+	clothes_s.Blend(new /icon('icons/mob/feet.dmi', "brown"), ICON_UNDERLAY)
+	clothes_s.Blend(new /icon('icons/mob/suit.dmi', "labcoat_open"), ICON_OVERLAY)
+	if(prob(1))
+		clothes_s.Blend(new /icon('icons/mob/head.dmi', "petehat"), ICON_OVERLAY)
+	switch(backpack)
+		if(2)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
+		if(3)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-tox"), ICON_OVERLAY)
+		if(4)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+
+	return clothes_s
 
 /datum/job/scientist
 	title = "Scientist"
 	flag = SCIENTIST
-	department_flag = MEDSCI
+	department_id = SCIENCE
 	faction = "Station"
 	total_positions = 6
 	spawn_positions = 3
@@ -51,6 +69,8 @@
 	alt_titles = list("Xenoarcheologist", "Anomalist", "Phoron Researcher", "Xenobotanist", "Research Assistant")
 
 	minimal_player_age = 14
+
+	rank_succesion_level = 4
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -67,12 +87,28 @@
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/labcoat/science(H), slot_wear_suit)
 		return 1
 
+/datum/job/scientist/make_preview_icon( var/backpack )
+	var/icon/clothes_s = null
 
+	clothes_s = new /icon('icons/mob/uniform.dmi', "sciencewhite_s")
+	clothes_s.Blend(new /icon('icons/mob/feet.dmi', "white"), ICON_UNDERLAY)
+	clothes_s.Blend(new /icon('icons/mob/suit.dmi', "labcoat_tox_open"), ICON_OVERLAY)
+	if(prob(1))
+		clothes_s.Blend(new /icon('icons/mob/head.dmi', "metroid"), ICON_OVERLAY)
+	switch(backpack)
+		if(2)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
+		if(3)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-tox"), ICON_OVERLAY)
+		if(4)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+
+	return clothes_s
 
 /datum/job/xenobiologist
 	title = "Xenobiologist"
 	flag = XENOBIOLOGIST
-	department_flag = MEDSCI
+	department_id = SCIENCE
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
@@ -82,6 +118,8 @@
 	minimal_access = list(access_research, access_xenobiology)
 
 	minimal_player_age = 14
+
+	rank_succesion_level = 4
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H) return 0
@@ -98,10 +136,28 @@
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/labcoat/science(H), slot_wear_suit)
 		return 1
 
+/datum/job/xenobiologist/make_preview_icon( var/backpack )
+	var/icon/clothes_s = null
+
+	clothes_s = new /icon('icons/mob/uniform.dmi', "sciencewhite_s")
+	clothes_s.Blend(new /icon('icons/mob/feet.dmi', "white"), ICON_UNDERLAY)
+	clothes_s.Blend(new /icon('icons/mob/suit.dmi', "labcoat_tox_open"), ICON_OVERLAY)
+	if(prob(1))
+		clothes_s.Blend(new /icon('icons/mob/head.dmi', "metroid"), ICON_OVERLAY)
+	switch(backpack)
+		if(2)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
+		if(3)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-tox"), ICON_OVERLAY)
+		if(4)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+
+	return clothes_s
+
 /datum/job/roboticist
 	title = "Roboticist"
 	flag = ROBOTICIST
-	department_flag = MEDSCI
+	department_id = SCIENCE
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
@@ -112,6 +168,8 @@
 	alt_titles = list("Biomechanical Engineer","Mechatronic Engineer")
 
 	minimal_player_age = 7
+
+	rank_succesion_level = 4
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -128,3 +186,22 @@
 			H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/labcoat(H), slot_wear_suit)
 		return 1
+
+/datum/job/roboticist/make_preview_icon( var/backpack )
+	var/icon/clothes_s = null
+
+	clothes_s = new /icon('icons/mob/uniform.dmi', "robotics_s")
+	clothes_s.Blend(new /icon('icons/mob/feet.dmi', "black"), ICON_UNDERLAY)
+	clothes_s.Blend(new /icon('icons/mob/hands.dmi', "bgloves"), ICON_UNDERLAY)
+	clothes_s.Blend(new /icon('icons/mob/suit.dmi', "labcoat_open"), ICON_OVERLAY)
+	if(prob(1))
+		clothes_s.Blend(new /icon('icons/mob/items_righthand.dmi', "toolbox_blue"), ICON_OVERLAY)
+	switch(backpack)
+		if(2)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
+		if(3)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-norm"), ICON_OVERLAY)
+		if(4)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+
+	return clothes_s

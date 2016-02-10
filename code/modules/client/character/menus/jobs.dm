@@ -20,8 +20,8 @@
 	//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
 	var/datum/job/lastJob
 	if (!job_master)		return
-	for(var/datum/job/job in job_master.occupations)
-
+	for( var/role in roles)
+		var/datum/job/job = job_master.GetJob(role)
 		index += 1
 		if((index >= limit) || (job.title in splitJobs))
 			if((index < limit) && (lastJob != null))
@@ -33,29 +33,26 @@
 			index = 0
 
 		HTML += "<tr bgcolor='[job.selection_color]'><td width='60%' align='right'>"
-		var/rank = job.title
+
 		lastJob = job
-		if(jobban_isbanned(user, rank))
-			HTML += "<del>[rank]</del></td><td><b> \[BANNED]</b></td></tr>"
+		if(jobban_isbanned(user, role))
+			HTML += "<del>[role]</del></td><td><b> \[BANNED]</b></td></tr>"
 			continue
 		if(!job.player_old_enough(user.client))
 			var/available_in_days = job.available_in_days(user.client)
-			HTML += "<del>[rank]</del></td><td> \[IN [(available_in_days)] DAYS]</td></tr>"
+			HTML += "<del>[role]</del></td><td> \[IN [(available_in_days)] DAYS]</td></tr>"
 			continue
-		if((job_civilian_low & ASSISTANT) && (rank != "Assistant"))
-			HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
-			continue
-		if((rank in command_positions) || (rank == "AI"))//Bold head jobs
-			HTML += "<b>[rank]</b>"
+		if((role in command_positions) || (role == "AI"))//Bold head jobs
+			HTML += "<b>[role]</b>"
 		else
-			HTML += "[rank]"
+			HTML += "[role]"
 
 		HTML += "</td><td width='40%'>"
 
-		HTML += "<a href='byond://?src=\ref[user];character=[menu_name];task=input;text=[rank]'>"
-
-		if(rank == "Assistant")//Assistant is special
-			if(job_civilian_low & ASSISTANT)
+		HTML += "<a href='byond://?src=\ref[user];character=[menu_name];task=input;text=[role]'>"
+/*
+		if(role == "Assistant")//Assistant is special
+			if( GetJobLevel( "Assistant" ) != "None" )
 				HTML += " <font color=green>\[Yes]</font>"
 			else
 				HTML += " <font color=red>\[No]</font>"
@@ -65,12 +62,12 @@
 <td><a href='byond://?src=\ref[user];character=[menu_name];task=alt_title;job=\ref[job]'>\[[GetPlayerAltTitle(job)]\]</a></td></tr>"}
 			HTML += "</a></td></tr>"
 			continue
-
-		if(GetJobDepartment(job, 1) & job.flag)
+*/
+		if( GetJobLevel( role ) == "High" )
 			HTML += " <font color=blue>\[High]</font>"
-		else if(GetJobDepartment(job, 2) & job.flag)
+		else if( GetJobLevel( role ) == "Medium" )
 			HTML += " <font color=green>\[Medium]</font>"
-		else if(GetJobDepartment(job, 3) & job.flag)
+		else if( GetJobLevel( role ) == "Low" )
 			HTML += " <font color=orange>\[Low]</font>"
 		else
 			HTML += " <font color=red>\[NEVER]</font>"

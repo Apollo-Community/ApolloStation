@@ -63,18 +63,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/faction = "None"                //Antag faction/general associated faction.
 	var/religion = "None"               //Religious association.
 
-	// Jobs, uses bitflags
-	var/job_civilian_high = 0
-	var/job_civilian_med = 0
-	var/job_civilian_low = 0
-
-	var/job_medsci_high = 0
-	var/job_medsci_med = 0
-	var/job_medsci_low = 0
-
-	var/job_engsec_high = 0
-	var/job_engsec_med = 0
-	var/job_engsec_low = 0
+	// Job vars, these are used in the job selection screen and hiring computer
+	var/department = 0
+	var/roles = list( "Assistant" = "High" ) // Roles that the player has unlocked
 
 	// Special role selection
 	var/job_antag = 0

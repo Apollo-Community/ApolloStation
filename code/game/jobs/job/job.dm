@@ -9,7 +9,7 @@
 
 	//Bitflags for the job
 	var/flag = 0
-	var/department_flag = 0
+	var/department_id = 0
 
 	//Players will be allowed to spawn in as jobs that are set to "Station"
 	var/faction = "None"
@@ -22,6 +22,9 @@
 
 	//How many players have this job
 	var/current_positions = 0
+
+	// Where this rank sits on the chain of command. Higher the number, the greater the authority
+	var/rank_succesion_level = 0
 
 	//Supervisors, who this person answers to directly
 	var/supervisors = ""
@@ -110,3 +113,6 @@
 	if(H.r_store)
 		H.r_store.add_fingerprint(H,1)
 	return 1
+
+/datum/job/proc/make_preview_icon( var/icon/preview_icon )
+	return preview_icon

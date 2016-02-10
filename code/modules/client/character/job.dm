@@ -1,3 +1,14 @@
+/proc/ShowChainOfCommand()
+	for( var/i = 0; i < 20; i++ )
+		var/job_found = 0
+		for( var/datum/job/job in job_master.occupations )
+			if( job.rank_succesion_level == i )
+				job_found = 1
+				world << "[job.title]"
+
+		if( job_found )
+			world << "Succesion level: [i]"
+
 /datum/character/proc/GetPlayerAltTitle(datum/job/job)
 	return player_alt_titles.Find(job.title) > 0 \
 		? player_alt_titles[job.title] \
@@ -18,113 +29,65 @@
 		EditCharacterMenu(user)
 		return
 
-	if(role == "Assistant")
-		if(job_civilian_low & job.flag)
-			job_civilian_low &= ~job.flag
-		else
-			job_civilian_low |= job.flag
-		JobChoicesMenu(user)
-		return 1
-
-	if(GetJobDepartment(job, 1) & job.flag)
-		SetJobDepartment(job, 1)
-	else if(GetJobDepartment(job, 2) & job.flag)
-		SetJobDepartment(job, 2)
-	else if(GetJobDepartment(job, 3) & job.flag)
-		SetJobDepartment(job, 3)
-	else//job = Never
-		SetJobDepartment(job, 4)
+	if( job.title in roles && DepartmentCheck( job ) )
+		ChangeJobLevel( job.title )
+	else if( DepartmentCheck( job ))
+		roles[job.title] = "None" // Adding the new roles
 
 	JobChoicesMenu(user)
 	return 1
 
-/datum/character/proc/ResetJobs()
-	job_civilian_high = 0
-	job_civilian_med = 0
-	job_civilian_low = 0
+// This checks if the given job is part of our department
+/datum/character/proc/DepartmentCheck( var/datum/job/job )
+	return department == job.department_id
 
-	job_medsci_high = 0
-	job_medsci_med = 0
-	job_medsci_low = 0
+/datum/character/proc/ChangeJobLevel( var/role )
+	if( !( role in roles ))
+		return 0
 
-	job_engsec_high = 0
-	job_engsec_med = 0
-	job_engsec_low = 0
-
-/datum/character/proc/GetJobDepartment(var/datum/job/job, var/level)
-	if(!job || !level)	return 0
-	switch(job.department_flag)
-		if(CIVILIAN)
-			switch(level)
-				if(1)
-					return job_civilian_high
-				if(2)
-					return job_civilian_med
-				if(3)
-					return job_civilian_low
-		if(MEDSCI)
-			switch(level)
-				if(1)
-					return job_medsci_high
-				if(2)
-					return job_medsci_med
-				if(3)
-					return job_medsci_low
-		if(ENGSEC)
-			switch(level)
-				if(1)
-					return job_engsec_high
-				if(2)
-					return job_engsec_med
-				if(3)
-					return job_engsec_low
-	return 0
-
-/datum/character/proc/SetJobDepartment(var/datum/job/job, var/level)
-	if(!job || !level)	return 0
-	switch(level)
-		if(1)//Only one of these should ever be active at once so clear them all here
-			job_civilian_high = 0
-			job_medsci_high = 0
-			job_engsec_high = 0
+	switch( roles[role] )
+		if( "None" )
+			roles[role] = "Low"
+			return 2
+		if( "Low" )
+			roles[role] = "Medium"
+			return 3
+		if( "Medium" )
+			roles[role] = "High"
+			return 4
+		if( "High" )
+			roles[role] = "None"
 			return 1
-		if(2)//Set current highs to med, then reset them
-			job_civilian_med |= job_civilian_high
-			job_medsci_med |= job_medsci_high
-			job_engsec_med |= job_engsec_high
-			job_civilian_high = 0
-			job_medsci_high = 0
-			job_engsec_high = 0
 
-	switch(job.department_flag)
-		if(CIVILIAN)
-			switch(level)
-				if(2)
-					job_civilian_high = job.flag
-					job_civilian_med &= ~job.flag
-				if(3)
-					job_civilian_med |= job.flag
-					job_civilian_low &= ~job.flag
-				else
-					job_civilian_low |= job.flag
-		if(MEDSCI)
-			switch(level)
-				if(2)
-					job_medsci_high = job.flag
-					job_medsci_med &= ~job.flag
-				if(3)
-					job_medsci_med |= job.flag
-					job_medsci_low &= ~job.flag
-				else
-					job_medsci_low |= job.flag
-		if(ENGSEC)
-			switch(level)
-				if(2)
-					job_engsec_high = job.flag
-					job_engsec_med &= ~job.flag
-				if(3)
-					job_engsec_med |= job.flag
-					job_engsec_low &= ~job.flag
-				else
-					job_engsec_low |= job.flag
-	return 1
+/datum/character/proc/GetJobLevel( var/role )
+	if( !( role in roles ))
+		return 0
+
+	return roles[role]
+
+/datum/character/proc/GetHighestLevelJob()
+	var/list/levels = list( "High", "Medium", "Low", "None" )
+
+	for( var/level in levels )
+		if( level == "None" )
+			switch(alternate_option)
+				if(GET_RANDOM_JOB)
+					return pick( roles )
+				if(BE_ASSISTANT)
+					return "Assistant"
+				if(RETURN_TO_LOBBY)
+					return
+
+		for( var/role in roles )
+			if( roles[role] == level )
+				return role
+
+/datum/character/proc/ResetJobs()
+	department = 0
+	roles = list( "Assistant" = "High" )
+
+/datum/character/proc/GetJobDepartment()
+	return department
+
+/datum/character/proc/SetJobDepartment( var/datum/job/job )
+	department = job.department_id

@@ -133,15 +133,6 @@
 
 		//Jobs
 		S["alternate_option"]	>> C.alternate_option
-		S["job_civilian_high"]	>> C.job_civilian_high
-		S["job_civilian_med"]	>> C.job_civilian_med
-		S["job_civilian_low"]	>> C.job_civilian_low
-		S["job_medsci_high"]	>> C.job_medsci_high
-		S["job_medsci_med"]		>> C.job_medsci_med
-		S["job_medsci_low"]		>> C.job_medsci_low
-		S["job_engsec_high"]	>> C.job_engsec_high
-		S["job_engsec_med"]		>> C.job_engsec_med
-		S["job_engsec_low"]		>> C.job_engsec_low
 
 		//Flavour Text
 		S["flavor_texts_general"]	>> C.flavor_texts_human

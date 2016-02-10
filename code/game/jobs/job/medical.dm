@@ -1,7 +1,7 @@
 /datum/job/cmo
 	title = "Chief Medical Officer"
 	flag = CMO
-	department_flag = MEDSCI
+	department_id = MEDICAL
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
@@ -16,6 +16,8 @@
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
 			access_keycard_auth, access_sec_doors, access_psychiatrist)
 	minimal_player_age = 10
+
+	rank_succesion_level = 10
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -36,10 +38,29 @@
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/labcoat/cmo(H), slot_wear_suit)
 		H.equip_to_slot_or_qdel(new /obj/item/device/flashlight/pen(H), slot_s_store)
 
+/datum/job/cmo/make_preview_icon( var/backpack )
+	var/icon/clothes_s = null
+
+	clothes_s = new /icon('icons/mob/uniform.dmi', "cmo_s")
+	clothes_s.Blend(new /icon('icons/mob/feet.dmi', "brown"), ICON_UNDERLAY)
+	if(prob(1))
+		clothes_s.Blend(new /icon('icons/mob/suit.dmi', "bio_cmo"), ICON_OVERLAY)
+	else
+		clothes_s.Blend(new /icon('icons/mob/suit.dmi', "labcoat_cmo_open"), ICON_OVERLAY)
+	switch(backpack)
+		if(2)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "medicalpack"), ICON_OVERLAY)
+		if(3)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-med"), ICON_OVERLAY)
+		if(4)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+
+	return clothes_s
+
 /datum/job/doctor
 	title = "Medical Doctor"
 	flag = DOCTOR
-	department_flag = MEDSCI
+	department_id = MEDICAL
 	faction = "Station"
 	total_positions = 5
 	spawn_positions = 3
@@ -48,6 +69,8 @@
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
 	minimal_access = list(access_medical, access_morgue, access_surgery, access_virology)
 	alt_titles = list("Surgeon","Emergency Physician","Nurse","Medical Intern")
+
+	rank_succesion_level = 4
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -98,13 +121,30 @@
 		H.equip_to_slot_or_qdel(new /obj/item/device/flashlight/pen(H), slot_s_store)
 		return 1
 
+/datum/job/doctor/make_preview_icon( var/backpack )
+	var/icon/clothes_s = null
 
+	clothes_s = new /icon('icons/mob/uniform.dmi', "medical_s")
+	clothes_s.Blend(new /icon('icons/mob/feet.dmi', "white"), ICON_UNDERLAY)
+	if(prob(1))
+		clothes_s.Blend(new /icon('icons/mob/suit.dmi', "surgeon"), ICON_OVERLAY)
+	else
+		clothes_s.Blend(new /icon('icons/mob/suit.dmi', "labcoat_open"), ICON_OVERLAY)
+	switch(backpack)
+		if(2)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "medicalpack"), ICON_OVERLAY)
+		if(3)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-med"), ICON_OVERLAY)
+		if(4)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+
+	return clothes_s
 
 //Chemist is a medical job damnit	//YEAH FUCK YOU SCIENCE	-Pete	//Guys, behave -Erro
 /datum/job/chemist
 	title = "Chemist"
 	flag = CHEMIST
-	department_flag = MEDSCI
+	department_id = MEDICAL
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
@@ -114,6 +154,7 @@
 	minimal_access = list(access_medical, access_chemistry)
 	alt_titles = list("Pharmacist")
 
+	rank_succesion_level = 4
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -130,12 +171,30 @@
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/labcoat/chemist(H), slot_wear_suit)
 		return 1
 
+/datum/job/chemist/make_preview_icon( var/backpack )
+	var/icon/clothes_s = null
+
+	clothes_s = new /icon('icons/mob/uniform.dmi', "chemistrywhite_s")
+	clothes_s.Blend(new /icon('icons/mob/feet.dmi', "white"), ICON_UNDERLAY)
+	if(prob(1))
+		clothes_s.Blend(new /icon('icons/mob/suit.dmi', "labgreen"), ICON_OVERLAY)
+	else
+		clothes_s.Blend(new /icon('icons/mob/suit.dmi', "labcoat_chem_open"), ICON_OVERLAY)
+	switch(backpack)
+		if(2)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
+		if(3)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-chem"), ICON_OVERLAY)
+		if(4)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+
+	return clothes_s
 
 /*
 /datum/job/geneticist
 	title = "Geneticist"
 	flag = GENETICIST
-	department_flag = MEDSCI
+	department_id = MEDICAL
 	faction = "Station"
 	total_positions = 0
 	spawn_positions = 0
@@ -162,7 +221,7 @@
 /datum/job/virologist
 	title = "Virologist"
 	flag = VIROLOGIST
-	department_flag = MEDSCI
+	department_id = MEDICAL
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
@@ -172,6 +231,7 @@
 	minimal_access = list(access_medical, access_virology)
 	alt_titles = list("Pathologist","Microbiologist")
 
+	rank_succesion_level = 4
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -190,11 +250,29 @@
 		rng_join_virus()
 		return 1
 
+/datum/job/virologist/make_preview_icon( var/backpack )
+	var/icon/clothes_s = null
+
+	clothes_s = new /icon('icons/mob/uniform.dmi', "virologywhite_s")
+	clothes_s.Blend(new /icon('icons/mob/feet.dmi', "white"), ICON_UNDERLAY)
+	clothes_s.Blend(new /icon('icons/mob/mask.dmi', "sterile"), ICON_OVERLAY)
+	clothes_s.Blend(new /icon('icons/mob/suit.dmi', "labcoat_vir_open"), ICON_OVERLAY)
+	if(prob(1))
+		clothes_s.Blend(new /icon('icons/mob/head.dmi', "plaguedoctor"), ICON_OVERLAY)
+	switch(backpack)
+		if(2)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "medicalpack"), ICON_OVERLAY)
+		if(3)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-vir"), ICON_OVERLAY)
+		if(4)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+
+	return clothes_s
 
 /datum/job/psychiatrist
 	title = "Psychiatrist"
 	flag = PSYCHIATRIST
-	department_flag = MEDSCI
+	department_id = MEDICAL
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
@@ -203,6 +281,8 @@
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_psychiatrist)
 	minimal_access = list(access_medical, access_psychiatrist)
 	alt_titles = list("Psychologist")
+
+	rank_succesion_level = 4
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -226,3 +306,22 @@
 		else
 			H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/labcoat(H), slot_wear_suit)
+
+/datum/job/psychiatrist/make_preview_icon( var/backpack )
+	var/icon/clothes_s = null
+
+	clothes_s = new /icon('icons/mob/uniform.dmi', "medical_s")
+	clothes_s.Blend(new /icon('icons/mob/feet.dmi', "white"), ICON_UNDERLAY)
+	if(prob(1))
+		clothes_s.Blend(new /icon('icons/mob/suit.dmi', "surgeon"), ICON_OVERLAY)
+	else
+		clothes_s.Blend(new /icon('icons/mob/suit.dmi', "labcoat_open"), ICON_OVERLAY)
+	switch(backpack)
+		if(2)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "medicalpack"), ICON_OVERLAY)
+		if(3)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-med"), ICON_OVERLAY)
+		if(4)
+			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+
+	return clothes_s
