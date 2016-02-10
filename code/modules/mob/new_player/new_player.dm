@@ -389,7 +389,8 @@
 					dat += "<font color='red'>The station is currently undergoing crew transfer procedures.</font><br>"
 
 		dat += "Choose from the following open positions:<br>"
-		for(var/datum/job/job in job_master.occupations)
+		for(var/role in client.prefs.selected_character.roles)
+			var/datum/job/job = job_master.GetJob( role )
 			if(job && IsJobAvailable(job.title))
 				var/active = 0
 				// Only players with the job assigned and AFK for less than 10 minutes count as active

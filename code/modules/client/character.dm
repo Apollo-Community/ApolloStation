@@ -65,7 +65,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	// Job vars, these are used in the job selection screen and hiring computer
 	var/datum/department/department
-	var/roles = list( "Assistant" = "High" ) // Roles that the player has unlocked
+	var/roles = list( "Assistant" = "Low" ) // Roles that the player has unlocked
 
 	// Special role selection
 	var/job_antag = 0
