@@ -84,7 +84,12 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/flavor_texts_human
 	var/flavor_texts_robot
 
-	// Character records
+	// Character notes, these are written by other people. Format is list( datetime = note )
+	var/med_notes = list()
+	var/sec_notes = list()
+	var/gen_notes = list()
+
+	// Character records, these are written by the player
 	var/med_record = ""
 	var/sec_record = ""
 	var/gen_record = ""

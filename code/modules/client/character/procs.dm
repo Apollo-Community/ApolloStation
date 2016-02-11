@@ -80,7 +80,12 @@
 	variables["flavor_texts_human"] = sql_sanitize_text( flavor_texts_human )
 	variables["flavor_texts_robot"] = sql_sanitize_text( flavor_texts_robot )
 
-	// Character records
+	// Character notes, these are written by other people. Format is list( datetime = note )
+	variables["med_notes"] = list2params( med_notes )
+	variables["sec_notes"] = list2params( sec_notes )
+	variables["gen_notes"] = list2params( gen_notes )
+
+	// Character records, these are written by the player
 	variables["med_record"] = sql_sanitize_text( med_record )
 	variables["sec_record"] = sql_sanitize_text( sec_record )
 	variables["gen_record"] = sql_sanitize_text( gen_record )
@@ -225,7 +230,12 @@
 	variables["flavor_texts_human"] = "text"
 	variables["flavor_texts_robot"] = "text"
 
-	// Character records
+	// Character notes, these are written by other people
+	variables["med_notes"] = "params"
+	variables["sec_notes"] = "params"
+	variables["gen_notes"] = "params"
+
+	// Character records, these are written by the player
 	variables["med_record"] = "text"
 	variables["sec_record"] = "text"
 	variables["gen_record"] = "text"
@@ -267,6 +277,10 @@
 				value = text2num( value )
 			if( "params" )
 				value = params2list( value )
+				if( !value )
+					value = list()
+			if( "list" )
+				value = text2list( value )
 				if( !value )
 					value = list()
 			if( "language" )
