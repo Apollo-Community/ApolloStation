@@ -17,6 +17,8 @@ var/global/datum/controller/occupations/job_master
 
 	proc/SetupOccupations(var/faction = "Station")
 		occupations = list()
+		departments = list()
+
 		var/list/all_jobs = typesof(/datum/job)
 		if(!all_jobs.len)
 			world << "<span class='alert'>\b Error setting up jobs, no job datums found</span>"

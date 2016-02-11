@@ -119,18 +119,19 @@
 		data["all_centcom_access"] = all_centcom_access
 	else if (modify)
 		var/list/regions = list()
-		for(var/i = 1; i <= 7; i++)
+		for(var/datum/department/D in job_master.departments)
 			var/list/accesses = list()
-			for(var/access in get_region_accesses(i))
-				if (get_access_desc(access))
+			for(var/access in D.region_access)
+				if(( access in scan.access ) && get_access_desc(access))
 					accesses.Add(list(list(
 						"desc" = replacetext(get_access_desc(access), " ", "&nbsp"),
 						"ref" = access,
 						"allowed" = (access in modify.access) ? 1 : 0)))
 
-			regions.Add(list(list(
-				"name" = get_region_accesses_name(i),
-				"accesses" = accesses)))
+			if( accesses && accesses.len && D.name != "Synthetic" )
+				regions.Add(list(list(
+					"name" = D.name,
+					"accesses" = accesses)))
 
 		data["regions"] = regions
 
