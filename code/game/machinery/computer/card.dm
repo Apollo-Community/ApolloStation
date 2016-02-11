@@ -19,7 +19,10 @@
 	return scan ? check_access(scan) : 0
 
 /obj/machinery/computer/card/proc/get_target_rank()
-	return modify && modify.assignment ? modify.assignment : "Unassigned"
+	if( !modify || !modify.assignment )
+		return "Unassigned"
+
+	return modify.assignment
 
 /obj/machinery/computer/card/proc/format_jobs(list/jobs)
 	var/list/formatted = list()
