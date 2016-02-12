@@ -113,7 +113,7 @@ var/global/list/alloy_postfix = list("metal" = "metallic", "glass" = "glaseous")
 			language_keys["#[lowertext(L.key)]"] = L
 
 	var/rkey = 0
-	paths = typesof(/datum/species)-/datum/species
+	paths = subtypes(/datum/species)
 	for(var/T in paths)
 		rkey++
 		var/datum/species/S = new T
@@ -121,6 +121,7 @@ var/global/list/alloy_postfix = list("metal" = "metallic", "glass" = "glaseous")
 		all_species[S.name] = S
 
 		if(!(S.flags & IS_RESTRICTED))
+			world << "[S.name]"
 			playable_species += S.name
 		if(S.flags & IS_WHITELISTED)
 			whitelisted_species += S.name

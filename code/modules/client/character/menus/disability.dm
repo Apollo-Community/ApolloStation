@@ -16,7 +16,7 @@
 	HTML += "<a href=\"byond://?src=\ref[user];character=[menu_name];disabilities=-1\">\[Done\]</a>"
 	HTML += "</center></tt>"
 
-	user << browse(HTML, "window=[menu_name];size=350x300;can_close=0")
+	user << browse(HTML, "window=[menu_name];size=710x560;can_close=0")
 	return
 
 /datum/character/proc/DisabilitiesMenuProcess( mob/user, list/href_list )

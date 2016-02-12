@@ -1,201 +1,255 @@
 /datum/character/proc/EditCharacterMenu(mob/user)
 	if(!istype( user ) || !user.client)	return
 
+	var/datum/species/S = all_species[species]
+
 	var/menu_name = "edit_character"
 
 	update_preview_icon()
 	user << browse_rsc(preview_icon_front, "previewicon.png")
 	user << browse_rsc(preview_icon_side, "previewicon2.png")
 
-	. = "<html><body><table><tr><td width='340px' height='320px'>"
+	. = "<html><body><center>"
+	. += "<b>Appearence</b> - "
+	. += "<b><a href='byond://?src=\ref[user];character=[menu_name];task=records_menu'>Records</a></b> - "
+	. += "<b><a href='byond://?src=\ref[user];character=[menu_name];task=job_menu'>Occupation</a></b> - "
+	. += "<b><a href='byond://?src=\ref[user];character=[menu_name];task=antag_options_menu'>Antag Options</a></b>"
+	. += "</center><hr>"
 
-	. += "<b>Name:</b> "
-	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=name'><b>[name]</b></a><br>"
-	. += "(<a href='byond://?src=\ref[user];character=[menu_name];task=name_random'>Random Name</A>) "
-	. += "<br>"
+	// APPEARENCE
+	. += "<table border='1'><tr><td valign='top'>"
+	. += "<table>"
+	. += "<tr>"
+	. += "<td>"
+	. += "<table><tr>"
+	. += "<td><b>Name:</b></td>"
+	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=name'><b>[name]</b></a></td>"
+	. += "<td>(<a href='byond://?src=\ref[user];character=[menu_name];task=name_random'>Random Name</A>)</td>"
+	. += "</tr>"
 
-	. += "<b>Gender:</b> <a href='byond://?src=\ref[user];character=[menu_name];task=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a><br>"
-	. += "<b>Age:</b> <a href='byond://?src=\ref[user];character=[menu_name];task=age'>[age]</a><br>"
-	. += "<b>Spawn Point</b>: <a href='byond://?src=\ref[user];character=[menu_name];task=spawnpoint'>[spawnpoint]</a>"
-	. += "<br>"
+	. += "<tr>"
+	. += "<td><b>Gender:</b></td>"
+	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a></td>"
+	. += "<td rowspan='3'><table><tr><td style='text-align:center'>"
+	. += "<img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64>"
+	. += "</td></tr></table></td>"
+	. += "</tr>"
 
-	. += "<br><b>Custom Loadout:</b> "
+	. += "<tr>"
+	. += "<td><b>Age:</b></td>"
+	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=age'>[age]</a></td>"
+	. += "</tr>"
+
+	. += "<tr>"
+	. += "<td><b>Species:</b></td>"
+	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=species_menu'>[species]</a></td>"
+	. += "</tr>"
+
+	. += "</table>"
+	. += "</td></tr></table>"
+
+	. += "</td><td valign='top'>"
+
+
 	var/total_cost = 0
-
 	if(!islist(gear)) gear = list()
 
 	if(gear && gear.len)
-		. += "<br>"
+		for(var/i = 1; i <= gear.len; i++)
+			var/datum/gear/G = gear_datums[gear[i]]
+			if(G && !G.account)
+				total_cost += G.cost
+
+	. += "<table border='1'>"
+	. += "<tr>"
+	. += "<td><b>Custom Loadout</b>:</td>"
+	. += "<td>[total_cost] / [MAX_GEAR_COST] points</td>"
+	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=loadout_add'>\[add\]</a>"
+	if(gear && gear.len)
+		. += " / <a href='byond://?src=\ref[user];character=[menu_name];task=loadout_clear'>\[clear\]</a></td>"
+	else
+		. += "</td>"
+
+	//. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=acc_items'><b>Account Items</b></a></td>"
+	. += "</tr>"
+
+	if(gear && gear.len)
 		for(var/i = 1; i <= gear.len; i++)
 			var/datum/gear/G = gear_datums[gear[i]]
 			if(G)
+				. += "<tr>"
+				. += "<td>[gear[i]]</td>"
 				if( !G.account )
-					total_cost += G.cost
-				. += "[gear[i]]"
-				if( !G.account )
-					. += " ([G.cost] points) "
+					. += "<td>([G.cost] points)</td>"
 				else
-					. += " (Account Item) "
-				. += "<a href='byond://?src=\ref[user];character=[menu_name];task=loadout_remove;gear=[i]'>\[remove\]</a><br>"
+					. += "<td>(Account)</td>"
 
-		. += "<b>Used:</b> [total_cost] points."
+				. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=loadout_remove;gear=[i]'>\[remove\]</a></td>"
+				. += "</tr>"
 	else
-		. += "none."
+		. += "<td colspan='3'>None.</td>"
+	. += "</td>"
+	. += "</tr>"
+	. += "</table>"
+	. += "</td></tr></table>"
 
-	if(total_cost < MAX_GEAR_COST)
-		. += " <a href='byond://?src=\ref[user];character=[menu_name];task=loadout_add'>\[add\]</a>"
-		if(gear && gear.len)
-			. += " <a href='byond://?src=\ref[user];character=[menu_name];task=loadout_clear'>\[clear\]</a>"
-	. += "<br>"
+	. += "<table border='1'>"
+	. += "<tr>"
+	. += "<td colspan='3' style='text-align:center'><b>Body</b> (<a href='byond://?src=\ref[user];character=[menu_name];task=all_random'>Randomize</A>)</td>"
+	. += "</tr>"
+	. += "<tr>"
+	. += "<td valign='top'>"
+	. += "<table><tr><td>"
+	. += "<table>"
+	if( S.flags & IS_SYNTHETIC )
+		. += "<tr>"
+		. += "<td rowspan='2' valign='top'><b>Monitor:</b></td>"
+		. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=hair_style'>[hair_style]</a></td>"
+		. += "</tr>"
+	else if( !( S.flags & IS_PLANT ))
+		. += "<tr>"
+		. += "<td rowspan='2' valign='top'><b>Hair:</b></td>"
+		. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=hair_color'>Color</a>"
+		. += "  <table style='display:inline;' bgcolor='[hair_color]'><tr><td><font face='fixedsys' size='3' color='[hair_color]'>__</font></td></tr></table></td>"
+		. += "</tr>"
 
-	. += "\t<a href='byond://?src=\ref[user];character=[menu_name];task=acc_items'><b>Account Items</b></a><br>"
+		. += "<tr>"
+		. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=hair_style'>[hair_style]</a></td>"
+		. += "</tr>"
 
-	. += "<br><br><b>Occupation Choices</b><br>"
-	. += "\t<a href='byond://?src=\ref[user];character=[menu_name];task=job_menu'><b>Set Preferences</b></a><br>"
+		. += "<tr>"
+		. += "<td rowspan='2' valign='top'><b>Facial Hair:</b></td>"
+		. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=hair_face_color'>Color</a>"
+		. += "  <table style='display:inline;' bgcolor='[hair_face_color]'><tr><td><font face='fixedsys' size='3' color='[hair_face_color]'>__</font></td></tr></table></td>"
+		. += "</tr>"
 
-	. += "<br><table><tr><td><b>Body</b> "
-	. += "(<a href='byond://?src=\ref[user];character=[menu_name];task=all_random'>Randomize</A>)"
-	. += "<br>"
-	. += "Species: <a href='byond://?src=\ref[user];character=[menu_name];task=species_menu'>[species]</a><br>"
-	. += "Secondary Language:<br><a href='byond://?src=\ref[user];character=[menu_name];task=language'>[additional_language]</a><br>"
-	. += "Blood Type: [blood_type]<br>"
-	. += "Skin Tone: <a href='byond://?src=\ref[user];character=[menu_name];task=skin_tone'>[-skin_tone+SKIN_TONE_DEFAULT]/[SKIN_TONE_MAX]<br></a>"
-	. += "Needs Glasses: <a href='byond://?src=\ref[user];character=[menu_name];task=disabilities'><b>[disabilities == 0 ? "No" : "Yes"]</b></a><br>"
-	. += "Limbs: <a href='byond://?src=\ref[user];character=[menu_name];task=limbs_adjust'>Adjust</a><br>"
-	. += "Internal Organs: <a href='byond://?src=\ref[user];character=[menu_name];task=organs_adjust'>Adjust</a><br>"
+		. += "<tr>"
+		. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=hair_face_style'>[hair_face_style]</a></td>"
+		. += "</tr>"
 
-	//display limbs below
-	var/ind = 0
-	for(var/name in organ_data)
-		//world << "[ind] \ [organ_data.len]"
-		var/status = organ_data[name]
-		var/organ_name = null
-		switch(name)
-			if("l_arm")
-				organ_name = "left arm"
-			if("r_arm")
-				organ_name = "right arm"
-			if("l_leg")
-				organ_name = "left leg"
-			if("r_leg")
-				organ_name = "right leg"
-			if("l_foot")
-				organ_name = "left foot"
-			if("r_foot")
-				organ_name = "right foot"
-			if("l_hand")
-				organ_name = "left hand"
-			if("r_hand")
-				organ_name = "right hand"
-			if("heart")
-				organ_name = "heart"
-			if("eyes")
-				organ_name = "eyes"
+	if( S.flags & HAS_EYE_COLOR )
+		. += "<tr>"
+		. += "<td><b>Eyes:</b></td>"
+		. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=eye_color'>Color</a>"
+		. += "  <table style='display:inline;' bgcolor='[eye_color]'><tr><td><font face='fixedsys' size='3' color='[eye_color]'>__</font></td></tr></table></td>"
+		. += "</tr>"
 
-		if(status == "cyborg")
-			++ind
-			if(ind > 1)
-				. += ", "
-			. += "\tMechanical [organ_name] prothesis"
-		else if(status == "amputated")
-			++ind
-			if(ind > 1)
-				. += ", "
-			. += "\tAmputated [organ_name]"
-		else if(status == "mechanical")
-			++ind
-			if(ind > 1)
-				. += ", "
-			. += "\tMechanical [organ_name]"
-		else if(status == "assisted")
-			++ind
-			if(ind > 1)
-				. += ", "
-			switch(organ_name)
+	if( S.flags & HAS_SKIN_COLOR || S.flags & HAS_SKIN_TONE )
+		. += "<tr>"
+		. += "<td rowspan='2' valign='top'><b>Skin:</b></td>"
+		if( S.flags & HAS_SKIN_TONE )
+			. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=skin_tone'>Tone: [-skin_tone+SKIN_TONE_DEFAULT]/[SKIN_TONE_MAX]</a></td>"
+		if( S.flags & HAS_SKIN_COLOR )
+			. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=skin_color'>Color</a>"
+			. += "  <table style='display:inline;' bgcolor='[skin_color]'><tr><td><font face='fixedsys' size='3' color='[skin_color]'>__</font></td></tr></table></td>"
+		. += "</tr>"
+	. += "</table>"
+	. += "</td></tr></table>"
+
+	. += "</td><td valign='top'>"
+
+	. += "<table>"
+	. += "<tr><td>"
+	. += "<table>"
+	. += "<tr>"
+	. += "<td><b>Needs Glasses:</b></td>"
+	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=disabilities'>[disabilities == 0 ? "No" : "Yes"]</a></td>"
+	. += "</tr>"
+
+	if( S.flags & HAS_UNDERWEAR )
+		. += "<tr>"
+		. += "<td><b>Underwear:</b></td>"
+		if(gender == MALE)
+			. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=underwear'>[underwear_m[underwear]]</a></td>"
+		else
+			. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=underwear'>[underwear_f[underwear]]</a></td>"
+
+		. += "<tr>"
+		. += "<td><b>Undershirt:</b></td>"
+		. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=undershirt'>[undershirt_t[undershirt]]</a></td>"
+		. += "</tr>"
+
+	. += "<tr>"
+	. += "<td><b>Backpack Type:</b></td>"
+	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=backpack'>[backpacklist[backpack]]</a></td>"
+	. += "</tr>"
+	. += "</table>"
+	. += "</td></tr></table>"
+	. += "</td><td valign='top'>"
+
+	if( !( S.flags & NO_ROBO_LIMBS ))
+		. += "<table border='1'>"
+		. += "<tr>"
+		. += "<td><b>Organs \& Limbs:</b></td>"
+		. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=organs_adjust'>Adjust</a></td>"
+		. += "</tr>"
+
+		//display limbs below
+
+		var/organ_count = 0
+		for(var/name in organ_data)
+			var/status = organ_data[name]
+			var/organ_name = null
+			switch(name)
+				if("l_arm")
+					organ_name = "left arm"
+				if("r_arm")
+					organ_name = "right arm"
+				if("l_leg")
+					organ_name = "left leg"
+				if("r_leg")
+					organ_name = "right leg"
+				if("l_foot")
+					organ_name = "left foot"
+				if("r_foot")
+					organ_name = "right foot"
+				if("l_hand")
+					organ_name = "left hand"
+				if("r_hand")
+					organ_name = "right hand"
 				if("heart")
-					. += "\tPacemaker-assisted [organ_name]"
-				if("voicebox") //on adding voiceboxes for speaking skrell/similar replacements
-					. += "\tSurgically altered [organ_name]"
+					organ_name = "heart"
 				if("eyes")
-					. += "\tRetinal overlayed [organ_name]"
-				else
-					. += "\tMechanically assisted [organ_name]"
-	if(!ind)
-		. += "\[...\]<br><br>"
-	else
-		. += "<br><br>"
+					organ_name = "eyes"
 
-	if(gender == MALE)
-		. += "Underwear: <a href='byond://?src=\ref[user];character=[menu_name];task=underwear'><b>[underwear_m[underwear]]</b></a><br>"
-	else
-		. += "Underwear: <a href='byond://?src=\ref[user];character=[menu_name];task=underwear'><b>[underwear_f[underwear]]</b></a><br>"
+			if( !status )
+				continue
 
-	. += "Undershirt: <a href='byond://?src=\ref[user];character=[menu_name];task=undershirt'><b>[undershirt_t[undershirt]]</b></a><br>"
+			organ_count++
+			. += "<tr>"
+			if(status == "cyborg" || status == "mechanical")
+				. += "<td>Mechanical [organ_name]</td>"
+			else if(status == "amputated")
+				. += "<td>Amputated [organ_name]</td>"
+			else if(status == "assisted")
+				switch(organ_name)
+					if("heart")
+						. += "<td>Pacemaker-assisted [organ_name]</td>"
+					if("voicebox") //on adding voiceboxes for speaking skrell/similar replacements
+						. += "<td>Surgically altered [organ_name]</td>"
+					if("eyes")
+						. += "<td>Retinal overlayed [organ_name]</td>"
+					else
+						. += "<td>Mechanically assisted [organ_name]</td>"
+			. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=limbs_organ_remove;limb=[name]'>\[remove\]</a></td>"
+			. += "</tr>"
+		if( !organ_count )
+			. += "<tr>"
+			. += "<td colspan='2'>None</td>"
+			. += "</tr>"
+		. += "</table>"
+	. += "</td></tr>"
+	. += "</table>"
 
-	. += "Backpack Type:<br><a href='byond://?src=\ref[user];character=[menu_name];task=backpack'><b>[backpacklist[backpack]]</b></a><br>"
-
-	. += "Nanotrasen Relation:<br><a href='byond://?src=\ref[user];character=[menu_name];task=nt_relation'><b>[nanotrasen_relation]</b></a><br>"
-
-	. += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></td></tr></table>"
-
-	. += "</td><td width='300px' height='300px'>"
-
-	if(jobban_isbanned(user, "Records"))
-		. += "<b>You are banned from using character records.</b><br>"
-	else
-		. += "<b><a href='byond://?src=\ref[user];character=[menu_name];task=records_menu'>Character Records</a></b><br>"
-
-	. += "<b><a href='byond://?src=\ref[user];character=[menu_name];task=antag_options_menu'>Set Antag Options</b></a><br>"
-	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=flavor_text_menu'><b>Set Flavor Text</b></a><br>"
-
-	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=pAI'><b>pAI Configuration</b></a><br>"
-	. += "<br>"
-
-	. += "<br><b>Hair</b><br>"
-	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=hair_color'>Change Color</a> <table style='display:inline;' bgcolor='[hair_color]'><tr><td><font face='fixedsys' size='3' color='[hair_color]'>__</font></td></tr></table> "
-	. += "<br>Style: <a href='byond://?src=\ref[user];character=[menu_name];task=hair_style'>[hair_style]</a><br>"
-
-	. += "<br><b>Facial</b><br>"
-	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=hair_face_color'>Change Color</a> <table  style='display:inline;' bgcolor='[hair_face_color]'><tr><td><font face='fixedsys' size='3' color='[hair_face_color]'>__</font></td></tr></table> "
-	. += "<br>Style: <a href='byond://?src=\ref[user];character=[menu_name];task=hair_face_style'>[hair_face_style]</a><br>"
-
-	. += "<br><b>Eyes</b><br>"
-	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=eye_color'>Change Color</a> <table style='display:inline;'bgcolor='[eye_color]'><tr><td><font face='fixedsys' size='3' color='[eye_color]'>__</font></td></tr></table><br>"
-
-	. += "<br><b>Body Color</b><br>"
-	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=skin_color'>Change Color</a> <table style='display:inline;'bgcolor='[skin_color]'><tr><td><font face='fixedsys' size='3' color='[skin_color]'>__</font></td></tr></table>"
-
-	. += "<br><br><b>Background Information</b><br>"
-	. += "<b>Home system</b>: <a href='byond://?src=\ref[user];character=[menu_name];task=home_system'>[home_system]</a><br/>"
-	. += "<b>Citizenship</b>: <a href='byond://?src=\ref[user];character=[menu_name];task=citizenship'>[citizenship]</a><br/>"
-	. += "<b>Faction</b>: <a href='byond://?src=\ref[user];character=[menu_name];task=faction'>[faction]</a><br/>"
-	. += "<b>Religion</b>: <a href='byond://?src=\ref[user];character=[menu_name];task=religion'>[religion]</a><br/>"
-
-	. += "<br><br>"
-
-	if(jobban_isbanned(user, "Syndicate"))
-		. += "<b>You are banned from antagonist roles.</b>"
-		src.job_antag = 0
-	else
-		var/n = 0
-		for (var/i in special_roles)
-			if(special_roles[i]) //if mode is available on the server
-				if(jobban_isbanned(user, i) || (i == "positronic brain" && jobban_isbanned(user, "AI") && jobban_isbanned(user, "Cyborg")) || (i == "pAI candidate" && jobban_isbanned(user, "pAI")))
-					. += "<b>Be [i]:<b> <font color=red><b> \[BANNED]</b></font><br>"
-				else
-					. += "<b>Be [i]:</b> <a href='byond://?src=\ref[user];character=[menu_name];task=job_antag;num=[n]'><b>[src.job_antag&(1<<n) ? "Yes" : "No"]</b></a><br>"
-			n++
-	. += "</td></tr></table><hr><center>"
-
+	. += "<hr><center>"
 	if(!IsGuestKey(user.key))
 		. += "<a href='byond://?src=\ref[user];character=[menu_name];task=save'>\[Save Setup\]</a> - "
-
-	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=reset'>\[Reset Changes\]</a> - "
+		. += "<a href='byond://?src=\ref[user];character=[menu_name];task=reset'>\[Reset Changes\]</a> - "
 
 	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=close'>\[Done\]</a>"
 	. += "</center></body></html>"
 
-	user << browse( ., "window=[menu_name];size=560x736;can_close=0" )
+	user << browse( ., "window=[menu_name];size=710x560;can_close=0" )
 	winshow( user, "edit_character", 1 )
 
 /datum/character/proc/EditCharacterMenuDisable( mob/user )
@@ -347,79 +401,90 @@
 			else
 				user << browse(null, "window=disabil")*/
 
-		if("limbs_adjust")
-			var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Left Leg","Right Leg","Left Arm","Right Arm","Left Foot","Right Foot","Left Hand","Right Hand")
-			if(!limb_name) return
-
-			var/limb = null
-			var/second_limb = null // if you try to change the arm, the hand should also change
-			var/third_limb = null  // if you try to unchange the hand, the arm should also change
-			switch(limb_name)
-				if("Left Leg")
-					limb = "l_leg"
-					second_limb = "l_foot"
-				if("Right Leg")
-					limb = "r_leg"
-					second_limb = "r_foot"
-				if("Left Arm")
-					limb = "l_arm"
-					second_limb = "l_hand"
-				if("Right Arm")
-					limb = "r_arm"
-					second_limb = "r_hand"
-				if("Left Foot")
-					limb = "l_foot"
-					third_limb = "l_leg"
-				if("Right Foot")
-					limb = "r_foot"
-					third_limb = "r_leg"
-				if("Left Hand")
-					limb = "l_hand"
-					third_limb = "l_arm"
-				if("Right Hand")
-					limb = "r_hand"
-					third_limb = "r_arm"
-
-			var/new_state = input(user, "What state do you wish the limb to be in?") as null|anything in list("Normal","Amputated","Prothesis")
-			if(!new_state) return
-
-			switch(new_state)
-				if("Normal")
-					organ_data[limb] = null
-					if(third_limb)
-						organ_data[third_limb] = null
-				if("Amputated")
-					organ_data[limb] = "amputated"
-					if(second_limb)
-						organ_data[second_limb] = "amputated"
-				if("Prothesis")
-					organ_data[limb] = "cyborg"
-					if(second_limb)
-						organ_data[second_limb] = "cyborg"
-					if(third_limb && organ_data[third_limb] == "amputated")
-						organ_data[third_limb] = null
 		if("organs_adjust")
-			var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes")
-			if(!organ_name) return
+			var/choice = input(user, "Which type do you want to change?") as null|anything in list("Limb","Organ")
+			if( choice == "Limb" )
+				var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Left Leg","Right Leg","Left Arm","Right Arm","Left Foot","Right Foot","Left Hand","Right Hand")
+				if(!limb_name) return
 
-			var/organ = null
-			switch(organ_name)
-				if("Heart")
-					organ = "heart"
-				if("Eyes")
-					organ = "eyes"
+				var/limb = null
+				var/second_limb = null // if you try to change the arm, the hand should also change
+				var/third_limb = null  // if you try to unchange the hand, the arm should also change
+				switch(limb_name)
+					if("Left Leg")
+						limb = "l_leg"
+						second_limb = "l_foot"
+					if("Right Leg")
+						limb = "r_leg"
+						second_limb = "r_foot"
+					if("Left Arm")
+						limb = "l_arm"
+						second_limb = "l_hand"
+					if("Right Arm")
+						limb = "r_arm"
+						second_limb = "r_hand"
+					if("Left Foot")
+						limb = "l_foot"
+						third_limb = "l_leg"
+					if("Right Foot")
+						limb = "r_foot"
+						third_limb = "r_leg"
+					if("Left Hand")
+						limb = "l_hand"
+						third_limb = "l_arm"
+					if("Right Hand")
+						limb = "r_hand"
+						third_limb = "r_arm"
 
-			var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal","Assisted","Mechanical")
-			if(!new_state) return
+				var/new_state = input(user, "What state do you wish the limb to be in?") as null|anything in list("Normal","Amputated","Prothesis")
+				if(!new_state) return
 
-			switch(new_state)
-				if("Normal")
-					organ_data[organ] = null
-				if("Assisted")
-					organ_data[organ] = "assisted"
-				if("Mechanical")
-					organ_data[organ] = "mechanical"
+				switch(new_state)
+					if("Normal")
+						organ_data[limb] = null
+						if(third_limb)
+							organ_data[third_limb] = null
+					if("Amputated")
+						organ_data[limb] = "amputated"
+						if(second_limb)
+							organ_data[second_limb] = "amputated"
+					if("Prothesis")
+						organ_data[limb] = "cyborg"
+						if(second_limb)
+							organ_data[second_limb] = "cyborg"
+						if(third_limb && organ_data[third_limb] == "amputated")
+							organ_data[third_limb] = null
+			else if( choice == "Organ" )
+				var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes")
+				if(!organ_name) return
 
+				var/organ = null
+				switch(organ_name)
+					if("Heart")
+						organ = "heart"
+					if("Eyes")
+						organ = "eyes"
+
+				var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal","Assisted","Mechanical")
+				if(!new_state) return
+
+				switch(new_state)
+					if("Normal")
+						organ_data[organ] = null
+					if("Assisted")
+						organ_data[organ] = "assisted"
+					if("Mechanical")
+						organ_data[organ] = "mechanical"
+
+		if( "limbs_organ_remove" )
+			var/organ_reset = href_list["limb"]
+
+			if( !organ_data )
+				organ_data = list()
+
+			if( organ_reset )
+				if( !( organ_reset in organ_data )) return
+				organ_data[organ_reset] = null
 		if("spawnpoint")
 			var/list/spawnkeys = list()
 			for(var/S in spawntypes)
@@ -566,7 +631,7 @@
 			name = random_name(gender,species)
 
 		if( "all_random" )
-			randomize_appearance_for()	//no params needed
+			randomize_appearance()	//no params needed
 
 		if("gender")
 			if(gender == MALE)

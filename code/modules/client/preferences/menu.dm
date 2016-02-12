@@ -7,24 +7,45 @@
 
 	var/menu_name = "client_menu"
 
-	. = "<h2>Client Menu</h2><br>"
+	. = "<h2>Client Menu</h2><hr>"
+	. += "<table border='1' width='320'>"
 	if( selected_character )
 		selected_character.update_preview_icon()
 		user << browse_rsc(selected_character.preview_icon_front, "previewicon.png")
 		user << browse_rsc(selected_character.preview_icon_side, "previewicon2.png")
-		. += "Selected Character: <a href='byond://?src=\ref[user];preference=[menu_name];task=select_character'>[selected_character.name]</a><br>"
-		. += "<b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64>"
-		. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=edit_character'>Edit </a>  "
-		. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=delete_character'>Delete</a><br>"
+		. += "<tr>"
+		. += "<td><b>Selected:</b></td>"
+		. += "<td colspan='2'><a href='byond://?src=\ref[user];preference=[menu_name];task=select_character'>[selected_character.name]</a></td>"
+		. += "</tr>"
+
+		. += "<tr>"
+		. += "<td><b>Preview:</b></td>"
+		. += "<td colspan='2'><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></td>"
+		. += "</tr>"
+
+		. += "<tr>"
+		. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=new_character'>New Character</a></td>"
+		. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=edit_character'>Edit</a></td>"
+		. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=delete_character'>Delete</a></td>"
+		. += "</tr>"
 	else
-		. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=select_character'>Select a Character</a><br>"
-	. += "<br>"
-	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=new_character'>Create New Character</a><br>"
+		. += "<tr>"
+		. += "<td colspan='3'><a href='byond://?src=\ref[user];preference=[menu_name];task=select_character'>Select a Character</a></td>"
+		. += "</tr>"
 
-	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=client_prefs'>Client Preferences</a><br>"
-	. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=close'>\[Done\]</a><br>"
+		. += "<tr>"
+		. += "<td colspan='3'><a href='byond://?src=\ref[user];preference=[menu_name];task=new_character'>New Character</a></td>"
+		. += "</tr>"
 
-	user << browse( ., "window=[menu_name];size=350x300;can_close=0")
+	. += "<tr>"
+	. += "<td colspan='3'><a href='byond://?src=\ref[user];preference=[menu_name];task=client_prefs'>Client Preferences</a></td>"
+	. += "</tr>"
+	. += "</table>"
+
+	. += "<hr><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>\[Done\]</a>"
+
+
+	user << browse( ., "window=[menu_name];size=360x300;can_close=0")
 	winshow( user, "client_menu", 1)
 
 /datum/preferences/proc/ClientMenuDisable( mob/user )

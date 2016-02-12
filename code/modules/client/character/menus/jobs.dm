@@ -1,4 +1,4 @@
-/datum/character/proc/JobChoicesMenu(mob/user, limit = 16, list/splitJobs = list("Chief Medical Officer"), width = 550, height = 660)
+/datum/character/proc/JobChoicesMenu(mob/user, limit = 16, list/splitJobs = list("Chief Medical Officer"))
 	var/menu_name = "job_choices_menu"
 
 	if(!job_master)
@@ -102,7 +102,7 @@
 	HTML += "</center>"
 	HTML += "</tt>"
 
-	user << browse(HTML, "window=[menu_name];size=[width]x[height];can_close=0")
+	user << browse(HTML, "window=[menu_name];size=710x560;can_close=0")
 	winshow( user, "[menu_name]", 1)
 	return
 

@@ -296,12 +296,7 @@
 
 	return 1
 
-/datum/character/proc/randomize_appearance_for(var/mob/living/carbon/human/H)
-	if(H)
-		if(H.gender == MALE)
-			gender = MALE
-		else
-			gender = FEMALE
+/datum/character/proc/randomize_appearance( var/random_age = 0 )
 	skin_tone = random_skin_tone()
 	hair_style = random_hair_style(gender, species)
 	hair_face_style = random_facial_hair_style(gender, species)
@@ -312,7 +307,11 @@
 	underwear = rand(1,underwear_m.len)
 	undershirt = rand(1,undershirt_t.len)
 	backpack = 2
-	age = rand(AGE_MIN,AGE_MAX)
+	if( random_age )
+		age = rand(AGE_MIN,AGE_MAX)
+
+/datum/character/proc/randomize_appearance_for(var/mob/living/carbon/human/H)
+	randomize_appearance(1)
 	if(H)
 		copy_to(H,1)
 
