@@ -58,7 +58,7 @@
 			ClientMenuDisable( user )
 		if( "edit_character" )
 			if( !selected_character )
-				selected_character = new( client )
+				selected_character = new( client, 1 )
 				characters.Add( selected_character )
 			ClientMenuDisable( user )
 			selected_character.EditCharacterMenu( user )
@@ -68,7 +68,7 @@
 			selected_character = null
 			ClientMenu( user )
 		if( "new_character" )
-			selected_character = new( client )
+			selected_character = new( client, 1 )
 			characters.Add( selected_character )
 			ClientMenuDisable( user )
 			selected_character.EditCharacterMenu( user )
@@ -85,24 +85,60 @@
 	var/menu_name = "pref_menu"
 
 	. = "<h3>Client Preference Menu</h3><hr>"
-	. += "<b>OOC Color:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=OOC_color'>[OOC_color]</a><br><br>"
-	. += "<b>UI Style:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=UI_style'>[UI_style]</a><br>"
-	. += "<b>UI Transparency:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=UI_trans'>[UI_style_alpha]</a><br>"
+
+	. += "<table border='1' width='100%'>"
+
+	. += "<tr>"
+	. += "<td><b>OOC Color:</b></td>"
+	. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=OOC_color'>[OOC_color]</a></td>"
+	. += "</tr>"
+
+	. += "<tr>"
+	. += "<td><b>UI Style:</b></td>"
+	. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=UI_style'>[UI_style]</a></td>"
+	. += "</tr>"
+
+	. += "<tr>"
+	. += "<td><b>UI Transparency:</b></td>"
+	. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=UI_trans'>[UI_style_alpha]</a></td>"
+	. += "</tr>"
 	if( UI_style == "White" ) // Only white UI gets custom colors
-		. += "<b>UI Color:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=UI_color'>[UI_style_color]</a><br>"
+		. += "<tr>"
+		. += "<td><b>UI Color:</b></td>"
+		. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=UI_color'>[UI_style_color]</a></td>"
+		. += "</tr>"
 	else
 		UI_style_color = initial( UI_style_color )
 
-	. += "<br>"
-	. += "<b>Admin Midis:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=hear_midis'>[(toggles & SOUND_MIDI) ? "On" : "Off"]</a><br>"
-	. += "<b>Lobby Music:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=lobby_music'>[(toggles & SOUND_LOBBY) ? "On" : "Off"]</a><br>"
-	. += "<br>"
-	. += "<b>Ghost Ears:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=ghost_ears'>[(toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearby Speech"]</a><br>"
-	. += "<b>Ghost Sight:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=ghost_sight'>[(toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearby Emotes"]</a><br>"
-	. += "<b>Ghost Radio:</b> <a href='byond://?src=\ref[user];preference=[menu_name];task=ghost_radio'>[(toggles & CHAT_GHOSTRADIO) ? "All Radio" : "Nearby Radio"]</a><br>"
-	. += "<br><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>\[Done\]</a><br>"
+	. += "<tr>"
+	. += "<td><b>Admin Midis:</b></td>"
+	. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=hear_midis'>[(toggles & SOUND_MIDI) ? "On" : "Off"]</a></td>"
+	. += "</tr>"
 
-	user << browse( ., "window=[menu_name];size=350x300;can_close=0" )
+	. += "<tr>"
+	. += "<td><b>Lobby Music:</b></td>"
+	. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=lobby_music'>[(toggles & SOUND_LOBBY) ? "On" : "Off"]</a></td>"
+	. += "</tr>"
+
+	. += "<tr>"
+	. += "<td><b>Ghost Ears:</b></td>"
+	. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=ghost_ears'>[(toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearby Speech"]</a></td>"
+	. += "</tr>"
+
+	. += "<tr>"
+	. += "<td><b>Ghost Sight:</b></td>"
+	. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=ghost_sight'>[(toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearby Emotes"]</a></td>"
+	. += "</tr>"
+
+	. += "<tr>"
+	. += "<td><b>Ghost Radio:</b></td>"
+	. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=ghost_radio'>[(toggles & CHAT_GHOSTRADIO) ? "All Radio" : "Nearby Radio"]</a></td>"
+	. += "</tr>"
+	. += "</table>"
+
+	. += "<hr><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>\[Done\]</a>"
+
+	user << browse( ., "window=[menu_name];size=350x340;can_close=0" )
 	winshow( user, "[menu_name]", 1)
 
 /datum/preferences/proc/PreferencesMenuProcess( mob/user, list/href_list )

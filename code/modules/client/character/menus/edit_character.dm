@@ -10,10 +10,13 @@
 	user << browse_rsc(preview_icon_side, "previewicon2.png")
 
 	. = "<html><body><center>"
-	. += "<b>Appearence</b> - "
-	. += "<b><a href='byond://?src=\ref[user];character=[menu_name];task=records_menu'>Records</a></b> - "
-	. += "<b><a href='byond://?src=\ref[user];character=[menu_name];task=job_menu'>Occupation</a></b> - "
-	. += "<b><a href='byond://?src=\ref[user];character=[menu_name];task=antag_options_menu'>Antag Options</a></b>"
+	. += "<b>Appearence</b>"
+	. += " - "
+	. += "<b><a href='byond://?src=\ref[user];character=switch_menu;task=records_menu'>Records</a></b>"
+	. += " - "
+	. += "<b><a href='byond://?src=\ref[user];character=switch_menu;task=job_menu'>Occupation</a></b>"
+	. += " - "
+	. += "<b><a href='byond://?src=\ref[user];character=switch_menu;task=antag_options_menu'>Antag Options</a></b>"
 	. += "</center><hr>"
 
 	// APPEARENCE
@@ -23,13 +26,19 @@
 	. += "<td>"
 	. += "<table width='100%'><tr>"
 	. += "<td><b>Name:</b></td>"
-	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=name'><b>[name]</b></a></td>"
-	. += "<td>(<a href='byond://?src=\ref[user];character=[menu_name];task=name_random'>Random Name</A>)</td>"
+	if( new_character )
+		. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=name'><b>[name]</b></a></td>"
+		. += "<td>(<a href='byond://?src=\ref[user];character=[menu_name];task=name_random'>Randomize</A>)</td>"
+	else
+		. += "<td>[name]</td>"
 	. += "</tr>"
 
 	. += "<tr>"
 	. += "<td><b>Gender:</b></td>"
-	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a></td>"
+	if( new_character )
+		. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a></td>"
+	else
+		. += "<td>[gender == MALE ? "Male" : "Female"]</td>"
 	. += "<td rowspan='3'><table width='100%'><tr><td style='text-align:center'>"
 	. += "<img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64>"
 	. += "</td></tr></table></td>"
@@ -37,12 +46,18 @@
 
 	. += "<tr>"
 	. += "<td><b>Age:</b></td>"
-	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=age'>[age]</a></td>"
+	if( new_character )
+		. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=age'>[age]</a></td>"
+	else
+		. += "<td>[age]</td>"
 	. += "</tr>"
 
 	. += "<tr>"
 	. += "<td><b>Species:</b></td>"
-	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=species_menu'>[species]</a></td>"
+	if( new_character )
+		. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=species_menu'>[species]</a></td>"
+	else
+		. += "<td>[species]</td>"
 	. += "</tr>"
 
 	. += "</table>"
@@ -60,7 +75,7 @@
 			if(G && !G.account)
 				total_cost += G.cost
 
-	. += "<table border='1'>"
+	. += "<table border='1' width='100%'>"
 	. += "<tr>"
 	. += "<td><b>Custom Loadout</b>:</td>"
 	. += "<td>[total_cost] / [MAX_GEAR_COST] points</td>"
@@ -148,14 +163,9 @@
 
 	. += "</td><td valign='top'>"
 
-	. += "<table>"
+	. += "<table width='100%'>"
 	. += "<tr><td>"
-	. += "<table>"
-	. += "<tr>"
-	. += "<td><b>Needs Glasses:</b></td>"
-	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=disabilities'>[disabilities == 0 ? "No" : "Yes"]</a></td>"
-	. += "</tr>"
-
+	. += "<table width='100%'>"
 	if( S.flags & HAS_UNDERWEAR )
 		. += "<tr>"
 		. += "<td><b>Underwear:</b></td>"
@@ -178,7 +188,7 @@
 	. += "</td><td valign='top'>"
 
 	if( !( S.flags & NO_ROBO_LIMBS ))
-		. += "<table border='1'>"
+		. += "<table border='1' width='100%'>"
 		. += "<tr>"
 		. += "<td><b>Organs \& Limbs:</b></td>"
 		. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=organs_adjust'>Adjust</a></td>"
@@ -239,6 +249,27 @@
 			. += "</tr>"
 		. += "</table>"
 	. += "</td></tr>"
+
+	. += "<tr><td colspan='3'>"
+	. += "<table width='100%' border='1'>"
+	. += "<col width='90'>"
+	. += "<tr>"
+	. += "<td colspan='3'><center><b>Flavor Text</b></center></td>"
+	. += "</tr>"
+
+	. += "<tr>"
+	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=human'><b>Humanoids</a>:</b></td>"
+	. += "<td>[TextPreview(flavor_texts_human)]</td>"
+	. += "</tr>"
+
+	. += "<tr>"
+	. += "<td><a href ='byond://?src=\ref[user];character=[menu_name];task=robot'><b>Cyborg</a>:</b></td>"
+	. += "<td>[TextPreview(flavor_texts_robot)]</td>"
+	. += "</tr>"
+
+	. += "</table>"
+
+	. += "</td></tr>"
 	. += "</table>"
 
 	. += "<hr><center>"
@@ -247,7 +278,8 @@
 		. += "<a href='byond://?src=\ref[user];character=[menu_name];task=reset'>\[Reset Changes\]</a> - "
 
 	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=close'>\[Done\]</a>"
-	. += "</center></body></html>"
+	. += "</center>"
+	. += "</body></html>"
 
 	user << browse( ., "window=[menu_name];size=710x560;can_close=0" )
 	winshow( user, "edit_character", 1 )
@@ -258,9 +290,8 @@
 /datum/character/proc/EditCharacterMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )
 		if( "save" )
-			if( !saveCharacter() )
+			if( !saveCharacter( 1 ))
 				alert( user, "Character could not be saved to the database, please contact an admin." )
-			return 1
 
 		if( "reset" )
 			if( !loadCharacter( name ))
@@ -279,29 +310,6 @@
 			var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
 			if(new_age)
 				age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
-
-		if("language")
-			var/languages_available
-			var/list/new_languages = list("None")
-			var/datum/species/S = all_species[species]
-
-			if(config.usealienwhitelist)
-				for(var/L in all_languages)
-					var/datum/language/lang = all_languages[L]
-					if((!(lang.flags & RESTRICTED)) && (is_alien_whitelisted(user, L)||(!( lang.flags & WHITELISTED ))||(S && (L in S.secondary_langs))))
-						new_languages += lang
-
-						languages_available = 1
-
-				if(!(languages_available))
-					alert(user, "There are not currently any available secondary languages.")
-			else
-				for(var/L in all_languages)
-					var/datum/language/lang = all_languages[L]
-					if(!(lang.flags & RESTRICTED))
-						new_languages += lang.name
-
-			additional_language = input("Please select a secondary language", "Character Generation", null) in new_languages
 
 		if("hair_color")
 			if(species == "Human" || species == "Unathi" || species == "Tajara" || species == "Skrell" || species == "Wryn")
@@ -386,10 +394,6 @@
 			if(new_backpack)
 				backpack = backpacklist.Find(new_backpack)
 
-		if("nt_relation")
-			var/new_relation = input(user, "Choose your relation to NT. Note that this represents what others can find out about your character by researching your background, not what your character actually thinks.", "Character Preference")  as null|anything in list("Loyal", "Supportive", "Neutral", "Skeptical", "Opposed")
-			if(new_relation)
-				nanotrasen_relation = new_relation
 
 		if("disabilities")
 			return
@@ -485,60 +489,7 @@
 			if( organ_reset )
 				if( !( organ_reset in organ_data )) return
 				organ_data[organ_reset] = null
-		if("spawnpoint")
-			var/list/spawnkeys = list()
-			for(var/S in spawntypes)
-				spawnkeys += S
-			var/choice = input(user, "Where would you like to spawn when latejoining?") as null|anything in spawnkeys
-			if(!choice || !spawntypes[choice])
-				spawnpoint = "Arrivals Shuttle"
-				EditCharacterMenu( user )
-				return
-			spawnpoint = choice
 
-		if("home_system")
-			var/choice = input(user, "Please choose a home system.") as null|anything in home_system_choices + list("Unset","Other")
-			if(!choice)
-				return
-			if(choice == "Other")
-				var/raw_choice = input(user, "Please enter a home system.")  as text|null
-				if(raw_choice)
-					home_system = sanitize(raw_choice)
-				return
-			home_system = choice
-		if("citizenship")
-			var/choice = input(user, "Please choose your current citizenship.") as null|anything in citizenship_choices + list("None","Other")
-			if(!choice)
-				return
-			if(choice == "Other")
-				var/raw_choice = input(user, "Please enter your current citizenship.", "Character Preference") as text|null
-				if(raw_choice)
-					citizenship = sanitize(raw_choice)
-				EditCharacterMenu( user )
-				return
-			citizenship = choice
-		if("faction")
-			var/choice = input(user, "Please choose a faction to work for.") as null|anything in faction_choices + list("None","Other")
-			if(!choice)
-				return
-			if(choice == "Other")
-				var/raw_choice = input(user, "Please enter a faction.")  as text|null
-				if(raw_choice)
-					faction = sanitize(raw_choice)
-				EditCharacterMenu( user )
-				return
-			faction = choice
-		if("religion")
-			var/choice = input(user, "Please choose a religion.") as null|anything in religion_choices + list("None","Other")
-			if(!choice)
-				return
-			if(choice == "Other")
-				var/raw_choice = input(user, "Please enter a religon.")  as text|null
-				if(raw_choice)
-					religion = sanitize(raw_choice)
-				EditCharacterMenu( user )
-				return
-			religion = choice
 
 		if( "loadout_add" )
 			var/list/valid_gear_choices = list()
@@ -639,9 +590,13 @@
 			else
 				gender = MALE
 
-		if("job_antag")
-			var/num = text2num(href_list["num"])
-			job_antag ^= (1<<num)
+		if( "human" )
+			var/msg = sanitize(input(usr,"Give a general description of your character. This will be shown regardless of clothing, and may NOT include OOC notes and preferences.","Flavor Text",html_decode(flavor_texts_human)) as message, extra = 0)
+			flavor_texts_human = msg
+
+		if( "robot" )
+			var/msg = sanitize(input(usr,"Give a general description for when you're a cyborg. It will be used for any module without individual setting. It may NOT include OOC notes and preferences.","Flavour Text",html_decode(flavor_texts_robot)) as message, extra = 0)
+			flavor_texts_robot = msg
 
 		if( "close" )
 			user.client.prefs.ClientMenu( user )
@@ -654,30 +609,6 @@
 			if(!choice) return
 			species_preview = choice
 			SpeciesMenu( user )
-			EditCharacterMenuDisable( user )
-			return 1
-
-		if( "pAI" )
-			paiController.recruitWindow(user, 0)
-			return 1
-
-		if( "records_menu" )
-			RecordsMenu( user )
-			EditCharacterMenuDisable( user )
-			return 1
-
-		if( "antag_options_menu" )
-			AntagOptionsMenu( user )
-			EditCharacterMenuDisable( user )
-			return 1
-
-		if( "flavor_text_menu" )
-			FlavorTextMenu( user )
-			EditCharacterMenuDisable( user )
-			return 1
-
-		if( "job_menu" )
-			JobChoicesMenu( user )
 			EditCharacterMenuDisable( user )
 			return 1
 

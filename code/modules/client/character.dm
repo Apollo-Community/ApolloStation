@@ -120,7 +120,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/icon/preview_icon_side = null
 	var/species_preview   // Used for the species selection window.
 
-/datum/character/New( var/client/C )
+	var/new_character = 0 // Is this a new character?
+
+/datum/character/New( var/client/C, var/new_char = 0 )
 	client = C
 
 	blood_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
@@ -133,6 +135,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	fingerprints = md5( "fingerprint[name][blood_type][gender][time2text(world.timeofday,"hh:mm")]" )
 	DNA = md5( "DNA[name][blood_type][gender][time2text(world.timeofday,"hh:mm")]" )
 	unique_identifier = md5( "unique_identifier[name][blood_type][gender][time2text(world.timeofday,"hh:mm")]" )
+
+	new_character = new_char
 
 	if( !department )
 		LoadDepartment( CIVILIAN )

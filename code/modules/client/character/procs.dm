@@ -1,4 +1,4 @@
-/datum/character/proc/saveCharacter( var/ckey )
+/datum/character/proc/saveCharacter( var/prompt = 0, var/ckey )
 	if( !istype( client ) && !ckey )
 		world << "No client or ckey"
 		return 0
@@ -9,6 +9,18 @@
 	if ( IsGuestKey( ckey ))
 		world << "Is a guest ckey"
 		return 0
+
+	if( prompt && client )
+		var/response
+		if( new_character )
+			response = alert(client, "Are you sure you're finished with character setup? You will no longer be able to change your character name, age, gender, or species after this.", "Save Character","Yes","No")
+		else
+			response = alert(client, "Are you sure you want to save?", "Save Character","Yes","No")
+
+		if( response == "No" )
+			return 1
+
+	new_character = 0
 
 	var/list/variables = list()
 

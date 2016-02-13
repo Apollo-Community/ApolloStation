@@ -1012,7 +1012,6 @@
 #include "code\modules\client\character\menus\antag.dm"
 #include "code\modules\client\character\menus\disability.dm"
 #include "code\modules\client\character\menus\edit_character.dm"
-#include "code\modules\client\character\menus\flavor_text.dm"
 #include "code\modules\client\character\menus\jobs.dm"
 #include "code\modules\client\character\menus\records.dm"
 #include "code\modules\client\character\menus\species.dm"

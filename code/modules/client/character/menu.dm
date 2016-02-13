@@ -11,16 +11,16 @@
 				user << "<span class='danger'>The forum URL is not set in the server configuration.</span>"
 				return
 
+		if( "switch_menu" )
+			SwitchMenuProcess( user, href_list )
+			return 1
+
 		if( "disabilities_menu" )
 			DisabilitiesMenuProcess( user, href_list )
 			return 1
 
 		if( "records_menu" )
 			RecordsMenuProcess( user, href_list )
-			return 1
-
-		if( "flavor_text_menu" )
-			FlavorTextMenuProcess( user, href_list )
 			return 1
 
 		if( "job_choices_menu")
@@ -40,3 +40,20 @@
 			return 1
 
 	return 1
+
+
+/datum/character/proc/SwitchMenuProcess( mob/user, list/href_list )
+	EditCharacterMenuDisable( user )
+	JobChoicesMenuDisable( user )
+	RecordsMenuDisable( user )
+	AntagOptionsMenuDisable( user )
+
+	switch( href_list["task"] )
+		if( "edit_character_menu" )
+			EditCharacterMenu( user )
+		if( "records_menu" )
+			RecordsMenu( user )
+		if( "job_menu" )
+			JobChoicesMenu( user )
+		if( "antag_options_menu" )
+			AntagOptionsMenu( user )

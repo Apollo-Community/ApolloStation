@@ -47,7 +47,7 @@
 		ckey = user.client.ckey
 
 	for( var/datum/character/character in characters )
-		character.saveCharacter( ckey )
+		character.saveCharacter( 0, ckey )
 
 	return 1
 

@@ -12,15 +12,25 @@
 	if( !department )
 		ResetJobs()
 
-	var/HTML = "<body>"
-	HTML += "<tt><center>"
+	. = "<html><body>"
+	. += "<center>"
+
+	. += "<b><a href='byond://?src=\ref[user];character=switch_menu;task=edit_character_menu'>Appearence</a></b>"
+	. += " - "
+	. += "<b><a href='byond://?src=\ref[user];character=switch_menu;task=records_menu'>Records</a></b>"
+	. += " - "
+	. += "<b>Occupation</b>"
+	. += " - "
+	. += "<b><a href='byond://?src=\ref[user];character=switch_menu;task=antag_options_menu'>Antag Options</a></b>"
+	. += "<hr>"
+
 	if( !department.department_id )
-		HTML += "<b>Branch: </b><a href='byond://?src=\ref[user];character=[menu_name];task=change_branch'>\[[department.name]\]</a><br><br>"
+		. += "<b>Branch: </b><a href='byond://?src=\ref[user];character=[menu_name];task=change_branch'>\[[department.name]\]</a><br><br>"
 	else
-		HTML += "<b>Branch: </b>[department.name]<br><br>"
-	HTML += "<center><a href='byond://?src=\ref[user];character=[menu_name];task=close'>\[Done\]</a></center><br>" // Easier to press up here.
-	HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
-	HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
+		. += "<b>Branch: </b>[department.name]<br><br>"
+	. += "<center><a href='byond://?src=\ref[user];character=[menu_name];task=close'>\[Done\]</a></center><br>" // Easier to press up here.
+	. += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
+	. += "<table width='100%' cellpadding='1' cellspacing='0'>"
 	var/index = -1
 
 	//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
@@ -37,83 +47,97 @@
 				//If the cells were broken up by a job in the splitJob list then it will fill in the rest of the cells with
 				//the last job's selection color. Creating a rather nice effect.
 				for(var/i = 0, i < (limit - index), i += 1)
-					HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'><a>&nbsp</a></td><td><a>&nbsp</a></td></tr>"
-			HTML += "</table></td><td width='20%'><table width='100%' cellpadding='1' cellspacing='0'>"
+					. += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'><a>&nbsp</a></td><td><a>&nbsp</a></td></tr>"
+			. += "</table></td><td width='20%'><table width='100%' cellpadding='1' cellspacing='0'>"
 			index = 0
 
-		HTML += "<tr bgcolor='[job.selection_color]'><td width='60%' align='right'>"
+		. += "<tr bgcolor='[job.selection_color]'><td width='60%' align='right'>"
 
 		lastJob = job
 		if(jobban_isbanned(user, role))
-			HTML += "<del>[role]</del></td><td><b> \[BANNED]</b></td></tr>"
+			. += "<del>[role]</del></td><td><b> \[BANNED]</b></td></tr>"
 			continue
 		if(!job.player_old_enough(user.client))
 			var/available_in_days = job.available_in_days(user.client)
-			HTML += "<del>[role]</del></td><td> \[IN [(available_in_days)] DAYS]</td></tr>"
+			. += "<del>[role]</del></td><td> \[IN [(available_in_days)] DAYS]</td></tr>"
 			continue
 		if((role in command_positions) || (role == "AI"))//Bold head jobs
-			HTML += "<b>[role]</b>"
+			. += "<b>[role]</b>"
 		else
-			HTML += "[role]"
+			. += "[role]"
 
-		HTML += "</td><td width='40%'>"
+		. += "</td><td width='40%'>"
 
-		HTML += "<a href='byond://?src=\ref[user];character=[menu_name];task=input;text=[role]'>"
+		. += "<a href='byond://?src=\ref[user];character=[menu_name];task=input;text=[role]'>"
 /*
 		if(role == "Assistant")//Assistant is special
 			if( GetJobLevel( "Assistant" ) != "None" )
-				HTML += " <font color=green>\[Yes]</font>"
+				. += " <font color=green>\[Yes]</font>"
 			else
-				HTML += " <font color=red>\[No]</font>"
+				. += " <font color=red>\[No]</font>"
 			if(job.alt_titles) //Blatantly cloned from a few lines down.
-				HTML += {"</a></td></tr><tr bgcolor='[lastJob.selection_color]'>
+				. += {"</a></td></tr><tr bgcolor='[lastJob.selection_color]'>
 <td width='60%' align='center'><a>&nbsp</a></td>
 <td><a href='byond://?src=\ref[user];character=[menu_name];task=alt_title;job=\ref[job]'>\[[GetPlayerAltTitle(job)]\]</a></td></tr>"}
-			HTML += "</a></td></tr>"
+			. += "</a></td></tr>"
 			continue
 */
 		if( GetJobLevel( role ) == "High" )
-			HTML += " <font color=blue>\[High]</font>"
+			. += " <font color=blue>\[High]</font>"
 		else if( GetJobLevel( role ) == "Medium" )
-			HTML += " <font color=green>\[Medium]</font>"
+			. += " <font color=green>\[Medium]</font>"
 		else if( GetJobLevel( role ) == "Low" )
-			HTML += " <font color=orange>\[Low]</font>"
+			. += " <font color=orange>\[Low]</font>"
 		else
-			HTML += " <font color=red>\[NEVER]</font>"
+			. += " <font color=red>\[NEVER]</font>"
 		if(job.alt_titles)
-			HTML += {"</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td>
+			. += {"</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td>
 <td><a href='byond://?src=\ref[user];character=[menu_name];task=alt_title;job=\ref[job]'>\[[GetPlayerAltTitle(job)]\]</a></td></tr>"}
-		HTML += "</a></td></tr>"
+		. += "</a></td></tr>"
 
-	HTML += "</td'></tr></table>"
+	. += "</td'></tr></table>"
 
-	HTML += "</center></table>"
+	. += "</center></table>"
 
 	switch(alternate_option)
 		if(GET_RANDOM_JOB)
-			HTML += "<center><br><u><a href='byond://?src=\ref[user];character=[menu_name];task=random'><font color=green>Get random job if preferences unavailable</font></a></u></center><br>"
+			. += "<center><br><u><a href='byond://?src=\ref[user];character=[menu_name];task=random'><font color=green>Get random job if preferences unavailable</font></a></u></center><br>"
 		if(BE_ASSISTANT)
-			HTML += "<center><br><u><a href='byond://?src=\ref[user];character=[menu_name];task=random'><font color=red>Be assistant if preference unavailable</font></a></u></center><br>"
+			. += "<center><br><u><a href='byond://?src=\ref[user];character=[menu_name];task=random'><font color=red>Be assistant if preference unavailable</font></a></u></center><br>"
 		if(RETURN_TO_LOBBY)
-			HTML += "<center><br><u><a href='byond://?src=\ref[user];character=[menu_name];task=random'><font color=purple>Return to lobby if preference unavailable</font></a></u></center><br>"
+			. += "<center><br><u><a href='byond://?src=\ref[user];character=[menu_name];task=random'><font color=purple>Return to lobby if preference unavailable</font></a></u></center><br>"
 
-	HTML += "<center>"
-	HTML += "<a href='byond://?src=\ref[user];character=[menu_name];task=reset'>\[Reset\]</a>"
-	HTML += "</center>"
-	HTML += "</tt>"
+	. += "<hr><center>"
+	if(!IsGuestKey(user.key))
+		. += "<a href='byond://?src=\ref[user];character=[menu_name];task=save'>\[Save Setup\]</a> - "
+		. += "<a href='byond://?src=\ref[user];character=[menu_name];task=reset'>\[Reset Changes\]</a> - "
 
-	user << browse(HTML, "window=[menu_name];size=710x560;can_close=0")
+	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=close'>\[Done\]</a>"
+	. += "</center>"
+	. += "</body></html>"
+
+	user << browse(., "window=[menu_name];size=710x560;can_close=0")
 	winshow( user, "[menu_name]", 1)
 	return
 
+/datum/character/proc/JobChoicesMenuDisable( mob/user )
+	winshow( user, "job_choices_menu", 0)
+
 /datum/character/proc/JobChoicesMenuProcess( mob/user, list/href_list )
 	switch(href_list["task"])
+		if( "save" )
+			if( !saveCharacter( 1 ))
+				alert( user, "Character could not be saved to the database, please contact an admin." )
+
+		if( "reset" )
+			if( !loadCharacter( name ))
+				alert( user, "No savepoint to reset from. You need to save your character first before you can reset." )
+
 		if("close")
-			winshow( user, "job_choices_menu", 0)
-			EditCharacterMenu(user)
+			JobChoicesMenuDisable( user )
+			user.client.prefs.ClientMenu( user )
 			return
-		if("reset")
-			ResetJobs()
+
 		if("change_branch")
 			var/list/choices = list()
 			for( var/datum/department/D in job_master.departments )
