@@ -166,21 +166,43 @@
 
 	. = ""
 	. += "<h3>Character Selection Menu</h3><hr>"
+	. += "<table border='1' width='100%'>"
 
 	var/sql_ckey = ckey( user.client.ckey )
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT name FROM characters WHERE ckey = '[sql_ckey]'")
+	var/DBQuery/query = dbcon.NewQuery("SELECT name, gender, age, department FROM characters WHERE ckey = '[sql_ckey]' ORDER BY name")
 	query.Execute()
 
+	. += "<tr>"
+	. += "<td><b>Name</b></td>"
+	. += "<td><b>Gender</b></td>"
+	. += "<td><b>Age</b></td>"
+	. += "<td><b>Department</b></td>"
+	. += "</tr>"
+
 	while( query.NextRow() )
+		. += "<tr>"
 		if( selected_character && selected_character.name == query.item[1] )
-			. += "<b>[query.item[1]]</b> - Selected<br>"
+			. += "<td><b>[query.item[1]]</b> - Selected</td>"
 		else
-			. += "<a href='byond://?src=\ref[user];preference=[menu_name];task=choose;name=[query.item[1]]'>[query.item[1]]</a><br>"
+			. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=choose;name=[query.item[1]]'>[query.item[1]]</a></td>"
 
-	. += "<br><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>\[Done\]</a><br>"
+		. += "<td>[capitalize( query.item[2] )]</td>"
+		. += "<td style='text-align:right'>[query.item[3]]</td>"
 
-	user << browse( ., "window=[menu_name];size=350x300;can_close=0" )
+		var/datum/department/D = job_master.GetDepartment( text2num( query.item[4] ))
+		if( D )
+			. += "<td>[D.name]</td>"
+		else
+			. += "<td>Civilian</td>"
+
+		. += "</tr>"
+
+	. += "</table>"
+
+	. += "<hr><center><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>\[Done\]</a></center>"
+
+	user << browse( ., "window=[menu_name];size=710x560;can_close=0" )
 	winshow( user, "[menu_name]", 1)
 
 /datum/preferences/proc/SelectCharacterMenuProcess( mob/user, list/href_list )
