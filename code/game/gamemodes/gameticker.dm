@@ -329,8 +329,11 @@ var/global/datum/controller/gameticker/ticker
 						world << "<span class='notice'><B>Restarting in [restart_timeout/10] seconds</B></span>"
 
 
-				if(blackbox)
+				if( blackbox )
 					blackbox.save_all_data_to_sql()
+
+				if( config.canon )
+					canonHandleRoundEnd()
 
 				if(!delay_end)
 					sleep(restart_timeout)

@@ -989,6 +989,7 @@
 #include "code\modules\awaymissions\loot.dm"
 #include "code\modules\awaymissions\pamphlet.dm"
 #include "code\modules\awaymissions\trigger.dm"
+#include "code\modules\canon\procs.dm"
 #include "code\modules\cellauto\cell_auto.dm"
 #include "code\modules\cellauto\handler.dm"
 #include "code\modules\cellauto\master.dm"

@@ -58,7 +58,7 @@
 			ClientMenuDisable( user )
 		if( "edit_character" )
 			if( !selected_character )
-				selected_character = new( client, 1 )
+				selected_character = new( client.ckey, 1 )
 				characters.Add( selected_character )
 			ClientMenuDisable( user )
 			selected_character.EditCharacterMenu( user )
@@ -66,10 +66,14 @@
 			characters.Remove( selected_character )
 			qdel( selected_character )
 			selected_character = null
+			savePreferences()
+
 			ClientMenu( user )
 		if( "new_character" )
-			selected_character = new( client, 1 )
+			selected_character = new( client.ckey, 1 )
 			characters.Add( selected_character )
+			savePreferences()
+
 			ClientMenuDisable( user )
 			selected_character.EditCharacterMenu( user )
 		if( "client_prefs" )
@@ -253,14 +257,16 @@
 					ClientMenu( user )
 					return
 
-			selected_character = new( client )
+			selected_character = new( client.ckey )
 			characters.Add( selected_character )
 			if( !selected_character.loadCharacter( chosen_name ))
 				qdel( selected_character )
 
+			savePreferences()
 			winshow( user, "select_character_menu", 0)
 			ClientMenu( user )
 		if( "close" )
+			savePreferences()
 			winshow( user, "select_character_menu", 0)
 			ClientMenu( user )
 			return

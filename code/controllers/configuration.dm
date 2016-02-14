@@ -216,6 +216,8 @@ var/list/gamemode_cache = list()
 	var/player_soft_cap = 40
 	var/player_hard_cap = 60
 
+	var/canon = 1 // Is this round a canon round?
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for (var/T in L)

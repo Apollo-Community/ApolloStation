@@ -17,13 +17,15 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"pAI candidate" = 1, // -- TLE                       // 14
 )
 
+var/list/all_characters = list() // A list of all loaded characters
+
 //used for alternate_option
 #define GET_RANDOM_JOB 0
 #define BE_ASSISTANT 1
 #define RETURN_TO_LOBBY 2
 
 /datum/character
-	var/client/client
+	var/ckey
 
 	// Basic information
 	var/name							//our character's name
@@ -121,10 +123,10 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/icon/preview_icon_side = null
 	var/species_preview   // Used for the species selection window.
 
-	var/new_character = 0 // Is this a new character?
+	var/new_character = 1 // Is this a new character?
 
-/datum/character/New( var/client/C, var/new_char = 0 )
-	client = C
+/datum/character/New( var/key, var/new_char = 1 )
+	ckey = ckey( key )
 
 	blood_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 
@@ -143,6 +145,13 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	if( !department )
 		LoadDepartment( CIVILIAN )
+
+	all_characters += src
+
+/datum/character/Destroy()
+	all_characters -= src
+
+	..()
 
 /datum/character/proc/copy_to(mob/living/carbon/human/character, safety = 0)
 	if(config.humans_need_surnames)

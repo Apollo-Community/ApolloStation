@@ -30,7 +30,7 @@
 			user << "[ckey]'s character saves do not exist!"
 		return 0
 
-	var/list/characters = loadCharactersFromSavefile( path )
+	var/list/characters = loadCharactersFromSavefile( path, ckey )
 	if( !characters || !characters.len )
 		if( !user )
 			world << "[ckey]'s character saves could not be converted!"
@@ -43,15 +43,12 @@
 	else
 		user << "[characters.len] characters found for [ckey]"
 
-	if( user && user.client )
-		ckey = user.client.ckey
-
 	for( var/datum/character/character in characters )
-		character.saveCharacter( 0, ckey )
+		character.saveCharacter( 0 )
 
 	return 1
 
-/proc/loadCharactersFromSavefile( var/path )
+/proc/loadCharactersFromSavefile( var/path, var/ckey )
 	if(!path)
 		world << "Bad path!"
 		return 0
@@ -76,7 +73,7 @@
 		S.cd = "/"
 		S.cd = "[directory]"
 
-		var/datum/character/C = new()
+		var/datum/character/C = new( ckey )
 
 		var/age = 30
 		//Character

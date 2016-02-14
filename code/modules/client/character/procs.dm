@@ -1,16 +1,23 @@
-/datum/character/proc/saveCharacter( var/prompt = 0, var/ckey )
-	if( !istype( client ) && !ckey )
-		world << "No client or ckey"
-		return 0
+/proc/saveAllActiveCharacters()
+	for( var/datum/character/C in all_characters )
+		if( !C.new_character ) // If they've been saved to the database previously
+			C.saveCharacter()
 
+/datum/character/proc/saveCharacter( var/prompt = 0 )
 	if( !ckey )
-		ckey = client.ckey
+		world << "No given ckey"
+		return 0
 
 	if ( IsGuestKey( ckey ))
 		world << "Is a guest ckey"
 		return 0
 
-	if( prompt && client )
+	if( prompt && ckey )
+		var/client
+		for( client in clients )
+			if( ckey( client:ckey ) == ckey )
+				break
+
 		var/response
 		if( new_character )
 			response = alert(client, "Are you sure you're finished with character setup? You will no longer be able to change your character name, age, gender, or species after this.", "Save Character","Yes","No")
@@ -175,13 +182,15 @@
 	return 1
 
 /datum/character/proc/loadCharacter( var/character_name )
-	if( !client )
-		world << "No client or ckey"
+	if( !ckey )
+		world << "No ckey"
 		return 0
 
 	if( !character_name )
 		world << "No character name"
 		return 0
+
+	new_character = 0 // If we're loading from the database, we're obviously a pre-existing character
 
 	var/list/variables = list()
 
@@ -267,7 +276,7 @@
 	variables["unique_identifier"] = "text"
 
 	var/query_names = list2text( variables, "," )
-	var/sql_ckey = ckey( client.ckey )
+	var/sql_ckey = ckey( ckey )
 	var/sql_character_name = sql_sanitize_text( character_name )
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT [query_names] FROM characters WHERE ckey = '[sql_ckey]' AND name = '[sql_character_name]'")
