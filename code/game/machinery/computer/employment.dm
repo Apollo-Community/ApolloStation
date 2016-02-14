@@ -1,6 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-/obj/machinery/computer/skills//TODO:SANITY
+/obj/machinery/computer/employment//TODO:SANITY
 	name = "employment records console"
 	desc = "Used to view, edit and maintain employment records."
 	icon_state = "medlaptop"
@@ -22,7 +22,7 @@
 	var/order = 1 // -1 = Descending - 1 = Ascending
 	light_color = COMPUTER_GREEN
 
-/obj/machinery/computer/skills/attackby(obj/item/O as obj, user as mob)
+/obj/machinery/computer/employment/attackby(obj/item/O as obj, user as mob)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
 		usr.drop_item()
 		O.loc = src
@@ -30,11 +30,11 @@
 		user << "You insert [O]."
 	..()
 
-/obj/machinery/computer/skills/attack_ai(mob/user as mob)
+/obj/machinery/computer/employment/attack_ai(mob/user as mob)
 	return attack_hand(user)
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
-/obj/machinery/computer/skills/attack_hand(mob/user as mob)
+/obj/machinery/computer/employment/attack_hand(mob/user as mob)
 	if(..())
 		return
 	if (src.z in config.admin_levels)
@@ -147,7 +147,7 @@
 /*Revised /N
 I can't be bothered to look more of the actual code outside of switch but that probably needs revising too.
 What a mess.*/
-/obj/machinery/computer/skills/Topic(href, href_list)
+/obj/machinery/computer/employment/Topic(href, href_list)
 	if(..())
 		return
 	if (!( data_core.general.Find(active1) ))
@@ -384,7 +384,7 @@ What a mess.*/
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/skills/emp_act(severity)
+/obj/machinery/computer/employment/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
 		..(severity)
 		return
