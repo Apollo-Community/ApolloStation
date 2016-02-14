@@ -74,7 +74,6 @@
 
 /obj/item/tictac/Click(location, control, params)
 	if(!ishuman(usr) || get_dist(usr,src) > 1 || usr.stat >= 1)	return
-
 	var/paramslist = params2list(params)
 
 	var/click_x = text2num(paramslist["icon-x"]);
@@ -87,8 +86,8 @@
 	if(!click_x || !click_y)		return
 
 	switch(remove_piece(click_x, click_y))
-		if(0)		place_piece(click_x, click_y)
-		if(1)		usr.visible_message("<span class='notice'>[usr] removes a [turn ? "circle" : "cross"] piece from the [name] board.</span>")
+		if(null)		place_piece(click_x, click_y)
+		if(1)			usr.visible_message("<span class='notice'>[usr] removes a [turn ? "circle" : "cross"] piece from the [name] board.</span>")
 
 /obj/item/tictac/DblClick(object,location, control, params)
 	//Stops people picking up the board by accident
