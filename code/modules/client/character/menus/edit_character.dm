@@ -309,7 +309,7 @@
 		if("age")
 			var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
 			if(new_age)
-				age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
+				change_age( text2num( new_age ))
 
 		if("hair_color")
 			if(species == "Human" || species == "Unathi" || species == "Tajara" || species == "Skrell" || species == "Wryn")

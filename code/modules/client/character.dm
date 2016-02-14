@@ -106,8 +106,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	var/fingerprints
 	var/DNA
-
 	var/unique_identifier
+
+	var/list/birth_date = list()
 
 	// Skills
 	var/used_skillpoints = 0
@@ -132,11 +133,13 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	gear = list()
 
-	fingerprints = md5( "fingerprint[name][blood_type][gender][time2text(world.timeofday,"hh:mm")]" )
-	DNA = md5( "DNA[name][blood_type][gender][time2text(world.timeofday,"hh:mm")]" )
-	unique_identifier = md5( "unique_identifier[name][blood_type][gender][time2text(world.timeofday,"hh:mm")]" )
+	DNA = md5( "DNA[name][blood_type][gender][eye_color][time2text(world.timeofday,"hh:mm")]" )
+	fingerprints = md5( DNA )
+	unique_identifier = md5( fingerprints )
 
 	new_character = new_char
+
+	change_age( 30 )
 
 	if( !department )
 		LoadDepartment( CIVILIAN )

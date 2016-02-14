@@ -77,6 +77,10 @@
 	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=language'>[additional_language]</a></td>"
 	. += "</tr>"
 
+	. += "<tr>"
+	. += "<td colspan='2'><center><a href='byond://?src=\ref[user];character=[menu_name];task=pAI'><b>pAI Configuration</b></a></center></td>"
+	. += "</tr>"
+
 	. += "</table>"
 
 	. += "</td><td valign='top'>"
@@ -90,6 +94,21 @@
 		. += "</tr>"
 
 	. += "<tr>"
+	. += "<td><b>DNA:</b></td>"
+	. += "<td>[DNA]</td>"
+	. += "</tr>"
+
+	. += "<tr>"
+	. += "<td><b>Fingerprint:</b></td>"
+	. += "<td>[fingerprints]</td>"
+	. += "</tr>"
+
+	. += "<tr>"
+	. += "<td><b>Birth Date:</b></td>"
+	. += "<td>[print_birthdate()]</td>"
+	. += "</tr>"
+
+	. += "<tr>"
 	. += "<td><b>Needs Glasses:</b></td>"
 	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=disabilities'>[disabilities == 0 ? "No" : "Yes"]</a></td>"
 	. += "</tr>"
@@ -97,10 +116,6 @@
 	. += "<tr>"
 	. += "<td><b>Spawn Point:</b></td>"
 	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=spawnpoint'>[spawnpoint]</a></td>"
-	. += "</tr>"
-
-	. += "<tr>"
-	. += "<td colspan='2'><center><a href='byond://?src=\ref[user];character=[menu_name];task=pAI'><b>pAI Configuration</b></a></center></td>"
 	. += "</tr>"
 
 	. += "</table>"

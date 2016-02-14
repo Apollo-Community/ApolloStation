@@ -27,7 +27,7 @@
 	variables["ckey"] = ckey( ckey )
 	variables["name"] = sql_sanitize_text( name )
 	variables["gender"] = sql_sanitize_text( gender )
-	variables["age"] = sanitize_integer( age, AGE_MIN, AGE_MAX, AGE_DEFAULT )
+	variables["birth_date"] = list2params( birth_date )
 	variables["spawnpoint"] = sql_sanitize_text( spawnpoint )
 	variables["blood_type"] = sql_sanitize_text( blood_type )
 
@@ -188,7 +188,7 @@
 	// Base information
 	variables["name"] = "text"
 	variables["gender"] = "text"
-	variables["age"] = "number"
+	variables["birth_date"] = "birth_date"
 	variables["spawnpoint"] = "text"
 	variables["blood_type"] = "text"
 
@@ -300,6 +300,16 @@
 					value = all_languages[value]
 				else
 					value = "None"
+			if( "birth_date" )
+				birth_date = params2list( value )
+				for( var/j = 1; j <= birth_date.len; j++ )
+					birth_date[j] = text2num( birth_date[j] )
+
+				if( !birth_date || !birth_date.len )
+					change_age( 30 )
+
+				calculate_age()
+				continue
 			if( "department" )
 				LoadDepartment( text2num( value ))
 				continue // Dont need to set the variable on this one
@@ -380,6 +390,58 @@
 			hair_color = rgb( red, green, blue )
 		if("facial")
 			hair_face_color = rgb( red, green, blue )
+
+/datum/character/proc/change_age( var/new_age, var/age_min = AGE_MIN, var/age_max = AGE_MAX )
+	new_age = max(min( round( new_age ), age_max), age_min)
+
+	var/birth_year = game_year-new_age
+
+	var/birth_month = text2num(time2text(world.timeofday, "MM")) - rand( 1, 12 )
+
+	if( birth_month < 1 )
+		birth_year++
+		birth_month += 12
+
+	var/birth_day = rand( 1, getMonthDays( birth_month ))
+
+	birth_date = list( birth_year, birth_month, birth_day )
+	age = calculate_age()
+
+/datum/character/proc/calculate_age()
+	var/cur_year = game_year
+	var/cur_month = text2num(time2text(world.timeofday, "MM"))
+	var/cur_day = text2num(time2text(world.timeofday, "DD"))
+
+	var/birth_year = birth_date[1]
+	var/birth_month = birth_date[2]
+	var/birth_day = birth_date[3]
+
+	age = cur_year-birth_year
+
+	if( cur_month > birth_month )
+		age++
+	else if( cur_month == birth_month )
+		if( cur_day >= birth_day )
+			age++
+
+	return age
+
+/datum/character/proc/print_birthdate()
+	if( !birth_date || birth_date.len < 3 )
+		calculate_age()
+		if( !birth_date || birth_date.len < 3 )
+			change_age( 30 )
+	return print_bdate( birth_date )
+
+/proc/print_bdate( var/list/birth_date )
+	if( !birth_date || birth_date.len < 3 )
+		return "NO BIRTHDATE"
+
+	var/birth_year = text2num( birth_date[1] )
+	var/birth_day = text2num( birth_date[3] )
+	var/birth_month = text2num( birth_date[2] )
+
+	return "[getMonthName( birth_month )] [birth_day], [birth_year]"
 
 /datum/character/proc/randomize_eyes_color()
 	var/red

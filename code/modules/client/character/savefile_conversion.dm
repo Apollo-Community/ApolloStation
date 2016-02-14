@@ -78,13 +78,16 @@
 
 		var/datum/character/C = new()
 
+		var/age = 30
 		//Character
 		S["real_name"]			>> C.name
 		S["gender"]				>> C.gender
-		S["age"]				>> C.age
+		S["age"]				>> age
 		S["species"]			>> C.species
 		S["language"]			>> C.additional_language
 		S["spawnpoint"]			>> C.spawnpoint
+
+		C.change_age( age )
 
 		//colors to be consolidated into hex strings (requires some work with dna code)
 		var/r_hair

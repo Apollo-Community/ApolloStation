@@ -206,13 +206,13 @@
 
 	var/sql_ckey = ckey( user.client.ckey )
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT name, gender, age, department FROM characters WHERE ckey = '[sql_ckey]' ORDER BY name")
+	var/DBQuery/query = dbcon.NewQuery("SELECT name, gender, birth_date, department FROM characters WHERE ckey = '[sql_ckey]' ORDER BY name")
 	query.Execute()
 
 	. += "<tr>"
 	. += "<td><b>Name</b></td>"
 	. += "<td><b>Gender</b></td>"
-	. += "<td><b>Age</b></td>"
+	. += "<td><b>Birth Date</b></td>"
 	. += "<td><b>Department</b></td>"
 	. += "</tr>"
 
@@ -224,7 +224,7 @@
 			. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=choose;name=[query.item[1]]'>[query.item[1]]</a></td>"
 
 		. += "<td>[capitalize( query.item[2] )]</td>"
-		. += "<td style='text-align:right'>[query.item[3]]</td>"
+		. += "<td style='text-align:right'>[print_bdate( params2list( query.item[3] ))]</td>"
 
 		var/datum/department/D = job_master.GetDepartment( text2num( query.item[4] ))
 		if( D )

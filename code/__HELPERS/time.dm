@@ -33,12 +33,42 @@ proc/isDay(var/month, var/day)
 		if(month == MM && day == DD)
 			return 1
 
-		// Uncomment this out when debugging!
-		//else
-			//return 1
-
 // Returns whether or not time since start is greater than delay or less than 0
 /proc/delayPassed( var/delay, var/start )
 	if((( world.timeofday - start) > delay ) || (( world.timeofday - start ) < 0))
 		return 1
 	return 0
+
+/proc/getMonthDays( var/month )
+	switch( month )
+		if( 1 )
+			return 31
+		if( 2 )
+			return 28
+		if( 3 )
+			return 31
+		if( 4 )
+			return 30
+		if( 5 )
+			return 31
+		if( 6 )
+			return 30
+		if( 7 )
+			return 31
+		if( 8 )
+			return 31
+		if( 9 )
+			return 30
+		if( 10 )
+			return 31
+		if( 11 )
+			return 30
+		if( 12 )
+			return 31
+
+/proc/getMonthName( var/month )
+	if( month < 1 || month > 12 )
+		return "ERROR"
+
+	var/list/months = list( "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" )
+	return months[month]

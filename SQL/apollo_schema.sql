@@ -278,7 +278,7 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `ckey` varchar(32) NOT NULL,
   `name` varchar(100) NOT NULL,
   `gender` varchar(11) NOT NULL,
-  `age` smallint UNSIGNED NOT NULL DEFAULT '30',
+  `birth_date` varchar(20) NOT NULL,
   `spawnpoint` varchar(100) NOT NULL DEFAULT "Arrivals Shuttle",
   `blood_type` varchar(10) NOT NULL,
   `underwear` tinyint UNSIGNED NOT NULL DEFAULT '1',
