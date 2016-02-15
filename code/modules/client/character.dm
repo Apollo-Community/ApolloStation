@@ -106,8 +106,8 @@ var/list/all_characters = list() // A list of all loaded characters
 	// Location of traitor uplink
 	var/uplink_location = "PDA"
 
-	var/fingerprints
 	var/DNA
+	var/fingerprints
 	var/unique_identifier
 
 	var/list/birth_date = list()
