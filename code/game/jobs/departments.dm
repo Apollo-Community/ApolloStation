@@ -16,6 +16,14 @@
 		if( job.department_id == department_id )
 			positions += job
 
+/datum/department/proc/getPositionNames()
+	var/list/names = list()
+
+	for( var/datum/job/position in positions )
+		names.Add( position.title )
+
+	return names
+
 /datum/department/civilian
 	name = "Civilian"
 	department_id = CIVILIAN

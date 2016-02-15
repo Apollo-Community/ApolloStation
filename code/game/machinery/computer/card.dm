@@ -29,7 +29,6 @@
 	for(var/job in jobs)
 		formatted.Add(list(list(
 			"display_name" = replacetext(job, " ", "&nbsp"),
-			"target_rank" = get_target_rank(),
 			"job" = job)))
 
 	return formatted
@@ -47,6 +46,12 @@
 		if(!usr.get_active_hand() && istype(usr,/mob/living/carbon/human))
 			usr.put_in_hands(scan)
 		scan = null
+
+		if( modify )
+			modify.loc = get_turf(src)
+			if(!usr.get_active_hand() && istype(usr,/mob/living/carbon/human))
+				usr.put_in_hands(modify)
+			modify = null
 	else if(modify)
 		usr << "You remove \the [modify] from \the [src]."
 		modify.loc = get_turf(src)
@@ -81,12 +86,21 @@
 	if(stat & (NOPOWER|BROKEN)) return
 	ui_interact(user)
 
+/obj/machinery/computer/card/proc/department_name()
+	if( !scan )
+		return
+
+	if( !scan.character )
+		return
+
+	return scan.character.department.name
+
 /obj/machinery/computer/card/ui_interact(mob/user, ui_key="main", var/datum/nanoui/ui = null, var/force_open = 1)
 	user.set_machine(src)
 
 	var/data[0]
 	data["src"] = "\ref[src]"
-	data["station_name"] = station_name()
+	data["department_name"] = department_name()
 	data["mode"] = mode
 	data["printing"] = printing
 	data["manifest"] = data_core ? data_core.get_manifest(0) : null
@@ -101,12 +115,19 @@
 	data["all_centcom_access"] = null
 	data["regions"] = null
 
-	data["engineering_jobs"] = format_jobs(engineering_positions)
-	data["medical_jobs"] = format_jobs(medical_positions)
-	data["science_jobs"] = format_jobs(science_positions)
-	data["security_jobs"] = format_jobs(security_positions)
-	data["civilian_jobs"] = format_jobs(civilian_positions)
-	data["centcom_jobs"] = format_jobs(get_all_centcom_jobs())
+	var/list/locked_jobs = list()
+	var/list/unlocked_jobs = list()
+
+	if( modify && modify.character && scan && scan.character && scan.character.department )
+		var/datum/department/D = scan.character.department
+
+		unlocked_jobs = modify.character.roles
+
+		locked_jobs = D.getPositionNames()
+		locked_jobs.Remove( unlocked_jobs )
+
+	data["locked_jobs"] = format_jobs(locked_jobs)
+	data["unlocked_jobs"] = format_jobs(unlocked_jobs)
 
 	if (modify && is_centcom())
 		var/list/all_centcom_access = list()
@@ -175,6 +196,10 @@
 				else
 					scan.loc = src.loc
 					scan = null
+
+				if( modify )
+					modify.loc = loc // ejecting the authorization card ejects the modified card
+					modify = null
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
@@ -275,11 +300,65 @@
 							P.info += "  [get_access_desc(A)]"
 
 		if ("terminate")
-			if (is_authenticated())
+			if (is_authenticated() && is_centcom())
 				modify.assignment = "Terminated"
 				modify.access = list()
 
+				if( modify.character )
+					modify.character.LoadDepartment( CIVILIAN )
+
 				callHook("terminate_employee", list(modify))
+				ping("[modify.registered_name] has been fired from NanoTrasen.")
+			else
+				modify.assignment = "Assistant"
+				modify.access = list()
+
+				if( modify.character )
+					modify.character.LoadDepartment( CIVILIAN )
+
+				callHook("reassign_employee", list(modify))
+				ping("[modify.registered_name] has been fired from \the [modify.character.department.name].")
+
+		if ("induct")
+			if( !scan.character )
+				ping("Authorized card is not tied to a NanoTrasen Employee!")
+				return
+
+			if( !scan.character.department )
+				ping("Authorized card has no active department!")
+				return
+
+			if( !modify.character )
+				ping("Modification card is not tied to a NanoTrasen Employee!")
+				return
+
+			modify.character.SetDepartment( scan.character.department )
+
+		if( "promote" )
+			if( !scan.character )
+				ping("Authorized card is not tied to a NanoTrasen Employee!")
+				return
+
+			if( !modify.character )
+				ping("Modification card is not tied to a NanoTrasen Employee!")
+				return
+
+			var/job_name = href_list["promote_role"]
+
+			modify.character.AddJob( job_name )
+
+		if( "demote" )
+			if( !scan.character )
+				ping("Authorized card is not tied to a NanoTrasen Employee!")
+				return
+
+			if( !modify.character )
+				ping("Modification card is not tied to a NanoTrasen Employee!")
+				return
+
+			var/job_name = href_list["demote_role"]
+
+			modify.character.RemoveJob( job_name )
 
 	if (modify)
 		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")

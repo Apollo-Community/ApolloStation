@@ -67,7 +67,7 @@ var/list/all_characters = list() // A list of all loaded characters
 
 	// Job vars, these are used in the job selection screen and hiring computer
 	var/datum/department/department
-	var/roles = list( "Assistant" = "Low" ) // Roles that the player has unlocked
+	var/list/roles = list( "Assistant" = "Low" ) // Roles that the player has unlocked
 
 	// Special role selection
 	var/job_antag = 0

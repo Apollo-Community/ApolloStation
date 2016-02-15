@@ -51,6 +51,12 @@
 	var/D = job_master.GetDepartment( id )
 	SetDepartment( D )
 
+/datum/character/proc/AddJob( var/job_name )
+	roles.Add( "[job_name]" = "None" )
+
+/datum/character/proc/RemoveJob( var/job_name )
+	roles.Remove( "[job_name]" )
+
 /datum/character/proc/SetJob(mob/user, role)
 	var/datum/job/job = job_master.GetJob(role)
 	if(!job)
