@@ -43,10 +43,12 @@
 			{{:helper.link(data.scan_name, 'eject', {'choice' : 'scan'})}}
 		  </div>
 		</div>
+		<br>
+		<hr>
 		
 		{{if data.has_modify}}
 			<div class='item'>
-				<h3>Promote</h3>
+				<h2>{{:data.department_name}} Promotions</h2>
 			</div>
 			{{for data.locked_jobs}}
 				<div class='itemContentWide'>
@@ -55,16 +57,17 @@
 			{{/for}}
 
 			<div class='item'>
-				<h3>Demote</h3>
+				<h2>{{:data.department_name}} Demotions</h2>
 			</div>
 			{{for data.unlocked_jobs}}
 				<div class='itemContentWide'>
 					{{:helper.link(value.display_name, '', {'choice' : 'demote', 'demote_role' : value.job})}}
 				</div>
 			{{/for}}
-		{{/if}}
 		<br>
 		<hr>
+		{{/if}}
+
 	{{else data.mode == 1}}
 		<div class='item'>
 		  <h2>Crew Manifest</h2>

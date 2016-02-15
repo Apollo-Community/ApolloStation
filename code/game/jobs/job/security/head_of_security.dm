@@ -19,7 +19,7 @@
 			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_change_ids)
 	minimal_player_age = 14
 
-	rank_succesion_level = 10
+	rank_succesion_level = COMMAND_SUCCESSION_LEVEL
 
 /datum/job/hos/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0

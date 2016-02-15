@@ -10,7 +10,7 @@
 	access = list(access_medical, access_morgue, access_chemistry)
 	minimal_access = list(access_medical, access_morgue)
 
-	rank_succesion_level = 3
+	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL
 
 /datum/job/nurse/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0

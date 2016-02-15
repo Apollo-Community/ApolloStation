@@ -10,7 +10,7 @@
 	access = list(access_eva, access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_atmospherics)
 	minimal_access = list(access_engine, access_engine_equip, access_maint_tunnels, access_external_airlocks, access_construction)
 
-	rank_succesion_level = 3
+	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL
 
 /datum/job/engineer_assistant/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0

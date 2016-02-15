@@ -15,6 +15,15 @@
 /obj/machinery/computer/card/proc/is_centcom()
 	return 0
 
+// This return true if the modify card is lower rank than the scan card
+/obj/machinery/computer/card/proc/modifyingSubordinate()
+	var/datum/job/subordinate = job_master.GetJob( modify.assignment )
+	var/datum/job/superior = job_master.GetJob( scan.assignment )
+
+	if( superior.rank_succesion_level > subordinate.rank_succesion_level )
+		return 1
+	return 0
+
 /obj/machinery/computer/card/proc/is_authenticated()
 	return scan ? check_access(scan) : 0
 
@@ -123,7 +132,7 @@
 
 		unlocked_jobs = modify.character.roles
 
-		locked_jobs = D.getPositionNames()
+		locked_jobs = D.getPromotablePositionNames()
 		locked_jobs.Remove( unlocked_jobs )
 
 	data["locked_jobs"] = format_jobs(locked_jobs)
@@ -210,6 +219,9 @@
 		if("access")
 			if(href_list["allowed"])
 				if(is_authenticated())
+					if( !modifyingSubordinate() )
+						ping( "Cannot modify a superior's card!" )
+
 					var/access_type = text2num(href_list["access_target"])
 					var/access_allowed = text2num(href_list["allowed"])
 					if(access_type in (is_centcom() ? get_all_centcom_access() : get_all_accesses()))
@@ -218,7 +230,10 @@
 							modify.access += access_type
 
 		if ("assign")
-			if (is_authenticated() && modify)
+			if( is_authenticated() && modify && modifyingSubordinate() )
+				if( !modifyingSubordinate() )
+					ping( "Cannot modify a superior's card!" )
+
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
 					var/temp_t = sanitize(input("Enter a custom job assignment.","Assignment"), 45)
@@ -250,6 +265,9 @@
 
 		if ("reg")
 			if (is_authenticated())
+				if( !modifyingSubordinate() )
+					ping( "Cannot modify a superior's card!" )
+
 				var/t2 = modify
 				if ((modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
 					var/temp_name = sanitizeName(href_list["reg"])
@@ -261,6 +279,9 @@
 
 		if ("account")
 			if (is_authenticated())
+				if( !modifyingSubordinate() )
+					ping( "Cannot modify a superior's card!" )
+
 				var/t2 = modify
 				if ((modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
 					var/account_num = text2num(href_list["account"])
@@ -301,6 +322,9 @@
 
 		if ("terminate")
 			if (is_authenticated() && is_centcom())
+				if( !modifyingSubordinate() )
+					ping( "Cannot modify a superior's card!" )
+
 				modify.assignment = "Terminated"
 				modify.access = list()
 
@@ -310,6 +334,9 @@
 				callHook("terminate_employee", list(modify))
 				ping("[modify.registered_name] has been fired from NanoTrasen.")
 			else
+				if( !modifyingSubordinate() )
+					ping( "Cannot modify a superior's card!" )
+
 				modify.assignment = "Assistant"
 				modify.access = list()
 
@@ -332,6 +359,9 @@
 				ping("Modification card is not tied to a NanoTrasen Employee!")
 				return
 
+			if( !modifyingSubordinate() )
+				ping( "Cannot modify a superior's card!" )
+
 			modify.character.SetDepartment( scan.character.department )
 
 		if( "promote" )
@@ -342,6 +372,9 @@
 			if( !modify.character )
 				ping("Modification card is not tied to a NanoTrasen Employee!")
 				return
+
+			if( !modifyingSubordinate() )
+				ping( "Cannot modify a superior's card!" )
 
 			var/job_name = href_list["promote_role"]
 
@@ -355,6 +388,9 @@
 			if( !modify.character )
 				ping("Modification card is not tied to a NanoTrasen Employee!")
 				return
+
+			if( !modifyingSubordinate() )
+				ping( "Cannot modify a superior's card!" )
 
 			var/job_name = href_list["demote_role"]
 

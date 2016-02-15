@@ -17,7 +17,7 @@
 			access_keycard_auth, access_sec_doors, access_psychiatrist, access_change_ids)
 	minimal_player_age = 10
 
-	rank_succesion_level = 10
+	rank_succesion_level = COMMAND_SUCCESSION_LEVEL
 
 /datum/job/cmo/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0

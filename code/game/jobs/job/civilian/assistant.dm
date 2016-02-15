@@ -10,7 +10,7 @@
 	access = list()			//See /datum/job/assistant/get_access()
 	minimal_access = list()	//See /datum/job/assistant/get_access()
 
-	rank_succesion_level = 2
+	rank_succesion_level = ASSISTANT_SUCCESSION_LEVEL
 
 /datum/job/assistant/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0

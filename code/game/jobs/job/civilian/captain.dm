@@ -15,7 +15,7 @@ var/datum/announcement/minor/captain_announcement = new(do_newscast = 1)
 	minimal_access = list() 	//See get_access()
 	minimal_player_age = 14
 
-	rank_succesion_level = 11
+	rank_succesion_level = COMMAND_SUCCESSION_LEVEL+1
 
 /datum/job/captain/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0

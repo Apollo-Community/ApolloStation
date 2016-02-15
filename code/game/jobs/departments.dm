@@ -16,11 +16,12 @@
 		if( job.department_id == department_id )
 			positions += job
 
-/datum/department/proc/getPositionNames()
+/datum/department/proc/getPromotablePositionNames()
 	var/list/names = list()
 
 	for( var/datum/job/position in positions )
-		names.Add( position.title )
+		if( position.rank_succesion_level < COMMAND_SUCCESSION_LEVEL && position.rank_succesion_level > INDUCTEE_SUCCESSION_LEVEL )
+			names.Add( position.title )
 
 	return names
 

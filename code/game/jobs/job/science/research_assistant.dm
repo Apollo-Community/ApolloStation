@@ -13,7 +13,7 @@
 
 	minimal_player_age = 0
 
-	rank_succesion_level = 3
+	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL
 
 /datum/job/research_assistant/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0

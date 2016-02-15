@@ -19,7 +19,7 @@
 			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_ai_upload, access_change_ids)
 	minimal_player_age = 7
 
-	rank_succesion_level = 10
+	rank_succesion_level = COMMAND_SUCCESSION_LEVEL
 
 /datum/job/chief_engineer/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
