@@ -9,7 +9,6 @@
 	selection_color = "#ffeeee"
 	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels, access_morgue)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels)
-	minimal_player_age = 5
 
 	rank_succesion_level = 4
 

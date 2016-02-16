@@ -11,8 +11,6 @@
 	minimal_access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
 	alt_titles = list("Xenoarcheologist", "Anomalist", "Phoron Researcher", "Xenobotanist")
 
-	minimal_player_age = 14
-
 	rank_succesion_level = 4
 
 /datum/job/scientist/equip(var/mob/living/carbon/human/H)

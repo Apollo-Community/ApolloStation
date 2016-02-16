@@ -8,7 +8,7 @@
 	selection_color = "#ccffcc"
 	supervisors = "your laws"
 	req_admin_notify = 1
-	minimal_player_age = 7
+	minimal_playtime = 10
 
 	rank_succesion_level = 1
 

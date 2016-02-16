@@ -29,7 +29,7 @@
 	name = "Civilian"
 	department_id = CIVILIAN
 	background_color = "#dddddd"
-	starting_positions = list( "Assistant" = "Low" )
+	starting_positions = list( "Assistant" = "Low", "Bartender" = "None", "Chaplain" = "None", "Chef" = "None", "Entertainer" = "None", "Janitor" = "None", "Internal Affairs Agent" = "None", "Librarian" = "None" )
 	region_access = list(access_kitchen,access_bar, access_hydroponics, access_janitor, access_chapel_office, access_crematorium, access_library, access_theatre, access_lawyer, access_clown, access_mime)
 
 /datum/department/engineering
@@ -71,7 +71,7 @@
 	name = "Synthetic"
 	department_id = SYNTHETIC
 	background_color = "#ddffdd"
-	starting_positions = list( "Cyborg" = "High" )
+	starting_positions = list( "Cyborg" = "High", "AI" = "None" )
 
 /datum/department/synthetic/New()
 	region_access = get_all_accesses()

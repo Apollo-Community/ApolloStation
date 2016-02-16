@@ -41,6 +41,10 @@
 		if( !job )
 			continue
 
+		var/required_playtime = 0
+		if( user.client.total_playtime_hours() <= job.minimal_playtime )
+			required_playtime = job.minimal_playtime-user.client.total_playtime_hours()
+
 		index += 1
 		if((index >= limit) || (job.title in splitJobs))
 			if((index < limit) && (lastJob != null))
@@ -68,21 +72,12 @@
 
 		. += "</td><td width='40%'>"
 
-		. += "<a href='byond://?src=\ref[user];character=[menu_name];task=input;text=[role]'>"
-/*
-		if(role == "Assistant")//Assistant is special
-			if( GetJobLevel( "Assistant" ) != "None" )
-				. += " <font color=green>\[Yes]</font>"
-			else
-				. += " <font color=red>\[No]</font>"
-			if(job.alt_titles) //Blatantly cloned from a few lines down.
-				. += {"</a></td></tr><tr bgcolor='[lastJob.selection_color]'>
-<td width='60%' align='center'><a>&nbsp</a></td>
-<td><a href='byond://?src=\ref[user];character=[menu_name];task=alt_title;job=\ref[job]'>\[[GetPlayerAltTitle(job)]\]</a></td></tr>"}
-			. += "</a></td></tr>"
-			continue
-*/
-		if( GetJobLevel( role ) == "High" )
+		if( !required_playtime )
+			. += "<a href='byond://?src=\ref[user];character=[menu_name];task=input;text=[role]'>"
+
+		if( required_playtime )
+			. += " [required_playtime] hours to unlock"
+		else if( GetJobLevel( role ) == "High" )
 			. += " <font color=blue>\[High]</font>"
 		else if( GetJobLevel( role ) == "Medium" )
 			. += " <font color=green>\[Medium]</font>"
@@ -90,10 +85,14 @@
 			. += " <font color=orange>\[Low]</font>"
 		else
 			. += " <font color=red>\[NEVER]</font>"
-		if(job.alt_titles)
+
+		if(job.alt_titles && !required_playtime)
 			. += {"</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td>
 <td><a href='byond://?src=\ref[user];character=[menu_name];task=alt_title;job=\ref[job]'>\[[GetPlayerAltTitle(job)]\]</a></td></tr>"}
-		. += "</a></td></tr>"
+		else if( !required_playtime )
+			. += "</a>"
+
+		. += "</td></tr>"
 
 	. += "</td'></tr></table>"
 

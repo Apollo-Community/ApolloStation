@@ -11,8 +11,6 @@
 	minimal_access = list(access_robotics, access_tech_storage, access_morgue, access_research) //As a job that handles so many corpses, it makes sense for them to have morgue access.
 	alt_titles = list("Biomechanical Engineer","Mechatronic Engineer")
 
-	minimal_player_age = 7
-
 	rank_succesion_level = 4
 
 /datum/job/roboticist/equip(var/mob/living/carbon/human/H)

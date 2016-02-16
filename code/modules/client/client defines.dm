@@ -52,3 +52,6 @@
 
 	var/afk = 0
 	var/afk_start_time = 0 // Used to keep track of time they started being AFK
+
+	var/session_start_time = 0 // When did our session begin?
+	var/total_afk_time = 0 // How low have we been AFK this session?

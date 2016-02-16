@@ -13,7 +13,7 @@ var/datum/announcement/minor/captain_announcement = new(do_newscast = 1)
 	req_admin_notify = 1
 	access = list() 			//See get_access()
 	minimal_access = list() 	//See get_access()
-	minimal_player_age = 14
+	minimal_playtime = 0
 
 	rank_succesion_level = COMMAND_SUCCESSION_LEVEL+1
 

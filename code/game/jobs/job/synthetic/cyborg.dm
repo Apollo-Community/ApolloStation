@@ -7,7 +7,7 @@
 	spawn_positions = 2
 	supervisors = "your laws and the AI"	//Nodrak
 	selection_color = "#ddffdd"
-	minimal_player_age = 1
+	minimal_playtime = 1
 	alt_titles = list("Android", "Robot")
 
 	rank_succesion_level = 0

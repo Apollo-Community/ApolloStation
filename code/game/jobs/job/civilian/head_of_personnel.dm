@@ -9,7 +9,7 @@
 	selection_color = "#ddddff"
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
-	minimal_player_age = 10
+	minimal_playtime = 0
 
 	rank_succesion_level = COMMAND_SUCCESSION_LEVEL
 

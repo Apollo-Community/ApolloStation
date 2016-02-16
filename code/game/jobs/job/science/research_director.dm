@@ -17,7 +17,6 @@
 			            access_tox_storage, access_teleporter, access_sec_doors,
 			            access_research, access_robotics, access_xenobiology, access_ai_upload,
 			            access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_change_ids)
-	minimal_player_age = 14
 
 	rank_succesion_level = COMMAND_SUCCESSION_LEVEL
 

@@ -10,8 +10,6 @@
 	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology)
 	minimal_access = list(access_research, access_xenobiology)
 
-	minimal_player_age = 14
-
 	rank_succesion_level = 4
 
 /datum/job/xenobiologist/equip(var/mob/living/carbon/human/H)

@@ -11,6 +11,8 @@
 	access = list(access_lawyer, access_court, access_sec_doors, access_maint_tunnels)
 	minimal_access = list(access_lawyer, access_court, access_sec_doors)
 
+	minimal_playtime = 10
+
 	rank_succesion_level = 4
 
 /datum/job/lawyer/equip(var/mob/living/carbon/human/H)

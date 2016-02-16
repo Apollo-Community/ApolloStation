@@ -10,7 +10,6 @@
 	alt_titles = list("Security Cadet")
 	access = list(access_security, access_sec_doors, access_court, access_maint_tunnels )
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
-	minimal_player_age = 0
 
 	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL
 

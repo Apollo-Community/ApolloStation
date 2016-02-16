@@ -12,6 +12,8 @@
 	minimal_access = list(access_library)
 	alt_titles = list("Journalist")
 
+	minimal_playtime = 2
+
 	rank_succesion_level = 3
 
 /datum/job/librarian/equip(var/mob/living/carbon/human/H)

@@ -17,7 +17,6 @@
 			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
 			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
 			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_change_ids)
-	minimal_player_age = 14
 
 	rank_succesion_level = COMMAND_SUCCESSION_LEVEL
 

@@ -41,8 +41,8 @@
 	//If this is set to 1, a text is printed to the player when jobs are assigned, telling him that he should let admins know that he has to disconnect.
 	var/req_admin_notify
 
-	//If you have use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_age days old. (meaning they first signed in at least that many days before.)
-	var/minimal_player_age = 0
+	//If you have use_playtime_restriction_for_jobs config option enabled, this is how much time is required in hours to play this role
+	var/minimal_playtime = 0
 
 /datum/job/proc/equip(var/mob/living/carbon/human/H)
 	return 1
@@ -66,14 +66,14 @@
 /datum/job/proc/available_in_days(client/C)
 	if(!C)
 		return 0
-	if(!config.use_age_restriction_for_jobs)
+	if(!config.use_playtime_restriction_for_jobs)
 		return 0
 	if(!isnum(C.player_age))
 		return 0 //This is only a number if the db connection is established, otherwise it is text: "Requires database", meaning these restrictions cannot be enforced
-	if(!isnum(minimal_player_age))
+	if(!isnum(minimal_playtime))
 		return 0
 
-	return max(0, minimal_player_age - C.player_age)
+	return max(0, minimal_playtime - C.player_age)
 
 /datum/job/proc/apply_fingerprints(var/mob/living/carbon/human/H)
 	if(!istype(H))
