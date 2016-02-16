@@ -72,3 +72,13 @@ proc/isDay(var/month, var/day)
 
 	var/list/months = list( "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" )
 	return months[month]
+
+/proc/print_date( var/list/date )
+	if( !date || date.len < 3 )
+		return "BAD DATE"
+
+	var/year = text2num( date[1] )
+	var/month = text2num( date[2] )
+	var/day = text2num( date[3] )
+
+	return "[getMonthName( month )] [day], [year]"

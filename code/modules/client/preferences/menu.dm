@@ -228,7 +228,7 @@
 			. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=choose;name=[query.item[1]]'>[query.item[1]]</a></td>"
 
 		. += "<td>[capitalize( query.item[2] )]</td>"
-		. += "<td style='text-align:right'>[print_bdate( params2list( query.item[3] ))]</td>"
+		. += "<td style='text-align:right'>[print_date( params2list( query.item[3] ))]</td>"
 
 		var/datum/department/D = job_master.GetDepartment( text2num( query.item[4] ))
 		if( D )

@@ -440,17 +440,7 @@
 		calculate_age()
 		if( !birth_date || birth_date.len < 3 )
 			change_age( 30 )
-	return print_bdate( birth_date )
-
-/proc/print_bdate( var/list/birth_date )
-	if( !birth_date || birth_date.len < 3 )
-		return "NO BIRTHDATE"
-
-	var/birth_year = text2num( birth_date[1] )
-	var/birth_day = text2num( birth_date[3] )
-	var/birth_month = text2num( birth_date[2] )
-
-	return "[getMonthName( birth_month )] [birth_day], [birth_year]"
+	return print_date( birth_date )
 
 /datum/character/proc/randomize_eyes_color()
 	var/red

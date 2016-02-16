@@ -48,6 +48,9 @@
 	roles |= new_department.starting_positions
 
 /datum/character/proc/LoadDepartment( var/id )
+	if( !job_master )
+		return
+
 	var/D = job_master.GetDepartment( id )
 	SetDepartment( D )
 

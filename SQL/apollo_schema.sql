@@ -140,9 +140,90 @@ CREATE TABLE IF NOT EXISTS `player` (
   `whitelist_flags` int(16) NOT NULL DEFAULT '0',
   `species_flags` int(16) NOT NULL DEFAULT '0',
   `donator_flags` int(16) NOT NULL DEFAULT '0',
-  `playtime` unsigned int DEFAULT '0',
+  `playtime` int UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `ckey` (`ckey`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+-- -----------------------------------------------------
+-- Player Preferences
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `preferences` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ckey` varchar(32) NOT NULL,
+  `joined_date` date NOT NULL,
+  `OOC_color` varchar(7) NOT NULL DEFAULT "#0033CC",
+  `UI_style` varchar(50) NOT NULL DEFAULT "Midnight",
+  `UI_style_color` varchar(7) NOT NULL DEFAULT "#FFFFFF",
+  `UI_style_alpha` tinyint UNSIGNED NOT NULL DEFAULT '255',
+  `toggles` int UNSIGNED NOT NULL DEFAULT '0',
+  `last_character` varchar(100),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ckey` (`ckey`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+-- -----------------------------------------------------
+-- Player Characters
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `characters` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `ckey` varchar(32) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `gender` varchar(11) NOT NULL,
+  `birth_date` varchar(20) NOT NULL,
+  `spawnpoint` varchar(100) NOT NULL DEFAULT "Arrivals Shuttle",
+  `blood_type` varchar(10) NOT NULL,
+  `underwear` tinyint UNSIGNED NOT NULL DEFAULT '1',
+  `undershirt` tinyint UNSIGNED NOT NULL DEFAULT '1',
+  `backpack` tinyint UNSIGNED NOT NULL DEFAULT '2', -- Different
+  `hair_style` varchar(50) NOT NULL DEFAULT "Bald",
+  `hair_face_style` varchar(50) NOT NULL DEFAULT "Shaved",
+  `hair_color` varchar(7) NOT NULL DEFAULT "#FFFFFF",
+  `hair_face_color` varchar(7) NOT NULL DEFAULT "#FFFFFF",
+  `skin_tone` smallint NOT NULL DEFAULT '35',
+  `skin_color` varchar(7) NOT NULL DEFAULT "#FFFFFF",
+  `eye_color` varchar(7) NOT NULL DEFAULT "#FFFFFF",
+  `species` varchar(100) NOT NULL DEFAULT "Human",
+  `additional_language` varchar(100),
+  `gear` text,
+  `home_system` varchar(100) NOT NULL DEFAULT "Unset",
+  `citizenship` varchar(50) NOT NULL DEFAULT "None",
+  `faction` varchar(50) NOT NULL DEFAULT "None",
+  `religion` varchar(50) NOT NULL DEFAULT "None",
+  `department` tinyint NOT NULL DEFAULT '0',
+  `roles` text,
+  `job_antag` int UNSIGNED NOT NULL DEFAULT '0',
+  `alternate_option` int UNSIGNED,
+  `organ_data` text,
+  `player_alt_titles` text,
+  `flavor_texts_human` text,
+  `flavor_texts_robot` text, -- Different
+  `med_notes` text,
+  `sec_notes` text,
+  `gen_notes` text,
+  `med_record` text,
+  `sec_record` text,
+  `gen_record` text,
+  `exploit_record` text,
+  `nanotrasen_relation` varchar(50) NOT NULL DEFAULT "Neutral",
+  `disabilities` int UNSIGNED NOT NULL DEFAULT '0',
+  `uplink_location` varchar(50) NOT NULL DEFAULT "PDA",
+  `fingerprints` varchar(32) NOT NULL,
+  `DNA` varchar(32) NOT NULL,
+  `unique_identifier` varchar(32) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+-- -----------------------------------------------------
+-- Universe Data
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `universe` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`name` varchar(255) NOT NULL,
+	`ic_date` varchar(20) NOT NULL,
+	`stocks` text,
+	`news` text,
+	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
 
 -- -----------------------------------------------------
@@ -254,71 +335,5 @@ CREATE TABLE IF NOT EXISTS `round_ai_laws` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `round_id` int(11) NOT NULL,
   `law` TEXT NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
-
--- -----------------------------------------------------
--- Player Preferences
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `preferences` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ckey` varchar(32) NOT NULL,
-  `joined_date` date NOT NULL,
-  `OOC_color` varchar(7) NOT NULL DEFAULT "#0033CC",
-  `UI_style` varchar(50) NOT NULL DEFAULT "Midnight",
-  `UI_style_color` varchar(7) NOT NULL DEFAULT "#FFFFFF",
-  `UI_style_alpha` tinyint UNSIGNED NOT NULL DEFAULT '255',
-  `toggles` int UNSIGNED NOT NULL DEFAULT '0',
-  `last_character` varchar(100),
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `ckey` (`ckey`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
-
-CREATE TABLE IF NOT EXISTS `characters` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `ckey` varchar(32) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `gender` varchar(11) NOT NULL,
-  `birth_date` varchar(20) NOT NULL,
-  `spawnpoint` varchar(100) NOT NULL DEFAULT "Arrivals Shuttle",
-  `blood_type` varchar(10) NOT NULL,
-  `underwear` tinyint UNSIGNED NOT NULL DEFAULT '1',
-  `undershirt` tinyint UNSIGNED NOT NULL DEFAULT '1',
-  `backpack` tinyint UNSIGNED NOT NULL DEFAULT '2', -- Different
-  `hair_style` varchar(50) NOT NULL DEFAULT "Bald",
-  `hair_face_style` varchar(50) NOT NULL DEFAULT "Shaved",
-  `hair_color` varchar(7) NOT NULL DEFAULT "#FFFFFF",
-  `hair_face_color` varchar(7) NOT NULL DEFAULT "#FFFFFF",
-  `skin_tone` smallint NOT NULL DEFAULT '35',
-  `skin_color` varchar(7) NOT NULL DEFAULT "#FFFFFF",
-  `eye_color` varchar(7) NOT NULL DEFAULT "#FFFFFF",
-  `species` varchar(100) NOT NULL DEFAULT "Human",
-  `additional_language` varchar(100),
-  `gear` text,
-  `home_system` varchar(100) NOT NULL DEFAULT "Unset",
-  `citizenship` varchar(50) NOT NULL DEFAULT "None",
-  `faction` varchar(50) NOT NULL DEFAULT "None",
-  `religion` varchar(50) NOT NULL DEFAULT "None",
-  `department` tinyint NOT NULL DEFAULT '0',
-  `roles` text,
-  `job_antag` int UNSIGNED NOT NULL DEFAULT '0',
-  `alternate_option` int UNSIGNED,
-  `organ_data` text,
-  `player_alt_titles` text,
-  `flavor_texts_human` text,
-  `flavor_texts_robot` text, -- Different
-  `med_notes` text,
-  `sec_notes` text,
-  `gen_notes` text,
-  `med_record` text,
-  `sec_record` text,
-  `gen_record` text,
-  `exploit_record` text,
-  `nanotrasen_relation` varchar(50) NOT NULL DEFAULT "Neutral",
-  `disabilities` int UNSIGNED NOT NULL DEFAULT '0',
-  `uplink_location` varchar(50) NOT NULL DEFAULT "PDA",
-  `fingerprints` varchar(32) NOT NULL,
-  `DNA` varchar(32) NOT NULL,
-  `unique_identifier` varchar(32) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;

@@ -135,7 +135,8 @@ var/global/datum/controller/gameticker/ticker
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				qdel(S)
-		world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
+		world << "<font color='blue'><B>Enjoy the game!</B></font>"
+		world << "<h3>Today's date is [print_date( universe.date )]</h3>"
 		world << sound('sound/AI/welcome.ogg') // Skie
 
 	//start_events() //handles random events and space dust.
