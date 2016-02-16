@@ -76,7 +76,7 @@
 			. += "<a href='byond://?src=\ref[user];character=[menu_name];task=input;text=[role]'>"
 
 		if( required_playtime )
-			. += " [required_playtime] hours to unlock"
+			. += " <b>Unlock in [required_playtime] hours</b>"
 		else if( GetJobLevel( role ) == "High" )
 			. += " <font color=blue>\[High]</font>"
 		else if( GetJobLevel( role ) == "Medium" )
