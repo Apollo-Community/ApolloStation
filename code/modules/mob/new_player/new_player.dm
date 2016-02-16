@@ -391,6 +391,10 @@
 		dat += "Choose from the following open positions:<br>"
 		for(var/role in client.prefs.selected_character.roles)
 			var/datum/job/job = job_master.GetJob( role )
+
+			if( job.minimal_playtime && src.client.total_playtime_hours() <= job.minimal_playtime )
+				continue
+
 			if(job && IsJobAvailable(job.title))
 				var/active = 0
 				// Only players with the job assigned and AFK for less than 10 minutes count as active

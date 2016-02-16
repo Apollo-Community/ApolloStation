@@ -42,7 +42,7 @@
 			continue
 
 		var/required_playtime = 0
-		if( user.client.total_playtime_hours() <= job.minimal_playtime )
+		if( job.minimal_playtime && user.client.total_playtime_hours() <= job.minimal_playtime )
 			required_playtime = job.minimal_playtime-user.client.total_playtime_hours()
 
 		index += 1
