@@ -23,6 +23,7 @@
 	var/stamps		//The (text for the) stamps on the paper.
 	var/fields		//Amount of user created fields
 	var/list/stamped
+	var/list/signatures = list()
 	var/ico[0]      //Icons and
 	var/offset_x[0] //offsets stored for later
 	var/offset_y[0] //usage by the photocopier
@@ -189,14 +190,22 @@
 	info = null
 	stamps = null
 	stamped = list()
+	signatures = list()
 	overlays.Cut()
 	updateinfolinks()
 	update_icon()
 
 /obj/item/weapon/paper/proc/get_signature(var/obj/item/weapon/pen/P, mob/user as mob)
+	var/signature
+
 	if(P && istype(P, /obj/item/weapon/pen))
-		return P.get_signature(user)
-	return (user && user.real_name) ? user.real_name : "Anonymous"
+		signature = P.get_signature(user)
+	else
+		signature = (user && user.real_name) ? user.real_name : "Anonymous"
+
+	signatures += signature
+
+	return signature
 
 /obj/item/weapon/paper/proc/parsepencode(var/t, var/obj/item/weapon/pen/P, mob/user as mob, var/iscrayon = 0)
 //	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)

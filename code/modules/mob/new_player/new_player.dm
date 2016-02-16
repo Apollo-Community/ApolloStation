@@ -392,7 +392,7 @@
 		for(var/role in client.prefs.selected_character.roles)
 			var/datum/job/job = job_master.GetJob( role )
 
-			if( job.minimal_playtime && src.client.total_playtime_hours() <= job.minimal_playtime )
+			if( job.available_in_hours( src.client ))
 				continue
 
 			if(job && IsJobAvailable(job.title))

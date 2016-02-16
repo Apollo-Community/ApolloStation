@@ -42,8 +42,8 @@
 			continue
 
 		var/required_playtime = 0
-		if( job.minimal_playtime && user.client.total_playtime_hours() <= job.minimal_playtime )
-			required_playtime = job.minimal_playtime-user.client.total_playtime_hours()
+		if( job.available_in_hours( user.client ))
+			required_playtime = job.available_in_hours( user.client )
 
 		index += 1
 		if((index >= limit) || (job.title in splitJobs))
@@ -61,9 +61,8 @@
 		if(jobban_isbanned(user, role))
 			. += "<del>[role]</del></td><td><b> \[BANNED]</b></td></tr>"
 			continue
-		if(!job.player_old_enough(user.client))
-			var/available_in_days = job.available_in_days(user.client)
-			. += "<del>[role]</del></td><td> \[IN [(available_in_days)] DAYS]</td></tr>"
+		if(required_playtime)
+			. += "<del>[role]</del></td><td> \[IN [(required_playtime)] HOURS]</td></tr>"
 			continue
 		if((role in command_positions) || (role == "AI"))//Bold head jobs
 			. += "<b>[role]</b>"
@@ -72,12 +71,9 @@
 
 		. += "</td><td width='40%'>"
 
-		if( !required_playtime )
-			. += "<a href='byond://?src=\ref[user];character=[menu_name];task=input;text=[role]'>"
+		. += "<a href='byond://?src=\ref[user];character=[menu_name];task=input;text=[role]'>"
 
-		if( required_playtime )
-			. += " <b>Unlock in [required_playtime] hours</b>"
-		else if( GetJobLevel( role ) == "High" )
+		if( GetJobLevel( role ) == "High" )
 			. += " <font color=blue>\[High]</font>"
 		else if( GetJobLevel( role ) == "Medium" )
 			. += " <font color=green>\[Medium]</font>"
@@ -86,10 +82,10 @@
 		else
 			. += " <font color=red>\[NEVER]</font>"
 
-		if(job.alt_titles && !required_playtime)
+		if( job.alt_titles )
 			. += {"</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td>
 <td><a href='byond://?src=\ref[user];character=[menu_name];task=alt_title;job=\ref[job]'>\[[GetPlayerAltTitle(job)]\]</a></td></tr>"}
-		else if( !required_playtime )
+		else
 			. += "</a>"
 
 		. += "</td></tr>"

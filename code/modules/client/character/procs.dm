@@ -614,8 +614,7 @@
 		undershirt_s = new/icon("icon" = 'icons/mob/human.dmi', "icon_state" = "undershirt[undershirt]_s")
 
 	var/icon/clothes_s = null
-	var/role = GetHighestLevelJob()
-	var/datum/job/job = job_master.GetJob( role )
+	var/datum/job/job = job_master.GetJob( GetHighestLevelJob() )
 
 	clothes_s = job.make_preview_icon( backpack )
 
