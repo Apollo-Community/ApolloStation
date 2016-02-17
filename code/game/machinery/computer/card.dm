@@ -1,8 +1,8 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/computer/card
-	name = "\improper ID card modification console"
-	desc = "Terminal for programming NanoTrasen employee ID cards to access parts of the station."
+	name = "\improper promotions console"
+	desc = "Terminal for handling NanoTrasen employee promotions. Can also modify ID access."
 	icon_state = "id"
 	req_access = list(access_change_ids)
 	circuit = "/obj/item/weapon/circuitboard/card"
