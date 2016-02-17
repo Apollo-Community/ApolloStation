@@ -54,6 +54,8 @@
 	var/D = job_master.GetDepartment( id )
 	SetDepartment( D )
 
+
+
 /datum/character/proc/AddJob( var/job_name )
 	roles.Add( "[job_name]" = "None" )
 

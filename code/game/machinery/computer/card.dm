@@ -81,15 +81,27 @@
 			if( F.isFilledOut() )
 				var/datum/character/C = due_papers[F]
 
-				if( istype( F, /obj/item/weapon/paper/form/job/promotion ))
+				if( istype( F, /obj/item/weapon/paper/form/job/induct ))
+					C.SetDepartment( job_master.GetDepartmentByName( F.job ))
+				else if( istype( F, /obj/item/weapon/paper/form/job/termination ))
+					C.LoadDepartment( CIVILIAN )
+				else if( istype( F, /obj/item/weapon/paper/form/job/promotion ))
 					C.AddJob( F.job )
 				else if( istype( F, /obj/item/weapon/paper/form/job/demotion ))
 					C.RemoveJob( F.job )
 				else
 					return
 
-				C.addRecordNote( "general", F.info )
 				ping( "[C.name] has been [F.job_verb] [F.job]!" )
+				C.addRecordNote( "general", F.info )
+
+				due_papers -= F
+				qdel( F )
+				return
+			else
+				ping( "This form was improperly filled out. Please try again." )
+
+				due_papers -= F
 				qdel( F )
 				return
 
@@ -118,24 +130,35 @@
 	if(stat & (NOPOWER|BROKEN)) return
 	ui_interact(user)
 
-/obj/machinery/computer/card/proc/department_name()
-	if( !scan )
+/obj/machinery/computer/card/proc/department_name( var/obj/item/weapon/card/id/C )
+	if( !istype( C ))
 		return
 
-	if( !scan.character )
+	if( !C.character )
 		return
 
-	return scan.character.department.name
+	return C.character.department.name
 
 /obj/machinery/computer/card/proc/is_inducted()
 	if( !modify || !scan )
 		return 0
 
-	var/datum/character/subordinate = modify.character
-	var/datum/character/superior = scan.character
+	var/scan_department = department_name( scan )
+	var/modify_department = department_name( modify )
 
-	if( superior && subordinate && ( superior.department == subordinate.department ))
+	if( scan_department && modify_department && scan_department == modify_department )
 		return 1
+	return 0
+
+/obj/machinery/computer/card/proc/can_induct()
+	var/scan_department = department_name( scan )
+	var/modify_department = department_name( modify )
+	if( !scan_department || !modify_department )
+		return 0
+
+	if( modify_department == "Civilian" )
+		return 1
+
 	return 0
 
 /obj/machinery/computer/card/ui_interact(mob/user, ui_key="main", var/datum/nanoui/ui = null, var/force_open = 1)
@@ -143,7 +166,8 @@
 
 	var/data[0]
 	data["src"] = "\ref[src]"
-	data["department_name"] = department_name()
+	data["department_name"] = department_name( scan )
+	data["modify_department_name"] = department_name( modify )
 	data["mode"] = mode
 	data["printing"] = printing
 	data["manifest"] = data_core ? data_core.get_manifest(0) : null
@@ -154,6 +178,7 @@
 	data["authenticated"] = is_authenticated()
 	data["has_modify"] = !!modify
 	data["inducted"] = is_inducted()
+	data["can_induct"] = can_induct()
 	data["account_number"] = modify ? modify.associated_account_number : null
 	data["centcom_access"] = is_centcom()
 	data["all_centcom_access"] = null
@@ -373,15 +398,12 @@
 				if( !modifyingSubordinate() )
 					ping( "Cannot modify a superior's card!" )
 
-				ping("[modify.registered_name] has been fired from \the [modify.character.department.name].")
+				var/list/names = list( scan.registered_name )
 
-				modify.assignment = "Assistant"
-				modify.access = list()
-
-				if( modify.character )
-					modify.character.LoadDepartment( CIVILIAN )
-
-				callHook("reassign_employee", list(modify))
+				var/obj/item/weapon/paper/form/job/termination/P = new( print_date( universe.date ), department_name( scan ), modify.registered_name)
+				P.required_signatures = names
+				due_papers[P] = modify.character
+				print( P )
 
 		if ("induct")
 			if( !scan.character )
@@ -399,7 +421,12 @@
 			if( !modifyingSubordinate() )
 				ping( "Cannot modify a superior's card!" )
 
-			modify.character.SetDepartment( scan.character.department )
+			var/list/names = list( modify.registered_name, scan.registered_name )
+
+			var/obj/item/weapon/paper/form/job/induct/P = new( print_date( universe.date ), department_name( scan ))
+			P.required_signatures = names
+			due_papers[P] = modify.character
+			print( P )
 
 		if( "promote" )
 			if( !scan.character )
@@ -417,7 +444,7 @@
 
 			var/list/names = list( modify.registered_name, scan.registered_name )
 
-			var/obj/item/weapon/paper/form/job/promotion/P = new( print_date( universe.date ), job_name, department_name() )
+			var/obj/item/weapon/paper/form/job/promotion/P = new( print_date( universe.date ), job_name, department_name( scan ))
 			P.required_signatures = names
 			due_papers[P] = modify.character
 			print( P )
@@ -438,7 +465,7 @@
 
 			var/list/names = list( scan.registered_name )
 
-			var/obj/item/weapon/paper/form/job/demotion/P = new( print_date( universe.date ), job_name, modify.registered_name, department_name() )
+			var/obj/item/weapon/paper/form/job/demotion/P = new( print_date( universe.date ), job_name, modify.registered_name, department_name( scan ))
 			P.required_signatures = names
 			due_papers[P] = modify.character
 			print( P )

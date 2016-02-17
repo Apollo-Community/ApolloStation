@@ -58,6 +58,14 @@ var/global/datum/controller/occupations/job_master
 				return D
 		return null
 
+	proc/GetDepartmentByName(var/name)
+		for(var/datum/department/D in departments)
+			if(!D)
+				continue
+			if(D.name == name)
+				return D
+		return null
+
 	proc/GetPlayerAltTitle(mob/new_player/player, rank)
 		return player.client.prefs.GetPlayerAltTitle(GetJob(rank))
 

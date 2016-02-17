@@ -317,7 +317,7 @@ What a mess.*/
 					var/date = href_list["date"]
 					if( C.gen_notes[date] )
 						usr << browse( html_decode( C.gen_notes[date] ), "window=employment_computer_note[date]")
-
+						return
 //FIELD FUNCTIONS
 			if ("Edit Field")
 				var/a1 = active1

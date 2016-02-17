@@ -49,26 +49,48 @@
 		{{if data.has_modify}}
 			{{if data.inducted}}
 				<div class='item'>
+					<div class='itemLabel'>
+						Terminations:
+					</div>
+					<div class='itemContent'>
+						{{:helper.link('Terminate ' + data.target_owner, 'gear', {'choice' : 'terminate'}, data.target_rank == "Terminated" ? 'disabled' : null, data.target_rank == "Terminated" ? 'disabled' : 'linkDanger')}}
+					</div>
+				</div>
+			
+				<div class='item'>
 					<h2>{{:data.department_name}} Promotions</h2>
 				</div>
-				{{for data.locked_jobs}}
-					<div class='itemContentWide'>
-						{{:helper.link(value.display_name, '', {'choice' : 'promote', 'promote_role' : value.job})}}
-					</div>
-				{{/for}}
+				<div style='float: left; width: 175px; min-height: 250px'
+					{{for data.locked_jobs}}
+						<div class='itemContentWide'>
+							{{:helper.link(value.display_name, '', {'choice' : 'promote', 'promote_role' : value.job})}}
+						</div>
+					{{/for}}
+				</div>
 
 				<div class='item'>
 					<h2>{{:data.department_name}} Demotions</h2>
 				</div>
-				{{for data.unlocked_jobs}}
-					<div class='itemContentWide'>
-						{{:helper.link(value.display_name, '', {'choice' : 'demote', 'demote_role' : value.job})}}
-					</div>
-				{{/for}}
-			{{else}}
-				<div class='item'>
-					{{:helper.link('Induct into ' + data.department_name, '', {'choice' : 'induct'})}}
+				<div style='float: left; width: 175px; min-height: 250px'
+					{{for data.unlocked_jobs}}
+						<div class='itemContentWide'>
+							{{:helper.link(value.display_name, '', {'choice' : 'demote', 'demote_role' : value.job})}}
+						</div>
+					{{/for}}
 				</div>
+			{{else}}
+				{{if data.can_induct}}
+					<div class='item'>
+						<div class='itemLabel'>
+							Inductions:
+						</div>
+						<div class='itemContent'>
+							{{:helper.link('Induct ' + data.target_owner, '', {'choice' : 'induct'})}}
+						</div>
+					</div>
+				{{else}}
+					<h3>{{:data.target_owner}} is already a member of {{:data.modify_department_name}}</h3>
+				{{/if}}
 			{{/if}}
 			<br>
 			<hr>

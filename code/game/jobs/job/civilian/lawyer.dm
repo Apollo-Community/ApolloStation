@@ -11,7 +11,7 @@
 	access = list(access_lawyer, access_court, access_sec_doors, access_maint_tunnels)
 	minimal_access = list(access_lawyer, access_court, access_sec_doors)
 
-	minimal_playtime = 10
+	minimal_playtime = 30
 
 	rank_succesion_level = 4
 

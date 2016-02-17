@@ -576,6 +576,39 @@
 
 	..()
 
+/obj/item/weapon/paper/form/job/termination
+	name = "NanoTrasen Departmental Termination Form"
+	job_verb = "terminated from"
+
+/obj/item/weapon/paper/form/job/termination/New( var/date, var/set_department, var/employee )
+	job = set_department
+
+	info = {"\[center\]\[logo\]\[/center\]
+\[center\]\[b\]\[i\]NanoTrasen Departmental Termination Form\[/b\]\[/i\]\[/center\]\[hr\]
+Upon signature of this document by the Department authority on [date], the contract of appointment within the [job] for [employee] is hereby null and void. Abuse of this form may result in the termination of the Department authority.\[br\]
+
+\[b\]Department authority:\[/b\] \[field\]
+\[hr\]"}
+
+	..( set_department )
+
+/obj/item/weapon/paper/form/job/induct
+	name = "NanoTrasen Departmental Induction Form"
+	job_verb = "inducted into"
+
+/obj/item/weapon/paper/form/job/induct/New( var/date, var/set_department )
+	job = set_department
+
+	info = {"\[center\]\[logo\]\[/center\]
+\[center\]\[b\]\[i\]NanoTrasen Departmental Induction Form\[/b\]\[/i\]\[/center\]\[hr\]
+Upon signature of this document by the employee, and witnessed by the Department authority of \the [job] on [date], the employee will legally be inducted into \the [job]. The Department authority is to provide them with instruction as to their role and function, or lack thereof, within the department.\[br\]
+
+\[b\]Employee:\[/b\] \[field\]
+\[b\]Department authority:\[/b\] \[field\]
+\[hr\]"}
+
+	..( set_department )
+
 /obj/item/weapon/paper/form/job/promotion
 	name = "NanoTrasen Employee Promotion Form"
 	job_verb = "promoted to"
@@ -585,10 +618,10 @@
 
 	info = {"\[center\]\[logo\]\[/center\]
 \[center\]\[b\]\[i\]NanoTrasen Employee Promotion Form\[/b\]\[/i\]\[/center\]\[hr\]
-Upon signature of this document by the employee, and witnessed by the Department authroity of the [department] on [date], the employee may legally fulfill all duties in authority as [job] as required of them. Failure to perform this responsibility hereto is subject to appointment termination without consent.\[br\]
+Upon signature of this document by the employee, and witnessed by the Department authority of the [department] on [date], the employee may legally fulfill all duties in authority as [job] as required of them. Failure to perform this responsibility hereto is subject to appointment termination without consent.\[br\]
 
 \[b\]Employee:\[/b\] \[field\]
-\[b\]Department authroity:\[/b\] \[field\]
+\[b\]Department authority:\[/b\] \[field\]
 \[hr\]"}
 
 	..(set_job)
