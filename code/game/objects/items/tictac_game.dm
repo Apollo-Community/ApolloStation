@@ -3,7 +3,7 @@
 	desc = "A board to play Tic-Tac-Toe on!"
 	icon = './icons/apollo/tictac.dmi'
 
-	var/list/base_icons = list("wood", "checker", "bar")
+	var/list/base_icons = list("wood", "checker", "bar", "metal", "white")
 	var/turn = 0
 	//0 = blue, 1 = red
 
