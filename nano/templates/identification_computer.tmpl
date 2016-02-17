@@ -47,25 +47,31 @@
 		<hr>
 		
 		{{if data.has_modify}}
-			<div class='item'>
-				<h2>{{:data.department_name}} Promotions</h2>
-			</div>
-			{{for data.locked_jobs}}
-				<div class='itemContentWide'>
-					{{:helper.link(value.display_name, '', {'choice' : 'promote', 'promote_role' : value.job})}}
+			{{if data.inducted}}
+				<div class='item'>
+					<h2>{{:data.department_name}} Promotions</h2>
 				</div>
-			{{/for}}
+				{{for data.locked_jobs}}
+					<div class='itemContentWide'>
+						{{:helper.link(value.display_name, '', {'choice' : 'promote', 'promote_role' : value.job})}}
+					</div>
+				{{/for}}
 
-			<div class='item'>
-				<h2>{{:data.department_name}} Demotions</h2>
-			</div>
-			{{for data.unlocked_jobs}}
-				<div class='itemContentWide'>
-					{{:helper.link(value.display_name, '', {'choice' : 'demote', 'demote_role' : value.job})}}
+				<div class='item'>
+					<h2>{{:data.department_name}} Demotions</h2>
 				</div>
-			{{/for}}
-		<br>
-		<hr>
+				{{for data.unlocked_jobs}}
+					<div class='itemContentWide'>
+						{{:helper.link(value.display_name, '', {'choice' : 'demote', 'demote_role' : value.job})}}
+					</div>
+				{{/for}}
+			{{else}}
+				<div class='item'>
+					{{:helper.link('Induct into ' + data.department_name, '', {'choice' : 'induct'})}}
+				</div>
+			{{/if}}
+			<br>
+			<hr>
 		{{/if}}
 
 	{{else data.mode == 1}}

@@ -127,6 +127,17 @@
 
 	return scan.character.department.name
 
+/obj/machinery/computer/card/proc/is_inducted()
+	if( !modify || !scan )
+		return 0
+
+	var/datum/character/subordinate = modify.character
+	var/datum/character/superior = scan.character
+
+	if( superior && subordinate && ( superior.department == subordinate.department ))
+		return 1
+	return 0
+
 /obj/machinery/computer/card/ui_interact(mob/user, ui_key="main", var/datum/nanoui/ui = null, var/force_open = 1)
 	user.set_machine(src)
 
@@ -142,6 +153,7 @@
 	data["scan_name"] = scan ? scan.name : "-----"
 	data["authenticated"] = is_authenticated()
 	data["has_modify"] = !!modify
+	data["inducted"] = is_inducted()
 	data["account_number"] = modify ? modify.associated_account_number : null
 	data["centcom_access"] = is_centcom()
 	data["all_centcom_access"] = null
@@ -153,7 +165,7 @@
 	if( modify && modify.character && scan && scan.character && scan.character.department )
 		var/datum/department/D = scan.character.department
 
-		unlocked_jobs = modify.character.roles
+		unlocked_jobs = D.getPromotablePositionNames() & modify.character.roles
 
 		locked_jobs = D.getPromotablePositionNames()
 		locked_jobs.Remove( unlocked_jobs )
@@ -348,6 +360,8 @@
 				if( !modifyingSubordinate() )
 					ping( "Cannot modify a superior's card!" )
 
+				ping("[modify.registered_name] has been fired from NanoTrasen.")
+
 				modify.assignment = "Terminated"
 				modify.access = list()
 
@@ -355,10 +369,11 @@
 					modify.character.LoadDepartment( CIVILIAN )
 
 				callHook("terminate_employee", list(modify))
-				ping("[modify.registered_name] has been fired from NanoTrasen.")
 			else
 				if( !modifyingSubordinate() )
 					ping( "Cannot modify a superior's card!" )
+
+				ping("[modify.registered_name] has been fired from \the [modify.character.department.name].")
 
 				modify.assignment = "Assistant"
 				modify.access = list()
@@ -367,7 +382,6 @@
 					modify.character.LoadDepartment( CIVILIAN )
 
 				callHook("reassign_employee", list(modify))
-				ping("[modify.registered_name] has been fired from \the [modify.character.department.name].")
 
 		if ("induct")
 			if( !scan.character )
