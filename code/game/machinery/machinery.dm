@@ -407,6 +407,14 @@ Class Procs:
   state(text, "blue")
   playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 
+/obj/machinery/proc/buzz(text=null)
+  if (!text)
+    text = "\The [src] buzzes."
+
+  state(text, "blue")
+  playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+
+
 /obj/machinery/proc/dismantle()
 	playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 	var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(loc)

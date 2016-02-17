@@ -92,14 +92,14 @@
 				else
 					return
 
-				ping( "[C.name] has been [F.job_verb] [F.job]!" )
+				ping( "\The [src] pings, \"[C.name] has been [F.job_verb] [F.job]!\"" )
 				C.addRecordNote( "general", F.info, "[capitalize( F.job_verb )] [F.job]" )
 
 				due_papers -= F
 				qdel( F )
 				return
 			else
-				ping( "This form was improperly filled out. Please try again." )
+				buzz( "\The [src] buzzes, \"This form was improperly filled out. Please try again.\"" )
 
 				due_papers -= F
 				qdel( F )
@@ -280,7 +280,7 @@
 			if(href_list["allowed"])
 				if(is_authenticated())
 					if( !modifyingSubordinate() )
-						ping( "Cannot modify a superior's card!" )
+						buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
 
 					var/access_type = text2num(href_list["access_target"])
 					var/access_allowed = text2num(href_list["allowed"])
@@ -292,7 +292,7 @@
 		if ("assign")
 			if( is_authenticated() && modify && modifyingSubordinate() )
 				if( !modifyingSubordinate() )
-					ping( "Cannot modify a superior's card!" )
+					buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
 
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
@@ -326,7 +326,7 @@
 		if ("reg")
 			if (is_authenticated())
 				if( !modifyingSubordinate() )
-					ping( "Cannot modify a superior's card!" )
+					buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
 
 				var/t2 = modify
 				if ((modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
@@ -334,13 +334,13 @@
 					if(temp_name)
 						modify.registered_name = temp_name
 					else
-						src.visible_message("<span class='notice'>[src] buzzes rudely.</span>")
+						buzz( "[src] buzzes rudely." )
 			nanomanager.update_uis(src)
 
 		if ("account")
 			if (is_authenticated())
 				if( !modifyingSubordinate() )
-					ping( "Cannot modify a superior's card!" )
+					buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
 
 				var/t2 = modify
 				if ((modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
@@ -383,9 +383,9 @@
 		if ("terminate")
 			if (is_authenticated() && is_centcom())
 				if( !modifyingSubordinate() )
-					ping( "Cannot modify a superior's card!" )
+					buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
 
-				ping("[modify.registered_name] has been fired from NanoTrasen.")
+				ping( "\The [src] pings, \"[modify.registered_name] has been fired from NanoTrasen.\"")
 
 				modify.assignment = "Terminated"
 				modify.access = list()
@@ -396,7 +396,7 @@
 				callHook("terminate_employee", list(modify))
 			else
 				if( !modifyingSubordinate() )
-					ping( "Cannot modify a superior's card!" )
+					buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
 
 				var/list/names = list( scan.registered_name )
 
@@ -404,22 +404,24 @@
 				P.required_signatures = names
 				due_papers[P] = modify.character
 				print( P )
+				spawn( 45 )
+					ping( "\The [src] pings, \"Please fill out this form and return it to this console when complete.\"" )
 
 		if ("induct")
 			if( !scan.character )
-				ping("Authorized card is not tied to a NanoTrasen Employee!")
+				buzz("\The [src] buzzes, \"Authorized card is not tied to a NanoTrasen Employee!\"")
 				return
 
 			if( !scan.character.department )
-				ping("Authorized card has no active department!")
+				buzz("\The [src] buzzes, \"Authorized card has no active department!\"")
 				return
 
 			if( !modify.character )
-				ping("Modification card is not tied to a NanoTrasen Employee!")
+				buzz("\The [src] buzzes, \"Modification card is not tied to a NanoTrasen Employee!\"")
 				return
 
 			if( !modifyingSubordinate() )
-				ping( "Cannot modify a superior's card!" )
+				buzz( "\The [src] buzzes, \"Cannot modify a superior's card!" )
 
 			var/list/names = list( modify.registered_name, scan.registered_name )
 
@@ -427,18 +429,20 @@
 			P.required_signatures = names
 			due_papers[P] = modify.character
 			print( P )
+			spawn( 45 )
+				ping( "\The [src] pings, \"Please fill out this form and return it to this console when complete.\"" )
 
 		if( "promote" )
 			if( !scan.character )
-				ping("Authorized card is not tied to a NanoTrasen Employee!")
+				buzz("\The [src] buzzes, \"Authorized card is not tied to a NanoTrasen Employee!\"")
 				return
 
 			if( !modify.character )
-				ping("Modification card is not tied to a NanoTrasen Employee!")
+				buzz("\The [src] buzzes, \"Modification card is not tied to a NanoTrasen Employee!\"")
 				return
 
 			if( !modifyingSubordinate() )
-				ping( "Cannot modify a superior's card!" )
+				buzz( "\The [src] buzzes, \"Cannot modify a superior's card!" )
 
 			var/job_name = href_list["promote_role"]
 
@@ -448,18 +452,20 @@
 			P.required_signatures = names
 			due_papers[P] = modify.character
 			print( P )
+			spawn( 45 )
+				ping( "\The [src] pings, \"Please fill out this form and return it to this console when complete.\"" )
 
 		if( "demote" )
 			if( !scan.character )
-				ping("Authorized card is not tied to a NanoTrasen Employee!")
+				buzz("\The [src] buzzes, \"Authorized card is not tied to a NanoTrasen Employee!\"")
 				return
 
 			if( !modify.character )
-				ping("Modification card is not tied to a NanoTrasen Employee!")
+				buzz("\The [src] buzzes, \"Modification card is not tied to a NanoTrasen Employee!\"")
 				return
 
 			if( !modifyingSubordinate() )
-				ping( "Cannot modify a superior's card!" )
+				buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
 
 			var/job_name = href_list["demote_role"]
 
@@ -469,6 +475,8 @@
 			P.required_signatures = names
 			due_papers[P] = modify.character
 			print( P )
+			spawn( 40 )
+				ping( "\The [src] pings, \"Please fill out this form and return it to this console when complete." )
 	if (modify)
 		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
 
