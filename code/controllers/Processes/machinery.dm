@@ -16,10 +16,12 @@ var/list/MachineProcessing = list()
 
 /datum/controller/process/machinery/proc/internal_process_machinery()
 	//Going to try processing in batches of 400
-	for(var/i = 1; i < Ceiling(MachineProcessing.len/400); i++)	//have to ceiling this so we don't miss out on extras
-		var/adjusted_i = i > 1 ? i*400 : i
-		spawn(5*i)
-			for(var/x = adjusted_i; x < 400+adjusted_i; x++)
+	var/tmp/ceil_val = Ceiling(MachineProcessing.len/400)
+	schedule_interval = 8+(4*ceil_val)	// fancy variable scheduling
+	for(var/i = 0; i < ceil_val; i++)	//have to ceiling this so we don't miss out on extras
+		var/adjusted_i = i == 0 ? i : i*400
+		spawn(4*i)
+			for(var/x = 1+adjusted_i; x < 400+adjusted_i; x++)
 				if(x > MachineProcessing.len)		break
 				var/obj/machinery/M = MachineProcessing[x]
 				if(M && !M.gcDestroyed)

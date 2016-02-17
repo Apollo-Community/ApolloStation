@@ -99,6 +99,7 @@ var/list/gamemode_cache = list()
 	var/wikiurl
 	var/forumurl
 	var/gitrepourl
+	var/slackinvurl
 
 	//Alert level description
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
@@ -414,6 +415,9 @@ var/list/gamemode_cache = list()
 
 				if ("gitrepourl")
 					config.gitrepourl = value
+
+				if ("slackinvurl")
+					config.slackinvurl = value
 
 				if ("guest_jobban")
 					config.guest_jobban = 1
