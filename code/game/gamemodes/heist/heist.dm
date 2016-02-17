@@ -60,6 +60,8 @@ var/global/list/obj/cortical_stacks = list() //Stacks for 'leave nobody behind' 
 	return 1
 
 /datum/game_mode/heist/pre_setup()
+	config.canon = 0
+
 	return 1
 
 /datum/game_mode/heist/post_setup()

@@ -315,7 +315,7 @@
 // This function can not be undone; do not call this unless you are sure
 // Also make sure there is a valid control computer
 /obj/machinery/cryopod/proc/despawn_occupant()
-	if( istype( occupant, /mob/living/carbon/human ))
+	if( istype( occupant, /mob/living/carbon/human ) && config.canon )
 		var/mob/living/carbon/human/H = occupant
 		if( H.character )
 			if( !H.character.new_character ) // If they've been saved to the database previously

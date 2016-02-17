@@ -265,6 +265,8 @@ datum/game_mode/mutiny
 	fluff.announce()
 
 /datum/game_mode/mutiny/pre_setup()
+	config.canon = 0
+
 	var/list/loyalist_candidates = get_head_loyalist_candidates()
 	if(!loyalist_candidates || loyalist_candidates.len == 0)
 		world << "<span class='alert'>Mutiny mode aborted: no valid candidates for head loyalist.</span>"

@@ -1956,6 +1956,9 @@ area/space/atmosalert()
 	icon_state = "yellow"
 	environment = QUARRY
 
+/area/construction/IAA
+	name = "\improper Construction Zone"
+
 /area/construction/supplyshuttle
 	name = "\improper Supply Shuttle"
 	icon_state = "yellow"
