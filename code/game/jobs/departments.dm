@@ -33,6 +33,15 @@
 
 	return names
 
+/datum/department/proc/getLowestPosition()
+	var/list/roles = list()
+
+	for( var/datum/job/position in positions )
+		if( position.rank_succesion_level <= INDUCTEE_SUCCESSION_LEVEL )
+			roles.Add( position )
+
+	return pick( roles )
+
 /datum/department/civilian
 	name = "Civilian"
 	department_id = CIVILIAN

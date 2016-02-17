@@ -83,12 +83,40 @@
 
 				if( istype( F, /obj/item/weapon/paper/form/job/induct ))
 					C.SetDepartment( job_master.GetDepartmentByName( F.job ))
+					var/datum/job/J = C.department.getLowestPosition()
+
+					modify.access = J.get_access()
+					modify.assignment = J.title
+					modify.rank = J.title
+
+					callHook("reassign_employee", list(modify))
 				else if( istype( F, /obj/item/weapon/paper/form/job/termination ))
 					C.LoadDepartment( CIVILIAN )
+					var/datum/job/J = job_master.GetJob( "Assistant" )
+
+					modify.access = J.get_access()
+					modify.assignment = J.title
+					modify.rank = J.title
+
+					callHook("reassign_employee", list(modify))
 				else if( istype( F, /obj/item/weapon/paper/form/job/promotion ))
 					C.AddJob( F.job )
+					var/datum/job/J = job_master.GetJob( F.job )
+
+					modify.access = J.get_access()
+					modify.assignment = J.title
+					modify.rank = J.title
+
+					callHook("reassign_employee", list(modify))
 				else if( istype( F, /obj/item/weapon/paper/form/job/demotion ))
 					C.RemoveJob( F.job )
+					var/datum/job/J = C.department.getLowestPosition()
+
+					modify.access = J.get_access()
+					modify.assignment = J.title
+					modify.rank = J.title
+
+					callHook("reassign_employee", list(modify))
 				else
 					return
 
