@@ -42,7 +42,7 @@
 		old_department = department
 
 	if( old_department )
-		roles -= old_department.positions // Removing all old departmental roles
+		roles -= old_department.getAllPositionNames() // Removing all old departmental roles
 
 	department = new_department
 	roles |= new_department.starting_positions
@@ -53,8 +53,6 @@
 
 	var/D = job_master.GetDepartment( id )
 	SetDepartment( D )
-
-
 
 /datum/character/proc/AddJob( var/job_name )
 	roles.Add( "[job_name]" = "None" )
