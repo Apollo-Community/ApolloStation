@@ -60,24 +60,20 @@
 				<div class='item'>
 					<h2>{{:data.department_name}} Promotions</h2>
 				</div>
-				<div style='float: left; width: 175px; min-height: 250px'
-					{{for data.locked_jobs}}
-						<div class='itemContentWide'>
-							{{:helper.link(value.display_name, '', {'choice' : 'promote', 'promote_role' : value.job})}}
-						</div>
-					{{/for}}
-				</div>
+				{{for data.locked_jobs}}
+					<div class='itemContentWide'>
+						{{:helper.link(value.display_name, '', {'choice' : 'promote', 'promote_role' : value.job})}}
+					</div>
+				{{/for}}
 
 				<div class='item'>
 					<h2>{{:data.department_name}} Demotions</h2>
 				</div>
-				<div style='float: left; width: 175px; min-height: 250px'
-					{{for data.unlocked_jobs}}
-						<div class='itemContentWide'>
-							{{:helper.link(value.display_name, '', {'choice' : 'demote', 'demote_role' : value.job})}}
-						</div>
-					{{/for}}
-				</div>
+				{{for data.unlocked_jobs}}
+					<div class='itemContentWide'>
+						{{:helper.link(value.display_name, '', {'choice' : 'demote', 'demote_role' : value.job})}}
+					</div>
+				{{/for}}
 			{{else}}
 				{{if data.can_induct}}
 					<div class='item'>
@@ -92,8 +88,6 @@
 					<h3>{{:data.target_owner}} is already a member of {{:data.modify_department_name}}</h3>
 				{{/if}}
 			{{/if}}
-			<br>
-			<hr>
 		{{/if}}
 
 	{{else data.mode == 1}}
