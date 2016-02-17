@@ -84,7 +84,7 @@ datum/mind
 
 		if( !character )
 			if( istype( new_character, /mob/living/carbon/human ))
-				var/mob/living/carbon/human/H
+				var/mob/living/carbon/human/H = new_character
 				character = H.character
 
 		if(changeling)
