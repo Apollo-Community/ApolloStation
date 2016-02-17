@@ -80,7 +80,7 @@
 					dat += text("<A href='?src=\ref[];choice=Log Out'>{Log Out}</A>",src)
 				if(2.0)
 					dat += "<B>Records Maintenance</B><HR>"
-					dat += "<BR><A href='?src=\ref[src];choice=Delete All Records'>Delete All Records</A><BR><BR><A href='?src=\ref[src];choice=Return'>Back</A>"
+					dat += "<BR><A href='?src=\ref[src];choice=Delete All Records'>Delete All Station Records</A><BR><BR><A href='?src=\ref[src];choice=Return'>Back</A>"
 				if(3.0)
 					dat += "<CENTER><B>Employment Record</B></CENTER><BR>"
 					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
@@ -97,13 +97,21 @@
 						Fingerprint: <A href='?src=\ref[src];choice=Edit Field;field=fingerprint'>[active1.fields["fingerprint"]]</A><BR>\n	\
 						Physical Status: [active1.fields["p_stat"]]<BR>\n	\
 						Mental Status: [active1.fields["m_stat"]]<BR>\n	\
-						Command Training: [active1.fields["command_training"]]<BR><BR>\n	\
-						Employment/skills summary:<BR> [decode(active1.fields["notes"])]<BR></td>	\
+						Command Training: [active1.fields["command_training"]]<BR><BR>\n")
+
+
+						dat+= text( "</td>	\
 						<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4>	\
 						<img src=side.png height=80 width=80 border=4></td></tr></table>")
+
+						dat += "General Record:<BR> [decode(active1.fields["notes"])]<BR>"
+						dat += "Employment History:<BR>"
+						dat += formatPromotionRecords( active1.fields["character"] )
+
 					else
 						dat += "<B>General Record Lost!</B><BR>"
-					dat += text("\n<A href='?src=\ref[];choice=Delete Record (ALL)'>Delete Record (ALL)</A><BR><BR>\n<A href='?src=\ref[];choice=Print Record'>Print Record</A><BR>\n<A href='?src=\ref[];choice=Return'>Back</A><BR>", src, src, src)
+//					dat += text("\n<A href='?src=\ref[];choice=Delete Station Record'>Delete Station Record</A>"
+					dat += "<BR><BR>\n<A href='?src=\ref[src];choice=Print Record'>Print Record</A><BR>\n<A href='?src=\ref[src];choice=Return'>Back</A><BR>"
 				if(4.0)
 					if(!Perp.len)
 						dat += text("ERROR.  String could not be located.<br><br><A href='?src=\ref[];choice=Return'>Back</A>", src)
@@ -282,7 +290,7 @@ What a mess.*/
 //RECORD DELETE
 			if ("Delete All Records")
 				temp = ""
-				temp += "Are you sure you wish to delete all Employment records?<br>"
+				temp += "Are you sure you wish to delete all Employment records? This will only remove the record stored on station, CentComm has backups of all employee records.<br>"
 				temp += "<a href='?src=\ref[src];choice=Purge All Records'>Yes</a><br>"
 				temp += "<a href='?src=\ref[src];choice=Clear Screen'>No</a>"
 
@@ -293,9 +301,9 @@ What a mess.*/
 					qdel(R)
 				temp = "All Employment records deleted."
 
-			if ("Delete Record (ALL)")
+			if ("Delete Station Record")
 				if (active1)
-					temp = "<h5>Are you sure you wish to delete the record (ALL)?</h5>"
+					temp = "<h5>Are you sure you wish to delete this Employment record? This will only remove the record stored on station, CentComm has backups of all employee records.</h5>"
 					temp += "<a href='?src=\ref[src];choice=Delete Record (ALL) Execute'>Yes</a><br>"
 					temp += "<a href='?src=\ref[src];choice=Clear Screen'>No</a>"
 //RECORD CREATE
@@ -303,6 +311,12 @@ What a mess.*/
 				if(PDA_Manifest.len)
 					PDA_Manifest.Cut()
 				active1 = CreateGeneralRecord()
+			if ("inspect_note")
+				var/datum/character/C = active1.fields["character"]
+				if( istype( C ))
+					var/date = href_list["date"]
+					if( C.gen_notes[date] )
+						usr << browse( html_decode( C.gen_notes[date] ), "window=employment_computer_note[date]")
 
 //FIELD FUNCTIONS
 			if ("Edit Field")
@@ -413,3 +427,14 @@ What a mess.*/
 			continue
 
 	..(severity)
+
+/obj/machinery/computer/employment/proc/formatPromotionRecords( var/datum/character/C )
+	. = ""
+
+	if( !istype( C ))
+		return .
+
+	for( var/note in C.gen_notes )
+		. += "<a href='?src=\ref[src];choice=inspect_note;date=[note]'>[note]</a><br>"
+
+	return .

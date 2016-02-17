@@ -29,8 +29,9 @@
 	var/offset_y[0] //usage by the photocopier
 	var/rigged = 0
 	var/spam_flag = 0
+	var/encode_html = 1
 
-	var/const/deffont = "Verdana"
+	var/deffont = "Verdana"
 	var/const/signfont = "Times New Roman"
 	var/const/crayonfont = "Comic Sans MS"
 
@@ -45,7 +46,7 @@
 	if(name != "paper")
 		desc = "This is a paper titled '" + name + "'."
 
-	if(info != initial(info))
+	if( encode_html && info != initial(info))
 		info = html_encode(info)
 		info = replacetext(info, "\n", "<BR>")
 		info = parsepencode(info)
@@ -551,6 +552,62 @@
 /obj/item/weapon/paper/cmo
 	name = "CMO's Outgoing Notes"
 	info = "<i><center>To the incoming CMO of Apollo:</center><br><br>I wish you and your crew well. Do take note:<br><br><br>The Medical Emergency Red Phone system has proven itself well. Take care to keep the phones in their designated places as they have been optimised for broadcast. The two handheld green radios (I have left one in this office, and one near the Emergency Entrance) are free to be used. The system has proven effective at alerting Medbay of important details, especially during power outages.<br><br>I think I may have left the toilet cubicle doors shut. It might be a good idea to open them so the staff and patients know they are not engaged.<br><br>The new syringe gun has been stored in secondary storage. I tend to prefer it stored in my office, but 'guidelines' are 'guidelines'.<br><br>Also in secondary storage is the grenade equipment crate. I've just realised I've left it open - you may wish to shut it.<br><br>There were a few problems with their installation, but the Medbay Quarantine shutters should now be working again  - they lock down the Emergency and Main entrances to prevent travel in and out. Pray you shan't have to use them.<br><br>The new version of the Medical Diagnostics Manual arrived. I distributed them to the shelf in the staff break room, and one on the table in the corner of this room.<br><br>The exam/triage room has the walking canes in it. I'm not sure why we'd need them - but there you have it.<br><br>Emergency Cryo bags are beside the emergency entrance, along with a kit.<br><br>Spare paper cups for the reception are on the left side of the reception desk.<br><br>I've fed Runtime. She should be fine.<br><br><br><center>That should be all. Good luck!</center>"
+
+// Forms are a type of paper that can be checked for the require signatures, usually used in conjuction with computers
+/obj/item/weapon/paper/form
+	var/list/required_signatures = list()
+	deffont = "Courier"
+
+/obj/item/weapon/paper/form/proc/numberOfRequiredSignatures()
+	var/list/check = required_signatures & signatures
+	return check.len
+
+/obj/item/weapon/paper/form/proc/isFilledOut()
+	if( numberOfRequiredSignatures() == required_signatures.len )
+		return 1
+	return 0
+
+/obj/item/weapon/paper/form/job
+	var/job // What job is being granted?
+	var/job_verb
+
+/obj/item/weapon/paper/form/job/New( var/set_job )
+	job = set_job
+
+	..()
+
+/obj/item/weapon/paper/form/job/promotion
+	name = "NanoTrasen Employee Promotion Form"
+	job_verb = "promoted to"
+
+/obj/item/weapon/paper/form/job/promotion/New( var/date, var/set_job, var/department )
+	job = set_job
+
+	info = {"\[center\]\[logo\]\[/center\]
+\[center\]\[b\]\[i\]NanoTrasen Employee Promotion Form\[/b\]\[/i\]\[/center\]\[hr\]
+Upon signature of this document by the employee, and witnessed by the Department authroity of the [department] on [date], the employee may legally fulfill all duties in authority as [job] as required of them. Failure to perform this responsibility hereto is subject to appointment termination without consent.\[br\]
+
+\[b\]Employee:\[/b\] \[field\]
+\[b\]Department authroity:\[/b\] \[field\]
+\[hr\]"}
+
+	..(set_job)
+
+/obj/item/weapon/paper/form/job/demotion
+	name = "NanoTrasen Employee Demotion Form"
+	job_verb = "demoted from"
+
+/obj/item/weapon/paper/form/job/demotion/New( var/date, var/set_job, var/employee, var/department )
+	job = set_job
+
+	info = {"\[center\]\[logo\]\[/center\]
+\[center\]\[b\]\[i\]NanoTrasen Employee Demotion Form\[/b\]\[/i\]\[/center\]\[hr\]
+Upon signature of this document by the Department authority on [date], the contract of appointment with the [department] Department for [employee] as [job] is hereby null and void. Abuse of this form may result in the termination of the Department authority.\[br\]
+
+\[b\]Department authority:\[/b\] \[field\]
+\[hr\]"}
+
+	..(set_job)
 
 /obj/item/weapon/paper/shotgun_permit
 	name = "Bartender Shotgun Permit"

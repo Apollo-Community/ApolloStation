@@ -10,6 +10,9 @@
 	var/obj/item/weapon/card/id/modify = null
 	var/mode = 0.0
 	var/printing = null
+
+	var/list/due_papers = list() // The promotion / demotion papers that the machine is still expecting
+
 	light_color = COMPUTER_BLUE
 
 /obj/machinery/computer/card/proc/is_centcom()
@@ -20,7 +23,7 @@
 	var/datum/job/subordinate = job_master.GetJob( modify.assignment )
 	var/datum/job/superior = job_master.GetJob( scan.assignment )
 
-	if( superior.rank_succesion_level > subordinate.rank_succesion_level )
+	if( superior && subordinate && ( superior.rank_succesion_level > subordinate.rank_succesion_level ))
 		return 1
 	return 0
 
@@ -71,9 +74,29 @@
 		usr << "There is nothing to remove from the console."
 	return
 
-/obj/machinery/computer/card/attackby(obj/item/weapon/card/id/id_card, mob/user)
-	if(!istype(id_card))
+/obj/machinery/computer/card/attackby( obj/O, mob/user)
+	if( istype( O, /obj/item/weapon/paper/form ))
+		var/obj/item/weapon/paper/form/job/F = O
+		if( F in due_papers )
+			if( F.isFilledOut() )
+				var/datum/character/C = due_papers[F]
+
+				if( istype( F, /obj/item/weapon/paper/form/job/promotion ))
+					C.AddJob( F.job )
+				else if( istype( F, /obj/item/weapon/paper/form/job/demotion ))
+					C.RemoveJob( F.job )
+				else
+					return
+
+				C.addRecordNote( "general", F.info )
+				ping( "[C.name] has been [F.job_verb] [F.job]!" )
+				qdel( F )
+				return
+
+	if( !istype( O, /obj/item/weapon/card/id ))
 		return ..()
+
+	var/obj/item/weapon/card/id/id_card = O
 
 	if(!scan && access_change_ids in id_card.access)
 		user.drop_item()
@@ -298,7 +321,7 @@
 					printing = null
 					nanomanager.update_uis(src)
 
-					var/obj/item/weapon/paper/P = new(loc)
+					var/obj/item/weapon/paper/P = new()
 					if (mode)
 						P.name = text("crew manifest ([])", worldtime2text())
 						P.info = {"<h4>Crew Manifest</h4>
@@ -319,7 +342,7 @@
 
 						for(var/A in modify.access)
 							P.info += "  [get_access_desc(A)]"
-
+					print( P )
 		if ("terminate")
 			if (is_authenticated() && is_centcom())
 				if( !modifyingSubordinate() )
@@ -378,7 +401,12 @@
 
 			var/job_name = href_list["promote_role"]
 
-			modify.character.AddJob( job_name )
+			var/list/names = list( modify.registered_name, scan.registered_name )
+
+			var/obj/item/weapon/paper/form/job/promotion/P = new( print_date( universe.date ), job_name, department_name() )
+			P.required_signatures = names
+			due_papers[P] = modify.character
+			print( P )
 
 		if( "demote" )
 			if( !scan.character )
@@ -394,8 +422,12 @@
 
 			var/job_name = href_list["demote_role"]
 
-			modify.character.RemoveJob( job_name )
+			var/list/names = list( scan.registered_name )
 
+			var/obj/item/weapon/paper/form/job/demotion/P = new( print_date( universe.date ), job_name, modify.registered_name, department_name() )
+			P.required_signatures = names
+			due_papers[P] = modify.character
+			print( P )
 	if (modify)
 		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
 

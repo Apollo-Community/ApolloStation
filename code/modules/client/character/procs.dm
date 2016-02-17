@@ -327,6 +327,16 @@
 
 	return 1
 
+/datum/character/proc/addRecordNote( var/type, var/note )
+	var/timestamp = "[worldtime2text()] [print_date( universe.date )]"
+	switch( type )
+		if( "general" )
+			gen_notes[timestamp] = html_encode( note )
+		if( "medical" )
+			med_notes[timestamp] = html_encode( note )
+		if( "security" )
+			sec_notes[timestamp] = html_encode( note )
+
 /datum/character/proc/randomize_appearance( var/random_age = 0 )
 	skin_tone = random_skin_tone()
 	hair_style = random_hair_style(gender, species)

@@ -452,6 +452,12 @@ Class Procs:
 	else
 		return 0
 
+/obj/machinery/proc/print( var/obj/paper )
+	playsound(src.loc, 'sound/machines/print.ogg', 50, 1)
+	visible_message("<span class='notice'>[src] rattles to life and spits out a paper titled [paper].</span>")
+	spawn(40)
+		paper.loc = src.loc
+
 /obj/machinery/floor
 	opacity = 0
 	density = 0
