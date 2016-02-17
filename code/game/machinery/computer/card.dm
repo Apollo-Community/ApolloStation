@@ -93,7 +93,7 @@
 					return
 
 				ping( "[C.name] has been [F.job_verb] [F.job]!" )
-				C.addRecordNote( "general", F.info )
+				C.addRecordNote( "general", F.info, "[capitalize( F.job_verb )] [F.job]" )
 
 				due_papers -= F
 				qdel( F )

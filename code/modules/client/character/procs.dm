@@ -327,8 +327,11 @@
 
 	return 1
 
-/datum/character/proc/addRecordNote( var/type, var/note )
+/datum/character/proc/addRecordNote( var/type, var/note, var/title )
 	var/timestamp = "[worldtime2text()] [print_date( universe.date )]"
+	if( title )
+		timestamp += " - [title]"
+
 	switch( type )
 		if( "general" )
 			gen_notes[timestamp] = html_encode( note )

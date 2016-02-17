@@ -104,7 +104,7 @@
 						<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4>	\
 						<img src=side.png height=80 width=80 border=4></td></tr></table>")
 
-						dat += "General Record:<BR> [decode(active1.fields["notes"])]<BR>"
+						dat += "General Record:<BR> [decode(active1.fields["notes"])]<BR><BR>"
 						dat += "Employment History:<BR>"
 						dat += formatPromotionRecords( active1.fields["character"] )
 
