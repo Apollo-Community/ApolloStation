@@ -42,6 +42,10 @@
 		dna.real_name = real_name
 	make_blood()
 
+	spawn( 50 )
+		if( mind && !mind.character )
+			mind.character = character
+
 /mob/living/carbon/human/Move(NewLoc, direct)
 	..()
 	statistics.increase_stat("run_distance", 0.00002 )

@@ -34,6 +34,8 @@ datum/mind
 	var/name				//replaces mob/var/original_name
 	var/mob/living/current
 	var/mob/living/original	//TODO: remove.not used in any meaningful way ~Carn. First I'll need to tweak the way silicon-mobs handle minds.
+	var/datum/character/character
+
 	var/active = 0
 
 	var/memory
@@ -66,7 +68,7 @@ datum/mind
 
 	proc/transfer_to(mob/living/new_character)
 		if(!istype(new_character))
-			world.log << "## DEBUG: transfer_to(): Some idiot has tried to transfer_to() a non mob/living mob. Please inform Carn"
+			world.log << "## DEBUG: transfer_to(): Some idiot has tried to transfer_to() a non mob/living mob."
 		if(current)					//remove ourself from our old body's mind variable
 			if(changeling)
 				current.remove_changeling_powers()
@@ -79,6 +81,11 @@ datum/mind
 
 		current = new_character		//link ourself to our new body
 		new_character.mind = src	//and link our new body to ourself
+
+		if( !character )
+			if( istype( new_character, /mob/living/carbon/human ))
+				var/mob/living/carbon/human/H
+				character = H.character
 
 		if(changeling)
 			new_character.make_changeling()

@@ -173,6 +173,10 @@ var/list/robot_verbs_default = list(
 	else
 		lawupdate = 0
 
+	spawn( 50 )
+		if( mind.character )
+			mind.character.LoadDepartment( SYNTHETIC )
+
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 
 /mob/living/silicon/robot/syndicate/init()
