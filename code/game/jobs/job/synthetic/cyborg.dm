@@ -10,7 +10,7 @@
 	minimal_playtime = 1
 	alt_titles = list("Android", "Robot")
 
-	rank_succesion_level = 0
+	rank_succesion_level = BORG_SUCCESSION_LEVEL
 
 /datum/job/cyborg/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0

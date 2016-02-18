@@ -11,7 +11,7 @@
 	req_admin_notify = 1
 	minimal_playtime = 0
 
-	rank_succesion_level = COMMAND_SUCCESSION_LEVEL
+	rank_succesion_level = COMMAND_SUCCESSION_LEVEL+1
 
 	access = list(access_security, access_sec_doors, access_brig, access_court, access_forensics_lockers,
 			            access_medical, access_engine, access_change_ids, access_ai_upload, access_eva, access_heads,

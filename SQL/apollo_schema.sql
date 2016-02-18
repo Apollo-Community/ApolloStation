@@ -194,7 +194,7 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `department` tinyint NOT NULL DEFAULT '0',
   `roles` text,
   `job_antag` int UNSIGNED NOT NULL DEFAULT '0',
-  `alternate_option` int UNSIGNED,
+  `alternate_option` int UNSIGNED DEFAULT '2',
   `organ_data` text,
   `player_alt_titles` text,
   `flavor_texts_human` text,

@@ -10,7 +10,7 @@
 	req_admin_notify = 1
 	minimal_playtime = 30
 
-	rank_succesion_level = 1
+	rank_succesion_level = BORG_SUCCESSION_LEVEL+1
 
 /datum/job/ai/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0

@@ -73,7 +73,7 @@ var/list/all_characters = list() // A list of all loaded characters
 	var/job_antag = 0
 
 	// Keeps track of preferrence for not getting any wanted jobs
-	var/alternate_option = 0
+	var/alternate_option = RETURN_TO_LOBBY
 
 	// Maps each organ to either null(intact), "cyborg" or "amputated"
 	// will probably not be able to do this for head and torso ;)

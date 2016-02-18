@@ -135,8 +135,8 @@
 		S["backbag"]			>> C.backpack
 		C.blood_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 
-		//Jobs
-		S["alternate_option"]	>> C.alternate_option
+		//Alternate job titles
+		C.alternate_option = RETURN_TO_LOBBY
 
 		//Flavour Text
 		S["flavor_texts_general"]	>> C.flavor_texts_human

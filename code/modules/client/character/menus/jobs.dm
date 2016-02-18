@@ -22,77 +22,93 @@
 	. += "<b>Occupation</b>"
 	. += " - "
 	. += "<b><a href='byond://?src=\ref[user];character=switch_menu;task=antag_options_menu'>Antag Options</a></b>"
-	. += "<hr>"
+	. += "</center><hr>"
+
+	if( !job_master )
+		return
+
+	// This is a list of job datums organized by department, also listed in order of succession
+	var/list/dep_jobs = organizeJobByDepartment( jobNamesToDatums( roles ))
 
 	if( !department.department_id )
-		. += "<b>Branch: </b><a href='byond://?src=\ref[user];character=[menu_name];task=change_branch'>\[[department.name]\]</a><br><br>"
+		. += "<b>Branch:</b> <a href='byond://?src=\ref[user];character=[menu_name];task=change_branch'>\[[department.name]\]</a><br><br>"
 	else
-		. += "<b>Branch: </b>[department.name]<br><br>"
-	. += "<center><a href='byond://?src=\ref[user];character=[menu_name];task=close'>\[Done\]</a></center><br>" // Easier to press up here.
-	. += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
-	. += "<table width='100%' cellpadding='1' cellspacing='0'>"
-	var/index = -1
+		. += "<b>Branch:</b> [department.name]<br><br>"
+	. += "<table width='100%'>"
+	. += "<tr>"
 
-	//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
-	var/datum/job/lastJob
-	if (!job_master)		return
-	for( var/role in roles)
-		var/datum/job/job = job_master.GetJob(role)
-		if( !job )
+	for( var/datum/department/D in dep_jobs )
+		if( !istype( D ))
 			continue
 
-		var/required_playtime = 0
-		if( job.available_in_hours( user.client ))
-			required_playtime = job.available_in_hours( user.client )
+		var/list/jobs = dep_jobs[D]
 
-		index += 1
-		if((index >= limit) || (job.title in splitJobs))
-			if((index < limit) && (lastJob != null))
-				//If the cells were broken up by a job in the splitJob list then it will fill in the rest of the cells with
-				//the last job's selection color. Creating a rather nice effect.
-				for(var/i = 0, i < (limit - index), i += 1)
-					. += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'><a>&nbsp</a></td><td><a>&nbsp</a></td></tr>"
-			. += "</table></td><td width='20%'><table width='100%' cellpadding='1' cellspacing='0'>"
-			index = 0
-
-		. += "<tr bgcolor='[job.selection_color]'><td width='60%' align='right'>"
-
-		lastJob = job
-		if(jobban_isbanned(user, role))
-			. += "<del>[role]</del></td><td><b> \[BANNED]</b></td></tr>"
+		if( !jobs || !jobs.len )
 			continue
-		if(required_playtime)
-			. += "<del>[role]</del></td><td> \[IN [(required_playtime)] HOURS]</td></tr>"
-			continue
-		if((role in command_positions) || (role == "AI"))//Bold head jobs
-			. += "<b>[role]</b>"
-		else
-			. += "[role]"
 
-		. += "</td><td width='40%'>"
-
-		. += "<a href='byond://?src=\ref[user];character=[menu_name];task=input;text=[role]'>"
-
-		if( GetJobLevel( role ) == "High" )
-			. += " <font color=blue>\[High]</font>"
-		else if( GetJobLevel( role ) == "Medium" )
-			. += " <font color=green>\[Medium]</font>"
-		else if( GetJobLevel( role ) == "Low" )
-			. += " <font color=orange>\[Low]</font>"
-		else
-			. += " <font color=red>\[NEVER]</font>"
-
-		if( job.alt_titles )
-			. += {"</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td>
-<td><a href='byond://?src=\ref[user];character=[menu_name];task=alt_title;job=\ref[job]'>\[[GetPlayerAltTitle(job)]\]</a></td></tr>"}
-		else
-			. += "</a>"
-
+		. += "<td valign='top'>"
+		. += "<table border='1' width='100%'>"
+		. += "<tr bgcolor='[D.background_color]'><td colspan='2'>"
+		. += "<b>[D.name]</b>"
 		. += "</td></tr>"
+		. += "<tr>"
 
-	. += "</td'></tr></table>"
+		. += "<td>"
+		. += "<b>Title</b>"
+		. += "</td>"
 
-	. += "</center></table>"
+		. += "<td>"
+		. += "<b>Priority</b>"
+		. += "</td>"
+
+		for( var/datum/job/J in jobs )
+			if( !istype( J ))
+				continue
+
+			if( !( J.title in roles )) // If its not in our roles, dont show it
+				continue
+
+			var/required_playtime = 0
+			if( J.available_in_hours( user.client ))
+				required_playtime = J.available_in_hours( user.client )
+
+			var/role = J.title
+
+			. += "<tr>"
+
+			. += "<td>"
+			if( J.alt_titles )
+				. += "<a href='byond://?src=\ref[user];character=[menu_name];task=alt_title;job=\ref[J]'>[GetPlayerAltTitle(J)]</a>"
+			else
+				. += "[role]"
+			. += "</td>"
+
+			. += "<td>"
+
+			if(jobban_isbanned(user, role))
+				. += "<b>BANNED</b>"
+			else if( required_playtime )
+				. += "IN [(required_playtime)] HOURS"
+			else
+				. += "<a href='byond://?src=\ref[user];character=[menu_name];task=input;text=[role]'>"
+				if( GetJobLevel( role ) == "High" )
+					. += "<font color=blue>HIGH</font>"
+				else if( GetJobLevel( role ) == "Medium" )
+					. += "<font color=green>MEDIUM</font>"
+				else if( GetJobLevel( role ) == "Low" )
+					. += "<font color=orange>LOW</font>"
+				else
+					. += "<font color=red>NEVER</font>"
+				. += "</a>"
+
+			. += "</td>"
+			. += "</tr>"
+
+		. += "</table>"
+		. += "</td>"
+
+	. += "</tr>"
+	. += "</table>"
 
 	switch(alternate_option)
 		if(GET_RANDOM_JOB)
@@ -102,6 +118,7 @@
 		if(RETURN_TO_LOBBY)
 			. += "<center><br><u><a href='byond://?src=\ref[user];character=[menu_name];task=random'><font color=purple>Return to lobby if preference unavailable</font></a></u></center><br>"
 
+
 	. += "<hr><center>"
 	if(!IsGuestKey(user.key))
 		. += "<a href='byond://?src=\ref[user];character=[menu_name];task=save'>\[Save Setup\]</a> - "
@@ -109,6 +126,7 @@
 
 	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=close'>\[Done\]</a>"
 	. += "</center>"
+
 	. += "</body></html>"
 
 	user << browse(., "window=[menu_name];size=710x560;can_close=0")
@@ -159,3 +177,37 @@
 			SetJob(user, href_list["text"])
 
 	JobChoicesMenu( user )
+
+// This takes a list of jobs, and returns an associative list of departments with their roles tied to them
+// Also organizes the departmental list in order of succession
+/datum/character/proc/organizeJobByDepartment( var/list/jobs )
+	var/list/departments = list()
+
+	for( var/datum/department/D in job_master.departments )
+		var/list/dep_positions = jobs & D.positions
+		if( dep_positions.len )
+			departments[D] = organizeJobBySuccession( dep_positions )
+
+	return departments
+
+// This takes a list of job datums and returns a list sorted by succession
+// YES I KNOW THIS IS A BAD SORTING ALGORITHM
+/datum/character/proc/organizeJobBySuccession( var/list/jobs )
+	. = list()
+	for( var/i = BORG_SUCCESSION_LEVEL; i < CAPTAIN_SUCCESION_LEVEL; i++ )
+		for( var/datum/job/J in jobs )
+			if( J.rank_succesion_level == i )
+				. += J
+				jobs -= J
+
+	return .
+
+// This takes a list of job names, and returns a list of the associated job datums
+/datum/character/proc/jobNamesToDatums( var/list/jobs )
+	var/list/job_datums = list()
+
+	for( var/datum/job/J in job_master.occupations )
+		if( J.title in jobs )
+			job_datums += J
+
+	return job_datums
