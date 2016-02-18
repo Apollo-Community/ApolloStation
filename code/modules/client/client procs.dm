@@ -282,6 +282,9 @@
 
 
 /client/proc/saveTokens()
+	if( !character_tokens || !character_tokens.len )
+		return
+
 	var/tokens = list2params( character_tokens )
 	var/sql_ckey = ckey( ckey )
 
