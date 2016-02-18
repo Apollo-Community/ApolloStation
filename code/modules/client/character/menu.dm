@@ -1,7 +1,7 @@
-/datum/character/proc/process_links( mob/user, list/href_list )
-	if(!user)	return
+/datum/character/Topic(href, href_list)
+	var/mob/user = usr
 
-	if(!istype(user, /mob/new_player))	return
+	if(!user)	return
 
 	switch( href_list["character"] )
 		if( "open_whitelist_forum" )

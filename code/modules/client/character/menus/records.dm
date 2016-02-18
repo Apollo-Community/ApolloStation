@@ -4,13 +4,13 @@
 
 	. = "<html><body><center>"
 
-	. += "<b><a href='byond://?src=\ref[user];character=switch_menu;task=edit_character_menu'>Appearence</a></b>"
+	. += "<b><a href='byond://?src=\ref[src];character=switch_menu;task=edit_character_menu'>Appearence</a></b>"
 	. += " - "
 	. += "<b>Records</b>"
 	. += " - "
-	. += "<b><a href='byond://?src=\ref[user];character=switch_menu;task=job_menu'>Occupation</a></b>"
+	. += "<b><a href='byond://?src=\ref[src];character=switch_menu;task=job_menu'>Occupation</a></b>"
 	. += " - "
-	. += "<b><a href='byond://?src=\ref[user];character=switch_menu;task=antag_options_menu'>Antag Options</a></b>"
+	. += "<b><a href='byond://?src=\ref[src];character=switch_menu;task=antag_options_menu'>Antag Options</a></b>"
 	. += "<hr>"
 
 	. += "<table width='100%'>"
@@ -21,22 +21,22 @@
 	. += "<table width='100%' border='1'>"
 	. += "<col width='160'>"
 	. += "<tr>"
-	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=med_record'><b>Medical Records</b></a></td>"
+	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=med_record'><b>Medical Records</b></a></td>"
 	. += "<td>[TextPreview(med_record,40)]</td>"
 	. += "</tr>"
 
 	. += "<tr>"
-	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=gen_record'><b>Employment Records</b></a></td>"
+	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=gen_record'><b>Employment Records</b></a></td>"
 	. += "<td>[TextPreview(gen_record,40)]</td>"
 	. += "</tr>"
 
 	. += "<tr>"
-	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=sec_record'><b>Security Records</b></a></td>"
+	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=sec_record'><b>Security Records</b></a></td>"
 	. += "<td>[TextPreview(sec_record,40)]</td>"
 	. += "</tr>"
 
 	. += "<tr>"
-	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=exploitable_record'><b>Exploitable Information</b></a></td>"
+	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=exploitable_record'><b>Exploitable Information</b></a></td>"
 	. += "<td>[TextPreview(exploit_record,40)]</td>"
 	. += "</tr>"
 
@@ -49,36 +49,36 @@
 	. += "<col width='160'>"
 	. += "<tr>"
 	. += "<td><b>Home system:</b></td>"
-	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=home_system'>[home_system]</a></td>"
+	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=home_system'>[home_system]</a></td>"
 	. += "</tr>"
 
 	. += "<tr>"
 	. += "<td><b>Citizenship:</b></td>"
-	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=citizenship'>[citizenship]</a></td>"
+	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=citizenship'>[citizenship]</a></td>"
 	. += "</tr>"
 
 	. += "<tr>"
 	. += "<td><b>Faction:</b></td>"
-	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=faction'>[faction]</a></td>"
+	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=faction'>[faction]</a></td>"
 	. += "</tr>"
 
 	. += "<tr>"
 	. += "<td><b>Nanotrasen Relation:</b></td>"
-	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=nt_relation'>[nanotrasen_relation]</a></td>"
+	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=nt_relation'>[nanotrasen_relation]</a></td>"
 	. += "</tr>"
 
 	. += "<tr>"
 	. += "<td><b>Religion:</b></td>"
-	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=religion'>[religion]</a></td>"
+	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=religion'>[religion]</a></td>"
 	. += "</tr>"
 
 	. += "<tr>"
 	. += "<td><b>Secondary Language:</b></td>"
-	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=language'>[additional_language]</a></td>"
+	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=language'>[additional_language]</a></td>"
 	. += "</tr>"
 
 	. += "<tr>"
-	. += "<td colspan='2'><center><a href='byond://?src=\ref[user];character=[menu_name];task=pAI'><b>pAI Configuration</b></a></center></td>"
+	. += "<td colspan='2'><center><a href='byond://?src=\ref[src];character=[menu_name];task=pAI'><b>pAI Configuration</b></a></center></td>"
 	. += "</tr>"
 
 	. += "</table>"
@@ -110,12 +110,12 @@
 
 	. += "<tr>"
 	. += "<td><b>Needs Glasses:</b></td>"
-	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=disabilities'>[disabilities == 0 ? "No" : "Yes"]</a></td>"
+	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=disabilities'>[disabilities == 0 ? "No" : "Yes"]</a></td>"
 	. += "</tr>"
 
 	. += "<tr>"
 	. += "<td><b>Spawn Point:</b></td>"
-	. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=spawnpoint'>[spawnpoint]</a></td>"
+	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=spawnpoint'>[spawnpoint]</a></td>"
 	. += "</tr>"
 
 	. += "</table>"
@@ -125,10 +125,10 @@
 
 	. += "<hr><center>"
 	if(!IsGuestKey(user.key))
-		. += "<a href='byond://?src=\ref[user];character=[menu_name];task=save'>\[Save Setup\]</a> - "
-		. += "<a href='byond://?src=\ref[user];character=[menu_name];task=reset'>\[Reset Changes\]</a> - "
+		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=save'>\[Save Setup\]</a> - "
+		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=reset'>\[Reset Changes\]</a> - "
 
-	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=close'>\[Done\]</a>"
+	. += "<a href='byond://?src=\ref[src];character=[menu_name];task=close'>\[Done\]</a>"
 	. += "</center>"
 	. += "</body></html>"
 

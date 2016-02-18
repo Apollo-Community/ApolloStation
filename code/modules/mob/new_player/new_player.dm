@@ -95,11 +95,6 @@
 		if( href_list["preference"] )
 			if( client.prefs.process_links( src, href_list ))
 				return 1
-
-		if( href_list["character"] )
-			if( client.prefs.selected_character )
-				if( client.prefs.selected_character.process_links( src, href_list ))
-					return 1
 			else
 				alert("You must select a character first!")
 

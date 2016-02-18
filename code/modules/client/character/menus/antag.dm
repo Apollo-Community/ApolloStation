@@ -4,23 +4,23 @@
 	if(uplink_location == "" || !uplink_location)
 		uplink_location = "PDA"
 	. = "<html><body>"
-	. += "<b><a href='byond://?src=\ref[user];character=switch_menu;task=edit_character_menu'>Appearence</a></b>"
+	. += "<b><a href='byond://?src=\ref[src];character=switch_menu;task=edit_character_menu'>Appearence</a></b>"
 	. += " - "
-	. += "<b><a href='byond://?src=\ref[user];character=switch_menu;task=records_menu'>Records</a></b>"
+	. += "<b><a href='byond://?src=\ref[src];character=switch_menu;task=records_menu'>Records</a></b>"
 	. += " - "
-	. += "<b><a href='byond://?src=\ref[user];character=switch_menu;task=job_menu'>Occupation</a></b>"
+	. += "<b><a href='byond://?src=\ref[src];character=switch_menu;task=job_menu'>Occupation</a></b>"
 	. += " - "
 	. += "<b>Antag Options</b>"
 	. += "<hr>"
 
-	. += "Uplink Type : <b><a href='byond://?src=\ref[user];character=[menu_name];task=uplinktype;active=1'>[uplink_location]</a></b>"
+	. += "Uplink Type : <b><a href='byond://?src=\ref[src];character=[menu_name];task=uplinktype;active=1'>[uplink_location]</a></b>"
 	. += "<br>"
 
 	if(jobban_isbanned(user, "Records"))
 		. += "<b>You are banned from using character records.</b><br>"
 	else
 		. += "<br>"
-		. +="<b><a href='byond://?src=\ref[user];character=[menu_name];task=exploitable_record'>Exploitable information</a></b><br>"
+		. +="<b><a href='byond://?src=\ref[src];character=[menu_name];task=exploitable_record'>Exploitable information</a></b><br>"
 		. +="[TextPreview(exploit_record,40)]"
 	. +="<br>"
 
@@ -34,15 +34,15 @@
 				if(jobban_isbanned(user, i) || (i == "positronic brain" && jobban_isbanned(user, "AI") && jobban_isbanned(user, "Cyborg")) || (i == "pAI candidate" && jobban_isbanned(user, "pAI")))
 					. += "<b>Be [i]:<b> <font color=red><b> \[BANNED]</b></font><br>"
 				else
-					. += "<b>Be [i]:</b> <a href='byond://?src=\ref[user];character=[menu_name];task=job_antag;num=[n]'><b>[src.job_antag&(1<<n) ? "Yes" : "No"]</b></a><br>"
+					. += "<b>Be [i]:</b> <a href='byond://?src=\ref[src];character=[menu_name];task=job_antag;num=[n]'><b>[src.job_antag&(1<<n) ? "Yes" : "No"]</b></a><br>"
 			n++
 
 	. += "<hr><center>"
 	if(!IsGuestKey(user.key))
-		. += "<a href='byond://?src=\ref[user];character=[menu_name];task=save'>\[Save Setup\]</a> - "
-		. += "<a href='byond://?src=\ref[user];character=[menu_name];task=reset'>\[Reset Changes\]</a> - "
+		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=save'>\[Save Setup\]</a> - "
+		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=reset'>\[Reset Changes\]</a> - "
 
-	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=close'>\[Done\]</a>"
+	. += "<a href='byond://?src=\ref[src];character=[menu_name];task=close'>\[Done\]</a>"
 	. += "</center>"
 	. += "</body></html>"
 

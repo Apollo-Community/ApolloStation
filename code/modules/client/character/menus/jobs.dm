@@ -15,13 +15,13 @@
 	. = "<html><body>"
 	. += "<center>"
 
-	. += "<b><a href='byond://?src=\ref[user];character=switch_menu;task=edit_character_menu'>Appearence</a></b>"
+	. += "<b><a href='byond://?src=\ref[src];character=switch_menu;task=edit_character_menu'>Appearence</a></b>"
 	. += " - "
-	. += "<b><a href='byond://?src=\ref[user];character=switch_menu;task=records_menu'>Records</a></b>"
+	. += "<b><a href='byond://?src=\ref[src];character=switch_menu;task=records_menu'>Records</a></b>"
 	. += " - "
 	. += "<b>Occupation</b>"
 	. += " - "
-	. += "<b><a href='byond://?src=\ref[user];character=switch_menu;task=antag_options_menu'>Antag Options</a></b>"
+	. += "<b><a href='byond://?src=\ref[src];character=switch_menu;task=antag_options_menu'>Antag Options</a></b>"
 	. += "</center><hr>"
 
 	if( !job_master )
@@ -37,7 +37,7 @@
 	. += "<tr>"
 	. += "<td><b>Branch:</b></td>"
 	if( !department.department_id )
-		. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=change_branch'>\[[department.name]\]</a></td>"
+		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=change_branch'>\[[department.name]\]</a></td>"
 	else
 		. += "<td>[department.name]</td>"
 	. += "</tr>"
@@ -50,7 +50,7 @@
 			. += "<tr>"
 			. += "<td>[type] Tokens:</td>"
 			. += "<td>[user.client.character_tokens[type]]</td>"
-			. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=use_token;type=[type]'>Use Token</a></td>"
+			. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=use_token;type=[type]'>Use Token</a></td>"
 			. += "</tr>"
 
 		. += "</table></td>"
@@ -104,7 +104,7 @@
 				. += "<b>"
 
 			if( J.alt_titles )
-				. += "<a href='byond://?src=\ref[user];character=[menu_name];task=alt_title;job=\ref[J]'>[GetPlayerAltTitle(J)]</a>"
+				. += "<a href='byond://?src=\ref[src];character=[menu_name];task=alt_title;job=\ref[J]'>[GetPlayerAltTitle(J)]</a>"
 			else
 				. += "[role]"
 
@@ -118,7 +118,7 @@
 			else if( required_playtime )
 				. += "IN [(required_playtime)] HOURS"
 			else
-				. += "<a href='byond://?src=\ref[user];character=[menu_name];task=input;text=[role]'>"
+				. += "<a href='byond://?src=\ref[src];character=[menu_name];task=input;text=[role]'>"
 				if( GetJobLevel( role ) == "High" )
 					. += "<font color=blue>HIGH</font>"
 				else if( GetJobLevel( role ) == "Medium" )
@@ -140,19 +140,19 @@
 
 	switch(alternate_option)
 		if(GET_RANDOM_JOB)
-			. += "<center><br><u><a href='byond://?src=\ref[user];character=[menu_name];task=random'><font color=green>Get random job if preferences unavailable</font></a></u></center><br>"
+			. += "<center><br><u><a href='byond://?src=\ref[src];character=[menu_name];task=random'><font color=green>Get random job if preferences unavailable</font></a></u></center><br>"
 		if(BE_ASSISTANT)
-			. += "<center><br><u><a href='byond://?src=\ref[user];character=[menu_name];task=random'><font color=red>Be assistant if preference unavailable</font></a></u></center><br>"
+			. += "<center><br><u><a href='byond://?src=\ref[src];character=[menu_name];task=random'><font color=red>Be assistant if preference unavailable</font></a></u></center><br>"
 		if(RETURN_TO_LOBBY)
-			. += "<center><br><u><a href='byond://?src=\ref[user];character=[menu_name];task=random'><font color=purple>Return to lobby if preference unavailable</font></a></u></center><br>"
+			. += "<center><br><u><a href='byond://?src=\ref[src];character=[menu_name];task=random'><font color=purple>Return to lobby if preference unavailable</font></a></u></center><br>"
 
 
 	. += "<hr><center>"
 	if(!IsGuestKey(user.key))
-		. += "<a href='byond://?src=\ref[user];character=[menu_name];task=save'>\[Save Setup\]</a> - "
-		. += "<a href='byond://?src=\ref[user];character=[menu_name];task=reset'>\[Reset Changes\]</a> - "
+		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=save'>\[Save Setup\]</a> - "
+		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=reset'>\[Reset Changes\]</a> - "
 
-	. += "<a href='byond://?src=\ref[user];character=[menu_name];task=close'>\[Done\]</a>"
+	. += "<a href='byond://?src=\ref[src];character=[menu_name];task=close'>\[Done\]</a>"
 	. += "</center>"
 
 	. += "</body></html>"

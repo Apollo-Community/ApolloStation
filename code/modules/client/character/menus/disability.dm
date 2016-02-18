@@ -5,15 +5,15 @@
 	HTML += "<tt><center>"
 	HTML += "<h3>Disabilities</h3><hr>"
 
-	HTML += "Need Glasses? <a href=\"byond://?src=\ref[user];character=[menu_name];disabilities=0\">[disabilities & (1<<0) ? "Yes" : "No"]</a><br>"
-	HTML += "Seizures? <a href=\"byond://?src=\ref[user];character=[menu_name];disabilities=1\">[disabilities & (1<<1) ? "Yes" : "No"]</a><br>"
-	HTML += "Coughing? <a href=\"byond://?src=\ref[user];character=[menu_name];disabilities=2\">[disabilities & (1<<2) ? "Yes" : "No"]</a><br>"
-	HTML += "Tourettes/Twitching? <a href=\"byond://?src=\ref[user];character=[menu_name];disabilities=3\">[disabilities & (1<<3) ? "Yes" : "No"]</a><br>"
-	HTML += "Nervousness? <a href=\"byond://?src=\ref[user];character=[menu_name];disabilities=4\">[disabilities & (1<<4) ? "Yes" : "No"]</a><br>"
-	HTML += "Deafness? <a href=\"byond://?src=\ref[user];character=[menu_name];disabilities=5\">[disabilities & (1<<5) ? "Yes" : "No"]</a><br>"
+	HTML += "Need Glasses? <a href=\"byond://?src=\ref[src];character=[menu_name];disabilities=0\">[disabilities & (1<<0) ? "Yes" : "No"]</a><br>"
+	HTML += "Seizures? <a href=\"byond://?src=\ref[src];character=[menu_name];disabilities=1\">[disabilities & (1<<1) ? "Yes" : "No"]</a><br>"
+	HTML += "Coughing? <a href=\"byond://?src=\ref[src];character=[menu_name];disabilities=2\">[disabilities & (1<<2) ? "Yes" : "No"]</a><br>"
+	HTML += "Tourettes/Twitching? <a href=\"byond://?src=\ref[src];character=[menu_name];disabilities=3\">[disabilities & (1<<3) ? "Yes" : "No"]</a><br>"
+	HTML += "Nervousness? <a href=\"byond://?src=\ref[src];character=[menu_name];disabilities=4\">[disabilities & (1<<4) ? "Yes" : "No"]</a><br>"
+	HTML += "Deafness? <a href=\"byond://?src=\ref[src];character=[menu_name];disabilities=5\">[disabilities & (1<<5) ? "Yes" : "No"]</a><br>"
 
 	HTML += "<br>"
-	HTML += "<a href=\"byond://?src=\ref[user];character=[menu_name];disabilities=-1\">\[Done\]</a>"
+	HTML += "<a href=\"byond://?src=\ref[src];character=[menu_name];disabilities=-1\">\[Done\]</a>"
 	HTML += "</center></tt>"
 
 	user << browse(HTML, "window=[menu_name];size=710x560;can_close=0")
