@@ -639,3 +639,26 @@
 	qdel(underwear_s)
 	qdel(undershirt_s)
 	qdel(clothes_s)
+
+/datum/character/proc/useCharacterToken( var/type, var/mob/user )
+	switch( type )
+		if( "Command" )
+			var/list/added_roles = list()
+
+			if( !department )
+				LoadDepartment( CIVILIAN )
+
+			if( department.department_id == CIVILIAN )
+				added_roles |= department.getAllPositionNamesWithPriority()
+			else
+				var/datum/department/D = job_master.GetDepartment( CIVILIAN )
+				added_roles |= D.getAllPositionNamesWithPriority()
+				added_roles |= department.getAllPositionNamesWithPriority()
+
+			roles |= added_roles
+
+	user.client.character_tokens[type]--
+
+	if( user.client.character_tokens[type] <= 0 )
+		user.client.character_tokens.Remove( type )
+		return

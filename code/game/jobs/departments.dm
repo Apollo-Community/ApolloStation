@@ -33,6 +33,14 @@
 
 	return names
 
+/datum/department/proc/getAllPositionNamesWithPriority()
+	var/list/names = getAllPositionNames()
+
+	for( var/name in names )
+		names[name] = "None"
+
+	return names
+
 /datum/department/proc/getLowestPosition()
 	var/list/roles = list()
 

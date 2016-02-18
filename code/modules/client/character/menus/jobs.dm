@@ -30,10 +30,34 @@
 	// This is a list of job datums organized by department, also listed in order of succession
 	var/list/dep_jobs = organizeJobByDepartment( jobNamesToDatums( roles ))
 
+	. += "<table width='100%'>"
+	. += "<tr>"
+
+	. += "<td><table width='100%'>"
+	. += "<tr>"
+	. += "<td><b>Branch:</b></td>"
 	if( !department.department_id )
-		. += "<b>Branch:</b> <a href='byond://?src=\ref[user];character=[menu_name];task=change_branch'>\[[department.name]\]</a><br><br>"
+		. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=change_branch'>\[[department.name]\]</a></td>"
 	else
-		. += "<b>Branch:</b> [department.name]<br><br>"
+		. += "<td>[department.name]</td>"
+	. += "</tr>"
+	. += "</table></td>"
+
+	if( department.department_id && user.client.character_tokens && user.client.character_tokens.len )
+		. += "<td><table width='100%'>"
+
+		for( var/type in user.client.character_tokens )
+			. += "<tr>"
+			. += "<td>[type] Tokens:</td>"
+			. += "<td>[user.client.character_tokens[type]]</td>"
+			. += "<td><a href='byond://?src=\ref[user];character=[menu_name];task=use_token;type=[type]'>Use Token</a></td>"
+			. += "</tr>"
+
+		. += "</table></td>"
+
+	. += "</tr>"
+	. += "</table>"
+
 	. += "<table width='100%'>"
 	. += "<tr>"
 
@@ -74,16 +98,20 @@
 
 			var/role = J.title
 
-			. += "<tr>"
+			. += "<tr><td>"
 
-			. += "<td>"
+			if( J.rank_succesion_level >= COMMAND_SUCCESSION_LEVEL )
+				. += "<b>"
+
 			if( J.alt_titles )
 				. += "<a href='byond://?src=\ref[user];character=[menu_name];task=alt_title;job=\ref[J]'>[GetPlayerAltTitle(J)]</a>"
 			else
 				. += "[role]"
-			. += "</td>"
 
-			. += "<td>"
+			if( J.rank_succesion_level >= COMMAND_SUCCESSION_LEVEL )
+				. += "</b>"
+
+			. += "</td><td>"
 
 			if(jobban_isbanned(user, role))
 				. += "<b>BANNED</b>"
@@ -159,6 +187,9 @@
 			var/choice = input("Select your desired department.", "Branch Selection", null) in choices
 			if( choice )
 				SetDepartment( choices[choice] )
+		if("use_token")
+			useCharacterToken( href_list["type"], user )
+			user.client.saveTokens()
 		if("random")
 			if(alternate_option == GET_RANDOM_JOB || alternate_option == BE_ASSISTANT)
 				alternate_option += 1
@@ -194,7 +225,7 @@
 // YES I KNOW THIS IS A BAD SORTING ALGORITHM
 /datum/character/proc/organizeJobBySuccession( var/list/jobs )
 	. = list()
-	for( var/i = BORG_SUCCESSION_LEVEL; i < CAPTAIN_SUCCESION_LEVEL; i++ )
+	for( var/i = CAPTAIN_SUCCESION_LEVEL; i >= BORG_SUCCESSION_LEVEL; i-- )
 		for( var/datum/job/J in jobs )
 			if( J.rank_succesion_level == i )
 				. += J
