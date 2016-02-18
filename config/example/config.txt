@@ -82,7 +82,7 @@ LOG_ADMINCHAT
 ## default probablity is 1, increase to make that mode more likely to be picked
 ## set to 0 to disable that mode
 PROBABILITY EXTENDED 1
-PROBABILITY MALFUNCTION 1
+PROBABILITY MALFUNCTION 0
 PROBABILITY MERCENARY 1
 PROBABILITY WIZARD 0
 PROBABILITY CHANGELING 1

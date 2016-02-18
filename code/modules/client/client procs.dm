@@ -55,8 +55,6 @@
 		cmd_admin_irc_pm(href_list["irc_msg"])
 		return
 
-
-
 	//Logs all hrefs
 	if(config && config.log_hrefs && href_logfile)
 		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
@@ -67,6 +65,20 @@
 		if("vars")		return view_var_Topic(href,href_list,hsrc)
 
 	..()	//redirect to hsrc.Topic()
+
+/client/proc/loadTokens()
+	var/DBQuery/query
+
+	query = dbcon.NewQuery("SELECT character_tokens FROM player WHERE ckey = '[ckey( ckey )]'")
+	query.Execute()
+
+	if( !query.NextRow() )
+		return
+
+	character_tokens = params2list( query.item[1] )
+
+	for( var/type in character_tokens )
+		character_tokens[type] = text2num( character_tokens[type] )
 
 /client/proc/handle_spam_prevention(var/message, var/mute_type)
 	if(config.automute_on && !holder && src.last_message == message)
@@ -214,6 +226,7 @@
 		stat_player_list = sortAssoc(stat_player_list)
 
 	log_client_to_db()
+	loadTokens()
 
 	if(!prefs.passed_date)
 		src << "<span class='admin_channel'>We have detected that your ckey is less than one month old. To help get you started we strongly recommend \
@@ -233,6 +246,7 @@
 /client/Del()
 	prefs.savePreferences()
 	log_client_to_db( 1 )
+	saveTokens()
 
 	if(holder)
 		holder.owner = null
@@ -266,6 +280,13 @@
 	else
 		return -1
 
+
+/client/proc/saveTokens()
+	var/tokens = list2params( character_tokens )
+	var/sql_ckey = ckey( ckey )
+
+	var/DBQuery/query_insert = dbcon.NewQuery("UPDATE player SET character_tokens = '[tokens]' WHERE ckey = '[sql_ckey]'")
+	query_insert.Execute()
 
 /client/proc/log_client_to_db( var/log_playtime = 0 )
 

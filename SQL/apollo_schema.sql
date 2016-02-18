@@ -141,6 +141,7 @@ CREATE TABLE IF NOT EXISTS `player` (
   `species_flags` int(16) NOT NULL DEFAULT '0',
   `donator_flags` int(16) NOT NULL DEFAULT '0',
   `playtime` int UNSIGNED NOT NULL DEFAULT '0',
+  `character_tokens` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ckey` (`ckey`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;

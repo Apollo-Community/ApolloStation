@@ -162,6 +162,7 @@ var/list/all_characters = list() // A list of all loaded characters
 		else if(firstspace == name_length)
 			name += "[pick(last_names)]"
 
+	character.gender = gender
 	character.real_name = name
 	character.name = character.real_name
 	if(character.dna)
