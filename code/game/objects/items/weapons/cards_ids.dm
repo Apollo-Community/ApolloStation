@@ -148,6 +148,9 @@
 	var/rank = null			//actual job
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
+/obj/item/weapon/card/id/proc/generateName()
+	name = "[registered_name]'s ID Card ([assignment])"
+
 /obj/item/weapon/card/id/New()
 	..()
 
@@ -193,7 +196,6 @@
 	usr << "The DNA hash on the card is [dna_hash]."
 	usr << "The fingerprint hash on the card is [fingerprint_hash]."
 	return
-
 
 /obj/item/weapon/card/id/silver
 	name = "identification card"

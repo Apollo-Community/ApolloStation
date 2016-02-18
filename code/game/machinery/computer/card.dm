@@ -80,51 +80,38 @@
 		if( F in due_papers )
 			if( F.isFilledOut() )
 				var/datum/character/C = due_papers[F]
-
+				var/datum/job/job_datum
 				if( istype( F, /obj/item/weapon/paper/form/job/induct ))
 					C.SetDepartment( job_master.GetDepartmentByName( F.job ))
-					var/datum/job/J = C.department.getLowestPosition()
-
-					modify.access = J.get_access()
-					modify.assignment = J.title
-					modify.rank = J.title
-
-					callHook("reassign_employee", list(modify))
+					job_datum = C.department.getLowestPosition()
 				else if( istype( F, /obj/item/weapon/paper/form/job/termination ))
 					C.LoadDepartment( CIVILIAN )
-					var/datum/job/J = job_master.GetJob( "Assistant" )
-
-					modify.access = J.get_access()
-					modify.assignment = J.title
-					modify.rank = J.title
-
-					callHook("reassign_employee", list(modify))
+					job_datum = job_master.GetJob( "Assistant" )
 				else if( istype( F, /obj/item/weapon/paper/form/job/promotion ))
 					C.AddJob( F.job )
-					var/datum/job/J = job_master.GetJob( F.job )
-
-					modify.access = J.get_access()
-					modify.assignment = J.title
-					modify.rank = J.title
-
-					callHook("reassign_employee", list(modify))
+					job_datum = job_master.GetJob( F.job )
 				else if( istype( F, /obj/item/weapon/paper/form/job/demotion ))
 					C.RemoveJob( F.job )
-					var/datum/job/J = C.department.getLowestPosition()
-
-					modify.access = J.get_access()
-					modify.assignment = J.title
-					modify.rank = J.title
-
-					callHook("reassign_employee", list(modify))
+					job_datum = C.department.getLowestPosition()
 				else
 					return
+
+				if( !istype( job_datum ))
+					return
+
+				modify.access = job_datum.get_access()
+				modify.assignment = job_datum.title
+				modify.rank = job_datum.title
+
+				modify.generateName()
+				callHook("reassign_employee", list(modify))
 
 				ping( "\The [src] pings, \"[C.name] has been [F.job_verb] [F.job]!\"" )
 				C.addRecordNote( "general", F.info, "[capitalize( F.job_verb )] [F.job]" )
 
 				due_papers -= F
 				qdel( F )
+				ui_interact(user)
 				return
 			else
 				buzz( "\The [src] buzzes, \"This form was improperly filled out. Please try again.\"" )
