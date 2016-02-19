@@ -178,6 +178,8 @@ var/list/all_characters = list() // A list of all loaded characters
 
 	character.character = src
 
+	character.set_species( species, 1 )
+
 	// Destroy/cyborgize organs
 	for(var/name in organ_data)
 		var/status = organ_data[name]

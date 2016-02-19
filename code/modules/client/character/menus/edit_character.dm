@@ -13,10 +13,11 @@
 	. += "<b>Appearence</b>"
 	. += " - "
 	. += "<b><a href='byond://?src=\ref[src];character=switch_menu;task=records_menu'>Records</a></b>"
-	. += " - "
-	. += "<b><a href='byond://?src=\ref[src];character=switch_menu;task=job_menu'>Occupation</a></b>"
-	. += " - "
-	. += "<b><a href='byond://?src=\ref[src];character=switch_menu;task=antag_options_menu'>Antag Options</a></b>"
+	if( !temporary )
+		. += " - "
+		. += "<b><a href='byond://?src=\ref[src];character=switch_menu;task=job_menu'>Occupation</a></b>"
+		. += " - "
+		. += "<b><a href='byond://?src=\ref[src];character=switch_menu;task=antag_options_menu'>Antag Options</a></b>"
 	. += "</center><hr>"
 
 	// APPEARENCE
@@ -275,7 +276,8 @@
 	. += "<hr><center>"
 	if(!IsGuestKey(user.key))
 		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=save'>\[Save Setup\]</a> - "
-		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=reset'>\[Reset Changes\]</a> - "
+		if( !temporary )
+			. += "<a href='byond://?src=\ref[src];character=[menu_name];task=reset'>\[Reset Changes\]</a> - "
 
 	. += "<a href='byond://?src=\ref[src];character=[menu_name];task=close'>\[Done\]</a>"
 	. += "</center>"

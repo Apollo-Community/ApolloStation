@@ -11,6 +11,7 @@
 /mob/living/carbon/human/New( var/new_loc, var/new_species = null )
 	if( !character )
 		character = new()
+		character.char_mob = src
 
 	if(!dna)
 		dna = new /datum/dna(null)
