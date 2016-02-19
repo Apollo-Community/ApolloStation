@@ -188,9 +188,16 @@
 				choices[D.name] = D
 
 			var/choice = input("Select your desired department.", "Branch Selection", null) in choices
+
+			if(alert("Are you sure you want to be a member of [choice]? You will not be able to change this selection.",,"Yes","No")=="No")
+				return
+
 			if( choice )
 				SetDepartment( choices[choice] )
 		if("use_token")
+			if(alert("Are you sure you use a command token on this character? This will unlock all roles in your selected department, but will consume the token.",,"Yes","No")=="No")
+				return
+
 			useCharacterToken( href_list["type"], user )
 			user.client.saveTokens()
 		if("random")
