@@ -265,7 +265,7 @@ var/global/datum/controller/occupations/job_master
 		unassigned = shuffle(unassigned)
 
 		HandleFeedbackGathering()
-
+/*
 		//People who wants to be assistants, sure, go on.
 		Debug("DO, Running Assistant Check 1")
 		var/datum/job/assist = new /datum/job/assistant()
@@ -276,6 +276,7 @@ var/global/datum/controller/occupations/job_master
 			AssignRole(player, "Assistant")
 			assistant_candidates -= player
 		Debug("DO, AC1 end")
+*/
 
 		//Select one head
 		Debug("DO, Running Head Check")
