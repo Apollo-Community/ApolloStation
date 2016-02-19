@@ -15,9 +15,6 @@
 
 	light_color = COMPUTER_BLUE
 
-/obj/machinery/computer/card/proc/is_centcom()
-	return 0
-
 // This return true if the modify card is lower rank than the scan card
 /obj/machinery/computer/card/proc/modifyingSubordinate()
 	var/datum/job/subordinate = job_master.GetJob( modify.assignment )
@@ -516,11 +513,15 @@
 
 	return 1
 
+/obj/machinery/computer/card/proc/is_centcom()
+	if( access_cent_captain in scan.access )
+		return 1
+	return 0
+
 /obj/machinery/computer/card/centcom
 	name = "\improper CentCom promotions console"
 	circuit = "/obj/item/weapon/circuitboard/card/centcom"
-	req_access = list(access_cent_captain)
-
+	req_access = list( access_cent_captain )
 
 /obj/machinery/computer/card/centcom/is_centcom()
 	return 1

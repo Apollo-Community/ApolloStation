@@ -1,21 +1,21 @@
 /datum/job/chemist
 	title = "Chemist"
 	flag = CHEMIST
-	department_id = MEDICAL
+	department_id = SCIENCE
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "the chief medical officer"
+	supervisors = "the research director"
 	selection_color = "#ffeef0"
-	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
-	minimal_access = list(access_medical, access_chemistry)
+	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_xenoarch, access_chemistry )
+	minimal_access = list(access_chemistry, access_research, access_xenoarch)
 	alt_titles = list("Pharmacist")
 
 	rank_succesion_level = 4
 
 /datum/job/chemist/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
-	H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/headset_med(H), slot_l_ear)
+	H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/headset_sci(H), slot_l_ear)
 	H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/chemist(H), slot_w_uniform)
 	H.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/white(H), slot_shoes)
 	H.equip_to_slot_or_qdel(new /obj/item/device/pda/chemist(H), slot_belt)

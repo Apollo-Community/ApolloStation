@@ -10,10 +10,10 @@
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
 	access = list(access_medical, access_morgue, access_genetics, access_heads,
-			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
+			access_virology, access_cmo, access_surgery, access_RC_announce,
 			access_keycard_auth, access_sec_doors, access_psychiatrist, access_change_ids)
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_heads,
-			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
+			access_virology, access_cmo, access_surgery, access_RC_announce,
 			access_keycard_auth, access_sec_doors, access_psychiatrist, access_change_ids)
 
 	rank_succesion_level = COMMAND_SUCCESSION_LEVEL
@@ -33,9 +33,11 @@
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 	else
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
-	return 1
+
 	H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/labcoat/cmo(H), slot_wear_suit)
 	H.equip_to_slot_or_qdel(new /obj/item/device/flashlight/pen(H), slot_s_store)
+
+	return 1
 
 /datum/job/cmo/make_preview_icon( var/backpack )
 	var/icon/clothes_s = null
