@@ -23,8 +23,6 @@
 	else
 		usr << "Failed to convert savefiles for [input_ckey]"
 
-	convert_whitelist_to_tokens( input_ckey )
-
 /proc/convert_ckey_savefile_to_SQL( var/ckey, var/mob/user = null )
 	var/path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/preferences.sav"
 	if( !fexists( path ))
