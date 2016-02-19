@@ -165,7 +165,7 @@
 	if( lowertext( species ) == "human" )
 		return 1
 
-	if( species in unwhitelisted_aliens )
+	if( !( species in whitelisted_species ))
 		return 1
 
 	if( !M )

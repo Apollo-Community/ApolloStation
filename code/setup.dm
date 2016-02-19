@@ -671,7 +671,7 @@ var/list/be_special_flags = list(
 #define NO_SCAN 4           // Cannot be scanned in a DNA machine/genome-stolen.
 #define NO_PAIN 8           // Cannot suffer halloss/recieves deceptive health indicator
 #define NO_SLIP 16          // Cannot fall over
-#define NO_POISON 32        // Cannot not suffer toxloss
+#define NO_ROBO_LIMBS 32 // Cannot have robotic limbs of any type
 #define HAS_SKIN_TONE 64    // Skin tone selectable in chargen (0-255)
 #define HAS_SKIN_COLOR 128  // Skin colour selectable in chargen (RGB)
 #define HAS_LIPS 256        // Lips are drawn onto the mob icon (lipstick)
@@ -682,8 +682,7 @@ var/list/be_special_flags = list(
 #define HAS_EYE_COLOR 8192  // Eye colour selectable in chargen (RGB)
 #define CAN_JOIN 16384      // Species is selectable in chargen
 #define IS_RESTRICTED 32768 // Is not a core/normally playable species (castes, mutantraces)
-#define NO_CRYO 65534
-#define NO_ROBO_LIMBS 131072 // Cannot have robotic limbs of any type
+#define NO_CRYO 65536
 
 #define BITFLAGS_MAX 65535
 

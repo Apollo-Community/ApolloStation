@@ -25,7 +25,7 @@ var/global/list/joblist = list()					//list of all jobstypes, minus borg and AI
 var/global/list/all_species[0]
 var/global/list/all_languages[0]
 var/global/list/language_keys[0]					// Table of say codes for all languages
-var/global/list/whitelisted_species = list("Human") // Species that require a whitelist check.
+var/global/list/whitelisted_species = list() 		// Species that require a whitelist check.
 var/global/list/playable_species = list("Human")    // A list of ALL playable species, whitelisted, latejoin or otherwise.
 
 // Posters
@@ -122,9 +122,11 @@ var/global/list/alloy_postfix = list("metal" = "metallic", "glass" = "glaseous")
 
 		if(!(S.flags & IS_RESTRICTED))
 			world << "[S.name]"
-			playable_species += S.name
-		if(S.flags & IS_WHITELISTED)
-			whitelisted_species += S.name
+			playable_species |= S.name
+		if( S.flags & IS_WHITELISTED )
+			whitelisted_species |= S.name
+
+	whitelisted_species &= playable_species
 
 	//Posters
 	paths = typesof(/datum/poster) - /datum/poster

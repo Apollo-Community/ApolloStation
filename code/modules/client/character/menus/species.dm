@@ -17,7 +17,7 @@
 	dat += "<small>"
 	if(current_species.flags & CAN_JOIN)
 		dat += "</br><b>Often present on human stations.</b>"
-	if(( current_species.flags & IS_WHITELISTED ) && !( current_species.name in unwhitelisted_aliens ))
+	if(( current_species.flags & IS_WHITELISTED ))
 		dat += "</br><b>Whitelist restricted.</b>"
 	if(current_species.flags & NO_BLOOD)
 		dat += "</br><b>Does not have blood.</b>"
@@ -29,8 +29,6 @@
 		dat += "</br><b>Does not feel pain.</b>"
 	if(current_species.flags & NO_SLIP)
 		dat += "</br><b>Has excellent traction.</b>"
-	if(current_species.flags & NO_POISON)
-		dat += "</br><b>Immune to most poisons.</b>"
 	if(current_species.flags & HAS_SKIN_TONE)
 		dat += "</br><b>Has a variety of skin tones.</b>"
 	if(current_species.flags & HAS_SKIN_COLOR)
