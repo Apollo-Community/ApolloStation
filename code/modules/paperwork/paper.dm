@@ -391,6 +391,8 @@
 
 		update_icon()
 
+/obj/item/weapon/paper/proc/WriteWindow( var/user )
+	user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]")
 
 /obj/item/weapon/paper/attackby(obj/item/weapon/P as obj, mob/user as mob)
 	..()
@@ -453,7 +455,7 @@
 		if ( istype(P, /obj/item/weapon/pen/robopen) && P:mode == 2 )
 			P:RenamePaper(user,src)
 		else
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]")
+			WriteWindow( user )
 		//openhelp(user)
 		return
 
@@ -635,7 +637,7 @@ Upon signature of this document by the employee, and witnessed by the Department
 
 	info = {"\[center\]\[logo\]\[/center\]
 \[center\]\[b\]\[i\]NanoTrasen Employee Demotion Form\[/b\]\[/i\]\[/center\]\[hr\]
-Upon signature of this document by the Department authority on [date], the contract of appointment with the [department] Department for [employee] as [job] is hereby null and void. Abuse of this form may result in the termination of the Department authority.\[br\]
+Upon signature of this document by the Department authority on [date], the contract of appointment with the [department] for [employee] as [job] is hereby null and void. Abuse of this form may result in the termination of the Department authority.\[br\]
 
 \[b\]Department authority:\[/b\] \[field\]
 \[hr\]"}

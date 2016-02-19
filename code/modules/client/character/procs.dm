@@ -653,22 +653,47 @@
 /datum/character/proc/useCharacterToken( var/type, var/mob/user )
 	switch( type )
 		if( "Command" )
-			var/list/added_roles = list()
-
-			if( !department )
+			if( !department || !istype( department ))
 				LoadDepartment( CIVILIAN )
 
-			if( department.department_id == CIVILIAN )
-				added_roles |= department.getAllPositionNamesWithPriority()
-			else
-				var/datum/department/D = job_master.GetDepartment( CIVILIAN )
-				added_roles |= D.getAllPositionNamesWithPriority()
-				added_roles |= department.getAllPositionNamesWithPriority()
-
-			roles |= added_roles
+			roles |= getAllPromotablePositions()
 
 	user.client.character_tokens[type]--
 
 	if( user.client.character_tokens[type] <= 0 )
 		user.client.character_tokens.Remove( type )
 		return
+
+/datum/character/proc/getAllPromotablePositions( var/succession_level )
+	. = list()
+
+	if( department.department_id == CIVILIAN )
+		. |= department.getAllPositionNamesWithPriority()
+	else
+		var/datum/department/D = job_master.GetDepartment( CIVILIAN )
+		. |= D.getAllPositionNamesWithPriority()
+		. |= department.getAllPositionNamesWithPriority()
+
+	if( succession_level )
+		for( var/datum/job/J in . )
+			if( J.rank_succesion_level >= succession_level )
+				. -= J
+
+	. -= getAllDemotablePositions()
+
+	return .
+
+/datum/character/proc/getAllDemotablePositions( var/succession_level )
+	. = list()
+
+	for( var/role in roles )
+		var/datum/job/J = job_master.GetJob( role )
+		if( !J )
+			continue
+
+		if( succession_level && ( J.rank_succesion_level >= succession_level ))
+			continue
+
+		. += role
+
+	return .

@@ -158,6 +158,9 @@
 	if( !modify || !scan )
 		return 0
 
+	if( is_centcom() )
+		return 1
+
 	var/scan_department = department_name( scan )
 	var/modify_department = department_name( modify )
 
@@ -171,6 +174,9 @@
 	if( !scan_department || !modify_department )
 		return 0
 
+	if( is_centcom() )
+		return 1
+
 	if( modify_department == "Civilian" )
 		return 1
 
@@ -181,8 +187,6 @@
 
 	var/data[0]
 	data["src"] = "\ref[src]"
-	data["department_name"] = department_name( scan )
-	data["modify_department_name"] = department_name( modify )
 	data["mode"] = mode
 	data["printing"] = printing
 	data["manifest"] = data_core ? data_core.get_manifest(0) : null
@@ -196,6 +200,10 @@
 	data["can_induct"] = can_induct()
 	data["account_number"] = modify ? modify.associated_account_number : null
 	data["centcom_access"] = is_centcom()
+	if( is_centcom() )
+		data["modify_department_name"] = "CentComm"
+	else
+		data["modify_department_name"] = department_name( modify )
 	data["all_centcom_access"] = null
 	data["regions"] = null
 
@@ -204,11 +212,14 @@
 
 	if( modify && modify.character && scan && scan.character && scan.character.department )
 		var/datum/department/D = scan.character.department
+		if( is_centcom() )
+			locked_jobs = modify.character.getAllPromotablePositions( COMMAND_SUCCESSION_LEVEL+1 )
+			unlocked_jobs = modify.character.getAllDemotablePositions( COMMAND_SUCCESSION_LEVEL+1 )
+		else
+			unlocked_jobs = D.getPromotablePositionNames() & modify.character.roles
 
-		unlocked_jobs = D.getPromotablePositionNames() & modify.character.roles
-
-		locked_jobs = D.getPromotablePositionNames()
-		locked_jobs.Remove( unlocked_jobs )
+			locked_jobs = D.getPromotablePositionNames()
+			locked_jobs.Remove( unlocked_jobs )
 
 	data["locked_jobs"] = format_jobs(locked_jobs)
 	data["unlocked_jobs"] = format_jobs(unlocked_jobs)
@@ -296,6 +307,7 @@
 				if(is_authenticated())
 					if( !modifyingSubordinate() )
 						buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
+						return
 
 					var/access_type = text2num(href_list["access_target"])
 					var/access_allowed = text2num(href_list["allowed"])
@@ -308,6 +320,7 @@
 			if( is_authenticated() && modify && modifyingSubordinate() )
 				if( !modifyingSubordinate() )
 					buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
+					return
 
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
@@ -342,6 +355,7 @@
 			if (is_authenticated())
 				if( !modifyingSubordinate() )
 					buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
+					return
 
 				var/t2 = modify
 				if ((modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
@@ -356,6 +370,7 @@
 			if (is_authenticated())
 				if( !modifyingSubordinate() )
 					buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
+					return
 
 				var/t2 = modify
 				if ((modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
@@ -396,7 +411,7 @@
 							P.info += "  [get_access_desc(A)]"
 					print( P )
 		if ("terminate")
-			if (is_authenticated() && is_centcom())
+/*			if (is_authenticated() && is_centcom())
 				if( !modifyingSubordinate() )
 					buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
 
@@ -409,18 +424,19 @@
 					modify.character.LoadDepartment( CIVILIAN )
 
 				callHook("terminate_employee", list(modify))
-			else
-				if( !modifyingSubordinate() )
-					buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
+			else*/
+			if( !modifyingSubordinate() )
+				buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
+				return
 
-				var/list/names = list( scan.registered_name )
+			var/list/names = list( scan.registered_name )
 
-				var/obj/item/weapon/paper/form/job/termination/P = new( print_date( universe.date ), department_name( scan ), modify.registered_name)
-				P.required_signatures = names
-				due_papers[P] = modify.character
-				print( P )
-				spawn( 45 )
-					ping( "\The [src] pings, \"Please fill out this form and return it to this console when complete.\"" )
+			var/obj/item/weapon/paper/form/job/termination/P = new( print_date( universe.date ), department_name( modify ), modify.registered_name)
+			P.required_signatures = names
+			due_papers[P] = modify.character
+			print( P )
+			spawn( 45 )
+				ping( "\The [src] pings, \"Please fill out this form and return it to this console when complete.\"" )
 
 		if ("induct")
 			if( !scan.character )
@@ -437,6 +453,7 @@
 
 			if( !modifyingSubordinate() )
 				buzz( "\The [src] buzzes, \"Cannot modify a superior's card!" )
+				return
 
 			var/list/names = list( modify.registered_name, scan.registered_name )
 
@@ -458,12 +475,13 @@
 
 			if( !modifyingSubordinate() )
 				buzz( "\The [src] buzzes, \"Cannot modify a superior's card!" )
+				return
 
 			var/job_name = href_list["promote_role"]
 
 			var/list/names = list( modify.registered_name, scan.registered_name )
 
-			var/obj/item/weapon/paper/form/job/promotion/P = new( print_date( universe.date ), job_name, department_name( scan ))
+			var/obj/item/weapon/paper/form/job/promotion/P = new( print_date( universe.date ), job_name, department_name( modify ))
 			P.required_signatures = names
 			due_papers[P] = modify.character
 			print( P )
@@ -481,12 +499,13 @@
 
 			if( !modifyingSubordinate() )
 				buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
+				return
 
 			var/job_name = href_list["demote_role"]
 
 			var/list/names = list( scan.registered_name )
 
-			var/obj/item/weapon/paper/form/job/demotion/P = new( print_date( universe.date ), job_name, modify.registered_name, department_name( scan ))
+			var/obj/item/weapon/paper/form/job/demotion/P = new( print_date( universe.date ), job_name, modify.registered_name, department_name( modify ))
 			P.required_signatures = names
 			due_papers[P] = modify.character
 			print( P )
@@ -498,7 +517,7 @@
 	return 1
 
 /obj/machinery/computer/card/centcom
-	name = "\improper CentCom ID card modification console"
+	name = "\improper CentCom promotions console"
 	circuit = "/obj/item/weapon/circuitboard/card/centcom"
 	req_access = list(access_cent_captain)
 

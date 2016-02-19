@@ -58,7 +58,7 @@
 				</div>
 			
 				<div class='item'>
-					<h2>{{:data.department_name}} Promotions</h2>
+					<h2>{{:data.modify_department_name}} Promotions</h2>
 				</div>
 				{{for data.locked_jobs}}
 					<div class='itemContentWide'>
@@ -67,7 +67,7 @@
 				{{/for}}
 
 				<div class='item'>
-					<h2>{{:data.department_name}} Demotions</h2>
+					<h2>{{:data.modify_department_name}} Demotions</h2>
 				</div>
 				{{for data.unlocked_jobs}}
 					<div class='itemContentWide'>
@@ -205,7 +205,7 @@
 				</div>
 			{{else}}
 			  <div class='item'>
-				<h2>{{:data.department_name}} Access Assignment</h2>
+				<h2>Access Assignment</h2>
 			  </div>
 			  <div class='item' style='width: 100%'>
 				{{for data.regions}}
