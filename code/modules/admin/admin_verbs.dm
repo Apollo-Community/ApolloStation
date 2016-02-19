@@ -719,58 +719,28 @@ var/list/admin_verbs_mentor = list(
 	return
 
 /client/proc/editappear(mob/living/carbon/human/M as mob in world)
-	set name = "Edit Appearance"
+	set name = "Edit Records"
 	set category = "Fun"
 
 	if(!check_rights(R_FUN))	return
 
-	if(!istype(M, /mob/living/carbon/human))
+	if( !istype( M ))
 		usr << "<span class='alert'>You can only do this to humans!</span>"
 		return
-	switch(alert("Are you sure you wish to edit this mob's appearance? Skrell, Unathi, Vox and Tajaran can result in unintended consequences.",,"Yes","No"))
-		if("No")
-			return
-	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
-	if(new_facial)
-		M.character.hair_face_color = new_facial
 
-	var/new_hair = input("Please select hair color.", "Character Generation") as color
-	if(new_hair)
-		M.character.hair_color = new_hair
+	if( !M.character )
+		usr << "<span class='alert'>This mob has no character!</span>"
+		return
 
-	var/new_eyes = input("Please select eye color.", "Character Generation") as color
-	if(new_eyes)
-		M.character.eye_color = new_eyes
+	M.character.EditCharacterMenu( usr )
 
-	var/new_skin = input("Please select body color. This is for Tajaran, Unathi, and Skrell only!", "Character Generation") as color
-	if(new_skin)
-		M.character.skin_color = new_skin
+	/*
+	M.character.copy_to( M )
 
-	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
-
-	if (new_tone)
-		M.character.skin_tone = max(min(round(text2num(new_tone)), 220), 1)
-		M.character.skin_tone =  -M.character.skin_tone + 35
-
-	// hair
-	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in hair_styles_list
-	if(new_hstyle)
-		M.character.hair_style = new_hstyle
-
-	// facial hair
-	var/new_fstyle = input(usr, "Select a facial hair style", "Grooming")  as null|anything in facial_hair_styles_list
-	if(new_fstyle)
-		M.character.hair_face_style = new_fstyle
-
-	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
-	if (new_gender)
-		if(new_gender == "Male")
-			M.character.gender = MALE
-		else
-			M.character.gender = FEMALE
 	M.update_hair()
 	M.update_body()
 	M.check_dna(M)
+	*/
 
 /client/proc/playernotes()
 	set name = "Show Player Info"

@@ -25,6 +25,7 @@ var/list/all_characters = list() // A list of all loaded characters
 #define RETURN_TO_LOBBY 2
 
 /datum/character
+	var/mob/living/carbon/human/char_mob
 	var/ckey
 
 	// Basic information
@@ -153,7 +154,10 @@ var/list/all_characters = list() // A list of all loaded characters
 
 	..()
 
-/datum/character/proc/copy_to(mob/living/carbon/human/character, safety = 0)
+/datum/character/proc/copy_to( mob/living/carbon/human/character )
+	if( !istype( character ))
+		return
+
 	if(config.humans_need_surnames)
 		var/firstspace = findtext(name, " ")
 		var/name_length = length(name)
@@ -161,6 +165,8 @@ var/list/all_characters = list() // A list of all loaded characters
 			name += " [pick(last_names)]"
 		else if(firstspace == name_length)
 			name += "[pick(last_names)]"
+
+	char_mob = character
 
 	character.gender = gender
 	character.real_name = name

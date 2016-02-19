@@ -95,8 +95,6 @@
 		if( href_list["preference"] )
 			if( client.prefs.process_links( src, href_list ))
 				return 1
-			else
-				alert("You must select a character first!")
 
 		if( href_list["show_preferences"] )
 			client.prefs.ClientMenu( src )

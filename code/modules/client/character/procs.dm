@@ -12,6 +12,12 @@
 		world << "Is a guest ckey"
 		return 0
 
+	if( istype( char_mob ))
+		copy_to( char_mob )
+		char_mob.update_hair()
+		char_mob.update_body()
+		char_mob.check_dna( char_mob )
+
 	if( prompt && ckey )
 		var/client
 		for( client in clients )

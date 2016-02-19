@@ -65,7 +65,10 @@
 
 		if( "close" )
 			AntagOptionsMenuDisable( user )
-			user.client.prefs.ClientMenu( user )
+
+			if( istype( user, /mob/new_player ))
+				user.client.prefs.ClientMenu( user )
+
 			return
 
 		if( "exploitable_record" )

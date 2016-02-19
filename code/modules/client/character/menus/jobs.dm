@@ -176,7 +176,10 @@
 
 		if("close")
 			JobChoicesMenuDisable( user )
-			user.client.prefs.ClientMenu( user )
+
+			if( istype( user, /mob/new_player ))
+				user.client.prefs.ClientMenu( user )
+
 			return
 
 		if("change_branch")

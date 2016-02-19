@@ -115,6 +115,9 @@
 			var/choice = input("Which species would you like to look at?") as null|anything in playable_species
 			if(!choice) return
 			species_preview = choice
-			user.client.prefs.ClientMenu( user )
+
+			if( istype( user, /mob/new_player ))
+				user.client.prefs.ClientMenu( user )
+
 			SpeciesMenu(user)
 

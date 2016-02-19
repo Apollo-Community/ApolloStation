@@ -599,8 +599,11 @@
 			flavor_texts_robot = msg
 
 		if( "close" )
-			user.client.prefs.ClientMenu( user )
 			EditCharacterMenuDisable( user )
+
+			if( istype( user, /mob/new_player ))
+				user.client.prefs.ClientMenu( user )
+
 			return 1
 
 		if( "species_menu" )

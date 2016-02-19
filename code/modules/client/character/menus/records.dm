@@ -151,7 +151,10 @@
 
 		if( "close" )
 			RecordsMenuDisable( user )
-			user.client.prefs.ClientMenu( user )
+
+			if( istype( user, /mob/new_player ))
+				user.client.prefs.ClientMenu( user )
+
 			return
 
 		if( "med_record" )
