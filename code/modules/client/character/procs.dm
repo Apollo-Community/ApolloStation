@@ -1,9 +1,18 @@
 /proc/saveAllActiveCharacters()
 	for( var/datum/character/C in all_characters )
-		if( !C.new_character ) // If they've been saved to the database previously
+		if( !C.new_character && !C.temporary ) // If they've been saved to the database previously
 			C.saveCharacter()
 
 /datum/character/proc/saveCharacter( var/prompt = 0 )
+	if( istype( char_mob ))
+		copy_to( char_mob )
+		char_mob.update_hair()
+		char_mob.update_body()
+		char_mob.check_dna( char_mob )
+
+	if( temporary ) // If we're just a temporary character, dont save to database
+		return 1
+
 	if( !ckey )
 		world << "No given ckey"
 		return 0
@@ -11,12 +20,6 @@
 	if ( IsGuestKey( ckey ))
 		world << "Is a guest ckey"
 		return 0
-
-	if( istype( char_mob ))
-		copy_to( char_mob )
-		char_mob.update_hair()
-		char_mob.update_body()
-		char_mob.check_dna( char_mob )
 
 	if( prompt && ckey )
 		var/client
@@ -196,8 +199,6 @@
 		world << "No character name"
 		return 0
 
-	new_character = 0 // If we're loading from the database, we're obviously a pre-existing character
-
 	var/list/variables = list()
 
 	// Base information
@@ -293,6 +294,9 @@
 	if( !query.NextRow() )
 		world << "Not a character in database"
 		return 0
+
+	new_character = 0 // If we're loading from the database, we're obviously a pre-existing character
+	temporary = 0
 
 	for( var/i = 1; i < variables.len; i++ )
 		var/value = query.item[i]

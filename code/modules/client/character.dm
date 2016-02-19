@@ -125,8 +125,9 @@ var/list/all_characters = list() // A list of all loaded characters
 	var/species_preview   // Used for the species selection window.
 
 	var/new_character = 1 // Is this a new character?
+	var/temporary = 1 // Is this character only for this round?
 
-/datum/character/New( var/key, var/new_char = 1 )
+/datum/character/New( var/key, var/new_char = 1, var/temp = 1 )
 	ckey = ckey( key )
 
 	blood_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
@@ -141,6 +142,7 @@ var/list/all_characters = list() // A list of all loaded characters
 	unique_identifier = md5( fingerprints )
 
 	new_character = new_char
+	temporary = temp
 
 	change_age( 30 )
 

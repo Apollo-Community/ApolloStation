@@ -58,7 +58,7 @@
 			ClientMenuDisable( user )
 		if( "edit_character" )
 			if( !selected_character )
-				selected_character = new( client.ckey, 1 )
+				selected_character = new( client.ckey, 1, 0 )
 				characters.Add( selected_character )
 			ClientMenuDisable( user )
 			selected_character.EditCharacterMenu( user )
@@ -70,7 +70,7 @@
 
 			ClientMenu( user )
 		if( "new_character" )
-			selected_character = new( client.ckey, 1 )
+			selected_character = new( client.ckey, 1, 0 )
 			characters.Add( selected_character )
 			savePreferences()
 

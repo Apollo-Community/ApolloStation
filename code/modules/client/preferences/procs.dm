@@ -115,7 +115,7 @@
 		var/selected_char_name = query.item[7]
 
 		if( selected_char_name )
-			selected_character = new( client.ckey )
+			selected_character = new( client.ckey, 0, 0 )
 			characters.Add( selected_character )
 			selected_character.loadCharacter( selected_char_name )
 
