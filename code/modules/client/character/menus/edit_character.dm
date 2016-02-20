@@ -122,7 +122,7 @@
 		. += "<tr>"
 		. += "<th rowspan='2'>Hair:</th>"
 		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=hair_color'>Color</a></td>"
-		. += "<td><table style='display:inline; background-color:[hair_color]; border-collapse:collapse;'><tr><td><font face='fixedsys' size='3' color='[hair_color]'>__</font></td></tr></table></td>"
+		. += "<td><div style='display:inline; background-color:[hair_color]; border-collapse:collapse;'><font face='fixedsys' size='3' color='[hair_color]'>__</font></div></td>"
 		. += "</tr>"
 
 		. += "<tr>"
@@ -132,7 +132,7 @@
 		. += "<tr>"
 		. += "<th rowspan='2'><b>Facial Hair:</b></th>"
 		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=hair_face_color'>Color</a></td>"
-		. += "<td><table style='display:inline; background-color:[hair_face_color]; border-collapse:collapse;'><tr><td><font face='fixedsys' size='3' color='[hair_face_color]'>__</font></td></tr></table></td>"
+		. += "<td><div style='display:inline; background-color:[hair_face_color]; border-collapse:collapse;'><font face='fixedsys' size='3' color='[hair_face_color]'>__</font></div></td>"
 		. += "</tr>"
 
 		. += "<tr>"
@@ -143,7 +143,7 @@
 		. += "<tr>"
 		. += "<th>Eyes:</th>"
 		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=eye_color'>Color</a></td>"
-		. += "<td><table style='display:inline; background-color:[eye_color]; border-collapse:collapse;'><tr><td><font face='fixedsys' size='3' color='[eye_color]'>__</font></td></tr></table></td>"
+		. += "<td><div style='display:inline; background-color:[eye_color]; border-collapse:collapse;'><font face='fixedsys' size='3' color='[eye_color]'>__</font></div></td>"
 		. += "</tr>"
 
 	if( S.flags & HAS_SKIN_COLOR || S.flags & HAS_SKIN_TONE )
@@ -153,7 +153,7 @@
 			. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=skin_tone'>Tone: [-skin_tone+SKIN_TONE_DEFAULT]/[SKIN_TONE_MAX]</a></td>"
 		if( S.flags & HAS_SKIN_COLOR )
 			. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=skin_color'>Color</a></td>"
-			. += "<td><table style='display:inline; background-color:[skin_color]; border-collapse:collapse;'><tr><td><font face='fixedsys' size='3' color='[skin_color]'>__</font></td></tr></table></td>"
+			. += "<td><div style='display:inline; background-color:[skin_color]; border-collapse:collapse;'><font face='fixedsys' size='3' color='[skin_color]'>__</font></div></td>"
 		. += "</tr>"
 	. += "</table>"
 
