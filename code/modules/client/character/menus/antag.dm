@@ -32,26 +32,26 @@
 		for (var/i in special_roles)
 			if(special_roles[i]) //if mode is available on the server
 				if(jobban_isbanned(user, i) || (i == "positronic brain" && jobban_isbanned(user, "AI") && jobban_isbanned(user, "Cyborg")) || (i == "pAI candidate" && jobban_isbanned(user, "pAI")))
-					. += "<b>Be [i]:<b> <font color=red><b> \[BANNED]</b></font><br>"
+					. += "<b>Be [i]:<b> <font color=red><b> BANNED]</b></font><br>"
 				else
 					. += "<b>Be [i]:</b> <a href='byond://?src=\ref[src];character=[menu_name];task=job_antag;num=[n]'><b>[src.job_antag&(1<<n) ? "Yes" : "No"]</b></a><br>"
 			n++
 
 	. += "<hr><center>"
 	if(!IsGuestKey(user.key))
-		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=save'>\[Save Setup\]</a> - "
-		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=reset'>\[Reset Changes\]</a> - "
+		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=save'>Save Setup</a> - "
+		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=reset'>Reset Changes</a> - "
 
-	. += "<a href='byond://?src=\ref[src];character=[menu_name];task=close'>\[Done\]</a>"
+	. += "<a href='byond://?src=\ref[src];character=[menu_name];task=close'>Done</a>"
 	. += "</center>"
 	. += "</body></html>"
 
-	user << browse(., "window=[menu_name];size=710x560;can_close=0")
-	winshow( user, "[menu_name]", 1)
-	return
+	menu.set_user( user )
+	menu.set_content( . )
+	menu.open()
 
 /datum/character/proc/AntagOptionsMenuDisable( mob/user )
-	winshow( user, "antag_options_menu", 0)
+	menu.close()
 
 /datum/character/proc/AntagOptionsMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )

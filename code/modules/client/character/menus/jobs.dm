@@ -30,27 +30,29 @@
 	// This is a list of job datums organized by department, also listed in order of succession
 	var/list/dep_jobs = organizeJobByDepartment( jobNamesToDatums( roles ))
 
-	. += "<table width='100%'>"
+	. += "<table>"
 	. += "<tr>"
 
-	. += "<td><table width='100%'>"
+	. += "<td><table>"
 	. += "<tr>"
 	. += "<td><b>Branch:</b></td>"
 	if( !department.department_id )
-		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=change_branch'>\[[department.name]\]</a></td>"
+		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=change_branch'>[department.name]</a></td>"
 	else
 		. += "<td>[department.name]</td>"
 	. += "</tr>"
 	. += "</table></td>"
 
 	if( department.department_id && user.client.character_tokens && user.client.character_tokens.len )
-		. += "<td><table width='100%'>"
+		. += "<td><table>"
 
 		for( var/type in user.client.character_tokens )
 			. += "<tr>"
 			. += "<td>[type] Tokens:</td>"
 			. += "<td>[user.client.character_tokens[type]]</td>"
-			. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=use_token;type=[type]'>Use Token</a></td>"
+			var/num = user.client.character_tokens[type]
+			if( num > 0 )
+				. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=use_token;type=[type]'>Use Token</a></td>"
 			. += "</tr>"
 
 		. += "</table></td>"
@@ -58,7 +60,7 @@
 	. += "</tr>"
 	. += "</table>"
 
-	. += "<table width='100%'>"
+	. += "<table>"
 	. += "<tr><td colspan='[dep_jobs.len]'>"
 	. += "<center>Get promoted by heads of staff to unlock more roles!</center>"
 	. += "</td></td>"
@@ -74,19 +76,15 @@
 			continue
 
 		. += "<td valign='top'>"
-		. += "<table border='1' width='100%'>"
-		. += "<tr bgcolor='[D.background_color]'><td colspan='2'>"
-		. += "<b>[D.name]</b>"
-		. += "</td></tr>"
+		. += "<table class='border'>"
+		. += "<tr style='background-color:[D.background_color]'>"
+		. += "<th colspan='2'>[D.name]</th>"
+		. += "</tr>"
 		. += "<tr>"
 
-		. += "<td>"
-		. += "<b>Title</b>"
-		. += "</td>"
+		. += "<th>Title</th>"
 
-		. += "<td>"
-		. += "<b>Priority</b>"
-		. += "</td>"
+		. += "<th>Priority</th>"
 
 		for( var/datum/job/J in jobs )
 			if( !istype( J ))
@@ -123,13 +121,13 @@
 			else
 				. += "<a href='byond://?src=\ref[src];character=[menu_name];task=input;text=[role]'>"
 				if( GetJobLevel( role ) == "High" )
-					. += "<font color=blue>HIGH</font>"
+					. += "<font color=#80ffff>HIGH</font>"
 				else if( GetJobLevel( role ) == "Medium" )
-					. += "<font color=green>MEDIUM</font>"
+					. += "<font color=#66ff66>MEDIUM</font>"
 				else if( GetJobLevel( role ) == "Low" )
-					. += "<font color=orange>LOW</font>"
+					. += "<font color=#ffff66>LOW</font>"
 				else
-					. += "<font color=red>NEVER</font>"
+					. += "<font color=#ff6666>NEVER</font>"
 				. += "</a>"
 
 			. += "</td>"
@@ -143,29 +141,29 @@
 
 	switch(alternate_option)
 		if(GET_RANDOM_JOB)
-			. += "<center><br><u><a href='byond://?src=\ref[src];character=[menu_name];task=random'><font color=green>Get random job if preferences unavailable</font></a></u></center><br>"
+			. += "<center><br><u><a href='byond://?src=\ref[src];character=[menu_name];task=random'>Get random job if preferences unavailable</a></u></center><br>"
 		if(BE_ASSISTANT)
-			. += "<center><br><u><a href='byond://?src=\ref[src];character=[menu_name];task=random'><font color=red>Be assistant if preference unavailable</font></a></u></center><br>"
+			. += "<center><br><u><a href='byond://?src=\ref[src];character=[menu_name];task=random'>Be assistant if preference unavailable</a></u></center><br>"
 		if(RETURN_TO_LOBBY)
-			. += "<center><br><u><a href='byond://?src=\ref[src];character=[menu_name];task=random'><font color=purple>Return to lobby if preference unavailable</font></a></u></center><br>"
+			. += "<center><br><u><a href='byond://?src=\ref[src];character=[menu_name];task=random'>Return to lobby if preference unavailable</a></u></center><br>"
 
 
 	. += "<hr><center>"
 	if(!IsGuestKey(user.key))
-		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=save'>\[Save Setup\]</a> - "
-		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=reset'>\[Reset Changes\]</a> - "
+		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=save'>Save Setup</a> - "
+		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=reset'>Reset Changes</a> - "
 
-	. += "<a href='byond://?src=\ref[src];character=[menu_name];task=close'>\[Done\]</a>"
+	. += "<a href='byond://?src=\ref[src];character=[menu_name];task=close'>Done</a>"
 	. += "</center>"
 
 	. += "</body></html>"
 
-	user << browse(., "window=[menu_name];size=710x560;can_close=0")
-	winshow( user, "[menu_name]", 1)
-	return
+	menu.set_user( user )
+	menu.set_content( . )
+	menu.open()
 
 /datum/character/proc/JobChoicesMenuDisable( mob/user )
-	winshow( user, "job_choices_menu", 0)
+	menu.close()
 
 /datum/character/proc/JobChoicesMenuProcess( mob/user, list/href_list )
 	switch(href_list["task"])
@@ -202,7 +200,6 @@
 				return
 
 			useCharacterToken( href_list["type"], user )
-			user.client.saveTokens()
 		if("random")
 			if(alternate_option == GET_RANDOM_JOB || alternate_option == BE_ASSISTANT)
 				alternate_option += 1

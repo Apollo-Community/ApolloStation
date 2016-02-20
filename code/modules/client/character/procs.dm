@@ -651,6 +651,10 @@
 	qdel(clothes_s)
 
 /datum/character/proc/useCharacterToken( var/type, var/mob/user )
+	var/num = user.client.character_tokens[type]
+	if( !num || num <= 0 )
+		return
+
 	switch( type )
 		if( "Command" )
 			if( !department || !istype( department ))
@@ -658,11 +662,10 @@
 
 			roles |= getAllPromotablePositions()
 
-	user.client.character_tokens[type]--
+	num--
 
-	if( user.client.character_tokens[type] <= 0 )
-		user.client.character_tokens.Remove( type )
-		return
+	user.client.character_tokens[type] = num
+	user.client.saveTokens()
 
 /datum/character/proc/getAllPromotablePositions( var/succession_level )
 	. = list()
@@ -674,7 +677,6 @@
 		. |= D.getAllPositionNamesWithPriority()
 		. |= department.getAllPositionNamesWithPriority()
 
-	if( succession_level )
 	for( var/role in . )
 		var/datum/job/J = job_master.GetJob( role )
 		if( !J )

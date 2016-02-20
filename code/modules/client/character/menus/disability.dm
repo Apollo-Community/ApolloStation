@@ -13,11 +13,12 @@
 	HTML += "Deafness? <a href=\"byond://?src=\ref[src];character=[menu_name];disabilities=5\">[disabilities & (1<<5) ? "Yes" : "No"]</a><br>"
 
 	HTML += "<br>"
-	HTML += "<a href=\"byond://?src=\ref[src];character=[menu_name];disabilities=-1\">\[Done\]</a>"
+	HTML += "<a href=\"byond://?src=\ref[src];character=[menu_name];disabilities=-1\">Done</a>"
 	HTML += "</center></tt>"
 
-	user << browse(HTML, "window=[menu_name];size=710x560;can_close=0")
-	return
+	menu.set_user( user )
+	menu.set_content( . )
+	menu.open()
 
 /datum/character/proc/DisabilitiesMenuProcess( mob/user, list/href_list )
 	var/dissab_toggle = text2num(href_list["disabilities"])

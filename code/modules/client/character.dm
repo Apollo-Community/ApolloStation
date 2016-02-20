@@ -113,6 +113,8 @@ var/list/all_characters = list() // A list of all loaded characters
 
 	var/list/birth_date = list()
 
+	var/datum/browser/menu
+
 	// Skills
 	var/used_skillpoints = 0
 	var/skill_specialization = null
@@ -148,6 +150,8 @@ var/list/all_characters = list() // A list of all loaded characters
 
 	if( !department )
 		LoadDepartment( CIVILIAN )
+
+	menu = new( null, "creator", "Character Creator", 710, 610 )
 
 	all_characters += src
 

@@ -46,7 +46,7 @@
 		user << "[characters.len] characters found for [ckey]"
 
 	for( var/datum/character/character in characters )
-		character.saveCharacter( 0 )
+		character.saveCharacter()
 
 	return 1
 
@@ -75,7 +75,7 @@
 		S.cd = "/"
 		S.cd = "[directory]"
 
-		var/datum/character/C = new( ckey )
+		var/datum/character/C = new( ckey, 0, 0 )
 
 		var/age = 30
 		//Character
