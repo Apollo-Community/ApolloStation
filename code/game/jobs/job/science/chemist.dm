@@ -15,7 +15,7 @@
 
 /datum/job/chemist/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
-	H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/headset_sci(H), slot_l_ear)
+	H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/headset_medsci(H), slot_l_ear)
 	H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/chemist(H), slot_w_uniform)
 	H.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/white(H), slot_shoes)
 	H.equip_to_slot_or_qdel(new /obj/item/device/pda/chemist(H), slot_belt)
