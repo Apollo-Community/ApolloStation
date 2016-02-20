@@ -21,32 +21,29 @@
 	. += "</center><hr>"
 
 	// APPEARENCE
-	. += "<table border='1' width='100%'><tr><td valign='top'>"
-	. += "<table width='100%'>"
-	. += "<tr>"
-	. += "<td>"
-	. += "<table width='100%'><tr>"
-	. += "<td><b>Name:</b></td>"
+	. += "<table><tr><td valign='top'>"
+	. += "<table class='outline'><tr>"
+	. += "<th>Name:</th>"
 	if( new_character )
 		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=name'><b>[name]</b></a></td>"
-		. += "<td>(<a href='byond://?src=\ref[src];character=[menu_name];task=name_random'>Randomize</A>)</td>"
+		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=name_random'>Randomize</A></td>"
 	else
 		. += "<td>[name]</td>"
 	. += "</tr>"
 
 	. += "<tr>"
-	. += "<td><b>Gender:</b></td>"
+	. += "<th>Gender:</th>"
 	if( new_character )
 		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a></td>"
 	else
 		. += "<td>[gender == MALE ? "Male" : "Female"]</td>"
-	. += "<td rowspan='3'><table width='100%'><tr><td style='text-align:center'>"
+	. += "<td rowspan='3'><table><tr><td style='text-align:center'>"
 	. += "<img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64>"
 	. += "</td></tr></table></td>"
 	. += "</tr>"
 
 	. += "<tr>"
-	. += "<td><b>Age:</b></td>"
+	. += "<th>Age:</th>"
 	if( new_character )
 		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=age'>[age]</a></td>"
 	else
@@ -54,15 +51,13 @@
 	. += "</tr>"
 
 	. += "<tr>"
-	. += "<td><b>Species:</b></td>"
+	. += "<th>Species:</th>"
 	if( new_character )
 		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=species_menu'>[species]</a></td>"
 	else
 		. += "<td>[species]</td>"
 	. += "</tr>"
-
 	. += "</table>"
-	. += "</td></tr></table>"
 
 	. += "</td><td valign='top'>"
 
@@ -76,15 +71,15 @@
 			if(G && !G.account)
 				total_cost += G.cost
 
-	. += "<table border='1' width='100%'>"
+	. += "<table class='border'>"
 	. += "<tr>"
-	. += "<td><b>Custom Loadout</b>:</td>"
-	. += "<td>[total_cost] / [MAX_GEAR_COST] points</td>"
-	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=loadout_add'>\[add\]</a>"
+	. += "<th>Custom Loadout:</th>"
+	. += "<th>[total_cost] / [MAX_GEAR_COST] points</th>"
+	. += "<th><a href='byond://?src=\ref[src];character=[menu_name];task=loadout_add'>add</a>"
 	if(gear && gear.len)
-		. += " / <a href='byond://?src=\ref[src];character=[menu_name];task=loadout_clear'>\[clear\]</a></td>"
+		. += " / <a href='byond://?src=\ref[src];character=[menu_name];task=loadout_clear'>clear</a></th>"
 	else
-		. += "</td>"
+		. += "</th>"
 
 	//. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=acc_items'><b>Account Items</b></a></td>"
 	. += "</tr>"
@@ -100,7 +95,7 @@
 				else
 					. += "<td>(Account)</td>"
 
-				. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=loadout_remove;gear=[i]'>\[remove\]</a></td>"
+				. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=loadout_remove;gear=[i]'>remove</a></td>"
 				. += "</tr>"
 	else
 		. += "<td colspan='3'>None.</td>"
@@ -109,90 +104,88 @@
 	. += "</table>"
 	. += "</td></tr></table>"
 
-	. += "<table border='1' width='100%'>"
+	. += "<table>"
 	. += "<tr>"
-	. += "<td colspan='3' style='text-align:center'><b>Body</b> (<a href='byond://?src=\ref[src];character=[menu_name];task=all_random'>Randomize</A>)</td>"
+	. += "<th colspan='3' style='text-align:center'><b>Body</b> <a href='byond://?src=\ref[src];character=[menu_name];task=all_random'>Randomize</A></th>"
 	. += "</tr>"
 	. += "<tr>"
 	. += "<td valign='top'>"
-	. += "<table width='100%'><tr><td>"
-	. += "<table width='100%'>"
+	. += "<table><tr><td valign='top'>"
+
+	. += "<table class='outline'>"
 	if( S.flags & IS_SYNTHETIC )
 		. += "<tr>"
-		. += "<td rowspan='2' valign='top'><b>Monitor:</b></td>"
+		. += "<th rowspan='2'>Monitor:</th>"
 		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=hair_style'>[hair_style]</a></td>"
 		. += "</tr>"
 	else if( !( S.flags & IS_PLANT ))
 		. += "<tr>"
-		. += "<td rowspan='2' valign='top'><b>Hair:</b></td>"
-		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=hair_color'>Color</a>"
-		. += "  <table style='display:inline;' bgcolor='[hair_color]'><tr><td><font face='fixedsys' size='3' color='[hair_color]'>__</font></td></tr></table></td>"
+		. += "<th rowspan='2'>Hair:</th>"
+		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=hair_color'>Color</a></td>"
+		. += "<td><table style='display:inline; background-color:[hair_color]; border-collapse:collapse;'><tr><td><font face='fixedsys' size='3' color='[hair_color]'>__</font></td></tr></table></td>"
 		. += "</tr>"
 
 		. += "<tr>"
-		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=hair_style'>[hair_style]</a></td>"
+		. += "<td colspan='2'><a href='byond://?src=\ref[src];character=[menu_name];task=hair_style'>[hair_style]</a></td>"
 		. += "</tr>"
 
 		. += "<tr>"
-		. += "<td rowspan='2' valign='top'><b>Facial Hair:</b></td>"
-		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=hair_face_color'>Color</a>"
-		. += "  <table style='display:inline;' bgcolor='[hair_face_color]'><tr><td><font face='fixedsys' size='3' color='[hair_face_color]'>__</font></td></tr></table></td>"
+		. += "<th rowspan='2'><b>Facial Hair:</b></th>"
+		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=hair_face_color'>Color</a></td>"
+		. += "<td><table style='display:inline; background-color:[hair_face_color]; border-collapse:collapse;'><tr><td><font face='fixedsys' size='3' color='[hair_face_color]'>__</font></td></tr></table></td>"
 		. += "</tr>"
 
 		. += "<tr>"
-		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=hair_face_style'>[hair_face_style]</a></td>"
+		. += "<td colspan='2'><a href='byond://?src=\ref[src];character=[menu_name];task=hair_face_style'>[hair_face_style]</a></td>"
 		. += "</tr>"
 
 	if( S.flags & HAS_EYE_COLOR )
 		. += "<tr>"
-		. += "<td><b>Eyes:</b></td>"
-		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=eye_color'>Color</a>"
-		. += "  <table style='display:inline;' bgcolor='[eye_color]'><tr><td><font face='fixedsys' size='3' color='[eye_color]'>__</font></td></tr></table></td>"
+		. += "<th>Eyes:</th>"
+		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=eye_color'>Color</a></td>"
+		. += "<td><table style='display:inline; background-color:[eye_color]; border-collapse:collapse;'><tr><td><font face='fixedsys' size='3' color='[eye_color]'>__</font></td></tr></table></td>"
 		. += "</tr>"
 
 	if( S.flags & HAS_SKIN_COLOR || S.flags & HAS_SKIN_TONE )
 		. += "<tr>"
-		. += "<td rowspan='2' valign='top'><b>Skin:</b></td>"
+		. += "<th rowspan='2' valign='top'>Skin:</th>"
 		if( S.flags & HAS_SKIN_TONE )
 			. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=skin_tone'>Tone: [-skin_tone+SKIN_TONE_DEFAULT]/[SKIN_TONE_MAX]</a></td>"
 		if( S.flags & HAS_SKIN_COLOR )
-			. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=skin_color'>Color</a>"
-			. += "  <table style='display:inline;' bgcolor='[skin_color]'><tr><td><font face='fixedsys' size='3' color='[skin_color]'>__</font></td></tr></table></td>"
+			. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=skin_color'>Color</a></td>"
+			. += "<td><table style='display:inline; background-color:[skin_color]; border-collapse:collapse;'><tr><td><font face='fixedsys' size='3' color='[skin_color]'>__</font></td></tr></table></td>"
 		. += "</tr>"
 	. += "</table>"
-	. += "</td></tr></table>"
 
 	. += "</td><td valign='top'>"
 
-	. += "<table width='100%'>"
-	. += "<tr><td>"
-	. += "<table width='100%'>"
+	. += "<table class='outline'>"
 	if( S.flags & HAS_UNDERWEAR )
 		. += "<tr>"
-		. += "<td><b>Underwear:</b></td>"
+		. += "<th>Underwear:</th>"
 		if(gender == MALE)
 			. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=underwear'>[underwear_m[underwear]]</a></td>"
 		else
 			. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=underwear'>[underwear_f[underwear]]</a></td>"
 
 		. += "<tr>"
-		. += "<td><b>Undershirt:</b></td>"
+		. += "<th>Undershirt:</th>"
 		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=undershirt'>[undershirt_t[undershirt]]</a></td>"
 		. += "</tr>"
 
 	. += "<tr>"
-	. += "<td><b>Backpack Type:</b></td>"
+	. += "<th>Backpack Type:</th>"
 	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=backpack'>[backpacklist[backpack]]</a></td>"
 	. += "</tr>"
 	. += "</table>"
-	. += "</td></tr></table>"
+
 	. += "</td><td valign='top'>"
 
 	if( !( S.flags & NO_ROBO_LIMBS ))
-		. += "<table border='1' width='100%'>"
+		. += "<table class='border'>"
 		. += "<tr>"
-		. += "<td><b>Organs \& Limbs:</b></td>"
-		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=organs_adjust'>Adjust</a></td>"
+		. += "<th>Organs \& Limbs:</th>"
+		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=organs_adjust'>Aajust</a></td>"
 		. += "</tr>"
 
 		//display limbs below
@@ -242,29 +235,31 @@
 						. += "<td>Retinal overlayed [organ_name]</td>"
 					else
 						. += "<td>Mechanically assisted [organ_name]</td>"
-			. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=limbs_organ_remove;limb=[name]'>\[remove\]</a></td>"
+			. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=limbs_organ_remove;limb=[name]'>remove</a></td>"
 			. += "</tr>"
 		if( !organ_count )
 			. += "<tr>"
 			. += "<td colspan='2'>None</td>"
 			. += "</tr>"
 		. += "</table>"
+	. += "</td></tr></table>"
+
 	. += "</td></tr>"
 
 	. += "<tr><td colspan='3'>"
-	. += "<table width='100%' border='1'>"
+	. += "<table class='border'>"
 	. += "<col width='90'>"
 	. += "<tr>"
-	. += "<td colspan='3'><center><b>Flavor Text</b></center></td>"
+	. += "<th colspan='3'>Flavor Text</th>"
 	. += "</tr>"
 
 	. += "<tr>"
-	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=human'><b>Humanoids</a>:</b></td>"
+	. += "<th><a href='byond://?src=\ref[src];character=[menu_name];task=human'>Humanoids</a>:</th>"
 	. += "<td>[TextPreview(flavor_texts_human)]</td>"
 	. += "</tr>"
 
 	. += "<tr>"
-	. += "<td><a href ='byond://?src=\ref[src];character=[menu_name];task=robot'><b>Cyborg</a>:</b></td>"
+	. += "<th><a href ='byond://?src=\ref[src];character=[menu_name];task=robot'>Cyborg</a>:</th>"
 	. += "<td>[TextPreview(flavor_texts_robot)]</td>"
 	. += "</tr>"
 
@@ -275,19 +270,20 @@
 
 	. += "<hr><center>"
 	if(!IsGuestKey(user.key))
-		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=save'>\[Save Setup\]</a> - "
+		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=save'>Save Setup</a> - "
 		if( !temporary )
-			. += "<a href='byond://?src=\ref[src];character=[menu_name];task=reset'>\[Reset Changes\]</a> - "
+			. += "<a href='byond://?src=\ref[src];character=[menu_name];task=reset'>Reset Changes</a> - "
 
-	. += "<a href='byond://?src=\ref[src];character=[menu_name];task=close'>\[Done\]</a>"
+	. += "<a href='byond://?src=\ref[src];character=[menu_name];task=close'>Done</a>"
 	. += "</center>"
 	. += "</body></html>"
 
-	user << browse( ., "window=[menu_name];size=710x560;can_close=0" )
-	winshow( user, "edit_character", 1 )
+	menu.set_user( user )
+	menu.set_content( . )
+	menu.open()
 
 /datum/character/proc/EditCharacterMenuDisable( mob/user )
-	winshow( user, "edit_character", 0)
+	menu.close()
 
 /datum/character/proc/EditCharacterMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )

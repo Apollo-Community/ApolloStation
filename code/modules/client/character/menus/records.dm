@@ -16,27 +16,24 @@
 	. += "<table width='100%'>"
 	. += "<tr><td colspan='2' valign='top'>"
 
-	//. += "<table border='1' width='100%'><tr><td valign='top'>"
-
-	. += "<table width='100%' border='1'>"
-	. += "<col width='160'>"
+	. += "<table class='border'>"
 	. += "<tr>"
-	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=med_record'><b>Medical Records</b></a></td>"
+	. += "<th style='width:175px'><a href='byond://?src=\ref[src];character=[menu_name];task=med_record'>Medical Records</a></th>"
 	. += "<td>[TextPreview(med_record,40)]</td>"
 	. += "</tr>"
 
 	. += "<tr>"
-	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=gen_record'><b>Employment Records</b></a></td>"
+	. += "<th style='width:175px'><a href='byond://?src=\ref[src];character=[menu_name];task=gen_record'>Employment Records</a></th>"
 	. += "<td>[TextPreview(gen_record,40)]</td>"
 	. += "</tr>"
 
 	. += "<tr>"
-	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=sec_record'><b>Security Records</b></a></td>"
+	. += "<th style='width:175px'><a href='byond://?src=\ref[src];character=[menu_name];task=sec_record'>Security Records</a></th>"
 	. += "<td>[TextPreview(sec_record,40)]</td>"
 	. += "</tr>"
 
 	. += "<tr>"
-	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=exploitable_record'><b>Exploitable Information</b></a></td>"
+	. += "<th style='width:175px'><a href='byond://?src=\ref[src];character=[menu_name];task=exploitable_record'>Exploitable Information</a></th>"
 	. += "<td>[TextPreview(exploit_record,40)]</td>"
 	. += "</tr>"
 
@@ -45,76 +42,78 @@
 	. += "</td></tr>"
 	. += "<tr><td valign='top'>"
 
-	. += "<table width='100%' border='1'>"
-	. += "<col width='160'>"
+	. += "<table class='border'>"
 	. += "<tr>"
-	. += "<td><b>Home system:</b></td>"
+	. += "<th>Home system:</th>"
 	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=home_system'>[home_system]</a></td>"
 	. += "</tr>"
 
 	. += "<tr>"
-	. += "<td><b>Citizenship:</b></td>"
+	. += "<th>Citizenship:</th>"
 	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=citizenship'>[citizenship]</a></td>"
 	. += "</tr>"
 
 	. += "<tr>"
-	. += "<td><b>Faction:</b></td>"
+	. += "<th>Faction:</th>"
 	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=faction'>[faction]</a></td>"
 	. += "</tr>"
 
 	. += "<tr>"
-	. += "<td><b>Nanotrasen Relation:</b></td>"
+	. += "<th>Nanotrasen Relation:</th>"
 	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=nt_relation'>[nanotrasen_relation]</a></td>"
 	. += "</tr>"
 
 	. += "<tr>"
-	. += "<td><b>Religion:</b></td>"
+	. += "<th>Religion:</th>"
 	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=religion'>[religion]</a></td>"
 	. += "</tr>"
 
 	. += "<tr>"
-	. += "<td><b>Secondary Language:</b></td>"
+	. += "<th>Secondary Language:</th>"
 	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=language'>[additional_language]</a></td>"
 	. += "</tr>"
 
 	. += "<tr>"
-	. += "<td colspan='2'><center><a href='byond://?src=\ref[src];character=[menu_name];task=pAI'><b>pAI Configuration</b></a></center></td>"
+	. += "<td colspan='2'><center><a href='byond://?src=\ref[src];character=[menu_name];task=pAI'>pAI Configuration</a></center></td>"
 	. += "</tr>"
 
 	. += "</table>"
 
 	. += "</td><td valign='top'>"
 
-	. += "<table width='100%' border='1'>"
-	. += "<col width='140'>"
+	. += "<table class='border'>"
 	if( !( S.flags & NO_BLOOD ))
 		. += "<tr>"
-		. += "<td><b>Blood Type:</b></td>"
+		. += "<th>Blood Type:</th>"
 		. += "<td>[blood_type]</td>"
 		. += "</tr>"
 
-	. += "<tr>"
-	. += "<td><b>DNA:</b></td>"
-	. += "<td>[DNA]</td>"
-	. += "</tr>"
+	if( !( S.flags & IS_SYNTHETIC ) && !( S.flags & IS_PLANT ))
+		. += "<tr>"
+		. += "<th>DNA:</th>"
+		. += "<td>[DNA]</td>"
+		. += "</tr>"
 
 	. += "<tr>"
-	. += "<td><b>Fingerprint:</b></td>"
+	. += "<th>Fingerprint:</th>"
 	. += "<td>[fingerprints]</td>"
 	. += "</tr>"
 
 	. += "<tr>"
-	. += "<td><b>Birth Date:</b></td>"
+	if( !( S.flags & IS_SYNTHETIC ))
+		. += "<th>Birth Date:</th>"
+	else
+		. += "<th>Production Date:</th>"
 	. += "<td>[print_birthdate()]</td>"
 	. += "</tr>"
 
 	. += "<tr>"
-	. += "<td><b>Needs Glasses:</b></td>"
+	. += "<th>Needs Glasses:</th>"
 	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=disabilities'>[disabilities == 0 ? "No" : "Yes"]</a></td>"
 	. += "</tr>"
 
 	. += "<tr>"
-	. += "<td><b>Spawn Point:</b></td>"
+	. += "<th>Spawn Point:</th>"
 	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=spawnpoint'>[spawnpoint]</a></td>"
 	. += "</tr>"
 
@@ -125,19 +124,19 @@
 
 	. += "<hr><center>"
 	if(!IsGuestKey(user.key))
-		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=save'>\[Save Setup\]</a> - "
-		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=reset'>\[Reset Changes\]</a> - "
+		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=save'>Save Setup</a> - "
+		. += "<a href='byond://?src=\ref[src];character=[menu_name];task=reset'>Reset Changes</a> - "
 
-	. += "<a href='byond://?src=\ref[src];character=[menu_name];task=close'>\[Done\]</a>"
+	. += "<a href='byond://?src=\ref[src];character=[menu_name];task=close'>Done</a>"
 	. += "</center>"
 	. += "</body></html>"
 
-	user << browse(., "window=[menu_name];size=710x560;can_close=0")
-	winshow( user, "[menu_name]", 1)
-	return
+	menu.set_user( user )
+	menu.set_content( . )
+	menu.open()
 
 /datum/character/proc/RecordsMenuDisable( mob/user )
-	winshow( user, "records_menu", 0)
+	menu.close()
 
 /datum/character/proc/RecordsMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )

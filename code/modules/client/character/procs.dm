@@ -674,7 +674,6 @@
 		. |= D.getAllPositionNamesWithPriority()
 		. |= department.getAllPositionNamesWithPriority()
 
-	if( succession_level )
 	for( var/role in . )
 		var/datum/job/J = job_master.GetJob( role )
 		if( !J )

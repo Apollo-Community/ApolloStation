@@ -43,10 +43,10 @@
 
 
 /datum/character/proc/SwitchMenuProcess( mob/user, list/href_list )
-	EditCharacterMenuDisable( user )
+/*	EditCharacterMenuDisable( user )
 	JobChoicesMenuDisable( user )
 	RecordsMenuDisable( user )
-	AntagOptionsMenuDisable( user )
+	AntagOptionsMenuDisable( user )*/
 
 	switch( href_list["task"] )
 		if( "edit_character_menu" )
