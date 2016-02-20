@@ -472,6 +472,10 @@
 		return 0
 
 	proc/close_spawn_windows()
+		winshow( src, "client_menu", 0)
+		winshow( src, "select_character_menu", 0)
+		winshow( src, "pref_menu", 0)
+
 		src << browse(null, "window=latechoices") //closes late choices window
 		src << browse(null, "window=playersetup") //closes the player setup window
 

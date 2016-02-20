@@ -13,6 +13,7 @@
 	. += "<b>Antag Options</b>"
 	. += "<hr>"
 
+	. += "<div class='block'><center>"
 	. += "Uplink Type : <b><a href='byond://?src=\ref[src];character=[menu_name];task=uplinktype;active=1'>[uplink_location]</a></b>"
 	. += "<br>"
 
@@ -36,6 +37,8 @@
 				else
 					. += "<b>Be [i]:</b> <a href='byond://?src=\ref[src];character=[menu_name];task=job_antag;num=[n]'><b>[src.job_antag&(1<<n) ? "Yes" : "No"]</b></a><br>"
 			n++
+
+	. += "</center></div>"
 
 	. += "<hr><center>"
 	if(!IsGuestKey(user.key))
