@@ -27,7 +27,7 @@
 /datum/job/supply_tech/make_preview_icon( var/backpack )
 	var/icon/clothes_s = null
 
-	clothes_s = new /icon('icons/mob/uniform.dmi', "cargotech_s")
+	clothes_s = new /icon('icons/mob/uniform.dmi', "cargo_s")
 	clothes_s.Blend(new /icon('icons/mob/feet.dmi', "black"), ICON_UNDERLAY)
 	clothes_s.Blend(new /icon('icons/mob/hands.dmi', "bgloves"), ICON_UNDERLAY)
 	if(prob(1))

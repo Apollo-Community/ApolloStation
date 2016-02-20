@@ -7,8 +7,8 @@
 	spawn_positions = 3
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
-	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_xenoarch)
-	minimal_access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
+	access = list( access_research )
+	minimal_access = list( access_research )
 	alt_titles = list("Xenoarcheologist", "Anomalist", "Phoron Researcher", "Xenobotanist", "Research Assistant")
 
 	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL

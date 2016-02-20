@@ -59,6 +59,9 @@
 	. += "</table>"
 
 	. += "<table width='100%'>"
+	. += "<tr><td colspan='[dep_jobs.len]'>"
+	. += "<center>Get promoted by heads of staff to unlock more roles</center>"
+	. += "</td></td>"
 	. += "<tr>"
 
 	for( var/datum/department/D in dep_jobs )
@@ -227,6 +230,11 @@
 	for( var/datum/department/D in job_master.departments )
 		var/list/dep_positions = jobs & D.positions
 		if( dep_positions.len )
+			if( D.department_id == SYNTHETIC )
+				departments.Cut()
+				departments[D] = organizeJobBySuccession( dep_positions )
+				break
+
 			departments[D] = organizeJobBySuccession( dep_positions )
 
 	return departments

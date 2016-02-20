@@ -4,10 +4,10 @@
 	department_id = MEDICAL
 	faction = "Station"
 	total_positions = 5
-	spawn_positions = 3
+	spawn_positions = 4
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
-	access = list(access_medical, access_morgue, access_chemistry)
+	access = list(access_medical, access_morgue)
 	minimal_access = list(access_medical, access_morgue)
 
 	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL

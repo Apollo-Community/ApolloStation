@@ -9,7 +9,7 @@
 	selection_color = "#ffeeee"
 	alt_titles = list("Security Cadet")
 	access = list(access_security, access_sec_doors, access_court, access_maint_tunnels )
-	minimal_access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
+	minimal_access = list(access_security, access_sec_doors, access_court, access_maint_tunnels)
 
 	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL
 
@@ -35,7 +35,7 @@
 /datum/job/cadet/make_preview_icon( var/backpack )
 	var/icon/clothes_s = null
 
-	clothes_s = new /icon('icons/mob/uniform.dmi', "redshirt2")
+	clothes_s = new /icon('icons/mob/uniform.dmi', "redshirt2_s")
 	clothes_s.Blend(new /icon('icons/mob/feet.dmi', "jackboots"), ICON_UNDERLAY)
 	if(prob(1))
 		clothes_s.Blend(new /icon('icons/mob/head.dmi', "officerberet"), ICON_OVERLAY)

@@ -10,11 +10,11 @@
 	var/region_access = list()
 
 /datum/department/New()
-	..()
-
 	for( var/datum/job/job in job_master.occupations )
 		if( job.department_id == department_id )
 			positions += job
+
+	..()
 
 /datum/department/proc/getPromotablePositionNames()
 	var/list/names = list()
@@ -100,6 +100,8 @@
 
 /datum/department/synthetic/New()
 	region_access = get_all_accesses()
+
+	..()
 
 // for eventual command department
 //list(access_heads, access_RC_announce, access_keycard_auth, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_tcomsat, access_gateway, access_all_personal_lockers, access_heads_vault, access_hop, access_captain)
