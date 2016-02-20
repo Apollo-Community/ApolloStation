@@ -80,6 +80,13 @@
 			if( istype( O, /obj/item/weapon/paper/form/command_recommendation ))
 				ping( "\The [src] pings, \"[C.name] has been recommended for additional command positions!\"" )
 				C.addRecordNote( "general", F.info, "Command Recommendation" )
+				var/obj/item/rcvdcopy
+
+				rcvdcopy = copy(F)
+				rcvdcopy.loc = null //hopefully this shouldn't cause trouble
+				adminfaxes += rcvdcopy
+
+				src.message_admins( user, "CENTCOMM FAX", rcvdcopy, "#006100" )
 			else if( istype( O, /obj/item/weapon/paper/form/job ))
 				var/obj/item/weapon/paper/form/job/J = O
 				var/datum/job/job_datum
@@ -541,6 +548,13 @@
 		return 1
 	return 0
 
+/obj/machinery/computer/card/proc/message_admins(var/mob/sender, var/faxname, var/obj/item/sent, font_colour="#006100")
+	var/msg = "<span class='notice'><b><font color='[font_colour]'>[faxname]: </font>[key_name(sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) </b>: Receiving '[sent.name]' via secure connection ... <a href='?_src_=holder;AdminFaxView=\ref[sent]'>view message</a></span>"
+	log_admin(msg)
+	for(var/client/C in admins)
+		if(R_ADMIN & C.holder.rights)
+			C << msg
+
 /obj/machinery/computer/card/centcom
 	name = "\improper CentCom promotions console"
 	circuit = "/obj/item/weapon/circuitboard/card/centcom"
@@ -548,3 +562,35 @@
 
 /obj/machinery/computer/card/centcom/is_centcom()
 	return 1
+
+/obj/machinery/computer/card/proc/copy(var/obj/item/weapon/paper/copy)
+	var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)
+
+	c.info = "<font color = #101010>"
+
+	var/copied = html_decode(copy.info)
+	copied = replacetext(copied, "<font face=\"[c.deffont]\" color=", "<font face=\"[c.deffont]\" nocolor=")	//state of the art techniques in action
+	copied = replacetext(copied, "<font face=\"[c.crayonfont]\" color=", "<font face=\"[c.crayonfont]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
+	c.info += copied
+	c.info += "</font>"
+	c.name = copy.name // -- Doohl
+	c.fields = copy.fields
+	c.stamps = copy.stamps
+	c.stamped = copy.stamped
+	c.ico = copy.ico
+	c.offset_x = copy.offset_x
+	c.offset_y = copy.offset_y
+	var/list/temp_overlays = copy.overlays       //Iterates through stamps
+	var/image/img                                //and puts a matching
+	for (var/j = 1, j <= temp_overlays.len, j++) //gray overlay onto the copy
+		if (findtext(copy.ico[j], "cap") || findtext(copy.ico[j], "cent"))
+			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-circle")
+		else if (findtext(copy.ico[j], "deny"))
+			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-x")
+		else
+			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-dots")
+		img.pixel_x = copy.offset_x[j]
+		img.pixel_y = copy.offset_y[j]
+		c.overlays += img
+	c.updateinfolinks()
+	return c
