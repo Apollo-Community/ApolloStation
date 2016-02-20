@@ -303,7 +303,7 @@
 			if(href_list["allowed"])
 				if(is_authenticated())
 					if( !modifyingSubordinate() )
-						buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
+						buzz( "\The [src] buzzes, \"Not authorized to modify this card!\"" )
 						return
 
 					var/access_type = text2num(href_list["access_target"])
@@ -316,7 +316,7 @@
 		if ("assign")
 			if( is_authenticated() && modify && modifyingSubordinate() )
 				if( !modifyingSubordinate() )
-					buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
+					buzz( "\The [src] buzzes, \"Not authorized to modify this card!\"" )
 					return
 
 				var/t1 = href_list["assign_target"]
@@ -351,7 +351,7 @@
 		if ("reg")
 			if (is_authenticated())
 				if( !modifyingSubordinate() )
-					buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
+					buzz( "\The [src] buzzes, \"Not authorized to modify this card!\"" )
 					return
 
 				var/t2 = modify
@@ -366,7 +366,7 @@
 		if ("account")
 			if (is_authenticated())
 				if( !modifyingSubordinate() )
-					buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
+					buzz( "\The [src] buzzes, \"Not authorized to modify this card!\"" )
 					return
 
 				var/t2 = modify
@@ -410,7 +410,7 @@
 		if ("terminate")
 /*			if (is_authenticated() && is_centcom())
 				if( !modifyingSubordinate() )
-					buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
+					buzz( "\The [src] buzzes, \"Not authorized to modify this card!\"" )
 
 				ping( "\The [src] pings, \"[modify.registered_name] has been fired from NanoTrasen.\"")
 
@@ -423,7 +423,7 @@
 				callHook("terminate_employee", list(modify))
 			else*/
 			if( !modifyingSubordinate() )
-				buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
+				buzz( "\The [src] buzzes, \"Not authorized to modify this card!\"" )
 				return
 
 			var/list/names = list( scan.registered_name )
@@ -449,7 +449,7 @@
 				return
 
 			if( !modifyingSubordinate() )
-				buzz( "\The [src] buzzes, \"Cannot modify a superior's card!" )
+				buzz( "\The [src] buzzes, \"Not authorized to modify this card!" )
 				return
 
 			var/list/names = list( modify.registered_name, scan.registered_name )
@@ -471,7 +471,7 @@
 				return
 
 			if( !modifyingSubordinate() )
-				buzz( "\The [src] buzzes, \"Cannot modify a superior's card!" )
+				buzz( "\The [src] buzzes, \"Not authorized to modify this card!" )
 				return
 
 			var/job_name = href_list["promote_role"]
@@ -495,7 +495,7 @@
 				return
 
 			if( !modifyingSubordinate() )
-				buzz( "\The [src] buzzes, \"Cannot modify a superior's card!\"" )
+				buzz( "\The [src] buzzes, \"Not authorized to modify this card!\"" )
 				return
 
 			var/job_name = href_list["demote_role"]

@@ -60,7 +60,7 @@
 
 	. += "<table width='100%'>"
 	. += "<tr><td colspan='[dep_jobs.len]'>"
-	. += "<center>Get promoted by heads of staff to unlock more roles</center>"
+	. += "<center>Get promoted by heads of staff to unlock more roles!</center>"
 	. += "</td></td>"
 	. += "<tr>"
 

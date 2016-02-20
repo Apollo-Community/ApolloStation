@@ -675,9 +675,15 @@
 		. |= department.getAllPositionNamesWithPriority()
 
 	if( succession_level )
-		for( var/datum/job/J in . )
-			if( J.rank_succesion_level >= succession_level )
-				. -= J
+	for( var/role in . )
+		var/datum/job/J = job_master.GetJob( role )
+		if( !J )
+			continue
+
+		if( J.rank_succesion_level < succession_level )
+			continue
+
+		. -= J
 
 	. -= getAllDemotablePositions()
 
