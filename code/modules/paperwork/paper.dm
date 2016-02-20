@@ -628,6 +628,21 @@ Upon signature of this document by the employee, and witnessed by the Department
 
 	..(set_job)
 
+/obj/item/weapon/paper/form/command_recommendation
+	name = "NanoTrasen Command Recommendation Form"
+
+/obj/item/weapon/paper/form/command_recommendation/New( var/date, var/name )
+	info = {"\[center\]\[logo\]\[/center\]
+\[center\]\[b\]\[i\]NanoTrasen Command Recommendation Form\[/b\]\[/i\]\[/center\]\[hr\]
+Upon signature of this document by one or several Command Officers on [date], [name] is hereby recommended for expanded responsibilities as a member of command staff. The signer of this form recognizes the potential in [name], and understands their skills to be a valuable addition to command. Misuse of this form may result in the Command Officer being pressed with criminal charges.\[br\]
+
+\[b\]Cause for Recommendation:\[/b\] \[field\]
+\[b\]Recommended Position:\[/b\] \[field\]
+\[b\]Command Officer(s) Signature(s):\[/b\] \[field\]
+\[hr\]"}
+
+	..()
+
 /obj/item/weapon/paper/form/job/demotion
 	name = "NanoTrasen Employee Demotion Form"
 	job_verb = "demoted from"

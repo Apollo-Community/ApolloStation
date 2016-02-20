@@ -47,6 +47,15 @@
 		<hr>
 		
 		{{if data.has_modify}}
+			<div class='item'>
+				<div class='itemLabel'>
+					Command Recommendation:
+				</div>
+				<div class='itemContent'>
+					{{:helper.link( 'Recommend ' + data.target_owner, '', {'choice' : 'recommend'})}}
+				</div>
+			</div>
+			
 			{{if data.inducted}}
 				<div class='item'>
 					<div class='itemLabel'>

@@ -72,23 +72,28 @@
 	return
 
 /obj/machinery/computer/card/attackby( obj/O, mob/user)
-	if( istype( O, /obj/item/weapon/paper/form ))
-		var/obj/item/weapon/paper/form/job/F = O
-		if( F in due_papers )
-			if( F.isFilledOut() )
-				var/datum/character/C = due_papers[F]
+	var/obj/item/weapon/paper/form/F = O
+	if( F in due_papers )
+		if( F.isFilledOut() )
+			var/datum/character/C = due_papers[F]
+
+			if( istype( O, /obj/item/weapon/paper/form/command_recommendation ))
+				ping( "\The [src] pings, \"[C.name] has been recommended for additional command positions!\"" )
+				C.addRecordNote( "general", F.info, "Command Recommendation" )
+			else if( istype( O, /obj/item/weapon/paper/form/job ))
+				var/obj/item/weapon/paper/form/job/J = O
 				var/datum/job/job_datum
-				if( istype( F, /obj/item/weapon/paper/form/job/induct ))
-					C.SetDepartment( job_master.GetDepartmentByName( F.job ))
+				if( istype( J, /obj/item/weapon/paper/form/job/induct ))
+					C.SetDepartment( job_master.GetDepartmentByName( J.job ))
 					job_datum = C.department.getLowestPosition()
-				else if( istype( F, /obj/item/weapon/paper/form/job/termination ))
+				else if( istype( J, /obj/item/weapon/paper/form/job/termination ))
 					C.LoadDepartment( CIVILIAN )
 					job_datum = job_master.GetJob( "Assistant" )
-				else if( istype( F, /obj/item/weapon/paper/form/job/promotion ))
-					C.AddJob( F.job )
-					job_datum = job_master.GetJob( F.job )
-				else if( istype( F, /obj/item/weapon/paper/form/job/demotion ))
-					C.RemoveJob( F.job )
+				else if( istype( J, /obj/item/weapon/paper/form/job/promotion ))
+					C.AddJob( J.job )
+					job_datum = job_master.GetJob( J.job )
+				else if( istype( J, /obj/item/weapon/paper/form/job/demotion ))
+					C.RemoveJob( J.job )
 					job_datum = C.department.getLowestPosition()
 				else
 					return
@@ -103,19 +108,19 @@
 				modify.generateName()
 				callHook("reassign_employee", list(modify))
 
-				ping( "\The [src] pings, \"[C.name] has been [F.job_verb] [F.job]!\"" )
-				C.addRecordNote( "general", F.info, "[capitalize( F.job_verb )] [F.job]" )
+				ping( "\The [src] pings, \"[C.name] has been [J.job_verb] [J.job]!\"" )
+				C.addRecordNote( "general", J.info, "[capitalize( J.job_verb )] [J.job]" )
 
-				due_papers -= F
-				qdel( F )
-				ui_interact(user)
-				return
-			else
-				buzz( "\The [src] buzzes, \"This form was improperly filled out. Please try again.\"" )
+			due_papers -= F
+			qdel( F )
+			ui_interact(user)
+			return
+		else
+			buzz( "\The [src] buzzes, \"This form was improperly filled out. Please try again.\"" )
 
-				due_papers -= F
-				qdel( F )
-				return
+			due_papers -= F
+			qdel( F )
+			return
 
 	if( !istype( O, /obj/item/weapon/card/id ))
 		return ..()
@@ -479,6 +484,24 @@
 			var/list/names = list( modify.registered_name, scan.registered_name )
 
 			var/obj/item/weapon/paper/form/job/promotion/P = new( print_date( universe.date ), job_name, department_name( modify ))
+			P.required_signatures = names
+			due_papers[P] = modify.character
+			print( P )
+			spawn( 45 )
+				ping( "\The [src] pings, \"Please fill out this form and return it to this console when complete.\"" )
+
+		if( "recommend" )
+			if( !scan.character )
+				buzz("\The [src] buzzes, \"Authorized card is not tied to a NanoTrasen Employee!\"")
+				return
+
+			if( !modify.character )
+				buzz("\The [src] buzzes, \"Modification card is not tied to a NanoTrasen Employee!\"")
+				return
+
+			var/list/names = list( scan.registered_name )
+
+			var/obj/item/weapon/paper/form/command_recommendation/P = new( print_date( universe.date ), modify.registered_name )
 			P.required_signatures = names
 			due_papers[P] = modify.character
 			print( P )
