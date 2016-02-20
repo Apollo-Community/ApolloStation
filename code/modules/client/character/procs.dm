@@ -14,11 +14,9 @@
 		return 1
 
 	if( !ckey )
-		world << "No given ckey"
 		return 0
 
 	if ( IsGuestKey( ckey ))
-		world << "Is a guest ckey"
 		return 0
 
 	if( prompt && ckey )
@@ -141,7 +139,6 @@
 
 	establish_db_connection()
 	if( !dbcon.IsConnected() )
-		world << "No database connected"
 		return 0
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM characters WHERE ckey = '[variables["ckey"]]' AND name = '[variables["name"]]'")
@@ -156,12 +153,10 @@
 		if(istext(sql_id))
 			sql_id = text2num(sql_id)
 		if(!isnum(sql_id))
-			world << "Invalid SQL ID"
 			return 0
 
 	if(sql_id)
 		if( names.len != values.len )
-			world << "Names length does not equal values length"
 			return 0
 
 		var/query_params = ""
@@ -173,7 +168,6 @@
 		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
 		var/DBQuery/query_update = dbcon.NewQuery("UPDATE characters SET [query_params] WHERE ckey = '[variables["ckey"]]' AND name = '[variables["name"]]'")
 		if( !query_update.Execute())
-			world << "Could not update"
 			return 0
 	else
 		var/query_names = list2text( names, "," )
@@ -185,18 +179,15 @@
 		// This needs a single quote before query_values because otherwise there will be an odd number of single quotes
 		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO characters ([query_names]) VALUES ('[query_values])")
 		if( !query_insert.Execute() )
-			world << "Could not insert"
 			return 0
 
 	return 1
 
 /datum/character/proc/loadCharacter( var/character_name )
 	if( !ckey )
-		world << "No ckey"
 		return 0
 
 	if( !character_name )
-		world << "No character name"
 		return 0
 
 	var/list/variables = list()
@@ -288,11 +279,9 @@
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT [query_names] FROM characters WHERE ckey = '[sql_ckey]' AND name = '[sql_character_name]'")
 	if( !query.Execute() )
-		world << "Could not run select query"
 		return 0
 
 	if( !query.NextRow() )
-		world << "Not a character in database"
 		return 0
 
 	new_character = 0 // If we're loading from the database, we're obviously a pre-existing character

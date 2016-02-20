@@ -1,14 +1,3 @@
-/proc/ShowChainOfCommand()
-	for( var/i = 0; i < 20; i++ )
-		var/job_found = 0
-		for( var/datum/job/job in job_master.occupations )
-			if( job.rank_succesion_level == i )
-				job_found = 1
-				world << "[job.title]"
-
-		if( job_found )
-			world << "Succesion level: [i]"
-
 /datum/character/proc/GetPlayerAltTitle(datum/job/job)
 	return player_alt_titles.Find(job.title) > 0 \
 		? player_alt_titles[job.title] \
