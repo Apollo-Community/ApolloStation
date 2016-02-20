@@ -55,7 +55,6 @@
 		if(istext(sql_id))
 			sql_id = text2num(sql_id)
 		if(!isnum(sql_id))
-			world << "Invalid sql_id!"
 			return
 
 	// Ckey join date
