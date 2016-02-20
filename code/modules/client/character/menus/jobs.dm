@@ -121,13 +121,13 @@
 			else
 				. += "<a href='byond://?src=\ref[src];character=[menu_name];task=input;text=[role]'>"
 				if( GetJobLevel( role ) == "High" )
-					. += "<font color=#cceeff>HIGH</font>"
+					. += "<font color=#80ffff>HIGH</font>"
 				else if( GetJobLevel( role ) == "Medium" )
-					. += "<font color=#ccffcc>MEDIUM</font>"
+					. += "<font color=#66ff66>MEDIUM</font>"
 				else if( GetJobLevel( role ) == "Low" )
-					. += "<font color=#ffd9b3>LOW</font>"
+					. += "<font color=#ffff66>LOW</font>"
 				else
-					. += "<font color=#ffcccc>NEVER</font>"
+					. += "<font color=#ff6666>NEVER</font>"
 				. += "</a>"
 
 			. += "</td>"
