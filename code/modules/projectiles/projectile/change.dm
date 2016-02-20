@@ -64,8 +64,8 @@
 				new_mob.name += " [pick(last_names)]"
 				new_mob.real_name = new_mob.name
 
-				var/datum/preferences/A = new()	//Randomize appearance for the human
-				A.randomize_appearance_for(new_mob)
+				var/datum/character/C = new()	//Randomize appearance for the human
+				C.randomize_appearance_for(new_mob)
 			else
 				return
 

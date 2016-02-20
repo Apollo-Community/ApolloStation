@@ -39,22 +39,21 @@ datum/controller/game_controller/New()
 datum/controller/game_controller/proc/setup()
 	world.tick_lag = config.Ticklag
 
-	// Pick a new race to unwhitelist for today's week
-	var/deciseconds_in_week = 6048000
-	var/selected_race = ((world.realtime/deciseconds_in_week) % whitelisted_aliens.len)
-	if( selected_race && selected_race < whitelisted_aliens.len )
-		unwhitelisted_alien = whitelisted_aliens[selected_race]
-	else
-		unwhitelisted_alien = "Wryn"
-
-	unwhitelisted_aliens.Add(unwhitelisted_alien)
-
 	setup_objects()
 	setupgenetics()
 	SetupXenoarch()
 
-	transfer_controller = new
+	// Pick a new race to unwhitelist for today's week
+	var/deciseconds_in_week = DECISECONDS_IN_SECOND*SECONDS_IN_WEEK
+	var/selected_race = ((world.realtime/deciseconds_in_week) % whitelisted_species.len)
+	if( selected_race && selected_race < whitelisted_species.len )
+		unwhitelisted_alien = whitelisted_species[selected_race]
+	else
+		unwhitelisted_alien = "Wryn"
 
+	whitelisted_species -= unwhitelisted_alien
+
+	transfer_controller = new
 
 datum/controller/game_controller/proc/setup_objects()
 	admin_notice("<span class='danger'>Initializing objects</span>", R_DEBUG)

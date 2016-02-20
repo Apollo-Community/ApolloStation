@@ -23,13 +23,15 @@
 	var/stamps		//The (text for the) stamps on the paper.
 	var/fields		//Amount of user created fields
 	var/list/stamped
+	var/list/signatures = list()
 	var/ico[0]      //Icons and
 	var/offset_x[0] //offsets stored for later
 	var/offset_y[0] //usage by the photocopier
 	var/rigged = 0
 	var/spam_flag = 0
+	var/encode_html = 1
 
-	var/const/deffont = "Verdana"
+	var/deffont = "Verdana"
 	var/const/signfont = "Times New Roman"
 	var/const/crayonfont = "Comic Sans MS"
 
@@ -44,7 +46,7 @@
 	if(name != "paper")
 		desc = "This is a paper titled '" + name + "'."
 
-	if(info != initial(info))
+	if( encode_html && info != initial(info))
 		info = html_encode(info)
 		info = replacetext(info, "\n", "<BR>")
 		info = parsepencode(info)
@@ -189,14 +191,22 @@
 	info = null
 	stamps = null
 	stamped = list()
+	signatures = list()
 	overlays.Cut()
 	updateinfolinks()
 	update_icon()
 
 /obj/item/weapon/paper/proc/get_signature(var/obj/item/weapon/pen/P, mob/user as mob)
+	var/signature
+
 	if(P && istype(P, /obj/item/weapon/pen))
-		return P.get_signature(user)
-	return (user && user.real_name) ? user.real_name : "Anonymous"
+		signature = P.get_signature(user)
+	else
+		signature = (user && user.real_name) ? user.real_name : "Anonymous"
+
+	signatures += signature
+
+	return signature
 
 /obj/item/weapon/paper/proc/parsepencode(var/t, var/obj/item/weapon/pen/P, mob/user as mob, var/iscrayon = 0)
 //	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
@@ -236,6 +246,7 @@
 		t = replacetext(t, "\[row\]", "</td><tr>")
 		t = replacetext(t, "\[cell\]", "<td>")
 		t = replacetext(t, "\[time]", "<font face=\"[signfont]\"><i>[worldtime2text()]</i></font>")	// Adds ability to add a timestamp for added document security.
+		t = replacetext(t, "\[date]", "<font face=\"[signfont]\"><i>[print_date( universe.date )]</i></font>")	// Adds ability to add a timestamp for added document security.
 		t = replacetext(t, "\[logo\]", "<img src = logo-nt.png>")
 		t = replacetext(t, "\[apollo\]", "<img src = logo-apollo.png>")
 		t = replacetext(t, "\[antilogo\]", "<img src = logo-anti.png>")	// Adds alternative anti-NT logo.
@@ -381,6 +392,8 @@
 
 		update_icon()
 
+/obj/item/weapon/paper/proc/WriteWindow( var/user )
+	user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]")
 
 /obj/item/weapon/paper/attackby(obj/item/weapon/P as obj, mob/user as mob)
 	..()
@@ -443,7 +456,7 @@
 		if ( istype(P, /obj/item/weapon/pen/robopen) && P:mode == 2 )
 			P:RenamePaper(user,src)
 		else
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]")
+			WriteWindow( user )
 		//openhelp(user)
 		return
 
@@ -542,6 +555,110 @@
 /obj/item/weapon/paper/cmo
 	name = "CMO's Outgoing Notes"
 	info = "<i><center>To the incoming CMO of Apollo:</center><br><br>I wish you and your crew well. Do take note:<br><br><br>The Medical Emergency Red Phone system has proven itself well. Take care to keep the phones in their designated places as they have been optimised for broadcast. The two handheld green radios (I have left one in this office, and one near the Emergency Entrance) are free to be used. The system has proven effective at alerting Medbay of important details, especially during power outages.<br><br>I think I may have left the toilet cubicle doors shut. It might be a good idea to open them so the staff and patients know they are not engaged.<br><br>The new syringe gun has been stored in secondary storage. I tend to prefer it stored in my office, but 'guidelines' are 'guidelines'.<br><br>Also in secondary storage is the grenade equipment crate. I've just realised I've left it open - you may wish to shut it.<br><br>There were a few problems with their installation, but the Medbay Quarantine shutters should now be working again  - they lock down the Emergency and Main entrances to prevent travel in and out. Pray you shan't have to use them.<br><br>The new version of the Medical Diagnostics Manual arrived. I distributed them to the shelf in the staff break room, and one on the table in the corner of this room.<br><br>The exam/triage room has the walking canes in it. I'm not sure why we'd need them - but there you have it.<br><br>Emergency Cryo bags are beside the emergency entrance, along with a kit.<br><br>Spare paper cups for the reception are on the left side of the reception desk.<br><br>I've fed Runtime. She should be fine.<br><br><br><center>That should be all. Good luck!</center>"
+
+// Forms are a type of paper that can be checked for the require signatures, usually used in conjuction with computers
+/obj/item/weapon/paper/form
+	var/list/required_signatures = list()
+	deffont = "Courier"
+
+/obj/item/weapon/paper/form/proc/numberOfRequiredSignatures()
+	var/list/check = required_signatures & signatures
+	return check.len
+
+/obj/item/weapon/paper/form/proc/isFilledOut()
+	if( numberOfRequiredSignatures() == required_signatures.len )
+		return 1
+	return 0
+
+/obj/item/weapon/paper/form/job
+	var/job // What job is being granted?
+	var/job_verb
+
+/obj/item/weapon/paper/form/job/New( var/set_job )
+	job = set_job
+
+	..()
+
+/obj/item/weapon/paper/form/job/termination
+	name = "NanoTrasen Departmental Termination Form"
+	job_verb = "terminated from"
+
+/obj/item/weapon/paper/form/job/termination/New( var/date, var/set_department, var/employee )
+	job = set_department
+
+	info = {"\[center\]\[logo\]\[/center\]
+\[center\]\[b\]\[i\]NanoTrasen Departmental Termination Form\[/b\]\[/i\]\[/center\]\[hr\]
+Upon signature of this document by the Department authority on [date], the contract of appointment within the [job] for [employee] is hereby null and void. Abuse of this form may result in the termination of the Department authority.\[br\]
+
+\[b\]Department authority:\[/b\] \[field\]
+\[hr\]"}
+
+	..( set_department )
+
+/obj/item/weapon/paper/form/job/induct
+	name = "NanoTrasen Departmental Induction Form"
+	job_verb = "inducted into"
+
+/obj/item/weapon/paper/form/job/induct/New( var/date, var/set_department )
+	job = set_department
+
+	info = {"\[center\]\[logo\]\[/center\]
+\[center\]\[b\]\[i\]NanoTrasen Departmental Induction Form\[/b\]\[/i\]\[/center\]\[hr\]
+Upon signature of this document by the employee, and witnessed by the Department authority of \the [job] on [date], the employee will legally be inducted into \the [job]. The Department authority is to provide them with instruction as to their role and function, or lack thereof, within the department.\[br\]
+
+\[b\]Employee:\[/b\] \[field\]
+\[b\]Department authority:\[/b\] \[field\]
+\[hr\]"}
+
+	..( set_department )
+
+/obj/item/weapon/paper/form/job/promotion
+	name = "NanoTrasen Employee Promotion Form"
+	job_verb = "promoted to"
+
+/obj/item/weapon/paper/form/job/promotion/New( var/date, var/set_job, var/department )
+	job = set_job
+
+	info = {"\[center\]\[logo\]\[/center\]
+\[center\]\[b\]\[i\]NanoTrasen Employee Promotion Form\[/b\]\[/i\]\[/center\]\[hr\]
+Upon signature of this document by the employee, and witnessed by the Department authority of the [department] on [date], the employee may legally fulfill all duties in authority as [job] as required of them. Failure to perform this responsibility hereto is subject to appointment termination without consent.\[br\]
+
+\[b\]Employee:\[/b\] \[field\]
+\[b\]Department authority:\[/b\] \[field\]
+\[hr\]"}
+
+	..(set_job)
+
+/obj/item/weapon/paper/form/command_recommendation
+	name = "NanoTrasen Command Recommendation Form"
+
+/obj/item/weapon/paper/form/command_recommendation/New( var/date, var/name )
+	info = {"\[center\]\[logo\]\[/center\]
+\[center\]\[b\]\[i\]NanoTrasen Command Recommendation Form\[/b\]\[/i\]\[/center\]\[hr\]
+Upon signature of this document by one or several Command Officers on [date], [name] is hereby recommended for expanded responsibilities as a member of command staff. The signer of this form recognizes the potential in [name], and understands their skills to be a valuable addition to command. Misuse of this form may result in the Command Officer being pressed with criminal charges.\[br\]
+
+\[b\]Cause for Recommendation:\[/b\] \[field\]
+\[b\]Recommended Position:\[/b\] \[field\]
+\[b\]Command Officer(s) Signature(s):\[/b\] \[field\]
+\[hr\]"}
+
+	..()
+
+/obj/item/weapon/paper/form/job/demotion
+	name = "NanoTrasen Employee Demotion Form"
+	job_verb = "demoted from"
+
+/obj/item/weapon/paper/form/job/demotion/New( var/date, var/set_job, var/employee, var/department )
+	job = set_job
+
+	info = {"\[center\]\[logo\]\[/center\]
+\[center\]\[b\]\[i\]NanoTrasen Employee Demotion Form\[/b\]\[/i\]\[/center\]\[hr\]
+Upon signature of this document by the Department authority on [date], the contract of appointment with the [department] for [employee] as [job] is hereby null and void. Abuse of this form may result in the termination of the Department authority.\[br\]
+
+\[b\]Department authority:\[/b\] \[field\]
+\[hr\]"}
+
+	..(set_job)
 
 /obj/item/weapon/paper/shotgun_permit
 	name = "Bartender Shotgun Permit"

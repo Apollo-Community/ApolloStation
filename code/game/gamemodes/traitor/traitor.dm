@@ -233,7 +233,7 @@
 	else
 		traitor_mob << "Could not find a backpack to put your Encryptic Sequencer in!"
 
-	if(traitor_mob.client.prefs.uplinklocation == "Headset")
+	if(traitor_mob.client.prefs.selected_character.uplink_location == "Headset")
 		R = locate(/obj/item/device/radio) in traitor_mob.contents
 		if(!R)
 			R = locate(/obj/item/device/pda) in traitor_mob.contents
@@ -241,7 +241,7 @@
 		if (!R)
 			traitor_mob << "Unfortunately, neither a radio or a PDA relay could be installed."
 
-	else if(traitor_mob.client.prefs.uplinklocation == "PDA")
+	else if(traitor_mob.client.prefs.selected_character.uplink_location == "PDA")
 		R = locate(/obj/item/device/pda) in traitor_mob.contents
 		if(!R)
 			R = locate(/obj/item/device/radio) in traitor_mob.contents
@@ -249,7 +249,7 @@
 		if (!R)
 			traitor_mob << "Unfortunately, neither a radio or a PDA relay could be installed."
 
-	else if(traitor_mob.client.prefs.uplinklocation == "None")
+	else if(traitor_mob.client.prefs.selected_character.uplink_location == "None")
 		traitor_mob << "You have elected to not have an AntagCorp portable teleportation relay installed!"
 		R = null
 

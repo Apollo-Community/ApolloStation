@@ -217,7 +217,7 @@
 /datum/species/machine/handle_death(var/mob/living/carbon/human/H)
 	..()
 	if(flags & IS_SYNTHETIC)
-		H.h_style = ""
+		H.character.hair_style = ""
 		spawn(100)
 			if(H) H.update_hair()
 
@@ -297,7 +297,7 @@
 	brute_mod = 2 // damn, double wham, double dam
 
 	var/brightness = 4
-	var/color = "#1C1C00"
+	var/color = "#cccc00"
 
 	flags = CAN_JOIN | NO_BREATHE | NO_BLOOD | NO_PAIN | HAS_LIPS | NO_ROBO_LIMBS | NO_CRYO
 	reagent_tag = IS_NUCLEATION
@@ -312,7 +312,7 @@
 
 /datum/species/nucleation/handle_post_spawn(var/mob/living/carbon/human/H)
 	H.light_range = brightness
-	H.light_color = "#1C1C00"
+	H.light_color = "#cccc00"
 	H.set_light( brightness, 1, color)
 	return ..()
 

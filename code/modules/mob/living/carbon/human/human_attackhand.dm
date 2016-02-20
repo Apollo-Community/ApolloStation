@@ -126,7 +126,7 @@
 						M << "<span class='notice'>You hear a loud crunch as you mercilessly pull off [src]'s antennae.</span>"
 						src << "<span class='alert'><B>You hear a loud crunch as your antennae is ripped off your head by [M].</B></span>"
 						src << "<span class='alert'><B>Its so quiet...</B></span>"
-						src.h_style = "Bald"
+						src.character.hair_style = "Bald"
 						src.update_hair()
 
 						if(!in_unlogged(M))

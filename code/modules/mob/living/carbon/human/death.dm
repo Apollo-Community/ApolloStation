@@ -80,10 +80,10 @@
 /mob/living/carbon/human/proc/ChangeToHusk()
 	if(HUSK in mutations)	return
 
-	if(f_style)
-		f_style = "Shaved"		//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
-	if(h_style)
-		h_style = "Bald"
+	if(character.hair_face_style)
+		character.hair_face_style = "Shaved"		//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
+	if(character.hair_style)
+		character.hair_style = "Bald"
 	update_hair(0)
 
 	mutations.Add(HUSK)
@@ -99,10 +99,10 @@
 /mob/living/carbon/human/proc/ChangeToSkeleton()
 	if(SKELETON in src.mutations)	return
 
-	if(f_style)
-		f_style = "Shaved"
-	if(h_style)
-		h_style = "Bald"
+	if(character.hair_face_style)
+		character.hair_face_style = "Shaved"
+	if(character.hair_style)
+		character.hair_style = "Bald"
 	update_hair(1)
 
 	mutations.Add(SKELETON)

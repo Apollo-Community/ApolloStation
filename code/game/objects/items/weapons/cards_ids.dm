@@ -136,6 +136,7 @@
 	item_state = "card-id"
 	var/access = list()
 	var/registered_name = "Unknown" // The name registered_name on the card
+	var/datum/character/character
 	slot_flags = SLOT_ID
 
 	var/blood_type = "\[UNSET\]"
@@ -147,13 +148,19 @@
 	var/rank = null			//actual job
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
+/obj/item/weapon/card/id/proc/generateName()
+	name = "[registered_name]'s ID Card ([assignment])"
+
 /obj/item/weapon/card/id/New()
 	..()
+
 	spawn(30)
-	if(istype(loc, /mob/living/carbon/human))
-		blood_type = loc:dna:b_type
-		dna_hash = loc:dna:unique_enzymes
-		fingerprint_hash = md5(loc:dna:uni_identity)
+		if(istype(loc, /mob/living/carbon/human))
+			character = loc:character
+
+			blood_type = loc:dna:b_type
+			dna_hash = loc:dna:unique_enzymes
+			fingerprint_hash = md5(loc:dna:uni_identity)
 
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
 	for(var/mob/O in viewers(user, null))
@@ -189,7 +196,6 @@
 	usr << "The DNA hash on the card is [dna_hash]."
 	usr << "The fingerprint hash on the card is [fingerprint_hash]."
 	return
-
 
 /obj/item/weapon/card/id/silver
 	name = "identification card"

@@ -242,7 +242,7 @@ var/list/robot_module_types = list("Standard", "Engineering", "Construction", "S
 var/static/list/scarySounds = list('sound/weapons/thudswoosh.ogg','sound/weapons/Taser.ogg','sound/weapons/armbomb.ogg','sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg','sound/voice/hiss5.ogg','sound/voice/hiss6.ogg','sound/effects/Glassbr1.ogg','sound/effects/Glassbr2.ogg','sound/effects/Glassbr3.ogg','sound/items/Welder.ogg','sound/items/Welder2.ogg','sound/machines/airlock.ogg','sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg')
 
 // Bomb cap!
-var/max_explosion_range = 14
+var/global/max_explosion_range = 14
 
 // Areas where actions won't be logged
 var/list/area/unlogged_areas = list( /area/tdome )
@@ -254,9 +254,7 @@ var/list/area/unlogged_areas = list( /area/tdome )
 	Unathi
 	Wryn */
 
-var/list/whitelisted_aliens = list( "Diona", "Skrell", "Tajara", "Unathi", "Wryn" )
-var/unwhitelisted_alien = "Wryn" // Default if the week calculation screws up for some reason.
-var/list/unwhitelisted_aliens = list( "Machine", "Nucleation" )
+var/global/unwhitelisted_alien = "Wryn" // Default if the week calculation screws up for some reason.
 
 // Random round statistics
 var/datum/round_stats/statistics = new()

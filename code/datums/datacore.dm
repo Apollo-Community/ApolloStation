@@ -69,18 +69,19 @@
 		G.fields["name"]		= H.real_name
 		G.fields["real_rank"]	= H.mind.assigned_role
 		G.fields["rank"]		= assignment
-		G.fields["age"]			= H.age
+		G.fields["age"]			= H.character.age
 		G.fields["fingerprint"]	= md5(H.dna.uni_identity)
 		G.fields["p_stat"]		= "Active"
 		G.fields["m_stat"]		= "Stable"
 		G.fields["sex"]			= H.gender
 		G.fields["species"]		= H.get_species()
-		G.fields["home_system"]	= H.home_system
-		G.fields["citizenship"]	= H.citizenship
-		G.fields["faction"]		= H.personal_faction
-		G.fields["religion"]	= H.religion
+		G.fields["home_system"]	= H.character.home_system
+		G.fields["citizenship"]	= H.character.citizenship
+		G.fields["faction"]		= H.character.faction
+		G.fields["religion"]	= H.character.religion
 		G.fields["photo_front"]	= front
 		G.fields["photo_side"]	= side
+		G.fields["character"]	= H.character
 		if(H.gen_record && !jobban_isbanned(H, "Records"))
 			G.fields["notes"] = H.gen_record
 		else
@@ -95,8 +96,8 @@
 		//Medical Record
 		var/datum/data/record/M = new()
 		M.fields["id"]			= id
-		M.fields["name"]		= H.real_name
-		M.fields["b_type"]		= H.b_type
+		M.fields["name"]		= H.character.name
+		M.fields["b_type"]		= H.character.blood_type
 		M.fields["b_dna"]		= H.dna.unique_enzymes
 		M.fields["mi_dis"]		= "None"
 		M.fields["mi_dis_d"]	= "No minor disabilities have been declared."
@@ -131,20 +132,20 @@
 		//Locked Record
 		var/datum/data/record/L = new()
 		L.fields["id"]			= md5("[H.real_name][H.mind.assigned_role]")
-		L.fields["name"]		= H.real_name
+		L.fields["name"]		= H.character.name
 		L.fields["rank"] 		= H.mind.assigned_role
-		L.fields["age"]			= H.age
+		L.fields["age"]			= H.character.age
 		L.fields["fingerprint"]	= md5(H.dna.uni_identity)
-		L.fields["sex"]			= H.gender
-		L.fields["b_type"]		= H.b_type
+		L.fields["sex"]			= H.character.gender
+		L.fields["b_type"]		= H.character.blood_type
 		L.fields["b_dna"]		= H.dna.unique_enzymes
 		L.fields["enzymes"]		= H.dna.SE // Used in respawning
 		L.fields["identity"]	= H.dna.UI // "
 		L.fields["species"]		= H.get_species()
-		L.fields["home_system"]	= H.home_system
-		L.fields["citizenship"]	= H.citizenship
-		L.fields["faction"]		= H.personal_faction
-		L.fields["religion"]	= H.religion
+		L.fields["home_system"]	= H.character.home_system
+		L.fields["citizenship"]	= H.character.citizenship
+		L.fields["faction"]		= H.character.faction
+		L.fields["religion"]	= H.character.religion
 		L.fields["image"]		= getFlatIcon(H)	//This is god-awful
 		if(H.exploit_record && !jobban_isbanned(H, "Records"))
 			L.fields["exploit_record"] = H.exploit_record
@@ -191,31 +192,31 @@ proc/get_id_photo(var/mob/living/carbon/human/H)
 
 	// Skin tone
 	if(H.species.flags & HAS_SKIN_TONE)
-		if (H.s_tone >= 0)
-			preview_icon.Blend(rgb(H.s_tone, H.s_tone, H.s_tone), ICON_ADD)
+		if (H.character.skin_tone >= 0)
+			preview_icon.Blend(rgb(H.character.skin_tone, H.character.skin_tone, H.character.skin_tone), ICON_ADD)
 		else
-			preview_icon.Blend(rgb(-H.s_tone,  -H.s_tone,  -H.s_tone), ICON_SUBTRACT)
+			preview_icon.Blend(rgb(-H.character.skin_tone,  -H.character.skin_tone,  -H.character.skin_tone), ICON_SUBTRACT)
 
 	// Skin color
 	if(H.species.flags & HAS_SKIN_TONE)
 		if(!H.species || H.species.flags & HAS_SKIN_COLOR)
-			preview_icon.Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)
+			preview_icon.Blend(H.character.skin_color, ICON_ADD)
 
 	var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = H.species ? H.species.eyes : "eyes_s")
 
 	if (H.species.flags & HAS_EYE_COLOR)
-		eyes_s.Blend(rgb(H.r_eyes, H.g_eyes, H.b_eyes), ICON_ADD)
+		eyes_s.Blend(H.character.eye_color, ICON_ADD)
 
-	var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style]
+	var/datum/sprite_accessory/hair_style = hair_styles_list[H.character.hair_style]
 	if(hair_style)
 		var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
-		hair_s.Blend(rgb(H.r_hair, H.g_hair, H.b_hair), ICON_ADD)
+		hair_s.Blend(H.character.hair_color, ICON_ADD)
 		eyes_s.Blend(hair_s, ICON_OVERLAY)
 
-	var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.f_style]
+	var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.character.hair_face_style]
 	if(facial_hair_style)
 		var/icon/facial_s = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s")
-		facial_s.Blend(rgb(H.r_facial, H.g_facial, H.b_facial), ICON_ADD)
+		facial_s.Blend(H.character.hair_face_color, ICON_ADD)
 		eyes_s.Blend(facial_s, ICON_OVERLAY)
 
 	var/icon/clothes_s = null

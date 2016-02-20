@@ -21,6 +21,7 @@
 /datum/game_mode/xenomorph/announce()
 
 /datum/game_mode/xenomorph/pre_setup()
+	config.canon = 0
 
 	config.aliens_allowed = 1
 	/*if(config.protect_roles_from_antagonist)
