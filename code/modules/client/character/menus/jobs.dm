@@ -50,7 +50,9 @@
 			. += "<tr>"
 			. += "<td>[type] Tokens:</td>"
 			. += "<td>[user.client.character_tokens[type]]</td>"
-			. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=use_token;type=[type]'>Use Token</a></td>"
+			var/num = user.client.character_tokens[type]
+			if( num > 0 )
+				. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=use_token;type=[type]'>Use Token</a></td>"
 			. += "</tr>"
 
 		. += "</table></td>"
@@ -119,13 +121,13 @@
 			else
 				. += "<a href='byond://?src=\ref[src];character=[menu_name];task=input;text=[role]'>"
 				if( GetJobLevel( role ) == "High" )
-					. += "<font color=blue>HIGH</font>"
+					. += "<font color=#cceeff>HIGH</font>"
 				else if( GetJobLevel( role ) == "Medium" )
-					. += "<font color=green>MEDIUM</font>"
+					. += "<font color=#ccffcc>MEDIUM</font>"
 				else if( GetJobLevel( role ) == "Low" )
-					. += "<font color=orange>LOW</font>"
+					. += "<font color=#ffd9b3>LOW</font>"
 				else
-					. += "<font color=red>NEVER</font>"
+					. += "<font color=#ffcccc>NEVER</font>"
 				. += "</a>"
 
 			. += "</td>"
@@ -139,11 +141,11 @@
 
 	switch(alternate_option)
 		if(GET_RANDOM_JOB)
-			. += "<center><br><u><a href='byond://?src=\ref[src];character=[menu_name];task=random'><font color=green>Get random job if preferences unavailable</font></a></u></center><br>"
+			. += "<center><br><u><a href='byond://?src=\ref[src];character=[menu_name];task=random'>Get random job if preferences unavailable</a></u></center><br>"
 		if(BE_ASSISTANT)
-			. += "<center><br><u><a href='byond://?src=\ref[src];character=[menu_name];task=random'><font color=red>Be assistant if preference unavailable</font></a></u></center><br>"
+			. += "<center><br><u><a href='byond://?src=\ref[src];character=[menu_name];task=random'>Be assistant if preference unavailable</a></u></center><br>"
 		if(RETURN_TO_LOBBY)
-			. += "<center><br><u><a href='byond://?src=\ref[src];character=[menu_name];task=random'><font color=purple>Return to lobby if preference unavailable</font></a></u></center><br>"
+			. += "<center><br><u><a href='byond://?src=\ref[src];character=[menu_name];task=random'>Return to lobby if preference unavailable</a></u></center><br>"
 
 
 	. += "<hr><center>"
@@ -198,7 +200,6 @@
 				return
 
 			useCharacterToken( href_list["type"], user )
-			user.client.saveTokens()
 		if("random")
 			if(alternate_option == GET_RANDOM_JOB || alternate_option == BE_ASSISTANT)
 				alternate_option += 1

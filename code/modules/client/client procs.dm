@@ -285,10 +285,15 @@
 	if( !character_tokens || !character_tokens.len )
 		return
 
-	var/tokens = list2params( character_tokens )
+	var/tokens
+	if( !character_tokens || !character_tokens.len )
+		tokens = "null"
+	else
+		tokens = "'[list2params( character_tokens )]'"
+
 	var/sql_ckey = ckey( ckey )
 
-	var/DBQuery/query_insert = dbcon.NewQuery("UPDATE player SET character_tokens = '[tokens]' WHERE ckey = '[sql_ckey]'")
+	var/DBQuery/query_insert = dbcon.NewQuery("UPDATE player SET character_tokens = [tokens] WHERE ckey = '[sql_ckey]'")
 	query_insert.Execute()
 
 /client/proc/log_client_to_db( var/log_playtime = 0 )
