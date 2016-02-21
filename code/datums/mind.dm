@@ -939,6 +939,7 @@ datum/mind
 
 	proc/make_Traitor()
 		if(!(src in ticker.mode.traitors))
+			character.temporary = 1 // Makes them non-canon
 			ticker.mode.traitors += src
 			special_role = "traitor"
 			if (!config.objectives_disabled)
@@ -948,6 +949,7 @@ datum/mind
 
 	proc/make_Nuke()
 		if(!(src in ticker.mode.syndicates))
+			character.temporary = 1 // Makes them non-canon
 			ticker.mode.syndicates += src
 			ticker.mode.update_synd_icons_added(src)
 			if (ticker.mode.syndicates.len==1)
@@ -978,6 +980,7 @@ datum/mind
 
 	proc/make_Changling()
 		if(!(src in ticker.mode.changelings))
+			character.temporary = 1 // Makes them non-canon
 			ticker.mode.changelings += src
 			ticker.mode.grant_changeling_powers(current)
 			special_role = "Changeling"
@@ -987,6 +990,7 @@ datum/mind
 
 	proc/make_Cultist()
 		if(!(src in ticker.mode.cult))
+			character.temporary = 1 // Makes them non-canon
 			ticker.mode.cult += src
 			ticker.mode.update_cult_icons_added(src)
 			special_role = "Cultist"
@@ -1033,6 +1037,7 @@ datum/mind
 					rev_obj.explanation_text = "Assassinate [O.target.current.real_name], the [O.target.assigned_role]."
 					objectives += rev_obj
 				ticker.mode.greet_revolutionary(src,0)
+		character.temporary = 1 // Makes them non-canon
 		ticker.mode.head_revolutionaries += src
 		ticker.mode.update_rev_icons_added(src)
 		special_role = "Head Revolutionary"

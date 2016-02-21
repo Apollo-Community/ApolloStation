@@ -59,6 +59,7 @@
 		if(!config.objectives_disabled)
 			forge_ninja_objectives(ninja)
 		show_objectives(ninja)
+		ninja.character.temporary = 1 // Makes them non-canon
 
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()

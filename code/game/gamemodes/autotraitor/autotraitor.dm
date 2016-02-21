@@ -194,6 +194,9 @@
 				character << "<span class='alert'><B>You are the traitor.</B></span>"
 				character.mind.special_role = "traitor"
 				character << "<i>You have been selected this round as an antagonist</i>!"
+
+				character.character.temporary = 1 // Makes them non-canon
+
 				show_objectives(character.mind)
 
 			//else
