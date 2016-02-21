@@ -473,6 +473,34 @@
 			spawn( 45 )
 				ping( "\The [src] pings, \"Please fill out this form and return it to this console when complete.\"" )
 
+		if ("transfer")
+			if( !scan.character )
+				buzz("\The [src] buzzes, \"Authorized card is not tied to a NanoTrasen Employee!\"")
+				return
+
+			if( !scan.character.department )
+				buzz("\The [src] buzzes, \"Authorized card has no active department!\"")
+				return
+
+			if( !modify.character )
+				buzz("\The [src] buzzes, \"Modification card is not tied to a NanoTrasen Employee!\"")
+				return
+
+			if( !modifyingSubordinate() )
+				buzz( "\The [src] buzzes, \"Not authorized to modify this card!" )
+				return
+
+			var/datum/department/D = input(usr, "Choose the department to transfer to:", "Department Transfer")  as null|anything in job_master.departments
+
+			var/list/names = list( modify.registered_name, scan.registered_name )
+
+			var/obj/item/weapon/paper/form/job/induct/P = new( print_date( universe.date ), D.name )
+			P.required_signatures = names
+			due_papers[P] = modify.character
+			print( P )
+			spawn( 45 )
+				ping( "\The [src] pings, \"Please fill out this form and return it to this console when complete.\"" )
+
 		if( "promote" )
 			if( !scan.character )
 				buzz("\The [src] buzzes, \"Authorized card is not tied to a NanoTrasen Employee!\"")

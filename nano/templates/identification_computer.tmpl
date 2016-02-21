@@ -56,6 +56,17 @@
 				</div>
 			</div>
 			
+			{{if data.centcom_access}}
+				<div class='item'>
+					<div class='itemLabel'>
+						Department Transfer:
+					</div>
+					<div class='itemContent'>
+						{{:helper.link( 'Transfer', '', {'choice' : 'transfer'})}}
+					</div>
+				</div>
+			{{/if}}
+			
 			{{if data.inducted}}
 				<div class='item'>
 					<div class='itemLabel'>
@@ -83,7 +94,7 @@
 						{{:helper.link(value.display_name, '', {'choice' : 'demote', 'demote_role' : value.job})}}
 					</div>
 				{{/for}}
-			{{else}}
+			{{else !data.centcom_access}}
 				{{if data.can_induct}}
 					<div class='item'>
 						<div class='itemLabel'>
