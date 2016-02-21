@@ -41,7 +41,7 @@
 	variables["ckey"] = ckey( ckey )
 	variables["name"] = sql_sanitize_text( name )
 	variables["gender"] = sql_sanitize_text( gender )
-	variables["birth_date"] = list2params( birth_date )
+	variables["birth_date"] = html_encode( list2params( birth_date ))
 	variables["spawnpoint"] = sql_sanitize_text( spawnpoint )
 	variables["blood_type"] = sql_sanitize_text( blood_type )
 
@@ -77,7 +77,7 @@
 		variables["additional_language"] = sql_sanitize_text( L.name )
 
 	// Custom spawn gear
-	variables["gear"] = list2params( gear )
+	variables["gear"] = html_encode( list2params( gear ))
 
 	// Some faction information.
 	variables["home_system"] = sql_sanitize_text( home_system )
@@ -87,7 +87,7 @@
 
 	// Jobs, uses bitflags
 	variables["department"] = sanitize_integer( department.department_id, 0, 255, 0 )
-	variables["roles"] = list2params( roles )
+	variables["roles"] = html_encode( list2params( roles ))
 
 	// Special role selection
 	variables["job_antag"] = sanitize_integer( job_antag, 0, BITFLAGS_MAX, 0 )
@@ -97,19 +97,19 @@
 
 	// Maps each organ to either null(intact), "cyborg" or "amputated"
 	// will probably not be able to do this for head and torso ;)
-	variables["organ_data"] = list2params( organ_data )
+	variables["organ_data"] = html_encode( list2params( organ_data ))
 
 	// The default name of a job like "Medical Doctor"
-	variables["player_alt_titles"] = list2params( player_alt_titles )
+	variables["player_alt_titles"] = html_encode( list2params( player_alt_titles ))
 
 	// Flavor texts
 	variables["flavor_texts_human"] = sql_sanitize_text( flavor_texts_human )
 	variables["flavor_texts_robot"] = sql_sanitize_text( flavor_texts_robot )
 
 	// Character notes, these are written by other people. Format is list( datetime = note )
-	variables["med_notes"] = list2params( med_notes )
-	variables["sec_notes"] = list2params( sec_notes )
-	variables["gen_notes"] = list2params( gen_notes )
+	variables["med_notes"] = html_encode( list2params( med_notes ))
+	variables["sec_notes"] = html_encode( list2params( sec_notes ))
+	variables["gen_notes"] = html_encode( list2params( gen_notes ))
 
 	// Character records, these are written by the player
 	variables["med_record"] = sql_sanitize_text( med_record )
@@ -296,11 +296,11 @@
 			if( "number" )
 				value = text2num( value )
 			if( "params" )
-				value = params2list( value )
+				value = params2list( html_decode( value ))
 				if( !value )
 					value = list()
 			if( "list" )
-				value = text2list( value )
+				value = text2list( html_decode( value ))
 				if( !value )
 					value = list()
 			if( "language" )
@@ -311,7 +311,7 @@
 			if( "birth_date" )
 				birth_date = params2list( value )
 				for( var/j = 1; j <= birth_date.len; j++ )
-					birth_date[j] = text2num( birth_date[j] )
+					birth_date[j] = text2num( html_decode( birth_date[j] ))
 
 				if( !birth_date || !birth_date.len )
 					change_age( 30 )
