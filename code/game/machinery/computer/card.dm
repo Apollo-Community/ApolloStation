@@ -473,6 +473,33 @@
 			spawn( 45 )
 				ping( "\The [src] pings, \"Please fill out this form and return it to this console when complete.\"" )
 
+		if ("change_role")
+			if( !scan.character )
+				buzz("\The [src] buzzes, \"Authorized card is not tied to a NanoTrasen Employee!\"")
+				return
+
+			if( !modify.character )
+				buzz("\The [src] buzzes, \"Modification card is not tied to a NanoTrasen Employee!\"")
+				return
+
+			if( !modifyingSubordinate() )
+				buzz( "\The [src] buzzes, \"Not authorized to modify this card!" )
+				return
+
+			var/datum/department/J = input(usr, "Choose the department to transfer to:", "Department Transfer")  as null|anything in modify.character.roles
+
+			var/datum/job/job_datum = job_master.GetJob( J )
+			if( !istype( job_datum ))
+				return
+
+			modify.access = job_datum.get_access()
+			modify.assignment = job_datum.title
+			modify.rank = job_datum.title
+
+			modify.generateName()
+			callHook("reassign_employee", list(modify))
+			ping( "\The [src] pings, \"[modify.registered_name]'s role has been changed to [modify.rank].\"" )
+
 		if ("transfer")
 			if( !scan.character )
 				buzz("\The [src] buzzes, \"Authorized card is not tied to a NanoTrasen Employee!\"")

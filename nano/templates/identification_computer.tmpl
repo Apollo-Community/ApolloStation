@@ -76,7 +76,16 @@
 						{{:helper.link('Terminate ' + data.target_owner, 'gear', {'choice' : 'terminate'}, data.target_rank == "Terminated" ? 'disabled' : null, data.target_rank == "Terminated" ? 'disabled' : 'linkDanger')}}
 					</div>
 				</div>
-			
+
+				<div class='item'>
+					<div class='itemLabel'>
+						Change Role:
+					</div>
+					<div class='itemContent'>
+						{{:helper.link(data.target_rank, '', {'choice' : 'change_role'})}}
+					</div>
+				</div>
+				
 				<div class='item'>
 					<h2>{{:data.modify_department_name}} Promotions</h2>
 				</div>
