@@ -185,7 +185,7 @@
 		. += "<table class='border'>"
 		. += "<tr>"
 		. += "<th>Organs \& Limbs:</th>"
-		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=organs_adjust'>Aajust</a></td>"
+		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=organs_adjust'>ajust</a></td>"
 		. += "</tr>"
 
 		//display limbs below
