@@ -96,8 +96,7 @@
 						Rank: <A href='?src=\ref[src];choice=Edit Field;field=rank'>[active1.fields["rank"]]</A><BR>\n	\
 						Fingerprint: <A href='?src=\ref[src];choice=Edit Field;field=fingerprint'>[active1.fields["fingerprint"]]</A><BR>\n	\
 						Physical Status: [active1.fields["p_stat"]]<BR>\n	\
-						Mental Status: [active1.fields["m_stat"]]<BR>\n	\
-						Command Training: [active1.fields["command_training"]]<BR><BR>\n")
+						Mental Status: [active1.fields["m_stat"]]<BR>\n")
 
 
 						dat+= text( "</td>	\

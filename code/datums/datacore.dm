@@ -82,14 +82,11 @@
 		G.fields["photo_front"]	= front
 		G.fields["photo_side"]	= side
 		G.fields["character"]	= H.character
-		if(H.gen_record && !jobban_isbanned(H, "Records"))
-			G.fields["notes"] = H.gen_record
+		if(H.character.gen_record && !jobban_isbanned(H, "Records"))
+			G.fields["notes"] = H.character.gen_record
 		else
 			G.fields["notes"] = "No notes found."
-		if( is_whitelisted( H ))
-			G.fields["command_training"] = "Completed"
-		else
-			G.fields["command_training"] = "Untrained"
+
 		general += G
 
 
@@ -107,8 +104,8 @@
 		M.fields["alg_d"]		= "No allergies have been detected in this patient."
 		M.fields["cdi"]			= "None"
 		M.fields["cdi_d"]		= "No diseases have been diagnosed at the moment."
-		if(H.med_record && !jobban_isbanned(H, "Records"))
-			M.fields["notes"] = H.med_record
+		if(H.character.med_record && !jobban_isbanned(H, "Records"))
+			M.fields["notes"] = H.character.med_record
 		else
 			M.fields["notes"] = "No notes found."
 		medical += M
@@ -123,8 +120,8 @@
 		S.fields["ma_crim"]		= "None"
 		S.fields["ma_crim_d"]	= "No major crime convictions."
 		S.fields["notes"]		= "No notes."
-		if(H.sec_record && !jobban_isbanned(H, "Records"))
-			S.fields["notes"] = H.sec_record
+		if(H.character.sec_record && !jobban_isbanned(H, "Records"))
+			S.fields["notes"] = H.character.sec_record
 		else
 			S.fields["notes"] = "No notes."
 		security += S
@@ -147,14 +144,10 @@
 		L.fields["faction"]		= H.character.faction
 		L.fields["religion"]	= H.character.religion
 		L.fields["image"]		= getFlatIcon(H)	//This is god-awful
-		if(H.exploit_record && !jobban_isbanned(H, "Records"))
-			L.fields["exploit_record"] = H.exploit_record
+		if(H.character.exploit_record && !jobban_isbanned(H, "Records"))
+			L.fields["exploit_record"] = H.character.exploit_record
 		else
 			L.fields["exploit_record"] = "No additional information acquired."
-		if( is_whitelisted( H ))
-			L.fields["command_training"] = "Completed"
-		else
-			L.fields["command_training"] = "Untrained"
 		locked += L
 
 		manifest_sort()
