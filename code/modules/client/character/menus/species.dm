@@ -115,8 +115,5 @@
 			if(!choice) return
 			species_preview = choice
 
-			if( istype( user, /mob/new_player ))
-				user.client.prefs.ClientMenu( user )
-
 			SpeciesMenu(user)
 
