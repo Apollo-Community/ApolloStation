@@ -57,7 +57,7 @@
 	dat += "</center></body>"
 
 	menu.set_user( user )
-	menu.set_content( . )
+	menu.set_content( dat )
 	menu.open()
 
 /datum/character/proc/SpeciesMenuProcess( mob/user, list/href_list )

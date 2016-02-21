@@ -610,7 +610,6 @@
 			if(!choice) return
 			species_preview = choice
 			SpeciesMenu( user )
-			EditCharacterMenuDisable( user )
 			return 1
 
 	EditCharacterMenu( user )
