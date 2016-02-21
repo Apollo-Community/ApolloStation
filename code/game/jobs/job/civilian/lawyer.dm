@@ -17,7 +17,7 @@
 
 /datum/job/lawyer/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
-	H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/headset_sec(H), slot_l_ear)
+	H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/heads/hop/iaa(H), slot_l_ear)
 	switch(H.character.backpack)
 		if(2) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack(H), slot_back)
 		if(3) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
