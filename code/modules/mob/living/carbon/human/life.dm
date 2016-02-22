@@ -127,6 +127,7 @@
 	name = get_visible_name()
 
 	handle_regular_hud_updates()
+	handle_regular_sound_updates()
 
 	pulse = handle_pulse()
 
@@ -1160,6 +1161,22 @@
 				gloves.germ_level += 1
 
 		return 1
+
+	proc/handle_regular_sound_updates()
+		var/heartbeat_channel = 500
+
+		if( health <= 0 )
+			if( !heartbeat )
+				heartbeat = sound( 'sound/effects/heart_beat.ogg', channel = heartbeat_channel, repeat = 1, volume = 100-( health+80 ))
+				heartbeat.status = SOUND_UPDATE
+			else
+				heartbeat.volume = 100-( health+80 )
+
+			src << heartbeat
+		else
+			src << sound(null, channel = heartbeat_channel)
+			qdel( heartbeat )
+			heartbeat = null
 
 	proc/handle_regular_hud_updates()
 		if(hud_updateflag) // update our mob's hud overlays, AKA what others see flaoting above our head

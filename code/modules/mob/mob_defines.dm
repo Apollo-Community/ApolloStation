@@ -240,3 +240,6 @@
 	var/STUI_log = 1
 
 	var/pumpkins_found = 0
+
+	var/sound/jukebox_sound = null
+	var/sound/heartbeat = null

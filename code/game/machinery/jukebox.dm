@@ -243,7 +243,7 @@ datum/track/New(var/title_name, var/audio)
 	update_icon()
 
 /obj/machinery/media/jukebox/process()
-	for(var/mob/living/M in living_mob_list)
+	for(var/mob/M in living_mob_list)
 		var/dist = get_dist(M,src)
 		if(dist <=15 && M.z == src.z)	// Only same z-level
 			if(playing)			//Plays the song to people within range while the song is active.
