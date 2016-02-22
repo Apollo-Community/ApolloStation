@@ -13,8 +13,9 @@ var/global/list/seen_religions = list()
 	return
 
 var/global/list/citizenship_choices = list(
-	"Earth",
 	"Mars",
+	"Luna",
+	"Europa",
 	"Moghes",
 	"Ahdomai",
 	"Qerrbalak"
