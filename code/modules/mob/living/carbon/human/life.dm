@@ -1162,10 +1162,10 @@
 
 		return 1
 
-	proc/handle_regular_sound_updates()
-		var/heartbeat_channel = 500
+	var/heartbeat_channel = 500
 
-		if( health <= 0 )
+	proc/handle_regular_sound_updates()
+		if( health <= 0 && stat != DEAD )
 			if( !heartbeat )
 				heartbeat = sound( 'sound/effects/heart_beat.ogg', channel = heartbeat_channel, repeat = 1, volume = 100-( health+80 ))
 				heartbeat.status = SOUND_UPDATE
@@ -1174,7 +1174,11 @@
 
 			src << heartbeat
 		else
-			src << sound(null, channel = heartbeat_channel)
+			stop_regular_sounds()
+
+	proc/stop_regular_sounds()
+		if( heartbeat )
+			src << sound( null, channel = heartbeat_channel )
 			qdel( heartbeat )
 			heartbeat = null
 

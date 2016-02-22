@@ -28,6 +28,9 @@
 
 	if(stat == DEAD) return
 
+	if( heartbeat )
+		stop_regular_sounds()
+
 	hud_updateflag |= 1 << HEALTH_HUD
 	hud_updateflag |= 1 << STATUS_HUD
 	handle_hud_list()
@@ -80,15 +83,9 @@
 /mob/living/carbon/human/proc/ChangeToHusk()
 	if(HUSK in mutations)	return
 
-	if(character.hair_face_style)
-		character.hair_face_style = "Shaved"		//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
-	if(character.hair_style)
-		character.hair_style = "Bald"
-	update_hair(0)
-
 	mutations.Add(HUSK)
 	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
-	update_body(0)
+	update_body()
 	return
 
 /mob/living/carbon/human/proc/Drain()
