@@ -44,7 +44,11 @@
 	SetDepartment( D )
 
 /datum/character/proc/AddJob( var/job_name )
-	roles.Add( "[job_name]" = "None" )
+	for( var/role in roles )
+		if( roles[role] == "High" )
+			roles[role] = "Medium"
+
+	roles.Add( "[job_name]" = "High" )
 
 /datum/character/proc/RemoveJob( var/job_name )
 	roles.Remove( "[job_name]" )
