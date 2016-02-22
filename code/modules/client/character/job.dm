@@ -48,7 +48,7 @@
 		if( roles[role] == "High" )
 			roles[role] = "Medium"
 
-	roles.Add( "[job_name]" = "High" )
+	roles.["[job_name]"] = "High"
 
 /datum/character/proc/RemoveJob( var/job_name )
 	roles.Remove( "[job_name]" )
