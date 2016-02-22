@@ -40,7 +40,7 @@
 	name = T_BOARD("promotions console")
 	build_path = /obj/machinery/computer/card
 
-/obj/item/weapon/circuitboard/card
+/obj/item/weapon/circuitboard/transfer
 	name = T_BOARD("job transfer console")
 	build_path = /obj/machinery/computer/transfer
 
