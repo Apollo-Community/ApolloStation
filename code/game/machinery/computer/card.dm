@@ -233,21 +233,12 @@
 	data["locked_jobs"] = format_jobs(locked_jobs)
 	data["unlocked_jobs"] = format_jobs(unlocked_jobs)
 
-	if (modify && is_centcom())
-		var/list/all_centcom_access = list()
-		for(var/access in get_all_centcom_access())
-			all_centcom_access.Add(list(list(
-				"desc" = replacetext(get_centcom_access_desc(access), " ", "&nbsp"),
-				"ref" = access,
-				"allowed" = (access in modify.access) ? 1 : 0)))
-
-		data["all_centcom_access"] = all_centcom_access
-	else if (modify)
+	if (modify)
 		var/list/regions = list()
 		for(var/datum/department/D in job_master.departments)
 			var/list/accesses = list()
-			for(var/access in D.region_access)
-				if(( access in scan.access ) && get_access_desc(access))
+			for(var/access in scan.access)
+				if(( access in D.region_access ) && get_access_desc(access))
 					accesses.Add(list(list(
 						"desc" = replacetext(get_access_desc(access), " ", "&nbsp"),
 						"ref" = access,
@@ -599,7 +590,7 @@
 	return 1
 
 /obj/machinery/computer/card/proc/is_centcom()
-	if( access_cent_captain in scan.access )
+	if( scan && ( access_cent_captain in scan.access ))
 		return 1
 	return 0
 

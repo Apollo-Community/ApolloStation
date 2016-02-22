@@ -221,22 +221,11 @@
 				</div>
 			</div>
 
-			{{if data.centcom_access}}
-				<div class='item'>
-					<h2>Central Command Access Assignment</h2>
-				</div>
-				<div class='item' style='width: 100%'>
-					{{for data.all_centcom_access}}
-						<div class='itemContentWide'>
-							{{:helper.link(value.desc, '', {'choice' : 'access', 'access_target' : value.ref, 'allowed' : value.allowed}, null, value.allowed ? 'selected' : null)}}
-						</div>
-					{{/for}}
-				</div>
-			{{else}}
-			  <div class='item'>
+
+			<div class='item'>
 				<h2>Access Assignment</h2>
-			  </div>
-			  <div class='item' style='width: 100%'>
+			</div>
+			<div class='item' style='width: 100%'>
 				{{for data.regions}}
 				  <div style='float: left; width: 175px; min-height: 250px'>
 					<div class='average'><b>{{:value.name}}</b></div>
@@ -247,8 +236,7 @@
 					{{/for}}
 				  </div>
 				{{/for}}
-			  </div>
-			{{/if}}
+			</div>
 		{{/if}}
 	{{/if}}
 {{/if}}
