@@ -185,7 +185,7 @@
 		. += "<table class='border'>"
 		. += "<tr>"
 		. += "<th>Organs \& Limbs:</th>"
-		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=organs_adjust'>ajust</a></td>"
+		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=organs_adjust'><b>adjust</b></a></td>"
 		. += "</tr>"
 
 		//display limbs below
@@ -597,6 +597,10 @@
 			flavor_texts_robot = msg
 
 		if( "close" )
+			if( alert( user, "Do you want to save your changes?", "Save Character","Yes","No" ) == "Yes" )
+				if( !saveCharacter( 0 ))
+					alert( user, "Character could not be saved to the database, please contact an admin." )
+
 			EditCharacterMenuDisable( user )
 
 			if( istype( user, /mob/new_player ))

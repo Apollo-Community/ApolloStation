@@ -152,6 +152,7 @@ var/list/all_characters = list() // A list of all loaded characters
 		LoadDepartment( CIVILIAN )
 
 	menu = new( null, "creator", "Character Creator", 710, 610 )
+	menu.window_options = "focus=0;can_close=0;"
 
 	all_characters += src
 
