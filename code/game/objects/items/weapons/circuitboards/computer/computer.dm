@@ -37,8 +37,12 @@
 	origin_tech = "programming=2;magnets=2"
 
 /obj/item/weapon/circuitboard/card
-	name = T_BOARD("ID card modification console")
+	name = T_BOARD("promotions console")
 	build_path = /obj/machinery/computer/card
+
+/obj/item/weapon/circuitboard/card
+	name = T_BOARD("job transfer console")
+	build_path = /obj/machinery/computer/transfer
 
 /obj/item/weapon/circuitboard/card/centcom
 	name = T_BOARD("CentCom ID card modification console")
