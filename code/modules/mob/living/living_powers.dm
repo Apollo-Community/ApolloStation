@@ -13,7 +13,7 @@
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Abilities"
 
-	if( isConscious() )
+	if( !isConscious() )
 		return
 
 	if (layer != 2.45)

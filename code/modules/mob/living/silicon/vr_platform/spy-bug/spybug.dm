@@ -42,7 +42,7 @@
 //spybugs cannot be upgraded with borg modules so we need to catch some items before they get used in ..().
 /mob/living/silicon/platform/spybug/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/borg/upgrade/))
-		user << "\red The spy bug chassis not compatible with \the [W]."
+		user << "<span class='alert'>The spy bug chassis not compatible with \the [W].</span>"
 		return
 
 	else if (istype(W, /obj/item/weapon/crowbar))

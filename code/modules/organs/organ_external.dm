@@ -29,7 +29,7 @@
 	// Internal organs of this body part
 	var/list/datum/organ/internal/internal_organs
 
-	var/damage_msg = "\red You feel an intense pain"
+	var/damage_msg = "<span class='alert'>You feel an intense pain</span>"
 	var/broken_description
 
 	var/open = 0
@@ -248,8 +248,8 @@ This function completely restores a damaged organ to perfect condition.
 				W.open_wound(damage)
 				if(prob(25))
 					//maybe have a separate message for BRUISE type damage?
-					owner.visible_message("\red The wound on [owner.name]'s [display_name] widens with a nasty ripping noise.",\
-					"\red The wound on your [display_name] widens with a nasty ripping noise.",\
+					owner.visible_message("<span class='alert'>The wound on [owner.name]'s [display_name] widens with a nasty ripping noise.</span>",\
+					"<span class='alert'>The wound on your [display_name] widens with a nasty ripping noise.</span>",\
 					"You hear a nasty ripping noise, as if flesh is being torn apart.")
 				return
 
@@ -644,8 +644,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 		destspawn = 1
 		//Robotic limbs explode if sabotaged.
 		if(status & ORGAN_ROBOT && !no_explode && sabotaged)
-			owner.visible_message("\red \The [owner]'s [display_name] explodes violently!",\
-			"\red <b>Your [display_name] explodes!</b>",\
+			owner.visible_message("<span class='alert'>\The [owner]'s [display_name] explodes violently!</span>",\
+			"<span class='alert'><b>Your [display_name] explodes!</b></span>",\
 			"You hear an explosion!")
 			explosion(get_turf(owner),-1,-1,2,3)
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
@@ -655,7 +655,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			spawn(10)
 				qdel(spark_system)
 
-		owner.visible_message("\red [owner.name]'s [display_name] flies off in an arc.",\
+		owner.visible_message("<span class='alert'>[owner.name]'s [display_name] flies off in an arc.</span>",\
 		"<span class='moderate'><b>Your [display_name] goes flying off!</b></span>",\
 		"You hear a terrible sound of ripping tendons and flesh.")
 
@@ -730,8 +730,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 		return
 
 	owner.visible_message(\
-		"\red You hear a loud cracking sound coming from \the [owner].",\
-		"\red <b>Something feels like it shattered in your [display_name]!</b>",\
+		"<span class='alert'>You hear a loud cracking sound coming from \the [owner].</span>",\
+		"<span class='alert'><b>Something feels like it shattered in your [display_name]!</b></span>",\
 		"You hear a sickening crack.")
 
 	if(owner.species && !(owner.species.flags & NO_PAIN))
@@ -994,13 +994,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if (disfigured)
 		return
 	if(type == "brute")
-		owner.visible_message("\red You hear a sickening cracking sound coming from \the [owner]'s face.",	\
-		"\red <b>Your face becomes unrecognizible mangled mess!</b>",	\
-		"\red You hear a sickening crack.")
+		owner.visible_message("<span class='alert'>You hear a sickening cracking sound coming from \the [owner]'s face.</span>",	\
+		"<span class='alert'><b>Your face becomes unrecognizible mangled mess!</b></span>",	\
+		"<span class='alert'>You hear a sickening crack.</span>")
 	else
-		owner.visible_message("\red [owner]'s face melts away, turning into mangled mess!",	\
-		"\red <b>Your face melts off!</b>",	\
-		"\red You hear a sickening sizzle.")
+		owner.visible_message("<span class='alert'>[owner]'s face melts away, turning into mangled mess!</span>",	\
+		"<span class='alert'><b>Your face melts off!</b></span>",	\
+		"<span class='alert'>You hear a sickening sizzle.</span>")
 	disfigured = 1
 
 /****************************************************
@@ -1042,15 +1042,15 @@ obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 	if(base)
 		//Changing limb's skin tone to match owner
 		if(!H.species || H.species.flags & HAS_SKIN_TONE)
-			if (H.s_tone >= 0)
-				base.Blend(rgb(H.s_tone, H.s_tone, H.s_tone), ICON_ADD)
+			if (H.character.skin_tone >= 0)
+				base.Blend(rgb(H.character.skin_tone, H.character.skin_tone, H.character.skin_tone), ICON_ADD)
 			else
-				base.Blend(rgb(-H.s_tone,  -H.s_tone,  -H.s_tone), ICON_SUBTRACT)
+				base.Blend(rgb(-H.character.skin_tone,  -H.character.skin_tone,  -H.character.skin_tone), ICON_SUBTRACT)
 
 	if(base)
 		//Changing limb's skin color to match owner
 		if(!H.species || H.species.flags & HAS_SKIN_COLOR)
-			base.Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)
+			base.Blend(H.character.skin_color, ICON_ADD)
 
 	icon = base
 	set_dir(SOUTH)
@@ -1094,21 +1094,21 @@ obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
 		src.icon_state = H.gender == MALE? "head_m" : "head_f"
 	..()
 	//Add (facial) hair.
-	if(H.f_style)
-		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.f_style]
+	if(H.character.hair_face_style)
+		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.character.hair_face_style]
 		if(facial_hair_style)
 			var/icon/facial = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s")
 			if(facial_hair_style.do_colouration)
-				facial.Blend(rgb(H.r_facial, H.g_facial, H.b_facial), ICON_ADD)
+				facial.Blend(H.character.hair_face_color, ICON_ADD)
 
 			overlays.Add(facial) // icon.Blend(facial, ICON_OVERLAY)
 
-	if(H.h_style && !(H.head && (H.head.flags & BLOCKHEADHAIR)))
-		var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style]
+	if(H.character.hair_style && !(H.head && (H.head.flags & BLOCKHEADHAIR)))
+		var/datum/sprite_accessory/hair_style = hair_styles_list[H.character.hair_style]
 		if(hair_style)
 			var/icon/hair = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
 			if(hair_style.do_colouration)
-				hair.Blend(rgb(H.r_hair, H.g_hair, H.b_hair), ICON_ADD)
+				hair.Blend(H.character.hair_color, ICON_ADD)
 
 			overlays.Add(hair) //icon.Blend(hair, ICON_OVERLAY)
 

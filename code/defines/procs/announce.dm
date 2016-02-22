@@ -46,38 +46,46 @@
 	Log(message, message_title)
 
 datum/announcement/proc/Message(message as text, message_title as text)
+	var/full_message = {"<hr><h2 class='alert'>[title]</h2>
+<span class='alert'>[message]</span>"}
+
+
 	for(var/mob/M in player_list)
 		if(!istype(M,/mob/new_player) && !isdeaf(M))
-			M << "<h2 class='alert'>[title]</h2>"
-			M << "<span class='alert'>[message]</span>"
+			M << full_message
 			if (announcer)
-				M << "<span class='alert'> -[html_encode(announcer)]</span>"
+				M << "<br><span class='alert'>-[html_encode(announcer)]</span>"
+			M << "<hr><br>"
 
 datum/announcement/minor/Message(message as text, message_title as text)
 	world << "<b>[message]</b>"
 
 datum/announcement/priority/Message(message as text, message_title as text)
-	world << "<h1 class='alert'>[message_title]</h1>"
-	world << "<span class='alert'>[message]</span>"
-	if(announcer)
-		world << "<span class='alert'> -[html_encode(announcer)]</span>"
-	world << "<br>"
+	var/full_message = {"<hr><h2 class='alert'>[message_title]</h2>
+<span class='alert'>[message]</span>"}
 
-datum/announcement/priority/command/Message(message as text, message_title as text)
-	var/command
-	command += "<h1 class='alert'>[command_name()] Update</h1>"
-	if (message_title)
-		command += "<br><h2 class='alert'>[message_title]</h2>"
-
-	command += "<br><span class='alert'>[message]</span><br>"
-	command += "<br>"
 	for(var/mob/M in player_list)
 		if(!istype(M,/mob/new_player) && !isdeaf(M))
-			M << command
+			M << full_message
+			if(announcer)
+				M << "<br><span class='alert'>-[html_encode(announcer)]</span>"
+			M << "<hr><br>"
+
+datum/announcement/priority/command/Message(message as text, message_title as text)
+	var/full_message = "<hr><h1 class='alert'>[command_name()] Update</h1>"
+	if (message_title)
+		full_message += "<h2 class='alert'>[message_title]</h2>"
+
+	full_message += "<span class='alert'>[message]</span><hr><br>"
+	for(var/mob/M in player_list)
+		if(!istype(M,/mob/new_player) && !isdeaf(M))
+			M << full_message
 
 datum/announcement/priority/security/Message(message as text, message_title as text)
-	world << "<font size=4 color='red'>[message_title]</font>"
-	world << "<font color='red'>[message]</font>"
+	for(var/mob/M in player_list)
+		if(!istype(M,/mob/new_player) && !isdeaf(M))
+			M << {"<hr><h2 class='alert'>[message_title]</h2>
+<font color='alert'>[message]</font><hr><br>"}
 
 datum/announcement/proc/NewsCast(message as text, message_title as text)
 	if(!newscast)

@@ -13,7 +13,7 @@
 
 	var/command = file2text("config/update_script_command.txt")		//Security measure to stop people changing command via config debug
 	if(!command)
-		usr << "<span class='danger'> The update command could not be found on the server.</span>"
+		usr << "<span class='danger'>The update command could not be found on the server.</span>"
 		return
 
 	var/result = shell(command)		//Use exit codes to determine what occured
@@ -28,43 +28,11 @@
 		if(2)
 			usr << "<b>Server requires the resource file to be re-compiled - update unsucessful.</b>"
 		if(3)
-			usr << "<span class='danger'> This server is already compiling. Please try again in a few minutes.</span>"
+			usr << "<span class='danger'>This server is already compiling. Please try again in a few minutes.</span>"
 		else
-			usr << "<span class='danger'> Error: A catastrphic error has occured. Please contact a developer about this</span>"
+			usr << "<span class='danger'>Error: A catastrphic error has occured. Please contact a developer about this</span>"
 
 	log_debug("IG UPDATE: exit code [result]")
-
-/client/proc/add_whitelist()
-    set category = "Admin"
-    set name = "Write to Whitelist"
-
-    set desc = "Adds a user to any whitelist available in the directory mid-round."
-
-    if(!check_rights(R_ADMIN|R_MOD))    return
-
-    var/client/input = input("Please, select a player!", "Add user to Whitelist") as null|anything in sortKey(clients)
-    if(!input)  return
-    else        input = input.ckey
-
-    var/file = browse_files("data/whitelists/")
-    switch(file)
-        if("data/whitelists/alienwhitelist.txt")
-            var/race = input("Which species?") as null|anything in whitelisted_species
-            if(!race)   return
-            if(safe_write("[input] - [race]", file, "whitelisted for this race"))
-                call("/proc/load_alienwhitelist")()     //Re-loads the alien-whitelist
-
-        if("data/whitelists/donators.txt")
-            var/tier = input("Which tier?") as null|anything in list("1","2")
-            if(!tier)   return
-            if(safe_write("[input] - [tier]", file, "a donator"))
-                call("/proc/load_donators")()          //Re-loads the donator list
-
-        if("data/whitelists/whitelist.txt")
-            if(safe_write(input,file, "Head-whitelisted"))
-                call("/proc/load_whitelist")()         //Re-loads the whitelist
-
-        else    return
 
 /proc/safe_write(var/text, var/file_path, var/type = "in the file")         //In-case we decide to do more with this
     if(text_exists(text, file_path))

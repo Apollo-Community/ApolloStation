@@ -76,17 +76,16 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggledebuglogs,
 	/client/proc/toggleghostwriters,
 	/client/proc/toggledrones,
-	/datum/admins/proc/show_skills,
+//	/datum/admins/proc/show_skills,
 	/client/proc/check_customitem_activity,
-	///client/proc/man_up,
-	///client/proc/global_man_up,
 	/client/proc/response_team, // Response Teams admin verb
 	/client/proc/toggle_antagHUD_use,
 	/client/proc/toggle_antagHUD_restrictions,
 	/client/proc/allow_character_respawn,    /* Allows a ghost to respawn */
 	/client/proc/event_manager_panel,
 	/client/proc/add_acc_item,
-	/client/proc/remove_acc_item
+	/client/proc/remove_acc_item,
+	/client/proc/TemplatePanel
 )
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -112,7 +111,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_add_random_ai_law,
 	/client/proc/make_sound,
 	/client/proc/toggle_random_events,
-	/client/proc/editappear
+	/client/proc/editappear,
+	/client/proc/modifyCharacterPromotions
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -265,7 +265,7 @@ var/list/admin_verbs_mod = list(
 	/datum/admins/proc/show_player_info,
 	/client/proc/player_panel_new,
 	/client/proc/dsay,
-	/datum/admins/proc/show_skills,
+//	/datum/admins/proc/show_skills,
 	/datum/admins/proc/show_player_panel,
 	/client/proc/check_antagonists,
 	/client/proc/jobbans,
@@ -407,11 +407,11 @@ var/list/admin_verbs_mentor = list(
 	if(holder && mob)
 		if(mob.invisibility == INVISIBILITY_OBSERVER)
 			mob.invisibility = initial(mob.invisibility)
-			mob << "\red <b>Invisimin off. Invisibility reset.</b>"
+			mob << "<span class='alert'><b>Invisimin off. Invisibility reset.</b></span>"
 			mob.alpha = max(mob.alpha + 100, 255)
 		else
 			mob.invisibility = INVISIBILITY_OBSERVER
-			mob << "\blue <b>Invisimin on. You are now as invisible as a ghost.</b>"
+			mob << "<span class='notice'><b>Invisimin on. You are now as invisible as a ghost.</b></span>"
 			mob.alpha = max(mob.alpha - 100, 0)
 
 
@@ -483,19 +483,19 @@ var/list/admin_verbs_mentor = list(
 	set name = "OOC Text Color"
 
 	if((src.holder && (src.holder.rights & R_ADMIN)) || src.IsByondMember())
-		var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
-		if(new_ooccolor)
-			prefs.ooccolor = new_ooccolor
-			prefs.save_preferences()
+		var/new_OOC_color = input(src, "Please select your OOC colour.", "OOC colour") as color|null
+		if(new_OOC_color)
+			prefs.OOC_color = new_OOC_color
+			prefs.savePreferences()
 		feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return
 	else
 		if (donator)
 			if (donator_tier(src) == 2)
-				var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
-				if(new_ooccolor)
-					prefs.ooccolor = new_ooccolor
-					prefs.save_preferences()
+				var/new_OOC_color = input(src, "Please select your OOC colour.", "OOC colour") as color|null
+				if(new_OOC_color)
+					prefs.OOC_color = new_OOC_color
+					prefs.savePreferences()
 				feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 				return
 			else
@@ -518,48 +518,6 @@ var/list/admin_verbs_mentor = list(
 		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]", "SNEAKY BREEKI:")
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-#define MAX_WARNS 3
-#define AUTOBANTIME 10
-
-/client/proc/warn(warned_ckey)
-	if(!check_rights(R_ADMIN))	return
-
-	if(!warned_ckey || !istext(warned_ckey))	return
-	if(warned_ckey in admin_datums)
-		usr << "<font color='red'>Error: warn(): You can't warn admins.</font>"
-		return
-
-	var/datum/preferences/D
-	var/client/C = directory[warned_ckey]
-	if(C)	D = C.prefs
-	else	D = preferences_datums[warned_ckey]
-
-	if(!D)
-		src << "<font color='red'>Error: warn(): No such ckey found.</font>"
-		return
-
-	if(++D.warns >= MAX_WARNS)					//uh ohhhh...you'reee iiiiin trouuuubble O:)
-		ban_unban_log_save("[ckey] warned [warned_ckey], resulting in a [AUTOBANTIME] minute autoban.")
-		if(C)
-			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)] resulting in a [AUTOBANTIME] minute ban.")
-			C << "<font color='red'><BIG><B>You have been autobanned due to a warning by [ckey].</B></BIG><br>This is a temporary ban, it will be removed in [AUTOBANTIME] minutes."
-			qdel(C)
-		else
-			message_admins("[key_name_admin(src)] has warned [warned_ckey] resulting in a [AUTOBANTIME] minute ban.")
-		AddBan(warned_ckey, D.last_id, "Autobanning due to too many formal warnings", ckey, 1, AUTOBANTIME)
-		feedback_inc("ban_warn",1)
-	else
-		if(C)
-			C << "<font color='red'><BIG><B>You have been formally warned by an administrator.</B></BIG><br>Further warnings will result in an autoban.</font>"
-			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)]. They have [MAX_WARNS-D.warns] strikes remaining.")
-		else
-			message_admins("[key_name_admin(src)] has warned [warned_ckey] (DC). They have [MAX_WARNS-D.warns] strikes remaining.")
-
-	feedback_add_details("admin_verb","WARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-#undef MAX_WARNS
-#undef AUTOBANTIME
 
 /client/proc/drop_bomb() // Some admin dickery that can probably be done better -- TLE
 	set category = "Special Verbs"
@@ -584,7 +542,7 @@ var/list/admin_verbs_mentor = list(
 			var/light_impact_range = input("Light impact range (in tiles):") as num
 			var/flash_range = input("Flash range (in tiles):") as num
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
-	message_admins("\blue [ckey] creating an admin explosion at [epicenter.loc].")
+	message_admins("<span class='notice'>[ckey] creating an admin explosion at [epicenter.loc].</span>")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/give_spell(mob/T as mob in mob_list) // -- Urist
@@ -601,7 +559,7 @@ var/list/admin_verbs_mentor = list(
 	T.spell_list += new path
 	feedback_add_details("admin_verb","GS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
-	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the spell [S].")
+	message_admins("<span class='notice'>[key_name_admin(usr)] gave [key_name(T)] the spell [S].</span>")
 
 /client/proc/give_disease(mob/T as mob in mob_list) // -- Giacom
 	set category = "Fun"
@@ -617,7 +575,7 @@ var/list/admin_verbs_mentor = list(
 	T.contract_disease(new path, 1)
 	feedback_add_details("admin_verb","GD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
-	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the disease [D].")
+	message_admins("<span class='notice'>[key_name_admin(usr)] gave [key_name(T)] the disease [D].</span>")
 
 /client/proc/give_disease2(mob/T as mob in mob_list) // -- Giacom
 	set category = "Fun"
@@ -648,7 +606,7 @@ var/list/admin_verbs_mentor = list(
 
 	feedback_add_details("admin_verb","GD2") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] a [greater] disease2 with infection chance [D.infectionchance].")
-	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] a [greater] disease2 with infection chance [D.infectionchance].")
+	message_admins("<span class='notice'>[key_name_admin(usr)] gave [key_name(T)] a [greater] disease2 with infection chance [D.infectionchance].</span>")
 
 /client/proc/make_sound(var/obj/O in world) // -- TLE
 	set category = "Special Verbs"
@@ -661,7 +619,7 @@ var/list/admin_verbs_mentor = list(
 		for (var/mob/V in hearers(O))
 			V.show_message(message, 2)
 		log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound")
-		message_admins("\blue [key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound")
+		message_admins("<span class='notice'>[key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound</span>")
 		feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -695,7 +653,7 @@ var/list/admin_verbs_mentor = list(
 		usr << "<b>Disabled air processing.</b>"
 	feedback_add_details("admin_verb","KA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] used 'kill air'.")
-	message_admins("\blue [key_name_admin(usr)] used 'kill air'.")
+	message_admins("<span class='notice'>[key_name_admin(usr)] used 'kill air'.</span>")
 
 /client/proc/readmin_self()
 	set name = "Re-Admin self"
@@ -762,66 +720,28 @@ var/list/admin_verbs_mentor = list(
 	return
 
 /client/proc/editappear(mob/living/carbon/human/M as mob in world)
-	set name = "Edit Appearance"
+	set name = "Edit Records"
 	set category = "Fun"
 
 	if(!check_rights(R_FUN))	return
 
-	if(!istype(M, /mob/living/carbon/human))
-		usr << "\red You can only do this to humans!"
+	if( !istype( M ))
+		usr << "<span class='alert'>You can only do this to humans!</span>"
 		return
-	switch(alert("Are you sure you wish to edit this mob's appearance? Skrell, Unathi, Vox and Tajaran can result in unintended consequences.",,"Yes","No"))
-		if("No")
-			return
-	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
-	if(new_facial)
-		M.r_facial = hex2num(copytext(new_facial, 2, 4))
-		M.g_facial = hex2num(copytext(new_facial, 4, 6))
-		M.b_facial = hex2num(copytext(new_facial, 6, 8))
 
-	var/new_hair = input("Please select hair color.", "Character Generation") as color
-	if(new_facial)
-		M.r_hair = hex2num(copytext(new_hair, 2, 4))
-		M.g_hair = hex2num(copytext(new_hair, 4, 6))
-		M.b_hair = hex2num(copytext(new_hair, 6, 8))
+	if( !M.character )
+		usr << "<span class='alert'>This mob has no character!</span>"
+		return
 
-	var/new_eyes = input("Please select eye color.", "Character Generation") as color
-	if(new_eyes)
-		M.r_eyes = hex2num(copytext(new_eyes, 2, 4))
-		M.g_eyes = hex2num(copytext(new_eyes, 4, 6))
-		M.b_eyes = hex2num(copytext(new_eyes, 6, 8))
+	M.character.EditCharacterMenu( usr )
 
-	var/new_skin = input("Please select body color. This is for Tajaran, Unathi, and Skrell only!", "Character Generation") as color
-	if(new_skin)
-		M.r_skin = hex2num(copytext(new_skin, 2, 4))
-		M.g_skin = hex2num(copytext(new_skin, 4, 6))
-		M.b_skin = hex2num(copytext(new_skin, 6, 8))
+	/*
+	M.character.copy_to( M )
 
-	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
-
-	if (new_tone)
-		M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
-		M.s_tone =  -M.s_tone + 35
-
-	// hair
-	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in hair_styles_list
-	if(new_hstyle)
-		M.h_style = new_hstyle
-
-	// facial hair
-	var/new_fstyle = input(usr, "Select a facial hair style", "Grooming")  as null|anything in facial_hair_styles_list
-	if(new_fstyle)
-		M.f_style = new_fstyle
-
-	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
-	if (new_gender)
-		if(new_gender == "Male")
-			M.gender = MALE
-		else
-			M.gender = FEMALE
 	M.update_hair()
 	M.update_body()
 	M.check_dna(M)
+	*/
 
 /client/proc/playernotes()
 	set name = "Show Player Info"
@@ -905,11 +825,11 @@ var/list/admin_verbs_mentor = list(
 	if( angry )
 		angry = 0
 		log_admin("[key_name(usr)] has CALMED DOWN!")
-		message_admins("\blue [key_name_admin(usr)] has CALMED DOWN!")
+		message_admins("<span class='notice'>[key_name_admin(usr)] has CALMED DOWN!</span>")
 	else
 		angry = 1
 		log_admin("[key_name(usr)] has become ANGRY!")
-		message_admins("\blue [key_name_admin(usr)] has become ANGRY!")
+		message_admins("<span class='notice'>[key_name_admin(usr)] has become ANGRY!</span>")
 
 /* This is the worst frickin verb, why did anyone ever think it was a good idea?
 /client/proc/man_up(mob/T as mob in mob_list)
@@ -921,7 +841,7 @@ var/list/admin_verbs_mentor = list(
 	T << "<span class='notice'>Move on.</span>"
 
 	log_admin("[key_name(usr)] told [key_name(T)] to man up and deal with it.")
-	message_admins("\blue [key_name_admin(usr)] told [key_name(T)] to man up and deal with it.", 1)
+	message_admins("<span class='notice'>[key_name_admin(usr)] told [key_name(T)] to man up and deal with it.</span>", 1)
 
 /client/proc/global_man_up()
 	set category = "Fun"
@@ -933,5 +853,5 @@ var/list/admin_verbs_mentor = list(
 		T << 'sound/voice/ManUp1.ogg'
 
 	log_admin("[key_name(usr)] told everyone to man up and deal with it.")
-	message_admins("\blue [key_name_admin(usr)] told everyone to man up and deal with it.", 1)
+	message_admins("<span class='notice'>[key_name_admin(usr)] told everyone to man up and deal with it.</span>", 1)
 */

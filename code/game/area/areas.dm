@@ -7,7 +7,7 @@
 	icon = "ICON FILENAME" 			(defaults to areas.dmi)
 	icon_state = "NAME OF ICON" 	(defaults to "unknown" (blank))
 	requires_power = 0 				(defaults to 1)
-	music = "music/music.ogg"		(defaults to "music/music.ogg")
+	music = list( 'sound/music/music.ogg' )
 
 NOTE: there are two lists of areas in the end of this file: centcom and station itself. Please maintain these lists valid. --rastaf0
 
@@ -135,7 +135,7 @@ var/list/ghostteleportlocs = list()
 	power_light = 0
 	power_equip = 0
 	power_environ = 0
-	music = list('sound/ambience/ambispace.ogg','sound/ambience/ambispace1.ogg')
+	music = list('sound/ambience/ambispace.ogg','sound/ambience/ambispace1.ogg','sound/ambience/ambispace2.ogg')
 	ambience = list()
 	environment = PLAIN
 
@@ -201,7 +201,6 @@ area/space/atmosalert()
 
 /area/shuttle/escape
 	name = "\improper Emergency Shuttle"
-	music = list( "music/escape.ogg" )
 
 /area/shuttle/escape/station
 	name = "\improper Emergency Shuttle Station"
@@ -219,7 +218,6 @@ area/space/atmosalert()
 
 /area/shuttle/escape_pod1
 	name = "\improper Escape Pod One"
-	music = list( "music/escape.ogg" )
 
 /area/shuttle/escape_pod1/station
 	icon_state = "shuttle2"
@@ -234,7 +232,6 @@ area/space/atmosalert()
 
 /area/shuttle/escape_pod2
 	name = "\improper Escape Pod Two"
-	music = list( "music/escape.ogg" )
 
 /area/shuttle/escape_pod2/station
 	icon_state = "shuttle2"
@@ -249,7 +246,6 @@ area/space/atmosalert()
 
 /area/shuttle/escape_pod3
 	name = "\improper Escape Pod Three"
-	music = list( "music/escape.ogg" )
 
 /area/shuttle/escape_pod3/station
 	icon_state = "shuttle2"
@@ -264,7 +260,6 @@ area/space/atmosalert()
 
 /area/shuttle/escape_pod5 //Pod 4 was lost to meteors
 	name = "\improper Escape Pod Five"
-	music = list( "music/escape.ogg" )
 
 /area/shuttle/escape_pod5/station
 	icon_state = "shuttle2"
@@ -279,7 +274,6 @@ area/space/atmosalert()
 
 /area/shuttle/mining
 	name = "\improper Mining Shuttle"
-	music = list( "music/escape.ogg" )
 
 /area/shuttle/mining/station
 	icon_state = "shuttle2"
@@ -371,7 +365,6 @@ area/space/atmosalert()
 
 /area/shuttle/research
 	name = "\improper Research Shuttle"
-	music = list( "music/escape.ogg" )
 
 /area/shuttle/research/station
 	icon_state = "shuttle2"
@@ -493,12 +486,12 @@ area/space/atmosalert()
 	name = "\improper Thunderdome"
 	icon_state = "thunder"
 	requires_power = 0
+	ambience = list('sound/music/THUNDERDOME.ogg')
 
 /area/tdome/arena
 	name = "\improper Thunderdome Arena"
 	icon_state = "thunder"
 	requires_power = 0
-	music = list( 'sound/music/THUNDERDOME.ogg' )
 
 /area/tdome/tdome1
 	name = "\improper Thunderdome (Team 1)"
@@ -1708,6 +1701,10 @@ area/space/atmosalert()
 	name = "\improper Toxins Mixing Room"
 	icon_state = "toxmix"
 
+/area/rnd/alloy_lab
+	name = "\improper Alloys Lab"
+	icon_state = "alloylab"
+
 /area/rnd/misc_lab
 	name = "\improper Miscellaneous Research"
 	icon_state = "toxmisc"
@@ -1959,6 +1956,9 @@ area/space/atmosalert()
 	icon_state = "yellow"
 	environment = QUARRY
 
+/area/construction/IAA
+	name = "\improper Construction Zone"
+
 /area/construction/supplyshuttle
 	name = "\improper Supply Shuttle"
 	icon_state = "yellow"
@@ -2122,7 +2122,7 @@ area/space/atmosalert()
 /area/turret_protected/tcomsat
 	name = "\improper Abandoned Satellite"
 	icon_state = "tcomsatlob"
-	music = list('sound/ambience/ambispace.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg','sound/ambience/ambispace1.ogg' )
+	music = list('sound/ambience/ambispace.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg','sound/ambience/ambispace1.ogg', ,'sound/ambience/ambispace2.ogg' )
 
 
 // Labor Camp

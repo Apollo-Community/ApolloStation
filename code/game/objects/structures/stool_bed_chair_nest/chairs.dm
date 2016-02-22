@@ -1,12 +1,9 @@
-/obj/structure/bed/chair	//YES, chairs are a type of bed, which are a type of stool. This works, believe me.	-Pete
+/obj/structure/bed/chair
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
-	icon_state = "chair"
+	icon_state = "chair1"
 
 	var/propelled = 0 // Check for fire-extinguisher-driven chairs
-
-/obj/structure/stool/MouseDrop(atom/over_object)
-	return
 
 /obj/structure/bed/chair/New()
 	..()
@@ -15,7 +12,14 @@
 	return
 
 /obj/structure/bed/chair/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
+	if( istype(W, /obj/item/weapon/wrench/) )
+		var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(src.loc)
+		if(istype(src, /obj/structure/bed/chair/office/)) M.amount = 5
+		else if(istype(src, /obj/structure/bed/chair/comfy/)) M.amount = 2
+		else M.amount = 1
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		qdel(src)
+		return
 	if(istype(W, /obj/item/assembly/shock_kit))
 		var/obj/item/assembly/shock_kit/SK = W
 		if(!SK.status)
@@ -29,6 +33,7 @@
 		SK.loc = E
 		SK.master = E
 		qdel(src)
+	..()
 
 /obj/structure/bed/chair/attack_tk(mob/user as mob)
 	if(buckled_mob)
@@ -58,7 +63,7 @@
 		src.set_dir(turn(src.dir, 90))
 		return
 	else
-		if(istype(usr,/mob/living/simple_animal/mouse))
+		if(istype(usr,/mob/living/simple_animal/rodent))
 			return
 		if(!usr || !isturf(usr.loc))
 			return
@@ -74,7 +79,7 @@
 	return
 
 // Chair types
-/obj/structure/bed/chair/wood/normal
+/obj/structure/bed/chair/wood
 	icon_state = "wooden_chair"
 	name = "wooden chair"
 	desc = "Old is never too old to not be in fashion."
@@ -100,7 +105,7 @@
 	var/image/armrest = null
 
 /obj/structure/bed/chair/comfy/New()
-	armrest = image("icons/obj/objects.dmi", "comfychair_armrest")
+	armrest = image("icons/obj/furniture.dmi", "comfychair_armrest")
 	armrest.layer = MOB_LAYER + 0.1
 
 	return ..()
@@ -188,3 +193,31 @@
 
 /obj/structure/bed/chair/office/dark
 	icon_state = "officechair_dark"
+
+/obj/structure/bed/chair/old
+	name = "chair"
+	desc = "It looks ugly."
+	icon_state = "chair"
+
+/obj/structure/bed/chair/cushion
+	name = "chair"
+	desc = "You sit in this. This one has a cushioned seat."
+	icon_state = "chair2"
+
+/obj/structure/bed/chair/shuttle
+	name = "shuttle chair"
+	desc = "It looks uncomfortable."
+	icon_state = "chair3"
+	var/image/armrest = null
+
+/obj/structure/bed/chair/shuttle/New()
+	armrest = image("icons/obj/furniture.dmi", "chair3_overlay")
+	armrest.layer = MOB_LAYER + 0.1
+
+	return ..()
+
+/obj/structure/bed/chair/shuttle/afterbuckle()
+	if(buckled_mob)
+		overlays += armrest
+	else
+		overlays -= armrest

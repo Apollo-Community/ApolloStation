@@ -189,11 +189,11 @@
 	proc/handle_disabilities()
 		if (disabilities & EPILEPSY)
 			if ((prob(1) && paralysis < 1))
-				src << "\red You have a seizure!"
+				src << "<span class='alert'>You have a seizure!</span>"
 				for(var/mob/O in viewers(src, null))
 					if(O == src)
 						continue
-					O.show_message(text("\red <B>[src] starts having a seizure!"), 1)
+					O.show_message(text("<span class='alert'><B>[src] starts having a seizure!</span>"), 1)
 				Paralyse(10)
 				make_jittery(1000)
 		if (disabilities & COUGHING)
@@ -236,15 +236,15 @@
 					custom_pain("Your head feels numb and painful.")
 			if(getBrainLoss() >= 15)
 				if(4 <= rn && rn <= 6) if(eye_blurry <= 0)
-					src << "\red It becomes hard to see for some reason."
+					src << "<span class='alert'>It becomes hard to see for some reason.</span>"
 					eye_blurry = 10
 			if(getBrainLoss() >= 35)
 				if(7 <= rn && rn <= 9) if(hand && equipped())
-					src << "\red Your hand won't respond properly, you drop what you're holding."
+					src << "<span class='alert'>Your hand won't respond properly, you drop what you're holding.</span>"
 					drop_item()
 			if(getBrainLoss() >= 50)
 				if(10 <= rn && rn <= 12) if(!lying)
-					src << "\red Your legs won't respond properly, you fall down."
+					src << "<span class='alert'>Your legs won't respond properly, you fall down.</span>"
 					resting = 1
 
 	proc/handle_stasis_bag()
@@ -284,7 +284,7 @@
 				radiation -= 1 * RADIATION_SPEED_COEFFICIENT
 				reagents.add_reagent("radium", rads/10)
 				if( prob(3) )
-					src << pick( "\blue You feel relaxed.", "\blue You feel soothed.", "\blue A warm, calming wave rolls over you." )
+					src << pick( "<span class='notice'>You feel relaxed.</span>", "<span class='notice'>You feel soothed.</span>", "<span class='notice'>A warm, calming wave rolls over you.</span>" )
 				return
 
 			var/datum/organ/internal/diona/nutrients/rad_organ = locate() in internal_organs
@@ -314,10 +314,10 @@
 					if(!lying)
 						emote("collapse")
 				if(prob(5) && prob(100 * RADIATION_SPEED_COEFFICIENT) && species.name == "Human") //apes go bald
-					if((h_style != "Bald" || f_style != "Shaved" ))
+					if((character.hair_style != "Bald" || character.hair_face_style != "Shaved" ))
 						src << "<span class='warning'>Your hair falls out.</span>"
-						h_style = "Bald"
-						f_style = "Shaved"
+						character.hair_style = "Bald"
+						character.hair_face_style = "Shaved"
 						update_hair()
 
 			if (radiation > 75)
@@ -596,7 +596,7 @@
 
 				// Enough to make us sleep as well
 				if(SA_pp > SA_sleep_min)
-					sleeping = min(sleeping+2, 10)
+					sleeping = min(sleeping+4, 10)
 
 			// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			else if(SA_pp > 0.15)
@@ -997,6 +997,9 @@
 			if(nutrition < 200)
 				take_overall_damage(2,0)
 				traumatic_shock++
+
+		if((locate(src.internal_organs_by_name["resonant crystal"]) in src.internal_organs))
+			nutrition = 400
 
 		if(!(species.flags & IS_SYNTHETIC)) handle_trace_chems()
 
@@ -1522,6 +1525,13 @@
 						if(!(M.status_flags & GODMODE))
 							M.adjustBruteLoss(5)
 						nutrition += 10
+				if(istype(M, /mob/living/simple_animal))
+					var/x = M.oxyloss
+					M.adjustOxyLoss(5)
+					if(x == M.oxyloss)
+						stomach_contents.Remove(M)
+						qdel(M)
+					nutrition += 10
 
 	proc/handle_changeling()
 		if(mind && mind.changeling)

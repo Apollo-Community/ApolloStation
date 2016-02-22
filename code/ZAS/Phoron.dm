@@ -98,7 +98,7 @@ obj/var/contaminated = 0
 	if(vsc.plc.SKIN_BURNS)
 		if(!pl_head_protected() || !pl_suit_protected())
 			burn_skin(0.75)
-			if(prob(20)) src << pick( "\red Your skin burns!", "\red You feel your skin peeling away!", "\red Blisters begin to form on your skin!", "\red Your skin is unbearably itchy!" )
+			if(prob(20)) src << pick( "<span class='alert'>Your skin burns!</span>", "<span class='alert'>You feel your skin peeling away!</span>", "<span class='alert'>Blisters begin to form on your skin!</span>", "<span class='alert'>Your skin is unbearably itchy!</span>" )
 			updatehealth()
 
 	//Burn eyes if exposed.
@@ -121,7 +121,7 @@ obj/var/contaminated = 0
 	if(vsc.plc.GENETIC_CORRUPTION)
 		if(rand(1,10000) < vsc.plc.GENETIC_CORRUPTION)
 			randmutb(src)
-			src << "\red High levels of toxins cause you to spontaneously mutate."
+			src << "<span class='alert'>High levels of toxins cause you to spontaneously mutate.</span>"
 			domutcheck(src,null)
 
 
@@ -132,11 +132,11 @@ obj/var/contaminated = 0
 
 	var/datum/organ/internal/eyes/E = internal_organs_by_name["eyes"]
 	if(E)
-		if(prob(20)) src << "\red Your eyes burn!"
+		if(prob(20)) src << "<span class='alert'>Your eyes burn!</span>"
 		E.damage += 2.5
 		eye_blurry = min(eye_blurry+1.5,50)
 		if (prob(max(0,E.damage - 15) + 1) &&!eye_blind)
-			src << "\red You are blinded!"
+			src << "<span class='alert'>You are blinded!</span>"
 			eye_blind += 20
 
 /mob/living/carbon/human/proc/burn_lungs()
@@ -147,7 +147,7 @@ obj/var/contaminated = 0
 	var/datum/organ/internal/lungs/E = internal_organs_by_name["lungs"]
 	if(E)
 		if(prob(20))
-			src << pick( "\red Your lungs burn!", "\red You find it extremely hard to breath!", "\red You cough uncontrollably!" )
+			src << pick( "<span class='alert'>Your lungs burn!</span>", "<span class='alert'>You find it extremely hard to breath!</span>", "<span class='alert'>You cough uncontrollably!</span>" )
 			E.damage += 2.5
 
 /mob/living/carbon/human/proc/pl_head_protected()

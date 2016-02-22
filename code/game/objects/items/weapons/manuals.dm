@@ -20,7 +20,7 @@
 		</head>
 
 		<body>
-		<iframe width='100%' height='97%' src="[config.wikiurl]Guide_to_construction&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		<iframe width='100%' height='97%' src="[config.wikiurl]index.php?title=Guide_to_Construction&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
 		</body>
 
 		</html>
@@ -35,43 +35,18 @@
 
 /obj/item/weapon/book/manual/engineering_particle_accelerator/New()
 	..()
-	dat = {"<html>
-				<head>
-				<style>
-				h1 {font-size: 18px; margin: 15px 0px 5px;}
-				h2 {font-size: 15px; margin: 15px 0px 5px;}
-				h3 {font-size: 13px; margin: 15px 0px 5px;}
-				li {margin: 2px 0px 2px 15px;}
-				ul {margin: 5px; padding: 0px;}
-				ol {margin: 5px; padding: 0px 15px;}
-				body {font-size: 13px; font-family: Verdana;}
-				</style>
-				</head>
-				<body>
+	dat = {"
 
-				<h1>Experienced User's Guide</h1>
+		<html><head>
+		</head>
 
-				<h2>Setting up the accelerator</h2>
+		<body>
+		<iframe width='100%' height='97%' src="[config.wikiurl]index.php?title=Singularity_Engine&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		</body>
 
-				<ol>
-					<li><b>Wrench</b> all pieces to the floor</li>
-					<li>Add <b>wires</b> to all the pieces</li>
-					<li>Close all the panels with your <b>screwdriver</b></li>
-				</ol>
+		</html>
 
-				<h2>Using the accelerator</h2>
-
-				<ol>
-					<li>Open the control panel</li>
-					<li>Set the speed to 2</li>
-					<li>Start firing at the singularity generator</li>
-					<li><font color='red'><b>When the singularity reaches a large enough size so it starts moving on it's own set the speed down to 0, but don't shut it off</b></font></li>
-					<li>Remember to wear a radiation suit when working with this machine... we did tell you that at the start, right?</li>
-				</ol>
-
-				</body>
-			</html>
-			"}
+		"}
 
 
 /obj/item/weapon/book/manual/supermatter_engine
@@ -82,109 +57,18 @@
 
 /obj/item/weapon/book/manual/supermatter_engine/New()
 	..()
-	dat = {"<html>
-				<head>
-				<style>
-				h1 {font-size: 18px; margin: 15px 0px 5px;}
-				h2 {font-size: 15px; margin: 15px 0px 5px;}
-				li {margin: 2px 0px 2px 15px;}
-				ul {margin: 5px; padding: 0px;}
-				ol {margin: 5px; padding: 0px 15px;}
-				body {font-size: 13px; font-family: Verdana;}
-				</style>
-				</head>
-				<body>
-				<br>
-				Engineering notes on the single-stage supermatter engine,</br>
-				-Waleed Asad</br></br>
+	dat = {"
 
-				Station,</br>
-				Apollo</br></br>
+		<html><head>
+		</head>
 
-				A word of caution, do not enter the engine room for any reason without radiation protection and meson scanners on. The status of the engine may be unpredictable even when you believe it is 'off.' This is an important level of personal protection.</br></br>
+		<body>
+		<iframe width='100%' height='97%' src="[config.wikiurl]index.php?title=Starting_the_Supermatter&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		</body>
 
-				The engine has two basic modes of functionality. It has been observed that it is capable of both a safe level of operation and a modified, high output mode.</br></br>
+		</html>
 
-				<h2>Heat-Primary Mode</h2>
-				<i>Notes on starting the basic function mode</i>
-				<ol>
-				<li><b>Prepare collector arrays</b>: As is standard, begin by wrenching them down, filling six phoron tanks with a phoron canister, and inserting the tank into the collectors one by one. Finally, initialize each collector.</li>
-
-				<li><b>Prepare gas system</b>: Before introducing any gas into the supermatter engine room, it is important to remember the small, but vital steps to preparing this section. First, set the input gas pump and output gas flow pump to 4500 kPa, or maximum flow. Second, switch the digital switching valve into the 'up' position, so the green light is on north side of the valve, in order to circulate the gas back toward the coolers and collectors.</li>
-
-				<li><b>Apply N2 gas</b>: Retrieve the two N2 canisters from storage and bring them to the engine room. Attach one of them to the input section of the engine gas system located next to the collectors. Keep it attached until the N2 pressure is low enough to turn the canister light red. Replace it with the second canister to keep N2 pressure at optimal levels.</li>
-
-				<li><b>Open supermatter shielding</b>: This button is located in the engine room, to the left of the engine monitoring room blast doors. At this point, the supermatter chamber is mostly a gas mixture of N2 and is producing no radiation. It is considered 'safe' up until this point. Do not forget radiation shielding and meson scanners.</li>
-
-				<li><b>Begin primary emitter burst series</b>: Begin by firing four shots into the supermatter using the emitter. It is important to move to this step quickly. The onboard SMES units may not have enough power to run the emitters if left alone too long on-station. This engine can produce enough power on its own to run the entire station, ignoring the SMES units completely, and is wired to do so.</li>
-
-				<li><b>Switch SMES units to primary settings</b>: Maximize input and set the devices to automatically charge, additionally turn their outputs on if they are off unless power is to be saved (Which can be useful in case of later failures).</li>
-
-				<li><b>Begin secondary emitter burst series</b>: Before firing the emitter again, check the power in the line with a multimeter (Do not forget electrical gloves). The engine is running at high efficiency when the value exceeds 200,000 power units.</li>
-
-				<li><b>Maintain engine power</b>: When power in the lines get low, add an additional emitter burst series to bring power to normal levels.</li>
-				</ol>
-
-
-				<h2>O2-Reaction Mode</h2>
-
-				The second mode for running the engine uses a gas mixture to produce a reaction within the supermatter. This mode requires the CE's or Atmospheric's help to set up. This is called 'O2-Reaction Mode.'</br></br>
-
-				<b><u>THIS MODE CAN CAUSE A RUNAWAY REACTION, LEADING TO CATASTROPHIC FAILURE IF NOT MAINTAINED. NEVER FORGET ABOUT THE ENGINE IN THIS MODE.</u></b></br></br>
-
-				Additionally, this mode can be used for what is called a '<b>Cold Start</b>.' If the station has no power in the SMES to run the emitters, using this mode will allow enough power output to run them, and quickly reach an acceptable level of power output.</br></br>
-
-				<ol>
-				<li><b>Prepare collector arrays</b>: As is standard, begin by wrenching them down, filling six phoron tanks with a phoron canister, and inserting the tank into the collectors one by one. Finally, initialize each collector.</li>
-
-				<li><b>Prepare gas system</b>: Before introducing any gas into the supermatter engine room, it is important to remember the small, but vital steps to preparing this section. First, set the input gas pump and output gas flow pump to 4500 kPa, or maximum flow. Second, switch the digital switching valve into the 'up' position, so the green light is on north side of the valve, in order to circulate the gas back toward the coolers and collectors.</li>
-
-				<li><b>Modify the engine room filters</b>: Unlike the Heat-Primary Mode, it is important to change the filters attached to the gas system to stop filtering O2, and start filtering carbon molecules. O2-Reaction Mode produces far more phoron than Heat-Primary, therefore filtering it off is essential.</li>
-
-				<li><b>Switch SMES units to primary settings</b>: Maximize input and set the devices to automatically charge, additionally turn their outputs on if they are off unless power is to be saved (Which can be useful in case of later failures). If you check the power in the system lines at this point, you will find that it is constantly going up. Indeed, with just the addition of O2 to the supermatter, it will begin outputting power.</li>
-
-				<li><b>Begin primary emitter burst series</b>: Begin by firing four shots into the supermatter using the emitter. Do not over power the supermatter. The reaction is self sustaining and propagating. As long as O2 is in the chamber, it will continue outputting MORE power.</li>
-
-				<li><b>Maintain follow up operations</b>: Remember to check the temperature of the core gas and switch to the Heat-Primary function, or vent the core room when problems begin if required.</li>
-				</ol></br>
-
-				<h2>Notes on Supermatter Reaction Function and Drawbacks</h2>
-
-				After several hours of observation, an interesting phenomenon was witnessed. The supermatter undergoes a constant, self-sustaining reaction when given an extremely high O2 concentration. Anything about 80% or higher typically will cause this reaction. The supermatter will continue to react whenever this gas mixture is in the same room as the supermatter.</br></br>
-
-				To understand why O2-Reaction mode is dangerous, the core principle of the supermatter must be understood. The supermatter emits three things when 'not safe,' that is any time it is giving off power. These things are:</br>
-
-				<ul>
-					<li>Radiation (which is converted into power by the collectors)</li></br>
-					<li>Heat (which is removed via the gas exchange system and coolers)</li></br>
-					<li>External gas (in the form of phoron and O2)</li></br>
-				</ul></br>
-
-				When in Heat-Primary mode, far more heat and phoron are produced than radiation. In O2-Reaction mode, very little heat and only moderate amounts of phoron are produced, however HUGE amounts of energy leaving the supermatter is in the form of radiation.</br></br>
-
-				The O2-Reaction engine mode has a single drawback which has been eluded to more than once so far and that is very simple. The engine room will continue to grow hotter as the constant reaction continues. Eventually, there will be what is called a 'critical gas mixture.' This is the point at which the constant adding of phoron to the mixture of air around the supermatter changes the gas concentration to below the tolerance. When this happens, two things occur. First, the supermatter switches to its primary mode of operation wherein huge amounts of heat are produced by the engine rather than low amounts with high power output. Second, an uncontrollable increase in heat within the supermatter chamber will occur. This will lead to a spark-up, igniting the phoron in the supermatter chamber, wildly increasing both pressure and temperature.</br></br>
-
-				While the O2-Reaction mode is dangerous, it does produce heavy amounts of energy. Consider using this mode only in short amounts to fill the SMES, and switch back later in the shift to keep things flowing normally.</br></br>
-
-
-				<h2>Notes on Supermatter Containment and Emergency Procedures</h2>
-
-				While a constant vigil on the supermatter is not required, regular checkups are important. Check the temperature of gas leaving the supermatter chamber for unsafe levels and ensure that the phoron in the chamber is at a safe concentration. Of course, also make sure the chamber is not on fire. A fire in the core chamber is very difficult to put out. As any toxin scientist can tell you, even low amounts of phoron can burn at very high temperatures. This burning creates a huge increase in pressure and more importantly, temperature of the crystal itself.</br></br>
-
-				The supermatter is strong, but not invincible. When the supermatter is heated too much, its crystal structure will attempt to liquefy. The change in atomic structure of the supermatter leads to a single reaction, a massive explosion. The computer chip attached to the supermatter core will warn the station when stability is threatened. It will then offer a second warning, when things have become dangerously close to total destruction of the core.</br></br>
-
-				Located both within the CE office and engine room is the engine ventilatory control button. This button allows the core vent controls to be accessed, venting the room to space. Remember however, that this process takes time. If a fire is raging, and the pressure is higher than fathomable, it will take a great deal of time to vent the room. Also located in the CE's office is the emergency core eject button. A new core can be ordered from cargo. It is often not worth the lives of the crew to hold on to it, not to mention the structural damage. However, if by some mistake the supermatter is pushed off or removed from the mass driver it sits on, manual reposition will be required. Which is very dangerous and often leads to death.</br></br>
-
-				The supermatter is extremely dangerous. More dangerous than people give it credit for. It can destroy you in an instant, without hesitation, reducing you to a pile of dust. When working closely with supermatter, it is suggested to get a genetic backup and do not wear any items of value to you. The supermatter core can be pulled if grabbed properly by the base, but <b>pushing is not possible.</b></br></br>
-
-
-				<h2>In Closing</h2>
-
-				Remember that the supermatter is dangerous, and the core is dangerous still. Venting the core room is always an option if you are even remotely worried, utilizing Atmospherics to properly ready the room once more for core function. It is always a good idea to check up regularly on the temperature of gas leaving the chamber, as well as the power in the system lines. Lastly, once again remember, never touch the supermatter with anything. Ever.</br></br>
-
-				-Waleed Asad, Senior Engine Technician
-				</body>
-			</html>"}
+		"}
 
 /obj/item/weapon/book/manual/engineering_hacking
 	name = "Hacking"
@@ -200,7 +84,7 @@
 		</head>
 
 		<body>
-		<iframe width='100%' height='97%' src="[config.wikiurl]Hacking&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		<iframe width='100%' height='97%' src="[config.wikiurl]index.php?title=Guide_to_Hacking&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
 		</body>
 
 		</html>
@@ -757,15 +641,13 @@
 		</head>
 
 		<body>
-		Space law accessable at :
-		<a href="[config.wikiurl]index.php/Corporate_Regulations" >Baystation Wiki<a/>
-
-		This book is currently broken due to baystations new wikipedia.
+		<iframe width='100%' height='97%' src="[config.wikiurl]index.php?title=Corporate_Regulations&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
 		</body>
 
 		</html>
 
 		"}
+
 // baystations new wikia doesn't have the right page.
 
 
@@ -831,7 +713,7 @@
 		</head>
 
 		<body>
-		<iframe width='100%' height='100%' src="[config.wikiurl]Guide_to_Engineering&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>		</body>
+		<iframe width='100%' height='100%' src="[config.wikiurl]index.php?title=Guide_to_Engineering&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>		</body>
 
 		</html>
 
@@ -962,42 +844,20 @@
 	author = "NanoTrasen"
 	title = "The Film Noir: Proper Procedures for Investigations"
 
-	dat = {"<html>
-				<head>
-				<style>
-				h1 {font-size: 18px; margin: 15px 0px 5px;}
-				h2 {font-size: 15px; margin: 15px 0px 5px;}
-				li {margin: 2px 0px 2px 15px;}
-				ul {margin: 5px; padding: 0px;}
-				ol {margin: 5px; padding: 0px 15px;}
-				body {font-size: 13px; font-family: Verdana;}
-				</style>
-				</head>
-				<body>
-				<h1>Detective Work</h1>
+/obj/item/weapon/book/manual/detective/New()
+	..()
 
-				Between your bouts of self-narration and drinking whiskey on the rocks, you might get a case or two to solve.<br>
-				To have the best chance to solve your case, follow these directions:
-				<p>
-				<ol>
-					<li>Go to the crime scene. </li>
-					<li>Take your scanner and scan EVERYTHING (Yes, the doors, the tables, even the dog). </li>
-					<li>Once you are reasonably certain you have every scrap of evidence you can use, find all possible entry points and scan them, too. </li>
-					<li>Return to your office. </li>
-					<li>Using your forensic scanning computer, scan your scanner to upload all of your evidence into the database.</li>
-					<li>Browse through the resulting dossiers, looking for the one that either has the most complete set of prints, or the most suspicious items handled. </li>
-					<li>If you have 80% or more of the print (The print is displayed), go to step 10, otherwise continue to step 8.</li>
-					<li>Look for clues from the suit fibres you found on your perpetrator, and go about looking for more evidence with this new information, scanning as you go. </li>
-					<li>Try to get a fingerprint card of your perpetrator, as if used in the computer, the prints will be completed on their dossier.</li>
-					<li>Assuming you have enough of a print to see it, grab the biggest complete piece of the print and search the security records for it. </li>
-					<li>Since you now have both your dossier and the name of the person, print both out as evidence and get security to nab your baddie.</li>
-					<li>Give yourself a pat on the back and a bottle of the ship's finest vodka, you did it!</li>
-				</ol>
-				<p>
-				It really is that easy! Good luck!
+	dat = {"
 
-				</body>
-			</html>"}
+		<html><head>
+		</head>
+
+		<body>
+		<iframe width='100%' height='100%' src="[config.wikiurl]index.php?title=Guide_to_Engineering&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>		</body>
+
+		</html>
+
+		"}
 
 /obj/item/weapon/book/manual/nuclear
 	name = "Fission Mailed: Nuclear Sabotage 101"
@@ -1005,158 +865,43 @@
 	author = "Syndicate"
 	title = "Fission Mailed: Nuclear Sabotage 101"
 
-	dat = {"<html>
-				<head>
-				<style>
-				h1 {font-size: 21px; margin: 15px 0px 5px;}
-				h2 {font-size: 15px; margin: 15px 0px 5px;}
-				li {margin: 2px 0px 2px 15px;}
-				ul {margin: 5px; padding: 0px;}
-				ol {margin: 5px; padding: 0px 15px;}
-				body {font-size: 13px; font-family: Verdana;}
-				</style>
-				</head>
-				<body>
-				<h1>Nuclear Explosives 101</h1>
-				Hello and thank you for choosing the Syndicate for your nuclear information needs. Today's crash course will deal with the operation of a Fusion Class NanoTrasen made Nuclear Device.<br><br>
+/obj/item/weapon/book/manual/nuclear/New()
+	..()
 
-				First and foremost, DO NOT TOUCH ANYTHING UNTIL THE BOMB IS IN PLACE. Pressing any button on the compacted bomb will cause it to extend and bolt itself into place. If this is done, to unbolt it, one must completely log in, which at this time may not be possible.<br>
+	dat = {"
 
-				<h2>To make the nuclear device functional</h2>
-				<ul>
-					<li>Place the nuclear device in the designated detonation zone.</li>
-					<li>Extend and anchor the nuclear device from its interface.</li>
-					<li>Insert the nuclear authorisation disk into the slot.</li>
-					<li>Type the numeric authorisation code into the keypad. This should have been provided.<br>
-					<b>Note</b>: If you make a mistake, press R to reset the device.
-					<li>Press the E button to log on to the device.</li>
-				</ul><br>
+		<html><head>
+		</head>
 
-				You now have activated the device. To deactivate the buttons at anytime, for example when you've already prepped the bomb for detonation, remove the authentication disk OR press R on the keypad.<br><br>
-				Now the bomb CAN ONLY be detonated using the timer. Manual detonation is not an option. Toggle off the SAFETY.<br>
-				<b>Note</b>: You wouldn't believe how many Syndicate Operatives with doctorates have forgotten this step.<br><br>
+		<body>
+		<iframe width='100%' height='97%' src="[config.wikiurl]index.php?title=Mercenary&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		</body>
 
-				So use the - - and + + to set a detonation time between 5 seconds and 10 minutes. Then press the timer toggle button to start the countdown. Now remove the authentication disk so that the buttons deactivate.<br>
-				<b>Note</b>: THE BOMB IS STILL SET AND WILL DETONATE<br><br>
+		</html>
 
-				Now before you remove the disk, if you need to move the bomb, you can toggle off the anchor, move it, and re-anchor.<br><br>
-
-				Remember the order:<br>
-				<b>Disk, Code, Safety, Timer, Disk, RUN!</b><br><br>
-				Intelligence Analysts believe that normal NanoTrasen procedure is for the Captain to secure the nuclear authentication disk.<br><br>
-
-				Good luck!
-				</body>
-			</html>
-			"}
+		"}
 
 /obj/item/weapon/book/manual/atmospipes
 	name = "Pipes and You: Getting To Know Your Scary Tools"
 	icon_state = "pipingbook"
 	author = "Maria Crash, Senior Atmospherics Technician"
 	title = "Pipes and You: Getting To Know Your Scary Tools"
-	dat = {"<html>
-				<head>
-				<style>
-				h1 {font-size: 18px; margin: 15px 0px 5px;}
-				h2 {font-size: 15px; margin: 15px 0px 5px;}
-				li {margin: 2px 0px 2px 15px;}
-				ul {margin: 5px; padding: 0px;}
-				ol {margin: 5px; padding: 0px 15px;}
-				body {font-size: 13px; font-family: Verdana;}
-				</style>
-				</head>
-				<body>
 
-				<h1><a name="Contents">Contents</a></h1>
-				<ol>
-					<li><a href="#Foreword">Author's Foreword</a></li>
-					<li><a href="#Basic">Basic Piping</a></li>
-					<li><a href="#Insulated">Insulated Pipes</a></li>
-					<li><a href="#Devices">Atmospherics Devices</a></li>
-					<li><a href="#HES">Heat Exchange Systems</a></li>
-					<li><a href="#Final">Final Checks</a></li>
-				</ol><br>
+/obj/item/weapon/book/manual/atmospipes/New()
+	..()
 
-				<h1><a name="Foreword"><U><B>HOW TO NOT SUCK QUITE SO HARD AT ATMOSPHERICS</B></U></a></h1><BR>
-				<I>Or: What the fuck does a "pressure regulator" do?</I><BR><BR>
+	dat = {"
 
-				Alright. It has come to my attention that a variety of people are unsure of what a "pipe" is and what it does.
-				Apparently, there is an unnatural fear of these arcane devices and their "gases." Spooky, spooky. So,
-				this will tell you what every device constructable by an ordinary pipe dispenser within atmospherics actually does.
-				You are not going to learn what to do with them to be the super best person ever, or how to play guitar with passive gates,
-				or something like that. Just what stuff does.<BR><BR>
+		<html><head>
+		</head>
 
+		<body>
+		<iframe width='100%' height='97%' src="[config.wikiurl]index.php?title=Guide_to_Atmospherics&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		</body>
 
-				<h1><a name="Basic"><B>Basic Pipes</B></a></h1>
-				<I>The boring ones.</I><BR>
-				Most ordinary pipes are pretty straightforward. They hold gas. If gas is moving in a direction for some reason, gas will flow in that direction.
-				That's about it. Even so, here's all of your wonderful pipe options.<BR>
+		</html>
 
-				<ul>
-				<li><b>Straight pipes:</b> They're pipes. One-meter sections. Straight line. Pretty simple. Just about every pipe and device is based around this
-				standard one-meter size, so most things will take up as much space as one of these.</li>
-				<li><b>Bent pipes:</b> Pipes with a 90 degree bend at the half-meter mark. My goodness.</li>
-				<li><b>Pipe manifolds:</b> Pipes that are essentially a "T" shape, allowing you to connect three things at one point.</li>
-				<li><b>4-way manifold:</b> A four-way junction.</li>
-				<li><b>Pipe cap:</b> Caps off the end of a pipe. Open ends don't actually vent air, because of the way the pipes are assembled, so, uh, use them to decorate your house or something.</li>
-				<li><b>Manual valve:</b> A valve that will block off airflow when turned. Can't be used by the AI or cyborgs, because they don't have hands.</li>
-				<li><b>Manual T-valve:</b> Like a manual valve, but at the center of a manifold instead of a straight pipe.</li><BR><BR>
-				</ul>
-
-				An important note here is that pipes are now done in three distinct lines - general, supply, and scrubber. You can move gases between these with a universal adapter. Use the correct position for the correct location.
-				Connecting scrubbers to a supply position pipe makes you an idiot who gives everyone a difficult job. Insulated and HE pipes don't go through these positions.
-
-				<h1><a name="Insulated"><B>Insulated Pipes</B></a></h1>
-				<li><I>Bent pipes:</I> Pipes with a 90 degree bend at the half-meter mark. My goodness.</li>
-				<li><I>Pipe manifolds:</I> Pipes that are essentially a "T" shape, allowing you to connect three things at one point.</li>
-				<li><I>4-way manifold:</I> A four-way junction.</li>
-				<li><I>Pipe cap:</I> Caps off the end of a pipe. Open ends don't actually vent air, because of the way the pipes are assembled, so, uh. Use them to decorate your house or something.</li>
-				<li><I>Manual Valve:</I> A valve that will block off airflow when turned. Can't be used by the AI or cyborgs, because they don't have hands.</li>
-				<li><I>Manual T-Valve:</I> Like a manual valve, but at the center of a manifold instead of a straight pipe.</li><BR><BR>
-
-				<h1><a name="Insulated"><B>Insulated Pipes</B></a></h1><BR>
-				<I>Special Public Service Announcement.</I><BR>
-				Our regular pipes are already insulated. These are completely worthless. Punch anyone who uses them.<BR><BR>
-
-				<h1><a name="Devices"><B>Devices: </B></a></h1>
-				<I>They actually do something.</I><BR>
-				This is usually where people get frightened, afraid, and start calling on their gods and/or cowering in fear. Yes, I can see you doing that right now.
-				Stop it. It's unbecoming. Most of these are fairly straightforward.<BR>
-
-				<ul>
-				<li><b>Gas pump:</b> Take a wild guess. It moves gas in the direction it's pointing (marked by the red line on one end). It moves it based on pressure, the maximum output being 15000 kPa (kilopascals).
-				Ordinary atmospheric pressure, for comparison, is 101.3 kPa, and the minimum pressure of room-temperature pure oxygen needed to not suffocate in a matter of minutes is 16 kPa
-				(though 18 kPa is preferred when using internals with pure oxygen, for various reasons). A high-powered variant will move gas more quickly at the expense of consuming more power. Do not turn the distribution loop up to 15000 kPa.
-				You will make engiborgs cry and the Chief Engineer will beat you.</li>
-				<li><b>Pressure regulator:</b> These replaced the old passive gates. You can choose to regulate pressure by input or output, and regulate flow rate. Regulating by input means that when input pressure is above the limit, gas will flow.
-				Regulating by output means that when pressure is below the limit, gas will flow. Flow rate can be controlled.</li>
-				<li><b>Unary vent:</b> The basic vent used in rooms. It pumps gas into the room, but can't suck it back out. Controlled by the room's air alarm system.</li>
-				<li><b>Scrubber:</b> The other half of room equipment. Filters air, and can suck it in entirely in what's called a "panic siphon." Activating a panic siphon without very good reason will kill someone. Don't do it.</li>
-				<li><b>Meter:</b> A little box with some gauges and numbers. Fasten it to any pipe or manifold and it'll read you the pressure in it. Very useful.</li>
-				<li><b>Gas mixer:</b> Two sides are input, one side is output. Mixes the gases pumped into it at the ratio defined. The side perpendicular to the other two is "node 2," for reference, on non-mirrored mixers..
-				Output is controlled by flow rate. There is also an "omni" variant that allows you to set input and output sections freely..</li>
-				<li><b>Gas filter:</b> Essentially the opposite of a gas mixer. One side is input. The other two sides are output. One gas type will be filtered into the perpendicular output pipe,
-				the rest will continue out the other side. Can also output from 0-4500 kPa. The "omni" vairant allows you to set input and output sections freely.</li>
-				</ul>
-
-				<h1><a name="HES"><B>Heat Exchange Systems</B></a></h1>
-				<I>Will not set you on fire.</I><BR>
-				These systems are used to only transfer heat between two pipes. They will not move gases or any other element, but will equalize the temperature (eventually). Note that because of how gases work (remember: pv=nRt),
-				a higher temperature will raise pressure, and a lower one will lower temperature.<BR>
-
-				<li><I>Pipe:</I> This is a pipe that will exchange heat with the surrounding atmosphere. Place in fire for superheating. Place in space for supercooling.</li>
-				<li><I>Bent pipe:</I> Take a wild guess.</li>
-				<li><I>Junction:</I> The point where you connect your normal pipes to heat exchange pipes. Not necessary for heat exchangers, but necessary for H/E pipes/bent pipes.</li>
-				<li><I>Heat exchanger:</I> These funky-looking bits attach to an open pipe end. Put another heat exchanger directly across from it, and you can transfer heat across two pipes without having to have the gases touch.
-				This normally shouldn't exchange with the ambient air, despite being totally exposed. Just don't ask questions.</li><BR>
-
-				That's about it for pipes. Go forth, armed with this knowledge, and try not to break, burn down, or kill anything. Please.
-
-
-				</body>
-			</html>
-			"}
+		"}
 
 /obj/item/weapon/book/manual/evaguide
 	name = "EVA Gear and You: Not Spending All Day Inside"

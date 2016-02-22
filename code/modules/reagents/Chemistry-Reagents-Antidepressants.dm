@@ -13,11 +13,11 @@
 		if(!M) M = holder.my_atom
 		if(src.volume <= 0.1) if(data != -1)
 			data = -1
-			M << "\red You lose focus.."
+			M << "<span class='alert'>You lose focus..</span>"
 		else
 			if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 				data = world.time
-				M << "\blue Your mind feels focused and undivided."
+				M << "<span class='notice'>Your mind feels focused and undivided.</span>"
 		..()
 		return
 
@@ -41,11 +41,11 @@
 		if(!M) M = holder.my_atom
 		if(src.volume <= 0.1) if(data != -1)
 			data = -1
-			M << "\red Your mind feels a little less stable.."
+			M << "<span class='alert'>Your mind feels a little less stable..</span>"
 		else
 			if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 				data = world.time
-				M << "\blue Your mind feels stable.. a little stable."
+				M << "<span class='notice'>Your mind feels stable.. a little stable.</span>"
 		..()
 		return
 
@@ -70,14 +70,14 @@
 		if(!M) M = holder.my_atom
 		if(src.volume <= 0.1) if(data != -1)
 			data = -1
-			M << "\red Your mind feels much less stable.."
+			M << "<span class='alert'>Your mind feels much less stable..</span>"
 		else
 			if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 				data = world.time
 				if(prob(90))
-					M << "\blue Your mind feels much more stable."
+					M << "<span class='notice'>Your mind feels much more stable.</span>"
 				else
-					M << "\red Your mind breaks apart.."
+					M << "<span class='alert'>Your mind breaks apart..</span>"
 					M.hallucination += 200
 		..()
 		return

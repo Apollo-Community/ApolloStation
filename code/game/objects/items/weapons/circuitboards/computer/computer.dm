@@ -55,7 +55,7 @@
 
 /obj/item/weapon/circuitboard/skills
 	name = T_BOARD("employment records console")
-	build_path = /obj/machinery/computer/skills
+	build_path = /obj/machinery/computer/employment
 
 /obj/item/weapon/circuitboard/stationalert
 	name = T_BOARD("station alert console")

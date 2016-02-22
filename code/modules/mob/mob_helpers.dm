@@ -79,7 +79,7 @@
 	return 0
 
 /proc/ismouse(A)
-	if(istype(A, /mob/living/simple_animal/mouse))
+	if(istype(A, /mob/living/simple_animal/rodent))
 		return 1
 	return 0
 

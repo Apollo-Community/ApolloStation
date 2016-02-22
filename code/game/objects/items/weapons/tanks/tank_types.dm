@@ -25,7 +25,7 @@
 
 	examine(mob/user)
 		if(..(user, 0) && air_contents.gas["oxygen"] < 10)
-			user << text("\red <B>The meter on the [src.name] indicates you are almost out of oxygen!</B>")
+			user << text("<span class='alert'><B>The meter on the [src.name] indicates you are almost out of oxygen!</B></span>")
 			//playsound(usr, 'sound/effects/alert.ogg', 50, 1)
 
 
@@ -67,7 +67,7 @@
 
 	examine(mob/user)
 		if(..(user, 0) && air_contents.gas["oxygen"] < 1 && loc==user)
-			user << "\red <B>The meter on the [src.name] indicates you are almost out of air!</B>"
+			user << "<span class='alert'><B>The meter on the [src.name] indicates you are almost out of air!</B></span>"
 			user << sound('sound/effects/alert.ogg')
 
 /obj/item/weapon/tank/air/New()
@@ -85,6 +85,7 @@
 	name = "phoron tank"
 	desc = "Contains dangerous phoron. Do not inhale. Warning: extremely flammable."
 	icon_state = "phoron"
+	item_state = "phoron_tank"
 	flags = CONDUCT
 	slot_flags = null	//they have no straps!
 
@@ -131,7 +132,7 @@
 
 	examine(mob/user)
 		if(..(user, 0) && air_contents.gas["oxygen"] < 0.2 && loc==user)
-			user << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
+			user << text("<span class='alert'><B>The meter on the [src.name] indicates you are almost out of air!</B></span>")
 			user << sound('sound/effects/alert.ogg')
 
 /obj/item/weapon/tank/emergency_oxygen/engi
@@ -162,5 +163,5 @@
 
 /obj/item/weapon/tank/nitrogen/examine(mob/user)
 	if(..(user, 0) && air_contents.gas["nitrogen"] < 10)
-		user << text("\red <B>The meter on the [src.name] indicates you are almost out of nitrogen!</B>")
+		user << text("<span class='alert'><B>The meter on the [src.name] indicates you are almost out of nitrogen!</B></span>")
 		//playsound(user, 'sound/effects/alert.ogg', 50, 1)

@@ -19,7 +19,7 @@
 	var/moving			= null
 	var/adminobs		= null
 	var/area			= null
-	var/time_died_as_mouse = null //when the client last died as a mouse
+	var/time_died_as_rodent = null //when the client last died as a mouse
 
 	var/adminhelped = 0
 
@@ -48,7 +48,13 @@
 	var/related_accounts_ip = "Requires database"	//So admins know why it isn't working - Used to determine what other accounts previously logged in from this ip
 	var/related_accounts_cid = "Requires database"	//So admins know why it isn't working - Used to determine what other accounts previously logged in from this computer id
 
+	// Special character tokens
+	var/list/character_tokens = list()
+
 	preload_rsc = 0 // This is 0 so we can set it to an URL once the player logs in and have them download the resources from a different server.
 
 	var/afk = 0
 	var/afk_start_time = 0 // Used to keep track of time they started being AFK
+
+	var/session_start_time = 0 // When did our session begin?
+	var/total_afk_time = 0 // How low have we been AFK this session?

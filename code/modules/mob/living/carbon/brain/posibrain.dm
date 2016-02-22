@@ -18,7 +18,7 @@
 /obj/item/device/mmi/digital/posibrain/attack_self(mob/user as mob)
 	if(brainmob && !brainmob.key && searching == 0)
 		//Start the process of searching for a new user.
-		user << "\blue You carefully locate the manual activation switch and start the positronic brain's boot process."
+		user << "<span class='notice'>You carefully locate the manual activation switch and start the positronic brain's boot process.</span>"
 		icon_state = "posibrain-searching"
 		src.searching = 1
 		src.request_player()
@@ -31,7 +31,7 @@
 		if(jobban_isbanned(O, "AI") && jobban_isbanned(O, "Cyborg"))
 			continue
 		if(O.client)
-			if(O.client.prefs.be_special & BE_AI)
+			if(O.client.prefs.beSpecial() & BE_AI)
 				question(O.client)
 
 /obj/item/device/mmi/digital/posibrain/proc/question(var/client/C)
@@ -44,7 +44,7 @@
 		if(response == "Yes")
 			transfer_personality(C.mob)
 		else if (response == "Never for this round")
-			C.prefs.be_special ^= BE_AI
+			C.prefs.selected_character.job_antag ^= BE_AI
 
 
 /obj/item/device/mmi/digital/posibrain/transfer_identity(var/mob/living/carbon/H)
@@ -69,7 +69,7 @@
 
 	var/turf/T = get_turf_or_move(src.loc)
 	for (var/mob/M in viewers(T))
-		M.show_message("\blue The positronic brain chimes quietly.")
+		M.show_message("<span class='notice'>The positronic brain chimes quietly.</span>")
 	icon_state = "posibrain-occupied"
 
 /obj/item/device/mmi/digital/posibrain/proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
@@ -81,7 +81,7 @@
 
 	var/turf/T = get_turf_or_move(src.loc)
 	for (var/mob/M in viewers(T))
-		M.show_message("\blue The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?")
+		M.show_message("<span class='notice'>The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>")
 
 /obj/item/device/mmi/digital/posibrain/examine(mob/user)
 	if(!..(user))

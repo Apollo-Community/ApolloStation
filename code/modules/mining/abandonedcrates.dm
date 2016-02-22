@@ -103,7 +103,7 @@
 			else
 				user << "<span class='notice'>* Anti-Tamper Bomb will activate after [src.attempts] failed access attempts.</span>"
 			if (lastattempt == null)
-				user << "<span class='notice'> has been made to open the crate thus far.</span>"
+				user << "<span class='notice'>has been made to open the crate thus far.</span>"
 				return
 			// hot and cold
 			if (code > lastattempt)

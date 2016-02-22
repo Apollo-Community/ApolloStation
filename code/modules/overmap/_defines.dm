@@ -12,6 +12,7 @@
 #define SECTOR_ALERT 4 // Is this sector affected by alerts such as red alert?
 #define SECTOR_LOCAL 8 // Is this sector accessible from the overmap?
 #define SECTOR_ADMIN 16 // Is this sector accessible only through admoon intervention?
+#define SECTOR_FORBID_RANDOM_TP 32 // Prevents people from floating into it randomly
 
 #define MAX_SECTORS 1 // How many unknown sectors are allowed?
 

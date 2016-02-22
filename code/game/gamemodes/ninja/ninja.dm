@@ -30,18 +30,17 @@
 	ninja.original = ninja.current
 
 	/*if(ninjastart.len == 0)
-		ninja.current << "<B>\red A proper starting location for you could not be found, please report this bug!</B>"
-		ninja.current << "<B>\red Attempting to place at a carpspawn.</B>"*/
-
+		ninja.current << "<B><span class='alert'>A proper starting location for you could not be found, please report this bug!</B></span>"
+		ninja.current << "<B><span class='alert'>Attempting to place at a carpspawn.</B>"*/
 	//Until such a time as people want to place ninja spawn points, carpspawn will do fine.
 	for(var/obj/effect/landmark/L in landmarks_list)
 		if(L.name == "carpspawn")
 			ninjastart.Add(L)
 	if(ninjastart.len == 0 && latejoin.len > 0)
-		ninja.current << "<B>\red No spawneable locations could be found. Defaulting to latejoin.</B>"
+		ninja.current << "<B><span class='alert'>No spawneable locations could be found. Defaulting to latejoin.</span></B>"
 		return 1
 	else if (ninjastart.len == 0)
-		ninja.current << "<B>\red No spawneable locations could be found. Aborting.</B>"
+		ninja.current << "<B><span class='alert'>No spawneable locations could be found. Aborting.</span></B>"
 		return 0
 
 	return 1
@@ -60,6 +59,7 @@
 		if(!config.objectives_disabled)
 			forge_ninja_objectives(ninja)
 		show_objectives(ninja)
+		ninja.character.temporary = 1 // Makes them non-canon
 
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
@@ -133,8 +133,8 @@
 	ninja.current.mind = ninja
 
 	var/directive = generate_ninja_directive("heel")//Only hired by antags, not NT
-	ninja.current << "You are an elite mercenary assassin of the Spider Clan, [ninja.current.real_name]. You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor.\nYour current directive is: \red <B>[directive]</B>\n \blue Try your best to adhere to this."
-	ninja.store_memory("<B>Directive:</B> \red [directive]<br>")
+	ninja.current << "You are an elite mercenary assassin of the Spider Clan, [ninja.current.real_name]. You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor.\nYour current directive is: <span class='alert'><B>[directive]</B></span>\n <span class='notice'>Try your best to adhere to this.</span>"
+	ninja.store_memory("<B>Directive:</B> <span class='alert'>[directive]</span><br>")
 
 	show_objectives(ninja)
 

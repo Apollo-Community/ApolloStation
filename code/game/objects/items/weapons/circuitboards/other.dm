@@ -11,7 +11,7 @@
 
 obj/item/weapon/circuitboard/fax_machine
 	name = T_BOARD("fax machine")
-	build_path = "/obj/machinery/photocopier/fax_machine"
+	build_path = "/obj/machinery/photocopier/faxmachine"
 	board_type = "machine"
 	origin_tech = "programming=2, bluespace=2"
 	frame_desc = "Requires 1 Micro-Manipulator, 1 Light Tube, 1 Subspace Transmitter, 1 Subspace Amplifier, and 1 Scanning Module."

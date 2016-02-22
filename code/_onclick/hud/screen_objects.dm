@@ -80,7 +80,6 @@
 /obj/screen/grab/attackby()
 	return
 
-
 /obj/screen/storage
 	name = "storage"
 

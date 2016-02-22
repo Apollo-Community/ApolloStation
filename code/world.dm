@@ -48,8 +48,6 @@ var/global/datum/global_init/init = new ()
 	load_mods()
 	//end-emergency fix
 
-	//loads donators
-	load_donators()
 	//loads custom titles
 	load_titles()
 
@@ -274,7 +272,6 @@ var/world_topic_spam_protect_time = world.timeofday
 
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
-
 
 /proc/load_configuration()
 	config = new /datum/configuration()

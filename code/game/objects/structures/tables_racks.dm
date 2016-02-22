@@ -34,7 +34,7 @@
 	name = "glass table"
 	desc = "A large glass table with metal supporting legs. It looks fragile."
 	icon_state = "glass_table"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/furniture.dmi'
 	parts = /obj/item/weapon/table_parts/glass
 	health = 20
 
@@ -45,13 +45,30 @@
 	if(usr.a_intent == I_HURT)
 		health -= W.force
 		playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
-		usr.visible_message("\red <b>[usr]</b> hits the [src] violently with [W]!")
+		usr.visible_message("<span class='alert'><b>[usr]</b> hits the [src] violently with [W]!</span>")
 		if(health<=0)
 			new /obj/item/weapon/shard(src.loc)
 			qdel(src)
 		return
 
 	..()
+
+/obj/structure/table/glass/Crossed(AM as mob|obj)
+	if(!ishuman(AM)) return
+	var/mob/living/carbon/human/dude = AM
+	if(prob(35+(dude.m_intent == "run" ? 30 : 0)))
+		src.health = 0
+	else
+		src.health -= 10
+
+	src.visible_message("<span class='alert'> The [src] wobbles and cracks as [dude]'s fat ass " + (dude.m_intent == "run" ? "runs" : "walks") + " on it!</span>")
+
+	if(src.health<=0)
+		src.structure_shaken()
+		playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
+		src.visible_message("<span class='alert'> The [src] smashes!</span>")
+		new /obj/item/weapon/shard(src.loc)
+		qdel(src)
 
 /obj/structure/table/reinforced
 	icon_state = "reinf_table"
@@ -61,7 +78,7 @@
 /obj/structure/table/rack
 	name = "rack"
 	desc = "Different from the Middle Ages version."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/furniture.dmi'
 	icon_state = "rack"
 	health = 100
 	parts = /obj/item/weapon/table_parts/rack
@@ -327,7 +344,7 @@
 
 /obj/structure/table/glass/flip(var/direction)
 	playsound(loc, 'sound/effects/Glassbr2.ogg', 100, 1)
-	src.visible_message("\red The [src] shatters!")
+	src.visible_message("<span class='alert'>The [src] shatters!</span>")
 	new /obj/item/weapon/shard(src.loc)
 	qdel(src)
 	return

@@ -114,12 +114,12 @@
 			else
 				src:health -= 10
 
-			usr.visible_message("\red The [src] wobbles and cracks as [usr]'s fat ass climbs up on it!")
+			usr.visible_message("<span class='alert'>The [src] wobbles and cracks as [usr]'s fat ass climbs up on it!</span>")
 
 			if(src:health<=0)
 				structure_shaken()
 				playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
-				usr.visible_message("\red The [src] smashes!")
+				usr.visible_message("<span class='alert'>The [src] smashes!</span>")
 				new /obj/item/weapon/shard(src.loc)
 				qdel(src)
 		else

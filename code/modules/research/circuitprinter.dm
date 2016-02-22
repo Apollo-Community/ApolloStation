@@ -92,7 +92,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 				qdel(src)
 				return 1
 			else
-				user << "\red You can't load the [src.name] while it's opened."
+				user << "<span class='alert'>You can't load the [src.name] while it's opened.</span>"
 				return 1
 		if (disabled)
 			user << "\The [name] appears to not be working!"
@@ -103,16 +103,16 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		if (O.is_open_container())
 			return 0
 		if (!istype(O, /obj/item/stack/sheet/glass) && !istype(O, /obj/item/stack/sheet/mineral/gold) && !istype(O, /obj/item/stack/sheet/mineral/diamond) && !istype(O, /obj/item/stack/sheet/mineral/uranium))
-			user << "\red You cannot insert this item into the [name]!"
+			user << "<span class='alert'>You cannot insert this item into the [name]!</span>"
 			return 1
 		if (stat)
 			return 1
 		if (busy)
-			user << "\red The [name] is busy. Please wait for completion of previous operation."
+			user << "<span class='alert'>The [name] is busy. Please wait for completion of previous operation.</span>"
 			return 1
 		var/obj/item/stack/sheet/stack = O
 		if ((TotalMaterials() + stack.perunit) > max_material_amount)
-			user << "\red The [name] is full. Please remove glass from the protolathe in order to insert more."
+			user << "<span class='alert'>The [name] is full. Please remove glass from the protolathe in order to insert more.</span>"
 			return 1
 
 		var/amount = round(input("How many sheets do you want to add?") as num)
@@ -128,7 +128,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		var/stacktype = stack.type
 		stack.use(amount)
 		if(do_after(usr,16))
-			user << "\blue You add [amount] sheets to the [src.name]."
+			user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
 			switch(stacktype)
 				if(/obj/item/stack/sheet/glass)
 					g_amount += amount * 3750

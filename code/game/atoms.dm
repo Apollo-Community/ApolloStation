@@ -257,7 +257,7 @@ its easier to just keep the beam vertical.
 	if(isnull(M)) return
 	if(isAI(M)) return
 	if(isnull(M.key)) return
-	if (ishuman(M))
+	if(ishuman(M))
 		//Add the list if it does not exist.
 		if(!fingerprintshidden)
 			fingerprintshidden = list()

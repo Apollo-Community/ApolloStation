@@ -57,16 +57,16 @@
 			if(host.reagents.has_reagent("sugar"))
 				if(!docile)
 					if(controlling)
-						host << "\blue You feel the soporific flow of sugar in your host's blood, lulling you into docility."
+						host << "<span class='notice'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>"
 					else
-						src << "\blue You feel the soporific flow of sugar in your host's blood, lulling you into docility."
+						src << "<span class='notice'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>"
 					docile = 1
 			else
 				if(docile)
 					if(controlling)
-						host << "\blue You shake off your lethargy as the sugar leaves your host's blood."
+						host << "<span class='notice'>You shake off your lethargy as the sugar leaves your host's blood.</span>"
 					else
-						src << "\blue You shake off your lethargy as the sugar leaves your host's blood."
+						src << "<span class='notice'>You shake off your lethargy as the sugar leaves your host's blood.</span>"
 					docile = 0
 
 			if(chemicals < 250)
@@ -74,7 +74,7 @@
 			if(controlling)
 
 				if(docile)
-					host << "\blue You are feeling far too docile to continue controlling your host..."
+					host << "<span class='notice'>You are feeling far too docile to continue controlling your host...</span>"
 					host.release_control()
 					return
 
@@ -179,7 +179,7 @@
 		if(jobban_isbanned(O, "Borer"))
 			continue
 		if(O.client)
-			if(O.client.prefs.be_special & BE_ALIEN)
+			if(O.client.prefs.beSpecial() & BE_ALIEN)
 				question(O.client)
 
 /mob/living/simple_animal/borer/proc/question(var/client/C)
@@ -191,7 +191,7 @@
 		if(response == "Yes")
 			transfer_personality(C)
 		else if (response == "Never for this round")
-			C.prefs.be_special ^= BE_ALIEN
+			C.prefs.selected_character.job_antag ^= BE_ALIEN
 
 /mob/living/simple_animal/borer/proc/transfer_personality(var/client/candidate)
 

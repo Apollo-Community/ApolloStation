@@ -12,4 +12,4 @@
 		if(turfs.len) //Pick a turf to spawn at if we can
 			var/turf/simulated/floor/T = pick(turfs)
 			new/obj/effect/plant_controller(T) //spawn a controller at turf
-			message_admins("\blue Spacevines spawned at [T.loc] ([T.x],[T.y],[T.z])", "EVENT:")
+			message_admins("Spacevines spawned at [T.loc] ([T.x],[T.y],[T.z])", "EVENT:")

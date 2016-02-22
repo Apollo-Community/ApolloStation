@@ -21,6 +21,7 @@
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/rp_revolution/pre_setup()
+	config.canon = 0
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
@@ -80,7 +81,7 @@
 /datum/game_mode/revolution/rp_revolution/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)
 	rev_mind.special_role = "Head Revolutionary"
 	if (you_are)
-		rev_mind.current << "\blue You are a member of the revolutionaries' leadership!"
+		rev_mind.current << "<span class='notice'>You are a member of the revolutionaries' leadership!</span>"
 	show_objectives(rev_mind)
 
 	// Show each head revolutionary up to 3 candidates
@@ -105,7 +106,7 @@
 	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
 		return 0
 	revolutionaries += rev_mind
-	rev_mind.current << "\red <FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill, capture or convert the heads to win the revolution!</FONT>"
+	rev_mind.current << "<span class='alert'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill, capture or convert the heads to win the revolution!</FONT></span>"
 	rev_mind.special_role = "Revolutionary"
 	show_objectives(rev_mind)
 	update_rev_icons_added(rev_mind)
@@ -143,10 +144,10 @@
 	if(!config.objectives_disabled)
 		if(finished == 1)
 			feedback_set_details("round_end_result","win - heads overthrown")
-			world << "\red <FONT size = 3><B> The heads of staff were overthrown! The revolutionaries win!</B></FONT>"
+			world << "<span class='alert'><FONT size = 3><B> The heads of staff were overthrown! The revolutionaries win!</B></FONT></span>"
 		else if(finished == 2)
 			feedback_set_details("round_end_result","loss - revolution stopped")
-			world << "\red <FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT>"
+			world << "<span class='alert'><FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT></span>"
 		..()
 	return 1
 
@@ -165,29 +166,29 @@
 		if(!stat && P.client && P.mind && !P.mind.special_role)
 			Possible += P
 	if(!Possible.len)
-		src << "\red There doesn't appear to be anyone available for you to convert here."
+		src << "<span class='alert'>There doesn't appear to be anyone available for you to convert here.</span>"
 		return
 	var/mob/living/carbon/human/M = input("Select a person to convert", "Viva la revolution!", null) as mob in Possible
 	if(((src.mind in ticker.mode:head_revolutionaries) || (src.mind in ticker.mode:revolutionaries)))
 		if((M.mind in ticker.mode:head_revolutionaries) || (M.mind in ticker.mode:revolutionaries))
-			src << "\red <b>[M] is already be a revolutionary!</b>"
+			src << "<span class='alert'><b>[M] is already be a revolutionary!</b></span>"
 		else if(!ticker.mode:is_convertible(M))
-			src << "\red <b>[M] is implanted with a loyalty implant - Remove it first!</b>"
+			src << "<span class='alert'><b>[M] is implanted with a loyalty implant - Remove it first!</b></span>"
 		else
 			if(world.time < M.mind.rev_cooldown)
-				src << "\red Wait five seconds before reconversion attempt."
+				src << "<span class='alert'>Wait five seconds before reconversion attempt.</span>"
 				return
-			src << "\red Attempting to convert [M]..."
+			src << "<span class='alert'>Attempting to convert [M]...</span>"
 			log_admin("[src]([src.ckey]) attempted to convert [M].")
-			message_admins("\red [src]([src.ckey]) attempted to convert [M].")
+			message_admins("<span class='alert'>[src]([src.ckey]) attempted to convert [M].</span>")
 			var/choice = alert(M,"Asked by [src]: Do you want to join the revolution?","Align Thyself with the Revolution!","No!","Yes!")
 			if(choice == "Yes!")
 				ticker.mode:add_revolutionary(M.mind)
-				M << "\blue You join the revolution!"
-				src << "\blue <b>[M] joins the revolution!</b>"
+				M << "<span class='notice'>You join the revolution!</span>"
+				src << "<span class='notice'><b>[M] joins the revolution!</b></span>"
 			else if(choice == "No!")
-				M << "\red You reject this traitorous cause!"
-				src << "\red <b>[M] does not support the revolution!</b>"
+				M << "<span class='alert'>You reject this traitorous cause!</span>"
+				src << "<span class='alert'><b>[M] does not support the revolution!</b></span>"
 			M.mind.rev_cooldown = world.time+50
 
 /datum/game_mode/revolution/rp_revolution/process()
@@ -214,7 +215,7 @@
 				update_rev_icons_added(H.mind)
 				H.verbs += /mob/living/carbon/human/proc/RevConvert
 
-				H << "\red Congratulations, yer heads of revolution are all gone now, so yer earned yourself a promotion."
+				H << "<span class='alert'>Congratulations, yer heads of revolution are all gone now, so yer earned yourself a promotion.</span>"
 				added_heads = 1
 				break
 
@@ -260,4 +261,4 @@
 			rev_obj.target = M.mind
 			rev_obj.explanation_text = "Assassinate, convert or capture [M.real_name], the [M.mind.assigned_role]."
 			rev_mind.objectives += rev_obj
-			rev_mind.current << "\red A new Head of Staff, [M.real_name], the [M.mind.assigned_role] has appeared. Your objectives have been updated."
+			rev_mind.current << "<span class='alert'>A new Head of Staff, [M.real_name], the [M.mind.assigned_role] has appeared. Your objectives have been updated.</span>"

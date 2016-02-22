@@ -302,6 +302,7 @@
 	var/mob/living/silicon/robot/R = occupant
 	if(!istype(R)) return ..()
 
+	qdel(R.id_card)
 	qdel(R.mmi)
 	for(var/obj/item/I in R.module) // the tools the borg has; metal, glass, guns etc
 		for(var/obj/item/O in I) // the things inside the tools, if anything; mainly for janiborg trash bags
@@ -314,6 +315,12 @@
 // This function can not be undone; do not call this unless you are sure
 // Also make sure there is a valid control computer
 /obj/machinery/cryopod/proc/despawn_occupant()
+	if( istype( occupant, /mob/living/carbon/human ) && config.canon )
+		var/mob/living/carbon/human/H = occupant
+		if( H.character )
+			if( !H.character.new_character ) // If they've been saved to the database previously
+				H.character.saveCharacter()
+
 	//Drop all items into the pod.
 	for(var/obj/item/W in occupant)
 		occupant.drop_from_inventory(W)

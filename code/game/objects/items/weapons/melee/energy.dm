@@ -82,15 +82,15 @@
 /obj/item/weapon/melee/energy/axe/activate(mob/living/user)
 	..()
 	icon_state = "axe1"
-	user << "\blue \The [src] is now energised."
+	user << "<span class='notice'>\The [src] is now energised.</span>"
 
 /obj/item/weapon/melee/energy/axe/deactivate(mob/living/user)
 	..()
 	icon_state = initial(icon_state)
-	user << "\blue \The [src] is de-energised. It's just a regular axe now."
+	user << "<span class='notice'>\The [src] is de-energised. It's just a regular axe now.</span>"
 
 /obj/item/weapon/melee/energy/axe/suicide_act(mob/user)
-	viewers(user) << "\red <b>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</b>"
+	viewers(user) << "<span class='alert'><b>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</b></span>"
 	return (BRUTELOSS|FIRELOSS)
 
 /*

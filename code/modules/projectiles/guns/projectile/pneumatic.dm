@@ -158,7 +158,7 @@
 		if(buildstate == 0)
 			user.drop_item()
 			qdel(W)
-			user << "\blue You secure the piping inside the frame."
+			user << "<span class='notice'>You secure the piping inside the frame.</span>"
 			buildstate++
 			update_icon()
 			return
@@ -166,17 +166,17 @@
 		if(buildstate == 2)
 			var/obj/item/stack/sheet/metal/M = W
 			if(M.use(5))
-				user << "\blue You assemble a chassis around the cannon frame."
+				user << "<span class='notice'>You assemble a chassis around the cannon frame.</span>"
 				buildstate++
 				update_icon()
 			else
-				user << "\blue You need at least five metal sheets to complete this task."
+				user << "<span class='notice'>You need at least five metal sheets to complete this task.</span>"
 			return
 	else if(istype(W,/obj/item/device/transfer_valve))
 		if(buildstate == 4)
 			user.drop_item()
 			qdel(W)
-			user << "\blue You install the transfer valve and connect it to the piping."
+			user << "<span class='notice'>You install the transfer valve and connect it to the piping.</span>"
 			buildstate++
 			update_icon()
 			return
@@ -186,7 +186,7 @@
 			if(T.remove_fuel(0,user))
 				if(!src || !T.isOn()) return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				user << "\blue You weld the pipe into place."
+				user << "<span class='notice'>You weld the pipe into place.</span>"
 				buildstate++
 				update_icon()
 		if(buildstate == 3)
@@ -194,7 +194,7 @@
 			if(T.remove_fuel(0,user))
 				if(!src || !T.isOn()) return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				user << "\blue You weld the metal chassis together."
+				user << "<span class='notice'>You weld the metal chassis together.</span>"
 				buildstate++
 				update_icon()
 		if(buildstate == 5)
@@ -202,7 +202,7 @@
 			if(T.remove_fuel(0,user))
 				if(!src || !T.isOn()) return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				user << "\blue You weld the valve into place."
+				user << "<span class='notice'>You weld the valve into place.</span>"
 				new /obj/item/weapon/gun/launcher/pneumatic(get_turf(src))
 				qdel(src)
 		return

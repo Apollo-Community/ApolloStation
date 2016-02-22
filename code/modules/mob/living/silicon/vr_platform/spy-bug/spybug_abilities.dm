@@ -10,13 +10,13 @@
 		mail_destination = ""
 		return
 
-	src << "\blue You configure your internal beacon, tagging yourself for delivery to '[new_tag]'."
+	src << "<span class='notice'>You configure your internal beacon, tagging yourself for delivery to '[new_tag]'.</span>"
 	mail_destination = new_tag
 
 	//Auto flush if we use this verb inside a disposal chute.
 	var/obj/machinery/disposal/D = src.loc
 	if(istype(D))
-		src << "\blue \The [D] acknowledges your signal."
+		src << "<span class='notice'>\The [D] acknowledges your signal.</span>"
 		D.flush_count = D.flush_every_ticks
 
 	return
@@ -28,7 +28,7 @@
 
 	src.visible_message( \
 			"[src] begins to emit a loud buzzing noise.", \
-			"\blue You begin to emit a loud buzzing noise.", \
+			"<span class='notice'>You begin to emit a loud buzzing noise.</span>", \
 			"You hear a loud buzzing noise.")
 	platform_disconnect()
 	src.gib()

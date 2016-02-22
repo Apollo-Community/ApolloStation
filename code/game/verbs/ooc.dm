@@ -4,7 +4,7 @@
 	set category = "OOC"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "\red Speech is currently admin-disabled."
+		usr << "<span class='alert'>Speech is currently admin-disabled.</span>"
 		return
 
 	if(!mob)	return
@@ -16,7 +16,7 @@
 	if(!msg)	return
 
 	if(!(prefs.toggles & CHAT_OOC))
-		src << "\red You have OOC muted."
+		src << "<span class='alert'>You have OOC muted.</span>"
 		return
 
 	if(!holder)
@@ -65,11 +65,11 @@
 					else
 						display_name = holder.fakekey
 			if(src.IsByondMember())
-				target << "<font color='[src.prefs.ooccolor]'><span class='ooc'>" + create_text_tag("byond-ooc", "VIP-OOC:", target) + " <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
-			else if(holder && !holder.fakekey && (holder.rights & R_ADMIN) && config.allow_admin_ooccolor && (src.prefs.ooccolor != initial(src.prefs.ooccolor))) // keeping this for the badmins
-				target << "<font color='[src.prefs.ooccolor]'><span class='ooc'>" + create_text_tag("ooc", "OOC:", target) + " <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
+				target << "<font color='[src.prefs.OOC_color]'><span class='ooc'>" + create_text_tag("byond-ooc", "VIP-OOC:", target) + " <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
+			else if(holder && !holder.fakekey && (holder.rights & R_ADMIN) && config.allow_admin_OOC_color && (src.prefs.OOC_color != initial(src.prefs.OOC_color))) // keeping this for the badmins
+				target << "<font color='[src.prefs.OOC_color]'><span class='ooc'>" + create_text_tag("ooc", "OOC:", target) + " <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
 			else if(donator_tier(src) == 2)
-				target << "<font color='[src.prefs.ooccolor]'><span class='ooc'>" + create_text_tag("ooc", "OOC:", target) + " <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
+				target << "<font color='[src.prefs.OOC_color]'><span class='ooc'>" + create_text_tag("ooc", "OOC:", target) + " <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
 			else if(donator_tier(src) == 1)
 				target << "<span class='ooc'><span class='donator'>" + create_text_tag("ooc", "OOC:", target) + " <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></span></font>"
 			else if(get_title(src) == 2)
@@ -83,7 +83,7 @@
 	set category = "OOC"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "\red Speech is currently admin-disabled."
+		usr << "<span class='alert'>Speech is currently admin-disabled.</span>"
 		return
 
 	if(!mob)	return
@@ -95,7 +95,7 @@
 	if(!msg)	return
 
 	if(!(prefs.toggles & CHAT_LOOC))
-		src << "\red You have LOOC muted."
+		src << "<span class='alert'>You have LOOC muted.</span>"
 		return
 
 	if(!holder)

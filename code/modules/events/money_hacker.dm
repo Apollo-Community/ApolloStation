@@ -15,6 +15,8 @@
 		kill()
 
 /datum/event/money_hacker/announce()
+	command_announcement.Announce("A remote brute-force hack has been detected against crew financial accounts aboard \the [station_name()]. Command personnel required to suspend accounts until the attack has ceased.", "AUTOMATED ALERT: Hack in Progress" )
+
 	var/message = "A brute force hack has been detected (in progress since [worldtime2text()]). The target of the attack is: Financial account #[affected_account.account_number], \
 	without intervention this attack will succeed in approximately 10 minutes. Required intervention: temporary suspension of affected accounts until the attack has ceased. \
 	Notifications will be sent as updates occur.<br>"
@@ -74,10 +76,11 @@
 		T.source_terminal = pick("","[pick("Biesel","New Gibson")] GalaxyNet Terminal #[rand(111,999)]","your mums place","nantrasen high CommanD")
 
 		affected_account.transaction_log.Add(T)
-
+		command_announcement.Announce("The remote brute-force hack has succeeded. Command personnel have failed to secure all crew accounts. NanoTrasen is void of any responsibility to repay lost funds.", "AUTOMATED ALERT: Hack Successful" )
 	else
 		//crew wins
 		message = "The attack has ceased, the affected accounts can now be brought online."
+		command_announcement.Announce("The remote brute-force hack has prevented. Command personnel successfully secured all crew accounts.", "AUTOMATED ALERT: Hack Prevented" )
 
 	var/my_department = "[station_name()] firewall subroutines"
 	var/sending = message + "<font color='blue'><b>Message dispatched by [my_department].</b></font>"

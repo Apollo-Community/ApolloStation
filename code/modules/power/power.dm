@@ -316,7 +316,7 @@
 	var/area/source_area
 	if(istype(power_source,/area))
 		source_area = power_source
-		power_source = source_area.get_apc()
+		power_source = source_area.get_apc()[1]
 	if(istype(power_source,/obj/structure/cable))
 		var/obj/structure/cable/Cable = power_source
 		power_source = Cable.powernet
@@ -342,6 +342,10 @@
 	//If following checks determine user is protected we won't alarm for long.
 	if(PN)
 		PN.trigger_warning(5)
+
+	if( istype( M, /mob/living/simple_animal/rodent ))
+		M.dust()
+
 	if(istype(M,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		if(H.species.siemens_coefficient == 0)
@@ -370,7 +374,6 @@
 	else
 		power_source = cell
 		shock_damage = cell_damage
-
 	// Capping the shock damage
 	if( shock_damage > max_damage )
 		shock_damage = max_damage

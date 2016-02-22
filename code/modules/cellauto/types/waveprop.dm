@@ -67,7 +67,7 @@
 		return 0
 
 	if( istype( T, /turf/simulated/wall ))
-		if( istype( T, /turf/simulated/wall/r_wall ))
+		if( istype( T, /turf/simulated/wall/alloy/reinforced ))
 			return 0
 
 		var/turf/simulated/wall/W = T

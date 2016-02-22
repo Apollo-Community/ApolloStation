@@ -926,7 +926,7 @@
 
 /obj/machinery/suit_cycler/proc/finished_job()
 	var/turf/T = get_turf(src)
-	T.visible_message("\icon[src] \blue The [src] pings loudly.")
+	T.visible_message("\icon[src] <span class='notice'>The [src] pings loudly.</span>")
 	icon_state = initial(icon_state)
 	active = 0
 	src.updateUsrDialog()
@@ -953,7 +953,7 @@
 /obj/machinery/suit_cycler/proc/eject_occupant(mob/user as mob)
 
 	if(locked || active)
-		user << "\red The cycler is locked."
+		user << "<span class='alert'>The cycler is locked.</span>"
 		return
 
 	if (!occupant)

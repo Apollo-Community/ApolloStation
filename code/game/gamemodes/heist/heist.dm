@@ -60,6 +60,8 @@ var/global/list/obj/cortical_stacks = list() //Stacks for 'leave nobody behind' 
 	return 1
 
 /datum/game_mode/heist/pre_setup()
+	config.canon = 0
+
 	return 1
 
 /datum/game_mode/heist/post_setup()
@@ -104,15 +106,15 @@ var/global/list/obj/cortical_stacks = list() //Stacks for 'leave nobody behind' 
 	vox.real_name = capitalize(newname)
 	vox.name = vox.real_name
 	newraider.name = vox.name
-	vox.age = rand(12,20)
+	vox.character.age = rand(12,20)
 	vox.set_species("Vox")
 	vox.languages = list() // Removing language from chargen.
-	vox.flavor_text = ""
+	vox.character.flavor_texts_human = ""
 	vox.add_language("Vox-pidgin")
 	vox.add_language("Galactic Common")
 	vox.add_language("Tradeband")
-	vox.h_style = "Short Vox Quills"
-	vox.f_style = "Shaved"
+	vox.character.hair_style = "Short Vox Quills"
+	vox.character.hair_face_style = "Shaved"
 
 	for(var/datum/organ/external/limb in vox.organs)
 		limb.status &= ~(ORGAN_DESTROYED | ORGAN_ROBOT)
@@ -171,11 +173,11 @@ var/global/list/obj/cortical_stacks = list() //Stacks for 'leave nobody behind' 
 	return objs
 
 /datum/game_mode/proc/greet_vox(var/datum/mind/raider)
-	raider.current << "\blue <B>You are a Vox Raider, fresh from the Shoal!</b>"
-	raider.current << "\blue The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to the frontier and much of the unexplored galaxy. You and the crew have come to the Apollo for plunder, trade or both."
-	raider.current << "\blue Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious."
-	raider.current << "\blue Use :V to voxtalk, :H to talk on your encrypted channel, and don't forget to turn on your nitrogen internals!"
-	raider.current << "\red IF YOU HAVE NOT PLAYED A VOX BEFORE, REVIEW THIS THREAD: http://baystation12.net/forums/viewtopic.php?f=6&t=8657."
+	raider.current << "<span class='notice'><B>You are a Vox Raider, fresh from the Shoal!</b></span>"
+	raider.current << "<span class='notice'>The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to the frontier and much of the unexplored galaxy. You and the crew have come to the Apollo for plunder, trade or both.</span>"
+	raider.current << "<span class='notice'>Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious.</span>"
+	raider.current << "<span class='notice'>Use :V to voxtalk, :H to talk on your encrypted channel, and don't forget to turn on your nitrogen internals!</span>"
+	raider.current << "<span class='alert'>IF YOU HAVE NOT PLAYED A VOX BEFORE, REVIEW THIS THREAD: http://baystation12.net/forums/viewtopic.php?f=6&t=8657.</span>"
 	show_objectives(raider)
 
 /datum/game_mode/heist/declare_completion()
@@ -229,7 +231,7 @@ var/global/list/obj/cortical_stacks = list() //Stacks for 'leave nobody behind' 
 		else
 			win_msg += "<B>The Vox Raiders were repelled!</B>"
 
-	world << "\red <FONT size = 3><B>[win_type] [win_group] victory!</B></FONT>"
+	world << "<span class='alert'><FONT size = 3><B>[win_type] [win_group] victory!</B></FONT></span>"
 	world << "[win_msg]"
 	feedback_set_details("round_end_result","heist - [win_type] [win_group]")
 

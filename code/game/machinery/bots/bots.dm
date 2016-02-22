@@ -61,7 +61,7 @@
 		if(health < maxhealth)
 			if(open)
 				health = min(maxhealth, health+10)
-				user.visible_message("\red [user] repairs [src]!","\blue You repair [src]!")
+				user.visible_message("<span class='alert'>[user] repairs [src]!</span>","<span class='notice'>You repair [src]!</span>")
 			else
 				user << "<span class='notice'>Unable to repair with the maintenance panel closed.</span>"
 		else
@@ -138,7 +138,7 @@
 
 	if(user.species.can_shred(user))
 		src.health -= rand(15,30)*brute_dam_coeff
-		src.visible_message("\red <B>[user] has slashed [src]!</B>")
+		src.visible_message("<span class='alert'><B>[user] has slashed [src]!</B></span>")
 		playsound(src.loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 		if(prob(10))
 			new /obj/effect/decal/cleanable/blood/oil(src.loc)
