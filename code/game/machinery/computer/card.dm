@@ -20,7 +20,10 @@
 	var/datum/job/subordinate = job_master.GetJob( modify.assignment )
 	var/datum/job/superior = job_master.GetJob( scan.assignment )
 
-	if( superior && subordinate && ( superior.rank_succesion_level > subordinate.rank_succesion_level ))
+	if( !subordinate )
+		return 1
+
+	if( superior && ( superior.rank_succesion_level > subordinate.rank_succesion_level ))
 		return 1
 	return 0
 
