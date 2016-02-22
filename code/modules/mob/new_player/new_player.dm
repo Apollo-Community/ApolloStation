@@ -126,12 +126,14 @@
 				observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
 
 				announce_ghost_joinleave(src)
-				client.prefs.selected_character.update_preview_icon()
-				observer.icon = client.prefs.selected_character.preview_icon
+				if( client && client.prefs && client.prefs.selected_character )
+					client.prefs.selected_character.update_preview_icon()
+					observer.icon = client.prefs.selected_character.preview_icon
+					observer.real_name = client.prefs.selected_character.name
+					observer.name = observer.real_name
+
 				observer.alpha = 127
 
-				observer.real_name = client.prefs.selected_character.name
-				observer.name = observer.real_name
 				if(!client.holder && !config.antag_hud_allowed)           // For new ghosts we remove the verb from even showing up if it's not allowed.
 					observer.verbs -= /mob/dead/observer/verb/toggle_antagHUD        // Poor guys, don't know what they are missing!
 				observer.key = key
@@ -142,17 +144,17 @@
 		if(href_list["late_join"])
 			if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
 				usr << alert( "The round is either not ready, or has already finished..." )
-				return
+				return 0
+
+			if( !client || !client.prefs || !client.prefs.selected_character )
+				usr << alert( "You have not selected a character!" )
+				return 0
 
 			var/species = client.prefs.selected_character.species
 
 			if( !is_alien_whitelisted(src, species ))
 				src << alert("You are currently not whitelisted to play [species].")
 				return 0
-
-			if( !client.prefs.selected_character )
-				usr << alert("You have not selected a character to join as!")
-				return
 
 			var/datum/species/S = all_species[species]
 
