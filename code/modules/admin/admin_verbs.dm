@@ -733,6 +733,7 @@ var/list/admin_verbs_mentor = list(
 		usr << "<span class='alert'>This mob has no character!</span>"
 		return
 
+	M.character.new_character = 1
 	M.character.EditCharacterMenu( usr )
 
 	/*
