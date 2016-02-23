@@ -81,4 +81,13 @@ proc/isDay(var/month, var/day)
 	var/month = text2num( date[2] )
 	var/day = text2num( date[3] )
 
+	if( !year )
+		year = 2560
+
+	if( !month )
+		month = 1
+
+	if( !day )
+		day = 1
+
 	return "[getMonthName( month )] [day], [year]"

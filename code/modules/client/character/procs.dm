@@ -344,12 +344,16 @@
 				else
 					value = "None"
 			if( "birth_date" )
-				birth_date = params2list( value )
-				for( var/j = 1; j <= birth_date.len; j++ )
-					birth_date[j] = text2num( html_decode( birth_date[j] ))
+				birth_date = list()
 
-				if( !birth_date || !birth_date.len )
-					change_age( 30 )
+				for( var/num in params2list( value ))
+					if( istext( num ))
+						num = text2num( html_decode( num ))
+						if( num )
+							birth_date.Add( num )
+
+				if( !birth_date || !birth_date.len == 3 )
+					change_age( rand( 25, 45 ))
 
 				calculate_age()
 				continue
