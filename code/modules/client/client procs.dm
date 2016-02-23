@@ -150,6 +150,7 @@
 	//Admin Authorisation
 	holder = admin_datums[ckey]
 	if(holder)
+		control_freak = 0
 		admins += src
 		holder.owner = src
 
