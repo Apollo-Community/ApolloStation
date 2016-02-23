@@ -116,3 +116,6 @@
 
 /datum/job/proc/make_preview_icon( var/icon/preview_icon )
 	return preview_icon
+
+/datum/job/proc/is_full()
+	return current_positions >= total_positions
