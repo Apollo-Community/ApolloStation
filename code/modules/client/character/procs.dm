@@ -1,8 +1,3 @@
-/proc/saveAllActiveCharacters()
-	for( var/datum/character/C in all_characters )
-		if( !C.new_character && !C.temporary ) // If they've been saved to the database previously
-			C.saveCharacter()
-
 /datum/character/proc/saveCharacter( var/prompt = 0 )
 	if( istype( char_mob ))
 		copy_to( char_mob )
