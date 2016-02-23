@@ -17,6 +17,7 @@
 	ring()
 
 /obj/item/desk_bell/MouseDrop(var/mob/living/carbon/human/H as mob)
-	H.put_in_hands( src )
+	if( istype( H ))
+		H.put_in_hands( src )
 
 	..()

@@ -8,7 +8,7 @@
 
 	light_color = COMPUTER_BLUE
 
-	var/list/usage_record = list()
+	var/global/list/usage_record = list()
 
 	var/wait_time = 36000 // time in deciseconds until they can transfer again
 

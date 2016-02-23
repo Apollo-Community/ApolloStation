@@ -451,6 +451,7 @@
 		if("facial")
 			hair_face_color = rgb( red, green, blue )
 
+// Call this to change the character's age, will recalculate their birthday given an age
 /datum/character/proc/change_age( var/new_age, var/age_min = AGE_MIN, var/age_max = AGE_MAX )
 	new_age = max(min( round( new_age ), age_max), age_min)
 
@@ -467,16 +468,21 @@
 	birth_date = list( birth_year, birth_month, birth_day )
 	age = calculate_age()
 
+
+// Calculates the characters age from their birthdate
 /datum/character/proc/calculate_age()
 	var/cur_year = game_year
 	var/cur_month = text2num(time2text(world.timeofday, "MM"))
 	var/cur_day = text2num(time2text(world.timeofday, "DD"))
 
+	if( !birth_date || birth_date.len < 3 )
+		change_age( rand( 20, 50 )) // If we dont have a birthdate, we better get one
+
 	var/birth_year = birth_date[1]
 	var/birth_month = birth_date[2]
 	var/birth_day = birth_date[3]
 
-	age = cur_year-birth_year
+	age = ( cur_year-birth_year )+1
 
 	if( cur_month > birth_month )
 		age++
@@ -486,11 +492,10 @@
 
 	return age
 
+// Prints the character's birthdate in a readable format
 /datum/character/proc/print_birthdate()
 	if( !birth_date || birth_date.len < 3 )
 		calculate_age()
-		if( !birth_date || birth_date.len < 3 )
-			change_age( 30 )
 	return print_date( birth_date )
 
 /datum/character/proc/randomize_eyes_color()

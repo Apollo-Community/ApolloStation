@@ -245,7 +245,8 @@
 	//DISCONNECT//
 	//////////////
 /client/Del()
-	prefs.savePreferences()
+	if( prefs )
+		prefs.savePreferences()
 	log_client_to_db( 1 )
 	saveTokens()
 

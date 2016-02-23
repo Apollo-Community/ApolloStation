@@ -432,8 +432,8 @@ var/list/robot_verbs_default = list(
 					icon_state = "[src.ckey]-Standard"
 
 	//Flavour text.
-	if(client)
-		flavor_text = client.prefs.selected_character.flavor_texts_robot["Default"]
+	if( client && client.prefs && client.prefs.selected_character )
+		flavor_text = client.prefs.selected_character.flavor_texts_robot
 
 /mob/living/silicon/robot/verb/Namepick()
 	set category = "Robot Commands"
@@ -587,8 +587,9 @@ var/list/robot_verbs_default = list(
 // update the status screen display
 /mob/living/silicon/robot/Stat()
 	..()
+
 	statpanel("Status")
-	if (client.statpanel == "Status")
+	if( client && client.statpanel == "Status" )
 		show_cell_power()
 		show_jetpack_pressure()
 		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
