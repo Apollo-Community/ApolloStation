@@ -316,7 +316,10 @@
 	var/area/source_area
 	if(istype(power_source,/area))
 		source_area = power_source
-		power_source = source_area.get_apc()[1]
+
+		var/list/apcs = source_area.get_apc()
+		if( apcs && apcs.len )
+			power_source = apcs[1]
 	if(istype(power_source,/obj/structure/cable))
 		var/obj/structure/cable/Cable = power_source
 		power_source = Cable.powernet
@@ -336,7 +339,7 @@
 	else if (!power_source)
 		return 0
 	else
-		log_admin("ERROR: /proc/electrocute_mob([M], [power_source], [source]): wrong power_source")
+		log_admin("ERROR: /proc/electrocute_mob([M], [power_source], [source]): bad power_source")
 		return 0
 	//Triggers powernet warning, but only for 5 ticks (if applicable)
 	//If following checks determine user is protected we won't alarm for long.
