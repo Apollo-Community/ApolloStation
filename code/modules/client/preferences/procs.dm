@@ -125,3 +125,21 @@
 		return
 
 	return selected_character.saveCharacter()
+
+/proc/deleteCharacter( var/ckey, var/character_name )
+	if( IsGuestKey( ckey ))
+		return 0
+
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return 0
+
+	var/sql_ckey = ckey( ckey )
+	var/sql_name = sql_sanitize_text( character_name )
+
+	var/DBQuery/query = dbcon.NewQuery("DELETE FROM characters WHERE ckey = '[sql_ckey]' AND name = '[sql_name]'")
+
+	if( !query.Execute() )
+		return 0
+
+	return 1

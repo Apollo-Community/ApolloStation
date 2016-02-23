@@ -63,10 +63,19 @@
 			ClientMenuDisable( user )
 			selected_character.EditCharacterMenu( user )
 		if( "delete_character" )
-			characters.Remove( selected_character )
-			qdel( selected_character )
-			selected_character = null
-			savePreferences()
+			if( alert( user, "Are you sure you want to permanently delete [selected_character.name]?", "Delete Character","Yes","No" ) == "No" )
+				return
+
+			if( deleteCharacter( client.ckey, selected_character.name ))
+				client << "[selected_character.name] deleted from your account."
+
+				characters.Remove( selected_character )
+
+				qdel( selected_character )
+				selected_character = null
+				savePreferences()
+			else
+				client << "[selected_character.name] could not be deleted from your account."
 
 			ClientMenu( user )
 		if( "new_character" )
