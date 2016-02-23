@@ -3,8 +3,8 @@
 	flag = CADET
 	department_id = SECURITY
 	faction = "Station"
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = -1
+	spawn_positions = -1
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	alt_titles = list("Security Cadet")

@@ -3,8 +3,8 @@
 	flag = NURSE
 	department_id = MEDICAL
 	faction = "Station"
-	total_positions = 5
-	spawn_positions = 4
+	total_positions = -1
+	spawn_positions = -1
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	access = list(access_medical, access_morgue)

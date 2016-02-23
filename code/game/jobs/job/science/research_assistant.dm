@@ -3,8 +3,8 @@
 	flag = RESEARCH_ASSISTANT
 	department_id = SCIENCE
 	faction = "Station"
-	total_positions = 6
-	spawn_positions = 3
+	total_positions = -1
+	spawn_positions = -1
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
 	access = list( access_research )

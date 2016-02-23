@@ -3,8 +3,8 @@
 	flag = CYBORG
 	department_id = SYNTHETIC
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = -1
+	spawn_positions = -1
 	supervisors = "your laws and the AI"	//Nodrak
 	selection_color = "#ddffdd"
 	minimal_playtime = 1
