@@ -185,11 +185,44 @@
 
 	return 1
 
+/proc/checkCharacter( var/character_name, var/ckey )
+	if( !ckey )
+		return 0
+
+	if( !character_name )
+		return 0
+
+	var/sql_ckey = ckey( ckey )
+	var/sql_character_name = sql_sanitize_text( character_name )
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM characters WHERE ckey = '[sql_ckey]' AND name = '[sql_character_name]'")
+	if( !query.Execute() )
+		return 0
+
+	if( !query.NextRow() )
+		return 0
+
+	var/sql_id = query.item[1]
+
+	if(!sql_id)
+		return 0
+
+	if(istext(sql_id))
+		sql_id = text2num(sql_id)
+
+	if(!isnum(sql_id))
+		return 0
+
+	return 1
+
 /datum/character/proc/loadCharacter( var/character_name )
 	if( !ckey )
 		return 0
 
 	if( !character_name )
+		return 0
+
+	if( !checkCharacter( character_name, ckey ))
 		return 0
 
 	var/list/variables = list()
@@ -279,15 +312,15 @@
 	var/sql_ckey = ckey( ckey )
 	var/sql_character_name = sql_sanitize_text( character_name )
 
+	new_character = 0 // If we're loading from the database, we're obviously a pre-existing character
+	temporary = 0
+
 	var/DBQuery/query = dbcon.NewQuery("SELECT [query_names] FROM characters WHERE ckey = '[sql_ckey]' AND name = '[sql_character_name]'")
 	if( !query.Execute() )
 		return 0
 
 	if( !query.NextRow() )
 		return 0
-
-	new_character = 0 // If we're loading from the database, we're obviously a pre-existing character
-	temporary = 0
 
 	for( var/i = 1; i < variables.len; i++ )
 		var/value = query.item[i]
