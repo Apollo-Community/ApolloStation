@@ -9,9 +9,11 @@
 		return 1
 
 	if( !ckey )
+		testing( "SAVE CHARACTER: Didn't save [name] because they didn't have a ckey" )
 		return 0
 
 	if ( IsGuestKey( ckey ))
+		testing( "SAVE CHARACTER: Didn't save [name] / ([ckey]) because they were a guest character" )
 		return 0
 
 	if( prompt && ckey )
@@ -134,6 +136,7 @@
 
 	establish_db_connection()
 	if( !dbcon.IsConnected() )
+		testing( "SAVE CHARACTER: Didn't save [name] / ([ckey]) because the database wasn't connected" )
 		return 0
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM characters WHERE ckey = '[variables["ckey"]]' AND name = '[variables["name"]]'")
@@ -148,10 +151,12 @@
 		if(istext(sql_id))
 			sql_id = text2num(sql_id)
 		if(!isnum(sql_id))
+			testing( "SAVE CHARACTER: Didn't save [name] / ([ckey]) because of an invalid sql ID" )
 			return 0
 
 	if(sql_id)
 		if( names.len != values.len )
+			testing( "SAVE CHARACTER: Didn't save [name] / ([ckey]) because the variables length did not match the values" )
 			return 0
 
 		var/query_params = ""
@@ -163,6 +168,7 @@
 		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
 		var/DBQuery/query_update = dbcon.NewQuery("UPDATE characters SET [query_params] WHERE ckey = '[variables["ckey"]]' AND name = '[variables["name"]]'")
 		if( !query_update.Execute())
+			testing( "SAVE CHARACTER: Didn't save [name] / ([ckey]) because the SQL update failed" )
 			return 0
 	else
 		var/query_names = list2text( names, "," )
@@ -174,6 +180,7 @@
 		// This needs a single quote before query_values because otherwise there will be an odd number of single quotes
 		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO characters ([query_names]) VALUES ('[query_values])")
 		if( !query_insert.Execute() )
+			testing( "SAVE CHARACTER: Didn't save [name] / ([ckey]) because the SQL insert failed" )
 			return 0
 
 	return 1
