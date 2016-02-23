@@ -490,36 +490,72 @@
 
 
 		if( "loadout_add" )
-			var/list/valid_gear_choices = list()
+			if( alert( user, "What type of loadout item do you want to add?", "Loadout Addition","Normal Item","Account Item" ) == "Normal Item" )
+				var/list/valid_gear_choices = list()
 
-			for(var/gear_name in gear_datums)
-				var/datum/gear/G = gear_datums[gear_name]
+				for(var/gear_name in gear_datums)
+					var/datum/gear/G = gear_datums[gear_name]
 
-				if(( G.whitelisted && !is_alien_whitelisted( user, G.whitelisted )) || G.account )
-					continue
-				valid_gear_choices += gear_name
+					if(( G.whitelisted && !is_alien_whitelisted( user, G.whitelisted )) || G.account )
+						continue
+					valid_gear_choices += gear_name
 
-			var/choice = input(user, "Select gear to add: ") as null|anything in valid_gear_choices
+				var/choice = input(user, "Select gear to add: ") as null|anything in valid_gear_choices
 
-			if(choice && gear_datums[choice])
+				if(choice && gear_datums[choice])
 
-				var/total_cost = 0
+					var/total_cost = 0
 
-				if(isnull(gear) || !islist(gear)) gear = list()
+					if(isnull(gear) || !islist(gear)) gear = list()
 
-				if(gear && gear.len)
-					for(var/gear_name in gear)
-						if(gear_datums[gear_name])
-							var/datum/gear/G = gear_datums[gear_name]
-							total_cost += G.cost
+					if(gear && gear.len)
+						for(var/gear_name in gear)
+							if(gear_datums[gear_name])
+								var/datum/gear/G = gear_datums[gear_name]
+								total_cost += G.cost
 
-				var/datum/gear/C = gear_datums[choice]
-				total_cost += C.cost
-				if(C && total_cost <= MAX_GEAR_COST)
-					gear += choice
-					user << "<span class='notice'>Added [choice] for [C.cost] points ([MAX_GEAR_COST - total_cost] points remaining).</span>"
-				else
-					user << "<span class='alert'>That item will exceed the maximum loadout cost of [MAX_GEAR_COST] points.</span>"
+					var/datum/gear/C = gear_datums[choice]
+					total_cost += C.cost
+					if(C && total_cost <= MAX_GEAR_COST)
+						gear += choice
+						user << "<span class='notice'>Added [choice] for [C.cost] points ([MAX_GEAR_COST - total_cost] points remaining).</span>"
+					else
+						user << "<span class='alert'>That item will exceed the maximum loadout cost of [MAX_GEAR_COST] points.</span>"
+			else
+				var/list/valid_gear_choices = list()
+
+				if( !user || !user.client || !user.client.prefs || !user.client.prefs.account_items )
+					return
+
+				for(var/gear_name in user.client.prefs.account_items)
+					var/datum/gear/G = gear_datums[gear_name]
+					if( !G )
+						continue
+					if( !G.account )
+						continue
+					valid_gear_choices += gear_name
+
+				if( !valid_gear_choices || !valid_gear_choices.len )
+					src << "There are no valid items tied to your account."
+					return
+
+				var/choice = input(user, "Select item to add: ") as null|anything in valid_gear_choices
+
+				if( !choice )
+					return
+
+				if( choice in gear )
+					user << "<span class='warning'>You already have this item selected.</span>"
+					return
+
+				if( !gear_datums[choice] )
+					return
+
+				if(isnull(gear) || !islist(gear))
+					gear = list()
+
+				gear += choice
+				user << "<span class='notice'>Added \the '[choice]'.</span>"
 
 		if( "loadout_remove" )
 			if(isnull(gear) || !islist(gear))
@@ -544,38 +580,6 @@
 		if( "loadout_clear" )
 			gear.Cut()
 
-		if( "acc_items" )
-			var/list/valid_gear_choices = list()
-
-			for(var/gear_name in account_items)
-				var/datum/gear/G = gear_datums[gear_name]
-				if( !G )
-					continue
-				if( !G.account )
-					continue
-				valid_gear_choices += gear_name
-
-			if( !valid_gear_choices || !valid_gear_choices.len )
-				src << "There are no valid items tied to your account."
-				return
-
-			var/choice = input(user, "Select item to add: ") as null|anything in valid_gear_choices
-
-			if( !choice )
-				return
-
-			if( choice in gear )
-				user << "<span class='warning'>You already have this item selected.</span>"
-				return
-
-			if( !gear_datums[choice] )
-				return
-
-			if(isnull(gear) || !islist(gear))
-				gear = list()
-
-			gear += choice
-			user << "<span class='notice'>Added \the '[choice]'.</span>"
 		if( "name_random" )
 			name = random_name(gender,species)
 
