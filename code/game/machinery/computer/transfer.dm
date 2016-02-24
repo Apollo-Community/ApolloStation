@@ -1,7 +1,9 @@
 /obj/machinery/computer/transfer
-	name = "\improper role transfer console"
-	desc = "Terminal for handling role transfers. Employees can use this to switch to a role they have already been promoted to."
-	icon_state = "id"
+	name = "\improper job transfer console"
+	desc = "Terminal for handling job transfers. Employees can use this to switch to a role that they've previously been promoted to."
+	icon = 'icons/obj/computer_transfer.dmi'
+	icon_state = "jobchange"
+	density = 0
 
 	circuit = "/obj/item/weapon/circuitboard/transfer"
 	var/obj/item/weapon/card/id/scan = null
@@ -20,10 +22,12 @@
 			var/time_passed = world.time-usage_record[user]
 			if( time_passed < wait_time )
 				buzz("\The [src] buzzes, \"You cannot change your role for another [round( wait_time/600 )-round( time_passed/600 )] minutes!\"")
+				flick( "jobchange_deny", src )
 				return
 
 		if( !C.character )
 			buzz("\The [src] buzzes, \"Card is not tied to a NanoTrasen Employee!\"")
+			flick( "jobchange_deny", src )
 			return
 
 		var/job = input(usr, "Choose the role you want to change to:", "Department Transfer")  as null|anything in C.character.roles
@@ -35,12 +39,16 @@
 
 		if( !istype( job_datum ))
 			buzz("\The [src] buzzes, \"Invalid role!\"")
+			flick( "jobchange_deny", src )
 			return
 
 		if( job_datum.is_full() )
 			buzz("\The [src] buzzes, \"Role is full!\"")
+			flick( "jobchange_deny", src )
 			return
 
+
+		flick( "jobchange_accept", src )
 		C.access = job_datum.get_access()
 		C.assignment = job_datum.title
 		C.rank = job_datum.title
