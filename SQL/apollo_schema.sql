@@ -228,6 +228,25 @@ CREATE TABLE IF NOT EXISTS `universe` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
 
 -- -----------------------------------------------------
+-- Paperwork Records
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `paperwork_records` (
+  `id` int(32) NOT NULL AUTO_INCREMENT,
+  `author_ckey` varchar(32) NOT NULL,
+  `author_name` varchar(32) NOT NULL,
+  `author_ip` varchar(18) NOT NULL,
+  `author_md5` varchar(32) NOT NULL,
+  `recipient_md5` varchar(32) NOT NULL,
+  `this_md5` varchar(32) NOT NULL,
+  `clearence` varchar(32) NOT NULL,
+  `category` varchar(255) NOT NULL,
+  `date_time` datetime NOT NULL,
+  `title` varchar(255),
+  `info` MEDIUMTEXT NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+-- -----------------------------------------------------
 -- Poll Options
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `poll_option` (
