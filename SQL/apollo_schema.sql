@@ -236,12 +236,12 @@ CREATE TABLE IF NOT EXISTS `paperwork_records` (
   `author_name` varchar(32) NOT NULL,
   `author_ip` varchar(18) NOT NULL,
   `author_md5` varchar(32) NOT NULL,
-  `recipient_md5` varchar(32) NOT NULL,
+  `recipient_md5` varchar(32),
   `this_md5` varchar(32) NOT NULL,
-  `clearence` varchar(32) NOT NULL,
-  `category` varchar(255) NOT NULL,
+  `clearence` varchar(32) NOT NULL DEFAULT  "Unclassified",
+  `category` varchar(255) NOT NULL DEFAULT "Uncategorized",
   `date_time` datetime NOT NULL,
-  `title` varchar(255),
+  `title` varchar(50),
   `info` MEDIUMTEXT NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;

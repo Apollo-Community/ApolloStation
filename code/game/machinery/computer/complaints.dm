@@ -9,8 +9,10 @@
 	var/obj/item/weapon/card/id/scan = null
 
 	var/database_hash = "complaints_computer" // DO NOT CHANGE THIS UNLESS YOU WANT TO UNLINK ALL DATABASE DATA
-	var/category = "Complaints"
+	var/global/category = "Complaints"
 	var/max_pad_length = 10
+	var/min_complaint_length = MAX_NAME_LEN
+	var/max_title_length = MAX_NAME_LEN
 
 	light_color = COMPUTER_BLUE
 
@@ -29,12 +31,25 @@
 		if( second_title )
 			title += ": [second_title]"
 
-		if( addToPaperworkRecord( user, recipient_md5, P.info, title, "Unclassified", category ))
-			ping("\The [src] pings, \"[title] successfully submitted!\"")
-			flick( "complaints_computer_insert", src )
-			qdel( P )
-		else
+		if( length( title ) >= MAX_NAME_LEN )
+			buzz("\The [src] buzzes, \"Title is too long!\"")
+			flick( "complaintbox_deny", src )
+			return
+
+		if( length( title ) < min_complaint_length )
+			buzz("\The [src] buzzes, \"Little to no !\"")
+			flick( "complaintbox_deny", src )
+			return
+
+		if( !addToPaperworkRecord( user, recipient_md5, P.info, title, "Unclassified", category ))
 			buzz("\The [src] buzzes, \"Could not add your complaint!\"")
+			flick( "complaintbox_deny", src )
+			return
+
+		ping("\The [src] pings, \"[title] successfully submitted!\"")
+		flick( "complaintbox_insert", src )
+		qdel( P )
+
 		return
 	..()
 

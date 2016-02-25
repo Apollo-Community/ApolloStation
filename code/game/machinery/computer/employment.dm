@@ -1,6 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-/obj/machinery/computer/employment//TODO:SANITY
+/obj/machinery/computer/employment
 	name = "employment records console"
 	desc = "Used to view, edit and maintain employment records."
 	icon_state = "medlaptop"
@@ -18,9 +18,12 @@
 	var/list/Perp
 	var/tempname = null
 	//Sorting Variables
+
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
 	light_color = COMPUTER_GREEN
+
+	var/datum/browser/menu = new( null, "employee_rec", "Employment Records", 710, 610 )
 
 /obj/machinery/computer/employment/attackby(obj/item/O as obj, user as mob)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
@@ -37,6 +40,9 @@
 /obj/machinery/computer/employment/attack_hand(mob/user as mob)
 	if(..())
 		return
+	ui_interact( user )
+
+/obj/machinery/computer/employment/ui_interact( mob/user as mob )
 	if (src.z in config.admin_levels)
 		user << "<span class='alert'><b>Unable to establish a connection</b>: </span><span class='black'>You're too far away from the station!</span>"
 		return
@@ -60,7 +66,7 @@
 <th>Records:</th>
 </tr>
 </table>
-<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+<table class='border'>
 <tr>
 <th><A href='?src=\ref[src];choice=Sorting;sort=name'>Name</A></th>
 <th><A href='?src=\ref[src];choice=Sorting;sort=id'>ID</A></th>
@@ -77,7 +83,7 @@
 							dat += text("<td>[]</td>", R.fields["fingerprint"])
 						dat += "</table><hr width='75%' />"
 					dat += text("<A href='?src=\ref[];choice=Record Maintenance'>Record Maintenance</A><br><br>", src)
-					dat += text("<A href='?src=\ref[];choice=Log Out'>{Log Out}</A>",src)
+					dat += text("<A href='?src=\ref[];choice=Log Out'>Log Out</A>",src)
 				if(2.0)
 					dat += "<B>Records Maintenance</B><HR>"
 					dat += "<BR><A href='?src=\ref[src];choice=Delete All Records'>Delete All Station Records</A><BR><BR><A href='?src=\ref[src];choice=Return'>Back</A>"
@@ -100,8 +106,8 @@
 
 
 						dat+= text( "</td>	\
-						<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4>	\
-						<img src=side.png height=80 width=80 border=4></td></tr></table>")
+						<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80>	\
+						<img src=side.png height=80 width=80></td></tr></table>")
 
 						dat += "General Record:<BR> [decode(active1.fields["notes"])]<BR><BR>"
 						dat += "Employment History:<BR>"
@@ -122,7 +128,7 @@
 						dat += {"
 </tr>
 </table>
-<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+<table class='border'>
 <tr>
 <th>Name</th>
 <th>ID</th>
@@ -146,9 +152,12 @@
 						dat += text("<br><A href='?src=\ref[];choice=Return'>Return to index.</A>", src)
 				else
 		else
-			dat += text("<A href='?src=\ref[];choice=Log In'>{Log In}</A>", src)
-	user << browse(text("<HEAD><TITLE>Employment Records</TITLE></HEAD><TT>[]</TT>", dat), "window=secure_rec;size=600x400")
-	onclose(user, "secure_rec")
+			dat += text("<A href='?src=\ref[];choice=Log In'>Log In</A>", src)
+
+	menu.set_user( user )
+	menu.set_content( dat )
+	menu.open()
+	onclose(user, "employee_rec")
 	return
 
 /*Revised /N
