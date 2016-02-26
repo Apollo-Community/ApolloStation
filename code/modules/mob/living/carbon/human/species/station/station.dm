@@ -212,7 +212,49 @@
 
 	has_organ = list( "eyes" =     /datum/organ/internal/eyes ) //TODO: Positronic brain.
 
-	var/obj/machinery/power/apc/attached_apc = null
+/datum/species/machine/handle_life(var/mob/living/carbon/human/H)
+	..()
+	if(!H.attached_apc)
+		return
+
+	var/obj/machinery/power/apc/A = H.attached_apc
+
+	if(!A.can_use(H) || !A.cell)
+		if(!in_range(A, H))
+			H << "<span class='warning'>You rip your fingers out of the APC!</span>"
+		H.attached_apc = null
+		return
+
+	if(H.a_intent == I_GRAB)
+		if(A.cell.charge <= 0)
+			H << "<span class='notice'>The power cell dries out, and you remove your fingers from the APC.</span>"
+			H.attached_apc = null
+			return
+		else if(H.nutrition >= 500)
+			H << "<span class='notice'>You remove your fingers from the APC as your power cell is fully charged.</span>"
+			H.attached_apc = null
+			return
+		else
+			H.nutrition = Clamp(H.nutrition + 10, 0, 500)
+			A.cell.charge = Clamp(A.cell.charge - 100, 0, A.cell.maxcharge)
+	else if(H.a_intent == I_DISARM)
+		if(A.cell.charge >= A.cell.maxcharge)
+			H << "<span class='notice'>You remove your fingers as the APC is fully charged.</span>"
+			H.attached_apc = null
+			return
+		else if(H.nutrition <= 30)
+			H << "<span class='notice'>You remove your fingers as your own power starts to run out.</span>"
+			H.attached_apc = null
+			return
+		else
+			H.nutrition = Clamp(H.nutrition - 10, 0, 500)
+			A.cell.charge = Clamp(A.cell.charge + 100, 0, A.cell.maxcharge)
+	else
+		H << "<span class='notice'>You remove your fingers from the APC.</span>"
+		H.attached_apc = null
+
+	A.charging = 1
+	A.update_icon()
 
 /datum/species/machine/handle_death(var/mob/living/carbon/human/H)
 	..()

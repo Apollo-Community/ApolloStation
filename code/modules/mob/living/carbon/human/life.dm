@@ -31,6 +31,7 @@
 	var/pressure_alert = 0
 	var/temperature_alert = 0
 	var/in_stasis = 0
+	var/obj/machinery/power/apc/attached_apc = null
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
@@ -117,11 +118,8 @@
 	handle_regular_status_updates()		//Optimized a bit
 	update_canmove()
 
-	//IPCs charging from APCs
-	if(istype(species, /datum/species/machine))
-		var/datum/species/machine/S = species
-		if(S.attached_apc)
-			handle_ipc_charging()
+	// Species-specific
+	if(species) species.handle_life(src)
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
@@ -1641,46 +1639,6 @@
 					temp = PULSE_NONE
 
 		return temp
-
-	proc/handle_ipc_charging()
-		var/datum/species/machine/S = species
-		var/obj/machinery/power/apc/A = S.attached_apc
-
-		if(!A.can_use(src) || !A.cell)
-			if(!in_range(A, src))
-				src << "<span class='warning'>You rip your fingers out of the APC!</span>"
-			S.attached_apc = null
-			return
-
-		if(a_intent == I_GRAB)
-			if(A.cell.charge <= 0)
-				src << "<span class='notice'>The power cell dries out, and you remove your fingers from the APC.</span>"
-				S.attached_apc = null
-				return
-			else if(nutrition >= 500)
-				src << "<span class='notice'>You remove your fingers from the APC as your power cell is fully charged.</span>"
-				S.attached_apc = null
-				return
-			else
-				nutrition += 10
-				A.cell.charge -= 100
-		else if(a_intent == I_DISARM)
-			if(A.cell.charge >= A.cell.maxcharge)
-				src << "<span class='notice'>You remove your fingers as the APC is fully charged.</span>"
-				S.attached_apc = null
-				return
-			else if(nutrition <= 30)
-				src << "<span class='notice'>You remove your fingers as your own power starts to run out.</span>"
-				return
-			else
-				nutrition -= 10
-				A.cell.charge += 100
-		else
-			src << "<span class='notice'>You remove your fingers from the APC.</span>"
-			S.attached_apc = null
-
-		A.charging = 1
-		A.update_icon()
 
 /*
 	Called by life(), instead of having the individual hud items update icons each tick and check for status changes
