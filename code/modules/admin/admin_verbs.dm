@@ -452,7 +452,7 @@ var/list/admin_verbs_mentor = list(
 	return
 
 /client/proc/unban_panel()
-	set name = "Unban Panel"
+	set name = "Ban Panel"
 	set category = "Admin"
 	if(holder)
 		if(config.ban_legacy_system)
@@ -721,9 +721,9 @@ var/list/admin_verbs_mentor = list(
 
 /client/proc/editappear(mob/living/carbon/human/M as mob in world)
 	set name = "Edit Records"
-	set category = "Fun"
+	set category = "Admin"
 
-	if(!check_rights(R_FUN))	return
+	if(!check_rights(R_MOD) && !check_rights(R_ADMIN))	return
 
 	if( !istype( M ))
 		usr << "<span class='alert'>You can only do this to humans!</span>"

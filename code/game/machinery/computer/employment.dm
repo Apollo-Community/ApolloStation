@@ -9,14 +9,25 @@
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
-	var/screen = null
+
+	var/screen_type = 0 // Station records or CentComm records?
+	var/screen = null // What screen are we on?
+
 	var/datum/data/record/active1 = null
 	var/a_id = null
+
+	var/return_limit = 10
+	var/query = null
+	var/query_type = "name"
+	var/is_complete = 1
+	var/list/query_types = list( "name" = 1, "birth_date" = 0, "fingerprints" = 1, "blood_type" = 0, "DNA" = 1)
+
 	var/temp = null
+	var/tempname = null
+
 	var/printing = null
 	var/can_change_id = 0
 	var/list/Perp
-	var/tempname = null
 	//Sorting Variables
 
 	var/sortBy = "name"
@@ -43,25 +54,171 @@
 	ui_interact( user )
 
 /obj/machinery/computer/employment/ui_interact( mob/user as mob )
-	if (src.z in config.admin_levels)
+	if( src.z in config.admin_levels )
 		user << "<span class='alert'><b>Unable to establish a connection</b>: </span><span class='black'>You're too far away from the station!</span>"
 		return
-	var/dat
 
+	authenticate( user )
+
+	. = header( user )
+
+	switch( screen_type )
+		if( 0 )
+			. += station_records( user )
+		if( 1 )
+			. += centcomm_records( user )
+
+	menu.set_user( user )
+	menu.set_content( . )
+	menu.open()
+	onclose(user, "employee_rec")
+	return
+
+/obj/machinery/computer/employment/proc/header( mob/user as mob )
+	. = ""
+
+	if (authenticated)
+		. += "<center>"
+		switch( screen_type )
+			if( 0 )
+				. += "Station Database - "
+				. += "<a href='?src=\ref[src];choice=Switch Menu;type=1'>CentComm Database</a>"
+			if( 1 )
+				. += "<a href='?src=\ref[src];choice=Switch Menu;type=0'>Station Database</a> - "
+				. += "CentComm Database"
+		. += "</center>"
+
+		. += "<br><br>"
+	. += "Confirm Identity: <A href='?src=\ref[src];choice=Confirm Identity'>[(scan ? scan.name : "----------")]</A><HR>"
+
+	return .
+
+/obj/machinery/computer/employment/proc/centcomm_records( mob/user as mob )
+	switch( screen )
+		if( 1 )
+			establish_db_connection()
+			if( !dbcon.IsConnected() )
+				. += {"<table class='outline'>
+<tr>
+<th>No connection to the external database!</th>
+</tr>
+</table>"}
+				return .
+
+
+
+			if( !query )
+				. += {"<table class='outline'>
+<tr>
+<th>Please input a <a href='?src=\ref[src];choice=Search Centcomm Records'>Search</a></th>
+</tr>
+</table>"}
+				return
+
+			var/query_input = "= '[query]'"
+			if( !is_complete )
+				query_input = "LIKE '%[query]%'"
+
+			var/DBQuery/db_query = dbcon.NewQuery("SELECT name, gender, birth_date, blood_type, fingerprints, DNA, unique_identifier FROM characters WHERE [query_type] [query_input] LIMIT [return_limit]")
+
+			if( !db_query.Execute() )
+				. += {"<table class='outline'>
+<tr>
+<th>Invalid database query! Please input a new <a href='?src=\ref[src];choice=Search Centcomm Records'>Search</a></th>
+</tr>
+</table>"}
+				return .
+
+			. += {"<table class='outline'>
+<tr>
+<th><a href='?src=\ref[src];choice=Search Centcomm Records'>Search:</a> [query]</a></th>
+</tr>
+</table>
+<table class='border'>
+<tr>
+<th>Name</th>
+<th>Gender</th>
+<th>Birth Date</th>
+<th>Blood Type</th>
+<th>Fingerprints</th>
+<th>DNA</th>
+<th>Paperwork</th>
+</tr>"}
+			while( db_query.NextRow() )
+				. += "<tr>"
+				. += "<td>[db_query.item[1]]</td>"
+				. += "<td>[db_query.item[2]]</td>"
+				. += "<td>[db_query.item[3]]</td>"
+				. += "<td>[db_query.item[4]]</td>"
+				. += "<td>[db_query.item[5]]</td>"
+				. += "<td>[db_query.item[6]]</td>"
+				. += "<td><a href='?src=\ref[src];choice=Load Paperwork;hash=[db_query.item[7]]'>View</a></td>"
+				. += "</tr>"
+
+			. += "</table>"
+
+			. += "<hr><center>Limited to [return_limit] results</center>"
+		if( 2 )
+			establish_db_connection()
+			if( !dbcon.IsConnected() )
+				. += {"<table class='outline'>
+<tr>
+<th>No connection to the external database!</th>
+</tr>
+</table>"}
+				. += "<A href='?src=\ref[src];choice=Return'>Back</A>"
+				return .
+
+			var/DBQuery/db_query = dbcon.NewQuery("SELECT id, date_time, title FROM paperwork_records WHERE recipient_md5 = [query]")
+
+			if( !db_query.Execute() )
+				. += {"<table class='outline'>
+<tr>
+<th>Invalid database query!</th>
+</tr>
+</table>"}
+				. += "<A href='?src=\ref[src];choice=Return'>Back</A>"
+				return .
+
+			. += {"<table class='outline'>
+<tr>
+<th>Paperwork Records</th>
+</tr>
+</table>
+<table class='border'>
+<tr>
+<table class='border'>
+<tr>
+<th>Date</th>
+<th>Title</th>
+<th>View</th>
+</tr>"}
+
+			while( db_query.NextRow() )
+				. += "<tr>"
+				. += "<td>[db_query.item[1]]</td>"
+				. += "<td>[db_query.item[2]]</td>"
+				. += "<td></td>"
+				. += "<td><a href='?src=\ref[src];choice=View Paperwork;id=[db_query.item[3]]'>View</a></td>"
+				. += "</tr>"
+
+			. += "<A href='?src=\ref[src];choice=Return'>Back</A>"
+
+	return .
+
+/obj/machinery/computer/employment/proc/station_records( mob/user as mob )
 	if (temp)
-		dat = text("<TT>[]</TT><BR><BR><A href='?src=\ref[];choice=Clear Screen'>Clear Screen</A>", temp, src)
+		. = text("<TT>[]</TT><BR><BR><A href='?src=\ref[];choice=Clear Screen'>Clear Screen</A>", temp, src)
 	else
-		dat = text("Confirm Identity: <A href='?src=\ref[];choice=Confirm Identity'>[]</A><HR>", src, (scan ? text("[]", scan.name) : "----------"))
 		if (authenticated)
 			switch(screen)
 				if(1.0)
-					dat += {"
-<p style='text-align:center;'>"}
-					dat += text("<A href='?src=\ref[];choice=Search Records'>Search Records</A><BR>", src)
-					dat += text("<A href='?src=\ref[];choice=New Record (General)'>New Record</A><BR>", src)
-					dat += {"
+					. += "<p style='text-align:center;'>"
+					. += text("<A href='?src=\ref[];choice=Search Records'>Search Records</A><BR>", src)
+					. += text("<A href='?src=\ref[];choice=New Record (General)'>New Record</A><BR>", src)
+					. += {"
 </p>
-<table style="text-align:center;" cellspacing="0" width="100%">
+<table class='outline'>
 <tr>
 <th>Records:</th>
 </tr>
@@ -77,24 +234,23 @@
 						for(var/datum/data/record/R in sortRecord(data_core.general, sortBy, order))
 							for(var/datum/data/record/E in data_core.security)
 							var/background
-							dat += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]</a></td>", background, src, R, R.fields["name"])
-							dat += text("<td>[]</td>", R.fields["id"])
-							dat += text("<td>[]</td>", R.fields["rank"])
-							dat += text("<td>[]</td>", R.fields["fingerprint"])
-						dat += "</table><hr width='75%' />"
-					dat += text("<A href='?src=\ref[];choice=Record Maintenance'>Record Maintenance</A><br><br>", src)
-					dat += text("<A href='?src=\ref[];choice=Log Out'>Log Out</A>",src)
+							. += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]</a></td>", background, src, R, R.fields["name"])
+							. += text("<td>[]</td>", R.fields["id"])
+							. += text("<td>[]</td>", R.fields["rank"])
+							. += text("<td>[]</td>", R.fields["fingerprint"])
+						. += "</table><hr width='75%' />"
+					. += text("<A href='?src=\ref[];choice=Record Maintenance'>Record Maintenance</A><br><br>", src)
 				if(2.0)
-					dat += "<B>Records Maintenance</B><HR>"
-					dat += "<BR><A href='?src=\ref[src];choice=Delete All Records'>Delete All Station Records</A><BR><BR><A href='?src=\ref[src];choice=Return'>Back</A>"
+					. += "<B>Records Maintenance</B><HR>"
+					. += "<BR><A href='?src=\ref[src];choice=Delete All Records'>Delete All Station Records</A><BR><BR><A href='?src=\ref[src];choice=Return'>Back</A>"
 				if(3.0)
-					dat += "<CENTER><B>Employment Record</B></CENTER><BR>"
+					. += "<CENTER><B>Employment Record</B></CENTER><BR>"
 					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
 						var/icon/front = active1.fields["photo_front"]
 						var/icon/side = active1.fields["photo_side"]
 						user << browse_rsc(front, "front.png")
 						user << browse_rsc(side, "side.png")
-						dat += text("<table><tr><td>	\
+						. += text("<table class='outline'><tr><td>	\
 						Name: <A href='?src=\ref[src];choice=Edit Field;field=name'>[active1.fields["name"]]</A><BR> \
 						ID: <A href='?src=\ref[src];choice=Edit Field;field=id'>[active1.fields["id"]]</A><BR>\n	\
 						Sex: <A href='?src=\ref[src];choice=Edit Field;field=sex'>[active1.fields["sex"]]</A><BR>\n	\
@@ -104,28 +260,27 @@
 						Physical Status: [active1.fields["p_stat"]]<BR>\n	\
 						Mental Status: [active1.fields["m_stat"]]<BR>\n")
 
-
-						dat+= text( "</td>	\
+						. += text( "</td>	\
 						<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80>	\
 						<img src=side.png height=80 width=80></td></tr></table>")
 
-						dat += "General Record:<BR> [decode(active1.fields["notes"])]<BR><BR>"
-						dat += "Employment History:<BR>"
-						dat += formatPromotionRecords( active1.fields["character"] )
+						. += "General Record:<BR> [decode(active1.fields["notes"])]<BR><BR>"
+						. += "Employment History:<BR>"
+						. += formatPromotionRecords( active1.fields["character"] )
 
 					else
-						dat += "<B>General Record Lost!</B><BR>"
-//					dat += text("\n<A href='?src=\ref[];choice=Delete Station Record'>Delete Station Record</A>"
-					dat += "<BR><BR>\n<A href='?src=\ref[src];choice=Print Record'>Print Record</A><BR>\n<A href='?src=\ref[src];choice=Return'>Back</A><BR>"
+						. += "<B>General Record Lost!</B><BR>"
+//					. += text("\n<A href='?src=\ref[];choice=Delete Station Record'>Delete Station Record</A>"
+					. += "<BR><BR>\n<A href='?src=\ref[src];choice=Print Record'>Print Record</A><BR>\n<A href='?src=\ref[src];choice=Return'>Back</A><BR>"
 				if(4.0)
 					if(!Perp.len)
-						dat += text("ERROR.  String could not be located.<br><br><A href='?src=\ref[];choice=Return'>Back</A>", src)
+						. += "ERROR.  String could not be located.<br><br><A href='?src=\ref[src];choice=Return'>Back</A>"
 					else
-						dat += {"
-<table style="text-align:center;" cellspacing="0" width="100%">
+						. += {"
+<table class='outline'>
 <tr>					"}
-						dat += text("<th>Search Results for '[]':</th>", tempname)
-						dat += {"
+						. += "<th>Search Results for '[tempname]':</th>"
+						. += {"
 </tr>
 </table>
 <table class='border'>
@@ -143,22 +298,16 @@
 								crimstat = E.fields["criminal"]
 							var/background
 							background = "'background-color:#00FF7F;'"
-							dat += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]</a></td>", background, src, R, R.fields["name"])
-							dat += text("<td>[]</td>", R.fields["id"])
-							dat += text("<td>[]</td>", R.fields["rank"])
-							dat += text("<td>[]</td>", R.fields["fingerprint"])
-							dat += text("<td>[]</td></tr>", crimstat)
-						dat += "</table><hr width='75%' />"
-						dat += text("<br><A href='?src=\ref[];choice=Return'>Return to index.</A>", src)
+							. += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]</a></td>", background, src, R, R.fields["name"])
+							. += text("<td>[]</td>", R.fields["id"])
+							. += text("<td>[]</td>", R.fields["rank"])
+							. += text("<td>[]</td>", R.fields["fingerprint"])
+							. += text("<td>[]</td></tr>", crimstat)
+						. += "</table><hr width='75%' />"
+						. += text("<br><A href='?src=\ref[];choice=Return'>Return to index.</A>", src)
 				else
 		else
-			dat += text("<A href='?src=\ref[];choice=Log In'>Log In</A>", src)
-
-	menu.set_user( user )
-	menu.set_content( dat )
-	menu.open()
-	onclose(user, "employee_rec")
-	return
+			. += text("<A href='?src=\ref[];choice=Log In'>Log In</A>", src)
 
 /*Revised /N
 I can't be bothered to look more of the actual code outside of switch but that probably needs revising too.
@@ -191,6 +340,35 @@ What a mess.*/
 				screen = 1
 				active1 = null
 
+			if( "Switch Menu" )
+				var/s_type = text2num( href_list["type"] )
+				if( !isnull( s_type ))
+					screen_type = s_type
+				screen = 1
+
+			if( "Load Paperwork" )
+				screen = 2
+
+				query = href_list["hash"]
+				query_type = "unique_identifier"
+
+			if( "View Paperwork" )
+				var/sql_id = text2num( href_list["hash"] )
+				var/DBQuery/db_query
+
+				db_query = dbcon.NewQuery("SELECT title, info FROM paperwork_records WHERE id = [sql_id]")
+
+				if( !db_query.Execute() )
+					return
+
+				if( !db_query.NextRow() )
+					return
+
+				var/title = db_query.item[1]
+				var/info = db_query.item[2]
+				usr << browse( info, "window=[title]")
+				return
+
 			if("Confirm Identity")
 				if (scan)
 					if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
@@ -205,29 +383,8 @@ What a mess.*/
 						I.loc = src
 						scan = I
 
-			if("Log Out")
-				authenticated = null
-				screen = null
-				active1 = null
-
 			if("Log In")
-				if (istype(usr, /mob/living/silicon/ai))
-					src.active1 = null
-					src.authenticated = usr.name
-					src.rank = "AI"
-					src.screen = 1
-				else if (istype(usr, /mob/living/silicon/robot))
-					src.active1 = null
-					src.authenticated = usr.name
-					var/mob/living/silicon/robot/R = usr
-					src.rank = R.braintype
-					src.screen = 1
-				else if (istype(scan, /obj/item/weapon/card/id))
-					active1 = null
-					if(check_access(scan))
-						authenticated = scan.registered_name
-						rank = scan.assignment
-						screen = 1
+				authenticate( usr )
 //RECORD FUNCTIONS
 			if("Search Records")
 				var/t1 = input("Search String: (Partial Name or ID or Fingerprints or Rank)", "Secure. records", null, null)  as text
@@ -253,6 +410,32 @@ What a mess.*/
 				tempname = t1
 				screen = 4
 
+			if( "Search Centcomm Records" )
+				query_type = input("What do you want to search by?", "Search Records", null, null) in query_types
+
+				var/allow_partial = query_types[query_type]
+
+				if( allow_partial )
+					if( "Complete" == alert( usr, "Complete or partial string search?", "", "Complete", "Partial" ))
+						is_complete = 1
+					else
+						is_complete = 0
+				else
+					is_complete = 1
+
+				if( !query_type )
+					query_type = sql_sanitize_text( "name" )
+					return
+
+				query = input("Search String: ", "Search Records", null, null)  as text|null
+
+				query_type = sql_sanitize_text( query_type )
+
+				if( !query )
+					return
+
+				query = sql_sanitize_text( query )
+
 			if("Record Maintenance")
 				screen = 2
 				active1 = null
@@ -265,22 +448,6 @@ What a mess.*/
 					for(var/datum/data/record/E in data_core.security)
 					active1 = R
 					screen = 3
-
-/*			if ("Search Fingerprints")
-				var/t1 = input("Search String: (Fingerprint)", "Secure. records", null, null)  as text
-				if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || (!in_range(src, usr)) && (!istype(usr, /mob/living/silicon))))
-					return
-				active1 = null
-				t1 = lowertext(t1)
-				for(var/datum/data/record/R in data_core.general)
-					if (lowertext(R.fields["fingerprint"]) == t1)
-						active1 = R
-				if (!( active1 ))
-					temp = text("Could not locate record [].", t1)
-				else
-					for(var/datum/data/record/E in data_core.security)
-						if ((E.fields["name"] == active1.fields["name"] || E.fields["id"] == active1.fields["id"]))
-					screen = 3	*/
 
 			if ("Print Record")
 				if (!( printing ))
@@ -405,6 +572,29 @@ What a mess.*/
 	add_fingerprint(usr)
 	updateUsrDialog()
 	return
+
+/obj/machinery/computer/employment/proc/authenticate( var/mob/user = usr )
+	src.authenticated = null
+	rank = null
+	screen = 1
+
+	if (istype(usr, /mob/living/silicon/ai))
+		src.active1 = null
+		src.authenticated = user.name
+		src.rank = "AI"
+		src.screen = 1
+	else if (istype(user, /mob/living/silicon/robot))
+		src.active1 = null
+		src.authenticated = user.name
+		var/mob/living/silicon/robot/R = user
+		src.rank = R.braintype
+		src.screen = 1
+	else if (istype(scan, /obj/item/weapon/card/id))
+		active1 = null
+		if(check_access(scan))
+			authenticated = scan.registered_name
+			rank = scan.assignment
+			screen = 1
 
 /obj/machinery/computer/employment/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
