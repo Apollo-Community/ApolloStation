@@ -1688,3 +1688,18 @@
 	display_name = "replica ERT armor"
 	path = /obj/item/clothing/suit/armor/vest/ert/command/replica
 	sort_category = slot_wear_suit
+
+/obj/item/weapon/rig/unathi/fancy/ominousbrainworm
+	name = "replica breacher chassis control module"
+	desc = "A replica Unathi breacher chassis. Huge and bulky, it must be like wearing a plastic tank. It appears to provide no protection."
+	suit_type = "breacher chassis"
+	icon_state = "breacher_rig"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	initial_modules = list()
+	vision_restriction = 0
+	slowdown = 3
+
+/datum/gear/account/ominousbrainworm_breacher
+	display_name = "replica breacher chassis"
+	path = /obj/item/weapon/rig/unathi/fancy/ominousbrainworm
+	sort_category = "misc"
