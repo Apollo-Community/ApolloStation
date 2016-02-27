@@ -7,7 +7,6 @@
 	spawn_positions = -1
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
-	alt_titles = list("Security Cadet")
 	access = list(access_security, access_sec_doors, access_court, access_maint_tunnels )
 	minimal_access = list(access_security, access_sec_doors, access_court, access_maint_tunnels)
 
