@@ -482,7 +482,7 @@ var/list/admin_verbs_mentor = list(
 	set category = "OOC"
 	set name = "OOC Text Color"
 
-	if((src.holder && (src.holder.rights & R_ADMIN)) || src.IsByondMember())
+	if( check_rights( R_ADMIN ))
 		var/new_OOC_color = input(src, "Please select your OOC colour.", "OOC colour") as color|null
 		if(new_OOC_color)
 			prefs.OOC_color = new_OOC_color
@@ -490,16 +490,13 @@ var/list/admin_verbs_mentor = list(
 		feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return
 	else
-		if (donator)
-			if (donator_tier(src) == 2)
-				var/new_OOC_color = input(src, "Please select your OOC colour.", "OOC colour") as color|null
-				if(new_OOC_color)
-					prefs.OOC_color = new_OOC_color
-					prefs.savePreferences()
-				feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-				return
-			else
-				src << "Only Tier 2 or higher donators can use this command."
+		if( donator_tier( src ) && donator_tier( src ) != DONATOR_TIER_1 )
+			var/new_OOC_color = input(src, "Please select your OOC colour.", "OOC colour") as color|null
+			if(new_OOC_color)
+				prefs.OOC_color = new_OOC_color
+				prefs.savePreferences()
+			feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			return
 		else
 			src << "Only tier 2 or higher donators and administrators can use this command."
 
