@@ -3,11 +3,7 @@ place_amount_max 0
 
 # Spawn chances for the different templates
 # If the chance is 0%, the entire line will be disregarded.
-chances test=0
-
-zs 3
-zs 4
-zs 6
+chances random=0
 
 # These objects will be placed last
 place_last /obj/machinery/power/apc
