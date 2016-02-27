@@ -263,8 +263,8 @@
 						var/list/quote_ep = list() // Quote ending positions
 
 						var/quote_start = findtext(string, "\"")
-						var/safety = 1000
-						while(quote_start && safety)
+						var/safety = 9999999999
+						while( quote_start && safety )
 							var/quote_end = findtext(string, "\"", quote_start + 1)
 
 							quote_sp += quote_start
