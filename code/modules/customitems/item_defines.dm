@@ -1690,16 +1690,21 @@
 	sort_category = slot_wear_suit
 
 /obj/item/weapon/rig/unathi/fancy/ominousbrainworm
-	name = "replica breacher chassis control module"
-	desc = "A replica Unathi breacher chassis. Huge and bulky, it must be like wearing a plastic tank. It appears to provide no protection."
+	name = "old breacher chassis control module"
+	desc = "An old Unathi breacher chassis. Huge and bulky, it must be like wearing a rusty tank. It appears to provide no protection."
 	suit_type = "breacher chassis"
 	icon_state = "breacher_rig"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	initial_modules = list()
 	vision_restriction = 0
-	slowdown = 3
+	slowdown = 4
 
 /datum/gear/account/ominousbrainworm_breacher
-	display_name = "replica breacher chassis"
+	display_name = "Sidiers breacher chassis"
 	path = /obj/item/weapon/rig/unathi/fancy/ominousbrainworm
+	sort_category = "misc"
+
+/datum/gear/account/ominousbrainworm_zippo
+	display_name = "Sidiers zippo"
+	path = /obj/item/weapon/flame/lighter/zippo/fluff/janis_godmanis
 	sort_category = "misc"
