@@ -1677,3 +1677,14 @@
 		walk_to(src,0)
 		target_loc = null
 		stop_automated_movement = 0
+
+
+/obj/item/clothing/suit/armor/vest/ert/command/replica
+	name = "replica emergency response team commander armor"
+	desc = "A replica set of armor worn by the commander of a NanoTrasen Emergency Response Team. Has blue highlights. This one seems to provide no real protection."
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+
+/datum/gear/account/halocat_ert
+	display_name = "replica ERT armor"
+	path = /obj/item/clothing/suit/armor/vest/ert/command/replica
+	sort_category = slot_wear_suit
