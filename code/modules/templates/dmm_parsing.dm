@@ -263,14 +263,15 @@
 						var/list/quote_ep = list() // Quote ending positions
 
 						var/quote_start = findtext(string, "\"")
-						while(quote_start)
+						var/safety = 1000
+						while(quote_start && safety)
 							var/quote_end = findtext(string, "\"", quote_start + 1)
 
 							quote_sp += quote_start
 							quote_ep += quote_end
 
 							quote_start = findtext(string, "\"", quote_end + 1)
-
+							safety--
 						// Start hack. Why? Because byond.
 						var/list/string_list = list()
 						var/next_sc_pos
