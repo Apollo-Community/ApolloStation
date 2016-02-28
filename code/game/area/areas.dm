@@ -13,33 +13,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 */
 
-// Environment types
-#define GENERIC 0
-#define PADDED_CELL 1
-#define ROOM 2
-#define BATHROOM 3
-#define LIVINGROOM 4
-#define STONEROOM 5
-#define AUDITORIUM 6
-#define CONCERT_HALL 7
-#define CAVE 8
-#define ARENA 9
-#define HANGAR 10
-#define CARPETTED_HALLWAY 11
-#define HALLWAY 12
-#define STONE_CORRIDOR 13
-#define ALLEY 14
-#define FOREST 15
-#define CITY 16
-#define MOUNTAINS 17
-#define QUARRY 18
-#define PLAIN 19
-#define PARKING_LOT 20
-#define SEWER_PIPE 21
-#define UNDERWATER 22
-#define DRUGGED 23
-#define DIZZY 24
-#define PSYCHOTIC 25
 
 /area
 	level = null
@@ -1956,6 +1929,9 @@ area/space/atmosalert()
 	icon_state = "yellow"
 	environment = QUARRY
 
+/area/construction/IAA
+	name = "\improper Construction Zone"
+
 /area/construction/supplyshuttle
 	name = "\improper Supply Shuttle"
 	icon_state = "yellow"
@@ -2388,6 +2364,8 @@ area/space/atmosalert()
 	icon_state = "south"
 	requires_power = 0
 
+
+
 /////////////////////////////////////////////////////////////////////
 /*
  Lists of areas to be used with is_type_in_list.
@@ -2450,30 +2428,3 @@ var/list/the_station_areas = list (
 	/area/turret_protected/ai_upload_foyer,
 	/area/turret_protected/ai,
 )
-
-#undef GENERIC
-#undef PADDED_CELL
-#undef ROOM
-#undef BATHROOM
-#undef LIVINGROOM
-#undef STONEROOM
-#undef AUDITORIUM
-#undef CONCERT_HALL
-#undef CAVE
-#undef ARENA
-#undef HANGAR
-#undef CARPETTED_HALLWAY
-#undef HALLWAY
-#undef STONE_CORRIDOR
-#undef ALLEY
-#undef FOREST
-#undef CITY
-#undef MOUNTAINS
-#undef QUARRY
-#undef PLAIN
-#undef PARKING_LOT
-#undef SEWER_PIPE
-#undef UNDERWATER
-#undef DRUGGED
-#undef DIZZY
-#undef PSYCHOTIC

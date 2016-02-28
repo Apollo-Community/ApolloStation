@@ -43,6 +43,18 @@
 		src << "<span class='alert'>The server's git repository is not set in the server configuration.</span>"
 	return
 
+/client/verb/slack()
+	set name = "slack"
+	set desc = "Join Apollo Station's Slack chat!"
+	set hidden = 1
+	if( config.slackinvurl )
+		if(alert("This will open the server's slack invite page in your browser. Are you sure?",,"Yes","No")=="No")
+			return
+		src << link(config.slackinvurl)
+	else
+		src << "<span class='alert'>This server's slack chat is not set in the server configuration.</span>"
+	return
+
 /client/verb/hotkeys_help()
 	set name = "hotkeys-help"
 	set category = "OOC"

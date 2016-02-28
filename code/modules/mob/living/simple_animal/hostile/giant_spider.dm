@@ -81,6 +81,7 @@
 				L.reagents.add_reagent(poison_type, 5)
 
 /mob/living/simple_animal/hostile/giant_spider/Life()
+	if(client) return
 	..()
 	if(!stat)
 		if(stance == HOSTILE_STANCE_IDLE)
@@ -104,6 +105,7 @@
 			stop_automated_movement = 0
 
 /mob/living/simple_animal/hostile/giant_spider/nurse/Life()
+	if(client) return
 	..()
 	if(!stat)
 		if(stance == HOSTILE_STANCE_IDLE)

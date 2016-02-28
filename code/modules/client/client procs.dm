@@ -55,8 +55,6 @@
 		cmd_admin_irc_pm(href_list["irc_msg"])
 		return
 
-
-
 	//Logs all hrefs
 	if(config && config.log_hrefs && href_logfile)
 		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
@@ -64,10 +62,23 @@
 	switch(href_list["_src_"])
 		if("holder")	hsrc = holder
 		if("usr")		hsrc = mob
-		if("prefs")		return prefs.process_link(usr,href_list)
 		if("vars")		return view_var_Topic(href,href_list,hsrc)
 
 	..()	//redirect to hsrc.Topic()
+
+/client/proc/loadTokens()
+	var/DBQuery/query
+
+	query = dbcon.NewQuery("SELECT character_tokens FROM player WHERE ckey = '[ckey( ckey )]'")
+	query.Execute()
+
+	if( !query.NextRow() )
+		return
+
+	character_tokens = params2list( query.item[1] )
+
+	for( var/type in character_tokens )
+		character_tokens[type] = text2num( character_tokens[type] )
 
 /client/proc/handle_spam_prevention(var/message, var/mute_type)
 	if(config.automute_on && !holder && src.last_message == message)
@@ -139,6 +150,7 @@
 	//Admin Authorisation
 	holder = admin_datums[ckey]
 	if(holder)
+		control_freak = 0
 		admins += src
 		holder.owner = src
 
@@ -147,6 +159,7 @@
 	if(!prefs)
 		prefs = new /datum/preferences(src)
 		preferences_datums[ckey] = prefs
+	prefs.client = src
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 
@@ -184,8 +197,9 @@
 		spawn(10) // Lets wait 1 second instead, 0.5 doesn't seem like enough
 			winset(src, null, "command=\".configure graphics-hwmode on\"")
 
-	donator = get_donator( src )
+	session_start_time = world.realtime
 
+	donator = get_donator( src )
 
 	if(!stat_player_list.Find(key))			//Don't add the same person twice? How does this even happen
 		var/obj/playerlist/O = new()
@@ -213,7 +227,8 @@
 		stat_player_list = sortAssoc(stat_player_list)
 
 	log_client_to_db()
-	
+	loadTokens()
+
 	if(!prefs.passed_date)
 		src << "<span class='admin_channel'>We have detected that your ckey is less than one month old. To help get you started we strongly recommend \
 		that you read this wiki page: <a></a>http://wiki.apollo-community.org/index.php?title=The_Basics</a>\nIn addition feel free to a member of staff \
@@ -230,6 +245,11 @@
 	//DISCONNECT//
 	//////////////
 /client/Del()
+	if( prefs )
+		prefs.savePreferences()
+	log_client_to_db( 1 )
+	saveTokens()
+
 	if(holder)
 		holder.owner = null
 		admins -= src
@@ -263,7 +283,22 @@
 		return -1
 
 
-/client/proc/log_client_to_db()
+/client/proc/saveTokens()
+	if( !character_tokens || !character_tokens.len )
+		return
+
+	var/tokens
+	if( !character_tokens || !character_tokens.len )
+		tokens = "null"
+	else
+		tokens = "'[list2params( character_tokens )]'"
+
+	var/sql_ckey = ckey( ckey )
+
+	var/DBQuery/query_insert = dbcon.NewQuery("UPDATE player SET character_tokens = [tokens] WHERE ckey = '[sql_ckey]'")
+	query_insert.Execute()
+
+/client/proc/log_client_to_db( var/log_playtime = 0 )
 
 	if ( IsGuestKey(src.key) )
 		return
@@ -297,6 +332,10 @@
 		related_accounts_cid += "[query_cid.item[1]], "
 		break
 
+	var/total_playtime = 0
+	if( log_playtime && sql_id )
+		total_playtime = total_playtime_seconds()
+
 	//Just the standard check to see if it's actually a number
 	if(sql_id)
 		if(istext(sql_id))
@@ -315,11 +354,21 @@
 
 	if(sql_id)
 		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
-		var/DBQuery/query_update = dbcon.NewQuery("UPDATE player SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]' WHERE id = [sql_id]")
+
+		var/DBQuery/query_update
+
+		if( total_playtime && log_playtime )
+			query_update = dbcon.NewQuery("UPDATE player SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]', playtime = '[total_playtime]' WHERE id = [sql_id]")
+		else
+			query_update = dbcon.NewQuery("UPDATE player SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]' WHERE id = [sql_id]")
 		query_update.Execute()
 	else
 		//New player!! Need to insert all the stuff
-		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]')")
+		var/DBQuery/query_insert
+		if( total_playtime && log_playtime )
+			query_insert = dbcon.NewQuery("INSERT INTO player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank, playtime) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]', '[total_playtime]')")
+		else
+			query_insert = dbcon.NewQuery("INSERT INTO player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]')")
 		query_insert.Execute()
 
 	//Logging player access
@@ -327,6 +376,31 @@
 	//var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
 	//query_accesslog.Execute()
 
+
+// Returns total recorded playtime in seconds
+/client/proc/total_playtime_seconds()
+	var/total_playtime = 0
+
+	var/sql_ckey = ckey(src.ckey)
+
+	var/DBQuery/query_playtime = dbcon.NewQuery("SELECT playtime FROM player WHERE ckey = '[sql_ckey]'")
+	query_playtime.Execute()
+
+	while(query_playtime.NextRow())
+		total_playtime = text2num( query_playtime.item[1] )
+		break
+
+	var/session_seconds = max( 0, round(( world.realtime-session_start_time )/DECISECONDS_IN_SECOND ))
+	var/afk_seconds = max( 0, round( total_afk_time/DECISECONDS_IN_SECOND ))
+
+	total_playtime = max( total_playtime, total_playtime+session_seconds )
+	total_playtime = total_playtime-min( afk_seconds, session_seconds )
+
+	return total_playtime
+
+/client/proc/total_playtime_hours()
+	var/playtime = round( total_playtime_seconds()/SECONDS_IN_HOUR )
+	return playtime
 
 /client/proc/client_exists_in_db()
 	if ( IsGuestKey(src.key) )

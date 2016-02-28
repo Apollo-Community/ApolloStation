@@ -179,7 +179,7 @@
 		if(jobban_isbanned(O, "Borer"))
 			continue
 		if(O.client)
-			if(O.client.prefs.be_special & BE_ALIEN)
+			if(O.client.prefs.beSpecial() & BE_ALIEN)
 				question(O.client)
 
 /mob/living/simple_animal/borer/proc/question(var/client/C)
@@ -191,7 +191,7 @@
 		if(response == "Yes")
 			transfer_personality(C)
 		else if (response == "Never for this round")
-			C.prefs.be_special ^= BE_ALIEN
+			C.prefs.selected_character.job_antag ^= BE_ALIEN
 
 /mob/living/simple_animal/borer/proc/transfer_personality(var/client/candidate)
 

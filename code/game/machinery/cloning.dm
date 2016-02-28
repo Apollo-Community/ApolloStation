@@ -135,14 +135,18 @@
 //Start growing a human clone in the pod!
 /obj/machinery/clonepod/proc/growclone(var/datum/dna2/record/R)
 	if(mess || attempting)
+		world << "messy or already attempting"
 		return 0
 	var/datum/mind/clonemind = locate(R.mind)
 	if(!istype(clonemind,/datum/mind))	//not a mind
+		world << "no clone mind"
 		return 0
 	if( clonemind.current && clonemind.current.stat != DEAD )	//mind is associated with a non-dead body
+		world << "body not dead"
 		return 0
-	if(clonemind.active)	//somebody is using that mind
+	if( clonemind.active )	//somebody is using that mind
 		if( ckey(clonemind.key)!=R.ckey )
+			world << "somebody using that mind"
 			return 0
 	else
 		for(var/mob/dead/observer/G in player_list)
@@ -150,6 +154,7 @@
 				if(G.can_reenter_corpse)
 					break
 				else
+					world << "cannot reenter corpse"
 					return 0
 
 
@@ -214,7 +219,7 @@
 
 	for(var/datum/language/L in R.languages)
 		H.add_language(L.name)
-	H.flavor_texts = R.flavor.Copy()
+	H.character.flavor_texts_human = R.flavor
 	H.suiciding = 0
 	src.attempting = 0
 	return 1

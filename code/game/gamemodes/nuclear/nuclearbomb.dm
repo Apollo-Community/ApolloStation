@@ -421,6 +421,10 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 
 				if(blackbox)
 					blackbox.save_all_data_to_sql()
+
+				if( config.canon )
+					canonHandleRoundEnd()
+
 				sleep(300)
 				log_game("Rebooting due to nuclear detonation")
 				world.Reboot()

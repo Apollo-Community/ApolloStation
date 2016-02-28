@@ -54,6 +54,8 @@
 */
 
 /datum/game_mode/cult/pre_setup()
+	config.canon = 0
+
 	if(!config.objectives_disabled)
 		if(prob(50))
 			objectives += "survive"

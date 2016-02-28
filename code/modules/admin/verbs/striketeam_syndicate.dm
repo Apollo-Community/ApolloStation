@@ -75,6 +75,7 @@ var/global/sent_syndicate_strike_team = 0
 				commandos -= new_syndicate_commando.key
 				new_syndicate_commando.internal = new_syndicate_commando.s_store
 				new_syndicate_commando.internals.icon_state = "internal1"
+				new_syndicate_commando.character.EditCharacterMenu( new_syndicate_commando )
 
 			//So they don't forget their code or mission.
 			if(nuke_code)
@@ -110,11 +111,11 @@ var/global/sent_syndicate_strike_team = 0
 
 	new_syndicate_commando.gender = pick(MALE, FEMALE)
 
-	var/datum/preferences/A = new()//Randomize appearance for the commando.
-	A.randomize_appearance_for(new_syndicate_commando)
+	var/datum/character/C = new()//Randomize appearance for the commando.
+	C.randomize_appearance_for(new_syndicate_commando)
 
 	new_syndicate_commando.real_name = "[!syndicate_leader_selected ? syndicate_commando_rank : syndicate_commando_leader_rank] [syndicate_commando_name]"
-	new_syndicate_commando.age = !syndicate_leader_selected ? rand(23,35) : rand(35,45)
+	new_syndicate_commando.character.age = !syndicate_leader_selected ? rand(23,35) : rand(35,45)
 
 	new_syndicate_commando.dna.ready_dna(new_syndicate_commando)//Creates DNA.
 

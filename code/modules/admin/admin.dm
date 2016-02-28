@@ -86,7 +86,6 @@ var/global/floorIsLava = 0
 		<a href='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</a>\] </b><br>
 		<b>Mob type</b> = [M.type]<br><br>
 		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
-		<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> |
 		<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> |
 		<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> |
 		<A href='?src=\ref[src];notes=show;mob=\ref[M]'>Notes</A>
@@ -744,6 +743,9 @@ var/global/floorIsLava = 0
 		if(blackbox)
 			blackbox.save_all_data_to_sql()
 
+		if( config.canon )
+			canonHandleRoundEnd()
+
 		sleep(50)
 		world.Reboot()
 
@@ -943,6 +945,9 @@ var/global/floorIsLava = 0
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
 
+	if( config.canon )
+		canonHandleRoundEnd()
+
 	world.Reboot()
 
 /datum/admins/proc/unprison(var/mob/M in mob_list)
@@ -1102,7 +1107,7 @@ var/global/floorIsLava = 0
 			S.laws.show_laws(usr)
 	if(!ai_number)
 		usr << "<b>No AIs located</b>" //Just so you know the thing is actually working and not just ignoring you.
-
+/*
 /datum/admins/proc/show_skills(var/mob/living/carbon/human/M as mob in world)
 	set category = "Admin"
 	set name = "Show Skills"
@@ -1116,6 +1121,7 @@ var/global/floorIsLava = 0
 	show_skill_window(usr, M)
 
 	return
+*/
 
 /client/proc/update_mob_sprite(mob/living/carbon/human/H as mob)
 	set category = "Admin"

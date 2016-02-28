@@ -90,7 +90,7 @@
 				playercount += 1
 			if (player.client && player.mind && player.mind.special_role && player.stat != 2)
 				traitorcount += 1
-			if (player.client && player.mind && !player.mind.special_role && player.stat != 2 && (player.client && player.client.prefs.be_special & BE_TRAITOR) && !jobban_isbanned(player, "Syndicate"))
+			if (player.client && player.mind && !player.mind.special_role && player.stat != 2 && (player.client && player.client.prefs.beSpecial() & BE_TRAITOR) && !jobban_isbanned(player, "Syndicate"))
 				possible_traitors += player
 		for(var/datum/mind/player in possible_traitors)
 			if(player.assigned_role in restricted_jobs)
@@ -152,7 +152,7 @@
 	if(emergency_shuttle.departed)
 		return
 	//message_admins("Late Join Check")
-	if((character.client && character.client.prefs.be_special & BE_TRAITOR) && !jobban_isbanned(character, "Syndicate"))
+	if((character.client && character.client.prefs.beSpecial() & BE_TRAITOR) && !jobban_isbanned(character, "Syndicate"))
 		if( character.mind ) // We dont want to select people who shouldn't be traitor
 			if( character.mind.assigned_role in restricted_jobs)
 				return
@@ -194,6 +194,9 @@
 				character << "<span class='alert'><B>You are the traitor.</B></span>"
 				character.mind.special_role = "traitor"
 				character << "<i>You have been selected this round as an antagonist</i>!"
+
+				character.character.temporary = 1 // Makes them non-canon
+
 				show_objectives(character.mind)
 
 			//else

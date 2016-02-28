@@ -1042,15 +1042,15 @@ obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 	if(base)
 		//Changing limb's skin tone to match owner
 		if(!H.species || H.species.flags & HAS_SKIN_TONE)
-			if (H.s_tone >= 0)
-				base.Blend(rgb(H.s_tone, H.s_tone, H.s_tone), ICON_ADD)
+			if (H.character.skin_tone >= 0)
+				base.Blend(rgb(H.character.skin_tone, H.character.skin_tone, H.character.skin_tone), ICON_ADD)
 			else
-				base.Blend(rgb(-H.s_tone,  -H.s_tone,  -H.s_tone), ICON_SUBTRACT)
+				base.Blend(rgb(-H.character.skin_tone,  -H.character.skin_tone,  -H.character.skin_tone), ICON_SUBTRACT)
 
 	if(base)
 		//Changing limb's skin color to match owner
 		if(!H.species || H.species.flags & HAS_SKIN_COLOR)
-			base.Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)
+			base.Blend(H.character.skin_color, ICON_ADD)
 
 	icon = base
 	set_dir(SOUTH)
@@ -1094,21 +1094,21 @@ obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
 		src.icon_state = H.gender == MALE? "head_m" : "head_f"
 	..()
 	//Add (facial) hair.
-	if(H.f_style)
-		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.f_style]
+	if(H.character.hair_face_style)
+		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.character.hair_face_style]
 		if(facial_hair_style)
 			var/icon/facial = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s")
 			if(facial_hair_style.do_colouration)
-				facial.Blend(rgb(H.r_facial, H.g_facial, H.b_facial), ICON_ADD)
+				facial.Blend(H.character.hair_face_color, ICON_ADD)
 
 			overlays.Add(facial) // icon.Blend(facial, ICON_OVERLAY)
 
-	if(H.h_style && !(H.head && (H.head.flags & BLOCKHEADHAIR)))
-		var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style]
+	if(H.character.hair_style && !(H.head && (H.head.flags & BLOCKHEADHAIR)))
+		var/datum/sprite_accessory/hair_style = hair_styles_list[H.character.hair_style]
 		if(hair_style)
 			var/icon/hair = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
 			if(hair_style.do_colouration)
-				hair.Blend(rgb(H.r_hair, H.g_hair, H.b_hair), ICON_ADD)
+				hair.Blend(H.character.hair_color, ICON_ADD)
 
 			overlays.Add(hair) //icon.Blend(hair, ICON_OVERLAY)
 

@@ -34,6 +34,8 @@ datum/mind
 	var/name				//replaces mob/var/original_name
 	var/mob/living/current
 	var/mob/living/original	//TODO: remove.not used in any meaningful way ~Carn. First I'll need to tweak the way silicon-mobs handle minds.
+	var/datum/character/character
+
 	var/active = 0
 
 	var/memory
@@ -66,7 +68,8 @@ datum/mind
 
 	proc/transfer_to(mob/living/new_character)
 		if(!istype(new_character))
-			world.log << "## DEBUG: transfer_to(): Some idiot has tried to transfer_to() a non mob/living mob. Please inform Carn"
+			world.log << "## DEBUG: transfer_to(): Some idiot has tried to transfer_to() a [new_character], which is not a /mob/living."
+			return
 		if(current)					//remove ourself from our old body's mind variable
 			if(changeling)
 				current.remove_changeling_powers()
@@ -79,6 +82,11 @@ datum/mind
 
 		current = new_character		//link ourself to our new body
 		new_character.mind = src	//and link our new body to ourself
+
+		if( !character )
+			if( istype( new_character, /mob/living/carbon/human ))
+				var/mob/living/carbon/human/H = new_character
+				character = H.character
 
 		if(changeling)
 			new_character.make_changeling()
@@ -932,6 +940,7 @@ datum/mind
 
 	proc/make_Traitor()
 		if(!(src in ticker.mode.traitors))
+			character.temporary = 1 // Makes them non-canon
 			ticker.mode.traitors += src
 			special_role = "traitor"
 			if (!config.objectives_disabled)
@@ -941,6 +950,7 @@ datum/mind
 
 	proc/make_Nuke()
 		if(!(src in ticker.mode.syndicates))
+			character.temporary = 1 // Makes them non-canon
 			ticker.mode.syndicates += src
 			ticker.mode.update_synd_icons_added(src)
 			if (ticker.mode.syndicates.len==1)
@@ -971,6 +981,7 @@ datum/mind
 
 	proc/make_Changling()
 		if(!(src in ticker.mode.changelings))
+			character.temporary = 1 // Makes them non-canon
 			ticker.mode.changelings += src
 			ticker.mode.grant_changeling_powers(current)
 			special_role = "Changeling"
@@ -980,6 +991,7 @@ datum/mind
 
 	proc/make_Cultist()
 		if(!(src in ticker.mode.cult))
+			character.temporary = 1 // Makes them non-canon
 			ticker.mode.cult += src
 			ticker.mode.update_cult_icons_added(src)
 			special_role = "Cultist"
@@ -1026,6 +1038,7 @@ datum/mind
 					rev_obj.explanation_text = "Assassinate [O.target.current.real_name], the [O.target.assigned_role]."
 					objectives += rev_obj
 				ticker.mode.greet_revolutionary(src,0)
+		character.temporary = 1 // Makes them non-canon
 		ticker.mode.head_revolutionaries += src
 		ticker.mode.update_rev_icons_added(src)
 		special_role = "Head Revolutionary"

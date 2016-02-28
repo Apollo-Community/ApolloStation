@@ -44,6 +44,7 @@
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/pre_setup()
+	config.canon = 0
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
