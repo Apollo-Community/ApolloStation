@@ -18,18 +18,6 @@ var/global/list/global_mutations = list() // list of hidden mutation things
 
 var/global/defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
 
-var/global/list/global_map = null
-	//list/global_map = list(list(1,5),list(4,3))//an array of map Z levels.
-	//Resulting sector map looks like
-	//|_1_|_4_|
-	//|_5_|_3_|
-	//
-	//1 - SS13
-	//4 - Derelict
-	//3 - AI satellite
-	//5 - empty space
-	//////////////
-
 //Noises made when hit while typing.
 var/list/hit_appends = list("-OOF", "-ACK", "-UGH", "-HRNK", "-HURGH", "-GLORF")
 

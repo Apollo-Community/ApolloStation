@@ -182,7 +182,7 @@ var/list/gamemode_cache = list()
 	var/list/alert_levels = list()	// Defines which Z-levels which, for example, a Code Red announcement may affect including such areas as Central Command and the Syndicate Shuttle
 	var/list/local_levels = list()	// Defines all Z-levels a character can typically reach
 	var/list/admin_levels = list()  // Defines which Z-levels which are for admin functionality, for example
-	var/list/can_random_teleport_levels = list()
+	var/list/can_random_teleport_levels = list() // Levels that you can possibly teleport to
 
 	// Event settings
 	var/expected_round_length = 3 * 60 * 60 * 10 // 3 hours

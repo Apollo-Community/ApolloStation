@@ -85,7 +85,9 @@ var/list/admin_verbs_admin = list(
 	/client/proc/event_manager_panel,
 	/client/proc/add_acc_item,
 	/client/proc/remove_acc_item,
-	/client/proc/TemplatePanel
+	/client/proc/TemplatePanel,
+	/client/proc/editappear,
+	/client/proc/modifyCharacterPromotions
 )
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -110,9 +112,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_add_random_ai_law,
 	/client/proc/make_sound,
-	/client/proc/toggle_random_events,
-	/client/proc/editappear,
-	/client/proc/modifyCharacterPromotions
+	/client/proc/toggle_random_events
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -140,7 +140,7 @@ var/list/admin_verbs_server = list(
 	/datum/admins/proc/toggle_space_ninja,
 	/client/proc/toggle_random_events,
 	/client/proc/check_customitem_activity,
-	/client/proc/nanomapgen_DumpImage,
+	/client/proc/nanomapgen_DumpImage
 	)
 var/list/admin_verbs_debug = list(
 	/client/proc/getruntimelog,                     /*allows us to access runtime logs to somebody*/
@@ -166,7 +166,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/callproc,
 	/client/proc/toggledebuglogs,
 	/client/proc/SDQL_query,
-	/client/proc/SDQL2_query,
+	/client/proc/SDQL2_query
 	)
 
 var/list/admin_verbs_paranoid_debug = list(
@@ -483,7 +483,7 @@ var/list/admin_verbs_mentor = list(
 	set category = "OOC"
 	set name = "OOC Text Color"
 
-	if((src.holder && (src.holder.rights & R_ADMIN)) || src.IsByondMember())
+	if( check_rights( R_ADMIN ))
 		var/new_OOC_color = input(src, "Please select your OOC colour.", "OOC colour") as color|null
 		if(new_OOC_color)
 			prefs.OOC_color = new_OOC_color
@@ -491,16 +491,13 @@ var/list/admin_verbs_mentor = list(
 		feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return
 	else
-		if (donator)
-			if (donator_tier(src) == 2)
-				var/new_OOC_color = input(src, "Please select your OOC colour.", "OOC colour") as color|null
-				if(new_OOC_color)
-					prefs.OOC_color = new_OOC_color
-					prefs.savePreferences()
-				feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-				return
-			else
-				src << "Only Tier 2 or higher donators can use this command."
+		if( donator_tier( src ) && donator_tier( src ) != DONATOR_TIER_1 )
+			var/new_OOC_color = input(src, "Please select your OOC colour.", "OOC colour") as color|null
+			if(new_OOC_color)
+				prefs.OOC_color = new_OOC_color
+				prefs.savePreferences()
+			feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			return
 		else
 			src << "Only tier 2 or higher donators and administrators can use this command."
 
@@ -722,9 +719,9 @@ var/list/admin_verbs_mentor = list(
 
 /client/proc/editappear(mob/living/carbon/human/M as mob in world)
 	set name = "Edit Records"
-	set category = "Fun"
+	set category = "Admin"
 
-	if(!check_rights(R_FUN))	return
+	if(!check_rights( R_MOD|R_ADMIN ))	return
 
 	if( !istype( M ))
 		usr << "<span class='alert'>You can only do this to humans!</span>"

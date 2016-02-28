@@ -101,10 +101,11 @@
 
 	. += "<table border='1' width='100%'>"
 
-	. += "<tr>"
-	. += "<td><b>OOC Color:</b></td>"
-	. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=OOC_color'>[OOC_color]</a></td>"
-	. += "</tr>"
+	if( client && (( donator_tier( src ) && donator_tier( src ) != DONATOR_TIER_1 ) || check_rights(  R_ADMIN|R_MOD )))
+		. += "<tr>"
+		. += "<td><b>OOC Color:</b></td>"
+		. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=OOC_color'>[OOC_color]</a></td>"
+		. += "</tr>"
 
 	. += "<tr>"
 	. += "<td><b>UI Style:</b></td>"
