@@ -1740,6 +1740,7 @@
 #include "code\modules\templates\dmm_parsing.dm"
 #include "code\modules\templates\helper.dm"
 #include "code\modules\templates\template.dm"
+#include "code\modules\templates\template_info.dm"
 #include "code\modules\templates\verbs.dm"
 #include "code\modules\vehicles\cargo_train.dm"
 #include "code\modules\vehicles\train.dm"
