@@ -225,6 +225,10 @@ datum/hud/New(mob/owner)
 					if(slot_r_store)
 						if(H.r_store) H.r_store.screen_loc = null
 
+/datum/hud/proc/create_parallax()
+	// SPESS BACKGROUND
+	mymob.space_parallax = new /obj/screen/space_parallax()
+	mymob.client.screen += mymob.space_parallax
 
 /datum/hud/proc/instantiate()
 	if(!ismob(mymob)) return 0
@@ -247,6 +251,8 @@ datum/hud/New(mob/owner)
 		robot_hud()
 	else if(isobserver(mymob))
 		ghost_hud()
+
+	create_parallax()
 
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
