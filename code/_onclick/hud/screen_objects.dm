@@ -535,3 +535,17 @@
 	layer = 1.5
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = 0
+
+/obj/screen/space_star
+	icon = 'icons/turf/stars.dmi'
+	icon_state = "star0"
+	name = "star"
+	screen_loc = UI_SPACE_PARALLAX
+	layer = 1.51
+	blend_mode = BLEND_ADD
+	mouse_opacity = 0
+
+/obj/screen/space_star/New()
+	var/star_type = pick( prob(100); 0, prob(10); 1, prob(1); 2 )
+	icon_state = "star[star_type]"
+	screen_loc = "[rand( 1, 15 )]:[rand( -16, 16 )],[rand( 1, 15 )]:[rand( -16, 16 )]"
