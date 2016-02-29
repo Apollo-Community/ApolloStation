@@ -11,7 +11,8 @@
 	mymob.blind.icon_state = "blackimageoverlay"
 	mymob.blind.name = " "
 	mymob.blind.screen_loc = "1,1"
-	mymob.blind.layer = 0
+	mymob.blind.plane = -1
+	mymob.blind.layer = 18
 
 /datum/hud/proc/ai_hud()
 	return
