@@ -49,7 +49,7 @@ var/list/global_huds = list(
 
 	parallax_bluespace_stars = list()
 	for( var/i = 0; i < star_count; i++ )
-		parallax_bluespace_stars += new /obj/screen/space_star()
+		parallax_bluespace_stars += new /obj/screen/space_star/bluespace()
 
 	//420erryday psychedellic colours screen overlay for when you are high
 	druggy = new /obj/screen()
@@ -241,10 +241,22 @@ datum/hud/New(mob/owner)
 	// SPESS BACKGROUND
 	mymob.parallax_master = new /obj/screen/parallax_master()
 	mymob.space_parallax = new /obj/screen/space_parallax()
+	mymob.space_parallax.overlays += global_hud.parallax_stars
 
 	mymob.client.screen += mymob.parallax_master
 	mymob.client.screen += mymob.space_parallax
-	mymob.client.screen += global_hud.parallax_stars
+	//mymob.client.screen += global_hud.parallax_stars
+
+// toggles between normal and bluespace
+/datum/hud/proc/toggle_parallax_space()
+	var/space_mode = mymob.space_parallax.icon_state == "space" ? 1 : 0
+	mymob.space_parallax.icon_state = "[space_mode ? "bluespace" : "space"]"
+	mymob.space_parallax.overlays.Cut()
+
+	if(space_mode)
+		mymob.space_parallax.overlays += global_hud.parallax_bluespace_stars
+	else
+		mymob.space_parallax.overlays += global_hud.parallax_stars
 
 /datum/hud/proc/instantiate()
 	if(!ismob(mymob)) return 0
