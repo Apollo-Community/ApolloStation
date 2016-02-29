@@ -309,6 +309,8 @@
 #include "code\game\area\apollo_area.dm"
 #include "code\game\area\area.dm"
 #include "code\game\area\areas.dm"
+#include "code\game\area\templates\ballshuttle.dm"
+#include "code\game\area\templates\cake_tradeship.dm"
 #include "code\game\area\templates\monarch.dm"
 #include "code\game\area\templates\reliefship.dm"
 #include "code\game\dna\dna2.dm"
