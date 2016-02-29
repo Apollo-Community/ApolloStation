@@ -525,3 +525,31 @@
 				usr.update_inv_r_hand(0)
 				usr.next_move = world.time+6
 	return 1
+
+/obj/screen/parallax_master
+	screen_loc = UI_SPACE_PARALLAX
+	plane = SPACE_PARALLAX_PLANE
+	layer = 1.5
+	blend_mode = BLEND_MULTIPLY
+	appearance_flags = PLANE_MASTER
+	mouse_opacity = 0
+
+/obj/screen/space_parallax
+	icon = 'icons/mob/screen1_full.dmi'
+	icon_state = "space"
+	name = "space"
+	screen_loc = UI_SPACE_PARALLAX
+	plane = SPACE_PARALLAX_PLANE
+	blend_mode = BLEND_ADD
+
+/obj/screen/space_star
+	icon = 'icons/turf/stars.dmi'
+	icon_state = "star0"
+	name = "star"
+	plane = SPACE_PARALLAX_PLANE
+	blend_mode = BLEND_ADD
+
+/obj/screen/space_star/New()
+	var/star_type = pick( prob(100); 0, prob(10); 1, prob(1); 2 )
+	icon_state = "star[star_type]"
+	screen_loc = "[rand( 1, 15 )]:[rand( -16, 16 )],[rand( 1, 15 )]:[rand( -16, 16 )]"
