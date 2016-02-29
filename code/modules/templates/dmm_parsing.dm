@@ -108,6 +108,8 @@
 
 			T.ChangeTurf(/turf/space)
 
+		qdel(area)
+
 		if(delete_src)
 			qdel(src)
 
