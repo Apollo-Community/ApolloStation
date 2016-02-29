@@ -27,8 +27,6 @@ var/list/global_huds = list(
 	var/obj/screen/thermal
 	var/obj/screen/meson
 	var/obj/screen/science
-	var/list/parallax_stars
-	var/list/parallax_bluespace_stars
 
 /datum/global_hud/proc/setup_overlay(var/icon_state)
 	var/obj/screen/screen = new /obj/screen()
@@ -41,16 +39,6 @@ var/list/global_huds = list(
 	return screen
 
 /datum/global_hud/New()
-	var/star_count = 1000
-
-	parallax_stars = list()
-	for( var/i = 0; i < star_count; i++ )
-		parallax_stars += new /obj/screen/space_star()
-
-	parallax_bluespace_stars = list()
-	for( var/i = 0; i < star_count; i++ )
-		parallax_bluespace_stars += new /obj/screen/space_star()
-
 	//420erryday psychedellic colours screen overlay for when you are high
 	druggy = new /obj/screen()
 	druggy.screen_loc = "WEST,SOUTH to EAST,NORTH"
@@ -242,7 +230,6 @@ datum/hud/New(mob/owner)
 	mymob.space_parallax = new /obj/screen/space_parallax()
 
 	mymob.client.screen += mymob.space_parallax
-	mymob.client.screen += global_hud.parallax_stars
 
 /datum/hud/proc/instantiate()
 	if(!ismob(mymob)) return 0
