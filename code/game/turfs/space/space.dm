@@ -10,9 +10,12 @@
 //	heat_capacity = 700000 No.
 
 /turf/space/New()
+	/*
 	if(!istype(src, /turf/space/transit) && !istype(src, /turf/space/bluespace))
 		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
-
+*/
+	icon_state = ""
+	layer = AREA_LAYER
 	update_starlight()
 
 /turf/space/proc/update_starlight()

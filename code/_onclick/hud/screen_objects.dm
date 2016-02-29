@@ -526,3 +526,12 @@
 				usr.update_inv_r_hand(0)
 				usr.next_move = world.time+6
 	return 1
+
+/obj/screen/space_parallax
+	icon = 'icons/mob/screen1_full.dmi'
+	icon_state = "space"
+	name = "space"
+	screen_loc = UI_SPACE_PARALLAX
+	layer = 1.5
+	blend_mode = BLEND_MULTIPLY
+	mouse_opacity = 0
