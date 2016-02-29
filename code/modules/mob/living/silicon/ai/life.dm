@@ -82,12 +82,12 @@
 			if (src:aiRestorePowerRoutine==2)
 				src << "Alert cancelled. Power has been restored without our assistance."
 				src:aiRestorePowerRoutine = 0
-				src.blind.plane = -1
+				src.blind.plane = -100
 				return
 			else if (src:aiRestorePowerRoutine==3)
 				src << "Alert cancelled. Power has been restored."
 				src:aiRestorePowerRoutine = 0
-				src.blind.plane = -1
+				src.blind.plane = -100
 				return
 		else
 
@@ -119,7 +119,7 @@
 							if (!istype(T, /turf/space))
 								src << "Alert cancelled. Power has been restored without our assistance."
 								src:aiRestorePowerRoutine = 0
-								src.blind.plane = -1
+								src.blind.plane = -100
 								return
 						src << "Fault confirmed: missing external power. Shutting down main control system to save power."
 						sleep(20)
@@ -156,7 +156,7 @@
 								if (!istype(T, /turf/space))
 									src << "Alert cancelled. Power has been restored without our assistance."
 									src:aiRestorePowerRoutine = 0
-									src.blind.plane = -1 //This, too, is a fix to issue 603
+									src.blind.plane = -100 //This, too, is a fix to issue 603
 									return
 							switch(PRP)
 								if (1) src << "APC located. Optimizing route to APC to avoid needless power waste."

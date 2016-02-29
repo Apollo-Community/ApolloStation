@@ -156,7 +156,7 @@
 		if ((blinded))
 			blind.plane = 0
 		else
-			blind.plane = -1
+			blind.plane = -100
 			if (disabilities & NEARSIGHTED)
 				client.screen += global_hud.vimpaired
 			if (eye_blurry)

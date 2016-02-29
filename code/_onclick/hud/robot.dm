@@ -137,7 +137,7 @@ var/obj/screen/robot_inventory
 	mymob.blind.icon_state = "blackimageoverlay"
 	mymob.blind.name = " "
 	mymob.blind.screen_loc = "1,1"
-	mymob.blind.plane = -1
+	mymob.blind.plane = -100
 	mymob.blind.layer = 18
 
 	mymob.fade = new

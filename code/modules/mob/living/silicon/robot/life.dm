@@ -273,7 +273,7 @@
 		if(src.blinded)
 			src.blind.plane = 0
 		else
-			src.blind.plane = -1
+			src.blind.plane = -100
 			if (src.disabilities & NEARSIGHTED)
 				src.client.screen += global_hud.vimpaired
 

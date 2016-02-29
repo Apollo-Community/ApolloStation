@@ -186,7 +186,7 @@
 				if ((src.blinded))
 					src.blind.plane = 0
 				else
-					src.blind.plane = -1
+					src.blind.plane = -100
 
 					if (src.disabilities & 1)
 						src.client.screen += src.hud_used.vimpaired
