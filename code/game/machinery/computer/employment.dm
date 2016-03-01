@@ -46,6 +46,7 @@
 		O.loc = src
 		scan = O
 		user << "You insert [O]."
+		screen = 1
 	..()
 
 /obj/machinery/computer/employment/attack_ai(mob/user as mob)
@@ -109,8 +110,6 @@
 </table>"}
 				return .
 
-
-
 			if( !query )
 				. += {"<table class='outline'>
 <tr>
@@ -123,7 +122,7 @@
 			if( !is_complete )
 				query_input = "LIKE '%[query]%'"
 
-			var/DBQuery/db_query = dbcon.NewQuery("SELECT name, gender, birth_date, blood_type, fingerprints, DNA, unique_identifier FROM characters WHERE [query_type] [query_input] LIMIT [return_limit]")
+			var/DBQuery/db_query = dbcon.NewQuery("SELECT name, gender, birth_date, blood_type, fingerprints, unique_identifier FROM characters WHERE [query_type] [query_input] LIMIT [return_limit]")
 
 			if( !db_query.Execute() )
 				. += {"<table class='outline'>
@@ -145,7 +144,6 @@
 <th>Birth Date</th>
 <th>Blood Type</th>
 <th>Fingerprints</th>
-<th>DNA</th>
 <th>Paperwork</th>
 </tr>"}
 			while( db_query.NextRow() )
@@ -155,8 +153,7 @@
 				. += "<td>[db_query.item[3]]</td>"
 				. += "<td>[db_query.item[4]]</td>"
 				. += "<td>[db_query.item[5]]</td>"
-				. += "<td>[db_query.item[6]]</td>"
-				. += "<td><a href='?src=\ref[src];choice=Load Paperwork;hash=[db_query.item[7]]'>View</a></td>"
+				. += "<td><a href='?src=\ref[src];choice=Load Paperwork;hash=[db_query.item[6]]'>View</a></td>"
 				. += "</tr>"
 
 			. += "</table>"
@@ -173,7 +170,7 @@
 				. += "<A href='?src=\ref[src];choice=Return'>Back</A>"
 				return .
 
-			var/DBQuery/db_query = dbcon.NewQuery("SELECT id, date_time, title FROM paperwork_records WHERE recipient_md5 = [query]")
+			var/DBQuery/db_query = dbcon.NewQuery("SELECT date_time, title, id FROM paperwork_records WHERE recipient_md5 = '[query]'")
 
 			if( !db_query.Execute() )
 				. += {"<table class='outline'>
@@ -202,11 +199,12 @@
 				. += "<tr>"
 				. += "<td>[db_query.item[1]]</td>"
 				. += "<td>[db_query.item[2]]</td>"
-				. += "<td></td>"
-				. += "<td><a href='?src=\ref[src];choice=View Paperwork;id=[db_query.item[3]]'>View</a></td>"
+				. += "<td><center><a href='?src=\ref[src];choice=View Paperwork;id=[db_query.item[3]]'>View</a></center></td>"
 				. += "</tr>"
 
-			. += "<A href='?src=\ref[src];choice=Return'>Back</A>"
+			. += "</table>"
+
+			. += "<hr><A href='?src=\ref[src];choice=Return'>Back</A>"
 
 	return .
 
@@ -357,7 +355,7 @@ What a mess.*/
 				query_type = "unique_identifier"
 
 			if( "View Paperwork" )
-				var/sql_id = text2num( href_list["hash"] )
+				var/sql_id = text2num( href_list["id"] )
 				var/DBQuery/db_query
 
 				db_query = dbcon.NewQuery("SELECT title, info FROM paperwork_records WHERE id = [sql_id]")
@@ -374,6 +372,7 @@ What a mess.*/
 				return
 
 			if("Confirm Identity")
+				screen = 1
 				if (scan)
 					if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
 						usr.put_in_hands(scan)
@@ -580,25 +579,21 @@ What a mess.*/
 /obj/machinery/computer/employment/proc/authenticate( var/mob/user = usr )
 	src.authenticated = null
 	rank = null
-	screen = 1
 
 	if (istype(usr, /mob/living/silicon/ai))
 		src.active1 = null
 		src.authenticated = user.name
 		src.rank = "AI"
-		src.screen = 1
 	else if (istype(user, /mob/living/silicon/robot))
 		src.active1 = null
 		src.authenticated = user.name
 		var/mob/living/silicon/robot/R = user
 		src.rank = R.braintype
-		src.screen = 1
 	else if (istype(scan, /obj/item/weapon/card/id))
 		active1 = null
 		if(check_access(scan))
 			authenticated = scan.registered_name
 			rank = scan.assignment
-			screen = 1
 
 /obj/machinery/computer/employment/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
