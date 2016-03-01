@@ -43,6 +43,8 @@ datum/controller/game_controller/proc/setup()
 	setupgenetics()
 	SetupXenoarch()
 
+	template_controller.PlaceTemplates()
+
 	// Pick a new race to unwhitelist for today's week
 	var/deciseconds_in_week = DECISECONDS_IN_SECOND*SECONDS_IN_WEEK
 	var/selected_race = ((world.realtime/deciseconds_in_week) % whitelisted_species.len)

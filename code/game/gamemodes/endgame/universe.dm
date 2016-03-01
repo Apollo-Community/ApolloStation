@@ -70,7 +70,7 @@
 
 /datum/universal_state/proc/saveToDB()
 	var/sql_name = sql_sanitize_text( name )
-	var/sql_date = list2params( date )
+	var/sql_date = html_encode( list2params( date ))
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM universe WHERE name = '[sql_name]'")
 	query.Execute()
@@ -114,7 +114,7 @@
 		world << "Could not load from database!"
 		return
 
-	var/list/date_text = params2list(query.item[1])
+	var/list/date_text = params2list( html_decode( query.item[1] ))
 	if( date_text && date_text.len >= 3 )
 		date = list( text2num( date_text[1] ), text2num( date_text[2] ), text2num( date_text[3] ))
 

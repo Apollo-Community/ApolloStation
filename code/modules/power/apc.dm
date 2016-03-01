@@ -191,6 +191,8 @@
 /obj/machinery/power/apc/proc/make_terminal()
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
+	if(terminal)
+		qdel(terminal)
 	terminal = new/obj/machinery/power/terminal(src.loc)
 	terminal.set_dir(tdir)
 	terminal.master = src
@@ -671,12 +673,10 @@
 				H << "<span class='alert'>The APC power currents surge eratically, damaging your chassis!</span>"
 				H.adjustFireLoss(10,0)
 				return
-				
-			var/datum/species/machine/S = H.species
 
-			if(S.attached_apc && S.attached_apc == src)
+			if(H.attached_apc && H.attached_apc == src)
 				H << "<span class='notice'>You remove your fingers from the APC.</span>"
-				S.attached_apc = null
+				H.attached_apc = null
 				charging = 1
 				update_icon()
 				return
@@ -687,14 +687,14 @@
 					H << "<span class='notice'>You're already fully charged!</span>"
 					return
 				H << "<span class='notice'>You slot your fingers in the APC and begin draining power from it.</span>"
-				S.attached_apc = src
+				H.attached_apc = src
 				return
 			else if(H.a_intent == I_DISARM)
 				if(cell.charge >= cell.maxcharge)
 					H << "<span class='notice'>The APC is already fully charged!</span>"
 					return
 				H << "<span class='notice'>You slot your fingers in the APC and begin transferring power to it.</span>"
-				S.attached_apc = src
+				H.attached_apc = src
 				return
 		else if(H.species.can_shred(H))
 			user.visible_message("<span class='alert'>[user.name] slashes at the [src.name]!</span>", "<span class='notice'>You slash at the [src.name]!</span>")

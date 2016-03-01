@@ -70,6 +70,9 @@
 	heat_capacity = 325000
 	intact = 0
 
+/turf/simulated/floor/engine/make_plating()
+	return
+
 /turf/simulated/floor/engine/nitrogen
 	oxygen = 0
 
@@ -140,17 +143,18 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = ""
 	name = "space"
+	plane = SPACE_PARALLAX_PLANE - 1
 
 	temperature = T20C-270
 
 	New()
 		..()
-		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
+		//icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
 		name = "space"
 
 	ex_act(severtiy)
 		if(1.0)
-			qdel()
+			src.ChangeTurf(/turf/space)
 		return
 
 /turf/simulated/floor/bluegrid
@@ -177,9 +181,45 @@
 	density = 1
 	blocks_air = 1
 
+/turf/simulated/shuttle/wall/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			src.ChangeTurf(/turf/space)
+			statistics.increase_stat("damage_cost", rand( 4000, 5000 ))
+			return
+		if(2.0)
+			src.ChangeTurf(/turf/simulated/shuttle/plating)
+			if(prob(33)) new /obj/item/stack/sheet/metal(src)
+		else
+	return
+
 /turf/simulated/shuttle/floor
 	name = "floor"
 	icon_state = "floor"
+
+/turf/simulated/shuttle/floor/ex_act(severity)
+	//set src in oview(1)
+	switch(severity)
+		if(1.0)
+			src.ChangeTurf(/turf/space)
+			statistics.increase_stat("damage_cost", rand( 1900, 2100 ))
+		if(2.0)
+			switch(pick(1,2;75,3))
+				if (1)
+					src.ReplaceWithLattice()
+					if(prob(33)) new /obj/item/stack/sheet/metal(src)
+					statistics.increase_stat("damage_cost", rand( 1900, 2000 ))
+				if(2)
+					src.ChangeTurf(/turf/space)
+					statistics.increase_stat("damage_cost", rand( 1900, 2100 ))
+				if(3)
+					src.ChangeTurf(/turf/simulated/shuttle/plating)
+					src.hotspot_expose(1000,CELL_VOLUME)
+					if(prob(33)) new /obj/item/stack/sheet/metal(src)
+		if(3.0)
+			if (prob(50))
+				src.hotspot_expose(1000,CELL_VOLUME)
+	return
 
 /turf/simulated/shuttle/plating
 	name = "plating"
@@ -231,10 +271,18 @@
 		spawn(4)
 			if(src)
 				update_icon()
-				for(var/direction in cardinal)
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						FF.update_icon() //so siding get updated properly
+				update_neighbors()
+
+/turf/simulated/floor/grass/proc/update_neighbors()
+	for(var/direction in cardinal)
+		if(istype(get_step(src,direction),/turf/simulated/floor))
+			var/turf/simulated/floor/FF = get_step(src,direction)
+			FF.update_icon() //so siding get updated properly
+
+/turf/simulated/floor/grass/make_plating()
+	update_neighbors()
+
+	..()
 
 /turf/simulated/floor/carpet
 	name = "Carpet"
@@ -245,14 +293,20 @@
 		if(!icon_state)
 			icon_state = "carpet"
 		..()
-		spawn(4)
-			if(src)
-				update_icon()
-				for(var/direction in list(1,2,4,8,5,6,9,10))
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						FF.update_icon() //so siding get updated properly
+		update_neighbors()
 
+/turf/simulated/floor/carpet/proc/update_neighbors()
+	spawn(5)
+		if(src)
+			for(var/direction in list(1,2,4,8,5,6,9,10))
+				if(istype(get_step(src,direction),/turf/simulated/floor))
+					var/turf/simulated/floor/FF = get_step(src,direction)
+					FF.update_icon() //so siding get updated properly
+
+/turf/simulated/floor/carpet/make_plating()
+	update_neighbors()
+
+	..()
 
 
 /turf/simulated/floor/plating/ironsand/New()

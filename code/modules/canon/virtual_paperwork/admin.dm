@@ -2,7 +2,7 @@
 	set name = "Promote / Demote"
 	set category = "Fun"
 
-	if( !check_rights( R_FUN ))
+	if(!check_rights( R_MOD|R_ADMIN ))
 		return
 
 	var/mob/user = usr
