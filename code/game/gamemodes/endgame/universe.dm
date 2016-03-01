@@ -51,6 +51,12 @@
 
 	return timestamp
 
+/datum/universal_state/proc/getYear()
+	if( !date || date.len < 3 )
+		return 2560
+
+	return date[1]
+
 /datum/universal_state/proc/handleDateProgression()
 	var/days = date[3]
 	var/month = date[2]
