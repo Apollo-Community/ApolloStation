@@ -329,8 +329,9 @@ var/list/mob/living/forced_ambiance_list = new
 		else if(src.music && prob(35))
 			if((world.time >= L.client.played + 600))
 				var/musVolume = 25
-				L << sound( pick(music), repeat = 0, wait = 0, volume = musVolume, channel = 1)
-				L.client.played = world.time
+				if( music && music.len )
+					L << sound( pick(music), repeat = 0, wait = 0, volume = musVolume, channel = 1)
+					L.client.played = world.time
 
 /area/proc/gravitychange(var/gravitystate = 0, var/area/A)
 

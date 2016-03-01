@@ -95,6 +95,25 @@
 
 	return 1
 
+/proc/convert_whitelist_to_tokens( var/ckey )
+	var/DBQuery/query
+
+	if( ckey )
+		query = dbcon.NewQuery("SELECT ckey, whitelist_flags FROM player WHERE ckey = '[ckey( ckey )]'")
+	else
+		query = dbcon.NewQuery("SELECT ckey, whitelist_flags FROM player")
+	query.Execute()
+
+	while( query.NextRow() )
+		ckey = ckey( query.item[1] )
+		var/whitelist = text2num( query.item[2] )
+
+		if( whitelist )
+			var/tokens = list2params( list( "Command" = 3 ))
+
+			var/DBQuery/query_insert = dbcon.NewQuery("UPDATE player SET character_tokens = '[tokens]' WHERE ckey = '[ckey]'")
+			query_insert.Execute()
+
 /proc/get_alien_flag( var/species )
 	var/list/aliens = list( "diona" = A_WHITELSIT_DIONA,
 							"skrell" = A_WHITELSIT_SKRELL,
@@ -140,17 +159,17 @@
 	return a_whitelist
 
 /proc/is_alien_whitelisted(mob/M, var/species)
-	if( !M )
-		return 0
-
 	if(!config.usealienwhitelist)
 		return 1
 
-	if( species == "human" || species == "Human")
+	if( lowertext( species ) == "human" )
 		return 1
 
-	if( species in unwhitelisted_aliens )
+	if( !( species in whitelisted_species ))
 		return 1
+
+	if( !M )
+		return 0
 
 	var/a_whitelist = 0
 	if( M.client )

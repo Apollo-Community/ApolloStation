@@ -19,6 +19,8 @@
 /datum/game_mode/broodswarm/announce()
 
 /datum/game_mode/broodswarm/pre_setup()
+	config.canon = 0
+
 	spawn(0)
 		station_erosion( 60 )
 

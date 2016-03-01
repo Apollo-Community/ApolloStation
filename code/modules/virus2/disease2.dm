@@ -185,13 +185,18 @@ var/global/list/virusDB = list()
 		.= V.fields["name"]
 
 /datum/disease2/disease/proc/get_info()
+
+	var/list/displayed_species = list()
+	for( var/i = 1, i < affected_species.len, i++ )
+		if( !findtext(affected_species[i], "Xenomorph" ) ) displayed_species += affected_species[i]
+
 	var/r = {"
 	<small>Analysis determined the existence of a GNAv2-based viral lifeform.</small><br>
 	<u>Designation:</u> [name()]<br>
 	<u>Antigen:</u> [antigens2string(antigen)]<br>
 	<u>Transmitted By:</u> [spreadtype]<br>
 	<u>Rate of Progression:</u> [stageprob * 10]<br>
-	<u>Species Affected:</u> [list2text(affected_species, ", ")]<br>
+	<u>Species Affected:</u> [list2text(displayed_species, ", ")]<br>
 "}
 
 	r += "<u>Symptoms:</u><br>"

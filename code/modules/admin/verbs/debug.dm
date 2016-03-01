@@ -363,6 +363,19 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.", "DEBUG:" )
 	feedback_add_details("admin_verb","MPWN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_debug_make_area_powernets()
+	set category = "Debug"
+	set name = "Make Area Powernets"
+	
+	var/area/A = get_area(mob)
+	if(!A)
+		return
+
+	makeareapowernets(A)
+	log_admin("[key_name(src)] has remade the powernet in [A.name]. makeareapowernets() called.")
+	message_admins("[key_name_admin(src)] has remade the powernets in [A.name]. makeareapowernets() called.", "DEBUG:" )
+	feedback_add_details("admin_verb","MAPWN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/cmd_debug_tog_aliens()
 	set category = "Server"
 	set name = "Toggle Aliens"

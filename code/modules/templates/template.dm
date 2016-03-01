@@ -9,10 +9,6 @@ var/datum/template_controller/template_controller
 		world << "<span class='alert'><b>Placing random structures...</b></span>"
 
 		parser = new()
-		PlaceTemplates()
-
-		spawn(0)
-			makepowernets()
 
 	proc/PlaceTemplateAt(var/turf/location, var/path, var/name)
 		set background = 1

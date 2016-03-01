@@ -80,7 +80,7 @@ datum/game_mode/mutiny
 	proc/get_head_mutineer_candidates()
 		var/list/candidates[0]
 		for(var/mob/mutineer in player_list)
-			if(mutineer.client.prefs.be_special & BE_MUTINEER)
+			if(mutineer.client.prefs.beSpecial() & BE_MUTINEER)
 				for(var/job in command_positions - "Captain")
 					if(mutineer.mind && mutineer.mind.assigned_role == job)
 						candidates.Add(mutineer.mind)
@@ -265,6 +265,8 @@ datum/game_mode/mutiny
 	fluff.announce()
 
 /datum/game_mode/mutiny/pre_setup()
+	config.canon = 0
+
 	var/list/loyalist_candidates = get_head_loyalist_candidates()
 	if(!loyalist_candidates || loyalist_candidates.len == 0)
 		world << "<span class='alert'>Mutiny mode aborted: no valid candidates for head loyalist.</span>"

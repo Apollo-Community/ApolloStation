@@ -174,8 +174,13 @@ datum/controller/vote
 			spawn(0)
 				world << "World restarting due to vote..."
 				feedback_set_details("end_error","restart vote")
-				if(blackbox)	blackbox.save_all_data_to_sql()
-				sleep(50)
+				if(blackbox)
+					blackbox.save_all_data_to_sql()
+
+				if( config.canon )
+					canonHandleRoundEnd()
+
+				sleep(100)
 				log_game("Rebooting due to restart vote")
 				world.Reboot()
 

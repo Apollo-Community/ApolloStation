@@ -62,10 +62,17 @@
 	// Getting the amount of time that the object will spend in bluespace
 	var/transit_time = rand( 60, 120 )
 
-	if( exit ) // Getting the destination
+	if( istype( exit )) // Getting the destination
 		destination = locate( exit.x-x_off, exit.y-y_off, exit.z ) // Getting the destination relative to where the object left
 	else // If we don't have a destination, toss them somewhere random
-		destination = locate( source.x+pick( rand( -10, source.x-2 ), rand( source.x+2, 10 )), source.y+pick( rand( -10, source.y-2 ), rand( source.y+2, 10 )), source.z )
+		var/exit_x = rand( source.x-20, source.x+20 )
+		var/exit_y = rand( source.y-20, source.y+20 )
+		var/exit_z = pick( config.can_random_teleport_levels )
+
+		destination = locate( exit_x, exit_y, exit_z )
+
+	if( !destination )
+		return
 
 /*
 	animate(A, transform = matrix()*(-2), transform = turn(matrix(), 360), time = 2)
@@ -75,7 +82,7 @@
 
 	var/atom/movable/AM = A
 
-	AM.Move( bluespace )
+	AM.forceMove( bluespace )
 
 	// change parallax background to bluespace
 	var/mob/M
@@ -98,5 +105,5 @@
 			M = locate() in AM
 		if(M && M.hud_used)	M.hud_used.toggle_parallax_space()
 
-		AM.Move( destination )
+		AM.forceMove( destination )
 		playsound(AM.loc, 'sound/effects/pop1.ogg', 80, 1)

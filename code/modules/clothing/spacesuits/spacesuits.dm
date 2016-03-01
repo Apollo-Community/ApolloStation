@@ -92,3 +92,5 @@
 		E.status &= ~ ORGAN_SPLINTED
 		user << "The suit stops supporting your [E.display_name]."
 	supporting_limbs = list()
+
+

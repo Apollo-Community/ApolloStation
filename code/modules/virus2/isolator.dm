@@ -167,8 +167,10 @@
 		update_icon()
 		return 1
 
-/obj/machinery/disease2/isolator/proc/print(var/mob/user)
+/obj/machinery/disease2/isolator/print(var/mob/user)
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(loc)
+	playsound(src.loc, 'sound/machines/print.ogg', 50, 1)
+	state("The nearby computer prints out a report.")
 
 	switch (state)
 		if (HOME)
@@ -230,4 +232,5 @@
 				<u>Additional Notes:</u>&nbsp;
 "}
 
-	state("The nearby computer prints out a report.")
+	spawn(40)
+		P.loc = src.loc

@@ -56,10 +56,11 @@
 		src.throwing = 0
 
 	spawn(0)
-		if ((A && yes))
-			A.last_bumped = world.time
+		if(( A && yes ))
 			A.Bumped(src)
+			A.last_bumped = world.time
 		return
+
 	..()
 	return
 
@@ -137,8 +138,6 @@
 	var/area/a = get_area(src.loc)
 	if(dist_x > dist_y)
 		var/error = dist_x/2 - dist_y
-
-
 
 		while(src && target &&((((src.x < target.x && dx == EAST) || (src.x > target.x && dx == WEST)) && dist_travelled < range) || (a && a.has_gravity == 0)  || istype(src.loc, /turf/space)) && src.throwing && istype(src.loc, /turf))
 			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up

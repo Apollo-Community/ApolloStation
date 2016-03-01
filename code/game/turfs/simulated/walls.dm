@@ -49,11 +49,10 @@
 	update_icon()
 
 /turf/simulated/wall/Destroy()
-	for(var/obj/effect/E in src) if(E.name == "Wallrot") qdel( E )
-	qdel( paint )
-	paint = null
 	processing_turfs -= src
-	dismantle_wall(null,null,1)
+	for(var/obj/O in src.contents)
+		qdel(O) // no mercy
+	ChangeTurf(/turf/simulated/floor/plating)
 	..()
 
 /turf/simulated/wall/ChangeTurf(var/newtype)
@@ -85,7 +84,7 @@
 	if(rotting)
 		user << "<span class='warning'>There is fungus growing on [src].</span>"
 
-/turf/simulated/wall/proc/update_icon()
+/turf/simulated/wall/update_icon()
 	if(!damage_overlays[1]) //list hasn't been populated
 		generate_overlays()
 

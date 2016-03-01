@@ -422,4 +422,6 @@
 
 /turf/proc/lighting_lumcount( var/cap = 10 )
 	var/atom/movable/lighting_overlay/L = locate(/atom/movable/lighting_overlay) in src
-	return min( cap, L.lum_r + L.lum_g + L.lum_b )
+	if( L )
+		return min( cap, L.lum_r + L.lum_g + L.lum_b )
+	return cap

@@ -247,6 +247,29 @@
 			propagate_network(PC,PC.powernet)
 	return 1
 
+// rebuilds all power networks that exist in an area
+/proc/makeareapowernets(var/area/A)
+	var/list/datum/powernet/area_powernets = list()
+	var/list/obj/structure/cable/cables = list()
+
+	for(var/obj/structure/cable/PC in A.contents)
+		if(istype(PC))
+			if(PC.powernet)
+				if(!area_powernets.Find(PC.powernet))
+					area_powernets.Add(PC.powernet)
+			cables.Add(PC)
+
+	for(var/datum/powernet/PN in area_powernets)
+		qdel(PN)
+	area_powernets.Cut()
+
+	for(var/obj/structure/cable/PC in cables)
+		if(!PC.powernet)
+			var/datum/powernet/NewPN = new()
+			NewPN.add_cable(PC)
+			propagate_network(PC,PC.powernet)
+	return 1
+
 //remove the old powernet and replace it with a new one throughout the network.
 /proc/propagate_network(var/obj/O, var/datum/powernet/PN)
 	//world.log << "propagating new network"
@@ -316,7 +339,10 @@
 	var/area/source_area
 	if(istype(power_source,/area))
 		source_area = power_source
-		power_source = source_area.get_apc()[1]
+
+		var/list/apcs = source_area.get_apc()
+		if( apcs && apcs.len )
+			power_source = apcs[1]
 	if(istype(power_source,/obj/structure/cable))
 		var/obj/structure/cable/Cable = power_source
 		power_source = Cable.powernet
@@ -336,7 +362,7 @@
 	else if (!power_source)
 		return 0
 	else
-		log_admin("ERROR: /proc/electrocute_mob([M], [power_source], [source]): wrong power_source")
+		log_admin("ERROR: /proc/electrocute_mob([M], [power_source], [source]): bad power_source")
 		return 0
 	//Triggers powernet warning, but only for 5 ticks (if applicable)
 	//If following checks determine user is protected we won't alarm for long.

@@ -131,3 +131,7 @@
 
 	prob_slip = round(prob_slip)
 	return(prob_slip)
+
+/mob/living/carbon/human/proc/bounce()
+	src.set_dir(reverse_dir[src.dir])
+	playsound( get_turf( src ), 'sound/effects/bounce.ogg', 100, 1 )

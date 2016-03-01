@@ -12,7 +12,14 @@
 	return
 
 /obj/structure/bed/chair/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
+	if( istype(W, /obj/item/weapon/wrench/) )
+		var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(src.loc)
+		if(istype(src, /obj/structure/bed/chair/office/)) M.amount = 5
+		else if(istype(src, /obj/structure/bed/chair/comfy/)) M.amount = 2
+		else M.amount = 1
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		qdel(src)
+		return
 	if(istype(W, /obj/item/assembly/shock_kit))
 		var/obj/item/assembly/shock_kit/SK = W
 		if(!SK.status)
@@ -26,6 +33,7 @@
 		SK.loc = E
 		SK.master = E
 		qdel(src)
+	..()
 
 /obj/structure/bed/chair/attack_tk(mob/user as mob)
 	if(buckled_mob)

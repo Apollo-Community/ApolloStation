@@ -130,7 +130,7 @@
 				user << "<span class='notice'>You hear a loud crunch as you mercilessly off cut [C]'s antennae.</span>"
 				C << "<span class='alert'><B>You hear a loud crunch as the wirecutters rip through your antennae.</B></span>"
 				C << "<span class='alert'><B>Its so quiet...</B></span>"
-				C.h_style = "Bald"
+				C.character.hair_style = "Bald"
 				C.update_hair()
 		else
 			if(istype(C.handcuffed, /obj/item/weapon/handcuffs/cable))

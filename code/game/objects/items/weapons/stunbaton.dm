@@ -45,10 +45,13 @@
 /obj/item/weapon/melee/baton/update_icon()
 	if(status)
 		icon_state = "[initial(name)]_active"
+		item_state = "[initial(item_state)]_active"
 	else if(!bcell || bcell.charge < hitcost)
 		icon_state = "[initial(name)]_nocell"
+		item_state = "[initial(item_state)]"
 	else
 		icon_state = "[initial(name)]"
+		item_state = "[initial(item_state)]"
 
 /obj/item/weapon/melee/baton/examine(mob/user)
 	if(!..(user, 1))
