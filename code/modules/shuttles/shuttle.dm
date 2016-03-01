@@ -116,7 +116,7 @@
 	origin.move_contents_to(destination, direction=direction)
 
 	for(var/mob/M in destination)
-		if(M.hud_used)	M.hud_used.toggle_parallax_space()
+		destination.Entered(M)
 		if(M.client)
 			spawn(0)
 				if(M.buckled)

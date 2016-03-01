@@ -83,27 +83,14 @@
 	var/atom/movable/AM = A
 
 	AM.forceMove( bluespace )
-
-	// change parallax background to bluespace
-	var/mob/M
-	if(istype(AM, /mob))
-		M = AM
-	else if(locate(/mob) in AM)
-		M = locate() in AM
-	if(M && M.hud_used)	M.hud_used.toggle_parallax_space()
+	bspace.Entered(AM)
 
 	spawn( transit_time )
 		if( !exit )
 			if( istype( AM, /mob ))
-				M = AM
+				var/mob/M = AM
 				M << "<span class='alert'>You feel that something went very wrong.</span>"
-	
-		// and change the parallax back to normal space
-		if(istype(AM, /mob))
-			M = AM
-		else if(locate(/mob) in AM)
-			M = locate() in AM
-		if(M && M.hud_used)	M.hud_used.toggle_parallax_space()
 
 		AM.forceMove( destination )
+		destination.loc.Entered(AM)
 		playsound(AM.loc, 'sound/effects/pop1.ogg', 80, 1)

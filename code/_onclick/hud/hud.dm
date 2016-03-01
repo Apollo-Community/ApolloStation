@@ -247,16 +247,22 @@ datum/hud/New(mob/owner)
 	mymob.client.screen += mymob.space_parallax
 	//mymob.client.screen += global_hud.parallax_stars
 
-// toggles between normal and bluespace
-/datum/hud/proc/toggle_parallax_space()
-	var/space_mode = mymob.space_parallax.icon_state == "space" ? 1 : 0
-	mymob.space_parallax.icon_state = "[space_mode ? "bluespace" : "space"]"
+	var/area/A = mymob.loc.loc
+	update_parallax_style(A.parallax_style)
+
+// updates the style of the parallax background
+// made this way so its easier to expand upon later
+/datum/hud/proc/update_parallax_style(var/style)
+	if(mymob.space_parallax.icon_state == style)	return
+
+	mymob.space_parallax.icon_state = style
 	mymob.space_parallax.overlays.Cut()
 
-	if(space_mode)
-		mymob.space_parallax.overlays += global_hud.parallax_bluespace_stars
-	else
-		mymob.space_parallax.overlays += global_hud.parallax_stars
+	switch(style)
+		if("bluespace")
+			mymob.space_parallax.overlays += global_hud.parallax_bluespace_stars
+		if("space")
+			mymob.space_parallax.overlays += global_hud.parallax_stars
 
 /datum/hud/proc/instantiate()
 	if(!ismob(mymob)) return 0

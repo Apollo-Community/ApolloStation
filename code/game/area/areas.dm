@@ -53,6 +53,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/list/ambience = list( 'sound/ambience/shipambience.ogg' )
 	var/list/music = list('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
 	var/sound/forced_ambience = null
+	var/parallax_style = "space"
 
 	var/rad_shielded = 0
 	var/environment = ROOM
@@ -128,6 +129,7 @@ area/space/atmosalert()
 	name = "\improper Bluespace"
 	ambience = list('sound/ambience/ambbspace.ogg')
 	environment = UNDERWATER
+	parallax_style = "bluespace"
 
 /area/engine/
 	music = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg' )
@@ -188,6 +190,7 @@ area/space/atmosalert()
 	icon_state = "shuttle"
 	ambience = list('sound/ambience/ambbspace.ogg')
 	environment = UNDERWATER
+	parallax_style = "bluespace"
 
 /area/shuttle/escape_pod1
 	name = "\improper Escape Pod One"
@@ -202,6 +205,7 @@ area/space/atmosalert()
 	icon_state = "shuttle"
 	ambience = list('sound/ambience/ambbspace.ogg')
 	environment = UNDERWATER
+	parallax_style = "bluespace"
 
 /area/shuttle/escape_pod2
 	name = "\improper Escape Pod Two"
@@ -216,6 +220,7 @@ area/space/atmosalert()
 	icon_state = "shuttle"
 	ambience = list('sound/ambience/ambbspace.ogg')
 	environment = UNDERWATER
+	parallax_style = "bluespace"
 
 /area/shuttle/escape_pod3
 	name = "\improper Escape Pod Three"
@@ -230,6 +235,7 @@ area/space/atmosalert()
 	icon_state = "shuttle"
 	ambience = list('sound/ambience/ambbspace.ogg')
 	environment = UNDERWATER
+	parallax_style = "bluespace"
 
 /area/shuttle/escape_pod5 //Pod 4 was lost to meteors
 	name = "\improper Escape Pod Five"
@@ -244,6 +250,7 @@ area/space/atmosalert()
 	icon_state = "shuttle"
 	ambience = list('sound/ambience/ambbspace.ogg')
 	environment = UNDERWATER
+	parallax_style = "bluespace"
 
 /area/shuttle/mining
 	name = "\improper Mining Shuttle"
@@ -533,6 +540,7 @@ area/space/atmosalert()
 	icon_state = "shuttle"
 	ambience = list('sound/ambience/ambbspace.ogg')
 	environment = UNDERWATER
+	parallax_style = "bluespace"
 
 /area/wizard_station
 	name = "\improper Wizard's Den"
@@ -549,6 +557,7 @@ area/space/atmosalert()
 	icon_state = "shuttle"
 	ambience = list('sound/ambience/ambbspace.ogg')
 	environment = UNDERWATER
+	parallax_style = "bluespace"
 
 /area/vox_station/southwest_solars
 	name = "\improper aft port solars"
