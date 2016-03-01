@@ -75,6 +75,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		if(!config.objectives_disabled)
 			forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
+		changeling.character.temporary = 1 // Makes them non-canon
 
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()

@@ -27,21 +27,29 @@
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
 /obj/item/weapon/storage/box/survival/
+	name = "survival kit"
+	desc = "A box with gear necessary for survival in space."
+
 	New()
 		..()
 		contents = list()
-		sleep(1)
-		new /obj/item/clothing/mask/breath( src )
-		new /obj/item/weapon/tank/emergency_oxygen( src )
+		spawn(0)
+			new /obj/item/clothing/mask/breath( src )
+			new /obj/item/weapon/tank/emergency_oxygen( src )
+			new /obj/item/inflatable/spacesuit/budget( src )
 		return
 
 /obj/item/weapon/storage/box/engineer/
+	name = "survival kit"
+	desc = "A box with gear necessary for survival in space."
+
 	New()
 		..()
 		contents = list()
-		sleep(1)
-		new /obj/item/clothing/mask/breath( src )
-		new /obj/item/weapon/tank/emergency_oxygen/engi( src )
+		spawn(0)
+			new /obj/item/clothing/mask/breath( src )
+			new /obj/item/weapon/tank/emergency_oxygen/engi( src )
+			new /obj/item/inflatable/spacesuit/budget( src )
 		return
 
 

@@ -31,6 +31,30 @@
 	src << browse(file(RULES_FILE), "window=rules;size=480x320")
 #undef RULES_FILE
 
+/client/verb/sourcecode()
+	set name = "sourcecode"
+	set desc = "View the source code on GitHub."
+	set hidden = 1
+	if( config.gitrepourl )
+		if(alert("This will open the server's git repository in your browser. Are you sure?",,"Yes","No")=="No")
+			return
+		src << link(config.gitrepourl)
+	else
+		src << "<span class='alert'>The server's git repository is not set in the server configuration.</span>"
+	return
+
+/client/verb/slack()
+	set name = "slack"
+	set desc = "Join Apollo Station's Slack chat!"
+	set hidden = 1
+	if( config.slackinvurl )
+		if(alert("This will open the server's slack invite page in your browser. Are you sure?",,"Yes","No")=="No")
+			return
+		src << link(config.slackinvurl)
+	else
+		src << "<span class='alert'>This server's slack chat is not set in the server configuration.</span>"
+	return
+
 /client/verb/hotkeys_help()
 	set name = "hotkeys-help"
 	set category = "OOC"

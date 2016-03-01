@@ -53,6 +53,23 @@
 
 	..()
 
+/obj/structure/table/glass/Crossed(AM as mob|obj)
+	if(!ishuman(AM)) return
+	var/mob/living/carbon/human/dude = AM
+	if(prob(35+(dude.m_intent == "run" ? 30 : 0)))
+		src.health = 0
+	else
+		src.health -= 10
+
+	src.visible_message("<span class='alert'> The [src] wobbles and cracks as [dude]'s fat ass " + (dude.m_intent == "run" ? "runs" : "walks") + " on it!</span>")
+
+	if(src.health<=0)
+		src.structure_shaken()
+		playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
+		src.visible_message("<span class='alert'> The [src] smashes!</span>")
+		new /obj/item/weapon/shard(src.loc)
+		qdel(src)
+
 /obj/structure/table/reinforced
 	icon_state = "reinf_table"
 	health = 200

@@ -405,6 +405,8 @@
 		step(obstacle,src.dir)
 	else
 		obstacle.Bumped(src)
+
+	obstacle.last_bumped = world.time
 	return
 
 ///////////////////////////////////

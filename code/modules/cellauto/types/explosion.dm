@@ -30,7 +30,10 @@
 
 	var/datum/cell_auto_master/explosion/M = master
 
-	icon_state = "[4-M.getSeverity()]"
+	if( M )
+		icon_state = "[4-M.getSeverity()]"
+	else
+		icon_state = ""
 
 /atom/movable/cell/explosion/process()
 	if( shouldDie() )

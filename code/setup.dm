@@ -610,10 +610,9 @@ var/list/be_special_flags = list(
 	"Traitor" = BE_TRAITOR,
 	"Operative" = BE_OPERATIVE,
 	"Changeling" = BE_CHANGELING,
-	"Wizard" = BE_WIZARD,
 	"Malf AI" = BE_MALF,
 	"Revolutionary" = BE_REV,
-	"Xenomorph" = BE_ALIEN,
+	"Alien" = BE_ALIEN,
 	"Positronic Brain" = BE_AI,
 	"Cultist" = BE_CULTIST,
 	"Monkey" = BE_MONKEY,
@@ -626,6 +625,11 @@ var/list/be_special_flags = list(
 
 #define AGE_MIN 18			//youngest a character can be
 #define AGE_MAX 95			//oldest a character can be
+#define AGE_DEFAULT 30
+
+#define SKIN_TONE_MIN 0
+#define SKIN_TONE_MAX 200
+#define SKIN_TONE_DEFAULT 35
 
 //Languages!
 #define LANGUAGE_HUMAN		1
@@ -667,7 +671,7 @@ var/list/be_special_flags = list(
 #define NO_SCAN 4           // Cannot be scanned in a DNA machine/genome-stolen.
 #define NO_PAIN 8           // Cannot suffer halloss/recieves deceptive health indicator
 #define NO_SLIP 16          // Cannot fall over
-#define NO_POISON 32        // Cannot not suffer toxloss
+#define NO_ROBO_LIMBS 32 // Cannot have robotic limbs of any type
 #define HAS_SKIN_TONE 64    // Skin tone selectable in chargen (0-255)
 #define HAS_SKIN_COLOR 128  // Skin colour selectable in chargen (RGB)
 #define HAS_LIPS 256        // Lips are drawn onto the mob icon (lipstick)
@@ -679,8 +683,8 @@ var/list/be_special_flags = list(
 #define CAN_JOIN 16384      // Species is selectable in chargen
 #define IS_RESTRICTED 32768 // Is not a core/normally playable species (castes, mutantraces)
 #define NO_CRYO 65536
-#define NO_ROBO_LIMBS 131072 // Cannot have robotic limbs of any type
 
+#define BITFLAGS_MAX 65535
 
 
 //Language flags.
@@ -805,9 +809,9 @@ var/list/be_special_flags = list(
 
 //Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
 #define MAX_MESSAGE_LEN 1024
-#define MAX_PAPER_MESSAGE_LEN 3072
-#define MAX_BOOK_MESSAGE_LEN 9216
-#define MAX_NAME_LEN 26
+#define MAX_PAPER_MESSAGE_LEN 25600
+#define MAX_BOOK_MESSAGE_LEN 51200
+#define MAX_NAME_LEN 30
 
 // Event defines.
 #define EVENT_LEVEL_MUNDANE 1
@@ -861,6 +865,12 @@ var/list/be_special_flags = list(
 #define TICKS_IN_DAY 864000
 #define TICKS_IN_SECOND 10
 
+#define DECISECONDS_IN_SECOND 10
+#define SECONDS_IN_MINUTE 60
+#define SECONDS_IN_HOUR 3600
+#define SECONDS_IN_DAY 86400
+#define SECONDS_IN_WEEK 604800
+
 #define MIN_SUPERMATTER_LEVEL 1
 #define MAX_SUPERMATTER_LEVEL 9
 
@@ -894,3 +904,9 @@ var/list/be_special_flags = list(
 #define A_WHITELSIT_UNATHI 8
 #define A_WHITELSIT_WRYN 16
 #define A_WHITELIST_TOTAL A_WHITELSIT_DIONA | A_WHITELSIT_SKRELL | A_WHITELSIT_TAJARA | A_WHITELSIT_UNATHI | A_WHITELSIT_WRYN
+
+#define BORG_SUCCESSION_LEVEL 0
+#define ASSISTANT_SUCCESSION_LEVEL 2
+#define INDUCTEE_SUCCESSION_LEVEL 3
+#define COMMAND_SUCCESSION_LEVEL 10
+#define CAPTAIN_SUCCESION_LEVEL COMMAND_SUCCESSION_LEVEL+2

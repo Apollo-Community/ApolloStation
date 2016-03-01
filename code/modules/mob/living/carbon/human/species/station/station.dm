@@ -212,12 +212,54 @@
 
 	has_organ = list( "eyes" =     /datum/organ/internal/eyes ) //TODO: Positronic brain.
 
-	var/obj/machinery/power/apc/attached_apc = null
+/datum/species/machine/handle_life(var/mob/living/carbon/human/H)
+	..()
+	if(!H.attached_apc)
+		return
+
+	var/obj/machinery/power/apc/A = H.attached_apc
+
+	if(!A.can_use(H) || !A.cell)
+		if(!in_range(A, H))
+			H << "<span class='warning'>You rip your fingers out of the APC!</span>"
+		H.attached_apc = null
+		return
+
+	if(H.a_intent == I_GRAB)
+		if(A.cell.charge <= 0)
+			H << "<span class='notice'>The power cell dries out, and you remove your fingers from the APC.</span>"
+			H.attached_apc = null
+			return
+		else if(H.nutrition >= 500)
+			H << "<span class='notice'>You remove your fingers from the APC as your power cell is fully charged.</span>"
+			H.attached_apc = null
+			return
+		else
+			H.nutrition = Clamp(H.nutrition + 10, 0, 500)
+			A.cell.charge = Clamp(A.cell.charge - 100, 0, A.cell.maxcharge)
+	else if(H.a_intent == I_DISARM)
+		if(A.cell.charge >= A.cell.maxcharge)
+			H << "<span class='notice'>You remove your fingers as the APC is fully charged.</span>"
+			H.attached_apc = null
+			return
+		else if(H.nutrition <= 30)
+			H << "<span class='notice'>You remove your fingers as your own power starts to run out.</span>"
+			H.attached_apc = null
+			return
+		else
+			H.nutrition = Clamp(H.nutrition - 10, 0, 500)
+			A.cell.charge = Clamp(A.cell.charge + 100, 0, A.cell.maxcharge)
+	else
+		H << "<span class='notice'>You remove your fingers from the APC.</span>"
+		H.attached_apc = null
+
+	A.charging = 1
+	A.update_icon()
 
 /datum/species/machine/handle_death(var/mob/living/carbon/human/H)
 	..()
 	if(flags & IS_SYNTHETIC)
-		H.h_style = ""
+		H.character.hair_style = ""
 		spawn(100)
 			if(H) H.update_hair()
 
@@ -297,7 +339,7 @@
 	brute_mod = 2 // damn, double wham, double dam
 
 	var/brightness = 4
-	var/color = "#1C1C00"
+	var/color = "#cccc00"
 
 	flags = CAN_JOIN | NO_BREATHE | NO_BLOOD | NO_PAIN | HAS_LIPS | NO_ROBO_LIMBS | NO_CRYO
 	reagent_tag = IS_NUCLEATION
@@ -312,7 +354,7 @@
 
 /datum/species/nucleation/handle_post_spawn(var/mob/living/carbon/human/H)
 	H.light_range = brightness
-	H.light_color = "#1C1C00"
+	H.light_color = "#cccc00"
 	H.set_light( brightness, 1, color)
 	return ..()
 

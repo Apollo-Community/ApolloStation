@@ -190,7 +190,6 @@
 	if(..())
 		return
 
-
 	if(href_list["toggle_report"])
 		report_at_round_end = !report_at_round_end
 		log_and_message_admins("has [report_at_round_end ? "enabled" : "disabled"] the round end event report.")

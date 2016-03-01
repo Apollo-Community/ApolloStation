@@ -19,7 +19,7 @@
 	name = "NSS Apollo Basement"
 	mapx = STATION_X
 	mapy = STATION_Y
-	sector_flags = SECTOR_KNOWN | SECTOR_STATION | SECTOR_ALERT
+	sector_flags = SECTOR_KNOWN | SECTOR_STATION | SECTOR_ALERT | SECTOR_FORBID_RANDOM_TP
 
 /obj/effect/mapinfo/sector/artemis
 	name = "NSS Artemis"

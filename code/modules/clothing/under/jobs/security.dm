@@ -23,8 +23,8 @@
 	icon_state = "security"
 	item_state = "r_suit"
 	item_color = "secred"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	siemens_coefficient = 0.9
+	armor = list(melee = 10, bullet = 2, laser = 2, energy = 2, bomb = 0, bio = 0, rad = 0)
+	siemens_coefficient = 0.5
 
 /obj/item/clothing/under/rank/dispatch
 	name = "dispatcher's uniform"
@@ -37,12 +37,12 @@
 	siemens_coefficient = 0.9
 
 /obj/item/clothing/under/rank/security2
-	name = "security officer's uniform"
+	name = "security cadet's uniform"
 	desc = "It's made of a slightly sturdier material, to allow for robust protection."
 	icon_state = "redshirt2"
 	item_state = "r_suit"
 	item_color = "redshirt2"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 5, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.9
 
 /obj/item/clothing/under/rank/security/corp
@@ -61,7 +61,7 @@
 	icon_state = "swatunder"
 	item_state = "swatunder"
 	item_color = "swatunder"
-	armor = list(melee = 10, bullet = 5, laser = 5,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.9
 
 /*

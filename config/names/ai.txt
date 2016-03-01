@@ -13,7 +13,6 @@ Alpha 7
 AmigoBot
 Android
 Aniel
-Asimov
 Astor
 B-4
 B-9
@@ -32,20 +31,16 @@ Chip
 Computer
 Conky 2000
 Cutie
-Data
 Dee Model
-Deep Thought
 Dor-15
 Dorfl
 Dot Matrix
 Duey
 E.D.I.
-ED-209
 E-Man
 Emma-2
 Erasmus
 Ez-27
-FRIEND COMPUTER
 Fagor
 Faith
 Fi
@@ -59,7 +54,6 @@ Gort
 H.A.R.L.I.E.
 H.E.L.P.eR.
 H.E.R.B.I.E.
-HAL 9000
 Hadaly
 Huey
 Irona
@@ -76,7 +70,6 @@ LUH 3417
 Louie
 MARK13
 Maria
-Marvin
 Master Control Program
 Max 404
 Maximillian
@@ -102,7 +95,6 @@ S.H.O.C.K.
 S.H.R.O.U.D.
 S.O.P.H.I.E.
 SEN 5241
-SHODAN
 SID 6.7
 Setaur
 Shrike
@@ -110,10 +102,6 @@ Solo
 Speedy
 Super 17
 Surgeon General Kraken
-T-1000
-T-800
-T-850
-THX 1138
 TWA
 Terminus
 Tidy
@@ -129,7 +117,6 @@ W1k1
 Wikipedia
 Windows 3.1
 X-5
-XERXES
 XR
 Yod
 Z-1
@@ -141,7 +128,5 @@ Mugsy3000
 Terminus
 Decimus
 Robot Devil
-Optimus
-Megatron
 Soundwave
 Ironhide
