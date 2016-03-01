@@ -18,9 +18,13 @@
 
 	var/return_limit = 10
 	var/query = null
+
+	// What are we searching by?
 	var/query_type = "name"
-	var/is_complete = 1
+	// What types of query types allow full and partial searches?
 	var/list/query_types = list( "name" = 1, "birth_date" = 0, "fingerprints" = 1, "blood_type" = 0, "DNA" = 1)
+	// It is a complete or partial search?
+	var/is_complete = 1
 
 	var/temp = null
 	var/tempname = null
