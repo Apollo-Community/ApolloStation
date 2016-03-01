@@ -45,11 +45,11 @@ var/list/global_huds = list(
 
 	parallax_stars = list()
 	for( var/i = 0; i < star_count; i++ )
-		parallax_stars += new /obj/screen/space_star()
+		parallax_stars += new /image/space_star()
 
 	parallax_bluespace_stars = list()
 	for( var/i = 0; i < star_count; i++ )
-		parallax_bluespace_stars += new /obj/screen/space_star/bluespace()
+		parallax_bluespace_stars += new /image/space_star/bluespace()
 
 	//420erryday psychedellic colours screen overlay for when you are high
 	druggy = new /obj/screen()
