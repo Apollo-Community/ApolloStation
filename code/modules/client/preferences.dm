@@ -14,6 +14,7 @@ var/list/preferences_datums = list()
 	// Ckey join date
 	var/joined_date = ""
 	var/passed_date = 0			//So we don't have to keep aquiring joined_date
+	var/country_code = null
 
 	// game-preferences
 	var/OOC_color = "#0033CC"			//Whatever this is set to acts as 'reset' color and is thus unusable as an actual custom color

@@ -143,12 +143,13 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = ""
 	name = "space"
+	plane = SPACE_PARALLAX_PLANE - 1
 
 	temperature = T20C-270
 
 	New()
 		..()
-		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
+		//icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
 		name = "space"
 
 	ex_act(severtiy)

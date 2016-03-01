@@ -13,6 +13,9 @@
 	Therefore, the top right corner (except during admin shenanigans) is at "15,15"
 */
 
+#define UI_SPACE_PARALLAX "1:0,1:0"
+#define SPACE_PARALLAX_PLANE -50
+
 //Upper left action buttons, displayed when you pick up an item that has this enabled.
 #define ui_action_slot1 "1:6,14:26"
 #define ui_action_slot2 "2:8,14:26"
