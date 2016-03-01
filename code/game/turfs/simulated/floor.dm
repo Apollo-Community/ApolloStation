@@ -122,7 +122,9 @@ var/list/wood_icons = list("wood","wood-broken")
 /turf/simulated/floor/blob_act()
 	return
 
-turf/simulated/floor/proc/update_icon()
+turf/simulated/proc/update_icon()
+
+turf/simulated/floor/update_icon()
 	if(lava)
 		return
 	else if(is_plasteel_floor())
@@ -232,7 +234,7 @@ turf/simulated/floor/proc/update_icon()
 			return 1
 	return 0
 
-/turf/simulated/floor/proc/gets_drilled()
+/turf/simulated/proc/gets_drilled()
 	return
 
 /turf/simulated/floor/proc/break_tile_to_plating()
@@ -330,32 +332,21 @@ turf/simulated/floor/proc/update_icon()
 
 //This proc will set floor_type to null and the update_icon() proc will then change the icon_state of the turf
 //This proc auto corrects the grass tiles' siding.
-/turf/simulated/floor/proc/make_plating()
-	if(istype(src,/turf/simulated/floor/engine)) return
+/turf/simulated/proc/make_plating()
+	set_light(0)
 
-	if(is_grass_floor())
-		for(var/direction in cardinal)
-			if(istype(get_step(src,direction),/turf/simulated/floor))
-				var/turf/simulated/floor/FF = get_step(src,direction)
-				FF.update_icon() //so siding get updated properly
-	else if(is_carpet_floor())
-		spawn(5)
-			if(src)
-				for(var/direction in list(1,2,4,8,5,6,9,10))
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						FF.update_icon() //so siding get updated properly
+	update_icon()
+	levelupdate()
 
+/turf/simulated/floor/make_plating()
 	if(!floor_type) return
 	icon_plating = "plating"
-	set_light(0)
 	floor_type = null
 	intact = 0
 	broken = 0
 	burnt = 0
 
-	update_icon()
-	levelupdate()
+	..()
 
 //This proc will make the turf a plasteel floor tile. The expected argument is the tile to make the turf with
 //If none is given it will make a new object. dropping or unequipping must be handled before or after calling
