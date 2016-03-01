@@ -80,8 +80,8 @@
 	var/sql_datetime = "'[sql_sanitize_text( universe.getDateTime() )]'"
 
 	var/sql_title
-	if( sql_title )
-		sql_title = "'[sql_sanitize_text( sql_title )]'"
+	if( title )
+		sql_title = "'[sql_sanitize_text( title )]'"
 	else
 		sql_title = "null"
 
