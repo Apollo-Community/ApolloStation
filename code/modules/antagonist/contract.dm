@@ -32,7 +32,6 @@
 	if(!success)
 		for(var/mob/living/M in workers)
 			M.antagonist.contract_ended(src, 0)
-		return
 	else
 		worker.antagonist.contract_ended(src, 1)
 		reward(worker)

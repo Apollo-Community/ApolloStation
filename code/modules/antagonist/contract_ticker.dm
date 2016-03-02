@@ -11,7 +11,6 @@ var/global/datum/controller/process/contractticker/contract_ticker
 	schedule_interval = 10 // Every second, so we don't let contracts run past their time limit
 
 	contracts = list()
-	next_contract_update = rand(600, 1200)
 
 /datum/controller/process/contractticker/doWork()
 	for(var/datum/contract/C in contracts)
