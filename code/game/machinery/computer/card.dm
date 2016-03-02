@@ -82,7 +82,7 @@
 
 			if( istype( O, /obj/item/weapon/paper/form/command_recommendation ))
 				ping( "\The [src] pings, \"[C.name] has been recommended for additional command positions!\"" )
-				C.addRecordNote( "general", F.info, "Command Recommendation" )
+				addToPaperworkRecord( user, C.unique_identifier,  F.info, "Command Recommendation", "Unclassified", "Employment Recommendation" )
 				var/obj/item/rcvdcopy
 
 				rcvdcopy = copy(F)
@@ -124,7 +124,7 @@
 				callHook("reassign_employee", list(modify))
 
 				ping( "\The [src] pings, \"[C.name] has been [J.job_verb] [J.job]!\"" )
-				C.addRecordNote( "general", J.info, "[capitalize( J.job_verb )] [J.job]" )
+				addToPaperworkRecord( user, C.unique_identifier, J.info, "[capitalize( J.job_verb )] [J.job]", "Unclassified", "Employment" )
 
 			due_papers -= F
 			qdel( F )

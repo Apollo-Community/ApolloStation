@@ -453,7 +453,7 @@ var/list/admin_verbs_mentor = list(
 	return
 
 /client/proc/unban_panel()
-	set name = "Unban Panel"
+	set name = "Ban Panel"
 	set category = "Admin"
 	if(holder)
 		if(config.ban_legacy_system)
