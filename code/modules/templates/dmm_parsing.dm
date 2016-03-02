@@ -252,6 +252,12 @@
 					cb_starting_positions += cb_start
 					cb_ending_positions += cb_end
 
+					// Ignore commas in {}s for the first copied path
+					// You'd end up with things like " as this is a test"}" as a path group without this, and infinite loops
+					if(cb_starting_positions.len == 1)
+						while(comma_pos in (cb_start to cb_end))
+							comma_pos = findtext(line, ",", comma_pos + 1)
+
 					cb_start = findtext(line, "{", cb_end + 1)
 
 				// Extract each comma-seperated path out of the text
