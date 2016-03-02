@@ -4,20 +4,19 @@ var/global/datum/controller/process/contractticker/contract_ticker
 
 /datum/controller/process/contractticker
 	var/datum/contract/list/contracts // Currently active contracts
+	var/next_contract_update
 
 /datum/controller/process/contractticker/setup()
 	name = "contract ticker"
-	schedule_interval = 600 // Every 60 seconds
+	schedule_interval = 10 // Every second, so we don't let contracts run past their time limit
 
 	contracts = list()
+	next_contract_update = rand(600, 1200)
 
 /datum/controller/process/contractticker/doWork()
 	for(var/datum/contract/C in contracts)
-		// End the contract immediately if they're not an antagonist anymore
-		if(!C.worker.antagonist || C.worker.stat & DEAD)
-			C.end()
-			contracts -= C
-			continue
-
 		if(world.time >= C.contract_start + C.time_limit)
 			C.end()
+			continue
+
+		C.check_completion()

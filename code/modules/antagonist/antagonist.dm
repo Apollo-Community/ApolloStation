@@ -6,20 +6,18 @@
 /datum/antagonist
 	var/name = "Antagonist"
 	var/gamemode = "" // The gamemode associated with this antagonist
-	var/datum/contract/list/contracts = list() // Type paths for all contracts associated with this antagonist
 	var/datum/contract/list/active_contracts = list() // Currently active contracts for the antagonist
 
 	var/datum/contract/list/completed_contracts = list()
-	var/commendations = 0
+	var/mob/living/antag = null
 
 /datum/antagonist/New()
 	..()
 	
-	contracts = typesof(/datum/contract)
-	var/datum/contract/C = pick(contracts)
-	active_contracts += C
-	C.start()
+/datum/antagonist/proc/contract_start(var/datum/contract/contract)
+	active_contracts += contract
 
-/datum/antagonist/proc/completed_contract(var/datum/contract/contract)
+/datum/antagonist/proc/contract_ended(var/datum/contract/contract, var/success = 0)
 	active_contracts -= contract
-	completed_contracts += contract
+	if(success)
+		completed_contracts += contract
