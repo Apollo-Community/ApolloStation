@@ -279,9 +279,11 @@ var/list/mob/living/forced_ambiance_list = new
 	if(!istype(M))
 		// In case there's multiple mobs inside
 		for(M in A.contents)
-			M.hud_used.update_parallax_style(parallax_style)
+			if( M.client )
+				M.hud_used.update_parallax_style(parallax_style)
 	else
-		M.hud_used.update_parallax_style(parallax_style)
+		if( M.client )
+			M.hud_used.update_parallax_style(parallax_style)
 
 	if(!istype(A,/mob/living))	return
 
