@@ -247,8 +247,9 @@ datum/hud/New(mob/owner)
 	mymob.client.screen += mymob.space_parallax
 	//mymob.client.screen += global_hud.parallax_stars
 
-	var/area/A = mymob.loc.loc
-	update_parallax_style(A.parallax_style)
+	var/area/A = get_area( mymob )
+	if( istype( A ))
+		update_parallax_style(A.parallax_style)
 
 // updates the style of the parallax background
 // made this way so its easier to expand upon later
