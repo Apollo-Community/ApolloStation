@@ -127,9 +127,6 @@
 		del(src)
 		return
 
-	if( byond_version < REC_CLIENT_VERSION )
-		alert(src,"Your BYOND client version is older than the recommended version. Please go to http://www.byond.com/download/ and download version [REC_CLIENT_VERSION].","BYOND Version","OK")
-
 	// Change the way they should download resources.
 	if(config.resource_urls)
 		src.preload_rsc = pick(config.resource_urls)
@@ -251,6 +248,10 @@
 	loadAccountItems()
 	send_resources()
 	nanomanager.send_resources(src)
+
+	spawn( 50 )
+		if( byond_version < REC_CLIENT_VERSION )
+			alert(src,"Your BYOND client version is older than the recommended version. Please go to http://www.byond.com/download/ and download version [REC_CLIENT_VERSION].","BYOND Version","OK")
 
 
 	//////////////
