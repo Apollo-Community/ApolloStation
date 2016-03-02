@@ -14,14 +14,14 @@ obj/item/device/cable_painter
 
 obj/item/device/cable_painter/New()
 	..()
-	modes[0] = COLOR_RED
-	modes[1] = COLOR_YELLOW
-	modes[2] = COLOR_GREEN
-	modes[3] = COLOR_BLUE
-	modes[4] = COLOR_PINK
-	modes[5] = COLOR_ORANGE
-	modes[6] = COLOR_CYAN
-	modes[7] = COLOR_WHITE
+	modes["red"] = COLOR_RED
+	modes["yellow"] = COLOR_YELLOW
+	modes["green"] = COLOR_GREEN
+	modes["blue"] = COLOR_BLUE
+	modes["pink"] = COLOR_PINK
+	modes["orange"] = COLOR_ORANGE
+	modes["cyan"] = COLOR_CYAN
+	modes["white"] = COLOR_WHITE
 	mode = pick(modes)
 
 obj/item/device/cable_painter/afterattack(atom/A, mob/user as mob, proximity)
@@ -41,10 +41,5 @@ obj/item/device/cable_painter/afterattack(atom/A, mob/user as mob, proximity)
 
 
 obj/item/device/cable_painter/attack_self(mob/user)
-	if(mode == 7)
-		mode = 0
-
-	else
-		mode++
-
-	user << "<span class='notice'>You change the paint mode.</span>"
+	mode = input( "What color would you like to use?", "Choose a Color", null, null) in modes
+	user << "<span class='notice'>You change the paint mode to [mode].</span>"
