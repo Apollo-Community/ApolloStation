@@ -32,13 +32,13 @@
 	var/printing = null
 	var/can_change_id = 0
 	var/list/Perp
-	//Sorting Variables
 
+	//Sorting Variables
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
 	light_color = COMPUTER_GREEN
 
-	var/datum/browser/menu = new( null, "employee_rec", "Employment Records", 710, 610 )
+	var/datum/browser/menu = new( null, "employee_rec", "Employment Records", 710, 725 )
 
 /obj/machinery/computer/employment/attackby(obj/item/O as obj, user as mob)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
@@ -280,7 +280,7 @@
 						<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80>	\
 						<img src=side.png height=80 width=80></td></tr></table>")
 
-						. += "General Record:<BR> [decode(active1.fields["notes"])]<BR><BR>"
+						. += "<br><table class='outline'><tr><td>General Record:</td></tr><tr><td>[decode(active1.fields["notes"])]</td></tr></table><BR>"
 						. += {"<table class='outline'>
 <tr>
 <th>Paperwork Records: [active1.fields["name"]]</th>
@@ -289,6 +289,7 @@
 						var/datum/character/C = active1.fields["character"]
 						if( istype( C ))
 							. += get_paperwork_records( C.unique_identifier )
+							. += "<A href='?src=\ref[src];choice=Add Note;rec_hash=[C.unique_identifier]'>Add Note</A><BR>"
 						else
 							. += "Could not find employee in external database."
 
@@ -391,6 +392,21 @@ What a mess.*/
 				var/info = db_query.item[2]
 				usr << browse( info, "window=[title]")
 				return
+
+			if("Add Note")
+				var/obj/item/weapon/paper/P = usr.get_active_hand()
+				if( istype( P ))
+					var/title = input("Input a title for this note:", "Input Title", null, null)  as text
+					if( !title )
+						title = "Note"
+
+					var/rec_hash = href_list["rec_hash"]
+					usr.drop_item()
+					P.loc = src
+					addToPaperworkRecord( usr, rec_hash, P.info, "[title]", "Unclassified", "Employment Notes" )
+					qdel( P )
+				else
+					buzz( "\The [src] buzzes, \"This machine accepts paper for notes.\"" )
 
 			if("Confirm Identity")
 				screen = 1
