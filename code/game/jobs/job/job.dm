@@ -62,7 +62,6 @@
 		return 1	//Available in 0 days = available right now = player is old enough to play.
 	return 0
 
-
 /datum/job/proc/available_in_hours(client/C)
 	if(!C)
 		return 0
@@ -118,4 +117,16 @@
 	return preview_icon
 
 /datum/job/proc/is_full()
-	return current_positions >= total_positions
+	return ( current_positions >= total_positions ) && total_positions != -1
+
+/datum/job/proc/can_join( var/client/C )
+	if( is_full() )
+		return 0
+
+	if( available_in_hours( C ))
+		return 0
+
+	if( jobban_isbanned( C, title ))
+		return 0
+
+	return 1
