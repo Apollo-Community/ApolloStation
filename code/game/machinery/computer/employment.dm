@@ -47,6 +47,7 @@
 		scan = O
 		user << "You insert [O]."
 		screen = 1
+		authenticate( user )
 	..()
 
 /obj/machinery/computer/employment/attack_ai(mob/user as mob)
@@ -62,8 +63,6 @@
 	if( src.z in config.admin_levels )
 		user << "<span class='alert'><b>Unable to establish a connection</b>: </span><span class='black'>You're too far away from the station!</span>"
 		return
-
-	authenticate( user )
 
 	. = header( user )
 
@@ -102,6 +101,8 @@
 	if( temp )
 		. = text("<TT>[]</TT><BR><BR><A href='?src=\ref[];choice=Clear Screen'>Clear Screen</A>", temp, src)
 		return
+
+	. = ""
 
 	if( !authenticated )
 		return
@@ -168,33 +169,42 @@
 
 			. += "<hr><center>Limited to [return_limit] results</center>"
 		if( 2 )
-			establish_db_connection()
-			if( !dbcon.IsConnected() )
-				. += {"<table class='outline'>
-<tr>
-<th>No connection to the external database!</th>
-</tr>
-</table>"}
-				. += "<A href='?src=\ref[src];choice=Return'>Back</A>"
-				return .
-
-			var/DBQuery/db_query = dbcon.NewQuery("SELECT date_time, title, id FROM paperwork_records WHERE recipient_md5 = '[query]'")
-
-			if( !db_query.Execute() )
-				. += {"<table class='outline'>
-<tr>
-<th>Invalid database query!</th>
-</tr>
-</table>"}
-				. += "<A href='?src=\ref[src];choice=Return'>Back</A>"
-				return .
-
 			. += {"<table class='outline'>
 <tr>
 <th>Paperwork Records: [tempname]</th>
 </tr>
-</table>
-<table class='border'>
+</table>"}
+			. += get_paperwork_records( query )
+
+	return .
+
+/obj/machinery/computer/employment/proc/get_paperwork_records( var/rec_md5 )
+	. = ""
+
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		. += {"<table class='outline'>
+<tr>
+<th>No connection to the external database!</th>
+</tr>
+</table>"}
+		. += "<A href='?src=\ref[src];choice=Return'>Back</A>"
+		return .
+
+	var/sql_rec_md5 = sql_sanitize_text( rec_md5 )
+
+	var/DBQuery/db_query = dbcon.NewQuery("SELECT date_time, title, id FROM paperwork_records WHERE recipient_md5 = '[sql_rec_md5]'")
+
+	if( !db_query.Execute() )
+		. += {"<table class='outline'>
+<tr>
+<th>Invalid database query!</th>
+</tr>
+</table>"}
+		. += "<A href='?src=\ref[src];choice=Return'>Back</A>"
+		return .
+
+	. += {"<table class='border'>
 <tr>
 <table class='border'>
 <tr>
@@ -203,18 +213,16 @@
 <th>View</th>
 </tr>"}
 
-			while( db_query.NextRow() )
-				. += "<tr>"
-				. += "<td>[db_query.item[1]]</td>"
-				. += "<td>[db_query.item[2]]</td>"
-				. += "<td><center><a href='?src=\ref[src];choice=View Paperwork;id=[db_query.item[3]]'>View</a></center></td>"
-				. += "</tr>"
+	while( db_query.NextRow() )
+		. += "<tr>"
+		. += "<td>[db_query.item[1]]</td>"
+		. += "<td>[db_query.item[2]]</td>"
+		. += "<td><center><a href='?src=\ref[src];choice=View Paperwork;id=[db_query.item[3]]'>View</a></center></td>"
+		. += "</tr>"
 
-			. += "</table>"
+	. += "</table>"
 
-			. += "<hr><A href='?src=\ref[src];choice=Return'>Back</A>"
-
-	return .
+	. += "<hr><A href='?src=\ref[src];choice=Return'>Back</A>"
 
 /obj/machinery/computer/employment/proc/station_records( mob/user as mob )
 	if (temp)
@@ -242,9 +250,7 @@
 </tr>"}
 					if(!isnull(data_core.general))
 						for(var/datum/data/record/R in sortRecord(data_core.general, sortBy, order))
-							for(var/datum/data/record/E in data_core.security)
-							var/background
-							. += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]</a></td>", background, src, R, R.fields["name"])
+							. += "<tr><td><A href='?src=\ref[src];choice=Browse Record;d_rec=\ref[R]'>[R.fields["name"]]</a></td>"
 							. += text("<td>[]</td>", R.fields["id"])
 							. += text("<td>[]</td>", R.fields["rank"])
 							. += text("<td>[]</td>", R.fields["fingerprint"])
@@ -255,7 +261,7 @@
 					. += "<BR><A href='?src=\ref[src];choice=Delete All Records'>Delete All Station Records</A><BR><BR><A href='?src=\ref[src];choice=Return'>Back</A>"
 				if(3.0)
 					. += "<CENTER><B>Employment Record</B></CENTER><BR>"
-					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
+					if( istype( active1, /datum/data/record ) && ( active1 in data_core.general ))
 						var/icon/front = active1.fields["photo_front"]
 						var/icon/side = active1.fields["photo_side"]
 						user << browse_rsc(front, "front.png")
@@ -275,8 +281,16 @@
 						<img src=side.png height=80 width=80></td></tr></table>")
 
 						. += "General Record:<BR> [decode(active1.fields["notes"])]<BR><BR>"
-						. += "Employment History:<BR>"
-						. += formatPromotionRecords( active1.fields["character"] )
+						. += {"<table class='outline'>
+<tr>
+<th>Paperwork Records: [active1.fields["name"]]</th>
+</tr>
+</table>"}
+						var/datum/character/C = active1.fields["character"]
+						if( istype( C ))
+							. += get_paperwork_records( C.unique_identifier )
+						else
+							. += "Could not find employee in external database."
 
 					else
 						. += "<B>General Record Lost!</B><BR>"
@@ -306,9 +320,7 @@
 							if(istype(Perp[i+1],/datum/data/record/))
 								var/datum/data/record/E = Perp[i+1]
 								crimstat = E.fields["criminal"]
-							var/background
-							background = "'background-color:#00FF7F;'"
-							. += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]</a></td>", background, src, R, R.fields["name"])
+							. += "<tr><td><A href='?src=\ref[src];choice=Browse Record;d_rec=\ref[R]'>[R.fields["name"]]</a></td>"
 							. += text("<td>[]</td>", R.fields["id"])
 							. += text("<td>[]</td>", R.fields["rank"])
 							. += text("<td>[]</td>", R.fields["fingerprint"])
@@ -325,9 +337,9 @@ What a mess.*/
 /obj/machinery/computer/employment/Topic(href, href_list)
 	if(..())
 		return
-	if (!( data_core.general.Find(active1) ))
+	if( !( active1 in data_core.general ))
 		active1 = null
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		usr.set_machine(src)
 		switch(href_list["choice"])
 // SORTING!
@@ -394,7 +406,7 @@ What a mess.*/
 						usr.drop_item()
 						I.loc = src
 						scan = I
-
+				authenticate( usr )
 			if("Log In")
 				authenticate( usr )
 //RECORD FUNCTIONS
@@ -454,7 +466,7 @@ What a mess.*/
 
 			if ("Browse Record")
 				var/datum/data/record/R = locate(href_list["d_rec"])
-				if (!( data_core.general.Find(R) ))
+				if( !istype( R ) || !( R in data_core.general ))
 					temp = "Record Not Found!"
 				else
 					for(var/datum/data/record/E in data_core.security)
