@@ -6,7 +6,7 @@
 	var/turf/location // Filled after collection is placed
 	var/list/turfs = list()
 	var/name
-	var/info = list()
+	var/list/info = list()
 	var/area/area = null
 
 	// Because associative lists are a pain in byond
@@ -42,7 +42,7 @@
 		A.environment = info["area_environment"]
 
 		for(var/turf/T in turfs)
-			if(!istype(T, /turf/space))
+			if(!istype(T, /turf/space) && istype(T.loc, /area/space))
 				A.contents.Add(T)
 
 		area = A
@@ -68,7 +68,9 @@
 
 		HandleEdgeCases()
 
-		PostPlace()
+		// info.len > 0 if there's an info object
+		if(info.len > 0)
+			PostPlace()
 
 		spawn(10)
 			for(var/turf/T in place_last_turfs)
@@ -83,8 +85,9 @@
 		location = origin
 
 		// Make powernets for the template
-		spawn(10)
-			makeareapowernets(area)
+		if(area)
+			spawn(10)
+				makeareapowernets(area)
 
 		return 1
 
