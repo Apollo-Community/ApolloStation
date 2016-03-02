@@ -37,7 +37,7 @@
 			return
 
 		if( length( title ) < min_complaint_length )
-			buzz("\The [src] buzzes, \"Little to no !\"")
+			buzz("\The [src] buzzes, \"Little to no content!\"")
 			flick( "complaintbox_deny", src )
 			return
 
