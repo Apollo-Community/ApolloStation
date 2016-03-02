@@ -191,6 +191,8 @@
 /obj/machinery/power/apc/proc/make_terminal()
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
+	if(terminal)
+		qdel(terminal)
 	terminal = new/obj/machinery/power/terminal(src.loc)
 	terminal.set_dir(tdir)
 	terminal.master = src

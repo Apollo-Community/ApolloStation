@@ -1,17 +1,18 @@
-"a" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s6"; icon_state = "swall_s6"},/area/space)
+"a" = (/turf/space,/turf/simulated/shuttle/wall{icon_state = "swall_f6"; dir = 2},/area/space)
 "b" = (/obj/structure/grille,/obj/structure/shuttle/window,/turf/space,/area/space)
-"c" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s10"; icon_state = "swall_s10"},/area/space)
-"d" = (/turf/simulated/shuttle/wall,/area/space)
+"c" = (/turf/space,/turf/simulated/shuttle/wall{dir = 3; icon_state = "swall_f10"; layer = 2},/area/space)
+"d" = (/turf/simulated/shuttle/wall{icon_state = "swall3"; dir = 2},/area/space)
 "e" = (/obj/structure/bed/chair/shuttle{tag = "icon-chair3 (NORTH)"; icon_state = "chair3"; dir = 1},/obj/effect/decal/remains/human,/obj/item/weapon/paper{desc = "That is a piece of paper, on it reads ' It has been three hours, I think something is wrong with the propulsion system, I'm starting to get thristy. I hope someone comes soon.'  "},/obj/item/weapon/pen,/turf/simulated/shuttle/floor,/area/space)
 "f" = (/obj/structure/bed/chair/shuttle{tag = "icon-chair3 (NORTH)"; icon_state = "chair3"; dir = 1},/obj/item/device/radio/beacon{desc = "A distress beacon"; name = "Old distress beacon"},/turf/simulated/shuttle/floor,/area/space)
-"g" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/shuttle/floor,/area/space)
-"h" = (/obj/structure/shuttle/engine/propulsion,/turf/space,/area/space)
-"i" = (/turf/space,/area/space)
+"g" = (/turf/simulated/shuttle/wall,/area/space)
+"h" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/shuttle/floor,/area/space)
+"i" = (/obj/structure/shuttle/engine/propulsion,/turf/space,/area/space)
+"j" = (/turf/space,/area/space)
 
 (1,1,1) = {"
 abc
 ded
 dfd
-dgd
-hih
+ghg
+iji
 "}

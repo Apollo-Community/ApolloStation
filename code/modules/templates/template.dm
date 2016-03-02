@@ -68,9 +68,6 @@ var/datum/template_controller/template_controller
 			// Wait for templates to spawn before continuing so they don't spawn into each other.
 			sleep(15)
 
-		spawn(0)
-			makepowernets()
-
 		log_game("Finished placing templates after [time2text((world.timeofday - started), "mm:ss")]")
 		world << "<span class='alert'><b>Finished placing random structures...</b></span>"
 

@@ -44,7 +44,10 @@ proc/isDay(var/month, var/day)
 		if( 1 )
 			return 31
 		if( 2 )
-			return 28
+			if( universe.getYear()%4 ) // leap year checks
+				return 28
+			else
+				return 29
 		if( 3 )
 			return 31
 		if( 4 )

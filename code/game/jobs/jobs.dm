@@ -82,7 +82,6 @@ var/list/medical_positions = list(
 	"Chief Medical Officer",
 	"Medical Doctor",
 	"Psychiatrist",
-	"Chemist",
 	"Virologist"
 )
 
@@ -91,7 +90,8 @@ var/list/science_positions = list(
 	"Research Director",
 	"Scientist",
 	"Roboticist",
-	"Xenobiologist"
+	"Xenobiologist",
+	"Chemist"
 )
 
 //BS12 EDIT

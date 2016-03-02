@@ -882,7 +882,7 @@ client
 		qdel(rem_organ)
 
 	else if(href_list["fix_nano"])
-		if(!check_rights(R_DEBUG)) return
+		if(!check_rights(R_ADMIN)) return
 
 		var/mob/H = locate(href_list["fix_nano"])
 

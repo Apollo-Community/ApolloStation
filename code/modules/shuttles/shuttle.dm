@@ -116,6 +116,7 @@
 	origin.move_contents_to(destination, direction=direction)
 
 	for(var/mob/M in destination)
+		destination.Entered(M)
 		if(M.client)
 			spawn(0)
 				if(M.buckled)

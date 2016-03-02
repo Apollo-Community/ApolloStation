@@ -174,6 +174,13 @@
 		if(round(world.realtime/864000)- text2days(prefs.joined_date) >= 30)
 			prefs.passed_date = 1
 
+	if(!prefs.country_code  && !address == "127.0.0.1")		//Stops localhost trying to be resolved.
+		var/list/http[] = world.Export("http://www.freegeoip.net/json/[address]")
+		if(http && http.len && ("CONTENT" in http))
+			var/regex/R = new("country_code\":\"(\\w+)\"")
+			if(R.Find(file2text(http["CONTENT"])))
+				prefs.country_code = R.group[1]		//There should only ever be one!
+
 	. = ..()	//calls mob.Login()
 
 	if(custom_event_msg && custom_event_msg != "")
@@ -227,6 +234,7 @@
 		stat_player_list = sortAssoc(stat_player_list)
 
 	log_client_to_db()
+
 	loadTokens()
 
 	if(!prefs.passed_date)
@@ -261,9 +269,35 @@
 
 // here because it's similar to below
 
+/*											This can wait until we get a RU translation
+/client/proc/handle_country_codes()
+	if(!prefs.country_code)		return
+	switch(prefs.country_code)
+		if("BRA")	src << "<span class='admin_channel'>Esperamos que você fale inglês corretamente. Se você não fala inglês fluentemente, esse servidor pode não ser adequado para você.</span>"
+*/
 /client/proc/gen_infraction_table()
-	if(!prefs.passed_date || (related_accounts_ip && !holder && !findtext(related_accounts_ip, "[ckey]")) || (related_accounts_cid && !holder && !findtext(related_accounts_cid, "[ckey]")))
-		message_admins("\nCkey\t\t\tJoined Date\t\tRelated Accounts\t\t\tRelated IPs\n<a href='?src=\ref[usr];priv_msg=\ref[src.mob]'>[ckey]</a>(<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</a>)\t\t[prefs.passed_date ? "[prefs.joined_date]" : "<span class='danger'>[prefs.joined_date]</span>"]\t\t[related_accounts_cid]\t\t\t[related_accounts_ip]<hr>")
+	if(!holder && (!prefs.passed_date || (related_accounts_ip && !findtext(related_accounts_ip, "[ckey]")) || (related_accounts_cid && !findtext(related_accounts_cid, "[ckey]"))))
+		var/message =  "\n<tt><font color='#386AFF'>\
+						+------------------+---------+------------+-----------------------------------+-----------------------------------+\n\
+						| Ckey             | Country | Join Date  | Related CIDs                      | Related IPs                       |\n\
+						+------------------+---------+------------+-----------------------------------+-----------------------------------+\n"
+					/*	| [ckey]           | ***     | 2010-09-11 | [related_accounts_cid]            | [related_accounts_ip]             |
+						+------------------+---------+------------+-----------------------------------+-----------------------------------+*/
+
+		var/list/padding_ammount = list(16 - (lentext(ckey) + 3) ,7 - lentext(prefs.country_code), 1, 33 - lentext(related_accounts_cid), 33 - lentext(related_accounts_ip))
+		var/list/padding_message = list("| <a href='?src=\ref[usr];priv_msg=\ref[src.mob]'>[padding_ammount[1] < 0 ? "[copytext(ckey,1,12)].." : "[ckey]"]</a>(<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</a>) ",
+										"| [prefs.country_code] ",
+										"| [prefs.passed_date ? "[prefs.joined_date]" : "<font color='#ff0000'>[prefs.joined_date]</font>"]",
+										"| [padding_ammount[4] < 0 ? "[copytext(related_accounts_cid,1,32)].." : "[related_accounts_cid]"] ",
+										"| [padding_ammount[5] < 0 ? "[copytext(related_accounts_ip,1,32)].." : "[related_accounts_ip]"] ")
+
+		for(var/i = 1 to 5)
+			message += padding_message[i]
+			for(var/p = 1; p <= padding_ammount[i]; p++)	message += " "
+
+		message += "|\n+------------------+---------+------------+-----------------------------------+-----------------------------------+</font></tt>\n"	//Closing table
+
+		for(var/client/C in admins)		C << "[message]"
 
 // Returns null if no DB connection can be established, or -1 if the requested key was not found in the database
 

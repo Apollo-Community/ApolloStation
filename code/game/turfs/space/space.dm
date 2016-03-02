@@ -1,8 +1,9 @@
 /turf/space
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
-	icon_state = "0"
+	icon_state = ""
 	dynamic_lighting = 0
+	plane = SPACE_PARALLAX_PLANE - 1
 
 	temperature = 3
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
@@ -10,8 +11,10 @@
 //	heat_capacity = 700000 No.
 
 /turf/space/New()
+	/*
 	if(!istype(src, /turf/space/transit) && !istype(src, /turf/space/bluespace))
 		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
+	*/
 
 	update_starlight()
 
