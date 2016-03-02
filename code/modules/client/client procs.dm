@@ -5,6 +5,7 @@
 #define UPLOAD_LIMIT		10485760	//Restricts client uploads to the server to 10MB //Boosted this thing. What's the worst that can happen?
 #define MIN_CLIENT_VERSION	0		//Just an ambiguously low version for now, I don't want to suddenly stop people playing.
 									//I would just like the code ready should it ever need to be used.
+#define REC_CLIENT_VERSION	510 	// Alerts people when their BYOND version is below this
 	/*
 	When somebody clicks a link in game, this Topic is called first.
 	It does the stuff in this proc and  then is redirected to the Topic() proc for the src=[0xWhatever]
@@ -118,13 +119,16 @@
 
 	if(!(connection in list("seeker", "web")))					//Invalid connection type.
 		return null
-	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
+	if( byond_version < MIN_CLIENT_VERSION )		//Out of date client.
 		return null
 
 	if(!config.guests_allowed && IsGuestKey(key))
 		alert(src,"This server doesn't allow guest accounts to play. Please go to http://www.byond.com/ and register for a key.","Guest","OK")
 		del(src)
 		return
+
+	if( byond_version < REC_CLIENT_VERSION )
+		alert(src,"Your BYOND client version is older than the recommended version. Please go to http://www.byond.com/download/ and download version [REC_CLIENT_VERSION].","BYOND Version","OK")
 
 	// Change the way they should download resources.
 	if(config.resource_urls)
