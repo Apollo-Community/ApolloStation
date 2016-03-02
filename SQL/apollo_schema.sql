@@ -199,9 +199,6 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `player_alt_titles` text,
   `flavor_texts_human` text,
   `flavor_texts_robot` text, -- Different
-  `med_notes` text,
-  `sec_notes` text,
-  `gen_notes` text,
   `med_record` text,
   `sec_record` text,
   `gen_record` text,
