@@ -811,7 +811,7 @@ var/list/be_special_flags = list(
 #define MAX_MESSAGE_LEN 1024
 #define MAX_PAPER_MESSAGE_LEN 25600
 #define MAX_BOOK_MESSAGE_LEN 51200
-#define MAX_NAME_LEN 30
+#define MAX_NAME_LEN 50
 
 // Event defines.
 #define EVENT_LEVEL_MUNDANE 1

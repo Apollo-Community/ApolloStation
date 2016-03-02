@@ -322,7 +322,7 @@
 	if( !query.NextRow() )
 		return 0
 
-	for( var/i = 1; i < variables.len; i++ )
+	for( var/i = 1; i <= variables.len; i++ )
 		var/value = query.item[i]
 
 		switch( variables[variables[i]] )

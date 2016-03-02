@@ -513,6 +513,7 @@
 #include "code\game\machinery\computer\card.dm"
 #include "code\game\machinery\computer\cloning.dm"
 #include "code\game\machinery\computer\communications.dm"
+#include "code\game\machinery\computer\complaints.dm"
 #include "code\game\machinery\computer\computer.dm"
 #include "code\game\machinery\computer\crew.dm"
 #include "code\game\machinery\computer\employment.dm"

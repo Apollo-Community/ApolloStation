@@ -124,7 +124,7 @@
 				callHook("reassign_employee", list(modify))
 
 				ping( "\The [src] pings, \"[C.name] has been [J.job_verb] [J.job]!\"" )
-				C.addRecordNote( "general", J.info, "[capitalize( J.job_verb )] [J.job]" )
+				addToPaperworkRecord( user, C.unique_identifier, J.info, "[capitalize( J.job_verb )] [J.job]", "Unclassified", "Employment" )
 
 			due_papers -= F
 			qdel( F )
