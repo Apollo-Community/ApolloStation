@@ -99,6 +99,13 @@
 	return .
 
 /obj/machinery/computer/employment/proc/centcomm_records( mob/user as mob )
+	if( temp )
+		. = text("<TT>[]</TT><BR><BR><A href='?src=\ref[];choice=Clear Screen'>Clear Screen</A>", temp, src)
+		return
+
+	if( !authenticated )
+		return
+
 	switch( screen )
 		if( 1 )
 			establish_db_connection()
@@ -147,13 +154,14 @@
 <th>Paperwork</th>
 </tr>"}
 			while( db_query.NextRow() )
+				var/char_name = db_query.item[1]
 				. += "<tr>"
-				. += "<td>[db_query.item[1]]</td>"
+				. += "<td>[char_name]</td>"
 				. += "<td>[db_query.item[2]]</td>"
 				. += "<td>[db_query.item[3]]</td>"
 				. += "<td>[db_query.item[4]]</td>"
 				. += "<td>[db_query.item[5]]</td>"
-				. += "<td><a href='?src=\ref[src];choice=Load Paperwork;hash=[db_query.item[6]]'>View</a></td>"
+				. += "<td><a href='?src=\ref[src];choice=Load Paperwork;hash=[db_query.item[6]];name=[char_name]'>View</a></td>"
 				. += "</tr>"
 
 			. += "</table>"
@@ -183,7 +191,7 @@
 
 			. += {"<table class='outline'>
 <tr>
-<th>Paperwork Records</th>
+<th>Paperwork Records: [tempname]</th>
 </tr>
 </table>
 <table class='border'>
@@ -352,6 +360,7 @@ What a mess.*/
 				screen = 2
 
 				query = href_list["hash"]
+				tempname = href_list["name"]
 				query_type = "unique_identifier"
 
 			if( "View Paperwork" )
