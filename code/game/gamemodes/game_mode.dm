@@ -298,12 +298,15 @@
 	//var/list/drafted = list()
 	//var/datum/mind/applicant = null
 
+	world << "[role] passed to get_players_for_role"
+
 	var/roletext
 	switch(role)
 		if(BE_CHANGELING)	roletext="changeling"
 		if(BE_TRAITOR)		roletext="traitor"
 		if(BE_OPERATIVE)	roletext="operative"
 		if(BE_WIZARD)		roletext="wizard"
+		if(BE_BROODSWARM)   roletext="broodswarm"
 		if(BE_REV)			roletext="revolutionary"
 		if(BE_CULTIST)		roletext="cultist"
 		if(BE_NINJA)		roletext="ninja"
@@ -341,6 +344,7 @@
 		for(var/datum/mind/player in candidates)
 			for(var/job in restricted_jobs)
 				if(player.assigned_role == job)
+					world << "[player.key] has a [job] and was removed"
 					candidates -= player
 
 	/*if(candidates.len < recommended_enemies)

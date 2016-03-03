@@ -60,7 +60,6 @@
 	var/weeds_phoron_rate = 5   // phoron regen on weeds.
 
 /datum/species/xenos/can_understand(var/mob/other)
-
 	if(istype(other,/mob/living/carbon/alien/larva))
 		return 1
 

@@ -115,6 +115,10 @@
 	if(status_flags & GODMODE)	return 0	//godmode
 	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
 
+/mob/living/proc/setBruteLoss(var/amount)
+	if(status_flags & GODMODE)	return 0	//godmode
+	bruteloss = amount
+
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
@@ -143,6 +147,10 @@
 /mob/living/proc/adjustFireLoss(var/amount)
 	if(status_flags & GODMODE)	return 0	//godmode
 	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
+
+/mob/living/proc/setFireLoss(var/amount)
+	if(status_flags & GODMODE)	return 0	//godmode
+	fireloss = amount
 
 /mob/living/proc/getCloneLoss()
 	return cloneloss

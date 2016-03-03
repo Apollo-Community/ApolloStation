@@ -2,71 +2,101 @@
 #define BARRICADE_LEVEL 40 // Percentage of areas barricaded
 
 /datum/game_mode
-	// this includes admin-appointed traitors and multitraitors. Easy!
 	var/list/datum/mind/broodswarm = list()
+	var/obj/machinery/broodswam/large/hive_tumor/hive
 
 /datum/game_mode/broodswarm
-	name = "Broodswarm"
+	name = "broodswarm"
 	config_tag = "broodswarm"
-	required_players = 10
+	required_players = 1
 	required_enemies = 1
 	recommended_enemies = 1
+
+	restricted_jobs = list()
+	protected_jobs = list()
 
 	var/const/waittime_l = 50 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 300 //upper bound on time before intercept arrives (in tenths of seconds)
 
+	var/datum/mind/broodmother
 
 /datum/game_mode/broodswarm/announce()
+	world << "<span class='warning'>The station was brutalized by meteor impacts multiple hours ago. Communication with Central Command has been knocked out, and </span>"
+
+
+/datum/game_mode/broodswarm/can_start()
+	if(!..())
+		return 0
+	return 1
 
 /datum/game_mode/broodswarm/pre_setup()
 	config.canon = 0
 
-	spawn(0)
-		station_erosion( 60 )
+	var/list/candidates = get_players_for_role( BE_BROODSWARM )
 
-	spawn(1)
-		populate_random_items()
-
-	spawn(3)
-		populate_barricades( 40 )
-
-	if(config.protect_roles_from_antagonist)
-		restricted_jobs += protected_jobs
-
-	var/list/possible_broodswarm = get_players_for_role(BE_BROODSWARM)
-
-	// stop setup if no possible traitors
-	if(!possible_broodswarm.len)
+	if(candidates.len < required_enemies)
 		return 0
 
-	var/num_brood = 1
+	for( var/i = 0, ( i < recommended_enemies && candidates.len ), i++ )
+		var/datum/mind/M = pick(candidates)
+		broodswarm += M
+		candidates -= M
 
-	for(var/datum/mind/player in possible_broodswarm)
-		for(var/job in restricted_jobs)
-			if(player.assigned_role == job)
-				possible_broodswarm -= player
-
-	for(var/j = 0, j < num_traitors, j++)
-		if (!possible_traitors.len)
-			break
-		var/datum/mind/brood = pick(possible_broodswarm)
-		broodswarm += brood
-		brood.special_role = "traitor"
-		possible_broodswarm.Remove(brood)
-
-	if(!broodswarm.len)
-		return 0
 	return 1
 
+/datum/game_mode/broodswarm/pre_setup()
+	station_erosion( 60 )
+	populate_barricades( 40 )
+	populate_random_items()
+
+	return 1
 
 /datum/game_mode/broodswarm/post_setup()
+	create_broodmother()
+	greet_broodmother()
 
+	return 1
 
-/datum/game_mode/proc/greet_broodmother(var/datum/mind/broodmother)
+/datum/game_mode/broodswarm/proc/create_broodmother()
+	broodmother = pick( broodswarm )
+
+	if( !broodmother )
+		return
+
+	var/mob/original = broodmother.current
+	var/mob/living/carbon/human/broodmother/new_brood = new( pick( xeno_spawn ))
+	broodmother.transfer_to( new_brood )
+
+	qdel(original)
+
+/datum/game_mode/broodswarm/proc/greet_broodmother()
 	broodmother.current << "<B><font size=3 color=red>You are the Broodmother.</font></B>"
 	show_objectives(broodmother)
-
 
 /datum/game_mode/broodswarm/declare_completion()
 	..()
 	return//Traitors will be checked as part of check_extra_completion. Leaving this here as a reminder.
+
+/datum/controller/gameticker/proc/addToHive( var/obj/machinery/M )
+	if( !ticker.mode )
+		return
+
+	var/obj/machinery/broodswam/large/hive_tumor/hive = ticker.mode.hive
+	if( !hive )
+		return
+
+	hive.addStructure( M )
+
+	return 1
+
+/datum/controller/gameticker/proc/removeFromHive( var/obj/machinery/M )
+	if( !ticker.mode )
+		return 0
+
+	var/obj/machinery/broodswam/large/hive_tumor/hive = ticker.mode.hive
+	if( !hive )
+		return 0
+
+	hive.removeStructure( M )
+
+	return 1

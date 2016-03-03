@@ -5,12 +5,6 @@
 	icon_closed = "cabinet_closed"
 	icon_opened = "cabinet_open"
 
-/obj/structure/closet/cabinet/update_icon()
-	if(!opened)
-		icon_state = icon_closed
-	else
-		icon_state = icon_opened
-
 /obj/structure/closet/acloset
 	name = "strange closet"
 	desc = "It looks alien!"

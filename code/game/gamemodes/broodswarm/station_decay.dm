@@ -1,13 +1,12 @@
 // Makes minor explosions to make the station a little bruised
-proc/station_erosion( var/erosion_level )
-	var/i = 0
-	while( i<erosion_level )
-		var/turf/T = locate( rand(0, 255), rand(0, 255), 1 )
+proc/station_erosion( var/erosion_level = 60 )
+	for( var/i = 0; i < erosion_level;  )
+		var/turf/T = locate( rand(0, 255), rand(0, 255), pick( config.station_levels ))
 
 		if( !istype( T, /turf/space ))
-			var/size = rand( 2, 10 )
+			var/size = rand( 5, 10 )
 			if( !near_space( T, size+1 )) // We want to lower the station structural integrity, yet keep it habitable
-				explosion(T, 0, 0, size, 0, 0)
+				explosion_rec(T, size, 3)
 				i++
 
 	for( var/area/A in all_areas )
@@ -22,16 +21,22 @@ proc/station_erosion( var/erosion_level )
 	return
 
 // Just adds random items strewn around the map
-proc/populate_random_items()
-	var/gun_count = 0
+proc/populate_random_items( var/max_guns = 20 )
+	for( var/gun_count = 0; gun_count < max_guns;  )
+		var/turf/T = locate( rand(0, 255), rand(0, 255), pick( config.station_levels ))
+		if( !T )
+			continue
 
-	for( var/area/A in all_areas )
-		for( var/turf/T in A )
-			if( prob( 0.001 )) // 1/10000 chance for a gun to spawn on the ground
-				new /obj/random/gun(T)
-				gun_count++
-	world << "Created [gun_count] guns around the map. Go find 'em!"
-	return
+		if( istype( T, /turf/space ))
+			continue
+
+		if( !isfloor( T ) )
+			continue
+
+		new /obj/random/gun(T)
+		gun_count++
+
+		return
 
 // Spreads all of the guns found on the map around the map
 proc/spread_guns()
@@ -40,26 +45,20 @@ proc/spread_guns()
 	for( var/area/A in all_areas )
 		for( var/obj/item/weapon/gun/G in A )
 			guns.Add( G )
-			world << "Added [G] to guns."
 
 	for( var/obj/item/weapon/gun/G in guns )
 		var/area/A = pick( all_areas )
 		var/turf/simulated/floor/T = pick( A.contents )
-		world << "Moved [G] from [G.loc] to [T]."
 		G.loc = T
 
 	return
 
 // Makes areas around the map barricaded
-proc/populate_barricades( var/barricade_chance )
-	var/areas_barricaded = 0
-
+proc/populate_barricades( var/barricade_chance = 10 )
 	for( var/area/A in all_areas )
 		if( prob( barricade_chance ))
 			barricade_area( A )
-			areas_barricaded++
 
-	world << "Barricaded [areas_barricaded] areas! Good luck getting inside!"
 	return
 
 // Barricades the given area
