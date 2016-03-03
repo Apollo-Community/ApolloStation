@@ -541,6 +541,7 @@
 	screen_loc = UI_SPACE_PARALLAX
 	plane = SPACE_PARALLAX_PLANE
 	blend_mode = BLEND_ADD
+	mouse_opacity = 0
 
 /image/space_star
 	icon = 'icons/turf/stars.dmi'
@@ -549,6 +550,7 @@
 	plane = SPACE_PARALLAX_PLANE
 	blend_mode = BLEND_ADD
 	appearance_flags = KEEP_APART
+	mouse_opacity = 0
 
 /image/space_star/New()
 	var/star_type = pick( prob(100); 0, prob(10); 1, prob(1); 2 )

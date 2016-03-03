@@ -68,6 +68,10 @@
 	..()	//redirect to hsrc.Topic()
 
 /client/proc/loadTokens()
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return 0
+
 	var/DBQuery/query
 
 	query = dbcon.NewQuery("SELECT character_tokens FROM player WHERE ckey = '[ckey( ckey )]'")

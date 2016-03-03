@@ -220,6 +220,10 @@
 	if( !checkCharacter( character_name, ckey ))
 		return 0
 
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return 0
+
 	var/list/variables = list()
 
 	// Base information
