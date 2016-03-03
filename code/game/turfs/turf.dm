@@ -411,6 +411,14 @@
 			return 1
 	return 0
 
+/turf/proc/contains_unpassable()
+	if(density)
+		return 1
+	for(var/atom/A in src)
+		if( istype( A, /turf/simulated/wall ) || istype( A, /turf/unsimulated/wall ) || istype( A, /obj/machinery/door ) || ( A.density && !(A.flags & ON_BORDER)))
+			return 1
+	return 0
+
 /turf/proc/contains_opaque_objects()
 	for(var/atom/A in src)
 		if( A.opacity )

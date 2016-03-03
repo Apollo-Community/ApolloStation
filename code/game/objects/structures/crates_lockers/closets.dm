@@ -20,6 +20,9 @@
 	var/store_items = 1
 	var/store_mobs = 1
 
+	var/can_flip = 1 // Can the closet flip over?
+	var/flipped = 0 // Is it flipped over?
+
 	var/const/default_mob_size = 15
 
 /obj/structure/closet/initialize()
@@ -52,8 +55,8 @@
 			user << "There is still some free space."
 		else
 			user << "It is full."
-
-
+	if( can_flip && flipped )
+		user << "It is flipped over and could be used as cover."
 
 /obj/structure/closet/alter_health()
 	return get_turf(src)
@@ -61,6 +64,12 @@
 /obj/structure/closet/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0 || wall_mounted)) return 1
 	return (!density)
+
+/obj/structure/closet/Bumped(AM as mob|obj)
+	if( istype( AM, /mob ) && can_flip && flipped )
+		AM << "<span class='warning'>You have difficulty pushing the closet! Maybe you should turn it upright first?</span>"
+		return 0
+	return 1
 
 /obj/structure/closet/proc/can_open()
 	if(src.welded)
@@ -199,6 +208,11 @@
 		return
 
 	..()
+
+	if( can_flip && prob( 10 ))
+		src.visible_message("<span class='warning'>The closet is knocked over!</span>")
+		toggle_flip()
+
 	damage(Proj.damage)
 
 	return
@@ -321,6 +335,43 @@
 	else
 		usr << "<span class='warning'>This mob type can't use this verb.</span>"
 
+/obj/structure/closet/verb/flip()
+	set src in oview(1)
+	set category = "Object"
+	set name = "Flip Closet"
+
+	if(!can_flip)
+		return
+
+	if(anchored)
+		return
+
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return
+
+	toggle_flip(usr)
+
+/obj/structure/closet/proc/toggle_flip( var/mob/user )
+	if( !flipped )
+		if( user )
+			user.visible_message("<span class='warning'>[user] knocks over the closet!</span>")
+		knockOver()
+		return
+	else
+		if( user )
+			user << "You start lifting the closet back up..."
+			if(	do_after( user, 50 ))
+				user.visible_message("[user] lifts the closet upright")
+		liftUp()
+
+/obj/structure/closet/proc/knockOver()
+	flipped = 1
+	update_icon()
+
+/obj/structure/closet/proc/liftUp()
+	flipped = 0
+	update_icon()
+
 /obj/structure/closet/update_icon()//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
 	overlays.Cut()
 	if(!opened)
@@ -329,6 +380,17 @@
 			overlays += "welded"
 	else
 		icon_state = icon_opened
+
+	flip_icon()
+
+/obj/structure/closet/proc/flip_icon( var/degrees = 270 )
+	var/matrix/M = matrix()
+
+	if( can_flip && flipped )
+		M.Turn( degrees )
+		M.Translate( 0, -6 )
+
+	src.transform = M
 
 /obj/structure/closet/hear_talk(mob/M as mob, text, verb, datum/language/speaking)
 	for (var/atom/A in src)
@@ -382,9 +444,13 @@
 		if(!req_breakout())
 			breakout = 0
 			return
+		if( can_flip && prob( 10 ) && !flipped )
+			escapee << "<span class='warning'>In your struggle, you accidentally knock over the closet!</span>"
+			knockOver()
 
 	//Well then break it!
 	breakout = 0
+
 	escapee << "<span class='warning'>You successfully break out!</span>"
 	visible_message("<span class='danger'>\the [escapee] successfully broke out of \the [src]!</span>")
 	playsound(src.loc, 'sound/effects/grillehit.ogg', 100, 1)

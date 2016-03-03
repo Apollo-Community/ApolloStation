@@ -132,3 +132,5 @@
 			overlays += "welded"
 	else
 		icon_state = icon_opened
+
+	flip_icon()

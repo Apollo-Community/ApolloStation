@@ -1503,7 +1503,7 @@ datum
 				if( (prob(10) && method==TOUCH) || method==INGEST)
 					M.contract_disease(new /datum/disease/xeno_transformation(0),1)
 
-		fluorosurfactant//foam precursor
+		fluorosurfactant //foam precursor
 			name = "Fluorosurfactant"
 			id = "fluorosurfactant"
 			description = "A perfluoronated sulfonic acid that forms a foam when mixed with water."

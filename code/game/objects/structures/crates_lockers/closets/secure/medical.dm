@@ -24,8 +24,6 @@
 		new /obj/item/weapon/reagent_containers/glass/bottle/antitoxin(src)
 		return
 
-
-
 /obj/structure/closet/secure_closet/medical2
 	name = "anesthetics closet"
 	desc = "Used to knock people out."
@@ -47,8 +45,6 @@
 		new /obj/item/clothing/mask/breath/medical(src)
 		new /obj/item/clothing/mask/breath/medical(src)
 		return
-
-
 
 /obj/structure/closet/secure_closet/medical3
 	name = "medical doctor's locker"
@@ -98,8 +94,6 @@
 		new /obj/item/device/radio/headset/headset_med(src)
 		return
 
-
-
 /obj/structure/closet/secure_closet/CMO
 	name = "chief medical officer's locker"
 	req_access = list(access_cmo)
@@ -140,8 +134,6 @@
 		new /obj/item/weapon/reagent_containers/hypospray(src)
 		return
 
-
-
 /obj/structure/closet/secure_closet/animal
 	name = "animal control closet"
 	req_access = list(access_surgery)
@@ -154,8 +146,6 @@
 		new /obj/item/device/radio/electropack(src)
 		new /obj/item/device/radio/electropack(src)
 		return
-
-
 
 /obj/structure/closet/secure_closet/chemical
 	name = "chemical closet"
