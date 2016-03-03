@@ -220,35 +220,37 @@
 
 	var/sql_ckey = ckey( user.client.ckey )
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT name, gender, birth_date, department FROM characters WHERE ckey = '[sql_ckey]' ORDER BY name")
-	query.Execute()
+	establish_db_connection()
+	if( dbcon.IsConnected() )
+		var/DBQuery/query = dbcon.NewQuery("SELECT name, gender, birth_date, department FROM characters WHERE ckey = '[sql_ckey]' ORDER BY name")
+		query.Execute()
 
-	. += "<tr>"
-	. += "<td><b>Name</b></td>"
-	. += "<td><b>Gender</b></td>"
-	. += "<td><b>Birth Date</b></td>"
-	. += "<td><b>Department</b></td>"
-	. += "</tr>"
-
-	while( query.NextRow() )
 		. += "<tr>"
-		if( selected_character && selected_character.name == query.item[1] )
-			. += "<td><b>[query.item[1]]</b> - Selected</td>"
-		else
-			. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=choose;name=[query.item[1]]'>[query.item[1]]</a></td>"
-
-		. += "<td>[capitalize( query.item[2] )]</td>"
-		. += "<td style='text-align:right'>[print_date( params2list( html_decode( query.item[3] )))]</td>"
-
-		var/datum/department/D = job_master.GetDepartment( text2num( query.item[4] ))
-		if( D )
-			. += "<td>[D.name]</td>"
-		else
-			. += "<td>Civilian</td>"
-
+		. += "<td><b>Name</b></td>"
+		. += "<td><b>Gender</b></td>"
+		. += "<td><b>Birth Date</b></td>"
+		. += "<td><b>Department</b></td>"
 		. += "</tr>"
 
-	. += "</table>"
+		while( query.NextRow() )
+			. += "<tr>"
+			if( selected_character && selected_character.name == query.item[1] )
+				. += "<td><b>[query.item[1]]</b> - Selected</td>"
+			else
+				. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=choose;name=[query.item[1]]'>[query.item[1]]</a></td>"
+
+			. += "<td>[capitalize( query.item[2] )]</td>"
+			. += "<td style='text-align:right'>[print_date( params2list( html_decode( query.item[3] )))]</td>"
+
+			var/datum/department/D = job_master.GetDepartment( text2num( query.item[4] ))
+			if( D )
+				. += "<td>[D.name]</td>"
+			else
+				. += "<td>Civilian</td>"
+
+			. += "</tr>"
+
+		. += "</table>"
 
 	. += "<hr><center><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>\[Done\]</a></center>"
 
