@@ -9,6 +9,7 @@ var/global/datum/controller/process/contractticker/contract_ticker
 /datum/controller/process/contractticker/setup()
 	name = "contract ticker"
 	schedule_interval = 10 // Every second, so we don't let contracts run past their time limit
+	cpu_threshold = 50
 
 	contracts = list()
 

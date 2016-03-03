@@ -121,6 +121,8 @@ var/global/datum/controller/gameticker/ticker
 	equip_characters()
 	data_core.manifest()
 
+	uplink.update_contracts() // populate the uplink with contracts
+
 	setup_economy()
 	current_state = GAME_STATE_PLAYING
 
