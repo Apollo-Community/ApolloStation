@@ -309,11 +309,13 @@
 		for(var/client/C in admins)		C << "[message]"
 
 // Returns null if no DB connection can be established, or -1 if the requested key was not found in the database
-
 /proc/get_player_age(key)
+	if( IsGuestKey( key ))
+		return -1
+
 	establish_db_connection()
 	if(!dbcon.IsConnected())
-		return null
+		return -1
 
 	var/sql_ckey = sql_sanitize_text(ckey(key))
 
@@ -327,8 +329,15 @@
 
 
 /client/proc/saveTokens()
+	if ( IsGuestKey(src.key) )
+		return 0
+
 	if( !character_tokens || !character_tokens.len )
-		return
+		return 0
+
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return 0
 
 	var/tokens
 	if( !character_tokens || !character_tokens.len )
@@ -342,7 +351,6 @@
 	query_insert.Execute()
 
 /client/proc/log_client_to_db( var/log_playtime = 0 )
-
 	if ( IsGuestKey(src.key) )
 		return
 
