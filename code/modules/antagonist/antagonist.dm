@@ -9,7 +9,7 @@
 	var/datum/contract/list/active_contracts = list() // Currently active contracts for the antagonist
 
 	var/datum/contract/list/completed_contracts = list()
-	var/mob/living/antag = null
+	var/datum/mind/antag = null
 
 /datum/antagonist/New()
 	..()

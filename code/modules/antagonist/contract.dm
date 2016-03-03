@@ -22,7 +22,7 @@
 // Start the contract for a new antag
 /datum/contract/proc/start(var/mob/living/worker)
 	workers += worker
-	worker.antagonist.contract_start()
+	worker.mind.antagonist.contract_start()
 
 // End the contract
 /datum/contract/proc/end(var/success = 0, var/mob/living/worker)
@@ -32,9 +32,9 @@
 
 	for(var/mob/living/M in workers)
 		if(M != worker)
-			M.antagonist.contract_ended(src, 0)
+			M.mind.antagonist.contract_ended(src, 0)
 		else
-			worker.antagonist.contract_ended(src, 1)
+			worker.mind.antagonist.contract_ended(src, 1)
 			reward(worker)
 
 	uplink.contract_ended(src)
