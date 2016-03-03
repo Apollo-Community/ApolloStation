@@ -60,7 +60,7 @@
 	Topic(var/href, var/list/href_list)
 		if(!interactable() || !computer.radio || ..(href,href_list) )
 			return
-		if( computer.z in config.station_levels )
+		if( !(computer.z in config.station_levels) )
 			usr << "<span class='alert'><b>Unable to establish a connection</b>: </span><span class='black'>You're too far away from the station!</span>"
 			return
 
@@ -187,7 +187,7 @@
 
 		// OMG CENTCOMM LETTERHEAD
 		if("MessageCentcomm" in href_list)
-			if(!computer.radio.subspace)
+			if(!computer.radio)
 				return
 			if(authenticated==2)
 				if(centcomm_message_cooldown)
@@ -277,7 +277,7 @@
 
 	proc/main_menu()
 		var/dat = ""
-		if (computer.radio.subspace)
+		if (!computer.radio)
 			if(emergency_shuttle.online() && emergency_shuttle.location())
 				var/timeleft = emergency_shuttle.estimate_arrival_time()
 				dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [timeleft / 60 % 60]:[add_zero(num2text(timeleft % 60), 2)]<BR>"
