@@ -147,8 +147,8 @@
 // Debug verb for antagonist update
 /client/proc/debug_antag(item in list("Uplink", "Contract Ticker"))
 	set category = "Debug"
-	set name = "Debug Uplink"
-	set desc = "Debug the Uplink"
+	set name = "Debug Antagonists"
+	set desc = "Debug antagonist-related stuff"
 
 	if(!holder)	return
 	switch(item)

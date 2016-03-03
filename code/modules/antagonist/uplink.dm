@@ -22,9 +22,14 @@ var/global/datum/contract/list/restricted_contracts = list()
 		else
 			regular_contracts += C
 
+	// Sanity. There should always be regular contracts
+	if(regular_contracts.len == 0)	return
+
 	var/path = pick(regular_contracts)
 	for(var/i = 0; i < rand(contracts_min, contracts_max); i++)
 		contracts += new path()
+
+	if(restricted_contracts.len == 0)	return
 
 	path = pick(restricted_contracts)
 	for(var/i = 0; i < rand(restricted_contracts_min, restricted_contracts_max); i++)

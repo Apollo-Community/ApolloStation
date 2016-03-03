@@ -29,12 +29,12 @@
 	finished = 1
 	completed = success
 
-	if(!success)
-		for(var/mob/living/M in workers)
+	for(var/mob/living/M in workers)
+		if(M != worker)
 			M.antagonist.contract_ended(src, 0)
-	else
-		worker.antagonist.contract_ended(src, 1)
-		reward(worker)
+		else
+			worker.antagonist.contract_ended(src, 1)
+			reward(worker)
 
 	uplink.contract_ended(src)
 
