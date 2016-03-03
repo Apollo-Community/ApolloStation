@@ -181,6 +181,10 @@
 	return 1
 
 /proc/checkCharacter( var/character_name, var/ckey )
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return 0
+
 	if( !ckey )
 		return 0
 
