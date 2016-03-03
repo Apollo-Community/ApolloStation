@@ -932,6 +932,7 @@
 #include "code\modules\antagonist\contract.dm"
 #include "code\modules\antagonist\contract_ticker.dm"
 #include "code\modules\antagonist\uplink.dm"
+#include "code\modules\antagonist\contracts\kill.dm"
 #include "code\modules\admin\admin.dm"
 #include "code\modules\admin\admin_investigate.dm"
 #include "code\modules\admin\admin_memo.dm"
