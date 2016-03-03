@@ -25,7 +25,7 @@ var/global/list/joblist = list()					//list of all jobstypes, minus borg and AI
 var/global/list/all_species[0]
 var/global/list/all_languages[0]
 var/global/list/language_keys[0]					// Table of say codes for all languages
-var/global/list/whitelisted_species = list("Human") // Species that require a whitelist check.
+var/global/list/whitelisted_species = list() 		// Species that require a whitelist check.
 var/global/list/playable_species = list("Human")    // A list of ALL playable species, whitelisted, latejoin or otherwise.
 
 // Posters
@@ -49,7 +49,11 @@ var/global/list/underwear_f = list("Red", "White", "Yellow", "Blue", "Black", "T
 	//undershirt
 var/global/list/undershirt_t = list("Black Tank top", "White Tank top", "Black shirt", "White shirt", "None")
 	//Backpacks
-var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Alt")
+var/global/list/backpacklist = list("Nothing", "Backpack", "Satchel", "Satchel Alt")
+
+// pre- and postfixes for alloys
+var/global/list/alloy_prefix = list("diamond" = "ada", "uranium" = "ura", "solid phoron" = "phoro", "gold" = "dives", "silver" = "argent", "iron" = "ferro", "platinum" = "cata", "tritium" = "trit", "osmium" = "osi", "sandstone" = "saso", "plastic" = "plast")
+var/global/list/alloy_postfix = list("metal" = "metallic", "glass" = "glaseous")
 
 //////////////////////////
 /////Initial Building/////
@@ -109,7 +113,7 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Al
 			language_keys["#[lowertext(L.key)]"] = L
 
 	var/rkey = 0
-	paths = typesof(/datum/species)-/datum/species
+	paths = subtypes(/datum/species)
 	for(var/T in paths)
 		rkey++
 		var/datum/species/S = new T
@@ -117,9 +121,12 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Al
 		all_species[S.name] = S
 
 		if(!(S.flags & IS_RESTRICTED))
-			playable_species += S.name
-		if(S.flags & IS_WHITELISTED)
-			whitelisted_species += S.name
+			world << "[S.name]"
+			playable_species |= S.name
+		if( S.flags & IS_WHITELISTED )
+			whitelisted_species |= S.name
+
+	whitelisted_species &= playable_species
 
 	//Posters
 	paths = typesof(/datum/poster) - /datum/poster

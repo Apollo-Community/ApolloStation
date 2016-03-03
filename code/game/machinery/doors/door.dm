@@ -13,6 +13,7 @@
 	opacity = 1
 	density = 1
 	layer = DOOR_OPEN_LAYER
+
 	var/open_layer = DOOR_OPEN_LAYER
 	var/closed_layer = DOOR_CLOSED_LAYER
 
@@ -82,11 +83,14 @@
 	//return
 
 /obj/machinery/door/Bumped(atom/AM)
-	if(p_open || operating) return
+	if(p_open || operating)
+		return
+
+	if(( world.time - src.last_bumped ) <= 5) //Can bump-open twice per second. This is to prevent shock / noise spam.
+		return
+
 	if(ismob(AM))
 		var/mob/M = AM
-		if(world.time - M.last_bumped <= 10) return	//Can bump-open one airlock per second. This is to prevent shock spam.
-		M.last_bumped = world.time
 		if(!M.restrained() && !M.small)
 			bumpopen(M)
 		return
@@ -152,7 +156,7 @@
 		else
 			emitter_hits ++
 			if(emitter_hits >= emitter_resistance)
-				visible_message("\red <B>[src.name] breaks apart!</B>", 1)
+				visible_message("<span class='alert'><B>[src.name] breaks apart!</B></span>", 1)
 				new /obj/effect/decal/cleanable/ash(src.loc) // Turn it to ashes!
 				qdel(src)
 
@@ -162,7 +166,7 @@
 
 /obj/machinery/door/hitby(AM as mob|obj, var/speed=5)
 	..()
-	visible_message("\red <B>[src.name] was hit by [AM].</B>")
+	visible_message("<span class='alert'><B>[src.name] was hit by [AM].</B></span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 15 * (speed/5)
@@ -176,7 +180,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/door/attack_hand(mob/user as mob)
-	return src.attackby(user, user)
+	return src.attackby( user, user )
 
 /obj/machinery/door/attack_tk(mob/user as mob)
 	if(requiresID() && !allowed(null))
@@ -253,9 +257,9 @@
 		var/obj/item/weapon/W = I
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			if(W.force < min_force)
-				user.visible_message("\red <B>\The [user] hits \the [src] with \the [W] with no visible effect.</B>" )
+				user.visible_message("<span class='alert'><B>\The [user] hits \the [src] with \the [W] with no visible effect.</B></span>" )
 			else
-				user.visible_message("\red <B>\The [user] forcefully strikes \the [src] with \the [W]!</B>" )
+				user.visible_message("<span class='alert'><B>\The [user] forcefully strikes \the [src] with \the [W]!</B></span>" )
 				playsound(src.loc, hitsound, 100, 1)
 				take_damage(W.force)
 		return
@@ -263,10 +267,7 @@
 	if(src.operating) return
 
 	if(src.density && (operable() && istype(I, /obj/item/weapon/card/emag)))
-		flick("door_spark", src)
-		sleep(6)
-		open()
-		operating = -1
+		emag()
 		return 1
 
 	if(src.allowed(user) && operable())
@@ -276,10 +277,32 @@
 			close()
 		return
 
+	if(istype( user, /mob/living/simple_animal/rodent/rat/king ))
+		var/mob/living/simple_animal/rodent/rat/king/K = user
+		if( K.canNibbleWire() )
+			src.visible_message("<span class='warning'>\The [user] begins to nibble on the door wiring!</span>" )
+
+			if( !do_after( user, 100 ))
+				user << "<span class='warning'>You need to wait longer to chew through the door's wiring!</span>"
+				return 0
+
+			src.visible_message("<span class='warning'>\The [user] chews its way through the door wiring!</span>" )
+
+			emag()
+			return 1
+		else
+			user << "<span class='warning'>Our [K.swarm_name] must grow larger before we can chew through wires!</span>"
+
 	if(src.density && !(stat & (NOPOWER|BROKEN)))
 		do_animate("deny")
 
 	return
+
+/obj/machinery/door/proc/emag()
+	flick("door_spark", src)
+	sleep(6)
+	open()
+	operating = -1
 
 /obj/machinery/door/proc/take_damage(var/damage)
 	var/initialhealth = src.health

@@ -175,7 +175,7 @@
 /obj/item/weapon/twohanded/dualsaber/attack(target as mob, mob/living/user as mob)
 	..()
 	if((CLUMSY in user.mutations) && (wielded) &&prob(40))
-		user << "\red You twirl around a bit before losing your balance and impaling yourself on the [src]."
+		user << "<span class='alert'>You twirl around a bit before losing your balance and impaling yourself on the [src].</span>"
 		user.take_organ_damage(20,25)
 		return
 	if((wielded) && prob(50))
@@ -193,6 +193,7 @@
 //spears, bay edition
 /obj/item/weapon/twohanded/spear
 	icon_state = "spearglass"
+	item_state = "spearglass0"
 	name = "spear"
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 14

@@ -178,7 +178,7 @@
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
 	if(istype(G, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
-			user << "\red A beaker is already loaded into the machine."
+			user << "<span class='alert'>A beaker is already loaded into the machine.</span>"
 			return
 
 		beaker =  G
@@ -276,22 +276,22 @@
 	return
 /obj/machinery/atmospherics/unary/cryo_cell/proc/put_mob(mob/living/carbon/M as mob)
 	if (stat & (NOPOWER|BROKEN))
-		usr << "\red The cryo cell is not functioning."
+		usr << "<span class='alert'>The cryo cell is not functioning.</span>"
 		return
 	if (!istype(M))
-		usr << "\red <B>The cryo cell cannot handle such a lifeform!</B>"
+		usr << "<span class='alert'><B>The cryo cell cannot handle such a lifeform!</B></span>"
 		return
 	if (M.species && M.species.flags & NO_CRYO)
-		usr << "\red <B>The cryo cell is in-effective at curing this species!<B>"
+		usr << "<span class='alert'><B>The cryo cell is in-effective at curing this species!<B></span>"
 		return
 	if (occupant)
-		usr << "\red <B>The cryo cell is already occupied!</B>"
+		usr << "<span class='alert'><B>The cryo cell is already occupied!</B></span>"
 		return
 	if (M.abiotic())
-		usr << "\red Subject may not have abiotic items on."
+		usr << "<span class='alert'>Subject may not have abiotic items on.</span>"
 		return
 	if(!node)
-		usr << "\red The cell is not correctly connected to its pipe network!"
+		usr << "<span class='alert'>The cell is not correctly connected to its pipe network!</span>"
 		return
 	if (M.client)
 		M.client.perspective = EYE_PERSPECTIVE
@@ -299,7 +299,7 @@
 	M.stop_pulling()
 	M.loc = src
 	if(M.health > -100 && (M.health < 0 || M.sleeping))
-		M << "\blue <b>You feel a cold liquid surround you. Your skin starts to freeze up.</b>"
+		M << "<span class='notice'><b>You feel a cold liquid surround you. Your skin starts to freeze up.</b></span>"
 	occupant = M
 	current_heat_capacity = HEAT_CAPACITY_HUMAN
 	update_use_power(2)
@@ -315,7 +315,7 @@
 	if(usr == occupant)//If the user is inside the tube...
 		if (usr.stat == 2)//and he's not dead....
 			return
-		usr << "\blue Release sequence activated. This will take two minutes."
+		usr << "<span class='notice'>Release sequence activated. This will take two minutes.</span>"
 		sleep(1200)
 		if(!src || !usr || !occupant || (occupant != usr)) //Check if someone's released/replaced/bombed him already
 			return

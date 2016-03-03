@@ -1,7 +1,7 @@
 /mob/new_player/Login()
 	update_Login_details()	//handles setting lastKnownIP and computer_id for use by the ban systems as well as checking for multikeying
 
-	var/alien_of_the_week = "This week's de-whitelisted alien: <b>[unwhitelisted_alien]</b>! Go ahead and give them a try, free of charge!"
+	var/alien_of_the_week = "This week's de-whitelisted alien: <b>[unwhitelisted_alien]</b>! Go ahead and give them a try!"
 
 	if(join_motd)
 		var/motd = "<div class='motd'><center>[join_motd]<br>[alien_of_the_week]<br></center></div><hr>"

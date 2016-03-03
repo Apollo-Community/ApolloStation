@@ -272,7 +272,19 @@
 
 var/list/mob/living/forced_ambiance_list = new
 
-/area/Entered(A)
+/area/Entered(var/atom/A)
+	if(!istype(A,/mob) && !locate(/mob) in A.contents)	return
+
+	var/mob/M = A
+	if(!istype(M))
+		// In case there's multiple mobs inside
+		for(M in A.contents)
+			if( M.client )
+				M.hud_used.update_parallax_style(parallax_style)
+	else
+		if( M.client )
+			M.hud_used.update_parallax_style(parallax_style)
+
 	if(!istype(A,/mob/living))	return
 
 	var/mob/living/L = A
@@ -329,8 +341,9 @@ var/list/mob/living/forced_ambiance_list = new
 		else if(src.music && prob(35))
 			if((world.time >= L.client.played + 600))
 				var/musVolume = 25
-				L << sound( pick(music), repeat = 0, wait = 0, volume = musVolume, channel = 1)
-				L.client.played = world.time
+				if( music && music.len )
+					L << sound( pick(music), repeat = 0, wait = 0, volume = musVolume, channel = 1)
+					L.client.played = world.time
 
 /area/proc/gravitychange(var/gravitystate = 0, var/area/A)
 

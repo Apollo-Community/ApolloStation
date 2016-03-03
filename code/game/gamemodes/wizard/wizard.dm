@@ -22,7 +22,7 @@
 /datum/game_mode/wizard/announce()
 /*
 	world << "<B>The current game mode is - Wizard!</B>"
-	world << "<B>There is a \red SPACE WIZARD\black on the station. You can't let him achieve his objective!</B>"
+	world << "<B>There is a <span class='alert'>SPACE WIZARD</span>\black on the station. You can't let him achieve his objective!</B>"
 */
 
 /datum/game_mode/wizard/can_start()//This could be better, will likely have to recode it later
@@ -38,7 +38,7 @@
 	wizard.special_role = "Wizard"
 	wizard.original = wizard.current
 	if(wizardstart.len == 0)
-		wizard.current << "<B>\red A starting location for you could not be found, please report this bug!</B>"
+		wizard.current << "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>"
 		return 0
 	return 1
 
@@ -135,7 +135,7 @@
 
 /datum/game_mode/proc/greet_wizard(var/datum/mind/wizard, var/you_are=1)
 	if (you_are)
-		wizard.current << "<B>\red You are the Space Wizard!</B>"
+		wizard.current << "<B><span class='alert'>You are the Space Wizard!</span></B>"
 	show_objectives(wizard)
 
 /*/datum/game_mode/proc/learn_basic_spells(mob/living/carbon/human/wizard_mob)
@@ -165,9 +165,9 @@
 	wizard_mob.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/sandal(wizard_mob), slot_shoes)
 	wizard_mob.equip_to_slot_or_qdel(new /obj/item/clothing/suit/wizrobe(wizard_mob), slot_wear_suit)
 	wizard_mob.equip_to_slot_or_qdel(new /obj/item/clothing/head/wizard(wizard_mob), slot_head)
-	if(wizard_mob.backbag == 2) wizard_mob.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack(wizard_mob), slot_back)
-	if(wizard_mob.backbag == 3) wizard_mob.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel_norm(wizard_mob), slot_back)
-	if(wizard_mob.backbag == 4) wizard_mob.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel(wizard_mob), slot_back)
+	if(wizard_mob.character.backpack == 2) wizard_mob.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack(wizard_mob), slot_back)
+	if(wizard_mob.character.backpack == 3) wizard_mob.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel_norm(wizard_mob), slot_back)
+	if(wizard_mob.character.backpack == 4) wizard_mob.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel(wizard_mob), slot_back)
 	wizard_mob.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box(wizard_mob), slot_in_backpack)
 //	wizard_mob.equip_to_slot_or_qdel(new /obj/item/weapon/scrying_gem(wizard_mob), slot_l_store) For scrying gem.
 	wizard_mob.equip_to_slot_or_qdel(new /obj/item/weapon/teleportation_scroll(wizard_mob), slot_r_store)
@@ -204,7 +204,7 @@
 /datum/game_mode/wizard/declare_completion()
 	if(finished)
 		feedback_set_details("round_end_result","loss - wizard killed")
-		world << "\red <FONT size = 3><B> The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</B></FONT>"
+		world << "<span class='alert'><FONT size = 3><B> The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</B></FONT></span>"
 	..()
 	return 1
 

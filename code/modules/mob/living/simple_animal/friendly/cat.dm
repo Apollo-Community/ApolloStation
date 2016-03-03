@@ -17,7 +17,7 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
 	var/turns_since_scan = 0
-	var/mob/living/simple_animal/mouse/movement_target
+	var/mob/living/simple_animal/rodent/movement_target
 	min_oxy = 16 //Require atleast 16kPA oxygen
 	minbodytemp = 223		//Below -50 Degrees Celcius
 	maxbodytemp = 323	//Above 50 Degrees Celcius
@@ -32,7 +32,7 @@
 	//MICE!
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
-			for(var/mob/living/simple_animal/mouse/M in loc)
+			for(var/mob/living/simple_animal/rodent/M in loc)
 				if(!M.stat)
 					M.splat()
 					visible_emote(pick("bites \the [M]!","toys with \the [M].","chomps on \the [M]!"))
@@ -42,7 +42,7 @@
 
 	..()
 
-	for(var/mob/living/simple_animal/mouse/snack in oview(src,5))
+	for(var/mob/living/simple_animal/rodent/snack in oview(src,5))
 		if(snack.stat < DEAD && prob(15))
 			audible_emote(pick("hisses and spits!","mrowls fiercely!","eyes [snack] hungrily."))
 		break
@@ -62,7 +62,7 @@
 		if( !movement_target || !(movement_target.loc in oview(src, 4)) )
 			movement_target = null
 			stop_automated_movement = 0
-			for(var/mob/living/simple_animal/mouse/snack in oview(src))
+			for(var/mob/living/simple_animal/rodent/snack in oview(src))
 				if(isturf(snack.loc) && !snack.stat)
 					movement_target = snack
 					break
@@ -94,6 +94,7 @@
 	icon_state = "cat"
 	icon_living = "cat"
 	icon_dead = "cat_dead"
+	holder_type = /obj/item/weapon/holder/runtime
 
 /mob/living/simple_animal/cat/kitten
 	name = "kitten"

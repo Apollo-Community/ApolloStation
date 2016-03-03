@@ -41,13 +41,19 @@
 	set category = "Object"
 	set name = "Enter Body Scanner"
 
+	if(!(ishuman(usr) || issmall(usr)))
+		return
+	for(var/mob/living/carbon/slime/M in range(1,usr))
+		if(M.Victim == usr)
+			usr << "You're too busy getting your life sucked out of you."
+			return
 	if (usr.stat != 0)
 		return
 	if (src.occupant)
-		usr << "\blue <B>The scanner is already occupied!</B>"
+		usr << "<span class='notice'><B>The scanner is already occupied!</B></span>"
 		return
 	if (usr.abiotic())
-		usr << "\blue <B>Subject cannot have abiotic items on.</B>"
+		usr << "<span class='notice'><B>Subject cannot have abiotic items on.</B></span>"
 		return
 	usr.pulling = null
 	usr.client.perspective = EYE_PERSPECTIVE
@@ -82,10 +88,10 @@
 	if ((!( istype(G, /obj/item/weapon/grab) ) || !( ismob(G.affecting) )))
 		return
 	if (src.occupant)
-		user << "\blue <B>The scanner is already occupied!</B>"
+		user << "<span class='notice'><B>The scanner is already occupied!</B></span>"
 		return
 	if (G.affecting.abiotic())
-		user << "\blue <B>Subject cannot have abiotic items on.</B>"
+		user << "<span class='notice'><B>Subject cannot have abiotic items on.</B></span>"
 		return
 	var/mob/M = G.affecting
 	if (M.client)
@@ -231,10 +237,10 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(!connected || (connected.stat & (NOPOWER|BROKEN)))
-		user << "\red This console is not connected to a functioning body scanner."
+		user << "<span class='alert'>This console is not connected to a functioning body scanner.</span>"
 		return
 	if(!ishuman(connected.occupant))
-		user << "\red This device can only scan compatible lifeforms."
+		user << "<span class='alert'>This device can only scan compatible lifeforms.</span>"
 		return
 
 	var/dat

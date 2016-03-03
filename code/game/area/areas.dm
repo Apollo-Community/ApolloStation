@@ -7,39 +7,12 @@
 	icon = "ICON FILENAME" 			(defaults to areas.dmi)
 	icon_state = "NAME OF ICON" 	(defaults to "unknown" (blank))
 	requires_power = 0 				(defaults to 1)
-	music = "music/music.ogg"		(defaults to "music/music.ogg")
+	music = list( 'sound/music/music.ogg' )
 
 NOTE: there are two lists of areas in the end of this file: centcom and station itself. Please maintain these lists valid. --rastaf0
 
 */
 
-// Environment types
-#define GENERIC 0
-#define PADDED_CELL 1
-#define ROOM 2
-#define BATHROOM 3
-#define LIVINGROOM 4
-#define STONEROOM 5
-#define AUDITORIUM 6
-#define CONCERT_HALL 7
-#define CAVE 8
-#define ARENA 9
-#define HANGAR 10
-#define CARPETTED_HALLWAY 11
-#define HALLWAY 12
-#define STONE_CORRIDOR 13
-#define ALLEY 14
-#define FOREST 15
-#define CITY 16
-#define MOUNTAINS 17
-#define QUARRY 18
-#define PLAIN 19
-#define PARKING_LOT 20
-#define SEWER_PIPE 21
-#define UNDERWATER 22
-#define DRUGGED 23
-#define DIZZY 24
-#define PSYCHOTIC 25
 
 /area
 	level = null
@@ -80,6 +53,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/list/ambience = list( 'sound/ambience/shipambience.ogg' )
 	var/list/music = list('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
 	var/sound/forced_ambience = null
+	var/parallax_style = "space"
 
 	var/rad_shielded = 0
 	var/environment = ROOM
@@ -135,7 +109,7 @@ var/list/ghostteleportlocs = list()
 	power_light = 0
 	power_equip = 0
 	power_environ = 0
-	music = list('sound/ambience/ambispace.ogg','sound/ambience/ambispace1.ogg')
+	music = list('sound/ambience/ambispace.ogg','sound/ambience/ambispace1.ogg','sound/ambience/ambispace2.ogg')
 	ambience = list()
 	environment = PLAIN
 
@@ -155,6 +129,7 @@ area/space/atmosalert()
 	name = "\improper Bluespace"
 	ambience = list('sound/ambience/ambbspace.ogg')
 	environment = UNDERWATER
+	parallax_style = "bluespace"
 
 /area/engine/
 	music = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg' )
@@ -201,7 +176,6 @@ area/space/atmosalert()
 
 /area/shuttle/escape
 	name = "\improper Emergency Shuttle"
-	music = list( "music/escape.ogg" )
 
 /area/shuttle/escape/station
 	name = "\improper Emergency Shuttle Station"
@@ -216,10 +190,10 @@ area/space/atmosalert()
 	icon_state = "shuttle"
 	ambience = list('sound/ambience/ambbspace.ogg')
 	environment = UNDERWATER
+	parallax_style = "bluespace"
 
 /area/shuttle/escape_pod1
 	name = "\improper Escape Pod One"
-	music = list( "music/escape.ogg" )
 
 /area/shuttle/escape_pod1/station
 	icon_state = "shuttle2"
@@ -231,10 +205,10 @@ area/space/atmosalert()
 	icon_state = "shuttle"
 	ambience = list('sound/ambience/ambbspace.ogg')
 	environment = UNDERWATER
+	parallax_style = "bluespace"
 
 /area/shuttle/escape_pod2
 	name = "\improper Escape Pod Two"
-	music = list( "music/escape.ogg" )
 
 /area/shuttle/escape_pod2/station
 	icon_state = "shuttle2"
@@ -246,10 +220,10 @@ area/space/atmosalert()
 	icon_state = "shuttle"
 	ambience = list('sound/ambience/ambbspace.ogg')
 	environment = UNDERWATER
+	parallax_style = "bluespace"
 
 /area/shuttle/escape_pod3
 	name = "\improper Escape Pod Three"
-	music = list( "music/escape.ogg" )
 
 /area/shuttle/escape_pod3/station
 	icon_state = "shuttle2"
@@ -261,10 +235,10 @@ area/space/atmosalert()
 	icon_state = "shuttle"
 	ambience = list('sound/ambience/ambbspace.ogg')
 	environment = UNDERWATER
+	parallax_style = "bluespace"
 
 /area/shuttle/escape_pod5 //Pod 4 was lost to meteors
 	name = "\improper Escape Pod Five"
-	music = list( "music/escape.ogg" )
 
 /area/shuttle/escape_pod5/station
 	icon_state = "shuttle2"
@@ -276,10 +250,10 @@ area/space/atmosalert()
 	icon_state = "shuttle"
 	ambience = list('sound/ambience/ambbspace.ogg')
 	environment = UNDERWATER
+	parallax_style = "bluespace"
 
 /area/shuttle/mining
 	name = "\improper Mining Shuttle"
-	music = list( "music/escape.ogg" )
 
 /area/shuttle/mining/station
 	icon_state = "shuttle2"
@@ -371,7 +345,6 @@ area/space/atmosalert()
 
 /area/shuttle/research
 	name = "\improper Research Shuttle"
-	music = list( "music/escape.ogg" )
 
 /area/shuttle/research/station
 	icon_state = "shuttle2"
@@ -493,12 +466,12 @@ area/space/atmosalert()
 	name = "\improper Thunderdome"
 	icon_state = "thunder"
 	requires_power = 0
+	ambience = list('sound/music/THUNDERDOME.ogg')
 
 /area/tdome/arena
 	name = "\improper Thunderdome Arena"
 	icon_state = "thunder"
 	requires_power = 0
-	music = list( 'sound/music/THUNDERDOME.ogg' )
 
 /area/tdome/tdome1
 	name = "\improper Thunderdome (Team 1)"
@@ -567,6 +540,7 @@ area/space/atmosalert()
 	icon_state = "shuttle"
 	ambience = list('sound/ambience/ambbspace.ogg')
 	environment = UNDERWATER
+	parallax_style = "bluespace"
 
 /area/wizard_station
 	name = "\improper Wizard's Den"
@@ -583,6 +557,7 @@ area/space/atmosalert()
 	icon_state = "shuttle"
 	ambience = list('sound/ambience/ambbspace.ogg')
 	environment = UNDERWATER
+	parallax_style = "bluespace"
 
 /area/vox_station/southwest_solars
 	name = "\improper aft port solars"
@@ -917,7 +892,7 @@ area/space/atmosalert()
 	icon_state = "hallC3"
 
 /area/hallway/secondary/exit
-	name = "\improper Escape Shuttle Hallway"
+	name = "\improper Departures Lobby"
 	icon_state = "escape"
 
 /area/hallway/secondary/construction
@@ -1708,6 +1683,10 @@ area/space/atmosalert()
 	name = "\improper Toxins Mixing Room"
 	icon_state = "toxmix"
 
+/area/rnd/alloy_lab
+	name = "\improper Alloys Lab"
+	icon_state = "alloylab"
+
 /area/rnd/misc_lab
 	name = "\improper Miscellaneous Research"
 	icon_state = "toxmisc"
@@ -1959,6 +1938,9 @@ area/space/atmosalert()
 	icon_state = "yellow"
 	environment = QUARRY
 
+/area/construction/IAA
+	name = "\improper Construction Zone"
+
 /area/construction/supplyshuttle
 	name = "\improper Supply Shuttle"
 	icon_state = "yellow"
@@ -2122,7 +2104,7 @@ area/space/atmosalert()
 /area/turret_protected/tcomsat
 	name = "\improper Abandoned Satellite"
 	icon_state = "tcomsatlob"
-	music = list('sound/ambience/ambispace.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg','sound/ambience/ambispace1.ogg' )
+	music = list('sound/ambience/ambispace.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg','sound/ambience/ambispace1.ogg', ,'sound/ambience/ambispace2.ogg' )
 
 
 // Labor Camp
@@ -2391,6 +2373,8 @@ area/space/atmosalert()
 	icon_state = "south"
 	requires_power = 0
 
+
+
 /////////////////////////////////////////////////////////////////////
 /*
  Lists of areas to be used with is_type_in_list.
@@ -2453,30 +2437,3 @@ var/list/the_station_areas = list (
 	/area/turret_protected/ai_upload_foyer,
 	/area/turret_protected/ai,
 )
-
-#undef GENERIC
-#undef PADDED_CELL
-#undef ROOM
-#undef BATHROOM
-#undef LIVINGROOM
-#undef STONEROOM
-#undef AUDITORIUM
-#undef CONCERT_HALL
-#undef CAVE
-#undef ARENA
-#undef HANGAR
-#undef CARPETTED_HALLWAY
-#undef HALLWAY
-#undef STONE_CORRIDOR
-#undef ALLEY
-#undef FOREST
-#undef CITY
-#undef MOUNTAINS
-#undef QUARRY
-#undef PLAIN
-#undef PARKING_LOT
-#undef SEWER_PIPE
-#undef UNDERWATER
-#undef DRUGGED
-#undef DIZZY
-#undef PSYCHOTIC

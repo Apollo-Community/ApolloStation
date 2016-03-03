@@ -14,6 +14,74 @@ hr
 	height: 1px;
 }
 
+table{
+	width: 100%;
+    padding: 1px;
+}
+
+th {
+	padding: 2px;
+	background-color: #303030;
+}
+
+td {
+	padding: 2px;
+	background-color: #202020;
+}
+
+table.border, table.outline {
+	border-width: 1px;
+    padding: 1px;
+	border-style: solid;
+	border-color: #40628a;
+    border-collapse: collapse;
+	width: 100%;
+	background-color: #202020;
+}
+
+table.outline td {
+	padding: 2px;
+	background-color: #202020;
+	border: none;
+	border-width: 0px;
+    border-collapse: collapse;
+}
+
+table.outline th {
+	padding: 2px;
+	background-color: #303030;
+	border: none;
+	border-width: 0px;
+    border-collapse: collapse;
+}
+
+table.border th{
+	border-width: 1px;
+    padding: 2px;
+	border-style: solid;
+	border-color: #40628a;
+    border-collapse: collapse;
+	background-color: #303030;
+}
+
+table.border td {
+	border-width: 1px;
+    padding: 2px;
+	border-style: solid;
+	border-color: #40628a;
+    border-collapse: collapse;
+	background-color: #202020;
+}
+
+table.border.empty {
+	width: 100%;
+    padding: 1px;
+}
+
+table.border.empty th, td {
+    padding: 2px;
+}
+
 a, a:link, a:visited, a:active, .linkOn, .linkOff
 { 
 	color: #ffffff; 

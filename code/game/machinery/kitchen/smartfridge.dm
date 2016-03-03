@@ -87,7 +87,7 @@
 /obj/machinery/smartfridge/secure/virology
 	name = "\improper Refrigerated Virus Storage"
 	desc = "A refrigerated storage unit for storing viral material."
-	req_access_txt = "39"
+	req_access = list(access_virology)
 	icon_state = "smartfridge_virology"
 	icon_on = "smartfridge_virology"
 	icon_off = "smartfridge_virology-off"
@@ -311,7 +311,7 @@
 		return 0
 	spawn(0)
 		throw_item.throw_at(target,16,3,src)
-	src.visible_message("\red <b>[src] launches [throw_item.name] at [target.name]!</b>")
+	src.visible_message("<span class='alert'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
 	return 1
 
 /************************
@@ -322,6 +322,6 @@
 	if(!ispowered) return 0
 	if (usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf)))
 		if (!allowed(usr) && !emagged && locked != -1 && href_list["vend"])
-			usr << "\red Access denied."
+			usr << "<span class='alert'>Access denied.</span>"
 			return 0
 	return ..()

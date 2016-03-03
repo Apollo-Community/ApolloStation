@@ -130,7 +130,7 @@
 
 /datum/game_mode/proc/greet_meme(var/datum/mind/meme, var/you_are=1)
 	if (you_are)
-		meme.current << "<B>\red You are a meme!</B>"
+		meme.current << "<B><span class='alert'>You are a meme!</B>"</span>
 	show_objectives(meme)
 	return
 
@@ -160,10 +160,10 @@
 			var/count = 1
 			for(var/datum/objective/objective in meme.objectives)
 				if(objective.check_completion())
-					world << "<B>Objective #[count]</B>: [objective.explanation_text] \green <B>Success</B>"
+					world << "<B>Objective #[count]</B>: [objective.explanation_text] <span class='green'><B>Success</B></span>"
 					feedback_add_details("meme_objective","[objective.type]|SUCCESS")
 				else
-					world << "<B>Objective #[count]</B>: [objective.explanation_text] \red Failed"
+					world << "<B>Objective #[count]</B>: [objective.explanation_text] <span class='alert'>Failed"</span>
 					feedback_add_details("meme_objective","[objective.type]|FAIL")
 					memewin = 0
 				count++

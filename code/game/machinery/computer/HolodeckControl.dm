@@ -622,7 +622,7 @@ var/global/list/holodeck_programs = list(
 /obj/structure/table/rack/holorack
 	name = "rack"
 	desc = "Different from the Middle Ages version."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/furniture.dmi'
 	icon_state = "rack"
 
 /obj/structure/table/rack/holorack/attack_hand(mob/user as mob)

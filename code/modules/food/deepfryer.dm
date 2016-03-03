@@ -81,51 +81,51 @@
 	switch(limb)
 		if("head")
 			M.apply_damage(40, BURN, limb)
-			M << "\red  Your thoughts are overwritten by the pain, as searing hot oil encompasses your head."
+			M << "<span class='alert'>Your thoughts are overwritten by the pain, as searing hot oil encompasses your head.</span>"
 			M.say("*scream")
 			return "head"
 		if("l_leg")
 			M.apply_damage(20, BURN, limb)
 			M.apply_damage(30, BURN, "l_foot")
-			M << "\red  Your thoughts are overwritten by the pain, as searing hot oil encompasses your left leg and foot."
+			M << "<span class='alert'>Your thoughts are overwritten by the pain, as searing hot oil encompasses your left leg and foot.</span>"
 			M.say("*scream")
 			return "left leg"
 		if("l_foot")
 			M.apply_damage(20, BURN, limb)
-			M << "\red  Your thoughts are overwritten by the pain, as searing hot oil encompasses your left foot."
+			M << "<span class='alert'>Your thoughts are overwritten by the pain, as searing hot oil encompasses your left foot.</span>"
 			M.say("*scream")
 			return "left foot"
 		if("r_leg")
 			M.apply_damage(20, BURN, limb)
 			M.apply_damage(30, BURN, "r_foot")
-			M << "\red  Your thoughts are overwritten by the pain, as searing hot oil encompasses your right leg and foot."
+			M << "<span class='alert'>Your thoughts are overwritten by the pain, as searing hot oil encompasses your right leg and foot.</span>"
 			M.say("*scream")
 			return "right leg"
 		if("r_foot")
 			M.apply_damage(20, BURN, limb)
-			M << "\red  Your thoughts are overwritten by the pain, as searing hot oil encompasses your right foot."
+			M << "<span class='alert'>Your thoughts are overwritten by the pain, as searing hot oil encompasses your right foot.</span>"
 			M.say("*scream")
 			return "right foot"
 		if("l_arm")
 			M.apply_damage(20, BURN, limb)
 			M.apply_damage(30, BURN, "l_hand")
-			M << "\red  Your thoughts are overwritten by the pain, as searing hot oil encompasses your left arm and hand."
+			M << "<span class='alert'>Your thoughts are overwritten by the pain, as searing hot oil encompasses your left arm and hand.</span>"
 			M.say("*scream")
 			return "left arm"
 		if("l_hand")
 			M.apply_damage(20, BURN, limb)
-			M << "\red  Your thoughts are overwritten by the pain, as searing hot oil encompasses your left hand."
+			M << "<span class='alert'>Your thoughts are overwritten by the pain, as searing hot oil encompasses your left hand.</span>"
 			M.say("*scream")
 			return "left hand"
 		if("r_arm")
 			M.apply_damage(20, BURN, limb)
 			M.apply_damage(30, BURN, "r_hand")
-			M << "\red  Your thoughts are overwritten by the pain, as searing hot oil encompasses your right arm and hand."
+			M << "<span class='alert'>Your thoughts are overwritten by the pain, as searing hot oil encompasses your right arm and hand.</span>"
 			M.say("*scream")
 			return "right arm"
 		if("r_hand")
 			M.apply_damage(20, BURN, limb)
-			M << "\red  Your thoughts are overwritten by the pain, as searing hot oil encompasses your right hand."
+			M << "<span class='alert'>Your thoughts are overwritten by the pain, as searing hot oil encompasses your right hand.</span>"
 			M.say("*scream")
 			return "right hand"
 	return null

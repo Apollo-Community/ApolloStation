@@ -6,13 +6,9 @@ var/datum/template_controller/template_controller
 
 	New()
 		..()
-		world << "\red <b>Placing random structures...</b>"
+		world << "<span class='alert'><b>Placing random structures...</b></span>"
 
 		parser = new()
-		PlaceTemplates()
-
-		spawn(0)
-			makepowernets()
 
 	proc/PlaceTemplateAt(var/turf/location, var/path, var/name)
 		set background = 1
@@ -73,7 +69,7 @@ var/datum/template_controller/template_controller
 			sleep(15)
 
 		log_game("Finished placing templates after [time2text((world.timeofday - started), "mm:ss")]")
-		world << "\red <b>Finished placing random structures...</b>"
+		world << "<span class='alert'><b>Finished placing random structures...</b></span>"
 
 	proc/PickTemplates()
 		set background = 1

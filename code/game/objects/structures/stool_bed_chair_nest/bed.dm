@@ -10,8 +10,9 @@
 /obj/structure/bed
 	name = "bed"
 	desc = "This is used to lie in, sleep in or strap on."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/furniture.dmi'
 	icon_state = "bed"
+	anchored = 1
 	var/mob/living/buckled_mob
 	var/movable = 0 // For mobility checks
 
@@ -64,12 +65,12 @@
 		if(buckled_mob.buckled == src)
 			if(buckled_mob != user)
 				buckled_mob.visible_message(\
-					"\blue [buckled_mob.name] was unbuckled by [user.name]!",\
+					"<span class='notice'>[buckled_mob.name] was unbuckled by [user.name]!</span>",\
 					"You were unbuckled from [src] by [user.name].",\
 					"You hear metal clanking")
 			else
 				buckled_mob.visible_message(\
-					"\blue [buckled_mob.name] unbuckled \himself!",\
+					"<span class='notice'>[buckled_mob.name] unbuckled \himself!</span>",\
 					"You unbuckle yourself from [src].",\
 					"You hear metal clanking")
 			unbuckle()
@@ -92,12 +93,12 @@
 
 	if (M == usr)
 		M.visible_message(\
-			"\blue [M.name] buckles in!",\
+			"<span class='notice'>[M.name] buckles in!</span>",\
 			"You buckle yourself to [src].",\
 			"You hear metal clanking")
 	else
 		M.visible_message(\
-			"\blue [M.name] is buckled in to [src] by [user.name]!",\
+			"<span class='notice'>[M.name] is buckled in to [src] by [user.name]!</span>",\
 			"You are buckled in to [src] by [user.name].",\
 			"You hear metal clanking")
 	M.buckled = src
@@ -147,7 +148,7 @@
 	if(istype(W,/obj/item/roller_holder))
 		var/obj/item/roller_holder/RH = W
 		if(!RH.held)
-			user << "\blue You collect the roller bed."
+			user << "<span class='notice'>You collect the roller bed.</span>"
 			src.loc = RH
 			RH.held = src
 			return
@@ -168,10 +169,10 @@
 /obj/item/roller_holder/attack_self(mob/user as mob)
 
 	if(!held)
-		user << "\blue The rack is empty."
+		user << "<span class='notice'>The rack is empty.</span>"
 		return
 
-	user << "\blue You deploy the roller bed."
+	user << "<span class='notice'>You deploy the roller bed.</span>"
 	var/obj/structure/bed/roller/R = new /obj/structure/bed/roller(user.loc)
 	R.add_fingerprint(user)
 	qdel(held)

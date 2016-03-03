@@ -5,6 +5,7 @@
 
 	var/mineral = "metal"
 	var/rotting = 0
+	var/unacidable = 0
 
 	var/damage = 0
 	var/damage_cap = 100 //Wall will break down to girders if damage reaches this point
@@ -48,11 +49,10 @@
 	update_icon()
 
 /turf/simulated/wall/Destroy()
-	for(var/obj/effect/E in src) if(E.name == "Wallrot") qdel( E )
-	qdel( paint )
-	paint = null
 	processing_turfs -= src
-	dismantle_wall(null,null,1)
+	for(var/obj/O in src.contents)
+		qdel(O) // no mercy
+	ChangeTurf(/turf/simulated/floor/plating)
 	..()
 
 /turf/simulated/wall/ChangeTurf(var/newtype)
@@ -84,7 +84,7 @@
 	if(rotting)
 		user << "<span class='warning'>There is fungus growing on [src].</span>"
 
-/turf/simulated/wall/proc/update_icon()
+/turf/simulated/wall/update_icon()
 	if(!damage_overlays[1]) //list hasn't been populated
 		generate_overlays()
 
@@ -139,15 +139,26 @@
 	return ..()
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
-	if(istype(src,/turf/simulated/wall/r_wall))
+	if(istype(src,/turf/simulated/wall/alloy) && !istype(src,/turf/simulated/wall/alloy/reinforced))
+		var/turf/simulated/wall/alloy/W = src
+		var/obj/item/stack/sheet/alloy/metal/M = new /obj/item/stack/sheet/alloy/metal(W.materials)
+		M.effects = W.effects
+		M.loc = get_turf(src)
+
+		if(!devastated)
+			playsound(src, 'sound/items/Welder.ogg', 100, 1)
+			new /obj/structure/girder(src)
+		else
+			new /obj/item/stack/sheet/metal(src)
+			new /obj/item/stack/sheet/metal(src)
+	else if(istype(src,/turf/simulated/wall/alloy/reinforced))
 		if(!devastated)
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			new /obj/structure/girder/reinforced(src)
-			new /obj/item/stack/sheet/plasteel( src )
 		else
 			new /obj/item/stack/sheet/metal( src )
 			new /obj/item/stack/sheet/metal( src )
-			new /obj/item/stack/sheet/plasteel( src )
+		new /obj/item/stack/sheet/alloy/plasteel( src )
 	else if(istype(src,/turf/simulated/wall/cult))
 		if(!devastated)
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
@@ -257,18 +268,18 @@
 	var/hulk_destroy_prob = 40
 	var/hulk_take_damage = 1
 	var/rotting_destroy_touch = 1
-	var/rotting_touch_message = "\blue The wall crumbles under your touch."
+	var/rotting_touch_message = "<span class='notice'>The wall crumbles under your touch.</span>"
 
 //Interactions
 /turf/simulated/wall/attack_hand(mob/user as mob)
 	if (HULK in user.mutations)
 		if (prob(hulk_destroy_prob) || rotting)
-			usr << text("\blue You smash through the wall.")
+			usr << text("<span class='notice'>You smash through the wall.</span>")
 			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
 			return 1
 		else
-			usr << text("\blue You punch the wall.")
+			usr << text("<span class='notice'>You punch the wall.</span>")
 			if(hulk_take_damage)
 				take_damage(rand(25, 75))
 			return 1
@@ -281,7 +292,7 @@
 
 	if(..()) return 1
 
-	user << "\blue You push the wall but nothing happens!"
+	user << "<span class='notice'>You push the wall but nothing happens!</span>"
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
 	return 0
@@ -292,7 +303,7 @@
 		user << "You push the wall but nothing happens."
 		return
 
-	if(istype(src,/turf/simulated/wall/r_wall) && !rotting)
+	if(istype(src,/turf/simulated/wall/alloy/reinforced) && !rotting)
 		user << "This wall is far too strong for you to destroy."
 
 	if(rotting || prob(40))

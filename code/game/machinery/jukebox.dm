@@ -60,6 +60,7 @@ datum/track/New(var/title_name, var/audio)
 		new/datum/track("Careless", 'sound/music/carelesswhisper.ogg'),
 		new/datum/track("Long Ago", 'sound/music/midis/cantina.mid'),
 		new/datum/track("Peace", 'sound/music/midis/manwhosoldtheworld.mid'),
+		new/datum/track("Thunderdome", 'sound/music/THUNDERDOME.ogg'),
 	)
 
 /obj/machinery/media/jukebox/New()
@@ -221,7 +222,7 @@ datum/track/New(var/title_name, var/audio)
 	return ..()
 
 /obj/machinery/media/jukebox/proc/StopPlaying()
-	for(var/mob/living/M in living_mob_list)
+	for( var/mob/M in mob_list )
 		kill_sound(M)
 
 	playing = 0
@@ -242,15 +243,15 @@ datum/track/New(var/title_name, var/audio)
 	update_icon()
 
 /obj/machinery/media/jukebox/process()
-	for(var/mob/living/M in living_mob_list)
+	for( var/mob/M in mob_list )
 		var/dist = get_dist(M,src)
 		if(dist <=15 && M.z == src.z)	// Only same z-level
 			if(playing)			//Plays the song to people within range while the song is active.
 				if(!M.jukebox_sound)
-					M.jukebox_sound = sound(current_track.sound, channel = jukebox_id, repeat = 1, volume = 35 - 3*(dist-1))
+					M.jukebox_sound = sound(current_track.sound, channel = jukebox_id, repeat = 1, volume = 60 - 3*(dist-1))
 					M.jukebox_sound.status = SOUND_UPDATE
 				else
-					M.jukebox_sound.volume = 35 - 3*(dist-1)
+					M.jukebox_sound.volume = 60 - 3*(dist-1)
 
 				var/turf/turf_source = get_turf( src )
 				M.jukebox_sound.x = (turf_source.x - M.x)*3 // Hearing from the west/east
@@ -258,9 +259,9 @@ datum/track/New(var/title_name, var/audio)
 
 				M << M.jukebox_sound
 		else		// Catch all
-			kill_sound(M)
+			kill_sound( M )
 
-/obj/machinery/media/jukebox/proc/kill_sound(var/mob/living/M in living_mob_list)
+/obj/machinery/media/jukebox/proc/kill_sound(var/mob/M in mob_list)
 	if(M.jukebox_sound && M.jukebox_sound.channel == jukebox_id)	//Support for multiple jukeboxes
 		M << sound(null, channel = jukebox_id)
 		M.jukebox_sound = null

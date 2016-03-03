@@ -23,7 +23,7 @@
 		return
 
 	if(air_contents.gas["oxygen"] < 10)
-		user << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
+		user << text("<span class='alert'><B>The meter on the [src.name] indicates you are almost out of air!</B></span>")
 		playsound(user, 'sound/effects/alert.ogg', 50, 1)
 
 /obj/item/weapon/tank/jetpack/verb/toggle_rockets()
@@ -112,7 +112,7 @@
 		return
 
 	if(air_contents.gas["carbon_dioxide"] < 10)
-		user << text("\red <B>The meter on the [src.name] indicates you are almost out of carbon dioxide!</B>")
+		user << text("<span class='alert'><B>The meter on the [src.name] indicates you are almost out of carbon dioxide!</B></span>")
 		playsound(user, 'sound/effects/alert.ogg', 50, 1)
 	return
 
@@ -164,11 +164,11 @@
 			usr.loc = upwards
 			if( istype( upwards, /turf/space ) || istype( upwards, /turf/simulated/floor/open ))
 				usr.loc = upwards
-				usr << "\blue You fly upwards."
+				usr << "<span class='notice'>You fly upwards.</span>"
 			else
-				usr << "\red \The [upwards] is in the way!"
+				usr << "<span class='alert'>\The [upwards] is in the way!</span>"
 		else
-			usr << "\red There's nothing of interest above you!"
+			usr << "<span class='alert'>There's nothing of interest above you!</span>"
 	return
 
 /obj/item/weapon/tank/jetpack/verb/fly_down()
@@ -178,7 +178,7 @@
 
 	var/turf/ground = get_turf( usr )
 	if( !istype( ground, /turf/space ) && !istype( ground, /turf/simulated/floor/open ))
-		usr << "\red \The [ground] is in the way!"
+		usr << "<span class='alert'>\The [ground] is in the way!</span>"
 		return
 
 	var/turf/controllerlocation = locate(1, 1, z)
@@ -187,9 +187,9 @@
 			var/turf/below = locate(src.x, src.y, controller.down_target)
 			if( !below.density )
 				usr.loc = below
-				usr << "\blue You fly downwards."
+				usr << "<span class='notice'>You fly downwards.</span>"
 			else
-				usr << "\red There is a [below] in the way!"
+				usr << "<span class='alert'>There is a [below] in the way!</span>"
 		else
-			usr << "\red There's nothing of interest below you!"
+			usr << "<span class='alert'>There's nothing of interest below you!</span>"
 	return

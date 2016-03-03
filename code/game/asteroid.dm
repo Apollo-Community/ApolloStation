@@ -22,7 +22,7 @@ proc/spawn_room(var/atom/start_loc,var/x_size,var/y_size,var/wall,var/floor , va
 
 	//world << "Room spawned at [start_loc.x],[start_loc.y],[start_loc.z]"
 	if(!wall)
-		wall = pick(/turf/simulated/wall/r_wall,/turf/simulated/wall,/obj/effect/alien/resin)
+		wall = pick(/turf/simulated/wall/alloy/reinforced,/turf/simulated/wall,/obj/effect/alien/resin)
 	if(!floor)
 		floor = pick(/turf/simulated/floor,/turf/simulated/floor/engine)
 
@@ -69,7 +69,7 @@ proc/admin_spawn_room_at_pos()
 	var/clean = input("Delete existing items in area?" , "Clean area?", 0)
 	switch(alert("Wall type",null,"Reinforced wall","Regular wall","Resin wall"))
 		if("Reinforced wall")
-			wall=/turf/simulated/wall/r_wall
+			wall=/turf/simulated/wall/alloy/reinforced
 		if("Regular wall")
 			wall=/turf/simulated/wall
 		if("Resin wall")

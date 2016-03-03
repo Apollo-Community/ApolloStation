@@ -20,6 +20,7 @@
 	G.fields["religion"]	= "Unknown"
 	G.fields["photo_front"]	= front
 	G.fields["photo_side"]	= side
+	G.fields["command_training"] = "Unknown"
 	data_core.general += G
 
 	qdel(dummy)

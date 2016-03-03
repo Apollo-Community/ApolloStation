@@ -38,7 +38,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/attack(mob/M as mob, mob/user as mob, def_zone)
 	if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
-		user << "\red None of [src] left, oh no!"
+		user << "<span class='alert'>None of [src] left, oh no!</span>"
 		M.drop_from_inventory(src)	//so icons update :[
 		qdel(src)
 		return 0
@@ -49,34 +49,34 @@
 			if(istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				if(H.species.flags & IS_SYNTHETIC)
-					H << "\red You have a monitor for a head, where do you think you're going to put that?"
+					H << "<span class='alert'>You have a monitor for a head, where do you think you're going to put that?</span>"
 					return
 			if (fullness <= 50)
-				M << "\red You hungrily chew out a piece of [src] and gobble it!"
+				M << "<span class='alert'>You hungrily chew out a piece of [src] and gobble it!</span>"
 			if (fullness > 50 && fullness <= 150)
-				M << "\blue You hungrily begin to eat [src]."
+				M << "<span class='notice'>You hungrily begin to eat [src].</span>"
 			if (fullness > 150 && fullness <= 350)
-				M << "\blue You take a bite of [src]."
+				M << "<span class='notice'>You take a bite of [src].</span>"
 			if (fullness > 350 && fullness <= 550)
-				M << "\blue You unwillingly chew a bit of [src]."
+				M << "<span class='notice'>You unwillingly chew a bit of [src].</span>"
 			if (fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
-				M << "\red You cannot force any more of [src] to go down your throat."
+				M << "<span class='alert'>You cannot force any more of [src] to go down your throat.</span>"
 				return 0
 		else
 			if(istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				if(H.species.flags & IS_SYNTHETIC)
-					H << "\red They have a monitor for a head, where do you think you're going to put that?"
+					H << "<span class='alert'>They have a monitor for a head, where do you think you're going to put that?</span>"
 					return
 
 			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
 
 				if (fullness <= (550 * (1 + M.overeatduration / 1000)))
 					for(var/mob/O in viewers(world.view, user))
-						O.show_message("\red [user] attempts to feed [M] [src].", 1)
+						O.show_message("<span class='alert'>[user] attempts to feed [M] [src].</span>", 1)
 				else
 					for(var/mob/O in viewers(world.view, user))
-						O.show_message("\red [user] cannot force anymore of [src] down [M]'s throat.", 1)
+						O.show_message("<span class='alert'>[user] cannot force anymore of [src] down [M]'s throat.</span>", 1)
 						return 0
 
 				if(!do_mob(user, M)) return
@@ -91,7 +91,7 @@
 					M.LAssailant = user
 
 				for(var/mob/O in viewers(world.view, user))
-					O.show_message("\red [user] feeds [M] [src].", 1)
+					O.show_message("<span class='alert'>[user] feeds [M] [src].</span>", 1)
 
 			else
 				user << "This creature does not seem to have a mouth!"
@@ -127,11 +127,11 @@
 	if (bitecount==0)
 		return
 	else if (bitecount==1)
-		user << "\blue \The [src] was bitten by someone!"
+		user << "<span class='notice'>\The [src] was bitten by someone!</span>"
 	else if (bitecount<=3)
-		user << "\blue \The [src] was bitten [bitecount] times!"
+		user << "<span class='notice'>\The [src] was bitten [bitecount] times!</span>"
 	else
-		user << "\blue \The [src] was bitten multiple times!"
+		user << "<span class='notice'>\The [src] was bitten multiple times!</span>"
 
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/pen))
@@ -150,12 +150,12 @@
 			U.create_reagents(5)
 
 		if (U.reagents.total_volume > 0)
-			user << "\red You already have something on your [U]."
+			user << "<span class='alert'>You already have something on your [U].</span>"
 			return
 
 		user.visible_message( \
 			"[user] scoops up some [src] with \the [U]!", \
-			"\blue You scoop up some [src] with \the [U]!" \
+			"<span class='notice'>You scoop up some [src] with \the [U]!</span>" \
 		)
 
 		src.bitecount++
@@ -180,7 +180,7 @@
 			if (W.w_class >= src.w_class || W.is_robot_module())
 				return
 
-			user << "\red You slip [W] inside [src]."
+			user << "<span class='alert'>You slip [W] inside [src].</span>"
 			user.u_equip(W)
 			if ((user.client && user.s_active != src))
 				user.client.screen -= W
@@ -191,15 +191,15 @@
 
 		if (has_edge(W))
 			if (!can_slice_here)
-				user << "\red You cannot slice [src] here! You need a table or at least a tray to do it."
+				user << "<span class='alert'>You cannot slice [src] here! You need a table or at least a tray to do it.</span>"
 				return
 
 			var/slices_lost = 0
 			if (W.w_class > 3)
-				user.visible_message("\blue [user] crudely slices \the [src] with [W]!", "\blue You crudely slice \the [src] with your [W]!")
+				user.visible_message("<span class='notice'>[user] crudely slices \the [src] with [W]!</span>", "<span class='notice'>You crudely slice \the [src] with your [W]!</span>")
 				slices_lost = rand(1,min(1,round(slices_num/2)))
 			else
-				user.visible_message("\blue [user] slices \the [src]!", "\blue You slice \the [src]!")
+				user.visible_message("<span class='notice'>[user] slices \the [src]!</span>", "<span class='notice'>You slice \the [src]!</span>")
 
 			var/reagents_per_slice = reagents.total_volume/slices_num
 			for(var/i=1 to (slices_num-slices_lost))
@@ -491,7 +491,7 @@
 		..()
 		new/obj/effect/decal/cleanable/egg_smudge(src.loc)
 		src.reagents.reaction(hit_atom, TOUCH)
-		src.visible_message("\red [src.name] has been squashed.","\red You hear a smack.")
+		src.visible_message("<span class='alert'>[src.name] has been squashed.</span>","<span class='alert'>You hear a smack.</span>")
 		qdel(src)
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -500,10 +500,10 @@
 			var/clr = C.colourName
 
 			if(!(clr in list("blue","green","mime","orange","purple","rainbow","red","yellow")))
-				usr << "\blue The egg refuses to take on this color!"
+				usr << "<span class='notice'>The egg refuses to take on this color!</span>"
 				return
 
-			usr << "\blue You color \the [src] [clr]"
+			usr << "<span class='notice'>You color \the [src] [clr]</span>"
 			icon_state = "egg-[clr]"
 			item_color = clr
 		else
@@ -575,13 +575,13 @@
 	afterattack(obj/target, mob/user , flag)
 		if(istype(target, /obj/machinery/icecream_vat))
 			if(!reagents.total_volume)
-				user << "\red [src] is empty."
+				user << "<span class='alert'>[src] is empty.</span>"
 				return
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)
-				user << "\red you can't add anymore to [target]."
+				user << "<span class='alert'>you can't add anymore to [target].</span>"
 				return
 			target.reagents.add_reagent("flour", 5)
-			user << "\blue You transfer 5 units of the flour to [target]."
+			user << "<span class='notice'>You transfer 5 units of the flour to [target].</span>"
 			qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/organ
@@ -926,7 +926,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom)
 	..()
 	new/obj/effect/decal/cleanable/pie_smudge(src.loc)
-	src.visible_message("\red [src.name] splats.","\red You hear a splat.")
+	src.visible_message("<span class='alert'>[src.name] splats.</span>","<span class='alert'>You hear a splat.</span>")
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/berryclafoutis
@@ -1134,7 +1134,7 @@
 		bitesize = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
 	On_Consume()
 		if(prob(unpopped))	//lol ...what's the point?
-			usr << "\red You bite down on an un-popped kernel!"
+			usr << "<span class='alert'>You bite down on an un-popped kernel!</span>"
 			unpopped = max(0, unpopped-1)
 		..()
 
@@ -1533,13 +1533,21 @@
 		reagents.add_reagent("nutriment",10)
 
 	afterattack(obj/O as obj, var/mob/living/carbon/human/user as mob, proximity)
-		if(!proximity) return
-		if(istype(O,/obj/structure/sink) && !wrapped)
+		if((istype(O,/obj/structure/sink) || istype(O,/obj/structure/reagent_dispensers/watertank)) && !wrapped && proximity)
 			user << "You place \the [name] under a stream of water..."
 			if(istype(user))
 				user.unEquip(src)
 			src.loc = get_turf(src)
 			return Expand()
+		..()
+
+	attackby(obj/O as obj, var/mob/living/carbon/human/user as mob)
+		if((istype(O, /obj/item/weapon/reagent_containers/glass/beaker) || istype(O, /obj/item/weapon/reagent_containers/glass/beaker/large)) && !wrapped)
+			if(O.reagents.get_master_reagent_name() == "Water")
+				if(user == src.loc)
+					user.unEquip(src)
+					src.loc = get_turf(src)
+				Expand()
 		..()
 
 	attack_self(mob/user as mob)
@@ -1548,7 +1556,8 @@
 
 	proc/Expand()
 		src.visible_message("<span class='notice'>\The [src] expands!</span>")
-		new /mob/living/carbon/human/monkey(src.loc)
+		var/mob/living/carbon/human/monkey/dave = new /mob/living/carbon/human/monkey(src.loc)
+		dave.set_species(monkey_type)
 		src.loc = null
 		qdel(src)
 		return 1
@@ -2646,7 +2655,7 @@
 	if( open && pizza )
 		user.put_in_hands( pizza )
 
-		user << "\red You take the [src.pizza] out of the [src]."
+		user << "<span class='alert'>You take the [src.pizza] out of the [src].</span>"
 		src.pizza = null
 		update_icon()
 		return
@@ -2660,7 +2669,7 @@
 		boxes -= box
 
 		user.put_in_hands( box )
-		user << "\red You remove the topmost [src] from your hand."
+		user << "<span class='alert'>You remove the topmost [src] from your hand.</span>"
 		box.update_icon()
 		update_icon()
 		return
@@ -2699,11 +2708,11 @@
 				box.update_icon()
 				update_icon()
 
-				user << "\red You put the [box] ontop of the [src]!"
+				user << "<span class='alert'>You put the [box] ontop of the [src]!</span>"
 			else
-				user << "\red The stack is too high!"
+				user << "<span class='alert'>The stack is too high!</span>"
 		else
-			user << "\red Close the [box] first!"
+			user << "<span class='alert'>Close the [box] first!</span>"
 
 		return
 
@@ -2716,9 +2725,9 @@
 
 			update_icon()
 
-			user << "\red You put the [I] in the [src]!"
+			user << "<span class='alert'>You put the [I] in the [src]!</span>"
 		else
-			user << "\red You try to push the [I] through the lid but it doesn't work!"
+			user << "<span class='alert'>You try to push the [I] through the lid but it doesn't work!</span>"
 		return
 
 	if( istype(I, /obj/item/weapon/pen/) )

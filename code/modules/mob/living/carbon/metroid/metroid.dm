@@ -229,7 +229,7 @@
 
 		//paralysis += 1
 
-	show_message("<span class='userdanger'> The blob attacks you!</span>")
+	show_message("<span class='userdanger'>The blob attacks you!</span>")
 
 	adjustFireLoss(damage)
 
@@ -254,7 +254,7 @@
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
 			else
-				visible_message("<span class='warning'> [M] manages to wrestle \the [name] off!</span>")
+				visible_message("<span class='warning'>[M] manages to wrestle \the [name] off!</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 				if(prob(90) && !client)
@@ -278,7 +278,7 @@
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
 			else
-				visible_message("<span class='warning'> [M] manages to wrestle \the [name] off of [Victim]!</span>")
+				visible_message("<span class='warning'>[M] manages to wrestle \the [name] off of [Victim]!</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 				if(prob(80) && !client)
@@ -456,10 +456,10 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	attackby(obj/item/O as obj, mob/user as mob)
 		if(istype(O, /obj/item/weapon/slimesteroid2))
 			if(enhanced == 1)
-				user << "<span class='warning'> This extract has already been enhanced!</span>"
+				user << "<span class='warning'>This extract has already been enhanced!</span>"
 				return ..()
 			if(Uses == 0)
-				user << "<span class='warning'> You can't enhance a used extract!</span>"
+				user << "<span class='warning'>You can't enhance a used extract!</span>"
 				return ..()
 			user <<"You apply the enhancer. It now has triple the amount of uses."
 			Uses = 3
@@ -568,16 +568,16 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
 		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
-			user << "<span class='warning'> The potion only works on baby slimes!</span>"
+			user << "<span class='warning'>The potion only works on baby slimes!</span>"
 			return ..()
 		if(M.is_adult) //Can't tame adults
-			user << "<span class='warning'> Only baby slimes can be tamed!</span>"
+			user << "<span class='warning'>Only baby slimes can be tamed!</span>"
 			return..()
 		if(M.stat)
-			user << "<span class='warning'> The slime is dead!</span>"
+			user << "<span class='warning'>The slime is dead!</span>"
 			return..()
 		if(M.mind)
-			user << "<span class='warning'> The slime resists!</span>"
+			user << "<span class='warning'>The slime resists!</span>"
 			return ..()
 		var/mob/living/simple_animal/slime/pet = new /mob/living/simple_animal/slime(M.loc)
 		pet.icon_state = "[M.colour] baby slime"
@@ -602,13 +602,13 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
 		if(!istype(M, /mob/living/carbon/slime/))//If target is not a slime.
-			user << "<span class='warning'> The potion only works on slimes!</span>"
+			user << "<span class='warning'>The potion only works on slimes!</span>"
 			return ..()
 		if(M.stat)
-			user << "<span class='warning'> The slime is dead!</span>"
+			user << "<span class='warning'>The slime is dead!</span>"
 			return..()
 		if(M.mind)
-			user << "<span class='warning'> The slime resists!</span>"
+			user << "<span class='warning'>The slime resists!</span>"
 			return ..()
 		var/mob/living/simple_animal/adultslime/pet = new /mob/living/simple_animal/adultslime(M.loc)
 		pet.icon_state = "[M.colour] adult slime"
@@ -634,16 +634,16 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
 		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
-			user << "<span class='warning'> The steroid only works on baby slimes!</span>"
+			user << "<span class='warning'>The steroid only works on baby slimes!</span>"
 			return ..()
 		if(M.is_adult) //Can't tame adults
-			user << "<span class='warning'> Only baby slimes can use the steroid!</span>"
+			user << "<span class='warning'>Only baby slimes can use the steroid!</span>"
 			return..()
 		if(M.stat)
-			user << "<span class='warning'> The slime is dead!</span>"
+			user << "<span class='warning'>The slime is dead!</span>"
 			return..()
 		if(M.cores == 3)
-			user <<"<span class='warning'> The slime already has the maximum amount of extract!</span>"
+			user <<"<span class='warning'>The slime already has the maximum amount of extract!</span>"
 			return..()
 
 		user <<"You feed the slime the steroid. It now has triple the amount of extract."
@@ -659,10 +659,10 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	/*afterattack(obj/target, mob/user , flag)
 		if(istype(target, /obj/item/slime_extract))
 			if(target.enhanced == 1)
-				user << "<span class='warning'> This extract has already been enhanced!</span>"
+				user << "<span class='warning'>This extract has already been enhanced!</span>"
 				return ..()
 			if(target.Uses == 0)
-				user << "<span class='warning'> You can't enhance a used extract!</span>"
+				user << "<span class='warning'>You can't enhance a used extract!</span>"
 				return ..()
 			user <<"You apply the enhancer. It now has triple the amount of uses."
 			target.Uses = 3
@@ -786,9 +786,9 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch()
 	processing_objects.Remove(src)
 	var/turf/T = get_turf(src)
-	src.visible_message("<span class='warning'> The [name] pulsates and quivers!</span>")
+	src.visible_message("<span class='warning'>The [name] pulsates and quivers!</span>")
 	spawn(rand(50,100))
-		src.visible_message("<span class='warning'> The [name] bursts open!</span>")
+		src.visible_message("<span class='warning'>The [name] bursts open!</span>")
 		new/mob/living/carbon/slime(T)
 		qdel(src)
 

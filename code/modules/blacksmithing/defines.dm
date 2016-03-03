@@ -14,7 +14,7 @@
 		else
 			//sends a message to people in view range
 			for(var/mob/M in viewers(src, null))
-				M.show_message("\red The [src.name] has cooled down and reverts to its original form.")
+				M.show_message("<span class='alert'>The [src.name] has cooled down and reverts to its original form.</span>")
 
 			set_light(0)
 			color = null
@@ -24,9 +24,9 @@
 	pickup(mob/living/user)
 		if(temperature > T20C+20)
 			//only an idiot would pick up a superheated chunk of metal -sigh-
-			user << "\red <B>You pick-up the [src.name]!</B>"
+			user << "<span class='alert'><B>You pick-up the [src.name]!</B></span>"
 			user.adjustFireLoss(temperature / 50)
-			user << "\red <B>Your hands burn!</B>"
+			user << "<span class='alert'><B>Your hands burn!</B></span>"
 			if(temperature > T20C+40)		//Just for you kwaky..
 				user.drop_item()
 				user.emote("scream")

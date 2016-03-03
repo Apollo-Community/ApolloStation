@@ -6,6 +6,8 @@
 	var/turf/location // Filled after collection is placed
 	var/list/turfs = list()
 	var/name
+	var/list/info = list()
+	var/area/area = null
 
 	// Because associative lists are a pain in byond
 	var/list/place_last_turfs = list()
@@ -29,6 +31,22 @@
 			for(var/atom/movable/M in T)
 				M.initialize()
 
+	proc/PostPlace()
+		var/area/A = new()
+		A.name = name
+		A.requires_power = info["requires_power"]
+		A.power_equip = 0
+		A.power_light = 0
+		A.power_environ = 0
+		A.always_unpowered = 0
+		A.environment = info["area_environment"]
+
+		for(var/turf/T in turfs)
+			if(!istype(T, /turf/space) && istype(T.loc, /area/space))
+				A.contents.Add(T)
+
+		area = A
+
 	proc/Place(var/turf/origin, var/template_name)
 		name = template_name
 
@@ -41,18 +59,18 @@
 				qdel(M)
 			qdel(T)
 
-		var/area/A = new()
-		A.name = template_name
-		A.requires_power = 1
-
 		for(var/y = 0; y < y_size; y++)
 			var/list/row = grid["[y]"]
 			var/x = 0
 			for(var/datum/dmm_object/object in row)
-				turfs += object.Instantiate(locate(origin.x + x, origin.y + y, origin.z), ((!object.HasArea()) && (!object.GetSubByType(/turf/space, 0))) ? A : null)
+				turfs += object.Instantiate(locate(origin.x + x, origin.y + y, origin.z))
 				x++
 
 		HandleEdgeCases()
+
+		// info.len > 0 if there's an info object
+		if(info.len > 0)
+			PostPlace()
 
 		spawn(10)
 			for(var/turf/T in place_last_turfs)
@@ -60,8 +78,16 @@
 				var/atom/last = new sub.object_path(T)
 				for(var/or in sub.var_overrides)
 					last.vars[or] = sub.var_overrides[or]
+				// Not very likely, but just to be sure
+				if(istype(last, /obj/machinery/atmospherics) || istype(last, /obj/structure) || istype(last, /obj/machinery/power))
+					last.New(T)
 
 		location = origin
+
+		// Make powernets for the template
+		if(area)
+			spawn(10)
+				makeareapowernets(area)
 
 		return 1
 
@@ -84,6 +110,8 @@
 				qdel(M)
 
 			T.ChangeTurf(/turf/space)
+
+		qdel(area)
 
 		if(delete_src)
 			qdel(src)
@@ -108,7 +136,7 @@
 
 		return sub_objects
 
-	proc/Instantiate(var/turf/position, var/area/AR)
+	proc/Instantiate(var/turf/position)
 		for(var/datum/dmm_sub_object/sub in SortSubObjects())
 			if(!sub.object_path)
 				continue
@@ -123,8 +151,17 @@
 				for(var/or in sub.var_overrides)
 					A.vars[or] = sub.var_overrides[or]
 
-				if(AR && istype(A, /turf))
-					AR.contents.Add(A)
+				if(istype(A, /obj/templateinfo))
+					var/obj/templateinfo/I = A
+					parent.name = I.area_name
+					parent.info["requires_power"] = I.requires_power
+					parent.info["area_environment"] = I.area_environment
+					qdel(A)
+
+				// Because variable override occurs AFTER New() is first called, a lot of variables are going to be wrong
+				// That's why New() is being called twice
+				if(istype(A, /obj/machinery/atmospherics) || istype(A, /obj/structure) || istype(A, /obj/machinery/power))
+					A.New(position)
 
 			catch(var/exception/ex)
 				message_admins("Error while creating template object: [ex.name]: [ex.desc] @ [ex.file] L:[ex.line]. Additional info: object_path = [sub.object_path] position = [position ? position : "null"]")
@@ -218,6 +255,12 @@
 					cb_starting_positions += cb_start
 					cb_ending_positions += cb_end
 
+					// Ignore commas in {}s for the first copied path
+					// You'd end up with things like " as this is a test"}" as a path group without this, and infinite loops
+					if(cb_starting_positions.len == 1)
+						while(comma_pos in (cb_start to cb_end))
+							comma_pos = findtext(line, ",", comma_pos + 1)
+
 					cb_start = findtext(line, "{", cb_end + 1)
 
 				// Extract each comma-seperated path out of the text
@@ -263,14 +306,15 @@
 						var/list/quote_ep = list() // Quote ending positions
 
 						var/quote_start = findtext(string, "\"")
-						while(quote_start)
+						var/safety = 9999999999
+						while( quote_start && safety )
 							var/quote_end = findtext(string, "\"", quote_start + 1)
 
 							quote_sp += quote_start
 							quote_ep += quote_end
 
 							quote_start = findtext(string, "\"", quote_end + 1)
-
+							safety--
 						// Start hack. Why? Because byond.
 						var/list/string_list = list()
 						var/next_sc_pos

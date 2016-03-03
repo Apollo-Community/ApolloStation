@@ -192,7 +192,11 @@
 		text += "<br>There [surviving_total>1 ? "were <b>[surviving_total] survivors</b>" : "was <b>one survivor</b>"]</b>"
 		text += " (<b>[escaped_total>0 ? escaped_total : "none"] [emergency_shuttle.evac ? "escaped" : "transferred"]</b>) and <b>[ghosts] ghosts</b>.</b><br>"
 	else
-		text += "There were <b>no survivors</b> (<b>[ghosts] ghosts</b>).</b>"
+		text += "There were <b>no survivors</b> (<b>[ghosts] ghosts</b>).</b><br>"
+
+	if( !config.canon )
+		text += "<h2>This round was NOT canon.</h2><br>"
+
 	world << text
 
 	if(clients > 0)
@@ -220,6 +224,8 @@
 
 	send2mainirc("A round of [src.name] has ended - [surviving_total] survivors, [ghosts] ghosts.")
 
+
+
 	return 0
 
 
@@ -238,8 +244,8 @@
 		var/special_role = man.mind.special_role
 		if (special_role == "Wizard" || special_role == "Ninja" || special_role == "Mercenary" || special_role == "Vox Raider")
 			continue	//NT intelligence ruled out possiblity that those are too classy to pretend to be a crew.
-		if(man.client.prefs.nanotrasen_relation == "Opposed" && prob(50) || \
-		   man.client.prefs.nanotrasen_relation == "Skeptical" && prob(20))
+		if(man.client.prefs.selected_character.nanotrasen_relation == "Opposed" && prob(50) || \
+		   man.client.prefs.selected_character.nanotrasen_relation == "Skeptical" && prob(20))
 			suspects += man
 		// Antags
 		else if(special_role == "traitor" && prob(40) || \
@@ -253,10 +259,10 @@
 			if(suplink)
 				var/extra = 4
 				suplink.uses += extra
-				man << "\red We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity."
+				man << "<span class='alert'>We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity.</span>"
 			else
 				// Give them a warning!
-				man << "\red They are on to you!"
+				man << "<span class='alert'>They are on to you!</span>"
 
 		// Some poor people who were just in the wrong place at the wrong time..
 		else if(prob(10))
@@ -318,9 +324,7 @@
 
 	// Get a list of all the people who want to be the antagonist for this round
 	for(var/mob/new_player/player in players)
-		world << "Checking [player.key]..."
-		if(player.client.prefs.be_special & role)
-			world << "[player.key] had [roletext] enabled, so we are drafting them."
+		if(player.client.prefs.beSpecial() & role)
 			log_debug("[player.key] had [roletext] enabled, so we are drafting them.")
 			candidates += player.mind
 			players -= player
@@ -346,7 +350,7 @@
 	/*if(candidates.len < recommended_enemies)
 		for(var/mob/new_player/player in players)
 			if(player.client && player.ready)
-				if(!(player.client.prefs.be_special & role)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
+				if(!(player.client.prefs.beSpecial() & role)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
 					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
 						drafted += player.mind
 
@@ -404,7 +408,7 @@
 
 /*
 /datum/game_mode/proc/check_player_role_pref(var/role, var/mob/new_player/player)
-	if(player.preferences.be_special & role)
+	if(player.preferences.beSpecial() & role)
 		return 1
 	return 0
 */
@@ -447,7 +451,7 @@
 //Reports player logouts//
 //////////////////////////
 proc/display_roundstart_logout_report()
-	var/msg = "\blue <b>Roundstart logout report\n\n"
+	var/msg = "<span class='notice'><b>Roundstart logout report\n\n</span>"
 	for(var/mob/living/L in mob_list)
 
 		if(L.ckey)
@@ -504,9 +508,9 @@ proc/get_nt_opposed()
 	var/list/dudes = list()
 	for(var/mob/living/carbon/human/man in player_list)
 		if(man.client)
-			if(man.client.prefs.nanotrasen_relation == "Opposed")
+			if(man.client.prefs.selected_character.nanotrasen_relation == "Opposed")
 				dudes += man
-			else if(man.client.prefs.nanotrasen_relation == "Skeptical" && prob(50))
+			else if(man.client.prefs.selected_character.nanotrasen_relation == "Skeptical" && prob(50))
 				dudes += man
 	if(dudes.len == 0) return null
 	return pick(dudes)
@@ -531,7 +535,7 @@ proc/get_nt_opposed()
 		return
 
 	var/obj_count = 1
-	player.current << "\blue Your current objectives:"
+	player.current << "<span class='notice'>Your current objectives:</span>"
 	for(var/datum/objective/objective in player.objectives)
 		player.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++

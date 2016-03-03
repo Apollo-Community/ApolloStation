@@ -54,7 +54,7 @@
 					"You hear a ratchet")
 				src.anchored = 0
 			if(2)
-				user << "\red The [src.name] needs to be unwelded from the floor."
+				user << "<span class='alert'>The [src.name] needs to be unwelded from the floor.</span>"
 		return
 
 	if(istype(W, /obj/item/weapon/weldingtool))
@@ -64,7 +64,7 @@
 			return
 		switch(state)
 			if(0)
-				user << "\red The [src.name] needs to be wrenched to the floor."
+				user << "<span class='alert'>The [src.name] needs to be wrenched to the floor.</span>"
 			if(1)
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -78,7 +78,7 @@
 						connect_to_network()
 						//src.directwired = 1
 				else
-					user << "\red You need more welding fuel to complete this task."
+					user << "<span class='alert'>You need more welding fuel to complete this task.</span>"
 			if(2)
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -92,24 +92,24 @@
 						disconnect_from_network()
 						//src.directwired = 0
 				else
-					user << "\red You need more welding fuel to complete this task."
+					user << "<span class='alert'>You need more welding fuel to complete this task.</span>"
 		return
 
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(emagged)
-			user << "\red The lock seems to be broken"
+			user << "<span class='alert'>The lock seems to be broken</span>"
 			return
 		if(src.allowed(user))
 			src.locked = !src.locked
 			user << "The controls are now [src.locked ? "locked." : "unlocked."]"
 		else
-			user << "\red Access denied."
+			user << "<span class='alert'>Access denied.</span>"
 		return
 
 	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
 		locked = 0
 		emagged = 1
-		user.visible_message("[user.name] emags the [src.name].","\red You short out the lock.")
+		user.visible_message("[user.name] emags the [src.name].","<span class='alert'>You short out the lock.</span>")
 		return
 
 	if(istype(W, /obj/item/weapon/fuel_assembly) && !cur_assembly)
@@ -200,7 +200,7 @@
 	if( href_list["fuel_usage"] )
 		var/new_usage = text2num(input("Enter new fuel usage (0.01% - 100%)", "Modifying fuel usage", fuel_usage * 100))
 		if(!new_usage)
-			usr << "\red That's not a valid number."
+			usr << "<span class='alert'>That's not a valid number.</span>"
 			return
 		new_usage = max(new_usage, 0.01)
 		new_usage = min(new_usage, 100)
@@ -281,10 +281,10 @@
 
 		break
 	if(success)
-		src.visible_message("\blue \icon[src] a green light flashes on [src].")
+		src.visible_message("<span class='notice'>\icon[src] a green light flashes on [src].</span>")
 		updateDialog()
 	else
-		src.visible_message("\red \icon[src] a red light flashes on [src].")
+		src.visible_message("<span class='alert'>\icon[src] a red light flashes on [src].</span>")
 
 /obj/machinery/power/rust_fuel_injector/verb/rotate_clock()
 	set category = "Object"

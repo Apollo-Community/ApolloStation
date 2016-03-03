@@ -307,7 +307,8 @@
 	mymob.blind.name = " "
 	mymob.blind.screen_loc = "1,1"
 	mymob.blind.mouse_opacity = 0
-	mymob.blind.layer = 0
+	mymob.blind.plane = -100
+	mymob.blind.layer = 18
 	hud_elements |= mymob.blind
 
 	mymob.fade = new /obj/screen()
@@ -439,12 +440,12 @@
 
 //Used for new human mobs created by cloning/goleming/etc.
 /mob/living/carbon/human/proc/set_cloned_appearance()
-	f_style = "Shaved"
+	character.hair_face_style = "Shaved"
 	if(dna.species == "Human") //no more xenos losing ears/tentacles
-		h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
-	undershirt = undershirt_t.Find("None")
+		character.hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
+	character.undershirt = undershirt_t.Find("None")
 	if(gender == MALE)
-		underwear = underwear_m.Find("None")
+		character.underwear = underwear_m.Find("None")
 	else
-		underwear = underwear_f.Find("None")
+		character.underwear = underwear_f.Find("None")
 	regenerate_icons()

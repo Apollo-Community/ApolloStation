@@ -18,18 +18,6 @@ var/global/list/global_mutations = list() // list of hidden mutation things
 
 var/global/defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
 
-var/global/list/global_map = null
-	//list/global_map = list(list(1,5),list(4,3))//an array of map Z levels.
-	//Resulting sector map looks like
-	//|_1_|_4_|
-	//|_5_|_3_|
-	//
-	//1 - SS13
-	//4 - Derelict
-	//3 - AI satellite
-	//5 - empty space
-	//////////////
-
 //Noises made when hit while typing.
 var/list/hit_appends = list("-OOF", "-ACK", "-UGH", "-HRNK", "-HURGH", "-GLORF")
 
@@ -103,7 +91,7 @@ var/list/lawchanges = list(  ) //Stores who uploaded laws to which silicon-based
 var/list/reg_dna = list(  )
 //	list/traitobj = list(  )
 
-var/mouse_respawn_time = 5 //Amount of time that must pass between a player dying as a mouse and repawning as a mouse. In minutes.
+var/rodent_respawn_time = 5 //Amount of time that must pass between a player dying as a mouse and repawning as a mouse. In minutes.
 
 var/CELLRATE = 0.002	// multiplier for watts per tick <> cell storage (eg: 0.02 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)
 						//It's a conversion constant. power_used*CELLRATE = charge_provided, or charge_used/CELLRATE = power_provided
@@ -242,7 +230,7 @@ var/list/robot_module_types = list("Standard", "Engineering", "Construction", "S
 var/static/list/scarySounds = list('sound/weapons/thudswoosh.ogg','sound/weapons/Taser.ogg','sound/weapons/armbomb.ogg','sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg','sound/voice/hiss5.ogg','sound/voice/hiss6.ogg','sound/effects/Glassbr1.ogg','sound/effects/Glassbr2.ogg','sound/effects/Glassbr3.ogg','sound/items/Welder.ogg','sound/items/Welder2.ogg','sound/machines/airlock.ogg','sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg')
 
 // Bomb cap!
-var/max_explosion_range = 14
+var/global/max_explosion_range = 14
 
 // Areas where actions won't be logged
 var/list/area/unlogged_areas = list( /area/tdome )
@@ -254,9 +242,7 @@ var/list/area/unlogged_areas = list( /area/tdome )
 	Unathi
 	Wryn */
 
-var/list/whitelisted_aliens = list( "Diona", "Skrell", "Tajaran", "Unathi", "Wryn" )
-var/unwhitelisted_alien = "Wryn" // Default if the week calculation screws up for some reason.
-var/list/unwhitelisted_aliens = list( "Machine", "Nucleation" )
+var/global/unwhitelisted_alien = "Wryn" // Default if the week calculation screws up for some reason.
 
 // Random round statistics
 var/datum/round_stats/statistics = new()

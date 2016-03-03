@@ -25,6 +25,9 @@ var/datum/template_config/template_config
 				value = values[val]
 			vars[val] = value
 
+	spawn( 1 )
+		zs = config.can_random_teleport_levels
+
 	PostInit()
 
 /datum/template_config/proc/PostInit()

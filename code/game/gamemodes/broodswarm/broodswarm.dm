@@ -23,9 +23,14 @@
 /datum/game_mode/broodswarm/announce()
 	world << "<span class='warning'>The station was brutalized by meteor impacts multiple hours ago. Communication with Central Command has been knocked out, and </span>"
 
+
 /datum/game_mode/broodswarm/can_start()
 	if(!..())
 		return 0
+	return 1
+
+/datum/game_mode/broodswarm/pre_setup()
+	config.canon = 0
 
 	var/list/candidates = get_players_for_role( BE_BROODSWARM )
 

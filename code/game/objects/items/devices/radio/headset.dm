@@ -177,6 +177,11 @@
 	icon_state = "com_headset"
 	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/heads/hop
+
+/obj/item/device/radio/headset/heads/hop/iaa
+	name = "internal affairs agent's headset"
+	desc = "Always watching, always listening, always paperwork."
+
 /*
 /obj/item/device/radio/headset/headset_mine
 	name = "mining radio headset"

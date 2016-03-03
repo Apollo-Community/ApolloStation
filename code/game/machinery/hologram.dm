@@ -74,9 +74,9 @@ var/const/HOLOPAD_MODE = 0
 			create_holo(user)//Create one.
 			src.visible_message("A holographic image of [user] flicks to life right before your eyes!")
 		else
-			user << "\red ERROR: \black Image feed in progress."
+			user << "<span class='alert'>ERROR: </span><span class='black'>Image feed in progress.</span>"
 	else
-		user << "\red ERROR: \black Unable to project hologram."
+		user << "<span class='alert'>ERROR: </span><span class='black'>Unable to project hologram.</span>"
 	return
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
@@ -94,7 +94,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		if(speaking)
 			rendered = "<i><span class='game say'>Holopad received, <span class='name'>[name_used]</span> [speaking.format_message(text, verb)]</span></i>"
 		else
-			rendered = "<i><span class='game say'>Holopad received, <span class='name'>[name_used]</span> [verb], <span class='message'>\"[text]\"</span></span></i>"
+			rendered = "<i><span class='game say'>Holopad received, <span class='name'>[name_used]</span> [verb], <span class='message'>\"[text]\</span></i>"
 		master.show_message(rendered, 2)
 	return
 

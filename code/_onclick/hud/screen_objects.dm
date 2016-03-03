@@ -14,7 +14,6 @@
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 	var/gun_click_time = -100 //I'm lazy.
 
-
 /obj/screen/text
 	icon = null
 	icon_state = null
@@ -79,7 +78,6 @@
 
 /obj/screen/grab/attackby()
 	return
-
 
 /obj/screen/storage
 	name = "storage"
@@ -527,3 +525,44 @@
 				usr.update_inv_r_hand(0)
 				usr.next_move = world.time+6
 	return 1
+
+/obj/screen/parallax_master
+	screen_loc = UI_SPACE_PARALLAX
+	plane = SPACE_PARALLAX_PLANE
+	layer = 1.5
+	blend_mode = BLEND_MULTIPLY
+	appearance_flags = PLANE_MASTER
+	mouse_opacity = 0
+
+/obj/screen/space_parallax
+	icon = 'icons/mob/screen1_full.dmi'
+	icon_state = "space"
+	name = "space"
+	screen_loc = UI_SPACE_PARALLAX
+	plane = SPACE_PARALLAX_PLANE
+	blend_mode = BLEND_ADD
+	mouse_opacity = 0
+
+/image/space_star
+	icon = 'icons/turf/stars.dmi'
+	icon_state = "star0"
+	name = "star"
+	plane = SPACE_PARALLAX_PLANE
+	blend_mode = BLEND_ADD
+	appearance_flags = KEEP_APART
+	mouse_opacity = 0
+
+/image/space_star/New()
+	var/star_type = pick( prob(100); 0, prob(10); 1, prob(1); 2 )
+	icon_state = "star[star_type]"
+	//screen_loc = "[rand( 1, 15 )]:[rand( -16, 16 )],[rand( 1, 15 )]:[rand( -16, 16 )]"
+	pixel_x = rand(-50, 530)
+	pixel_y = rand(-50, 530)
+
+/image/space_star/bluespace
+	icon_state = "bstar0"
+
+/image/space_star/bluespace/New()
+	..()
+	var/star_type = pick( prob(100); 0, prob(50); 1, prob(10); 2, prob(1); 3, prob(10); 4, prob(15); 5, prob(75); 6 )
+	icon_state = "bstar[star_type]"

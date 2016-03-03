@@ -75,6 +75,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		if(!config.objectives_disabled)
 			forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
+		changeling.character.temporary = 1 // Makes them non-canon
 
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
@@ -122,8 +123,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/game_mode/proc/greet_changeling(var/datum/mind/changeling, var/you_are=1)
 	if (you_are)
-		changeling.current << "<B>\red You are a changeling!</B>"
-	changeling.current << "<b>\red Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</b>"
+		changeling.current << "<B><span class='alert'>You are a changeling!</span></B>"
+	changeling.current << "<b><span class='alert'>Use say </span>\":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</b>"
 
 	show_objectives(changeling)
 

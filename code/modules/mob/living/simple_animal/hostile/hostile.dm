@@ -60,6 +60,7 @@
 	return
 
 /mob/living/simple_animal/hostile/proc/MoveToTarget()
+	if(client) return
 	stop_automated_movement = 1
 	if(!target_mob || SA_attackable(target_mob))
 		stance = HOSTILE_STANCE_IDLE
@@ -131,7 +132,6 @@
 	walk(src, 0)
 
 /mob/living/simple_animal/hostile/Life()
-
 	. = ..()
 	if(!.)
 		walk(src, 0)
@@ -156,7 +156,7 @@
 
 /mob/living/simple_animal/hostile/proc/OpenFire(target_mob)
 	var/target = target_mob
-	visible_message("\red <b>[src]</b> fires at [target]!", 1)
+	visible_message("<span class='alert'><b>[src]</b> fires at [target]!</span>", 1)
 
 	var/tturf = get_turf(target)
 	if(rapid)
@@ -210,3 +210,6 @@
 			var/obj/structure/obstacle = locate(/obj/structure, get_step(src, dir))
 			if(istype(obstacle, /obj/structure/window) || istype(obstacle, /obj/structure/closet) || istype(obstacle, /obj/structure/table) || istype(obstacle, /obj/structure/grille))
 				obstacle.attack_generic(src,rand(melee_damage_lower,melee_damage_upper),attacktext)
+
+/mob/living/simple_animal/hostile/Logout()
+	LoseTarget()

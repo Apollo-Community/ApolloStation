@@ -5,19 +5,23 @@ var/global/datum/controller/occupations/job_master
 #define RETURN_TO_LOBBY 2
 
 /datum/controller/occupations
-		//List of all jobs
+		// List of all jobs
 	var/list/occupations = list()
-		//Players who need jobs
+		// List of departments
+	var/list/departments = list()
+		// Players who need jobs
 	var/list/unassigned = list()
-		//Debug info
+		// Debug info
 	var/list/job_debug = list()
 
 
 	proc/SetupOccupations(var/faction = "Station")
 		occupations = list()
+		departments = list()
+
 		var/list/all_jobs = typesof(/datum/job)
 		if(!all_jobs.len)
-			world << "\red \b Error setting up jobs, no job datums found"
+			world << "<span class='alert'>\b Error setting up jobs, no job datums found</span>"
 			return 0
 		for(var/J in all_jobs)
 			var/datum/job/job = new J()
@@ -25,9 +29,13 @@ var/global/datum/controller/occupations/job_master
 			if(job.faction != faction)	continue
 			occupations += job
 
+		for( var/type in subtypes( /datum/department ))
+			var/datum/department/D = new type()
+			if( !D ) continue
+			if( D.faction != faction )	continue
+			departments += D
 
 		return 1
-
 
 	proc/Debug(var/text)
 		if(!Debug2)	return 0
@@ -40,6 +48,22 @@ var/global/datum/controller/occupations/job_master
 		for(var/datum/job/J in occupations)
 			if(!J)	continue
 			if(J.title == rank)	return J
+		return null
+
+	proc/GetDepartment(var/id)
+		for(var/datum/department/D in departments)
+			if(!D)
+				continue
+			if(D.department_id == id)
+				return D
+		return null
+
+	proc/GetDepartmentByName(var/name)
+		for(var/datum/department/D in departments)
+			if(!D)
+				continue
+			if(D.name == name)
+				return D
 		return null
 
 	proc/GetPlayerAltTitle(mob/new_player/player, rank)
@@ -82,10 +106,10 @@ var/global/datum/controller/occupations/job_master
 			if(!job.player_old_enough(player.client))
 				Debug("FOC player not old enough, Player: [player]")
 				continue
-			if(flag && (!player.client.prefs.be_special & flag))
+			if(flag && (!player.client.prefs.beSpecial() & flag))
 				Debug("FOC flag failed, Player: [player], Flag: [flag], ")
 				continue
-			if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
+			if( player.client.prefs.GetJobLevelNum( job.title ) == level )
 				Debug("FOC pass, Player: [player], Level:[level]")
 				candidates += player
 		return candidates
@@ -148,7 +172,7 @@ var/global/datum/controller/occupations/job_master
 				for(var/mob/V in candidates)
 					// Log-out during round-start? What a bad boy, no head position for you!
 					if(!V.client) continue
-					var/age = V.client.prefs.age
+					var/age = V.client.prefs.selected_character.age
 					switch(age)
 						if(good_age_minimal - 10 to good_age_minimal)
 							weightedCandidates[V] = 3 // Still a bit young.
@@ -240,7 +264,7 @@ var/global/datum/controller/occupations/job_master
 		unassigned = shuffle(unassigned)
 
 		HandleFeedbackGathering()
-
+/*
 		//People who wants to be assistants, sure, go on.
 		Debug("DO, Running Assistant Check 1")
 		var/datum/job/assist = new /datum/job/assistant()
@@ -251,6 +275,7 @@ var/global/datum/controller/occupations/job_master
 			AssignRole(player, "Assistant")
 			assistant_candidates -= player
 		Debug("DO, AC1 end")
+*/
 
 		//Select one head
 		Debug("DO, Running Head Check")
@@ -293,10 +318,10 @@ var/global/datum/controller/occupations/job_master
 						continue
 
 					// If the player wants that job on this level, then try give it to him.
-					if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
+					if( player.client.prefs.GetJobLevelNum( job.title ) == level)
 
 						// If the job isn't filled
-						if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
+						if(( job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
 							Debug("DO pass, Player: [player], Level:[level], Job:[job.title]")
 							AssignRole(player, job.title)
 							unassigned -= player
@@ -305,7 +330,7 @@ var/global/datum/controller/occupations/job_master
 		// Hand out random jobs to the people who didn't get any in the last check
 		// Also makes sure that they got their preference correct
 		for(var/mob/new_player/player in unassigned)
-			if(player.client.prefs.alternate_option == GET_RANDOM_JOB)
+			if(player.client.prefs.selected_character.alternate_option == GET_RANDOM_JOB)
 				GiveRandomJob(player)
 		/*
 		Old job system
@@ -331,13 +356,13 @@ var/global/datum/controller/occupations/job_master
 
 		// For those who wanted to be assistant if their preferences were filled, here you go.
 		for(var/mob/new_player/player in unassigned)
-			if(player.client.prefs.alternate_option == BE_ASSISTANT)
+			if(player.client.prefs.selected_character.alternate_option == BE_ASSISTANT)
 				Debug("AC2 Assistant located, Player: [player]")
 				AssignRole(player, "Assistant")
 
 		//For ones returning to lobby
 		for(var/mob/new_player/player in unassigned)
-			if(player.client.prefs.alternate_option == RETURN_TO_LOBBY)
+			if(player.client.prefs.selected_character.alternate_option == RETURN_TO_LOBBY)
 				player.ready = 0
 				player.new_player_panel_proc()
 				unassigned -= player
@@ -364,9 +389,9 @@ var/global/datum/controller/occupations/job_master
 			//Equip custom gear loadout.
 			var/list/custom_equip_slots = list() //If more than one item takes the same slot, all after the first one spawn in storage.
 			var/list/custom_equip_leftovers = list()
-			if(H.client.prefs.gear && H.client.prefs.gear.len && job.title != "Cyborg" && job.title != "AI")
+			if(H.client.prefs.selected_character.gear && H.client.prefs.selected_character.gear.len && job.title != "Cyborg" && job.title != "AI")
 
-				for(var/thing in H.client.prefs.gear)
+				for(var/thing in H.client.prefs.selected_character.gear)
 					var/datum/gear/G = gear_datums[thing]
 					if(G)
 						var/permitted
@@ -381,7 +406,7 @@ var/global/datum/controller/occupations/job_master
 							permitted = 0
 
 						if(!permitted)
-							H << "\red Your current job or whitelist status does not permit you to spawn with [thing]!"
+							H << "<span class='alert'>Your current job or whitelist status does not permit you to spawn with [thing]!</span>"
 							continue
 
 						if(G.sort_category == "ID_card")
@@ -394,7 +419,7 @@ var/global/datum/controller/occupations/job_master
 							if(G.slot == slot_wear_mask || G.slot == slot_wear_suit || G.slot == slot_head)
 								custom_equip_leftovers += thing
 							else if(H.equip_to_slot_or_qdel(new G.path(H), G.slot))
-								H << "\blue Equipping you with [thing]!"
+								H << "<span class='notice'>Equipping you with [thing]!</span>"
 								custom_equip_slots.Add(G.slot)
 							else
 								custom_equip_leftovers.Add(thing)
@@ -410,7 +435,7 @@ var/global/datum/controller/occupations/job_master
 					spawn_in_storage += thing
 				else
 					if(H.equip_to_slot_or_qdel(new G.path(H), G.slot))
-						H << "\blue Equipping you with [thing]!"
+						H << "<span class='notice'>Equipping you with [thing]!</span>"
 						custom_equip_slots.Add(G.slot)
 					else
 						spawn_in_storage += thing
@@ -427,8 +452,12 @@ var/global/datum/controller/occupations/job_master
 				break
 			if(!S)
 				S = locate("start*[rank]") // use old stype
+
 			if(istype(S, /obj/effect/landmark/start) && istype(S.loc, /turf))
 				H.loc = S.loc
+			else
+				H.loc = pick( latejoin )
+
 			// Moving wheelchair if they have one
 			if(H.buckled && istype(H.buckled, /obj/structure/bed/chair/wheelchair))
 				H.buckled.loc = H.loc
@@ -462,7 +491,7 @@ var/global/datum/controller/occupations/job_master
 			H.mind.store_memory(remembered_info)
 
 		spawn(0)
-			H << "\blue<b>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</b>"
+			H << "<span class='notice'><b>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</b></span>"
 
 		if(H.mind)
 			switch(rank)
@@ -470,7 +499,7 @@ var/global/datum/controller/occupations/job_master
 					return H.Robotize()
 				if("AI","Clown")	//don't need bag preference stuff!
 				else
-					switch(H.backbag) //BS12 EDIT
+					switch(H.character.backpack) //BS12 EDIT
 						if(1)
 							H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 						if(2)
@@ -495,11 +524,11 @@ var/global/datum/controller/occupations/job_master
 
 						if(!isnull(B))
 							for(var/thing in spawn_in_storage)
-								H << "\blue Placing [thing] in your [B]!"
+								H << "<span class='notice'>Placing [thing] in your [B]!</span>"
 								var/datum/gear/G = gear_datums[thing]
 								new G.path(B)
 						else
-							H << "\red Failed to locate a storage object on your mob, either you spawned with no arms and no backpack or this is a bug."
+							H << "<span class='alert'>Failed to locate a storage object on your mob, either you spawned with no arms and no backpack or this is a bug.</span>"
 
 		//TODO: Generalize this by-species
 		if(H.species)
@@ -647,13 +676,15 @@ var/global/datum/controller/occupations/job_master
 				if(!job.player_old_enough(player.client))
 					level6++
 					continue
-				if(player.client.prefs.GetJobDepartment(job, 1) & job.flag)
-					level1++
-				else if(player.client.prefs.GetJobDepartment(job, 2) & job.flag)
-					level2++
-				else if(player.client.prefs.GetJobDepartment(job, 3) & job.flag)
-					level3++
-				else level4++ //not selected
+				switch( player.client.prefs.GetJobLevel( job.title ))
+					if( "High" )
+						level1++
+					if( "Medium" )
+						level2++
+					if( "Low" )
+						level3++
+					else
+						level4++ //not selected
 
 			tmp_str += "HIGH=[level1]|MEDIUM=[level2]|LOW=[level3]|NEVER=[level4]|BANNED=[level5]|YOUNG=[level6]|-"
 			feedback_add_details("job_preferences",tmp_str)

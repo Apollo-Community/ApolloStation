@@ -40,11 +40,7 @@ var/global/datum/controller/gameticker/ticker
 	var/round_end_announced = 0 // Spam Prevention. Announce round end only once.
 
 /datum/controller/gameticker/proc/pregame()
-	login_music = 'sound/music/space_oddity_bowie.ogg'
-	/*pick(\
-	'sound/music/halloween/skeletons.ogg',\
-	'sound/music/halloween/halloween.ogg',\
-	'sound/music/halloween/ghosts.ogg'
+	login_music = pick(\
 	'sound/music/space.ogg',\
 	'sound/music/traitor.ogg',\
 	'sound/music/title2.ogg',\
@@ -55,8 +51,8 @@ var/global/datum/controller/gameticker/ticker
 	'sound/music/mining_song1.ogg',\
 	'sound/music/mining_song2.ogg',\
 	'sound/music/mining_song3.ogg',\
-	'sound/music/jazzy_jazz.ogg'
-	)*/
+	'sound/music/jazzy_jazz.ogg',\
+	)
 	do
 		pregame_timeleft = 180
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
@@ -139,7 +135,8 @@ var/global/datum/controller/gameticker/ticker
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				qdel(S)
-		world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
+		world << "<font color='blue'><B>Enjoy the game!</B></font>"
+		world << "<h3>Today's date is [print_date( universe.date )]</h3>"
 		world << sound('sound/AI/welcome.ogg') // Skie
 
 	//start_events() //handles random events and space dust.
@@ -154,7 +151,8 @@ var/global/datum/controller/gameticker/ticker
 
 	processScheduler.start()
 
-	for(var/obj/multiz/ladder/L in world) L.connect() //Lazy hackfix for ladders. TODO: move this to an actual controller. ~ Z
+	for(var/obj/multiz/ladder/L in world)
+		L.connect() //Lazy hackfix for ladders. TODO: move this to an actual controller. ~ Z
 
 	if(config.sql_enabled)
 		statistic_cycle() // Polls population totals regularly and stores them in an SQL DB -- TLE
@@ -288,19 +286,12 @@ var/global/datum/controller/gameticker/ticker
 
 
 	proc/equip_characters()
-		var/captainless=1
 		for(var/mob/living/carbon/human/player in player_list)
 			if(player && player.mind && player.mind.assigned_role)
-				if(player.mind.assigned_role == "Captain")
-					captainless=0
 				if(player.mind.assigned_role != "MODE")
 					job_master.EquipRank(player, player.mind.assigned_role, 0)
 					UpdateFactionList(player)
 					EquipCustomItems(player)
-		if(captainless)
-			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
-					M << "Captainship not forced on anyone."
 
 
 	proc/process()
@@ -332,24 +323,27 @@ var/global/datum/controller/gameticker/ticker
 				if (mode.station_was_nuked)
 					feedback_set_details("end_proper","nuke")
 					if(!delay_end)
-						world << "\blue <B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B>"
+						world << "<span class='notice'><B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B></span>"
 				else
 					feedback_set_details("end_proper","proper completion")
 					if(!delay_end)
-						world << "\blue <B>Restarting in [restart_timeout/10] seconds</B>"
+						world << "<span class='notice'><B>Restarting in [restart_timeout/10] seconds</B></span>"
 
 
-				if(blackbox)
+				if( blackbox )
 					blackbox.save_all_data_to_sql()
+
+				if( config.canon )
+					canonHandleRoundEnd()
 
 				if(!delay_end)
 					sleep(restart_timeout)
 					if(!delay_end)
 						world.Reboot()
 					else
-						world << "\blue <B>An admin has delayed the round end</B>"
+						world << "<span class='notice'><B>An admin has delayed the round end</B></span>"
 				else
-					world << "\blue <B>An admin has delayed the round end</B>"
+					world << "<span class='notice'><B>An admin has delayed the round end</B></span>"
 
 		else if (mode_finished)
 			post_game = 1
@@ -359,7 +353,7 @@ var/global/datum/controller/gameticker/ticker
 			//call a transfer shuttle vote
 			spawn(50)
 				if(!round_end_announced) // Spam Prevention. Now it should announce only once.
-					world << "\red The round has ended!"
+					world << "<span class='alert'>The round has ended!</span>"
 					round_end_announced = 1
 				vote.autotransfer()
 

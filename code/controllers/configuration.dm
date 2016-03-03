@@ -22,7 +22,7 @@ var/list/gamemode_cache = list()
 	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
 	var/log_runtime = 0					// logs world.log to a file
 	var/sql_enabled = 1					// for sql switching
-	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
+	var/allow_admin_OOC_color = 0		// Allows admins with relevant permissions to have their own ooc colour
 	var/allow_vote_restart = 0 			// allow votes to restart
 	var/ert_admin_call_only = 0
 	var/allow_vote_mode = 0				// allow votes to change mode
@@ -71,7 +71,7 @@ var/list/gamemode_cache = list()
 	var/mod_job_tempban_max = 1440
 	var/load_jobs_from_txt = 0
 	var/ToRban = 0
-	var/automute_on = 0					//enables automuting/spam prevention
+	var/automute_on = 1					//enables automuting/spam prevention
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
 
 	var/cult_ghostwriter = 1               //Allows ghosts to write in blood in cult rounds...
@@ -98,7 +98,8 @@ var/list/gamemode_cache = list()
 	var/banappeals
 	var/wikiurl
 	var/forumurl
-	var/githuburl
+	var/gitrepourl
+	var/slackinvurl
 
 	//Alert level description
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
@@ -152,7 +153,7 @@ var/list/gamemode_cache = list()
 
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
-	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
+	var/use_playtime_restriction_for_jobs = 1 //Do jobs use account age restrictions? --requires database
 
 	var/simultaneous_pm_warning_timeout = 100
 
@@ -181,7 +182,7 @@ var/list/gamemode_cache = list()
 	var/list/alert_levels = list()	// Defines which Z-levels which, for example, a Code Red announcement may affect including such areas as Central Command and the Syndicate Shuttle
 	var/list/local_levels = list()	// Defines all Z-levels a character can typically reach
 	var/list/admin_levels = list()  // Defines which Z-levels which are for admin functionality, for example
-	var/list/can_random_teleport_levels = list()
+	var/list/can_random_teleport_levels = list() // Levels that you can possibly teleport to
 
 	// Event settings
 	var/expected_round_length = 3 * 60 * 60 * 10 // 3 hours
@@ -215,6 +216,8 @@ var/list/gamemode_cache = list()
 
 	var/player_soft_cap = 40
 	var/player_hard_cap = 60
+
+	var/canon = 1 // Is this round a canon round?
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -269,8 +272,8 @@ var/list/gamemode_cache = list()
 				if ("ban_legacy_system")
 					config.ban_legacy_system = 1
 
-				if ("use_age_restriction_for_jobs")
-					config.use_age_restriction_for_jobs = 1
+				if ("use_playtime_restriction_for_jobs")
+					config.use_playtime_restriction_for_jobs = 1
 
 				if ("jobs_have_minimal_access")
 					config.jobs_have_minimal_access = 1
@@ -332,8 +335,8 @@ var/list/gamemode_cache = list()
 				if ("generate_asteroid")
 					config.generate_asteroid = 1
 
-				if("allow_admin_ooccolor")
-					config.allow_admin_ooccolor = 1
+				if("allow_admin_OOC_color")
+					config.allow_admin_OOC_color = 1
 
 				if ("allow_vote_restart")
 					config.allow_vote_restart = 1
@@ -410,8 +413,11 @@ var/list/gamemode_cache = list()
 				if ("forumurl")
 					config.forumurl = value
 
-				if ("githuburl")
-					config.githuburl = value
+				if ("gitrepourl")
+					config.gitrepourl = value
+
+				if ("slackinvurl")
+					config.slackinvurl = value
 
 				if ("guest_jobban")
 					config.guest_jobban = 1

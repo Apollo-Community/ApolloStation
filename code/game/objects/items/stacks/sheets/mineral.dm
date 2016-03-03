@@ -61,6 +61,8 @@ var/global/list/datum/stack_recipe/iron_recipes = list ( \
 	throw_speed = 3
 	throw_range = 3
 
+	var/list/mineral_effect = list()
+
 /obj/item/stack/sheet/mineral/New()
 	..()
 	pixel_x = rand(0,4)-4
@@ -73,6 +75,8 @@ obj/item/stack/sheet/mineral/iron
 	sheettype = "iron"
 	color = "#333333"
 	perunit = 3750
+
+	mineral_effect = list("str" = 0.15, "blastres" = 1.1, "projarmor" = 0.4)
 
 obj/item/stack/sheet/mineral/iron/New()
 	..()
@@ -88,6 +92,8 @@ obj/item/stack/sheet/mineral/iron/New()
 	origin_tech = "materials=1"
 	sheettype = "sandstone"
 
+	mineral_effect = list("str" = 0.1)
+
 /obj/item/stack/sheet/mineral/sandstone/New()
 	..()
 	recipes = sandstone_recipes
@@ -98,6 +104,8 @@ obj/item/stack/sheet/mineral/iron/New()
 	origin_tech = "materials=6"
 	perunit = 3750
 	sheettype = "diamond"
+
+	mineral_effect = list("str" = 1.5, "blastres" = 1.3, "tempres" = 10, "projarmor" = 0.25, "acidres" = 1)
 
 
 /obj/item/stack/sheet/mineral/diamond/New()
@@ -111,6 +119,8 @@ obj/item/stack/sheet/mineral/iron/New()
 	perunit = 2000
 	sheettype = "uranium"
 
+	mineral_effect = list("rot" = 1, "rad" = 3, "str" = -0.05)
+
 /obj/item/stack/sheet/mineral/uranium/New()
 	..()
 	recipes = uranium_recipes
@@ -121,6 +131,8 @@ obj/item/stack/sheet/mineral/iron/New()
 	origin_tech = "phorontech=2;materials=2"
 	perunit = 2000
 	sheettype = "phoron"
+
+	mineral_effect = list("str" = 0.25, "tempres" = 60, "projarmor" = 0.3, "acidres" = 1)
 
 /obj/item/stack/sheet/mineral/phoron/New()
 	..()
@@ -149,6 +161,8 @@ obj/item/stack/sheet/mineral/iron/New()
 	perunit = 2000
 	sheettype = "gold"
 
+	mineral_effect = list("str" = 0.67, "blastres" = 1.3, "projarmor" = 0.35, "acidres" = 1)
+
 /obj/item/stack/sheet/mineral/gold/New()
 	..()
 	recipes = gold_recipes
@@ -159,6 +173,8 @@ obj/item/stack/sheet/mineral/iron/New()
 	origin_tech = "materials=3"
 	perunit = 2000
 	sheettype = "silver"
+
+	mineral_effect = list("str" = 0.1, "projarmor" = 0.4)
 
 /obj/item/stack/sheet/mineral/silver/New()
 	..()
@@ -177,6 +193,8 @@ obj/item/stack/sheet/mineral/iron/New()
 	origin_tech = "materials=2"
 	sheettype = "platinum"
 	perunit = 2000
+
+	mineral_effect = list("str" = 0.67, "blastres" = 1.5, "projarmor" = 0.15, "tempres" = 5)
 
 //Extremely valuable to Research.
 /obj/item/stack/sheet/mineral/mhydrogen
@@ -202,3 +220,5 @@ obj/item/stack/sheet/mineral/iron/New()
 	origin_tech = "materials=5"
 	color = "#9999FF"
 	perunit = 2000
+
+	mineral_effect = list("str" = 0.2, "blastres" = 5, "acidres" = 1)

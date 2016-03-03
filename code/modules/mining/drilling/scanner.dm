@@ -40,7 +40,7 @@
 
 			if(ore_type) metals[ore_type] += T.resources[metal]
 
-	user << "\icon[src] \blue The scanner beeps and displays a readout."
+	user << "\icon[src] <span class='notice'>The scanner beeps and displays a readout.</span>"
 
 	for(var/ore_type in metals)
 

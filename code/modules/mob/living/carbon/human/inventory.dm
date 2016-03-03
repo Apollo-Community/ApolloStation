@@ -14,7 +14,7 @@
 			else
 				update_inv_r_hand(0)
 		else
-			H << "\red You are unable to equip that."
+			H << "<span class='alert'>You are unable to equip that.</span>"
 
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, del_on_fail = 1)
 	for (var/slot in slots)
@@ -310,7 +310,7 @@
 			var/obj/item/clothing/under/uniform = src.w_uniform
 			uniform.attackby(W,src)
 		else
-			src << "\red You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it..."
+			src << "<span class='alert'>You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>"
 			return
 
 	if((W == src.l_hand) && (slot != slot_l_hand))
@@ -411,7 +411,7 @@
 		if(isrobot(source) && place != "handcuff")
 			qdel(src)
 		for(var/mob/O in viewers(target, null))
-			O.show_message("\red <B>[source] is trying to put \a [item] on [target]</B>", 1)
+			O.show_message("<span class='alert'><B>[source] is trying to put \a [item] on [target]</B></span>", 1)
 	else
 
 		var/target_part = null
@@ -463,64 +463,64 @@
 				target_item = target.wear_id
 
 			if("syringe")
-				message = "\red <B>[source] is trying to inject [target]!</B>"
+				message = "<span class='alert'><B>[source] is trying to inject [target]!</B></span>"
 			if("pill")
-				message = "\red <B>[source] is trying to force [target] to swallow [item]!</B>"
+				message = "<span class='alert'><B>[source] is trying to force [target] to swallow [item]!</B></span>"
 			if("drink")
-				message = "\red <B>[source] is trying to force [target] to swallow a gulp of [item]!</B>"
+				message = "<span class='alert'><B>[source] is trying to force [target] to swallow a gulp of [item]!</B></span>"
 			if("dnainjector")
-				message = "\red <B>[source] is trying to inject [target] with the [item]!</B>"
+				message = "<span class='alert'><B>[source] is trying to inject [target] with the [item]!</B></span>"
 			if("uniform")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their uniform ([target.w_uniform]) removed by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) uniform ([target.w_uniform])</font>")
 				if(target.w_uniform && !target.w_uniform.canremove)
-					message = "\red <B>[source] fails to take off \a [target.w_uniform] from [target]'s body!</B>"
+					message = "<span class='alert'><B>[source] fails to take off \a [target.w_uniform] from [target]'s body!</B></span>"
 					return
 				else
-					message = "\red <B>[source] is trying to take off \a [target.w_uniform] from [target]'s body!</B>"
+					message = "<span class='alert'><B>[source] is trying to take off \a [target.w_uniform] from [target]'s body!</B></span>"
 					for(var/obj/item/I in list(target.l_store, target.r_store))
 						if(I.on_found(source))
 							return
 			if("handcuff")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Was unhandcuffed by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to unhandcuff [target.name]'s ([target.ckey])</font>")
-				message = "\red <B>[source] is trying to unhandcuff [target]!</B>"
+				message = "<span class='alert'><B>[source] is trying to unhandcuff [target]!</B></span>"
 			if("legcuff")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Was unlegcuffed by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to unlegcuff [target.name]'s ([target.ckey])</font>")
-				message = "\red <B>[source] is trying to unlegcuff [target]!</B>"
+				message = "<span class='alert'><B>[source] is trying to unlegcuff [target]!</B></span>"
 			if("tie")
 				var/obj/item/clothing/under/suit = target.w_uniform
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their accessory ([suit.hastie]) removed by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) accessory ([suit.hastie])</font>")
 				if(istype(suit.hastie, /obj/item/clothing/tie/holobadge) || istype(suit.hastie, /obj/item/clothing/tie/medal))
 					for(var/mob/M in viewers(target, null))
-						M.show_message("\red <B>[source] tears off \the [suit.hastie] from [target]'s suit!</B>" , 1)
+						M.show_message("<span class='alert'><B>[source] tears off \the [suit.hastie] from [target]'s suit!</B></span>" , 1)
 					done()
 					return
 				else
-					message = "\red <B>[source] is trying to take off \a [suit.hastie] from [target]'s suit!</B>"
+					message = "<span class='alert'><B>[source] is trying to take off \a [suit.hastie] from [target]'s suit!</B></span>"
 			if("pockets")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their pockets emptied by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to empty [target.name]'s ([target.ckey]) pockets</font>")
 				for(var/obj/item/I in list(target.l_store, target.r_store))
 					if(I.on_found(source))
 						return
-				message = "\red <B>[source] is trying to empty [target]'s pockets.</B>"
+				message = "<span class='alert'><B>[source] is trying to empty [target]'s pockets.</B></span>"
 			if("CPR")
 				if (!target.cpr_time)
 					qdel(src)
 				target.cpr_time = 0
-				message = "\red <B>[source] is trying perform CPR on [target]!</B>"
+				message = "<span class='alert'><B>[source] is trying to perform CPR on [target]!</B></span>"
 			if("internal")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their internals toggled by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to toggle [target.name]'s ([target.ckey]) internals</font>")
 				if (target.internal)
-					message = "\red <B>[source] is trying to remove [target]'s internals</B>"
+					message = "<span class='alert'><B>[source] is trying to remove [target]'s internals</B></span>"
 				else
-					message = "\red <B>[source] is trying to set on [target]'s internals.</B>"
+					message = "<span class='alert'><B>[source] is trying to set on [target]'s internals.</B></span>"
 			if("splints")
-				message = text("\red <B>[] is trying to remove []'s splints!</B>", source, target)
+				message = text("<span class='alert'><B>[] is trying to remove []'s splints!</B></span>", source, target)
 			if("sensor")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their sensors toggled by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to toggle [target.name]'s ([target.ckey]) sensors</font>")
@@ -528,7 +528,7 @@
 				if (suit.has_sensor >= 2)
 					source << "The controls are locked."
 					return
-				message = "\red <B>[source] is trying to set [target]'s suit sensors!</B>"
+				message = "<span class='alert'><B>[source] is trying to set [target]'s suit sensors!</B></span>"
 
 		if(target_item)
 			target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had their [target_item] removed by [source.name] ([source.ckey])</font>")
@@ -661,7 +661,7 @@ It can still be worn/put on as normal.
 						break
 				if (!grabbing)
 					slot_to_process = null
-					source << "\red Your grasp was broken before you could restrain [target]!"
+					source << "<span class='alert'>Your grasp was broken before you could restrain [target]!</span>"
 
 		if("legcuff")
 			slot_to_process = slot_legcuffed
@@ -691,9 +691,9 @@ It can still be worn/put on as normal.
 				target.adjustOxyLoss(-suff)
 				target.updatehealth()
 				for(var/mob/O in viewers(source, null))
-					O.show_message("\red [source] performs CPR on [target]!", 1)
-				target << "\blue <b>You feel a breath of fresh air enter your lungs. It feels good.</b>"
-				source << "\red Repeat at least every 7 seconds."
+					O.show_message("<span class='alert'>[source] performs CPR on [target]!</span>", 1)
+				target << "<span class='notice'><b>You feel a breath of fresh air enter your lungs. It feels good.</b></span>"
+				source << "<span class='alert'>Repeat at least every 7 seconds.</span>"
 		if("dnainjector")
 			var/obj/item/weapon/dnainjector/S = item
 			if(S)
@@ -707,7 +707,7 @@ It can still be worn/put on as normal.
 					qdel(src)
 				S.s_time = world.time
 				for(var/mob/O in viewers(source, null))
-					O.show_message("\red [source] injects [target] with the DNA Injector!", 1)
+					O.show_message("<span class='alert'>[source] injects [target] with the DNA Injector!</span>", 1)
 				S.inuse = 0
 		if("pockets")
 			if (!item || (target.l_store && target.r_store))	// Only empty pockets when hand is empty or both pockets are full

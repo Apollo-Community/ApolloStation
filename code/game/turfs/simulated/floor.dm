@@ -122,7 +122,9 @@ var/list/wood_icons = list("wood","wood-broken")
 /turf/simulated/floor/blob_act()
 	return
 
-turf/simulated/floor/proc/update_icon()
+turf/simulated/proc/update_icon()
+
+turf/simulated/floor/update_icon()
 	if(lava)
 		return
 	else if(is_plasteel_floor())
@@ -232,7 +234,7 @@ turf/simulated/floor/proc/update_icon()
 			return 1
 	return 0
 
-/turf/simulated/floor/proc/gets_drilled()
+/turf/simulated/proc/gets_drilled()
 	return
 
 /turf/simulated/floor/proc/break_tile_to_plating()
@@ -330,32 +332,21 @@ turf/simulated/floor/proc/update_icon()
 
 //This proc will set floor_type to null and the update_icon() proc will then change the icon_state of the turf
 //This proc auto corrects the grass tiles' siding.
-/turf/simulated/floor/proc/make_plating()
-	if(istype(src,/turf/simulated/floor/engine)) return
+/turf/simulated/proc/make_plating()
+	set_light(0)
 
-	if(is_grass_floor())
-		for(var/direction in cardinal)
-			if(istype(get_step(src,direction),/turf/simulated/floor))
-				var/turf/simulated/floor/FF = get_step(src,direction)
-				FF.update_icon() //so siding get updated properly
-	else if(is_carpet_floor())
-		spawn(5)
-			if(src)
-				for(var/direction in list(1,2,4,8,5,6,9,10))
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						FF.update_icon() //so siding get updated properly
+	update_icon()
+	levelupdate()
 
+/turf/simulated/floor/make_plating()
 	if(!floor_type) return
 	icon_plating = "plating"
-	set_light(0)
 	floor_type = null
 	intact = 0
 	broken = 0
 	burnt = 0
 
-	update_icon()
-	levelupdate()
+	..()
 
 //This proc will make the turf a plasteel floor tile. The expected argument is the tile to make the turf with
 //If none is given it will make a new object. dropping or unequipping must be handled before or after calling
@@ -469,23 +460,23 @@ turf/simulated/floor/proc/update_icon()
 				qdel(C)
 				set_lightfloor_state(0) //fixing it by bashing it with a light bulb, fun eh?
 				update_icon()
-				user << "\blue You replace the light bulb."
+				user << "<span class='notice'>You replace the light bulb.</span>"
 			else
-				user << "\blue The lightbulb seems fine, no need to replace it."
+				user << "<span class='notice'>The lightbulb seems fine, no need to replace it.</span>"
 
 	if(istype(C, /obj/item/weapon/crowbar) && (!(is_plating())))
 		if(broken || burnt)
-			user << "\red You remove the broken plating."
+			user << "<span class='alert'>You remove the broken plating.</span>"
 		else
 			if(is_wood_floor())
-				user << "\red You forcefully pry off the planks, destroying them in the process."
+				user << "<span class='alert'>You forcefully pry off the planks, destroying them in the process.</span>"
 			else
 				var/obj/item/I = new floor_type(src)
 				if(is_light_floor())
 					var/obj/item/stack/tile/light/L = I
 					L.on = get_lightfloor_on()
 					L.state = get_lightfloor_state()
-				user << "\red You remove the [I.name]."
+				user << "<span class='alert'>You remove the [I.name].</span>"
 
 		make_plating()
 		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
@@ -497,7 +488,7 @@ turf/simulated/floor/proc/update_icon()
 			return
 		else
 			if(is_wood_floor())
-				user << "\red You unscrew the planks."
+				user << "<span class='alert'>You unscrew the planks.</span>"
 				new floor_type(src)
 
 		make_plating()
@@ -511,7 +502,7 @@ turf/simulated/floor/proc/update_icon()
 			if (R.get_amount() < 2)
 				user << "<span class='warning'>You need more rods.</span>"
 				return
-			user << "\blue Reinforcing the floor..."
+			user << "<span class='notice'>Reinforcing the floor...</span>"
 			if(do_after(user, 30) && is_plating())
 				if (R.use(2))
 					ChangeTurf(/turf/simulated/floor/engine)
@@ -519,7 +510,7 @@ turf/simulated/floor/proc/update_icon()
 				return
 			else
 		else
-			user << "\red You must remove the plating first."
+			user << "<span class='alert'>You must remove the plating first.</span>"
 		return
 
 	if(istype(C, /obj/item/stack/tile))
@@ -549,7 +540,7 @@ turf/simulated/floor/proc/update_icon()
 				levelupdate()
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			else
-				user << "\blue This section is too damaged to support a tile. Use a welder to fix the damage."
+				user << "<span class='notice'>This section is too damaged to support a tile. Use a welder to fix the damage.</span>"
 
 
 	if(istype(C, /obj/item/stack/cable_coil))
@@ -557,29 +548,29 @@ turf/simulated/floor/proc/update_icon()
 			var/obj/item/stack/cable_coil/coil = C
 			coil.turf_place(src, user)
 		else
-			user << "\red You must remove the plating first."
+			user << "<span class='alert'>You must remove the plating first.</span>"
 
 	if(istype(C, /obj/item/weapon/shovel))
 		if(is_grass_floor())
 			new /obj/item/weapon/ore/glass(src)
 			new /obj/item/weapon/ore/glass(src) //Make some sand if you shovel grass
-			user << "\blue You shovel the grass."
+			user << "<span class='notice'>You shovel the grass.</span>"
 			make_plating()
 		else
-			user << "\red You cannot shovel this."
+			user << "<span class='alert'>You cannot shovel this.</span>"
 
 	if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/welder = C
 		if(welder.isOn() && (is_plating()))
 			if(broken || burnt)
 				if(welder.remove_fuel(0,user))
-					user << "\red You fix some dents on the broken plating."
+					user << "<span class='alert'>You fix some dents on the broken plating.</span>"
 					playsound(src, 'sound/items/Welder.ogg', 80, 1)
 					icon_state = "plating"
 					burnt = 0
 					broken = 0
 				else
-					user << "\blue You need more welding fuel to complete this task."
+					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 
 /turf/simulated/floor/melt()
 	if( prob( 80 ))

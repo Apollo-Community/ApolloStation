@@ -85,7 +85,7 @@
 /obj/effect/alien/resin/hitby(AM as mob|obj)
 	..()
 	for(var/mob/O in viewers(src, null))
-		O.show_message("\red <B>[src] was hit by [AM].</B>", 1)
+		O.show_message("<span class='alert'><B>[src] was hit by [AM].</B></span>", 1)
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 10
@@ -99,9 +99,9 @@
 
 /obj/effect/alien/resin/attack_hand()
 	if (HULK in usr.mutations)
-		usr << "\blue You easily destroy the [name]."
+		usr << "<span class='notice'>You easily destroy the [name].</span>"
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [usr] destroys the [name]!", 1)
+			O.show_message("<span class='alert'>[usr] destroys the [name]!</span>", 1)
 		health = 0
 	else
 
@@ -110,14 +110,14 @@
 			var/mob/living/carbon/M = usr
 			if(locate(/datum/organ/internal/xenos/hivenode) in M.internal_organs)
 				for(var/mob/O in oviewers(src))
-					O.show_message("\red [usr] strokes the [name] and it melts away!", 1)
+					O.show_message("<span class='alert'>[usr] strokes the [name] and it melts away!</span>", 1)
 				health = 0
 				healthcheck()
 				return
 
-		usr << "\blue You claw at the [name]."
+		usr << "<span class='notice'>You claw at the [name].</span>"
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [usr] claws at the [name]!", 1)
+			O.show_message("<span class='alert'>[usr] claws at the [name]!</span>", 1)
 		health -= rand(5,10)
 	healthcheck()
 	return
@@ -233,9 +233,9 @@ Alien plants should do something if theres a lot of poison
 
 /obj/effect/alien/weeds/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(W.attack_verb.len)
-		visible_message("\red <B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
+		visible_message("<span class='alert'><B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".</span>")]")
 	else
-		visible_message("\red <B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]")
+		visible_message("<span class='alert'><B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".</span>")]")
 
 	var/damage = W.force / 4.0
 
@@ -297,7 +297,7 @@ Alien plants should do something if theres a lot of poison
 	if(ticks >= target_strength)
 
 		for(var/mob/O in hearers(src, null))
-			O.show_message("\green <B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B>", 1)
+			O.show_message("<span class='green'><B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B></span>", 1)
 
 		if(istype(target, /turf/simulated/wall)) // I hate turf code.
 			var/turf/simulated/wall/W = target
@@ -309,13 +309,13 @@ Alien plants should do something if theres a lot of poison
 
 	switch(target_strength - ticks)
 		if(6)
-			visible_message("\green <B>[src.target] is holding up against the acid!</B>")
+			visible_message("<span class='green'><B>[src.target] is holding up against the acid!</B></span>")
 		if(4)
-			visible_message("\green <B>[src.target]\s structure is being melted by the acid!</B>")
+			visible_message("<span class='green'><B>[src.target]</span>\s structure is being melted by the acid!</B>")
 		if(2)
-			visible_message("\green <B>[src.target] is struggling to withstand the acid!</B>")
+			visible_message("<span class='green'><B>[src.target] is struggling to withstand the acid!</B></span>")
 		if(0 to 1)
-			visible_message("\green <B>[src.target] begins to crumble under the acid!</B>")
+			visible_message("<span class='green'><B>[src.target] begins to crumble under the acid!</B></span>")
 	spawn(rand(150, 200)) tick()
 
 /*
@@ -355,14 +355,14 @@ Alien plants should do something if theres a lot of poison
 
 	switch(status)
 		if(BURST)
-			user << "\red You clear the hatched egg."
+			user << "<span class='alert'>You clear the hatched egg.</span>"
 			qdel(src)
 			return
 		if(GROWING)
-			user << "\red The child is not developed yet."
+			user << "<span class='alert'>The child is not developed yet.</span>"
 			return
 		if(GROWN)
-			user << "\red You retrieve the child."
+			user << "<span class='alert'>You retrieve the child.</span>"
 			Burst(0)
 			return
 
@@ -404,9 +404,9 @@ Alien plants should do something if theres a lot of poison
 	if(health <= 0)
 		return
 	if(W.attack_verb.len)
-		src.visible_message("\red <B>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
+		src.visible_message("<span class='alert'><B>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".</span>")]")
 	else
-		src.visible_message("\red <B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]")
+		src.visible_message("<span class='alert'><B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".</span>")]")
 	var/damage = W.force / 4.0
 
 	if(istype(W, /obj/item/weapon/weldingtool))

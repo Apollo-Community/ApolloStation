@@ -1,6 +1,6 @@
 /mob/living/carbon/human/broodmother/New(var/new_loc)
-	h_style = "Bald"
 	..(new_loc, "Broodmother")
+	character.hair_style = "Bald"
 
 /mob/living/carbon/human/broodmother/death(gibbed)
 	..()

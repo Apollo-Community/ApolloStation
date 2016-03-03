@@ -9,7 +9,7 @@
 
 	//Bitflags for the job
 	var/flag = 0
-	var/department_flag = 0
+	var/department_id = 0
 
 	//Players will be allowed to spawn in as jobs that are set to "Station"
 	var/faction = "None"
@@ -22,6 +22,9 @@
 
 	//How many players have this job
 	var/current_positions = 0
+
+	// Where this rank sits on the chain of command. Higher the number, the greater the authority
+	var/rank_succesion_level = 0
 
 	//Supervisors, who this person answers to directly
 	var/supervisors = ""
@@ -38,8 +41,8 @@
 	//If this is set to 1, a text is printed to the player when jobs are assigned, telling him that he should let admins know that he has to disconnect.
 	var/req_admin_notify
 
-	//If you have use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_age days old. (meaning they first signed in at least that many days before.)
-	var/minimal_player_age = 0
+	//If you have use_playtime_restriction_for_jobs config option enabled, this is how much time is required in hours to play this role
+	var/minimal_playtime = 0
 
 /datum/job/proc/equip(var/mob/living/carbon/human/H)
 	return 1
@@ -55,22 +58,21 @@
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/C)
-	if(available_in_days(C) == 0)
+	if(available_in_hours(C) == 0)
 		return 1	//Available in 0 days = available right now = player is old enough to play.
 	return 0
 
-
-/datum/job/proc/available_in_days(client/C)
+/datum/job/proc/available_in_hours(client/C)
 	if(!C)
 		return 0
-	if(!config.use_age_restriction_for_jobs)
+	if(!config.use_playtime_restriction_for_jobs)
 		return 0
 	if(!isnum(C.player_age))
 		return 0 //This is only a number if the db connection is established, otherwise it is text: "Requires database", meaning these restrictions cannot be enforced
-	if(!isnum(minimal_player_age))
+	if(!isnum(minimal_playtime))
 		return 0
 
-	return max(0, minimal_player_age - C.player_age)
+	return max( 0, minimal_playtime - C.total_playtime_hours() )
 
 /datum/job/proc/apply_fingerprints(var/mob/living/carbon/human/H)
 	if(!istype(H))
@@ -109,4 +111,22 @@
 		H.l_store.add_fingerprint(H,1)
 	if(H.r_store)
 		H.r_store.add_fingerprint(H,1)
+	return 1
+
+/datum/job/proc/make_preview_icon( var/icon/preview_icon )
+	return preview_icon
+
+/datum/job/proc/is_full()
+	return ( current_positions >= total_positions ) && total_positions != -1
+
+/datum/job/proc/can_join( var/client/C )
+	if( is_full() )
+		return 0
+
+	if( available_in_hours( C ))
+		return 0
+
+	if( jobban_isbanned( C, title ))
+		return 0
+
 	return 1

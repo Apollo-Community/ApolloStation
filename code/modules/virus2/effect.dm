@@ -100,7 +100,7 @@
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.suiciding = 1
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
-		viewers(mob) << "\red <b>[mob.name] is holding \his breath. It looks like \he's trying to commit suicide.</b>"
+		viewers(mob) << "<span class='alert'><b>[mob.name] is holding \his breath. It looks like \he's trying to commit suicide.</b></span>"
 		mob.adjustOxyLoss(175 - mob.getToxLoss() - mob.getFireLoss() - mob.getBruteLoss() - mob.getOxyLoss())
 		mob.updatehealth()
 		spawn(200) //in case they get revived by cryo chamber or something stupid like that, let them suicide again in 20 seconds
@@ -165,7 +165,7 @@
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
 			H << "<span class='notice'>You suddenly feel hurt and old...</span>"
-			H.age += 8
+			H.character.age += 8
 		var/backlash_amt = 5*multiplier
 		mob.apply_damages(backlash_amt,backlash_amt,backlash_amt,backlash_amt)
 
@@ -312,10 +312,10 @@
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			if(H.species.name == "Human" && !(H.h_style == "Bald") && !(H.h_style == "Balding Hair"))
+			if(H.species.name == "Human" && !(H.character.hair_style == "Bald") && !(H.character.hair_style == "Balding Hair"))
 				H << "<span class='danger'>Your hair starts to fall out in clumps...</span>"
 				spawn(50)
-					H.h_style = "Balding Hair"
+					H.character.hair_style = "Balding Hair"
 					H.update_hair()
 
 /datum/disease2/effect/stimulant

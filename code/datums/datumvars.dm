@@ -9,7 +9,7 @@ client
 
 
 		if(!usr.client || !usr.client.holder)
-			usr << "\red You need to be an administrator to access this."
+			usr << "<span class='alert'>You need to be an administrator to access this.</span>"
 			return
 
 
@@ -164,6 +164,7 @@ client
 
 
 		body += "<option value='?_src_=vars;mark_object=\ref[D]'>Mark Object</option>"
+		body += "<option value='?_src_=vars;jump_to_object=\ref[D]'>Jump to Object</option>"
 		if(ismob(D))
 			body += "<option value='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</option>"
 
@@ -596,6 +597,22 @@ client
 		src.holder.marked_datum = D
 		href_list["datumrefresh"] = href_list["mark_object"]
 
+	else if(href_list["jump_to_object"])
+		if(!check_rights(0))	return
+
+		var/atom/A = locate(href_list["jump_to_object"])
+		if(!isobj(A) && !ismob(A) && !isturf(A))
+			usr << "This can only be done to instances of type /obj, /mob and /turf"
+			return
+
+		var/turf/T = get_turf(A)
+		if(T && isturf(T))
+			message_admins("[key_name_admin(usr)] jumped to [A] (\ref[A]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>JMP</a>)")
+			usr.loc = T
+		else
+			usr << "This mob is not located in the game world."
+		href_list["datumrefresh"] = href_list["mark_object"]
+
 	else if(href_list["rotatedatum"])
 		if(!check_rights(0))	return
 
@@ -865,7 +882,7 @@ client
 		qdel(rem_organ)
 
 	else if(href_list["fix_nano"])
-		if(!check_rights(R_DEBUG)) return
+		if(!check_rights(R_ADMIN)) return
 
 		var/mob/H = locate(href_list["fix_nano"])
 

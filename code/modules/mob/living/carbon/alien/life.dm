@@ -154,9 +154,9 @@
 
 	if ((blind && stat != 2))
 		if ((blinded))
-			blind.layer = 18
+			blind.plane = 0
 		else
-			blind.layer = 0
+			blind.plane = -100
 			if (disabilities & NEARSIGHTED)
 				client.screen += global_hud.vimpaired
 			if (eye_blurry)
@@ -190,6 +190,6 @@
 		adjustFireLoss((environment.temperature - (T0C+66))/5) // Might be too high, check in testing.
 		if (fire) fire.icon_state = "fire2"
 		if(prob(20))
-			src << "\red You feel a searing heat!"
+			src << "<span class='alert'>You feel a searing heat!</span>"
 	else
 		if (fire) fire.icon_state = "fire0"

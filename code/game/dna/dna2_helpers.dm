@@ -131,23 +131,27 @@
 			src.dna.UpdateUI()
 		dna.check_integrity()
 		var/mob/living/carbon/human/H = src
-		H.r_hair   = dna.GetUIValueRange(DNA_UI_HAIR_R,    255)
-		H.g_hair   = dna.GetUIValueRange(DNA_UI_HAIR_G,    255)
-		H.b_hair   = dna.GetUIValueRange(DNA_UI_HAIR_B,    255)
+		var/r_hair   = dna.GetUIValueRange(DNA_UI_HAIR_R,    255)
+		var/g_hair   = dna.GetUIValueRange(DNA_UI_HAIR_G,    255)
+		var/b_hair   = dna.GetUIValueRange(DNA_UI_HAIR_B,    255)
+		H.character.hair_color = rgb( r_hair, g_hair, b_hair )
 
-		H.r_facial = dna.GetUIValueRange(DNA_UI_BEARD_R,   255)
-		H.g_facial = dna.GetUIValueRange(DNA_UI_BEARD_G,   255)
-		H.b_facial = dna.GetUIValueRange(DNA_UI_BEARD_B,   255)
+		var/r_facial = dna.GetUIValueRange(DNA_UI_BEARD_R,   255)
+		var/g_facial = dna.GetUIValueRange(DNA_UI_BEARD_G,   255)
+		var/b_facial = dna.GetUIValueRange(DNA_UI_BEARD_B,   255)
+		H.character.hair_face_color = rgb( r_facial, g_facial, b_facial )
 
-		H.r_skin   = dna.GetUIValueRange(DNA_UI_SKIN_R,    255)
-		H.g_skin   = dna.GetUIValueRange(DNA_UI_SKIN_G,    255)
-		H.b_skin   = dna.GetUIValueRange(DNA_UI_SKIN_B,    255)
+		var/r_skin   = dna.GetUIValueRange(DNA_UI_SKIN_R,    255)
+		var/g_skin   = dna.GetUIValueRange(DNA_UI_SKIN_G,    255)
+		var/b_skin   = dna.GetUIValueRange(DNA_UI_SKIN_B,    255)
+		H.character.skin_color = rgb( r_skin, g_skin, b_skin )
 
-		H.r_eyes   = dna.GetUIValueRange(DNA_UI_EYES_R,    255)
-		H.g_eyes   = dna.GetUIValueRange(DNA_UI_EYES_G,    255)
-		H.b_eyes   = dna.GetUIValueRange(DNA_UI_EYES_B,    255)
+		var/r_eyes   = dna.GetUIValueRange(DNA_UI_EYES_R,    255)
+		var/g_eyes   = dna.GetUIValueRange(DNA_UI_EYES_G,    255)
+		var/b_eyes   = dna.GetUIValueRange(DNA_UI_EYES_B,    255)
+		H.character.eye_color = rgb( r_eyes, g_eyes, b_eyes )
 
-		H.s_tone   = 35 - dna.GetUIValueRange(DNA_UI_SKIN_TONE, 220) // Value can be negative.
+		H.character.skin_tone   = 35 - dna.GetUIValueRange(DNA_UI_SKIN_TONE, 220) // Value can be negative.
 
 		if (dna.GetUIState(DNA_UI_GENDER))
 			H.gender = FEMALE
@@ -157,12 +161,12 @@
 		//Hair
 		var/hair = dna.GetUIValueRange(DNA_UI_HAIR_STYLE,hair_styles_list.len)
 		if((0 < hair) && (hair <= hair_styles_list.len))
-			H.h_style = hair_styles_list[hair]
+			H.character.hair_style = hair_styles_list[hair]
 
 		//Facial Hair
 		var/beard = dna.GetUIValueRange(DNA_UI_BEARD_STYLE,facial_hair_styles_list.len)
 		if((0 < beard) && (beard <= facial_hair_styles_list.len))
-			H.f_style = facial_hair_styles_list[beard]
+			H.character.hair_face_style = facial_hair_styles_list[beard]
 
 		H.update_body(0)
 		H.update_hair()

@@ -90,7 +90,7 @@
 				playercount += 1
 			if (player.client && player.mind && player.mind.special_role && player.stat != 2)
 				traitorcount += 1
-			if (player.client && player.mind && !player.mind.special_role && player.stat != 2 && (player.client && player.client.prefs.be_special & BE_TRAITOR) && !jobban_isbanned(player, "Syndicate"))
+			if (player.client && player.mind && !player.mind.special_role && player.stat != 2 && (player.client && player.client.prefs.beSpecial() & BE_TRAITOR) && !jobban_isbanned(player, "Syndicate"))
 				possible_traitors += player
 		for(var/datum/mind/player in possible_traitors)
 			if(player.assigned_role in restricted_jobs)
@@ -133,7 +133,7 @@
 					equip_traitor(newtraitor)
 
 				traitors += newtraitor.mind
-				newtraitor << "\red <B>No time like the present.</B> \black It's time to take matters into your own hands..."
+				newtraitor << "<span class='alert'><B>No time like the present.</B> </span><span class='black'>It's time to take matters into your own hands...</span>"
 				newtraitor << "<B>You are now a traitor.</B>"
 				newtraitor.mind.special_role = "traitor"
 				newtraitor.hud_updateflag |= 1 << SPECIALROLE_HUD
@@ -152,7 +152,7 @@
 	if(emergency_shuttle.departed)
 		return
 	//message_admins("Late Join Check")
-	if((character.client && character.client.prefs.be_special & BE_TRAITOR) && !jobban_isbanned(character, "Syndicate"))
+	if((character.client && character.client.prefs.beSpecial() & BE_TRAITOR) && !jobban_isbanned(character, "Syndicate"))
 		if( character.mind ) // We dont want to select people who shouldn't be traitor
 			if( character.mind.assigned_role in restricted_jobs)
 				return
@@ -191,9 +191,12 @@
 					forge_traitor_objectives(character.mind)
 				equip_traitor(character)
 				traitors += character.mind
-				character << "\red <B>You are the traitor.</B>"
+				character << "<span class='alert'><B>You are the traitor.</B></span>"
 				character.mind.special_role = "traitor"
 				character << "<i>You have been selected this round as an antagonist</i>!"
+
+				character.character.temporary = 1 // Makes them non-canon
+
 				show_objectives(character.mind)
 
 			//else

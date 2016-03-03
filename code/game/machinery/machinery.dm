@@ -340,7 +340,7 @@ Class Procs:
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if (electrocute_mob(user, get_area(src), src, 0.7))
+	if (electrocute_mob(user, get_area(src), src, 25, 0.7))
 		var/area/temp_area = get_area(src)
 		if(temp_area)
 			var/obj/machinery/power/apc/temp_apc = temp_area.get_apc()
@@ -407,6 +407,14 @@ Class Procs:
   state(text, "blue")
   playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 
+/obj/machinery/proc/buzz(text=null)
+  if (!text)
+    text = "\The [src] buzzes."
+
+  state(text, "blue")
+  playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+
+
 /obj/machinery/proc/dismantle()
 	playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 	var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(loc)
@@ -445,12 +453,18 @@ Class Procs:
 		else
 			user << "<span class='notice'>Following parts detected in the machine:</span>"
 			for(var/var/obj/item/C in component_parts)
-				user << "<span class='notice'>    [C.name]</span>"
+				user << "<span class='notice'>[C.name]</span>"
 		if(shouldplaysound)
 			W.play_rped_sound()
 		return 1
 	else
 		return 0
+
+/obj/machinery/proc/print( var/obj/paper )
+	playsound(src.loc, 'sound/machines/print.ogg', 50, 1)
+	visible_message("<span class='notice'>[src] rattles to life and spits out a paper titled [paper].</span>")
+	spawn(40)
+		paper.loc = src.loc
 
 /obj/machinery/floor
 	opacity = 0

@@ -38,7 +38,7 @@
 			return
 
 	if(P.stored_phoron < cost)
-		src << "\red You don't have enough phoron stored to do that."
+		src << "<span class='alert'>You don't have enough phoron stored to do that.</span>"
 		return 0
 
 	if(needs_foundation)
@@ -49,7 +49,7 @@
 			if(!(istype(T,/turf/space)))
 				has_foundation = 1
 		if(!has_foundation)
-			src << "\red You need a solid foundation to do that on."
+			src << "<span class='alert'>You need a solid foundation to do that on.</span>"
 			return 0
 
 	P.stored_phoron -= cost
@@ -143,7 +143,7 @@
 			src << "<span class='alium'>You cannot dissolve this object.</span>"
 			return
 	// TURF CHECK
-	else if(istype(O, /turf/simulated/wall/r_wall) || istype(O, /turf/simulated/floor/engine))
+	else if(istype(O, /turf/simulated/wall/alloy/reinforced) || istype(O, /turf/simulated/floor/engine))
 		src << "<span class='alium'>You cannot dissolve this object.</span>"
 		return
 

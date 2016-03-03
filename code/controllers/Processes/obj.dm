@@ -1,29 +1,20 @@
 var/global/list/object_profiling = list()
 /var/global/datum/controller/process/obj/ObjProcess
 
-/datum/controller/process/obj
-	var/tmp/datum/updateQueue/updateQueueInstance
-
 /datum/controller/process/obj/setup()
-	name = "obj"
-	schedule_interval = 40 // every 4 seconds
-	cpu_threshold = 50
-	updateQueueInstance = new
+    name = "obj"
+    schedule_interval = 40 // every 4 seconds
+    cpu_threshold = 50
 
-	ObjProcess = src
-
-/datum/controller/process/obj/started()
-	..()
-	if(!updateQueueInstance)
-		if(!processing_objects)
-			processing_objects = list()
-		else if(processing_objects.len)
-			updateQueueInstance = new
+    ObjProcess = src
 
 /datum/controller/process/obj/doWork()
-	if(updateQueueInstance)
-		updateQueueInstance.init(processing_objects, "process")
-		updateQueueInstance.Run()
+    for(var/obj/O in processing_objects)
+        if(O)
+            O.process()
+            continue
+        processing_objects.Remove(O)
+        scheck()
 
 /datum/controller/process/obj/getStatName()
-	return ..()+"([processing_objects.len])"
+    return ..()+"([processing_objects.len])"

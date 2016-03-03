@@ -861,6 +861,8 @@ window "chemdispenser"
 		keep-aspect = false
 		align = center
 		text-wrap = false
+		allow-html = false
+		letterbox = true
 	elem "eject"
 		type = BUTTON
 		pos = 264,4
@@ -1027,6 +1029,8 @@ window "chemdispenser"
 		keep-aspect = false
 		align = center
 		text-wrap = false
+		allow-html = false
+		letterbox = true
 	elem "child1"
 		type = CHILD
 		pos = 0,40
@@ -1148,6 +1152,8 @@ window "chemdispenser_reagents"
 		keep-aspect = false
 		align = center
 		text-wrap = false
+		allow-html = false
+		letterbox = true
 
 window "mainwindow"
 	elem "mainwindow"
@@ -1434,7 +1440,7 @@ window "outputwindow"
 window "rpane"
 	elem "rpane"
 		type = MAIN
-		pos = 281,0
+		pos = 219,0
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
@@ -1497,6 +1503,62 @@ window "rpane"
 		splitter = 50
 		show-splitter = true
 		lock = none
+	elem "button7"
+		type = BUTTON
+		pos = 402,0
+		size = 60x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #ffceff
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Slack"
+		image = ""
+		command = "slack"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbutton
+	elem "button6"
+		type = BUTTON
+		pos = 340,0
+		size = 60x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #c4ffe1
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "GitHub"
+		image = ""
+		command = "sourcecode"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbutton
 	elem "rulesb"
 		type = BUTTON
 		pos = 278,0
@@ -1507,7 +1569,7 @@ window "rpane"
 		font-size = 0
 		font-style = ""
 		text-color = #000000
-		background-color = none
+		background-color = #ffd5d5
 		is-visible = true
 		is-disabled = false
 		is-transparent = false
@@ -1535,7 +1597,7 @@ window "rpane"
 		font-size = 0
 		font-style = ""
 		text-color = #000000
-		background-color = none
+		background-color = #d7ebff
 		is-visible = true
 		is-disabled = false
 		is-transparent = false
@@ -1563,7 +1625,7 @@ window "rpane"
 		font-size = 0
 		font-style = ""
 		text-color = #000000
-		background-color = none
+		background-color = #ffffce
 		is-visible = true
 		is-disabled = false
 		is-transparent = false
@@ -1611,7 +1673,7 @@ window "rpane"
 		button-type = pushbox
 	elem "browseb"
 		type = BUTTON
-		pos = 464,0
+		pos = 466,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
@@ -1669,7 +1731,7 @@ window "rpane"
 window "browserwindow"
 	elem "browserwindow"
 		type = MAIN
-		pos = 281,0
+		pos = 219,0
 		size = 640x480
 		anchor1 = none
 		anchor2 = none

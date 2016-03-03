@@ -15,7 +15,7 @@
 	action(atom/target)
 		if(!action_checks(target)) return
 		if(!cargo_holder) return
-		if(istype(target, /obj/structure/stool)) return
+		if(istype(target, /obj/item/weapon/stool)) return
 		for(var/M in target.contents)
 			if(istype(M, /mob/living))
 				return
@@ -52,8 +52,8 @@
 				M.take_overall_damage(dam_force)
 				M.adjustOxyLoss(round(dam_force/2))
 				M.updatehealth()
-				occupant_message("\red You squeeze [target] with [src.name]. Something cracks.")
-				chassis.visible_message("\red [chassis] squeezes [target].")
+				occupant_message("<span class='alert'>You squeeze [target] with [src.name]. Something cracks.</span>")
+				chassis.visible_message("<span class='alert'>[chassis] squeezes [target].</span>")
 			else
 				step_away(M,chassis)
 				occupant_message("You push [target] out of the way.")
@@ -85,7 +85,7 @@
 		var/C = target.loc	//why are these backwards? we may never know -Pete
 		if(do_after_cooldown(target))
 			if(T == chassis.loc && src == chassis.selected)
-				if(istype(target, /turf/simulated/wall/r_wall))
+				if(istype(target, /turf/simulated/wall/alloy/reinforced))
 					occupant_message("<font color='red'>[target] is too durable to drill through.</font>")
 				else if(istype(target, /turf/simulated/mineral))
 					for(var/turf/simulated/mineral/M in range(chassis,1))
@@ -136,7 +136,7 @@
 		var/C = target.loc	//why are these backwards? we may never know -Pete
 		if(do_after_cooldown(target))
 			if(T == chassis.loc && src == chassis.selected)
-				if(istype(target, /turf/simulated/wall/r_wall))
+				if(istype(target, /turf/simulated/wall/alloy/reinforced))
 					if(do_after_cooldown(target))//To slow down how fast mechs can drill through the station
 						log_message("Drilled through [target]")
 						target.ex_act(3)
@@ -192,12 +192,12 @@
 			if( istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(chassis,target) <= 1)
 				var/obj/o = target
 				var/amount = o.reagents.trans_to(src, 200)
-				occupant_message("\blue [amount] units transferred into internal tank.")
+				occupant_message("<span class='notice'>[amount] units transferred into internal tank.</span>")
 				playsound(chassis, 'sound/effects/refill.ogg', 50, 1, -6)
 				return
 
 			if (src.reagents.total_volume < 1)
-				occupant_message("\red \The [src] is empty.")
+				occupant_message("<span class='alert'>\The [src] is empty.</span>")
 				return
 
 			playsound(chassis, 'sound/effects/extinguish.ogg', 75, 1, -3)
@@ -530,7 +530,7 @@
 			return chassis.dynattackby(W,user)
 		chassis.log_message("Attacked by [W]. Attacker - [user]")
 		if(prob(chassis.deflect_chance*deflect_coeff))
-			user << "\red The [W] bounces off [chassis] armor."
+			user << "<span class='alert'>The [W] bounces off [chassis] armor.</span>"
 			chassis.log_append_to_last("Armor saved.")
 		else
 			chassis.occupant_message("<font color='red'><b>[user] hits [chassis] with [W].</b></font>")
@@ -581,7 +581,7 @@
 		if(!action_checks(src))
 			return chassis.dynbulletdamage(Proj)
 		if(prob(chassis.deflect_chance*deflect_coeff))
-			chassis.occupant_message("\blue The armor deflects incoming projectile.")
+			chassis.occupant_message("<span class='notice'>The armor deflects incoming projectile.</span>")
 			chassis.visible_message("The [chassis.name] armor deflects the projectile")
 			chassis.log_append_to_last("Armor saved.")
 		else
@@ -597,7 +597,7 @@
 		if(!action_checks(A))
 			return chassis.dynhitby(A)
 		if(prob(chassis.deflect_chance*deflect_coeff) || istype(A, /mob/living) || istype(A, /obj/item/mecha_parts/mecha_tracking))
-			chassis.occupant_message("\blue The [A] bounces off the armor.")
+			chassis.occupant_message("<span class='notice'>The [A] bounces off the armor.</span>")
 			chassis.visible_message("The [A] bounces off the [chassis] armor")
 			chassis.log_append_to_last("Armor saved.")
 			if(istype(A, /mob/living))
@@ -1037,11 +1037,11 @@
 			var/mob/living/M = target
 			if(M.stat>1) return
 			if(chassis.occupant.a_intent == I_HURT)
-				chassis.occupant_message("\red You obliterate [target] with [src.name], leaving blood and guts everywhere.")
-				chassis.visible_message("\red [chassis] destroys [target] in an unholy fury.")
+				chassis.occupant_message("<span class='alert'>You obliterate [target] with [src.name], leaving blood and guts everywhere.</span>")
+				chassis.visible_message("<span class='alert'>[chassis] destroys [target] in an unholy fury.</span>")
 			if(chassis.occupant.a_intent == I_DISARM)
-				chassis.occupant_message("\red You tear [target]'s limbs off with [src.name].")
-				chassis.visible_message("\red [chassis] rips [target]'s arms off.")
+				chassis.occupant_message("<span class='alert'>You tear [target]'s limbs off with [src.name].</span>")
+				chassis.visible_message("<span class='alert'>[chassis] rips [target]'s arms off.</span>")
 			else
 				step_away(M,chassis)
 				chassis.occupant_message("You smash into [target], sending them flying.")
@@ -1090,7 +1090,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/tool/passenger/proc/move_inside(var/mob/user)
 	if (chassis)
-		chassis.visible_message("\blue [user] starts to climb into [chassis].")
+		chassis.visible_message("<span class='notice'>[user] starts to climb into [chassis].</span>")
 
 	if(do_after(user, 40, needhand=0))
 		if(!src.occupant)
@@ -1099,7 +1099,7 @@
 			log_message("[user] boarded.")
 			occupant_message("[user] boarded.")
 		else if(src.occupant != user)
-			user << "\red [src.occupant] was faster. Try better next time, loser."
+			user << "<span class='alert'>[src.occupant] was faster. Try better next time, loser.</span>"
 	else
 		user << "You stop entering the exosuit."
 
@@ -1174,18 +1174,18 @@
 		return
 
 	if (!isturf(usr.loc))
-		usr << "\red You can't reach the passenger compartment from here."
+		usr << "<span class='alert'>You can't reach the passenger compartment from here.</span>"
 		return
 
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		if(C.handcuffed)
-			usr << "\red Kinda hard to climb in while handcuffed don't you think?"
+			usr << "<span class='alert'>Kinda hard to climb in while handcuffed don't you think?</span>"
 			return
 
 	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == usr)
-			usr << "\red You're too busy getting your life sucked out of you."
+			usr << "<span class='alert'>You're too busy getting your life sucked out of you.</span>"
 			return
 
 	//search for a valid passenger compartment
@@ -1205,10 +1205,10 @@
 	//didn't find anything
 	switch (feedback)
 		if (OCCUPIED)
-			usr << "\red The passenger compartment is already occupied!"
+			usr << "<span class='alert'>The passenger compartment is already occupied!</span>"
 		if (LOCKED)
-			usr << "\red The passenger compartment hatch is locked!"
+			usr << "<span class='alert'>The passenger compartment hatch is locked!</span>"
 		if (OCCUPIED|LOCKED)
-			usr << "\red All of the passenger compartments are already occupied or locked!"
+			usr << "<span class='alert'>All of the passenger compartments are already occupied or locked!</span>"
 		if (0)
-			usr << "\red \The [src] doesn't have a passenger compartment."
+			usr << "<span class='alert'>\The [src] doesn't have a passenger compartment.</span>"

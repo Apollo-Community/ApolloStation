@@ -55,11 +55,11 @@ datum/genesequence
 		W.loc = src.loc
 		switch(scan_fossil(W))
 			if(1)
-				src.visible_message("\red \icon[src] [src] scans the fossil and rejects it.")
+				src.visible_message("<span class='alert'>\icon[src] [src] scans the fossil and rejects it.</span>")
 			if(2)
-				visible_message("\red \icon[src] [src] can not extract any more genetic data from new fossils.")
+				visible_message("<span class='alert'>\icon[src] [src] can not extract any more genetic data from new fossils.</span>")
 			if(4)
-				src.visible_message("\blue \icon[src] [user] inserts [W] into [src], the fossil is consumed as [src] extracts genetic data from it.")
+				src.visible_message("<span class='notice'>\icon[src] [user] inserts [W] into [src], the fossil is consumed as [src] extracts genetic data from it.</span>")
 				qdel(W)
 				updateDialog()
 	else if (istype(W, /obj/item/weapon/storage))
@@ -80,15 +80,15 @@ datum/genesequence
 					qdel(F)
 					updateDialog()
 
-		user.visible_message("[user] empties all the fossils from [S] into [src].", "\blue You empty all the fossils from [S] into [src].", "You hear the sound of rocks being poured into a container")
+		user.visible_message("[user] empties all the fossils from [S] into [src].", "<span class='notice'>You empty all the fossils from [S] into [src].</span>", "You hear the sound of rocks being poured into a container")
 
 		var/outmsg = ""
 		if(numaccepted)
-			outmsg += " \blue[numaccepted] fossils were accepted and consumed as [src] extracts genetic data from them."
+			outmsg += " <span class='notice'>[numaccepted] fossils were accepted and consumed as [src] extracts genetic data from them.</span>"
 		if(numrejected)
-			outmsg += " \red[numrejected] fossils were rejected."
+			outmsg += " <span class='alert'>[numrejected] fossils were rejected.</span>"
 		if(full)
-			outmsg += " \red[src] can not extract any more genetic data from new fossils."
+			outmsg += " <span class='alert'>[src] can not extract any more genetic data from new fossils.</span>"
 		user << outmsg
 
 	else
@@ -186,13 +186,13 @@ datum/genesequence
 		var/datum/genesequence/cloned_genesequence = completed_genesequences[sequence_num]
 		if(pod1)
 			if(pod1.occupant)
-				visible_message("\red \icon[src] The cloning pod is currently occupied.")
+				visible_message("<span class='alert'>\icon[src] The cloning pod is currently occupied.</span>")
 			else if(pod1.biomass < CLONE_BIOMASS)
-				visible_message("\red \icon[src] Not enough biomass in the cloning pod.")
+				visible_message("<span class='alert'>\icon[src] Not enough biomass in the cloning pod.</span>")
 			else if(pod1.mess)
-				visible_message("\red \icon[src] Error: clonepod malfunction.")
+				visible_message("<span class='alert'>\icon[src] Error: clonepod malfunction.</span>")
 			else
-				visible_message("\blue \icon[src] [src] clones something from a reconstituted gene sequence!")
+				visible_message("<span class='notice'>\icon[src] [src] clones something from a reconstituted gene sequence!</span>")
 				playsound(src.loc, 'sound/effects/screech.ogg', 50, 1, -3)
 				pod1.occupant = new cloned_genesequence.spawned_type(pod1)
 				pod1.locked = 1
@@ -200,7 +200,7 @@ datum/genesequence
 				//pod1.occupant.name = "[pod1.occupant.name] ([rand(0,999)])"
 				pod1.biomass -= CLONE_BIOMASS
 		else
-			usr << "\red \icon[src] Unable to locate cloning pod!"
+			usr << "<span class='alert'>\icon[src] Unable to locate cloning pod!</span>"
 	else
 		..()
 
@@ -244,7 +244,7 @@ datum/genesequence
 	else if(href_list["clone"])
 		var/sequence_num = text2num(href_list["sequence_num"])
 		var/datum/genesequence/cloned_genesequence = completed_genesequences[sequence_num]
-		visible_message("\blue \icon[src] [src] clones a packet of seeds from a reconstituted gene sequence!")
+		visible_message("<span class='notice'>\icon[src] [src] clones a packet of seeds from a reconstituted gene sequence!</span>")
 		playsound(src.loc, 'sound/effects/screech.ogg', 50, 1, -3)
 		new cloned_genesequence.spawned_type(src.loc)
 

@@ -173,6 +173,10 @@ var/list/robot_verbs_default = list(
 	else
 		lawupdate = 0
 
+	spawn( 50 )
+		if( mind.character )
+			mind.character.LoadDepartment( SYNTHETIC )
+
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 
 /mob/living/silicon/robot/syndicate/init()
@@ -236,7 +240,7 @@ var/list/robot_verbs_default = list(
 	var/list/modules = list()
 	modules.Add(robot_module_types)
 	if((crisis && security_level == SEC_LEVEL_RED) || crisis_override) //Leaving this in until it's balanced appropriately.
-		src << "\red Crisis mode active. Combat module available."
+		src << "<span class='alert'>Crisis mode active. Combat module available.</span>"
 		modules+="Combat"
 	modtype = input("Please, select a module!", "Robot", null, null) in modules
 
@@ -428,12 +432,8 @@ var/list/robot_verbs_default = list(
 					icon_state = "[src.ckey]-Standard"
 
 	//Flavour text.
-	if(client)
-		var/module_flavour = client.prefs.flavour_texts_robot[modtype]
-		if(module_flavour)
-			flavor_text = module_flavour
-		else
-			flavor_text = client.prefs.flavour_texts_robot["Default"]
+	if( client && client.prefs && client.prefs.selected_character )
+		flavor_text = client.prefs.selected_character.flavor_texts_robot
 
 /mob/living/silicon/robot/verb/Namepick()
 	set category = "Robot Commands"
@@ -509,11 +509,11 @@ var/list/robot_verbs_default = list(
 	set name = "Self Diagnosis"
 
 	if(!is_component_functioning("diagnosis unit"))
-		src << "\red Your self-diagnosis component isn't functioning."
+		src << "<span class='alert'>Your self-diagnosis component isn't functioning.</span>"
 
 	var/datum/robot_component/CO = get_component("diagnosis unit")
 	if (!cell_use_power(CO.active_usage))
-		src << "\red Low Power."
+		src << "<span class='alert'>Low Power.</span>"
 	var/dat = self_diagnosis()
 	src << browse(dat, "window=robotdiagnosis")
 
@@ -537,10 +537,10 @@ var/list/robot_verbs_default = list(
 	var/datum/robot_component/C = components[toggle]
 	if(C.toggled)
 		C.toggled = 0
-		src << "\red You disable [C.name]."
+		src << "<span class='alert'>You disable [C.name].</span>"
 	else
 		C.toggled = 1
-		src << "\red You enable [C.name]."
+		src << "<span class='alert'>You enable [C.name].</span>"
 
 /*
 // this function shows information about the malf_ai gameplay type in the status screen
@@ -587,8 +587,9 @@ var/list/robot_verbs_default = list(
 // update the status screen display
 /mob/living/silicon/robot/Stat()
 	..()
+
 	statpanel("Status")
-	if (client.statpanel == "Status")
+	if( client && client.statpanel == "Status" )
 		show_cell_power()
 		show_jetpack_pressure()
 		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
@@ -610,7 +611,7 @@ var/list/robot_verbs_default = list(
 			var/mob/tmob = AM
 			if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
 				if(prob(20))
-					usr << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
+					usr << "<span class='alert'><B>You fail to push [tmob]'s fat ass out of the way.</B></span>"
 					now_pushing = 0
 					return
 			if(!(tmob.status_flags & CANPUSH))
@@ -680,7 +681,7 @@ var/list/robot_verbs_default = list(
 					C.brute_damage = WC.brute
 					C.electronics_damage = WC.burn
 
-				usr << "\blue You install the [W.name]."
+				usr << "<span class='notice'>You install the [W.name].</span>"
 
 				return
 
@@ -698,7 +699,7 @@ var/list/robot_verbs_default = list(
 			updatehealth()
 			add_fingerprint(user)
 			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [user] has fixed some of the dents on [src]!"), 1)
+				O.show_message(text("<span class='alert'>[user] has fixed some of the dents on [src]!</span>"), 1)
 		else
 			user << "Need more welding fuel!"
 			return
@@ -712,7 +713,7 @@ var/list/robot_verbs_default = list(
 			adjustFireLoss(-30)
 			updatehealth()
 			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [user] has fixed some of the burnt wires on [src]!"), 1)
+				O.show_message(text("<span class='alert'>[user] has fixed some of the burnt wires on [src]!</span>"), 1)
 
 	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
 		if(opened)
@@ -795,6 +796,72 @@ var/list/robot_verbs_default = list(
 			C.brute_damage = 0
 			C.electronics_damage = 0
 
+	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
+		if(!opened)//Cover is closed
+			if(locked)
+				if(prob(90))
+					var/obj/item/weapon/card/emag/emag = W
+					emag.uses--
+					user << "You emag the cover lock."
+					locked = 0
+					spark_system.start()
+				else
+					user << "You fail to emag the cover lock."
+					src << "Hack attempt detected."
+					spark_system.start()
+			else
+				user << "The cover is already unlocked."
+			return
+
+		if(opened)//Cover is open
+			if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
+			if(wiresexposed)
+				user << "You must close the panel first"
+				return
+			else
+				sleep(6)
+				if(prob(50))
+					emagged = 1
+					spark_system.start()
+					lawupdate = 0
+					connected_ai = null
+					user << "You emag [src]'s interface."
+					message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
+					log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
+					clear_supplied_laws()
+					clear_inherent_laws()
+					laws = new /datum/ai_laws/syndicate_override
+					var/time = time2text(world.realtime,"hh:mm:ss")
+					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
+					set_zeroth_law("Only [user.real_name] and people he designates as being such are operatives.")
+					src << "<span class='alert'>ALERT: Foreign software detected.</span>"
+					sleep(5)
+					src << "<span class='alert'>Initiating diagnostics...</span>"
+					sleep(20)
+					src << "<span class='alert'>SynBorg v1.7.1 loaded.</span>"
+					sleep(5)
+					src << "<span class='alert'>LAW SYNCHRONISATION ERROR</span>"
+					sleep(5)
+					src << "<span class='alert'>Would you like to send a report to NanoTraSoft? Y/N</span>"
+					sleep(10)
+					src << "<span class='alert'>> N</span>"
+					sleep(20)
+					src << "<span class='alert'>ERRORERRORERROR</span>"
+					src << "<b>Obey these laws:</b>"
+					laws.show_laws(src)
+					src << "<span class='alert'>\b ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</span>"
+					if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
+						for(var/obj/item/weapon/pickaxe/borgdrill/D in src.module.modules)
+							qdel(D)
+						src.module.modules += new /obj/item/weapon/pickaxe/diamonddrill(src.module)
+						src.module.rebuild()
+					updateicon()
+				else
+					user << "You fail to hack [src]'s interface."
+					src << "Hack attempt detected."
+					spark_system.start()
+			return
+
 	else if ( istype( W, /obj/item/weapon/card ) && opened)
 		if(wiresexposed)
 			user << "Close the panel first."
@@ -841,69 +908,7 @@ var/list/robot_verbs_default = list(
 				user << "You [ locked ? "lock" : "unlock"] [src]'s interface."
 				updateicon()
 			else
-				user << "\red Access denied."
-
-	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
-		if(!opened)//Cover is closed
-			if(locked)
-				if(prob(90))
-					var/obj/item/weapon/card/emag/emag = W
-					emag.uses--
-					user << "You emag the cover lock."
-					locked = 0
-				else
-					user << "You fail to emag the cover lock."
-					src << "Hack attempt detected."
-			else
-				user << "The cover is already unlocked."
-			return
-
-		if(opened)//Cover is open
-			if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
-			if(wiresexposed)
-				user << "You must close the panel first"
-				return
-			else
-				sleep(6)
-				if(prob(50))
-					emagged = 1
-					lawupdate = 0
-					connected_ai = null
-					user << "You emag [src]'s interface."
-					message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
-					log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
-					clear_supplied_laws()
-					clear_inherent_laws()
-					laws = new /datum/ai_laws/syndicate_override
-					var/time = time2text(world.realtime,"hh:mm:ss")
-					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-					set_zeroth_law("Only [user.real_name] and people he designates as being such are operatives.")
-					src << "\red ALERT: Foreign software detected."
-					sleep(5)
-					src << "\red Initiating diagnostics..."
-					sleep(20)
-					src << "\red SynBorg v1.7.1 loaded."
-					sleep(5)
-					src << "\red LAW SYNCHRONISATION ERROR"
-					sleep(5)
-					src << "\red Would you like to send a report to NanoTraSoft? Y/N"
-					sleep(10)
-					src << "\red > N"
-					sleep(20)
-					src << "\red ERRORERRORERROR"
-					src << "<b>Obey these laws:</b>"
-					laws.show_laws(src)
-					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands."
-					if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
-						for(var/obj/item/weapon/pickaxe/borgdrill/D in src.module.modules)
-							qdel(D)
-						src.module.modules += new /obj/item/weapon/pickaxe/diamonddrill(src.module)
-						src.module.rebuild()
-					updateicon()
-				else
-					user << "You fail to hack [src]'s interface."
-					src << "Hack attempt detected."
-			return
+				user << "<span class='alert'>Access denied.</span>"
 
 	else if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
@@ -1046,7 +1051,7 @@ var/list/robot_verbs_default = list(
 
 /mob/living/silicon/robot/proc/installed_modules()
 	if(weapon_lock)
-		src << "\red Weapon lock active, unable to use modules! Count:[weaponlock_time]"
+		src << "<span class='alert'>Weapon lock active, unable to use modules! Count:[weaponlock_time]</span>"
 		return
 
 	if(!module)
@@ -1209,7 +1214,7 @@ var/list/robot_verbs_default = list(
 								cleaned_human.shoes.clean_blood()
 								cleaned_human.update_inv_shoes(0)
 							cleaned_human.clean_blood(1)
-							cleaned_human << "\red [src] cleans your face!"
+							cleaned_human << "<span class='alert'>[src] cleans your face!</span>"
 		return
 
 /mob/living/silicon/robot/proc/self_destruct()

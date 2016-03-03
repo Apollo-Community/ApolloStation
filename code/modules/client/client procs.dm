@@ -5,6 +5,7 @@
 #define UPLOAD_LIMIT		10485760	//Restricts client uploads to the server to 10MB //Boosted this thing. What's the worst that can happen?
 #define MIN_CLIENT_VERSION	0		//Just an ambiguously low version for now, I don't want to suddenly stop people playing.
 									//I would just like the code ready should it ever need to be used.
+#define REC_CLIENT_VERSION	510 	// Alerts people when their BYOND version is below this
 	/*
 	When somebody clicks a link in game, this Topic is called first.
 	It does the stuff in this proc and  then is redirected to the Topic() proc for the src=[0xWhatever]
@@ -55,8 +56,6 @@
 		cmd_admin_irc_pm(href_list["irc_msg"])
 		return
 
-
-
 	//Logs all hrefs
 	if(config && config.log_hrefs && href_logfile)
 		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
@@ -64,20 +63,37 @@
 	switch(href_list["_src_"])
 		if("holder")	hsrc = holder
 		if("usr")		hsrc = mob
-		if("prefs")		return prefs.process_link(usr,href_list)
 		if("vars")		return view_var_Topic(href,href_list,hsrc)
 
 	..()	//redirect to hsrc.Topic()
+
+/client/proc/loadTokens()
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return 0
+
+	var/DBQuery/query
+
+	query = dbcon.NewQuery("SELECT character_tokens FROM player WHERE ckey = '[ckey( ckey )]'")
+	query.Execute()
+
+	if( !query.NextRow() )
+		return
+
+	character_tokens = params2list( query.item[1] )
+
+	for( var/type in character_tokens )
+		character_tokens[type] = text2num( character_tokens[type] )
 
 /client/proc/handle_spam_prevention(var/message, var/mute_type)
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
-			src << "\red You have exceeded the spam filter limit for identical messages. An auto-mute was applied."
+			src << "<span class='alert'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>"
 			cmd_admin_mute(src.mob, mute_type, 1)
 			return 1
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
-			src << "\red You are nearing the spam filter limit for identical messages."
+			src << "<span class='alert'>You are nearing the spam filter limit for identical messages.</span>"
 			return 0
 	else
 		last_message = message
@@ -107,7 +123,7 @@
 
 	if(!(connection in list("seeker", "web")))					//Invalid connection type.
 		return null
-	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
+	if( byond_version < MIN_CLIENT_VERSION )		//Out of date client.
 		return null
 
 	if(!config.guests_allowed && IsGuestKey(key))
@@ -120,7 +136,7 @@
 		src.preload_rsc = pick(config.resource_urls)
 	else src.preload_rsc = 1 // If config.resource_urls is not set, preload like normal.
 
-	src << "\red If the title screen is black, resources are still downloading. Please be patient until the title screen appears."
+	src << "<span class='alert'>If the title screen is black, resources are still downloading. Please be patient until the title screen appears.</span>"
 
 	for(var/client/target in clients)
 		if( !target )
@@ -139,6 +155,7 @@
 	//Admin Authorisation
 	holder = admin_datums[ckey]
 	if(holder)
+		control_freak = 0
 		admins += src
 		holder.owner = src
 
@@ -147,8 +164,27 @@
 	if(!prefs)
 		prefs = new /datum/preferences(src)
 		preferences_datums[ckey] = prefs
+	prefs.client = src
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
+
+	if(!prefs.joined_date)				//So this is only called once to generate it.
+		var/list/http[] = world.Export("http://www.byond.com/members/[key]?format=text")  // Retrieve information from BYOND
+		if(http && http.len && ("CONTENT" in http))
+			var/String = file2text(http["CONTENT"])  //  Convert the HTML file to text
+			var/JoinPos = findtext(String, "joined")+10  //  Parse for the joined date
+			prefs.joined_date = copytext(String, JoinPos, JoinPos+10)  //  Get the date in the YYYY-MM-DD format
+
+	if(!prefs.passed_date)		//Re-calculate this each round until it passes
+		if(round(world.realtime/864000)- text2days(prefs.joined_date) >= 30)
+			prefs.passed_date = 1
+
+	if(!prefs.country_code  && !address == "127.0.0.1")		//Stops localhost trying to be resolved.
+		var/list/http[] = world.Export("http://www.freegeoip.net/json/[address]")
+		if(http && http.len && ("CONTENT" in http))
+			var/regex/R = new("country_code\":\"(\\w+)\"")
+			if(R.Find(file2text(http["CONTENT"])))
+				prefs.country_code = R.group[1]		//There should only ever be one!
 
 	. = ..()	//calls mob.Login()
 
@@ -170,10 +206,13 @@
 	// (but turn them off first, since sometimes BYOND doesn't turn them on properly otherwise)
 	if(src)
 		winset(src, null, "command=\".configure graphics-hwmode off\"")
-		spawn(5) // And wait a half-second, since it sounds like you can do this too fast.
+		spawn(10) // Lets wait 1 second instead, 0.5 doesn't seem like enough
 			winset(src, null, "command=\".configure graphics-hwmode on\"")
 
-	donator = is_donator(src)
+	session_start_time = world.realtime
+
+	donator = get_donator( src )
+
 	if(!stat_player_list.Find(key))			//Don't add the same person twice? How does this even happen
 		var/obj/playerlist/O = new()
 		O.icon = icon('./icons/playerlist.dmi')
@@ -201,20 +240,33 @@
 
 	log_client_to_db()
 
-	if(related_accounts_ip && !holder && !findtext(related_accounts_ip, "[ckey]"))		//So admin accounts don't generate spam
-		message_admins("[ckey]'s IP has been previously used by [related_accounts_ip]")
-	if(related_accounts_cid && !holder && !findtext(related_accounts_cid, "[ckey]"))
-		message_admins("[ckey]'s CID has been previously used by [related_accounts_cid]")
+	loadTokens()
+
+	if(!prefs.passed_date)
+		src << "<span class='admin_channel'>We have detected that your ckey is less than one month old. To help get you started we strongly recommend \
+		that you read this wiki page: <a></a>http://wiki.apollo-community.org/index.php?title=The_Basics</a>\nIn addition feel free to a member of staff \
+		for help by using the \"ahelp\" command.\n\n~Apollo Team</span>"
+
+	gen_infraction_table()
 
 	loadAccountItems()
 	send_resources()
 	nanomanager.send_resources(src)
+
+	spawn( 50 )
+		if( byond_version < REC_CLIENT_VERSION )
+			alert(src,"Your BYOND client version is older than the recommended version. Please go to http://www.byond.com/download/ and download version [REC_CLIENT_VERSION].","BYOND Version","OK")
 
 
 	//////////////
 	//DISCONNECT//
 	//////////////
 /client/Del()
+	if( prefs )
+		prefs.savePreferences()
+	log_client_to_db( 1 )
+	saveTokens()
+
 	if(holder)
 		holder.owner = null
 		admins -= src
@@ -226,12 +278,44 @@
 
 // here because it's similar to below
 
-// Returns null if no DB connection can be established, or -1 if the requested key was not found in the database
+/*											This can wait until we get a RU translation
+/client/proc/handle_country_codes()
+	if(!prefs.country_code)		return
+	switch(prefs.country_code)
+		if("BRA")	src << "<span class='admin_channel'>Esperamos que você fale inglês corretamente. Se você não fala inglês fluentemente, esse servidor pode não ser adequado para você.</span>"
+*/
+/client/proc/gen_infraction_table()
+	if(!holder && (!prefs.passed_date || (related_accounts_ip && !findtext(related_accounts_ip, "[ckey]")) || (related_accounts_cid && !findtext(related_accounts_cid, "[ckey]"))))
+		var/message =  "\n<tt><font color='#386AFF'>\
+						+------------------+---------+------------+-----------------------------------+-----------------------------------+\n\
+						| Ckey             | Country | Join Date  | Related CIDs                      | Related IPs                       |\n\
+						+------------------+---------+------------+-----------------------------------+-----------------------------------+\n"
+					/*	| [ckey]           | ***     | 2010-09-11 | [related_accounts_cid]            | [related_accounts_ip]             |
+						+------------------+---------+------------+-----------------------------------+-----------------------------------+*/
 
+		var/list/padding_ammount = list(16 - (lentext(ckey) + 3) ,7 - lentext(prefs.country_code), 1, 33 - lentext(related_accounts_cid), 33 - lentext(related_accounts_ip))
+		var/list/padding_message = list("| <a href='?src=\ref[usr];priv_msg=\ref[src.mob]'>[padding_ammount[1] < 0 ? "[copytext(ckey,1,12)].." : "[ckey]"]</a>(<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</a>) ",
+										"| [prefs.country_code] ",
+										"| [prefs.passed_date ? "[prefs.joined_date]" : "<font color='#ff0000'>[prefs.joined_date]</font>"]",
+										"| [padding_ammount[4] < 0 ? "[copytext(related_accounts_cid,1,32)].." : "[related_accounts_cid]"] ",
+										"| [padding_ammount[5] < 0 ? "[copytext(related_accounts_ip,1,32)].." : "[related_accounts_ip]"] ")
+
+		for(var/i = 1 to 5)
+			message += padding_message[i]
+			for(var/p = 1; p <= padding_ammount[i]; p++)	message += " "
+
+		message += "|\n+------------------+---------+------------+-----------------------------------+-----------------------------------+</font></tt>\n"	//Closing table
+
+		for(var/client/C in admins)		C << "[message]"
+
+// Returns null if no DB connection can be established, or -1 if the requested key was not found in the database
 /proc/get_player_age(key)
+	if( IsGuestKey( key ))
+		return -1
+
 	establish_db_connection()
 	if(!dbcon.IsConnected())
-		return null
+		return -1
 
 	var/sql_ckey = sql_sanitize_text(ckey(key))
 
@@ -244,8 +328,29 @@
 		return -1
 
 
-/client/proc/log_client_to_db()
+/client/proc/saveTokens()
+	if ( IsGuestKey(src.key) )
+		return 0
 
+	if( !character_tokens || !character_tokens.len )
+		return 0
+
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return 0
+
+	var/tokens
+	if( !character_tokens || !character_tokens.len )
+		tokens = "null"
+	else
+		tokens = "'[list2params( character_tokens )]'"
+
+	var/sql_ckey = ckey( ckey )
+
+	var/DBQuery/query_insert = dbcon.NewQuery("UPDATE player SET character_tokens = [tokens] WHERE ckey = '[sql_ckey]'")
+	query_insert.Execute()
+
+/client/proc/log_client_to_db( var/log_playtime = 0 )
 	if ( IsGuestKey(src.key) )
 		return
 
@@ -253,7 +358,7 @@
 	if(!dbcon.IsConnected())
 		return
 
-	var/sql_ckey = sql_sanitize_text(src.ckey)
+	var/sql_ckey = ckey(src.ckey)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM player WHERE ckey = '[sql_ckey]'")
 	query.Execute()
@@ -278,6 +383,10 @@
 		related_accounts_cid += "[query_cid.item[1]], "
 		break
 
+	var/total_playtime = 0
+	if( log_playtime && sql_id )
+		total_playtime = total_playtime_seconds()
+
 	//Just the standard check to see if it's actually a number
 	if(sql_id)
 		if(istext(sql_id))
@@ -296,11 +405,21 @@
 
 	if(sql_id)
 		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
-		var/DBQuery/query_update = dbcon.NewQuery("UPDATE player SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]' WHERE id = [sql_id]")
+
+		var/DBQuery/query_update
+
+		if( total_playtime && log_playtime )
+			query_update = dbcon.NewQuery("UPDATE player SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]', playtime = '[total_playtime]' WHERE id = [sql_id]")
+		else
+			query_update = dbcon.NewQuery("UPDATE player SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]' WHERE id = [sql_id]")
 		query_update.Execute()
 	else
 		//New player!! Need to insert all the stuff
-		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]')")
+		var/DBQuery/query_insert
+		if( total_playtime && log_playtime )
+			query_insert = dbcon.NewQuery("INSERT INTO player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank, playtime) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]', '[total_playtime]')")
+		else
+			query_insert = dbcon.NewQuery("INSERT INTO player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]')")
 		query_insert.Execute()
 
 	//Logging player access
@@ -308,6 +427,31 @@
 	//var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
 	//query_accesslog.Execute()
 
+
+// Returns total recorded playtime in seconds
+/client/proc/total_playtime_seconds()
+	var/total_playtime = 0
+
+	var/sql_ckey = ckey(src.ckey)
+
+	var/DBQuery/query_playtime = dbcon.NewQuery("SELECT playtime FROM player WHERE ckey = '[sql_ckey]'")
+	query_playtime.Execute()
+
+	while(query_playtime.NextRow())
+		total_playtime = text2num( query_playtime.item[1] )
+		break
+
+	var/session_seconds = max( 0, round(( world.realtime-session_start_time )/DECISECONDS_IN_SECOND ))
+	var/afk_seconds = max( 0, round( total_afk_time/DECISECONDS_IN_SECOND ))
+
+	total_playtime = max( total_playtime, total_playtime+session_seconds )
+	total_playtime = total_playtime-min( afk_seconds, session_seconds )
+
+	return total_playtime
+
+/client/proc/total_playtime_hours()
+	var/playtime = round( total_playtime_seconds()/SECONDS_IN_HOUR )
+	return playtime
 
 /client/proc/client_exists_in_db()
 	if ( IsGuestKey(src.key) )
@@ -317,7 +461,7 @@
 	if(!dbcon.IsConnected())
 		return 0
 
-	var/sql_ckey = sql_sanitize_text(src.ckey)
+	var/sql_ckey = ckey(src.ckey)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM player WHERE ckey = '[sql_ckey]'")
 	query.Execute()
