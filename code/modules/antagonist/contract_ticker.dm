@@ -13,6 +13,8 @@ var/global/datum/controller/process/contractticker/contract_ticker
 	contracts = list()
 
 /datum/controller/process/contractticker/doWork()
+	if(contracts.len == 0)	return
+
 	for(var/datum/contract/C in contracts)
 		if(world.time >= C.contract_start + C.time_limit)
 			C.end()

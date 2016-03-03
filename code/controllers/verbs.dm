@@ -143,3 +143,16 @@
 			feedback_add_details("admin_verb", "DTemplateConf")
 	message_admins("Admin [key_name_admin(usr)] is debugging the [controller] controller.")
 	return
+
+// Debug verb for antagonist update
+/client/proc/debug_antag(item in list("Uplink", "Contract Ticker"))
+	set category = "Debug"
+	set name = "Debug Uplink"
+	set desc = "Debug the Uplink"
+
+	if(!holder)	return
+	switch(item)
+		if("Uplink")
+			debug_variables(uplink)
+		if("Contract TIcker")
+			debug_variables(contract_ticker)

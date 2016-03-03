@@ -152,6 +152,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/cmd_debug_make_area_powernets,
 	/client/proc/kill_airgroup,
 	/client/proc/debug_controller,
+	/client/proc/debug_antag,
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_debug_mobs,
 	/client/proc/cmd_admin_delete,
