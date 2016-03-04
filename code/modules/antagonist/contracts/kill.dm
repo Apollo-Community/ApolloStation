@@ -10,12 +10,7 @@
 /datum/contract/kill/New()
 	..()
 
-	var/datum/mind/list/taken = get_taken_targets()
-	var/datum/mind/list/candidates = list()
-	for(var/datum/mind/M in ticker.minds)
-		if(!(M in taken) && ishuman(M.current) && M.current.stat != 2)
-			candidates += M
-	target = pick(candidates)
+	target = get_target()
 
 	if(!target)
 		// Let the uplink see if it's a notoriety-restricted contract before we delete ourselves
@@ -66,6 +61,14 @@
 		if(istype(C) && C.target)	taken += C.target
 	return taken
 
+/datum/contract/kill/proc/get_target()
+	var/datum/mind/list/taken = get_taken_targets()
+	var/datum/mind/list/candidates = list()
+	for(var/datum/mind/M in ticker.minds)
+		if(!(M in taken) && ishuman(M.current) && M.current.stat != 2)
+			candidates += M
+	return pick(candidates)
+
 // Heads only
 /datum/contract/kill/head
 	title = "Assassinate Head of Staff"
@@ -75,20 +78,10 @@
 
 	reward = 6000
 
-/datum/contract/kill/head/New()
-	..()
-
-	if(!(target.assigned_role in command_positions))
-		var/datum/mind/list/taken = get_taken_targets()
-		var/datum/mind/list/candidates = list()
-		for(var/datum/mind/M in ticker.minds)
-			if(!(M in taken) && ishuman(M.current) && M.current.stat != 2 && M.assigned_role in command_positions)
-				candidates += M
-		target = pick(candidates)
-
-	if(!target)
-		if(ticker.current_state != 1)
-			qdel(src)
-		return
-
-	set_details()
+/datum/contract/kill/head/get_target()
+	var/datum/mind/list/taken = get_taken_targets()
+	var/datum/mind/list/candidates = list()
+	for(var/datum/mind/M in ticker.minds)
+		if(!(M in taken) && ishuman(M.current) && M.current.stat != 2 && M.assigned_role in command_positions)
+			candidates += M
+	target = pick(candidates)
