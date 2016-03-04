@@ -1708,3 +1708,18 @@
 	display_name = "Sidiers zippo"
 	path = /obj/item/weapon/flame/lighter/zippo/fluff/janis_godmanis
 	sort_category = "misc"
+
+
+////////// Kodos' Custom Stuff
+
+/obj/item/device/assembly/signaler/fluff/kodosmacarthur
+	name = "MI Remote Signalling Device"
+	desc = "A high quality remote signalling device. It has a 'Macarthur Innovations' label on the back."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "kodos_signaler"
+	item_state = "kodos_signaler"
+
+/datum/gear/account/kodosmacarthur_signaler
+	display_name = "macarthur innovation signaler"
+	path = /obj/item/device/assembly/signaler/fluff/kodosmacarthur
+	sort_category = "misc"
