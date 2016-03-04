@@ -104,7 +104,7 @@
 		if(!config.objectives_disabled)
 			memorize_cult_objectives(cult_mind)
 		show_objectives(cult_mind)
-		cult_mind.special_role = "Cultist"
+		cult_mind.antagonist = "Cultist"
 
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()

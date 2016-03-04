@@ -65,7 +65,7 @@ client/proc/one_click_antag()
 		if(applicant.client.prefs.beSpecial() & BE_TRAITOR)
 			if(!applicant.stat)
 				if(applicant.mind)
-					if (!applicant.mind.special_role)
+					if (!applicant.mind.antagonist)
 						if(!jobban_isbanned(applicant, "traitor") && !jobban_isbanned(applicant, "Syndicate"))
 							if(!(applicant.job in temp.restricted_jobs))
 								candidates += applicant
@@ -97,7 +97,7 @@ client/proc/one_click_antag()
 		if(applicant.client.prefs.beSpecial() & BE_CHANGELING)
 			if(!applicant.stat)
 				if(applicant.mind)
-					if (!applicant.mind.special_role)
+					if (!applicant.mind.antagonist)
 						if(!jobban_isbanned(applicant, "changeling") && !jobban_isbanned(applicant, "Syndicate"))
 							if(!(applicant.job in temp.restricted_jobs))
 								candidates += applicant
@@ -127,7 +127,7 @@ client/proc/one_click_antag()
 		if(applicant.client.prefs.beSpecial() & BE_REV)
 			if(applicant.stat == CONSCIOUS)
 				if(applicant.mind)
-					if(!applicant.mind.special_role)
+					if(!applicant.mind.antagonist)
 						if(!jobban_isbanned(applicant, "revolutionary") && !jobban_isbanned(applicant, "Syndicate"))
 							if(!(applicant.job in temp.restricted_jobs))
 								candidates += applicant
@@ -157,7 +157,7 @@ client/proc/one_click_antag()
 		if(applicant.client.prefs.beSpecial() & BE_CULTIST)
 			if(applicant.stat == CONSCIOUS)
 				if(applicant.mind)
-					if(!applicant.mind.special_role)
+					if(!applicant.mind.antagonist)
 						if(!jobban_isbanned(applicant, "cultist") && !jobban_isbanned(applicant, "Syndicate"))
 							if(!(applicant.job in temp.restricted_jobs))
 								candidates += applicant
@@ -387,7 +387,7 @@ client/proc/one_click_antag()
 	//Creates mind stuff.
 	new_syndicate_commando.mind_initialize()
 	new_syndicate_commando.mind.assigned_role = "MODE"
-	new_syndicate_commando.mind.special_role = "Mercenary"
+	new_syndicate_commando.mind.antagonist = "Mercenary"
 
 	//Adds them to current traitor list. Which is really the extra antagonist list.
 	ticker.mode.traitors += new_syndicate_commando.mind
@@ -476,7 +476,7 @@ client/proc/one_click_antag()
 	new_vox.dna.ready_dna(new_vox) // Creates DNA.
 	new_vox.mind_initialize()
 	new_vox.mind.assigned_role = "MODE"
-	new_vox.mind.special_role = "Vox Raider"
+	new_vox.mind.antagonist = "Vox Raider"
 	new_vox.mutations |= NOCLONE //Stops the station crew from messing around with their DNA.
 
 	if(ticker.mode && ( istype( ticker.mode,/datum/game_mode/heist ) ) )

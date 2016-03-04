@@ -52,7 +52,7 @@ ________________________________________________________________________________
 	How to do that:
 	Make sure your character has a mind.
 	Change their assigned_role to "MODE", no quotes. Otherwise, the suit won't initialize.
-	Change their special_role to "Ninja", no quotes. Otherwise, the character will be gibbed.
+	Change their antagonist to "Ninja", no quotes. Otherwise, the character will be gibbed.
 	Spawn ninja gear, put it on, hit initialize. Let the suit do the rest. You are now a space ninja.
 	I don't recommend messing with suit variables unless you really know what you're doing.
 
@@ -241,13 +241,13 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 
 			if(sent_strike_team&&side=="heel"&&antagonist_list.len)//If a strike team was sent, murder them all like a champ.
 				for(current_mind in antagonist_list)//Search and destroy. Since we already have an antagonist list, they should appear there.
-					if(current_mind && current_mind.special_role=="Death Commando")
+					if(current_mind && current_mind.antagonist=="Death Commando")
 						commando_list += current_mind
 				if(commando_list.len)//If there are living commandos still in play.
 					for(var/mob/living/carbon/human/commando in commando_list)
 						var/datum/objective/assassinate/ninja_objective = new
 						ninja_objective.owner = ninja_mind
-						ninja_objective.find_target_by_role(commando.mind.special_role,1)
+						ninja_objective.find_target_by_role(commando.mind.antagonist,1)
 						ninja_mind.objectives += ninja_objective
 					mission_set = 1
 		/*
@@ -289,7 +289,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 							if(current_mind)
 								var/datum/objective/assassinate/ninja_objective = new
 								ninja_objective.owner = ninja_mind
-								ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role),(current_mind.special_role?1:0))//If they have a special role, use that instead to find em.
+								ninja_objective.find_target_by_role((current_mind.antagonist ? current_mind.antagonist : current_mind.assigned_role),(current_mind.antagonist?1:0))//If they have a special role, use that instead to find em.
 								ninja_mind.objectives += ninja_objective
 
 							else
@@ -311,7 +311,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 
 								var/datum/objective/protect/ninja_objective = new
 								ninja_objective.owner = ninja_mind
-								ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role),(current_mind.special_role?1:0))
+								ninja_objective.find_target_by_role((current_mind.antagonist ? current_mind.antagonist : current_mind.assigned_role),(current_mind.antagonist?1:0))
 								ninja_mind.objectives += ninja_objective
 
 							else
@@ -325,7 +325,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 
 								var/datum/objective/debrain/ninja_objective = new
 								ninja_objective.owner = ninja_mind
-								ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role),(current_mind.special_role?1:0))
+								ninja_objective.find_target_by_role((current_mind.antagonist ? current_mind.antagonist : current_mind.assigned_role),(current_mind.antagonist?1:0))
 								ninja_mind.objectives += ninja_objective
 
 							else
@@ -507,7 +507,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 /mob/living/carbon/human/proc/create_mind_space_ninja()
 	mind_initialize()
 	mind.assigned_role = "MODE"
-	mind.special_role = "Ninja"
+	mind.antagonist = "Ninja"
 
 	//ticker.mode.ninjas |= mind
 	return 1

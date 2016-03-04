@@ -71,7 +71,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 /datum/game_mode/changeling/post_setup()
 	for(var/datum/mind/changeling in changelings)
 		grant_changeling_powers(changeling.current)
-		changeling.special_role = "Changeling"
+		changeling.antagonist = "Changeling"
 		if(!config.objectives_disabled)
 			forge_changeling_objectives(changeling)
 		greet_changeling(changeling)

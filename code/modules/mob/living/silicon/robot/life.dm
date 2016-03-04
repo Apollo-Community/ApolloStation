@@ -229,8 +229,8 @@
 			src.connected_ai.connected_robots -= src
 			src.connected_ai = null
 		if(src.mind)
-			if(!src.mind.special_role)
-				src.mind.special_role = "traitor"
+			if(!src.mind.antagonist)
+				src.mind.antagonist = "traitor"
 				ticker.mode.traitors += src.mind
 
 	if (src.cells)

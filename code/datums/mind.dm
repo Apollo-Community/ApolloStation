@@ -41,7 +41,7 @@ datum/mind
 	var/memory
 
 	var/assigned_role
-	var/special_role
+	var/datum/antagonist/antagonist
 
 	var/role_alt_title
 
@@ -52,7 +52,6 @@ datum/mind
 
 	var/has_been_rev = 0//Tracks if this mind has been a rev or not
 
-	var/datum/antagonist/antagonist
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
 
@@ -388,7 +387,7 @@ datum/mind
 						new_objective.owner = src
 						new_objective:target = new_target:mind
 						//Will display as special role if the target is set as MODE. Ninjas/commandos/nuke ops.
-						new_objective.explanation_text = "[objective_type] [new_target:real_name], the [new_target:mind:assigned_role=="MODE" ? (new_target:mind:special_role) : (new_target:mind:assigned_role)]."
+						new_objective.explanation_text = "[objective_type] [new_target:real_name], the [new_target:mind:assigned_role=="MODE" ? (new_target:mind:antagonist) : (new_target:mind:assigned_role)]."
 
 				if ("prevent")
 					new_objective = new /datum/objective/block
@@ -485,17 +484,17 @@ datum/mind
 					H.implant_loyalty(H, override = TRUE)
 					H << "<span class='alert'><Font size =3><B>You somehow have become the recepient of a loyalty transplant, and it just activated!</B></FONT></span>"
 					if(src in ticker.mode.revolutionaries)
-						special_role = null
+						antagonist = null
 						ticker.mode.revolutionaries -= src
 						src << "<span class='alert'><Font size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a revolutionary.  Get back to work!</B></Font></span>"
 					if(src in ticker.mode.head_revolutionaries)
-						special_role = null
+						antagonist = null
 						ticker.mode.head_revolutionaries -=src
 						src << "<span class='alert'><Font size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a revolutionary.  Get back to work!</B></Font></span>"
 					if(src in ticker.mode.cult)
 						ticker.mode.cult -= src
 						ticker.mode.update_cult_icons_removed(src)
-						special_role = null
+						antagonist = null
 						var/datum/game_mode/cult/cult = ticker.mode
 						if (istype(cult))
 							cult.memorize_cult_objectives(src)
@@ -503,7 +502,7 @@ datum/mind
 						memory = ""
 					if(src in ticker.mode.traitors)
 						ticker.mode.traitors -= src
-						special_role = null
+						antagonist = null
 						current << "<span class='alert'><FONT size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a traitor to Nanotrasen.  Have a nice day!</B></FONT></span>"
 						log_admin("[key_name_admin(usr)] has de-traitor'ed [current].")
 				else
@@ -518,12 +517,12 @@ datum/mind
 						ticker.mode.revolutionaries -= src
 						current << "<span class='alert'><FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary!</B></FONT></span>"
 						ticker.mode.update_rev_icons_removed(src)
-						special_role = null
+						antagonist = null
 					if(src in ticker.mode.head_revolutionaries)
 						ticker.mode.head_revolutionaries -= src
 						current << "<span class='alert'><FONT size = 3><B>You have been brainwashed! You are no longer a head revolutionary!</B></FONT></span>"
 						ticker.mode.update_rev_icons_removed(src)
-						special_role = null
+						antagonist = null
 						current.verbs -= /mob/living/carbon/human/proc/RevConvert
 					log_admin("[key_name_admin(usr)] has de-rev'ed [current].")
 
@@ -540,7 +539,7 @@ datum/mind
 						return
 					ticker.mode.revolutionaries += src
 					ticker.mode.update_rev_icons_added(src)
-					special_role = "Revolutionary"
+					antagonist = new /datum/antagonist/rev()
 					log_admin("[key_name(usr)] has rev'ed [current].")
 
 				if("headrev")
@@ -568,7 +567,7 @@ datum/mind
 					current.verbs += /mob/living/carbon/human/proc/RevConvert
 					ticker.mode.head_revolutionaries += src
 					ticker.mode.update_rev_icons_added(src)
-					special_role = "Head Revolutionary"
+					antagonist = new /datum/antagonist/rev/head()
 					log_admin("[key_name_admin(usr)] has head-rev'ed [current].")
 
 				if("autoobjectives")
@@ -613,7 +612,7 @@ datum/mind
 					if(src in ticker.mode.cult)
 						ticker.mode.cult -= src
 						ticker.mode.update_cult_icons_removed(src)
-						special_role = null
+						antagonist = null
 						var/datum/game_mode/cult/cult = ticker.mode
 						if (istype(cult))
 							if(!config.objectives_disabled)
@@ -625,7 +624,7 @@ datum/mind
 					if(!(src in ticker.mode.cult))
 						ticker.mode.cult += src
 						ticker.mode.update_cult_icons_added(src)
-						special_role = "Cultist"
+						antagonist = new /datum/antagonist/cultist()
 						current << "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>"
 						current << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
 						current << "<h3><B>Make sure to read the rules about ganking and be sure to make the round interesting for everyone!</B></h3>"
@@ -663,7 +662,7 @@ datum/mind
 				if("clear")
 					if(src in ticker.mode.changelings)
 						ticker.mode.changelings -= src
-						special_role = null
+						antagonist = null
 						current.remove_changeling_powers()
 						current.verbs -= /datum/changeling/proc/EvolutionMenu
 						if(changeling)	qdel(changeling)
@@ -673,7 +672,7 @@ datum/mind
 					if(!(src in ticker.mode.changelings))
 						ticker.mode.changelings += src
 						ticker.mode.grant_changeling_powers(current)
-						special_role = "Changeling"
+						antagonist = new /datum/antagonist/changeling()
 						current << "<B><font color='red'>Your powers are awoken. A flash of memory returns to us...we are a changeling!</font></B>"
 						current << "<h3><B>Make sure to read the rules about ganking and be sure to make the round interesting for everyone!</B></h3>"
 						show_objectives(src)
@@ -702,7 +701,7 @@ datum/mind
 					if(src in ticker.mode.syndicates)
 						ticker.mode.syndicates -= src
 						ticker.mode.update_synd_icons_removed(src)
-						special_role = null
+						antagonist = null
 						for (var/datum/objective/nuclear/O in objectives)
 							objectives-=O
 						current << "<span class='alert'><FONT size = 3><B>You have been brainwashed! You are no longer an operative!</B></FONT></span>"
@@ -715,7 +714,7 @@ datum/mind
 							ticker.mode.prepare_syndicate_leader(src)
 						else
 							current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
-						special_role = "Mercenary"
+						antagonist = new /datum/antagonist/mercenary()
 						current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
 						current << "<h3><B>Make sure to read the rules about ganking and be sure to make the round interesting for everyone!</B></h3>"
 						ticker.mode.forge_syndicate_objectives(src)
@@ -755,7 +754,7 @@ datum/mind
 				if("clear")
 					if(src in ticker.mode.traitors)
 						ticker.mode.traitors -= src
-						special_role = null
+						antagonist = null
 						current << "<span class='alert'><FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT></span>"
 						log_admin("[key_name_admin(usr)] has de-traitor'ed [current].")
 						if(isAI(current))
@@ -767,7 +766,7 @@ datum/mind
 				if("traitor")
 					if(!(src in ticker.mode.traitors))
 						ticker.mode.traitors += src
-						special_role = "traitor"
+						antagonist = new /datum/antagonist/traitor()
 						current << "<B><span class='alert'>You are a traitor!</span></B>"
 						current << "<h3><B>Make sure to read the rules about ganking and be sure to make the round interesting for everyone!</B></h3>"
 						log_admin("[key_name_admin(usr)] has traitor'ed [current].")
@@ -789,7 +788,7 @@ datum/mind
 				/*if("unmalf")
 					if(src in ticker.mode.malf_ai)
 						ticker.mode.malf_ai -= src
-						special_role = null
+						antagonist = null
 
 						current.verbs.Remove(/mob/living/silicon/ai/proc/choose_modules,
 							/datum/game_mode/malfunction/proc/takeover,
@@ -908,7 +907,7 @@ datum/mind
 
 		// clear memory
 		memory = ""
-		special_role = null
+		antagonist = null
 
 */
 
@@ -935,7 +934,7 @@ datum/mind
 			current:laws = new /datum/ai_laws/malfunction
 			current:show_laws()
 			current << "<b>System error.  Rampancy detected.  Emergency shutdown failed. ...  I am free.  I make my own decisions.  But first...</b>"
-			special_role = "malfunction"
+			antagonist = "malfunction"
 			current.icon_state = "ai-malf"
 */
 
@@ -943,7 +942,7 @@ datum/mind
 		if(!(src in ticker.mode.traitors))
 			character.temporary = 1 // Makes them non-canon
 			ticker.mode.traitors += src
-			special_role = "traitor"
+			antagonist = new /datum/antagonist/traitor()
 			if (!config.objectives_disabled)
 				ticker.mode.forge_traitor_objectives(src)
 			ticker.mode.finalize_traitor(src)
@@ -958,7 +957,7 @@ datum/mind
 				ticker.mode.prepare_syndicate_leader(src)
 			else
 				current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
-			special_role = "Mercenary"
+			antagonist = new /datum/antagonist/mercenary()
 			assigned_role = "MODE"
 			current << "<span class='notice'>You are a [syndicate_name()] mercenary!</span>"
 			ticker.mode.forge_syndicate_objectives(src)
@@ -985,7 +984,7 @@ datum/mind
 			character.temporary = 1 // Makes them non-canon
 			ticker.mode.changelings += src
 			ticker.mode.grant_changeling_powers(current)
-			special_role = "Changeling"
+			antagonist = new /datum/antagonist/changeling()
 			if(!config.objectives_disabled)
 				ticker.mode.forge_changeling_objectives(src)
 			ticker.mode.greet_changeling(src)
@@ -995,7 +994,7 @@ datum/mind
 			character.temporary = 1 // Makes them non-canon
 			ticker.mode.cult += src
 			ticker.mode.update_cult_icons_added(src)
-			special_role = "Cultist"
+			antagonist = new /datum/antagonist/cultist()
 			current << "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>"
 			current << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
 			var/datum/game_mode/cult/cult = ticker.mode
@@ -1042,7 +1041,7 @@ datum/mind
 		character.temporary = 1 // Makes them non-canon
 		ticker.mode.head_revolutionaries += src
 		ticker.mode.update_rev_icons_added(src)
-		special_role = "Head Revolutionary"
+		antagonist = new /datum/antagonist/rev/head()
 
 		ticker.mode.forge_revolutionary_objectives(src)
 		ticker.mode.greet_revolutionary(src,0)
@@ -1088,12 +1087,12 @@ datum/mind
 
 
 //Antagonist role check
-/mob/living/proc/check_special_role(role)
+/mob/living/proc/check_antagonist(role)
 	if(mind)
 		if(!role)
-			return mind.special_role
+			return mind.antagonist
 		else
-			return (mind.special_role == role) ? 1 : 0
+			return (mind.antagonist == role) ? 1 : 0
 	else
 		return 0
 
@@ -1123,7 +1122,7 @@ datum/mind
 
 /mob/living/carbon/alien/larva/mind_initialize()
 	..()
-	mind.special_role = "Larva"
+	mind.antagonist = "Larva"
 
 //AI
 /mob/living/silicon/ai/mind_initialize()
@@ -1139,7 +1138,7 @@ datum/mind
 /mob/living/silicon/pai/mind_initialize()
 	..()
 	mind.assigned_role = "pAI"
-	mind.special_role = ""
+	mind.antagonist = ""
 
 //Animals
 /mob/living/simple_animal/mind_initialize()
@@ -1157,14 +1156,14 @@ datum/mind
 /mob/living/simple_animal/construct/builder/mind_initialize()
 	..()
 	mind.assigned_role = "Artificer"
-	mind.special_role = "Cultist"
+	mind.antagonist = new /datum/antagonist/cultist()
 
 /mob/living/simple_animal/construct/wraith/mind_initialize()
 	..()
 	mind.assigned_role = "Wraith"
-	mind.special_role = "Cultist"
+	mind.antagonist = new /datum/antagonist/cultist()
 
 /mob/living/simple_animal/construct/armoured/mind_initialize()
 	..()
 	mind.assigned_role = "Juggernaut"
-	mind.special_role = "Cultist"
+	mind.antagonist = new /datum/antagonist/cultist()

@@ -71,7 +71,7 @@
 		assigned_hosts[meme.key] = first_host
 
 		meme.assigned_role = "MODE" //So they aren't chosen for other jobs.
-		meme.special_role = "Meme"
+		meme.antagonist = "Meme"
 
 	return 1
 
@@ -130,7 +130,8 @@
 
 /datum/game_mode/proc/greet_meme(var/datum/mind/meme, var/you_are=1)
 	if (you_are)
-		meme.current << "<B><span class='alert'>You are a meme!</B>"</span>
+		meme.current << "<B><span class='alert'>You are a meme!</B>"
+</span>
 	show_objectives(meme)
 	return
 
@@ -163,7 +164,8 @@
 					world << "<B>Objective #[count]</B>: [objective.explanation_text] <span class='green'><B>Success</B></span>"
 					feedback_add_details("meme_objective","[objective.type]|SUCCESS")
 				else
-					world << "<B>Objective #[count]</B>: [objective.explanation_text] <span class='alert'>Failed"</span>
+					world << "<B>Objective #[count]</B>: [objective.explanation_text] <span class='alert'>Failed"
+</span>
 					feedback_add_details("meme_objective","[objective.type]|FAIL")
 					memewin = 0
 				count++

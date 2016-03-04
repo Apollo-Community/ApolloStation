@@ -2407,7 +2407,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
 				if(istype(M, /mob/living/carbon/human) && M.mind)
-					if(M.mind.special_role)
+					if(M.mind.antagonist)
 						if(!M) M = holder.my_atom
 						M.heal_organ_damage(1*REM,1*REM)
 						M.nutrition += nutriment_factor

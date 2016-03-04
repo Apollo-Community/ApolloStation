@@ -277,7 +277,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.absorbed_dna[M.real_name] = M.dna.Clone()
 			M.make_changeling()
 			if(M.mind)
-				M.mind.special_role = "Changeling"
+				M.mind.antagonist = "Changeling"
 	else
 		alert("Invalid mob")
 */
@@ -334,7 +334,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 					M << "<span class='alert'>You remembered one thing from the glimpse... [cultwords["see"]] is see...</span>"
 
 			if(M.mind)
-				M.mind.special_role = "Cultist"
+				M.mind.antagonist = "Cultist"
 				ticker.mode.cult += M.mind
 			src << "Made [M] a cultist."
 */

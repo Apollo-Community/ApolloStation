@@ -144,7 +144,7 @@ var/global/datum/controller/occupations/job_master
 		for(var/mob/new_player/player in player_list)
 			if((player) && (player.mind))
 				player.mind.assigned_role = null
-				player.mind.special_role = null
+				player.mind.antagonist = null
 		SetupOccupations()
 		unassigned = list()
 		return

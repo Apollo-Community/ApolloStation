@@ -59,7 +59,7 @@
 
 		greet_malf(AI_mind)
 
-		AI_mind.special_role = "malfunction"
+		AI_mind.antagonist = "malfunction"
 
 		AI_mind.current.verbs += /datum/game_mode/malfunction/proc/takeover
 

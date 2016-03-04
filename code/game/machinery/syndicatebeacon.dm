@@ -46,7 +46,7 @@
 			src.updateUsrDialog()
 			return
 		var/mob/M = locate(href_list["traitormob"])
-		if(M.mind.special_role || jobban_isbanned(M, "Syndicate"))
+		if(M.mind.antagonist || jobban_isbanned(M, "Syndicate"))
 			temptext = "<i>We have no need for you at this time. Have a pleasant day.</i><br>"
 			src.updateUsrDialog()
 			return
@@ -61,7 +61,7 @@
 			var/mob/living/carbon/human/N = M
 			ticker.mode.equip_traitor(N)
 			ticker.mode.traitors += N.mind
-			N.mind.special_role = "traitor"
+			N.mind.antagonist = "traitor"
 			if(!config.objectives_disabled)
 				var/objective = "Free Objective"
 				switch(rand(1,100))

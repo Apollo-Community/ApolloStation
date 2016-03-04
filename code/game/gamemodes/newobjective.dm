@@ -254,7 +254,7 @@ datum
 			return INFINITY
 		proc/find_target_by_role(role, role_type=0)//Option sets either to check assigned role or special role. Default to assigned.
 			for(var/datum/mind/possible_target in ticker.minds)
-				if((possible_target != owner) && ishuman(possible_target.current) && ((role_type ? possible_target.special_role : possible_target.assigned_role) == role) )
+				if((possible_target != owner) && ishuman(possible_target.current) && ((role_type ? possible_target.antagonist : possible_target.assigned_role) == role) )
 					target = possible_target
 					break
 
@@ -342,7 +342,7 @@ datum
 			find_target_by_role(role, role_type=0)
 				..(role, role_type)
 				if(target && target.current)
-					explanation_text = "Protect [target.current.real_name], the [target.role_alt_title ? target.role_alt_title : (!role_type ? target.assigned_role : target.special_role)]."
+					explanation_text = "Protect [target.current.real_name], the [target.role_alt_title ? target.role_alt_title : (!role_type ? target.assigned_role : target.antagonist)]."
 				else
 					explanation_text = "Free Objective"
 				return target
@@ -1261,7 +1261,7 @@ datum
 			find_target_by_role(role, role_type=0)
 				..(role, role_type)
 				if(target && target.current)
-					explanation_text = "[target.current.real_name], the [target.role_alt_title ? target.role_alt_title : (!role_type ? target.assigned_role : target.special_role)], has defied us for the last time.  Make an example of him, and bring us his severed head."
+					explanation_text = "[target.current.real_name], the [target.role_alt_title ? target.role_alt_title : (!role_type ? target.assigned_role : target.antagonist)], has defied us for the last time.  Make an example of him, and bring us his severed head."
 				else
 					explanation_text = "Free Objective"
 				return target
@@ -1364,7 +1364,7 @@ datum
 			find_target_by_role(role, role_type=0)
 				..(role, role_type)
 				if(target && target.current)
-					explanation_text = "Steal the brain of [target.current.real_name] the [target.role_alt_title ? target.role_alt_title : (!role_type ? target.assigned_role : target.special_role)]."
+					explanation_text = "Steal the brain of [target.current.real_name] the [target.role_alt_title ? target.role_alt_title : (!role_type ? target.assigned_role : target.antagonist)]."
 				else
 					explanation_text = "Free Objective"
 				return target
@@ -1395,7 +1395,7 @@ datum
 			find_target_by_role(role, role_type=0)
 				..(role, role_type)
 				if(target && target.current)
-					explanation_text = "Assassinate [target.current.real_name], the [target.role_alt_title ? target.role_alt_title : (!role_type ? target.assigned_role : target.special_role)]."
+					explanation_text = "Assassinate [target.current.real_name], the [target.role_alt_title ? target.role_alt_title : (!role_type ? target.assigned_role : target.antagonist)]."
 				else
 					explanation_text = "Free Objective"
 				return target

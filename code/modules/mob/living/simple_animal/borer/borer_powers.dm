@@ -105,9 +105,9 @@
 
 		//Update their traitor status.
 		if(host.mind)
-			if(!host.mind.special_role)
+			if(!host.mind.antagonist)
 				ticker.mode.borers |= host.mind
-				host.mind.special_role = "Borer Thrall"
+				host.mind.antagonist = "Borer Thrall"
 			host << "<span class='danger'>A creeping lassitude surrounds you. Your mind is being invaded by an alien intelligence and that's just fine.</span>"
 			host << "<span class = 'danger'>You are now a thrall to a cortical borer. Please listen to what they have to say; they're in your head.</span>"
 			show_generic_antag_text(host.mind)
@@ -178,7 +178,7 @@
 		H.ghostize(0)
 
 	if(src.mind)
-		src.mind.special_role = "Borer Husk"
+		src.mind.antagonist = "Borer Husk"
 		src.mind.transfer_to(host)
 
 	H.ChangeToHusk()

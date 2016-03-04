@@ -376,12 +376,12 @@ Alien plants should do something if theres a lot of poison
 			if(C.health < 0) continue
 			if(istype(C, /mob/living/carbon/) && src.atkcarbon)
 				if(C:mind)
-					if(C:mind:special_role == "H.I.V.E")
+					if(C:mind:antagonist == "H.I.V.E")
 						continue
 				src.attack = 1
 			if(istype(C, /mob/living/silicon/) && src.atksilicon)
 				if(C:mind)
-					if(C:mind:special_role == "H.I.V.E")
+					if(C:mind:antagonist == "H.I.V.E")
 						continue
 				src.attack = 1
 			if(src.attack)

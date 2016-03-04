@@ -66,7 +66,7 @@ var/global/list/turf/synd_spawn = list()
 
 	for(var/datum/mind/synd_mind in syndicates)
 		synd_mind.assigned_role = "MODE" //So they aren't chosen for other jobs.
-		synd_mind.special_role = "Mercenary"//So they actually have a special role/N
+		synd_mind.antagonist = "Mercenary"//So they actually have a special role/N
 	return 1
 
 

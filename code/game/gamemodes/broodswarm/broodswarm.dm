@@ -51,7 +51,7 @@
 			break
 		var/datum/mind/brood = pick(possible_broodswarm)
 		broodswarm += brood
-		brood.special_role = "traitor"
+		brood.antagonist = "traitor"
 		possible_broodswarm.Remove(brood)
 
 	if(!broodswarm.len)

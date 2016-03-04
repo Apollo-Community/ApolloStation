@@ -153,10 +153,10 @@
 
 	if(host.mind)
 		//If they're not a proper traitor, reset their antag status.
-		if(host.mind.special_role == "Borer Thrall")
+		if(host.mind.antagonist == "Borer Thrall")
 			host << "<span class ='danger'>You are no longer an antagonist.</span>"
 			ticker.mode.borers -= host.mind
-			host.mind.special_role = null
+			host.mind.antagonist = null
 
 	src.loc = get_turf(host)
 
@@ -204,7 +204,7 @@
 
 	if(src.mind)
 		src.mind.assigned_role = "Cortical Borer"
-		src.mind.special_role = "Cortical Borer"
+		src.mind.antagonist = "Cortical Borer"
 
 	src << "<span class='notice'>You are a cortical borer!</span> You are a brain slug that worms its way \
 	into the head of its victim. Use stealth, persuasion and your powers of mind control to keep you, \

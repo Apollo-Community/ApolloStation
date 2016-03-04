@@ -128,7 +128,7 @@ datum/game_mode/mutiny
 	proc/equip_head(datum/mind/head, faction, proc/recruitment_verb)
 		var/mob/living/carbon/human/H = head.current
 		H << "You are the Head [capitalize(faction)]!"
-		head.special_role = "head_[faction]"
+		head.antagonist = "head_[faction]"
 
 		var/slots = get_equipment_slots()
 		switch(faction)
@@ -162,7 +162,7 @@ datum/game_mode/mutiny
 		if(M in mutineers)
 			mutineers.Remove(M)
 
-		M.special_role = faction
+		M.antagonist = faction
 		faction_list.Add(M)
 
 		if(faction == "mutineer")
@@ -204,12 +204,12 @@ datum/game_mode/mutiny
 
 	proc/can_be_recruited(datum/mind/M, role)
 		if(!M) return 0
-		if(!M.special_role) return 1
+		if(!M.antagonist) return 1
 		switch(role)
 			if("loyalist")
-				return M.special_role == "mutineer"
+				return M.antagonist == "mutineer"
 			if("mutineer")
-				return M.special_role == "loyalist"
+				return M.antagonist == "loyalist"
 
 	proc/round_outcome()
 		world << "<center><h4>Breaking News</h4></center><br><hr>"
