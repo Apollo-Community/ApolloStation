@@ -541,6 +541,7 @@ datum/mind
 					ticker.mode.revolutionaries += src
 					ticker.mode.update_rev_icons_added(src)
 					special_role = "Revolutionary"
+					antagonist = new /datum/antagonist/rev()
 					log_admin("[key_name(usr)] has rev'ed [current].")
 
 				if("headrev")
@@ -569,6 +570,7 @@ datum/mind
 					ticker.mode.head_revolutionaries += src
 					ticker.mode.update_rev_icons_added(src)
 					special_role = "Head Revolutionary"
+					antagonist = new /datum/antagonist/rev/head()
 					log_admin("[key_name_admin(usr)] has head-rev'ed [current].")
 
 				if("autoobjectives")
@@ -626,6 +628,7 @@ datum/mind
 						ticker.mode.cult += src
 						ticker.mode.update_cult_icons_added(src)
 						special_role = "Cultist"
+						antagonist = new /datum/antagonist/cultist()
 						current << "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>"
 						current << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
 						current << "<h3><B>Make sure to read the rules about ganking and be sure to make the round interesting for everyone!</B></h3>"
@@ -674,6 +677,7 @@ datum/mind
 						ticker.mode.changelings += src
 						ticker.mode.grant_changeling_powers(current)
 						special_role = "Changeling"
+						antagonist = new /datum/antagonist/changeling()
 						current << "<B><font color='red'>Your powers are awoken. A flash of memory returns to us...we are a changeling!</font></B>"
 						current << "<h3><B>Make sure to read the rules about ganking and be sure to make the round interesting for everyone!</B></h3>"
 						show_objectives(src)
@@ -716,6 +720,7 @@ datum/mind
 						else
 							current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
 						special_role = "Mercenary"
+						antagonist = new /datum/antagonist/mercenary()
 						current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
 						current << "<h3><B>Make sure to read the rules about ganking and be sure to make the round interesting for everyone!</B></h3>"
 						ticker.mode.forge_syndicate_objectives(src)
@@ -768,6 +773,7 @@ datum/mind
 					if(!(src in ticker.mode.traitors))
 						ticker.mode.traitors += src
 						special_role = "traitor"
+						antagonist = new /datum/antagonist/traitor()
 						current << "<B><span class='alert'>You are a traitor!</span></B>"
 						current << "<h3><B>Make sure to read the rules about ganking and be sure to make the round interesting for everyone!</B></h3>"
 						log_admin("[key_name_admin(usr)] has traitor'ed [current].")
@@ -944,6 +950,7 @@ datum/mind
 			character.temporary = 1 // Makes them non-canon
 			ticker.mode.traitors += src
 			special_role = "traitor"
+			antagonist = new /datum/antagonist/traitor()
 			if (!config.objectives_disabled)
 				ticker.mode.forge_traitor_objectives(src)
 			ticker.mode.finalize_traitor(src)
@@ -959,6 +966,7 @@ datum/mind
 			else
 				current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
 			special_role = "Mercenary"
+			antagonist = new /datum/antagonist/mercenary()
 			assigned_role = "MODE"
 			current << "<span class='notice'>You are a [syndicate_name()] mercenary!</span>"
 			ticker.mode.forge_syndicate_objectives(src)
@@ -986,6 +994,7 @@ datum/mind
 			ticker.mode.changelings += src
 			ticker.mode.grant_changeling_powers(current)
 			special_role = "Changeling"
+			antagonist = new /datum/antagonist/changeling()
 			if(!config.objectives_disabled)
 				ticker.mode.forge_changeling_objectives(src)
 			ticker.mode.greet_changeling(src)
@@ -996,6 +1005,7 @@ datum/mind
 			ticker.mode.cult += src
 			ticker.mode.update_cult_icons_added(src)
 			special_role = "Cultist"
+			antagonist = new /datum/antagonist/cultist()
 			current << "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>"
 			current << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
 			var/datum/game_mode/cult/cult = ticker.mode
@@ -1043,6 +1053,7 @@ datum/mind
 		ticker.mode.head_revolutionaries += src
 		ticker.mode.update_rev_icons_added(src)
 		special_role = "Head Revolutionary"
+		antagonist = new /datum/antagonist/rev/head()
 
 		ticker.mode.forge_revolutionary_objectives(src)
 		ticker.mode.greet_revolutionary(src,0)
@@ -1158,13 +1169,16 @@ datum/mind
 	..()
 	mind.assigned_role = "Artificer"
 	mind.special_role = "Cultist"
+	antagonist = new /datum/antagonist/cultist()
 
 /mob/living/simple_animal/construct/wraith/mind_initialize()
 	..()
 	mind.assigned_role = "Wraith"
 	mind.special_role = "Cultist"
+	antagonist = new /datum/antagonist/cultist()
 
 /mob/living/simple_animal/construct/armoured/mind_initialize()
 	..()
 	mind.assigned_role = "Juggernaut"
 	mind.special_role = "Cultist"
+	antagonist = new /datum/antagonist/cultist()
