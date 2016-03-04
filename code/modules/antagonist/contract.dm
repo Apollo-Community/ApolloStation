@@ -19,6 +19,10 @@
 	contract_start = world.time
 	contract_ticker.contracts += src
 
+// set title, desc, etc. here
+/datum/contract/proc/set_details()
+	return
+
 // Start the contract for a new antag
 /datum/contract/proc/start(var/mob/living/worker)
 	workers += worker

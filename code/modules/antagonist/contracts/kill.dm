@@ -50,3 +50,36 @@
 		charge_to_account(M.account_number, company, purpose, terminal, reward)
 	*/
 	M.money += reward
+
+/datum/contract/kill/proc/get_taken_targets()
+	var/datum/mind/list/taken = list()
+	for(var/datum/contract/kill/C in uplink.contracts)
+		if(istype(C) && C.target)	taken += C.target
+	return taken
+
+// Heads only
+/datum/contract/kill/head
+	title = "Assassinate Head of Staff"
+	desc = "We're looking to instate one of our own agents in a position higher up. That means someone already there has to go."
+	time_limit = 1200
+	min_notoriety = 2
+
+	reward = 6000
+
+/datum/contract/kill/head/New()
+	..()
+
+	if(!(target.assigned_role in command_positions))
+		var/datum/mind/list/taken = get_taken_targets()
+		var/datum/mind/list/candidates = list()
+		for(var/datum/mind/M in ticker.minds)
+			if(!(M in taken) && ishuman(M.current) && M.current.stat != 2 && M.assigned_role in command_positions)
+				candidates += M
+		target = pick(candidates)
+
+	if(!target)
+		if(ticker.current_state != 1)
+			qdel(src)
+		return
+
+	set_details()
