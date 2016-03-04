@@ -15,6 +15,10 @@ var/global/list/restricted_contracts = list()
 /datum/uplink/New()
 	..()
 
+	if(uplink)
+		qdel(uplink)
+	uplink = src
+
 	if(!contract_ticker)
 		contract_ticker = new()
 		contract_ticker.setup()

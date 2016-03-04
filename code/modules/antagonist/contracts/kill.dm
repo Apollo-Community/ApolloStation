@@ -11,7 +11,6 @@
 	..()
 
 	target = get_target()
-
 	if(!target)
 		// Let the uplink see if it's a notoriety-restricted contract before we delete ourselves
 		if(ticker.current_state != 1)
@@ -67,7 +66,7 @@
 	for(var/datum/mind/M in ticker.minds)
 		if(!(M in taken) && ishuman(M.current) && M.current.stat != 2)
 			candidates += M
-	return pick(candidates)
+	return (candidates.len > 0 ? pick(candidates) : null) // pick(candidates) if candidates isn't empty. null otherwise
 
 // Heads only
 /datum/contract/kill/head
@@ -84,4 +83,4 @@
 	for(var/datum/mind/M in ticker.minds)
 		if(!(M in taken) && ishuman(M.current) && M.current.stat != 2 && M.assigned_role in command_positions)
 			candidates += M
-	target = pick(candidates)
+	target = (candidates.len > 0 ? pick(candidates) : null)
