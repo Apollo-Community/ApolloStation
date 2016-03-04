@@ -1913,7 +1913,7 @@
 					if(is_special_character(H)) continue
 					//traitorize(H, objective, 0)
 					ticker.mode.traitors += H.mind
-					H.mind.antagonist = "traitor"
+					H.mind.special_role = "traitor"
 					var/datum/objective/new_objective = new
 					new_objective.owner = H
 					new_objective.explanation_text = objective
@@ -1923,7 +1923,7 @@
 					ticker.mode.finalize_traitor(H.mind)
 				for(var/mob/living/silicon/A in player_list)
 					ticker.mode.traitors += A.mind
-					A.mind.antagonist = "traitor"
+					A.mind.special_role = "traitor"
 					var/datum/objective/new_objective = new
 					new_objective.owner = A
 					new_objective.explanation_text = objective

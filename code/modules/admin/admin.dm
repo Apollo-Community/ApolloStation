@@ -1005,7 +1005,7 @@ var/global/floorIsLava = 0
 		var/mob/living/silicon/robot/R = M
 		if(R.emagged)
 			return 1
-	if(M.mind&&M.mind.antagonist)//If they have a mind and special role, they are some type of traitor or antagonist.
+	if(M.mind&&M.mind.special_role)//If they have a mind and special role, they are some type of traitor or antagonist.
 		return 1
 
 	return 0

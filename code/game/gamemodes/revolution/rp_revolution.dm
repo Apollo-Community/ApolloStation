@@ -79,7 +79,7 @@
 		send_intercept()
 
 /datum/game_mode/revolution/rp_revolution/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)
-	rev_mind.antagonist = "Head Revolutionary"
+	rev_mind.special_role = "Head Revolutionary"
 	if (you_are)
 		rev_mind.current << "<span class='notice'>You are a member of the revolutionaries' leadership!</span>"
 	show_objectives(rev_mind)
@@ -107,7 +107,7 @@
 		return 0
 	revolutionaries += rev_mind
 	rev_mind.current << "<span class='alert'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill, capture or convert the heads to win the revolution!</FONT></span>"
-	rev_mind.antagonist = "Revolutionary"
+	rev_mind.special_role = "Revolutionary"
 	show_objectives(rev_mind)
 	update_rev_icons_added(rev_mind)
 	H.hud_updateflag |= 1 << SPECIALROLE_HUD
@@ -163,7 +163,7 @@
 	set category = "IC"
 	var/list/Possible = list()
 	for (var/mob/living/carbon/human/P in oview(src))
-		if(!stat && P.client && P.mind && !P.mind.antagonist)
+		if(!stat && P.client && P.mind && !P.mind.special_role)
 			Possible += P
 	if(!Possible.len)
 		src << "<span class='alert'>There doesn't appear to be anyone available for you to convert here.</span>"

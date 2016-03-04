@@ -56,7 +56,7 @@ var/global/list/obj/cortical_stacks = list() //Stacks for 'leave nobody behind' 
 
 	for(var/datum/mind/raider in raiders)
 		raider.assigned_role = "MODE"
-		raider.antagonist = "Vox Raider"
+		raider.special_role = "Vox Raider"
 	return 1
 
 /datum/game_mode/heist/pre_setup()

@@ -380,7 +380,7 @@
 
 	if(occupant.mind.objectives.len)
 		qdel(occupant.mind.objectives)
-		occupant.mind.antagonist = null
+		occupant.mind.special_role = null
 	else
 		if(ticker.mode.name == "AutoTraitor")
 			var/datum/game_mode/traitor/autotraitor/current_mode = ticker.mode

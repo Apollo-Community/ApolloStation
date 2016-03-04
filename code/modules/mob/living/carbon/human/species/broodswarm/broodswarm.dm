@@ -44,7 +44,7 @@
 
 	if(H.mind)
 		H.mind.assigned_role = "Brood"
-		H.mind.antagonist = "Brood"
+		H.mind.special_role = "Brood"
 
 	swarm_number++ //Keep track of how many aliens we've had so far.
 	H.real_name = "alien [caste_name] ([alien_number])"

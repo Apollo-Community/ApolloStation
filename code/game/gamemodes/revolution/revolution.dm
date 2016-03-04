@@ -122,7 +122,7 @@
 
 /datum/game_mode/proc/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)
 
-	rev_mind.antagonist = "Head Revolutionary"
+	rev_mind.special_role = "Head Revolutionary"
 
 	if (you_are)
 		rev_mind.current << "<span class='notice'>You are a member of the revolutionaries' leadership!</span>"
@@ -197,7 +197,7 @@
 		return 0
 	revolutionaries += rev_mind
 	rev_mind.current << "<span class='alert'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>"
-	rev_mind.antagonist = "Revolutionary"
+	rev_mind.special_role = "Revolutionary"
 	show_objectives(rev_mind)
 	update_rev_icons_added(rev_mind)
 	return 1
@@ -207,7 +207,7 @@
 /datum/game_mode/proc/remove_revolutionary(datum/mind/rev_mind , beingborged)
 	if(rev_mind in revolutionaries)
 		revolutionaries -= rev_mind
-		rev_mind.antagonist = null
+		rev_mind.special_role = null
 		rev_mind.current.hud_updateflag |= 1 << SPECIALROLE_HUD
 
 		if(beingborged)

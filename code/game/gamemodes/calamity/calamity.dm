@@ -58,7 +58,7 @@
 			//Prune out candidates who are already antagonists.
 			var/list/remove_players = list()
 			for(var/datum/mind/player in candidates)
-				if(player.antagonist || player.assigned_role == "MODE")
+				if(player.special_role || player.assigned_role == "MODE")
 					remove_players += player
 			candidates -= remove_players
 
@@ -76,7 +76,7 @@
 			if(atype != "tater" && atype != "ling" && atype != "cult")
 				chosen_candidate.assigned_role = "MODE"
 
-			chosen_candidate.antagonist = atype
+			chosen_candidate.special_role = atype
 			chosen_candidates |= chosen_candidate
 			candidates -= chosen_candidate
 
@@ -102,7 +102,7 @@
 			var/list/candidates = list()
 
 			for(var/datum/mind/player in chosen_candidates)
-				if(player.antagonist == atype)
+				if(player.special_role == atype)
 					candidates |= player
 					chosen_candidates -= player
 
@@ -113,7 +113,7 @@
 			log_debug("Calamity: spawning [atype].")
 
 			for(var/datum/mind/player in candidates)
-				player.antagonist = get_candidate_role_text(atype)
+				player.special_role = get_candidate_role_text(atype)
 
 			switch(atype)
 				if("syndi")
@@ -142,7 +142,7 @@
 
 		if(L.len)
 			var/datum/mind/M = L[1]
-			text = "<BR/><FONT size = 2><B>The [M.antagonist][L.len == 1 ? " was" : "s were"]:</B></FONT>"
+			text = "<BR/><FONT size = 2><B>The [M.special_role][L.len == 1 ? " was" : "s were"]:</B></FONT>"
 
 			for(var/datum/mind/P in L)
 				text += "<br>[P.key] was [P.name] ("
@@ -169,7 +169,7 @@
 
 		if(L.len)
 			var/datum/mind/M = L[1]
-			text = "<BR/><FONT size = 2><B>The [M.antagonist][L.len == 1 ? " was" : "s were"]:</B></FONT>"
+			text = "<BR/><FONT size = 2><B>The [M.special_role][L.len == 1 ? " was" : "s were"]:</B></FONT>"
 			for(var/datum/mind/P in L)
 				var/num = 1
 				text += "<BR/><FONT size = 2>[P.key] was [P.name].<FONT>"
@@ -302,7 +302,7 @@
 
 		changelings |= player
 		grant_changeling_powers(player.current)
-		player.antagonist = "Changeling"
+		player.special_role = "Changeling"
 
 		if(!config.objectives_disabled)
 			player.objectives += new /datum/objective/escape()
@@ -464,4 +464,4 @@
 			player.objectives += new /datum/objective/survive()
 
 		show_objectives(player)
-		player.antagonist = "Cultist"
+		player.special_role = "Cultist"

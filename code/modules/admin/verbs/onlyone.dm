@@ -8,7 +8,7 @@
 		if(is_special_character(H)) continue
 
 		ticker.mode.traitors += H.mind
-		H.mind.antagonist = "traitor"
+		H.mind.special_role = "traitor"
 
 		var/datum/objective/steal/steal_objective = new
 		steal_objective.owner = H.mind

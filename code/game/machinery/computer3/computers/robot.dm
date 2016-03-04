@@ -159,7 +159,7 @@
 					var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
 					if(choice == "Confirm")
 						if(R && istype(R))
-							if(R.mind && R.mind.antagonist && R.emagged)
+							if(R.mind && R.mind.special_role && R.emagged)
 								R << "Extreme danger.  Termination codes detected.  Scrambling security codes and automatic AI unlink triggered."
 								R.ResetSecurityCodes()
 
@@ -202,7 +202,7 @@
 //							message_admins("<span class='notice'>[key_name_admin(usr)] emagged [R.name] using robotic console!</span>")
 							log_game("[key_name(usr)] emagged [R.name] using robotic console!")
 							R.emagged = 1
-							if(R.mind.antagonist)
+							if(R.mind.special_role)
 								R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
 
 		interact()

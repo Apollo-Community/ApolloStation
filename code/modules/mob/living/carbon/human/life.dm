@@ -1762,7 +1762,7 @@
 		holder.icon_state = "hudblank"
 		if(mind)
 
-			switch(mind.antagonist)
+			switch(mind.special_role)
 				if("traitor","Mercenary")
 					holder.icon_state = "hudsyndicate"
 				if("Revolutionary")

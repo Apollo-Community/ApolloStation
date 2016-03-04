@@ -15,7 +15,7 @@
 	var/permitted = 0
 	var/list/allowed = list("Syndicate","traitor","Wizard","Head Revolutionary","Cultist","Changeling")
 	for(var/T in allowed)
-		if(mind.antagonist == T)
+		if(mind.special_role == T)
 			permitted = 1
 			break
 

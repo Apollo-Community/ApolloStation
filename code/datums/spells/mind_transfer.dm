@@ -49,7 +49,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 		user << "They appear to be catatonic. Not even magic can affect their vacant mind."
 		return
 
-	if(target.mind.antagonist in protected_roles)
+	if(target.mind.special_role in protected_roles)
 		user << "Their mind is resisting your spell."
 		return
 

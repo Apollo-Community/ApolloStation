@@ -106,7 +106,7 @@ Works together with spawning an observer, noted above.
 	if(antagHUD)
 		var/list/target_list = list()
 		for(var/mob/living/target in oview(src, 14))
-			if(target.mind&&(target.mind.antagonist||issilicon(target)) )
+			if(target.mind&&(target.mind.special_role||issilicon(target)) )
 				target_list += target
 		if(target_list.len)
 			assess_targets(target_list, src)
@@ -129,7 +129,7 @@ Works together with spawning an observer, noted above.
 /*
 		else//If the silicon mob has no law datum, no inherent laws, or a law zero, add them to the hud.
 			var/mob/living/silicon/silicon_target = target
-			if(!silicon_target.laws||(silicon_target.laws&&(silicon_target.laws.zeroth||!silicon_target.laws.inherent.len))||silicon_target.mind.antagonist=="traitor")
+			if(!silicon_target.laws||(silicon_target.laws&&(silicon_target.laws.zeroth||!silicon_target.laws.inherent.len))||silicon_target.mind.special_role=="traitor")
 				if(isrobot(silicon_target))//Different icons for robutts and AI.
 					U.client.images += image(tempHud,silicon_target,"hudmalborg")
 				else

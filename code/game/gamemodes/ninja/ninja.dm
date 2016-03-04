@@ -26,7 +26,7 @@
 	ninjas += ninja
 	modePlayer += ninja
 	ninja.assigned_role = "MODE" //So they aren't chosen for other jobs.
-	ninja.antagonist = "Ninja"
+	ninja.special_role = "Ninja"
 	ninja.original = ninja.current
 
 	/*if(ninjastart.len == 0)
@@ -169,8 +169,8 @@
 					count++
 
 			var/special_role_text
-			if(ninja.antagonist)
-				special_role_text = lowertext(ninja.antagonist)
+			if(ninja.special_role)
+				special_role_text = lowertext(ninja.special_role)
 			else
 				special_role_text = "antagonist"
 

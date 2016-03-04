@@ -440,7 +440,7 @@ var/global/datum/controller/gameticker/ticker
 	var/list/total_antagonists = list()
 	//Look into all mobs in world, dead or alive
 	for(var/datum/mind/Mind in minds)
-		var/temprole = Mind.antagonist
+		var/temprole = Mind.special_role
 		if(temprole)							//if they are an antagonist of some sort.
 			if(temprole in total_antagonists)	//If the role exists already, add the name to it
 				total_antagonists[temprole] += ", [Mind.name]([Mind.key])"

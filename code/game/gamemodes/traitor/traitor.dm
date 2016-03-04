@@ -53,7 +53,7 @@
 		var/datum/mind/traitor = pick(possible_traitors)
 
 		traitors += traitor
-		traitor.antagonist = new /datum/antagonist/traitor()
+		traitor.special_role = "traitor"
 		possible_traitors.Remove(traitor)
 
 	if(!traitors.len)
@@ -192,8 +192,8 @@
 					count++
 
 			var/special_role_text
-			if(traitor.antagonist)
-				special_role_text = lowertext(traitor.antagonist)
+			if(traitor.special_role)
+				special_role_text = lowertext(traitor.special_role)
 			else
 				special_role_text = "antagonist"
 			if(!config.objectives_disabled)

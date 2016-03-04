@@ -71,7 +71,7 @@
 	var/law = pick(laws)
 
 	for (var/mob/living/silicon/ai/target in world)
-		if(target.mind.antagonist == "traitor")
+		if(target.mind.special_role == "traitor")
 			continue
 		target << "<span class='alert'><b>You have detected a change in your laws information:</b></span>"
 		target << law

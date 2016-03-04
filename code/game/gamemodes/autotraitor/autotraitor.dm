@@ -63,7 +63,7 @@
 			traitors.Remove(traitor)
 			continue
 		if(istype(traitor))
-			traitor.antagonist = "traitor"
+			traitor.special_role = "traitor"
 
 //	if(!traitors.len)
 //		return 0
@@ -88,9 +88,9 @@
 
 			if (player.client && player.stat != 2)
 				playercount += 1
-			if (player.client && player.mind && player.mind.antagonist && player.stat != 2)
+			if (player.client && player.mind && player.mind.special_role && player.stat != 2)
 				traitorcount += 1
-			if (player.client && player.mind && !player.mind.antagonist && player.stat != 2 && (player.client && player.client.prefs.beSpecial() & BE_TRAITOR) && !jobban_isbanned(player, "Syndicate"))
+			if (player.client && player.mind && !player.mind.special_role && player.stat != 2 && (player.client && player.client.prefs.beSpecial() & BE_TRAITOR) && !jobban_isbanned(player, "Syndicate"))
 				possible_traitors += player
 		for(var/datum/mind/player in possible_traitors)
 			if(player.assigned_role in restricted_jobs)
@@ -135,7 +135,7 @@
 				traitors += newtraitor.mind
 				newtraitor << "<span class='alert'><B>No time like the present.</B> </span><span class='black'>It's time to take matters into your own hands...</span>"
 				newtraitor << "<B>You are now a traitor.</B>"
-				newtraitor.mind.antagonist = "traitor"
+				newtraitor.mind.special_role = "traitor"
 				newtraitor.hud_updateflag |= 1 << SPECIALROLE_HUD
 				newtraitor << "<i>You have been selected this round as an antagonist!</i>"
 				show_objectives(newtraitor.mind)
@@ -166,7 +166,7 @@
 
 			if (player.client && player.stat != 2)
 				playercount += 1
-			if (player.client && player.mind && player.mind.antagonist && player.stat != 2)
+			if (player.client && player.mind && player.mind.special_role && player.stat != 2)
 				traitorcount += 1
 		//message_admins("Live Players: [playercount]")
 		//message_admins("Live Traitors: [traitorcount]")
@@ -192,7 +192,7 @@
 				equip_traitor(character)
 				traitors += character.mind
 				character << "<span class='alert'><B>You are the traitor.</B></span>"
-				character.mind.antagonist = "traitor"
+				character.mind.special_role = "traitor"
 				character << "<i>You have been selected this round as an antagonist</i>!"
 
 				character.character.temporary = 1 // Makes them non-canon

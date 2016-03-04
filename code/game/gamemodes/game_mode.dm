@@ -241,17 +241,17 @@
 	var/list/suspects = list()
 	for(var/mob/living/carbon/human/man in player_list) if(man.client && man.mind)
 		// NT relation option
-		var/antagonist = man.mind.antagonist
-		if (antagonist == "Wizard" || antagonist == "Ninja" || antagonist == "Mercenary" || antagonist == "Vox Raider")
+		var/special_role = man.mind.special_role
+		if (special_role == "Wizard" || special_role == "Ninja" || special_role == "Mercenary" || special_role == "Vox Raider")
 			continue	//NT intelligence ruled out possiblity that those are too classy to pretend to be a crew.
 		if(man.client.prefs.selected_character.nanotrasen_relation == "Opposed" && prob(50) || \
 		   man.client.prefs.selected_character.nanotrasen_relation == "Skeptical" && prob(20))
 			suspects += man
 		// Antags
-		else if(antagonist == "traitor" && prob(40) || \
-		   antagonist == "Changeling" && prob(50) || \
-		   antagonist == "Cultist" && prob(30) || \
-		   antagonist == "Head Revolutionary" && prob(30))
+		else if(special_role == "traitor" && prob(40) || \
+		   special_role == "Changeling" && prob(50) || \
+		   special_role == "Cultist" && prob(30) || \
+		   special_role == "Head Revolutionary" && prob(30))
 			suspects += man
 
 			// If they're a traitor or likewise, give them extra TC in exchange.
@@ -537,7 +537,7 @@ proc/get_nt_opposed()
 		obj_count++
 
 /datum/game_mode/proc/print_player_lite(var/datum/mind/ply)
-	var/role = ply.assigned_role == "MODE" ? "\improper[ply.antagonist]" : "\improper[ply.assigned_role]"
+	var/role = ply.assigned_role == "MODE" ? "\improper[ply.special_role]" : "\improper[ply.assigned_role]"
 	var/text = "<br><b>[ply.name]</b> (<b>[ply.key]</b>) as \a <b>[role]</b> ("
 	if(ply.current)
 		if(ply.current.stat == DEAD)

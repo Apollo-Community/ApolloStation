@@ -79,7 +79,7 @@ datum/round_stats/proc/report_death(var/mob/living/H)
 	var/sqlname = sanitizeSQL(H.real_name)
 	var/sqlkey = sanitizeSQL(H.key)
 	var/sqlpod = sanitizeSQL(podname)
-	var/sqlspecial = sanitizeSQL(H.mind.antagonist)
+	var/sqlspecial = sanitizeSQL(H.mind.special_role)
 	var/sqljob = sanitizeSQL(H.mind.assigned_role)
 	var/laname
 	var/lakey
@@ -239,7 +239,7 @@ datum/round_stats/proc/save_stats()
 			for(var/datum/objective/objective in M.objectives)
 				if(!objective.check_completion())
 					win = 0
-			query.Execute("INSERT INTO round_antags (id, round_id, ckey, name, job, role, success) VALUES(null, [round_id], '[sanitizeSQL(M.key)]', '[sanitizeSQL(M.name)]', '[sanitizeSQL(M.assigned_role)]', '[sanitizeSQL(M.antagonist)]', [win])")
+			query.Execute("INSERT INTO round_antags (id, round_id, ckey, name, job, role, success) VALUES(null, [round_id], '[sanitizeSQL(M.key)]', '[sanitizeSQL(M.name)]', '[sanitizeSQL(M.assigned_role)]', '[sanitizeSQL(M.special_role)]', [win])")
 
 	for(var/mob/living/silicon/S in mob_list)
 		if(S.laws.zeroth)

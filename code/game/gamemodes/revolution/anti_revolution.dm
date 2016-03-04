@@ -103,7 +103,7 @@
 		head_mind.current << "<span class='notice'>Note that you can ignore these objectives, but resisting NT's orders probably means demotion or worse.</span>"
 	for(var/datum/objective/objective in head_mind.objectives)
 		head_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		head_mind.antagonist = "Corrupt Head"
+		head_mind.special_role = "Corrupt Head"
 		obj_count++
 
 	head_mind.current.verbs += /mob/proc/ResignFromHeadPosition
@@ -215,7 +215,7 @@
 	ticker.mode:heads -= src.mind
 	src.mind.objectives = list()
 	ticker.mode.modePlayer -= src.mind
-	src.mind.antagonist = null
+	src.mind.special_role = null
 
 	src.verbs -= /mob/proc/ResignFromHeadPosition
 
