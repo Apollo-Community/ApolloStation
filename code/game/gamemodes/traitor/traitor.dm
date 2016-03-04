@@ -53,7 +53,7 @@
 		var/datum/mind/traitor = pick(possible_traitors)
 
 		traitors += traitor
-		traitor.special_role = "traitor"
+		traitor.antagonist = new /datum/antagonist/traitor()
 		possible_traitors.Remove(traitor)
 
 	if(!traitors.len)
