@@ -1704,9 +1704,17 @@
 	path = /obj/item/weapon/rig/unathi/fancy/ominousbrainworm
 	sort_category = "misc"
 
+/obj/item/weapon/flame/lighter/zippo/fluff/ominousbrainworm
+	name = "scratched zippo lighter"
+	desc = "A very old zippo with what seems to be very deep claw marks on the sides."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "sidier_zippo"
+	icon_on = "sidier_zippoon"
+	icon_off = "sidier_zippo"
+
 /datum/gear/account/ominousbrainworm_zippo
 	display_name = "Sidiers zippo"
-	path = /obj/item/weapon/flame/lighter/zippo/fluff/janis_godmanis
+	path = /obj/item/weapon/flame/lighter/zippo/fluff/ominousbrainworm
 	sort_category = "misc"
 
 
