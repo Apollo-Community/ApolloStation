@@ -1169,16 +1169,16 @@ datum/mind
 	..()
 	mind.assigned_role = "Artificer"
 	mind.special_role = "Cultist"
-	antagonist = new /datum/antagonist/cultist()
+	mind.antagonist = new /datum/antagonist/cultist()
 
 /mob/living/simple_animal/construct/wraith/mind_initialize()
 	..()
 	mind.assigned_role = "Wraith"
 	mind.special_role = "Cultist"
-	antagonist = new /datum/antagonist/cultist()
+	mind.antagonist = new /datum/antagonist/cultist()
 
 /mob/living/simple_animal/construct/armoured/mind_initialize()
 	..()
 	mind.assigned_role = "Juggernaut"
 	mind.special_role = "Cultist"
-	antagonist = new /datum/antagonist/cultist()
+	mind.antagonist = new /datum/antagonist/cultist()
