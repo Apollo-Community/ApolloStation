@@ -1,18 +1,21 @@
+// Regular kill contract
 /datum/contract/kill
 	title = "Kill the Target"
 	desc = "We're looking to send a message. A rather strong one."
 	time_limit = 2700
 
 	var/reward = 3000
-	var/mob/living/target = null
+	var/datum/mind/target = null
 
 /datum/contract/kill/New()
 	..()
 
-	for(var/mob/living/M in living_mob_list)
-		if(M.client)
-			target = M
-			break
+	var/datum/mind/list/taken = get_taken_targets()
+	var/datum/mind/list/candidates = list()
+	for(var/datum/mind/M in ticker.minds)
+		if(!(M in taken) && ishuman(M.current) && M.current.stat != 2)
+			candidates += M
+	target = pick(candidates)
 
 	if(!target)
 		// Let the uplink see if it's a notoriety-restricted contract before we delete ourselves
@@ -20,15 +23,21 @@
 			qdel(src)
 		return
 
-	title = "[pick(list("Kill", "Murder", "Eliminate"))] [target.real_name]"
-	desc = "[target.real_name] [pick(list("would serve us better dead", "has been causing us trouble recently", "has badmouthed the wrong people"))]. [pick(list("Kill them at your earliest convenience", "Ensure that they don't live another day", "Eliminate them"))]." 
+	set_details()
+
+/datum/contract/kill/set_details()
+	title = "[pick(list("Kill", "Murder", "Eliminate"))] [target.current.real_name]"
+	desc = {"[target.current.real_name], the [target.assigned_role]
+		[pick(list("would serve us better dead", "has been causing us trouble recently", "has badmouthed the wrong people"))].
+		[pick(list("Kill them at your earliest convenience", "Ensure that they don't live another day", "Eliminate them"))].
+		"}
 
 /datum/contract/kill/check_completion()
-	if(target && (target.stat & DEAD))
-		if(target.lastattacker && (target.lastattacker in workers))
-			end(1, target.lastattacker)
+	if(target.current.stat & DEAD || issilicon(target.current) || isbrain(target.current))
+		if(target.current.lastattacker in workers)
+			end(1, target.current.lastattacker)
 			return
-		// Fail! Someone who hasn't taken the contract killed them (probably themselves).
+		// Fail! Someone or something hasn't taken the contract, and got them killed (probably themselves).
 		end(0)
 	else
 		return
