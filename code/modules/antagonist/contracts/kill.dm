@@ -3,8 +3,8 @@
 	title = "Kill the Target"
 	desc = "We're looking to send a message. A rather strong one."
 	time_limit = 2700
-
-	var/reward = 3000
+	reward = 3000
+	
 	var/datum/mind/target = null
 
 /datum/contract/kill/New()
@@ -32,24 +32,6 @@
 		end(0)
 	else
 		return
-
-/datum/contract/kill/reward(var/mob/living/worker)
-	var/datum/money_account/M
-	for(var/datum/money_account/D in all_money_accounts)
-		if(D.owner_name == worker.real_name)
-			M = D
-
-	if(!M)
-		return
-
-	/*
-		Too easy to just check the source for key words and then monitor transaction logs
-		var/company = "[pick(list("GreenGo", "Afterburn", "Feeform", "Mr. Pete", "Punko"))] [pick(list("Ltd.", "Corp.", "Inc.", "Conglomerate", "Lottery", "Funds"))]"
-		var/purpose = "[pick(list("Investment returns", "Beneficiary transfer", "Freelance work completion"))]"
-		var/terminal = "[pick(list("TrussCo.", "CashMonger", "Leeay"))] ME Terminal #[rand(111,444)]"
-		charge_to_account(M.account_number, company, purpose, terminal, reward)
-	*/
-	M.money += reward
 
 /datum/contract/kill/proc/get_taken_targets()
 	var/datum/mind/list/taken = list()
