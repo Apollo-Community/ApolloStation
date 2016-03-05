@@ -22,7 +22,7 @@
 	H.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/orange(H), slot_shoes)
 	H.equip_to_slot_or_qdel(new /obj/item/clothing/head/hardhat(H), slot_head)
 	H.equip_to_slot_or_qdel(new /obj/item/device/t_scanner(H), slot_r_store)
-	H.equip_to_slot_or_qdel(new /obj/item/device/pda/engineering(H), slot_l_store)
+	H.equip_to_slot_or_qdel(new /obj/item/device/pda/engineering(H), slot_belt)
 	if(H.character.backpack == 1)
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/engineer(H), slot_r_hand)
 	else
@@ -42,5 +42,4 @@
 			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
 		else
 			clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
-
 	return clothes_s
