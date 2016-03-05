@@ -8,17 +8,20 @@ var/global/datum/controller/process/contractticker/contract_ticker
 
 /datum/controller/process/contractticker/setup()
 	name = "contract ticker"
-	schedule_interval = 10 // Every second, so we don't let contracts run past their time limit
+	schedule_interval = 50
 	cpu_threshold = 50
 
 	contracts = list()
+	contract_ticker = src
 
 /datum/controller/process/contractticker/doWork()
 	if(contracts.len == 0)	return
 
 	for(var/datum/contract/C in contracts)
 		if(world.time >= C.contract_start + C.time_limit)
-			C.end()
+			C.check_completion()
+			if(!C.finished)
+				C.end()
 			continue
 
 		C.check_completion()

@@ -19,10 +19,6 @@ var/global/list/restricted_contracts = list()
 		qdel(uplink)
 	uplink = src
 
-	if(!contract_ticker)
-		contract_ticker = new()
-		contract_ticker.setup()
-
 	for(var/path in subtypes(/datum/contract))
 		var/datum/contract/C = new path()
 		if(C.min_notoriety > 0)

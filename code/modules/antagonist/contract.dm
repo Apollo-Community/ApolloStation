@@ -18,7 +18,8 @@
 	
 	time_limit *= 10
 	contract_start = world.time
-	contract_ticker.contracts += src
+	if(contract_ticker)
+		contract_ticker.contracts += src
 
 // set title, desc, etc. here
 /datum/contract/proc/set_details()
@@ -42,6 +43,7 @@
 			worker.mind.antagonist.contract_ended(src, 1)
 			reward(worker)
 
+	contract_ticker.contracts -= src
 	uplink.contract_ended(src)
 
 // Check if the contract is completed.
