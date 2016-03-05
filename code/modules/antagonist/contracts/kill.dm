@@ -58,9 +58,8 @@
 	reward = 6000
 
 /datum/contract/kill/head/get_target()
-	var/datum/mind/list/taken = get_taken_targets()
 	var/datum/mind/list/candidates = list()
-	for(var/datum/mind/M in ticker.minds)
-		if(!(M in taken) && ishuman(M.current) && M.current.stat != 2 && M.assigned_role in command_positions)
+	for(var/datum/mind/M in (ticker.minds - get_taken_targets()))
+		if(ishuman(M.current) && M.current.stat != 2 && M.assigned_role in command_positions)
 			candidates += M
 	target = (candidates.len > 0 ? pick(candidates) : null)
