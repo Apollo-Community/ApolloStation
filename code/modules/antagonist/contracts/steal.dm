@@ -42,26 +42,24 @@
 /datum/contract/steal/set_details()
 	var/obj/O = new target()
 	title = "Steal \The [O.name]"
+	title = "Steal \the [O.name]"
 	desc = "We've taken an interest in \the [O.name]. [pick(list("Deliver", "Drop off"))] \the [O.name] to \the [dropoff.name], where one of our agents will retrieve it."
 	qdel(O)
 
 // Steal contracts only end unsuccessfully by time expiration
 /datum/contract/steal/check_completion()
+	if(workers.len == 0)	return
+
 	var/obj/O = locate(target) in dropoff
-	world << "Checking for a steal contract completion:"
-	world << "TARGET PATH: [target]"
-	world << "LOCATED OBJECT: [O] / \ref[O]"
 	var/mob/list/audience = viewers(O)
-	world << "VIEWERS: [audience.len]"
 	if(O && audience.len == 0)
-		world << "No viewers! Rewarding the deliverer."
 		var/mob/living/completer = null
-		for(var/mob/M in player_list)
-			if(M.client.key == O.fingerprintslast && (M in workers))
+		for(var/mob/M in workers)
+			if(M.client.key == O.fingerprintslast)
 				completer = M
 				break
-		world << "Deliverer appears to be [completer] / \ref[completer]"
 		end(1, completer)
+		qdel(O)
 
 /datum/contract/steal/novelty
 	title = "Steal Symbolic Item"
