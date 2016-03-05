@@ -23,7 +23,16 @@
 		var/datum/contract/C = pick(uplink.contracts)
 		while((C in active_contracts) || isnull(C))
 			C = pick(uplink.contracts)
+		// no self-harm
+		if(istype(C, /datum/contract/kill))
+			var/datum/contract/kill/K = C
+			while((K in active_contracts) || isnull(K) || K.target == antag)
+				K = pick(uplink.contracts)
+			C = K
+
 		C.start(antag.current)
+
+	antag.character.temporary = 1
 
 	antag.current << "<B><font size=3 color=red>[greeting]</font></B>"
 	if(active_contracts.len > 0)
@@ -43,6 +52,7 @@
 			antag.current << "<B>[C.title]</B>\n<I>[C.desc]</I>\nYou have [time] to complete the contract."
 	else
 		antag.current << "Your employer has not signed any contracts in your name."
+	antag.current << "\n"
 
 	equip()
 
