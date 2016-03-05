@@ -55,7 +55,7 @@
 	time_limit = 1200
 	min_notoriety = 2
 
-	reward = 6000
+	reward = 4500
 
 /datum/contract/kill/head/get_target()
 	var/datum/mind/list/candidates = list()

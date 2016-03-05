@@ -75,7 +75,7 @@
 
 	var/list/candidates = list()
 	for(var/path in possible_targets)
-		if(locate(path)) // the target item must be on the station
+		if(locate(path)) // the target item must be there when the game starts
 			candidates += path
 	return (candidates.len > 0 ? pick(candidates) : null) // pick(candidates) if candidates isn't empty. null otherwise
 
