@@ -16,6 +16,8 @@
 /datum/contract/New()
 	..()
 	
+	workers = list()
+
 	time_limit *= 10
 	contract_start = world.time
 	if(contract_ticker)
