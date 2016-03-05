@@ -24,12 +24,14 @@
 	desc = "[target.current.real_name], the [target.assigned_role] [pick(list("would serve us better dead", "has been causing us trouble recently", "has badmouthed the wrong people"))]. [pick(list("Kill them at your earliest convenience", "Ensure that they don't live another day", "Eliminate them"))]."
 
 /datum/contract/kill/check_completion()
+	if(workers.len == 0)	return
+
 	if(target.current.stat & DEAD || issilicon(target.current) || isbrain(target.current))
 		if(target.current.lastattacker in workers)
 			end(1, target.current.lastattacker)
 			return
 		// Fail! Someone or something hasn't taken the contract, and got them killed (probably themselves).
-		end(0)
+		end()
 	else
 		return
 
@@ -40,10 +42,9 @@
 	return taken
 
 /datum/contract/kill/proc/get_target()
-	var/datum/mind/list/taken = get_taken_targets()
 	var/datum/mind/list/candidates = list()
-	for(var/datum/mind/M in ticker.minds)
-		if(!(M in taken) && ishuman(M.current) && M.current.stat != 2)
+	for(var/datum/mind/M in (ticker.minds - get_taken_targets()))
+		if(ishuman(M.current) && M.current.stat != 2)
 			candidates += M
 	return (candidates.len > 0 ? pick(candidates) : null) // pick(candidates) if candidates isn't empty. null otherwise
 
