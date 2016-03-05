@@ -51,7 +51,9 @@
 	world << "Checking for a steal contract completion:"
 	world << "TARGET PATH: [target]"
 	world << "LOCATED OBJECT: [O] / \ref[O]"
-	if(O && viewers(O).len == 0)
+	var/mob/list/audience = viewers(O)
+	world << "VIEWERS: [audience.len]"
+	if(O && audience.len == 0)
 		world << "No viewers! Rewarding the deliverer."
 		var/mob/living/completer = null
 		for(var/mob/M in player_list)
