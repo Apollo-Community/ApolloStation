@@ -21,10 +21,7 @@
 
 /datum/contract/kill/set_details()
 	title = "[pick(list("Kill", "Murder", "Eliminate"))] [target.current.real_name]"
-	desc = {"[target.current.real_name], the [target.assigned_role]
-		[pick(list("would serve us better dead", "has been causing us trouble recently", "has badmouthed the wrong people"))].
-		[pick(list("Kill them at your earliest convenience", "Ensure that they don't live another day", "Eliminate them"))].
-		"}
+	desc = "[target.current.real_name], the [target.assigned_role] [pick(list("would serve us better dead", "has been causing us trouble recently", "has badmouthed the wrong people"))]. [pick(list("Kill them at your earliest convenience", "Ensure that they don't live another day", "Eliminate them"))]."
 
 /datum/contract/kill/check_completion()
 	if(target.current.stat & DEAD || issilicon(target.current) || isbrain(target.current))

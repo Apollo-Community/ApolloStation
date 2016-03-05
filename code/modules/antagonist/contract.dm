@@ -26,7 +26,7 @@
 // Start the contract for a new antag
 /datum/contract/proc/start(var/mob/living/worker)
 	workers += worker
-	worker.mind.antagonist.contract_start()
+	worker.mind.antagonist.contract_start(src)
 
 // End the contract
 /datum/contract/proc/end(var/success = 0, var/mob/living/worker)

@@ -25,7 +25,6 @@
 /datum/game_mode/traitor/announce()
 
 /datum/game_mode/traitor/pre_setup()
-
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
@@ -53,7 +52,7 @@
 		var/datum/mind/traitor = pick(possible_traitors)
 
 		traitors += traitor
-		traitor.antagonist = new /datum/antagonist/traitor()
+		traitor.antagonist = new /datum/antagonist/traitor(traitor)
 		possible_traitors.Remove(traitor)
 
 	if(!traitors.len)
@@ -66,8 +65,9 @@
 		if (!config.objectives_disabled)
 			forge_traitor_objectives(traitor)
 		spawn(rand(10,100))
-			finalize_traitor(traitor)
-			greet_traitor(traitor)
+			traitor.antagonist.setup()
+			//finalize_traitor(traitor)
+			//greet_traitor(traitor)
 	modePlayer += traitors
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
