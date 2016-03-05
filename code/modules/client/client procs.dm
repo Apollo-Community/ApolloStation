@@ -430,6 +430,10 @@
 
 // Returns total recorded playtime in seconds
 /client/proc/total_playtime_seconds()
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return 0
+
 	var/total_playtime = 0
 
 	var/sql_ckey = ckey(src.ckey)
@@ -547,8 +551,10 @@ client/proc/MayRespawn()
 	return 0
 
 client/proc/loadAccountItems()
-	if(!dbcon.IsConnected())
-		return
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return 0
+
 	if( !prefs )
 		return
 	if( !prefs.account_items )
