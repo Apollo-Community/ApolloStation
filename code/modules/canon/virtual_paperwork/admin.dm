@@ -22,15 +22,18 @@
 				return
 
 			C.AddJob( role )
+			message_admins( "Admin [key_name_admin(usr)] has added role [role] from [key_name_admin(M)]", "CANON:" )
 		if( "Demotion" )
 			var/role = input( user, "Choose a role to demote them from:", "Role Demotion" ) as null|anything in C.getAllDemotablePositions()
 			if( !role )
 				return
 
+			message_admins( "Admin [key_name_admin(usr)] has removed role [role] from [key_name_admin(M)]", "CANON:" )
 			C.RemoveJob( role )
 		if( "Set Department" )
 			var/department = input( user, "Choose a department to induct them into:", "Department Induction" ) as null|anything in job_master.departments
 			if( !department )
 				return
 
+			message_admins( "Admin [key_name_admin(usr)] has set the department of [key_name_admin(M)] to [department]", "CANON:" )
 			C.SetDepartment( department )

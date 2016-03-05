@@ -19,7 +19,7 @@ em						{font-style: normal;font-weight: bold;}
 .debug_message			{color: #00CCFF;	font-weight: bold;}
 .exploit_message		{color: #FF9933;	font-weight: bold;}
 .bews_message			{color: #996633;	font-weight: bold;}
-
+.canon_message			{color: #00CC00;	font-weight: bold;}
 
 /* OOC */
 .ooc					{font-weight: bold;}

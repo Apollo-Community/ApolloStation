@@ -79,13 +79,11 @@
 		src << "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>"
 		return
 
-	var/recieve_message
+	adminhelped = 1
 
 	if(holder && !C.holder)
-		recieve_message = "<span class='pm'><span class='howto'><b>-- Click the [recieve_pm_type]'s name to reply --</b></span></span>\n"
-		if(C.adminhelped)
-			C << recieve_message
-			C.adminhelped = 0
+		if( !C.adminhelped )
+			C << "<span class='pm'><span class='howto'><b>-- Click the [recieve_pm_type]'s name to reply --</b></span></span>\n"
 
 		//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
 		//Set so it'll make a popup window if the admin is ANGRY
