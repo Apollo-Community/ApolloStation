@@ -111,7 +111,8 @@
 
 			T.ChangeTurf(/turf/space)
 
-		qdel(area)
+		for(var/area/A in block(location, locate(location.x + (x_size - 1), location.y + (y_size - 1), location.z)))
+			qdel(area)
 
 		if(delete_src)
 			qdel(src)
