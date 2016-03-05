@@ -25,14 +25,18 @@
 		/area/construction,
 		/area/maintenance/incinerator,
 		/area/storage/emergency,
-		/area/crew_quarters/sleep/bedrooms)
+		/area/library)
 
 /datum/contract/steal/New()
 	..()
 
-	target = pick(possible_targets)
+	target = get_target()
 	dropoff = locate(pick(dropoff_areas))
-	if(!dropoff) // what the fuck?
+	// much easier to pick a new dropoff area rather than a new target
+	while((locate(target) in dropoff))
+		dropoff = locate(pick(dropoff_areas))
+
+	if(!dropoff || !target)
 		if(ticker.current_state != 1)
 			qdel(src)
 		return
@@ -41,7 +45,6 @@
 
 /datum/contract/steal/set_details()
 	var/obj/O = new target()
-	title = "Steal \The [O.name]"
 	title = "Steal \the [O.name]"
 	desc = "We've taken an interest in \the [O.name]. [pick(list("Deliver", "Drop off"))] \the [O.name] to \the [dropoff.name], where one of our agents will retrieve it."
 	qdel(O)
@@ -60,6 +63,21 @@
 				break
 		end(1, completer)
 		qdel(O)
+
+/datum/contract/steal/proc/get_taken_targets()
+	var/datum/mind/list/taken = list()
+	for(var/datum/contract/steal/C in (uplink.contracts - src))
+		if(istype(C) && C.target)	taken += C.target
+	return taken
+
+/datum/contract/steal/proc/get_target()
+	possible_targets -= get_taken_targets()
+
+	var/list/candidates = list()
+	for(var/path in possible_targets)
+		if(locate(path)) // the target item must be on the station
+			candidates += path
+	return (candidates.len > 0 ? pick(candidates) : null) // pick(candidates) if candidates isn't empty. null otherwise
 
 /datum/contract/steal/novelty
 	title = "Steal Symbolic Item"
