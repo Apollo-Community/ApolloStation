@@ -28,6 +28,8 @@ var/global/floorIsLava = 0
 			style = "exploit_message"
 		if("BEWS:")
 			style = "bews_message"
+		if("CANON:")
+			style = "canon_message"
 
 	msg = "<span class=\"[style]\"><span class=\"prefix\">[prefix]</span> <span class=\"message\">[msg]</span></span>"
 	log_adminwarn(msg)
