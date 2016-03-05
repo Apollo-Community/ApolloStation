@@ -1704,7 +1704,30 @@
 	path = /obj/item/weapon/rig/unathi/fancy/ominousbrainworm
 	sort_category = "misc"
 
+/obj/item/weapon/flame/lighter/zippo/fluff/ominousbrainworm
+	name = "scratched zippo lighter"
+	desc = "A very old zippo with what seems to be very deep claw marks on the sides."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "sidier_zippo"
+	icon_on = "sidier_zippoon"
+	icon_off = "sidier_zippo"
+
 /datum/gear/account/ominousbrainworm_zippo
 	display_name = "Sidiers zippo"
-	path = /obj/item/weapon/flame/lighter/zippo/fluff/janis_godmanis
+	path = /obj/item/weapon/flame/lighter/zippo/fluff/ominousbrainworm
+	sort_category = "misc"
+
+
+////////// Kodos' Custom Stuff
+
+/obj/item/device/assembly/signaler/fluff/kodosmacarthur
+	name = "MI Remote Signalling Device"
+	desc = "A high quality remote signalling device. It has a 'Macarthur Innovations' label on the back."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "kodos_signaler"
+	item_state = "kodos_signaler"
+
+/datum/gear/account/kodosmacarthur_signaler
+	display_name = "macarthur innovation signaler"
+	path = /obj/item/device/assembly/signaler/fluff/kodosmacarthur
 	sort_category = "misc"

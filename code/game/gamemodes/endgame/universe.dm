@@ -75,6 +75,10 @@
 	date = list( year, month, days )
 
 /datum/universal_state/proc/saveToDB()
+	establish_db_connection()
+	if(!dbcon.IsConnected())
+		return
+
 	var/sql_name = sql_sanitize_text( name )
 	var/sql_date = html_encode( list2params( date ))
 
