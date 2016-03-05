@@ -312,8 +312,6 @@
 		newlap.spawn_files += (/datum/file/program/atmos_alert)
 	if(access_change_ids in C.access)
 		newlap.spawn_files += (/datum/file/program/card_comp)
-	if(access_heads in C.access)
-		newlap.spawn_files += (/datum/file/program/communications)
 	if((access_medical in C.access) || (access_forensics_lockers in C.access)) //Gives detective the medical records program, but not the crew monitoring one.
 		newlap.spawn_files += (/datum/file/program/med_data)
 		if (access_medical in C.access)
