@@ -26,7 +26,7 @@
 		// no self-harm
 		if(istype(C, /datum/contract/kill))
 			var/datum/contract/kill/K = C
-			var/list/kill_contracts = uplink.get_contracts(/datum/contract/kill)
+			var/list/kill_contracts = uplink.get_contracts(/datum/contract/kill) - active_contracts
 			if(kill_contracts.len > 0)
 				while((K in active_contracts) || isnull(K) || K.target == antag)
 					K = pick(kill_contracts)
