@@ -21,14 +21,19 @@
 /datum/antagonist/proc/setup()
 	for(var/i = 0; i < obligatory_contracts; i++)
 		var/datum/contract/C = pick(uplink.contracts)
-		while((C in active_contracts) || isnull(C))
+		while((C in active_contracts) || isnull(C) || locate(typeof(C)) in active_contracts)
 			C = pick(uplink.contracts)
 		// no self-harm
 		if(istype(C, /datum/contract/kill))
 			var/datum/contract/kill/K = C
-			while((K in active_contracts) || isnull(K) || K.target == antag)
-				K = pick(uplink.contracts)
-			C = K
+			var/kill_contracts = uplink.get_contracts(/datum/contract/kill)
+			if(kill_contracts.len > 0)
+				while((K in active_contracts) || isnull(K) || K.target == antag)
+					K = pick(uplink.get_contracts(/datum/contract/kill))
+				C = K
+			else
+				while((C in active_contracts) || isnull(C))
+					C = pick(uplink.contracts)
 
 		C.start(antag.current)
 

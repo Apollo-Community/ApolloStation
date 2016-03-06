@@ -67,3 +67,14 @@ var/global/list/restricted_contracts = list()
 	contracts_completed += C
 
 	update_contracts()
+
+// gets contracts (of a type)
+/datum/uplink/proc/get_contracts(var/type)
+	if(!type)
+		return contracts
+
+	var/datum/contract/list/contracts_of_type = list()
+	for(var/datum/contract/C in contracts)
+		if(istype(C, type))
+			contracts_of_type += C
+	return contracts_of_type
