@@ -989,6 +989,7 @@
 #include "code\modules\antagonist\antagonists\mercenary.dm"
 #include "code\modules\antagonist\antagonists\revolutionary.dm"
 #include "code\modules\antagonist\antagonists\traitor.dm"
+#include "code\modules\antagonist\contracts\deface.dm"
 #include "code\modules\antagonist\contracts\kill.dm"
 #include "code\modules\antagonist\contracts\steal.dm"
 #include "code\modules\assembly\assembly.dm"
