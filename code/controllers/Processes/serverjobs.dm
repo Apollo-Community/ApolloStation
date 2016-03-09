@@ -1,7 +1,7 @@
 /datum/controller/process/inactivity/setup()
 	name = "inactivity"
 	schedule_interval = 600 // Once every minute (approx.)
-	cpu_threshold = 10
+	tick_allowance = 10
 
 /datum/controller/process/inactivity/doWork()
 	if(config.kick_inactive)
@@ -16,7 +16,7 @@
 /datum/controller/process/statplayers/setup()
 	name = "statplayers"
 	schedule_interval = 50 //runs every 5 seconds (subject to change)
-	cpu_threshold = 10
+	tick_allowance = 10
 
 /datum/controller/process/statplayers/doWork()
 	// I kinda don't wana rebuild the list everytime, but probably the easiest way to get around it

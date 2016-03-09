@@ -3,7 +3,7 @@
 /datum/controller/process/nanoui/setup()
 	name = "nanoui"
 	schedule_interval = 20 // every 2 second
-	cpu_threshold = 30
+	tick_allowance = 30
 
 
 /datum/controller/process/nanoui/doWork()

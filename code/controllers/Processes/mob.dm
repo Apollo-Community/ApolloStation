@@ -3,7 +3,7 @@
 /datum/controller/process/mob/setup()
     name = "mob"
     schedule_interval = 20 // every 2 seconds
-    cpu_threshold = 50
+    tick_allowance = 50
 
     MobProcess = src
 
