@@ -28,11 +28,11 @@ datum/nano_item_lists
 	var/list/ItemsCategory	// List of categories with lists of items
 	var/list/ItemsReference	// List of references with an associated item
 	var/list/nanoui_items	// List of items for NanoUI use
-	var/nanoui_menu = 0		// The current menu we are in
+	var/nanoui_menu = "contracts"		// The current menu we are in
 	var/list/nanoui_data = new // Additional data for NanoUI use
 
 	var/list/purchase_log = new
-	var/uplink_owner = null//text-only
+	var/datum/mind/uplink_owner = null
 	var/used_TC = 0
 
 /obj/item/device/uplink/New()
@@ -180,13 +180,51 @@ datum/nano_item_lists
 	NANO UI FOR UPLINK WOOP WOOP
 */
 /obj/item/device/uplink/hidden/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
-	var/title = "Remote Uplink"
+	var/title = "The Uplink"
 	var/data[0]
 
 	data["welcome"] = welcome
 	data["crystals"] = uses
 	data["menu"] = nanoui_menu
 	data["nano_items"] = nanoui_items
+	data["curtime"] = world.time
+
+	var/list/uplink_active_contracts = list() // because fucking nanoui
+	for(var/datum/contract/C in uplink.contracts)
+		var/list/info = list()
+		info["name"] = C.title
+		info["desc"] = C.desc
+		info["start"] = C.contract_start
+		info["reward"] = C.reward
+		info["limit"] = C.time_limit
+		uplink_active_contracts[++uplink_active_contracts.len] = info
+		world << info
+
+	var/list/active_contracts = list()
+	for(var/datum/contract/C in uplink_owner.antagonist.active_contracts)
+		var/list/info = list()
+		info["name"] = C.title
+		info["desc"] = C.desc
+		info["start"] = C.contract_start
+		info["reward"] = C.reward
+		info["limit"] = C.time_limit
+		active_contracts[++active_contracts.len] = info
+		world << info
+
+	var/list/completed_contracts = list()
+	for(var/datum/contract/C in uplink_owner.antagonist.completed_contracts)
+		var/list/info = list()
+		info["name"] = C.title
+		info["desc"] = C.desc
+		info["start"] = C.contract_start
+		info["reward"] = C.reward
+		info["elapsed"] = C.time_elapsed
+		completed_contracts[++completed_contracts.len] = info
+		world << info
+
+	data["uplink_contracts"] = uplink_active_contracts
+	data["active_contracts"] = active_contracts
+	data["completed_contracts"] = completed_contracts
 	data += nanoui_data
 
 	// update the ui if it exists, returns null if no ui is passed/found
@@ -194,7 +232,7 @@ datum/nano_item_lists
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "uplink.tmpl", title, 450, 600)
+		ui = new(user, src, ui_key, "uplink.tmpl", title, 528, 600)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
 		// open the new ui window
@@ -226,7 +264,7 @@ datum/nano_item_lists
 			nanoui_menu = round(nanoui_menu/10)
 			update_nano_data()
 		if(href_list["menu"])
-			nanoui_menu = text2num(href_list["menu"])
+			nanoui_menu = href_list["menu"]
 			update_nano_data(href_list["id"])
 
 	interact(usr)

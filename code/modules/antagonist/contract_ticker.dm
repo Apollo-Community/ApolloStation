@@ -18,7 +18,7 @@ var/global/datum/controller/process/contractticker/contract_ticker
 	if(contracts.len == 0)	return
 
 	for(var/datum/contract/C in contracts)
-		if(world.time >= C.contract_start + C.time_limit)
+		if(world.time >= (C.contract_start + C.time_limit))
 			C.check_completion()
 			if(!C.finished)
 				C.end()
