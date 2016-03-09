@@ -526,13 +526,7 @@ What a mess.*/
 				if(PDA_Manifest.len)
 					PDA_Manifest.Cut()
 				active1 = CreateGeneralRecord()
-			if ("inspect_note")
-				var/datum/character/C = active1.fields["character"]
-				if( istype( C ))
-					var/date = href_list["date"]
-					if( C.gen_notes[date] )
-						usr << browse( html_decode( C.gen_notes[date] ), "window=employment_computer_note[date]")
-						return
+
 //FIELD FUNCTIONS
 			if ("Edit Field")
 				var/a1 = active1
@@ -661,14 +655,3 @@ What a mess.*/
 			continue
 
 	..(severity)
-
-/obj/machinery/computer/employment/proc/formatPromotionRecords( var/datum/character/C )
-	. = ""
-
-	if( !istype( C ))
-		return .
-
-	for( var/note in C.gen_notes )
-		. += "<a href='?src=\ref[src];choice=inspect_note;date=[note]'>[note]</a><br>"
-
-	return .

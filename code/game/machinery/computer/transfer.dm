@@ -42,11 +42,18 @@
 			flick( "jobchange_deny", src )
 			return
 
-		if( job_datum.is_full() )
-			buzz("\The [src] buzzes, \"Role is full!\"")
+		if( !job_datum.can_join( user.client ))
+			buzz("\The [src] buzzes, \"Cannot transfer to [job_datum.title]!\"")
 			flick( "jobchange_deny", src )
 			return
 
+		if( job_datum.rank_succesion_level >= COMMAND_SUCCESSION_LEVEL )
+			buzz("\The [src] buzzes, \"Cannot transfer to a command role on this console!\"")
+			flick( "jobchange_deny", src )
+			return
+
+		if( "No" == alert(user, "Are you sure you want to transfer to being a [job_datum.title]?", "\The [src]", "Yes", "No"))
+			return
 
 		flick( "jobchange_accept", src )
 		C.access = job_datum.get_access()

@@ -1,3 +1,5 @@
+// USE THESE PROCS IF YOU WANT TO CONVERT SAVEFILES TO SQL DATABASE SAVES
+
 /proc/convert_savefiles_to_SQL()
 	var/DBQuery/query = dbcon.NewQuery( "SELECT ckey FROM player" )
 	query.Execute()

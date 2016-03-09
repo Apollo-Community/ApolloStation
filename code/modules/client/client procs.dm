@@ -68,6 +68,10 @@
 	..()	//redirect to hsrc.Topic()
 
 /client/proc/loadTokens()
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return 0
+
 	var/DBQuery/query
 
 	query = dbcon.NewQuery("SELECT character_tokens FROM player WHERE ckey = '[ckey( ckey )]'")
@@ -126,9 +130,6 @@
 		alert(src,"This server doesn't allow guest accounts to play. Please go to http://www.byond.com/ and register for a key.","Guest","OK")
 		del(src)
 		return
-
-	if( byond_version < REC_CLIENT_VERSION )
-		alert(src,"Your BYOND client version is older than the recommended version. Please go to http://www.byond.com/download/ and download version [REC_CLIENT_VERSION].","BYOND Version","OK")
 
 	// Change the way they should download resources.
 	if(config.resource_urls)
@@ -252,6 +253,10 @@
 	send_resources()
 	nanomanager.send_resources(src)
 
+	spawn( 50 )
+		if( byond_version < REC_CLIENT_VERSION )
+			alert(src,"Your BYOND client version is older than the recommended version. Please go to http://www.byond.com/download/ and download version [REC_CLIENT_VERSION].","BYOND Version","OK")
+
 
 	//////////////
 	//DISCONNECT//
@@ -304,11 +309,13 @@
 		for(var/client/C in admins)		C << "[message]"
 
 // Returns null if no DB connection can be established, or -1 if the requested key was not found in the database
-
 /proc/get_player_age(key)
+	if( IsGuestKey( key ))
+		return -1
+
 	establish_db_connection()
 	if(!dbcon.IsConnected())
-		return null
+		return -1
 
 	var/sql_ckey = sql_sanitize_text(ckey(key))
 
@@ -322,8 +329,15 @@
 
 
 /client/proc/saveTokens()
+	if ( IsGuestKey(src.key) )
+		return 0
+
 	if( !character_tokens || !character_tokens.len )
-		return
+		return 0
+
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return 0
 
 	var/tokens
 	if( !character_tokens || !character_tokens.len )
@@ -337,7 +351,6 @@
 	query_insert.Execute()
 
 /client/proc/log_client_to_db( var/log_playtime = 0 )
-
 	if ( IsGuestKey(src.key) )
 		return
 
@@ -417,6 +430,10 @@
 
 // Returns total recorded playtime in seconds
 /client/proc/total_playtime_seconds()
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return 0
+
 	var/total_playtime = 0
 
 	var/sql_ckey = ckey(src.ckey)
@@ -534,8 +551,10 @@ client/proc/MayRespawn()
 	return 0
 
 client/proc/loadAccountItems()
-	if(!dbcon.IsConnected())
-		return
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return 0
+
 	if( !prefs )
 		return
 	if( !prefs.account_items )

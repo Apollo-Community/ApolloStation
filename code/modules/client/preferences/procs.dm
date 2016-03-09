@@ -34,7 +34,7 @@
 	if( !client )
 		return 0
 
-	if ( IsGuestKey( client.ckey ))
+	if( IsGuestKey( client.ckey ))
 		return 0
 
 	establish_db_connection()

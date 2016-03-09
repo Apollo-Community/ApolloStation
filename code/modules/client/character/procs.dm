@@ -103,11 +103,6 @@
 	variables["flavor_texts_human"] = sql_sanitize_text( flavor_texts_human )
 	variables["flavor_texts_robot"] = sql_sanitize_text( flavor_texts_robot )
 
-	// Character notes, these are written by other people. Format is list( datetime = note )
-	variables["med_notes"] = html_encode( list2params( med_notes ))
-	variables["sec_notes"] = html_encode( list2params( sec_notes ))
-	variables["gen_notes"] = html_encode( list2params( gen_notes ))
-
 	// Character records, these are written by the player
 	variables["med_record"] = sql_sanitize_text( med_record )
 	variables["sec_record"] = sql_sanitize_text( sec_record )
@@ -186,6 +181,10 @@
 	return 1
 
 /proc/checkCharacter( var/character_name, var/ckey )
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return 0
+
 	if( !ckey )
 		return 0
 
@@ -223,6 +222,10 @@
 		return 0
 
 	if( !checkCharacter( character_name, ckey ))
+		return 0
+
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
 		return 0
 
 	var/list/variables = list()
@@ -283,11 +286,6 @@
 	// Flavor texts
 	variables["flavor_texts_human"] = "text"
 	variables["flavor_texts_robot"] = "text"
-
-	// Character notes, these are written by other people
-	variables["med_notes"] = "params"
-	variables["sec_notes"] = "params"
-	variables["gen_notes"] = "params"
 
 	// Character records, these are written by the player
 	variables["med_record"] = "text"
@@ -364,19 +362,6 @@
 		vars[variables[i]] = value
 
 	return 1
-
-/datum/character/proc/addRecordNote( var/type, var/note, var/title )
-	var/timestamp = "[worldtime2text()] [print_date( universe.date )]"
-	if( title )
-		timestamp += " - [title]"
-
-	switch( type )
-		if( "general" )
-			gen_notes[timestamp] = html_encode( note )
-		if( "medical" )
-			med_notes[timestamp] = html_encode( note )
-		if( "security" )
-			sec_notes[timestamp] = html_encode( note )
 
 /datum/character/proc/randomize_appearance( var/random_age = 0 )
 	skin_tone = random_skin_tone()
