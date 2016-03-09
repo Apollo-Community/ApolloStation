@@ -158,10 +158,45 @@ area/space/atmosalert()
 	lighting_use_dynamic = 1
 	environment = CAVE
 
-/area/podbay
-	name = "\improper Podbay"
+/area/shuttle/pizza
+	icon_state = "shuttle"
+	environment = CAVE
+
+/area/podbay/secmedbay
+	name = "\improper Emergency Pod Storage"
+	icon_state = "red"
+
+/area/podbay/engbay
+	name = "\improper Engineering Pod Storage"
 	icon_state = "yellow"
-	environment = SEWER_PIPE
+
+/area/podbay/scibay
+	name = "\improper Science Pod Storage"
+	icon_state = "green"
+
+/area/podbay/minbay
+	name = "\improper Mining Pod Storage"
+	icon_state = "yellow"
+
+/area/podbay/sparebay
+	name = "\improper Spare Pod Storage"
+	icon_state = "green"
+
+/area/podbay/podshop
+	name = "\improper Pod Workshop"
+	icon_state = "yellow"
+
+/area/podbay/hangara
+	name = "\improper Hangar A"
+	icon_state = "green"
+
+/area/podbay/hangarb
+	name = "\improper Hangar B"
+	icon_state = "green"
+
+/area/podbay/supplyroom
+	name = "\improper Supply Shuttle Control Room"
+	icon_state = "quart"
 
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
@@ -981,6 +1016,10 @@ area/space/atmosalert()
 	icon_state = "toilet"
 	environment = BATHROOM
 
+/area/crew_quarters/shop
+	name = "\improper Shops"
+	icon_state = "green"
+
 /area/crew_quarters/sleep
 	name = "\improper Dormitories"
 	icon_state = "Sleep"
@@ -1579,6 +1618,11 @@ area/space/atmosalert()
 
 /area/quartermaster
 	name = "\improper Quartermasters"
+	icon_state = "quart"
+	environment = QUARRY
+
+/area/warehouse
+	name = "\improper Warehouse"
 	icon_state = "quart"
 	environment = QUARRY
 

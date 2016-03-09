@@ -203,6 +203,17 @@
 	brightness_color = "#FF6666"
 	light_type = /obj/item/weapon/light/bulb/fire
 
+// Hangar lights
+/obj/machinery/light/small/warning
+	icon_state = "tuglight1"
+	base_state = "tuglight"
+	brightness_color = "#cc7a00"
+	brightness_range = 4
+	brightness_power = 2
+	desc = "A small warning lighting fixture."
+	light_type = /obj/item/weapon/light/bulb
+
+
 // create a new lighting fixture
 /obj/machinery/light/New()
 	..()
