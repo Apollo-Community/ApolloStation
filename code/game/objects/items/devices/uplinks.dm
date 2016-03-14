@@ -27,6 +27,9 @@ datum/nano_item_lists
 	var/uses 				// Numbers of crystals
 	var/list/ItemsCategory	// List of categories with lists of items
 	var/list/ItemsReference	// List of references with an associated item
+
+	var/datum/browser/menu
+
 	var/list/nanoui_items	// List of items for NanoUI use
 	var/nanoui_menu = "contracts"		// The current menu we are in
 	var/list/nanoui_data = new // Additional data for NanoUI use
@@ -46,6 +49,8 @@ datum/nano_item_lists
 	ItemsReference = IL.items_reference
 
 	world_uplinks += src
+
+	menu = new(null, "uplink", "Uplink", 700, 600)
 
 /obj/item/device/uplink/Destroy()
 	world_uplinks -= src
@@ -106,16 +111,6 @@ datum/nano_item_lists
 		if(UI.cost <= uses)
 			random_items += UI
 	return pick(random_items)
-
-/obj/item/device/uplink/Topic(href, href_list)
-	if(href_list["buy_item"] == "random")
-		var/datum/uplink_item/UI = chooseRandomItem()
-		href_list["buy_item"] = UI.reference
-		return buy(UI, "RN")
-	else
-		var/datum/uplink_item/UI = ItemsReference[href_list["buy_item"]]
-		return buy(UI, UI ? UI.reference : "")
-	return 0
 
 /obj/item/device/uplink/proc/buy(var/datum/uplink_item/UI, var/reference)
 	if(UI && UI.cost <= uses)
@@ -187,44 +182,6 @@ datum/nano_item_lists
 	data["crystals"] = uses
 	data["menu"] = nanoui_menu
 	data["nano_items"] = nanoui_items
-	data["curtime"] = world.time
-
-	var/list/uplink_active_contracts = list() // because fucking nanoui
-	for(var/datum/contract/C in uplink.contracts)
-		var/list/info = list()
-		info["name"] = C.title
-		info["desc"] = C.desc
-		info["start"] = C.contract_start
-		info["reward"] = C.reward
-		info["limit"] = C.time_limit
-		uplink_active_contracts[++uplink_active_contracts.len] = info
-		world << info
-
-	var/list/active_contracts = list()
-	for(var/datum/contract/C in uplink_owner.antagonist.active_contracts)
-		var/list/info = list()
-		info["name"] = C.title
-		info["desc"] = C.desc
-		info["start"] = C.contract_start
-		info["reward"] = C.reward
-		info["limit"] = C.time_limit
-		active_contracts[++active_contracts.len] = info
-		world << info
-
-	var/list/completed_contracts = list()
-	for(var/datum/contract/C in uplink_owner.antagonist.completed_contracts)
-		var/list/info = list()
-		info["name"] = C.title
-		info["desc"] = C.desc
-		info["start"] = C.contract_start
-		info["reward"] = C.reward
-		info["elapsed"] = C.time_elapsed
-		completed_contracts[++completed_contracts.len] = info
-		world << info
-
-	data["uplink_contracts"] = uplink_active_contracts
-	data["active_contracts"] = active_contracts
-	data["completed_contracts"] = completed_contracts
 	data += nanoui_data
 
 	// update the ui if it exists, returns null if no ui is passed/found
@@ -241,34 +198,8 @@ datum/nano_item_lists
 
 // Interaction code. Gathers a list of items purchasable from the paren't uplink and displays it. It also adds a lock button.
 /obj/item/device/uplink/hidden/interact(mob/user)
-	ui_interact(user)
-
-// The purchasing code.
-/obj/item/device/uplink/hidden/Topic(href, href_list)
-	if (usr.stat || usr.restrained())
-		return
-
-	if (!( istype(usr, /mob/living/carbon/human)))
-		return 0
-	var/mob/user = usr
-	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
-	if ((usr.contents.Find(src.loc) || (in_range(src.loc, usr) && istype(src.loc.loc, /turf))))
-		usr.set_machine(src)
-		if(..(href, href_list))
-			return 1
-		else if(href_list["lock"])
-			toggle()
-			ui.close()
-			return 1
-		if(href_list["return"])
-			nanoui_menu = round(nanoui_menu/10)
-			update_nano_data()
-		if(href_list["menu"])
-			nanoui_menu = href_list["menu"]
-			update_nano_data(href_list["id"])
-
-	interact(usr)
-	return 1
+	//ui_interact(user)
+	contract_menu(user) // defined in modules/antagonist/menus/contracts.dm
 
 /obj/item/device/uplink/hidden/proc/update_nano_data(var/id)
 	if(nanoui_menu == 1)
