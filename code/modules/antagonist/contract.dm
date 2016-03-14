@@ -77,3 +77,18 @@
 		charge_to_account(M.account_number, company, purpose, terminal, reward)
 	*/
 	M.money += reward
+
+/datum/contract/proc/formatted_time(var/time = time_limit)
+	var/list/amounts = list()
+	amounts["hrs"] = Floor((time/10)/3600)
+	amounts["min"] = ((time/10)/60) % 60
+	amounts["sec"] = (time/10) % 60
+	var/time_string = ""
+	if(amounts["hrs"] > 0)
+		time_string += "[amounts["hrs"]] hour[amounts["hrs"] > 1 ? "s" : ""]"
+	if(amounts["min"] > 0)
+		time_string += "[amounts["sec"] > 0 && amounts["hrs"] ? ", " : (amounts["hrs"] > 0 ? " and " : "")][amounts["min"]] minute[amounts["min"] > 1 ? "s" : ""]"
+	if(amounts["sec"] > 0)
+		time_string += "[(amounts["hrs"] > 0 || amounts["min"] > 0) ? " and " : ""][amounts["sec"]] second[amounts["sec"] > 1 ? "s" : ""]"
+
+	return time_string

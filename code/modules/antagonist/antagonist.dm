@@ -44,17 +44,7 @@
 	if(active_contracts.len > 0)
 		antag.current << "Your employer has signed the following contracts in your name:"
 		for(var/datum/contract/C in active_contracts)
-			var/list/amounts = list()
-			amounts["hrs"] = Floor((C.time_limit/10)/3600)
-			amounts["min"] = ((C.time_limit/10)/60) % 60
-			amounts["sec"] = (C.time_limit/10) % 60
-			var/time = ""
-			if(amounts["hrs"] > 0)
-				time += "[amounts["hrs"]] hour[amounts["hrs"] > 1 ? "s" : ""]"
-			if(amounts["min"] > 0)
-				time += "[amounts["sec"] > 0 && amounts["hrs"] ? ", " : (amounts["hrs"] > 0 ? " and " : "")][amounts["min"]] minute[amounts["min"] > 1 ? "s" : ""]"
-			if(amounts["sec"] > 0)
-				time += "[(amounts["hrs"] > 0 || amounts["min"] > 0) ? " and " : ""][amounts["sec"]] second[amounts["sec"] > 1 ? "s" : ""]"
+			var/time = C.formatted_time()
 			antag.current << "<B>[C.title]</B>\n<I>[C.desc]</I>\nYou have [time] to complete the contract."
 	else
 		antag.current << "Your employer has not signed any contracts in your name."
