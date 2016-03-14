@@ -23,6 +23,12 @@
 	title = "[pick(list("Kill", "Murder", "Eliminate"))] [target.current.real_name]"
 	desc = "[target.current.real_name], the [target.assigned_role] [pick(list("would serve us better dead", "has been causing us trouble recently", "has badmouthed the wrong people"))]. [pick(list("Kill them at your earliest convenience", "Ensure that they don't live another day", "Eliminate them"))]."
 
+/datum/contract/kill/can_accept(var/mob/living/M)
+	if(!M.mind)	return 0
+		if(M.mind == target) // no suicide missions
+			return 0
+	return 1
+
 /datum/contract/kill/check_completion()
 	if(workers.len == 0)	return
 

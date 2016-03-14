@@ -27,10 +27,14 @@
 /datum/contract/proc/set_details()
 	return
 
+/datum/contract/proc/can_accept(var/mob/living/M)
+	return 1
+
 // Start the contract for a new antag
 /datum/contract/proc/start(var/mob/living/worker)
-	workers += worker
-	worker.mind.antagonist.contract_start(src)
+	if(can_accept(worker))
+		workers += worker
+		worker.mind.antagonist.contract_start(src)
 
 // End the contract
 /datum/contract/proc/end(var/success = 0, var/mob/living/worker)
