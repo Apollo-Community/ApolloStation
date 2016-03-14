@@ -21,18 +21,19 @@
 /datum/antagonist/proc/setup()
 	for(var/i = 0; i < obligatory_contracts; i++)
 		var/datum/contract/C = pick(uplink.contracts)
-		while((C in active_contracts) || isnull(C))
+		while((C in active_contracts) || isnull(C) || !C.can_accept(antag.current))
 			C = pick(uplink.contracts)
-		// no self-harm
+		// no self-harm. try to get a new kill contract, though
 		if(istype(C, /datum/contract/kill))
 			var/datum/contract/kill/K = C
 			var/list/kill_contracts = uplink.get_contracts(/datum/contract/kill) - active_contracts
 			if(kill_contracts.len > 0)
-				while((K in active_contracts) || isnull(K) || K.target == antag)
+				while((K in active_contracts) || isnull(K) || !K.can_accept(antag.current))
+					kill_contracts -= K
 					K = pick(kill_contracts)
 				C = K
 			else
-				while((C in active_contracts) || isnull(C))
+				while((C in active_contracts) || isnull(C) || !C.can_accept(antag.current))
 					C = pick(uplink.contracts)
 
 		C.start(antag.current)
