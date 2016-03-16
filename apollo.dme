@@ -913,6 +913,7 @@
 #include "code\modules\antagonist\contracts\deface.dm"
 #include "code\modules\antagonist\contracts\kill.dm"
 #include "code\modules\antagonist\contracts\steal.dm"
+#include "code\modules\antagonist\menus\buy.dm"
 #include "code\modules\antagonist\menus\contracts.dm"
 #include "code\modules\antagonist\menus\master.dm"
 #include "code\modules\assembly\assembly.dm"

@@ -112,22 +112,6 @@ datum/nano_item_lists
 			random_items += UI
 	return pick(random_items)
 
-/obj/item/device/uplink/proc/buy(var/datum/uplink_item/UI, var/reference)
-	if(UI && UI.cost <= uses)
-		uses -= UI.cost
-		used_TC += UI.cost
-		feedback_add_details("traitor_uplink_items_bought", reference)
-
-		var/obj/I = new UI.path(get_turf(usr))
-		if(ishuman(usr))
-			var/mob/living/carbon/human/A = usr
-			A.put_in_any_hand_if_possible(I)
-
-		purchase_log[UI] = purchase_log[UI] + 1
-
-		return 1
-	return 0
-
 // HIDDEN UPLINK - Can be stored in anything but the host item has to have a trigger for it.
 /* How to create an uplink in 3 easy steps!
 

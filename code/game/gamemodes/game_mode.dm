@@ -34,54 +34,54 @@
 	var/uplink_uses = 10
 	var/list/datum/uplink_item/uplink_items = list(
 		"Highly Visible and Dangerous Weapons" = list(
-			 new/datum/uplink_item(/obj/item/weapon/gun/projectile, 6, "Revolver", "RE"),
-			 new/datum/uplink_item(/obj/item/ammo_magazine/a357, 2, "Ammo-357", "RA"),
-			 new/datum/uplink_item(/obj/item/weapon/gun/energy/crossbow, 5, "Energy Crossbow", "XB"),
-			 new/datum/uplink_item(/obj/item/weapon/melee/energy/sword, 4, "Energy Sword", "ES"),
-			 new/datum/uplink_item(/obj/item/mecha_parts/mecha_equipment/weapon/energy/riggedlaser, 6, "Exosuit Rigged Laser", "RL"),
-			 new/datum/uplink_item(/obj/item/weapon/storage/box/syndicate, 10, "Mercenary Bundle", "BU"),
-			 new/datum/uplink_item(/obj/item/weapon/storage/box/emps, 3, "5 EMP Grenades", "EM"),
-			 new/datum/uplink_item(/obj/item/weapon/grenade/spawnergrenade/bhole, 10, "Black Hole Grenade", "BH")
+			 new/datum/uplink_item(/obj/item/weapon/gun/projectile, 6000, "Revolver", "RE"),
+			 new/datum/uplink_item(/obj/item/ammo_magazine/a357, 2000, "Ammo-357", "RA"),
+			 new/datum/uplink_item(/obj/item/weapon/gun/energy/crossbow, 5000, "Energy Crossbow", "XB"),
+			 new/datum/uplink_item(/obj/item/weapon/melee/energy/sword, 4000, "Energy Sword", "ES"),
+			 new/datum/uplink_item(/obj/item/mecha_parts/mecha_equipment/weapon/energy/riggedlaser, 6000, "Exosuit Rigged Laser", "RL"),
+			 new/datum/uplink_item(/obj/item/weapon/storage/box/syndicate, 10000, "Mercenary Bundle", "BU"),
+			 new/datum/uplink_item(/obj/item/weapon/storage/box/emps, 3000, "5 EMP Grenades", "EM"),
+			 new/datum/uplink_item(/obj/item/weapon/grenade/spawnergrenade/bhole, 10000, "Black Hole Grenade", "BH")
 			),
 		"Stealthy and Inconspicuous Weapons" = list(
-			new/datum/uplink_item(/obj/item/weapon/pen/paralysis, 3, "Paralysis Pen", "PP"),
-			new/datum/uplink_item(/obj/item/weapon/soap/syndie, 1, "Subversive Soap", "SP"),
-			new/datum/uplink_item(/obj/item/weapon/cartridge/syndicate, 3, "Detomatix PDA Cartridge", "DC"),
-			new/datum/uplink_item(/obj/item/weapon/cane/pois_cane, 3, "Poison Tipped Cane", "PC"),
-			new/datum/uplink_item(/obj/item/device/flash/syndicamera, 2, "Flashy Camera", "CF")
+			new/datum/uplink_item(/obj/item/weapon/pen/paralysis, 3000, "Paralysis Pen", "PP"),
+			new/datum/uplink_item(/obj/item/weapon/soap/syndie, 1000, "Subversive Soap", "SP"),
+			new/datum/uplink_item(/obj/item/weapon/cartridge/syndicate, 3000, "Detomatix PDA Cartridge", "DC"),
+			new/datum/uplink_item(/obj/item/weapon/cane/pois_cane, 3000, "Poison Tipped Cane", "PC"),
+			new/datum/uplink_item(/obj/item/device/flash/syndicamera, 2000, "Flashy Camera", "CF")
 			),
 		"Stealth and Camouflage Items" = list(
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/chameleon, 3, "Chameleon Kit", "CB"),
-			new/datum/uplink_item(/obj/item/clothing/shoes/syndigaloshes, 2, "No-Slip Shoes", "SH"),
-			new/datum/uplink_item(/obj/item/weapon/card/id/syndicate, 2, "Agent ID card", "AC"),
-			new/datum/uplink_item(/obj/item/clothing/mask/gas/voice, 4, "Voice Changer", "VC"),
-			new/datum/uplink_item(/obj/item/device/chameleon, 4, "Chameleon-Projector", "CP")
+			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/chameleon, 3000, "Chameleon Kit", "CB"),
+			new/datum/uplink_item(/obj/item/clothing/shoes/syndigaloshes, 2000, "No-Slip Shoes", "SH"),
+			new/datum/uplink_item(/obj/item/weapon/card/id/syndicate, 2000, "Agent ID card", "AC"),
+			new/datum/uplink_item(/obj/item/clothing/mask/gas/voice, 4000, "Voice Changer", "VC"),
+			new/datum/uplink_item(/obj/item/device/chameleon, 4000, "Chameleon-Projector", "CP")
 			),
 		"Devices and Tools" = list(
-			new/datum/uplink_item(/obj/item/weapon/card/emag, 4, "Cryptographic Sequencer", "CS"),
-			new/datum/uplink_item(/obj/item/weapon/card/emag/weak, 1, "Encryptic Sequencer", "CE"),
-			new/datum/uplink_item(/obj/item/weapon/reagent_containers/tube/syndicream, 2, "Syndicream Tube", "SC"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/spybug, 2, "Spybug Kit", "SK" ),
-			new/datum/uplink_item(/obj/item/weapon/storage/toolbox/syndicate, 1, "Fully Loaded Toolbox", "ST"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/clerical, 3, "Morphic Clerical Kit", "CK"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/space, 3, "Space Suit", "SS"),
-			new/datum/uplink_item(/obj/item/clothing/glasses/thermal/syndi, 3, "Thermal Imaging Glasses", "TM"),
-			new/datum/uplink_item(/obj/item/device/encryptionkey/binary, 3, "Binary Translator Key", "BT"),
-			new/datum/uplink_item(/obj/item/weapon/aiModule/syndicate, 7, "Hacked AI Upload Module", "AI"),
-			new/datum/uplink_item(/obj/item/weapon/plastique, 2, "C-4 (Destroys walls)", "C4"),
-			new/datum/uplink_item(/obj/item/device/powersink, 5, "Powersink (DANGER!)", "PS",),
-			new/datum/uplink_item(/obj/item/device/radio/beacon/syndicate, 7, "Singularity Beacon (DANGER!)", "SB"),
-			new/datum/uplink_item(/obj/item/weapon/circuitboard/teleporter, 20, "Teleporter Circuit Board", "TP")
+			new/datum/uplink_item(/obj/item/weapon/card/emag, 4000, "Cryptographic Sequencer", "CS"),
+			new/datum/uplink_item(/obj/item/weapon/card/emag/weak, 1000, "Encryptic Sequencer", "CE"),
+			new/datum/uplink_item(/obj/item/weapon/reagent_containers/tube/syndicream, 2000, "Syndicream Tube", "SC"),
+			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/spybug, 2000, "Spybug Kit", "SK" ),
+			new/datum/uplink_item(/obj/item/weapon/storage/toolbox/syndicate, 1000, "Fully Loaded Toolbox", "ST"),
+			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/clerical, 3000, "Morphic Clerical Kit", "CK"),
+			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/space, 3000, "Space Suit", "SS"),
+			new/datum/uplink_item(/obj/item/clothing/glasses/thermal/syndi, 3000, "Thermal Imaging Glasses", "TM"),
+			new/datum/uplink_item(/obj/item/device/encryptionkey/binary, 3000, "Binary Translator Key", "BT"),
+			new/datum/uplink_item(/obj/item/weapon/aiModule/syndicate, 7000, "Hacked AI Upload Module", "AI"),
+			new/datum/uplink_item(/obj/item/weapon/plastique, 2000, "C-4 (Destroys walls)", "C4"),
+			new/datum/uplink_item(/obj/item/device/powersink, 5000, "Powersink (DANGER!)", "PS",),
+			new/datum/uplink_item(/obj/item/device/radio/beacon/syndicate, 7000, "Singularity Beacon (DANGER!)", "SB"),
+			new/datum/uplink_item(/obj/item/weapon/circuitboard/teleporter, 20000, "Teleporter Circuit Board", "TP")
 			),
 		"Implants" = list(
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_freedom, 3, "Freedom Implant", "FI"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_uplink, 10, "Uplink Implant (Contains 5 Telecrystals)", "UI"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_explosive, 6, "Explosive Implant (DANGER!)", "EI"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_compress, 4, "Compressed Matter Implant", "CI")
+			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_freedom, 3000, "Freedom Implant", "FI"),
+			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_uplink, 5000, "Uplink Implant", "UI"),
+			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_explosive, 6000, "Explosive Implant (DANGER!)", "EI"),
+			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_compress, 4000, "Compressed Matter Implant", "CI")
 			),
 		"(Pointless) Badassery" = list(
-			new/datum/uplink_item(/obj/item/toy/syndicateballoon, 10, "For showing that You Are The BOSS (Useless Balloon)", "BS"),
-			new/datum/uplink_item(/obj/item/weapon/gun/projectile/automatic/bb_gun, 10, "BB Gun", "BB"),
+			new/datum/uplink_item(/obj/item/toy/syndicateballoon, 10000, "For showing that You Are The BOSS (Useless Balloon)", "BS"),
+			new/datum/uplink_item(/obj/item/weapon/gun/projectile/automatic/bb_gun, 10000, "BB Gun", "BB"),
 			)
 		)
 

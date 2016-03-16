@@ -8,6 +8,7 @@
 	var/greeting = "You are an antagonist." // Shown when the antag is setup, informing them they're an antagonist
 	var/obligatory_contracts = 1 // How many contracts the antagonist is forced to take from round start
 	var/datum/contract/list/active_contracts = list() // Currently active contracts for the antagonist
+	var/start_cash = 10000 // How much extra cash you start with (for equipment)
 
 	var/datum/contract/list/completed_contracts = list()
 	var/datum/mind/antag = null
@@ -38,9 +39,13 @@
 
 		C.start(antag.current)
 
+	var/datum/money_account/A = find_account(antag.current)
+	A.money += start_cash
+
 	antag.character.temporary = 1
 
 	antag.current << "<B><font size=3 color=red>[greeting]</font></B>"
+	antag.current << "Your employer has provided you with an extra $[start_cash] to purchase equipment with."
 	if(active_contracts.len > 0)
 		antag.current << "Your employer has signed the following contracts in your name:"
 		for(var/datum/contract/C in active_contracts)
