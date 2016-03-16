@@ -160,8 +160,10 @@ datum/controller/vote
 						else
 							master_mode = .
 				if("crew_transfer")
-					if(. == "Initiate Crew Transfer")
+					if(. == "Initiate Crew Transfer" && emergency_shuttle.can_call())
 						init_shift_change(null, 1)
+					else if(. != "Continue The Round")
+						world << "<font color='red'><b>The vote has been cancelled. The shuttle is currently in transit or disabled.</b></font>"
 
 		if(mode == "gamemode") //fire this even if the vote fails.
 			if(!going)
@@ -172,8 +174,13 @@ datum/controller/vote
 			spawn(0)
 				world << "World restarting due to vote..."
 				feedback_set_details("end_error","restart vote")
-				if(blackbox)	blackbox.save_all_data_to_sql()
-				sleep(50)
+				if(blackbox)
+					blackbox.save_all_data_to_sql()
+
+				if( config.canon )
+					canonHandleRoundEnd()
+
+				sleep(100)
 				log_game("Rebooting due to restart vote")
 				world.Reboot()
 
@@ -302,15 +309,19 @@ datum/controller/vote
 		else
 			. += "<h2>Start a vote:</h2><hr><ul><li>"
 			//restart
-			if(trialmin || config.allow_vote_restart)
+			if((trialmin || config.allow_vote_restart) && ticker.current_state != GAME_STATE_PREGAME)
 				. += "<a href='?src=\ref[src];vote=restart'>Restart</a>"
 			else
 				. += "<font color='grey'>Restart (Disallowed)</font>"
+				if( trialmin && ticker.current_state == GAME_STATE_PREGAME)
+					. += "\t(<a href='?src=\ref[src];vote=override_restart'>Override</a>)"
 			. += "</li><li>"
-			if(trialmin || config.allow_vote_restart)
+			if((trialmin || config.allow_vote_restart) && emergency_shuttle.can_call() && ticker.current_state != GAME_STATE_PREGAME)
 				. += "<a href='?src=\ref[src];vote=crew_transfer'>Crew Transfer</a>"
 			else
 				. += "<font color='grey'>Crew Transfer (Disallowed)</font>"
+				if( trialmin && (ticker.current_state == GAME_STATE_PREGAME || !emergency_shuttle.can_call()))
+					. += "\t(<a href='?src=\ref[src];vote=override_crew_transfer'>Override</a>)"
 			if(trialmin)
 				. += "\t(<a href='?src=\ref[src];vote=toggle_restart'>[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
 			. += "</li><li>"
@@ -347,14 +358,18 @@ datum/controller/vote
 				if(usr.client.holder)
 					config.allow_vote_mode = !config.allow_vote_mode
 			if("restart")
-				if(config.allow_vote_restart || usr.client.holder)
+				if((config.allow_vote_restart || usr.client.holder) && ticker.current_state != GAME_STATE_PREGAME)
 					initiate_vote("restart",usr.key)
+			if("override_restart")
+				initiate_vote("restart",usr.key)
 			if("gamemode")
-				if(config.allow_vote_mode || usr.client.holder)
+				if((config.allow_vote_mode || usr.client.holder) && ticker.current_state == GAME_STATE_PREGAME)
 					initiate_vote("gamemode",usr.key)
 			if("crew_transfer")
-				if(config.allow_vote_restart || usr.client.holder)
+				if((config.allow_vote_restart || usr.client.holder) && emergency_shuttle.can_call() )
 					initiate_vote("crew_transfer",usr.key)
+			if("override_crew_transfer")
+				initiate_vote("crew_transfer",usr.key)
 			if("custom")
 				if(usr.client.holder)
 					initiate_vote("custom",usr.key)

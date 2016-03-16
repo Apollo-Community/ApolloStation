@@ -59,9 +59,13 @@
 						step(target, get_dir(get_turf(user), get_turf(target)))
 						target.visible_message("<span class='danger'>[pick("[target] was sent flying backward!", "[target] staggers back from the impact!")]</span>")
 					else
-						target.visible_message("<span class='danger'>[target] slams into [T]!</span>")
-					if(prob(50))
-						target.set_dir(reverse_dir[target.dir])
+						if( target.canBounce() )
+							target.visible_message("<span class='danger'>[target] bounces off [T] harmlessly!</span>")
+							target.bounce()
+						else
+							target.visible_message("<span class='danger'>[target] slams into [T]!</span>")
+							if(prob(50))
+								target.set_dir(reverse_dir[target.dir])
 					target.apply_effect(attack_damage * 0.4, WEAKEN, armour)
 			if("groin")
 				target.visible_message("<span class='warning'>[target] looks like \he is in pain!</span>", "<span class='warning'>[(target.gender=="female") ? "Oh god that hurt!" : "Oh no, not your [pick("testicles", "crown jewels", "clockweights", "family jewels", "marbles", "bean bags", "teabags", "sweetmeats", "goolies")]!"]</span>")

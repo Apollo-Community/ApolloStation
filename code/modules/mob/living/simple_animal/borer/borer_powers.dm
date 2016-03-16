@@ -11,7 +11,7 @@
 		src << "You cannot leave your host in your current state."
 
 	if(docile)
-		src << "\blue You are feeling far too docile to do that."
+		src << "<span class='notice'>You are feeling far too docile to do that.</span>"
 		return
 
 	if(!host || !src) return
@@ -146,7 +146,7 @@
 		src << "You cannot do that in your current state."
 
 	if(docile)
-		src << "\blue You are feeling far too docile to do that."
+		src << "<span class='notice'>You are feeling far too docile to do that.</span>"
 		return
 
 
@@ -214,7 +214,7 @@
 		src << "You cannot secrete chemicals in your current state."
 
 	if(docile)
-		src << "\blue You are feeling far too docile to do that."
+		src << "<span class='notice'>You are feeling far too docile to do that.</span>"
 		return
 
 	if(chemicals < 50)
@@ -225,7 +225,7 @@
 	if(!chem || chemicals < 50 || !host || controlling || !src || stat) //Sanity check.
 		return
 
-	src << "\red <B>You squirt a measure of [chem] from your reservoirs into [host]'s bloodstream.</B>"
+	src << "<span class='alert'><B>You squirt a measure of [chem] from your reservoirs into [host]'s bloodstream.</B></span>"
 	host.reagents.add_reagent(chem, 10)
 	chemicals -= 50
 
@@ -263,8 +263,8 @@
 		src << "You cannot infest someone who is already infested!"
 		return
 
-	src << "\red You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread."
-	M << "\red You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing."
+	src << "<span class='alert'>You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.</span>"
+	M << "<span class='alert'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>"
 	M.Weaken(10)
 
 	used_dominate = world.time
@@ -283,7 +283,7 @@
 		return
 
 	if(docile)
-		src << "\blue You are feeling far too docile to do that."
+		src << "<span class='notice'>You are feeling far too docile to do that.</span>"
 		return
 
 	src << "You begin delicately adjusting your connection to the host brain..."
@@ -294,8 +294,8 @@
 			return
 		else
 
-			src << "\red <B>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</B>"
-			host << "\red <B>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</B>"
+			src << "<span class='alert'><B>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</B></span>"
+			host << "<span class='alert'><B>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</B></span>"
 			host.add_language("Cortical Link")
 
 			// host -> brain

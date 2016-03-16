@@ -136,6 +136,7 @@
 	item_state = "card-id"
 	var/access = list()
 	var/registered_name = "Unknown" // The name registered_name on the card
+	var/datum/character/character
 	slot_flags = SLOT_ID
 
 	var/blood_type = "\[UNSET\]"
@@ -147,13 +148,19 @@
 	var/rank = null			//actual job
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
+/obj/item/weapon/card/id/proc/generateName()
+	name = "[registered_name]'s ID Card ([assignment])"
+
 /obj/item/weapon/card/id/New()
 	..()
+
 	spawn(30)
-	if(istype(loc, /mob/living/carbon/human))
-		blood_type = loc:dna:b_type
-		dna_hash = loc:dna:unique_enzymes
-		fingerprint_hash = md5(loc:dna:uni_identity)
+		if(istype(loc, /mob/living/carbon/human))
+			character = loc:character
+
+			blood_type = loc:dna:b_type
+			dna_hash = loc:dna:unique_enzymes
+			fingerprint_hash = md5(loc:dna:uni_identity)
 
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
 	for(var/mob/O in viewers(user, null))
@@ -190,7 +197,6 @@
 	usr << "The fingerprint hash on the card is [fingerprint_hash]."
 	return
 
-
 /obj/item/weapon/card/id/silver
 	name = "identification card"
 	desc = "A silver card which shows honour and dedication."
@@ -225,7 +231,7 @@
 		src.access |= I.access
 		if(istype(user, /mob/living) && user.mind)
 			if(user.mind.special_role)
-				usr << "\blue The card's microscanners activate as you pass it over the ID, copying its access."
+				usr << "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>"
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user as mob)
 	if(!src.registered_name)
@@ -243,7 +249,7 @@
 			return
 		src.assignment = u
 		src.name = "[src.registered_name]'s ID Card ([src.assignment])"
-		user << "\blue You successfully forge the ID card."
+		user << "<span class='notice'>You successfully forge the ID card.</span>"
 		registered_user = user
 	else if(!registered_user || registered_user == user)
 
@@ -263,7 +269,7 @@
 					return
 				src.assignment = u
 				src.name = "[src.registered_name]'s ID Card ([src.assignment])"
-				user << "\blue You successfully forge the ID card."
+				user << "<span class='notice'>You successfully forge the ID card.</span>"
 				return
 			if("Show")
 				..()
@@ -271,6 +277,13 @@
 		..()
 
 
+/obj/item/weapon/card/id/spacepod
+	name = "spacepod access card"
+	desc = "Spacepods use this to bypass energy barriers, and now you can too!"
+	icon_state = "data"
+	registered_name = "spacepod"
+	assignment = "spacepod"
+	access = list( access_energy_barrier )
 
 /obj/item/weapon/card/id/syndicate_command
 	name = "syndicate ID card"

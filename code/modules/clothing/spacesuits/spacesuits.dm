@@ -35,7 +35,7 @@
 		camera.network = camera_networks
 		cameranet.removeCamera(camera)
 		camera.c_tag = user.name
-		user << "\blue User scanned as [camera.c_tag]. Camera activated."
+		user << "<span class='notice'>User scanned as [camera.c_tag]. Camera activated.</span>"
 		return 1
 
 	..()
@@ -92,3 +92,5 @@
 		E.status &= ~ ORGAN_SPLINTED
 		user << "The suit stops supporting your [E.display_name]."
 	supporting_limbs = list()
+
+

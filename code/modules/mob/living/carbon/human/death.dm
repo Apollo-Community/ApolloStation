@@ -28,6 +28,9 @@
 
 	if(stat == DEAD) return
 
+	if( heartbeat )
+		stop_regular_sounds()
+
 	hud_updateflag |= 1 << HEALTH_HUD
 	hud_updateflag |= 1 << STATUS_HUD
 	handle_hud_list()
@@ -60,7 +63,7 @@
 		playsound(loc, species.death_sound, 80, 1, 1)
 
 	if(ticker && ticker.mode)
-		sql_report_death(src)
+		statistics.report_death(src)
 		ticker.mode.check_win()
 		if(istype(ticker.mode,/datum/game_mode/heist))
 			vox_kills++ //Bad vox. Shouldn't be killing humans.
@@ -69,26 +72,20 @@
 		var/mob/living/killer = src.lastattacker
 
 		if( is_special_character(killer) )
-			src << "\blue [killer.real_name] was the last person to attack you. They were an antagonist."
+			src << "<span class='notice'>[killer.real_name] was the last person to attack you. They were an antagonist.</span>"
 		else
-			src << "\blue [killer.real_name] was the last person to attack you. \red <b>They were NOT an antagonist.</b>"
+			src << "<span class='notice'>[killer.real_name] was the last person to attack you. </span><span class='alert'><b>They were NOT an antagonist.</b></span>"
 
-		src << "\blue If you believe that your death wasn't properly roleplayed, ahelp it now."
+		src << "<span class='notice'>If you believe that your death wasn't properly roleplayed, ahelp it now.</span>"
 
 	return ..(gibbed,species.death_message)
 
 /mob/living/carbon/human/proc/ChangeToHusk()
 	if(HUSK in mutations)	return
 
-	if(f_style)
-		f_style = "Shaved"		//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
-	if(h_style)
-		h_style = "Bald"
-	update_hair(0)
-
 	mutations.Add(HUSK)
 	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
-	update_body(0)
+	update_body()
 	return
 
 /mob/living/carbon/human/proc/Drain()
@@ -99,13 +96,13 @@
 /mob/living/carbon/human/proc/ChangeToSkeleton()
 	if(SKELETON in src.mutations)	return
 
-	if(f_style)
-		f_style = "Shaved"
-	if(h_style)
-		h_style = "Bald"
-	update_hair(0)
+	if(character.hair_face_style)
+		character.hair_face_style = "Shaved"
+	if(character.hair_style)
+		character.hair_style = "Bald"
+	update_hair(1)
 
 	mutations.Add(SKELETON)
 	status_flags |= DISFIGURED
-	update_body(0)
+	update_body(1)
 	return

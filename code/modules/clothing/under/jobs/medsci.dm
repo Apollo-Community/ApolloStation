@@ -56,9 +56,9 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 
-/obj/item/clothing/under/rank/geneticist
-	desc = "It's made of a special fiber that gives special protection against biohazards. It has a genetics rank stripe on it."
-	name = "geneticist's jumpsuit"
+/obj/item/clothing/under/rank/nurse_suit
+	desc = "It's made of a special fiber that gives special protection against biohazards."
+	name = "nurse's jumpsuit"
 	icon_state = "genetics"
 	item_state = "w_suit"
 	item_color = "geneticswhite"
@@ -74,7 +74,7 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 
-/obj/item/clothing/under/rank/nursesuit
+/obj/item/clothing/under/rank/nurse_dress
 	desc = "It's a jumpsuit commonly worn by nursing staff in the medical department."
 	name = "nurse's suit"
 	icon_state = "nursesuit"

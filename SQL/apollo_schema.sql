@@ -4,8 +4,9 @@ USE `apollo` ;
 -- -----------------------------------------------------
 -- Death Tracking
 -- -----------------------------------------------------
-CREATE TABLE `death` (
+CREATE TABLE IF NOT EXISTS `deaths` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `round_id` INT(11) NOT NULL,
   `pod` TEXT NOT NULL COMMENT 'Place of death' ,
   `coord` TEXT NOT NULL COMMENT 'X, Y, Z POD' ,
   `tod` DATETIME NOT NULL COMMENT 'Time of death' ,
@@ -26,7 +27,7 @@ CREATE TABLE `death` (
 -- -----------------------------------------------------
 -- Library Books
 -- -----------------------------------------------------
-CREATE TABLE `library` (
+CREATE TABLE IF NOT EXISTS `library` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `author` TEXT NOT NULL ,
   `title` TEXT NOT NULL ,
@@ -38,7 +39,7 @@ CREATE TABLE `library` (
 -- -----------------------------------------------------
 -- Account Items
 -- -----------------------------------------------------
-CREATE TABLE `acc_items` (
+CREATE TABLE IF NOT EXISTS `acc_items` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `ckey` TEXT NOT NULL ,
   `item` TEXT NOT NULL ,
@@ -50,18 +51,18 @@ CREATE TABLE `acc_items` (
 -- -----------------------------------------------------
 -- Population Tracking
 -- -----------------------------------------------------
-CREATE TABLE `population` (
+CREATE TABLE IF NOT EXISTS `population` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `playercount` INT(11) NULL DEFAULT NULL ,
   `admincount` INT(11) NULL DEFAULT NULL ,
   `time` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`) 
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
 
 -- -----------------------------------------------------
 -- Admin Permissions
 -- -----------------------------------------------------
-CREATE TABLE `admins` (
+CREATE TABLE IF NOT EXISTS `admins` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ckey` varchar(32) NOT NULL,
   `rank` varchar(32) NOT NULL DEFAULT 'Administrator',
@@ -73,7 +74,7 @@ CREATE TABLE `admins` (
 -- -----------------------------------------------------
 -- Admin Permissions
 -- -----------------------------------------------------
-CREATE TABLE `admin_log` (
+CREATE TABLE IF NOT EXISTS `admin_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `datetime` datetime NOT NULL,
   `adminckey` varchar(32) NOT NULL,
@@ -85,7 +86,7 @@ CREATE TABLE `admin_log` (
 -- -----------------------------------------------------
 -- Bans
 -- -----------------------------------------------------
-CREATE TABLE `ban` (
+CREATE TABLE IF NOT EXISTS `ban` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bantime` datetime NOT NULL,
   `serverip` varchar(32) NOT NULL,
@@ -115,7 +116,7 @@ CREATE TABLE `ban` (
 -- -----------------------------------------------------
 -- Error logging
 -- -----------------------------------------------------
-CREATE TABLE `feedback` (
+CREATE TABLE IF NOT EXISTS `feedback` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `time` datetime NOT NULL,
   `round_id` int(8) NOT NULL,
@@ -128,7 +129,7 @@ CREATE TABLE `feedback` (
 -- -----------------------------------------------------
 -- Unique Players
 -- -----------------------------------------------------
-CREATE TABLE `player` (
+CREATE TABLE IF NOT EXISTS `player` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ckey` varchar(32) NOT NULL,
   `firstseen` datetime NOT NULL,
@@ -136,14 +137,116 @@ CREATE TABLE `player` (
   `ip` varchar(18) NOT NULL,
   `computerid` varchar(32) NOT NULL,
   `lastadminrank` varchar(32) NOT NULL DEFAULT 'Player',
+  `whitelist_flags` int(16) NOT NULL DEFAULT '0',
+  `species_flags` int(16) NOT NULL DEFAULT '0',
+  `donator_flags` int(16) NOT NULL DEFAULT '0',
+  `playtime` int UNSIGNED NOT NULL DEFAULT '0',
+  `character_tokens` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ckey` (`ckey`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
 
 -- -----------------------------------------------------
+-- Player Preferences
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `preferences` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ckey` varchar(32) NOT NULL,
+  `joined_date` date NOT NULL,
+  `OOC_color` varchar(7) NOT NULL DEFAULT "#0033CC",
+  `UI_style` varchar(50) NOT NULL DEFAULT "Midnight",
+  `UI_style_color` varchar(7) NOT NULL DEFAULT "#FFFFFF",
+  `UI_style_alpha` tinyint UNSIGNED NOT NULL DEFAULT '255',
+  `toggles` int UNSIGNED NOT NULL DEFAULT '0',
+  `last_character` varchar(100),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ckey` (`ckey`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+-- -----------------------------------------------------
+-- Player Characters
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `characters` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `ckey` varchar(32) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `gender` varchar(11) NOT NULL,
+  `birth_date` varchar(20) NOT NULL,
+  `spawnpoint` varchar(100) NOT NULL DEFAULT "Arrivals Shuttle",
+  `blood_type` varchar(10) NOT NULL,
+  `underwear` tinyint UNSIGNED NOT NULL DEFAULT '1',
+  `undershirt` tinyint UNSIGNED NOT NULL DEFAULT '1',
+  `backpack` tinyint UNSIGNED NOT NULL DEFAULT '2', -- Different
+  `hair_style` varchar(50) NOT NULL DEFAULT "Bald",
+  `hair_face_style` varchar(50) NOT NULL DEFAULT "Shaved",
+  `hair_color` varchar(7) NOT NULL DEFAULT "#FFFFFF",
+  `hair_face_color` varchar(7) NOT NULL DEFAULT "#FFFFFF",
+  `skin_tone` smallint NOT NULL DEFAULT '35',
+  `skin_color` varchar(7) NOT NULL DEFAULT "#FFFFFF",
+  `eye_color` varchar(7) NOT NULL DEFAULT "#FFFFFF",
+  `species` varchar(100) NOT NULL DEFAULT "Human",
+  `additional_language` varchar(100),
+  `gear` text,
+  `home_system` varchar(100) NOT NULL DEFAULT "Unset",
+  `citizenship` varchar(50) NOT NULL DEFAULT "None",
+  `faction` varchar(50) NOT NULL DEFAULT "None",
+  `religion` varchar(50) NOT NULL DEFAULT "None",
+  `department` tinyint NOT NULL DEFAULT '0',
+  `roles` text,
+  `job_antag` int UNSIGNED NOT NULL DEFAULT '0',
+  `alternate_option` int UNSIGNED DEFAULT '2',
+  `organ_data` text,
+  `player_alt_titles` text,
+  `flavor_texts_human` text,
+  `flavor_texts_robot` text, -- Different
+  `med_record` text,
+  `sec_record` text,
+  `gen_record` text,
+  `exploit_record` text,
+  `nanotrasen_relation` varchar(50) NOT NULL DEFAULT "Neutral",
+  `disabilities` int UNSIGNED NOT NULL DEFAULT '0',
+  `uplink_location` varchar(50) NOT NULL DEFAULT "PDA",
+  `fingerprints` varchar(32) NOT NULL,
+  `DNA` varchar(32) NOT NULL,
+  `unique_identifier` varchar(32) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+-- -----------------------------------------------------
+-- Universe Data
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `universe` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`name` varchar(255) NOT NULL,
+	`ic_date` varchar(20) NOT NULL,
+	`stocks` text,
+	`news` text,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+-- -----------------------------------------------------
+-- Paperwork Records
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `paperwork_records` (
+  `id` int(32) NOT NULL AUTO_INCREMENT,
+  `author_ckey` varchar(32) NOT NULL,
+  `author_name` varchar(32) NOT NULL,
+  `author_ip` varchar(18) NOT NULL,
+  `author_md5` varchar(32) NOT NULL,
+  `recipient_md5` varchar(32),
+  `this_md5` varchar(32) NOT NULL,
+  `clearence` varchar(32) NOT NULL DEFAULT  "Unclassified",
+  `category` varchar(255) NOT NULL DEFAULT "Uncategorized",
+  `date_time` datetime NOT NULL,
+  `title` varchar(50),
+  `info` MEDIUMTEXT NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+-- -----------------------------------------------------
 -- Poll Options
 -- -----------------------------------------------------
-CREATE TABLE `poll_option` (
+CREATE TABLE IF NOT EXISTS `poll_option` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pollid` int(11) NOT NULL,
   `text` varchar(255) NOT NULL,
@@ -159,7 +262,7 @@ CREATE TABLE `poll_option` (
 -- -----------------------------------------------------
 -- Poll Question
 -- -----------------------------------------------------
-CREATE TABLE `poll_question` (
+CREATE TABLE IF NOT EXISTS `poll_question` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `polltype` varchar(16) NOT NULL DEFAULT 'OPTION',
   `starttime` datetime NOT NULL,
@@ -172,7 +275,7 @@ CREATE TABLE `poll_question` (
 -- -----------------------------------------------------
 -- Poll Replies Text
 -- -----------------------------------------------------
-CREATE TABLE `poll_textreply` (
+CREATE TABLE IF NOT EXISTS `poll_textreply` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `datetime` datetime NOT NULL,
   `pollid` int(11) NOT NULL,
@@ -186,7 +289,7 @@ CREATE TABLE `poll_textreply` (
 -- -----------------------------------------------------
 -- Poll Replies Vote
 -- -----------------------------------------------------
-CREATE TABLE `poll_vote` (
+CREATE TABLE IF NOT EXISTS `poll_vote` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `datetime` datetime NOT NULL,
   `pollid` int(11) NOT NULL,
@@ -195,5 +298,59 @@ CREATE TABLE `poll_vote` (
   `ip` varchar(16) NOT NULL,
   `adminrank` varchar(32) NOT NULL,
   `rating` int(2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+-- -----------------------------------------------------
+-- End Round Stats
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `round_stats` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `game_mode` varchar(50) NOT NULL,
+  `end_time` datetime NOT NULL,
+  `duration` int(11) NOT NULL,
+
+  -- End round stats shown in game
+  `productivity` int(11) NOT NULL,
+  `deaths` int(11) NOT NULL,
+  `clones` int(11) NOT NULL,
+  `dispense_volume` int(11) NOT NULL,
+  `bombs_exploded` int(11) NOT NULL,
+  `vended` int(11) NOT NULL,
+  `run_distance` int(11) NOT NULL,
+  `blood_mopped` int(11) NOT NULL,
+  `damage_cost` int(11) NOT NULL,
+  `break_time` int(11) NOT NULL,
+  `monkey_deaths` int(11) NOT NULL,
+  `spam_blocked` int(11) NOT NULL,
+  `people_slipped` int(11) NOT NULL,
+  `doors_opened` int(11) NOT NULL,
+  `guns_fired` int(11) NOT NULL,
+  `beepsky_beatings` int(11) NOT NULL,
+  `doors_welded` int(11) NOT NULL,
+  `total_kwh` int(11) NOT NULL,
+  `artifacts` int(11) NOT NULL,
+  `cargo_profit` int(11) NOT NULL,
+  `trash_vented` int(11) NOT NULL,
+  `ai_follow` int(11) NOT NULL,
+  `banned` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+CREATE TABLE IF NOT EXISTS `round_antags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `round_id` int(11) NOT NULL,
+  `ckey` TEXT NOT NULL,
+  `name` TEXT NOT NULL,
+  `job` TEXT NOT NULL,
+  `role` TEXT NOT NULL,
+  `success` BOOL NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+CREATE TABLE IF NOT EXISTS `round_ai_laws` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `round_id` int(11) NOT NULL,
+  `law` TEXT NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;

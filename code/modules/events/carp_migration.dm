@@ -11,10 +11,10 @@
 /datum/event/carp_migration/announce()
 	var/announcement = ""
 	if(severity == EVENT_LEVEL_MAJOR)
-		announcement = "Massive migration of unknown biological entities has been detected near [station_name()], please stand-by."
+		announcement = "Massive migration of unknown biological entities has been detected near [station_name()], all EVA activities must be suspended until further notice."
 	else
-		announcement = "Unknown biological [spawned_carp.len == 1 ? "entity has" : "entities have"] been detected near [station_name()], please stand-by."
-	command_announcement.Announce(announcement, "Lifesign Alert")
+		announcement = "Unknown biological [spawned_carp.len == 1 ? "entity has" : "entities have"] been detected near [station_name()], all EVA activities discouraged until further notice."
+	command_announcement.Announce(announcement, "AUTOMATED ALERT: Unidentified Lifesigns")
 
 /datum/event/carp_migration/start()
 	if(severity == EVENT_LEVEL_MAJOR)

@@ -37,7 +37,7 @@
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/carrot)) //feedin' dem chickens
-			user.visible_message("\blue [user] feeds [O] to [name]! It seems very happy.","\blue You feed [O] to [name]! It seems very happy.")
+			user.visible_message("<span class='notice'>[user] feeds [O] to [name]! It seems very happy.</span>","<span class='notice'>You feed [O] to [name]! It seems very happy.</span>")
 			user.drop_item()
 			qdel(O)
 		else

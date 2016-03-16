@@ -334,7 +334,7 @@
 	vars[ch] = vw
 	if(how == "Toggle")
 		newvar = (newvar?"ON":"OFF")
-	world << "\blue <b>[key_name(user)] changed the setting [display_description] to [newvar].</b>"
+	world << "<span class='notice'><b>[key_name(user)] changed the setting [display_description] to [newvar].</b></span>"
 	ChangeSettingsDialog(user,settings)
 
 /sm_control/proc/RandomizeWithProbability()
@@ -487,6 +487,6 @@
 			crit_danger += 25
 
 
-	world << "\blue <b>[key_name(user)] changed the global supermatter settings to \"[def]\"</b>"
+	world << "<span class='notice'><b>[key_name(user)] changed the global supermatter settings to \"[def]\"</b></span>"
 
 */

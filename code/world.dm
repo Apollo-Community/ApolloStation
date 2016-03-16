@@ -19,8 +19,7 @@ var/global/datum/global_init/init = new ()
 	view = "15x15"
 	cache_lifespan = 0	//stops player uploaded stuff from being kept in the rsc past the current session
 
-
-#define RECOMMENDED_VERSION 501
+#define RECOMMENDED_VERSION 510
 /world/New()
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
@@ -37,6 +36,9 @@ var/global/datum/global_init/init = new ()
 		// dumb and hardcoded but I don't care~
 		config.server_name += " #[(world.port % 1000) / 100]"
 
+	if(config.server_name)
+		world.name = config.server_name
+
 	if(config && config.log_runtime)
 		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD-(hh-mm-ss)")]-runtime.log")
 
@@ -45,8 +47,6 @@ var/global/datum/global_init/init = new ()
 	load_mods()
 	//end-emergency fix
 
-	//loads donators
-	load_donators()
 	//loads custom titles
 	load_titles()
 
@@ -272,7 +272,6 @@ var/world_topic_spam_protect_time = world.timeofday
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
 
-
 /proc/load_configuration()
 	config = new /datum/configuration()
 	config.load("config/config.txt")
@@ -330,7 +329,10 @@ var/world_topic_spam_protect_time = world.timeofday
 	var/s = ""
 
 	if (config && config.server_name)
-		s += "<a href=\"https://apollo-community.org\">" //Change this to wherever you want the hub to link to.
+		if(config.forumurl)
+			s += "<a href=\"[config.forumurl]\">"
+		else
+			s += "<a href=\"https://apollo-community.org\">"
 		s += "<big><b>[config.server_name]</b></big>"
 		s += "</a>\]"
 

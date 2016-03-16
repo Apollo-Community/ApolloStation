@@ -285,7 +285,7 @@
 	new /obj/item/clothing/suit/storage/toggle/labcoat/chemist(src)
 	return
 
-
+/*
 /obj/structure/closet/wardrobe/genetics_white
 	name = "genetics wardrobe"
 	icon_state = "white"
@@ -300,7 +300,7 @@
 	new /obj/item/clothing/suit/storage/toggle/labcoat/genetics(src)
 	new /obj/item/clothing/suit/storage/toggle/labcoat/genetics(src)
 	return
-
+*/
 
 /obj/structure/closet/wardrobe/virology_white
 	name = "virology wardrobe"

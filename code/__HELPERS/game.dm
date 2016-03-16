@@ -37,6 +37,8 @@
 	var/list/heard = view(range, source)
 	source.light_range = lum
 
+	heard |= hearers( range, source )
+
 	return heard
 
 /proc/isStationLevel(var/level)
@@ -50,6 +52,9 @@
 
 /proc/isAdminLevel(var/level)
 	return level in config.admin_levels
+
+/proc/isAlertZLevel(var/level)
+	return level in config.alert_levels
 
 /proc/isNotAdminLevel(var/level)
 	return !isAdminLevel(level)
@@ -315,7 +320,7 @@ proc/isInSight(var/atom/A, var/atom/B)
 	var/i = 0
 	while(candidates.len <= 0 && i < 5)
 		for(var/mob/dead/observer/G in player_list)
-			if(G.client.prefs.be_special & BE_ALIEN)
+			if(G.client.prefs.beSpecial() & BE_ALIEN)
 				if(((G.client.inactivity/10)/60) <= ALIEN_SELECT_AFK_BUFFER + i) // the most active players are more likely to become an alien
 					if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
 						candidates += G.key

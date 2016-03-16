@@ -228,7 +228,7 @@ BLIND     // can't see anything
 			return
 
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-		user.visible_message("\red [user] cuts the fingertips off of the [src].","\red You cut the fingertips off of the [src].")
+		user.visible_message("<span class='alert'>[user] cuts the fingertips off of the [src].</span>","<span class='alert'>You cut the fingertips off of the [src].</span>")
 
 		clipped = 1
 		name = "modified [name]"
@@ -440,7 +440,7 @@ BLIND     // can't see anything
 	..()
 
 /obj/item/clothing/under/MouseDrop(obj/over_object as obj)
-	if (ishuman(usr) || issmall(usr))
+	if ((ishuman(usr) || issmall(usr)) && over_object)		//Sanity check
 		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
 		if (!(src.loc == usr))
 			return
@@ -503,7 +503,7 @@ BLIND     // can't see anything
 		switch(sensor_mode)
 			if(0)
 				for(var/mob/V in viewers(usr, 1))
-					V.show_message("\red [usr] disables [src.loc]'s remote sensing equipment.", 1)
+					V.show_message("<span class='alert'>[usr] disables [src.loc]'s remote sensing equipment.</span>", 1)
 			if(1)
 				for(var/mob/V in viewers(usr, 1))
 					V.show_message("[usr] turns [src.loc]'s remote sensors to binary.", 1)

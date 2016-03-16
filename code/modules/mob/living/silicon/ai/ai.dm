@@ -102,6 +102,8 @@ var/list/ai_verbs_default = list(
 				possibleNames -= pickedName
 				pickedName = null
 
+	id_card = new /obj/item/weapon/card/id/captains_spare(src) // AI gets to do whatever they like
+
 	aiPDA = new/obj/item/device/pda/ai(src)
 	SetName(pickedName)
 	anchored = 1
@@ -187,11 +189,13 @@ var/list/ai_verbs_default = list(
 
 	src << radio_text
 
-	if (!(ticker && ticker.mode && (mind in ticker.mode.malf_ai)))
-		show_laws()
-		src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
+	show_laws()
+	src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
 
 	job = "AI"
+
+	if( id_card )
+		id_card.assignment = "AI"
 
 /mob/living/silicon/ai/Destroy()
 	ai_list -= src
@@ -311,6 +315,7 @@ var/list/ai_verbs_default = list(
 			//usr <<"You can only change your display once!"
 			//return
 
+/*
 /mob/living/silicon/ai/proc/is_malf()
 	if(ticker.mode.name == "AI malfunction")
 		var/datum/game_mode/malfunction/malf = ticker.mode
@@ -324,6 +329,7 @@ var/list/ai_verbs_default = list(
 	var/datum/game_mode/malfunction/malf = is_malf()
 	if(malf && malf.apcs >= 3)
 		stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
+*/
 
 /mob/living/silicon/ai/proc/ai_alerts()
 	set category = "AI Commands"
@@ -486,7 +492,7 @@ var/list/ai_verbs_default = list(
 		if(target && (!istype(target, /mob/living/carbon/human) || html_decode(href_list["trackname"]) == target:get_face_name()))
 			ai_actual_track(target)
 		else
-			src << "\red System error. Cannot locate [html_decode(href_list["trackname"])]."
+			src << "<span class='alert'>System error. Cannot locate [html_decode(href_list["trackname</span>"])]."
 		return
 
 	return
@@ -498,7 +504,7 @@ var/list/ai_verbs_default = list(
 		camera = A
 	..()
 	if(istype(A,/obj/machinery/camera))
-		if(camera_light_on)	A.set_light(AI_CAMERA_light_range)
+		if(camera_light_on)	A.set_light(AI_CAMERA_light_range, AI_CAMERA_light_power)
 		else				A.set_light(0)
 
 
@@ -583,15 +589,16 @@ var/list/ai_verbs_default = list(
 			if(network in C.network)
 				U.eyeobj.setLoc(get_turf(C))
 				break
-	src << "\blue Switched to [network] camera network."
+	src << "<span class='notice'>Switched to [network] camera network.</span>"
 //End of code by Mord_Sith
 
-
+/*
 /mob/living/silicon/ai/proc/choose_modules()
 	set category = "Malfunction"
 	set name = "Choose Module"
 
 	malf_picker.use(src)
+*/
 
 /mob/living/silicon/ai/proc/ai_statuschange()
 	set category = "AI Commands"
@@ -653,7 +660,7 @@ var/list/ai_verbs_default = list(
 
 	var/obj/machinery/power/apc/apc = src.loc
 	if(!istype(apc))
-		src << "\blue You are already in your Main Core."
+		src << "<span class='notice'>You are already in your Main Core.</span>"
 		return
 	apc.malfvacate()*/
 
@@ -688,7 +695,7 @@ var/list/ai_verbs_default = list(
 				src.camera.set_light(0)
 				if(!camera.light_disabled)
 					src.camera = camera
-					src.camera.set_light(AI_CAMERA_light_range)
+					src.camera.set_light(AI_CAMERA_light_range, AI_CAMERA_light_power)
 				else
 					src.camera = null
 			else if(isnull(camera))
@@ -698,7 +705,7 @@ var/list/ai_verbs_default = list(
 			var/obj/machinery/camera/camera = near_range_camera(src.eyeobj)
 			if(camera && !camera.light_disabled)
 				src.camera = camera
-				src.camera.set_light(AI_CAMERA_light_range)
+				src.camera.set_light(AI_CAMERA_light_range, AI_CAMERA_light_power)
 		camera_light_on = world.timeofday + 1 * 20 // Update the light every 2 seconds.
 
 
@@ -710,19 +717,19 @@ var/list/ai_verbs_default = list(
 
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(anchored)
-			user.visible_message("\blue \The [user] starts to unbolt \the [src] from the plating...")
+			user.visible_message("<span class='notice'>\The [user] starts to unbolt \the [src] from the plating...</span>")
 			if(!do_after(user,40))
-				user.visible_message("\blue \The [user] decides not to unbolt \the [src].")
+				user.visible_message("<span class='notice'>\The [user] decides not to unbolt \the [src].</span>")
 				return
-			user.visible_message("\blue \The [user] finishes unfastening \the [src]!")
+			user.visible_message("<span class='notice'>\The [user] finishes unfastening \the [src]!</span>")
 			anchored = 0
 			return
 		else
-			user.visible_message("\blue \The [user] starts to bolt \the [src] to the plating...")
+			user.visible_message("<span class='notice'>\The [user] starts to bolt \the [src] to the plating...</span>")
 			if(!do_after(user,40))
-				user.visible_message("\blue \The [user] decides not to bolt \the [src].")
+				user.visible_message("<span class='notice'>\The [user] decides not to bolt \the [src].</span>")
 				return
-			user.visible_message("\blue \The [user] finishes fastening down \the [src]!")
+			user.visible_message("<span class='notice'>\The [user] finishes fastening down \the [src]!</span>")
 			anchored = 1
 			return
 	else
@@ -748,14 +755,14 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/proc/check_unable(var/flags = 0)
 	if(stat == DEAD)
-		usr << "\red You are dead!"
+		usr << "<span class='alert'>You are dead!</span>"
 		return 1
 
 	if((flags & AI_CHECK_WIRELESS) && src.control_disabled)
-		usr << "\red Wireless control is disabled!"
+		usr << "<span class='alert'>Wireless control is disabled!</span>"
 		return 1
 	if((flags & AI_CHECK_RADIO) && src.aiRadio.disabledAi)
-		src << "\red System Error - Transceiver Disabled!"
+		src << "<span class='alert'>System Error - Transceiver Disabled!</span>"
 		return 1
 	return 0
 

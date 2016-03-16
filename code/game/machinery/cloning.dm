@@ -135,14 +135,18 @@
 //Start growing a human clone in the pod!
 /obj/machinery/clonepod/proc/growclone(var/datum/dna2/record/R)
 	if(mess || attempting)
+		world << "messy or already attempting"
 		return 0
 	var/datum/mind/clonemind = locate(R.mind)
 	if(!istype(clonemind,/datum/mind))	//not a mind
+		world << "no clone mind"
 		return 0
 	if( clonemind.current && clonemind.current.stat != DEAD )	//mind is associated with a non-dead body
+		world << "body not dead"
 		return 0
-	if(clonemind.active)	//somebody is using that mind
+	if( clonemind.active )	//somebody is using that mind
 		if( ckey(clonemind.key)!=R.ckey )
+			world << "somebody using that mind"
 			return 0
 	else
 		for(var/mob/dead/observer/G in player_list)
@@ -150,6 +154,7 @@
 				if(G.can_reenter_corpse)
 					break
 				else
+					world << "cannot reenter corpse"
 					return 0
 
 
@@ -214,7 +219,7 @@
 
 	for(var/datum/language/L in R.languages)
 		H.add_language(L.name)
-	H.flavor_texts = R.flavor.Copy()
+	H.character.flavor_texts_human = R.flavor
 	H.suiciding = 0
 	src.attempting = 0
 	return 1
@@ -281,12 +286,12 @@
 /obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (!src.check_access(W))
-			user << "\red Access Denied."
+			user << "<span class='alert'>Access Denied.</span>"
 			return
 		if ((!src.locked) || (isnull(src.occupant)))
 			return
 		if ((src.occupant.health < -20) && (src.occupant.stat != 2))
-			user << "\red Access Refused."
+			user << "<span class='alert'>Access Refused.</span>"
 			return
 		else
 			src.locked = 0
@@ -299,14 +304,14 @@
 		src.go_out()
 		return
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
-		user << "\blue \The [src] processes \the [W]."
+		user << "<span class='notice'>\The [src] processes \the [W].</span>"
 		biomass += 50
 		user.drop_item()
 		qdel(W)
 		return
 	else if (istype(W, /obj/item/weapon/wrench))
 		if(src.locked && (src.anchored || src.occupant))
-			user << "\red Can not do that while [src] is in use."
+			user << "<span class='alert'>Can not do that while [src] is in use.</span>"
 		else
 			if(src.anchored)
 				src.anchored = 0

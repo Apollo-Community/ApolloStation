@@ -45,10 +45,13 @@
 /obj/item/weapon/melee/baton/update_icon()
 	if(status)
 		icon_state = "[initial(name)]_active"
-	else if(!bcell)
+		item_state = "[initial(item_state)]_active"
+	else if(!bcell || bcell.charge < hitcost)
 		icon_state = "[initial(name)]_nocell"
+		item_state = "[initial(item_state)]"
 	else
 		icon_state = "[initial(name)]"
+		item_state = "[initial(item_state)]"
 
 /obj/item/weapon/melee/baton/examine(mob/user)
 	if(!..(user, 1))
@@ -87,13 +90,13 @@
 		status = !status
 		user << "<span class='notice'>[src] is now [status ? "on" : "off"].</span>"
 		playsound(loc, "sparks", 75, 1, -1)
-		update_icon()
 	else
 		status = 0
 		if(!bcell)
 			user << "<span class='warning'>[src] does not have a power source!</span>"
 		else
 			user << "<span class='warning'>[src] is out of charge.</span>"
+	update_icon()
 	add_fingerprint(user)
 
 
@@ -129,7 +132,7 @@
 				target_zone = get_zone_with_miss_chance(user.zone_sel.selecting, L)
 
 			if(!target_zone)
-				L.visible_message("\red <B>[user] misses [L] with \the [src]!")
+				L.visible_message("<span class='alert'><B>[user] misses [L] with \the [src]!</span>")
 				return 0
 
 			var/mob/living/carbon/human/H = L

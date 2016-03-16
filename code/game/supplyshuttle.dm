@@ -51,7 +51,7 @@ var/list/mechtoys = list(
 	explosion_resistance = 5
 	var/list/mobs_can_pass = list(
 		/mob/living/carbon/slime,
-		/mob/living/simple_animal/mouse,
+		/mob/living/simple_animal/rodent,
 		/mob/living/silicon/robot/drone
 		)
 
@@ -59,8 +59,8 @@ var/list/mechtoys = list(
 	if(istype(A) && A.checkpass(PASSGLASS))
 		return prob(60)
 
-	var/obj/structure/stool/bed/B = A
-	if (istype(A, /obj/structure/stool/bed) && B.buckled_mob)//if it's a bed/chair and someone is buckled, it will not pass
+	var/obj/structure/bed/B = A
+	if (istype(A, /obj/structure/bed) && B.buckled_mob)//if it's a bed/chair and someone is buckled, it will not pass
 		return 0
 
 	if(istype(A, /obj/vehicle))	//no vehicles

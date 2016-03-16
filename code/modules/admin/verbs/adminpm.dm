@@ -79,13 +79,11 @@
 		src << "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>"
 		return
 
-	var/recieve_message
+	adminhelped = 1
 
 	if(holder && !C.holder)
-		recieve_message = "<span class='pm'><span class='howto'><b>-- Click the [recieve_pm_type]'s name to reply --</b></span></span>\n"
-		if(C.adminhelped)
-			C << recieve_message
-			C.adminhelped = 0
+		if( !C.adminhelped )
+			C << "<span class='pm'><span class='howto'><b>-- Click the [recieve_pm_type]'s name to reply --</b></span></span>\n"
 
 		//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
 		//Set so it'll make a popup window if the admin is ANGRY
@@ -133,8 +131,8 @@
 	sanitize(msg)
 
 	if(length(msg) > 400) // TODO: if message length is over 400, divide it up into seperate messages, the message length restriction is based on IRC limitations.  Probably easier to do this on the bots ends.
-		src << "\red Your message was not sent because it was more then 400 characters find your message below for ease of copy/pasting"
-		src << "\blue [msg]"
+		src << "<span class='alert'>Your message was not sent because it was more then 400 characters find your message below for ease of copy/pasting</span>"
+		src << "<span class='notice'>[msg]</span>"
 		return
 
 	send2adminirc("PlayerPM from [key_name(src)]: [html_decode(msg)]")

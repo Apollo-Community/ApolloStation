@@ -4,14 +4,15 @@
 	name = "Emergency Floodlight"
 	icon = 'icons/obj/machines/floodlight.dmi'
 	icon_state = "flood00"
-	light_color = "#4C4C3D"
 	density = 1
 	var/on = 0
 	var/obj/item/weapon/cell/high/cell = null
 	var/use = 5
 	var/unlocked = 0
 	var/open = 0
-	var/brightness_on = 8		//can't remember what the maxed out value is
+
+	var/brightness_range = 6
+	var/brightness_power = 1
 
 /obj/machinery/floodlight/New()
 	src.cell = new(src)
@@ -50,7 +51,7 @@
 
 	if(on)
 		on = 0
-		user << "\blue You turn off the light"
+		user << "<span class='notice'>You turn off the light</span>"
 		set_light(0)
 	else
 		if(!cell)
@@ -58,8 +59,8 @@
 		if(cell.charge <= 0)
 			return
 		on = 1
-		user << "\blue You turn on the light"
-		set_light(brightness_on)
+		user << "<span class='notice'>You turn on the light</span>"
+		set_light(brightness_range, brightness_power, light_color)
 
 	updateicon()
 

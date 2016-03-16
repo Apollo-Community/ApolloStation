@@ -1,3 +1,5 @@
+/atom/movable/var/can_fall = 1 // Can the object fall down z-levels?
+
 /turf/simulated/floor/open
 	name = "open space"
 	intact = 0
@@ -20,7 +22,13 @@
 				if(!floorbelow) //make sure that there is actually something below
 					if(!getbelow())
 						return
+				if( istype( floorbelow, /turf/space ))
+					return
+
 				if(AM)
+					if( !AM.can_fall )
+						return
+
 					var/area/areacheck = get_area(src)
 					var/blocked = 0
 					var/soft = 0
@@ -84,21 +92,24 @@
 		if(O.level == 1)
 			O.hide(0)
 
+/turf/simulated/floor/open/ex_act(severity)
+	// cant destroy empty space with an ordinary bomb
+	return
+
+/*
 //overwrite the attackby of space to transform it to openspace if necessary
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
 	if (istype(C, /obj/item/stack/cable_coil) && src.hasbelow())
 		var/turf/simulated/floor/open/W = src.ChangeTurf(/turf/simulated/floor/open)
 		W.attackby(C, user)
+		W.addToZProcess()
 		return
 	..()
-
-/turf/simulated/floor/open/ex_act(severity)
-	// cant destroy empty space with an ordinary bomb
-	return
+*/
 
 /turf/simulated/floor/open/attackby(obj/item/C as obj, mob/user as mob)
 	(..)
-	if (istype(C, /obj/item/stack/cable_coil))
+	if( !istype( floorbelow, /turf/space ) && istype( C, /obj/item/stack/cable_coil ))
 		var/obj/item/stack/cable_coil/cable = C
 		cable.turf_place(src, user)
 		return
@@ -109,7 +120,7 @@
 			return
 		var/obj/item/stack/rods/R = C
 		if (R.use(1))
-			user << "\blue Constructing support lattice ..."
+			user << "<span class='notice'>Constructing support lattice ...</span>"
 			playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
 			ReplaceWithLattice()
 		return
@@ -126,5 +137,5 @@
 			S.use(1)
 			return
 		else
-			user << "\red The plating is going to need some support."
+			user << "<span class='alert'>The plating is going to need some support.</span>"
 	return

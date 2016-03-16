@@ -1,3 +1,5 @@
+var/global/list/all_drone_fabricators = list()
+
 /proc/count_drones()
 	var/drones = 0
 	for(var/mob/living/silicon/robot/drone/D in world)
@@ -15,8 +17,8 @@
 	idle_power_usage = 20
 	active_power_usage = 5000
 
-	var/fabricator_tag = "Exodus"
-	var/drone_progress = 0
+	var/fabricator_tag = "NSS Apollo"
+	var/drone_progress = 100
 	var/produce_drones = 1
 	var/time_last_drone = 500
 	var/drone_type = /mob/living/silicon/robot/drone
@@ -26,6 +28,12 @@
 
 /obj/machinery/drone_fabricator/New()
 	..()
+
+	all_drone_fabricators += src
+
+/obj/machinery/drone_fabricator/Destroy()
+	..()
+	all_drone_fabricators -= src
 
 /obj/machinery/drone_fabricator/power_change()
 	..()
@@ -126,18 +134,18 @@
 		usr << "You must wait 10 minutes to respawn as a drone!"
 		return
 
-	var/list/all_fabricators = list()
-	for(var/obj/machinery/drone_fabricator/DF in world)
+	var/list/valid_spawns = list()
+	for(var/obj/machinery/drone_fabricator/DF in all_drone_fabricators )
 		if(DF.stat & NOPOWER || !DF.produce_drones)
 			continue
 		if(DF.drone_progress >= 100)
-			all_fabricators[DF.fabricator_tag] = DF
+			valid_spawns[DF.fabricator_tag] = DF
 
-	if(!all_fabricators.len)
+	if(!valid_spawns.len)
 		src << "<span class='danger'>There are no available drone spawn points, sorry.</span>"
 		return
 
-	var/choice = input(src,"Which fabricator do you wish to use?") as null|anything in all_fabricators
+	var/choice = input(src,"Which fabricator do you wish to use?") as null|anything in valid_spawns
 	if(choice)
-		var/obj/machinery/drone_fabricator/chosen_fabricator = all_fabricators[choice]
+		var/obj/machinery/drone_fabricator/chosen_fabricator = valid_spawns[choice]
 		chosen_fabricator.create_drone(src.client)

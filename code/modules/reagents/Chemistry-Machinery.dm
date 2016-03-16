@@ -11,6 +11,7 @@
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
+	req_access = list(access_chemistry)
 	use_power = 1
 	idle_power_usage = 40
 	var/ui_title = "Chem Dispenser 5000"
@@ -403,7 +404,10 @@
 				return
 
 			if (href_list["createpill_multiple"])
-				count = Clamp(isgoodnumber(input("Select the number of pills to make.", 10, pillamount) as num),1,max_pill_count)
+				count = isgoodnumber(input("Select the number of pills to make.", 10, pillamount) as num)
+
+			if(count > max_pill_count)
+				return
 
 			if(reagents.total_volume/count < 1) //Sanity checking.
 				return
@@ -823,7 +827,7 @@
 		//Sheets
 		/obj/item/stack/sheet/mineral/phoron = list("phoron" = 20),
 		/obj/item/stack/sheet/metal = list("iron" = 20),
-		/obj/item/stack/sheet/plasteel = list("iron" = 20, "phoron" = 20),
+		/obj/item/stack/sheet/alloy/plasteel = list("iron" = 20, "platinum" = 20),
 		/obj/item/stack/sheet/wood = list("carbon" = 20),
 		/obj/item/stack/sheet/glass = list("silicon" = 20),
 		/obj/item/stack/sheet/glass/reinforced = list("silicon" = 20, "iron" = 20),

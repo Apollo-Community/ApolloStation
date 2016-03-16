@@ -2,8 +2,8 @@
 language: c
 
 env:
-  BYOND_MAJOR="509"
-  BYOND_MINOR="1313"
+  BYOND_MAJOR="510"
+  BYOND_MINOR="1327"
 
 before_install:
   - sudo apt-get update -qq
@@ -20,3 +20,8 @@ script:
   - shopt -s globstar
   - (! grep 'step_[xy]' maps/**/*.dmm)
   - DreamMaker apollo.dme
+
+notifications:
+  slack:
+    rooms:
+      - apollo-community:$SLACK_TRAVIS

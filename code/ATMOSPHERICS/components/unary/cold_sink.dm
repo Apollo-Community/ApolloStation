@@ -32,19 +32,6 @@
 	component_parts += new /obj/item/stack/cable_coil(src, 2)
 	RefreshParts()
 
-/obj/machinery/atmospherics/unary/freezer/initialize()
-	if(node)
-		return
-
-	var/node_connect = dir
-
-	for(var/obj/machinery/atmospherics/target in get_step(src, node_connect))
-		if(target.initialize_directions & get_dir(target, src))
-			node = target
-			break
-
-	update_icon()
-
 /obj/machinery/atmospherics/unary/freezer/update_icon()
 	if(node)
 		if(use_power && cooling)
@@ -165,12 +152,12 @@
 	power_rating = max_power_rating * (power_setting/100)
 
 /obj/machinery/atmospherics/unary/freezer/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(default_deconstruction_screwdriver(user, O))
-		return
-	if(default_deconstruction_crowbar(user, O))
-		return
-
-	..()
+	if(istype(O, /obj/item/weapon/screwdriver/))
+		default_deconstruction_screwdriver(user, icon_state, icon_state, O)
+	if(istype(O, /obj/item/weapon/wrench/))
+		..()
+	if(istype(O, /obj/item/weapon/crowbar/))
+		default_deconstruction_crowbar(O)
 
 /obj/machinery/atmospherics/unary/freezer/examine(mob/user)
 	..(user)

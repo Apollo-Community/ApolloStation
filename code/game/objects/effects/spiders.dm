@@ -22,9 +22,9 @@
 
 /obj/effect/spider/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(W.attack_verb.len)
-		visible_message("\red <B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
+		visible_message("<span class='alert'><B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".</span>")]")
 	else
-		visible_message("\red <B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]")
+		visible_message("<span class='alert'><B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".</span>")]")
 
 	var/damage = W.force / 4.0
 
@@ -64,7 +64,7 @@
 		return 1
 	else if(istype(mover, /mob/living))
 		if(prob(50))
-			mover << "\red You get stuck in \the [src] for a moment."
+			mover << "<span class='alert'>You get stuck in \the [src] for a moment.</span>"
 			return 0
 	else if(istype(mover, /obj/item/projectile))
 		return prob(30)
@@ -105,6 +105,11 @@
 		//50% chance to grow up
 		if(prob(50))
 			amount_grown = 1
+
+/obj/effect/spider/spiderling/attack_hand(mob/user as mob)
+	visible_message("<span class='alert'><B>\The [src] has been stomped on by [user]</span>")
+	health -= 1 // 3 stomps, these are robust bastards.
+	healthcheck()
 
 /obj/effect/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
@@ -150,7 +155,7 @@
 							return
 
 						if(prob(50))
-							src.visible_message("\blue You hear something squeezing through the ventilation ducts.",2)
+							src.visible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>",2)
 						sleep(travel_time)
 
 						if(!exit_vent || exit_vent.welded)
@@ -172,7 +177,7 @@
 			var/target_atom = pick(nearby)
 			walk_to(src, target_atom, 5)
 			if(prob(25))
-				src.visible_message("\blue \the [src] skitters[pick(" away"," around","")].")
+				src.visible_message("<span class='notice'>\the [src] skitters[pick(" away</span>"," around","")].")
 	else if(prob(5))
 		//vent crawl!
 		for(var/obj/machinery/atmospherics/unary/vent_pump/v in view(7,src))
@@ -182,7 +187,7 @@
 				break
 
 	if(prob(1))
-		src.visible_message("\blue \the [src] chitters.")
+		src.visible_message("<span class='notice'>\the [src] chitters.</span>")
 	if(isturf(loc) && amount_grown > 0)
 		amount_grown += rand(0,2)
 		if(amount_grown >= 100)
@@ -206,7 +211,7 @@
 		icon_state = pick("cocoon1","cocoon2","cocoon3")
 
 /obj/effect/spider/cocoon/Destroy()
-	src.visible_message("\red \the [src] splits open.")
+	src.visible_message("<span class='alert'>\the [src] splits open.</span>")
 	for(var/atom/movable/A in contents)
 		A.loc = src.loc
 	return ..()

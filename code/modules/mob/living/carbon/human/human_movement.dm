@@ -48,7 +48,7 @@
 	if(wear_suit)
 		tally += wear_suit.slowdown
 
-	if(istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
+	if(istype(buckled, /obj/structure/bed/chair/wheelchair))
 		for(var/organ_name in list("l_hand","r_hand","l_arm","r_arm"))
 			var/datum/organ/external/E = get_organ(organ_name)
 			if(!E || (E.status & ORGAN_DESTROYED))
@@ -131,3 +131,7 @@
 
 	prob_slip = round(prob_slip)
 	return(prob_slip)
+
+/mob/living/carbon/human/proc/bounce()
+	src.set_dir(reverse_dir[src.dir])
+	playsound( get_turf( src ), 'sound/effects/bounce.ogg', 100, 1 )

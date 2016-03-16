@@ -1,7 +1,6 @@
 /* Diffrent misc types of sheets
  * Contains:
  *		Metal
- *		Plasteel
  *		Wood
  *		Cloth
  *		Cardboard
@@ -11,24 +10,24 @@
  * Metal
  */
 var/global/list/datum/stack_recipe/metal_recipes = list ( \
-	new/datum/stack_recipe("stool", /obj/structure/stool, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("chair", /obj/structure/stool/bed/chair, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("bed", /obj/structure/stool/bed, 2, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("stool", /obj/item/weapon/stool, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("chair", /obj/structure/bed/chair, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("bed", /obj/structure/bed, 2, one_per_turf = 1, on_floor = 1), \
 	null, \
 	new/datum/stack_recipe_list("office chairs",list( \
-		new/datum/stack_recipe("dark office chair", /obj/structure/stool/bed/chair/office/dark, 5, one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("light office chair", /obj/structure/stool/bed/chair/office/light, 5, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("dark office chair", /obj/structure/bed/chair/office/dark, 5, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("light office chair", /obj/structure/bed/chair/office/light, 5, one_per_turf = 1, on_floor = 1), \
 		), 5), \
 	new/datum/stack_recipe_list("comfy chairs", list( \
-		new/datum/stack_recipe("beige comfy chair", /obj/structure/stool/bed/chair/comfy/beige, 2, one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("black comfy chair", /obj/structure/stool/bed/chair/comfy/black, 2, one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("brown comfy chair", /obj/structure/stool/bed/chair/comfy/brown, 2, one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("lime comfy chair", /obj/structure/stool/bed/chair/comfy/lime, 2, one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("teal comfy chair", /obj/structure/stool/bed/chair/comfy/teal, 2, one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("red comfy chair", /obj/structure/stool/bed/chair/comfy/red, 2, one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("blue comfy chair", /obj/structure/stool/bed/chair/comfy/blue, 2, one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("purple comfy chair", /obj/structure/stool/bed/chair/comfy/purp, 2, one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("green comfy chair", /obj/structure/stool/bed/chair/comfy/green, 2, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("beige comfy chair", /obj/structure/bed/chair/comfy/beige, 2, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("black comfy chair", /obj/structure/bed/chair/comfy/black, 2, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("brown comfy chair", /obj/structure/bed/chair/comfy/brown, 2, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("lime comfy chair", /obj/structure/bed/chair/comfy/lime, 2, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("teal comfy chair", /obj/structure/bed/chair/comfy/teal, 2, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("red comfy chair", /obj/structure/bed/chair/comfy/red, 2, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("blue comfy chair", /obj/structure/bed/chair/comfy/blue, 2, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("purple comfy chair", /obj/structure/bed/chair/comfy/purp, 2, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("green comfy chair", /obj/structure/bed/chair/comfy/green, 2, one_per_turf = 1, on_floor = 1), \
 		), 2), \
 	null, \
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts, 2), \
@@ -132,54 +131,6 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 		else
 			icon_state = "[item_state]-5"
 
-
-/*
- * Plasteel
- */
-var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
-	//new/datum/stack_recipe("machine frame", /obj/machinery/constructable_frame/machine_frame/plasteel, 5, time = 25, one_per_turf = 1, on_floor = 1), \
-	//new/datum/stack_recipe("wall frame", /obj/item/wall_frame/plasteel, 2), \
-	//new/datum/stack_recipe("tall machine frame", /obj/machinery/constructable_frame/machine_frame/tall/plasteel, 5, time = 25, one_per_turf = 1, on_floor = 1), \
-	/*new/datum/stack_recipe("device frame", /obj/item/device_frame/plasteel, 2), \ */
-	/*new/datum/stack_recipe("tile frame", /obj/machinery/constructable_frame/machine_frame/plasteel, 5, time = 25, one_per_turf = 1, on_floor = 1), \ */
-	/*new/datum/stack_recipe("computer frame", /obj/structure/computerframe/plasteel, 5, time = 25, one_per_turf = 1, on_floor = 1), \*/
-	null, \
-	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = 1), \
-	new/datum/stack_recipe("Metal crate", /obj/structure/closet/crate, 10, time = 50, one_per_turf = 1), \
-	new/datum/stack_recipe("RUST fuel assembly port frame", /obj/item/rust_fuel_assembly_port_frame, 12, time = 50, one_per_turf = 1), \
-	new/datum/stack_recipe("RUST fuel compressor frame", /obj/item/rust_fuel_compressor_frame, 12, time = 50, one_per_turf = 1), \
-	new/datum/stack_recipe("knife grip", /obj/item/butterflyhandle, 4, time = 20, one_per_turf = 0, on_floor = 1),
-	)
-
-/obj/item/stack/sheet/plasteel
-	name = "plasteel"
-	singular_name = "plasteel sheet"
-	desc = "This sheet is an alloy of steel and phoron."
-	icon = 'icons/obj/items/materials.dmi'
-	icon_state = "plasteel-1"
-	item_state = "plasteel"
-	matter = list("metal" = 7500)
-	throwforce = 15.0
-	flags = CONDUCT
-	origin_tech = "materials=2"
-
-/obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
-	recipes = plasteel_recipes
-	return ..()
-
-/obj/item/stack/sheet/plasteel/update_icon()
-	switch(amount)
-		if(1)
-			icon_state = "[item_state]-1"
-		if(2 to 16)
-			icon_state = "[item_state]-2"
-		if(17 to 32)
-			icon_state = "[item_state]-3"
-		if(33 to 49)
-			icon_state = "[item_state]-4"
-		else
-			icon_state = "[item_state]-5"
-
 /*
  * Wood
  */
@@ -187,7 +138,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("wooden sandals", /obj/item/clothing/shoes/sandal, 1), \
 	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20), \
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts/wood, 2), \
-	new/datum/stack_recipe("wooden chair", /obj/structure/stool/bed/chair/wood/normal, 3, time = 10, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("wooden chair", /obj/structure/bed/chair/wood, 3, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("wooden barricade", /obj/structure/barricade/wooden, 5, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("crossbow frame", /obj/item/weapon/crossbowframe, 5, time = 25, one_per_turf = 0, on_floor = 0), \
 	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 20, one_per_turf = 1, on_floor = 1), \

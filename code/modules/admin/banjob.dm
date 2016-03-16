@@ -5,11 +5,13 @@ var/jobban_keylist[0]		//to store the keys & ranks
 
 /proc/jobban_fullban(mob/M, rank, reason)
 	if (!M || !M.key) return
-	jobban_keylist.Add(text("[M.ckey] - [rank] ## [reason]"))
+	var/ckey = ckey(M.ckey)
+	jobban_keylist.Add(text("[ckey] - [rank] ## [reason]"))
 	jobban_savebanfile()
 
 /proc/jobban_client_fullban(ckey, rank)
 	if (!ckey || !rank) return
+	ckey = ckey(ckey)
 	jobban_keylist.Add(text("[ckey] - [rank]"))
 	jobban_savebanfile()
 
@@ -19,15 +21,15 @@ var/jobban_keylist[0]		//to store the keys & ranks
 		/*
 		if(_jobban_isbanned(M, rank)) return "Reason Unspecified"	//for old jobban
 		*/
-
+		var/ckey = ckey(M.ckey)
 		if (guest_jobbans(rank))
-			if(config.guest_jobban && IsGuestKey(M.key))
+			if(config.guest_jobban && IsGuestKey(ckey))
 				return "Guest Job-ban"
-			if(config.usewhitelist && !check_whitelist(M))
+			if(config.usewhitelist && !is_whitelisted(M))
 				return "Whitelisted Job"
 
 		for (var/s in jobban_keylist)
-			if( findtext(s,"[M.ckey] - [rank]") == 1 )
+			if( findtext(s,"[ckey] - [rank]") == 1 )
 				var/startpos = findtext(s, "## ")+3
 				if(startpos && startpos<length(s))
 					var/text = copytext(s, startpos, 0)

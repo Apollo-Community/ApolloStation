@@ -104,7 +104,7 @@
 
 /obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod_berth/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/emag) && !emagged)
-		user << "\blue You emag the [src], arming the escape pod!"
+		user << "<span class='notice'>You emag the [src], arming the escape pod!</span>"
 		emagged = 1
 		if (istype(docking_program, /datum/computer/file/embedded_program/docking/simple/escape_pod))
 			var/datum/computer/file/embedded_program/docking/simple/escape_pod/P = docking_program

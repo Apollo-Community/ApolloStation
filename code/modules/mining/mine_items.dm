@@ -47,6 +47,14 @@
 	light_color = "#1A0A00"
 	brightness_on = 6			// light_range when on
 
+/obj/item/device/flashlight/lantern/update_brightness(var/mob/user = null)
+	if(on)
+		icon_state = "[initial(icon_state)]-on"
+		set_light(brightness_on, 6) // 6 as light power is to compensate for the light color
+	else
+		icon_state = initial(icon_state)
+		set_light(0)
+
 /*****************************Pickaxe********************************/
 
 /obj/item/weapon/pickaxe

@@ -14,6 +14,7 @@
 	if(client)
 		handle_regular_hud_updates()
 		update_items()
+
 	if (src.stat != DEAD) //still using power
 		use_power()
 		process_killswitch()
@@ -53,7 +54,7 @@
 		src.has_power = 1
 	else
 		if (src.has_power)
-			src << "\red You are now running on emergency backup power."
+			src << "<span class='alert'>You are now running on emergency backup power.</span>"
 		src.has_power = 0
 		if(lights_on) // Light is on but there is no power!
 			lights_on = 0
@@ -142,7 +143,6 @@
 	return 1
 
 /mob/living/silicon/robot/proc/handle_regular_hud_updates()
-
 	if (src.stat == 2 || XRAY in mutations || src.sight_mode & BORGXRAY)
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
@@ -271,9 +271,9 @@
 
 	if ((src.blind && src.stat != 2))
 		if(src.blinded)
-			src.blind.layer = 18
+			src.blind.plane = 0
 		else
-			src.blind.layer = 0
+			src.blind.plane = -100
 			if (src.disabilities & NEARSIGHTED)
 				src.client.screen += global_hud.vimpaired
 
@@ -312,7 +312,7 @@
 		killswitch_time --
 		if(killswitch_time <= 0)
 			if(src.client)
-				src << "\red <B>Killswitch Activated"
+				src << "<span class='alert'><B>Killswitch Activated</span>"
 			killswitch = 0
 			spawn(5)
 				gib()
@@ -323,7 +323,7 @@
 		weaponlock_time --
 		if(weaponlock_time <= 0)
 			if(src.client)
-				src << "\red <B>Weapon Lock Timed Out!"
+				src << "<span class='alert'><B>Weapon Lock Timed Out!</span>"
 			weapon_lock = 0
 			weaponlock_time = 120
 

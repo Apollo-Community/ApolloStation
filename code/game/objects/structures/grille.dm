@@ -37,14 +37,16 @@
 	if(ismob(user)) shock(user, 70)
 
 /obj/structure/grille/attack_hand(mob/user as mob)
-
-	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
-
 	var/damage_dealt = 1
 	var/attack_message = "kicks"
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		if(H.species.can_shred(H))
+			attack_message = "mangles"
+			damage_dealt = 5
+	else if(istype(user, /mob/living/simple_animal/rodent/rat/king)) // NONE STAND BEFORE THE MIGHT OF THE KINGDOM
+		var/mob/living/simple_animal/rodent/rat/king/R = user
+		if( R.canSmashGrille() )
 			attack_message = "mangles"
 			damage_dealt = 5
 
@@ -56,6 +58,7 @@
 	else
 		damage_dealt += 1
 
+	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	attack_generic(user,damage_dealt,attack_message)
 
 /obj/structure/grille/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -93,7 +96,6 @@
 			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] the grille.</span>", \
 								 "<span class='notice'>You have [anchored ? "fastened the grille to" : "unfastened the grill from"] the floor.</span>")
 			return
-
 //window placing begin
 	else if(istype(W,/obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/ST = W
@@ -167,7 +169,6 @@
 // returns 1 if shocked, 0 otherwise
 
 /obj/structure/grille/proc/shock(mob/user as mob, prb)
-
 	if(!anchored || destroyed)		// anchored/destroyed grilles are never connected
 		return 0
 	if(!prob(prb))
@@ -176,6 +177,13 @@
 		return 0
 	var/turf/T = get_turf(src)
 	var/obj/structure/cable/C = T.get_cable_node()
+
+	if(istype(user, /mob/living/simple_animal/rodent/rat/king))
+		var/mob/living/simple_animal/rodent/rat/king/R = user
+		user = R.getMobAttacked()
+		spawn(1)
+			R.update()
+
 	if(C)
 		if(electrocute_mob(user, C, src))
 			if(C.powernet)

@@ -92,9 +92,9 @@ display round(lastgen) and phorontank amount
 	if(!..(user,1 ))
 		return
 	if(active)
-		usr << "\blue The generator is on."
+		usr << "<span class='notice'>The generator is on.</span>"
 	else
-		usr << "\blue The generator is off."
+		usr << "<span class='notice'>The generator is off.</span>"
 
 //A power generator that runs on solid phoron sheets.
 /obj/machinery/power/port_gen/pacman
@@ -148,8 +148,8 @@ display round(lastgen) and phorontank amount
 
 /obj/machinery/power/port_gen/pacman/examine(mob/user)
 	..(user)
-	user << "\blue The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle."
-	if(crit_fail) user << "\red The generator seems to have broken down."
+	user << "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle.</span>"
+	if(crit_fail) user << "<span class='alert'>The generator seems to have broken down.</span>"
 
 /obj/machinery/power/port_gen/pacman/HasFuel()
 	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)
@@ -211,9 +211,9 @@ display round(lastgen) and phorontank amount
 		var/obj/item/stack/addstack = O
 		var/amount = min((max_sheets - sheets), addstack.amount)
 		if(amount < 1)
-			user << "\blue The [src.name] is full!"
+			user << "<span class='notice'>The [src.name] is full!</span>"
 			return
-		user << "\blue You add [amount] sheets to the [src.name]."
+		user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
 		sheets += amount
 		addstack.use(amount)
 		updateUsrDialog()
@@ -227,10 +227,10 @@ display round(lastgen) and phorontank amount
 
 			if(!anchored)
 				connect_to_network()
-				user << "\blue You secure the generator to the floor."
+				user << "<span class='notice'>You secure the generator to the floor.</span>"
 			else
 				disconnect_from_network()
-				user << "\blue You unsecure the generator from the floor."
+				user << "<span class='notice'>You unsecure the generator from the floor.</span>"
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			anchored = !anchored
@@ -239,9 +239,9 @@ display round(lastgen) and phorontank amount
 			open = !open
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if(open)
-				user << "\blue You open the access panel."
+				user << "<span class='notice'>You open the access panel.</span>"
 			else
-				user << "\blue You close the access panel."
+				user << "<span class='notice'>You close the access panel.</span>"
 		else if(istype(O, /obj/item/weapon/crowbar) && open)
 			var/obj/machinery/constructable_frame/machine_frame/new_frame = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			for(var/obj/item/I in component_parts)

@@ -1,4 +1,4 @@
-/turf/simulated/floor/bspace_safe/refueling_floor
+/obj/machinery/floor/refueling_floor
 	name = "Refueling floor"
 	desc = "It has little hoses that come out of the floor when a spacepod hovers over top of them."
 	icon = 'icons/mecha/mech_bay.dmi'
@@ -6,41 +6,35 @@
 	var/list/fuel_tanks = list()
 	var/list/fuel_ports = list()
 	var/obj/spacepod/refueling = null
-	var/datum/global_iterator/refueling_floor/hose
 
-/turf/simulated/floor/bspace_safe/refueling_floor/New()
+/obj/machinery/floor/refueling_floor/New()
 	..()
 
-	processing_objects.Add( src )
 	spawn( 30 )
 		init_devices()
-		hose = new /datum/global_iterator/refueling_floor( list( src ))
 
-/turf/simulated/floor/bspace_safe/refueling_floor/Destroy()
-	processing_objects.Remove( src )
-	qdel( hose )
-
+/obj/machinery/floor/refueling_floor/Destroy()
 	..()
 
-/turf/simulated/floor/bspace_safe/refueling_floor/Entered( var/obj/spacepod/spacepod )
+/obj/machinery/floor/refueling_floor/Crossed( var/obj/spacepod/spacepod )
 	. = ..()
 
 	init_devices( spacepod )
 
 	return
 
-/turf/simulated/floor/bspace_safe/refueling_floor/Exited(atom)
+/obj/machinery/floor/refueling_floor/Uncrossed(atom)
 	. = ..()
 	if( atom == refueling )
 		refueling = null
 		sync_devices()
 	return
 
-/turf/simulated/floor/bspace_safe/refueling_floor/proc/init_devices( var/obj/spacepod/spacepod = null )
+/obj/machinery/floor/refueling_floor/proc/init_devices( var/obj/spacepod/spacepod = null )
 	for( var/obj/machinery/atmospherics/pipe/tank/phoron/tank in range( src, 3 ))
 		fuel_tanks.Add( tank )
 
-	for( var/turf/simulated/floor/bspace_safe/refueling_floor/port in range( src, 3 ))
+	for( var/obj/machinery/floor/refueling_floor/port in range( src, 3 ))
 		fuel_ports.Add( port )
 
 	if( !spacepod ) // If we weren't given one, we better find one
@@ -67,64 +61,41 @@
 
 	return
 
-/turf/simulated/floor/bspace_safe/refueling_floor/proc/sync_devices()
-	for( var/turf/simulated/floor/bspace_safe/refueling_floor/port in fuel_ports )
+/obj/machinery/floor/refueling_floor/proc/sync_devices()
+	for( var/obj/machinery/floor/refueling_floor/port in fuel_ports )
 		port.refueling = src.refueling
 		port.fuel_ports = src.fuel_ports
 		port.fuel_tanks = src.fuel_tanks
-		port.hose = src.hose
 
-/datum/global_iterator/refueling_floor
-	delay = 20
-	check_for_null = 0
+/obj/machinery/floor/refueling_floor/process()
+	if( !refueling )
+		return
 
-/datum/global_iterator/refueling_floor/process( var/turf/simulated/floor/bspace_safe/refueling_floor/hose )
-	if( hose )
-		if( hose.refueling )
-			var/obj/spacepod/refueling = hose.refueling
-			var/datum/gas_mixture/pod = refueling.equipment_system.engine_system.fuel_tank
+	if( !refueling.equipment_system.engine_system )
+		return
 
-			if( !refueling.equipment_system.engine_system ) return
+	var/datum/gas_mixture/pod = refueling.equipment_system.engine_system.fuel_tank
 
-			for( var/obj/machinery/atmospherics/pipe/tank/phoron/tank in hose.fuel_tanks )
+	for( var/obj/machinery/atmospherics/pipe/tank/phoron/tank in fuel_tanks )
+		var/datum/gas_mixture/fuel = tank.air_temporary
+		var/pressure_delta
+		var/output_volume
+		var/air_temperature
+		var/target_pressure = refueling.equipment_system.engine_system.max_pressure // max pressure of the fuel tank
 
-				var/datum/gas_mixture/fuel = tank.air_temporary
-				var/pressure_delta
-				var/output_volume
-				var/air_temperature
-				var/target_pressure = refueling.equipment_system.engine_system.max_pressure // max pressure of the fuel tank
+		pressure_delta = target_pressure-pod.return_pressure()
+		output_volume = pod.volume/16.0
+		air_temperature = fuel.temperature? fuel.temperature : pod.temperature
 
-				pressure_delta = target_pressure-pod.return_pressure()
-				output_volume = pod.volume/16.0
-				air_temperature = fuel.temperature? fuel.temperature : pod.temperature
-	/*
-				testing( "Pressure delta: [pressure_delta]" )
-				testing( "Output volume: [output_volume]" )
-				testing( "Air temperature: [air_temperature]" )
-	*/
-				var/transfer_moles = pressure_delta*output_volume/(air_temperature * R_IDEAL_GAS_EQUATION)
-	//			testing( "Calculated trasnfer moles: [transfer_moles]" )
+		var/transfer_moles = pressure_delta*output_volume/(air_temperature * R_IDEAL_GAS_EQUATION)
 
-				if (isnull(transfer_moles))
-					transfer_moles = fuel.total_moles
-				else
-					transfer_moles = min(fuel.total_moles, transfer_moles)
+		if (isnull(transfer_moles))
+			transfer_moles = fuel.total_moles
+		else
+			transfer_moles = min(fuel.total_moles, transfer_moles)
 
-		/*
-					if(fuel)
-						testing( "Fuel exists and has [fuel.total_moles] mols of gas in it" )
-					else
-						testing( "Fuel does not exist" )
-		*/
-
-	//			testing( "Attempting to merge [transfer_moles] of gas." )
-				var/datum/gas_mixture/removed = fuel.remove(transfer_moles)
-				if (removed) //Just in case
-	//				testing( "Gas succesfully merged!" )
-					pod.merge(removed)
-				else
-	//				testing( "Failed to remove gas!" )
-					return -1
-	//	else
-	//		testing( "No spacepod located!" )
-
+		var/datum/gas_mixture/removed = fuel.remove(transfer_moles)
+		if (removed) //Just in case
+			pod.merge(removed)
+		else
+			return -1

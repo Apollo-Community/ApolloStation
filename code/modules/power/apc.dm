@@ -167,16 +167,16 @@
 			src.update()
 
 /obj/machinery/power/apc/Destroy()
-	if(malfai && operating)
+/*	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
 			if (src.z in config.station_levels) //if (is_type_in_list(get_area(src), the_station_areas))
-				ticker.mode:apcs--
+				ticker.mode:apcs--*/
 	area.power_light = 0
 	area.power_equip = 0
 	area.power_environ = 0
 	area.power_change()
-	if(occupier)
-		malfvacate(1)
+/*	if(occupier)
+		malfvacate(1)*/
 	qdel(wires)
 	if(cell)
 		qdel(cell) // qdel
@@ -191,6 +191,8 @@
 /obj/machinery/power/apc/proc/make_terminal()
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
+	if(terminal)
+		qdel(terminal)
 	terminal = new/obj/machinery/power/terminal(src.loc)
 	terminal.set_dir(tdir)
 	terminal.master = src
@@ -660,35 +662,42 @@
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 
-		if(H.species.flags & IS_SYNTHETIC && H.a_intent == I_GRAB)
+		if(H.species.flags & IS_SYNTHETIC)
+			if(!src.cell)
+				user << "<span class='notice'>This APC has no power cell!</span>"
+				return
 			if(emagged || stat & BROKEN)
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(3, 1, src)
 				s.start()
-				H << "\red The APC power currents surge eratically, damaging your chassis!"
+				H << "<span class='alert'>The APC power currents surge eratically, damaging your chassis!</span>"
 				H.adjustFireLoss(10,0)
-			else if(src.cell && src.cell.charge > 0)
-				if(H.nutrition < 450)
+				return
 
-					if(src.cell.charge >= 500)
-						H.nutrition += 50
-						src.cell.charge -= 500
-					else
-						H.nutrition += src.cell.charge/10
-						src.cell.charge = 0
+			if(H.attached_apc && H.attached_apc == src)
+				H << "<span class='notice'>You remove your fingers from the APC.</span>"
+				H.attached_apc = null
+				charging = 1
+				update_icon()
+				return
 
-					user << "\blue You slot your fingers into the APC interface and siphon off some of the stored charge for your own use."
-					if(src.cell.charge < 0) src.cell.charge = 0
-					if(H.nutrition > 500) H.nutrition = 500
-					src.charging = 1
-
-				else
-					user << "\blue You are already fully charged."
-			else
-				user << "There is no charge to draw from that APC."
-			return
+			// The actual power draining is handled in the life ticker
+			if(H.a_intent == I_GRAB)
+				if(H.nutrition >= 500)
+					H << "<span class='notice'>You're already fully charged!</span>"
+					return
+				H << "<span class='notice'>You slot your fingers in the APC and begin draining power from it.</span>"
+				H.attached_apc = src
+				return
+			else if(H.a_intent == I_DISARM)
+				if(cell.charge >= cell.maxcharge)
+					H << "<span class='notice'>The APC is already fully charged!</span>"
+					return
+				H << "<span class='notice'>You slot your fingers in the APC and begin transferring power to it.</span>"
+				H.attached_apc = src
+				return
 		else if(H.species.can_shred(H))
-			user.visible_message("\red [user.name] slashes at the [src.name]!", "\blue You slash at the [src.name]!")
+			user.visible_message("<span class='alert'>[user.name] slashes at the [src.name]!</span>", "<span class='notice'>You slash at the [src.name]!</span>")
 			playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 
 			var/allcut = wires.IsAllCut()
@@ -696,12 +705,12 @@
 			if(beenhit >= pick(3, 4) && wiresexposed != 1)
 				wiresexposed = 1
 				src.update_icon()
-				src.visible_message("\red The [src.name]'s cover flies open, exposing the wires!")
+				src.visible_message("<span class='alert'>The [src.name]'s cover flies open, exposing the wires!</span>")
 
 			else if(wiresexposed == 1 && allcut == 0)
 				wires.CutAll()
 				src.update_icon()
-				src.visible_message("\red The [src.name]'s wires are shredded!")
+				src.visible_message("<span class='alert'>The [src.name]'s wires are shredded!</span>")
 			else
 				beenhit += 1
 			return
@@ -733,7 +742,7 @@
 
 	return ui_interact(user)
 
-
+/*
 /obj/machinery/power/apc/proc/get_malf_status(mob/user)
 	if (ticker && ticker.mode && (user.mind in ticker.mode.malf_ai) && istype(user, /mob/living/silicon/ai))
 		if (src.malfai == (user:parent ? user:parent : user))
@@ -747,7 +756,7 @@
 			return 1 // 1 = APC not hacked.
 	else
 		return 0 // 0 = User is not a Malf AI
-
+*/
 
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
 	if(!user)
@@ -764,7 +773,7 @@
 		"totalCharging" = round(lastused_charging),
 		"coverLocked" = coverlocked,
 		"siliconUser" = istype(user, /mob/living/silicon),
-		"malfStatus" = get_malf_status(user),
+//		"malfStatus" = get_malf_status(user),
 
 		"powerChannels" = list(
 			list(
@@ -926,7 +935,7 @@
 	else if (href_list["overload"])
 		if(istype(usr, /mob/living/silicon))
 			src.overload_lighting()
-
+/*
 	else if (href_list["malfhack"])
 		var/mob/living/silicon/ai/malfai = usr
 		if(get_malf_status(malfai)==1)
@@ -959,7 +968,7 @@
 	else if (href_list["deoccupyapc"])
 		if(get_malf_status(usr))
 			malfvacate()
-
+*/
 	else if (href_list["toggleaccess"])
 		if(istype(usr, /mob/living/silicon))
 			if(emagged || (stat & (BROKEN|MAINT)))
@@ -973,14 +982,15 @@
 /obj/machinery/power/apc/proc/toggle_breaker()
 	operating = !operating
 
-	if(malfai)
+/*	if(malfai)
 		if (ticker.mode.config_tag == "malfunction")
 			if (src.z in config.station_levels) //if (is_type_in_list(get_area(src), the_station_areas))
-				operating ? ticker.mode:apcs++ : ticker.mode:apcs--
+				operating ? ticker.mode:apcs++ : ticker.mode:apcs--*/
 
 	src.update()
 	update_icon()
 
+/*
 /obj/machinery/power/apc/proc/malfoccupy(var/mob/living/silicon/ai/malf)
 	return
 
@@ -1037,7 +1047,7 @@
 			src.occupier.gib()
 			for(var/obj/item/weapon/pinpointer/point in world)
 				point.the_disk = null //the pinpointer will go back to pointing at the nuke disc.
-
+*/
 
 /obj/machinery/power/apc/proc/ion_act()
 	//intended to be exactly the same as an AI malf attack
@@ -1045,7 +1055,7 @@
 		if(prob(3))
 			src.locked = 1
 			if (src.cell.charge > 0)
-//				world << "\red blew APC in [src.loc.loc]"
+//				world << "<span class='alert'>blew APC in [src.loc.loc]</span>"
 				src.cell.charge = 0
 				cell.corrupt()
 				src.malfhack = 1
@@ -1309,10 +1319,10 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 		terminal = null
 
 /obj/machinery/power/apc/proc/set_broken()
-	if(malfai && operating)
+/*	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
 			if (src.z in config.station_levels) //if (is_type_in_list(get_area(src), the_station_areas))
-				ticker.mode:apcs--
+				ticker.mode:apcs--*/
 	// Aesthetically much better!
 	src.visible_message("<span class='notice'>[src]'s screen flickers with warnings briefly!</span>")
 	spawn(rand(2,5))
@@ -1321,8 +1331,8 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 		operating = 0
 		update_icon()
 		update()
-		if(occupier)
-			malfvacate(1)
+/*		if(occupier)
+			malfvacate(1)*/
 
 // overload all the lights in this APC area
 

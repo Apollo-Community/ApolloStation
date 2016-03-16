@@ -11,13 +11,15 @@ em						{font-style: normal;font-weight: bold;}
 .motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover
 						{color: #638500;}
 
+.centcomm_message		{}
+
 .prefix					{font-weight: bold;}
 .log_message			{color: #386AFF;	font-weight: bold;}
 .attack_message			{color: #FF5050;	font-weight: bold;}
 .debug_message			{color: #00CCFF;	font-weight: bold;}
 .exploit_message		{color: #FF9933;	font-weight: bold;}
 .bews_message			{color: #996633;	font-weight: bold;}
-
+.canon_message			{color: #00CC00;	font-weight: bold;}
 
 /* OOC */
 .ooc					{font-weight: bold;}
@@ -79,6 +81,8 @@ h1.alert, h2.alert		{color: #000000;}
 .moderate				{color: #CC0000;}
 .disarm					{color: #990000;}
 .passive				{color: #660000;}
+.black					{color: #000000;}
+.green					{color: #008000;}
 
 .danger					{color: #ff0000;	font-weight: bold;}
 .warning				{color: #ff0000;	font-style: italic;}

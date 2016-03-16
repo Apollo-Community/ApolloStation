@@ -17,11 +17,11 @@
 		var/fillevel = gulp_size
 
 		if(!R.total_volume || !R)
-			user << "\red The [src.name] is empty!"
+			user << "<span class='alert'>The [src.name] is empty!</span>"
 			return 0
 
 		if(M == user)
-			M << "\blue You swallow a gulp of [src]."
+			M << "<span class='notice'>You swallow a gulp of [src].</span>"
 			if(reagents.total_volume)
 				reagents.trans_to_ingest(M, gulp_size)
 				reagents.reaction(M, INGEST)
@@ -37,10 +37,10 @@
 
 		else if (canopened == 1)
 			for(var/mob/O in viewers(world.view, user))
-				O.show_message("\red [user] attempts to feed [M] [src].", 1)
+				O.show_message("<span class='alert'>[user] attempts to feed [M] [src].</span>", 1)
 			if(!do_mob(user, M)) return
 			for(var/mob/O in viewers(world.view, user))
-				O.show_message("\red [user] feeds [M] [src].", 1)
+				O.show_message("<span class='alert'>[user] feeds [M] [src].</span>", 1)
 			if(!in_unlogged(M))
 				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
 				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
@@ -88,15 +88,15 @@
 		if(!..(user, 1))
 			return
 		if(!reagents || reagents.total_volume==0)
-			user << "\blue \The [src] is empty!"
+			user << "<span class='notice'>\The [src] is empty!</span>"
 		else if (reagents.total_volume<=src.volume/4)
-			user << "\blue \The [src] is almost empty!"
+			user << "<span class='notice'>\The [src] is almost empty!</span>"
 		else if (reagents.total_volume<=src.volume*0.66)
-			user << "\blue \The [src] is half full!"
+			user << "<span class='notice'>\The [src] is half full!</span>"
 		else if (reagents.total_volume<=src.volume*0.90)
-			user << "\blue \The [src] is almost full!"
+			user << "<span class='notice'>\The [src] is almost full!</span>"
 		else
-			user << "\blue \The [src] is full!"*/
+			user << "<span class='notice'>\The [src] is full!</span>"*/
 
 
 //DRINKS

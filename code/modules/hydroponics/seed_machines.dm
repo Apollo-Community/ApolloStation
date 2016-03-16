@@ -96,7 +96,7 @@
 
 	if(istype(W,/obj/item/weapon/screwdriver))
 		open = !open
-		user << "\blue You [open ? "open" : "close"] the maintenance panel."
+		user << "<span class='notice'>You [open ? "open" : "close"] the maintenance panel.</span>"
 		return
 
 	if(open)

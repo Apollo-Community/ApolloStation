@@ -213,7 +213,7 @@ datum
 					var/removed_heat = between(0, volume*WATER_LATENT_HEAT, -environment.get_thermal_energy_change(min_temperature))
 					environment.add_thermal_energy(-removed_heat)
 					if (prob(5))
-						T.visible_message("\red The water sizzles as it lands on \the [T]!")
+						T.visible_message("<span class='alert'>The water sizzles as it lands on \the [T]!</span>")
 
 				else //otherwise, the turf gets wet
 					if(volume >= 3)
@@ -274,10 +274,10 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(ishuman(M))
 					if((M.mind in ticker.mode.cult) && prob(10))
-						M << "\blue A cooling sensation from inside you brings you an untold calmness."
+						M << "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>"
 						ticker.mode.remove_cultist(M.mind)
 						for(var/mob/O in viewers(M, null))
-							O.show_message(text("\blue []'s eyes blink and become clearer.", M), 1) // So observers know it worked.
+							O.show_message(text("<span class='notice'>[]'s eyes blink and become clearer.</span>", M), 1) // So observers know it worked.
 				..()
 				return
 
@@ -347,7 +347,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(istype(M, /mob/living/carbon) && M.stat != DEAD)
-					M << "\red Your flesh rapidly mutates!"
+					M << "<span class='alert'>Your flesh rapidly mutates!</span>"
 					if(M.monkeyizing)	return
 					M.monkeyizing = 1
 					M.canmove = 0
@@ -378,7 +378,7 @@ datum
 			description = "Inaprovaline is a synaptic stimulant and cardiostimulant. Commonly used to stabilize patients."
 			reagent_state = LIQUID
 			color = "#00BFFF" // rgb: 200, 165, 220
-			overdose = REAGENTS_OVERDOSE*2
+			overdose = 0
 			scannable = 1
 
 			custom_metabolism = REAGENTS_METABOLISM
@@ -390,7 +390,7 @@ datum
 					M.adjustToxLoss(REM)
 				else
 					if(M.losebreath >= 10)
-						M.losebreath = max(10, M.losebreath-5)
+						M.losebreath = max(10, M.losebreath-5*REM)
 
 				..()
 				return
@@ -1671,7 +1671,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(prob(10))
-					M << "\red Your insides are burning!"
+					M << "<span class='alert'>Your insides are burning!</span>"
 					M.adjustToxLoss(rand(20,60)*REM)
 				else if(prob(40))
 					M.heal_organ_damage(5*REM,0)
@@ -1802,7 +1802,7 @@ datum
 						for(var/obj/effect/E in W) if(E.name == "Wallrot") del E
 
 						for(var/mob/O in viewers(W, null))
-							O.show_message(text("\blue The fungi are completely dissolved by the solution!"), 1)
+							O.show_message(text("<span class='notice'>The fungi are completely dissolved by the solution!</span>"), 1)
 
 			reaction_obj(var/obj/O, var/volume)
 				if(istype(O,/obj/effect/alien/weeds/))
@@ -2037,8 +2037,38 @@ datum
 						var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 						I.desc = "Looks like this was \an [O] some time ago."
 						for(var/mob/M in viewers(5, O))
-							M << "\red \the [O] melts."
+							M << "<span class='alert'>\the [O] melts.</span>"
 						qdel(O)
+
+			reaction_turf(var/turf/simulated/T, var/volume)
+				if(!istype(T, /turf/simulated/floor)) return
+
+				var/turf/simulated/floor/F = T
+
+				if( !F.burnt && !F.is_plating() && prob(meltprob*4) )
+					F.burn_tile()
+					spawn(50)
+						for(var/mob/M in viewers(5, F))
+							M << "<span class='alert'>The floor tile has melted!</span>"
+						F.make_plating()
+					return
+
+				if( F.is_plating() && !F.burnt && prob(meltprob) )
+					F.burn_tile()
+					for(var/mob/M in viewers(5, F))
+						M << "<span class='alert'>The acid scorches the plating!</span>"
+					return
+
+/* No destroying turfs :<
+				if( F.burnt && !F.intact && meltprob > 10 && prob(meltprob/3) ) // Acid as strong as polyacid and only 10% chance
+					for(var/mob/M in viewers(5, F))
+						M << "<span class='danger'>The acid starts to destroy the plating!</span>"
+					spawn(50)
+						T.ReplaceWithLattice()
+						for(var/mob/M in viewers(5, F))
+							M << "<span class='danger'>The acid eats away the plating!</span>"
+					return
+*/
 
 		toxin/caustic/polyacid
 			name = "Polytrinic acid"
@@ -2136,15 +2166,15 @@ datum
 					if(H.species && !(H.species.flags & (NO_PAIN | IS_SYNTHETIC)) )
 						switch(data)
 							if(1 to 2)
-								H << "\red <b>Your insides feel uncomfortably hot !</b>"
+								H << "<span class='alert'><b>Your insides feel uncomfortably hot !</b></span>"
 							if(2 to 20)
 								if(prob(5))
-									H << "\red <b>Your insides feel uncomfortably hot !</b>"
+									H << "<span class='alert'><b>Your insides feel uncomfortably hot !</b></span>"
 							if(20 to INFINITY)
 								H.apply_effect(2,AGONY,0)
 								if(prob(5))
 									H.visible_message("<span class='warning'>[H] [pick("dry heaves!","coughs!","splutters!")]</span>")
-									H << "\red <b>You feel like your insides are burning !</b>"
+									H << "<span class='alert'><b>You feel like your insides are burning !</b></span>"
 				else if(istype(M, /mob/living/carbon/slime))
 					M.bodytemperature += rand(10,25)
 				holder.remove_reagent("frostoil", 5)
@@ -2188,10 +2218,10 @@ datum
 							if ( !safe_thing )
 								safe_thing = victim.glasses
 						if ( eyes_covered && mouth_covered )
-							victim << "\red Your [safe_thing] protects you from the pepperspray!"
+							victim << "<span class='alert'>Your [safe_thing] protects you from the pepperspray!</span>"
 							return
 						else if ( eyes_covered )	// Reduced effects if partially protected
-							victim << "\red Your [safe_thing] protect you from most of the pepperspray!"
+							victim << "<span class='alert'>Your [safe_thing] protect you from most of the pepperspray!</span>"
 							victim.eye_blurry = max(M.eye_blurry, 15)
 							victim.eye_blind = max(M.eye_blind, 5)
 							victim.Stun(5)
@@ -2200,7 +2230,7 @@ datum
 							//victim.drop_item()
 							return
 						else if ( mouth_covered ) // Mouth cover is better than eye cover
-							victim << "\red Your [safe_thing] protects your face from the pepperspray!"
+							victim << "<span class='alert'>Your [safe_thing] protects your face from the pepperspray!</span>"
 							if (!(victim.species && (victim.species.flags & NO_PAIN)))
 								victim.emote("scream")
 							victim.eye_blurry = max(M.eye_blurry, 5)
@@ -2208,7 +2238,7 @@ datum
 						else // Oh dear :D
 							if (!(victim.species && (victim.species.flags & NO_PAIN)))
 								victim.emote("scream")
-							victim << "\red You're sprayed directly in the eyes with pepperspray!"
+							victim << "<span class='alert'>You're sprayed directly in the eyes with pepperspray!</span>"
 							victim.eye_blurry = max(M.eye_blurry, 25)
 							victim.eye_blind = max(M.eye_blind, 10)
 							victim.Stun(5)
@@ -2226,12 +2256,12 @@ datum
 					if(H.species && !(H.species.flags & (NO_PAIN | IS_SYNTHETIC)) )
 						switch(data)
 							if(1)
-								H << "\red <b>You feel like your insides are burning !</b>"
+								H << "<span class='alert'><b>You feel like your insides are burning !</b></span>"
 							if(2 to INFINITY)
 								H.apply_effect(4,AGONY,0)
 								if(prob(5))
 									H.visible_message("<span class='warning'>[H] [pick("dry heaves!","coughs!","splutters!")]</span>")
-									H << "\red <b>You feel like your insides are burning !</b>"
+									H << "<span class='alert'><b>You feel like your insides are burning !</b></span>"
 				else if(istype(M, /mob/living/carbon/slime))
 					M.bodytemperature += rand(15,30)
 				holder.remove_reagent("frostoil", 5)
@@ -3236,13 +3266,13 @@ datum
 				M.weakened = max(M.weakened, 3)
 				if(!data) data = 1
 				data++
-				M.dizziness +=6
+				M.dizziness += 6*REM
 				switch(data)
 					if(15 to 45)
-						M.stuttering = max(M.stuttering+3,0)
+						M.stuttering = max(M.stuttering+3*REM,0)
 					if(45 to 55)
 						if (prob(50))
-							M.confused = max(M.confused+3,0)
+							M.confused = max(M.confused+3*REM,0)
 					if(55 to 200)
 						M.druggy = max(M.druggy, 55)
 					if(200 to INFINITY)
@@ -3331,7 +3361,7 @@ datum
 				if (adj_sleepy) M.sleeping = max(0,M.sleeping + adj_sleepy)
 
 				if(!src.data || (!isnum(src.data)  && src.data.len)) data = 1   //if it doesn't exist we set it.  if it's a list we're going to set it to 1 as well.  This is to
-				src.data += boozepwr						//avoid a runtime error associated with drinking blood mixed in drinks (demon's blood).
+				src.data += boozepwr*REM*4						//avoid a runtime error associated with drinking blood mixed in drinks (demon's blood).
 
 				var/d = data
 

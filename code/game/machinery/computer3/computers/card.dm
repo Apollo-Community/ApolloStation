@@ -122,9 +122,9 @@
 		for(var/i = 1; i <= 7; i++)
 			accesses += "<td style='width:14%'><b>[get_region_accesses_name(i)]:</b></td>"
 		accesses += "</tr><tr>"
-		for(var/i = 1; i <= 7; i++)
+		for(var/datum/department/D in job_master.departments)
 			accesses += "<td style='width:14%' valign='top'>"
-			for(var/A in get_region_accesses(i))
+			for(var/A in D.region_access)
 				if(A in writer.access)
 					accesses += topic_link(src,"access=[A]","<font color='red'>[replacetext(get_access_desc(A), " ", "&nbsp")]</font>") + " "
 				else

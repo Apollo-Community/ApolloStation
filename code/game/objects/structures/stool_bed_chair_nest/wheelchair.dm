@@ -1,4 +1,4 @@
-/obj/structure/stool/bed/chair/wheelchair
+/obj/structure/bed/chair/wheelchair
 	name = "wheelchair"
 	desc = "You sit in this. Either by will or force."
 	icon_state = "wheelchair"
@@ -9,22 +9,21 @@
 	var/mob/living/pulling = null
 	var/bloodiness
 
-
-/obj/structure/stool/bed/chair/wheelchair/set_dir()
+/obj/structure/bed/chair/wheelchair/set_dir()
 	..()
 	overlays = null
-	var/image/O = image(icon = 'icons/obj/objects.dmi', icon_state = "w_overlay", layer = FLY_LAYER, dir = src.dir)
+	var/image/O = image(icon = 'icons/obj/furniture.dmi', icon_state = "w_overlay", layer = FLY_LAYER, dir = src.dir)
 	overlays += O
 	if(buckled_mob)
 		buckled_mob.set_dir(dir)
 
-/obj/structure/stool/bed/chair/wheelchair/relaymove(mob/user, direction)
+/obj/structure/bed/chair/wheelchair/relaymove(mob/user, direction)
 	// Redundant check?
 	if(user.stat || user.stunned || user.weakened || user.paralysis || user.lying || user.restrained())
 		if(user==pulling)
 			pulling = null
 			user.pulledby = null
-			user << "\red You lost your grip!"
+			user << "<span class='alert'>You lost your grip!</span>"
 		return
 	if(buckled_mob && pulling && user == buckled_mob)
 		if(pulling.stat || pulling.stunned || pulling.weakened || pulling.paralysis || pulling.lying || pulling.restrained())
@@ -42,10 +41,10 @@
 		if(user==pulling)
 			return
 	if(pulling && (get_dir(src.loc, pulling.loc) == direction))
-		user << "\red You cannot go there."
+		user << "<span class='alert'>You cannot go there.</span>"
 		return
 	if(pulling && buckled_mob && (buckled_mob == user))
-		user << "\red You cannot drive while being pushed."
+		user << "<span class='alert'>You cannot drive while being pushed.</span>"
 		return
 
 	// Let's roll
@@ -79,7 +78,7 @@
 		create_track()
 	driving = 0
 
-/obj/structure/stool/bed/chair/wheelchair/Move()
+/obj/structure/bed/chair/wheelchair/Move()
 	..()
 	if(buckled_mob)
 		var/mob/living/occupant = buckled_mob
@@ -96,25 +95,25 @@
 					unbuckle()
 			if (pulling && (get_dist(src, pulling) > 1))
 				pulling.pulledby = null
-				pulling << "\red You lost your grip!"
+				pulling << "<span class='alert'>You lost your grip!</span>"
 				pulling = null
 		else
 			if (occupant && (src.loc != occupant.loc))
 				src.loc = occupant.loc // Failsafe to make sure the wheelchair stays beneath the occupant after driving
 
-/obj/structure/stool/bed/chair/wheelchair/attack_hand(mob/user as mob)
+/obj/structure/bed/chair/wheelchair/attack_hand(mob/user as mob)
 	if (pulling)
 		MouseDrop(usr)
 	else
 		manual_unbuckle(user)
 	return
 
-/obj/structure/stool/bed/chair/wheelchair/MouseDrop(over_object, src_location, over_location)
+/obj/structure/bed/chair/wheelchair/MouseDrop(over_object, src_location, over_location)
 	..()
 	if(over_object == usr && in_range(src, usr))
 		if(!ishuman(usr))	return
 		if(usr == buckled_mob)
-			usr << "\red You realize you are unable to push the wheelchair you sit in."
+			usr << "<span class='alert'>You realize you are unable to push the wheelchair you sit in.</span>"
 			return
 		if(!pulling)
 			pulling = usr
@@ -126,14 +125,14 @@
 		else
 			if(usr != pulling)
 				for(var/mob/O in viewers(pulling, null))
-					O.show_message("\red [usr] breaks [pulling]'s grip on the wheelchair.", 1)
+					O.show_message("<span class='alert'>[usr] breaks [pulling]'s grip on the wheelchair.</span>", 1)
 			else
 				usr << "You let go of \the [name]'s handles."
 			pulling.pulledby = null
 			pulling = null
 		return
 
-/obj/structure/stool/bed/chair/wheelchair/Bump(atom/A)
+/obj/structure/bed/chair/wheelchair/Bump(atom/A)
 	..()
 	if(!buckled_mob)	return
 
@@ -172,7 +171,7 @@
 		else
 			occupant.visible_message("<span class='danger'>[occupant] crashed into \the [A]!</span>")
 
-/obj/structure/stool/bed/chair/wheelchair/proc/create_track()
+/obj/structure/bed/chair/wheelchair/proc/create_track()
 	var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
 	var/newdir = get_dir(get_step(loc, dir), loc)
 	if(newdir == dir)
@@ -186,7 +185,7 @@
 		B.set_dir(newdir)
 	bloodiness--
 
-/obj/structure/stool/bed/chair/wheelchair/buckle_mob(mob/M as mob, mob/user as mob)
+/obj/structure/bed/chair/wheelchair/buckle_mob(mob/M as mob, mob/user as mob)
 	if(M == pulling)
 		pulling = null
 		usr.pulledby = null

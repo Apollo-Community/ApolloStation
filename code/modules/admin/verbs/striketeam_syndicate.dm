@@ -75,13 +75,14 @@ var/global/sent_syndicate_strike_team = 0
 				commandos -= new_syndicate_commando.key
 				new_syndicate_commando.internal = new_syndicate_commando.s_store
 				new_syndicate_commando.internals.icon_state = "internal1"
+				new_syndicate_commando.character.EditCharacterMenu( new_syndicate_commando )
 
 			//So they don't forget their code or mission.
 			if(nuke_code)
-				new_syndicate_commando.mind.store_memory("<B>Nuke Code:</B> \red [nuke_code].")
-			new_syndicate_commando.mind.store_memory("<B>Mission:</B> \red [input].")
+				new_syndicate_commando.mind.store_memory("<B>Nuke Code:</B> <span class='alert'>[nuke_code].</span>")
+			new_syndicate_commando.mind.store_memory("<B>Mission:</B> <span class='alert'>[input].</span>")
 
-			new_syndicate_commando << "\blue You are an Elite Mercenary. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of criminal elements hostile to NanoTrasen. \nYour current mission is: \red<B>[input]</B>"
+			new_syndicate_commando << "<span class='notice'>You are an Elite Mercenary. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of criminal elements hostile to NanoTrasen. \nYour current mission is: </span><span class='alert'><B>[input]</B></span>"
 
 			syndicate_commando_number--
 
@@ -98,7 +99,7 @@ var/global/sent_syndicate_strike_team = 0
 			new /obj/effect/spawner/newbomb/timer/syndicate(L.loc)
 			qdel(L)
 
-	message_admins("\blue [key_name_admin(usr)] has spawned a mercenary strike squad.")
+	message_admins("<span class='notice'>[key_name_admin(usr)] has spawned a mercenary strike squad.</span>")
 	log_admin("[key_name(usr)] used Spawn Mercenary Squad.")
 	feedback_add_details("admin_verb","SDTHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -110,11 +111,11 @@ var/global/sent_syndicate_strike_team = 0
 
 	new_syndicate_commando.gender = pick(MALE, FEMALE)
 
-	var/datum/preferences/A = new()//Randomize appearance for the commando.
-	A.randomize_appearance_for(new_syndicate_commando)
+	var/datum/character/C = new()//Randomize appearance for the commando.
+	C.randomize_appearance_for(new_syndicate_commando)
 
 	new_syndicate_commando.real_name = "[!syndicate_leader_selected ? syndicate_commando_rank : syndicate_commando_leader_rank] [syndicate_commando_name]"
-	new_syndicate_commando.age = !syndicate_leader_selected ? rand(23,35) : rand(35,45)
+	new_syndicate_commando.character.age = !syndicate_leader_selected ? rand(23,35) : rand(35,45)
 
 	new_syndicate_commando.dna.ready_dna(new_syndicate_commando)//Creates DNA.
 

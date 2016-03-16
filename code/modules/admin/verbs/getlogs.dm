@@ -76,6 +76,18 @@
 	src << "Attempting to send file, this may take a fair few minutes if the file is very large."
 	return
 
+/client/proc/getupdatelog()
+	set name = ".getupdatelog"
+	set desc = "Fetch update log generated from in-game updates"
+	set category = null
+
+	if(file_spam_check())
+		return
+
+	message_admins("[key_name_admin(src)] accessed file: update log")
+	src << run( file("data/update_log.txt") )
+	//src << "Attempting to send file, this may take a fair few minutes if the file is very large."		This file should never be huge
+	return
 
 //Other log stuff put here for the sake of organisation
 

@@ -15,8 +15,6 @@ client/proc/one_click_antag()
 		<a href='?src=\ref[src];makeAntag=2'>Make Changlings</a><br>
 		<a href='?src=\ref[src];makeAntag=3'>Make Revs</a><br>
 		<a href='?src=\ref[src];makeAntag=4'>Make Cult</a><br>
-		<a href='?src=\ref[src];makeAntag=5'>Make Malf AI</a><br>
-		<a href='?src=\ref[src];makeAntag=6'>Make Wizard (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=11'>Make Vox Raiders (Requires Ghosts)</a><br>
 		"}
 /* These dont work just yet
@@ -32,7 +30,7 @@ client/proc/one_click_antag()
 	usr << browse(dat, "window=oneclickantag;size=400x400")
 	return
 
-
+/*
 /datum/admins/proc/makeMalfAImode()
 
 	var/list/mob/living/silicon/AIs = list()
@@ -52,7 +50,7 @@ client/proc/one_click_antag()
 		return 1
 
 	return 0
-
+*/
 
 /datum/admins/proc/makeTraitors()
 	var/datum/game_mode/traitor/temp = new
@@ -64,7 +62,7 @@ client/proc/one_click_antag()
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(applicant.client.prefs.be_special & BE_TRAITOR)
+		if(applicant.client.prefs.beSpecial() & BE_TRAITOR)
 			if(!applicant.stat)
 				if(applicant.mind)
 					if (!applicant.mind.special_role)
@@ -96,7 +94,7 @@ client/proc/one_click_antag()
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(applicant.client.prefs.be_special & BE_CHANGELING)
+		if(applicant.client.prefs.beSpecial() & BE_CHANGELING)
 			if(!applicant.stat)
 				if(applicant.mind)
 					if (!applicant.mind.special_role)
@@ -126,7 +124,7 @@ client/proc/one_click_antag()
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(applicant.client.prefs.be_special & BE_REV)
+		if(applicant.client.prefs.beSpecial() & BE_REV)
 			if(applicant.stat == CONSCIOUS)
 				if(applicant.mind)
 					if(!applicant.mind.special_role)
@@ -145,41 +143,6 @@ client/proc/one_click_antag()
 
 	return 0
 
-/datum/admins/proc/makeWizard()
-	var/list/mob/dead/observer/candidates = list()
-	var/mob/dead/observer/theghost = null
-	var/time_passed = world.time
-
-	for(var/mob/dead/observer/G in player_list)
-		if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))
-			spawn(0)
-				switch(alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
-					if("Yes")
-						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
-							return
-						candidates += G
-					if("No")
-						return
-					else
-						return
-
-	sleep(300)
-
-	if(candidates.len)
-		shuffle(candidates)
-		for(var/mob/i in candidates)
-			if(!i || !i.client) continue //Dont bother removing them from the list since we only grab one wizard
-
-			theghost = i
-			break
-
-	if(theghost)
-		var/mob/living/carbon/human/new_character=makeBody(theghost)
-		new_character.mind.make_Wizard()
-		return 1
-
-	return 0
-
 
 /datum/admins/proc/makeCult()
 
@@ -191,7 +154,7 @@ client/proc/one_click_antag()
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(applicant.client.prefs.be_special & BE_CULTIST)
+		if(applicant.client.prefs.beSpecial() & BE_CULTIST)
 			if(applicant.stat == CONSCIOUS)
 				if(applicant.mind)
 					if(!applicant.mind.special_role)
@@ -369,7 +332,7 @@ client/proc/one_click_antag()
 				//So they don't forget their code or mission.
 
 
-				new_syndicate_commando << "\blue You are an Elite Mercenary. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of criminal elements hostile to NanoTrasen. \nYour current mission is: \red<B> [input]</B>"
+				new_syndicate_commando << "<span class='notice'>You are an Elite Mercenary. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of criminal elements hostile to NanoTrasen. \nYour current mission is: </span><span class='alert'><B> [input]</B></span>"
 
 				numagents--
 		if(numagents >= 6)
@@ -390,14 +353,14 @@ client/proc/one_click_antag()
 
 	new_character.gender = pick(MALE,FEMALE)
 
-	var/datum/preferences/A = new()
-	A.randomize_appearance_for(new_character)
+	var/datum/character/C = new()
+	C.randomize_appearance_for(new_character)
 	if(new_character.gender == MALE)
 		new_character.real_name = "[pick(first_names_male)] [pick(last_names)]"
 	else
 		new_character.real_name = "[pick(first_names_female)] [pick(last_names)]"
 	new_character.name = new_character.real_name
-	new_character.age = rand(17,45)
+	new_character.character.age = rand(17,45)
 
 	new_character.dna.ready_dna(new_character)
 	new_character.key = G_found.key
@@ -412,12 +375,12 @@ client/proc/one_click_antag()
 
 	new_syndicate_commando.gender = pick(MALE, FEMALE)
 
-	var/datum/preferences/A = new()//Randomize appearance for the commando.
-	A.randomize_appearance_for(new_syndicate_commando)
+	var/datum/character/C = new()//Randomize appearance for the commando.
+	C.randomize_appearance_for(new_syndicate_commando)
 
 	new_syndicate_commando.real_name = "[!syndicate_leader_selected ? syndicate_commando_rank : syndicate_commando_leader_rank] [syndicate_commando_name]"
 	new_syndicate_commando.name = new_syndicate_commando.real_name
-	new_syndicate_commando.age = !syndicate_leader_selected ? rand(23,35) : rand(35,45)
+	new_syndicate_commando.character.age = !syndicate_leader_selected ? rand(23,35) : rand(35,45)
 
 	new_syndicate_commando.dna.ready_dna(new_syndicate_commando)//Creates DNA.
 
@@ -480,8 +443,8 @@ client/proc/one_click_antag()
 					break
 
 				new_vox.key = theghost.key
-				new_vox << "\blue You are a Vox Primalis, fresh out of the Shoal. Your ship has arrived at a human-meat system hosting the NSV Apollo... or was it the Luna? NSS? Utopia? Nobody is really sure, who cares about stupid meat-names anyway? Everyone is raring to start pillaging! Your current goal is: \red<B> [input]</B>"
-				new_vox << "\red Don't forget to turn on your nitrogen internals!"
+				new_vox << "<span class='notice'>You are a Vox Primalis, fresh out of the Shoal. Your ship has arrived at a human-meat system hosting the NSV Apollo... or was it the Luna? NSS? Utopia? Nobody is really sure, who cares about stupid meat-names anyway? Everyone is raring to start pillaging! Your current goal is: </span><span class='alert'><B> [input]</B></span>"
+				new_vox << "<span class='alert'>Don't forget to turn on your nitrogen internals!</span>"
 
 				raiders--
 			if(raiders > max_raiders)
@@ -495,7 +458,7 @@ client/proc/one_click_antag()
 	var/mob/living/carbon/human/new_vox = new(spawn_location.loc, "Vox")
 
 	new_vox.gender = pick(MALE, FEMALE)
-	new_vox.h_style = "Short Vox Quills"
+	new_vox.character.hair_style = "Short Vox Quills"
 	new_vox.regenerate_icons()
 
 	var/sounds = rand(2,10)
@@ -508,7 +471,7 @@ client/proc/one_click_antag()
 
 	new_vox.real_name = capitalize(newname)
 	new_vox.name = new_vox.real_name
-	new_vox.age = rand(12,20)
+	new_vox.character.age = rand(12,20)
 
 	new_vox.dna.ready_dna(new_vox) // Creates DNA.
 	new_vox.mind_initialize()

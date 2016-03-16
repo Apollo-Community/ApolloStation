@@ -7,6 +7,8 @@
 	//If they're SSD, remove it so they can wake back up.
 	player_logged = 0
 
+	walk(src,0) // Will stop any automagic movement
+
 	//Round specific stuff like hud updates
 	if(ticker && ticker.mode)
 		switch(ticker.mode.name)

@@ -22,7 +22,7 @@
 
 /turf/simulated/Entered(atom/A, atom/OL)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		usr << "<span class='alert'>Movement is admin-disabled.</span>" //This is to identify lag problems
 		return
 
 	if (istype(A,/mob/living/carbon))
@@ -86,7 +86,7 @@
 				bloodDNA = null
 
 		var/noslip = 0
-		for (var/obj/structure/stool/bed/chair/C in loc)
+		for (var/obj/structure/bed/chair/C in loc)
 			if (C.buckled_mob == M)
 				noslip = 1
 		if((wet == 1 && M.m_intent == "walk") || noslip)

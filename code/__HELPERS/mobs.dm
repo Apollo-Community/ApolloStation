@@ -1,5 +1,5 @@
 proc/random_hair_style(gender, species = "Human")
-	var/h_style = "Bald"
+	var/hair_style = "Bald"
 
 	var/list/valid_hairstyles = list()
 	for(var/hairstyle in hair_styles_list)
@@ -13,12 +13,12 @@ proc/random_hair_style(gender, species = "Human")
 		valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
 
 	if(valid_hairstyles.len)
-		h_style = pick(valid_hairstyles)
+		hair_style = pick(valid_hairstyles)
 
-	return h_style
+	return hair_style
 
 proc/random_facial_hair_style(gender, species = "Human")
-	var/f_style = "Shaved"
+	var/hair_face_style = "Shaved"
 
 	var/list/valid_facialhairstyles = list()
 	for(var/facialhairstyle in facial_hair_styles_list)
@@ -33,9 +33,9 @@ proc/random_facial_hair_style(gender, species = "Human")
 		valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
 
 	if(valid_facialhairstyles.len)
-		f_style = pick(valid_facialhairstyles)
+		hair_face_style = pick(valid_facialhairstyles)
 
-		return f_style
+		return hair_face_style
 
 proc/random_name(gender, species = "Human")
 

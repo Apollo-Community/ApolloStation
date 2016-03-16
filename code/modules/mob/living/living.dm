@@ -1,3 +1,24 @@
+/mob/living/New()
+	. = ..()
+	generate_static_overlay()
+	if(istype(static_overlays,/list) && static_overlays.len)
+		for(var/mob/living/silicon/robot/drone/D in player_list)
+			if(D.can_see_static())
+				D.static_overlays.Add(static_overlays["static"])
+				D.client.images.Add(static_overlays["static"])
+
+/mob/living/Destroy()
+	for(var/mob/living/silicon/robot/drone/D in player_list)
+		for(var/image/I in static_overlays)
+			D.static_overlays.Remove(I) //no checks, since it's either there or its not
+			D.client.images.Remove(I)
+			qdel(I)
+			I = null
+	if(static_overlays)
+		static_overlays = null
+
+	. = ..()
+
 //mob verbs are faster than object verbs. See mob/verb/examine.
 /mob/living/verb/pulled(atom/movable/AM as mob|obj in oview(1))
 	set name = "Pull"
@@ -25,7 +46,7 @@
 	if ((src.health < 0 && src.health > -95.0))
 		src.adjustOxyLoss(src.health + 200)
 		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
-		src << "\blue You have given up life and succumbed to death."
+		src << "<span class='notice'>You have given up life and succumbed to death.</span>"
 
 
 /mob/living/proc/updatehealth()
@@ -331,22 +352,6 @@
 /mob/living/proc/UpdateDamageIcon()
 	return
 
-
-/mob/living/proc/Examine_OOC()
-	set name = "Examine Meta-Info (OOC)"
-	set category = "OOC"
-	set src in view()
-
-	if(config.allow_Metadata)
-		if(client)
-			usr << "[src]'s Metainfo:<br>[client.prefs.metadata]"
-		else
-			usr << "[src] does not have any stored infomation!"
-	else
-		usr << "OOC Metadata is not supported by this server!"
-
-	return
-
 /mob/living/Move(a, b, flag)
 	if (buckled)
 		return
@@ -391,7 +396,7 @@
 							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
 							if (istype(G, /obj/item/weapon/grab))
 								for(var/mob/O in viewers(M, null))
-									O.show_message(text("\red [] has been pulled from []'s grip by []", G.affecting, G.assailant, src), 1)
+									O.show_message(text("<span class='alert'>[] has been pulled from []'s grip by []</span>", G.affecting, G.assailant, src), 1)
 								//G = null
 								qdel(G)
 						else
@@ -410,11 +415,11 @@
 						//pull damage with injured people
 							if(!istype(src.loc, /turf/space) && prob(25))
 								M.adjustBruteLoss(1)
-								visible_message("\red \The [M]'s wounds open more from being dragged!")
+								visible_message("<span class='alert'>\The [M]'s wounds open more from being dragged!</span>")
 						if(M.pull_damage())
 							if(prob(25))
 								M.adjustBruteLoss(2)
-								visible_message("\red \The [M]'s wounds worsen terribly from being dragged!")
+								visible_message("<span class='alert'>\The [M]'s wounds worsen terribly from being dragged!</span>")
 								var/turf/location = M.loc
 								if (istype(location, /turf/simulated))
 									location.add_blood(M)
@@ -535,7 +540,7 @@
 	set category = "IC"
 
 	resting = !resting
-	src << "\blue You are now [resting ? "resting" : "getting up"]"
+	src << "<span class='notice'>You are now [resting ? "resting" : "getting up"]</span>"
 
 /mob/living/proc/handle_ventcrawl(var/obj/machinery/atmospherics/unary/vent_pump/vent_found = null, var/ignore_items = 0) // -- TLE -- Merged by Carn
 	if(stat)
@@ -547,7 +552,7 @@
 
 	var/special_fail_msg = can_use_vents()
 	if(special_fail_msg)
-		src << "\red [special_fail_msg]"
+		src << "<span class='alert'>[special_fail_msg]</span>"
 		return
 
 	if(vent_found) // one was passed in, probably from vent/AltClick()
@@ -587,7 +592,7 @@
 			index = "[T.loc.name]\[[i]\]"
 		vents[index] = temp_vent
 	if(!vents.len)
-		src << "\red There are no available vents to travel to, they could be welded."
+		src << "<span class='alert'>There are no available vents to travel to, they could be welded.</span>"
 		return
 
 	var/obj/selection = input("Select a destination.", "Duct System") as null|anything in sortAssoc(vents)
@@ -600,13 +605,13 @@
 	if(!ignore_items)
 		for(var/obj/item/carried_item in contents)//If the monkey got on objects.
 			if( !istype(carried_item, /obj/item/weapon/implant) && !istype(carried_item, /obj/item/clothing/mask/facehugger) )//If it's not an implant or a facehugger
-				src << "\red You can't be carrying items or have items equipped when vent crawling!"
+				src << "<span class='alert'>You can't be carrying items or have items equipped when vent crawling!</span>"
 				return
 
 	if(isslime(src))
 		var/mob/living/carbon/slime/S = src
 		if(S.Victim)
-			src << "\red You'll have to let [S.Victim] go or finish eating \him first."
+			src << "<span class='alert'>You'll have to let [S.Victim] go or finish eating \him first.</span>"
 			return
 
 	var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection]
@@ -630,7 +635,7 @@
 		if(!target_vent)	return
 		if(target_vent.welded)			//the vent can be welded while alien scrolled through the list or travelled.
 			target_vent = vent_found 	//travel back. No additional time required.
-			src << "\red The vent you were heading to appears to be welded."
+			src << "<span class='alert'>The vent you were heading to appears to be welded.</span>"
 		loc = target_vent.loc
 		var/area/new_area = get_area(loc)
 		if(new_area)
@@ -680,7 +685,37 @@
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
 	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
 
-
 /mob/living/do_attack_animation(atom/A)
 	..(A, initial(pixel_y))
 
+/mob/living/proc/generate_static_overlay()
+	if(!istype(static_overlays,/list))
+		static_overlays = list()
+	static_overlays.Add(list("static", "blank", "letter"))
+	var/image/static_overlay = image(getStaticIcon(new/icon(src.icon, src.icon_state)), loc = src)
+	static_overlay.override = 1
+	static_overlays["static"] = static_overlay
+
+	static_overlay = image(getBlankIcon(new/icon(src.icon, src.icon_state)), loc = src)
+	static_overlay.override = 1
+	static_overlays["blank"] = static_overlay
+
+	static_overlay = getLetterImage(src)
+	static_overlay.override = 1
+	static_overlays["letter"] = static_overlay
+
+/mob/living/proc/isDead()
+	if( stat && stat & DEAD )
+		return 0
+
+/mob/living/proc/isConscious()
+	if( stat || stat & DEAD || paralysis || weakened || stunned || sleeping )
+		return 0
+
+	return 1
+
+/mob/living/proc/isAble()
+	if( !isConscious() || restrained() )
+		return 0
+
+	return 1

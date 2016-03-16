@@ -205,15 +205,19 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/Stat()
 	..()
+
+	if( !client )
+		return
+
 	statpanel("Status")
 	if (client.statpanel == "Status")
-		if(ticker)
+/*		if(ticker)
 			if(ticker.mode)
 				//world << "DEBUG: ticker not null"
 				if(ticker.mode.name == "AI malfunction")
 					//world << "DEBUG: malf mode ticker test"
 					if(ticker.mode:malf_mode_declared)
-						stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
+						stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")*/
 		if(emergency_shuttle)
 			var/eta_status = emergency_shuttle.get_status_panel_eta()
 			if(eta_status)
@@ -252,10 +256,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	if(medHUD)
 		medHUD = 0
-		src << "\blue <B>Medical HUD Disabled</B>"
+		src << "<span class='notice'><B>Medical HUD Disabled</B></span>"
 	else
 		medHUD = 1
-		src << "\blue <B>Medical HUD Enabled</B>"
+		src << "<span class='notice'><B>Medical HUD Enabled</B></span>"
 
 /mob/dead/observer/verb/toggle_antagHUD()
 	set category = "Ghost"
@@ -266,11 +270,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	var/mentor = is_mentor(usr.client)
 	if(!config.antag_hud_allowed && (!client.holder || mentor))
-		src << "\red Admins have disabled this for this round."
+		src << "<span class='alert'>Admins have disabled this for this round.</span>"
 		return
 	var/mob/dead/observer/M = src
 	if(jobban_isbanned(M, "AntagHUD"))
-		src << "\red <B>You have been banned from using this feature</B>"
+		src << "<span class='alert'><B>You have been banned from using this feature</B></span>"
 		return
 	if(config.antag_hud_restricted && !M.has_enabled_antagHUD && (!client.holder || mentor))
 		var/response = alert(src, "If you turn this on, you will not be able to take any part in the round.","Are you sure you want to turn this feature on?","Yes","No")
@@ -280,10 +284,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		M.has_enabled_antagHUD = 1
 	if(M.antagHUD)
 		M.antagHUD = 0
-		src << "\blue <B>AntagHUD Disabled</B>"
+		src << "<span class='notice'><B>AntagHUD Disabled</B></span>"
 	else
 		M.antagHUD = 1
-		src << "\blue <B>AntagHUD Enabled</B>"
+		src << "<span class='notice'><B>AntagHUD Enabled</B></span>"
 
 /mob/dead/observer/proc/dead_tele(A in ghostteleportlocs)
 	set category = "Ghost"
@@ -323,7 +327,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(following && following == target)
 			return
 		following = target
-		src << "\blue Now following [target]"
+		src << "<span class='notice'>Now following [target]</span>"
 		spawn(0)
 			while(target && following == target && client)
 				var/turf/T = get_turf(target)
@@ -370,11 +374,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/memory()
 	set hidden = 1
-	src << "\red You are dead! You have no mind to store memory!"
+	src << "<span class='alert'>You are dead! You have no mind to store memory!</span>"
 
 /mob/dead/observer/add_memory()
 	set hidden = 1
-	src << "\red You are dead! You have no mind to store memory!"
+	src << "<span class='alert'>You are dead! You have no mind to store memory!</span>"
 
 /mob/dead/observer/verb/analyze_air()
 	set name = "Analyze Air"
@@ -391,16 +395,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/pressure = environment.return_pressure()
 	var/total_moles = environment.total_moles
 
-	src << "\blue <B>Results:</B>"
+	src << "<span class='notice'><B>Results:</B></span>"
 	if(abs(pressure - ONE_ATMOSPHERE) < 10)
-		src << "\blue Pressure: [round(pressure,0.1)] kPa"
+		src << "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>"
 	else
-		src << "\red Pressure: [round(pressure,0.1)] kPa"
+		src << "<span class='alert'>Pressure: [round(pressure,0.1)] kPa</span>"
 	if(total_moles)
 		for(var/g in environment.gas)
-			src << "\blue [gas_data.name[g]]: [round((environment.gas[g] / total_moles) * 100)]% ([round(environment.gas[g], 0.01)] moles)"
-		src << "\blue Temperature: [round(environment.temperature-T0C,0.1)]&deg;C ([round(environment.temperature,0.1)]K)"
-		src << "\blue Heat Capacity: [round(environment.heat_capacity(),0.1)]"
+			src << "<span class='notice'>[gas_data.name[g]]: [round((environment.gas[g] / total_moles) * 100)]% ([round(environment.gas[g], 0.01)] moles)</span>"
+		src << "<span class='notice'>Temperature: [round(environment.temperature-T0C,0.1)]&deg;C ([round(environment.temperature,0.1)]K)</span>"
+		src << "<span class='notice'>Heat Capacity: [round(environment.heat_capacity(),0.1)]</span>"
 
 
 /mob/dead/observer/verb/toggle_darkness()
@@ -412,32 +416,31 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
 
-/mob/dead/observer/verb/become_mouse()
-	set name = "Become mouse"
+/mob/dead/observer/verb/become_rodent()
+	set name = "Become Rodent"
 	set category = "Ghost"
 
 	if(config.disable_player_mice)
-		src << "<span class='warning'>Spawning as a mouse is currently disabled.</span>"
+		src << "<span class='warning'>Spawning as a rodent is currently disabled.</span>"
 		return
 
 	var/mob/dead/observer/M = usr
 	if(config.antag_hud_restricted && M.has_enabled_antagHUD == 1)
-		src << "<span class='warning'>antagHUD restrictions prevent you from spawning in as a mouse.</span>"
+		src << "<span class='warning'>antagHUD restrictions prevent you from spawning in as a rodent.</span>"
 		return
 
-	var/timedifference = world.time - client.time_died_as_mouse
-	if(client.time_died_as_mouse && timedifference <= mouse_respawn_time * 600)
+	var/timedifference = world.time - client.time_died_as_rodent
+	if(client.time_died_as_rodent && timedifference <= rodent_respawn_time * 600 && !rat_king_spawned)
 		var/timedifference_text
-		timedifference_text = time2text(mouse_respawn_time * 600 - timedifference,"mm:ss")
-		src << "<span class='warning'>You may only spawn again as a mouse more than [mouse_respawn_time] minutes after your death. You have [timedifference_text] left.</span>"
+		timedifference_text = time2text(rodent_respawn_time * 600 - timedifference,"mm:ss")
+		src << "<span class='warning'>You may only spawn again as a rodent more than [rodent_respawn_time] minutes after your death. You have [timedifference_text] left.</span>"
 		return
 
-	var/response = alert(src, "Are you -sure- you want to become a mouse?","Are you sure you want to squeek?","Squeek!","Nope!")
+	var/response = alert(src, "Are you -sure- you want to become a rodent?","Are you sure you want to squeek?","Squeek!","Nope!")
 	if(response != "Squeek!") return  //Hit the wrong key...again.
 
-
-	//find a viable mouse candidate
-	var/mob/living/simple_animal/mouse/host
+	//find a viable rodent candidate
+	var/mob/living/simple_animal/rodent/host
 	var/obj/machinery/atmospherics/unary/vent_pump/vent_found
 	var/list/found_vents = list()
 	for(var/obj/machinery/atmospherics/unary/vent_pump/v in world)
@@ -445,16 +448,25 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			found_vents.Add(v)
 	if(found_vents.len)
 		vent_found = pick(found_vents)
-		host = new /mob/living/simple_animal/mouse(vent_found.loc)
+
+		var/rodent_type
+		if( prob( 5 ) && !rat_king_spawned )
+			rodent_type = /mob/living/simple_animal/rodent/rat/king
+		else if( prob( 50 ) || rat_king_spawned )
+			rodent_type = /mob/living/simple_animal/rodent/rat
+		else
+			rodent_type = /mob/living/simple_animal/rodent
+
+		host = new rodent_type(vent_found.loc)
 	else
-		src << "<span class='warning'>Unable to find any unwelded vents to spawn mice at.</span>"
+		src << "<span class='warning'>Unable to find any unwelded vents to spawn a rodent at.</span>"
 
 	if(host)
 		if(config.uneducated_mice)
 			host.universal_understand = 0
-		announce_ghost_joinleave(src, 0, "They are now a mouse.")
+		announce_ghost_joinleave(src, 0, "They are now a rodent.")
 		host.ckey = src.ckey
-		host << "<span class='info'>You are now a mouse. Try to avoid interaction with players, and do not give hints away that you are more than a simple rodent.</span>"
+		host << "<span class='info'>You are now a rodent. Try to avoid interaction with players, and do not give hints away that you are more than a simple rodent.</span>"
 
 /mob/dead/observer/verb/view_manfiest()
 	set name = "View Crew Manifest"
@@ -474,7 +486,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "If the round is sufficiently spooky, write a short message in blood on the floor or a wall. Remember, no IC in OOC or OOC in IC."
 
 	if(!(config.cult_ghostwriter))
-		src << "\red That verb is not currently permitted."
+		src << "<span class='alert'>That verb is not currently permitted.</span>"
 		return
 
 	if (!src.stat)
@@ -490,7 +502,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			ghosts_can_write = 1
 
 	if(!ghosts_can_write)
-		src << "\red The veil is not thin enough for you to do that."
+		src << "<span class='alert'>The veil is not thin enough for you to do that.</span>"
 		return
 
 	var/list/choices = list()
@@ -540,7 +552,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		W.update_icon()
 		W.message = message
 		W.add_hiddenprint(src)
-		W.visible_message("\red Invisible fingers crudely paint something in blood on [T]...")
+		W.visible_message("<span class='alert'>Invisible fingers crudely paint something in blood on [T]...</span>")
 
 /mob/dead/observer/pointed(atom/A as mob|obj|turf in view())
 	if(!..())
@@ -650,31 +662,34 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(alert(usr, "Do you really want to join the THUNDERDOME?", "Message", "Yes", "No") != "Yes")
 		return
 
-	var/mob/M = usr
+	say_dead_direct( "<span class='name'>[name]</span> no longer [pick("skulks","lurks","prowls","creeps","stalks")] in the realm of the dead. They now fight for honor and glory in the thunderdome.")
+	spawn(50)
+		usr << "<span class='notice'>You have joined as a gladiator in the Thunderdome!"
+	log_admin("[key_name_admin(usr)] has joined the thunderdome!")
 
-	var/new_name = input(usr, "Pick a name","Name") as null|text
-	if(!new_name)//Somebody changed his mind, place is available again.
-		M.name = "Gladiator"
+	var/mob/M = usr
+	create_gladiator( M )
+
+/proc/create_gladiator( var/mob/M )
+	if( !istype( M ))
 		return
 
-	var/mob/living/carbon/human/new_gladiator = create_gladiator( pick(tdome), new_name )
-	new_gladiator.mind.key = usr.key
-	new_gladiator.key = usr.key
+	var/mob/living/carbon/human/new_gladiator = forge_gladiator( pick(tdome) )
 
-	spawn(50)
-		new_gladiator << "\blue You have joined as a gladiator in the Thunderdome!"
-	say_dead_direct( "<span class='name'>[name]</span> no longer [pick("skulks","lurks","prowls","creeps","stalks")] in the realm of the dead. They now fight for honor and glory in the thunderdome.")
-
-	log_admin("[key_name_admin(M)] has joined the thunderdome!")
+	new_gladiator.mind.key = M.key
+	new_gladiator.key = M.key
 	new_gladiator.Paralyse(5)
 
 	qdel(M)
 
+/proc/forge_gladiator( var/obj/spawn_location )
 
-/proc/create_gladiator( var/obj/spawn_location, var/gladiator_name )
-
-	//usr << "\red ERT has been temporarily disabled. Talk to a coder."
+	//usr << "<span class='alert'>ERT has been temporarily disabled. Talk to a coder.</span>"
 	//return
+
+	var/gladiator_name = input("Pick a name","Name") as null|text
+	if(!gladiator_name)//Somebody changed his mind, place is available again.
+		return
 
 	var/mob/living/carbon/human/M = new(null)
 
@@ -682,28 +697,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	//make it a panel, like in character creation
 	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
 	if(new_facial)
-		M.r_facial = hex2num(copytext(new_facial, 2, 4))
-		M.g_facial = hex2num(copytext(new_facial, 4, 6))
-		M.b_facial = hex2num(copytext(new_facial, 6, 8))
+		M.character.hair_face_color = new_facial
 
 	var/new_hair = input("Please select hair color.", "Character Generation") as color
-	if(new_facial)
-		M.r_hair = hex2num(copytext(new_hair, 2, 4))
-		M.g_hair = hex2num(copytext(new_hair, 4, 6))
-		M.b_hair = hex2num(copytext(new_hair, 6, 8))
+	if(new_hair)
+		M.character.hair_color = new_hair
 
 	var/new_eyes = input("Please select eye color.", "Character Generation") as color
 	if(new_eyes)
-		M.r_eyes = hex2num(copytext(new_eyes, 2, 4))
-		M.g_eyes = hex2num(copytext(new_eyes, 4, 6))
-		M.b_eyes = hex2num(copytext(new_eyes, 6, 8))
+		M.character.eye_color = new_eyes
 
 	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
 
 	if (!new_tone)
 		new_tone = 35
-	M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
-	M.s_tone =  -M.s_tone + 35
+	M.character.skin_tone = max(min(round(text2num(new_tone)), 220), 1)
+	M.character.skin_tone =  -M.character.skin_tone + 35
 
 	// hair
 	var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
@@ -719,19 +728,19 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 //hair
 	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in hair_styles_list
 	if(new_hstyle)
-		M.h_style = new_hstyle
+		M.character.hair_style = new_hstyle
 
 	// facial hair
 	var/new_fstyle = input(usr, "Select a facial hair style", "Grooming")  as null|anything in facial_hair_styles_list
 	if(new_fstyle)
-		M.f_style = new_fstyle
+		M.character.hair_face_style = new_fstyle
 
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
 	if (new_gender)
 		if(new_gender == "Male")
-			M.gender = MALE
+			M.character.gender = MALE
 		else
-			M.gender = FEMALE
+			M.character.gender = FEMALE
 
 	M.update_hair()
 	M.update_body()
@@ -739,7 +748,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	M.real_name = gladiator_name
 	M.name = gladiator_name
-	M.age = rand(23,35)
+	M.character.age = rand(23,35)
 
 	M.dna.ready_dna(M)//Creates DNA.
 
@@ -747,8 +756,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	M.mind = new
 	M.mind.current = M
 	M.mind.original = M
-	M.mind.assigned_role = "MODE"
-	M.mind.special_role = "Gladiator"
+	M.mind.assigned_role = "Gladiator"
 	if(!(M.mind in ticker.minds))
 		ticker.minds += M.mind//Adds them to regular mind list.
 	M.equip_gladiator()

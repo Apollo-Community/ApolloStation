@@ -1,5 +1,5 @@
 /obj/item/weapon/tank/jetpack/verb/moveup()
-	set name = "Move Upwards"
+	set name = "Fly Upwards"
 	set category = "Object"
 	if(allow_thrust(0.01, usr))
 		var/turf/controllerlocation = locate(1, 1, usr.z)
@@ -13,19 +13,19 @@
 					for(var/atom/A in T.contents)
 						if(A.density)
 							blocked = 1
-							usr << "\red You bump into [A.name]."
+							usr << "<span class='alert'>You bump into [A.name].</span>"
 							break
 					if(!blocked)
 						usr.Move(T)
 						usr << "You move upwards."
 				else
-					usr << "\red There is something in your way."
+					usr << "<span class='alert'>There is something in your way.</span>"
 		if (legal == 0)
 			usr << "There is nothing of interest in this direction."
 	return 1
 
 /obj/item/weapon/tank/jetpack/verb/movedown()
-	set name = "Move Downwards"
+	set name = "Fly Downwards"
 	set category = "Object"
 	if(allow_thrust(0.01, usr))
 		var/turf/controllerlocation = locate(1, 1, usr.z)
@@ -40,13 +40,13 @@
 					for(var/atom/A in T.contents)
 						if(A.density)
 							blocked = 1
-							usr << "\red You bump into [A.name]."
+							usr << "<span class='alert'>You bump into [A.name].</span>"
 							break
 					if(!blocked)
 						usr.Move(T)
 						usr << "You move downwards."
 				else
-					usr << "\red You cant move through the floor."
+					usr << "<span class='alert'>You cant move through the floor.</span>"
 		if (legal == 0)
 			usr << "There is nothing of interest in this direction."
 	return 1

@@ -206,37 +206,37 @@
 
 /obj/item/clothing/tie/holster/proc/holster(obj/item/I, mob/user as mob)
 	if(holstered)
-		user << "\red There is already a [holstered] holstered here!"
+		user << "<span class='alert'>There is already a [holstered] holstered here!</span>"
 		return
 
 	if (!istype(I, /obj/item/weapon/gun))
-		user << "\red Only guns can be holstered!"
+		user << "<span class='alert'>Only guns can be holstered!</span>"
 		return
 
 	var/obj/item/weapon/gun/W = I
 	if (!can_holster(W))
-		user << "\red This [W] won't fit in the [src]!"
+		user << "<span class='alert'>This [W] won't fit in the [src]!</span>"
 		return
 
 	holstered = W
 	user.drop_from_inventory(holstered)
 	holstered.loc = src
 	holstered.add_fingerprint(user)
-	user.visible_message("\blue [user] holsters the [holstered].", "You holster the [holstered].")
+	user.visible_message("<span class='notice'>[user] holsters the [holstered].</span>", "You holster the [holstered].")
 
 /obj/item/clothing/tie/holster/proc/unholster(mob/user as mob)
 	if(!holstered)
 		return
 
 	if(istype(user.get_active_hand(),/obj) && istype(user.get_inactive_hand(),/obj))
-		user << "\red You need an empty hand to draw the [holstered]!"
+		user << "<span class='alert'>You need an empty hand to draw the [holstered]!</span>"
 	else
 		if(user.a_intent == I_HURT)
-			usr.visible_message("\red [user] draws the [holstered], ready to shoot!", \
-			"\red You draw the [holstered], ready to shoot!")
+			usr.visible_message("<span class='alert'>[user] draws the [holstered], ready to shoot!</span>", \
+			"<span class='alert'>You draw the [holstered], ready to shoot!</span>")
 		else
-			user.visible_message("\blue [user] draws the [holstered], pointing it at the ground.", \
-			"\blue You draw the [holstered], pointing it at the ground.")
+			user.visible_message("<span class='notice'>[user] draws the [holstered], pointing it at the ground.</span>", \
+			"<span class='notice'>You draw the [holstered], pointing it at the ground.</span>")
 		user.put_in_hands(holstered)
 		holstered.add_fingerprint(user)
 		holstered = null
@@ -293,7 +293,7 @@
 
 	if(!H.holstered)
 		if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
-			usr << "\blue You need your gun equiped to holster it."
+			usr << "<span class='notice'>You need your gun equiped to holster it.</span>"
 			return
 		var/obj/item/weapon/gun/W = usr.get_active_hand()
 		H.holster(W, usr)
@@ -406,17 +406,17 @@
 		user << "Waving around a badge before swiping an ID would be pretty pointless."
 		return
 	if(isliving(user))
-		user.visible_message("\red [user] displays their NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.","\red You display your NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.")
+		user.visible_message("<span class='alert'>[user] displays their NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.</span>","<span class='alert'>You display your NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.</span>")
 
 /obj/item/clothing/tie/holobadge/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	if (istype(O, /obj/item/weapon/card/emag))
 		if (emagged)
-			user << "\red [src] is already cracked."
+			user << "<span class='alert'>[src] is already cracked.</span>"
 			return
 		else
 			emagged = 1
-			user << "\red You swipe [O] and crack the holobadge security checks."
+			user << "<span class='alert'>You swipe [O] and crack the holobadge security checks.</span>"
 			return
 
 	else if(istype(O, /obj/item/weapon/card/id) || istype(O, /obj/item/device/pda))
@@ -441,7 +441,7 @@
 
 /obj/item/clothing/tie/holobadge/attack(mob/living/carbon/human/M, mob/living/user)
 	if(isliving(user))
-		user.visible_message("\red [user] invades [M]'s personal space, thrusting [src] into their face insistently.","\red You invade [M]'s personal space, thrusting [src] into their face insistently. You are the law.")
+		user.visible_message("<span class='alert'>[user] invades [M]'s personal space, thrusting [src] into their face insistently.</span>","<span class='alert'>You invade [M]'s personal space, thrusting [src] into their face insistently. You are the law.</span>")
 
 /obj/item/weapon/storage/box/holobadge
 	name = "holobadge box"

@@ -21,14 +21,14 @@
 		if(!istype(src, /mob/living/carbon/brain))
 			if(!istype(M, /mob/living/carbon/slime))
 				if(stat != 2)
-					if(health > -70)
+					if(health > -maxHealth)
 
 						for(var/mob/living/carbon/slime/met in view())
 							if(met.Victim == M && met != src)
 								src << "<i>The [met.name] is already feeding on this subject...</i>"
 								return
-						src << "\blue <i>I have latched onto the subject and begun feeding...</i>"
-						M << "\red <b>The [src.name] has latched onto your head!</b>"
+						src << "<span class='notice'><i>I have latched onto the subject and begun feeding...</i></span>"
+						M << "<span class='alert'><b>The [src.name] has latched onto your head!</b></span>"
 						Feedon(M)
 
 					else
@@ -54,7 +54,7 @@
 	else
 		icon_state = "[colour] baby slime eat"
 
-	while(Victim && M.health > -70 && stat != 2)
+	while(Victim && M.health > -M.maxHealth && stat != 2)
 		canmove = 0
 
 		if(Adjacent(M))
@@ -130,7 +130,7 @@
 	anchored = 0
 
 	if(M)
-		if(M.health <= -70)
+		if(M.health <= -M.maxHealth)
 			M.canmove = 0
 			if(!client)
 				if(Victim && !rabid && !attacked)

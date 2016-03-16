@@ -14,7 +14,7 @@
 
 		if (src.malfhack)
 			if (src.malfhack.aidisabled)
-				src << "\red ERROR: APC access disabled, hack attempt canceled."
+				src << "<span class='alert'>ERROR: APC access disabled, hack attempt canceled.</span>"
 				src.malfhacking = 0
 				src.malfhack = null
 
@@ -26,6 +26,9 @@
 		if (src.machine)
 			if (!( src.machine.check_eye(src) ))
 				src.reset_view(null)
+		// update camera light to the new nearest one
+		if(camera_light_on)
+			lightNearbyCamera()
 
 		// Handle power damage (oxy)
 		if(src:aiRestorePowerRoutine != 0)
@@ -79,19 +82,19 @@
 			if (src:aiRestorePowerRoutine==2)
 				src << "Alert cancelled. Power has been restored without our assistance."
 				src:aiRestorePowerRoutine = 0
-				src.blind.layer = 0
+				src.blind.plane = -100
 				return
 			else if (src:aiRestorePowerRoutine==3)
 				src << "Alert cancelled. Power has been restored."
 				src:aiRestorePowerRoutine = 0
-				src.blind.layer = 0
+				src.blind.plane = -100
 				return
 		else
 
 			//stage = 6
 			src.blind.screen_loc = "1,1 to 15,15"
-			if (src.blind.layer!=18)
-				src.blind.layer = 18
+			if (src.blind.plane != 0)
+				src.blind.plane = 0
 			src.sight = src.sight&~SEE_TURFS
 			src.sight = src.sight&~SEE_MOBS
 			src.sight = src.sight&~SEE_OBJS
@@ -116,7 +119,7 @@
 							if (!istype(T, /turf/space))
 								src << "Alert cancelled. Power has been restored without our assistance."
 								src:aiRestorePowerRoutine = 0
-								src.blind.layer = 0
+								src.blind.plane = -100
 								return
 						src << "Fault confirmed: missing external power. Shutting down main control system to save power."
 						sleep(20)
@@ -153,7 +156,7 @@
 								if (!istype(T, /turf/space))
 									src << "Alert cancelled. Power has been restored without our assistance."
 									src:aiRestorePowerRoutine = 0
-									src.blind.layer = 0 //This, too, is a fix to issue 603
+									src.blind.plane = -100 //This, too, is a fix to issue 603
 									return
 							switch(PRP)
 								if (1) src << "APC located. Optimizing route to APC to avoid needless power waste."

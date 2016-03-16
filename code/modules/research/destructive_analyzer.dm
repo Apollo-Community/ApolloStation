@@ -67,34 +67,34 @@ Note: Must be placed within 3 tiles of the R&D Console
 			qdel(src)
 			return 1
 		else
-			user << "\red You can't load the [src.name] while it's opened."
+			user << "<span class='alert'>You can't load the [src.name] while it's opened.</span>"
 			return 1
 	if (disabled)
 		return
 	if (!linked_console)
-		user << "\red The destructive analyzer must be linked to an R&D console first!"
+		user << "<span class='alert'>The destructive analyzer must be linked to an R&D console first!</span>"
 		return
 	if (busy)
-		user << "\red The destructive analyzer is busy right now."
+		user << "<span class='alert'>The destructive analyzer is busy right now.</span>"
 		return
 	if (istype(O, /obj/item) && !loaded_item)
 		if(isrobot(user)) //Don't put your module items in there!
 			return
 		if(!O.origin_tech)
-			user << "\red This doesn't seem to have a tech origin!"
+			user << "<span class='alert'>This doesn't seem to have a tech origin!</span>"
 			return
 		var/list/temp_tech = ConvertReqString2List(O.origin_tech)
 		if (temp_tech.len == 0)
-			user << "\red You cannot deconstruct this item!"
+			user << "<span class='alert'>You cannot deconstruct this item!</span>"
 			return
 		if(O.reliability < 90 && O.crit_fail == 0)
-			usr << "\red Item is neither reliable enough nor broken enough to learn from."
+			usr << "<span class='alert'>Item is neither reliable enough nor broken enough to learn from.</span>"
 			return
 		busy = 1
 		loaded_item = O
 		user.drop_item()
 		O.loc = src
-		user << "\blue You add the [O.name] to the machine!"
+		user << "<span class='notice'>You add the [O.name] to the machine!</span>"
 		flick("d_analyzer_la", src)
 		spawn(10)
 			icon_state = "d_analyzer_l"

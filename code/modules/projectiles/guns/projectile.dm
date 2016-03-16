@@ -80,7 +80,7 @@
 			loaded += AC
 			num_loaded++
 	if(num_loaded)
-		user << "\blue You load [num_loaded] shell\s into the gun!"
+		user << "<span class='notice'>You load [num_loaded] shell\s into the gun!</span>"
 	A.update_icon()
 	update_icon()
 	return
@@ -93,7 +93,7 @@
 			var/obj/item/ammo_casing/AC = loaded[1]
 			loaded -= AC
 			AC.loc = get_turf(src) //Eject casing onto ground.
-			user << "\blue You unload shell from \the [src]!"
+			user << "<span class='notice'>You unload shell from \the [src]!</span>"
 		if (load_method == MAGAZINE)
 			var/obj/item/ammo_magazine/AM = empty_mag
 			for (var/obj/item/ammo_casing/AC in loaded)
@@ -103,9 +103,9 @@
 			empty_mag = null
 			update_icon()
 			AM.update_icon()
-			user << "\blue You unload magazine from \the [src]!"
+			user << "<span class='notice'>You unload magazine from \the [src]!</span>"
 	else
-		user << "\red Nothing loaded in \the [src]!"
+		user << "<span class='alert'>Nothing loaded in \the [src]!</span>"
 
 
 

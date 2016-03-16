@@ -60,12 +60,19 @@
 	var/turf/destination
 
 	// Getting the amount of time that the object will spend in bluespace
-	var/transit_time = rand( 30, 80 )
+	var/transit_time = rand( 60, 120 )
 
-	if( exit ) // Getting the destination
+	if( istype( exit )) // Getting the destination
 		destination = locate( exit.x-x_off, exit.y-y_off, exit.z ) // Getting the destination relative to where the object left
 	else // If we don't have a destination, toss them somewhere random
-		destination = locate( source.x+pick( rand( -10, source.x-2 ), rand( source.x+2, 10 )), source.y+pick( rand( -10, source.y-2 ), rand( source.y+2, 10 )), source.z )
+		var/exit_x = rand( source.x-20, source.x+20 )
+		var/exit_y = rand( source.y-20, source.y+20 )
+		var/exit_z = pick( config.can_random_teleport_levels )
+
+		destination = locate( exit_x, exit_y, exit_z )
+
+	if( !destination )
+		return
 
 /*
 	animate(A, transform = matrix()*(-2), transform = turn(matrix(), 360), time = 2)
@@ -73,29 +80,17 @@
 	animate(A, transform = null, time = 1)
 */
 
-/* // Decided this was a bad idea after all
-	// Transporting turfs
-	if( istype( A, /turf/simulated ))
-		var/type = A.type
-		var/turf/simulated/transmit = A
-		transmit.ChangeTurf(/turf/space)
-
-		spawn( transit_time )
-			destination.ChangeTurf(type)
-		return
-	else if( istype( A, /turf ))
-		return
-*/
-
 	var/atom/movable/AM = A
 
-	AM.loc = bluespace
+	AM.forceMove( bluespace )
+	bspace.Entered(AM)
 
 	spawn( transit_time )
 		if( !exit )
 			if( istype( AM, /mob ))
 				var/mob/M = AM
-				M << "\red You feel that something went very wrong."
+				M << "<span class='alert'>You feel that something went very wrong.</span>"
 
-		AM.loc = destination
+		AM.forceMove( destination )
+		destination.loc.Entered(AM)
 		playsound(AM.loc, 'sound/effects/pop1.ogg', 80, 1)

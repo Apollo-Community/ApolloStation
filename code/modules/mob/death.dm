@@ -65,7 +65,7 @@
 	layer = MOB_LAYER
 
 	if(blind && client)
-		blind.layer = 0
+		blind.plane = -100
 
 	sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 	see_in_dark = 8
@@ -87,7 +87,13 @@
 	if(ticker && ticker.mode)
 		ticker.mode.check_win()
 
-	if( istype( src, /mob/living/carbon/human ))
+	if( ismonkey(src))			//This needs to be first as moneys are a subtype of humans.
+		statistics.increase_stat("monkey_deaths")
+	else if( ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if( H.mind && H.mind.assigned_role == "Gladiator" )
+			return
 		statistics.increase_stat("deaths")
+
 
 	return 1

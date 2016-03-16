@@ -103,12 +103,12 @@
 		//no living humans, follow a ghost instead.
 
 /obj/singularity/narsie/proc/acquire(var/mob/food)
-	target << "\blue <b>NAR-SIE HAS LOST INTEREST IN YOU</b>"
+	target << "<span class='notice'><b>NAR-SIE HAS LOST INTEREST IN YOU</b></span>"
 	target = food
 	if(ishuman(target))
-		target << "\red <b>NAR-SIE HUNGERS FOR YOUR SOUL</b>"
+		target << "<span class='alert'><b>NAR-SIE HUNGERS FOR YOUR SOUL</b></span>"
 	else
-		target << "\red <b>NAR-SIE HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</b>"
+		target << "<span class='alert'><b>NAR-SIE HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</b></span>"
 
 //Wizard narsie
 
