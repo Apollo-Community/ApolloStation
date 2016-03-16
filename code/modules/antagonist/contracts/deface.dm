@@ -1,6 +1,6 @@
 /datum/contract/deface
 	title = "Deface the Station" // /obj/effect/decal/cleanable/crayon
-	desc = "You might think this childish, but a petty crime repeated many times gets about as bad, or at least as annoying as a felony."
+	desc = "eat crayons and puke on the floor"
 	time_limit = 900
 	reward = 500 // /area/hallway/primary/central_one 
 
