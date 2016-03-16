@@ -31,7 +31,6 @@
 	. += "<hr></center>"
 
 	. += "<h2><span class='white'>Uplink Market</span></h2>"
-	. += "<br>"
 	. += "<h3><span class='white'>Available Funds: $[A.money]</span></h3>"
 
 	for(var/category in ticker.mode.uplink_items)
