@@ -31,6 +31,10 @@
 	if(!M.mind || M.mind == target)	return 0 // why protect yourself
 	if(workers.len > 0)	return 0 // only one person can take this
 
+	// protect and kill contracts for the same guy, nope
+	for(var/datum/contract/kill/C in M.mind.antagonist.active_contracts)
+		if(istype(C) && C.target == target)	return 0
+
 	return 1
 
 /datum/contract/protect/check_completion()
@@ -51,6 +55,6 @@
 	var/datum/mind/list/candidates = list()
 	var/datum/mind/list/taken = get_taken_targets()
 	for(var/datum/contract/kill/C in uplink.contracts)
-		if(!(C.target in taken))
+		if(istype(C) && !(C.target in taken))
 			candidates += C.target
 	return (candidates.len > 0 ? pick(candidates) : null) // pick(candidates) if candidates isn't empty. null otherwise

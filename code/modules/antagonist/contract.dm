@@ -28,6 +28,7 @@
 	return
 
 /datum/contract/proc/can_accept(var/mob/living/M)
+	if(!M.mind.antagonist)	return 0
 	return 1
 
 // Start the contract for a new antag
