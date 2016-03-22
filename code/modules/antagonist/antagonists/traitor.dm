@@ -14,7 +14,7 @@
 
 	if(antag.character.uplink_location == "Headset" && locate(/obj/item/device/radio) in antag.current.contents)
 		I = locate(/obj/item/device/radio) in antag.current.contents
-	
+
 	if(!I)	return
 	if(istype(I, /obj/item/device/radio))
 		var/obj/item/device/radio/R = I
