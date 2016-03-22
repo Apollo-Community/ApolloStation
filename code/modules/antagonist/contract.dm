@@ -33,7 +33,7 @@
 // Start the contract for a new antag
 /datum/contract/proc/start(var/mob/living/worker)
 	if(can_accept(worker))
-		workers += worker
+		workers[++workers.len] = worker
 		worker.mind.antagonist.contract_start(src)
 
 // End the contract
