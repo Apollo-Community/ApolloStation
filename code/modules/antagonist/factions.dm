@@ -17,14 +17,12 @@
 /datum/faction/syndicate
 
 	var/list/alliances = list() // these alliances work together
-	var/list/datum/uplink_items/equipment = list() // list of equipment available for this faction and its prices
+	var/list/datum/uplink_item/equipment = list() // list of equipment available for this faction and its prices
 	var/friendly_identification	// 0 to 2, the level of identification of fellow operatives or allied factions
 								// ID_NONE - no identification clues
 								// ID_PHRASE - faction gives key words and phrases
 								// ID_COMPLETE - faction reveals complete identity/job of other agents
 	var/operative_notes // some notes to pass onto each operative
-
-	var/list/datum/uplink_items/equipment = list() // list of extra equipment available for this faction and its prices
 
 
 /* ----- Begin defining syndicate factions ------ */
