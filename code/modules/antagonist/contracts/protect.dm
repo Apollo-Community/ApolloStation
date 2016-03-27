@@ -28,10 +28,12 @@
 	desc = "[target.current.real_name], the [target.assigned_role] [pick(list("is a key component in our plans", "cannot be allowed to come to harm", "should be staying alive a little longer"))]. [pick(list("Make sure they don't die... until the specified time", "We know somebody wants them dead, so make sure it doesn't happen", "Protect them"))]."
 
 /datum/contract/protect/can_accept(var/mob/living/M)
+	..()
+
 	if(!M.mind || M.mind == target)	return 0 // why protect yourself
 	if(workers.len > 0)	return 0 // only one person can take this
 
-	// protect and kill contracts for the same guy, nope
+	// taking protect and kill contracts for the same guy? nope
 	for(var/datum/contract/kill/C in M.mind.antagonist.active_contracts)
 		if(istype(C) && C.target == target)	return 0
 
