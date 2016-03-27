@@ -44,18 +44,13 @@
 			 new/datum/uplink_item(/obj/item/weapon/grenade/spawnergrenade/bhole, 10000, "Black Hole Grenade", "BH")
 			),
 		"Stealthy and Inconspicuous Weapons" = list(
-			new/datum/uplink_item(/obj/item/weapon/pen/paralysis, 3000, "Paralysis Pen", "PP"),
 			new/datum/uplink_item(/obj/item/weapon/soap/syndie, 1000, "Subversive Soap", "SP"),
 			new/datum/uplink_item(/obj/item/weapon/cartridge/syndicate, 3000, "Detomatix PDA Cartridge", "DC"),
 			new/datum/uplink_item(/obj/item/weapon/cane/pois_cane, 3000, "Poison Tipped Cane", "PC"),
 			new/datum/uplink_item(/obj/item/device/flash/syndicamera, 2000, "Flashy Camera", "CF")
 			),
 		"Stealth and Camouflage Items" = list(
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/chameleon, 3000, "Chameleon Kit", "CB"),
-			new/datum/uplink_item(/obj/item/clothing/shoes/syndigaloshes, 2000, "No-Slip Shoes", "SH"),
-			new/datum/uplink_item(/obj/item/weapon/card/id/syndicate, 2000, "Agent ID card", "AC"),
-			new/datum/uplink_item(/obj/item/clothing/mask/gas/voice, 4000, "Voice Changer", "VC"),
-			new/datum/uplink_item(/obj/item/device/chameleon, 4000, "Chameleon-Projector", "CP")
+			new/datum/uplink_item(/obj/item/clothing/shoes/syndigaloshes, 2000, "No-Slip Shoes", "SH")
 			),
 		"Devices and Tools" = list(
 			new/datum/uplink_item(/obj/item/weapon/card/emag, 4000, "Cryptographic Sequencer", "CS"),
@@ -74,10 +69,7 @@
 			new/datum/uplink_item(/obj/item/weapon/circuitboard/teleporter, 20000, "Teleporter Circuit Board", "TP")
 			),
 		"Implants" = list(
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_freedom, 3000, "Freedom Implant", "FI"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_uplink, 5000, "Uplink Implant", "UI"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_explosive, 6000, "Explosive Implant (DANGER!)", "EI"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_compress, 4000, "Compressed Matter Implant", "CI")
+			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_explosive, 6000, "Explosive Implant (DANGER!)", "EI")
 			),
 		"(Pointless) Badassery" = list(
 			new/datum/uplink_item(/obj/item/toy/syndicateballoon, 10000, "For showing that You Are The BOSS (Useless Balloon)", "BS"),

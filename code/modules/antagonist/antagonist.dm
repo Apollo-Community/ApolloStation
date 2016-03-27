@@ -1,15 +1,16 @@
 /*
 	As of the antagonist update, all antagonists are now handled via antagonist datums!
-	Antagonist take datum/contracts, and are rewarded for successful completion. 
+	Antagonist take /datum/contracts, and are rewarded for successful completion. 
 */
 
 /datum/antagonist
-	var/name = "Antagonist"
-	var/greeting = "You are an antagonist." // Shown when the antag is setup, informing them they're an antagonist
-	var/obligatory_contracts = 1 // How many contracts the antagonist is forced to take from round start
-	var/datum/contract/list/active_contracts = list() // Currently active contracts for the antagonist
-	var/start_cash = 10000 // How much extra cash you start with (for equipment)
+	var/name = "Antagonist" 							// Name of the type of antagonist (Changeling, traitor, etc.)
+	var/greeting = "You are an antagonist." 			// Shown when the antag is setup, informing them they're an antagonist
+	var/obligatory_contracts = 1 						// How many contracts the antagonist is forced to take from round start
+	var/datum/contract/list/active_contracts = list() 	// Currently active contracts for the antagonist
+	var/start_cash = 10000 								// How much extra cash you start with (for equipment)
 
+	var/datum/faction/syndicate/faction = null
 	var/datum/contract/list/completed_contracts = list()
 	var/datum/mind/antag = null
 
@@ -43,6 +44,8 @@
 	A.money += start_cash
 
 	antag.character.temporary = 1
+
+	// greet the antagonist and give them any info concerning their task(s)
 
 	antag.current << "<B><font size=3 color=red>[greeting]</font></B>"
 	antag.current << "Your employer has provided you with an extra $[start_cash] to purchase equipment with."
