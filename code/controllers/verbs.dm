@@ -126,6 +126,9 @@
 		if("Event")
 			debug_variables(event_manager)
 			feedback_add_details("admin_verb", "DEvent")
+		if("Faction controller")
+			debug_variables(faction_controller)
+			feedback_add_details("admin_verb", "FController")
 /*		if("Plants")
 			debug_variables(plant_controller)
 			feedback_add_details("admin_verb", "DPlants")*/
@@ -145,14 +148,14 @@
 	return
 
 // Debug verb for antagonist update
-/client/proc/debug_antag(item in list("Uplink", "Contract Ticker"))
+/client/proc/debug_antag(item in list("Faction controller", "Contract Ticker"))
 	set category = "Debug"
 	set name = "Debug Antagonists"
 	set desc = "Debug antagonist-related stuff"
 
 	if(!holder)	return
 	switch(item)
-		if("Uplink")
-			debug_variables(uplink)
-		if("Contract TIcker")
+		if("Faction controller")
+			debug_variables(faction_controller)
+		if("Contract Ticker")
 			debug_variables(contract_ticker)

@@ -124,7 +124,7 @@ var/global/datum/controller/gameticker/ticker
 	setup_economy()
 	current_state = GAME_STATE_PLAYING
 
-	uplink.update_contracts() // populate the uplink with contracts
+	faction_controller.update_contracts() // populate the factions with contracts
 
 	callHook("roundstart")
 

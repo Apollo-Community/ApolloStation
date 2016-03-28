@@ -7,11 +7,11 @@
 	var/name = "Antagonist" 							// Name of the type of antagonist (Changeling, traitor, etc.)
 	var/greeting = "You are an antagonist." 			// Shown when the antag is setup, informing them they're an antagonist
 	var/obligatory_contracts = 1 						// How many contracts the antagonist is forced to take from round start
-	var/datum/contract/list/active_contracts = list() 	// Currently active contracts for the antagonist
+	var/list/datum/contract/active_contracts = list() 	// Currently active contracts for the antagonist
 	var/start_cash = 10000 								// How much extra cash you start with (for equipment)
 
 	var/datum/faction/syndicate/faction = null
-	var/datum/contract/list/completed_contracts = list()
+	var/list/datum/contract/completed_contracts = list()
 	var/datum/mind/antag = null
 
 /datum/antagonist/New(var/datum/mind/us)
@@ -21,14 +21,22 @@
 	// setup() done in postsetup so that there's actually contracts to pick
 
 /datum/antagonist/proc/setup()
+	faction = faction_controller.get_syndie_faction(antag.current)
+	if(!faction) // we need a faction
+		message_admins("[antag.key]/([antag.current.real_name]) was made an antagonist, but failed to get a faction.")
+		antag.antagonist = null
+		ticker.mode.traitors -= antag
+		qdel(src)
+		return 0
+
 	for(var/i = 0; i < obligatory_contracts; i++)
-		var/datum/contract/C = pick(uplink.contracts)
+		var/datum/contract/C = pick(faction.contracts)
 		while((C in active_contracts) || isnull(C) || !C.can_accept(antag.current))
-			C = pick(uplink.contracts)
+			C = pick(faction.contracts)
 		// no self-harm. try to get a new kill contract, though
 		if(istype(C, /datum/contract/kill))
 			var/datum/contract/kill/K = C
-			var/list/kill_contracts = uplink.get_contracts(/datum/contract/kill) - active_contracts
+			var/list/kill_contracts = faction.get_contracts(/datum/contract/kill) - active_contracts
 			if(kill_contracts.len > 0)
 				while((K in active_contracts) || isnull(K) || !K.can_accept(antag.current))
 					kill_contracts -= K
@@ -36,7 +44,7 @@
 				C = K
 			else
 				while((C in active_contracts) || isnull(C) || !C.can_accept(antag.current))
-					C = pick(uplink.contracts)
+					C = pick(faction.contracts)
 
 		C.start(antag.current)
 
@@ -64,10 +72,11 @@
 /datum/antagonist/proc/equip()
 	return
 	
-/datum/antagonist/proc/contract_start(var/datum/contract/contract)
-	active_contracts += contract
+/datum/antagonist/proc/contract_start(var/datum/contract/C)
+	active_contracts += C
 
-/datum/antagonist/proc/contract_ended(var/datum/contract/contract, var/success = 0)
-	active_contracts -= contract
+/datum/antagonist/proc/contract_ended(var/datum/contract/C, var/success = 0)
+	faction.contract_ended(C)
+	active_contracts -= C
 	if(success)
-		completed_contracts += contract
+		completed_contracts += C

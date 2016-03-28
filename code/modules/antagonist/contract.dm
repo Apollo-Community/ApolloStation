@@ -1,11 +1,14 @@
 /datum/contract
-	var/title = "Ordinary Contract" // Contract name/title
-	var/desc = "Complete the contract" // Contract information, what is required to complete it?
-	var/time_limit = 3600 // How long before the contract expires after it's put on the uplink (in seconds)
-	var/min_notoriety = 0 // The minimum amount of notoriety you need to take on the contract
-	var/rarity = 100 // prob(rarity) is used when determining if the contract should appear on the Uplink
-	var/reward = 1000 // Thaler reward
+	var/title = "Ordinary Contract" 	// Contract name/title
+	var/desc = "Complete the contract" 	// Contract information, what is required to complete it?
+	var/time_limit = 3600 				// How long before the contract expires after it's put on the uplink (in seconds)
+	var/min_notoriety = 0 				// The minimum amount of notoriety you need to take on the contract
+	var/rarity = 100 					// prob(rarity) is used when determining if the contract should appear on the Uplink
+	var/reward = 1000 					// Thaler reward
+	var/affilation = list() 			// If you place names of factions here, this contract will only appear in the Uplink of agents of that faction
+										// E.g. if you define it as list("Cybersun Industries"), only cybersun agents will get the contract in their Uplink
 
+	var/datum/faction/syndicate/faction = null
 	var/mob/living/list/workers = null
 
 	var/finished = 0
@@ -13,9 +16,10 @@
 	var/contract_start = 0
 	var/time_elapsed = 0
 
-/datum/contract/New()
+/datum/contract/New(var/datum/faction/syndicate/F)
 	..()
 	
+	faction = F
 	workers = list()
 
 	time_limit *= 10
@@ -54,7 +58,6 @@
 			reward(worker)
 
 	contract_ticker.contracts -= src
-	uplink.contract_ended(src)
 
 // Check if the contract is completed.
 /datum/contract/proc/check_completion()

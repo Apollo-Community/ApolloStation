@@ -71,7 +71,7 @@
 
 /datum/contract/deface/proc/get_taken_phrases()
 	var/datum/mind/list/taken = list()
-	for(var/datum/contract/deface/C in (uplink.contracts - src))
+	for(var/datum/contract/deface/C in (faction.contracts - src))
 		if(istype(C) && C.phrase)	taken += C.phrase
 	return taken
 

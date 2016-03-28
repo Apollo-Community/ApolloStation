@@ -12,6 +12,8 @@
 	var/list/members = list() 	// a list of mind datums that belong to this faction
 	var/max_op = 0		// the maximum number of members a faction can have (0 for no max)
 
+	var/datum/controller/faction_controller/controller = null
+
 // Factions, members of the syndicate coalition:
 
 /datum/faction/syndicate
@@ -22,8 +24,62 @@
 								// ID_NONE - no identification clues
 								// ID_PHRASE - faction gives key words and phrases
 								// ID_COMPLETE - faction reveals complete identity/job of other agents
+	var/phrases = "" // if friendly_identification == ID_PHRASE, this will be displayed to each agent of the faction
 	var/operative_notes // some notes to pass onto each operative
 
+	var/list/datum/contract/contracts = list() // currently available contracts for this faction
+	var/contracts_min = 5 // minimum amount of contracts that will appear for each
+	var/contracts_max = 10 // maximum amount of contracts that will appear for each
+	var/restricted_contracts_min = 2 // minimum amount of contracts with a notoriety requirement that will appear
+	var/restricted_contracts_max = 4 // minimum amount of contracts with a notoriety requirement that will appear
+
+// Populate contracts with new contracts
+/datum/faction/syndicate/proc/update_contracts()
+	if(contracts.len == (contracts_max + restricted_contracts_max))
+		return
+
+	var/amt_regular_contracts
+	for(var/datum/contract/C in contracts)
+		if(C.min_notoriety == 0)
+			amt_regular_contracts++
+	var/amt_restricted_contracts = contracts.len - amt_regular_contracts
+
+	if(regular_contracts.len == 0)	return
+
+	// Fill up to the minimum + some more
+	var/path = pick(regular_contracts)
+	var/goal = contracts_min + rand(0, contracts_max - amt_regular_contracts)
+	var/safety = contracts_max // You'll never add more than this anyways
+	while(amt_regular_contracts < goal && --safety > 0)
+		contracts += new path(src)
+		path = pick(regular_contracts)
+		amt_regular_contracts++
+
+	if(restricted_contracts.len == 0)	return
+
+	path = pick(restricted_contracts)
+	goal = contracts_min + rand(0, restricted_contracts_max - amt_restricted_contracts)
+	safety = restricted_contracts_max
+	while(amt_regular_contracts < goal && --safety > 0)
+		contracts += new path(src)
+		path = pick(restricted_contracts)
+		amt_restricted_contracts++
+
+// Pretty much just for removing the contract from contracts
+/datum/faction/syndicate/proc/contract_ended(var/datum/contract/C)
+	contracts -= C
+	update_contracts()
+
+// Gets active contracts (of a type)
+/datum/faction/syndicate/proc/get_contracts(var/type)
+	if(!type)
+		return contracts
+
+	var/datum/contract/list/contracts_of_type = list()
+	for(var/datum/contract/C in contracts)
+		if(istype(C, type))
+			contracts_of_type += C
+	return contracts_of_type
 
 /* ----- Begin defining syndicate factions ------ */
 

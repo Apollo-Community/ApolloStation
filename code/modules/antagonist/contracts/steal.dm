@@ -66,7 +66,7 @@
 
 /datum/contract/steal/proc/get_taken_targets()
 	var/datum/mind/list/taken = list()
-	for(var/datum/contract/steal/C in (uplink.contracts - src))
+	for(var/datum/contract/steal/C in (faction.contracts - src))
 		if(istype(C) && C.target)	taken += C.target
 	return taken
 

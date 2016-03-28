@@ -45,7 +45,7 @@
 	// Uplink Contracts
 	. += "<h2><span class='white'>Available Contracts</span></h2>"
 	. += "<table><center>"
-	for(var/datum/contract/C in uplink.contracts - antag.active_contracts)
+	for(var/datum/contract/C in antag.faction.contracts - antag.active_contracts)
 		. += "<tr><table class='outline'>"
 		. += "<th width=20%>[C.title]</th>"
 		. += "<td width=40%><i>[C.desc]</i></td>"
@@ -71,7 +71,7 @@
 	var/end = findtext(href_list["task"], "\]")
 	var/reference = copytext(href_list["task"], start, end+1)
 
-	for(var/datum/contract/C in uplink.contracts)
+	for(var/datum/contract/C in user.mind.antagonist.faction.contracts)
 		if("\ref[C]" == reference)
 			C.start(user)
 

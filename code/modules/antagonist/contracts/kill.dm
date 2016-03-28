@@ -12,7 +12,7 @@
 
 	target = get_target()
 	if(!target)
-		// Let the uplink see if it's a notoriety-restricted contract before we delete ourselves
+		// Let the faction controller see if it's a notoriety-restricted contract before we delete ourselves
 		if(ticker.current_state != 1)
 			qdel(src)
 		return
@@ -43,7 +43,7 @@
 
 /datum/contract/kill/proc/get_taken_targets()
 	var/datum/mind/list/taken = list()
-	for(var/datum/contract/kill/C in uplink.contracts)
+	for(var/datum/contract/kill/C in faction.contracts)
 		if(istype(C) && C.target)	taken += C.target
 	return taken
 
