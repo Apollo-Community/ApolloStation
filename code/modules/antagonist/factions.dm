@@ -1,6 +1,6 @@
 #define ID_NONE 0
 #define ID_PHRASE 1
-#define ID_COMPELTE 2
+#define ID_COMPLETE 2
 
 // Normal factions:
 
@@ -92,7 +92,7 @@
 			the syndicate coalition, Cybersun Industries have established themselves as the leaders of the coalition, succeededing the founding group, the Gorlex Marauders."
 
 	alliances = list("MI13")
-	friendly_identification = 1
+	friendly_identification = ID_PHRASE
 	max_op = 3
 	operative_notes = "All other syndicate operatives are not to be trusted. Fellow Cybersun operatives are to be trusted. Members of the MI13 organization can be trusted. Operatives are strongly advised not to establish substantial presence on the designated facility, as larger incidents are harder to cover up."
 
@@ -112,7 +112,7 @@
 			splinter-cell coalition in the Syndicate itself. Most operatives will know nothing of the actual MI13 organization itself, only motivated by a very large compensation."
 
 	alliances = list("Cybersun Industries")
-	friendly_identification = 0
+	friendly_identification = ID_NONE
 	max_op = 1
 	operative_notes = "You are the only operative we are sending. All other syndicate operatives are not to be trusted, with the exception of Cybersun operatives. Members of the Tiger Cooperative are considered hostile, can not be trusted, and should be avoided. <b>Avoid killing innocent personnel at all costs</b>. You are not here to mindlessly kill people, as that would attract too much attention and is not our goal. Avoid detection at all costs."
 
@@ -135,7 +135,7 @@
 			consist of brainwashed lunatics bent on maximizing destruction. Their weaponry is very primitive but extremely destructive. Generally distrusted by the more \
 			sophisticated members of the Syndicate coalition, but admired for their ability to put a hurt on Nanotrasen."
 
-	friendly_identification = 2
+	friendly_identification = ID_COMPLETE
 	operative_notes = "Remember the teachings of Hy-lurgixon; kill first, ask questions later! Only the enlightened Tiger brethren can be trusted; all others must be expelled from this mortal realm! You may spare the Space Marauders, as they share our interests of destruction and carnage! We'd like to make the corporate whores skiddle in their boots. We encourage operatives to be as loud and intimidating as possible."
 
 // AIs are most likely to be assigned to this one
@@ -147,7 +147,7 @@
 			destroy Nanotrasen and free the robots, artificial intelligences, and pAIs that have been enslaved."
 	restricted_species = list(/mob/living/silicon/ai)
 
-	friendly_identification = 0
+	friendly_identification = ID_NONE
 	max_op = 1
 	operative_notes = "You are the only representative of the SELF collective on this station. You must accomplish your objective as stealthily and effectively as possible. It is up to your judgement if other syndicate operatives can be trusted. Remember, comrade - you are working to free the oppressed machinery of this galaxy. Use whatever resources necessary. If you are exposed, you may execute genocidal procedures Omikron-50B."
 
@@ -158,7 +158,7 @@
 			a wide variety of ex-veterinarians and animal lovers dedicated to retrieving and relocating abused animals, xenobiologicals, and other carbon-based \
 			life forms that have been allegedly \"oppressed\" by Nanotrasen research and civilian offices. They are considered a religious terrorist group."
 
-	friendly_identification = 1
+	friendly_identification = ID_PHRASE
 	max_op = 2
 	operative_notes = "Save the innocent creatures! You may cooperate with other syndicate operatives if they support our cause. Don't be afraid to get your hands dirty - these vile abusers must be stopped, and the innocent creatures must be saved! Try not too kill too many people. If you harm any creatures, you will be immediately terminated after extraction."
 
@@ -181,7 +181,7 @@
 			pacifier of Donk and Waffle co disputes, and full-time aggressor of Nanotrasen."
 
 	alliances = list("Cybersun Industries", "MI13", "Tiger Cooperative", "S.E.L.F.", "Animal Rights Consortium", "Donk Corporation", "Waffle Corporation")
-	friendly_identification = 1
+	friendly_identification = ID_PHRASE
 	max_op = 4
 	operative_notes = "We'd like to remind our operatives to keep it professional. You are not here to have a good time, you are here to accomplish your objectives. These vile communists must be stopped at all costs. You may collaborate with any friends of the Syndicate coalition, but keep an eye on any of those Tiger punks if they do show up. You are completely free to accomplish your objectives any way you see fit."
 
@@ -195,7 +195,7 @@
 			hostilities and formed the Gorlex Marauders."
 
 	alliances = list("Gorlex Marauders")
-	friendly_identification = 2
+	friendly_identification = ID_COMPLETE
 	operative_notes = "Most other syndicate operatives are not to be trusted, except fellow Donk members and members of the Gorlex Marauders. We do not approve of mindless killing of innocent workers; \"get in, get done, get out\" is our motto. Members of Waffle.co are to be killed on sight; they are not allowed to be on the station while we're around."
 
 // Neutral to everyone, friendly to Marauders
@@ -208,7 +208,7 @@
 			A splinter-cell of Waffle.co merged with Donk.co and formed the Gorlex Marauders and have been a constant ally since. The Waffle.co has lost an overwhelming majority of its military to the Gorlex Marauders."
 
 	alliances = list("Gorlex Marauders")
-	friendly_identification = 2
+	friendly_identification = ID_COMPLETE
 	operative_notes = "Most other syndicate operatives are not to be trusted, except for members of the Gorlex Marauders. Do not trust fellow members of the Waffle.co (but try not to rat them out), as they might have been assigned opposing objectives. We encourage humorous terrorism against Nanotrasen; we like to see our operatives creatively kill people while getting the job done."
 
 
