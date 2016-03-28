@@ -13,7 +13,6 @@ var/global/list/restricted_contracts = list()
 
 /datum/controller/faction_controller/New()
 	..()
-	world << "faction_controller new()"
 	faction_controller = src
 
 /datum/controller/faction_controller/Destroy()

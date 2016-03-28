@@ -29,6 +29,7 @@ datum/controller/game_controller/New()
 		admin_notice("<span class='danger'>Job setup complete</span>", R_DEBUG)
 
 	if(!ticker)						ticker = new /datum/controller/gameticker()
+	if(!faction_controller)			faction_controller = new /datum/controller/faction_controller()
 	if(!syndicate_code_phrase.len )		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response.len )	syndicate_code_response	= generate_code_phrase()
 	if(!emergency_shuttle)			emergency_shuttle = new /datum/emergency_shuttle_controller()
