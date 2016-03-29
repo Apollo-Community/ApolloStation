@@ -8,7 +8,6 @@
 	var/greeting = "You are an antagonist." 			// Shown when the antag is setup, informing them they're an antagonist
 	var/obligatory_contracts = 1 						// How many contracts the antagonist is forced to take from round start
 	var/list/datum/contract/active_contracts = list() 	// Currently active contracts for the antagonist
-	var/start_cash = 10000 								// How much extra cash you start with (for equipment)
 
 	var/datum/faction/syndicate/faction = null
 	var/list/datum/contract/completed_contracts = list()
@@ -49,14 +48,15 @@
 		C.start(antag.current)
 
 	var/datum/money_account/A = find_account(antag.current)
-	A.money += start_cash
+	A.money += faction.start_cash
 
 	antag.character.temporary = 1
 
 	// greet the antagonist and give them any info concerning their task(s)
 
 	antag.current << "<B><font size=3 color=red>[greeting]</font></B>"
-	antag.current << "Your employer has provided you with an extra $[start_cash] to purchase equipment with."
+	antag.current << "<B><font size=2 color=red>You are working for \The [faction.name].</font></B>"
+	antag.current << "Your employer has provided you with an extra $[faction.start_cash] to purchase equipment with."
 	switch(faction.friendly_identification)
 		if(FACTION_ID_PHRASE)
 			antag.current << "\The [faction.name] has provided all its agents with the following code phrases to identify other agents:"

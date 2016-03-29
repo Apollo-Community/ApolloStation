@@ -23,6 +23,8 @@
 	var/list/phrase = list() // if friendly_identification == FACTION_ID_PHRASE, this contains the phrases which is provided to each agent
 	var/operative_notes // some notes to pass onto each operative
 
+	var/start_cash = 10000 // How much extra cash agents start with (for equipment)
+
 	var/list/datum/contract/contracts = list() // currently available contracts for this faction
 	var/contracts_min = 5 // minimum amount of contracts that will appear for each
 	var/contracts_max = 10 // maximum amount of contracts that will appear for each
