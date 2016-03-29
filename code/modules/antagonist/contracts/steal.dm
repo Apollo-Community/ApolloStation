@@ -55,6 +55,9 @@
 
 	var/obj/O = locate(target) in dropoff
 	var/mob/list/audience = viewers(O)
+	for(var/mob/M in viewers)
+		if(!M.mind)	audience -= M // only players matter. mice and the likes can freak out all they like when stuff disappears before their very eyes
+
 	if(O && audience.len == 0)
 		var/mob/living/completer = null
 		for(var/mob/M in workers)
