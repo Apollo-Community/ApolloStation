@@ -5,6 +5,11 @@
 /datum/antagonist/traitor/equip()
 	var/mob/living/M = antag.current
 
+	var/datum/money_account/A = find_account(M)
+	A.money += faction.start_cash
+
+	antag.current << "Your employer has provided you with an extra $[faction.start_cash] to purchase equipment with."
+
 	var/backpack = locate(/obj/item/weapon/storage/backpack) in M.contents
 	if(backpack)
 		new /obj/item/weapon/card/emag/weak(backpack)
@@ -40,4 +45,3 @@
 
 		antag.current << "An Uplink interface has been installed in your [P.name]. Enter the code \"[pass]\" into the ringtone select to access it."
 		antag.store_memory("<B>Uplink Access Passcode:</B> [pass] ([P.name]).")
-	

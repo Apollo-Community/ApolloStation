@@ -31,9 +31,6 @@
 		qdel(src)
 		return 0
 
-	var/datum/money_account/A = find_account(antag.current)
-	A.money += faction.start_cash
-
 	antag.character.temporary = 1
 
 	// greet the antagonist and give them any info concerning their task(s)
@@ -43,7 +40,6 @@
 	antag.current << "You are a sleeper cell agent, and your employer has recently ordered you to <B>stand by for further instructions</B>."
 	antag.current << "" // newline
 
-	antag.current << "Your employer has provided you with an extra $[faction.start_cash] to purchase equipment with."
 	switch(faction.friendly_identification)
 		if(FACTION_ID_PHRASE)
 			antag.current << "\The [faction.name] has provided all its agents with the following code phrases to identify other agents:"
