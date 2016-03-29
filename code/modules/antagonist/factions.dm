@@ -56,7 +56,11 @@
 	var/goal = contracts_min + rand(0, contracts_max - amt_regular_contracts)
 	var/safety = contracts_max // You'll never add more than this anyways
 	while(amt_regular_contracts < goal && --safety > 0)
-		contracts += new path(src)
+		var/datum/contract/C = new path(src)
+		while(isnull(C))
+			path = pick(regular_contracts)
+			C = new path()
+		contracts += C
 		path = pick(regular_contracts)
 		amt_regular_contracts++
 
@@ -66,7 +70,11 @@
 	goal = contracts_min + rand(0, restricted_contracts_max - amt_restricted_contracts)
 	safety = restricted_contracts_max
 	while(amt_regular_contracts < goal && --safety > 0)
-		contracts += new path(src)
+		var/datum/contract/C = new path(src)
+		while(isnull(C))
+			path = pick(regular_contracts)
+			C = new path()
+		contracts += C
 		path = pick(restricted_contracts)
 		amt_restricted_contracts++
 
