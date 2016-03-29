@@ -35,13 +35,16 @@ var/global/list/restricted_contracts = list()
 /datum/controller/faction_controller/proc/join_faction(var/datum/mind/M, var/datum/faction/F)
 	if(ispath(F))
 		F = (locate(F) in factions)
-	if(!F)	return 0
+	if(!F)
+		return 0
 	F.members += M
 	M.faction = F
 
 	// set antagonist.faction if the mind is joining a syndicate faction
 	if(istype(F, /datum/faction/syndicate) && M.antagonist)
 		M.antagonist.faction = F
+
+	return F
 
 // removes the mind from the faction. also works if a type is passed as the faction
 /datum/controller/faction_controller/proc/leave_faction(var/datum/mind/M, var/datum/faction/F)
@@ -53,6 +56,8 @@ var/global/list/restricted_contracts = list()
 
 	if(istype(F, /datum/faction/syndicate) && M.antagonist)
 		M.antagonist.faction = null
+
+	return 1
 
 // create factions and add them to our list
 /datum/controller/faction_controller/proc/setup_factions()
@@ -68,9 +73,14 @@ var/global/list/restricted_contracts = list()
 	var/mob/living/mob = M.current
 	if(!mob)	return 0
 
+	var/datum/faction/syndicate/S = null
 	var/list/datum/faction/syndicate/candidates = factions.Copy()
-	for(var/datum/faction/syndicate/S in candidates)
-		if(!istype(S, /datum/faction/syndicate) || (S.max_op > 0 && S.members.len >= S.max_op) || (S.restricted_species.len > 0 && !(mob.species.type in S.restricted_species)))
+	for(var/datum/faction/F in candidates)
+		if(!istype(F, /datum/faction/syndicate))
+			candidates -= F
+			continue
+		S = F
+		if((S.max_op > 0 && S.members.len >= S.max_op) || (S.restricted_species.len > 0 && !(mob.species.type in S.restricted_species)))
 			candidates -= S
 
 	if(candidates.len == 0)	return 0
