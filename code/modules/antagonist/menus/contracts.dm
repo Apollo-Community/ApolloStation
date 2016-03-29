@@ -43,6 +43,20 @@
 				. += "</center></table></tr>"
 			. += "</table>"
 
+		// Our completed contracts
+		if(antag.completed_contracts.len > 0)
+			. += "<h2><span class='white'>Completed Contracts</span></h2>"
+			. += "<table>"
+			for(var/datum/contract/C in antag.completed_contracts)
+				. += "<tr><table class='outline'><center>"
+				. += "<th width=20%>[C.title]</th>"
+				. += "<td width=80%><i>[C.desc]</i></td>"
+				. += "</center></table></tr>"
+			. += "</table>"
+
+		if(antag.active_contracts.len > 0 || antag.completed_contracts.len > 0)
+			. += "<hr>"
+
 		// Faction Contracts
 		var/list/datum/contract/available_contracts = (antag.faction.contracts - antag.active_contracts)
 		if(available_contracts.len > 0)
