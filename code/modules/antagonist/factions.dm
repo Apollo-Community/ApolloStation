@@ -101,11 +101,9 @@
 	operative_notes = "All other syndicate operatives are not to be trusted. Fellow Cybersun operatives are to be trusted. Members of the MI13 organization can be trusted. Operatives are strongly advised not to establish substantial presence on the designated facility, as larger incidents are harder to cover up."
 
 	equipment = list(
-		"Implants" = list(
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_freedom, 3000, "Freedom Implant", "FI"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_uplink, 5000, "Uplink Implant", "UI"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_compress, 4000, "Compressed Matter Implant", "CI")
-			)
+		new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_freedom, 3000, "Freedom Implant", "FI"),
+		new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_uplink, 5000, "Uplink Implant", "UI"),
+		new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_compress, 4000, "Compressed Matter Implant", "CI")
 	)
 
 // Friendly with Cybersun, hostile to Tiger
@@ -121,15 +119,11 @@
 	operative_notes = "You are the only operative we are sending. All other syndicate operatives are not to be trusted, with the exception of Cybersun operatives. Members of the Tiger Cooperative are considered hostile, can not be trusted, and should be avoided. <b>Avoid killing innocent personnel at all costs</b>. You are not here to mindlessly kill people, as that would attract too much attention and is not our goal. Avoid detection at all costs."
 
 	equipment = list(
-		"Stealthy and Inconspicuous Weapons" = list(
-			new/datum/uplink_item(/obj/item/weapon/pen/paralysis, 3000, "Paralysis Pen", "PP")
-			),
-		"Stealth and Camouflage Items" = list(
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/chameleon, 3000, "Chameleon Kit", "CB"),
-			new/datum/uplink_item(/obj/item/weapon/card/id/syndicate, 2000, "Agent ID card", "AC"),
-			new/datum/uplink_item(/obj/item/clothing/mask/gas/voice, 4000, "Voice Changer", "VC"),
-			new/datum/uplink_item(/obj/item/device/chameleon, 4000, "Chameleon-Projector", "CP")
-			)
+		new/datum/uplink_item(/obj/item/weapon/pen/paralysis, 3000, "Paralysis Pen", "PP"),
+		new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/chameleon, 3000, "Chameleon Kit", "CB"),
+		new/datum/uplink_item(/obj/item/weapon/card/id/syndicate, 2000, "Agent ID card", "AC"),
+		new/datum/uplink_item(/obj/item/clothing/mask/gas/voice, 4000, "Voice Changer", "VC"),
+		new/datum/uplink_item(/obj/item/device/chameleon, 4000, "Chameleon-Projector", "CP")
 	)
 
 // Hostile to everyone.

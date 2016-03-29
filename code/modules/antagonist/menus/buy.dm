@@ -35,7 +35,9 @@
 		. += "<h2><span class='white'>Uplink Market</span></h2>"
 		. += "<h3><span class='white'>Available Funds: $[A.money]</span></h3>"
 
-		var/list/datum/uplink_item/items = (ticker.mode.uplink_items.Copy() + antag.faction.equipment)
+		var/list/datum/uplink_item/items = ticker.mode.uplink_items.Copy()
+		if(antag.faction.equipment.len > 0)
+			items["[antag.faction.name] Equipment"] = antag.faction.equipment
 		for(var/category in items)
 			. += "<h3><span class='white'>[category]</span></h3>"
 			. += "<table><center>"
@@ -51,6 +53,7 @@
 				. += "</th>"
 			. += "</center></table><br>"
 
+		. += "<h3><span class='white'>Other</span></h3>"
 		. += "<center><table class='outline'>"
 		. += "<th width=20%>Random Item</th>"
 		. += "<td width=40%>$???</td>"
