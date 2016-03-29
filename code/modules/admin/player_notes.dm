@@ -85,73 +85,55 @@ datum/admins/proc/notes_gethtml(var/ckey)
 
 //Hijacking this file for BS12 playernotes functions. I like this ^ one systemm alright, but converting sounds too bothersome~ Chinsky.
 
-/proc/notes_add(var/key, var/note, var/mob/usr)
-	if (!key || !note)
+/proc/note_add( var/mob/user, var/note, var/rkey, var/rip, var/rcid )
+	if( !rkey || !note || !user || !user.client || !user.client.holder )
 		return
 
-	//Loading list of notes for this key
-	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
-	var/list/infos
-	info >> infos
-	if(!infos) infos = list()
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return
 
-	//Overly complex timestamp creation
-	var/modifyer = "th"
-	switch(time2text(world.timeofday, "DD"))
-		if("01","21","31")
-			modifyer = "st"
-		if("02","22",)
-			modifyer = "nd"
-		if("03","23")
-			modifyer = "rd"
-	var/day_string = "[time2text(world.timeofday, "DD")][modifyer]"
-	if(copytext(day_string,1,2) == "0")
-		day_string = copytext(day_string,2)
-	var/full_date = time2text(world.timeofday, "DDD, Month DD of YYYY")
-	var/day_loc = findtext(full_date, time2text(world.timeofday, "DD"))
+	var/sql_rkey = "'[sql_sanitize_text( rkey )]'"
+	var/sql_rip = "null"
+	var/sql_rcid = "null"
+	var/sql_akey = "'[ckey( usr.key )]'"
+	var/sql_aip = "'[sql_sanitize_text( user.client.address )]'"
+	var/sql_acid = "'[sql_sanitize_text( user.client.computer_id )]'"
+	var/sql_arank = "'[sql_sanitize_text( usr.client.holder.rank )]'"
+	var/sql_info = "'[sql_sanitize_text( note )]'"
 
-	var/datum/player_info/P = new
-	if (usr)
-		P.author = usr.key
-		P.rank = usr.client.holder.rank
-	else
-		P.author = "Adminbot"
-		P.rank = "Friendly Robot"
-	P.content = note
-	P.timestamp = "[copytext(full_date,1,day_loc)][day_string][copytext(full_date,day_loc+2)]"
+	if( rip )
+		sql_rip = "'[sql_sanitize_text( rkey )]'"
 
-	infos += P
-	info << infos
+	if( rcid )
+		sql_rcid = "'[sql_sanitize_text( rkey )]'"
 
-	message_admins("<span class='notice'>[key_name_admin(usr)] has edited [key]'s notes.</span>")
-	log_admin("[key_name(usr)] has edited [key]'s notes.")
+	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO player_notes (`id`,`player_ckey`, `player_ip`, `player_cid`, `author_ckey` , `author_ip`, `author_cid`, `author_rank`, `date_time`, `info`) VALUES (null, [sql_rkey], [sql_rip], [sql_rcid], [sql_akey], [sql_aip], [sql_acid], [sql_arank], Now(), [sql_info])")
+	if( query_insert.Execute() )
+		message_admins("<span class='notice'>[key_name_admin(usr)] has edited [rkey]'s notes.</span>")
+		log_admin("[key_name(usr)] has edited [rkey]'s notes.")
 
-	del info
+/proc/note_del( var/key as text, var/index as num )
+	if( !key )
+		return
 
-	//Updating list of keys with notes on them
-	var/savefile/note_list = new("data/player_notes.sav")
-	var/list/note_keys
-	note_list >> note_keys
-	if(!note_keys) note_keys = list()
-	if(!note_keys.Find(key)) note_keys += key
-	note_list << note_keys
-	del note_list
+	if( !index )
+		return
 
+	var/sql_index = sanitize_integer( index, 1, 2^32, 0)
 
-/proc/notes_qdel(var/key, var/index)
-	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
-	var/list/infos
-	info >> infos
-	if(!infos || infos.len < index) return
+	if( !sql_index )
+		return
 
-	var/datum/player_info/item = infos[index]
-	infos.Remove(item)
-	info << infos
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return
 
-	message_admins("<span class='notice'>[key_name_admin(usr)] deleted one of [key]'s notes.</span>")
-	log_admin("[key_name(usr)] deleted one of [key]'s notes.")
+	var/DBQuery/db_query = dbcon.NewQuery("DELETE FROM player_notes WHERE id = '[sql_index]'")
 
-	del info
+	if( db_query.Execute() )
+		message_admins("<span class='notice'>[key_name_admin(usr)] deleted one of [key]'s notes.</span>")
+		log_admin("[key_name(usr)] deleted one of [key]'s notes.")
 
 /proc/show_player_info_irc(var/key as text)
 	var/dat = "          Info on [key]%0D%0A"

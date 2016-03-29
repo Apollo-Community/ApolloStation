@@ -721,7 +721,9 @@
 							msg = job
 						else
 							msg += ", [job]"
-					notes_add(M.ckey, "Banned  from [msg] - [reason]")
+
+
+
 					message_admins("<span class='notice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes</span>")
 					M << "<span class='alert'><BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG></span>"
 					M << "<span class='alert'><B>The reason is: [reason]</B></span>"
@@ -742,7 +744,6 @@
 							jobban_fullban(M, job, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
 							if(!msg)	msg = job
 							else		msg += ", [job]"
-						notes_add(M.ckey, "Banned  from [msg] - [reason]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg]</span>")
 						M << "<span class='alert'><BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG></span>"
 						M << "<span class='alert'><B>The reason is: [reason]</B></span>"
@@ -2714,14 +2715,14 @@
 		var/add = sanitize(input("Add Player Info") as null|text)
 		if(!add) return
 
-		notes_add(key,add,usr)
-		show_player_info(key)
+		note_add(usr, add, key )
+		show_player_info( key )
 
 	if(href_list["remove_player_info"])
 		var/key = href_list["remove_player_info"]
 		var/index = text2num(href_list["remove_index"])
 
-		notes_qdel(key, index)
+		note_del(key, index)
 		show_player_info(key)
 
 	if(href_list["notes"])

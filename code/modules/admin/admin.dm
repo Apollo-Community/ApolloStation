@@ -286,16 +286,101 @@ var/global/floorIsLava = 0
 
 	usr << browse(dat, "window=player_notes;size=400x400")
 
+/datum/admins/proc/get_player_notes( var/rkey as text, var/rip, var/rcid )
+	if( !rkey )
+		return
 
-/datum/admins/proc/player_has_info(var/key as text)
-	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
-	var/list/infos
-	info >> infos
-	if(!infos || !infos.len) return 0
-	else return 1
+	. = ""
 
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		. += {"<table class='outline'>
+<tr>
+<th>No connection to the external database!</th>
+</tr>
+</table>"}
+		return .
 
-/datum/admins/proc/show_player_info(var/key as text)
+	var/sql_rkey = ckey( rkey )
+	var/sql_rip = sql_sanitize_text( rip )
+	var/sql_rcid = sql_sanitize_text( rcid )
+
+	var/list/general_notes = list()
+	var/list/ip_notes = list()
+	var/list/cid_notes = list()
+
+	// Compiling the lists of entries
+	if( sql_rkey )
+		var/DBQuery/db_query = dbcon.NewQuery("SELECT date_time, info, author_ckey, author_rank, id FROM player_notes WHERE player_ckey = '[sql_rkey]'")
+		if( db_query.Execute() )
+			while( db_query.NextRow() )
+				general_notes += list( "date" = db_query.item[1], "info" = db_query.item[2], "author_ckey" = db_query.item[3], "author_rank" = db_query.item[4], "id" = db_query.item[5] )
+
+	if( sql_rip )
+		var/DBQuery/db_query = dbcon.NewQuery("SELECT date_time, info, author_ckey, author_rank, id FROM player_notes WHERE player_ip = '[sql_rip]'")
+		if( db_query.Execute() )
+			while( db_query.NextRow() )
+				ip_notes += list( "date" = db_query.item[1], "info" = db_query.item[2], "author_ckey" = db_query.item[3], "author_rank" = db_query.item[4], "id" = db_query.item[5] )
+
+	if( sql_rcid )
+		var/DBQuery/db_query = dbcon.NewQuery("SELECT date_time, info, author_ckey, author_rank, id FROM player_notes WHERE player_cid = '[sql_rcid]'")
+		if( db_query.Execute() )
+			while( db_query.NextRow() )
+				cid_notes += list( "date" = db_query.item[1], "info" = db_query.item[2], "author_ckey" = db_query.item[3], "author_rank" = db_query.item[4], "id" = db_query.item[5] )
+
+	// Removing duplicate entries
+	ip_notes -= general_notes
+	cid_notes -= general_notes
+	cid_notes -= ip_notes
+
+	if( general_notes && general_notes.len )
+		. += "<table class='outline'>"
+		. += "<tr>"
+		. += "<th colspan='4'>General Notes</th>"
+		. += "</tr>"
+		for( var/list/entry in general_notes )
+			. += "<tr>"
+			. += "<td>[entry["date"]]</td>"
+			. += "<td>[entry["info"]]</td>"
+			. += "<td>[entry["author_ckey"]] ([entry["author_rank"]])</td>"
+			. += "<td><A href='?src=\ref[src];remove_player_info=[rkey];remove_index=[entry["id"]]'>Remove</A></td>"
+			. += "</tr>"
+
+		. += "</table>"
+
+	if( ip_notes && ip_notes.len )
+		. += "<table class='outline'>"
+		. += "<tr>"
+		. += "<th colspan='4'>IP Notes</th>"
+		. += "</tr>"
+		for( var/entry in ip_notes )
+			. += "<tr>"
+			. += "<td>[entry["date"]]</td>"
+			. += "<td>[entry["info"]]</td>"
+			. += "<td>[entry["author_ckey"]] ([entry["author_rank"]])</td>"
+			. += "<td><A href='?src=\ref[src];remove_player_info=[rkey];remove_index=[entry["id"]]'>Remove</A></td>"
+			. += "</tr>"
+
+		. += "</table>"
+
+	if( cid_notes && cid_notes.len )
+		. += "<table class='outline'>"
+		. += "<tr>"
+		. += "<th colspan='4'>Computer Notes</th>"
+		. += "</tr>"
+		for( var/entry in cid_notes )
+			. += "<tr>"
+			. += "<td>[entry["date"]]</td>"
+			. += "<td>[entry["info"]]</td>"
+			. += "<td>[entry["author_ckey"]] ([entry["author_rank"]])</td>"
+			. += "<td><A href='?src=\ref[src];remove_player_info=[rkey];remove_index=[entry["id"]]'>Remove</A></td>"
+			. += "</tr>"
+
+		. += "</table>"
+
+	return .
+
+/datum/admins/proc/show_player_info( var/key as text )
 	set category = "Admin"
 	set name = "Show Player Info"
 	if (!istype(src,/datum/admins))
@@ -303,38 +388,26 @@ var/global/floorIsLava = 0
 	if (!istype(src,/datum/admins))
 		usr << "Error: you are not an admin!"
 		return
-	var/dat = "<html><head><title>Info on [key]</title></head>"
-	dat += "<body>"
 
-	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
-	var/list/infos
-	info >> infos
-	if(!infos)
-		dat += "No information found on the given key.<br>"
-	else
-		var/update_file = 0
-		var/i = 0
-		for(var/datum/player_info/I in infos)
-			i += 1
-			if(!I.timestamp)
-				I.timestamp = "Pre-4/3/2012"
-				update_file = 1
-			if(!I.rank)
-				I.rank = "N/A"
-				update_file = 1
-			dat += "<font color=#008800>[I.content]</font> <i>by [I.author] ([I.rank])</i> on <i><font color=blue>[I.timestamp]</i></font> "
-			if(I.author == usr.key || I.author == "Adminbot" || ishost(usr))
-				dat += "<A href='?src=\ref[src];remove_player_info=[key];remove_index=[i]'>Remove</A>"
-			dat += "<br><br>"
-		if(update_file) info << infos
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return
 
-	dat += "<br>"
-	dat += "<A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A><br>"
+	var/DBQuery/db_query = dbcon.NewQuery("SELECT ip, computerid FROM player WHERE ckey = '[ckey( key )]'")
 
-	dat += "</body></html>"
-	usr << browse(dat, "window=adminplayerinfo;size=480x480")
+	var/ip
+	var/cid
 
+	if( db_query.Execute() && db_query.NextRow() )
+		ip = db_query.item[1]
+		cid = db_query.item[2]
 
+	. = get_player_notes( key, ip, cid )
+	. += "<hr><A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A>"
+
+	menu.set_user( usr )
+	menu.set_content( . )
+	menu.open()
 
 /datum/admins/proc/access_news_network() //MARKER
 	set category = "Fun"
