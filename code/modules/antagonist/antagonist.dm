@@ -61,11 +61,15 @@
 		if(FACTION_ID_PHRASE)
 			antag.current << "\The [faction.name] has provided all its agents with the following code phrases to identify other agents:"
 			antag.current << "<B>[list2text(faction.phrase, ", ")]</B>"
-		if(FACTION_ID_COMPLETE) // && (faction.members.len - 1) > 0
-			antag.current << "\The [faction.name] has provided all its agents with the identity of their fellow agents. Your co-workers are as follows:"
-			for(var/datum/mind/M in (faction.members - antag))
-				antag.current << "<B>[M.current.real_name]</B>, [station_name] [M.assigned_role]"
-	antag.current << "\n"
+		if(FACTION_ID_COMPLETE)
+			if((faction.members.len - 1) > 0)
+				antag.current << "\The [faction.name] has provided all its agents with the identity of their fellow agents. Your co-workers are as follows:"
+				for(var/datum/mind/M in (faction.members - antag))
+					antag.current << "<B>[M.current.real_name]</B>, [station_name] [M.assigned_role]"
+			else
+				antag.current << "\The [faction.name] has informed you that <B>you are the only active agent on [station_name]</B>"
+
+	antag.current << "" // newline
 
 	if(active_contracts.len > 0)
 		antag.current << "Your employer has signed the following contracts in your name:"
@@ -74,6 +78,7 @@
 			antag.current << "<B>[C.title]</B>\n<I>[C.desc]</I>\nYou have [time] to complete the contract."
 	else
 		antag.current << "Your employer has not signed any contracts in your name."
+	antag.current << "" // newline
 
 	equip()
 
