@@ -57,6 +57,16 @@
 
 	antag.current << "<B><font size=3 color=red>[greeting]</font></B>"
 	antag.current << "Your employer has provided you with an extra $[start_cash] to purchase equipment with."
+	switch(faction.friendly_identification)
+		if(FACTION_ID_PHRASE)
+			antag.current << "\The [faction.name] has provided all its agents with the following code phrases to identify other agents:"
+			antag.current << "<B>[list2text(faction.phrase, ", ")]</B>"
+		if(FACTION_ID_COMPLETE) // && (faction.members.len - 1) > 0
+			antag.current << "\The [faction.name] has provided all its agents with the identity of their fellow agents. Your co-workers are as follows:"
+			for(var/datum/mind/M in (faction.members - antag))
+				antag.current << "<B>[M.current.real_name]</B>, [station_name] [M.assigned_role]"
+	antag.current << "\n"
+
 	if(active_contracts.len > 0)
 		antag.current << "Your employer has signed the following contracts in your name:"
 		for(var/datum/contract/C in active_contracts)
@@ -64,7 +74,6 @@
 			antag.current << "<B>[C.title]</B>\n<I>[C.desc]</I>\nYou have [time] to complete the contract."
 	else
 		antag.current << "Your employer has not signed any contracts in your name."
-	antag.current << "\n"
 
 	equip()
 
