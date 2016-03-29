@@ -40,3 +40,4 @@
 
 		antag.current << "An Uplink interface has been installed in your [P.name]. Enter the code \"[pass]\" into the ringtone select to access it."
 		antag.store_memory("<B>Uplink Access Passcode:</B> [pass] ([P.name]).")
+	

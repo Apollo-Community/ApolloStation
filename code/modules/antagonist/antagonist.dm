@@ -85,10 +85,11 @@
 		antag.current << "Your employers have signed the following contracts in your name:"
 		for(var/datum/contract/C in active_contracts)
 			var/time = worldtime2text(world.time + C.time_limit)
-			antag.current << "<B>[C.title]</B>\n<I>[C.desc]</I>\nYou have until [time] to complete the contract."
+			antag.current << "<B>[C.title]</B>\n<I>[C.desc]</I>\nYou have until [time], station time to complete the contract."
 	else
 		antag.current << "You are declared autonomous. You may accept contracts freely, but are not obligated to do so."
 	antag.current << "<B>Contracts are now available from your Uplink.</B>"
+	antag.current << ""
 
 // Equip the antagonist here
 /datum/antagonist/proc/equip()
@@ -102,3 +103,14 @@
 	active_contracts -= C
 	if(success)
 		completed_contracts += C
+
+	var/obj/item/I = locate(/obj/item/device/pda) in antag.current.contents
+
+	if(antag.character.uplink_location == "Headset" && locate(/obj/item/device/radio) in antag.current.contents)
+		I = locate(/obj/item/device/radio) in antag.current.contents
+
+	if(!I)	return
+	if(istype(I, /obj/item/device/radio))
+		antag.current << "<span class='notice'>You feel your headset vibrate.</span>"
+	else
+		antag.current << "<span class='notice'>You feel your PDA vibrate.</span>"

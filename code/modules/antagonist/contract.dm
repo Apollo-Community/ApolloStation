@@ -49,11 +49,8 @@
 
 	for(var/mob/living/M in workers)
 		if(M != worker)
-			worker << "<font color=red>A contract you signed up for has ended. The reward was not paid out to you.</font>\n<B>[src.title]</B>\n<I>[src.desc]</I></font>"
 			M.mind.antagonist.contract_ended(src, 0)
 		else
-			// v is PLACEHOLDER!!! You'll have to check your uplink later on to see if you completed it.
-			worker << "<font color=green>You've completed a contract</font>\n<B>[src.title]</B>\n<I>[src.desc]</I></font>"
 			worker.mind.antagonist.contract_ended(src, 1)
 			reward(worker)
 
