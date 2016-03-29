@@ -8,8 +8,6 @@
 	var/list/datum/mind/members = list() 	// a list of mind datums that belong to this faction
 	var/max_op = 0		// the maximum number of members a faction can have (0 for no limit)
 
-	var/datum/controller/faction_controller/controller = null
-
 // Factions, members of the syndicate coalition:
 
 /datum/faction/syndicate
@@ -41,8 +39,8 @@
 // Populate contracts with new contracts
 // I JUST WANT THIS TO BE REFACTORED
 /datum/faction/syndicate/proc/update_contracts()
-	if(contracts.len == (contracts_max + restricted_contracts_max))
-		return
+	if(faction_controller.contract_ban)	return
+	if(contracts.len == (contracts_max + restricted_contracts_max))	return
 
 	var/amt_regular_contracts
 	for(var/datum/contract/C in contracts)

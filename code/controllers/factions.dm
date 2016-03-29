@@ -3,6 +3,8 @@
 // Faction controller also hands out factions to antagonists
 // contracts & antagonists reports back to factions. the faction controller just sets up factions and forces them to do shit
 
+// You could say this is actually a contract master controller too?
+
 var/global/datum/controller/faction_controller/faction_controller
 
 var/global/list/regular_contracts = list()
@@ -10,6 +12,8 @@ var/global/list/restricted_contracts = list()
 
 /datum/controller/faction_controller
 	var/list/datum/faction/factions = list()
+
+	var/contract_ban = 0 // stops any more contracts from being created
 
 /datum/controller/faction_controller/New()
 	..()
@@ -91,3 +95,14 @@ var/global/list/restricted_contracts = list()
 /datum/controller/faction_controller/proc/update_contracts()
 	for(var/datum/faction/syndicate/S in factions)
 		if(istype(S))	S.update_contracts()
+
+// check completion for all contracts, then forcefully end them if nobody completed it
+// only used at round end. using it anywhere else may fuck shit up bad
+/datum/controller/faction_controller/proc/kill_contracts()
+	contract_ban = 1
+
+	for(var/datum/faction/syndicate/S in factions)
+		for(var/datum/contract/C in S.contracts)
+			C.check_completion()
+			if(!C.finished)
+				C.end()
