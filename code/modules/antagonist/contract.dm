@@ -27,6 +27,12 @@
 	if(contract_ticker)
 		contract_ticker.contracts += src
 
+/datum/contract/Destroy()
+	..()
+
+	if(faction)
+		faction.contracts -= src
+
 // set title, desc, etc. here
 /datum/contract/proc/set_details()
 	return

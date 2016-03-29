@@ -17,6 +17,12 @@ var/global/datum/controller/process/contractticker/contract_ticker
 /datum/controller/process/contractticker/doWork()
 	if(contracts.len == 0)	return
 
+	for(var/datum/faction/F in faction_controller.factions)
+		if(istype(F, /datum/faction/syndicate))
+			var/datum/faction/syndicate/S = F
+			if(contracts.len < S.contracts_min)
+				S.update_contracts()
+
 	for(var/datum/contract/C in contracts)
 		if(world.time >= (C.contract_start + C.time_limit))
 			C.check_completion()
