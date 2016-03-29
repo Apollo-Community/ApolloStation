@@ -86,3 +86,8 @@ var/global/list/restricted_contracts = list()
 	if(candidates.len == 0)	return 0
 
 	return join_faction(M, pick(candidates))
+
+// updates contracts for all syndicate factions
+/datum/controller/faction_controller/proc/update_contracts()
+	for(var/datum/faction/syndicate/S in factions)
+		if(istype(S))	S.update_contracts()

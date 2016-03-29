@@ -31,10 +31,35 @@
 		qdel(src)
 		return 0
 
-	// so fucking ugly but i cba to think of another solution
-	if(faction.contracts.len == 0)
-		faction.update_contracts()
+	var/datum/money_account/A = find_account(antag.current)
+	A.money += faction.start_cash
 
+	antag.character.temporary = 1
+
+	// greet the antagonist and give them any info concerning their task(s)
+
+	antag.current << "<B><font size=3 color=red>[greeting]</font></B>"
+	antag.current << "<B><font size=2 color=red>You are working for \The [faction.name].</font></B>"
+	antag.current << "You are a sleeper cell agent, and your employer has recently ordered you to <B>stand by for further instructions</B>."
+	antag.current << "" // newline
+
+	antag.current << "Your employer has provided you with an extra $[faction.start_cash] to purchase equipment with."
+	switch(faction.friendly_identification)
+		if(FACTION_ID_PHRASE)
+			antag.current << "\The [faction.name] has provided all its agents with the following code phrases to identify other agents:"
+			antag.current << "<B>[list2text(faction.phrase, ", ")]</B>"
+		if(FACTION_ID_COMPLETE)
+			if((faction.members.len - 1) > 0)
+				antag.current << "\The [faction.name] has provided all its agents with the identity of their fellow agents. Your co-workers are as follows:"
+				for(var/datum/mind/M in (faction.members - antag))
+					antag.current << "<B>[M.current.real_name]</B>, [station_name] [M.assigned_role]"
+			else
+				antag.current << "\The [faction.name] has informed you that <B>you are the only active [faction.name] agent on [station_name]</B>."
+	antag.current << "" // newline
+
+	equip()
+
+/datum/antagonist/proc/pick_contracts()
 	for(var/i = 0; i < obligatory_contracts; i++)
 		var/datum/contract/C = pick(faction.contracts)
 		while((C in active_contracts) || isnull(C) || !C.can_accept(antag.current))
@@ -54,40 +79,16 @@
 
 		C.start(antag.current)
 
-	var/datum/money_account/A = find_account(antag.current)
-	A.money += faction.start_cash
-
-	antag.character.temporary = 1
-
-	// greet the antagonist and give them any info concerning their task(s)
-
-	antag.current << "<B><font size=3 color=red>[greeting]</font></B>"
-	antag.current << "<B><font size=2 color=red>You are working for \The [faction.name].</font></B>"
-	antag.current << "Your employer has provided you with an extra $[faction.start_cash] to purchase equipment with."
-	switch(faction.friendly_identification)
-		if(FACTION_ID_PHRASE)
-			antag.current << "\The [faction.name] has provided all its agents with the following code phrases to identify other agents:"
-			antag.current << "<B>[list2text(faction.phrase, ", ")]</B>"
-		if(FACTION_ID_COMPLETE)
-			if((faction.members.len - 1) > 0)
-				antag.current << "\The [faction.name] has provided all its agents with the identity of their fellow agents. Your co-workers are as follows:"
-				for(var/datum/mind/M in (faction.members - antag))
-					antag.current << "<B>[M.current.real_name]</B>, [station_name] [M.assigned_role]"
-			else
-				antag.current << "\The [faction.name] has informed you that <B>you are the only active [faction.name] agent on [station_name]</B>."
-
-	antag.current << "" // newline
-
+	antag.current << ""
+	antag.current << "<B><font size=3 color=red>\The [faction.name] has decided on your orders.</font></B>"
 	if(active_contracts.len > 0)
-		antag.current << "Your employer has signed the following contracts in your name:"
+		antag.current << "Your employers have signed the following contracts in your name:"
 		for(var/datum/contract/C in active_contracts)
-			var/time = C.formatted_time()
-			antag.current << "<B>[C.title]</B>\n<I>[C.desc]</I>\nYou have [time] to complete the contract."
+			var/time = worldtime2text(world.time + C.time_limit)
+			antag.current << "<B>[C.title]</B>\n<I>[C.desc]</I>\nYou have until [time] to complete the contract."
 	else
-		antag.current << "Your employer has not signed any contracts in your name."
-	antag.current << "" // newline
-
-	equip()
+		antag.current << "You are declared autonomous. You may accept contracts freely, but are not obligated to do so."
+	antag.current << "<B>Contracts are now available from your Uplink.</B>"
 
 // Equip the antagonist here
 /datum/antagonist/proc/equip()

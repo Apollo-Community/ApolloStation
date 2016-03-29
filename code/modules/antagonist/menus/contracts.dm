@@ -39,7 +39,7 @@
 				. += "<tr><table class='outline'><center>"
 				. += "<th width=20%>[C.title]</th>"
 				. += "<td width=60%><i>[C.desc]</i></td>"
-				. += "<td width=20%>Expires in: [C.formatted_time((C.contract_start + C.time_limit) - world.time)]</td>"
+				. += "<td width=20%>Expires: [worldtime2text(C.contract_start + C.time_limit)]</td>"
 				. += "</center></table></tr>"
 			. += "</table>"
 
@@ -52,7 +52,7 @@
 				. += "<tr><table class='outline'>"
 				. += "<th width=20%>[C.title]</th>"
 				. += "<td width=40%><i>[C.desc]</i></td>"
-				. += "<td width=20%>Expires in: [C.formatted_time((C.contract_start + C.time_limit) - world.time)]</td>"
+				. += "<td width=20%>Expires: [worldtime2text(C.contract_start + C.time_limit)]</td>"
 				. += "<th width=20%>"
 				if(C.can_accept(user))
 					. += "<a href='byond://?src=\ref[src];tgroup=[tgroup];task=accept_contract\ref[C]'>Accept Contract</a>"

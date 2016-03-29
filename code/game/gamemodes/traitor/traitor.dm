@@ -15,8 +15,14 @@
 	uplink_welcome = "AntagCorp Portable Teleportation Relay:"
 	uplink_uses = 10
 
+	var/game_start = 0 // world.time when the game started
+
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
+	// 600 for debug
+	var/const/contract_delay = 600 // this (in 1/10 seconds) is how long it takes before traitors get their contracts, and the factions are populated with contracts
+
+	var/contracts_made = 0
 
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/const/traitor_scaling_coeff = 5.0 //how much does the amount of players get divided by to determine traitors
@@ -69,6 +75,9 @@
 			//finalize_traitor(traitor)
 			//greet_traitor(traitor)
 	modePlayer += traitors
+
+	game_start = world.time
+
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
 	..()
@@ -156,6 +165,12 @@
 	traitor_mob << "Use the code words, preferably in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
 
 /datum/game_mode/traitor/process()
+	if(!contracts_made && world.time > (game_start + contract_delay))
+		contracts_made = 1
+		faction_controller.update_contracts()
+		for(var/datum/mind/T in traitors)
+			T.antagonist.pick_contracts()
+
 	// Make sure all objectives are processed regularly, so that objectives
 	// which can be checked mid-round are checked mid-round.
 	for(var/datum/mind/traitor_mind in traitors)

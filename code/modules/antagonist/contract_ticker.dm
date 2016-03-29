@@ -1,4 +1,4 @@
-// The ticker doesn't turn in your contracts for you, but it does fail them if you die, lose antag, time runs out, etc.
+// This ticker controls contract completion
 
 var/global/datum/controller/process/contractticker/contract_ticker
 
