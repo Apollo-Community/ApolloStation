@@ -50,6 +50,7 @@
 /datum/contract/kill/proc/get_target()
 	var/datum/mind/list/candidates = list()
 	for(var/datum/mind/M in (ticker.minds - get_taken_targets()))
+		if(M in faction || (M.antagonist && (M.antagonist.faction.name in faction.alliances)))	continue // no killing coworkers or allies
 		if(ishuman(M.current) && M.current.stat != 2)
 			candidates += M
 	return (candidates.len > 0 ? pick(candidates) : null) // pick(candidates) if candidates isn't empty. null otherwise
