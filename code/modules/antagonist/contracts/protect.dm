@@ -2,7 +2,7 @@
 /datum/contract/protect
 	title = "Protect the Target"
 	desc = "We cannot afford for this dude to die until the contract expires."
-	time_limit = 2700
+	time_limit = 3600
 	reward = 2000
 	
 	var/datum/mind/target = null
@@ -48,7 +48,7 @@
 
 /datum/contract/protect/proc/get_taken_targets()
 	var/datum/mind/list/taken = list()
-	for(var/datum/contract/protect/C in faction.contracts)
+	for(var/datum/contract/protect/C in (faction.contracts + faction.completed_contracts))
 		if(istype(C) && C.target)	taken += C.target
 	return taken
 

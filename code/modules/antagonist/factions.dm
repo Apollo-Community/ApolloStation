@@ -25,7 +25,8 @@
 
 	var/start_cash = 10000 // How much extra cash agents start with (for equipment)
 
-	var/list/datum/contract/contracts = list() // currently available contracts for this faction
+	var/list/datum/contract/contracts = list() // currently available contracts for this faction'
+	var/list/datum/contract/completed_contracts = list() // list of contracts that are done, so that they won't reappear
 	var/contracts_min = 5 // minimum amount of contracts that will appear for each
 	var/contracts_max = 10 // maximum amount of contracts that will appear for each
 	var/restricted_contracts_min = 2 // minimum amount of contracts with a notoriety requirement that will appear
@@ -72,6 +73,7 @@
 // Pretty much just for removing the contract from contracts
 /datum/faction/syndicate/proc/contract_ended(var/datum/contract/C)
 	contracts -= C
+	completed_contracts += C
 	update_contracts()
 
 // Gets active contracts (of a type)

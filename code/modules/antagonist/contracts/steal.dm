@@ -69,7 +69,7 @@
 
 /datum/contract/steal/proc/get_taken_targets()
 	var/datum/mind/list/taken = list()
-	for(var/datum/contract/steal/C in (faction.contracts - src))
+	for(var/datum/contract/steal/C in (faction.contracts + faction.completed_contracts))
 		if(istype(C) && C.target)	taken += C.target
 	return taken
 
