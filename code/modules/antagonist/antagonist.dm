@@ -71,7 +71,7 @@
 				for(var/datum/mind/M in (faction.members - antag))
 					antag.current << "<B>[M.current.real_name]</B>, [station_name] [M.assigned_role]"
 			else
-				antag.current << "\The [faction.name] has informed you that <B>you are the only active agent on [station_name]</B>"
+				antag.current << "\The [faction.name] has informed you that <B>you are the only active [faction.name] agent on [station_name]</B>."
 
 	antag.current << "" // newline
 
