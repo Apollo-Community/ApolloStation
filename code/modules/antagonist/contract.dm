@@ -54,6 +54,7 @@
 			worker.mind.antagonist.contract_ended(src, 1)
 			reward(worker)
 
+	faction.contract_ended(C)
 	contract_ticker.contracts -= src
 
 // Check if the contract is completed.

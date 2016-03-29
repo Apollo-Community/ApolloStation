@@ -99,7 +99,6 @@
 	active_contracts += C
 
 /datum/antagonist/proc/contract_ended(var/datum/contract/C, var/success = 0)
-	faction.contract_ended(C)
 	active_contracts -= C
 	if(success)
 		completed_contracts += C
