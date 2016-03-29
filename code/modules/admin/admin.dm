@@ -314,19 +314,22 @@ var/global/floorIsLava = 0
 		var/DBQuery/db_query = dbcon.NewQuery("SELECT date_time, info, author_ckey, author_rank, id FROM player_notes WHERE player_ckey = '[sql_rkey]'")
 		if( db_query.Execute() )
 			while( db_query.NextRow() )
-				general_notes += list( "date" = db_query.item[1], "info" = db_query.item[2], "author_ckey" = db_query.item[3], "author_rank" = db_query.item[4], "id" = db_query.item[5] )
+				var/list/entry = list( "date" = db_query.item[1], "info" = db_query.item[2], "author_ckey" = db_query.item[3], "author_rank" = db_query.item[4], "id" = db_query.item[5] )
+				general_notes += list( entry ) // Adding a list within a list because byond automatically adds the contents of lists to lists
 
 	if( sql_rip )
 		var/DBQuery/db_query = dbcon.NewQuery("SELECT date_time, info, author_ckey, author_rank, id FROM player_notes WHERE player_ip = '[sql_rip]'")
 		if( db_query.Execute() )
 			while( db_query.NextRow() )
-				ip_notes += list( "date" = db_query.item[1], "info" = db_query.item[2], "author_ckey" = db_query.item[3], "author_rank" = db_query.item[4], "id" = db_query.item[5] )
+				var/list/entry = list( "date" = db_query.item[1], "info" = db_query.item[2], "author_ckey" = db_query.item[3], "author_rank" = db_query.item[4], "id" = db_query.item[5] )
+				ip_notes += list( entry )
 
 	if( sql_rcid )
 		var/DBQuery/db_query = dbcon.NewQuery("SELECT date_time, info, author_ckey, author_rank, id FROM player_notes WHERE player_cid = '[sql_rcid]'")
 		if( db_query.Execute() )
 			while( db_query.NextRow() )
-				cid_notes += list( "date" = db_query.item[1], "info" = db_query.item[2], "author_ckey" = db_query.item[3], "author_rank" = db_query.item[4], "id" = db_query.item[5] )
+				var/list/entry = list( "date" = db_query.item[1], "info" = db_query.item[2], "author_ckey" = db_query.item[3], "author_rank" = db_query.item[4], "id" = db_query.item[5] )
+				cid_notes += list( entry )
 
 	// Removing duplicate entries
 	ip_notes -= general_notes
@@ -339,6 +342,9 @@ var/global/floorIsLava = 0
 		. += "<th colspan='4'>General Notes</th>"
 		. += "</tr>"
 		for( var/list/entry in general_notes )
+			if( !islist( entry ))
+				continue
+
 			. += "<tr>"
 			. += "<td>[entry["date"]]</td>"
 			. += "<td>[entry["info"]]</td>"
