@@ -43,22 +43,27 @@
 				. += "</center></table></tr>"
 			. += "</table>"
 
-		// Uplink Contracts
-		. += "<h2><span class='white'>Available Contracts</span></h2>"
-		. += "<table><center>"
-		for(var/datum/contract/C in antag.faction.contracts - antag.active_contracts)
-			. += "<tr><table class='outline'>"
-			. += "<th width=20%>[C.title]</th>"
-			. += "<td width=40%><i>[C.desc]</i></td>"
-			. += "<td width=20%>Expires in: [C.formatted_time((C.contract_start + C.time_limit) - world.time)]</td>"
-			. += "<th width=20%>"
-			if(C.can_accept(user))
-				. += "<a href='byond://?src=\ref[src];tgroup=[tgroup];task=accept_contract\ref[C]'>Accept Contract</a>"
-			else
-				. += "<i class='red'>Cannot Accept</i>"
-			. += "</th>"
-			. += "</table></tr>"
-		. += "</center></table>"
+		// Faction Contracts
+		var/list/datum/contract/available_contracts = (antag.faction.contracts - antag.active_contracts)
+		if(available_contracts.len > 0)
+			. += "<h2><span class='white'>Available Contracts</span></h2>"
+			. += "<table><center>"
+			for(var/datum/contract/C in available_contracts)
+				. += "<tr><table class='outline'>"
+				. += "<th width=20%>[C.title]</th>"
+				. += "<td width=40%><i>[C.desc]</i></td>"
+				. += "<td width=20%>Expires in: [C.formatted_time((C.contract_start + C.time_limit) - world.time)]</td>"
+				. += "<th width=20%>"
+				if(C.can_accept(user))
+					. += "<a href='byond://?src=\ref[src];tgroup=[tgroup];task=accept_contract\ref[C]'>Accept Contract</a>"
+				else
+					. += "<i class='red'>Cannot Accept</i>"
+				. += "</th>"
+				. += "</table></tr>"
+			. += "</center></table>"
+		else
+			. += "<center><h2><span class='white'>No Available Contracts</span></h2></center>"
+			. += "<center><span class='white'>No contracts are currently available from your employer.</span></center>"
 
 	. += "</body></html>"
 
