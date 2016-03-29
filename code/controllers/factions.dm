@@ -17,6 +17,14 @@ var/global/list/restricted_contracts = list()
 
 	setup_factions()
 
+	for(var/path in subtypes(/datum/contract))
+		var/datum/contract/C = new path()
+		if(C.min_notoriety > 0)
+			restricted_contracts += path
+		else
+			regular_contracts += path
+		qdel(C)
+
 /datum/controller/faction_controller/Destroy()
 	..()
 	for(var/datum/faction/F in factions)
@@ -45,6 +53,4 @@ var/global/list/restricted_contracts = list()
 // starts a contract update for all syndicate factions
 /datum/controller/faction_controller/proc/update_contracts()
 	for(var/datum/faction/syndicate/S in factions)
-		if(istype(S))
-			world << "updating contracts for [S]"
-			S.update_contracts()
+		if(istype(S))	S.update_contracts()

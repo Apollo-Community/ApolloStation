@@ -9,13 +9,13 @@
 
 /datum/contract/kill/New()
 	..()
+	// Just let the faction controller see if it's a notoriety-restricted contract
+	if(ticker.current_state == 1)	return 0
 
 	target = get_target()
 	if(!target)
-		// Let the faction controller see if it's a notoriety-restricted contract before we delete ourselves
-		if(ticker.current_state != 1)
-			qdel(src)
-		return
+		qdel(src)
+		return 0
 
 	set_details()
 

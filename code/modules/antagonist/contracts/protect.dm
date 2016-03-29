@@ -9,12 +9,11 @@
 
 /datum/contract/protect/New()
 	..()
+	if(ticker.current_state == 1)	return 0
 
 	target = get_target()
 	if(!target)
-		// Let the faction controller see if it's a notoriety-restricted contract before we delete ourselves
-		if(ticker.current_state != 1)
-			qdel(src)
+		qdel(src)
 		return
 
 	// less cash for protecting heads because they're already hard targets

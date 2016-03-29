@@ -29,6 +29,7 @@
 
 /datum/contract/steal/New()
 	..()
+	if(ticker.current_state == 1)	return 0
 
 	target = get_target()
 	dropoff = locate(pick(dropoff_areas))
@@ -37,8 +38,7 @@
 		dropoff = locate(pick(dropoff_areas))
 
 	if(!dropoff || !target)
-		if(ticker.current_state != 1)
-			qdel(src)
+		qdel(src)
 		return
 
 	set_details()
