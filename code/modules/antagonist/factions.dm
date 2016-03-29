@@ -39,6 +39,7 @@
 		phrase = generate_code_phrase()
 
 // Populate contracts with new contracts
+// I JUST WANT THIS TO BE REFACTORED
 /datum/faction/syndicate/proc/update_contracts()
 	if(contracts.len == (contracts_max + restricted_contracts_max))
 		return
@@ -80,9 +81,10 @@
 
 // Pretty much just for removing the contract from contracts
 /datum/faction/syndicate/proc/contract_ended(var/datum/contract/C)
-	contracts -= C
-	completed_contracts += C
-	update_contracts()
+	if(!(C in completed_contracts)) // in case somebody has already triggered the contracts update
+		contracts -= C
+		completed_contracts += C
+		update_contracts()
 
 // Gets active contracts (of a type)
 /datum/faction/syndicate/proc/get_contracts(var/type)
