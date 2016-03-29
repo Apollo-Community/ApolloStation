@@ -124,8 +124,6 @@ var/global/datum/controller/gameticker/ticker
 	setup_economy()
 	current_state = GAME_STATE_PLAYING
 
-	faction_controller.update_contracts() // populate the factions with contracts
-
 	callHook("roundstart")
 
 	shuttle_controller.setup_shuttle_docks()

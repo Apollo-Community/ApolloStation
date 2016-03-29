@@ -17,7 +17,6 @@
 	..()
 
 	antag = us
-	// setup() done in postsetup so that there's actually contracts to pick
 
 /datum/antagonist/proc/setup()
 	if(faction)
@@ -31,6 +30,10 @@
 		ticker.mode.traitors -= antag
 		qdel(src)
 		return 0
+
+	// so fucking ugly but i cba to think of another solution
+	if(faction.contracts.len == 0)
+		faction.update_contracts()
 
 	for(var/i = 0; i < obligatory_contracts; i++)
 		var/datum/contract/C = pick(faction.contracts)
