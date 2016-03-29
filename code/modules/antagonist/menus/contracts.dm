@@ -30,34 +30,35 @@
 	. += " - <b><a href='byond://?src=\ref[src];tgroup=close'>Close</a></b>"
 	. += "<hr></center>"
 
-	// Our Contracts
-	if(antag.active_contracts.len > 0)
-		. += "<h2><span class='white'>Active Contracts</span></h2>"
-		. += "<table>"
-		for(var/datum/contract/C in antag.active_contracts)
-			. += "<tr><table class='outline'><center>"
-			. += "<th width=20%>[C.title]</th>"
-			. += "<td width=60%><i>[C.desc]</i></td>"
-			. += "<td width=20%>Expires in: [C.formatted_time((C.contract_start + C.time_limit) - world.time)]</td>"
-			. += "</center></table></tr>"
-		. += "</table>"
+	if(antag)
+		// Our Contracts
+		if(antag.active_contracts.len > 0)
+			. += "<h2><span class='white'>Active Contracts</span></h2>"
+			. += "<table>"
+			for(var/datum/contract/C in antag.active_contracts)
+				. += "<tr><table class='outline'><center>"
+				. += "<th width=20%>[C.title]</th>"
+				. += "<td width=60%><i>[C.desc]</i></td>"
+				. += "<td width=20%>Expires in: [C.formatted_time((C.contract_start + C.time_limit) - world.time)]</td>"
+				. += "</center></table></tr>"
+			. += "</table>"
 
-	// Uplink Contracts
-	. += "<h2><span class='white'>Available Contracts</span></h2>"
-	. += "<table><center>"
-	for(var/datum/contract/C in antag.faction.contracts - antag.active_contracts)
-		. += "<tr><table class='outline'>"
-		. += "<th width=20%>[C.title]</th>"
-		. += "<td width=40%><i>[C.desc]</i></td>"
-		. += "<td width=20%>Expires in: [C.formatted_time((C.contract_start + C.time_limit) - world.time)]</td>"
-		. += "<th width=20%>"
-		if(C.can_accept(user))
-			. += "<a href='byond://?src=\ref[src];tgroup=[tgroup];task=accept_contract\ref[C]'>Accept Contract</a>"
-		else
-			. += "<i class='red'>Cannot Accept</i>"
-		. += "</th>"
-		. += "</table></tr>"
-	. += "</center></table>"
+		// Uplink Contracts
+		. += "<h2><span class='white'>Available Contracts</span></h2>"
+		. += "<table><center>"
+		for(var/datum/contract/C in antag.faction.contracts - antag.active_contracts)
+			. += "<tr><table class='outline'>"
+			. += "<th width=20%>[C.title]</th>"
+			. += "<td width=40%><i>[C.desc]</i></td>"
+			. += "<td width=20%>Expires in: [C.formatted_time((C.contract_start + C.time_limit) - world.time)]</td>"
+			. += "<th width=20%>"
+			if(C.can_accept(user))
+				. += "<a href='byond://?src=\ref[src];tgroup=[tgroup];task=accept_contract\ref[C]'>Accept Contract</a>"
+			else
+				. += "<i class='red'>Cannot Accept</i>"
+			. += "</th>"
+			. += "</table></tr>"
+		. += "</center></table>"
 
 	. += "</body></html>"
 

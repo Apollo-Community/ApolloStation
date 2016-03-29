@@ -3,6 +3,7 @@
 
 	var/tgroup = "buy"
 
+	var/datum/antagonist/antag = user.mind.antagonist
 	var/datum/money_account/A = find_account(user)
 
 	. += "<html><head>"
@@ -30,29 +31,31 @@
 	. += " - <b><a href='byond://?src=\ref[src];tgroup=close'>Close</a></b>"
 	. += "<hr></center>"
 
-	. += "<h2><span class='white'>Uplink Market</span></h2>"
-	. += "<h3><span class='white'>Available Funds: $[A.money]</span></h3>"
+	if(antag)
+		. += "<h2><span class='white'>Uplink Market</span></h2>"
+		. += "<h3><span class='white'>Available Funds: $[A.money]</span></h3>"
 
-	for(var/category in ticker.mode.uplink_items)
-		. += "<h3><span class='white'>[category]</span></h3>"
-		. += "<table><center>"
-		for(var/datum/uplink_item/I in ticker.mode.uplink_items[category])
-			. += "<tr><table class='outline'>"
-			. += "<th width=20%>[I.name]</th>"
-			. += "<td width=40%>$[I.cost]</td>"
-			. += "<th width=20%>"
-			if(A.money >= I.cost)
-				. += "<a href='byond://?src=\ref[src];tgroup=[tgroup];task=[I.reference]'>Purchase</a>"
-			else
-				. += "<i class='red'>Insufficient Funds</i>"
-			. += "</th>"
-		. += "</center></table><br>"
+		var/list/datum/uplink_item/items = (ticker.mode.uplink_items.Copy() + antag.faction.equipment)
+		for(var/category in items)
+			. += "<h3><span class='white'>[category]</span></h3>"
+			. += "<table><center>"
+			for(var/datum/uplink_item/I in items[category])
+				. += "<tr><table class='outline'>"
+				. += "<th width=20%>[I.name]</th>"
+				. += "<td width=40%>$[I.cost]</td>"
+				. += "<th width=20%>"
+				if(A.money >= I.cost)
+					. += "<a href='byond://?src=\ref[src];tgroup=[tgroup];task=[I.reference]'>Purchase</a>"
+				else
+					. += "<i class='red'>Insufficient Funds</i>"
+				. += "</th>"
+			. += "</center></table><br>"
 
-	. += "<center><table class='outline'>"
-	. += "<th width=20%>Random Item</th>"
-	. += "<td width=40%>$???</td>"
-	. += "<th width=20%><a href='byond://?src=\ref[src];tgroup=[tgroup];task=random'>Purchase</a></th>"
-	. += "</table></center>"
+		. += "<center><table class='outline'>"
+		. += "<th width=20%>Random Item</th>"
+		. += "<td width=40%>$???</td>"
+		. += "<th width=20%><a href='byond://?src=\ref[src];tgroup=[tgroup];task=random'>Purchase</a></th>"
+		. += "</table></center>"
 
 	. += "</body></html>"
 
