@@ -25,6 +25,10 @@ var/global/datum/controller/gameticker/ticker
 	var/Bible_name			// name of the bible
 	var/Bible_deity_name
 
+	// 600 for debug
+	var/const/contract_delay = 600 // this (in 1/10 seconds) is how long it takes before traitors get their contracts, and the factions are populated with contracts
+	var/contracts_made = 0
+
 	var/random_players = 0 	// if set to nonzero, ALL players who latejoin or declare-ready join will have random appearances/genders
 
 	var/list/syndicate_coalition = list() // list of traitor-compatible factions
@@ -301,6 +305,12 @@ var/global/datum/controller/gameticker/ticker
 		mode.process()
 
 		emergency_shuttle.process()
+
+		if(!contracts_made && world.time > (game_start + contract_delay))
+			contracts_made = 1
+			faction_controller.update_contracts()
+			for(var/datum/mind/T in traitors)
+				T.antagonist.pick_contracts()
 
 		var/game_finished = 0
 		var/mode_finished = 0
