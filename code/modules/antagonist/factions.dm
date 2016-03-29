@@ -59,7 +59,7 @@
 		var/datum/contract/C = new path(src)
 		while(isnull(C))
 			path = pick(regular_contracts)
-			C = new path()
+			C = new path(src)
 		contracts += C
 		path = pick(regular_contracts)
 		amt_regular_contracts++
@@ -73,7 +73,7 @@
 		var/datum/contract/C = new path(src)
 		while(isnull(C))
 			path = pick(regular_contracts)
-			C = new path()
+			C = new path(src)
 		contracts += C
 		path = pick(restricted_contracts)
 		amt_restricted_contracts++
