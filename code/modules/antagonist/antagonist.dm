@@ -9,7 +9,7 @@
 	var/obligatory_contracts = 1 						// How many contracts the antagonist is forced to take from round start
 	var/list/datum/contract/active_contracts = list() 	// Currently active contracts for the antagonist
 
-	var/datum/faction/syndicate/faction = null
+	var/datum/faction/syndicate/faction = null // Defining this (type path) in the antagonist datum will force all antagonists of that type to be part of this faction
 	var/list/datum/contract/completed_contracts = list()
 	var/datum/mind/antag = null
 
@@ -20,7 +20,11 @@
 	// setup() done in postsetup so that there's actually contracts to pick
 
 /datum/antagonist/proc/setup()
-	faction = faction_controller.get_syndie_faction(antag.current)
+	if(faction)
+		faction_controller.join_faction(antag, faction)
+	else
+		faction_controller.get_syndie_faction(antag)
+
 	if(!faction) // we need a faction
 		message_admins("[antag.key]/([antag.current.real_name]) was made an antagonist, but failed to get a faction.")
 		antag.antagonist = null

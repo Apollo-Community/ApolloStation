@@ -5,8 +5,8 @@
 	var/desc		// small paragraph explaining the traitor faction
 
 	var/list/restricted_species = list() // only members of these species can be recruited.
-	var/list/members = list() 	// a list of mind datums that belong to this faction
-	var/max_op = 0		// the maximum number of members a faction can have (0 for no max)
+	var/list/datum/mind/members = list() 	// a list of mind datums that belong to this faction
+	var/max_op = 0		// the maximum number of members a faction can have (0 for no limit)
 
 	var/datum/controller/faction_controller/controller = null
 

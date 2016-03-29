@@ -1,5 +1,5 @@
 // Short version of all antagonist workings:
-// Faction controller > factions > contracts & antagonists
+// Faction controller > factions > contracts & antagonists (or members)
 // Faction controller also hands out factions to antagonists
 // contracts & antagonists reports back to factions. the faction controller just sets up factions and forces them to do shit
 
@@ -31,6 +31,29 @@ var/global/list/restricted_contracts = list()
 		qdel(F)
 		factions -= F
 
+// makes the mind join a faction. also works if a type is passed as the faction
+/datum/controller/faction_controller/proc/join_faction(var/datum/mind/M, var/datum/faction/F)
+	if(ispath(F))
+		F = (locate(F) in factions)
+	if(!F)	return 0
+	F.members += M
+	M.faction = F
+
+	// set antagonist.faction if the mind is joining a syndicate faction
+	if(istype(F, /datum/faction/syndicate) && M.antagonist)
+		M.antagonist.faction = F
+
+// removes the mind from the faction. also works if a type is passed as the faction
+/datum/controller/faction_controller/proc/leave_faction(var/datum/mind/M, var/datum/faction/F)
+	if(ispath(F))
+		F = (locate(F) in factions)
+	if(!F || !(M in F.members))	return 0
+	F.members -= M
+	M.faction = null
+
+	if(istype(F, /datum/faction/syndicate) && M.antagonist)
+		M.antagonist.faction = null
+
 // create factions and add them to our list
 /datum/controller/faction_controller/proc/setup_factions()
 	var/datum/faction/F = null
@@ -40,15 +63,19 @@ var/global/list/restricted_contracts = list()
 		F = new faction()
 		factions += F
 
-// returns a suitable syndicate faction for a mob
-/datum/controller/faction_controller/proc/get_syndie_faction(var/mob/living/M)
-	var/list/datum/faction/syndicate/candidates = factions
+// finds a suitable syndicate faction for a mind and joins it
+/datum/controller/faction_controller/proc/get_syndie_faction(var/datum/mind/M)
+	var/mob/living/mob = M.current
+	if(!mob)	return 0
+
+	var/list/datum/faction/syndicate/candidates = factions.Copy()
 	for(var/datum/faction/syndicate/S in candidates)
-		if(!istype(S) || S.members.len >= S.max_op || (S.restricted_species.len > 0 && !(M.species.type in S.restricted_species)))	candidates -= S
+		if(!istype(S, /datum/faction/syndicate) || (S.max_op > 0 && S.members.len >= S.max_op) || (S.restricted_species.len > 0 && !(mob.species.type in S.restricted_species)))
+			candidates -= S
 
 	if(candidates.len == 0)	return 0
 
-	return pick(candidates)
+	return join_faction(M, pick(candidates))
 
 // starts a contract update for all syndicate factions
 /datum/controller/faction_controller/proc/update_contracts()
