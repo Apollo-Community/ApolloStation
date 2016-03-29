@@ -37,8 +37,9 @@
 
 	antag.current << "<B><font size=3 color=red>[greeting]</font></B>"
 	antag.current << "<B><font size=2 color=red>You are working for \The [faction.name].</font></B>"
-	antag.current << "You are a sleeper cell agent, and your employer has recently ordered you to <B>stand by for further instructions</B>."
-	antag.current << "" // newline
+	if(!ticker.contracts_made)
+		antag.current << "You are a sleeper cell agent, and your employer has recently ordered you to <B>stand by for further instructions</B>."
+		antag.current << "" // newline
 
 	switch(faction.friendly_identification)
 		if(FACTION_ID_PHRASE)
@@ -52,6 +53,10 @@
 			else
 				antag.current << "\The [faction.name] has informed you that <B>you are the only active [faction.name] agent on [station_name]</B>."
 	antag.current << "" // newline
+
+	if(ticker.contracts_made) // for antags that are created mid-round, after the contracts have been made available
+		pick_contracts()
+		antag.current << "" // newline
 
 	equip()
 
