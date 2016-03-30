@@ -15,8 +15,6 @@
 	uplink_welcome = "AntagCorp Portable Teleportation Relay:"
 	uplink_uses = 10
 
-	var/game_start = 0 // world.time when the game started
-
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
@@ -71,8 +69,6 @@
 			//finalize_traitor(traitor)
 			//greet_traitor(traitor)
 	modePlayer += traitors
-
-	game_start = world.time
 
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()

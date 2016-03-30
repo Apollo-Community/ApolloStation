@@ -12,6 +12,7 @@ var/global/datum/controller/gameticker/ticker
 
 	var/hide_mode = 1
 	var/datum/game_mode/mode = null
+	var/game_start = 0 // world.time when the game started
 	var/post_game = 0
 	var/event_time = null
 	var/event = 0
@@ -308,9 +309,10 @@ var/global/datum/controller/gameticker/ticker
 
 		if(!contracts_made && world.time > (game_start + contract_delay))
 			contracts_made = 1
+			message_admins("[contract_delay/10] seconds have passed since game start. Contracts are now available to antagonists.")
 			faction_controller.update_contracts()
-			for(var/datum/mind/T in traitors)
-				T.antagonist.pick_contracts()
+			for(var/datum/mind/M in minds)
+				if(M.antagonist)	M.antagonist.pick_contracts()
 
 		var/game_finished = 0
 		var/mode_finished = 0
