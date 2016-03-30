@@ -55,8 +55,12 @@
 /datum/contract/protect/proc/get_target()
 	var/datum/mind/list/candidates = list()
 	var/datum/mind/list/taken = get_taken_targets()
-	for(var/datum/contract/kill/C in faction.contracts)
-		if(faction.members.len == 1 && (C.target in faction.members))	continue // no protect contracts for yourself as the sole member of a faction
-		if(istype(C) && !(C.target in taken))
-			candidates += C.target
+
+	for(var/datum/faction/syndicate/S in (faction_controller.factions - faction))
+		if(S.name in faction.alliances)	continue // don't interfere with our alliances
+		
+		for(var/datum/contract/kill/C in S.contracts)
+			if(faction.members.len == 1 && (C.target in faction.members))	continue // no protect contracts for yourself as the sole member of a faction
+			if(istype(C) && !(C.target in taken))
+				candidates += C.target
 	return (candidates.len > 0 ? pick(candidates) : null) // pick(candidates) if candidates isn't empty. null otherwise
