@@ -17,6 +17,7 @@
 
 /datum/contract/deface/New()
 	..()
+	if(ticker.current_state == 1)	return 0
 
 	phrase = get_phrase()
 

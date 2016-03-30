@@ -9,6 +9,7 @@
 
 /datum/contract/protect/New()
 	..()
+	if(ticker.current_state == 1)	return 0
 
 	target = get_target()
 	if(!target)
