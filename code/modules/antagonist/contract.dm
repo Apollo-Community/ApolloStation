@@ -19,6 +19,10 @@
 /datum/contract/New(var/datum/faction/syndicate/F)
 	..()
 	if(ticker.current_state == 1)	return 0
+
+	if(affilation.len > 0 && (!F in affilation))
+		qdel(src)
+		return
 	
 	faction = F
 	workers = list()

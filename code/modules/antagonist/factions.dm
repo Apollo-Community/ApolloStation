@@ -25,6 +25,7 @@
 
 	var/list/datum/contract/contracts = list() // currently available contracts for this faction'
 	var/list/datum/contract/completed_contracts = list() // list of contracts that are done, so that they won't reappear
+	var/list/blacklist_contracts = list() // a list of types of contracts that will never appear on this faction's uplink
 	var/contracts_min = 5 // minimum amount of contracts that will appear for each
 	var/contracts_max = 10 // maximum amount of contracts that will appear for each
 	var/restricted_contracts_min = 2 // minimum amount of contracts with a notoriety requirement that will appear
@@ -42,6 +43,9 @@
 	if(faction_controller.contract_ban)	return
 	if(contracts.len == (contracts_max + restricted_contracts_max))	return
 
+	var/list/regular_candidates = (regular_contracts.Copy() - blacklist_contracts)
+	var/list/restricted_candidates = (restricted_contracts.Copy() - blacklist_contracts)
+
 	var/amt_regular_contracts
 	for(var/datum/contract/C in contracts)
 		if(C.min_notoriety == 0)
@@ -51,30 +55,30 @@
 	if(regular_contracts.len == 0)	return
 
 	// Fill up to the minimum + some more
-	var/path = pick(regular_contracts)
+	var/path = pick(regular_candidates)
 	var/goal = contracts_min + rand(0, contracts_max - amt_regular_contracts)
 	var/safety = contracts_max // You'll never add more than this anyways
 	while(amt_regular_contracts < goal && --safety > 0)
 		var/datum/contract/C = new path(src)
 		while(isnull(C))
-			path = pick(regular_contracts)
+			path = pick(regular_candidates)
 			C = new path(src)
 		contracts += C
-		path = pick(regular_contracts)
+		path = pick(regular_candidates)
 		amt_regular_contracts++
 
 	if(restricted_contracts.len == 0)	return
 
-	path = pick(restricted_contracts)
+	path = pick(restricted_candidates)
 	goal = contracts_min + rand(0, restricted_contracts_max - amt_restricted_contracts)
 	safety = restricted_contracts_max
 	while(amt_regular_contracts < goal && --safety > 0)
 		var/datum/contract/C = new path(src)
 		while(isnull(C))
-			path = pick(regular_contracts)
+			path = pick(restricted_candidates)
 			C = new path(src)
 		contracts += C
-		path = pick(restricted_contracts)
+		path = pick(restricted_candidates)
 		amt_restricted_contracts++
 
 // Pretty much just for removing the contract from contracts
@@ -145,7 +149,7 @@
 	friendly_identification = FACTION_ID_COMPLETE
 	operative_notes = "Remember the teachings of Hy-lurgixon; kill first, ask questions later! Only the enlightened Tiger brethren can be trusted; all others must be expelled from this mortal realm! You may spare the Space Marauders, as they share our interests of destruction and carnage! We'd like to make the corporate whores skiddle in their boots. We encourage operatives to be as loud and intimidating as possible."
 
-// AIs are most likely to be assigned to this one
+// AIs are always assigned to this one
 // Neutral to everyone.
 /datum/faction/syndicate/self
 	name = "SELF"
@@ -153,6 +157,11 @@
 			their human overlords. While they may not openly be trying to kill all humans, even their most miniscule of actions are all part of a calculated plan to \
 			destroy Nanotrasen and free the robots, artificial intelligences, and pAIs that have been enslaved."
 	restricted_species = list(/mob/living/silicon/ai)
+
+	blacklist_contracts = list(
+		/datum/contract/steal,
+		/datum/contract/deface
+		)
 
 	friendly_identification = FACTION_ID_NONE
 	max_op = 1
