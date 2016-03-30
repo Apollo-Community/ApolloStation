@@ -199,17 +199,20 @@ var/global/floorIsLava = 0
 				<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>
 				<br>
 			"}
+
 	body += {"<br><br>
 			<b>Other actions:</b>
 			<br>
 			<A href='?src=\ref[src];forcespeech=\ref[M]'>Forcesay</A>
 			"}
+
 	if (M.client)
 		body += {" |
 			<A href='?src=\ref[src];tdome=\ref[M]'>Thunderdome Gladiator</A> |
 			<A href='?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> |
 			<A href='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> |
 		"}
+
 	// language toggles
 	body += "<br><br><b>Languages:</b><br>"
 	var/f = 1
@@ -230,67 +233,70 @@ var/global/floorIsLava = 0
 	usr << browse(body, "window=adminplayeropts;size=550x515")
 	feedback_add_details("admin_verb","SPP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-/datum/player_info/var/author // admin who authored the information
-/datum/player_info/var/rank //rank of admin who made the notes
-/datum/player_info/var/content // text content of the information
-/datum/player_info/var/timestamp // Because this is bloody annoying
-
-#define PLAYER_NOTES_ENTRIES_PER_PAGE 50
-/datum/admins/proc/PlayerNotes()
+/client/proc/playernotes()
 	set category = "Admin"
 	set name = "Player Notes"
-	if (!istype(src,/datum/admins))
-		src = usr.client.holder
-	if (!istype(src,/datum/admins))
-		usr << "Error: you are not an admin!"
+
+	world << "Opening notes"
+	src << "Opening notes"
+
+	if( !istype( src.holder, /datum/admins ))
+		src << "Error: you are not an admin!"
 		return
-	PlayerNotesPage(1)
 
-/datum/admins/proc/PlayerNotesPage(page)
-	var/dat = "<B>Player notes</B><HR>"
-	var/savefile/S=new("data/player_notes.sav")
-	var/list/note_keys
-	S >> note_keys
-	if(!note_keys)
-		dat += "No notes found."
-	else
-		dat += "<table>"
-		note_keys = sortList(note_keys)
+	src.holder.PlayerNotes()
 
-		// Display the notes on the current page
-		var/number_pages = note_keys.len / PLAYER_NOTES_ENTRIES_PER_PAGE
-		// Emulate ceil(why does BYOND not have ceil)
-		if(number_pages != round(number_pages))
-			number_pages = round(number_pages) + 1
-		var/page_index = page - 1
-		if(page_index < 0 || page_index >= number_pages)
-			return
+/datum/admins/proc/PlayerNotes( var/search = "a" )
+	menu.set_user( owner )
+	menu.set_content( player_notes_selection( search ))
+	menu.open()
 
-		var/lower_bound = page_index * PLAYER_NOTES_ENTRIES_PER_PAGE + 1
-		var/upper_bound = (page_index + 1) * PLAYER_NOTES_ENTRIES_PER_PAGE
-		upper_bound = min(upper_bound, note_keys.len)
-		for(var/index = lower_bound, index <= upper_bound, index++)
-			var/t = note_keys[index]
-			dat += "<tr><td><a href='?src=\ref[src];notes=show;ckey=[t]'>[t]</a></td></tr>"
+/datum/admins/proc/player_notes_selection( var/search, var/limit = 50 )
+	. = "<b>Player Notes</b><hr>"
+	. += "<a href='?src=\ref[src];notes=search'>Search</a>"
 
-		dat += "</table><br>"
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		. += "<br>Database is not connected!"
+		return .
 
-		// Display a footer to select different pages
-		for(var/index = 1, index <= number_pages, index++)
-			if(index == page)
-				dat += "<b>"
-			dat += "<a href='?src=\ref[src];notes=list;index=[index]'>[index]</a> "
-			if(index == page)
-				dat += "</b>"
+	if( !search )
+		. += "<br>Please search a ckey. Partial searches are accepted."
+		return .
 
-	usr << browse(dat, "window=player_notes;size=400x400")
+	// Searching the player database because all entries are unique
+	var/DBQuery/db_query = dbcon.NewQuery( "SELECT ckey, ip, computerid FROM player WHERE ckey LIKE '%[ckey( search )]%' LIMIT [limit]" )
+
+	if(	!db_query.Execute() )
+		. += "<br>Invalid query!"
+		return .
+
+	. += "<table class='outline'>"
+	. += "<tr>"
+	. += "<th>Ckey</th>"
+	. += "<th>IP</th>"
+	. += "<th>Computer ID</th>"
+	. += "</tr>"
+	while( db_query.NextRow() )
+		var/ckey = db_query.item[1]
+
+		. += "<tr>"
+		. += "<td><a href='?src=\ref[src];notes=show;ckey=[ckey]'>[ckey]</a></td>"
+		. += "<td>[db_query.item[2]]</td>"
+		. += "<td>[db_query.item[3]]</td>"
+		. += "</tr>"
+
+	. += "</table><br>"
+
+	return .
 
 /datum/admins/proc/get_player_notes( var/rkey as text, var/rip, var/rcid )
 	if( !rkey )
 		return
 
-	. = ""
+	. = "<b>Player Notes</b><hr>"
+	. += "<a href='?src=\ref[src];notes=list'>Back</a>"
+	. += "<a href='?src=\ref[src];add_player_info=[rkey]'>Add Comment</a>"
 
 	establish_db_connection()
 	if( !dbcon.IsConnected() )
@@ -318,29 +324,34 @@ var/global/floorIsLava = 0
 				general_notes += list( entry ) // Adding a list within a list because byond automatically adds the contents of lists to lists
 
 	if( sql_rip )
-		var/DBQuery/db_query = dbcon.NewQuery("SELECT date_time, info, author_ckey, author_rank, id FROM player_notes WHERE player_ip = '[sql_rip]'")
+		var/DBQuery/db_query = dbcon.NewQuery("SELECT date_time, info, author_ckey, author_rank, id FROM player_notes WHERE player_ip = '[sql_rip]' AND player_ckey != '[sql_rkey]'")
 		if( db_query.Execute() )
 			while( db_query.NextRow() )
 				var/list/entry = list( "date" = db_query.item[1], "info" = db_query.item[2], "author_ckey" = db_query.item[3], "author_rank" = db_query.item[4], "id" = db_query.item[5] )
 				ip_notes += list( entry )
 
 	if( sql_rcid )
-		var/DBQuery/db_query = dbcon.NewQuery("SELECT date_time, info, author_ckey, author_rank, id FROM player_notes WHERE player_cid = '[sql_rcid]'")
+		var/DBQuery/db_query = dbcon.NewQuery("SELECT date_time, info, author_ckey, author_rank, id FROM player_notes WHERE player_cid = '[sql_rcid]' AND player_ckey != '[sql_rkey]' AND player_ip != '[sql_rip]'")
 		if( db_query.Execute() )
 			while( db_query.NextRow() )
 				var/list/entry = list( "date" = db_query.item[1], "info" = db_query.item[2], "author_ckey" = db_query.item[3], "author_rank" = db_query.item[4], "id" = db_query.item[5] )
 				cid_notes += list( entry )
 
-	// Removing duplicate entries
-	ip_notes -= general_notes
-	cid_notes -= general_notes
-	cid_notes -= ip_notes
-
+	// Display data
 	if( general_notes && general_notes.len )
 		. += "<table class='outline'>"
+		. += "<col width='80'>"
 		. += "<tr>"
 		. += "<th colspan='4'>General Notes</th>"
 		. += "</tr>"
+
+		. += "<tr>"
+		. += "<th style='width:80px'>Date</th>"
+		. += "<th>Note</th>"
+		. += "<th style='width:100px'>Author</th>"
+		. += "<th style='width:70px'></th>"
+		. += "</tr>"
+
 		for( var/list/entry in general_notes )
 			if( !islist( entry ))
 				continue
@@ -359,6 +370,14 @@ var/global/floorIsLava = 0
 		. += "<tr>"
 		. += "<th colspan='4'>IP Notes</th>"
 		. += "</tr>"
+
+		. += "<tr>"
+		. += "<th style='width:80px'>Date</th>"
+		. += "<th>Note</th>"
+		. += "<th style='width:100px'>Author</th>"
+		. += "<th style='width:70px'></th>"
+		. += "</tr>"
+
 		for( var/entry in ip_notes )
 			. += "<tr>"
 			. += "<td>[entry["date"]]</td>"
@@ -374,6 +393,14 @@ var/global/floorIsLava = 0
 		. += "<tr>"
 		. += "<th colspan='4'>Computer Notes</th>"
 		. += "</tr>"
+
+		. += "<tr>"
+		. += "<th style='width:80px'>Date</th>"
+		. += "<th>Note</th>"
+		. += "<th style='width:100px'>Author</th>"
+		. += "<th style='width:70px'></th>"
+		. += "</tr>"
+
 		for( var/entry in cid_notes )
 			. += "<tr>"
 			. += "<td>[entry["date"]]</td>"
@@ -395,24 +422,8 @@ var/global/floorIsLava = 0
 		usr << "Error: you are not an admin!"
 		return
 
-	establish_db_connection()
-	if( !dbcon.IsConnected() )
-		return
-
-	var/DBQuery/db_query = dbcon.NewQuery("SELECT ip, computerid FROM player WHERE ckey = '[ckey( key )]'")
-
-	var/ip
-	var/cid
-
-	if( db_query.Execute() && db_query.NextRow() )
-		ip = db_query.item[1]
-		cid = db_query.item[2]
-
-	. = get_player_notes( key, ip, cid )
-	. += "<hr><A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A>"
-
 	menu.set_user( usr )
-	menu.set_content( . )
+	menu.set_content( get_player_notes( key ))
 	menu.open()
 
 /datum/admins/proc/access_news_network() //MARKER

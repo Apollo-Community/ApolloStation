@@ -41,7 +41,7 @@ datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = 
 	else if(banckey)
 		ckey = ckey(banckey)
 
-	note_add( usr, "[bantype_str] - [reason]", ckey, ip, computerid )
+	note_add( usr, "[bantype_str] - [reason]", ckey, 0 )
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM player WHERE ckey = '[ckey]'")
 	query.Execute()

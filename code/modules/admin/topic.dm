@@ -2715,7 +2715,7 @@
 		var/add = sanitize(input("Add Player Info") as null|text)
 		if(!add) return
 
-		note_add(usr, add, key )
+		note_add( usr, add, key )
 		show_player_info( key )
 
 	if(href_list["remove_player_info"])
@@ -2736,5 +2736,10 @@
 			if("show")
 				show_player_info(ckey)
 			if("list")
-				PlayerNotesPage(text2num(href_list["index"]))
+				PlayerNotes()
+			if("search")
+				var/search = ckey( input( usr,"Ckey to search","Search Ckey", null ) as text|null )
+				if( !search )
+					return
+				PlayerNotes( search )
 		return
