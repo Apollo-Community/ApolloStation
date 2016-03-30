@@ -52,12 +52,17 @@
 	var/amt_restricted_contracts = contracts.len - amt_regular_contracts
 
 	var/path = pick(regular_candidates)
+	var/goal = contracts_min + rand(0, contracts_max - amt_regular_contracts)
 	if(regular_candidates.len > 0)
 		// Fill up to the minimum + some more
-		for(var/i = 0; i < (contracts_min + rand(0, contracts_max - amt_regular_contracts)); i++)
+		for(var/i = 0; i < goal; i++)
 			var/datum/contract/C = new path(src)
 			if(isnull(C)) // trying to get a new one won't help, it'll delete itself too
 				regular_candidates -= path
+				if(regular_candidates.len == 0) // this is some really shit luck
+					break
+				i-- // we'll cheat a bit and decrement i to ensure we get the goal amount of contracts, though
+				path = pick(regular_candidates)
 				continue
 			contracts += C
 			path = pick(regular_candidates)
@@ -66,10 +71,15 @@
 	if(restricted_candidates.len == 0)	return
 
 	path = pick(restricted_candidates)
-	for(var/i = 0; i < (restricted_contracts_min + rand(0, restricted_contracts_max - amt_restricted_contracts)); i++)
+	goal = restricted_contracts_min + rand(0, restricted_contracts_max - amt_restricted_contracts)
+	for(var/i = 0; i < goal; i++)
 		var/datum/contract/C = new path(src)
 		if(isnull(C)) // trying to get a new one won't help, it'll delete itself too
 			restricted_candidates -= path
+			if(restricted_candidates.len == 0)
+				break
+			i--
+			path = pick(restricted_candidates)
 			continue
 		contracts += C
 		path = pick(restricted_candidates)
