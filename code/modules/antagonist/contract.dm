@@ -1,6 +1,7 @@
 /datum/contract
 	var/title = "Ordinary Contract" 	// Contract name/title
 	var/desc = "Complete the contract" 	// Contract information, what is required to complete it?
+	var/informal_name = ""				// A more informal version of the title. Used on round end when traitors are revealed
 	var/time_limit = 3600 				// How long before the contract expires after it's put on the uplink (in seconds)
 	var/min_notoriety = 0 				// The minimum amount of notoriety you need to take on the contract
 	var/rarity = 100 					// prob(rarity) is used when determining if the contract should appear on the Uplink
@@ -19,7 +20,7 @@
 /datum/contract/New(var/datum/faction/syndicate/F)
 	..()
 
-	if(affilation.len > 0 && (!F in affilation))
+	if(affilation.len > 0 && !(F in affilation))
 		qdel(src)
 		return
 	

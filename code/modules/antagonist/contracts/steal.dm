@@ -47,6 +47,7 @@
 	var/obj/O = new target()
 	title = "Steal \the [O.name]"
 	desc = "We've taken an interest in \the [O.name]. [pick(list("Deliver", "Drop off"))] \the [O.name] to \the [dropoff.name], where one of our agents will retrieve it."
+	informal_name = "Steal \the [O.name] and deliver it to \the [dropoff.name]"
 	qdel(O)
 
 // Steal contracts only end unsuccessfully by time expiration

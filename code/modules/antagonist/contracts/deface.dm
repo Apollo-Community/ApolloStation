@@ -29,6 +29,7 @@
 
 /datum/contract/deface/set_details()
 	desc = "[pick(list("We've a surprisingly serious contract for you", "There's an urgent task at hand"))]. Write \"[phrase]\" in the Central Primary Hallway with crayons."
+	informal_name = "Deface the central hallway with \"[phrase]\""
 
 /datum/contract/deface/check_completion()
 	var/hallway = locate(/area/hallway/primary/central_one)

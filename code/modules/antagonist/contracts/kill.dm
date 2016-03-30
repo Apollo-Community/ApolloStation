@@ -22,6 +22,7 @@
 /datum/contract/kill/set_details()
 	title = "[pick(list("Kill", "Murder", "Eliminate"))] [target.current.real_name]"
 	desc = "[target.current.real_name], the [target.assigned_role] [pick(list("would serve us better dead", "has been causing us trouble recently", "has badmouthed the wrong people"))]. [pick(list("Kill them at your earliest convenience", "Ensure that they don't live another day", "Eliminate them"))]."
+	informal_name = "Kill [target.current.real_name], the [target.assigned_role]"
 
 /datum/contract/kill/can_accept(var/mob/living/M)
 	..()
