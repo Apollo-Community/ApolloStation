@@ -69,6 +69,7 @@
 		if(FACTION_ID_PHRASE)
 			antag.current << "\The [faction.name] has provided all its agents with the following code phrases to identify other agents:"
 			antag.current << "<B>[list2text(faction.phrase, ", ")]</B>"
+			antag.current << ""
 		if(FACTION_ID_COMPLETE)
 			if((faction.members.len - 1) > 0)
 				antag.current << "\The [faction.name] has provided all its agents with the identity of their fellow agents. Your co-workers are as follows:"
@@ -76,15 +77,14 @@
 					antag.current << "<B>[M.current.real_name]</B>, [station_name] [M.assigned_role]"
 			else
 				antag.current << "\The [faction.name] has informed you that <B>you are the only active [faction.name] agent on [station_name]</B>."
-	antag.current << ""
+			antag.current << ""
 
 	// Tell them about people they might want to contact.
 	var/mob/living/carbon/human/M = get_nt_opposed()
 	if(M && M != antag.current)
 		antag.current << "There are credible reports claiming that <B>[M.real_name]</B> might be willing to help our cause. If you need assistance, consider contacting them."
 		antag.current.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
-
-	antag.current << ""
+		antag.current << ""
 
 /datum/antagonist/proc/pick_contracts()
 	var/list/datum/contract/candidates = faction.contracts.Copy()
