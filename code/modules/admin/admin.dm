@@ -287,7 +287,7 @@ var/global/floorIsLava = 0
 
 	return .
 
-/datum/admins/proc/get_player_notes( var/rkey as text, var/rip, var/rcid )
+/datum/admins/proc/get_player_notes( var/rkey as text )
 	if( !rkey )
 		return
 
@@ -305,8 +305,25 @@ var/global/floorIsLava = 0
 		return .
 
 	var/sql_rkey = ckey( rkey )
-	var/sql_rip = sql_sanitize_text( rip )
-	var/sql_rcid = sql_sanitize_text( rcid )
+
+	var/DBQuery/db_select = dbcon.NewQuery("SELECT ip, computerid FROM player WHERE ckey = '[sql_rkey]'")
+
+	var/ip
+	var/cid
+
+	if( db_select.Execute() && db_select.NextRow() )
+		ip = db_select.item[1]
+		cid = db_select.item[2]
+	else
+		. += {"<table class='outline'>
+<tr>
+<th>Bad database query!</th>
+</tr>
+</table>"}
+		return .
+
+	var/sql_rip = sql_sanitize_text( ip )
+	var/sql_rcid = sql_sanitize_text( cid )
 
 	var/list/general_notes = list()
 	var/list/ip_notes = list()
@@ -360,7 +377,7 @@ var/global/floorIsLava = 0
 			. += "<td><A href='?src=\ref[src];remove_player_info=[rkey];remove_index=[entry["id"]]'>Remove</A></td>"
 			. += "</tr>"
 
-		. += "</table>"
+		. += "</table><br>"
 
 	if( ip_notes && ip_notes.len )
 		. += "<table class='outline'>"
@@ -383,7 +400,7 @@ var/global/floorIsLava = 0
 			. += "<td><A href='?src=\ref[src];remove_player_info=[rkey];remove_index=[entry["id"]]'>Remove</A></td>"
 			. += "</tr>"
 
-		. += "</table>"
+		. += "</table><br>"
 
 	if( cid_notes && cid_notes.len )
 		. += "<table class='outline'>"
@@ -406,7 +423,7 @@ var/global/floorIsLava = 0
 			. += "<td><A href='?src=\ref[src];remove_player_info=[rkey];remove_index=[entry["id"]]'>Remove</A></td>"
 			. += "</tr>"
 
-		. += "</table>"
+		. += "</table><br>"
 
 	return .
 

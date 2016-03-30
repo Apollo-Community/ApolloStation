@@ -249,8 +249,8 @@ CREATE TABLE IF NOT EXISTS `paperwork_records` (
 CREATE TABLE IF NOT EXISTS `player_notes` (
   `id` int(32) NOT NULL AUTO_INCREMENT,
   `player_ckey` varchar(32) NOT NULL,
-  `player_ip` varchar(18),
-  `player_cid` varchar(32),
+  `player_ip` varchar(18) NOT NULL,
+  `player_cid` varchar(32) NOT NULL,
   `author_ckey` varchar(32) NOT NULL,
   `author_ip` varchar(18) NOT NULL,
   `author_cid` varchar(32) NOT NULL,

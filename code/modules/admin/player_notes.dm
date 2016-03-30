@@ -26,7 +26,7 @@
 	var/sql_akey = "'[ckey( usr.key )]'"
 	var/sql_aip = "'[sql_sanitize_text( user.client.address )]'"
 	var/sql_acid = "'[sql_sanitize_text( user.client.computer_id )]'"
-	var/sql_arank = "'[sql_sanitize_text( usr.client.holder.rank )]'"
+	var/sql_arank = "'[sql_sanitize_text( user.client.holder.rank )]'"
 	var/sql_info = "'[sql_sanitize_text( note )]'"
 
 	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO player_notes (`id`,`player_ckey`, `player_ip`, `player_cid`, `author_ckey` , `author_ip`, `author_cid`, `author_rank`, `date_time`, `info`) VALUES (null, [sql_rkey], [sql_rip], [sql_rcid], [sql_akey], [sql_aip], [sql_acid], [sql_arank], Now(), [sql_info])")
