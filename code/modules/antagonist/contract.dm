@@ -5,7 +5,7 @@
 	var/min_notoriety = 0 				// The minimum amount of notoriety you need to take on the contract
 	var/rarity = 100 					// prob(rarity) is used when determining if the contract should appear on the Uplink
 	var/reward = 1000 					// Thaler reward
-	var/affilation = list() 			// If you place names of factions here, this contract will only appear in the Uplink of agents of that faction
+	var/list/affilation = list() 		// If you place names of factions here, this contract will only appear in the Uplink of agents of that faction
 										// E.g. if you define it as list("Cybersun Industries"), only cybersun agents will get the contract in their Uplink
 
 	var/datum/faction/syndicate/faction = null
