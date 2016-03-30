@@ -431,20 +431,20 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/player_key = G_found.key
 
 	//Now for special roles and equipment.
-	switch(new_character.mind.special_role)
-		if("traitor")
+	switch(new_character.mind.antagonist.type)
+		if(/datum/antagonist/traitor)
 			job_master.EquipRank(new_character, new_character.mind.assigned_role, 1)
-			ticker.mode.equip_traitor(new_character)
-		if("Wizard")
+			new_character.mind.antagonist.setup()
+		if(/datum/antagonist/wizard)
 			new_character.loc = pick(wizardstart)
 			//ticker.mode.learn_basic_spells(new_character)
 			ticker.mode.equip_wizard(new_character)
-		if("Mercenary")
+		if(/datum/antagonist/mercenary)
 			var/obj/effect/landmark/synd_spawn = locate("landmark*Syndicate-Spawn")
 			if(synd_spawn)
 				new_character.loc = get_turf(synd_spawn)
 			call(/datum/game_mode/proc/equip_syndicate)(new_character)
-		if("Ninja")
+		if(/datum/antagonist/ninja)
 			new_character.equip_space_ninja()
 			if(ninjastart.len == 0)
 				new_character << "<B><span class='alert'>A proper starting location for you could not be found, please report this bug!</B></span>"
@@ -458,7 +458,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				else if (ninjastart.len == 0)
 					new_character << "<B><span class='alert'>Still no spawneable locations could be found. Aborting.</B></span>"
 
-		if("Death Commando")//Leaves them at late-join spawn.
+		if(/datum/antagonist/death_commando)//Leaves them at late-join spawn.
 			new_character.equip_death_commando()
 			new_character.internal = new_character.s_store
 			new_character.internals.icon_state = "internal1"
@@ -466,12 +466,12 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			switch(new_character.mind.assigned_role)
 				if("Cyborg")//More rigging to make em' work and check if they're traitor.
 					new_character = new_character.Robotize()
-					if(new_character.mind.special_role=="traitor")
-						call(/datum/game_mode/proc/add_law_zero)(new_character)
+					if(new_character.mind.antagonist)
+						new_character.mind.antagonist.setup()
 				if("AI")
 					new_character = new_character.AIize()
-					if(new_character.mind.special_role=="traitor")
-						call(/datum/game_mode/proc/add_law_zero)(new_character)
+					if(new_character.mind.antagonist)
+						new_character.mind.antagonist.setup()
 				//Add aliens.
 				else
 					job_master.EquipRank(new_character, new_character.mind.assigned_role, 1)//Or we simply equip them.

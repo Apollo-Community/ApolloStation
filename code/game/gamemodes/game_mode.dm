@@ -547,12 +547,12 @@ proc/get_nt_opposed()
 /datum/game_mode/proc/print_player_full(var/datum/mind/ply)
 	var/text = print_player_lite(ply)
 
-	var/TC_uses = 0
+	var/money_spent = 0
 	var/uplink_true = 0
 	var/purchases = ""
 	for(var/obj/item/device/uplink/H in world_uplinks)
 		if(H && H.uplink_owner && H.uplink_owner == ply)
-			TC_uses += H.used_TC
+			money_spent = H.uplink_owner.antagonist.money_spent
 			uplink_true = 1
 			var/list/refined_log = new()
 			for(var/datum/uplink_item/UI in H.purchase_log)
@@ -561,7 +561,7 @@ proc/get_nt_opposed()
 				qdel(I)
 			purchases = english_list(refined_log, nothing_text = "")
 	if(uplink_true)
-		text += " (used [TC_uses] TC)"
+		text += " (Spent $[money_spent])"
 		if(purchases)
 			text += "<br>[purchases]"
 

@@ -1903,35 +1903,21 @@
 				if(!ticker)
 					alert("The game hasn't started yet!")
 					return
-				var/objective = sanitize(copytext(input("Enter an objective"),1,MAX_MESSAGE_LEN))
-				if(!objective)
-					return
 				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","TA([objective])")
+				feedback_add_details("admin_secrets_fun_used","TA")
 				for(var/mob/living/carbon/human/H in player_list)
 					if(H.stat == 2 || !H.client || !H.mind) continue
 					if(is_special_character(H)) continue
 					//traitorize(H, objective, 0)
 					ticker.mode.traitors += H.mind
-					H.mind.special_role = "traitor"
-					var/datum/objective/new_objective = new
-					new_objective.owner = H
-					new_objective.explanation_text = objective
-					H.mind.objectives += new_objective
-					ticker.mode.greet_traitor(H.mind)
-					//ticker.mode.forge_traitor_objectives(H.mind)
-					ticker.mode.finalize_traitor(H.mind)
+					H.mind.antagonist = new /datum/antagonist/traitor()
+					H.mind.antagonist.setup()
 				for(var/mob/living/silicon/A in player_list)
 					ticker.mode.traitors += A.mind
-					A.mind.special_role = "traitor"
-					var/datum/objective/new_objective = new
-					new_objective.owner = A
-					new_objective.explanation_text = objective
-					A.mind.objectives += new_objective
-					ticker.mode.greet_traitor(A.mind)
-					ticker.mode.finalize_traitor(A.mind)
-				message_admins("<span class='notice'>[key_name_admin(usr)] used everyone is a traitor secret. Objective is [objective]</span>")
-				log_admin("[key_name(usr)] used everyone is a traitor secret. Objective is [objective]")
+					A.mind.antagonist = new /datum/antagonist/traitor()
+					A.mind.antagonist.setup()
+				message_admins("<span class='notice'>[key_name_admin(usr)] used everyone is a traitor secret.</span>")
+				log_admin("[key_name(usr)] used everyone is a traitor secret.")
 
 			if("launchshuttle")
 				if(!shuttle_controller) return // Something is very wrong, the shuttle controller has not been created.

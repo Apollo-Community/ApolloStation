@@ -11,7 +11,11 @@
 
 	var/datum/faction/syndicate/faction = null // Defining this (type path) in the antagonist datum will force all antagonists of that type to be part of this faction
 	var/list/datum/contract/completed_contracts = list()
+	var/list/datum/contract/failed_contracts = list()
 	var/datum/mind/antag = null
+
+	// fun facts for the round end, but could also be used for statistics?
+	var/money_spent = 0
 
 /datum/antagonist/New(var/datum/mind/us)
 	..()
@@ -53,6 +57,12 @@
 			else
 				antag.current << "\The [faction.name] has informed you that <B>you are the only active [faction.name] agent on [station_name]</B>."
 	antag.current << "" // newline
+
+	// Tell them about people they might want to contact.
+	var/mob/living/carbon/human/M = get_nt_opposed()
+	if(M && M != antag.current)
+		antag.current << "There are credible reports claiming that <B>[M.real_name]</B> might be willing to help our cause. If you need assistance, consider contacting them."
+		antag.current.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
 
 	if(ticker.contracts_made) // for antags that are created mid-round, after the contracts have been made available
 		pick_contracts()
@@ -103,6 +113,8 @@
 	active_contracts -= C
 	if(success)
 		completed_contracts += C
+	else
+		failed_contracts += C
 
 	var/obj/item/I = locate(/obj/item/device/pda) in antag.current.contents
 

@@ -601,7 +601,7 @@ datum/mind
 					qdel(flash)
 					take_uplink()
 					var/fail = 0
-					fail |= !ticker.mode.equip_traitor(current, 1)
+					fail |= !src.antagonist.equip()
 					fail |= !ticker.mode.equip_revolutionary(current)
 					if (fail)
 						usr << "<span class='alert'>Reequipping revolutionary goes wrong!</span>"
@@ -768,19 +768,17 @@ datum/mind
 					if(!(src in ticker.mode.traitors))
 						ticker.mode.traitors += src
 						antagonist = new /datum/antagonist/traitor()
-						current << "<B><span class='alert'>You are a traitor!</span></B>"
+						antagonist.setup()
 						current << "<h3><B>Make sure to read the rules about ganking and be sure to make the round interesting for everyone!</B></h3>"
 						log_admin("[key_name_admin(usr)] has traitor'ed [current].")
-						show_objectives()
 
 						if(istype(current, /mob/living/silicon))
-							var/mob/living/silicon/A = current
-							call(/datum/game_mode/proc/add_law_zero)(A)
+							var/mob/living/silicon/ai/A = current
 							A.show_laws()
 
 				if("autoobjectives")
-					if (!config.objectives_disabled)
-						ticker.mode.forge_traitor_objectives(src)
+					if (!config.objectives_disabled && ticker.contracts_made)
+						src.antagonist.pick_contracts()
 						usr << "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>"
 
 		else if (href_list["silicon"])
@@ -869,7 +867,7 @@ datum/mind
 							if (suplink)
 								suplink.uses = crystals
 				if("uplink")
-					if (!ticker.mode.equip_traitor(current, !(src in ticker.mode.traitors)))
+					if (!src.antagonist.equip())
 						usr << "<span class='alert'>Equipping an operative failed!</span>"
 
 		else if (href_list["obj_announce"])
@@ -941,13 +939,9 @@ datum/mind
 
 	proc/make_Traitor()
 		if(!(src in ticker.mode.traitors))
-			character.temporary = 1 // Makes them non-canon
 			ticker.mode.traitors += src
 			antagonist = new /datum/antagonist/traitor()
-			if (!config.objectives_disabled)
-				ticker.mode.forge_traitor_objectives(src)
-			ticker.mode.finalize_traitor(src)
-			ticker.mode.greet_traitor(src)
+			antagonist.setup()
 
 	proc/make_Nuke()
 		if(!(src in ticker.mode.syndicates))

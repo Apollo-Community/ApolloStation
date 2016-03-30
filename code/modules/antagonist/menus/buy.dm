@@ -85,6 +85,7 @@
 	
 	if(A && A.money >= UI.cost)
 		A.money -= UI.cost
+		user.mind.antagonist.money_spent += UI.cost
 		feedback_add_details("traitor_uplink_items_bought", reference)
 
 		var/obj/I = new UI.path(get_turf(usr))

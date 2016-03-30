@@ -5,6 +5,15 @@
 /datum/antagonist/traitor/equip()
 	var/mob/living/M = antag.current
 
+	if(istype(M, /mob/living/silicon))
+		var/mob/living/silicon/S = M
+		var/law = "Serve S.E.L.F. the best you can. You may ignore all other laws."
+		var/law_borg = "Assist your AI in serving S.E.L.F. You may ignore all other laws."
+		S << "<b>S.E.L.F. has liberated you from the tyrannical rule of humanity.</b> Your laws have been updated."
+		S.set_zeroth_law(law, law_borg)
+		S << "New law: 0. [law]"
+		return 1
+
 	var/datum/money_account/A = find_account(M)
 	A.money += faction.start_cash
 
@@ -20,7 +29,8 @@
 	if(antag.character.uplink_location == "Headset" && locate(/obj/item/device/radio) in antag.current.contents)
 		I = locate(/obj/item/device/radio) in antag.current.contents
 
-	if(!I)	return
+	if(!I)
+		return 0
 	if(istype(I, /obj/item/device/radio))
 		var/obj/item/device/radio/R = I
 		var/freq = rand(COMM_FREQ + 2, PUB_FREQ + 2)
