@@ -18,6 +18,7 @@
 
 /datum/contract/New(var/datum/faction/syndicate/F)
 	..()
+	if(ticker.current_state == 1)	return 0
 	
 	faction = F
 	workers = list()

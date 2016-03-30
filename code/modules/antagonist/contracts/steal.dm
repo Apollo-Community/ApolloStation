@@ -29,7 +29,6 @@
 
 /datum/contract/steal/New()
 	..()
-	if(ticker.current_state == 1)	return 0
 
 	target = get_target()
 	dropoff = locate(pick(dropoff_areas))
