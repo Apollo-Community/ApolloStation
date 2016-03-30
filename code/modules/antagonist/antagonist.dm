@@ -38,6 +38,12 @@
 		qdel(src)
 		return 0
 
+	// notify any other agents in their faction about a new agent
+	if(faction.friendly_identification == FACTION_ID_COMPLETE)
+		for(var/datum/mind/M in faction.members - antag))
+			M.current << "Your employers have notified you that a fellow [newtraitor.antagonist.faction.name] agent has been activated:"
+			M.current << "<B>[M.current.real_name]</B>, [station_name] [M.assigned_role]"
+
 	antag.character.temporary = 1
 
 	if(ticker.contracts_made) // for antags that are created mid-round, after the contracts have been made available
@@ -55,7 +61,9 @@
 	antag.current << "<B><font size=2 color=red>You are working for \The [faction.name].</font></B>"
 	if(!ticker.contracts_made)
 		antag.current << "You are a sleeper cell agent, and your employer has recently ordered you to <B>stand by for further instructions</B>."
-		antag.current << "" // newline
+	else
+		antag.current << "Your services have been requested <B>now</B>."
+	antag.current << ""
 
 	switch(faction.friendly_identification)
 		if(FACTION_ID_PHRASE)
@@ -68,13 +76,15 @@
 					antag.current << "<B>[M.current.real_name]</B>, [station_name] [M.assigned_role]"
 			else
 				antag.current << "\The [faction.name] has informed you that <B>you are the only active [faction.name] agent on [station_name]</B>."
-	antag.current << "" // newline
+	antag.current << ""
 
 	// Tell them about people they might want to contact.
 	var/mob/living/carbon/human/M = get_nt_opposed()
 	if(M && M != antag.current)
 		antag.current << "There are credible reports claiming that <B>[M.real_name]</B> might be willing to help our cause. If you need assistance, consider contacting them."
 		antag.current.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
+
+	antag.current << ""
 
 /datum/antagonist/proc/pick_contracts()
 	for(var/i = 0; i < obligatory_contracts; i++)
