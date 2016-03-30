@@ -38,7 +38,6 @@
 		phrase = generate_code_phrase()
 
 // Populate contracts with new contracts
-// I JUST WANT THIS TO BE REFACTORED
 /datum/faction/syndicate/proc/update_contracts()
 	if(faction_controller.contract_ban)	return
 	if(contracts.len == (contracts_max + restricted_contracts_max))	return
@@ -52,31 +51,26 @@
 			amt_regular_contracts++
 	var/amt_restricted_contracts = contracts.len - amt_regular_contracts
 
-	if(regular_contracts.len == 0)	return
-
-	// Fill up to the minimum + some more
 	var/path = pick(regular_candidates)
-	var/goal = contracts_min + rand(0, contracts_max - amt_regular_contracts)
-	var/safety = contracts_max // You'll never add more than this anyways
-	while(amt_regular_contracts < goal && --safety > 0)
-		var/datum/contract/C = new path(src)
-		while(isnull(C))
+	if(regular_candidates.len > 0)
+		// Fill up to the minimum + some more
+		for(var/i = 0; i < (contracts_min + rand(0, contracts_max - amt_regular_contracts)); i++)
+			var/datum/contract/C = new path(src)
+			if(isnull(C)) // trying to get a new one won't help, it'll delete itself too
+				regular_candidates -= path
+				continue
+			contracts += C
 			path = pick(regular_candidates)
-			C = new path(src)
-		contracts += C
-		path = pick(regular_candidates)
-		amt_regular_contracts++
+			amt_regular_contracts++
 
-	if(restricted_contracts.len == 0)	return
+	if(restricted_candidates.len == 0)	return
 
 	path = pick(restricted_candidates)
-	goal = contracts_min + rand(0, restricted_contracts_max - amt_restricted_contracts)
-	safety = restricted_contracts_max
-	while(amt_regular_contracts < goal && --safety > 0)
+	for(var/i = 0; i < (restricted_contracts_min + rand(0, restricted_contracts_max - amt_restricted_contracts)); i++)
 		var/datum/contract/C = new path(src)
-		while(isnull(C))
-			path = pick(restricted_candidates)
-			C = new path(src)
+		if(isnull(C)) // trying to get a new one won't help, it'll delete itself too
+			restricted_candidates -= path
+			continue
 		contracts += C
 		path = pick(restricted_candidates)
 		amt_restricted_contracts++
@@ -158,10 +152,12 @@
 			destroy Nanotrasen and free the robots, artificial intelligences, and pAIs that have been enslaved."
 	restricted_species = list(/mob/living/silicon/ai)
 
+	/* atm this causes an infinite loop. need more contract types!
 	blacklist_contracts = list(
 		/datum/contract/steal,
 		/datum/contract/deface
 		)
+	*/
 
 	friendly_identification = FACTION_ID_NONE
 	max_op = 1
