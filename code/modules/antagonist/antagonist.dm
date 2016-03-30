@@ -22,7 +22,7 @@
 
 	antag = us
 
-/datum/antagonist/proc/setup()
+/datum/antagonist/proc/setup(var/skip_greet=0)
 	if(faction)
 		faction_controller.join_faction(antag, faction)
 	else
@@ -37,8 +37,17 @@
 
 	antag.character.temporary = 1
 
-	// greet the antagonist and give them any info concerning their task(s)
+	if(ticker.contracts_made) // for antags that are created mid-round, after the contracts have been made available
+		pick_contracts()
+		antag.current << "" // newline
 
+	// greet the antagonist and give them any info concerning their task(s)
+	if(!skip_greet)
+		greet()
+
+	equip()
+
+/datum/antagonist/proc/greet()
 	antag.current << "<B><font size=3 color=red>[greeting]</font></B>"
 	antag.current << "<B><font size=2 color=red>You are working for \The [faction.name].</font></B>"
 	if(!ticker.contracts_made)
@@ -63,12 +72,6 @@
 	if(M && M != antag.current)
 		antag.current << "There are credible reports claiming that <B>[M.real_name]</B> might be willing to help our cause. If you need assistance, consider contacting them."
 		antag.current.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
-
-	if(ticker.contracts_made) // for antags that are created mid-round, after the contracts have been made available
-		pick_contracts()
-		antag.current << "" // newline
-
-	equip()
 
 /datum/antagonist/proc/pick_contracts()
 	for(var/i = 0; i < obligatory_contracts; i++)
