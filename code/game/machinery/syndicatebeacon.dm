@@ -60,7 +60,7 @@
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/N = M
 			ticker.mode.traitors += N.mind
-			N.mind.antagonist = new /datum/antagonist/traitor()
+			N.mind.antagonist = new /datum/antagonist/traitor(N.mind)
 			N.mind.antagonist.setup()
 
 			M << "<B>You have joined the ranks of the Syndicate and become a traitor to the station!</B>"

@@ -1910,11 +1910,11 @@
 					if(is_special_character(H)) continue
 					//traitorize(H, objective, 0)
 					ticker.mode.traitors += H.mind
-					H.mind.antagonist = new /datum/antagonist/traitor()
+					H.mind.antagonist = new /datum/antagonist/traitor(H.mind)
 					H.mind.antagonist.setup()
 				for(var/mob/living/silicon/A in player_list)
 					ticker.mode.traitors += A.mind
-					A.mind.antagonist = new /datum/antagonist/traitor()
+					A.mind.antagonist = new /datum/antagonist/traitor(A.mind)
 					A.mind.antagonist.setup()
 				message_admins("<span class='notice'>[key_name_admin(usr)] used everyone is a traitor secret.</span>")
 				log_admin("[key_name(usr)] used everyone is a traitor secret.")

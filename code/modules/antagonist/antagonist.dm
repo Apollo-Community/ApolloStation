@@ -20,6 +20,9 @@
 /datum/antagonist/New(var/datum/mind/us)
 	..()
 
+	if(!us) // who the fuck am i?
+		log_debug("A new antagonist was made, but it doesn't know what mind it belongs to!")
+
 	antag = us
 
 /datum/antagonist/proc/setup(var/skip_greet=0)
