@@ -87,24 +87,18 @@
 	antag.current << ""
 
 /datum/antagonist/proc/pick_contracts()
+	var/list/datum/contract/candidates = faction.contracts.Copy()
+
+	for(var/datum/contract/C in candidates)
+		if(isnull(C) || !C.can_accept(antag.current))	candidates -= C
+	if(candidates.len == 0)
+		message_admins("Couldn't pick obligatory contract(s) for [antag.current.real_name] ([antag.key]). No possible contract candidates.")
+		return 0
+
 	for(var/i = 0; i < obligatory_contracts; i++)
 		var/datum/contract/C = pick(faction.contracts)
-		while((C in active_contracts) || isnull(C) || !C.can_accept(antag.current))
-			C = pick(faction.contracts)
-		// no self-harm. try to get a new kill contract, though
-		if(istype(C, /datum/contract/kill))
-			var/datum/contract/kill/K = C
-			var/list/kill_contracts = faction.get_contracts(/datum/contract/kill) - active_contracts
-			if(kill_contracts.len > 0)
-				while((K in active_contracts) || isnull(K) || !K.can_accept(antag.current))
-					kill_contracts -= K
-					K = pick(kill_contracts)
-				C = K
-			else
-				while((C in active_contracts) || isnull(C) || !C.can_accept(antag.current))
-					C = pick(faction.contracts)
-
 		C.start(antag.current)
+		candidates -= C
 
 	antag.current << ""
 	antag.current << "<B><font size=3 color=red>\The [faction.name] has decided on your orders.</font></B>"
