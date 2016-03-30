@@ -41,7 +41,7 @@
 	// notify any other agents in their faction about a new agent
 	if(faction.friendly_identification == FACTION_ID_COMPLETE)
 		for(var/datum/mind/M in (faction.members - antag))
-			M.current << "Your employers have notified you that a fellow [newtraitor.antagonist.faction.name] agent has been activated:"
+			M.current << "Your employers have notified you that a fellow [faction.name] agent has been activated:"
 			M.current << "<B>[M.current.real_name]</B>, [station_name] [M.assigned_role]"
 
 	antag.character.temporary = 1
