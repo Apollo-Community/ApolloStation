@@ -63,14 +63,11 @@
 			traitors.Remove(traitor)
 			continue
 		if(istype(traitor))
-			traitor.special_role = "traitor"
+			traitor.antagonist = new /datum/antagonist/traitor(traitor)
 
 //	if(!traitors.len)
 //		return 0
 	return 1
-
-
-
 
 /datum/game_mode/traitor/autotraitor/post_setup()
 	..()
@@ -88,9 +85,9 @@
 
 			if (player.client && player.stat != 2)
 				playercount += 1
-			if (player.client && player.mind && player.mind.special_role && player.stat != 2)
+			if (player.client && player.mind && player.mind.antagonist && player.stat != 2)
 				traitorcount += 1
-			if (player.client && player.mind && !player.mind.special_role && player.stat != 2 && (player.client && player.client.prefs.beSpecial() & BE_TRAITOR) && !jobban_isbanned(player, "Syndicate"))
+			if (player.client && player.mind && !player.mind.antagonist && player.stat != 2 && (player.client && player.client.prefs.beSpecial() & BE_TRAITOR) && !jobban_isbanned(player, "Syndicate"))
 				possible_traitors += player
 		for(var/datum/mind/player in possible_traitors)
 			if(player.assigned_role in restricted_jobs)
@@ -121,24 +118,16 @@
 					message_admins("No potential traitors.  Cancelling new traitor.")
 					traitorcheckloop()
 					return
-				var/mob/living/newtraitor = pick(possible_traitors)
+				var/mob/living/newmob = pick(possible_traitors)
 				//message_admins("[newtraitor.real_name] is the new Traitor.")
+				var/datum/mind/newtraitor = newmob.mind
 
-				if (!config.objectives_disabled)
-					forge_traitor_objectives(newtraitor.mind)
+				traitors += newtraitor
+				newtraitor.antagonist = new /datum/antagonist/traitor(newtraitor)
+				newtraitor << "<span class='alert'><B>No time like the present.</B></span>"
+				newtraitor.antagonist.setup()
 
-				if(istype(newtraitor, /mob/living/silicon))
-					add_law_zero(newtraitor)
-				else
-					equip_traitor(newtraitor)
-
-				traitors += newtraitor.mind
-				newtraitor << "<span class='alert'><B>No time like the present.</B> </span><span class='black'>It's time to take matters into your own hands...</span>"
-				newtraitor << "<B>You are now a traitor.</B>"
-				newtraitor.mind.special_role = "traitor"
-				newtraitor.hud_updateflag |= 1 << SPECIALROLE_HUD
-				newtraitor << "<i>You have been selected this round as an antagonist!</i>"
-				show_objectives(newtraitor.mind)
+				newtraitor.current.hud_updateflag |= 1 << SPECIALROLE_HUD
 
 			//else
 				//message_admins("No new traitor being added.")
@@ -166,7 +155,7 @@
 
 			if (player.client && player.stat != 2)
 				playercount += 1
-			if (player.client && player.mind && player.mind.special_role && player.stat != 2)
+			if (player.client && player.mind && player.mind.antagonist && player.stat != 2)
 				traitorcount += 1
 		//message_admins("Live Players: [playercount]")
 		//message_admins("Live Traitors: [traitorcount]")
@@ -187,17 +176,11 @@
 			//message_admins("The probability of a new traitor is [traitor_prob]%")
 			if(prob(traitor_prob))
 				message_admins("New traitor roll passed.  Making a new Traitor.")
-				if (!config.objectives_disabled)
-					forge_traitor_objectives(character.mind)
-				equip_traitor(character)
-				traitors += character.mind
-				character << "<span class='alert'><B>You are the traitor.</B></span>"
-				character.mind.special_role = "traitor"
-				character << "<i>You have been selected this round as an antagonist</i>!"
+				var/datum/mind/newtraitor = character.mind
 
-				character.character.temporary = 1 // Makes them non-canon
-
-				show_objectives(character.mind)
+				traitors += newtraitor
+				newtraitor.antagonist = new /datum/antagonist/traitor(newtraitor)
+				newtraitor.antagonist.setup()
 
 			//else
 				//message_admins("New traitor roll failed.  No new traitor.")
