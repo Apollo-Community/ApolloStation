@@ -237,9 +237,6 @@ var/global/floorIsLava = 0
 	set category = "Admin"
 	set name = "Player Notes"
 
-	world << "Opening notes"
-	src << "Opening notes"
-
 	if( !istype( src.holder, /datum/admins ))
 		src << "Error: you are not an admin!"
 		return
