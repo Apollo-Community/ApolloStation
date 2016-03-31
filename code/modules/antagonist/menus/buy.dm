@@ -60,8 +60,8 @@
 		. += "<th width=20%><a href='byond://?src=\ref[src];tgroup=[tgroup];task=random'>Purchase</a></th>"
 		. += "</table></center>"
 	else
-		. += "<h2><span class='white'>The Uplink Market is Unavailable</span></h2>"
-		. += "<center><span class='white'>Your employer has disabled your access to the market service.</span></center>"
+		. += "<center><h2><span class='white'>The Uplink Market is Unavailable</span></h2>"
+		. += "<span class='white'>Your employer has disabled your market service access.</span></center>"
 
 	. += "</body></html>"
 
