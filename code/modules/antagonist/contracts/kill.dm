@@ -44,8 +44,8 @@
 
 /datum/contract/kill/proc/get_taken_targets()
 	var/datum/mind/list/taken = list()
-	for(var/datum/contract/kill/C in (faction.contracts + faction.completed_contracts))
-		if(istype(C) && C.target)	taken += C.target
+	for(var/datum/contract/C in (faction.contracts + faction.completed_contracts))
+		if((istype(C, /datum/contract/kill) || istype(C, /datum/contract/protect)) && C.target)	taken += C.target
 	return taken
 
 /datum/contract/kill/proc/get_target()
