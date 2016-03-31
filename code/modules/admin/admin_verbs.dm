@@ -66,7 +66,7 @@ var/list/admin_verbs_admin = list(
 	/datum/admins/proc/toggledsay,		/*toggles dsay on/off for everyone*/
 	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
 	/client/proc/cmd_admin_say,			/*admin-only ooc chat*/
-	/datum/admins/proc/PlayerNotes,
+	/client/proc/playernotes,
 	/client/proc/cmd_mod_say,
 	/datum/admins/proc/show_player_info,
 	/client/proc/free_slot,			/*frees slot for chosen job*/
@@ -260,7 +260,7 @@ var/list/admin_verbs_mod = list(
 	/client/proc/cmd_admin_pm_panel,	/*admin-pm list*/
 	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game.*/
 	/client/proc/toggledebuglogs,
-	/datum/admins/proc/PlayerNotes,
+	/client/proc/playernotes,
 	/client/proc/admin_ghost,			/*allows us to ghost/reenter body at will*/
 	/client/proc/cmd_mod_say,
 	/datum/admins/proc/show_player_info,
@@ -276,7 +276,7 @@ var/list/admin_verbs_mod = list(
 var/list/admin_verbs_mentor = list(
 	/client/proc/cmd_admin_pm_context,
 	/client/proc/cmd_admin_pm_panel,
-	/datum/admins/proc/PlayerNotes,
+	/client/proc/playernotes,
 	/client/proc/admin_ghost,
 	/client/proc/cmd_mod_say,
 	/datum/admins/proc/show_player_info,
@@ -741,13 +741,6 @@ var/list/admin_verbs_mentor = list(
 	M.update_body()
 	M.check_dna(M)
 	*/
-
-/client/proc/playernotes()
-	set name = "Show Player Info"
-	set category = "Admin"
-	if(holder)
-		holder.PlayerNotes()
-	return
 
 /client/proc/free_slot()
 	set name = "Free Job Slot"

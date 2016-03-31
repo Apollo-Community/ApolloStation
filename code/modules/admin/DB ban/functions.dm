@@ -41,6 +41,8 @@ datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = 
 	else if(banckey)
 		ckey = ckey(banckey)
 
+	note_add( usr, "[bantype_str] - [reason]", ckey, 0 )
+
 	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM player WHERE ckey = '[ckey]'")
 	query.Execute()
 	var/validckey = 0
@@ -81,7 +83,6 @@ datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = 
 	usr << "<span class='notice'>Ban saved to database.</span>"
 	message_admins("[key_name_admin(usr)] has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.")
 	statistics.increase_stat("banned")
-
 
 
 datum/admins/proc/DB_ban_unban(var/ckey, var/bantype, var/job = "")
