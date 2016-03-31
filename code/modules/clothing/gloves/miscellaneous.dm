@@ -62,8 +62,8 @@
 	siemens_coefficient = 0.9
 
 /obj/item/clothing/gloves/sm_proof
-	desc = "These gloves are weaved with phoron threads, protecting from contact with supermatter, but with the side effect of toxin leeching into your system."
-	name = "supermatter-safe gloves"
+	desc = "These gloves are weaved with phoron threads, protecting the user from contact with supermatter, but with the minor side effect of leeching toxins into your body."
+	name = "phoroweave gloves"
 	icon_state = "sm_proof"
 	item_state = "sm_proof"
 	permeability_coefficient = 0.9
