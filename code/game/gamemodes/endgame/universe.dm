@@ -46,11 +46,6 @@
 
 	handleDateProgression()
 
-/datum/universal_state/Destroy()
-	saveToDB()
-
-	..()
-
 // Returns the universe datetime in format "YYYY-MM-DD HH:MM:SS"
 /datum/universal_state/proc/getDateTime()
 	var/timestamp = "[date[1]]-[ date[2] < 10 ? date[2] : add_zero( date[2] )]-[ date[3] < 10 ? date[3] : add_zero( date[3] )]"
