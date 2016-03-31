@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `library` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `author` TEXT NOT NULL ,
   `title` TEXT NOT NULL ,
-  `content` TEXT NOT NULL ,
+  `content` MEDIUMTEXT NOT NULL ,
   `category` TEXT NOT NULL ,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
@@ -240,6 +240,23 @@ CREATE TABLE IF NOT EXISTS `paperwork_records` (
   `date_time` datetime NOT NULL,
   `title` varchar(50),
   `info` MEDIUMTEXT NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+-- -----------------------------------------------------
+-- Player Notes
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `player_notes` (
+  `id` int(32) NOT NULL AUTO_INCREMENT,
+  `player_ckey` varchar(32) NOT NULL,
+  `player_ip` varchar(18) NOT NULL,
+  `player_cid` varchar(32) NOT NULL,
+  `author_ckey` varchar(32) NOT NULL,
+  `author_ip` varchar(18) NOT NULL,
+  `author_cid` varchar(32) NOT NULL,
+  `author_rank` varchar(32) NOT NULL,
+  `date_time` datetime NOT NULL,
+  `info` TEXT NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
 

@@ -283,10 +283,7 @@
 	icon_state = "data"
 	registered_name = "spacepod"
 	assignment = "spacepod"
-	New()
-		var/datum/job/captain/J = new/datum/job/captain
-		access = J.get_access()
-		..()
+	access = list( access_energy_barrier )
 
 /obj/item/weapon/card/id/syndicate_command
 	name = "syndicate ID card"
