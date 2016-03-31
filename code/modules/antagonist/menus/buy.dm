@@ -31,7 +31,7 @@
 	. += " - <b><a href='byond://?src=\ref[src];tgroup=close'>Close</a></b>"
 	. += "<hr></center>"
 
-	if(antag)
+	if(antag && !faction_controller.contract_ban)
 		. += "<h2><span class='white'>Uplink Market</span></h2>"
 		. += "<h3><span class='white'>Available Funds: $[A.money]</span></h3>"
 
@@ -59,6 +59,9 @@
 		. += "<td width=40%>$???</td>"
 		. += "<th width=20%><a href='byond://?src=\ref[src];tgroup=[tgroup];task=random'>Purchase</a></th>"
 		. += "</table></center>"
+	else
+		. += "<h2><span class='white'>The Uplink Market is Unavailable</span></h2>"
+		. += "<center><span class='white'>Your employer has disabled your access to the market service.</span></center>"
 
 	. += "</body></html>"
 
