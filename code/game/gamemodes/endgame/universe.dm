@@ -7,6 +7,18 @@
  // Essentially a policy manager.  Once shit hits the fan, this changes its policies.
  // Called by master controller.
 
+/proc/set_date( var/year, var/month, var/day )
+	if( !year || year < 2560 )
+		return
+
+	if( !month || month < 1 || month > 12 )
+		month = 1
+
+	if( !day || day < 1 )
+		day = 1
+
+	universe.date = list( year, month, day )
+
  // Default shit.
 /datum/universal_state
 	// Just for reference, for now.
@@ -26,21 +38,13 @@
 	// Simulates stuff getting broken due to molecular bonds decaying.
 	var/decay_rate = 0
 
-/datum/universal_state/New()
-	..()
+/datum/universal_state/proc/load_date()
+	loadFromDB()
 
-	spawn( 10 )
-		loadFromDB()
+	if( !date || date.len < 3 )
+		date = list( 2560, 1, 1 )
 
-		if( !date || date.len < 3 )
-			date = list( 2560, 1, 1 )
-
-		handleDateProgression()
-
-/datum/universal_state/Destroy()
-	saveToDB()
-
-	..()
+	handleDateProgression()
 
 // Returns the universe datetime in format "YYYY-MM-DD HH:MM:SS"
 /datum/universal_state/proc/getDateTime()
