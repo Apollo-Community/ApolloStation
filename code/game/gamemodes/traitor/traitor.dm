@@ -70,7 +70,7 @@
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	if(traitors.len)
-		var/text = "<font size=2><B>The syndicate factions with active agents were:</B></font>"
+		var/text = "<font size=2><B>The syndicate factions with active agents were:</B></font><br>"
 		for(var/datum/faction/syndicate/S in faction_controller.factions)
 			if(S.members.len > 0)
 				text += "<B>\The [S.name]</B>, with [S.members.len] agent[S.members.len > 1 ? "s" : ""] present.<br>"
@@ -78,12 +78,12 @@
 				for(var/datum/mind/M in S.members)
 					text += print_player_full(M)
 					text += "<br>"
-					text += "[M.name] took on the following contracts:"
+					text += "[M.name] had to complete at least [M.antagonist.obligatory_contracts] contract. They took on the following contracts:<br>"
 					for(var/datum/contract/C in M.antagonist.completed_contracts)
-						text += "[C.informal_name ? C.informal_name : C.title] <font color='green'><B>Completed!</B></font><br>"
+						text += "[C.informal_name ? C.informal_name : C.title]. <font color='green'><B>Completed!</B></font><br>"
 						feedback_add_details("traitor_contract","[C.type]|SUCCESS")
 					for(var/datum/contract/C in M.antagonist.failed_contracts)
-						text += "[C.informal_name ? C.informal_name : C.title] <font color='red'>Fail.</font><br>"
+						text += "[C.informal_name ? C.informal_name : C.title]. <font color='red'>Fail</font><br>"
 						feedback_add_details("traitor_contract","[C.type]|SUCCESS")
 
 					if(M.antagonist.completed_contracts.len > M.antagonist.obligatory_contracts)
@@ -92,9 +92,7 @@
 					else
 						text += "<br><font color='red'><B>The [lowertext(M.antagonist.name)] has failed!</B></font>"
 						feedback_add_details("traitor_success","FAIL")
-
-					text += "<br>"
-			text += "<br>"
+				text += "<br>"
 		text += "<br>"
 
 		world << text
