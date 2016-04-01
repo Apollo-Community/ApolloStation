@@ -118,7 +118,7 @@
 
 		legal_struggle
 			channel_name = "Curios Commoner"
-			author = "Correspondent Brad Oakley"
+			author = "Editor Brad Oakley"
 
 			message = {"A \"turf war\" between several megacorporations has broken out over a much disputed asteroid field
 			in the Nyx system. Reports indicate the legal teams of Mattermonger and NanoTrasen have been hard at work.
@@ -153,7 +153,7 @@
 
 		legal_struggle_end
 			channel_name = "Curios Commoner"
-			author = "Correspondent Brad Oakley"
+			author = "Editor Brad Oakley"
 
 			message = {"Investigations carried out by the Regional Administration Office in the Nyx system seems to have put an end
 			to the legal struggle between several megacorporations interested in a mineral rich asteroid field. Upon arrival at the
