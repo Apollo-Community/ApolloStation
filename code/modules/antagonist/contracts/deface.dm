@@ -3,6 +3,7 @@
 	desc = "eat crayons and puke on the floor"
 	time_limit = 900
 	reward = 500
+	max_contracts = 1 // not too many of these 0-effort contracts
 
 	var/phrase = null
 	var/list/phrases = list(

@@ -3,10 +3,10 @@
 	var/desc = "Complete the contract" 	// Contract information, what is required to complete it?
 	var/informal_name = ""				// A more informal version of the title. Used on round end when traitors are revealed
 	var/time_limit = 3600 				// How long before the contract expires after it's put on the uplink (in seconds)
+	var/reward = 1000 					// Thaler reward
 	var/min_notoriety = 0 				// The minimum amount of notoriety you need to take on the contract
 	var/max_workers = 0 				// Max amount of agents who can have this contract at the same time. 0 for no limit
-	var/rarity = 100 					// prob(rarity) is used when determining if the contract should appear on the Uplink
-	var/reward = 1000 					// Thaler reward
+	var/max_contracts = 0				// The maximum amount of contracts of this type that can appear on the uplink. 0 for no limit
 	var/list/affilation = list() 		// If you place names of factions here, this contract will only appear in the Uplink of agents of that faction
 										// E.g. if you define it as list("Cybersun Industries"), only cybersun agents will get the contract in their Uplink
 
@@ -22,6 +22,14 @@
 	..()
 
 	if(affilation.len > 0 && !(F in affilation))
+		qdel(src)
+		return
+
+	var/same_count = 0
+	for(var/datum/contract/C in F.contracts)
+		if(istype(C, src.type))
+			same_count++
+	if(same_count >= max_contracts)
 		qdel(src)
 		return
 	
