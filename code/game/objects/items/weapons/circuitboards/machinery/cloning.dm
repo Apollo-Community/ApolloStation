@@ -26,3 +26,15 @@
 							"/obj/item/weapon/stock_parts/micro_laser" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
 							"/obj/item/stack/cable_coil" = 2)
+/obj/item/weapon/circuitboard/cryocell
+	name = T_BOARD("Cryo cell")
+	build_path = "/obj/machinery/atmospherics/unary/cryo_cell"
+	board_type = "machine"
+	origin_tech = "biotech = 4;engineering=3"
+	frame_desc = "Requires 2 Scanning Module, 2 Manipulator, 2 pieces of cable and 1 Console Screen"
+	req_components = list(
+							"/obj/item/weapon/stock_parts/scanning_module" = 2,
+							"/obj/item/weapon/stock_parts/manipulator" = 2,
+							"/obj/item/weapon/stock_parts/console_screen" = 1
+							"/obj/item/stack/cable_coil" = 2)
+							)
