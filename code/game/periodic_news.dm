@@ -117,7 +117,7 @@
 	nyx_developments
 
 		legal_struggle
-			channel_name = "Curios Commoner"
+			channel_name = "Curious Commoner"
 			author = "Editor Brad Oakley"
 
 			message = {"A \"turf war\" between several megacorporations has broken out over a much disputed asteroid field
@@ -128,7 +128,7 @@
 			round_time = 60 * 10
 
 		organized_crime
-			channel_name = "Curios Commoner"
+			channel_name = "Curious Commoner"
 			author = "Journalist Reisso Ilsa"
 
 			message = {"An increase in the activity of organized crime has Nyx officials worried. Experts fear that the
@@ -140,19 +140,19 @@
 			round_time = 60 * 20
 
 		new_station
-			channel_name = "Curios Commoner"
+			channel_name = "Curious Commoner"
 			author = "Reporter Carly Baker"
 
 			message = {"The recent discovery of a mineral rich asteroid field in close proximity to a planetary mist in
 			the Nyx solar system has prompted the construction of a new research station. An asteroid prospecting drone investigating
-			the asteroid field gave results that may indicate the existence of new, promising phoron structures. While Curios Commoner
+			the asteroid field gave results that may indicate the existence of new, promising phoron structures. While Curious Commoner
 			investiagors were turned away by construction site security, few companies have described an interest in working asteroids like
 			the ones found in this field. It is most likely that Jenk Research, Mattermonger, NanoTrasen or Vagrant Exploration
-			are behind the new station. Curios Commoner is following the case closely, and will follow up with more detailed reports."}
+			are behind the new station. Curious Commoner is following the case closely, and will follow up with more detailed reports."}
 			round_time = 60 * 30
 
 		legal_struggle_end
-			channel_name = "Curios Commoner"
+			channel_name = "Curious Commoner"
 			author = "Editor Brad Oakley"
 
 			message = {"Investigations carried out by the Regional Administration Office in the Nyx system seems to have put an end
