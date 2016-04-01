@@ -17,8 +17,8 @@
 		"piss off")
 
 /datum/contract/deface/New()
-	..()
-	if(ticker.current_state == 1)	return 0
+	. = ..()
+	if(!.)	return
 
 	phrase = get_phrase()
 

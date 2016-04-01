@@ -28,8 +28,8 @@
 		/area/library)
 
 /datum/contract/steal/New()
-	..()
-	if(ticker.current_state == 1)	return 0
+	. = ..()
+	if(!.)	return
 
 	target = get_target()
 	dropoff = locate(pick(dropoff_areas))

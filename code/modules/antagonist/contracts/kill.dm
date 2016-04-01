@@ -9,9 +9,8 @@
 	var/datum/mind/target = null
 
 /datum/contract/kill/New()
-	..()
-	// Just let the faction controller see if it's a notoriety-restricted contract
-	if(ticker.current_state == 1)	return 0
+	. = ..()
+	if(!.)	return
 
 	target = get_target()
 	if(!target)
@@ -69,8 +68,8 @@
 	reward = 5000
 
 /datum/contract/kill/head/New()
-	..()
-	if(ticker.current_state == 1)	return 0
+	. = ..()
+	if(!.)	return
 
 	target = get_target()
 	if(!target)

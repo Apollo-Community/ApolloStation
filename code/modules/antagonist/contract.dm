@@ -20,10 +20,13 @@
 
 /datum/contract/New(var/datum/faction/syndicate/F)
 	..()
+	// Just let the faction controller see if it's a notoriety-restricted contract
+	if(ticker.current_state == 1)	return 0
+	if(!F)	return 0
 
 	if(affilation.len > 0 && !(F in affilation))
 		qdel(src)
-		return
+		return 0
 
 	var/same_count = 0
 	for(var/datum/contract/C in F.contracts)
@@ -31,7 +34,7 @@
 			same_count++
 	if(same_count >= max_contracts)
 		qdel(src)
-		return
+		return 0
 	
 	faction = F
 	workers = list()
@@ -40,6 +43,8 @@
 	contract_start = world.time
 	if(contract_ticker)
 		contract_ticker.contracts += src
+
+	return 1
 
 // set title, desc, etc. here
 /datum/contract/proc/set_details()

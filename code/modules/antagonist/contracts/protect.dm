@@ -9,8 +9,8 @@
 	var/datum/mind/target = null
 
 /datum/contract/protect/New()
-	..()
-	if(ticker.current_state == 1)	return 0
+	. = ..()
+	if(!.)	return
 
 	target = get_target()
 	if(!target)
