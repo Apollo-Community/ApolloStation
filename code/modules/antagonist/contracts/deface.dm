@@ -1,8 +1,8 @@
 /datum/contract/deface
-	title = "Deface the Station" // /obj/effect/decal/cleanable/crayon
+	title = "Deface the Station"
 	desc = "eat crayons and puke on the floor"
 	time_limit = 900
-	reward = 500 // /area/hallway/primary/central_one 
+	reward = 500
 
 	var/phrase = null
 	var/list/phrases = list(
@@ -32,7 +32,7 @@
 	informal_name = "Deface the central hallway with \"[phrase]\""
 
 /datum/contract/deface/check_completion()
-	var/hallway = locate(/area/hallway/primary/central_one)
+	var/hallway = locate(/area/hallway/primary)
 
 	var/found_phrase = ""
 	var/atom/O = locate(/obj/effect/decal/cleanable/crayon) in hallway // so that we don't have to make an even bigger scope pyramid
