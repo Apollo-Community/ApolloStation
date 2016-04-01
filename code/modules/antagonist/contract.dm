@@ -28,13 +28,14 @@
 		qdel(src)
 		return 0
 
-	var/same_count = 0
-	for(var/datum/contract/C in F.contracts)
-		if(istype(C, src.type))
-			same_count++
-	if(same_count >= max_contracts)
-		qdel(src)
-		return 0
+	if(max_contracts)
+		var/same_count = 0
+		for(var/datum/contract/C in F.contracts)
+			if(istype(C, src.type))
+				same_count++
+		if(same_count >= max_contracts)
+			qdel(src)
+			return 0
 	
 	faction = F
 	workers = list()
