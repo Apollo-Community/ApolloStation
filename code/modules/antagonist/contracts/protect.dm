@@ -3,6 +3,7 @@
 	title = "Protect the Target"
 	desc = "We cannot afford for this dude to die until the contract expires."
 	time_limit = 3600
+	max_workers = 1
 	reward = 2000
 	
 	var/datum/mind/target = null
@@ -28,10 +29,9 @@
 	informal_name = "Protect [target.current.real_name], the [target.assigned_role]"
 
 /datum/contract/protect/can_accept(var/mob/living/M)
-	..()
+	if(!..())	return 0
 
 	if(!M.mind || M.mind == target)	return 0 // why protect yourself
-	if(workers.len > 0)	return 0 // only one person can take this
 
 	// taking protect and kill contracts for the same guy? nope
 	for(var/datum/contract/kill/C in M.mind.antagonist.active_contracts)

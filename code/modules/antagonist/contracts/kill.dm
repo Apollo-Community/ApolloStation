@@ -25,8 +25,8 @@
 	informal_name = "Kill [target.current.real_name], the [target.assigned_role]"
 
 /datum/contract/kill/can_accept(var/mob/living/M)
-	..()
-
+	if(!..())	return 0
+	
 	if(!M.mind || M.mind == target)	return 0 // no suicide missions
 	return 1
 
