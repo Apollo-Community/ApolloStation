@@ -53,7 +53,8 @@
 /datum/contract/kill/proc/get_target()
 	var/datum/mind/list/candidates = list()
 	for(var/datum/mind/M in (ticker.minds - get_taken_targets()))
-		if(M in faction.members || (M.antagonist && (M.antagonist.faction.name in faction.alliances)) || M.assigned_role in command_positions)	continue // no killing coworkers or allies. heads are excluded from normal kill contracts
+		if((M.assigned_role in command_positions))	continue // head contract's stuff
+		if((M in faction.members) || (M.antagonist && (M.antagonist.faction.name in faction.alliances)))	continue // no killing coworkers or allies. heads are excluded from normal kill contracts
 		if(ishuman(M.current) && M.current.stat != 2)
 			candidates += M
 	return (candidates.len > 0 ? pick(candidates) : null) // pick(candidates) if candidates isn't empty. null otherwise
@@ -81,6 +82,13 @@
 		reward = 8000
 
 	set_details()
+
+/datum/contract/kill/head/get_taken_targets()
+	var/datum/mind/list/taken = list()
+	for(var/datum/contract/C in (faction.contracts + faction.completed_contracts))
+		var/datum/contract/kill/head/K = C
+		if((istype(K) || istype(C, /datum/contract/protect)) && K.target)	taken += K.target
+	return taken
 
 /datum/contract/kill/head/get_target()
 	var/datum/mind/list/candidates = list()
