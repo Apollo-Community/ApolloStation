@@ -109,6 +109,7 @@
 			antag.current << "<B>[C.title]</B>\n<I>[C.desc]</I>\nYou have until [time], station time to complete the contract."
 	else
 		antag.current << "You are declared autonomous. You may accept contracts freely, but are not obligated to do so."
+		obligatory_contracts = 0
 	antag.current << "<B>Contracts are now available from your Uplink.</B>"
 	antag.current << ""
 
