@@ -40,6 +40,7 @@
 /datum/contract/proc/can_accept(var/mob/living/M)
 	if(!M.mind.antagonist)	return 0
 	if(max_workers && workers.len > max_workers)	return 0
+	if(M.mind.antagonist.notoriety < min_notoriety)	return 0
 	return 1
 
 // Start the contract for a new antag

@@ -8,6 +8,7 @@
 	var/greeting = "You are an antagonist." 			// Shown when the antag is setup, informing them they're an antagonist
 	var/obligatory_contracts = 1 						// How many contracts the antagonist is forced to take from round start
 	var/list/datum/contract/active_contracts = list() 	// Currently active contracts for the antagonist
+	var/notoriety = 0
 
 	var/datum/faction/syndicate/faction = null // Defining this (type path) in the antagonist datum will force all antagonists of that type to be part of this faction
 	var/list/datum/contract/completed_contracts = list()
