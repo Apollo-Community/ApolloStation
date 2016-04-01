@@ -3,6 +3,7 @@
 	title = "Kill the Target"
 	desc = "We're looking to send a message. A rather strong one."
 	time_limit = 2700
+	min_notoriety = 2
 	reward = 3000
 	
 	var/datum/mind/target = null
@@ -52,7 +53,7 @@
 /datum/contract/kill/proc/get_target()
 	var/datum/mind/list/candidates = list()
 	for(var/datum/mind/M in (ticker.minds - get_taken_targets()))
-		if(M in faction.members || (M.antagonist && (M.antagonist.faction.name in faction.alliances)))	continue // no killing coworkers or allies
+		if(M in faction.members || (M.antagonist && (M.antagonist.faction.name in faction.alliances)) || M.assigned_role in command_positions)	continue // no killing coworkers or allies. heads are excluded from normal kill contracts
 		if(ishuman(M.current) && M.current.stat != 2)
 			candidates += M
 	return (candidates.len > 0 ? pick(candidates) : null) // pick(candidates) if candidates isn't empty. null otherwise
@@ -61,10 +62,25 @@
 /datum/contract/kill/head
 	title = "Assassinate Head of Staff"
 	desc = "We're looking to instate one of our own agents in a position higher up. That means someone already there has to go."
-	time_limit = 1200
-	min_notoriety = 2
+	time_limit = 2700
+	min_notoriety = 5
 
-	reward = 4500
+	reward = 5000
+
+/datum/contract/kill/head/New()
+	..()
+	if(ticker.current_state == 1)	return 0
+
+	target = get_target()
+	if(!target)
+		qdel(src)
+		return 0
+
+	// the hard ones give the big bucks
+	if(target.assigned_role == "Captain" || target.assigned_role == "Head of Security")
+		reward = 8000
+
+	set_details()
 
 /datum/contract/kill/head/get_target()
 	var/datum/mind/list/candidates = list()
