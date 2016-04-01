@@ -915,6 +915,7 @@
 #include "code\modules\antagonist\antagonists\wizard.dm"
 #include "code\modules\antagonist\contracts\deface.dm"
 #include "code\modules\antagonist\contracts\kill.dm"
+#include "code\modules\antagonist\contracts\propaganda.dm"
 #include "code\modules\antagonist\contracts\protect.dm"
 #include "code\modules\antagonist\contracts\steal.dm"
 #include "code\modules\antagonist\menus\buy.dm"
