@@ -46,6 +46,7 @@
 
 		traitors += traitor
 		traitor.antagonist = new /datum/antagonist/traitor(traitor)
+		traitor.antagonist.randomize_character()
 		possible_traitors.Remove(traitor)
 
 	if(!traitors.len)

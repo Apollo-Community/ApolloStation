@@ -30,6 +30,12 @@
 
 	..()
 
+// Primarily for copying role data to antags
+/datum/character/proc/copy_metadata_to( var/datum/character/C )
+	C.roles = src.roles
+	C.department = src.department
+	C.uplink_location = src.uplink_location
+
 /datum/character/proc/copy_to( mob/living/carbon/human/character )
 	if( !istype( character ))
 		return

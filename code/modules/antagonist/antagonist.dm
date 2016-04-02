@@ -28,13 +28,16 @@
 	if( join_faction && faction_controller )
 		faction = faction_controller.get_faction( join_faction )
 
-/datum/antagonist/proc/randomize_appearence()
-	var/datum/character/C = new()
+// This randomizes the antag character, used for any non-persistant antags
+/datum/antagonist/proc/randomize_character()
+	var/datum/character/C = new( antag.current.client.ckey )
 	C.randomize_appearance( 1 )
-	C.roles = antag.character.roles
+	antag.current.client.prefs.selected_character.copy_metadata_to( C )
 	C.temporary = 1
 	antag.current.client.prefs.selected_character = C
-	C.copy_to( antag.current )
+
+	if( istype( antag.current, /mob/living/carbon/human ))
+		C.copy_to( antag.current ) // for latespawns
 
 /datum/antagonist/proc/setup(var/skip_greet=0)
 	if(faction)
