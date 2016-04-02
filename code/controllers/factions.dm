@@ -23,6 +23,7 @@ var/global/list/restricted_contracts = list()
 
 	for(var/path in subtypes(/datum/contract))
 		var/datum/contract/C = new path()
+		if(C.base)	continue
 		if(C.min_notoriety > 0)
 			restricted_contracts += path
 		else

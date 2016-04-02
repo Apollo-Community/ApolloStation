@@ -4,6 +4,7 @@
 	var/informal_name = ""				// A more informal version of the title. Used on round end when traitors are revealed
 	var/time_limit = 3600 				// How long before the contract expires after it's put on the uplink (in seconds)
 	var/reward = 1000 					// Thaler reward
+	var/base = 0						// Bases don't show up as contracts. This is used by e.g. sabotage contracts
 	var/min_notoriety = 0 				// The minimum amount of notoriety you need to take on the contract
 	var/max_workers = 0 				// Max amount of agents who can have this contract at the same time. 0 for no limit
 	var/max_contracts = 0				// The maximum amount of contracts of this type that can appear on the uplink. 0 for no limit
