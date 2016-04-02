@@ -30,7 +30,7 @@
 	name = T_BOARD("recharge station")
 	build_path = "/obj/machinery/recharge_station"
 	board_type = "machine"
-	origin_tech = powerstorage = 4;engineering = 3)
+	origin_tech = "powerstorage = 4;engineering = 3"
 	frame_desc = "Requires 2 power cells, 1 scanning module, 1 capacitor and 1 manipulator"
 	req_components = list(
 						"/obj/item/weapon/cell" = 2,
