@@ -89,8 +89,9 @@
 /datum/contract/steal/novelty
 	title = "Steal Symbolic Item"
 	desc = "There's an object of symbolic value we want removed."
-
+	max_contracts = 1
 	reward = 1500
+
 	possible_targets = list(
 		/obj/item/weapon/melee/chainofcommand,
 		/obj/item/clothing/under/rank/head_of_personnel_whimsy,
