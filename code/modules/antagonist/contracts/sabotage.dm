@@ -122,18 +122,19 @@
 
 // DEPRESSURIZE AREA //
 
-// Drop the area's pressure around the air alarm to < 20kPa
+// Drop the area's pressure to < 20kPa
 /datum/contract/sabotage/depressurize
 	title = "Cause Depressurization Event"
 	desc = "Depressurize an area"
 	time_limit = 2700
 	min_notoriety = 3
+	reward = 1500
 
 	var/area/target_area = null
 	var/areas = list(
 		/area/crew_quarters/bar,
-		/area/crew_quarters/sleep,
 		/area/medical/sleeper,
+		/area/crew_quarters/diner,
 		/area/security/main,
 		/area/bridge,
 		/area/ai_monitored/storage/eva
@@ -152,17 +153,19 @@
 
 /datum/contract/sabotage/depressurize/set_details()
 	title = "Depressurize \The [target_area.name]"
-	desc = "[pick(list("Love is in the air... get rid of it", "Help the poor crew overcome their phobia of vacuums"))]. Drop the air pressure to below 20kPa in \The [target_area.name]. The air alarm must not be damaged."
+	desc = "[pick(list("Love is in the air... get rid of it", "Help the poor crew overcome their phobia of vacuums"))]. Drop the air pressure to below 20kPa in \The [target_area.name]."
 	informal_name = "Depressurize \The [target_area.name]"
 
 /datum/contract/sabotage/depressurize/check_completion()
 	if(workers.len == 0)	return
 
-	// air alarm is necessary for completion
-	if(target_area.master_air_alarm)
-		var/turf/T = get_turf(target_area.master_air_alarm)
-		var/datum/gas_mixture/G = T.return_air()
-		if(G && G.return_pressure() < 20)
+	var/turf/simulated/floor/F = (locate(/turf/simulated/floor) in target_area)
+	if( F ) // really hope they haven't done their job TOO well
+		var/datum/gas_mixture/G = F.return_air()
+		if( G && G.return_pressure() < 20 )
+			end(1, workers[1])
+	else // but y'kno, if they have...
+		if(locate(/turf/space) in target_area)
 			end(1, workers[1])
 
 /datum/contract/sabotage/depressurize/proc/get_taken_areas()

@@ -79,10 +79,10 @@
 					text += "<br>"
 					text += "[M.name] had to complete at least [M.antagonist.obligatory_contracts] contract. They took on the following contracts:<br>"
 					for(var/datum/contract/C in M.antagonist.completed_contracts)
-						text += "[C.informal_name ? C.informal_name : C.title]. <font color='green'><B>Completed!</B></font><br>"
+						text += "<br>[C.informal_name ? C.informal_name : C.title]. <font color='green'><B>Completed!</B></font>"
 						feedback_add_details("traitor_contract","[C.type]|SUCCESS")
 					for(var/datum/contract/C in M.antagonist.failed_contracts)
-						text += "[C.informal_name ? C.informal_name : C.title]. <font color='red'>Fail</font><br>"
+						text += "<br>[C.informal_name ? C.informal_name : C.title]. <font color='red'>Fail</font>"
 						feedback_add_details("traitor_contract","[C.type]|SUCCESS")
 
 					if(M.antagonist.completed_contracts.len > M.antagonist.obligatory_contracts)
