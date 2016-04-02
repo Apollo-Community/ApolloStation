@@ -119,7 +119,9 @@ var/global/datum/controller/gameticker/ticker
 
 	job_master.ResetOccupations()
 	job_master.DivideOccupations() // Apparently important for new antagonist system to register specific job antags properly.
+
 	src.mode.pre_setup()
+	src.mode.persistant_antag_pre_setup() // Sets up persistant antags
 
 	create_characters() //Create player characters and transfer them
 	collect_minds()
@@ -137,6 +139,7 @@ var/global/datum/controller/gameticker/ticker
 		game_start = world.time
 		universe.load_date()
 		mode.post_setup()
+		mode.persistant_antag_post_setup()
 		//Cleanup some stuff
 		for(var/obj/effect/landmark/start/S in landmarks_list)
 			//Deleting Startpoints but we need the ai point to AI-ize people later

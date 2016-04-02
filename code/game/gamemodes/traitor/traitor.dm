@@ -17,9 +17,6 @@
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/const/traitor_scaling_coeff = 5.0 //how much does the amount of players get divided by to determine traitors
 
-
-/datum/game_mode/traitor/announce()
-
 /datum/game_mode/traitor/pre_setup()
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
@@ -57,10 +54,9 @@
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)
-		spawn(rand(10,100))
-			if(istype(traitor.current, /mob/living/silicon/ai))
-				traitor.antagonist.faction = /datum/faction/syndicate/self
-			traitor.antagonist.setup()
+		if(istype(traitor.current, /mob/living/silicon/ai))
+			traitor.antagonist.faction = /datum/faction/syndicate/self
+		traitor.antagonist.setup()
 	modePlayer += traitors
 
 	spawn (rand(waittime_l, waittime_h))

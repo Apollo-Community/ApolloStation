@@ -1,6 +1,6 @@
 /*
 	As of the antagonist update, all antagonists are now handled via antagonist datums!
-	Antagonist take /datum/contracts, and are rewarded for successful completion. 
+	Antagonist take /datum/contracts, and are rewarded for successful completion.
 */
 
 /datum/antagonist
@@ -17,13 +17,24 @@
 	// fun facts for the round end, but could also be used for statistics?
 	var/money_spent = 0
 
-/datum/antagonist/New(var/datum/mind/us)
+/datum/antagonist/New( var/datum/mind/us, var/join_faction )
 	..()
 
 	if(!us) // who the fuck am i?
 		log_debug("A new antagonist was made, but it doesn't know what mind it belongs to!")
 
 	antag = us
+
+	if( join_faction && faction_controller )
+		faction = faction_controller.get_faction( join_faction )
+
+/datum/antagonist/proc/randomize_appearence()
+	var/datum/character/C = new()
+	C.randomize_appearance( 1 )
+	C.roles = antag.character.roles
+	C.temporary = 1
+	antag.current.client.prefs.selected_character = C
+	C.copy_to( antag.current )
 
 /datum/antagonist/proc/setup(var/skip_greet=0)
 	if(faction)
@@ -43,8 +54,6 @@
 		for(var/datum/mind/M in (faction.members - antag))
 			M.current << "Your employers have notified you that a fellow [faction.name] agent has been activated:"
 			M.current << "<B>[M.current.real_name]</B>, [station_name] [M.assigned_role]"
-
-	antag.character.temporary = 1
 
 	if(ticker.contracts_made) // for antags that are created mid-round, after the contracts have been made available
 		pick_contracts()
@@ -115,7 +124,7 @@
 // Equip the antagonist here
 /datum/antagonist/proc/equip()
 	return
-	
+
 /datum/antagonist/proc/contract_start(var/datum/contract/C)
 	active_contracts += C
 

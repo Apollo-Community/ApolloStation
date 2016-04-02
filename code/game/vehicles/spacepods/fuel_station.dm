@@ -78,6 +78,9 @@
 
 	for( var/obj/machinery/atmospherics/pipe/tank/phoron/tank in fuel_tanks )
 		var/datum/gas_mixture/fuel = tank.air_temporary
+		if( !fuel )
+			continue
+
 		var/pressure_delta
 		var/output_volume
 		var/air_temperature
@@ -85,7 +88,7 @@
 
 		pressure_delta = target_pressure-pod.return_pressure()
 		output_volume = pod.volume/16.0
-		air_temperature = fuel.temperature? fuel.temperature : pod.temperature
+		air_temperature = fuel.temperature ? fuel.temperature : pod.temperature
 
 		var/transfer_moles = pressure_delta*output_volume/(air_temperature * R_IDEAL_GAS_EQUATION)
 

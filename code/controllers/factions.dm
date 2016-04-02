@@ -35,6 +35,11 @@ var/global/list/restricted_contracts = list()
 		qdel(F)
 		factions -= F
 
+/datum/controller/faction_controller/proc/get_faction( var/name )
+	for( var/datum/faction/F in factions )
+		if( name == F.name )
+			return F
+
 // makes the mind join a faction. also works if a type is passed as the faction
 /datum/controller/faction_controller/proc/join_faction(var/datum/mind/M, var/datum/faction/F)
 	if(ispath(F))
