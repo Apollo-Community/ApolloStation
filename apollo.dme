@@ -705,6 +705,7 @@
 #include "code\game\objects\items\weapons\circuitboards\machinery\research.dm"
 #include "code\game\objects\items\weapons\circuitboards\machinery\shieldgen.dm"
 #include "code\game\objects\items\weapons\circuitboards\machinery\telecomms.dm"
+#include "code\game\objects\items\weapons\circuitboards\machinery\teleporters.dm"
 #include "code\game\objects\items\weapons\circuitboards\machinery\unary_atmos.dm"
 #include "code\game\objects\items\weapons\grenades\chem_grenade.dm"
 #include "code\game\objects\items\weapons\grenades\emgrenade.dm"
