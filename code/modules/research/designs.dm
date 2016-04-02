@@ -127,6 +127,11 @@ datum/design/circuit/borgupload
 	req_tech = list("programming" = 4)
 	build_path = /obj/item/weapon/circuitboard/borgupload
 
+datum/design/circuit/borgrecharge
+	name = "cyborg recharging station"
+	id = "borgrecharge"
+	req_tech = list("powerstorage" = 4)
+
 datum/design/circuit/operating
 	name = "patient monitoring console"
 	id = "operating"
