@@ -23,6 +23,7 @@
 	var/list/datum/mind/modePlayer = new
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be traitors because
+	var/list/persistant_traitors = list()
 	var/required_players = 0
 	var/required_players_secret = 0 //Minimum number of players for that game mode to be chose in Secret
 	var/required_enemies = 0
@@ -108,6 +109,56 @@
 /datum/game_mode/proc/pre_setup()
 	return 1
 
+/datum/game_mode/proc/persistant_antag_pre_setup()
+	var/list/players = list()
+	var/list/candidates = list()
+
+	// Assemble a list of active players without jobbans.
+	for(var/mob/new_player/player in player_list)
+		if( player.client && player.ready )
+			if( !jobban_isbanned(player, "Syndicate" ))
+				players += player
+
+	// Shuffle the players list so that it becomes ping-independent.
+	players = shuffle(players)
+
+	// Get a list of all the people who want to be the antagonist for this round
+	for(var/mob/new_player/player in players)
+		if( player.client.prefs.selected_character.isPersistantAntag() )
+			log_debug("[player.key] is a persistant antag.")
+			candidates += player.mind
+			players -= player
+
+	var/num_traitors = 1
+
+	// yes this is hardcoded, yes i know its bad, yes go away please
+	num_traitors = max(1, round( num_players()/5 ))
+
+	for(var/j = 0, j < num_traitors, j++)
+		if (!candidates.len)
+			log_debug("No candidates for persistant antag.")
+			break
+		var/datum/mind/traitor = pick(candidates)
+
+		log_debug("Picked [traitor.name] for persistant antag.")
+		persistant_traitors += traitor
+		var/faction = traitor.current.client.prefs.selected_character.getAntagFaction() // please dont break
+
+		traitor.antagonist = new /datum/antagonist/traitor/persistant( traitor, faction )
+		candidates.Remove(traitor)
+
+	if(!persistant_traitors.len)
+		return 0
+	return 1
+
+/datum/game_mode/proc/persistant_antag_post_setup()
+	for(var/datum/mind/traitor in persistant_traitors)
+		spawn(rand(10,100))
+			if(istype(traitor.current, /mob/living/silicon/ai))
+				traitor.antagonist.faction = /datum/faction/syndicate/self
+			traitor.antagonist.setup()
+
+	return 1
 
 ///post_setup()
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things

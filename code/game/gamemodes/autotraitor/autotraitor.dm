@@ -64,7 +64,7 @@
 			continue
 		if(istype(traitor))
 			traitor.antagonist = new /datum/antagonist/traitor(traitor)
-
+			traitor.antagonist.randomize_character()
 //	if(!traitors.len)
 //		return 0
 	return 1
@@ -113,6 +113,7 @@
 
 				traitors += newtraitor
 				newtraitor.antagonist = new /datum/antagonist/traitor(newtraitor)
+				newtraitor.antagonist.randomize_character()
 				newtraitor.antagonist.setup()
 
 			//else
