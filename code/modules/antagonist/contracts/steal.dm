@@ -2,6 +2,7 @@
 	title = "Retrieve Object of Interest"
 	desc = "An object on board the NSS Apollo has caught our attention."
 	time_limit = 1800
+	max_contracts = 3
 	reward = 2000
 
 	var/target = null // Type path of the object we want stolen
@@ -14,7 +15,8 @@
 		/obj/item/weapon/reagent_containers/hypospray,
 		/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped,
 		/obj/item/device/mmi/digital/posibrain,
-		/obj/item/pod_parts/core)
+		/obj/item/pod_parts/core
+		)
 
 	var/area/dropoff = null // The area where the item must be dropped off at
 	var/area/list/dropoff_areas = list(
@@ -25,7 +27,8 @@
 		/area/construction,
 		/area/maintenance/incinerator,
 		/area/storage/emergency,
-		/area/library)
+		/area/library
+		)
 
 /datum/contract/steal/New()
 	. = ..()
@@ -92,4 +95,5 @@
 		/obj/item/weapon/melee/chainofcommand,
 		/obj/item/clothing/under/rank/head_of_personnel_whimsy,
 		/obj/item/weapon/reagent_containers/food/drinks/flask,
-		/obj/item/weapon/holder/runtime)
+		/obj/item/weapon/holder/runtime
+		)
