@@ -38,6 +38,7 @@
 		for(var/job in restricted_jobs)
 			if(player.assigned_role == job)
 				possible_traitors -= player
+		if(player.antagonist)	possible_traitors -= player // already a persistant antag
 
 	for(var/j = 0, j < num_traitors, j++)
 		if (!possible_traitors.len)
@@ -55,9 +56,10 @@
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)
-		if(istype(traitor.current, /mob/living/silicon/ai))
-			traitor.antagonist.faction = /datum/faction/syndicate/self
-		traitor.antagonist.setup()
+		spawn(rand(10,100))
+			if(istype(traitor.current, /mob/living/silicon/ai))
+				traitor.antagonist.faction = /datum/faction/syndicate/self
+			traitor.antagonist.setup()
 	modePlayer += traitors
 
 	spawn (rand(waittime_l, waittime_h))

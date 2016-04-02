@@ -34,6 +34,7 @@
 /datum/character/proc/copy_metadata_to( var/datum/character/C )
 	C.roles = src.roles
 	C.department = src.department
+	C.antag_data = src.antag_data.Copy()
 	C.uplink_location = src.uplink_location
 
 /datum/character/proc/copy_to( mob/living/carbon/human/character )
@@ -459,6 +460,8 @@
 				var/list/L = params2list( html_decode( value ))
 				if( !L || !L.len )
 					L = list( "notoriety" =  0, "persistant" = 0 )
+				for(var/V in L)
+					L[V] = text2num( L[V] )
 				value = L
 
 		vars[variables[i]] = value

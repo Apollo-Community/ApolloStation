@@ -120,8 +120,8 @@ var/global/datum/controller/gameticker/ticker
 	job_master.ResetOccupations()
 	job_master.DivideOccupations() // Apparently important for new antagonist system to register specific job antags properly.
 
-	src.mode.pre_setup()
 	src.mode.persistant_antag_pre_setup() // Sets up persistant antags
+	src.mode.pre_setup()
 
 	create_characters() //Create player characters and transfer them
 	collect_minds()

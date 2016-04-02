@@ -124,7 +124,7 @@
 
 	// Get a list of all the people who want to be the antagonist for this round
 	for(var/mob/new_player/player in players)
-		if( player.client.prefs.selected_character.isPersistantAntag() )
+		if( player.client.prefs.selected_character && player.client.prefs.selected_character.isPersistantAntag() )
 			log_debug("[player.key] is a persistant antag.")
 			candidates += player.mind
 			players -= player

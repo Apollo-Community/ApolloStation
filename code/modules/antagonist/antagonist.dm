@@ -18,16 +18,13 @@
 	// fun facts for the round end, but could also be used for statistics?
 	var/money_spent = 0
 
-/datum/antagonist/New( var/datum/mind/us, var/join_faction )
+/datum/antagonist/New( var/datum/mind/us )
 	..()
 
 	if(!us) // who the fuck am i?
 		log_debug("A new antagonist was made, but it doesn't know what mind it belongs to!")
 
 	antag = us
-
-	if( join_faction && faction_controller )
-		faction = faction_controller.get_faction( join_faction )
 
 // This randomizes the antag character, used for any non-persistant antags
 /datum/antagonist/proc/randomize_character()
@@ -52,6 +49,8 @@
 		ticker.mode.traitors -= antag
 		qdel(src)
 		return 0
+
+	notoriety = antag.character.antag_data["notoriety"] // :)
 
 	// notify any other agents in their faction about a new agent
 	if(faction.friendly_identification == FACTION_ID_COMPLETE)
