@@ -309,6 +309,7 @@ var/global/datum/controller/gameticker/ticker
 			return 0
 
 		mode.process()
+		process_newscaster()
 
 		emergency_shuttle.process()
 
