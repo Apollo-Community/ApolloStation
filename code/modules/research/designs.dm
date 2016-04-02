@@ -173,6 +173,11 @@ datum/design/circuit/med_data
 	id = "med_data"
 	build_path = /obj/item/weapon/circuitboard/med_data
 
+datum/design/circuit/chemdispenser
+	name = "Chemical dispenser"
+	id = "chemdispenser"
+	build_path = /obj/item/weapon/circuitboard/chemdispenser
+
 datum/design/circuit/secdata
 	name = "security records console"
 	id = "sec_data"
@@ -230,6 +235,12 @@ datum/design/circuit/clonescanner
 	id = "clonescanner"
 	req_tech = list("programming" = 3, "biotech" = 3)
 	build_path = /obj/item/weapon/circuitboard/clonescanner
+
+datum/design/circuit/cryocell
+	name = "cryogenics cell"
+	id = "cryocell"
+	req_tech = list("biotech" = 4,"engineering" = 3)
+	build_path = /obj/item/weapon/circuitboard/cryocell
 
 datum/design/circuit/arcademachine
 	name = "arcade machine"
@@ -297,6 +308,18 @@ datum/design/circuit/message_monitor
 	id = "message_monitor"
 	req_tech = list("programming" = 5)
 	build_path = /obj/item/weapon/circuitboard/message_monitor
+
+datum/design/circuit/teleporterstation
+	name = "Teleporter station"
+	id = "teleporterstation"
+	req_tech = list("bluespace" = 4)
+	build_path = /obj/item/weapon/circuitboard/teleporterstation
+
+datum/design/circuit/teleporterhub
+	name = "Teleporter hub"
+	id = "teleporterhub"
+	req_tech = list("bluespace" = 4)
+	build_path = /obj/item/weapon/circuitboard/teleporterhub
 
 datum/design/circuit/aifixer
 	name = "AI integrity restorer"
