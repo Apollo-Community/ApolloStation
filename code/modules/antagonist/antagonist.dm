@@ -50,13 +50,14 @@
 		qdel(src)
 		return 0
 
-	notoriety = antag.character.antag_data["notoriety"] // :)
+	notoriety = antag.character.antag_data["notoriety"]
 
 	// notify any other agents in their faction about a new agent
-	if(faction.friendly_identification == FACTION_ID_COMPLETE)
-		for(var/datum/mind/M in (faction.members - antag))
-			M.current << "Your employers have notified you that a fellow [faction.name] agent has been activated:"
-			M.current << "<B>[M.current.real_name]</B>, [station_name] [M.assigned_role]"
+	if( world.time > ( ticker.game_start + 100 )) // hacky hacks
+		if(faction.friendly_identification == FACTION_ID_COMPLETE)
+			for(var/datum/mind/M in (faction.members - antag))
+				M.current << "Your employers have notified you that a fellow [faction.name] agent has been activated:"
+				M.current << "<B>[M.current.real_name]</B>, [station_name] [M.assigned_role]"
 
 	if(ticker.contracts_made) // for antags that are created mid-round, after the contracts have been made available
 		pick_contracts()
@@ -83,13 +84,15 @@
 			antag.current << "<B>[list2text(faction.phrase, ", ")]</B>"
 			antag.current << ""
 		if(FACTION_ID_COMPLETE)
-			if((faction.members.len - 1) > 0)
-				antag.current << "\The [faction.name] has provided all its agents with the identity of their fellow agents. Your co-workers are as follows:"
-				for(var/datum/mind/M in (faction.members - antag))
-					antag.current << "<B>[M.current.real_name]</B>, [station_name] [M.assigned_role]"
-			else
-				antag.current << "\The [faction.name] has informed you that <B>you are the only active [faction.name] agent on [station_name]</B>."
-			antag.current << ""
+			spawn(100) // so other antags can set up and we don't end up with an incomplete list
+				if((faction.members.len - 1) > 0)
+					antag.current << "\The [faction.name] has provided all its agents with the identity of their fellow agents. Your co-workers are as follows:"
+					for(var/datum/mind/M in (faction.members - antag))
+						if( !istype( M.antagonist, /datum/antagonist/traitor/persistant))
+							antag.current << "<B>[M.current.real_name]</B>, [station_name] [M.assigned_role]"
+				else
+					antag.current << "\The [faction.name] has informed you that <B>you are the only active [faction.name] agent on [station_name]</B>."
+				antag.current << ""
 
 	// Tell them about people they might want to contact.
 	var/mob/living/carbon/human/M = get_nt_opposed()

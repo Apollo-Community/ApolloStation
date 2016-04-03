@@ -461,7 +461,7 @@
 				if( !L || !L.len )
 					L = list( "notoriety" =  0, "persistant" = 0, "faction" = "Gorlex Marauders", "career_length" = 0 )
 				for(var/V in L)
-					if( text2num( L[V] ))
+					if( V != "faction" ) // hardcode but pls go away
 						L[V] = text2num( L[V] )
 				value = L
 
@@ -864,4 +864,4 @@
 	if( !isPersistantAntag() )
 		return 0
 
-	return antag_data["faction"]
+	return faction_controller.get_faction(antag_data["faction"])

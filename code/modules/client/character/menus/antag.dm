@@ -17,12 +17,16 @@
 	. += "<table>"
 	. += "<tr>"
 
-	. += "<td><table><tr>"
-	. += "<td><b>Faction:</b></td>"
-	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=change_faction'>[antag_data["faction"] ? "[antag_data["faction"]]" : "None"]</a></td>"
-	. += "</tr></table></td>"
-
 	if(antag_data["persistant"])
+		. += "<td><table><tr>"
+		. += "<td><b>Faction:</b></td>"
+		// need at least 3 notoriety to switch
+		if( antag_data["notoriety"] < 3 )
+			. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=change_faction'>[antag_data["faction"] ? "[antag_data["faction"]]" : "None"]</a></td>"
+		else
+			. += "<td>[antag_data["faction"]]</td>"
+		. += "</tr></table></td>"
+
 		. += "<td><table><tr>"
 		. += "<td><b>This character is a persistant antagonist</b></td>"
 		. += "</tr></table></td>"
@@ -35,7 +39,7 @@
 		if( num > 0 )
 			. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=use_token;type=Antagonist'>Use Token</a></td>"
 
-		. += "/tr></table></td>"
+		. += "</tr></table></td>"
 
 	. += "</tr>"
 	. += "</table>"
@@ -113,11 +117,12 @@
 			choices["Cancel"] = "Cancel"
 
 			var/choice = input("Select your preferred faction.", "Faction Selection", null) in choices
+			if( choice == "Cancel" )	return
 
 			if(alert("Are you sure you want to be a member of [choice]? This will reset all of your notoriety.",,"Yes","No")=="No")
 				return
 
-			if( choice && choice != "Cancel" )
+			if( choice )
 				antag_data["faction"] = choices[choice]
 				antag_data["notoriety"] = 0
 
