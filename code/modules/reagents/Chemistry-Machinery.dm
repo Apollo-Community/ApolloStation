@@ -15,9 +15,11 @@
 	use_power = 1
 	idle_power_usage = 40
 	var/ui_title = "Chem Dispenser 5000"
+	var/opened = 0
 	var/energy = 100
 	var/max_energy = 100
 	var/amount = 30
+	var/manip_rating = 2 // there is probably a better way to do this
 	var/accept_glass = 0 //At 0 ONLY accepts glass containers. Kinda misleading varname.
 	var/atom/beaker = null
 	var/recharged = 0
@@ -42,15 +44,37 @@
 /obj/machinery/chem_dispenser/process()
 	if(recharged <= 0)
 		recharge()
-		recharged = 15
+		if (manip_rating == 6) //double manipulators yield double the rating, fixes accordingly
+			recharged = 7 // half of the original
+		if (manip_rating == 4)
+			recharged = 10 // two-thirds of the original
+		if (manip_rating == 2)
+			recharged = 15
 	else
 		recharged -= 1
-
+////"Requires 2 Matter Bin, 2 Micro-Manipulator, 1 Console Screen"
 /obj/machinery/chem_dispenser/New()
 	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/chemdispenser(src)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
+	RefreshParts()
 	recharge()
 	dispensable_reagents = sortList(dispensable_reagents)
 
+obj/machinery/chem_dispenser/RefreshParts()
+	var/bin_rating = 0
+	manip_rating = 0
+	for(var/obj/item/weapon/stock_parts/P in component_parts)
+		if(istype(P, /obj/item/weapon/stock_parts/manipulator))
+			manip_rating += P.rating
+		if(istype(P, /obj/item/weapon/stock_parts/matter_bin))
+			bin_rating += P.rating
+	max_energy = initial(max_energy)*bin_rating/2 // double matter bins yield double rating, so need to divide it by two
 
 /obj/machinery/chem_dispenser/ex_act(severity)
 	switch(severity)
@@ -79,7 +103,7 @@
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main",var/datum/nanoui/ui = null, var/force_open = 1)
 	if(stat & (BROKEN|NOPOWER)) return
 	if(user.stat || user.restrained()) return
-
+	//"Requires 2 Matter Bin, 2 Micro-Manipulator, 1 Console Screen"
 	// this is the data which will be sent to the ui
 	var/data[0]
 	data["amount"] = amount
@@ -152,10 +176,13 @@
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
 
-/obj/machinery/chem_dispenser/attackby(var/obj/item/weapon/reagent_containers/B as obj, var/mob/user as mob)
+/obj/machinery/chem_dispenser/attackby(var/obj/item/B as obj, var/mob/user as mob)
 	if(isrobot(user))
 		return
 	if(src.beaker)
+		if(istype(B, /obj/item/weapon/screwdriver) || istype(B, /obj/item/weapon/crowbar))
+			user << "You need to empty the dispenser first."
+			return
 		user << "Something is already loaded into the machine."
 		return
 	if(istype(B, /obj/item/weapon/reagent_containers/glass) || istype(B, /obj/item/weapon/reagent_containers/food))
@@ -167,6 +194,22 @@
 		user << "You set [B] on the machine."
 		nanomanager.update_uis(src) // update all UIs attached to src
 		return
+	if (istype(B, /obj/item/weapon/screwdriver))
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		if (!opened)
+			opened = 1
+			user << "You open the maintenance hatch."
+		else
+			opened = 0
+			user << "You close the maintenance hatch."
+	if(istype(B, /obj/item/weapon/crowbar	) && opened == 1)
+		user << "You have removed the circuitboard and the components."
+		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+		for(var/obj/item/I in component_parts)
+			I.loc = src.loc
+		qdel(src)
+
 
 /obj/machinery/chem_dispenser/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
