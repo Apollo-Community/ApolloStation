@@ -154,6 +154,9 @@ datum/controller/vote
 						// Restart vote doubles as an "end the game" vote
 						if(ticker.current_state == GAME_STATE_FINISHED)
 							world << "<span class='notice'><B>Restarting in [ticker.restart_timeout/10] seconds!</B></span>"
+							if( blackbox )
+								blackbox.save_all_data_to_sql()
+
 							if( config.canon )
 								canonHandleRoundEnd()
 							ticker.restart_called = 1

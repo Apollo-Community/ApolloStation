@@ -306,6 +306,14 @@ var/global/datum/controller/gameticker/ticker
 
 
 	proc/process()
+		if( current_state == GAME_STATE_FINISHED )
+			if( restart_called )
+				sleep(restart_timeout)
+				if(!delay_end)
+					world.Reboot()
+				else
+					world << "<span class='notice'><B>An admin has delayed the round end</B>. Retrying restart in [restart_timeout/10] seconds.</span>"
+
 		if(current_state != GAME_STATE_PLAYING)
 			return 0
 
@@ -345,7 +353,7 @@ var/global/datum/controller/gameticker/ticker
 					if(M.current.client && M.antagonist) // Players that have left can't get commendations
 						total_antagonists += M
 
-				if(total_antagonists)
+				if(total_antagonists.len)
 					world << "<span class='notice'><B>Please vote on the antagonists' performance!</B></span>"
 
 				for(var/datum/mind/M in minds)
@@ -361,9 +369,6 @@ var/global/datum/controller/gameticker/ticker
 					feedback_set_details("end_proper","proper completion")
 					world << "<span class='notice'><B>The game is now over. You may vote to restart when you wish to start a new round.</B></span>"
 
-				if( blackbox )
-					blackbox.save_all_data_to_sql()
-
 		else if (mode_finished)
 			post_game = 1
 
@@ -375,15 +380,6 @@ var/global/datum/controller/gameticker/ticker
 					world << "<span class='alert'>The round has ended!</span>"
 					round_end_announced = 1
 				vote.autotransfer()
-
-		if( restart_called )
-			world << "Attempting reboot"
-			if(!delay_end)
-				world << "Restarting world!"
-				world.Reboot()
-			else
-				world << "<span class='notice'><B>An admin has delayed the round end</B>. Retrying restart in [restart_timeout/10] seconds.</span>"
-				sleep(restart_timeout)
 
 		return 1
 
