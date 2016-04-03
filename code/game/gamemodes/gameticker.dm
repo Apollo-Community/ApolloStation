@@ -9,6 +9,7 @@ var/global/datum/controller/gameticker/ticker
 /datum/controller/gameticker
 	var/const/restart_timeout = 600
 	var/current_state = GAME_STATE_PREGAME
+	var/restart_called = 0
 
 	var/hide_mode = 1
 	var/datum/game_mode/mode = null
@@ -338,30 +339,30 @@ var/global/datum/controller/gameticker/ticker
 			spawn(50)
 				callHook("roundend")
 
+				var/list/total_antagonists = list()
+				//Look into all mobs in world, dead or alive
+				for(var/datum/mind/M in minds)
+					if(M.current.client && M.antagonist) // Players that have left can't get commendations
+						total_antagonists += M
+
+				if(total_antagonists)
+					world << "<span class='notice'><B>Please vote on the antagonists' performance!</B></span>"
+
+				for(var/datum/mind/M in minds)
+					//if(!M.antagonist)
+					var/datum/browser/menu = new(null, "antag_vote", "Antagonist Vote", 400, 700)
+					open_antag_vote(M.current, menu, total_antagonists) // defined in modules/antagonist/menus/voting.dm
+
 				if (mode.station_was_nuked)
 					feedback_set_details("end_proper","nuke")
 					if(!delay_end)
 						world << "<span class='notice'><B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B></span>"
 				else
 					feedback_set_details("end_proper","proper completion")
-					if(!delay_end)
-						world << "<span class='notice'><B>Restarting in [restart_timeout/10] seconds</B></span>"
-
+					world << "<span class='notice'><B>The game is now over. You may vote to restart when you wish to start a new round.</B></span>"
 
 				if( blackbox )
 					blackbox.save_all_data_to_sql()
-
-				if( config.canon )
-					canonHandleRoundEnd()
-
-				if(!delay_end)
-					sleep(restart_timeout)
-					if(!delay_end)
-						world.Reboot()
-					else
-						world << "<span class='notice'><B>An admin has delayed the round end</B></span>"
-				else
-					world << "<span class='notice'><B>An admin has delayed the round end</B></span>"
 
 		else if (mode_finished)
 			post_game = 1
@@ -374,6 +375,15 @@ var/global/datum/controller/gameticker/ticker
 					world << "<span class='alert'>The round has ended!</span>"
 					round_end_announced = 1
 				vote.autotransfer()
+
+		if( restart_called )
+			world << "Attempting reboot"
+			if(!delay_end)
+				world << "Restarting world!"
+				world.Reboot()
+			else
+				world << "<span class='notice'><B>An admin has delayed the round end</B>. Retrying restart in [restart_timeout/10] seconds.</span>"
+				sleep(restart_timeout)
 
 		return 1
 
@@ -456,13 +466,13 @@ var/global/datum/controller/gameticker/ticker
 	var/list/total_antagonists = list()
 	//Look into all mobs in world, dead or alive
 	for(var/datum/mind/Mind in minds)
-		var/temprole = Mind.special_role
-		if(temprole)							//if they are an antagonist of some sort.
-			if(temprole in total_antagonists)	//If the role exists already, add the name to it
-				total_antagonists[temprole] += ", [Mind.name]([Mind.key])"
+		var/datum/antagonist/antag = Mind.antagonist
+		if(antag)							//if they are an antagonist of some sort.
+			if(antag.name in total_antagonists)	//If the role exists already, add the name to it
+				total_antagonists[antag.name] += ", [Mind.name]([Mind.key])"
 			else
-				total_antagonists.Add(temprole) //If the role doesnt exist in the list, create it and add the mob
-				total_antagonists[temprole] += ": [Mind.name]([Mind.key])"
+				total_antagonists.Add(antag.name) //If the role doesnt exist in the list, create it and add the mob
+				total_antagonists[antag.name] += ": [Mind.name]([Mind.key])"
 
 	//Now print them all into the log!
 	log_game("Antagonists at round end were...")

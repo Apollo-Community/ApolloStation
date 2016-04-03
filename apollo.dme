@@ -923,6 +923,7 @@
 #include "code\modules\antagonist\menus\buy.dm"
 #include "code\modules\antagonist\menus\contracts.dm"
 #include "code\modules\antagonist\menus\info.dm"
+#include "code\modules\antagonist\menus\voting.dm"
 #include "code\modules\antagonist\menus\master.dm"
 #include "code\modules\assembly\assembly.dm"
 #include "code\modules\assembly\bomb.dm"
