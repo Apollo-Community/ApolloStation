@@ -21,7 +21,7 @@
 		. += "<td><table><tr>"
 		. += "<td><b>Faction:</b></td>"
 		// need at least 3 notoriety to switch
-		if( antag_data["notoriety"] < 3 )
+		if( antag_data["notoriety"] >= 3 )
 			. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=change_faction'>[antag_data["faction"] ? "[antag_data["faction"]]" : "None"]</a></td>"
 		else
 			. += "<td>[antag_data["faction"]]</td>"
