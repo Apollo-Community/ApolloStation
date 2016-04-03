@@ -129,6 +129,7 @@ var/global/datum/controller/gameticker/ticker
 	shuttle_controller.setup_shuttle_docks()
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
+		universe.load_date()
 		mode.post_setup()
 		//Cleanup some stuff
 		for(var/obj/effect/landmark/start/S in landmarks_list)
@@ -299,6 +300,7 @@ var/global/datum/controller/gameticker/ticker
 			return 0
 
 		mode.process()
+		process_newscaster()
 
 		emergency_shuttle.process()
 

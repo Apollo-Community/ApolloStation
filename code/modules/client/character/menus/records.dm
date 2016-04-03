@@ -184,7 +184,7 @@
 			if(config.usealienwhitelist)
 				for(var/L in all_languages)
 					var/datum/language/lang = all_languages[L]
-					if((!(lang.flags & RESTRICTED)) && ((!( lang.flags & WHITELISTED ))||(S && (L in S.secondary_langs))))
+					if( !( lang.flags & RESTRICTED || lang.flags & WHITELISTED ) || ( is_alien_whitelisted( user, species ) && ( S && L in S.secondary_langs )))
 						new_languages += lang
 
 						languages_available = 1

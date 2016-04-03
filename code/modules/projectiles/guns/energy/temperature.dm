@@ -1,16 +1,15 @@
 /obj/item/weapon/gun/energy/temperature
-	name = "temperature gun"
+	name = "heat ray gun"
 	icon_state = "freezegun"
 	fire_sound = 'sound/weapons/pulse3.ogg'
-	desc = "A gun that changes temperatures."
+	desc = "A gun that fires concentrated bursts of energy to raise temperature."
 	var/temperature = T20C
 	var/current_temperature = T20C
 	charge_cost = 100
 	origin_tech = "combat=3;materials=4;powerstorage=3;magnets=2"
 
 	projectile_type = "/obj/item/projectile/temp"
-	cell_type = "/obj/item/weapon/cell/crap"
-
+	cell_type = "/obj/item/weapon/cell"
 
 	New()
 		..()
@@ -30,7 +29,7 @@
 		else
 			temp_text = "<FONT color=blue>[temperature] ([round(temperature-T0C)]&deg;C) ([round(temperature*1.8-459.67)]&deg;F)</FONT>"
 
-		var/dat = {"<B>Freeze Gun Configuration: </B><BR>
+		var/dat = {"<B>Heat Ray Gun Configuration: </B><BR>
 		Current output temperature: [temp_text]<BR>
 		Target output temperature: <A href='?src=\ref[src];temp=-100'>-</A> <A href='?src=\ref[src];temp=-10'>-</A> <A href='?src=\ref[src];temp=-1'>-</A> [current_temperature] <A href='?src=\ref[src];temp=1'>+</A> <A href='?src=\ref[src];temp=10'>+</A> <A href='?src=\ref[src];temp=100'>+</A><BR>
 		"}
