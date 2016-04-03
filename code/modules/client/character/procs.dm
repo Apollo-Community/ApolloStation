@@ -459,9 +459,10 @@
 			if( "antag_data" )
 				var/list/L = params2list( html_decode( value ))
 				if( !L || !L.len )
-					L = list( "notoriety" =  0, "persistant" = 0 )
+					L = list( "notoriety" =  0, "persistant" = 0, "faction" = "Gorlex Marauders", "career_length" = 0 )
 				for(var/V in L)
-					L[V] = text2num( L[V] )
+					if( text2num( L[V] ))
+						L[V] = text2num( L[V] )
 				value = L
 
 		vars[variables[i]] = value
@@ -787,6 +788,9 @@
 				LoadDepartment( CIVILIAN )
 
 			roles |= getAllPromotablePositions()
+
+		if( "Antagonist" )
+			antag_data["persistant"] = 1
 
 	num--
 

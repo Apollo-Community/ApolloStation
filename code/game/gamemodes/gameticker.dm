@@ -28,7 +28,7 @@ var/global/datum/controller/gameticker/ticker
 	var/Bible_deity_name
 
 	// 600 for debug
-	var/const/contract_delay = 600 // this (in 1/10 seconds) is how long it takes before traitors get their contracts, and the factions are populated with contracts
+	var/const/contract_delay = 150 // this (in 1/10 seconds) is how long it takes before traitors get their contracts, and the factions are populated with contracts
 	var/contracts_made = 0
 
 	var/random_players = 0 	// if set to nonzero, ALL players who latejoin or declare-ready join will have random appearances/genders
@@ -347,20 +347,6 @@ var/global/datum/controller/gameticker/ticker
 			spawn(50)
 				callHook("roundend")
 
-				var/list/total_antagonists = list()
-				//Look into all mobs in world, dead or alive
-				for(var/datum/mind/M in minds)
-					if(M.current.client && M.antagonist) // Players that have left can't get commendations
-						total_antagonists += M
-
-				if(total_antagonists.len)
-					world << "<span class='notice'><B>Please vote on the antagonists' performance!</B></span>"
-
-				for(var/datum/mind/M in minds)
-					//if(!M.antagonist)
-					var/datum/browser/menu = new(null, "antag_vote", "Antagonist Vote", 400, 700)
-					open_antag_vote(M.current, menu, total_antagonists) // defined in modules/antagonist/menus/voting.dm
-
 				if (mode.station_was_nuked)
 					feedback_set_details("end_proper","nuke")
 					if(!delay_end)
@@ -458,6 +444,8 @@ var/global/datum/controller/gameticker/ticker
 	//Ask the event manager to print round end information
 	event_manager.RoundEnd()
 
+	mode.persistant_antag_game_end() // After-the-game persistant antag stuff
+
 	//Print a list of antagonists to the server log
 	var/list/total_antagonists = list()
 	//Look into all mobs in world, dead or alive
@@ -476,6 +464,20 @@ var/global/datum/controller/gameticker/ticker
 		log_game("[i]s[total_antagonists[i]].")
 
 	statistics.call_stats() // Show the end-round stats
+
+	var/list/datum/mind/all_antagonists = list()
+	//Look into all mobs in world, dead or alive
+	for(var/datum/mind/M in minds)
+		if(M.current.client && (M.antagonist && !istype(M.antagonist, /datum/antagonist/traitor/persistant))) // Players that have left can't get commendations
+			all_antagonists += M
+
+	if(all_antagonists.len)
+		world << "<span class='notice'><B>Please vote on the antagonists' performance!</B></span>"
+
+	for(var/datum/mind/M in minds)
+		//if(!M.antagonist)
+		var/datum/browser/menu = new(null, "antag_vote", "Antagonist Vote", 400, 700)
+		open_antag_vote(M.current, menu, all_antagonists) // defined in modules/antagonist/menus/voting.dm
 
 	return 1
 

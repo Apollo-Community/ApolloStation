@@ -271,6 +271,30 @@
 
 	return 0
 
+// persistant antag related stuff for after the game ends
+/datum/game_mode/proc/persistant_antag_game_end()
+	for( var/datum/mind/traitor in persistant_traitors )
+		var/datum/antagonist/antag = traitor.antagonist
+		if( antag )	continue // admin removed them or something, idk
+
+		// antag got caught check goes here
+
+		var/notoriety = traitor.character.antag_data["notoriety"]
+		var/contract_requirement = round( ( notoriety + 1 ) / 2 )
+		if( antag.completed_contracts.len > contract_requirement )
+			notoriety++
+			traitor.current << "<span class='notice'>You have gained notoriety for completing [antag.completed_contracts.len > contract_requirement ? "more than" : ""] [contract_requirement] contracts!</span>"
+		else if( antag.completed_contracts.len < ( notoriety - contract_requirement ))
+			notoriety--
+			traitor.current << "<span class='warning'>You have lost notoriety for not completing enough contracts!</span>"
+		else if( antag.failed_contracts.len > antag.completed_contracts.len )
+			notoriety--
+			traitor.current << "<span class='warning'>You have lost notoriety for failing more contracts than you completed!</span>"
+		traitor.character.antag_data["notoriety"] = notoriety
+		traitor.character.antag_data["career_length"]++
+
+		traitor.current << "<span class='notice'>Your career length is now [traitor.character.antag_data["career_length"]] rounds!</span>"
+
 
 /datum/game_mode/proc/check_win() //universal trigger to be called at mob death, nuke explosion, etc. To be called from everywhere.
 	return 0

@@ -43,17 +43,16 @@
 	. += "</tr>"
 	. += "</table></td>"
 
-	if( department.department_id && user.client.character_tokens && user.client.character_tokens.len )
+	if( department.department_id && user.client.character_tokens && user.client.character_tokens["Command"] )
 		. += "<td><table>"
 
-		for( var/type in user.client.character_tokens )
-			. += "<tr>"
-			. += "<td>[type] Tokens:</td>"
-			. += "<td>[user.client.character_tokens[type]]</td>"
-			var/num = user.client.character_tokens[type]
-			if( num > 0 )
-				. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=use_token;type=[type]'>Use Token</a></td>"
-			. += "</tr>"
+		var/num = user.client.character_tokens["Command"]
+		. += "<tr>"
+		. += "<td>Command Tokens:</td>"
+		. += "<td>[num]</td>"
+		if( num > 0 )
+			. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=use_token;type=Command'>Use Token</a></td>"
+		. += "</tr>"
 
 		. += "</table></td>"
 
@@ -196,7 +195,7 @@
 			if( choice )
 				SetDepartment( choices[choice] )
 		if("use_token")
-			if(alert("Are you sure you use a command token on this character? This will unlock all roles in your selected department, but will consume the token.",,"Yes","No")=="No")
+			if(alert("Are you sure you want to use a command token on this character? This will unlock all roles in your selected department, but will consume the token.",,"Yes","No")=="No")
 				return
 
 			useCharacterToken( href_list["type"], user )

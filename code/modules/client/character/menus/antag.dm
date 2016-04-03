@@ -4,6 +4,7 @@
 	if(uplink_location == "" || !uplink_location)
 		uplink_location = "PDA"
 	. = "<html><body>"
+	. += "<center>"
 	. += "<b><a href='byond://?src=\ref[src];character=switch_menu;task=edit_character_menu'>Appearence</a></b>"
 	. += " - "
 	. += "<b><a href='byond://?src=\ref[src];character=switch_menu;task=records_menu'>Records</a></b>"
@@ -11,7 +12,33 @@
 	. += "<b><a href='byond://?src=\ref[src];character=switch_menu;task=job_menu'>Occupation</a></b>"
 	. += " - "
 	. += "<b>Antag Options</b>"
-	. += "<hr>"
+	. += "</center><hr>"
+
+	. += "<table>"
+	. += "<tr>"
+
+	. += "<td><table><tr>"
+	. += "<td><b>Faction:</b></td>"
+	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=change_faction'>[antag_data["faction"] ? "[antag_data["faction"]]" : "None"]</a></td>"
+	. += "</tr></table></td>"
+
+	if(antag_data["persistant"])
+		. += "<td><table><tr>"
+		. += "<td><b>This character is a persistant antagonist</b></td>"
+		. += "</tr></table></td>"
+	else if( user.client.character_tokens && !isnull( user.client.character_tokens["Antagonist"] )) // isnull cause it can be 0 < tokens < 1
+		. += "<td><table><tr>"
+
+		var/num = round( user.client.character_tokens["Antagonist"] )
+		. += "<td>Antagonist Tokens:</td>"
+		. += "<td>[num]</td>"
+		if( num > 0 )
+			. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=use_token;type=Antagonist'>Use Token</a></td>"
+
+		. += "/tr></table></td>"
+
+	. += "</tr>"
+	. += "</table>"
 
 	. += "<div class='block'><center>"
 	. += "Uplink Type : <b><a href='byond://?src=\ref[src];character=[menu_name];task=uplinktype;active=1'>[uplink_location]</a></b>"
@@ -73,6 +100,32 @@
 				user.client.prefs.ClientMenu( user )
 
 			return
+
+		if( "change_faction" )
+			var/list/choices = list()
+			for( var/datum/faction/syndicate/S in faction_controller.factions )
+				if( S.name != antag_data["faction"] )
+					// going to a rival faction requires a lot of notoriety
+					if( antag_data["faction"] != "" &&  !( antag_data["faction"] in S.alliances ) && antag_data["notoriety"] < 6 )	continue
+					choices[S.name] = S.name
+
+			if( !choices.len )	return
+			choices["Cancel"] = "Cancel"
+
+			var/choice = input("Select your preferred faction.", "Faction Selection", null) in choices
+
+			if(alert("Are you sure you want to be a member of [choice]? This will reset all of your notoriety.",,"Yes","No")=="No")
+				return
+
+			if( choice && choice != "Cancel" )
+				antag_data["faction"] = choices[choice]
+				antag_data["notoriety"] = 0
+
+		if( "use_token" )
+			if(alert("Are you sure you want to use an antagonist token on this character? This will make the character a persistant antagonist, but will consume the token.",,"Yes","No")=="No")
+				return
+
+			useCharacterToken( href_list["type"], user )
 
 		if( "exploitable_record" )
 			var/expmsg = sanitize(input(usr,"Set your exploitable information here. This information is used by antags.","Exploitable Information",html_decode(exploit_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)

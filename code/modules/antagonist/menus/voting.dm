@@ -36,8 +36,8 @@
 
 	. += "</body></html>"
 
-	menu.set_user(user)
-	menu.set_content(replacetext(., "\improper", ""))
+	menu.set_user( user )
+	menu.set_content( replacetext( ., "\improper", ""))
 	menu.open()
 
 /datum/controller/gameticker/Topic(href, href_list)
@@ -57,8 +57,8 @@
 	C.character_tokens["Antagonist"] += 0.03125 // 32 commendations = 1 token
 
 	var/progress = C.character_tokens["Antagonist"] - round(C.character_tokens["Antagonist"])
-	log_debug("[C.key] has received an antagonist commendation.")
-	antag.current << "You have received an antagonist commendation!"
-	antag.current << "You are now <B>[progress * 100]%</B> on the way to your next antagonist token."
+	log_debug("[C.key] has received an antagonist commendation from [usr].")
+	antag.current << "<span class='notice'>You have received an antagonist commendation!</span>"
+	antag.current << "<span class='notice'>You are now <B>[progress * 100]%</B> on the way to your next antagonist token.</span>"
 
 	usr << browse(null, "window=antag_vote") // close the window
