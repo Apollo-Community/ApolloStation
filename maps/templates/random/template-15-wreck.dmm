@@ -1,0 +1,49 @@
+"a" = (/turf/space,/area/space)
+"b" = (/obj/structure/lattice,/turf/space,/area/space)
+"c" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/space)
+"d" = (/turf/simulated/floor/plating/airless,/area/space)
+"e" = (/obj/structure/artilleryplaceholder{tag = "icon-1"; icon_state = "1"},/turf/simulated/floor/plating/airless,/area/space)
+"f" = (/obj/structure/artilleryplaceholder{tag = "icon-2"; icon_state = "2"},/turf/simulated/floor/plating/airless,/area/space)
+"g" = (/obj/structure/artilleryplaceholder{tag = "icon-3"; icon_state = "3"},/turf/simulated/floor/plating/airless,/area/space)
+"h" = (/obj/structure/artilleryplaceholder{tag = "icon-4"; icon_state = "4"},/turf/simulated/floor/plating/airless,/area/space)
+"i" = (/obj/structure/artilleryplaceholder{tag = "icon-5"; icon_state = "5"},/turf/simulated/floor/plating/airless,/area/space)
+"j" = (/obj/structure/artilleryplaceholder{tag = "icon-6"; icon_state = "6"},/turf/simulated/floor/plating/airless,/area/space)
+"k" = (/obj/structure/artilleryplaceholder{tag = "icon-7"; icon_state = "7"},/turf/simulated/floor/plating/airless,/area/space)
+"l" = (/obj/structure/artilleryplaceholder{tag = "icon-8"; icon_state = "8"},/turf/simulated/floor/plating/airless,/area/space)
+"m" = (/obj/structure/artilleryplaceholder{tag = "icon-9"; icon_state = "9"},/turf/simulated/floor/plating/airless,/area/space)
+"n" = (/obj/structure/artilleryplaceholder{tag = "icon-10"; icon_state = "10"},/turf/simulated/floor/plating/airless,/area/space)
+"o" = (/obj/structure/artilleryplaceholder{tag = "icon-11"; icon_state = "11"},/turf/simulated/floor/plating/airless,/area/space)
+"p" = (/obj/structure/artilleryplaceholder{tag = "icon-12"; icon_state = "12"},/turf/simulated/floor/plating/airless,/area/space)
+"q" = (/obj/structure/artilleryplaceholder{tag = "icon-13"; icon_state = "13"},/turf/simulated/floor/plating/airless,/area/space)
+"r" = (/obj/structure/artilleryplaceholder{tag = "icon-14"; icon_state = "14"},/turf/simulated/floor/plating/airless,/area/space)
+"s" = (/obj/structure/artilleryplaceholder{tag = "icon-15"; icon_state = "15"},/turf/simulated/floor/plating/airless,/area/space)
+"t" = (/obj/structure/artilleryplaceholder{tag = "icon-16"; icon_state = "16"},/turf/simulated/floor/plating/airless,/area/space)
+"u" = (/obj/structure/artilleryplaceholder{tag = "icon-17"; icon_state = "17"},/turf/simulated/floor/plating/airless,/area/space)
+"v" = (/obj/structure/artilleryplaceholder{tag = "icon-18"; icon_state = "18"},/turf/simulated/floor/plating/airless,/area/space)
+"w" = (/obj/structure/artilleryplaceholder{tag = "icon-19"; icon_state = "19"},/turf/simulated/floor/plating/airless,/area/space)
+"x" = (/obj/structure/artilleryplaceholder{tag = "icon-20"; icon_state = "20"},/turf/simulated/floor/plating/airless,/area/space)
+"y" = (/obj/structure/artilleryplaceholder{tag = "icon-21"; icon_state = "21"},/turf/simulated/floor/plating/airless,/area/space)
+"z" = (/obj/structure/artilleryplaceholder{tag = "icon-22"; icon_state = "22"},/turf/simulated/floor/plating/airless,/area/space)
+"A" = (/obj/structure/artilleryplaceholder{tag = "icon-23"; icon_state = "23"},/turf/simulated/floor/plating/airless,/area/space)
+"B" = (/obj/structure/artilleryplaceholder{tag = "icon-24"; icon_state = "24"},/turf/simulated/floor/plating/airless,/area/space)
+"C" = (/obj/structure/artilleryplaceholder/decorative{tag = "icon-25"; icon_state = "25"},/turf/simulated/floor/plating/airless,/area/space)
+"D" = (/obj/structure/artilleryplaceholder/decorative{tag = "icon-26"; icon_state = "26"},/turf/simulated/floor/plating/airless,/area/space)
+"E" = (/obj/structure/artilleryplaceholder/decorative{tag = "icon-27"; icon_state = "27"},/turf/simulated/floor/plating/airless,/area/space)
+"F" = (/obj/structure/artilleryplaceholder/decorative{tag = "icon-28"; icon_state = "28"},/obj/structure/computer3frame,/turf/simulated/floor/plating/airless,/area/space)
+"G" = (/obj/structure/artilleryplaceholder/decorative{tag = "icon-29"; icon_state = "29"},/turf/simulated/floor/plating/airless,/area/space)
+"H" = (/obj/structure/artilleryplaceholder/decorative{tag = "icon-30"; icon_state = "30"},/turf/simulated/floor/plating/airless,/area/space)
+"I" = (/obj/structure/artilleryplaceholder/decorative{tag = "icon-31"; icon_state = "31"},/turf/simulated/floor/plating/airless,/area/space)
+"J" = (/obj/structure/artilleryplaceholder/decorative{tag = "icon-32"; icon_state = "32"},/turf/simulated/floor/plating/airless,/area/space)
+"K" = (/obj/structure/artilleryplaceholder/decorative{tag = "icon-33"; icon_state = "33"},/turf/simulated/floor/plating/airless,/area/space)
+"L" = (/obj/structure/artilleryplaceholder/decorative{tag = "icon-34"; icon_state = "34"},/turf/simulated/floor/plating/airless,/area/space)
+"M" = (/obj/structure/artilleryplaceholder{tag = "icon-35"; icon_state = "35"},/turf/simulated/floor/plating/airless,/area/space)
+
+(1,1,1) = {"
+aabaaaabccbaaaaaaaaa
+aabbbaddddddbbbabaaa
+bbbdefghijklmnopbbbb
+aaadqrstuvwxyzABdaaa
+aabdCdDEFGHIJKLMaaaa
+aacddddbbadaabbbaaaa
+aaaaabbaacccccabaaaa
+"}

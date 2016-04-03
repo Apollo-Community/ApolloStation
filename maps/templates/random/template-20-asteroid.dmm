@@ -1,0 +1,21 @@
+"a" = (/turf/space,/area/space)
+"b" = (/turf/simulated/mineral/random,/area/space)
+"c" = (/obj/effect/decal/cleanable/blood,/turf/simulated/floor/plating/airless/asteroid,/area/space)
+"d" = (/obj/effect/decal/cleanable/blood/gibs,/turf/simulated/floor/plating/airless/asteroid,/area/space)
+"e" = (/turf/simulated/floor/plating/airless/asteroid,/area/space)
+"f" = (/obj/structure/bed/chair,/turf/simulated/floor/plating/airless/asteroid,/area/space)
+"g" = (/obj/effect/decal/cleanable/blood,/mob/living/simple_animal/hostile/carp,/turf/simulated/floor/plating/airless/asteroid,/area/space)
+"h" = (/obj/item/weapon/paper/crumpled/bloody{info = "I love my carp friend. Please don't kill him!"; name = "note"},/turf/simulated/floor/plating/airless/asteroid,/area/space)
+
+(1,1,1) = {"
+aaaaabaaaa
+abaabbbbba
+abbbbbbbba
+abbbcdbbbb
+bbbecfcbbb
+bbbgehebba
+bbbededbbb
+bbbbecbbbb
+abbbbbbbba
+aabaabbbaa
+"}
