@@ -120,7 +120,6 @@
 	return
 
 /obj/machinery/dna_scannernew/attackby(var/obj/item/item as obj, var/mob/user as mob)
-	opened = 0
 	if (istype(item, /obj/item/weapon/screwdriver))
 		default_deconstruction_screwdriver(user,icon_state,icon_state,item)
 	if(istype(item, /obj/item/weapon/crowbar	))
