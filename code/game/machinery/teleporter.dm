@@ -182,22 +182,9 @@
 
 /obj/machinery/teleport/hub/attackby(obj/item/B as obj, var/mob/user as mob)
 	if (istype(B, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if (!hub_opened)
-			hub_opened = 1
-			user << "You open the maintenance hatch."
-		else
-			hub_opened = 0
-			user << "You close the maintenance hatch."
-	if(istype(B, /obj/item/weapon/crowbar	) && hub_opened == 1)
-		user << "You have removed the circuitboard and the components."
-		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-		M.state = 2
-		M.icon_state = "box_1"
-		for(var/obj/item/I in component_parts)
-			I.loc = src.loc
-		qdel(src)
+		default_deconstruction_screwdriver(user,icon_state,icon_state,B)
+	if(istype(B, /obj/item/weapon/crowbar	))
+		default_deconstruction_crowbar(B,0)
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
 	spawn()
@@ -344,24 +331,11 @@
 	overlays.Cut()
 	overlays += image('icons/obj/stationobjs.dmi', icon_state = "controller-wires")
 
-/obj/machinery/teleport/station/attackby(var/obj/item/B as obj, var/mob/user as mob)
+/obj/machinery/teleport/station/attackby(obj/item/B as obj, var/mob/user as mob)
 	if (istype(B, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if (!opened)
-			opened = 1
-			user << "You open the maintenance hatch."
-		else
-			opened = 0
-			user << "You close the maintenance hatch."
-	if(istype(B, /obj/item/weapon/crowbar	) && opened == 1)
-		user << "You have removed the circuitboard and the components."
-		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-		M.state = 2
-		M.icon_state = "box_1"
-		for(var/obj/item/I in component_parts)
-			I.loc = src.loc
-		qdel(src)
+		default_deconstruction_screwdriver(user,icon_state,icon_state,B)
+	if(istype(B, /obj/item/weapon/crowbar	))
+		default_deconstruction_crowbar(B,0)
 
 /obj/machinery/teleport/station/attack_ai()
 	src.attack_hand()

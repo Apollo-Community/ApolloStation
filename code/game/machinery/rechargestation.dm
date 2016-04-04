@@ -15,12 +15,21 @@
 	var/icon_update_tick = 0				// Used to update icon only once every 10 ticks
 
 
-
+//"Requires 2 power cells, 1 scanning module, 1 capacitor and 1 manipulator"
 	New()
 		..()
+		component_parts = list()
+		component_parts += new /obj/item/weapon/cell
+		component_parts += new /obj/item/weapon/stock_parts/scanning_module
+		component_parts += new /obj/item/weapon/stock_parts/capacitor
+		component_parts += new /obj/item/weapon/stock_parts/manipulator
 		build_icon()
 		update_icon()
-
+	attackby(var/obj/item/B as obj,var/mob/user)
+		if (istype(B, /obj/item/weapon/screwdriver))
+			default_deconstruction_screwdriver(user,icon_state,icon_state,B)
+		if(istype(B, /obj/item/weapon/crowbar	))
+			default_deconstruction_crowbar(B,0)
 	process()
 		if(stat & (BROKEN))
 			return

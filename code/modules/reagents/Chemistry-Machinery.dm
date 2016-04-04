@@ -195,22 +195,9 @@ obj/machinery/chem_dispenser/RefreshParts()
 		nanomanager.update_uis(src) // update all UIs attached to src
 		return
 	if (istype(B, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if (!opened)
-			opened = 1
-			user << "You open the maintenance hatch."
-		else
-			opened = 0
-			user << "You close the maintenance hatch."
-	if(istype(B, /obj/item/weapon/crowbar	) && opened == 1)
-		user << "You have removed the circuitboard and the components."
-		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-		M.state = 2
-		M.icon_state = "box_1"
-		for(var/obj/item/I in component_parts)
-			I.loc = src.loc
-		qdel(src)
+		default_deconstruction_screwdriver(user,icon_state,icon_state,B)
+	if(istype(B, /obj/item/weapon/crowbar	))
+		default_deconstruction_crowbar(B,0)
 
 
 /obj/machinery/chem_dispenser/attack_ai(mob/user as mob)
