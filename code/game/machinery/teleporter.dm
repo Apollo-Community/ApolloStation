@@ -5,6 +5,7 @@
 	circuit = "/obj/item/weapon/circuitboard/teleporter"
 	dir = 4
 	var/obj/item/locked = null
+	req_access = list(access_teleporter)
 	var/id = null
 	var/one_time_use = 0 //Used for one-time-use teleport cards (such as clown planet coordinates.)
 						 //Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
@@ -165,7 +166,6 @@
 	dir = 4
 	var/accurate = 0
 	use_power = 1
-	var/hub_opened = 0
 	idle_power_usage = 10
 	active_power_usage = 2000
 	var/obj/machinery/computer/teleporter/com
@@ -313,7 +313,6 @@
 	dir = 4
 	var/active = 0
 	var/engaged = 0
-	var/opened = 0
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 2000

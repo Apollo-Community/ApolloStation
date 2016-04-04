@@ -13,7 +13,6 @@
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 200
-	var/opened = 0
 
 	var/temperature_archived
 	var/mob/living/carbon/occupant = null
@@ -184,23 +183,9 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(var/obj/item/G as obj, var/mob/user as mob)
 	if (istype(G, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if (!opened)
-			opened = 1
-			user << "You open the maintenance hatch."
-		else
-			opened = 0
-			user << "You close the maintenance hatch."
+		default_deconstruction_screwdriver(user,icon_state,icon_state,G)
 	if(istype(G, /obj/item/weapon/crowbar))
-		go_out()
-		user << "You have removed the circuitboard and the components."
-		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-		M.state = 2
-		M.icon_state = "box_1"
-		for(var/obj/item/I in component_parts)
-			I.loc = src.loc
-		qdel(src)
+		default_deconstruction_crowbar(B,0)
 	if(istype(G, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
 			user << "<span class='alert'>A beaker is already loaded into the machine.</span>"
