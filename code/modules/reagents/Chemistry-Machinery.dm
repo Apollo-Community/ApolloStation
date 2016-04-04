@@ -15,7 +15,6 @@
 	use_power = 1
 	idle_power_usage = 40
 	var/ui_title = "Chem Dispenser 5000"
-	var/opened = 0
 	var/energy = 100
 	var/max_energy = 100
 	var/amount = 30

@@ -20,6 +20,7 @@
 		..()
 		component_parts = list()
 		component_parts += new /obj/item/weapon/cell
+		component_parts += new /obj/item/weapon/cell
 		component_parts += new /obj/item/weapon/stock_parts/scanning_module
 		component_parts += new /obj/item/weapon/stock_parts/capacitor
 		component_parts += new /obj/item/weapon/stock_parts/manipulator
