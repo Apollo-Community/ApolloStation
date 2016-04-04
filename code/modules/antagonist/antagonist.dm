@@ -59,10 +59,6 @@
 				M.current << "Your employers have notified you that a fellow [faction.name] agent has been activated:"
 				M.current << "<B>[M.current.real_name]</B>, [station_name] [M.assigned_role]"
 
-	if(ticker.contracts_made) // for antags that are created mid-round, after the contracts have been made available
-		pick_contracts()
-		antag.current << "" // newline
-
 	// greet the antagonist and give them any info concerning their task(s)
 	if(!skip_greet)
 		greet()
@@ -99,33 +95,6 @@
 		antag.current << "There are credible reports claiming that <B>[M.real_name]</B> might be willing to help our cause. If you need assistance, consider contacting them."
 		antag.current.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
 		antag.current << ""
-
-/datum/antagonist/proc/pick_contracts()
-	var/list/datum/contract/candidates = faction.contracts.Copy()
-
-	for(var/datum/contract/C in candidates)
-		if(isnull(C) || !C.can_accept(antag.current))	candidates -= C
-	if(candidates.len == 0)
-		message_admins("Couldn't pick obligatory contract(s) for [antag.current.real_name] ([antag.key]). No possible contract candidates.")
-		return 0
-
-	for(var/i = 0; i < obligatory_contracts; i++)
-		var/datum/contract/C = pick(faction.contracts)
-		C.start(antag.current)
-		candidates -= C
-
-	antag.current << ""
-	antag.current << "<B><font size=3 color=red>\The [faction.name] has decided on your orders.</font></B>"
-	if(active_contracts.len > 0)
-		antag.current << "Your employers have signed the following contracts in your name:"
-		for(var/datum/contract/C in active_contracts)
-			var/time = worldtime2text(world.time + C.time_limit)
-			antag.current << "<B>[C.title]</B>\n<I>[C.desc]</I>\nYou have until [time], station time to complete the contract."
-	else
-		antag.current << "You are declared autonomous. You may accept contracts freely, but are not obligated to do so."
-		obligatory_contracts = 0
-	antag.current << "<B>Contracts are now available from your Uplink.</B>"
-	antag.current << ""
 
 // Equip the antagonist here
 /datum/antagonist/proc/equip()
