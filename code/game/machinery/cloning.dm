@@ -306,8 +306,8 @@
 		default_deconstruction_screwdriver(user,icon_state,icon_state,W)
 	if(istype(W, /obj/item/weapon/crowbar	))
 		if (src.occupant)
-		src.locked = 0
-		src.go_out()
+			src.locked = 0
+			src.go_out()
 		default_deconstruction_crowbar(W,0)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (!src.check_access(W))
