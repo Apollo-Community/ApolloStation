@@ -3,6 +3,8 @@
 	greeting = "You are a traitor."
 
 /datum/antagonist/traitor/setup()
+	..()
+
 	if(ticker.contracts_made) // for traitors that are created mid-round, after the contracts have been made available
 		pick_contracts()
 		antag.current << "" // newline

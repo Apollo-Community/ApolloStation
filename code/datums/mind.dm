@@ -778,8 +778,9 @@ datum/mind
 
 				if("autoobjectives")
 					if (!config.objectives_disabled && ticker.contracts_made)
-						src.antagonist.pick_contracts()
-						usr << "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>"
+						if(istype(src.antagonist, /datum/antagonist/traitor))
+							src.antagonist.pick_contracts()
+						usr << "<span class='notice'>The contracts for traitor [key] have been picked.</span>"
 
 		else if (href_list["silicon"])
 			current.hud_updateflag |= (1 << SPECIALROLE_HUD)
