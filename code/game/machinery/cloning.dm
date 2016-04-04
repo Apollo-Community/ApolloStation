@@ -302,8 +302,10 @@
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
 /obj/machinery/clonepod/attackby(obj/item/W as obj, mob/user as mob)
+	if(istype(W, obj/item/weapon/screwdriver))
+		default_deconstruction_screwdriver(user,icon_state,icon_state,W)
 	if(istype(W, /obj/item/weapon/crowbar	))
-		default_deconstruction_crowbar(W,1)
+		default_deconstruction_crowbar(W,0)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (!src.check_access(W))
 			user << "<span class='alert'>Access Denied.</span>"
