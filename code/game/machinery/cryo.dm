@@ -185,7 +185,7 @@
 	if (istype(G, /obj/item/weapon/screwdriver))
 		default_deconstruction_screwdriver(user,icon_state,icon_state,G)
 	if(istype(G, /obj/item/weapon/crowbar))
-		default_deconstruction_crowbar(B,0)
+		default_deconstruction_crowbar(G,0)
 	if(istype(G, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
 			user << "<span class='alert'>A beaker is already loaded into the machine.</span>"
