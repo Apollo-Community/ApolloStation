@@ -4,7 +4,12 @@
 	// this may seem backwards, but this is done so that antagonist factions that aren't part of the syndicate can show up
 	var/list/datum/faction/factions = list()
 	for( var/datum/mind/M in antags )
+		if( M == user.mind ) // no voting for yourself
+			antags -= M
+			continue
 		factions += M.antagonist.faction
+
+	if( !antags.len )	return
 
 	. += "<html><head>"
 	. += {"<style>
