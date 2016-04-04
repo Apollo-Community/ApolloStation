@@ -22,15 +22,12 @@
 	var/current_heat_capacity = 50
 //"Requires 2 Scanning Module, 2 Manipulator, 2 pieces of cable and 1 Console Screen"
 /obj/machinery/atmospherics/unary/cryo_cell/New()
-	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/cryocell(src)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
-	component_parts += new /obj/item/stack/cable_coil(src)
-	component_parts += new /obj/item/stack/cable_coil(src)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
 	initialize_directions = dir
 
@@ -42,7 +39,6 @@
 	..()
 
 /obj/machinery/atmospherics/unary/cryo_cell/initialize()
-	New()
 	if(node) return
 	var/node_connect = dir
 	for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
@@ -187,16 +183,16 @@
 	return 1 // update UIs attached to this object
 
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(var/obj/item/G as obj, var/mob/user as mob)
-	opened = 0
 	if (istype(G, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if (!opened)
 			opened = 1
-			user << "You open the maintenance hatch.(wyk)"
+			user << "You open the maintenance hatch."
 		else
 			opened = 0
 			user << "You close the maintenance hatch."
-	if(istype(G, /obj/item/weapon/crowbar) && opened == 1)
+	if(istype(G, /obj/item/weapon/crowbar))
+		go_out()
 		user << "You have removed the circuitboard and the components."
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
