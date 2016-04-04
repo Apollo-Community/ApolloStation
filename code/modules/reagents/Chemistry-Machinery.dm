@@ -206,6 +206,8 @@ obj/machinery/chem_dispenser/RefreshParts()
 		user << "You have removed the circuitboard and the components."
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+		M.state = 2
+		M.icon_state = "box_1"
 		for(var/obj/item/I in component_parts)
 			I.loc = src.loc
 		qdel(src)

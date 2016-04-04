@@ -21,6 +21,23 @@
 	var/attempting = 0 //One clone attempt at a time thanks
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
 	var/biomass = CLONE_BIOMASS * 3
+//Requires 2 Manipulator, 2 Scanning Module, 2 pieces of cable and 1 Console Screen."
+/obj/machinery/clonepod/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/clonepod(src)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
+	RefreshParts()
+
+/obj/machinery/clonepod/RefreshParts()
+	var/manip_rating = 0
+	for(var/obj/item/weapon/stock_parts/P in component_parts)
+		if(istype(P, /obj/item/weapon/stock_parts/manipulator))
+			manip_rating += P.rating
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -283,7 +300,25 @@
 	return
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
-/obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/clonepod/attackby(obj/item/W as obj, mob/user as mob)
+	var/opened = 0
+	if (istype(W, /obj/item/weapon/screwdriver))
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		if (!opened)
+			opened = 1
+			user << "You open the maintenance hatch."
+		else
+			opened = 0
+			user << "You close the maintenance hatch."
+	if(istype(W, /obj/item/weapon/crowbar	) && opened == 1)
+		user << "You have removed the circuitboard and the components."
+		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+		M.state = 2
+		M.icon_state = "box_1"
+		for(var/obj/item/I in component_parts)
+			I.loc = src.loc
+		qdel(src)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (!src.check_access(W))
 			user << "<span class='alert'>Access Denied.</span>"
@@ -304,8 +339,12 @@
 		src.go_out()
 		return
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
+		var/manip_rating = 0
+		for(var/obj/item/weapon/stock_parts/P in component_parts)
+			if(istype(P, /obj/item/weapon/stock_parts/manipulator))
+				manip_rating += P.rating
 		user << "<span class='notice'>\The [src] processes \the [W].</span>"
-		biomass += 50
+		biomass += 50*manip_rating/2
 		user.drop_item()
 		qdel(W)
 		return

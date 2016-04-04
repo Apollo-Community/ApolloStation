@@ -13,15 +13,25 @@
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 200
+	var/opened = 0
 
 	var/temperature_archived
 	var/mob/living/carbon/occupant = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 
 	var/current_heat_capacity = 50
-
+//"Requires 2 Scanning Module, 2 Manipulator, 2 pieces of cable and 1 Console Screen"
 /obj/machinery/atmospherics/unary/cryo_cell/New()
 	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/cryocell(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
+	component_parts += new /obj/item/stack/cable_coil(src)
+	component_parts += new /obj/item/stack/cable_coil(src)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
 	initialize_directions = dir
 
 /obj/machinery/atmospherics/unary/cryo_cell/Destroy()
@@ -32,6 +42,7 @@
 	..()
 
 /obj/machinery/atmospherics/unary/cryo_cell/initialize()
+	New()
 	if(node) return
 	var/node_connect = dir
 	for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
@@ -175,7 +186,25 @@
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
 
-/obj/machinery/atmospherics/unary/cryo_cell/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/unary/cryo_cell/attackby(var/obj/item/G as obj, var/mob/user as mob)
+	opened = 0
+	if (istype(G, /obj/item/weapon/screwdriver))
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		if (!opened)
+			opened = 1
+			user << "You open the maintenance hatch.(wyk)"
+		else
+			opened = 0
+			user << "You close the maintenance hatch."
+	if(istype(G, /obj/item/weapon/crowbar) && opened == 1)
+		user << "You have removed the circuitboard and the components."
+		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+		M.state = 2
+		M.icon_state = "box_1"
+		for(var/obj/item/I in component_parts)
+			I.loc = src.loc
+		qdel(src)
 	if(istype(G, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
 			user << "<span class='alert'>A beaker is already loaded into the machine.</span>"
