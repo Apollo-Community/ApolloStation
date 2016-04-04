@@ -6,6 +6,7 @@
 /datum/antagonist
 	var/name = "Antagonist" 							// Name of the type of antagonist (Changeling, traitor, etc.)
 	var/greeting = "You are an antagonist." 			// Shown when the antag is setup, informing them they're an antagonist
+	var/can_buy = 1										// Whether or not the antagonist can use the uplink market
 	var/obligatory_contracts = 1 						// How many contracts the antagonist is forced to take from round start
 	var/list/datum/contract/active_contracts = list() 	// Currently active contracts for the antagonist
 	var/notoriety = 0
