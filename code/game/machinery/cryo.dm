@@ -19,9 +19,15 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 
 	var/current_heat_capacity = 50
-
+//"Requires 2 Scanning Module, 2 Manipulator, 2 pieces of cable and 1 Console Screen"
 /obj/machinery/atmospherics/unary/cryo_cell/New()
-	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/cryocell(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
 	initialize_directions = dir
 
 /obj/machinery/atmospherics/unary/cryo_cell/Destroy()
@@ -175,7 +181,11 @@
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
 
-/obj/machinery/atmospherics/unary/cryo_cell/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/unary/cryo_cell/attackby(var/obj/item/G as obj, var/mob/user as mob)
+	if (istype(G, /obj/item/weapon/screwdriver))
+		default_deconstruction_screwdriver(user,icon_state,icon_state,G)
+	if(istype(G, /obj/item/weapon/crowbar))
+		default_deconstruction_crowbar(G,0)
 	if(istype(G, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
 			user << "<span class='alert'>A beaker is already loaded into the machine.</span>"
