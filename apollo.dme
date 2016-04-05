@@ -848,6 +848,8 @@
 #include "code\modules\whotitles.dm"
 #include "code\modules\account_items\account_items.dm"
 #include "code\modules\account_items\items.dm"
+#include "code\modules\account_items\donators\gear.dm"
+#include "code\modules\account_items\donators\items.dm"
 #include "code\modules\account_items\template_contest\gear.dm"
 #include "code\modules\account_items\template_contest\items.dm"
 #include "code\modules\admin\admin.dm"
