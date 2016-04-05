@@ -21,6 +21,7 @@
 	var/current_heat_capacity = 50
 //"Requires 2 Scanning Module, 2 Manipulator, 2 pieces of cable and 1 Console Screen"
 /obj/machinery/atmospherics/unary/cryo_cell/New()
+	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/cryocell(src)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
