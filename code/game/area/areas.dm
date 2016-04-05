@@ -9,7 +9,7 @@
 	requires_power = 0 				(defaults to 1)
 	music = list( 'sound/music/music.ogg' )
 
-NOTE: there are two lists of areas in the end of this file: centcom and station itself. Please maintain these lists valid. --rastaf0
+NOTE: there are two lists of areas in the end of this file: cerntcom and station itself. Please maintain these lists valid. --rastaf0
 
 */
 
@@ -702,6 +702,15 @@ area/space/atmosalert()
 	name = "Port Maintenance"
 	icon_state = "pmaint"
 
+/area/maintenance/portdorm
+	name = "Port Dormitory Maintenance"
+	icon_state = "pmaint"
+
+/area/maintenance/portkitchen
+	name = "Port Kitchen Maintenance"
+	icon_state = "pmaint"
+
+
 /area/maintenance/atmos_control
 	name = "Atmospherics Maintenance"
 	icon_state = "fpmaint"
@@ -871,6 +880,14 @@ area/space/atmosalert()
 	name = "\improper Starboard Primary Hallway"
 	icon_state = "hallS"
 
+/area/hallway/primary/fore_starboard
+	name = "\improper Fore Starboard Primary Hallway"
+	icon_state = "hallS"
+
+/area/hallway/primary/aft_starboard
+	name = "\improper Port Starboard Primary Hallway"
+	icon_state = "hallS"
+
 /area/hallway/primary/aft
 	name = "\improper Aft Primary Hallway"
 	icon_state = "hallA"
@@ -878,6 +895,22 @@ area/space/atmosalert()
 /area/hallway/primary/port
 	name = "\improper Port Primary Hallway"
 	icon_state = "hallP"
+
+/area/hallway/primary/fore_port
+	name = "\improper Fore Port Primary Hallway"
+	icon_state = "hallP"
+
+/area/hallway/primary/aft_port
+	name = "\improper Aft Port Primary Hallway"
+	icon_state = "hallP"
+
+/area/hallway/primary/central_fore
+	name = "\improper Fore Central Primary Hallway"
+	icon_state = "hallC1"
+
+/area/hallway/primary/central_aft
+	name = "\improper Fore Central Primary Hallway"
+	icon_state = "hallC2"
 
 /area/hallway/primary/central_one
 	name = "\improper Central Primary Hallway"

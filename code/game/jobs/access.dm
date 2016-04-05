@@ -66,6 +66,8 @@
 /var/const/access_psychiatrist = 64 // Psychiatrist's office
 /var/const/access_xenoarch = 65
 /var/const/access_energy_barrier = 66
+/var/const/access_shop1 = 67
+/var/const/access_shop2 = 68
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -201,7 +203,7 @@
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_construction,
-	            access_hydroponics, access_library, access_lawyer, access_virology, access_psychiatrist, access_cmo, access_qm, access_clown, access_mime, access_surgery,
+	            access_hydroponics, access_shop1, access_shop2, access_library, access_lawyer, access_virology, access_psychiatrist, access_cmo, access_qm, access_clown, access_mime, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
 	            access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_energy_barrier, access_cent_captain)
@@ -362,6 +364,10 @@
 			return "Brig"
 		if(access_energy_barrier)
 			return "Energy Barriers"
+		if(access_shop1)
+			return "Shop One"
+		if(access_shop2)
+			return "Shop Two"
 
 /proc/get_centcom_access_desc(A)
 	switch(A)
