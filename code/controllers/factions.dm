@@ -19,7 +19,8 @@ var/global/list/restricted_contracts = list()
 	..()
 	faction_controller = src
 
-	setup_factions()
+	for(var/path in (subtypes(/datum/faction) - /datum/faction/syndicate))
+		factions += new path()
 
 	for(var/path in subtypes(/datum/contract))
 		var/datum/contract/C = new path()
@@ -43,16 +44,15 @@ var/global/list/restricted_contracts = list()
 
 // makes the mind join a faction. also works if a type is passed as the faction
 /datum/controller/faction_controller/proc/join_faction(var/datum/mind/M, var/datum/faction/F)
-	if(ispath(F))
-		F = (locate(F) in factions)
-	if(!F)
+	if(!istype(F) && ispath(F))
+		for(var/datum/faction/faction in factions)
+			if(faction.type == F)
+				F = faction
+				break
+	if(!F || ispath(F))
 		return 0
 	F.members += M
 	M.faction = F
-
-	// set antagonist.faction if the mind is joining a syndicate faction
-	if(istype(F, /datum/faction/syndicate) && M.antagonist)
-		M.antagonist.faction = F
 
 	return F
 
@@ -69,15 +69,6 @@ var/global/list/restricted_contracts = list()
 
 	return 1
 
-// create factions and add them to our list
-/datum/controller/faction_controller/proc/setup_factions()
-	var/datum/faction/F = null
-	for(var/faction in (subtypes(/datum/faction) - /datum/faction/syndicate))
-		if(locate(faction) in factions)
-			continue
-		F = new faction()
-		factions += F
-
 // finds a suitable syndicate faction for a mind and joins it
 /datum/controller/faction_controller/proc/get_syndie_faction(var/datum/mind/M)
 	var/mob/living/mob = M.current
@@ -90,7 +81,7 @@ var/global/list/restricted_contracts = list()
 			candidates -= F
 			continue
 		S = F
-		if((S.max_op > 0 && S.members.len >= S.max_op) || (S.restricted_species.len > 0 && !(mob.species.type in S.restricted_species)))
+		if( S.can_join(M) )
 			candidates -= S
 
 	if(candidates.len == 0)	return 0

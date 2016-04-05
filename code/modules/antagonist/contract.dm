@@ -2,7 +2,7 @@
 	var/title = "Ordinary Contract" 	// Contract name/title
 	var/desc = "Complete the contract" 	// Contract information, what is required to complete it?
 	var/informal_name = ""				// A more informal version of the title. Used on round end when traitors are revealed
-	var/time_limit = 3600 				// How long before the contract expires after it's put on the uplink (in seconds)
+	var/time_limit = 3600 				// How long before the contract expires after it's put on the uplink (in seconds). 0 = no limit
 	var/reward = 1000 					// Thaler reward
 	var/min_notoriety = 0 				// The minimum amount of notoriety you need to take on the contract
 	var/max_workers = 0 				// Max amount of agents who can have this contract at the same time. 0 for no limit
@@ -11,7 +11,7 @@
 										// E.g. if you define it as list("Cybersun Industries"), only cybersun agents will get the contract in their Uplink
 
 	var/datum/faction/syndicate/faction = null
-	var/mob/living/list/workers = null
+	var/list/mob/living/workers = list()
 
 	var/finished = 0
 	var/completed = 0
@@ -24,7 +24,8 @@
 	if(ticker.current_state == 1)	return 0
 	if(!F)	return 0
 
-	if(affilation.len > 0 && !(F in affilation))
+	// by deleting ourselves here, we'll be removed from the candidate list in the faction's update_contract
+	if(affilation.len > 0 && !(F.name in affilation))
 		qdel(src)
 		return 0
 
@@ -70,11 +71,16 @@
 	completed = success
 
 	for(var/mob/living/M in workers)
-		if(M != worker)
-			M.mind.antagonist.contract_ended(src, 0)
+		if(success && worker)
+			if(M != worker)
+				M.mind.antagonist.contract_ended(src, 0)
+			else
+				worker.mind.antagonist.contract_ended(src, 1)
+				reward(worker)
 		else
-			worker.mind.antagonist.contract_ended(src, 1)
-			reward(worker)
+			// just reward everyone if nobody's defined as the one who gets the reward
+			M.mind.antagonist.contract_ended(src, 1)
+			reward(M)
 
 	faction.contract_ended(src)
 	contract_ticker.contracts -= src

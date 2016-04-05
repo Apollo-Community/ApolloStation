@@ -15,12 +15,12 @@ var/global/datum/controller/process/contractticker/contract_ticker
 	contract_ticker = src
 
 /datum/controller/process/contractticker/doWork()
-	if(contracts.len == 0)	return
+	if( contracts.len == 0 )	return
 
-	for(var/datum/contract/C in contracts)
-		if(world.time >= (C.contract_start + C.time_limit))
+	for( var/datum/contract/C in contracts )
+		if( C.time_limit && ( world.time >= ( C.contract_start + C.time_limit )))
 			C.check_completion()
-			if(!C.finished)
+			if( !C.finished )
 				C.end()
 			continue
 

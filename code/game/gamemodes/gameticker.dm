@@ -439,7 +439,7 @@ var/global/datum/controller/gameticker/ticker
 
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))
-		if (findtext("[handler]","auto_declare_completion_"))
+		if (findtext("[handler]","auto_declare_completion_[mode.name]"))
 			call(mode, handler)()
 
 	//Ask the event manager to print round end information

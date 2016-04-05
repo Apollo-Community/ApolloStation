@@ -39,8 +39,8 @@
 		C.copy_to( antag.current ) // for latespawns
 
 /datum/antagonist/proc/setup(var/skip_greet=0)
-	if(faction)
-		faction_controller.join_faction(antag, faction)
+	if(faction) 
+		faction = faction_controller.join_faction(antag, faction)
 	else
 		faction_controller.get_syndie_faction(antag)
 

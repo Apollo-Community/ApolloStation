@@ -8,6 +8,11 @@
 	var/list/datum/mind/members = list() 	// a list of mind datums that belong to this faction
 	var/max_op = 0		// the maximum number of members a faction can have (0 for no limit)
 
+/datum/faction/proc/can_join(var/datum/mind/M)
+	if( ( max_op > 0 && members.len > max_op ) || ( restricted_species.len > 0 && !( M.current.species.type in restricted_species )))
+		return 0
+	return 1
+
 // Factions, members of the syndicate coalition:
 
 /datum/faction/syndicate
@@ -258,3 +263,18 @@
 			attempts of communication with other life forms is completely incomprehensible. Members of this alien race are capable of broadcasting subspace transmissions from their bodies. \
 			The religious leaders of the Tiger Cooperative claim to have the technology to decypher and interpret their messages, which have been confirmed as religious propaganda. Their motives are unknown \
 			but they are otherwise not considered much of a threat to anyone. They are virtually indestructable because of their nonphysical composition, and have the frighetning ability to make anything stop existing in a second."
+
+
+/* ----- Begin defining gamemode-specific factions ------ */
+
+/datum/faction/syndicate/marauders/mercenaries
+	name = "Gorlex Mercenaries"
+
+/datum/faction/syndicate/marauders/mercenaries/can_join(var/datum/mind/M)
+	if( M.antagonist && istype(M.antagonist, /datum/antagonist/mercenary) )
+		return 1
+	return 0
+
+// contracts are added manually by the gamemode
+/datum/faction/syndicate/marauders/mercenaries/update_contracts()
+	return
