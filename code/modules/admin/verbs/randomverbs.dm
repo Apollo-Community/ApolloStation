@@ -431,20 +431,20 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/player_key = G_found.key
 
 	//Now for special roles and equipment.
-	switch(new_character.mind.antagonist.type)
-		if(/datum/antagonist/traitor)
+	switch(new_character.mind.special_role)
+		if("traitor")
 			job_master.EquipRank(new_character, new_character.mind.assigned_role, 1)
 			new_character.mind.antagonist.setup()
-		if(/datum/antagonist/wizard)
+		if("Wizard")
 			new_character.loc = pick(wizardstart)
 			//ticker.mode.learn_basic_spells(new_character)
 			ticker.mode.equip_wizard(new_character)
-		if(/datum/antagonist/mercenary)
+		if("Mercenary")
 			var/obj/effect/landmark/synd_spawn = locate("landmark*Syndicate-Spawn")
 			if(synd_spawn)
 				new_character.loc = get_turf(synd_spawn)
 			call(/datum/game_mode/proc/equip_syndicate)(new_character)
-		if(/datum/antagonist/ninja)
+		if("Ninja")
 			new_character.equip_space_ninja()
 			if(ninjastart.len == 0)
 				new_character << "<B><span class='alert'>A proper starting location for you could not be found, please report this bug!</B></span>"
@@ -458,7 +458,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				else if (ninjastart.len == 0)
 					new_character << "<B><span class='alert'>Still no spawneable locations could be found. Aborting.</B></span>"
 
-		if(/datum/antagonist/death_commando)//Leaves them at late-join spawn.
+		if("Death Commando")//Leaves them at late-join spawn.
 			new_character.equip_death_commando()
 			new_character.internal = new_character.s_store
 			new_character.internals.icon_state = "internal1"
