@@ -119,8 +119,185 @@ datum/mind
 			alert("Not before round-start!", "Alert")
 			return
 
-		memory_browser = new(null, "antagpanel_[key]", "Antagonist Panel", 400, 500)
+		// 400 + 17 for the scroll bar
+		memory_browser = new(null, "antagpanel_[key]", "Antagonist Panel", 417, 500)
 
+		var/mob/living/carbon/human/H = current
+		// START NEW ANTAGONIST SYSTEM PANEL //
+		. = "<table><tr><td>"
+		. += "<font size=3>[name] - @[key]</font>"
+		. += "<hr>"
+		. += "</td></tr>"
+
+		. += "<tr><td><table class='outline'>"
+		. += "<tr><th align='left' style='padding-left: 6px'><b>New Antag System</b></th></tr>"
+
+		. += "<tr><td><table>"
+
+		// COMMANDS
+		if(antagonist)
+			. += "<tr>"
+			. += "<td>Antagonist type: <a href='byond://?src=\ref[src];command='antag_type'><b>[antagonist.name]</b></a></td>"
+			. += "<td>Persistent: <b>[istype(antagonist, /datum/antagonist/traitor/persistant) ? "Yes" : "No"]</b></td>"
+			. += "</tr>"
+			. += "<tr>"
+			. += "<td>Faction: <a href='byond://?src=\ref[src];command='antag_faction'><b>[antagonist.faction.name]</b></a></td>"
+			. += "<td>Notoriety: <a href='byond://?src=\ref[src];command='edit_notoriety'>[character.antag_data["notoriety"]]</a></td>"
+			. += "</tr>"
+
+			. += "</table></td></tr>"
+
+			. += "<tr><td><hr></td></tr>"
+
+			. += "<tr><td><table>"
+			
+			. += "<tr><td>General</td></tr>"
+			. += "<tr><td><a href='byond://?src=\ref[src];command='disable_uplink'>Disable Uplink</a> | <a href='byond://?src=\ref[src];command='random_contract'>Random contract</a> | <a href='byond://?src=\ref[src];command='custom_contract'>Custom contract</a></td></tr>"
+
+			. += "<tr><td>Fun</td></tr>"
+			. += "<tr><td><a href='byond://?src=\ref[src];command='give_money'>Grant funds</a> | <a href='byond://?src=\ref[src];command='buy_random'>Buy random</a> | <a href='byond://?src=\ref[src];command='buy_random_faction'>Buy random (faction)</a> | <a href='byond://?src=\ref[src];command='randomize_char'>Randomize character</a> | <a href='byond://?src=\ref[src];command='save_char'>Save character</a> | <a href='byond://?src=\ref[src];command='give_token'>Give token</a></td></tr>"
+
+			if(check_rights(R_DEBUG))
+				. += "<tr><td>Debug</td></tr>"
+				. += "<tr><td><a href='byond://?src=\ref[src];command_debug='equip'>Equip</a> | <a href='byond://?src=\ref[src];command_debug='setup'>Force setup</a> | <a href='byond://?src=\ref[src];command_debug='greet'>Greet</a> | <a href='byond://?src=\ref[src];command_debug='commend'>Commend</a></td></tr>"
+
+			. += "</table></td></tr>"
+		else
+			. += "<tr>"
+			. += "<td>Antagonist type: <a href='byond://?src=\ref[src];command='antag_type'><b>Not antagonist</b></a></td>"
+			. += "</tr>"
+
+		. += "</table></td></tr>"
+
+		// CONTRACTS
+		if(antagonist)
+			. += "<tr><td><hr></td></tr>"
+
+			. += "<tr><td><table>"
+			. += "<tr><td>Active Contracts</td></tr>"
+			. += "<tr><td>"
+			if(antagonist.active_contracts.len)
+				for(var/datum/contract/contract in antagonist.active_contracts)
+					. += "<table><tr>"
+					. += "<th width=70%>[contract.informal_name]</th>"
+					. += "<td><a href='byond://?src=\ref[src];contract_command='fail';contract=\ref[contract]>Fail</a></td>"
+					. += "<td><a href='byond://?src=\ref[src];contract_command='complete';contract=\ref[contract]>Complete</a></td>"
+					. += "</tr></table>"
+			else
+				. += "<table><tr><td>No active contracts</td></tr></table>"
+
+			. += "</td></tr>"
+			. += "</table></td></tr>"
+
+			. += "<tr><td><table>"
+			. += "<tr><td>Completed Contracts</td></tr>"
+			. += "<tr><td>"
+
+			if(antagonist.completed_contracts.len)
+				for(var/datum/contract/C in antagonist.completed_contracts)
+					. += "<table><tr>"
+					. += "<th>[C.informal_name]</th>"
+					. += "</tr></table>"
+			else
+				. += "<table><tr><td>No completed contracts</td></tr></table>"
+
+			. += "</td></tr>"
+
+		. += "</table></td></tr>"
+		// END NEW ANTAGONIST SYSTEM PANEL //
+
+		// START OLD ANTAGONIST SYSTEM PANEL //
+		. += "<tr><td><table class='outline'>"
+		. += "<tr><th align='left' style='padding-left: 6px'><b>Old Antag System</b></th></tr>"
+
+		. += "<tr><td><table>"
+		. += "<tr><td>General</td></tr>"
+		. += "<tr>"
+		. += "<td>Loyalty implant:</td>"
+
+		// LOYALTY IMPLANTS
+		if(H.is_loyalty_implanted(H))
+			. += "<td>Implanted | <a href='byond://?src=\ref[src];old_command='remove_implant'>Not implanted</a></td>"
+		else
+			. += "<td><a href='byond://?src=\ref[src];old_command='give_implant'>Implanted</a> | Not implanted</td>"
+
+		. += "</tr></table>"
+		. += "</td></tr>"
+
+		. += "<tr><td><hr></td></tr>"
+
+		. += "<tr><td><table>"
+		. += "<tr><td>Antagonists</td></tr>"
+
+		. += "<tr>"
+		. += "<td>Revolutionary:</td>"
+
+		// REVOLUTIONARY
+		if(src in ticker.mode.head_revolutionaries)
+			. += "<td><a href='byond://?src=\ref[src];old_antag='rev_employee'>Employee</a> | <a href='byond://?src=\ref[src];old_command='rev_rev'>Rev</a> | Head Rev</td>"
+		else if(src in ticker.mode.revolutionaries)
+			. += "<td><a href='byond://?src=\ref[src];old_antag='rev_employee'>Employee</a> | Rev | <a href='byond://?src=\ref[src];old_command='rev_head'>Head Rev</a></td>"
+		else
+			. += "<td>Employee | <a href='byond://?src=\ref[src];old_command='rev_rev'>Rev</a> | <a href='byond://?src=\ref[src];old_command='rev_head'>Head Rev</a></td>"
+
+		. += "</tr>"
+		. += "<tr>"
+		. += "<td>Cultist:</td>"
+
+		// CULTIST
+		if(src in ticker.mode.cult)
+			. += "<td><a href='byond://?src=\ref[src];old_command='cult_employee'>Employee</a> | Cultist</td>"
+		else
+			. += "<td>Employee | <a href='byond://?src=\ref[src];old_command='cult_cultist'>Cultist</a></td>"
+
+		. += "</tr>"
+		. += "<tr>"
+		. += "<td>Changeling:</td>"
+
+		// CHANGELING
+		if(src in ticker.mode.changelings)
+			. += "<td><a href='byond://?src=\ref[src];old_command='ling_employee'>Employee</a> | Changeling</td>"
+		else
+			. += "<td>Employee | <a href='byond://?src=\ref[src];old_command='ling_changeling'>Changeling</a></td>"
+
+		. += "</tr></table>"
+		. += "</td></tr>"
+
+		. += "</table></td></tr>"
+		// END OLD ANTAGONIST SYSTEM PANEL //
+
+		// START OBJECTIVES PANEL //
+		. += "<tr><td><table class='outline'>"
+		. += "<tr><th align='left' style='padding-left: 6px'><b>Objectives</b></th></tr>"
+
+		. += "<tr><td><table>"
+		. += "<tr><td>Commands</td></tr>"
+		. += "<tr><td><a href='byond://?src=\ref[src];obj_command='add'>Add objective</a> | <a href='byond://?src=\ref[src];obj_command='announce'>Announce objectives</a></td></tr>"
+		. += "</table></td></tr>"
+
+		. += "<tr><td><hr></td></tr>"
+
+		. += "<tr><td><table>"
+		. += "<tr><td>Current objectives</td></tr>"
+		. += "<tr><td>"
+
+		// OBJECTIVES LIST
+		if(objectives.len)
+			for(var/datum/objective/objective in objectives)
+				. += "<table><tr>"
+				. += "<td width=60%>[objective.explanation_text]</td>"
+				. += "<td> <a href='byond://?src=\ref[src];obj_command='edit';objective='\ref[objective]'>Edit</a> | <ahref='byond://?src=\ref[src];obj_command='delete';objective=\ref[objective]>Delete</a> | <ahref='byond://?src=\ref[src];obj_command='toggle_completion';objective=\ref[objective]><font color=[objective.completed ? "blue" : "yellow"]>Toggle completion</font></a></td>"
+				. += "</tr></table>"
+		else
+			. += "<table><tr><td>No objectives</td></tr></table>"
+
+		. += "</td></tr></table>"
+		. += "</td></tr></table>"
+
+		. += "</td></tr>"
+		. += "</table>"
+		// END OBJECTIVES PANEL //
+			
 		memory_browser.set_user( usr )
 		memory_browser.set_content( . )
 		memory_browser.open()
