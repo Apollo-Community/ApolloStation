@@ -39,7 +39,10 @@
 				. += "<tr><table class='outline'><center>"
 				. += "<th width=20%>[C.title]</th>"
 				. += "<td width=60%><i>[C.desc]</i></td>"
-				. += "<td width=20%>Expires: [worldtime2text(C.contract_start + C.time_limit)]</td>"
+				if(C.time_limit)
+					. += "<td width=20%>Expires: [worldtime2text(C.contract_start + C.time_limit)]</td>"
+				else
+					. += "<td width=20%>No expiry</td>"
 				. += "</center></table></tr>"
 			. += "</table>"
 

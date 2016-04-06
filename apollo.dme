@@ -911,6 +911,7 @@
 #include "code\modules\antagonist\factions.dm"
 #include "code\modules\antagonist\antagonists\persistant.dm"
 #include "code\modules\antagonist\antagonists\traitor.dm"
+#include "code\modules\antagonist\contracts\custom.dm"
 #include "code\modules\antagonist\contracts\deface.dm"
 #include "code\modules\antagonist\contracts\kill.dm"
 #include "code\modules\antagonist\contracts\propaganda.dm"

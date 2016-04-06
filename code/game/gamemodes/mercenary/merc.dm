@@ -14,13 +14,14 @@
 	if(!cur_mode)
 		return
 
-	antag.current << "<B><font size=3 color=red>The contract is as follows:</font></B>"
-	antag.current << "<B>[cur_mode.merc_contract.title]</B>\n<I>[cur_mode.merc_contract.desc]</I>"
-	if( cur_mode.merc_contract.time_limit )
-		antag.current << "You and your squad have until [worldtime2text(cur_mode.merc_contract.contract_start + cur_mode.merc_contract.time_limit)], station time, to complete the contract. <B><font color=red>Failure is not an option.</font></B>"
-	else
-		antag.current << "You have all the time could you need at your disposal. Your only requirement is to finish the contract. <B><font color=red>Failure is not an option.</font></B>"
-	antag.current << ""
+	if( cur_mode.merc_contract )
+		antag.current << "<B><font size=3 color=red>The contract is as follows:</font></B>"
+		antag.current << "<B>[cur_mode.merc_contract.title]</B>\n<I>[cur_mode.merc_contract.desc]</I>"
+		if( cur_mode.merc_contract.time_limit )
+			antag.current << "You and your squad have until [worldtime2text(cur_mode.merc_contract.contract_start + cur_mode.merc_contract.time_limit)], station time, to complete the contract. <B><font color=red>Failure is not an option.</font></B>"
+		else
+			antag.current << "You have all the time could you need at your disposal. Your only requirement is to finish the contract. <B><font color=red>Failure is not an option.</font></B>"
+		antag.current << ""
 
 /datum/antagonist/mercenary/equip()
 	var/mob/living/mob = antag.current

@@ -40,7 +40,7 @@
 // This randomizes the antag character, used for any non-persistant antags
 /datum/antagonist/proc/randomize_character()
 	if( !antag.original_character )
-		antag.original_character = antag.character
+		antag.original_character = antag.current.client.prefs.selected_character
 
 	var/datum/character/C = new( antag.current.client.ckey )
 	C.randomize_appearance( 1 )

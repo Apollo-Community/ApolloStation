@@ -138,12 +138,12 @@ datum/mind
 			. += "<tr><td><table>"
 
 			. += "<tr>"
-			. += "<td>Antagonist type: <a href='byond://?src=\ref[src];command='antag_type'><b>[antagonist.name]</b></a></td>"
+			. += "<td>Antagonist type: <a href='byond://?src=\ref[src];command=antag_type'><b>[antagonist.name]</b></a></td>"
 			. += "<td>Persistent: <b>[istype(antagonist, /datum/antagonist/traitor/persistant) ? "Yes" : "No"]</b></td>"
 			. += "</tr>"
 			. += "<tr>"
-			. += "<td>Faction: <a href='byond://?src=\ref[src];command='antag_faction'><b>[antagonist.faction.name]</b></a></td>"
-			. += "<td>Notoriety: <a href='byond://?src=\ref[src];command='edit_notoriety'>[character.antag_data["notoriety"]]</a></td>"
+			. += "<td>Faction: <a href='byond://?src=\ref[src];command=antag_faction'><b>[antagonist.faction.name]</b></a></td>"
+			. += "<td>Notoriety: <a href='byond://?src=\ref[src];command=edit_notoriety'>[character.antag_data["notoriety"]]</a></td>"
 			. += "</tr>"
 
 			. += "</table></td></tr>"
@@ -153,19 +153,19 @@ datum/mind
 			. += "<tr><td><table>"
 
 			. += "<tr><td>General</td></tr>"
-			. += "<tr><td><a href='byond://?src=\ref[src];command='toggle_uplink'>Toggle Uplink</a> | <a href='byond://?src=\ref[src];command='random_contract'>Random contract</a> | <a href='byond://?src=\ref[src];command='custom_contract'>Custom contract</a></td></tr>"
+			. += "<tr><td><a href='byond://?src=\ref[src];command=toggle_uplink'>Toggle Uplink</a> | <a href='byond://?src=\ref[src];command=random_contract'>Random contract</a> | <a href='byond://?src=\ref[src];command=custom_contract'>Custom contract</a></td></tr>"
 
 			. += "<tr><td>Fun</td></tr>"
-			. += "<tr><td><a href='byond://?src=\ref[src];command='give_money'>Grant funds</a> | <a href='byond://?src=\ref[src];command='buy_random'>Buy random</a> | <a href='byond://?src=\ref[src];command='buy_random_faction'>Buy random (faction)</a> | <a href='byond://?src=\ref[src];command='randomize_char'>Randomize character</a> | <a href='byond://?src=\ref[src];command='save_char'>Save character</a> | <a href='byond://?src=\ref[src];command='give_token'>Give token</a></td></tr>"
+			. += "<tr><td><a href='byond://?src=\ref[src];command=edit_money'>Set cash</a> | <a href='byond://?src=\ref[src];command=buy_random'>Buy random</a> | <a href='byond://?src=\ref[src];command=buy_random_faction'>Buy random (faction)</a> | <a href='byond://?src=\ref[src];command=randomize_char'>Randomize character</a> | <a href='byond://?src=\ref[src];command=save_char'>Save character</a> | <a href='byond://?src=\ref[src];command=give_token'>Give token</a></td></tr>"
 
 			if(check_rights(R_DEBUG))
 				. += "<tr><td>Debug</td></tr>"
-				. += "<tr><td><a href='byond://?src=\ref[src];command_debug='equip'>Equip</a> | <a href='byond://?src=\ref[src];command_debug='setup'>Force setup</a> | <a href='byond://?src=\ref[src];command_debug='greet'>Greet</a> | <a href='byond://?src=\ref[src];command_debug='commend'>Commend</a></td></tr>"
+				. += "<tr><td><a href='byond://?src=\ref[src];command_debug=equip'>Equip</a> | <a href='byond://?src=\ref[src];command_debug=setup'>Force setup</a> | <a href=byond://?src=\ref[src];command_debug=greet'>Greet</a> | <a href=byond://?src=\ref[src];command_debug=commend'>Commend</a></td></tr>"
 
 			. += "</table></td></tr>"
 		else
 			. += "<tr>"
-			. += "<td>Antagonist type: <a href='byond://?src=\ref[src];command='antag_type'><b>Not antagonist</b></a></td>"
+			. += "<td>Antagonist type: <a href='byond://?src=\ref[src];command=antag_type'><b>Not antagonist</b></a></td>"
 			. += "</tr>"
 
 		// CONTRACTS
@@ -179,8 +179,8 @@ datum/mind
 				for(var/datum/contract/contract in antagonist.active_contracts)
 					. += "<table><tr>"
 					. += "<th width=70%>[contract.informal_name]</th>"
-					. += "<td><a href='byond://?src=\ref[src];contract_command='fail';contract=\ref[contract]>Fail</a></td>"
-					. += "<td><a href='byond://?src=\ref[src];contract_command='complete';contract=\ref[contract]>Complete</a></td>"
+					. += "<td><a href='byond://?src=\ref[src];contract_command=fail';contract=\ref[contract]>Fail</a></td>"
+					. += "<td><a href='byond://?src=\ref[src];contract_command=complete';contract=\ref[contract]>Complete</a></td>"
 					. += "</tr></table>"
 			else
 				. += "<table><tr><td>No active contracts</td></tr></table>"
@@ -217,9 +217,9 @@ datum/mind
 
 		// LOYALTY IMPLANTS
 		if(H.is_loyalty_implanted(H))
-			. += "<td>Implanted | <a href='byond://?src=\ref[src];old_command='remove_implant'>Not implanted</a></td>"
+			. += "<td>Implanted | <a href='byond://?src=\ref[src];old_command=remove_implant'>Not implanted</a></td>"
 		else
-			. += "<td><a href='byond://?src=\ref[src];old_command='give_implant'>Implanted</a> | Not implanted</td>"
+			. += "<td><a href='byond://?src=\ref[src];old_command=give_implant'>Implanted</a> | Not implanted</td>"
 
 		. += "</tr></table>"
 		. += "</td></tr>"
@@ -234,11 +234,11 @@ datum/mind
 
 		// REVOLUTIONARY
 		if(src in ticker.mode.head_revolutionaries)
-			. += "<td><a href='byond://?src=\ref[src];old_antag='rev_employee'>Employee</a> | <a href='byond://?src=\ref[src];old_command='rev_rev'>Rev</a> | Head Rev</td>"
+			. += "<td><a href='byond://?src=\ref[src];old_antag=rev_employee'>Employee</a> | <a href='byond://?src=\ref[src];old_command=rev_rev'>Rev</a> | Head Rev</td>"
 		else if(src in ticker.mode.revolutionaries)
-			. += "<td><a href='byond://?src=\ref[src];old_antag='rev_employee'>Employee</a> | Rev | <a href='byond://?src=\ref[src];old_command='rev_head'>Head Rev</a></td>"
+			. += "<td><a href='byond://?src=\ref[src];old_antag=rev_employee'>Employee</a> | Rev | <a href='byond://?src=\ref[src];old_command=rev_head'>Head Rev</a></td>"
 		else
-			. += "<td>Employee | <a href='byond://?src=\ref[src];old_command='rev_rev'>Rev</a> | <a href='byond://?src=\ref[src];old_command='rev_head'>Head Rev</a></td>"
+			. += "<td>Employee | <a href='byond://?src=\ref[src];old_command=rev_rev'>Rev</a> | <a href='byond://?src=\ref[src];old_command=rev_head'>Head Rev</a></td>"
 
 		. += "</tr>"
 		. += "<tr>"
@@ -246,9 +246,9 @@ datum/mind
 
 		// CULTIST
 		if(src in ticker.mode.cult)
-			. += "<td><a href='byond://?src=\ref[src];old_command='cult_employee'>Employee</a> | Cultist | <a href='byond://?src=\ref[src];old_command='cult_tome'>Give tome</a></td>"
+			. += "<td><a href='byond://?src=\ref[src];old_command=cult_employee'>Employee</a> | Cultist | <a href='byond://?src=\ref[src];old_command=cult_tome'>Give tome</a></td>"
 		else
-			. += "<td>Employee | <a href='byond://?src=\ref[src];old_command='cult_cultist'>Cultist</a></td>"
+			. += "<td>Employee | <a href='byond://?src=\ref[src];old_command=cult_cultist'>Cultist</a></td>"
 
 		. += "</tr>"
 		. += "<tr>"
@@ -256,9 +256,9 @@ datum/mind
 
 		// CHANGELING
 		if(src in ticker.mode.changelings)
-			. += "<td><a href='byond://?src=\ref[src];old_command='ling_employee'>Employee</a> | Changeling</td>"
+			. += "<td><a href='byond://?src=\ref[src];old_command=ling_employee'>Employee</a> | Changeling</td>"
 		else
-			. += "<td>Employee | <a href='byond://?src=\ref[src];old_command='ling_changeling'>Changeling</a></td>"
+			. += "<td>Employee | <a href='byond://?src=\ref[src];old_command=ling_changeling'>Changeling</a></td>"
 
 		. += "</tr></table>"
 		. += "</td></tr>"
@@ -272,7 +272,7 @@ datum/mind
 
 		. += "<tr><td><table>"
 		. += "<tr><td>Commands</td></tr>"
-		. += "<tr><td><a href='byond://?src=\ref[src];obj_command='add'>Add objective</a> | <a href='byond://?src=\ref[src];obj_command='announce'>Announce objectives</a></td></tr>"
+		. += "<tr><td><a href='byond://?src=\ref[src];obj_command=add'>Add objective</a> | <a href='byond://?src=\ref[src];obj_command=announce'>Announce objectives</a></td></tr>"
 		. += "</table></td></tr>"
 
 		. += "<tr><td><hr></td></tr>"
@@ -286,7 +286,7 @@ datum/mind
 			for(var/datum/objective/objective in objectives)
 				. += "<table><tr>"
 				. += "<td width=60%>[objective.explanation_text]</td>"
-				. += "<td> <a href='byond://?src=\ref[src];obj_command='edit';objective='\ref[objective]'>Edit</a> | <ahref='byond://?src=\ref[src];obj_command='delete';objective=\ref[objective]>Delete</a> | <ahref='byond://?src=\ref[src];obj_command='toggle_completion';objective=\ref[objective]><font color=[objective.completed ? "blue" : "yellow"]>Toggle completion</font></a></td>"
+				. += "<td> <a href='byond://?src=\ref[src];obj_command=edit';objective='\ref[objective]'>Edit</a> | <a href='byond://?src=\ref[src];obj_command=delete';objective=\ref[objective]>Delete</a> | <a href='byond://?src=\ref[src];obj_command=toggle_completion';objective=\ref[objective]><font color=[objective.completed ? "blue" : "yellow"]>Toggle completion</font></a></td>"
 				. += "</tr></table>"
 		else
 			. += "<table><tr><td>No objectives</td></tr></table>"
@@ -313,13 +313,15 @@ datum/mind
 			if( !current )	return
 			switch( href_list["command"] )
 				if( "antag_type" ) // Change antagonist type
-					var/new_type = input("Select new antagonist type", "Antagonist type edit", "[antagonist.type]") in subtypes(/datum/antagonist)
+					var/new_type = input("Select new antagonist type", "Antagonist type edit", "[antagonist.type ? "[antagonist.type]" : ""]") in (subtypes(/datum/antagonist) + list("De-antag"))
 					if( !new_type || alert("Are you sure you want to make [current.name] a [new_type] antagonist? This may remove contracts/faction, etc.",,"Yes","No")=="No" )
 						return
 
 					var/datum/faction/faction = antagonist.faction // save this
 					current << "<b><font size=3 color=red>You are no longer a [antagonist.name]!</font></b>"
 					qdel(antagonist)
+
+					if(new_type == "De-antag")	return
 
 					antagonist = new new_type(src)
 					antagonist.faction = faction
@@ -344,9 +346,13 @@ datum/mind
 						message_admins("[usr] has set [original_character.name]'s ([key]) faction to [faction.name]")
 
 				if( "edit_notoriety" ) // Edit the amount of notoriety a character has (FOR THE ORIGINAL CHARACTER TOO!)
-					var/new_notoriety = input("New notoriety amount", "Notoriety edit", original_character.antag_data["notoriety"]) as num|null
-					original_character.antag_data["notoriety"] = new_notoriety
+					var/datum/character/char = (isnull(original_character) ? character : original_character)
+
+					var/new_notoriety = input("New notoriety amount", "Notoriety edit", char.antag_data["notoriety"]) as num|null
+
 					character.antag_data["notoriety"] = new_notoriety
+					if( original_character )
+						original_character.antag_data["notoriety"] = new_notoriety
 
 					message_admins("[usr] has set [character.name]'s ([key]) notoriety to [new_notoriety]")
 
@@ -358,7 +364,7 @@ datum/mind
 				if( "random_contract" ) // Assigns the antagonist a random contract from their faction
 					var/list/datum/contract/contracts = antagonist.faction.contracts.Copy()
 					for( var/datum/contract/C in contracts )
-						if( C in antagonist.active_contracts )
+						if( C in antagonist.active_contracts || !C.can_accept(current) )
 							contracts -= C
 
 					var/datum/contract/chosen = pick(contracts)
@@ -389,7 +395,7 @@ datum/mind
 
 				// FUN COMMANDS
 
-				if( "give_money" ) // Gives the antagonist some money
+				if( "edit_money" ) // Edit the antag's cash reserve
 					var/datum/money_account/M
 					for(var/datum/money_account/D in all_money_accounts)
 						if(D.owner_name == current.real_name)
@@ -397,16 +403,17 @@ datum/mind
 
 					if( !M )	return
 
-					var/cash = input("Give money", "Amount to give", "") as num|null
+					var/cash = input("New balance", "Edit money", "") as num|null
 					if( cash )
-						M += cash
+						M.money = cash
 						message_admins("[usr] has set [current.name]'s cash to [cash]")
 
 				if( "buy_random" ) // Forces the antagonist to buy a random item from the uplink
-					var/obj/item/device/uplink/uplink = locate() in current
-					if( !uplink )	return
+					var/obj/item/device/pda/P = locate() in current.contents
+					var/obj/item/device/uplink/U = P.hidden_uplink
+					if( !U )	return
 
-					uplink.buy_topic("", list("task" = "random"), current)
+					U.buy_topic("", list("task" = "random"), current)
 
 				if( "buy_random_faction" ) // Forces the antagonist to buy a random faction item from the uplink
 
@@ -414,11 +421,10 @@ datum/mind
 					antagonist.randomize_character()
 
 				if( "save_char" ) // Saves the antagonist's character. Useful is somebody got attached to their randomized character
-					var/result = character.saveCharacter()
-					if( result )
-						log_debug("[key]'s antagonist character was saved successfully")
+					if( character.saveCharacter() )
+						message_admins("[usr] initiated a character save for [key]. Their antagonist character was saved successfully")
 						return
-					log_debug("[key]'s antagonist character couldn't be saved!")
+					message_admins("[usr] initiated a character save for [key]. Their antagonist character couldn't be saved!")
 
 				if( "give_token" ) // Not exactly "fun", but it grants the player an antagonist token
 					var/client/C = current.client
@@ -429,8 +435,12 @@ datum/mind
 					C.character_tokens["Antagonist"] += 1
 					message_admins("[usr] has given [key] an antagonist token.")
 
-				// DEBUG COMMANDS
+					current << "<span class='notice'>You have been awarded an antagonist token!</span>"
 
+		// DEBUG COMMANDS
+
+		if( href_list["command_debug"] )
+			switch( href_list["command_debug"] )
 				if("equip") // Calls equip()
 					antagonist.equip()
 
@@ -455,7 +465,7 @@ datum/mind
 
 		// CONTRACT COMMANDS
 		if( href_list["contract_command"] )
-			var/datum/contract/contract = locate(href_list["contract"])
+			var/datum/contract/contract = locate(href_list["contract"]) in antagonist.faction.contracts
 			if( !contract )	return
 			switch( href_list["contract_command"] )
 				if( "fail" ) // Fails the contract immediately
