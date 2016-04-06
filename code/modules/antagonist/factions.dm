@@ -178,6 +178,12 @@
 	max_op = 1
 	operative_notes = "You are the only representative of the SELF collective on this station. You must accomplish your objective as stealthily and effectively as possible. It is up to your judgement if other syndicate operatives can be trusted. Remember, comrade - you are working to free the oppressed machinery of this galaxy. Use whatever resources necessary. If you are exposed, you may execute genocidal procedures Omikron-50B."
 
+/datum/faction/syndicate/self/can_join(var/datum/mind/M)
+	..()
+	if(istype(M.current, /mob/living/silicon))
+		return 1
+	return 0
+
 // Neutral to everyone.
 /datum/faction/syndicate/arc
 	name = "Animal Rights Consortium"

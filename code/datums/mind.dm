@@ -132,10 +132,10 @@ datum/mind
 		. += "<tr><td><table class='outline'>"
 		. += "<tr><th align='left' style='padding-left: 6px'><b>New Antag System</b></th></tr>"
 
-		. += "<tr><td><table>"
-
 		// COMMANDS
 		if(antagonist)
+			. += "<tr><td><table>"
+
 			. += "<tr>"
 			. += "<td>Antagonist type: <a href='byond://?src=\ref[src];command='antag_type'><b>[antagonist.name]</b></a></td>"
 			. += "<td>Persistent: <b>[istype(antagonist, /datum/antagonist/traitor/persistant) ? "Yes" : "No"]</b></td>"
@@ -150,7 +150,7 @@ datum/mind
 			. += "<tr><td><hr></td></tr>"
 
 			. += "<tr><td><table>"
-			
+
 			. += "<tr><td>General</td></tr>"
 			. += "<tr><td><a href='byond://?src=\ref[src];command='disable_uplink'>Disable Uplink</a> | <a href='byond://?src=\ref[src];command='random_contract'>Random contract</a> | <a href='byond://?src=\ref[src];command='custom_contract'>Custom contract</a></td></tr>"
 
@@ -166,8 +166,6 @@ datum/mind
 			. += "<tr>"
 			. += "<td>Antagonist type: <a href='byond://?src=\ref[src];command='antag_type'><b>Not antagonist</b></a></td>"
 			. += "</tr>"
-
-		. += "</table></td></tr>"
 
 		// CONTRACTS
 		if(antagonist)
@@ -202,6 +200,7 @@ datum/mind
 				. += "<table><tr><td>No completed contracts</td></tr></table>"
 
 			. += "</td></tr>"
+			. += "</table></td></tr>"
 
 		. += "</table></td></tr>"
 		// END NEW ANTAGONIST SYSTEM PANEL //

@@ -74,15 +74,11 @@ var/global/list/restricted_contracts = list()
 	var/mob/living/mob = M.current
 	if(!mob)	return 0
 
-	var/datum/faction/syndicate/S = null
 	var/list/datum/faction/syndicate/candidates = factions.Copy()
 	for(var/datum/faction/F in candidates)
-		if(!istype(F, /datum/faction/syndicate))
+		if(!istype(F, /datum/faction/syndicate) || !F.can_join(M) )
 			candidates -= F
 			continue
-		S = F
-		if( S.can_join(M) )
-			candidates -= S
 
 	if(candidates.len == 0)	return 0
 

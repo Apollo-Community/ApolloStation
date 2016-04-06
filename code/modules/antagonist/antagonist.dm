@@ -42,7 +42,7 @@
 	if(faction) 
 		faction = faction_controller.join_faction(antag, faction)
 	else
-		faction_controller.get_syndie_faction(antag)
+		faction = faction_controller.get_syndie_faction(antag)
 
 	if(!faction) // we need a faction
 		message_admins("[antag.key]/([antag.current.real_name]) was made an antagonist, but failed to get a faction.")
