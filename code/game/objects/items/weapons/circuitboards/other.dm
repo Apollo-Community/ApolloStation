@@ -32,3 +32,14 @@ obj/item/weapon/circuitboard/photocopier
 							"/obj/item/weapon/stock_parts/manipulator" = 1,
 							"/obj/item/weapon/light/tube" = 1,
 							"/obj/item/weapon/stock_parts/scanning_module" = 1)
+
+obj/item/weapon/circuitboard/chemdispenser
+	name = T_BOARD("Chem dispenser")
+	build_path = "/obj/machinery/chem_dispenser"
+	board_type = "machine"
+	origin_tech = "materials = 5;engineering = 4"
+	frame_desc = "Requires 2 Matter Bin, 2 Micro-Manipulator, 1 Console Screen"
+	req_components = list(
+							"/obj/item/weapon/stock_parts/matter_bin" = 2,
+							"/obj/item/weapon/stock_parts/manipulator" = 2,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)
