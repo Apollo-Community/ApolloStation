@@ -279,7 +279,7 @@
 
 		// antag got caught check goes here
 
-		var/notoriety = traitor.character.antag_data["notoriety"]
+		var/notoriety = traitor.original_character.antag_data["notoriety"]
 		var/contract_requirement = round( ( notoriety + 1 ) / 2 )
 		if( antag.completed_contracts.len > contract_requirement )
 			notoriety++
@@ -290,8 +290,8 @@
 		else if( antag.failed_contracts.len > antag.completed_contracts.len )
 			notoriety--
 			traitor.current << "<span class='warning'>You have lost notoriety for failing more contracts than you completed!</span>"
-		traitor.character.antag_data["notoriety"] = notoriety
-		traitor.character.antag_data["career_length"]++
+		traitor.original_character.antag_data["notoriety"] = notoriety
+		traitor.original_character.antag_data["career_length"]++
 
 		traitor.current << "<span class='notice'>Your career length is now [traitor.character.antag_data["career_length"]] rounds!</span>"
 

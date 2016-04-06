@@ -31,7 +31,7 @@
 	. += " - <b><a href='byond://?src=\ref[src];tgroup=close'>Close</a></b>"
 	. += "<hr></center>"
 
-	if(antag && antag.can_buy && !faction_controller.contract_ban)
+	if(antag && antag.can_buy && !faction_controller.contract_ban && !antag.uplink_blocked)
 		. += "<h2><span class='white'>Uplink Market</span></h2>"
 		. += "<h3><span class='white'>Available Funds: $[A.money]</span></h3>"
 

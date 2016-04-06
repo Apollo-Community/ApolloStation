@@ -59,7 +59,7 @@
 
 		// Faction Contracts
 		var/list/datum/contract/available_contracts = (antag.faction.contracts - antag.active_contracts)
-		if(available_contracts.len > 0)
+		if(available_contracts.len > 0 && !antag.uplink_blocked)
 			. += "<h2><span class='white'>Available Contracts</span></h2>"
 			. += "<table><center>"
 			for(var/datum/contract/C in available_contracts)

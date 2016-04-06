@@ -64,9 +64,6 @@ var/global/list/restricted_contracts = list()
 	F.members -= M
 	M.faction = null
 
-	if(istype(F, /datum/faction/syndicate) && M.antagonist)
-		M.antagonist.faction = null
-
 	return 1
 
 // finds a suitable syndicate faction for a mind and joins it

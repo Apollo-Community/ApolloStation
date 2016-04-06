@@ -16,6 +16,8 @@
 	var/list/datum/contract/failed_contracts = list()
 	var/datum/mind/antag = null
 
+	var/uplink_blocked = 0 // adminbuse var
+
 	// fun facts for the round end, but could also be used for statistics?
 	var/money_spent = 0
 
@@ -27,8 +29,19 @@
 
 	antag = us
 
+/datum/antagonist/Destroy()
+	..()
+
+	for(var/datum/contract/C in active_contracts)
+		C.workers -= antag.current
+
+	faction_controller.leave_faction(antag, faction)
+
 // This randomizes the antag character, used for any non-persistant antags
 /datum/antagonist/proc/randomize_character()
+	if( !antag.original_character )
+		antag.original_character = antag.character
+
 	var/datum/character/C = new( antag.current.client.ckey )
 	C.randomize_appearance( 1 )
 	antag.current.client.prefs.selected_character.copy_metadata_to( C )
