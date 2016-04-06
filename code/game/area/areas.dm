@@ -163,6 +163,11 @@ area/space/atmosalert()
 	icon_state = "yellow"
 	environment = SEWER_PIPE
 
+/area/podbay/hangar
+	name = "\improper Hangar A"
+	icon_state = "blue"
+	environment = SEWER_PIPE
+
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
 
@@ -856,6 +861,9 @@ area/space/atmosalert()
 
 /area/maintenance/substation/civilian_west // Cargo, PTS, locker room, probably arrivals, ...)
 	name = "Civilian West Substation"
+
+/area/maintenance/substation/hangar // Hangar, Pods, Departures, ....)
+	name = "Hangar Substation"
 
 /area/maintenance/substation/command // AI and central cluster. This one will be between HoP office and meeting room (probably).
 	name = "Command Substation"
@@ -2406,6 +2414,82 @@ area/space/atmosalert()
 	icon_state = "south"
 	requires_power = 0
 
+//////////////////SHIPS////////////////////////////////////////
+/area/monarch
+	name = "\improper Monarch"
+	icon_state = "storage"
+	environment = PLAIN
+
+/area/cake/tradeship/aft
+ name = "Trade Ship Aft"
+ icon_state = "red"
+ requires_power = 0
+
+/area/cake/tradeship/central
+ name = "Trade Ship Central"
+ icon_state = "yellow"
+ requires_power = 0
+
+/area/cake/tradeship/office
+ name = "Trade Ship Offices"
+ icon_state = "green"
+ requires_power = 0
+
+/area/cake/tradeship/kitchen
+ name = "Trade Ship Kitchen"
+ icon_state = "blue"
+ requires_power = 0
+
+/area/cake/tradeship/breakroom
+ name = "Trade Ship Break Room"
+ icon_state = "green"
+ requires_power = 0
+
+/area/cake/tradeship/bridge
+ name = "Trade Ship Bridge"
+ icon_state = "red"
+ requires_power = 0
+
+/area/cake/monarch/ship
+ name = "Monarch"
+ icon_state = "red"
+ requires_power = 0
+
+ /area/ballshuttle
+	name = "\improper abandoned shuttle"
+	icon_state = "south"
+
+/area/relief_ship
+	name = "\improper Relief Ship"
+	icon_state = "south"
+
+/area/relief_ship/cryo
+	name = "\improper Cryogenics"
+	icon_state = "cryo"
+
+/area/relief_ship/engine
+	name = "\improper Engine Room"
+	icon_state = "hallA"
+
+/area/relief_ship/morgue
+	name = "\improper Morgue"
+	icon_state = "hallP"
+
+/area/relief_ship/virology
+	name = "\improper Virology"
+	icon_state = "hallS"
+
+/area/relief_ship/chemistry
+	name = "\improper Chemistry"
+	icon_state = "green"
+
+/area/relief_ship/surgery
+	name = "\improper Surgery"
+	icon_state = "yellow"
+
+/area/relief_ship/cloning
+	name = "\improper Cloning"
+	icon_state = "research"
 
 
 /////////////////////////////////////////////////////////////////////
