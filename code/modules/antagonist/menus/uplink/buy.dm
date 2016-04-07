@@ -71,21 +71,23 @@
 	menu.set_content(.)
 	menu.open()
 
-/obj/item/device/uplink/proc/buy_topic(href, href_list, var/mob/user)
-	if(href_list["task"] == "random")
+/obj/item/device/uplink/proc/buy_topic(href, href_list, var/mob/user, var/secret=0)
+	var/datum/money_account/A = find_account(user)
+
+	if(A && href_list["task"] == "random")
 		var/list/random_items = new
 		for(var/IR in ItemsReference)
 			var/datum/uplink_item/UI = ItemsReference[IR]
-			if(UI.cost <= uses)
+			if(A.money >= UI.cost)
 				random_items += UI
 
 		var/datum/uplink_item/I = pick(random_items)
-		return buy(I, I ? I.reference : "", user)
+		return buy(I, I ? I.reference : "", user, secret)
 
 	var/datum/uplink_item/I = ItemsReference[href_list["task"]]
-	return buy(I, I ? I.reference : "", user)
+	return buy(I, I ? I.reference : "", user, secret)
 
-/obj/item/device/uplink/proc/buy(var/datum/uplink_item/UI, var/reference, var/mob/user)
+/obj/item/device/uplink/proc/buy(var/datum/uplink_item/UI, var/reference, var/mob/user, var/secret=0)
 	var/datum/money_account/A = find_account(user)
 	
 	if(A && A.money >= UI.cost)
@@ -100,7 +102,10 @@
 
 		purchase_log[UI] = purchase_log[UI] + 1
 
-		buy_menu(user)
+		if(!secret)
+			buy_menu(user)
 		return 1
-	buy_menu(user)
+
+	if(!secret)
+		buy_menu(user)
 	return 0

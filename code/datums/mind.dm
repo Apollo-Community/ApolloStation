@@ -153,14 +153,14 @@ datum/mind
 			. += "<tr><td><table>"
 
 			. += "<tr><td>General</td></tr>"
-			. += "<tr><td><a href='byond://?src=\ref[src];command=toggle_uplink'>Toggle Uplink</a> | <a href='byond://?src=\ref[src];command=random_contract'>Random contract</a> | <a href='byond://?src=\ref[src];command=custom_contract'>Custom contract</a></td></tr>"
+			. += "<tr><td><a href='byond://?src=\ref[src];command=toggle_uplink'>[antagonist.uplink_blocked ? "Enable Uplink" : "Disable Uplink"]</a> | <a href='byond://?src=\ref[src];command=random_contract'>Random contract</a> | <a href='byond://?src=\ref[src];command=custom_contract'>Custom contract</a></td></tr>"
 
 			. += "<tr><td>Fun</td></tr>"
 			. += "<tr><td><a href='byond://?src=\ref[src];command=edit_money'>Set cash</a> | <a href='byond://?src=\ref[src];command=buy_random'>Buy random</a> | <a href='byond://?src=\ref[src];command=buy_random_faction'>Buy random (faction)</a> | <a href='byond://?src=\ref[src];command=randomize_char'>Randomize character</a> | <a href='byond://?src=\ref[src];command=save_char'>Save character</a> | <a href='byond://?src=\ref[src];command=give_token'>Give token</a></td></tr>"
 
 			if(check_rights(R_DEBUG))
 				. += "<tr><td>Debug</td></tr>"
-				. += "<tr><td><a href='byond://?src=\ref[src];command_debug=equip'>Equip</a> | <a href='byond://?src=\ref[src];command_debug=setup'>Force setup</a> | <a href=byond://?src=\ref[src];command_debug=greet'>Greet</a> | <a href=byond://?src=\ref[src];command_debug=commend'>Commend</a></td></tr>"
+				. += "<tr><td><a href='byond://?src=\ref[src];command_debug=equip'>Equip</a> | <a href='byond://?src=\ref[src];command_debug=setup'>Force setup</a> | <a href='byond://?src=\ref[src];command_debug=greet'>Greet</a> | <a href='byond://?src=\ref[src];command_debug=commend'>Commend</a></td></tr>"
 
 			. += "</table></td></tr>"
 		else
@@ -179,8 +179,8 @@ datum/mind
 				for(var/datum/contract/contract in antagonist.active_contracts)
 					. += "<table><tr>"
 					. += "<th width=70%>[contract.informal_name]</th>"
-					. += "<td><a href='byond://?src=\ref[src];command_contract=fail';contract=\ref[contract]>Fail</a></td>"
-					. += "<td><a href='byond://?src=\ref[src];command_contract=complete';contract=\ref[contract]>Complete</a></td>"
+					. += "<td><a href='byond://?src=\ref[src];command_contract=fail;contract=\ref[contract]'>Fail</a></td>"
+					. += "<td><a href='byond://?src=\ref[src];command_contract=complete;contract=\ref[contract]'>Complete</a></td>"
 					. += "</tr></table>"
 			else
 				. += "<table><tr><td>No active contracts</td></tr></table>"
@@ -286,7 +286,7 @@ datum/mind
 			for(var/datum/objective/objective in objectives)
 				. += "<table><tr>"
 				. += "<td width=60%>[objective.explanation_text]</td>"
-				. += "<td> <a href='byond://?src=\ref[src];command_objective=edit';objective='\ref[objective]'>Edit</a> | <a href='byond://?src=\ref[src];command_objective=delete';objective=\ref[objective]>Delete</a> | <a href='byond://?src=\ref[src];command_objective=toggle_completion';objective=\ref[objective]><font color=[objective.completed ? "blue" : "yellow"]>Toggle completion</font></a></td>"
+				. += "<td> <a href='byond://?src=\ref[src];command_objective=edit;objective=\ref[objective]'>Edit</a> | <a href='byond://?src=\ref[src];command_objective=delete;objective=\ref[objective]'>Delete</a> | <a href='byond://?src=\ref[src];command_objective=toggle_completion;objective=\ref[objective]'><font color=[objective.completed ? "blue" : "yellow"]>Toggle completion</font></a></td>"
 				. += "</tr></table>"
 		else
 			. += "<table><tr><td>No objectives</td></tr></table>"
@@ -398,6 +398,7 @@ datum/mind
 
 					custom.start(current)
 
+					usr << "<span class='notice'>Custom contract created successfully!</span>"
 					current << "<b><font size=3 color=red>You have been assigned a contract.</font></b>"
 					current << "<B>[custom.title]</B>\n<I>[custom.desc]</I>\nYou have until [worldtime2text(world.time + custom.time_limit)], station time to complete the contract."
 
@@ -421,7 +422,7 @@ datum/mind
 					var/obj/item/device/uplink/U = P.hidden_uplink
 					if( !U )	return
 
-					U.buy_topic("", list("task" = "random"), current)
+					U.buy_topic("", list("task" = "random"), current, 1)
 
 				if( "buy_random_faction" ) // Forces the antagonist to buy a random faction item from the uplink
 
@@ -448,16 +449,16 @@ datum/mind
 		// DEBUG COMMANDS
 		if( href_list["command_debug"] )
 			switch( href_list["command_debug"] )
-				if("equip") // Calls equip()
+				if( "equip" ) // Calls equip()
 					antagonist.equip()
 
-				if("setup") // Calls setup()
+				if( "setup" ) // Calls setup()
 					antagonist.setup()
 
-				if("greet") // Calls greet()
+				if( "greet" ) // Calls greet()
 					antagonist.greet()
 
-				if("commend") // Commends the antagonist once
+				if( "commend" ) // Commends the antagonist once
 					var/client/C = current.client
 					if( !C )	return
 
@@ -467,14 +468,13 @@ datum/mind
 
 					var/progress = C.character_tokens["Antagonist"] - round(C.character_tokens["Antagonist"])
 					log_debug("[usr] has commended [key] as an antagonist via admin command.")
+					message_admins("[usr] has commended [key] as an antagonist.")
 					current << "<span class='notice'>You have received an antagonist commendation!</span>"
 					current << "<span class='notice'>You are now <B>[progress * 100]%</B> on the way to your next antagonist token.</span>"
 
 		// CONTRACT COMMANDS
 		if( href_list["command_contract"] )
-			world << "[href_list["contract"]]"
 			var/datum/contract/contract = locate(href_list["contract"]) in antagonist.faction.contracts
-			world << "[contract.title]"
 			if( !contract )	return
 			switch( href_list["command_contract"] )
 				if( "fail" ) // Fails the contract immediately
@@ -494,9 +494,121 @@ datum/mind
 					contract.end(1, current)
 
 		// OBJECTIVE STUFF & COMMANDS
+		// mess
 		if( href_list["command_objective"] )
+			if( href_list["command_objective"] == "announce" ) // Announce objectives
+				var/obj_count = 1
+				current << "<span class='notice'>Your current objectives:</span>"
+				for(var/datum/objective/objs in objectives)
+					current << "<B>Objective #[obj_count]</B>: [objs.explanation_text]"
+					obj_count++
+
+			if( href_list["command_objective"] == "add" || href_list["command_objective"] == "edit")
+				var/datum/objective/objective
+				var/objective_pos
+				var/def_value
+
+				if( href_list["command_objective"] == "edit" )
+					objective = locate(href_list["objective"])
+					if (!objective) return
+					objective_pos = objectives.Find(objective)
+
+					//Text strings are easy to manipulate. Revised for simplicity.
+					var/temp_obj_type = "[objective.type]"//Convert path into a text string.
+					def_value = copytext(temp_obj_type, 19)//Convert last part of path into an objective keyword.
+					if(!def_value)//If it's a custom objective, it will be an empty string.
+						def_value = "custom"
+
+				var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "debrain", "block", "harm", "brig", "hijack", "escape", "survive", "steal", "download", "nuclear", "capture", "absorb", "custom")
+				if( !new_obj_type )	return
+
+				var/datum/objective/new_objective = null
+
+				switch( new_obj_type )
+					if( "assassinate", "block", "debrain", "harm", "brig" )
+						//To determine what to name the objective in explanation text.
+						var/objective_type_capital = uppertext(copytext(new_obj_type, 1,2))//Capitalize first letter.
+						var/objective_type_text = copytext(new_obj_type, 2)//Leave the rest of the text.
+						var/objective_type = "[objective_type_capital][objective_type_text]"//Add them together into a text string.
+
+						var/list/possible_targets = list("Free objective")
+						for(var/datum/mind/possible_target in ticker.minds)
+							if ((possible_target != src) && istype(possible_target.current, /mob/living/carbon/human))
+								possible_targets += possible_target.current
+
+						var/mob/def_target = null
+						var/objective_list[] = list(/datum/objective/assassinate, /datum/objective/protect, /datum/objective/debrain)
+						if (objective&&(objective.type in objective_list) && objective:target)
+							def_target = objective:target.current
+
+						var/new_target = input("Select target:", "Objective target", def_target) as null|anything in possible_targets
+						if (!new_target) return
+
+						var/objective_path = text2path("/datum/objective/[new_obj_type]")
+						if (new_target == "Free objective")
+							new_objective = new objective_path
+							new_objective.owner = src
+							new_objective:target = null
+							new_objective.explanation_text = "Free objective"
+						else
+							new_objective = new objective_path
+							new_objective.owner = src
+							new_objective:target = new_target:mind
+							//Will display as special role if the target is set as MODE. Ninjas/commandos/nuke ops.
+							new_objective.explanation_text = "[objective_type] [new_target:real_name], the [new_target:mind:assigned_role=="MODE" ? (new_target:mind:special_role) : (new_target:mind:assigned_role)]."
+
+					if( "download", "capture", "absorb" )
+						var/def_num
+						if(objective&&objective.type==text2path("/datum/objective/[new_obj_type]"))
+							def_num = objective.target_amount
+
+						var/target_number = input("Input target number:", "Objective", def_num) as num|null
+						if (isnull(target_number))//Ordinarily, you wouldn't need isnull. In this case, the value may already exist.
+							return
+
+						switch(new_obj_type)
+							if("download")
+								new_objective = new /datum/objective/download
+								new_objective.explanation_text = "Download [target_number] research levels."
+							if("capture")
+								new_objective = new /datum/objective/capture
+								new_objective.explanation_text = "Accumulate [target_number] capture points."
+							if("absorb")
+								new_objective = new /datum/objective/absorb
+								new_objective.explanation_text = "Absorb [target_number] compatible genomes."
+						new_objective.owner = src
+						new_objective.target_amount = target_number
+
+					if( "steal" )
+						if (!istype(objective, /datum/objective/steal))
+							new_objective = new /datum/objective/steal
+							new_objective.owner = src
+						else
+							new_objective = objective
+						var/datum/objective/steal/steal = new_objective
+						if (!steal.select_target())
+							return
+
+					if( "custom" )
+						var/expl = sanitize(input("Custom objective:", "Objective", objective ? objective.explanation_text : "") as text|null)
+						if (!expl) return
+						new_objective = new /datum/objective
+						new_objective.owner = src
+						new_objective.explanation_text = expl
+
+					else
+						var/path = text2path("/datum/objective/[new_obj_type]")
+						new_objective = new path()
+						new_objective.owner = src
+
+				if (objective)
+					objectives -= objective
+					objectives.Insert(objective_pos, new_objective)
+				else
+					objectives += new_objective
+
+
 			var/datum/objective/objective = locate(href_list["objective"])
-			world << "objective:: [objective]"
 			if( !objective )	return
 			var/def_value = copytext("[objective.type]", 19)
 			if( !def_value )
@@ -504,98 +616,13 @@ datum/mind
 
 			switch( href_list["command_objective"] )
 				if( "edit" ) // Edit the objective
-					var/objective_pos = objectives.Find(objective)
 
-					var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "debrain", "protect", "block", "harm", "brig", "hijack", "escape", "survive", "steal", "download", "nuclear", "capture", "absorb", "custom")
-					if( !new_obj_type )	return
-
-					var/datum/objective/new_objective = null
-
-					switch( new_obj_type )
-						if( "assassinate", "block", "debrain", "harm", "brig" )
-							//To determine what to name the objective in explanation text.
-							var/objective_type_capital = uppertext(copytext(new_obj_type, 1,2))//Capitalize first letter.
-							var/objective_type_text = copytext(new_obj_type, 2)//Leave the rest of the text.
-							var/objective_type = "[objective_type_capital][objective_type_text]"//Add them together into a text string.
-
-							var/list/possible_targets = list("Free objective")
-							for(var/datum/mind/possible_target in ticker.minds)
-								if ((possible_target != src) && istype(possible_target.current, /mob/living/carbon/human))
-									possible_targets += possible_target.current
-
-							var/mob/def_target = null
-							var/objective_list[] = list(/datum/objective/assassinate, /datum/objective/protect, /datum/objective/debrain)
-							if (objective&&(objective.type in objective_list) && objective:target)
-								def_target = objective:target.current
-
-							var/new_target = input("Select target:", "Objective target", def_target) as null|anything in possible_targets
-							if (!new_target) return
-
-							var/objective_path = text2path("/datum/objective/[new_obj_type]")
-							if (new_target == "Free objective")
-								new_objective = new objective_path
-								new_objective.owner = src
-								new_objective:target = null
-								new_objective.explanation_text = "Free objective"
-							else
-								new_objective = new objective_path
-								new_objective.owner = src
-								new_objective:target = new_target:mind
-								//Will display as special role if the target is set as MODE. Ninjas/commandos/nuke ops.
-								new_objective.explanation_text = "[objective_type] [new_target:real_name], the [new_target:mind:assigned_role=="MODE" ? (new_target:mind:special_role) : (new_target:mind:assigned_role)]."
-
-						if( "download", "capture", "absorb" )
-							var/def_num
-							if(objective&&objective.type==text2path("/datum/objective/[new_obj_type]"))
-								def_num = objective.target_amount
-
-							var/target_number = input("Input target number:", "Objective", def_num) as num|null
-							if (isnull(target_number))//Ordinarily, you wouldn't need isnull. In this case, the value may already exist.
-								return
-
-							switch(new_obj_type)
-								if("download")
-									new_objective = new /datum/objective/download
-									new_objective.explanation_text = "Download [target_number] research levels."
-								if("capture")
-									new_objective = new /datum/objective/capture
-									new_objective.explanation_text = "Accumulate [target_number] capture points."
-								if("absorb")
-									new_objective = new /datum/objective/absorb
-									new_objective.explanation_text = "Absorb [target_number] compatible genomes."
-							new_objective.owner = src
-							new_objective.target_amount = target_number
-
-						if( "custom" )
-							var/expl = sanitize(input("Custom objective:", "Objective", objective ? objective.explanation_text : "") as text|null)
-							if (!expl) return
-							new_objective = new /datum/objective
-							new_objective.owner = src
-							new_objective.explanation_text = expl
-
-						else
-							var/path = text2path("/datum/objective/[new_obj_type]")
-							new_objective = new path()
-							new_objective.owner = src
-
-					if (objective)
-						objectives -= objective
-						objectives.Insert(objective_pos, new_objective)
-					else
-						objectives += new_objective
 
 				if( "delete" ) // Delete the objective
 					objectives -= objective
 
 				if( "toggle_completion" ) // Toggle completion for the objective
 					objective.completed = !objective.completed
-
-				if( "announce" ) // Announce objectives
-					var/obj_count = 1
-					current << "<span class='notice'>Your current objectives:</span>"
-					for(var/datum/objective/objs in objectives)
-						current << "<B>Objective #[obj_count]</B>: [objs.explanation_text]"
-						obj_count++
 
 		// OLD ANTAG SYSTEM STUFF
 		// This stuff can be removed as stuff is ported to the new antagonist system

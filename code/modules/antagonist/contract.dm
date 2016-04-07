@@ -71,16 +71,13 @@
 	completed = success
 
 	for(var/mob/living/M in workers)
-		if(success && worker)
-			if(M != worker)
-				M.mind.antagonist.contract_ended(src, 0)
-			else
-				worker.mind.antagonist.contract_ended(src, 1)
+		M.mind.antagonist.contract_ended(src, success)
+		if(worker)
+			if(success & M == worker)
 				reward(worker)
-		else
-			// just reward everyone if nobody's defined as the one who gets the reward
-			M.mind.antagonist.contract_ended(src, 1)
+		else if(success)
 			reward(M)
+
 
 	faction.contract_ended(src)
 	contract_ticker.contracts -= src
