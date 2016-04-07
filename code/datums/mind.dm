@@ -143,7 +143,7 @@ datum/mind
 			. += "</tr>"
 			. += "<tr>"
 			. += "<td>Faction: <a href='byond://?src=\ref[src];command=antag_faction'><b>[antagonist.faction.name]</b></a></td>"
-			. += "<td>Notoriety: <a href='byond://?src=\ref[src];command=edit_notoriety'>[character.antag_data["notoriety"]]</a></td>"
+			. += "<td>Notoriety: <a href='byond://?src=\ref[src];command=edit_notoriety'>[antagonist.notoriety]</a></td>"
 			. += "</tr>"
 
 			. += "</table></td></tr>"
@@ -164,9 +164,9 @@ datum/mind
 
 			. += "</table></td></tr>"
 		else
-			. += "<tr>"
-			. += "<td>Antagonist type: <a href='byond://?src=\ref[src];command=antag_type'><b>Not antagonist</b></a></td>"
-			. += "</tr>"
+			. += "<tr><td><table>"
+			. += "<tr><td>Antagonist type: <a href='byond://?src=\ref[src];command=antag_type'><b>Not antagonist</b></a></td></tr>"
+			. += "</table></td></tr>"
 
 		// CONTRACTS
 		if(antagonist)
@@ -179,8 +179,8 @@ datum/mind
 				for(var/datum/contract/contract in antagonist.active_contracts)
 					. += "<table><tr>"
 					. += "<th width=70%>[contract.informal_name]</th>"
-					. += "<td><a href='byond://?src=\ref[src];contract_command=fail';contract=\ref[contract]>Fail</a></td>"
-					. += "<td><a href='byond://?src=\ref[src];contract_command=complete';contract=\ref[contract]>Complete</a></td>"
+					. += "<td><a href='byond://?src=\ref[src];command_contract=fail';contract=\ref[contract]>Fail</a></td>"
+					. += "<td><a href='byond://?src=\ref[src];command_contract=complete';contract=\ref[contract]>Complete</a></td>"
 					. += "</tr></table>"
 			else
 				. += "<table><tr><td>No active contracts</td></tr></table>"
@@ -217,9 +217,9 @@ datum/mind
 
 		// LOYALTY IMPLANTS
 		if(H.is_loyalty_implanted(H))
-			. += "<td>Implanted | <a href='byond://?src=\ref[src];old_command=remove_implant'>Not implanted</a></td>"
+			. += "<td>Implanted | <a href='byond://?src=\ref[src];command_old=remove_implant'>Not implanted</a></td>"
 		else
-			. += "<td><a href='byond://?src=\ref[src];old_command=give_implant'>Implanted</a> | Not implanted</td>"
+			. += "<td><a href='byond://?src=\ref[src];command_old=give_implant'>Implanted</a> | Not implanted</td>"
 
 		. += "</tr></table>"
 		. += "</td></tr>"
@@ -234,11 +234,11 @@ datum/mind
 
 		// REVOLUTIONARY
 		if(src in ticker.mode.head_revolutionaries)
-			. += "<td><a href='byond://?src=\ref[src];old_antag=rev_employee'>Employee</a> | <a href='byond://?src=\ref[src];old_command=rev_rev'>Rev</a> | Head Rev</td>"
+			. += "<td><a href='byond://?src=\ref[src];command_old=rev_employee'>Employee</a> | <a href='byond://?src=\ref[src];command_old=rev_rev'>Rev</a> | Head Rev</td>"
 		else if(src in ticker.mode.revolutionaries)
-			. += "<td><a href='byond://?src=\ref[src];old_antag=rev_employee'>Employee</a> | Rev | <a href='byond://?src=\ref[src];old_command=rev_head'>Head Rev</a></td>"
+			. += "<td><a href='byond://?src=\ref[src];command_old=rev_employee'>Employee</a> | Rev | <a href='byond://?src=\ref[src];command_old=rev_head'>Head Rev</a></td>"
 		else
-			. += "<td>Employee | <a href='byond://?src=\ref[src];old_command=rev_rev'>Rev</a> | <a href='byond://?src=\ref[src];old_command=rev_head'>Head Rev</a></td>"
+			. += "<td>Employee | <a href='byond://?src=\ref[src];command_old=rev_rev'>Rev</a> | <a href='byond://?src=\ref[src];command_old=rev_head'>Head Rev</a></td>"
 
 		. += "</tr>"
 		. += "<tr>"
@@ -246,9 +246,9 @@ datum/mind
 
 		// CULTIST
 		if(src in ticker.mode.cult)
-			. += "<td><a href='byond://?src=\ref[src];old_command=cult_employee'>Employee</a> | Cultist | <a href='byond://?src=\ref[src];old_command=cult_tome'>Give tome</a></td>"
+			. += "<td><a href='byond://?src=\ref[src];command_old=cult_employee'>Employee</a> | Cultist | <a href='byond://?src=\ref[src];command_old=cult_tome'>Give tome</a></td>"
 		else
-			. += "<td>Employee | <a href='byond://?src=\ref[src];old_command=cult_cultist'>Cultist</a></td>"
+			. += "<td>Employee | <a href='byond://?src=\ref[src];command_old=cult_cultist'>Cultist</a></td>"
 
 		. += "</tr>"
 		. += "<tr>"
@@ -256,9 +256,9 @@ datum/mind
 
 		// CHANGELING
 		if(src in ticker.mode.changelings)
-			. += "<td><a href='byond://?src=\ref[src];old_command=ling_employee'>Employee</a> | Changeling</td>"
+			. += "<td><a href='byond://?src=\ref[src];command_old=ling_employee'>Employee</a> | Changeling</td>"
 		else
-			. += "<td>Employee | <a href='byond://?src=\ref[src];old_command=ling_changeling'>Changeling</a></td>"
+			. += "<td>Employee | <a href='byond://?src=\ref[src];command_old=ling_changeling'>Changeling</a></td>"
 
 		. += "</tr></table>"
 		. += "</td></tr>"
@@ -272,7 +272,7 @@ datum/mind
 
 		. += "<tr><td><table>"
 		. += "<tr><td>Commands</td></tr>"
-		. += "<tr><td><a href='byond://?src=\ref[src];obj_command=add'>Add objective</a> | <a href='byond://?src=\ref[src];obj_command=announce'>Announce objectives</a></td></tr>"
+		. += "<tr><td><a href='byond://?src=\ref[src];command_objective=add'>Add objective</a> | <a href='byond://?src=\ref[src];command_objective=announce'>Announce objectives</a></td></tr>"
 		. += "</table></td></tr>"
 
 		. += "<tr><td><hr></td></tr>"
@@ -286,7 +286,7 @@ datum/mind
 			for(var/datum/objective/objective in objectives)
 				. += "<table><tr>"
 				. += "<td width=60%>[objective.explanation_text]</td>"
-				. += "<td> <a href='byond://?src=\ref[src];obj_command=edit';objective='\ref[objective]'>Edit</a> | <a href='byond://?src=\ref[src];obj_command=delete';objective=\ref[objective]>Delete</a> | <a href='byond://?src=\ref[src];obj_command=toggle_completion';objective=\ref[objective]><font color=[objective.completed ? "blue" : "yellow"]>Toggle completion</font></a></td>"
+				. += "<td> <a href='byond://?src=\ref[src];command_objective=edit';objective='\ref[objective]'>Edit</a> | <a href='byond://?src=\ref[src];command_objective=delete';objective=\ref[objective]>Delete</a> | <a href='byond://?src=\ref[src];command_objective=toggle_completion';objective=\ref[objective]><font color=[objective.completed ? "blue" : "yellow"]>Toggle completion</font></a></td>"
 				. += "</tr></table>"
 		else
 			. += "<table><tr><td>No objectives</td></tr></table>"
@@ -299,7 +299,7 @@ datum/mind
 		// END OBJECTIVES PANEL //
 			
 		memory_browser.set_user( usr )
-		memory_browser.set_content( . )
+		memory_browser.set_content( replacetext( ., "\improper", "" ) )
 		memory_browser.open()
 
 
@@ -313,18 +313,22 @@ datum/mind
 			if( !current )	return
 			switch( href_list["command"] )
 				if( "antag_type" ) // Change antagonist type
-					var/new_type = input("Select new antagonist type", "Antagonist type edit", "[antagonist.type ? "[antagonist.type]" : ""]") in (subtypes(/datum/antagonist) + list("De-antag"))
+					var/new_type = input("Select new antagonist type", "Antagonist type edit", "[antagonist ? "[antagonist.type]" : ""]") in (subtypes(/datum/antagonist) + list("De-antag"))
 					if( !new_type || alert("Are you sure you want to make [current.name] a [new_type] antagonist? This may remove contracts/faction, etc.",,"Yes","No")=="No" )
 						return
 
-					var/datum/faction/faction = antagonist.faction // save this
-					current << "<b><font size=3 color=red>You are no longer a [antagonist.name]!</font></b>"
-					qdel(antagonist)
+					var/datum/faction/fact = faction_controller.get_syndie_faction(src)
+					if( antagonist )
+						fact = antagonist.faction // save this
+						current << "<b><font size=3 color=red>You are no longer a [antagonist.name]!</font></b>"
+						qdel(antagonist)
 
-					if(new_type == "De-antag")	return
+					if(new_type == "De-antag")
+						message_admins("[usr] has removed [current.name]'s antagonist status")
+						return
 
 					antagonist = new new_type(src)
-					antagonist.faction = faction
+					antagonist.faction = fact
 					antagonist.setup()
 
 					message_admins("[usr] has made [current.name] ([key]) an antagonist of type [new_type]")
@@ -340,15 +344,19 @@ datum/mind
 
 					var/datum/faction/faction = faction_controller.get_faction(new_faction)
 					if( faction )
+						current << "<b><font size=3 color=red></font>You no longer work for [antagonist.faction.name]</b>"
+
 						antagonist.active_contracts.Cut()
 						antagonist.faction = faction
 
+						current << "<b><font size=3 color=red>You are now an agent of [faction.name]</font></b>"
 						message_admins("[usr] has set [original_character.name]'s ([key]) faction to [faction.name]")
 
 				if( "edit_notoriety" ) // Edit the amount of notoriety a character has (FOR THE ORIGINAL CHARACTER TOO!)
 					var/datum/character/char = (isnull(original_character) ? character : original_character)
 
 					var/new_notoriety = input("New notoriety amount", "Notoriety edit", char.antag_data["notoriety"]) as num|null
+					antagonist.notoriety = new_notoriety
 
 					character.antag_data["notoriety"] = new_notoriety
 					if( original_character )
@@ -438,7 +446,6 @@ datum/mind
 					current << "<span class='notice'>You have been awarded an antagonist token!</span>"
 
 		// DEBUG COMMANDS
-
 		if( href_list["command_debug"] )
 			switch( href_list["command_debug"] )
 				if("equip") // Calls equip()
@@ -464,10 +471,12 @@ datum/mind
 					current << "<span class='notice'>You are now <B>[progress * 100]%</B> on the way to your next antagonist token.</span>"
 
 		// CONTRACT COMMANDS
-		if( href_list["contract_command"] )
+		if( href_list["command_contract"] )
+			world << "[href_list["contract"]]"
 			var/datum/contract/contract = locate(href_list["contract"]) in antagonist.faction.contracts
+			world << "[contract.title]"
 			if( !contract )	return
-			switch( href_list["contract_command"] )
+			switch( href_list["command_contract"] )
 				if( "fail" ) // Fails the contract immediately
 					if( !current )	return
 					if( contract.workers.len > 1 )
@@ -485,14 +494,15 @@ datum/mind
 					contract.end(1, current)
 
 		// OBJECTIVE STUFF & COMMANDS
-		if( href_list["obj_command"] )
+		if( href_list["command_objective"] )
 			var/datum/objective/objective = locate(href_list["objective"])
+			world << "objective:: [objective]"
 			if( !objective )	return
 			var/def_value = copytext("[objective.type]", 19)
 			if( !def_value )
 				def_value = "custom"
 
-			switch( href_list["obj_command"] )
+			switch( href_list["command_objective"] )
 				if( "edit" ) // Edit the objective
 					var/objective_pos = objectives.Find(objective)
 
@@ -590,11 +600,11 @@ datum/mind
 		// OLD ANTAG SYSTEM STUFF
 		// This stuff can be removed as stuff is ported to the new antagonist system
 
-		if( href_list["old_command"] )
+		if( href_list["command_old"] )
 			var/mob/living/carbon/human/H = current
 			if( !H || !istype(H) )	return
 
-			switch( href_list["old_command"] )
+			switch( href_list["command_old"] )
 				// LOYALTY IMPLANT
 
 				if( "remove_implant" ) // Remove loyalty implant
@@ -635,6 +645,7 @@ datum/mind
 						antagonist = null
 						current << "<span class='alert'><FONT size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a traitor to Nanotrasen.  Have a nice day!</B></FONT></span>"
 						log_admin("[key_name_admin(usr)] has de-traitor'ed [current].")
+						message_admins("[key_name_admin(usr)] has de-traitor'ed [current].")
 					H.hud_updateflag |= (1 << IMPLOYAL_HUD)   // updates that players HUD images so secHUD's pick up they are implanted or not.
 
 				// REVOLUTIONARY
@@ -668,6 +679,7 @@ datum/mind
 					ticker.mode.update_rev_icons_added(src)
 					special_role = "Revolutionary"
 					log_admin("[key_name(usr)] has rev'ed [current].")
+					message_admins("[key_name(usr)] has rev'ed [current].")
 
 				if( "rev_head" )
 					if(src in ticker.mode.revolutionaries)
@@ -696,6 +708,7 @@ datum/mind
 					ticker.mode.update_rev_icons_added(src)
 					special_role = "Head Revolutionary"
 					log_admin("[key_name_admin(usr)] has head-rev'ed [current].")
+					message_admins("[key_name_admin(usr)] has head-rev'ed [current].")
 
 				// CULT
 
@@ -711,6 +724,7 @@ datum/mind
 						current << "<span class='alert'><FONT size = 3><B>You have been brainwashed! You are no longer a cultist!</B></FONT></span>"
 						memory = ""
 						log_admin("[key_name_admin(usr)] has de-cult'ed [current].")
+						message_admins("[key_name_admin(usr)] has de-cult'ed [current].")
 
 				if( "cult_cultist" )
 					if(!(src in ticker.mode.cult))
@@ -726,6 +740,7 @@ datum/mind
 								cult.memorize_cult_objectives(src)
 						show_objectives(src)
 						log_admin("[key_name_admin(usr)] has cult'ed [current].")
+						message_admins("[key_name_admin(usr)] has cult'ed [current].")
 
 				if( "cult_tome" )
 					var/obj/item/weapon/book/tome/T = new(H)
@@ -740,6 +755,8 @@ datum/mind
 					var/where = H.equip_in_one_of_slots(T, slots)
 					if (!where)
 						usr << "<span class='alert'>Spawning tome failed!</span>"
+					else
+						usr << "<span class='notice'>Spawned tome successfully!</span>"
 
 				// CHANGELING
 
@@ -752,6 +769,7 @@ datum/mind
 						if(changeling)	qdel(changeling)
 						current << "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</B></FONT>"
 						log_admin("[key_name_admin(usr)] has de-changeling'ed [current].")
+						message_admins("[key_name_admin(usr)] has de-changeling'ed [current].")
 
 				if( "ling_changeling" )
 					if(!(src in ticker.mode.changelings))
@@ -762,6 +780,8 @@ datum/mind
 						current << "<h3><B>Make sure to read the rules about ganking and be sure to make the round interesting for everyone!</B></h3>"
 						show_objectives(src)
 						log_admin("[key_name_admin(usr)] has changeling'ed [current].")
+						message_admins("[key_name_admin(usr)] has changeling'ed [current].")
+
 		edit_memory()
 
 /*

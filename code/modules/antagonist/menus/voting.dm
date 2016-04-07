@@ -42,7 +42,7 @@
 	. += "</body></html>"
 
 	menu.set_user( user )
-	menu.set_content( replacetext( ., "\improper", ""))
+	menu.set_content( replacetext( ., "\improper", "" ))
 	menu.open()
 
 /datum/controller/gameticker/Topic(href, href_list)

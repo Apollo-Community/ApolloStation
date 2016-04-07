@@ -73,7 +73,7 @@
 		return 0
 
 	for(var/i = 0; i < obligatory_contracts; i++)
-		var/datum/contract/C = pick(faction.contracts)
+		var/datum/contract/C = pick(candidates)
 		C.start(antag.current)
 		candidates -= C
 

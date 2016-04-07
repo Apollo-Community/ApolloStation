@@ -38,6 +38,8 @@
 		var/list/datum/uplink_item/items = ticker.mode.uplink_items.Copy()
 		if(antag.faction.equipment.len > 0)
 			items["[antag.faction.name] Equipment"] = antag.faction.equipment
+		
+
 		for(var/category in items)
 			. += "<h3><span class='white'>[category]</span></h3>"
 			. += "<table><center>"

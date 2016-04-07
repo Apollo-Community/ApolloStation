@@ -84,8 +84,8 @@
 
 	. += "</body></html>"
 
-	menu.set_user(user)
-	menu.set_content(.)
+	menu.set_user( user )
+	menu.set_content( replacetext( ., "\improper", "" ))
 	menu.open()
 
 /obj/item/device/uplink/proc/contract_topic(href, href_list, var/mob/user)
