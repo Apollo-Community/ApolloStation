@@ -36,11 +36,11 @@
 	var/list/variables = list()
 
 	variables["ckey"] = ckey( ckey )
-	variables["name"] = sql_sanitize_text( name )
-	variables["gender"] = sql_sanitize_text( gender )
+	variables["name"] = html_encode( sql_sanitize_text( name ))
+	variables["gender"] = html_encode( sql_sanitize_text( gender ))
 	variables["birth_date"] = html_encode( list2params( birth_date ))
-	variables["spawnpoint"] = sql_sanitize_text( spawnpoint )
-	variables["blood_type"] = sql_sanitize_text( blood_type )
+	variables["spawnpoint"] = html_encode( sql_sanitize_text( spawnpoint ))
+	variables["blood_type"] = html_encode( sql_sanitize_text( blood_type ))
 
 	// Default clothing
 
@@ -55,8 +55,8 @@
 	variables["backpack"] = sanitize_integer( backpack, 1, backpacklist.len, initial(backpack))
 
 	// Cosmetic features
-	variables["hair_style"] = sql_sanitize_text( hair_style )
-	variables["hair_face_style"] = sql_sanitize_text( hair_face_style )
+	variables["hair_style"] = html_encode( sql_sanitize_text( hair_style ))
+	variables["hair_face_style"] = html_encode( sql_sanitize_text( hair_face_style ))
 	variables["hair_color"] = sanitize_hexcolor( hair_color )
 	variables["hair_face_color"] = sanitize_hexcolor( hair_face_color )
 
@@ -66,21 +66,21 @@
 	variables["eye_color"] = sanitize_hexcolor( eye_color )
 
 	// Character species
-	variables["species"] = sql_sanitize_text( species )
+	variables["species"] = html_encode( sql_sanitize_text( species ))
 
 	// Secondary language
 	var/datum/language/L = additional_language
 	if( istype( L ))
-		variables["additional_language"] = sql_sanitize_text( L.name )
+		variables["additional_language"] = html_encode( sql_sanitize_text( L.name ))
 
 	// Custom spawn gear
 	variables["gear"] = html_encode( list2params( gear ))
 
 	// Some faction information.
-	variables["home_system"] = sql_sanitize_text( home_system )
-	variables["citizenship"] = sql_sanitize_text( citizenship )
-	variables["faction"] = sql_sanitize_text( faction )
-	variables["religion"] = sql_sanitize_text( religion )
+	variables["home_system"] = html_encode( sql_sanitize_text( home_system ))
+	variables["citizenship"] = html_encode( sql_sanitize_text( citizenship ))
+	variables["faction"] = html_encode( sql_sanitize_text( faction ))
+	variables["religion"] = html_encode( sql_sanitize_text( religion ))
 
 	// Jobs, uses bitflags
 	variables["department"] = sanitize_integer( department.department_id, 0, 255, 0 )
@@ -100,28 +100,28 @@
 	variables["player_alt_titles"] = html_encode( list2params( player_alt_titles ))
 
 	// Flavor texts
-	variables["flavor_texts_human"] = sql_sanitize_text( flavor_texts_human )
-	variables["flavor_texts_robot"] = sql_sanitize_text( flavor_texts_robot )
+	variables["flavor_texts_human"] = html_encode( sql_sanitize_text( flavor_texts_human ))
+	variables["flavor_texts_robot"] = html_encode( sql_sanitize_text( flavor_texts_robot ))
 
 	// Character records, these are written by the player
-	variables["med_record"] = sql_sanitize_text( med_record )
-	variables["sec_record"] = sql_sanitize_text( sec_record )
-	variables["gen_record"] = sql_sanitize_text( gen_record )
-	variables["exploit_record"] = sql_sanitize_text( exploit_record )
+	variables["med_record"] = html_encode( sql_sanitize_text( med_record ))
+	variables["sec_record"] = html_encode( sql_sanitize_text( sec_record ))
+	variables["gen_record"] = html_encode( sql_sanitize_text( gen_record ))
+	variables["exploit_record"] = html_encode( sql_sanitize_text( exploit_record ))
 
 	// Relation to NanoTrasen
-	variables["nanotrasen_relation"] = sql_sanitize_text( nanotrasen_relation )
+	variables["nanotrasen_relation"] = html_encode( sql_sanitize_text( nanotrasen_relation ))
 
 	// Character disabilities
 	variables["disabilities"] = sanitize_integer( disabilities, 0, BITFLAGS_MAX, 0 )
 
 	// Location of traitor uplink
-	variables["uplink_location"] = sql_sanitize_text( uplink_location )
+	variables["uplink_location"] = html_encode( sql_sanitize_text( uplink_location ))
 
 	// Unique identifiers
-	variables["fingerprints"] = sql_sanitize_text( fingerprints )
-	variables["DNA"] = sql_sanitize_text( DNA )
-	variables["unique_identifier"] = sql_sanitize_text( unique_identifier )
+	variables["fingerprints"] = html_encode( sql_sanitize_text( fingerprints ))
+	variables["DNA"] = html_encode( sql_sanitize_text( DNA ))
+	variables["unique_identifier"] = html_encode( sql_sanitize_text( unique_identifier ))
 
 	var/list/names = list()
 	var/list/values = list()
@@ -192,7 +192,7 @@
 		return 0
 
 	var/sql_ckey = ckey( ckey )
-	var/sql_character_name = sql_sanitize_text( character_name )
+	var/sql_character_name = html_encode( character_name )
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM characters WHERE ckey = '[sql_ckey]' AND name = '[sql_character_name]'")
 	if( !query.Execute() )
@@ -212,7 +212,7 @@
 	if(!isnum(sql_id))
 		return 0
 
-	return 1
+	return sql_id
 
 /datum/character/proc/loadCharacter( var/character_name )
 	if( !ckey )
@@ -308,7 +308,7 @@
 
 	var/query_names = list2text( variables, "," )
 	var/sql_ckey = ckey( ckey )
-	var/sql_character_name = sql_sanitize_text( character_name )
+	var/sql_character_name = html_encode( sql_sanitize_text( character_name ))
 
 	new_character = 0 // If we're loading from the database, we're obviously a pre-existing character
 	temporary = 0
@@ -325,7 +325,7 @@
 
 		switch( variables[variables[i]] )
 			if( "text" )
-				value = sanitize_text( value, "ERROR" )
+				value = html_decode( sanitize_text( value, "ERROR" ))
 			if( "number" )
 				value = text2num( value )
 			if( "params" )

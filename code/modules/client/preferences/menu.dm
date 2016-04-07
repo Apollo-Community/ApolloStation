@@ -234,10 +234,11 @@
 
 		while( query.NextRow() )
 			. += "<tr>"
-			if( selected_character && selected_character.name == query.item[1] )
+			var/name = query.item[1]
+			if( selected_character && selected_character.name == name )
 				. += "<td><b>[query.item[1]]</b> - Selected</td>"
 			else
-				. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=choose;name=[query.item[1]]'>[query.item[1]]</a></td>"
+				. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=choose;name=[name]'>[name]</a></td>"
 
 			. += "<td>[capitalize( query.item[2] )]</td>"
 			. += "<td style='text-align:right'>[print_date( params2list( html_decode( query.item[3] )))]</td>"
