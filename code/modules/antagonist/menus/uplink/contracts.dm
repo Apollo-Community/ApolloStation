@@ -7,20 +7,20 @@
 
 	. += "<html><head>"
 	. += {"<style>
-		body{
-			background-color: #8f1414;
-			background-image: url('uiBackground-Syndicate.png');
-			background-position: 50% 0;
-			background-repeat: repeat-x;
-		}
+			body{
+				background-color: #8f1414;
+				background-image: url('uiBackground-Syndicate.png');
+				background-position: 50% 0;
+				background-repeat: repeat-x;
+			}
 
-		.white{
-			color: #ffffff;
-		}
+			.white{
+				color: #ffffff;
+			}
 
-		.red{
-			color: #9f2828;
-		}
+			.red{
+				color: #9f2828;
+			}
 		</style>"}
 	. += "</head><body><center>"
 
@@ -66,17 +66,13 @@
 			. += "<h2><span class='white'>Available Contracts</span></h2>"
 			. += "<table><center>"
 			for(var/datum/contract/C in available_contracts)
-				. += "<tr><table class='outline'>"
-				. += "<th width=20%>[C.title]</th>"
-				. += "<td width=40%><i>[C.desc]</i></td>"
-				. += "<td width=20%>Expires: [worldtime2text(C.contract_start + C.time_limit)]</td>"
-				. += "<th width=20%>"
 				if(C.can_accept(user))
-					. += "<a href='byond://?src=\ref[src];tgroup=[tgroup];task=accept_contract\ref[C]'>Accept Contract</a>"
-				else
-					. += "<i class='red'>Cannot Accept</i>"
-				. += "</th>"
-				. += "</table></tr>"
+					. += "<tr><table class='outline'>"
+					. += "<th width=20%>[C.title]</th>"
+					. += "<td width=40%><i>[C.desc]</i></td>"
+					. += "<td width=20%>Expires: [worldtime2text(C.contract_start + C.time_limit)]</td>"
+					. += "<th width=20%><a href='byond://?src=\ref[src];tgroup=[tgroup];task=accept_contract\ref[C]'>Accept Contract</a></th>"
+					. += "</table></tr>"
 			. += "</center></table>"
 		else
 			. += "<center><h2><span class='white'>No Available Contracts</span></h2></center>"
