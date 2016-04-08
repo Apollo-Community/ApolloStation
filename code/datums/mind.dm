@@ -435,6 +435,16 @@ datum/mind
 					U.buy_topic( "", list( "task" = "random" ), current, 1 )
 
 				if( "buy_random_faction" ) // Forces the antagonist to buy a random faction item from the uplink
+					var/obj/item/device/pda/P = locate() in current.contents
+					var/obj/item/device/uplink/U = P.hidden_uplink
+					if( !U )	return
+
+					if( !U.ItemsCategory["[antagonist.faction.name] Equipment"] )
+						usr << "<span class='notice'>[current.name] belongs to a faction that has no faction-specific equipment!</span>"
+						return
+
+					var/datum/uplink_item/UI = pick(U.ItemsCategory["[antagonist.faction.name] Equipment"])
+					U.buy_topic( "", list( "task" = "\ref[UI]" ), current, 1 )
 
 				if( "randomize_char" ) // Randomizes the antagonist character
 					antagonist.randomize_character()
