@@ -344,13 +344,23 @@ datum/mind
 
 					var/datum/faction/faction = faction_controller.get_faction(new_faction)
 					if( faction )
+						var/obj/item/device/pda/P = locate() in current.contents
+						var/obj/item/device/uplink/U = P.hidden_uplink
 						current << "<b><font size=3 color=red></font>You no longer work for [antagonist.faction.name]</b>"
+
+						if( U )
+							if( U.ItemsCategory["[antagonist.faction.name] Equipment"] )
+								U.ItemsCategory.Cut()
+								U.ItemsCategory = ticker.mode.uplink_items
+								var/datum/nano_item_lists/IL = U.generate_item_lists()
+								U.nanoui_items = IL.items_nano
+								U.ItemsReference = IL.items_reference
 
 						antagonist.active_contracts.Cut()
 						antagonist.faction = faction
 
 						current << "<b><font size=3 color=red>You are now an agent of [faction.name]</font></b>"
-						message_admins("[usr] has set [original_character.name]'s ([key]) faction to [faction.name]")
+						message_admins("[usr] has set [current.name]'s ([key]) faction to [faction.name]")
 
 				if( "edit_notoriety" ) // Edit the amount of notoriety a character has (FOR THE ORIGINAL CHARACTER TOO!)
 					var/datum/character/char = (isnull(original_character) ? character : original_character)
@@ -362,7 +372,7 @@ datum/mind
 					if( original_character )
 						original_character.antag_data["notoriety"] = new_notoriety
 
-					message_admins("[usr] has set [character.name]'s ([key]) notoriety to [new_notoriety]")
+					message_admins("[usr] has set [current.name]'s ([key]) notoriety to [new_notoriety]")
 
 				// GENERAL COMMANDS
 
@@ -372,31 +382,31 @@ datum/mind
 				if( "random_contract" ) // Assigns the antagonist a random contract from their faction
 					var/list/datum/contract/contracts = antagonist.faction.contracts.Copy()
 					for( var/datum/contract/C in contracts )
-						if( C in antagonist.active_contracts || !C.can_accept(current) )
+						if( C in antagonist.active_contracts || !C.can_accept( current ) )
 							contracts -= C
 
 					var/datum/contract/chosen = pick(contracts)
-					chosen.start(current)
+					chosen.start( current )
 
 					current << "<b><font size=3 color=red>You have been assigned a contract.</font></b>"
 					current << "<B>[chosen.title]</B>\n<I>[chosen.desc]</I>\nYou have until [worldtime2text(chosen.contract_start + chosen.time_limit)], station time to complete the contract."
 
 				if( "custom_contract" ) // Make a custom contract
-					var/datum/contract/custom/custom = new(antagonist.faction)
+					var/datum/contract/custom/custom = new( antagonist.faction )
 
-					custom.title = sanitize(input("Title of the contract", "Custom contract title", ""))
-					custom.desc = sanitize(input("Description of the contract", "Custom contract description", ""))
-					custom.informal_name = sanitize(input("Short description of the contract objective", "Custom contract informal name", ""))
+					custom.title = sanitize( input( "Title of the contract", "Custom contract title", "" ))
+					custom.desc = sanitize( input( "Description of the contract", "Custom contract description", "" ))
+					custom.informal_name = sanitize( input( "Short description of the contract objective", "Custom contract informal name", "" ))
 
-					custom.time_limit = input("Time limit in seconds", "Time limit", "") as num|null
+					custom.time_limit = input( "Time limit in seconds", "Time limit", "" ) as num|null
 					if( custom.time_limit )
 						custom.time_limit *= 10
 						custom.contract_start = world.time
 						if( contract_ticker )
 							contract_ticker.contracts += custom
-					custom.reward = input("Monetary reward in $$$", "Reward", "") as num|null
+					custom.reward = input( "Monetary reward in $$$", "Reward", "" ) as num|null
 
-					custom.start(current)
+					custom.start( current )
 
 					usr << "<span class='notice'>Custom contract created successfully!</span>"
 					current << "<b><font size=3 color=red>You have been assigned a contract.</font></b>"
@@ -412,22 +422,25 @@ datum/mind
 
 					if( !M )	return
 
-					var/cash = input("New balance", "Edit money", "") as num|null
+					var/cash = input( "New balance", "Edit money", "" ) as num|null
 					if( cash )
 						M.money = cash
-						message_admins("[usr] has set [current.name]'s cash to [cash]")
+						message_admins( "[usr] has set [current.name]'s cash to [cash]" )
 
 				if( "buy_random" ) // Forces the antagonist to buy a random item from the uplink
 					var/obj/item/device/pda/P = locate() in current.contents
 					var/obj/item/device/uplink/U = P.hidden_uplink
 					if( !U )	return
 
-					U.buy_topic("", list("task" = "random"), current, 1)
+					U.buy_topic( "", list( "task" = "random" ), current, 1 )
 
 				if( "buy_random_faction" ) // Forces the antagonist to buy a random faction item from the uplink
 
 				if( "randomize_char" ) // Randomizes the antagonist character
 					antagonist.randomize_character()
+
+					character.copy_to( current )
+					current.fully_replace_character_name( current.name, character.name )
 
 				if( "save_char" ) // Saves the antagonist's character. Useful is somebody got attached to their randomized character
 					if( character.saveCharacter() )

@@ -35,15 +35,17 @@
 		. += "<h2><span class='white'>Uplink Market</span></h2>"
 		. += "<h3><span class='white'>Available Funds: $[A.money]</span></h3>"
 
-		var/list/datum/uplink_item/items = ticker.mode.uplink_items.Copy()
-		if(antag.faction.equipment.len > 0)
-			items["[antag.faction.name] Equipment"] = antag.faction.equipment
-		
+		if(!ItemsCategory["[antag.faction.name] Equipment"] && antag.faction.equipment.len)
+			ItemsCategory["[antag.faction.name] Equipment"] = antag.faction.equipment
+			// copypaste cause im tired
+			var/datum/nano_item_lists/IL = generate_item_lists()
+			nanoui_items = IL.items_nano
+			ItemsReference = IL.items_reference
 
-		for(var/category in items)
+		for(var/category in ItemsCategory)
 			. += "<h3><span class='white'>[category]</span></h3>"
 			. += "<table><center>"
-			for(var/datum/uplink_item/I in items[category])
+			for(var/datum/uplink_item/I in ItemsCategory[category])
 				. += "<tr><table class='outline'>"
 				. += "<th width=20%>[I.name]</th>"
 				. += "<td width=40%>$[I.cost]</td>"
