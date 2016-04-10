@@ -695,6 +695,18 @@ area/space/atmosalert()
 	name = "Aft Maintenance"
 	icon_state = "amaint"
 
+/area/maintenance/bridge_pfore
+	name = "Bridge Port Fore Maintenance"
+	icon_state = "amaint"
+
+/area/maintenance/bridge_sfore
+	name = "Bridge Starboard Fore Maintenance"
+	icon_state = "amaint"
+
+/area/maintenance/bridge_aft
+	name = "Bridge Aft Maintenance"
+	icon_state = "amaint"
+
 /area/maintenance/fore
 	name = "Fore Maintenance"
 	icon_state = "fmaint"
@@ -960,6 +972,16 @@ area/space/atmosalert()
 
 /area/bridge
 	name = "\improper Bridge"
+	icon_state = "bridge"
+	environment = STONEROOM
+
+/area/bridge/bridgedorm
+	name = "\improper Bridge Dormitory"
+	icon_state = "bridge"
+	environment = STONEROOM
+
+/area/bridge/bridgemed
+	name = "\improper Bridge Medical"
 	icon_state = "bridge"
 	environment = STONEROOM
 
@@ -1683,6 +1705,11 @@ area/space/atmosalert()
 /area/rnd/research
 	name = "\improper Research and Development"
 	icon_state = "research"
+
+/area/rnd/researchbreak
+	name = "\improper Research Break Room"
+	icon_state = "research"
+
 
 /area/rnd/docking
 	name = "\improper Research Dock"
