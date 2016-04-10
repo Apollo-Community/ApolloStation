@@ -131,6 +131,7 @@ datum/design/circuit/borgrecharge
 	name = "cyborg recharging station"
 	id = "borgrecharge"
 	req_tech = list("powerstorage" = 4)
+	build_path = /obj/item/weapon/circuitboard/rechargestation
 
 datum/design/circuit/operating
 	name = "patient monitoring console"
@@ -204,6 +205,12 @@ datum/design/circuit/rcon_console
 	id = "rcon_console"
 	req_tech = list("programming" = 4, "engineering" = 3, "powerstorage" = 5)
 	build_path = /obj/item/weapon/circuitboard/rcon_console
+
+datum/design/circuit/breakerbox
+	name = "breaker box"
+	id = "breakerbox"
+	req_tech = list("Engineering" = 4)
+	build_path = /obj/item/weapon/circuitboard/breakerbox
 
 /* Uncomment if someone makes these buildable
 datum/design/circuit/general_alert
