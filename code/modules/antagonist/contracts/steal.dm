@@ -30,6 +30,8 @@
 		/area/library
 		)
 
+	var/dropoff_time
+
 /datum/contract/steal/New()
 	. = ..()
 	if(!.)	return
@@ -44,23 +46,28 @@
 		qdel(src)
 		return
 
+	dropoff_time = rand(4, 6) * 600 // 4-6 minutes
+
 	set_details()
 
 /datum/contract/steal/set_details()
 	var/obj/O = new target()
+	var/dropoff_interval = (contract_start + time_limit - dropoff_time)
 	title = "Steal \the [O.name]"
-	desc = "We've taken an interest in \the [O.name]. [pick(list("Deliver", "Drop off"))] \the [O.name] to \the [dropoff.name], where one of our agents will retrieve it."
+	desc = "We've taken an interest in \the [O.name]. [pick(list("Deliver", "Drop off"))] \the [O.name] to \the [dropoff.name], where one of our agents can retrieve it after [worldtime2text(dropoff_interval)]. Nobody can see the target when our agent retrieves it."
 	informal_name = "Steal \the [O.name] and deliver it to \the [dropoff.name]"
 	qdel(O)
 
 // Steal contracts only end unsuccessfully by time expiration
 /datum/contract/steal/check_completion()
 	if(workers.len == 0)	return
+	var/dropoff_interval = (contract_start + time_limit - dropoff_time) // dropoff_time before the contract expires
+	if(world.time < dropoff_interval)	return
 
 	var/obj/O = locate(target) in dropoff
 	var/mob/list/audience = viewers(O)
 	for(var/mob/M in audience)
-		if(!M.mind)	audience -= M // only players matter. mice and the likes can freak out all they like when stuff disappears before their very eyes
+		if(!M.client)	audience -= M // only players matter. mice and the likes can freak out all they like when stuff disappears before their very eyes
 
 	if(O && audience.len == 0)
 		var/mob/living/completer = null
@@ -69,6 +76,7 @@
 				completer = M
 				break
 		end(1, completer)
+		playsound(O.loc, 'sound/effects/pop1.ogg', 80, 1)
 		qdel(O)
 
 /datum/contract/steal/proc/get_taken_targets()
