@@ -1105,6 +1105,21 @@ area/space/atmosalert()
 	icon_state = "bar"
 	environment = QUARRY
 
+/area/crew_quarters/observe
+	name = "\improper Observatory"
+	icon_state = "green"
+	environment = QUARRY
+
+/area/crew_quarters/shop1
+	name = "\improper Shop One"
+	icon_state = "blue"
+	environment = QUARRY
+
+/area/crew_quarters/shop2
+	name = "\improper Shop Two"
+	icon_state = "yellow"
+	environment = QUARRY
+
 /area/basement/civilian/hallway
 	name = "\improper Civilian Basement Hallway"
 	icon_state = "bar"
@@ -1544,6 +1559,30 @@ area/space/atmosalert()
 
 /area/security/main
 	name = "\improper Security Office"
+	icon_state = "security"
+
+/area/security/evidence
+	name = "\improper Security Processing"
+	icon_state = "security"
+
+/area/security/meeting
+	name = "\improper Conference Room"
+	icon_state = "security"
+
+/area/security/monitor
+	name = "\improper Security Monitoring"
+	icon_state = "security"
+
+/area/security/interrogate
+	name = "\improper Security Interrogation"
+	icon_state = "security"
+
+/area/security/tribunal
+	name = "\improper Tribunal Room"
+	icon_state = "security"
+
+/area/security/breakroom
+	name = "\improper Security BreakRoom"
 	icon_state = "security"
 
 /area/security/lobby
