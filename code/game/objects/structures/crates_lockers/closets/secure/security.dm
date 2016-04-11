@@ -30,6 +30,7 @@
 		new /obj/item/clothing/under/dress/dress_cap(src)
 		new /obj/item/clothing/head/helmet/formalcaptain(src)
 		new /obj/item/clothing/under/captainformal(src)
+		new /obj/item/clothing/tie/holster(src)
 		return
 
 

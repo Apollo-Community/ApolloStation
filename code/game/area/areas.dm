@@ -9,7 +9,7 @@
 	requires_power = 0 				(defaults to 1)
 	music = list( 'sound/music/music.ogg' )
 
-NOTE: there are two lists of areas in the end of this file: centcom and station itself. Please maintain these lists valid. --rastaf0
+NOTE: there are two lists of areas in the end of this file: cerntcom and station itself. Please maintain these lists valid. --rastaf0
 
 */
 
@@ -161,6 +161,11 @@ area/space/atmosalert()
 /area/podbay
 	name = "\improper Podbay"
 	icon_state = "yellow"
+	environment = SEWER_PIPE
+
+/area/podbay/hangar
+	name = "\improper Hangar A"
+	icon_state = "blue"
 	environment = SEWER_PIPE
 
 /area/shuttle/arrival
@@ -690,6 +695,18 @@ area/space/atmosalert()
 	name = "Aft Maintenance"
 	icon_state = "amaint"
 
+/area/maintenance/bridge_pfore
+	name = "Bridge Port Fore Maintenance"
+	icon_state = "amaint"
+
+/area/maintenance/bridge_sfore
+	name = "Bridge Starboard Fore Maintenance"
+	icon_state = "amaint"
+
+/area/maintenance/bridge_aft
+	name = "Bridge Aft Maintenance"
+	icon_state = "amaint"
+
 /area/maintenance/fore
 	name = "Fore Maintenance"
 	icon_state = "fmaint"
@@ -701,6 +718,15 @@ area/space/atmosalert()
 /area/maintenance/port
 	name = "Port Maintenance"
 	icon_state = "pmaint"
+
+/area/maintenance/portdorm
+	name = "Port Dormitory Maintenance"
+	icon_state = "pmaint"
+
+/area/maintenance/portkitchen
+	name = "Port Kitchen Maintenance"
+	icon_state = "pmaint"
+
 
 /area/maintenance/atmos_control
 	name = "Atmospherics Maintenance"
@@ -848,6 +874,9 @@ area/space/atmosalert()
 /area/maintenance/substation/civilian_west // Cargo, PTS, locker room, probably arrivals, ...)
 	name = "Civilian West Substation"
 
+/area/maintenance/substation/hangar // Hangar, Pods, Departures, ....)
+	name = "Hangar Substation"
+
 /area/maintenance/substation/command // AI and central cluster. This one will be between HoP office and meeting room (probably).
 	name = "Command Substation"
 
@@ -871,6 +900,14 @@ area/space/atmosalert()
 	name = "\improper Starboard Primary Hallway"
 	icon_state = "hallS"
 
+/area/hallway/primary/fore_starboard
+	name = "\improper Fore Starboard Primary Hallway"
+	icon_state = "hallS"
+
+/area/hallway/primary/aft_starboard
+	name = "\improper Port Starboard Primary Hallway"
+	icon_state = "hallS"
+
 /area/hallway/primary/aft
 	name = "\improper Aft Primary Hallway"
 	icon_state = "hallA"
@@ -878,6 +915,22 @@ area/space/atmosalert()
 /area/hallway/primary/port
 	name = "\improper Port Primary Hallway"
 	icon_state = "hallP"
+
+/area/hallway/primary/fore_port
+	name = "\improper Fore Port Primary Hallway"
+	icon_state = "hallP"
+
+/area/hallway/primary/aft_port
+	name = "\improper Aft Port Primary Hallway"
+	icon_state = "hallP"
+
+/area/hallway/primary/central_fore
+	name = "\improper Fore Central Primary Hallway"
+	icon_state = "hallC1"
+
+/area/hallway/primary/central_aft
+	name = "\improper Fore Central Primary Hallway"
+	icon_state = "hallC2"
 
 /area/hallway/primary/central_one
 	name = "\improper Central Primary Hallway"
@@ -919,6 +972,16 @@ area/space/atmosalert()
 
 /area/bridge
 	name = "\improper Bridge"
+	icon_state = "bridge"
+	environment = STONEROOM
+
+/area/bridge/bridgedorm
+	name = "\improper Bridge Dormitory"
+	icon_state = "bridge"
+	environment = STONEROOM
+
+/area/bridge/bridgemed
+	name = "\improper Bridge Medical"
 	icon_state = "bridge"
 	environment = STONEROOM
 
@@ -1040,6 +1103,21 @@ area/space/atmosalert()
 /area/crew_quarters/diner
 	name = "\improper Diner"
 	icon_state = "bar"
+	environment = QUARRY
+
+/area/crew_quarters/observe
+	name = "\improper Observatory"
+	icon_state = "green"
+	environment = QUARRY
+
+/area/crew_quarters/shop1
+	name = "\improper Shop One"
+	icon_state = "blue"
+	environment = QUARRY
+
+/area/crew_quarters/shop2
+	name = "\improper Shop Two"
+	icon_state = "yellow"
 	environment = QUARRY
 
 /area/basement/civilian/hallway
@@ -1483,6 +1561,30 @@ area/space/atmosalert()
 	name = "\improper Security Office"
 	icon_state = "security"
 
+/area/security/evidence
+	name = "\improper Security Processing"
+	icon_state = "security"
+
+/area/security/meeting
+	name = "\improper Conference Room"
+	icon_state = "security"
+
+/area/security/monitor
+	name = "\improper Security Monitoring"
+	icon_state = "security"
+
+/area/security/interrogate
+	name = "\improper Security Interrogation"
+	icon_state = "security"
+
+/area/security/tribunal
+	name = "\improper Tribunal Room"
+	icon_state = "security"
+
+/area/security/breakroom
+	name = "\improper Security BreakRoom"
+	icon_state = "security"
+
 /area/security/lobby
 	name = "\improper Security lobby"
 	icon_state = "security"
@@ -1642,6 +1744,11 @@ area/space/atmosalert()
 /area/rnd/research
 	name = "\improper Research and Development"
 	icon_state = "research"
+
+/area/rnd/researchbreak
+	name = "\improper Research Break Room"
+	icon_state = "research"
+
 
 /area/rnd/docking
 	name = "\improper Research Dock"
@@ -2373,6 +2480,82 @@ area/space/atmosalert()
 	icon_state = "south"
 	requires_power = 0
 
+//////////////////SHIPS////////////////////////////////////////
+/area/monarch
+	name = "\improper Monarch"
+	icon_state = "storage"
+	environment = PLAIN
+
+/area/cake/tradeship/aft
+ name = "Trade Ship Aft"
+ icon_state = "red"
+ requires_power = 0
+
+/area/cake/tradeship/central
+ name = "Trade Ship Central"
+ icon_state = "yellow"
+ requires_power = 0
+
+/area/cake/tradeship/office
+ name = "Trade Ship Offices"
+ icon_state = "green"
+ requires_power = 0
+
+/area/cake/tradeship/kitchen
+ name = "Trade Ship Kitchen"
+ icon_state = "blue"
+ requires_power = 0
+
+/area/cake/tradeship/breakroom
+ name = "Trade Ship Break Room"
+ icon_state = "green"
+ requires_power = 0
+
+/area/cake/tradeship/bridge
+ name = "Trade Ship Bridge"
+ icon_state = "red"
+ requires_power = 0
+
+/area/cake/monarch/ship
+ name = "Monarch"
+ icon_state = "red"
+ requires_power = 0
+
+ /area/ballshuttle
+	name = "\improper abandoned shuttle"
+	icon_state = "south"
+
+/area/relief_ship
+	name = "\improper Relief Ship"
+	icon_state = "south"
+
+/area/relief_ship/cryo
+	name = "\improper Cryogenics"
+	icon_state = "cryo"
+
+/area/relief_ship/engine
+	name = "\improper Engine Room"
+	icon_state = "hallA"
+
+/area/relief_ship/morgue
+	name = "\improper Morgue"
+	icon_state = "hallP"
+
+/area/relief_ship/virology
+	name = "\improper Virology"
+	icon_state = "hallS"
+
+/area/relief_ship/chemistry
+	name = "\improper Chemistry"
+	icon_state = "green"
+
+/area/relief_ship/surgery
+	name = "\improper Surgery"
+	icon_state = "yellow"
+
+/area/relief_ship/cloning
+	name = "\improper Cloning"
+	icon_state = "research"
 
 
 /////////////////////////////////////////////////////////////////////
