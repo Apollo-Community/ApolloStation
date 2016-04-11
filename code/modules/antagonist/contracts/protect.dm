@@ -3,6 +3,7 @@
 	title = "Protect the Target"
 	desc = "We cannot afford for this dude to die until the contract expires."
 	time_limit = 3600
+	max_contracts = 2
 	max_workers = 1
 	reward = 2000
 	
@@ -62,6 +63,6 @@
 		
 		for(var/datum/contract/kill/C in S.contracts)
 			if(faction.members.len == 1 && (C.target in faction.members))	continue // no protect contracts for yourself as the sole member of a faction
-			if(istype(C) && !(C.target in taken))
+			if(istype(C) && !(C.target in taken) && C.workers.len)
 				candidates += C.target
 	return (candidates.len > 0 ? pick(candidates) : null) // pick(candidates) if candidates isn't empty. null otherwise
