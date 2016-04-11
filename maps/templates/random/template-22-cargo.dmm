@@ -1,27 +1,30 @@
 "a" = (/turf/space,/area/space)
 "b" = (/obj/structure/lattice,/turf/space,/area/space)
-"c" = (/turf/simulated/wall,/area/space)
-"d" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/plating,/area/space)
-"e" = (/turf/simulated/floor/plating/airless{tag = "icon-warnplate (NORTHWEST)"; icon_state = "warnplate"; dir = 9},/area/space)
-"f" = (/turf/simulated/floor/plating/airless{dir = 1; icon_state = "warnplate"},/area/space)
-"g" = (/turf/simulated/floor/plating/airless{tag = "icon-warnplate (NORTHEAST)"; icon_state = "warnplate"; dir = 5},/area/space)
-"h" = (/turf/simulated/floor/plating/airless{tag = "icon-warnplate (WEST)"; icon_state = "warnplate"; dir = 8},/area/space)
-"i" = (/obj/machinery/gravity_generator,/turf/simulated/floor/plating/airless,/area/space)
-"j" = (/turf/simulated/floor/plating/airless{tag = "icon-warnplate (EAST)"; icon_state = "warnplate"; dir = 4},/area/space)
-"k" = (/turf/simulated/floor/plating/airless{tag = "icon-warnplate (SOUTHWEST)"; icon_state = "warnplate"; dir = 10},/area/space)
-"l" = (/turf/simulated/floor/plating/airless{tag = "icon-warnplate"; icon_state = "warnplate"; dir = 2},/area/space)
-"m" = (/turf/simulated/floor/plating/airless{tag = "icon-warnplate (SOUTHEAST)"; icon_state = "warnplate"; dir = 6},/area/space)
-"n" = (/obj/machinery/light/small/firelight{tag = "icon-firelight1 (NORTH)"; icon_state = "firelight1"; dir = 1},/turf/space,/area/space)
+"c" = (/obj/item/weapon/spacecash/c50,/turf/space,/area/space)
+"d" = (/obj/item/weapon/spacecash/c10,/turf/space,/area/space)
+"e" = (/turf/simulated/wall,/area/space)
+"f" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/plating,/area/space)
+"g" = (/turf/simulated/floor/plating/airless{tag = "icon-warnplate (NORTHWEST)"; icon_state = "warnplate"; dir = 9},/area/space)
+"h" = (/turf/simulated/floor/plating/airless{dir = 1; icon_state = "warnplate"},/area/space)
+"i" = (/obj/structure/safe,/obj/item/weapon/spacecash/c100,/obj/item/weapon/spacecash/c100,/obj/item/weapon/spacecash/c50,/obj/item/weapon/spacecash/c50,/obj/item/weapon/spacecash/c50,/obj/item/weapon/spacecash/c50,/obj/item/weapon/spacecash/c20,/obj/item/weapon/spacecash/c20,/obj/item/weapon/spacecash/c20,/obj/item/weapon/spacecash/c20,/obj/item/weapon/spacecash/c20,/turf/simulated/floor/plating/airless{tag = "icon-warnplate (NORTHEAST)"; icon_state = "warnplate"; dir = 5},/area/space)
+"j" = (/turf/simulated/floor/plating/airless{tag = "icon-warnplate (WEST)"; icon_state = "warnplate"; dir = 8},/area/space)
+"k" = (/obj/item/weapon/spacecash/c10,/turf/simulated/floor/plating/airless,/area/space)
+"l" = (/turf/simulated/floor/plating/airless{tag = "icon-warnplate (EAST)"; icon_state = "warnplate"; dir = 4},/area/space)
+"m" = (/turf/simulated/floor/plating/airless{tag = "icon-warnplate (SOUTHWEST)"; icon_state = "warnplate"; dir = 10},/area/space)
+"n" = (/turf/simulated/floor/plating/airless{tag = "icon-warnplate"; icon_state = "warnplate"; dir = 2},/area/space)
+"o" = (/turf/simulated/floor/plating/airless{tag = "icon-warnplate (SOUTHEAST)"; icon_state = "warnplate"; dir = 6},/area/space)
+"p" = (/obj/structure/lattice,/obj/item/weapon/spacecash/c10,/turf/space,/area/space)
+"q" = (/obj/machinery/light/small/firelight{tag = "icon-firelight1 (NORTH)"; icon_state = "firelight1"; dir = 1},/turf/space,/area/space)
 
 (1,1,1) = {"
-abbbaaaaaa
-abbbbaabaa
+abbbcadaaa
+abbbbaabda
 aabaaabbab
 aaaaabbaab
-ccdcaaabab
-cefgbaaaaa
-chijbbaaaa
-cklmbabaaa
-cccccaaaaa
-naaanaaaaa
+eefeadabab
+eghibacaaa
+ejklbbaada
+emnopabaaa
+eeeeeaaaaa
+qaaaqaaaaa
 "}
