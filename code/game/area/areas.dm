@@ -163,6 +163,11 @@ area/space/atmosalert()
 	icon_state = "yellow"
 	environment = SEWER_PIPE
 
+/area/podbay/hangar
+	name = "\improper Hangar"
+	icon_state = "green"
+	environment = SEWER_PIPE
+
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
 
@@ -690,8 +695,29 @@ area/space/atmosalert()
 	name = "Aft Maintenance"
 	icon_state = "amaint"
 
+/area/maintenance/portdorm
+	name = "Dormitory Maintenance"
+	icon_state = "pmaint"
+
+
+/area/maintenance/portkitchen
+	name = "Kitchen Maintenance"
+	icon_state = "amaint"
+
+/area/maintenance/bridge_aft
+	name = "Bridge Aft Maintenance"
+	icon_state = "amaint"
+
 /area/maintenance/fore
 	name = "Fore Maintenance"
+	icon_state = "fmaint"
+
+/area/maintenance/bridge_pfore
+	name = "Bridge Port Maintenance"
+	icon_state = "fmaint"
+
+/area/maintenance/bridge_sfore
+	name = "Bridge Starboard Maintenance"
 	icon_state = "fmaint"
 
 /area/maintenance/starboard
@@ -854,6 +880,9 @@ area/space/atmosalert()
 /area/maintenance/substation/security // Security, Brig, Permabrig, etc.
 	name = "Security Substation"
 
+/area/maintenance/substation/hangar // Hangar, Pod Hangar, Arrivals, Depatures, etc...
+	name = "Hangar Substation"
+
 
 
 
@@ -866,9 +895,20 @@ area/space/atmosalert()
 	name = "\improper Fore Primary Hallway"
 	icon_state = "hallF"
 
+/area/hallway/primary/central_fore
+	name = "\improper Central Fore Primary Hallway"
+	icon_state = "hallF"
 
 /area/hallway/primary/starboard
 	name = "\improper Starboard Primary Hallway"
+	icon_state = "hallS"
+
+/area/hallway/primary/fore_starboard
+	name = "\improper Fore Starboard Primary Hallway"
+	icon_state = "hallS"
+
+/area/hallway/primary/aft_starboard
+	name = "\improper Aft Starboard Primary Hallway"
 	icon_state = "hallS"
 
 /area/hallway/primary/aft
@@ -877,6 +917,14 @@ area/space/atmosalert()
 
 /area/hallway/primary/port
 	name = "\improper Port Primary Hallway"
+	icon_state = "hallP"
+
+/area/hallway/primary/fore_port
+	name = "\improper Fore Port Primary Hallway"
+	icon_state = "hallP"
+
+/area/hallway/primary/aft_port
+	name = "\improper Aft Port Primary Hallway"
 	icon_state = "hallP"
 
 /area/hallway/primary/central_one
@@ -919,6 +967,11 @@ area/space/atmosalert()
 
 /area/bridge
 	name = "\improper Bridge"
+	icon_state = "bridge"
+	environment = STONEROOM
+
+/area/bridge/bridgemed
+	name = "\improper Bridge Medical"
 	icon_state = "bridge"
 	environment = STONEROOM
 
@@ -980,6 +1033,18 @@ area/space/atmosalert()
 	name = "\improper Dormitory Toilets"
 	icon_state = "toilet"
 	environment = BATHROOM
+
+/area/crew_quarters/observe
+	name = "\improper Observatory"
+	icon_state = "green"
+
+/area/crew_quarters/shop1
+	name = "\improper Shop One"
+	icon_state = "red"
+
+/area/crew_quarters/shop2
+	name = "\improper Shop One"
+	icon_state = "yellow"
 
 /area/crew_quarters/sleep
 	name = "\improper Dormitories"
@@ -1483,8 +1548,32 @@ area/space/atmosalert()
 	name = "\improper Security Office"
 	icon_state = "security"
 
+/area/security/breakroom
+	name = "\improper Security Break Room"
+	icon_state = "security"
+
+/area/security/interrogate
+	name = "\improper Security Interrogation"
+	icon_state = "security"
+
+/area/security/meeting
+	name = "\improper Security Meeting Room"
+	icon_state = "security"
+
+/area/security/tribunal
+	name = "\improper Tribunal Hall"
+	icon_state = "security"
+
+/area/security/monitor
+	name = "\improper Security Monitoring"
+	icon_state = "security"
+
 /area/security/lobby
 	name = "\improper Security lobby"
+	icon_state = "security"
+
+/area/security/evidence
+	name = "\improper Security Evidence"
 	icon_state = "security"
 
 /area/security/brig
@@ -1641,6 +1730,10 @@ area/space/atmosalert()
 
 /area/rnd/research
 	name = "\improper Research and Development"
+	icon_state = "research"
+
+/area/rnd/researchbreak
+	name = "\improper Research Break Room"
 	icon_state = "research"
 
 /area/rnd/docking
