@@ -29,7 +29,9 @@ var/global/datum/emergency_shuttle_controller/emergency_shuttle
 		if (world.time >= launch_time)	//time to launch the shuttle
 			stop_launch_countdown()
 
-			if (!shuttle.location)	//leaving from the station
+			if(shuttle.location)	// leaving from centcom
+				faction_controller.kill_contracts() // too late to recall now, the game must end
+			else	//leaving from the station
 				//launch the pods!
 				for (var/datum/shuttle/ferry/escape_pod/pod in escape_pods)
 					if (!pod.arming_controller || pod.arming_controller.armed)
