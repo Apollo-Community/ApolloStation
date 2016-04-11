@@ -125,6 +125,12 @@ var/global/list/world_rodents = list()
 	body_color = "brown"
 	icon_state = "mouse_brown"
 
+
+//Cake's got too much money!!!!!
+/mob/living/simple_animal/rodent/white/cake
+	body_color = "cake"
+	icon_state = "mouse_cake"
+
 //TOM IS ALIVE! SQUEEEEEEEE~K :)
 /mob/living/simple_animal/rodent/brown/Tom
 	name = "Tom"
