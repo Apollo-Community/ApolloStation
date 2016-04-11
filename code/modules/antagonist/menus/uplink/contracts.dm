@@ -6,6 +6,7 @@
 	var/datum/antagonist/antag = user.mind.antagonist
 
 	. += "<html><head>"
+	// shit
 	. += {"<style>
 			body{
 				background-color: #8f1414;
