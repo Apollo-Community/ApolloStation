@@ -1102,6 +1102,11 @@ area/space/atmosalert()
 	icon_state = "bar"
 	environment = QUARRY
 
+/area/crew_quarters/lounge
+	name = "\improper Lounge"
+	icon_state = "Break Room"
+	environment = QUARRY
+
 /area/crew_quarters/diner
 	name = "\improper Diner"
 	icon_state = "bar"
