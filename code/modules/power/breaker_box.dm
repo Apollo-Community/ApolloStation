@@ -18,6 +18,13 @@
 	var/directions = list(1,2,4,8,5,6,9,10)
 	var/RCon_tag = "NO_TAG"
 	var/update_locked = 0
+/obj/machinery/power/breakerbox/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/breakerbox(src)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+	component_parts += new /obj/item/stack/cable_coil(src,2)
 
 /obj/machinery/power/breakerbox/Destroy()
 	..()
@@ -82,6 +89,10 @@
 	busy = 0
 
 /obj/machinery/power/breakerbox/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	if(istype(W, /obj/item/weapon/screwdriver))
+		default_deconstruction_screwdriver(user,icon_state,icon_state,W)
+	if(istype(W, /obj/item/weapon/crowbar))
+		default_deconstruction_crowbar(W)
 	if(istype(W, /obj/item/device/multitool))
 		var/newtag = input(user, "Enter new RCON tag. Use \"NO_TAG\" to disable RCON or leave empty to cancel.", "SMES RCON system") as text
 		if(newtag)

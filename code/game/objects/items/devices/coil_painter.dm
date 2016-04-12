@@ -1,6 +1,6 @@
-obj/item/device/cable_painter
-	name = "cable painter"
-	desc = "A device for repainting cables."
+obj/item/device/coil_painter
+	name = "cable coil painter"
+	desc = "A device for repainting cable coils."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler0"
 	item_state = "flight"
@@ -8,7 +8,7 @@ obj/item/device/cable_painter
 	var/list/modes
 	w_class = 2.0
 
-obj/item/device/cable_painter/New()
+obj/item/device/coil_painter/New()
 	..()
 	mode = COLOR_RED
 	modes = new()
@@ -22,6 +22,6 @@ obj/item/device/cable_painter/New()
 //	modes["white"] = COLOR_WHITE
 	mode = pick(modes)
 
-obj/item/device/cable_painter/attack_self(mob/user)
+obj/item/device/coil_painter/attack_self(mob/user)
 	mode = input( "What color would you like to use?", "Choose a Color", null, null) in modes
 	user << "<span class='notice'>You change the paint mode to [mode].</span>"
