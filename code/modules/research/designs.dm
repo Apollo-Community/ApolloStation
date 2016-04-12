@@ -167,7 +167,6 @@ datum/design/circuit/teleconsole
 	name = "teleporter control console"
 	id = "teleconsole"
 	req_tech = list("programming" = 3, "bluespace" = 2)
-	build_path = /obj/item/weapon/circuitboard/teleporter
 
 datum/design/circuit/emp_data
 	name = "employment records console"

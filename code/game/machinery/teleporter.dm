@@ -327,7 +327,6 @@
 	component_parts += new /obj/item/weapon/stock_parts/manipulator
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module
-	RefreshParts()
 	overlays.Cut()
 	overlays += image('icons/obj/stationobjs.dmi', icon_state = "controller-wires")
 
