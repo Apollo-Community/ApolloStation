@@ -73,7 +73,8 @@
 			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_explosive, 6000, "Explosive Implant (DANGER!)", "EI")
 			),
 		"Fun and Games" = list(
-			new/datum/uplink_item(/obj/item/weapon/storage/box/lube, 3000, "6 Lube Grenades", "LG")
+			new/datum/uplink_item(/obj/item/weapon/storage/box/lube, 3000, "6 Lube Grenades", "LG"),
+			new/datum/uplink_item(/obj/item/weapon/reagent_containers/spray/pepper/alcohol, 2000, "Alcospray", "AS"),
 			),
 		"(Pointless) Badassery" = list(
 			new/datum/uplink_item(/obj/item/toy/syndicateballoon, 10000, "For showing that You Are The BOSS (Useless Balloon)", "BS"),

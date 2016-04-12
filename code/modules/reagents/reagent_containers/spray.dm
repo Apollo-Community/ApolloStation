@@ -155,6 +155,18 @@
 		return
 	..()
 
+//alcospray
+/obj/item/weapon/reagent_containers/spray/pepper/alcohol
+	name = "alcospray"
+	desc = "A spray bottle containing concentrated ethanol. Often used to get ridiculously drunk before your ass even hits the ground."
+	icon_state = "alcospray"
+	volume = 40
+
+/obj/item/weapon/reagent_containers/spray/pepper/alcohol/New()
+	..()
+	reagents.remove_reagent("condensedcapsaicin", 40)
+	reagents.add_reagent("alcospray_ethanol", 40)
+
 //water flower
 /obj/item/weapon/reagent_containers/spray/waterflower
 	name = "water flower"
