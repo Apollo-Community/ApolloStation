@@ -37,3 +37,14 @@
 						"/obj/item/weapon/stock_parts/scanning_module" = 1,
 						"/obj/item/weapon/stock_parts/capacitor" = 1,
 						"/obj/item/weapon/stock_parts/manipulator" = 1)
+
+/obj/item/weapon/circuitboard/breakerbox
+	name = T_BOARD("breaker box")
+	build_path = "/obj/machinery/power/breakerbox"
+	board_type = "machine"
+	origin_tech = "engineering = 4;"
+	frame_desc = "Requires 1 scanning module, 1 manipulator and 2 cable lengths"
+	req_components = list(
+						"/obj/item/weapon/stock_parts/scanning_module" = 1,
+						"/obj/item/weapon/stock_parts/manipulator" = 1,
+						"/obj/item/stack/cable_coil" = 2)
