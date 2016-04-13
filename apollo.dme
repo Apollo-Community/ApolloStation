@@ -603,7 +603,6 @@
 #include "code\game\objects\items\devices\binoculars.dm"
 #include "code\game\objects\items\devices\cable_painter.dm"
 #include "code\game\objects\items\devices\chameleonproj.dm"
-#include "code\game\objects\items\devices\coil_painter.dm"
 #include "code\game\objects\items\devices\debugger.dm"
 #include "code\game\objects\items\devices\flash.dm"
 #include "code\game\objects\items\devices\flashlight.dm"
