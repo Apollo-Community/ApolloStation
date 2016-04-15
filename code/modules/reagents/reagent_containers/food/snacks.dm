@@ -3044,6 +3044,4 @@
 	icon_state = "ratrod_raw"
 
 	On_Consume()
-		if(prob(5))
-			
 		return
