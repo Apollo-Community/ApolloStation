@@ -3511,6 +3511,10 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=12)
 
 			on_mob_life(var/mob/living/M as mob)
+				// glorious donk
+				if(M.mind.antagonist && istype(M.mind.antagonist.faction, /datum/faction/syndicate/donk))
+					M.reagents.add_reagent("hyperzine", 0.5)
+
 				M.radiation = max(M.radiation-1,0)
 				..()
 				return
