@@ -61,6 +61,7 @@
 		new /obj/item/device/multitool(src)
 		new /obj/item/device/multitool(src)
 		new /obj/item/device/multitool(src)
+		new /obj/item/device/cable_painter(src)
 		return
 
 
