@@ -1,5 +1,5 @@
 #ifndef T_BOARD
-#error T_BOARD macro is not defined but we need it! 
+#error T_BOARD macro is not defined but we need it!
 #endif
 
 /obj/item/weapon/circuitboard/teleporterstation
@@ -18,7 +18,7 @@
   name = T_BOARD("Teleporter Hub")
   build_path = "/obj/machinery/teleport/hub"
   board_type = "machine"
-  origin_tech = "enginering=5,bluespace=4"
+  origin_tech = "engineering=5,bluespace=4"
   frame_desc = "Requires 1 Ansible Crystal, 2 Subspace Transmitter and 2 pieces of cable."
   req_components = list(
                   "/obj/item/weapon/stock_parts/subspace/transmitter" = 2,
