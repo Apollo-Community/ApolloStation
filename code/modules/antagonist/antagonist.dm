@@ -82,6 +82,7 @@
 /datum/antagonist/proc/greet()
 	antag.current << "<B><font size=3 color=red>[greeting]</font></B>"
 	antag.current << "<B><font size=2 color=red>You are working for \The [faction.name].</font></B>"
+	antag.current << "[faction.operative_notes]"
 	if(!ticker.contracts_made)
 		antag.current << "You are a sleeper cell agent, and your employer has recently ordered you to <B>stand by for further instructions</B>."
 	else

@@ -469,7 +469,7 @@ var/global/datum/controller/gameticker/ticker
 	var/list/datum/mind/all_antagonists = list()
 	//Look into all mobs in world, dead or alive
 	for(var/datum/mind/M in minds)
-		if(M.current.client && (M.antagonist && !istype(M.antagonist, /datum/antagonist/traitor/persistant))) // Players that have left can't get commendations
+		if(M.current.client && M.antagonist && !istype(M.antagonist, /datum/antagonist/traitor/persistant)) // Players that have left can't get commendations
 			all_antagonists += M
 
 	if(all_antagonists.len)
