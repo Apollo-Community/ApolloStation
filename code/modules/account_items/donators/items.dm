@@ -56,7 +56,7 @@
 	icon_state = "lucien93"
 	item_state = "lucien93"
 
-////////////////////////////////// Awsomesun /////////////////////////////////////////////////
+////////////////////////////////// Greatmoon /////////////////////////////////////////////////
 
 // Need to add in this stupid holder because Delta will spawn in the bag...
 // Besides this holder getting created on round start, Delta can't be picked up normally
@@ -74,7 +74,7 @@
 
 /mob/living/simple_animal/dog/german_shep/fluff/delta
 	name = "Delta"
-	desc = "This big puppy has thick, black fur."
+	desc = "This big puppy has thick, black and yellow fur."
 	gender = MALE
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 	health = 50
@@ -88,7 +88,7 @@
 	..()
 	for( var/mob/living/carbon/human/M in living_mob_list )
 		if (M.mind)
-			if (M.mind.key == "Awsomesun")
+			if (M.mind.key == "Greatmoon")
 				bff = M
 				break
 
@@ -209,3 +209,28 @@
 	item_state = "labcoat_sidier"
 	icon_open = "labcoat_sidier"
 	icon_closed = "labcoat"
+
+//////////////////// King_nexus
+
+/obj/item/clothing/suit/dionalight/kingnexus
+	name = "Bio-luminescent organ"
+	desc = "Some sort of a bio-luminescent organ."
+	icon_state = "dionalight_kingnexus"
+	item_state = "dionalight_kingnexus"
+	var/ison = 0 // Prevents adding more light each time equipped() is called (when picked up, put on slot etc).
+	var/brightness_on = 5
+	canremove = 0 // Yep, once you glue it on to your back you're stuck with it for the the rest of your life.
+	slot_flags = SLOT_BACK
+
+
+/obj/item/clothing/suit/dionalight/kingnexus/equipped(mob/user)
+	spawn(1)
+		if(loc == user && ison == 0)
+			user.set_light(user.light_range + brightness_on, 5, "#00FFFF")
+			ison = 1
+
+/obj/item/clothing/suit/dionalight/kingnexus/dropped(mob/user)
+	spawn(1)
+		if(loc != user && ison == 1)
+			user.set_light(user.light_range - brightness_on)
+			ison = 0
