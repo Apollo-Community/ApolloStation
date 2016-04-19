@@ -158,6 +158,10 @@
 	friendly_identification = FACTION_ID_COMPLETE
 	operative_notes = "Remember the teachings of Hy-lurgixon; kill first, ask questions later! Only the enlightened Tiger brethren can be trusted; all others must be expelled from this mortal realm! You may spare the Space Marauders, as they share our interests of destruction and carnage! We'd like to make the corporate whores skiddle in their boots. We encourage operatives to be as loud and intimidating as possible."
 
+	equipment = list(
+		new/datum/uplink_item(/obj/item/weapon/legcuffs/beartrap/viper, 3000, "Viper's Coil", "TVC")
+	)
+
 // AIs are always assigned to this one
 // Neutral to everyone.
 /datum/faction/syndicate/self
@@ -217,6 +221,10 @@
 	friendly_identification = FACTION_ID_PHRASE
 	max_op = 4
 	operative_notes = "We'd like to remind our operatives to keep it professional. You are not here to have a good time, you are here to accomplish your objectives. These vile communists must be stopped at all costs. You may collaborate with any friends of the Syndicate coalition, but keep an eye on any of those Tiger punks if they do show up. You are completely free to accomplish your objectives any way you see fit."
+
+	equipment = list(
+		new/datum/uplink_item(/obj/item/weapon/handcuffs/tuff, 1500, "Tuff Cuffs", "THC")
+	)
 
 // Neutral to everyone, friendly to Marauders
 /datum/faction/syndicate/donk
