@@ -5416,7 +5416,7 @@
 "cah" = (/obj/structure/table/reinforced,/obj/machinery/door/window/westleft{dir = 1; name = "Mailing Room"; req_access_txt = "50"},/obj/machinery/door/firedoor,/obj/structure/disposalpipe/segment,/turf/simulated/floor{dir = 4; icon = 'icons/turf/floors.dmi'; icon_state = "floor"; tag = "loading"},/area/quartermaster/sorting)
 "cai" = (/turf/simulated/wall/alloy/reinforced,/area/quartermaster/sorting)
 "caj" = (/obj/machinery/chem_dispenser,/turf/simulated/floor{tag = "icon-whiteblue (WEST)"; icon_state = "whiteblue"; dir = 8},/area/medical/chemistry)
-"cak" = (/obj/machinery/chem_master,/turf/simulated/floor{icon_state = "white"},/area/medical/chemistry)
+"cak" = (/obj/machinery/chem_master,/obj/machinery/light,/turf/simulated/floor{icon_state = "white"},/area/medical/chemistry)
 "cal" = (/obj/structure/table/glass,/obj/structure/reagent_dispensers/sacidtank{pixel_x = 0; pixel_y = -30},/obj/item/weapon/hand_labeler,/obj/item/weapon/packageWrap,/obj/item/device/destTagger{pixel_x = 4; pixel_y = 3},/turf/simulated/floor{icon_state = "white"},/area/medical/chemistry)
 "cam" = (/obj/machinery/disposal,/obj/structure/disposalpipe/trunk{dir = 1},/obj/machinery/power/apc{dir = 2; name = "south bump"; pixel_y = -24},/obj/structure/cable/green,/turf/simulated/floor{icon_state = "white"},/area/medical/chemistry)
 "can" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor{tag = "icon-whitepurple (WEST)"; icon_state = "whitepurple"; dir = 8},/area/rnd/research)
