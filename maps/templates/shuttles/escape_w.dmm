@@ -1,0 +1,14 @@
+"a" = (/turf/space,/turf/simulated/shuttle/wall{icon_state = "swall_f6"; dir = 2},/area/shuttle/escape_pod5/station)
+"b" = (/turf/simulated/shuttle/wall{icon_state = "swall12"; dir = 2},/area/shuttle/escape_pod5/station)
+"c" = (/obj/structure/shuttle/engine/propulsion/burst{dir = 8},/turf/simulated/shuttle/plating,/area/shuttle/escape_pod5/station)
+"d" = (/obj/structure/window/shuttle,/obj/structure/grille,/turf/simulated/shuttle/plating,/area/shuttle/escape_pod5/station)
+"e" = (/obj/machinery/status_display{density = 0; layer = 4; pixel_x = 0; pixel_y = 32},/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod{frequency = 1380; id_tag = "escape_pod_5"; pixel_x = 0; pixel_y = -25; req_access_txt = "0"; req_one_access_txt = "0"; tag_door = "escape_pod_5_hatch"},/obj/structure/bed/chair/shuttle{tag = "icon-chair3 (WEST)"; icon_state = "chair3"; dir = 8},/turf/simulated/shuttle/floor,/area/shuttle/escape_pod5/station)
+"f" = (/obj/item/device/radio/intercom{broadcasting = 0; listening = 1; name = "Station Intercom (General)"; pixel_y = 20},/obj/structure/bed/chair/shuttle{tag = "icon-chair3 (WEST)"; icon_state = "chair3"; dir = 8},/turf/simulated/shuttle/floor,/area/shuttle/escape_pod5/station)
+"g" = (/obj/machinery/door/airlock/external{frequency = 1380; icon_state = "door_locked"; id_tag = "escape_pod_5_hatch"; locked = 1; name = "Escape Pod Hatch"; req_access_txt = "13"},/turf/simulated/shuttle/plating,/area/shuttle/escape_pod5/station)
+"h" = (/turf/space,/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/shuttle/escape_pod5/station)
+
+(1,1,1) = {"
+abbc
+defg
+hbbc
+"}

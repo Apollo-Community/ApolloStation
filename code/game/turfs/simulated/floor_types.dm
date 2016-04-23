@@ -167,6 +167,31 @@
 	icon_state = "gcircuit"
 	light_range = 1
 
+/turf/simulated/floor/dock_one
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "One"
+	light_range = 1
+
+/turf/simulated/floor/dock_two
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "Two"
+	light_range = 1
+
+/turf/simulated/floor/dock_tree
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "Tree"
+	light_range = 1
+
+/turf/simulated/floor/dock_Five
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "Five"
+	light_range = 1
+
+/turf/simulated/floor/dock_tile
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "Dock"
+	light_range = 1
+
 /turf/simulated/shuttle
 	name = "shuttle"
 	icon = 'icons/turf/shuttle.dmi'
