@@ -6,6 +6,11 @@
 	var/obj/machinery/computer/mech_bay_power_console/recharge_console
 	var/obj/mecha/recharging_mecha = null
 
+/turf/simulated/floor/docking_beacon_floor
+	name = "Inbuild docking beacon"
+	icon = 'icons/mecha/mech_bay.dmi'
+	icon_state = "recharge_floor"
+
 /turf/simulated/floor/mech_bay_recharge_floor/Entered(var/obj/mecha/mecha)
 	. = ..()
 	if(istype(mecha))
