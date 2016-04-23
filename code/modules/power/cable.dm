@@ -119,16 +119,11 @@ By design, d1 is the smallest direction and d2 is the highest
 //   - Cable coil : merge cables
 //   - Multitool : get the power currently passing through the cable
 //
-/obj/structure/cable/proc/change_color(var/obj/item/device/cable_painter/P)
-	src.color = P.mode
 /obj/structure/cable/attackby(obj/item/W, mob/user)
+
 	var/turf/T = src.loc
 	if(T.intact)
 		return
-
-	if(istype(W,/obj/item/device/cable_painter))//cable painter, works
-		var/obj/item/device/cable_painter/P = W
-		src.color = P.mode
 
 	if(istype(W, /obj/item/weapon/wirecutters))
 ///// Z-Level Stuff
@@ -507,11 +502,6 @@ obj/structure/cable/proc/cableColor(var/colorC)
 	slot_flags = SLOT_BELT
 	item_state = "coil"
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
-
-/obj/item/stack/cable_coil/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/device/cable_painter))
-		var/obj/item/device/cable_painter/P = W
-		src.color = P.mode //proc defined earlier on the code, up up
 
 /obj/item/stack/cable_coil/cyborg
 	name = "cable coil synthesizer"

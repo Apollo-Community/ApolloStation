@@ -162,6 +162,43 @@ area/space/atmosalert()
 	lighting_use_dynamic = 1
 	environment = CAVE
 
+/area/hanger
+	requires_power = 0
+	lighting_use_dynamic = 1
+	environment = CAVE
+
+/area/hanger/north
+	name = "\improper Hangar"
+	icon_state = "north"
+
+/area/hanger/northeast
+	name = "\improper Hangar"
+	icon_state = "northeast"
+
+/area/hanger/east
+	name = "\improper Hangar"
+	icon_state = "east"
+
+/area/hanger/southeast
+	name = "\improper Hangar"
+	icon_state = "southeast"
+
+/area/hanger/south
+	name = "\improper Hangar"
+	icon_state = "south"
+
+/area/hanger/southwest
+	name = "\improper Hangar"
+	icon_state = "southwest"
+
+/area/hanger/west
+	name = "\improper Hangar"
+	icon_state = "west"
+
+/area/hanger/northwest
+	name = "\improper Hangar"
+	icon_state = "northwest"
+
 /area/podbay
 	name = "\improper Podbay"
 	icon_state = "yellow"
@@ -170,6 +207,11 @@ area/space/atmosalert()
 /area/podbay/hangar
 	name = "\improper Hangar"
 	icon_state = "green"
+	environment = SEWER_PIPE
+
+/area/podbay/hangar/s_hanger_e
+	name = "\improper Hangar_loc_e"
+	icon_state = "green_e"
 	environment = SEWER_PIPE
 
 /area/shuttle/arrival
@@ -191,6 +233,10 @@ area/space/atmosalert()
 	icon_state = "shuttle2"
 
 /area/shuttle/escape/centcom
+	name = "\improper Emergency Shuttle Centcom"
+	icon_state = "shuttle"
+
+/area/shuttle/escape/spawn_area
 	name = "\improper Emergency Shuttle Centcom"
 	icon_state = "shuttle"
 
@@ -444,6 +490,14 @@ area/space/atmosalert()
 	icon_state = "syndie-control"
 
 /area/syndicate_mothership/elite_squad
+	name = "\improper Elite Mercenary Squad"
+	icon_state = "syndie-elite"
+
+/area/syndicate_mothership/shuttle
+	name = "\improper Elite Mercenary Squad"
+	icon_state = "syndie-elite"
+
+/area/syndicate_mothership/offsite_hanger
 	name = "\improper Elite Mercenary Squad"
 	icon_state = "syndie-elite"
 

@@ -47,7 +47,7 @@
 
 		area = A
 
-	proc/Place(var/turf/origin, var/template_name)
+	proc/Place(var/turf/origin, var/template_name = "default")
 		name = template_name
 
 		for(var/turf/T in block(origin, locate(origin.x + (x_size - 1), origin.y + (y_size - 1), origin.z)))
@@ -74,6 +74,7 @@
 
 		spawn(10)
 			for(var/turf/T in place_last_turfs)
+
 				var/datum/dmm_sub_object/sub = place_last_objects[place_last_turfs.Find(T)]
 				var/atom/last = new sub.object_path(T)
 				for(var/or in sub.var_overrides)

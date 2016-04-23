@@ -1,0 +1,12 @@
+"a" = (/turf/unsimulated/wall{icon_state = "phoron6"},/area/shuttle/alien/base)
+"b" = (/turf/unsimulated/wall{icon_state = "phoron12"},/area/shuttle/alien/base)
+"c" = (/turf/unsimulated/wall{icon_state = "phoron3"},/area/shuttle/alien/base)
+"d" = (/turf/unsimulated/floor{icon_state = "floor5"},/area/shuttle/alien/base)
+"e" = (/obj/machinery/door/airlock/hatch,/turf/unsimulated/floor{icon_state = "floor5"},/area/shuttle/alien/base)
+"f" = (/turf/unsimulated/wall{icon_state = "phoron5"},/area/shuttle/alien/base)
+
+(1,1,1) = {"
+abbb
+cdde
+fbbb
+"}

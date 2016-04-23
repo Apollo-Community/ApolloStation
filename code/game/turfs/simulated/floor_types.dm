@@ -157,6 +157,11 @@
 			src.ChangeTurf(/turf/space)
 		return
 
+/turf/simulated/floor/docking_beacon
+	name = "Floor Docking Beacon"
+	icon = 'icons/mecha/mech_bay.dmi'
+	icon_state = "recharge_floor"
+
 /turf/simulated/floor/bluegrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "bcircuit"
@@ -165,6 +170,31 @@
 /turf/simulated/floor/greengrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "gcircuit"
+	light_range = 1
+
+/turf/simulated/floor/dock_one
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "One"
+	light_range = 1
+
+/turf/simulated/floor/dock_two
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "Two"
+	light_range = 1
+
+/turf/simulated/floor/dock_tree
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "Tree"
+	light_range = 1
+
+/turf/simulated/floor/dock_Five
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "Five"
+	light_range = 1
+
+/turf/simulated/floor/dock_tile
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "Dock"
 	light_range = 1
 
 /turf/simulated/shuttle
