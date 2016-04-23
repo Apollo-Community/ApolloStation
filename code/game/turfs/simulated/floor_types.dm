@@ -157,6 +157,11 @@
 			src.ChangeTurf(/turf/space)
 		return
 
+/turf/simulated/floor/docking_beacon
+	name = "Floor Docking Beacon"
+	icon = 'icons/mecha/mech_bay.dmi'
+	icon_state = "recharge_floor"
+
 /turf/simulated/floor/bluegrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "bcircuit"
