@@ -84,6 +84,10 @@ var/global/datum/emergency_shuttle_controller/emergency_shuttle
 		if(istype(A, /area/hallway))
 			A.readyalert()
 
+	for (var/datum/shuttle/ferry/escape_pod/pod in escape_pods)
+		if (pod.arming_controller)
+			pod.arming_controller.arm()
+
 //calls the shuttle for a routine crew transfer
 /datum/emergency_shuttle_controller/proc/call_transfer()
 	if(!can_call()) return

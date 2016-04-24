@@ -12,15 +12,16 @@ var/datum/template_controller/template_controller
 
 	proc/PlaceTemplateAt(var/turf/location, var/path, var/name, var/return_list = 0)
 		set background = 1
-		var/list/turfs = new/list()
 		var/datum/dmm_object_collection/collection = parser.GetCollection(file2list(path))
+		var/list/turfs = new /list()
 		collection.RemoveSpaceTurfs()
-		turfs += collection.Place(location, name, return_list)
+		turfs = collection.Place(location, name)
 		log_game("TEMPL: Spawned template [name] at ([location.x], [location.y], [location.z]).")
 
-		if(!(return_list[1]) && !isnull(turfs))
+		if(return_list)
 			return turfs
-		return collection
+		else
+			return collection
 
 	proc/PlaceTemplates()
 		set background = 1

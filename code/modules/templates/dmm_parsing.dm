@@ -51,14 +51,17 @@
 		name = template_name
 		var/list/to_return = new /list()
 
+		//Place in the actual objects on the right tiles.
+		//Igonore any objects with the ignore
 		for(var/y = 0; y < y_size; y++)
 			var/list/row = grid["[y]"]
 			var/x = 0
-			for(var/datum/dmm_object/object in row).
-				var/turf/T = locate(origin.x + x, origin.y + y, origin.z)
-				clear_turf(T)
-				turfs += object.Instantiate(T)
-				to_return += T
+			for(var/datum/dmm_object/object in row)
+				if(!object.ignore)
+					var/turf/T = locate(origin.x + x, origin.y + y, origin.z)
+					clear_turf(T)
+					turfs += object.Instantiate(T)
+					to_return += T
 				x++
 
 		HandleEdgeCases()
@@ -84,9 +87,8 @@
 		if(area)
 			spawn(10)
 				makeareapowernets(area)
-		if(return_list)
-			return to_return
-		return 1
+
+		return to_return
 
 	proc/Reset()
 		Delete()
@@ -117,17 +119,16 @@
 	//Remove all space turfs from a collection
 	proc/RemoveSpaceTurfs()
 		for(var/y = 0; y < y_size; y++)
-			var/list/to_remove = new /list()
 			var/list/row = grid["[y]"]
 			for(var/datum/dmm_object/object in row)
-				if(object.GetSubByType(text2path("/turf/space"), 0) != 0)
-					to_remove += object
-			row.Remove(to_remove)
+				if(object.SubHasSpace())
+					object.ignore = 1
 
 /datum/dmm_object
 	var/id
 	var/list/sub_objects = list()
 	var/datum/dmm_object_collection/parent
+	var/ignore = 0
 
 	// We want the turf first and area second.
 	proc/SortSubObjects()
@@ -199,6 +200,12 @@
 				if(sub.object_path == path)
 					sub_objs += sub
 
+		return sub_objs
+
+	proc/SubHasSpace()
+		for(var/datum/dmm_sub_object/sub in sub_objects)
+			if(istype(sub.object_path, text2path("/turf/space")) || sub.object_path == text2path("/turf/space"))
+				return 1
 		return 0
 
 	//Removes all subobjects with the path /turf/space from the object

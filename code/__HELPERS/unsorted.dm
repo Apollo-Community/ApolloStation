@@ -804,6 +804,16 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 		qdel(M)
 	qdel(T)
 
+//get the bottem left corner position from center coordinate and box dimensions
+/proc/get_corner_turf(var/x_pos, var/y_pos, var/z_pos, var/dimx, var/dimy)
+	var/corn_x = x_pos - ((1/2) * dimx)
+	var/corn_y = y_pos - ((1/2) * dimy)
+	if(dimx % 2)
+		corn_x += 1
+	if(dimy % 2)
+		corn_y += 1
+
+	return locate(corn_x, corn_y, z_pos)
 
 /proc/shift_turfs(var/datum/coords/scr_coords, var/datum/coords/trg_coords, var/list/scr_list)
 	//Takes: Two sets of coordinats and a list of turfs to shift

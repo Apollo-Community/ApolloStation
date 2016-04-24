@@ -5,6 +5,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	var/list/shuttles	//maps shuttle tags to shuttle datums, so that they can be looked up.
 	var/list/process_shuttles	//simple list of shuttles, for processing
 	var/list/hangers
+	var/init_done = 0
 
 /datum/shuttle_controller/proc/process()
 	//process ferry shuttles
@@ -25,7 +26,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttle.warmup_time = 10
 	shuttle.tag_interim = "escape_shuttle_interim"
 	shuttle.template_path ="maps/templates/shuttles/emergency_shuttle.dmm"
-	shuttle.template_area = locate(/area/shuttle/escape/spawn_area)
 	shuttle.docking_controller_tag = "escape_shuttle"
 	shuttle.dock_target_station = "escape_dock"
 	shuttle.dock_target_offsite = "centcom_dock"
@@ -46,7 +46,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttle.dock_target_station = "escape_pod_1_berth"
 	shuttle.dock_target_offsite = "escape_pod_1_recovery"
 	shuttle.template_path = "maps/templates/shuttles/escape_n.dmm"
-	shuttle.template_area = locate(/area/shuttle/escape_pod1/station)
 	shuttle.hanger_station = hangers["Station_E1_Hanger"]
 	shuttle.hanger_offsite = hangers["CentCom_E1_Hanger"]
 	shuttle.transit_direction = NORTH
@@ -62,7 +61,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttle.docking_controller_tag = "escape_pod_2"
 	shuttle.dock_target_station = "escape_pod_2_berth"
 	shuttle.dock_target_offsite = "escape_pod_2_recovery"
-	shuttle.template_area = locate(/area/shuttle/escape_pod1/station)
 	shuttle.hanger_station = hangers["Station_E2_Hanger"]
 	shuttle.hanger_offsite = hangers["CentCom_E2_Hanger"]
 	shuttle.transit_direction = NORTH
@@ -78,7 +76,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttle.docking_controller_tag = "escape_pod_3"
 	shuttle.dock_target_station = "escape_pod_3_berth"
 	shuttle.dock_target_offsite = "escape_pod_3_recovery"
-	shuttle.template_area = locate(/area/shuttle/escape_pod3/station)
 	shuttle.hanger_station = hangers["Station_E3_Hanger"]
 	shuttle.hanger_offsite = hangers["CentCom_E3_Hanger"]
 	shuttle.transit_direction = EAST
@@ -95,7 +92,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttle.docking_controller_tag = "escape_pod_5"
 	shuttle.dock_target_station = "escape_pod_5_berth"
 	shuttle.dock_target_offsite = "escape_pod_5_recovery"
-	shuttle.template_area = locate(/area/shuttle/escape_pod5/station)
 	shuttle.hanger_station = hangers["Station_E5_Hanger"]
 	shuttle.hanger_offsite = hangers["CentCom_E5_Hanger"]
 	shuttle.transit_direction = WEST
@@ -117,7 +113,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttle.location = 1
 	shuttle.warmup_time = 10
 	shuttle.docking_controller_tag = "supply_shuttle"
-	shuttle.template_area = locate(/area/supply/dock)
 	shuttle.template_path = "maps/templates/shuttles/supply.dmm"
 	shuttle.dock_target_station = "cargo_bay"
 	shuttle.hanger_station = hangers["Station_R_Hanger"]
@@ -132,7 +127,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 	admin_shuttle.warmup_time = 10
 	admin_shuttle.hanger_station = hangers["Station_L_Hanger"]
 	admin_shuttle.hanger_offsite = hangers["CentCom_L_Hanger"]
-	admin_shuttle.template_area = locate(/area/shuttle/transport1/centcom)
 	admin_shuttle.template_path ="maps/templates/shuttles/cc_transport.dmm"
 	admin_shuttle.docking_controller_tag = "centcom_shuttle"
 	admin_shuttle.dock_target_station = "centcom_shuttle_dock_airlock"
@@ -159,7 +153,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 	//Alien shuttle can only be moved by admins
 	var/datum/shuttle/AS = new/datum/shuttle()
 	AS.template_path = "maps/templates/shuttles/alien_shuttle.dmm"
-	AS.template_area = locate(/area/shuttle/alien/base)
 	shuttles["Alien"] = shuttle
 	//process_shuttles += shuttle	//don't need to process this. It can only be moved using admin magic anyways.
 
@@ -169,7 +162,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 	ERT.location = 0 //ERT home base is the Frigate offsite
 	ERT.warmup_time = 10
 	ERT.template_path ="maps/templates/shuttles/ERT.dmm"
-	ERT.template_area = locate(/area/shuttle/specops/centcom)
 	ERT.hanger_station = hangers["Frigate_Hanger"]
 	ERT.hanger_offsite = hangers["Station_C_Hanger"]
 	ERT.docking_controller_tag = "specops_shuttle_port"
@@ -184,7 +176,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 	//Vox Shuttle.
 	var/datum/shuttle/multi_shuttle/VS = new/datum/shuttle/multi_shuttle()
 	VS.template_path ="maps/templates/shuttles/vox.dmm"
-	VS.template_area = locate(/area/shuttle/vox/station)
 	VS.tag_interim = "vox_interim"
 	VS.origin = hangers["Vox_Home_Hanger"]
 
@@ -211,7 +202,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 	//Nuke Ops shuttle.
 	var/datum/shuttle/multi_shuttle/MS = new/datum/shuttle/multi_shuttle()
 	MS.template_path ="maps/templates/shuttles/Merc.dmm"
-	MS.template_area = locate(/area/syndicate_mothership/shuttle)
 	MS.tag_interim = "vox_interim"
 	MS.origin = hangers["Syndi_Home_Hanger"] //Continue HERE
 	MS.destinations = list(
@@ -262,9 +252,12 @@ var/global/datum/shuttle_controller/shuttle_controller
 	for (var/shuttle_tag in shuttles)
 		shuttle = shuttles[shuttle_tag]
 		shuttle.init_templates()
+	init_done = 1
 
 //This is called by gameticker after all the machines and radio frequencies have been properly initialized
 /datum/shuttle_controller/proc/setup_shuttle_docks()
+	while(!init_done)
+		sleep(50)
 	var/datum/shuttle/shuttle
 	var/datum/shuttle/ferry/multidock/multidock
 	var/list/dock_controller_map = list()	//so we only have to iterate once through each list

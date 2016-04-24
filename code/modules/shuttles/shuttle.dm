@@ -7,7 +7,6 @@
 	var/warmup_time = 0
 	var/moving_status = SHUTTLE_IDLE
 	var/list/template_dim
-	var/area/template_area
 	var/template_path
 	var/list/dock_coord_interim
 	var/tag_interim
@@ -19,11 +18,8 @@
 	var/arrive_time = 0	//the time at which the shuttle arrives when long jumping
 
 /datum/shuttle/proc/init_templates()
-	if(!isnull(template_area))
-		shuttle_turfs = get_area_turfs(template_area.type)
-	else
-		world << "<span class='danger'>warning: [docking_controller_tag] shuttle area could not be located </span>"
-
+	if(isnull(template_path))
+		world << "<span class='danger'>warning: [docking_controller_tag] shuttle template could not be located </span>"
 	template_dim = template_controller.GetTemplateSize(template_path)
 	/*
 	var/datum/dim_min_max/dims = get_dim_and_minmax(shuttle_turfs)
@@ -155,9 +151,7 @@
 	if(!shuttle_ingame)
 		//Make it so at the location you want to be
 		place_shuttle(trg_hanger)
-		shuttle_ingame = 1
 	else
-		shuttle_turfs = filter_space(shuttle_turfs)
 		shuttle_turfs = move_turfs_to_turfs(shuttle_turfs, destination, direction=direction)
 
 	//move_gib(destination, trg_hanger)
@@ -184,9 +178,12 @@
 
 /datum/shuttle/proc/place_shuttle(var/datum/hanger/trg_hanger)
 	if(isnull(trg_hanger) || shuttle_ingame) return
-	shuttle_turfs = move_turfs_to_turfs (shuttle_turfs, get_turfs_square(trg_hanger.loc.x_pos, trg_hanger.loc.y_pos, trg_hanger.loc.z_pos, template_dim[1], template_dim[2]))
-	//copy_list_contents_to(shuttle_turfs, get_turfs_square(trg_hanger.loc.x_pos, trg_hanger.loc.y_pos, trg_hanger.loc.z_pos, template_dim[1], template_dim[2]))
 	shuttle_ingame = 1
+	var/turf/location = get_corner_turf(trg_hanger.loc.x_pos, trg_hanger.loc.y_pos, trg_hanger.loc.z_pos, template_dim[1], template_dim[2])
+
+	shuttle_turfs = template_controller.PlaceTemplateAt(location, template_path, docking_controller_tag, return_list = 1)
+	//copy_list_contents_to(shuttle_turfs, get_turfs_square(trg_hanger.loc.x_pos, trg_hanger.loc.y_pos, trg_hanger.loc.z_pos, template_dim[1], template_dim[2]))
+	error("shuttle [docking_controller_tag] placed via template the turfs contain [shuttle_turfs.len] turfs and are centered around [trg_hanger.loc.x_pos] - [trg_hanger.loc.y_pos] - [trg_hanger.loc.z_pos]")
 
 //Shake effect
 /datum/shuttle/proc/shake_effect(var/list/turfs)
