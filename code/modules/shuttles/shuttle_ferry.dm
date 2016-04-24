@@ -45,6 +45,9 @@
 	if(isnull(location))
 		return
 
+	if(isnull(trg_hanger))
+		trg_hanger = get_hanger(!location)
+
 	if(isnull(direction))
 		direction = !location
 
@@ -57,6 +60,9 @@
 	//world << "shuttle/ferry/long_jump: departing=[departing], destination=[destination], interim=[interim], travel_time=[travel_time]"
 	if(isnull(location))
 		return
+
+	if(isnull(trg_hanger))
+		trg_hanger = get_hanger(!location)
 
 	if(isnull(coord_interim))
 		coord_interim = dock_coord_interim
