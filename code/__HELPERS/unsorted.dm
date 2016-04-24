@@ -794,6 +794,17 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 				atoms += A
 	return atoms
 
+//Clear the given turf of anything but living cliets or mobs that have keys
+/proc/clear_turf(var/turf/T)
+	for(var/atom/movable/M in T)
+		if(istype(M, /mob))
+			var/mob/mob = M
+			if(mob.client || mob.key)
+				continue
+		qdel(M)
+	qdel(T)
+
+
 /proc/shift_turfs(var/datum/coords/scr_coords, var/datum/coords/trg_coords, var/list/scr_list)
 	//Takes: Two sets of coordinats and a list of turfs to shift
 	//Returns: List of turfs with shifted center and same relative position as input list

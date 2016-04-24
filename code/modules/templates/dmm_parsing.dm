@@ -47,23 +47,18 @@
 
 		area = A
 
-	proc/Place(var/turf/origin, var/template_name = "default")
+	proc/Place(var/turf/origin, var/template_name = "default", var/return_list)
 		name = template_name
-
-		for(var/turf/T in block(origin, locate(origin.x + (x_size - 1), origin.y + (y_size - 1), origin.z)))
-			for(var/atom/movable/M in T)
-				if(istype(M, /mob))
-					var/mob/mob = M
-					if(mob.client || mob.key)
-						continue
-				qdel(M)
-			qdel(T)
+		var/list/to_return = new /list()
 
 		for(var/y = 0; y < y_size; y++)
 			var/list/row = grid["[y]"]
 			var/x = 0
-			for(var/datum/dmm_object/object in row)
-				turfs += object.Instantiate(locate(origin.x + x, origin.y + y, origin.z))
+			for(var/datum/dmm_object/object in row).
+				var/turf/T = locate(origin.x + x, origin.y + y, origin.z)
+				clear_turf(T)
+				turfs += object.Instantiate(T)
+				to_return += T
 				x++
 
 		HandleEdgeCases()
@@ -89,7 +84,8 @@
 		if(area)
 			spawn(10)
 				makeareapowernets(area)
-
+		if(return_list)
+			return to_return
 		return 1
 
 	proc/Reset()
@@ -117,6 +113,16 @@
 
 		if(delete_src)
 			qdel(src)
+
+	//Remove all space turfs from a collection
+	proc/RemoveSpaceTurfs()
+		for(var/y = 0; y < y_size; y++)
+			var/list/to_remove = new /list()
+			var/list/row = grid["[y]"]
+			for(var/datum/dmm_object/object in row)
+				if(object.GetSubByType(text2path("/turf/space"), 0) != 0)
+					to_remove += object
+			row.Remove(to_remove)
 
 /datum/dmm_object
 	var/id
@@ -181,6 +187,26 @@
 					return sub
 
 		return 0
+
+	//Get all subobjects with a given path from the subojects list
+	proc/GetAllSubOfType(var/path, var/strict = 0)
+		var/list/sub_objs = new /list()
+		for(var/datum/dmm_sub_object/sub in sub_objects)
+			if(strict)
+				if(istype(sub.object_path, path))
+					sub_objs += sub
+			else
+				if(sub.object_path == path)
+					sub_objs += sub
+
+		return 0
+
+	//Removes all subobjects with the path /turf/space from the object
+	proc/RemoveSpaceTurfs()
+		var/list/space_turfs = GetAllSubOfType(text2path("/turf/space"), 1)
+		sub_objects.Remove(space_turfs)
+
+
 
 	// Has area other than space
 	proc/HasArea()
