@@ -1992,11 +1992,11 @@
 
 					var/move_duration = input("How many seconds will this jump take?") as num
 
-					S.long_jump(origin_area, destination_area, transition_area, move_duration)
+					S.long_jump(destination_area, transition_area, move_duration)
 					message_admins("<span class='notice'>[key_name_admin(usr)] has initiated a jump from [origin_area] to [destination_area] lasting [move_duration] seconds for the [shuttle_tag] shuttle</span>")
 					log_admin("[key_name_admin(usr)] has initiated a jump from [origin_area] to [destination_area] lasting [move_duration] seconds for the [shuttle_tag] shuttle")
 				else
-					S.short_jump(origin_area, destination_area)
+					S.short_jump(destination_area)
 					message_admins("<span class='notice'>[key_name_admin(usr)] has initiated a jump from [origin_area] to [destination_area] for the [shuttle_tag] shuttle</span>")
 					log_admin("[key_name_admin(usr)] has initiated a jump from [origin_area] to [destination_area] for the [shuttle_tag] shuttle")
 
@@ -2022,7 +2022,7 @@
 				var/destination_area = input("Which area is the shuttle at now? (MAKE SURE THIS IS CORRECT OR THINGS WILL BREAK)") as null|area in world
 				if (!destination_area) return
 
-				S.move(origin_area, destination_area)
+				S.move(destination_area)
 				message_admins("<span class='notice'>[key_name_admin(usr)] moved the [shuttle_tag] shuttle</span>")
 				log_admin("[key_name(usr)] moved the [shuttle_tag] shuttle")
 

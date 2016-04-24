@@ -1,6 +1,10 @@
 /datum/shuttle/ferry/emergency
 	//pass
 
+/datum/shuttle/ferry/emergency/init_templates()
+	//Call super to get proper coordinates
+	..()
+
 /datum/shuttle/ferry/emergency/arrived()
 	if (istype(in_use, /obj/machinery/computer/shuttle_control/emergency))
 		var/obj/machinery/computer/shuttle_control/emergency/C = in_use
@@ -8,23 +12,26 @@
 
 	emergency_shuttle.shuttle_arrived()
 
-/datum/shuttle/ferry/emergency/long_jump(var/area/departing, var/area/destination, var/area/interim, var/travel_time, var/direction)
-	//world << "shuttle/ferry/emergency/long_jump: departing=[departing], destination=[destination], interim=[interim], travel_time=[travel_time]"
+/datum/shuttle/ferry/emergency/long_jump(var/datum/hanger/trg_hanger, var/list/coord_interim, var/travel_time, var/direction)
 	if (!location)
 		travel_time = SHUTTLE_TRANSIT_DURATION_RETURN
 	else
 		travel_time = SHUTTLE_TRANSIT_DURATION
-
+	if(isnull(trg_hanger))
+		trg_hanger = get_hanger(!location)
+	if(trg_hanger.can_land_at(src))
 	//update move_time and launch_time so we get correct ETAs
-	move_time = travel_time
-	emergency_shuttle.launch_time = world.time
+		move_time = travel_time
+		emergency_shuttle.launch_time = world.time
+		..(trg_hanger, coord_interim, travel_time, direction)
 
-	..()
+/datum/shuttle/ferry/emergency/move(trg_hanger, var/direction = null, var/long_j)
+	var/leaving_station = at_station()
 
-/datum/shuttle/ferry/emergency/move(var/area/origin,var/area/destination)
-	..(origin, destination)
+	..(trg_hanger, direction, long_j)
 
-	if (origin == area_station)	//leaving the station
+	//Are we leaving the station ?
+	if (leaving_station)
 		emergency_shuttle.departed = 1
 
 		if (emergency_shuttle.evac)

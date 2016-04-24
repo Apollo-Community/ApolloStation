@@ -160,5 +160,4 @@
 	set category = "Debug"
 	set src in view(1)
 	src.program:initiate_undocking()
-
 */
