@@ -127,18 +127,18 @@ var/global/datum/shuttle_controller/shuttle_controller
 	supply_controller.shuttle = shuttle
 
 	// Admin shuttles.
-	shuttle = new/datum/shuttle/ferry()
-	shuttle.location = 1
-	shuttle.warmup_time = 10
-	shuttle.hanger_station = hangers["Station_L_Hanger"]
-	shuttle.hanger_offsite = hangers["CentCom_L_Hanger"]
-	shuttle.template_area = locate(/area/shuttle/transport1/centcom)
-	shuttle.template_path ="maps/templates/shuttles/cc_transport.dmm"
-	shuttle.docking_controller_tag = "centcom_shuttle"
-	shuttle.dock_target_station = "centcom_shuttle_dock_airlock"
-	shuttle.dock_target_offsite = "centcom_shuttle_bay"
-	shuttles["Centcom"] = shuttle
-	process_shuttles += shuttle
+	var/datum/shuttle/ferry/admin_shuttle = new/datum/shuttle/ferry()
+	admin_shuttle.location = 1
+	admin_shuttle.warmup_time = 10
+	admin_shuttle.hanger_station = hangers["Station_L_Hanger"]
+	admin_shuttle.hanger_offsite = hangers["CentCom_L_Hanger"]
+	admin_shuttle.template_area = locate(/area/shuttle/transport1/centcom)
+	admin_shuttle.template_path ="maps/templates/shuttles/cc_transport.dmm"
+	admin_shuttle.docking_controller_tag = "centcom_shuttle"
+	admin_shuttle.dock_target_station = "centcom_shuttle_dock_airlock"
+	admin_shuttle.dock_target_offsite = "centcom_shuttle_bay"
+	shuttles["Centcom"] = admin_shuttle
+	process_shuttles += admin_shuttle
 
 	/*
 	//Is this even in ?

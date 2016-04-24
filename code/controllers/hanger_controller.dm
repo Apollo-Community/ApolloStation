@@ -277,5 +277,4 @@ datum/hanger_controller/New()
 
 /datum/hanger_controller/proc/init_hangers()
 	for(var/datum/hanger/H in hangers)
-		error("Hanger [H.tag] is setting itself up")
 		H.init_hanger()

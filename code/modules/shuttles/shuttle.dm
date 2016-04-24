@@ -48,11 +48,12 @@
 
 //Make a short jump to the target hanger
 /datum/shuttle/proc/short_jump(var/datum/hanger/trg_hanger, var/direction)
+	error("shuttle [template_path] making short jump to [trg_hanger.tag]")
 	if(moving_status != SHUTTLE_IDLE) return
 
 	if(isnull(trg_hanger)) return
 
-	if(trg_hanger.can_land_at())
+	if(trg_hanger.can_land_at(src))
 		trg_hanger.full = 1
 	else
 		return
@@ -64,6 +65,7 @@
 			return	//someone cancelled the launch
 
 		moving_status = SHUTTLE_INTRANSIT //shouldn't matter but just to be safe
+		error("shuttle [template_path] jumpint now to [trg_hanger.tag]")
 		move(trg_hanger, null, 0)
 		moving_status = SHUTTLE_IDLE
 
@@ -75,7 +77,7 @@
 
 	if(isnull(trg_hanger)) return
 
-	if(trg_hanger.can_land_at())
+	if(trg_hanger.can_land_at(src))
 		trg_hanger.full = 1
 	else
 		return
@@ -105,9 +107,7 @@
 	var/dock_target = current_dock_target()
 	if (!dock_target)
 		return
-	error("[template_path] Init docking with [dock_target]")
 	docking_controller.initiate_docking(dock_target)
-	error("[template_path] Init docking done with [dock_target]")
 
 /datum/shuttle/proc/undock()
 	if (!docking_controller)

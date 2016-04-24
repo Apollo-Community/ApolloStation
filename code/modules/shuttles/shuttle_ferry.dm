@@ -50,7 +50,7 @@
 
 	if(isnull(direction))
 		direction = !location
-
+	error("shuttle ferry [template_path] making short jump to [trg_hanger.tag]")
 	..(trg_hanger, direction)
 
 //Ferry long jump
@@ -68,6 +68,7 @@
 		coord_interim = dock_coord_interim
 
 	direction = !location
+	error("shuttle ferry [template_path] making long jump to [trg_hanger.tag]")
 	..(trg_hanger, coord_interim, travel_time, direction)
 
 
