@@ -95,6 +95,10 @@
 	name = "engraved floor"
 	icon_state = "cult"
 
+/turf/simulated/floor/shuttle_beacon_floor
+	name = "Floor plating with intergratged shuttle beacon"
+	icon = 'icons/mecha/mech_bay.dmi'
+	icon_state = "recharge_floor"
 
 /turf/simulated/floor/engine/n20
 	New()
@@ -156,11 +160,6 @@
 		if(1.0)
 			src.ChangeTurf(/turf/space)
 		return
-
-/turf/simulated/floor/docking_beacon
-	name = "Floor Docking Beacon"
-	icon = 'icons/mecha/mech_bay.dmi'
-	icon_state = "recharge_floor"
 
 /turf/simulated/floor/bluegrid
 	icon = 'icons/turf/floors.dmi'
