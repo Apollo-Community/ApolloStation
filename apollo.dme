@@ -1755,7 +1755,6 @@
 #include "maps\templates\shuttles\escape_n2.dmm"
 #include "maps\templates\shuttles\escape_w.dmm"
 #include "maps\templates\shuttles\Merc.dmm"
-#include "maps\templates\shuttles\old_supply.dmm"
 #include "maps\templates\shuttles\supply.dmm"
 #include "maps\templates\shuttles\vox.dmm"
 // END_INCLUDE
