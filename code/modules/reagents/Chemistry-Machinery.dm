@@ -176,6 +176,7 @@ obj/machinery/chem_dispenser/RefreshParts()
 	return 1 // update UIs attached to this object
 
 /obj/machinery/chem_dispenser/attackby(var/obj/item/B as obj, var/mob/user as mob)
+	if(src.type == /obj/machinery/chem_dispenser)
 	if(isrobot(user))
 		return
 	if(src.beaker)
@@ -193,11 +194,11 @@ obj/machinery/chem_dispenser/RefreshParts()
 		user << "You set [B] on the machine."
 		nanomanager.update_uis(src) // update all UIs attached to src
 		return
-	if (istype(B, /obj/item/weapon/screwdriver))
-		default_deconstruction_screwdriver(user,icon_state,icon_state,B)
-	if(istype(B, /obj/item/weapon/crowbar	))
-		default_deconstruction_crowbar(B,0)
-
+	if(src.type == /obj/machinery/chem_dispenser)
+		if (istype(B, /obj/item/weapon/screwdriver))
+			default_deconstruction_screwdriver(user,icon_state,icon_state,B)
+		if(istype(B, /obj/item/weapon/crowbar	))
+			default_deconstruction_crowbar(B,0)
 
 /obj/machinery/chem_dispenser/attack_ai(mob/user as mob)
 	return src.attack_hand(user)

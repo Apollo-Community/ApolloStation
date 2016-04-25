@@ -32,3 +32,8 @@
 	display_name = "Sidiers labcoat"
 	path = /obj/item/clothing/suit/storage/toggle/labcoat/ominousbrainworm
 	sort_category = slot_wear_suit
+
+/datum/gear/account/kingnexus_dionalight
+	display_name = "Bio-luminescent organ"
+	path = /obj/item/clothing/suit/dionalight/kingnexus
+	sort_category = "misc"
