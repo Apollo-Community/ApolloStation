@@ -164,8 +164,11 @@
 
 //Shake effect
 /datum/shuttle/proc/shake_effect(var/list/turfs)
+	var/area/A
 	for(var/turf/T in turfs)
+		A = T.loc
 		for(var/mob/M in T)
+			A.Entered(M)
 			//Have to find a fix for this
 			//destination.Entered(M)
 			if(M.client)
