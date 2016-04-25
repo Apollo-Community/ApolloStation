@@ -12,20 +12,21 @@
 	var/arrival_message
 	var/departure_message
 
-	var/area/interim
-	var/area/last_departed
+	var/datum/hanger/origin
+	var/datum/hanger/last_departed
+
 	var/start_location
 	var/last_location
 	var/list/destinations
 	var/list/destination_dock_controller_tags = list() //optional, in case the shuttle has multiple docking ports like the ERT shuttle (even though that isn't a multi_shuttle)
 	var/list/destination_dock_controllers = list()
 	var/list/destination_dock_targets = list()
-	var/area/origin
 	var/return_warning = 0
 
 /datum/shuttle/multi_shuttle/New()
 	..()
 
+//Link docking controllers to destinations
 /datum/shuttle/multi_shuttle/init_docking_controllers()
 	..()
 	for(var/destination in destinations)
@@ -34,12 +35,12 @@
 			destination_dock_controllers[destination] = docking_controller
 		else
 			var/datum/computer/file/embedded_program/docking/C = locate(controller_tag)
-			
+
 			if(!istype(C))
 				world << "<span class='danger'>warning: shuttle with docking tag [controller_tag] could not find it's controller!</span>"
 			else
 				destination_dock_controllers[destination] = C
-	
+
 	//might as well set this up here.
 	if(origin) last_departed = origin
 	last_location = start_location
@@ -47,10 +48,10 @@
 /datum/shuttle/multi_shuttle/current_dock_target()
 	return destination_dock_targets[last_location]
 
-/datum/shuttle/multi_shuttle/move(var/area/origin, var/area/destination)
-	..()
+/datum/shuttle/multi_shuttle/move(var/datum/hanger/trg_hanger, var/direction=null, var/long_j)
+	..(trg_hanger, direction, long_j)
 	last_move = world.time
-	if (destination == src.origin)
+	if (trg_hanger == src.origin)
 		returned_home = 1
 	docking_controller = destination_dock_controllers[last_location]
 
@@ -99,7 +100,7 @@
 	dat += "<br><b><A href='?src=\ref[src];toggle_cloak=[1]'>Toggle cloaking field</A></b><br>"
 	dat += "<b><A href='?src=\ref[src];move_multi=[1]'>Move ship</A></b><br>"
 	dat += "<b><A href='?src=\ref[src];start=[1]'>Return to base</A></b></center>"
-	
+
 	//Docking
 	dat += "<center><br><br>"
 	if(MS.skip_docking_checks())
@@ -107,7 +108,7 @@
 	else
 		var/override_en = MS.docking_controller.override_enabled
 		var/docking_status = MS.docking_controller.get_docking_status()
-		
+
 		dat += "Docking Status: "
 		switch(docking_status)
 			if("undocked")
@@ -118,11 +119,11 @@
 				dat += "<font color='[override_en? "red" : "yellow"]'>Undocking</font>"
 			if("docked")
 				dat += "<font color='[override_en? "red" : "green"]'>Docked</font>"
-		
+
 		if(override_en) dat += " <font color='red'>(Override Enabled)</font>"
-		
+
 		dat += ". <A href='?src=\ref[src];refresh=[1]'>\[Refresh\]</A><br><br>"
-		
+
 		switch(docking_status)
 			if("undocked")
 				dat += "<b><A href='?src=\ref[src];dock_command=[1]'>Dock</A></b></center>"
@@ -139,11 +140,11 @@
 	var/choice = alert("The shuttle is currently docked! Please undock before continuing.","Error","Cancel","Force Launch")
 	if(choice == "Cancel")
 		return 0
-			
+
 	choice = alert("Forcing a shuttle launch while docked may result in severe injury, death and/or damage to property. Are you sure you wish to continue?", "Force Launch", "Force Launch", "Cancel")
 	if(choice == "Cancel")
 		return 0
-	
+
 	return 1
 
 /obj/machinery/computer/shuttle_control/multi/Topic(href, href_list)
@@ -165,11 +166,11 @@
 	if (MS.moving_status != SHUTTLE_IDLE)
 		usr << "<span class='notice'>[shuttle_tag] vessel is moving.</span>"
 		return
-	
+
 	if(href_list["dock_command"])
 		MS.dock()
 		return
-	
+
 	if(href_list["undock_command"])
 		MS.undock()
 		return
@@ -178,7 +179,7 @@
 		if(MS.at_origin)
 			usr << "<span class='alert'>You are already at your home base.</span>"
 			return
-	
+
 		if((MS.last_move + MS.cooldown*10) > world.time)
 			usr << "<span class='alert'>The ship's drive is inoperable while the engines are charging.</span>"
 			return
@@ -186,14 +187,14 @@
 		if(!check_docking(MS))
 			updateUsrDialog()
 			return
-		
+
 		if(!MS.return_warning)
 			usr << "<span class='alert'>Returning to your home base will end your mission. If you are sure, press the button again.</span>"
 			//TODO: Actually end the mission.
 			MS.return_warning = 1
 			return
 
-		MS.long_jump(MS.last_departed,MS.origin,MS.interim,MS.move_time)
+		MS.long_jump(MS.origin, MS.interim_hanger, MS.move_time, null)
 		MS.last_departed = MS.origin
 		MS.last_location = MS.start_location
 		MS.at_origin = 1
@@ -207,11 +208,11 @@
 		if((MS.last_move + MS.cooldown*10) > world.time)
 			usr << "<span class='alert'>The ship's drive is inoperable while the engines are charging.</span>"
 			return
-		
+
 		if(!check_docking(MS))
 			updateUsrDialog()
 			return
-		
+
 		var/choice = input("Select a destination.") as null|anything in MS.destinations
 		if(!choice) return
 
@@ -222,8 +223,7 @@
 			MS.last_departed = MS.origin
 			MS.at_origin = 0
 
-
-			MS.long_jump(MS.last_departed, MS.destinations[choice], MS.interim, MS.move_time)
+			MS.long_jump(MS.destinations[choice], MS.interim_hanger, MS.move_time, null)
 			MS.last_departed = MS.destinations[choice]
 			MS.last_location = choice
 			return
@@ -232,7 +232,7 @@
 
 			MS.announce_departure()
 
-		MS.short_jump(MS.last_departed, MS.destinations[choice])
+		MS.short_jump(MS.destinations[choice], null)
 		MS.last_departed = MS.destinations[choice]
 		MS.last_location = choice
 
