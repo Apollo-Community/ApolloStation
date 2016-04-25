@@ -1,0 +1,50 @@
+"a" = (/turf/space,/area/space)
+"b" = (/turf/simulated/shuttle/wall{icon_state = "swall_f6"; dir = 2},/area/shuttle/transport1/centcom)
+"c" = (/obj/structure/window/shuttle{icon_state = "window4"},/obj/structure/grille,/turf/simulated/floor{tag = "icon-shuttle_floor7"; icon_state = "shuttle_floor7"},/area/shuttle/transport1/centcom)
+"d" = (/obj/structure/window/shuttle{icon_state = "window12"},/obj/structure/grille,/turf/simulated/floor{tag = "icon-shuttle_floor7"; icon_state = "shuttle_floor7"},/area/shuttle/transport1/centcom)
+"e" = (/obj/structure/window/shuttle{tag = "icon-17 (NORTHEAST)"; icon_state = "17"},/obj/structure/grille,/turf/simulated/floor{tag = "icon-shuttle_floor7"; icon_state = "shuttle_floor7"},/area/shuttle/transport1/centcom)
+"f" = (/turf/simulated/shuttle/wall{icon_state = "swall_f10"; dir = 2},/area/shuttle/transport1/centcom)
+"g" = (/turf/simulated/shuttle/wall{icon_state = "swall3"; dir = 2},/area/shuttle/transport1/centcom)
+"h" = (/obj/structure/table/reinforced,/obj/machinery/embedded_controller/radio/simple_docking_controller{frequency = 1380; id_tag = "centcom_shuttle"; pixel_x = 0; pixel_y = -25; req_access_txt = "0"; req_one_access_txt = "0"; tag_door = "centcom_shuttle_hatch"},/obj/machinery/light/small,/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/transport1/centcom)
+"i" = (/obj/structure/bed/chair/shuttle{tag = "icon-chair3 (NORTH)"; icon_state = "chair3"; dir = 1},/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/transport1/centcom)
+"j" = (/obj/machinery/computer/shuttle_control{req_access = null; req_access_txt = "101"; shuttle_tag = "Centcom"},/obj/machinery/light/small,/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/transport1/centcom)
+"k" = (/turf/simulated/shuttle/wall{icon_state = "swall7"; dir = 2},/area/shuttle/transport1/centcom)
+"l" = (/turf/simulated/shuttle/wall{icon_state = "swall12"; dir = 2},/area/shuttle/transport1/centcom)
+"m" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/transport1/centcom)
+"n" = (/turf/simulated/shuttle/wall{icon_state = "swall11"; dir = 2},/area/shuttle/transport1/centcom)
+"o" = (/obj/structure/window/shuttle{icon_state = "window2"},/obj/structure/grille,/turf/simulated/floor{tag = "icon-shuttle_floor7"; icon_state = "shuttle_floor7"},/area/shuttle/transport1/centcom)
+"p" = (/obj/structure/bed/chair/shuttle{tag = "icon-chair3 (EAST)"; icon_state = "chair3"; dir = 4},/turf/simulated/floor{tag = "icon-shuttle_floor3"; icon_state = "shuttle_floor3"},/area/shuttle/transport1/centcom)
+"q" = (/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/transport1/centcom)
+"r" = (/obj/structure/bed/chair/shuttle{tag = "icon-chair3 (WEST)"; icon_state = "chair3"; dir = 8},/turf/simulated/floor{tag = "icon-shuttle_floor3"; icon_state = "shuttle_floor3"},/area/shuttle/transport1/centcom)
+"s" = (/obj/structure/window/shuttle{icon_state = "window1"},/obj/structure/grille,/turf/simulated/floor{tag = "icon-shuttle_floor7"; icon_state = "shuttle_floor7"},/area/shuttle/transport1/centcom)
+"t" = (/obj/structure/bed/chair/shuttle{tag = "icon-chair3 (EAST)"; icon_state = "chair3"; dir = 4},/obj/machinery/light/small{dir = 8},/turf/simulated/floor{tag = "icon-shuttle_floor3"; icon_state = "shuttle_floor3"},/area/shuttle/transport1/centcom)
+"u" = (/obj/machinery/light/small{dir = 4},/obj/structure/bed/chair/shuttle{tag = "icon-chair3 (WEST)"; icon_state = "chair3"; dir = 8},/turf/simulated/floor{tag = "icon-shuttle_floor3"; icon_state = "shuttle_floor3"},/area/shuttle/transport1/centcom)
+"v" = (/turf/simulated/shuttle/wall{icon_state = "swallc4"},/area/shuttle/transport1/centcom)
+"w" = (/turf/simulated/shuttle/wall{icon_state = "swallc3"},/area/shuttle/transport1/centcom)
+"x" = (/obj/machinery/door/airlock/external{frequency = 1380; icon_state = "door_locked"; id_tag = ""; locked = 1; name = "Shuttle Hatch"; req_access_txt = "13"},/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/transport1/centcom)
+"y" = (/obj/machinery/door/airlock/external{frequency = 1380; icon_state = "door_locked"; id_tag = "centcom_shuttle_hatch"; locked = 1; name = "Shuttle Hatch"; req_access_txt = "13"},/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/transport1/centcom)
+"z" = (/turf/simulated/shuttle/wall{dir = 2; icon_state = "swallc1"},/area/shuttle/transport1/centcom)
+"A" = (/obj/machinery/light/small{dir = 8},/turf/simulated/floor{tag = "icon-shuttle_floor2"; icon_state = "shuttle_floor2"},/area/shuttle/transport1/centcom)
+"B" = (/obj/structure/closet/crate/freezer/rations,/turf/simulated/floor{tag = "icon-shuttle_floor2"; icon_state = "shuttle_floor2"},/area/shuttle/transport1/centcom)
+"C" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor{tag = "icon-shuttle_floor2"; icon_state = "shuttle_floor2"},/area/shuttle/transport1/centcom)
+"D" = (/turf/simulated/shuttle/wall{tag = "icon-swallc2"; icon_state = "swallc2"; dir = 2},/area/shuttle/transport1/centcom)
+"E" = (/obj/structure/shuttle/engine/propulsion,/turf/simulated/floor/plating{tag = "icon-warnplate (WEST)"; icon_state = "warnplate"; dir = 8},/area/shuttle/transport1/centcom)
+"F" = (/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/shuttle/transport1/centcom)
+"G" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/heater,/turf/simulated/floor/plating,/area/shuttle/transport1/centcom)
+"H" = (/turf/simulated/shuttle/wall{icon_state = "swall_f9"; dir = 2},/area/shuttle/transport1/centcom)
+"I" = (/obj/structure/shuttle/engine/propulsion,/turf/simulated/floor/plating{tag = "icon-warnplate (EAST)"; icon_state = "warnplate"; dir = 4},/area/shuttle/transport1/centcom)
+"J" = (/obj/structure/shuttle/engine/propulsion,/turf/simulated/floor/plating{tag = "icon-warnplate"; icon_state = "warnplate"},/area/shuttle/transport1/centcom)
+
+(1,1,1) = {"
+abcdefa
+aghijga
+aklmlna
+aopqroa
+aspqrsa
+bntqukf
+kvpqrwn
+xqqqqqy
+kzABCDn
+EFGGGHI
+aaJJJaa
+"}

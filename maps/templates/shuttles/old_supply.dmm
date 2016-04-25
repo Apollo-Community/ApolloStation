@@ -1,0 +1,40 @@
+"a" = (/turf/simulated/shuttle/wall{icon_state = "swall_f6"; dir = 2},/area/supply/dock)
+"b" = (/turf/simulated/shuttle/wall{icon_state = "swall12"; dir = 2},/area/supply/dock)
+"c" = (/turf/simulated/shuttle/wall{icon_state = "swall_f10"; dir = 2},/area/supply/dock)
+"d" = (/turf/simulated/shuttle/wall{icon_state = "swall3"; dir = 2},/area/supply/dock)
+"e" = (/obj/machinery/light/small{dir = 8},/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/supply/dock)
+"f" = (/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/supply/dock)
+"g" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/supply/dock)
+"h" = (/obj/machinery/conveyor{dir = 4; id = "QMLoad2"},/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/supply/dock)
+"i" = (/obj/machinery/conveyor{dir = 4; id = "QMLoad2"},/obj/machinery/door/airlock/external{frequency = 1380; icon_state = "door_locked"; id_tag = "supply_shuttle_hatch"; locked = 1; name = "Shuttle Hatch"; req_access_txt = "13"},/turf/simulated/shuttle/plating,/area/supply/dock)
+"j" = (/turf/simulated/floor{tag = "icon-shuttle_floor2"; icon_state = "shuttle_floor2"},/area/supply/dock)
+"k" = (/obj/machinery/door/airlock/external{frequency = 1380; icon_state = "door_locked"; id_tag = "supply_shuttle_hatch"; locked = 1; name = "Shuttle Hatch"; req_access_txt = "13"},/turf/simulated/shuttle/floor,/area/supply/dock)
+"l" = (/obj/machinery/embedded_controller/radio/simple_docking_controller{frequency = 1380; id_tag = "supply_shuttle"; pixel_x = 25; pixel_y = 0; req_access_txt = "0"; req_one_access_txt = "13;31"; tag_door = "supply_shuttle_hatch"},/obj/machinery/light/small{dir = 4},/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/supply/dock)
+"m" = (/obj/machinery/conveyor{dir = 4; id = "QMLoad"},/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/supply/dock)
+"n" = (/obj/machinery/conveyor{dir = 4; id = "QMLoad"},/obj/machinery/door/airlock/external{frequency = 1380; icon_state = "door_locked"; id_tag = "supply_shuttle_hatch"; locked = 1; name = "Shuttle Hatch"; req_access_txt = "13"},/turf/simulated/shuttle/plating,/area/supply/dock)
+"o" = (/turf/simulated/shuttle/wall{icon_state = "swall7"; dir = 2},/area/supply/dock)
+"p" = (/turf/simulated/shuttle/wall{dir = 1; icon_state = "swall_floor_f10"},/area/supply/dock)
+"q" = (/turf/simulated/shuttle/wall{dir = 8; icon_state = "swall_floor_f6"},/area/supply/dock)
+"r" = (/turf/simulated/shuttle/wall{icon_state = "swall11"; dir = 2},/area/supply/dock)
+"s" = (/turf/space,/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/supply/dock)
+"t" = (/turf/simulated/shuttle/wall{icon_state = "swall15"; dir = 2},/area/supply/dock)
+"u" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/heater,/turf/simulated/floor/plating/airless,/area/supply/dock)
+"v" = (/turf/space,/turf/simulated/shuttle/wall{icon_state = "swall_f9"; dir = 2},/area/supply/dock)
+"w" = (/turf/unsimulated/floor{tag = "icon-plating"; icon_state = "plating"},/area/centcom/suppy)
+"x" = (/obj/structure/shuttle/engine/propulsion{icon_state = "burst_l"},/turf/simulated/floor/plating,/area/supply/dock)
+"y" = (/obj/structure/shuttle/engine/propulsion,/turf/simulated/floor/plating,/area/supply/dock)
+"z" = (/obj/structure/shuttle/engine/propulsion{icon_state = "burst_r"},/turf/simulated/floor/plating,/area/supply/dock)
+
+(1,1,1) = {"
+abbbbbc
+defffgd
+dffffhi
+dfjfffk
+defffld
+dfffffk
+dffffmn
+defffgd
+opfffqr
+stuuutv
+wxyyyzw
+"}
