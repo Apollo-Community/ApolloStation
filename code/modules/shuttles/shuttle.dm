@@ -32,7 +32,7 @@
 
 //Make a short jump to the target hanger
 /datum/shuttle/proc/short_jump(var/datum/hanger/trg_hanger, var/direction)
-	error("shuttle [template_path] making short jump to [trg_hanger.tag]")
+	//error("shuttle [template_path] making short jump to [trg_hanger.tag]")
 	if(moving_status != SHUTTLE_IDLE) return
 
 	if(isnull(trg_hanger)) return

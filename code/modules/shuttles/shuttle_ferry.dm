@@ -51,7 +51,7 @@
 
 	if(isnull(direction))
 		direction = !location
-	error("shuttle ferry [template_path] making short jump to [trg_hanger.tag]")
+	//error("shuttle ferry [template_path] making short jump to [trg_hanger.tag]")
 	..(trg_hanger, direction)
 
 //Ferry long jump
