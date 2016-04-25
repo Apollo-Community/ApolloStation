@@ -256,6 +256,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 
 //This is called by gameticker after all the machines and radio frequencies have been properly initialized
 /datum/shuttle_controller/proc/setup_shuttle_docks()
+	//We MUST wait for the shuttles to be ingame otherwise the docking controllers will not be found
 	while(!init_done)
 		sleep(50)
 	var/datum/shuttle/shuttle

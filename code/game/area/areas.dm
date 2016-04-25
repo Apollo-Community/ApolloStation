@@ -135,6 +135,55 @@ area/space/atmosalert()
 	environment = UNDERWATER
 	parallax_style = "bluespace"
 
+/area/space/bluespace/hanger_1
+	icon_state = "start"
+	name = "\improper Bluespace"
+	ambience = list('sound/ambience/ambbspace.ogg')
+	environment = UNDERWATER
+	parallax_style = "bluespace"
+
+/area/space/bluespace/hanger_2
+	icon_state = "start"
+	name = "\improper Bluespace"
+	ambience = list('sound/ambience/ambbspace.ogg')
+	environment = UNDERWATER
+	parallax_style = "bluespace"
+
+/area/space/bluespace/hanger_3
+	icon_state = "start"
+	name = "\improper Bluespace"
+	ambience = list('sound/ambience/ambbspace.ogg')
+	environment = UNDERWATER
+	parallax_style = "bluespace"
+
+/area/space/bluespace/hanger_4
+	icon_state = "start"
+	name = "\improper Bluespace"
+	ambience = list('sound/ambience/ambbspace.ogg')
+	environment = UNDERWATER
+	parallax_style = "bluespace"
+
+/area/space/bluespace/hanger_5
+	icon_state = "start"
+	name = "\improper Bluespace"
+	ambience = list('sound/ambience/ambbspace.ogg')
+	environment = UNDERWATER
+	parallax_style = "bluespace"
+
+/area/space/bluespace/hanger_6
+	icon_state = "start"
+	name = "\improper Bluespace"
+	ambience = list('sound/ambience/ambbspace.ogg')
+	environment = UNDERWATER
+	parallax_style = "bluespace"
+
+/area/space/bluespace/hanger_7
+	icon_state = "start"
+	name = "\improper Bluespace"
+	ambience = list('sound/ambience/ambbspace.ogg')
+	environment = UNDERWATER
+	parallax_style = "bluespace"
+
 /area/engine/
 	music = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg' )
 

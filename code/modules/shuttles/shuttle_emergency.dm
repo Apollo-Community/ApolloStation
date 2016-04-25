@@ -12,18 +12,17 @@
 
 	emergency_shuttle.shuttle_arrived()
 
-/datum/shuttle/ferry/emergency/long_jump(var/datum/hanger/trg_hanger, var/list/coord_interim, var/travel_time, var/direction)
+/datum/shuttle/ferry/emergency/long_jump(var/datum/hanger/trg_hanger, var/datum/hanger/hanger_interim, var/travel_time, var/direction)
 	if (!location)
 		travel_time = SHUTTLE_TRANSIT_DURATION_RETURN
 	else
 		travel_time = SHUTTLE_TRANSIT_DURATION
 	if(isnull(trg_hanger))
 		trg_hanger = get_hanger(!location)
-	if(trg_hanger.can_land_at(src))
 	//update move_time and launch_time so we get correct ETAs
 		move_time = travel_time
 		emergency_shuttle.launch_time = world.time
-		..(trg_hanger, coord_interim, travel_time, direction)
+		..(trg_hanger, hanger_interim, travel_time, direction)
 
 /datum/shuttle/ferry/emergency/move(trg_hanger, var/direction = null, var/long_j)
 	var/leaving_station = at_station()

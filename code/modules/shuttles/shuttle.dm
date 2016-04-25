@@ -13,6 +13,7 @@
 	var/list/shuttle_turfs
 	var/shuttle_ingame = 0
 	var/datum/hanger/current_hanger
+	var/datum/hanger/interim_hanger
 	var/docking_controller_tag	//tag of the controller used to coordinate docking
 	var/datum/computer/file/embedded_program/docking/docking_controller	//the controller itself. (micro-controller, not game controller)
 	var/arrive_time = 0	//the time at which the shuttle arrives when long jumping
@@ -21,21 +22,8 @@
 	if(isnull(template_path))
 		world << "<span class='danger'>warning: [docking_controller_tag] shuttle template could not be located </span>"
 	template_dim = template_controller.GetTemplateSize(template_path)
-	/*
-	var/datum/dim_min_max/dims = get_dim_and_minmax(shuttle_turfs)
-	template_dim = list(dims.dim_x , dims.dim_y)
-	if(template_dim[1] % 2)
-		template_dim[1] = template_dim[1] + 1
-	if(template_dim[2] % 2)
-		template_dim[2] = template_dim[2] + 1
-	//annoying blue space ugh
-	if(!isnull(tag_interim))
-		var/obj/locObj = locate(tag_interim)
-		dock_coord_interim = list(locObj.x, locObj.y, locObj.z)
-	*/
 
 //Initiate the docking controllers by locating them in the game world.
-//If there are no.. do nothing ?
 /datum/shuttle/proc/init_docking_controllers()
 	if(docking_controller_tag)
 		docking_controller = locate(docking_controller_tag)
@@ -67,16 +55,20 @@
 
 //Make a long jump. First go the the interim position and then to the target hanger.
 //Wait at the interim position for the indicated time.
-/datum/shuttle/proc/long_jump(var/datum/hanger/trg_hanger, var/list/coord_interim, var/travel_time, var/direction)
+/datum/shuttle/proc/long_jump(var/datum/hanger/trg_hanger, var/datum/hanger/interim_hanger, var/travel_time, var/direction)
 	//world << "shuttle/long_jump: departing=[departing], destination=[destination], interim=[interim], travel_time=[travel_time]"
 	if(moving_status != SHUTTLE_IDLE) return
 
 	if(isnull(trg_hanger)) return
 
-	if(trg_hanger.can_land_at(src))
-		trg_hanger.full = 1
-	else
-		return
+	if(!trg_hanger.can_land_at(src)) return
+	trg_hanger.full = 1
+
+	if(isnull(interim_hanger))
+		interim_hanger = hanger_controller.get_free_interim_hanger(src)
+
+	if(!isnull(interim_hanger) && interim_hanger.can_land_at(src))
+		interim_hanger.full = 1
 
 	//it would be cool to play a sound here
 	moving_status = SHUTTLE_WARMUP
@@ -86,7 +78,8 @@
 
 		arrive_time = world.time + travel_time*10
 		moving_status = SHUTTLE_INTRANSIT
-		move(trg_hanger, direction, null, 1)
+		//Needs to have interim_hanger
+		move(interim_hanger, direction, null, 0)
 
 
 		while (world.time < arrive_time)
@@ -121,7 +114,6 @@
 //Arguments:
 //trg_hanger - The hanger we are going to jump to, must be a datum/hanger type
 //direction - the direction we are jumping (not shure if this matters)
-//long_j - Is this called via long jump ? (needed for hanger assigment and hanger calls).
 //Returns:
 //Nothing
 //Note:
@@ -140,32 +132,16 @@
 
 	//Move and or gib who/what is/are under the arriving shuttle
 	move_gib(destination, trg_hanger.exterior)
-
-	//Tell the hanger a shuttle is landing at it if we are not jumping to blue space
-	if(!long_j)
-		//error("[template_path] is going to call the hanger")
-		//error("[shuttle_turfs.len] is the size of the shuttle")
-		trg_hanger.land_at(src)
+	trg_hanger.land_at(src)
 
 	//Are we physycally in the game yet ?
 	if(!shuttle_ingame)
-		//Make it so at the location you want to be
 		place_shuttle(trg_hanger)
 	else
 		shuttle_turfs = move_turfs_to_turfs(shuttle_turfs, destination, direction=direction)
 
-	//move_gib(destination, trg_hanger)
-
-	//Tell the hanger you took of from that you've taken off from it.
 	current_hanger.take_off()
-	//The hanger that you went to is now your current if you are not jumping to blue space
-	//If so assign a special blue space hanger (this is hacky)
-	if(!long_j)
-		current_hanger = trg_hanger
-	else
-		current_hanger = blue_hanger
-
-	//Shake effect
+	current_hanger = trg_hanger
 	shake_effect(shuttle_turfs)
 
 	//Check and update powered systems on the shuttle

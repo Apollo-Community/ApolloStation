@@ -9,6 +9,7 @@
 	var/transit_direction = null	//needed for area/move_contents_to() to properly handle shuttle corners - not exactly sure how it works.
 	var/datum/hanger/hanger_station
 	var/datum/hanger/hanger_offsite
+	var/pod = 0
 
 	//TODO: change location to a string and use a mapping for area and dock targets.
 	var/dock_target_station
@@ -55,8 +56,8 @@
 
 //Ferry long jump
 //Find out if we have a location, if so determin where we are going.
-//Call super with your destination and bluespace coords
-/datum/shuttle/ferry/long_jump(var/datum/hanger/trg_hanger, var/list/coord_interim, var/travel_time, var/direction)
+//Call super with your destination and bluespace hanger
+/datum/shuttle/ferry/long_jump(var/datum/hanger/trg_hanger, var/datum/hanger/interim_hanger, var/travel_time, var/direction)
 	//world << "shuttle/ferry/long_jump: departing=[departing], destination=[destination], interim=[interim], travel_time=[travel_time]"
 	if(isnull(location))
 		return
@@ -64,12 +65,8 @@
 	if(isnull(trg_hanger))
 		trg_hanger = get_hanger(!location)
 
-	if(isnull(coord_interim))
-		coord_interim = dock_coord_interim
-
 	direction = !location
-	error("shuttle ferry [template_path] making long jump to [trg_hanger.tag]")
-	..(trg_hanger, coord_interim, travel_time, direction)
+	..(trg_hanger, interim_hanger, travel_time, direction)
 
 
 //Ferries have a few things that need to be done afther the standart move.
@@ -106,10 +103,7 @@
 	switch(process_state)
 		if (WAIT_LAUNCH)
 			if (skip_docking_checks() || docking_controller.can_launch())
-
-				//world << "shuttle/ferry/process: area_transition=[area_transition], travel_time=[travel_time]"
-
-				if (move_time && dock_coord_interim)
+				if (move_time && pod)
 					long_jump(null, null, move_time, transit_direction)
 				else
 					short_jump()
@@ -117,7 +111,7 @@
 				process_state = WAIT_ARRIVE
 
 		if (FORCE_LAUNCH)
-			if (move_time && dock_coord_interim)
+			if (move_time && pod)
 				long_jump(null, null, move_time, transit_direction)
 			else
 				short_jump()

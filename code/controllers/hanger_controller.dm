@@ -3,10 +3,14 @@ var/global/datum/hanger_controller/hanger_controller
 datum/hanger_controller
 	var/list/hangers
 	var/list/hangers_as
+	var/list/blue_space_hangers
+	var/list/blue_space_hangers_as
 
 datum/hanger_controller/New()
 	hangers = new /list()
 	hangers_as = new /list()
+	blue_space_hangers = new /list()
+	blue_space_hangers_as = new /list()
 	var/datum/hanger/H
 
 	//Hangers:
@@ -264,6 +268,14 @@ datum/hanger_controller/New()
 	hangers_as[H.tag] = H
 	hangers += H
 
+	//Generating bluespace hangers for long jumps
+	for(var/i=1, i <= 7, i++)
+		H = new /datum/hanger()
+		H.tag = "Blue_Space_[i]"
+		H.exterior = 1
+		H.hanger_area = locate(text2path("/area/space/bluespace/hanger_[i]"))
+		blue_space_hangers_as[H.tag] = H
+		blue_space_hangers += H
 
 	//Remove the space hanager beacons because my drawing skills are not for mortal eyes to see
 	init_hangers()
@@ -278,3 +290,13 @@ datum/hanger_controller/New()
 /datum/hanger_controller/proc/init_hangers()
 	for(var/datum/hanger/H in hangers)
 		H.init_hanger()
+
+//Need to make this
+/datum/hanger_controller/proc/get_free_interim_hanger(var/datum/shuttle/S)
+	for(var/datum/hanger/H in blue_space_hangers)
+		if(H.can_land_at(S))
+			return H
+	return null
+
+/datum/hanger_controller/proc/ger_free_hanger(var/datum/hanger/H)
+	return 0

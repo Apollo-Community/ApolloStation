@@ -194,7 +194,7 @@
 			MS.return_warning = 1
 			return
 
-		MS.long_jump(MS.origin, MS.dock_coord_interim, MS.move_time, null)
+		MS.long_jump(MS.origin, MS.interim_hanger, MS.move_time, null)
 		MS.last_departed = MS.origin
 		MS.last_location = MS.start_location
 		MS.at_origin = 1
@@ -223,7 +223,7 @@
 			MS.last_departed = MS.origin
 			MS.at_origin = 0
 
-			MS.long_jump(MS.destinations[choice], MS.dock_coord_interim, MS.move_time, null)
+			MS.long_jump(MS.destinations[choice], MS.interim_hanger, MS.move_time, null)
 			MS.last_departed = MS.destinations[choice]
 			MS.last_location = choice
 			return

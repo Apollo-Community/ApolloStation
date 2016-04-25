@@ -1932,11 +1932,10 @@
 						valid_shuttles += shuttle_tag
 
 				var/shuttle_tag = input("Which shuttle do you want to launch?") as null|anything in valid_shuttles
-
+				var/datum/shuttle/ferry/S = shuttle_controller.shuttles[shuttle_tag]
 				if (!shuttle_tag)
 					return
 
-				var/datum/shuttle/ferry/S = shuttle_controller.shuttles[shuttle_tag]
 				if (S.can_launch())
 					S.launch(usr)
 					message_admins("<span class='notice'>[key_name_admin(usr)] launched the [shuttle_tag] shuttle</span>")

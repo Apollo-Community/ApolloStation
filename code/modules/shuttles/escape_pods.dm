@@ -13,6 +13,7 @@
 			world << "<span class='danger'>warning: escape pod with docking tag [docking_controller_tag] could not find it's controller master!</span>"
 		else
 			controller_master.pod = src
+	pod = 1
 
 /datum/shuttle/ferry/escape_pod/can_launch()
 	if(arming_controller && !arming_controller.armed)	//must be armed
