@@ -277,7 +277,7 @@ datum/hanger_controller/New()
 		blue_space_hangers_as[H.tag] = H
 		blue_space_hangers += H
 
-	//Remove the space hanager beacons because my drawing skills are not for mortal eyes to see
+
 	init_hangers()
 /datum/hanger_controller/proc/remove_space_beacons()
 	var/obj/locObj
@@ -288,8 +288,9 @@ datum/hanger_controller/New()
 		qdel(locObj)
 
 /datum/hanger_controller/proc/init_hangers()
-	for(var/datum/hanger/H in hangers)
+	for(var/datum/hanger/H in hangers + blue_space_hangers)
 		H.init_hanger()
+		error("Hanger [H.tag] created at [H.hanger_area] has [H.hanger_area_turfs.len] turfs")
 
 //Need to make this
 /datum/hanger_controller/proc/get_free_interim_hanger(var/datum/shuttle/S)

@@ -137,6 +137,7 @@
 	//Are we physycally in the game yet ?
 	if(!shuttle_ingame)
 		place_shuttle(trg_hanger)
+		current_hanger = blue_hanger
 	else
 		shuttle_turfs = move_turfs_to_turfs(shuttle_turfs, destination, direction=direction)
 
