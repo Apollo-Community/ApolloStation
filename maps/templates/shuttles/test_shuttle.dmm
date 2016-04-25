@@ -1,0 +1,51 @@
+"a" = (/turf/space,/area/space)
+"b" = (/turf/space,/area/shuttle/escape/spawn_area)
+"c" = (/turf/simulated/shuttle/wall{icon_state = "swall3"; dir = 2},/area/shuttle/escape/spawn_area)
+"d" = (/turf/simulated/floor/bspace_safe,/area/shuttle/escape/spawn_area)
+"e" = (/turf/simulated/shuttle/floor,/area/shuttle/escape/spawn_area)
+"f" = (/turf/simulated/shuttle/wall{icon_state = "swall3"; dir = 2},/area/space)
+"g" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/shuttle/wall{icon_state = "swall3"; dir = 2},/area/shuttle/escape/spawn_area)
+"h" = (/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/space)
+"i" = (/turf/simulated/shuttle/wall{dir = 3; icon_state = "swall_f10"; layer = 2},/area/shuttle/escape/spawn_area)
+"j" = (/turf/simulated/shuttle/wall{icon_state = "swall_f6"; dir = 2},/area/shuttle/escape/spawn_area)
+"k" = (/turf/simulated/shuttle/wall{dir = 2; icon_state = "swall_floor_f9"},/area/shuttle/escape/spawn_area)
+"l" = (/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 4},/area/shuttle/escape/spawn_area)
+"m" = (/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 8},/area/shuttle/escape/spawn_area)
+"n" = (/turf/simulated/shuttle/wall{icon_state = "swall_f9"; dir = 2},/area/space)
+"o" = (/obj/machinery/door/airlock/external{frequency = 1380; icon_state = "door_locked"; id_tag = "escape_shuttle_hatch"; locked = 1; name = "Shuttle Hatch"; req_access_txt = "13"},/obj/machinery/mech_sensor{dir = 8; frequency = 1380; id_tag = "shuttle_dock_south_mech"; pixel_y = 19},/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/escape/spawn_area)
+"p" = (/obj/machinery/door/airlock/external{frequency = 1380; icon_state = "door_locked"; id_tag = "escape_shuttle_hatch"; locked = 1; name = "Shuttle Hatch"; req_access_txt = "13"},/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/escape/spawn_area)
+"q" = (/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/shuttle/escape/spawn_area)
+"r" = (/obj/structure/window/shuttle,/turf/simulated/wall/mineral/glass,/area/shuttle/escape/spawn_area)
+"s" = (/obj/structure/spacepoddoor,/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 1},/area/shuttle/escape/spawn_area)
+"t" = (/turf/simulated/shuttle/wall{icon_state = "swall11"; dir = 2},/area/shuttle/escape/spawn_area)
+"u" = (/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/shuttle/escape/spawn_area)
+"v" = (/turf/simulated/shuttle/wall{dir = 2; icon_state = "swall_floor_f5"},/area/space)
+"w" = (/turf/simulated/shuttle/wall{dir = 3; icon_state = "swall_f10"; layer = 2},/area/space)
+"x" = (/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"y" = (/obj/structure/window/shuttle{icon_state = "window4"},/turf/simulated/wall/mineral/glass,/area/space)
+"z" = (/obj/structure/window/shuttle{icon_state = "window8"},/turf/simulated/wall/mineral/glass,/area/space)
+
+(1,1,1) = {"
+abbbbbbbbba
+bbbbbbbbbbb
+bbbbbbbbbbb
+cddddddceec
+fddddddceef
+fddddddgeef
+fddddddceef
+fddddddceef
+hiddddjkeef
+aclddmceeef
+aclddmceeef
+aclddmceejn
+aclddmgeeca
+aclddmceeca
+aclddmceeoa
+aclddmceepa
+aqrssrteeca
+abbbbbqieca
+aabbbbbcefa
+aabbbbbcuvw
+aabbbbbruxf
+aaabbbbqyzn
+"}
