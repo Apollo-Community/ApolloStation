@@ -159,7 +159,8 @@
 	operative_notes = "Remember the teachings of Hy-lurgixon; kill first, ask questions later! Only the enlightened Tiger brethren can be trusted; all others must be expelled from this mortal realm! You may spare the Space Marauders, as they share our interests of destruction and carnage! We'd like to make the corporate whores skiddle in their boots. We encourage operatives to be as loud and intimidating as possible."
 
 	equipment = list(
-		new/datum/uplink_item(/obj/item/weapon/legcuffs/beartrap/viper, 3000, "Viper's Coil", "TVC")
+		new/datum/uplink_item(/obj/item/weapon/legcuffs/beartrap/viper, 3000, "Viper's Coil", "TVC"),
+		new/datum/uplink_item(/obj/item/weapon/twohanded/spear/exolitic, 4000, "Spear of the Pure", "ECS")
 	)
 
 // AIs are always assigned to this one
