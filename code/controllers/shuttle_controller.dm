@@ -155,6 +155,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	AS.template_path = "maps/templates/shuttles/alien_shuttle.dmm"
 	shuttles["Alien"] = shuttle
 	//process_shuttles += shuttle	//don't need to process this. It can only be moved using admin magic anyways.
+	//Admin magic can be found ingame under the admin/secrets tap. The shuttle is moved via the jump shuttle command
 
 
 	// ERT Shuttle
@@ -176,8 +177,8 @@ var/global/datum/shuttle_controller/shuttle_controller
 	//Vox Shuttle.
 	var/datum/shuttle/multi_shuttle/VS = new/datum/shuttle/multi_shuttle()
 	VS.template_path ="maps/templates/shuttles/vox.dmm"
-	VS.tag_interim = "vox_interim"
-	VS.origin = hangers["Vox_Home_Hanger"]
+	//With the starting hange schedular we don't need to worry about an origen hanger with ships that do not start at a dock
+	//VS.origin = hangers["Vox_Home_Hanger"]
 
 	//Need to add the mining shuttle and maybe moon base if it fits
 	VS.destinations = list(
@@ -194,16 +195,16 @@ var/global/datum/shuttle_controller/shuttle_controller
 	VS.announcer = "NSV Icarus"
 	VS.arrival_message = "Attention, Apollo, we just tracked a small target bypassing our defensive perimeter. Can't fire on it without hitting the station - you've got incoming visitors, like it or not."
 	VS.departure_message = "Your guests are pulling away, Apollo - moving too fast for us to draw a bead on them. Looks like they're heading out of the system at a rapid clip."
-
+	VS.docking_controller_tag = "Vox Shuttle"
 	VS.warmup_time = 0
 	shuttles["Vox Skipjack"] = VS
 
 
-	//Nuke Ops shuttle.
+	//Merc Shuttle not in the game at the moment
+	/*
 	var/datum/shuttle/multi_shuttle/MS = new/datum/shuttle/multi_shuttle()
 	MS.template_path ="maps/templates/shuttles/Merc.dmm"
-	MS.tag_interim = "vox_interim"
-	MS.origin = hangers["Syndi_Home_Hanger"] //Continue HERE
+	MS.starting_hanger = hangers["Syndi_Home_Hanger"]
 	MS.destinations = list(
 		"Port Solars" = hangers["Space_W_Hanger"],
 		"Starboard Solars" = hangers["Space_E_Hanger"],
@@ -220,31 +221,52 @@ var/global/datum/shuttle_controller/shuttle_controller
 	MS.departure_message = "Your visitors are on their way out of the system, Apollo, burning delta-v like it's nothing. Good riddance."
 	MS.warmup_time = 0
 	shuttles["Mercenary"] = MS
+	*/
+
+	//Nuke ops shuttle
+	var/datum/shuttle/multi_shuttle/NS = new/datum/shuttle/multi_shuttle()
+	NS.template_path ="maps/templates/shuttles/nuke_ops.dmm"
+	NS.starting_hanger = hangers["Syndi_Home_Hanger"]
+	NS.destinations = list(
+		"Port Solars" = hangers["Space_W_Hanger"],
+		"Starboard Solars" = hangers["Space_E_Hanger"],
+		"Fore Side" = hangers["Space_N_Hanger"],
+		"Fore Port Side" = hangers["Space_NW_Hanger"],
+		"Fore Starboard Side" = hangers["Space_NE_Hanger"],
+		"Aft Side" = hangers["Space_S_Hanger"],
+		"Aft Port Side" = hangers["Space_SW_Hanger"],
+		"Aft Starboard Side" = hangers["Space_SE_Hanger"]
+		)
+
+	NS.announcer = "NSV Icarus"
+	NS.arrival_message = "Attention, Apollo, you have a large signature approaching the station - looks unarmed to surface scans. We're too far out to intercept - brace for visitors."
+	NS.departure_message = "Your visitors are on their way out of the system, Apollo, burning delta-v like it's nothing. Good riddance."
+	NS.warmup_time = 0
+	NS.docking_controller_tag = "Nuke_Shuttle"
+	shuttles["Mercenary"] = NS
 
 
-	/*
-// Valen's shuttle - same layout as nuke and goes to mostly same locations
+
+	//Valen's shuttle - same layout as nuke and goes to the same locations
 	var/datum/shuttle/multi_shuttle/VALS = new/datum/shuttle/multi_shuttle()
-	VALS.origin = locate(/area/adminprep/valansship)
-
+	VALS.template_path ="maps/templates/shuttles/valen_shuttle.dmm"
 	VALS.destinations = list(
-		"Northwest of the station" = locate(/area/syndicate_station/northwest),
-		"Northeast of the station" = locate(/area/syndicate_station/northeast),
-		"Southwest of the station" = locate(/area/syndicate_station/southwest),
-		"South of the station" = locate(/area/syndicate_station/south),
-		"Southeast of the station" = locate(/area/syndicate_station/southeast),
-		"Telecomms Satellite" = locate(/area/syndicate_station/commssat),
-		"Mining Asteroid" = locate(/area/syndicate_station/mining),
+		"Port Solars" = hangers["Space_W_Hanger"],
+		"Starboard Solars" = hangers["Space_E_Hanger"],
+		"Fore Side" = hangers["Space_N_Hanger"],
+		"Fore Port Side" = hangers["Space_NW_Hanger"],
+		"Fore Starboard Side" = hangers["Space_NE_Hanger"],
+		"Aft Side" = hangers["Space_S_Hanger"],
+		"Aft Port Side" = hangers["Space_SW_Hanger"],
+		"Aft Starboard Side" = hangers["Space_SE_Hanger"]
 		)
 
 	VALS.announcer = "NSV Icarus"
 	VALS.arrival_message = "Attention, Apollo, you have a large signature approaching the station - looks unarmed to surface scans. We're too far out to intercept - brace for visitors."
-	VALS.departure_message = "Your visitors are on their way out of the system, Apollo, burning delta-v like it's nothing. Good riddance."
-	VALS.interim = locate(/area/syndicate_station/transit)
-
+	VALS.departure_message = "Your visitors are on their way out of the system Apollo. They are moving to fast for us to atempt an intercept."
 	VALS.warmup_time = 0
+	VALS.docking_controller_tag = "Valen's Shuttle"
 	shuttles["Valans"] = VALS
-	*/
 
 /datum/shuttle_controller/proc/setup()
 

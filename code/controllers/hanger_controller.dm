@@ -5,12 +5,16 @@ datum/hanger_controller
 	var/list/hangers_as
 	var/list/blue_space_hangers
 	var/list/blue_space_hangers_as
+	var/list/start_hangers_as
+	var/list/start_hangers
 
 datum/hanger_controller/New()
 	hangers = new /list()
 	hangers_as = new /list()
 	blue_space_hangers = new /list()
 	blue_space_hangers_as = new /list()
+	start_hangers_as = new /list()
+	start_hangers	= new /list()
 	var/datum/hanger/H
 
 	//Hangers:
@@ -251,19 +255,13 @@ datum/hanger_controller/New()
 	hangers_as[H.tag] = H
 	hangers += H
 
-	//From here on down are "event and costum" shuttle/hanger origins
-	H = new /datum/hanger()
-	H.tag = "Vox_Home_Hanger"
-	H.exterior = 1
-	H.hanger_area = locate(/area/shuttle/vox/station)
-	hangers_as += H.tag
-	hangers_as[H.tag] = H
-	hangers += H
-
+	//Home hanger for the nuke ops syndicate shuttle
 	H = new /datum/hanger()
 	H.tag = "Syndi_Home_Hanger"
-	H.exterior = 0
+	H.beacon_tag = "sy_home"
 	H.hanger_area = locate(/area/syndicate_mothership/offsite_hanger)
+	H.exterior = 1
+	H.square = 0
 	hangers_as += H.tag
 	hangers_as[H.tag] = H
 	hangers += H
@@ -277,6 +275,14 @@ datum/hanger_controller/New()
 		blue_space_hangers_as[H.tag] = H
 		blue_space_hangers += H
 
+	//Generating CC starting hangers for generic ships
+	for(var/i=1, i <= 10, i++)
+		H = new /datum/hanger()
+		H.tag = "Start_Hanger_[i]"
+		H.exterior = 1
+		H.hanger_area = locate(text2path("/area/space/s_hanger_[i]"))
+		start_hangers_as[H.tag] = H
+		start_hangers += H
 
 	init_hangers()
 /datum/hanger_controller/proc/remove_space_beacons()
@@ -288,7 +294,7 @@ datum/hanger_controller/New()
 		qdel(locObj)
 
 /datum/hanger_controller/proc/init_hangers()
-	for(var/datum/hanger/H in hangers + blue_space_hangers)
+	for(var/datum/hanger/H in hangers + blue_space_hangers + start_hangers)
 		H.init_hanger()
 		error("Hanger [H.tag] created at [H.hanger_area] has [H.hanger_area_turfs.len] turfs")
 
@@ -299,5 +305,8 @@ datum/hanger_controller/New()
 			return H
 	return null
 
-/datum/hanger_controller/proc/ger_free_hanger(var/datum/hanger/H)
-	return 0
+/datum/hanger_controller/proc/ger_free_starting_hanger(var/datum/shuttle/S)
+	for(var/datum/hanger/H in start_hangers)
+		if(H.can_land_at(S))
+			return H
+	return null

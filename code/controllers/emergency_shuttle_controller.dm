@@ -83,7 +83,7 @@ var/global/datum/emergency_shuttle_controller/emergency_shuttle
 	for(var/area/A in world)
 		if(istype(A, /area/hallway))
 			A.readyalert()
-
+	//Arm the pods (maybe a bit early but good for testing)
 	for (var/datum/shuttle/ferry/escape_pod/pod in escape_pods)
 		if (pod.arming_controller)
 			pod.arming_controller.arm()

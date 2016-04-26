@@ -14,14 +14,26 @@
 	var/shuttle_ingame = 0
 	var/datum/hanger/current_hanger
 	var/datum/hanger/interim_hanger
+	var/datum/hanger/starting_hanger
 	var/docking_controller_tag	//tag of the controller used to coordinate docking
 	var/datum/computer/file/embedded_program/docking/docking_controller	//the controller itself. (micro-controller, not game controller)
 	var/arrive_time = 0	//the time at which the shuttle arrives when long jumping
 
 /datum/shuttle/proc/init_templates()
 	if(isnull(template_path))
-		world << "<span class='danger'>warning: [docking_controller_tag] shuttle template could not be located </span>"
+		world << "<span class='danger'>warning: [docking_controller_tag] shuttle template could not be located. </span>"
 	template_dim = template_controller.GetTemplateSize(template_path)
+
+	if(isnull(starting_hanger))
+		starting_hanger = hanger_controller.ger_free_starting_hanger(src)
+		if(isnull(starting_hanger))
+			world << "<span class='danger'>warning: [docking_controller_tag] could not find a hanger to start at. </span>"
+	//Place down the template at the right spot further down in this process this will also aquere the right turfs for us.
+	starting_hanger.land_at(src)
+	current_hanger = starting_hanger
+	place_shuttle(starting_hanger)
+	shuttle_ingame = 1
+
 
 //Initiate the docking controllers by locating them in the game world.
 /datum/shuttle/proc/init_docking_controllers()
@@ -133,14 +145,7 @@
 	//Move and or gib who/what is/are under the arriving shuttle
 	move_gib(destination, trg_hanger.exterior)
 	trg_hanger.land_at(src)
-
-	//Are we physycally in the game yet ?
-	if(!shuttle_ingame)
-		place_shuttle(trg_hanger)
-		current_hanger = blue_hanger
-	else
-		shuttle_turfs = move_turfs_to_turfs(shuttle_turfs, destination, direction=direction)
-
+	shuttle_turfs = move_turfs_to_turfs(shuttle_turfs, destination, direction=direction)
 	current_hanger.take_off()
 	current_hanger = trg_hanger
 	shake_effect(shuttle_turfs)

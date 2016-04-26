@@ -113,6 +113,46 @@ var/list/ghostteleportlocs = list()
 	ambience = list()
 	environment = PLAIN
 
+/area/space/s_hanger_1
+	name = "\improper Space"
+	icon_state = "space_1"
+
+/area/space/s_hanger_2
+	name = "\improper Space"
+	icon_state = "space_1"
+
+/area/space/s_hanger_3
+	name = "\improper Space"
+	icon_state = "space_1"
+
+/area/space/s_hanger_4
+	name = "\improper Space"
+	icon_state = "space_1"
+
+/area/space/s_hanger_5
+	name = "\improper Space"
+	icon_state = "space_1"
+
+/area/space/s_hanger_6
+	name = "\improper Space"
+	icon_state = "space_1"
+
+/area/space/s_hanger_7
+	name = "\improper Space"
+	icon_state = "space_1"
+
+/area/space/s_hanger_8
+	name = "\improper Space"
+	icon_state = "space_1"
+
+/area/space/s_hanger_9
+	name = "\improper Space"
+	icon_state = "space_1"
+
+/area/space/s_hanger_10
+	name = "\improper Space"
+	icon_state = "space_1"
+
 /area/space/inner
 	name = "\improper Inner Station Space"
 	icon_state = "space"

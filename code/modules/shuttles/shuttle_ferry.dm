@@ -19,24 +19,13 @@
 
 //Ferries always have two stops so they must be ingame at round start
 /datum/shuttle/ferry/init_templates()
-	//Call super to get proper coordinates
-	..()
-
 	//What is our home base ?
-	var/datum/hanger/trg_hanger
 	if(location == 0)
-		trg_hanger = hanger_station
+		starting_hanger = hanger_station
 	else
-		trg_hanger = hanger_offsite
+		starting_hanger = hanger_offsite
 
-	//Place down the template at the right spot further down in this process this will also aquere the right turfs for us.
-	trg_hanger.land_at(src)
-	current_hanger = trg_hanger
-	place_shuttle(trg_hanger)
-
-	//We are now ingame
-	shuttle_ingame = 1
-	//error("[template_path] - location = [location]")
+	..()
 
 //Ferries have a simple short jump
 //Find out if we have a location, if so determin where we are going.
@@ -102,10 +91,14 @@
 /datum/shuttle/ferry/proc/process()
 	switch(process_state)
 		if (WAIT_LAUNCH)
+			error("shuttle [docking_controller_tag] is waiting for docking controllers to agree its undocked.")
 			if (skip_docking_checks() || docking_controller.can_launch())
+				error("shuttle [docking_controller_tag] is launching.")
 				if (move_time && pod)
+					error("shuttle [docking_controller_tag] is making a long jump.")
 					long_jump(null, null, move_time, transit_direction)
 				else
+					error("shuttle [docking_controller_tag] is making a short jump.")
 					short_jump()
 
 				process_state = WAIT_ARRIVE

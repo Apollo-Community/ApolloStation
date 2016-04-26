@@ -1,24 +1,24 @@
 "aa" = (/turf/space,/area/space)
 "ab" = (/turf/simulated/shuttle/wall{dir = 8; icon_state = "diagonalWall3"},/area/shuttle/vox/station)
-"ac" = (/turf/simulated/shuttle/wall{icon_state = "pwall"; dir = 1},/area/space)
-"ad" = (/turf/simulated/shuttle/wall{dir = 1; icon_state = "diagonalWall3"},/area/shuttle/vox/station)
-"ae" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/shuttle/vox/station)
-"af" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/machinery/door/blast/regular{dir = 2; id = "skipjack"; name = "Skipjack Blast Shielding"},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
-"ag" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/machinery/door/blast/regular{dir = 2; id = "skipjack"; name = "Skipjack Blast Shielding"},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
-"ah" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/machinery/door/blast/regular{dir = 2; id = "skipjack"; name = "Skipjack Blast Shielding"},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
-"ai" = (/obj/machinery/computer/station_alert,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"aj" = (/obj/machinery/computer/shuttle_control/multi/vox,/turf/simulated/shuttle/floor{icon_state = "floor4"; oxygen = 0},/area/shuttle/vox/station)
-"ak" = (/turf/simulated/shuttle/floor{icon_state = "floor4"; oxygen = 0},/area/shuttle/vox/station)
-"al" = (/obj/machinery/access_button{command = "cycle_exterior"; frequency = 1331; master_tag = "vox_west_control"; req_one_access_txt = "150"},/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/shuttle/vox/station)
-"am" = (/obj/machinery/door/airlock/hatch{frequency = 1331; icon_state = "door_locked"; id_tag = "vox_northwest_lock"; locked = 1; req_access_txt = "150"; req_one_access = null; req_one_access_txt = "0"},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
-"an" = (/obj/machinery/door_control{id = "skipjack"; pixel_y = 24},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"ao" = (/obj/effect/landmark{name = "voxstart"},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"ap" = (/obj/structure/bed/chair{dir = 1},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"aq" = (/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"ar" = (/obj/machinery/door/airlock/hatch{frequency = 1331; icon_state = "door_locked"; id_tag = "vox_northeast_lock"; locked = 1; req_access_txt = "150"; req_one_access = null; req_one_access_txt = "0"},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
-"as" = (/obj/machinery/access_button{command = "cycle_exterior"; frequency = 1331; master_tag = "vox_east_control"; req_access_txt = "150"},/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/shuttle/vox/station)
-"at" = (/obj/machinery/atmospherics/unary/vent_pump/high_volume{frequency = 1331; id_tag = "vox_west_vent"},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
-"au" = (/obj/machinery/airlock_sensor{frequency = 1331; id_tag = "vox_west_sensor"; pixel_x = 25},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"ac" = (/turf/simulated/shuttle/wall{dir = 1; icon_state = "diagonalWall3"},/area/shuttle/vox/station)
+"ad" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/shuttle/vox/station)
+"ae" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/machinery/door/blast/regular{dir = 2; id = "skipjack"; name = "Skipjack Blast Shielding"},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"af" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/machinery/door/blast/regular{dir = 2; id = "skipjack"; name = "Skipjack Blast Shielding"},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"ag" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/machinery/door/blast/regular{dir = 2; id = "skipjack"; name = "Skipjack Blast Shielding"},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"ah" = (/obj/machinery/computer/station_alert,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"ai" = (/obj/machinery/computer/shuttle_control/multi/vox,/turf/simulated/shuttle/floor{icon_state = "floor4"; oxygen = 0},/area/shuttle/vox/station)
+"aj" = (/turf/simulated/shuttle/floor{icon_state = "floor4"; oxygen = 0},/area/shuttle/vox/station)
+"ak" = (/obj/machinery/access_button{command = "cycle_exterior"; frequency = 1331; master_tag = "vox_west_control"; req_one_access_txt = "150"},/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/shuttle/vox/station)
+"al" = (/obj/machinery/door/airlock/hatch{frequency = 1331; icon_state = "door_locked"; id_tag = "vox_northwest_lock"; locked = 1; req_access_txt = "150"; req_one_access = null; req_one_access_txt = "0"},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"am" = (/obj/machinery/door_control{id = "skipjack"; pixel_y = 24},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"an" = (/obj/effect/landmark{name = "voxstart"},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"ao" = (/obj/structure/bed/chair{dir = 1},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"ap" = (/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"aq" = (/obj/machinery/door/airlock/hatch{frequency = 1331; icon_state = "door_locked"; id_tag = "vox_northeast_lock"; locked = 1; req_access_txt = "150"; req_one_access = null; req_one_access_txt = "0"},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"ar" = (/obj/machinery/access_button{command = "cycle_exterior"; frequency = 1331; master_tag = "vox_east_control"; req_access_txt = "150"},/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/shuttle/vox/station)
+"as" = (/obj/machinery/atmospherics/unary/vent_pump/high_volume{frequency = 1331; id_tag = "vox_west_vent"},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"at" = (/obj/machinery/airlock_sensor{frequency = 1331; id_tag = "vox_west_sensor"; pixel_x = 25},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"au" = (/turf/simulated/shuttle/wall{icon_state = "pwall"; dir = 1},/area/space)
 "av" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/machinery/door/blast/regular{id = "skipjack"; name = "Skipjack Blast Shielding"},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
 "aw" = (/obj/item/weapon/stool,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
 "ax" = (/obj/item/clothing/head/collectable/petehat{desc = "It smells faintly of reptile."; name = "fancy leader hat"},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
@@ -37,7 +37,7 @@
 "aK" = (/obj/machinery/atmospherics/pipe/simple/visible,/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
 "aL" = (/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
 "aM" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/machinery/door/blast/regular{id = "skipjack"; name = "Skipjack Blast Shielding"},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
-"aN" = (/obj/machinery/atmospherics/pipe/simple/visible,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"aN" = (/obj/machinery/atmospherics/pipe/simple/visible,/obj/machinery/door/window{dir = 1; req_access = "150"},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
 "aO" = (/obj/structure/window/basic{dir = 1},/obj/structure/table,/obj/machinery/recharger,/obj/item/robot_parts/chest,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
 "aP" = (/obj/structure/window/basic{dir = 1},/obj/structure/table,/obj/machinery/cell_charger,/obj/item/weed_extract,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
 "aQ" = (/obj/structure/window/basic{dir = 1},/obj/structure/table,/mob/living/bot/floorbot,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
@@ -46,60 +46,64 @@
 "aT" = (/obj/structure/table/reinforced,/obj/item/weapon/scalpel,/obj/item/stack/cable_coil,/obj/item/weapon/storage/firstaid/regular,/obj/structure/window/basic{dir = 1},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
 "aU" = (/obj/structure/table/reinforced,/obj/item/weapon/circular_saw,/obj/structure/window/basic{dir = 1},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
 "aV" = (/obj/machinery/optable,/obj/item/organ/brain,/obj/structure/window/basic{dir = 1},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"aW" = (/obj/item/weapon/screwdriver{pixel_y = 15},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"aX" = (/obj/item/weapon/organ/r_arm,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"aY" = (/obj/machinery/atmospherics/pipe/tank/nitrogen{dir = 1; initialize_directions = 1; start_pressure = 493.6},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"aZ" = (/obj/machinery/portable_atmospherics/canister/phoron,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"ba" = (/obj/machinery/portable_atmospherics/canister/nitrogen,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bb" = (/obj/structure/table/rack,/obj/item/weapon/rcd,/obj/item/weapon/rcd_ammo,/obj/item/weapon/rcd_ammo,/obj/item/weapon/rcd_ammo,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bc" = (/obj/structure/table/rack,/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/nitrogen,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bd" = (/obj/structure/table/rack,/obj/item/clothing/tie/storage/black_vest,/obj/item/clothing/suit/space/vox/carapace,/obj/item/clothing/head/helmet/space/vox/carapace,/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"be" = (/obj/structure/table/rack,/obj/item/weapon/gun/dartgun/vox/raider,/obj/item/weapon/gun/dartgun/vox/medical,/obj/item/weapon/dart_cartridge,/obj/item/weapon/dart_cartridge,/obj/item/weapon/dart_cartridge,/obj/item/weapon/dart_cartridge,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bf" = (/obj/machinery/sleeper,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bg" = (/obj/machinery/sleep_console,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bh" = (/obj/machinery/bodyscanner,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bi" = (/obj/machinery/body_scanconsole,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bj" = (/turf/simulated/shuttle/wall{icon_state = "diagonalWall3"},/area/shuttle/vox/station)
-"bk" = (/obj/structure/shuttle/engine/heater,/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
-"bl" = (/obj/structure/table/rack,/obj/item/clothing/tie/storage/black_vest,/obj/item/clothing/suit/space/vox/medic,/obj/item/clothing/head/helmet/space/vox/medic,/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bm" = (/obj/structure/table/rack,/obj/item/weapon/gun/launcher/pneumatic,/obj/item/weapon/harpoon,/obj/item/weapon/harpoon,/obj/item/weapon/harpoon,/obj/item/weapon/harpoon,/obj/item/weapon/tank/nitrogen,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bn" = (/turf/simulated/shuttle/wall{dir = 4; icon_state = "diagonalWall3"},/area/shuttle/vox/station)
-"bo" = (/obj/structure/shuttle/engine/propulsion,/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
-"bp" = (/obj/structure/table/rack,/obj/item/clothing/tie/storage/black_vest,/obj/item/clothing/suit/space/vox/pressure,/obj/item/clothing/head/helmet/space/vox/pressure,/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bq" = (/obj/structure/table/rack,/obj/item/weapon/gun/launcher/spikethrower,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"br" = (/obj/structure/table/rack,/obj/item/clothing/tie/storage/black_vest,/obj/item/clothing/suit/space/vox/stealth,/obj/item/clothing/head/helmet/space/vox/stealth,/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bs" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
-"bt" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
-"bu" = (/obj/machinery/door/airlock/hatch{req_access_txt = "150"; req_one_access = null; req_one_access_txt = "0"},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
-"bv" = (/obj/item/clothing/head/bowler,/obj/item/weapon/broken_bottle,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bw" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bx" = (/obj/item/weapon/tank/emergency_oxygen,/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"by" = (/obj/item/clothing/head/bearpelt,/obj/item/xenos_claw,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bz" = (/obj/structure/bed/chair{dir = 4},/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bA" = (/obj/item/clothing/head/collectable/xenom,/obj/item/clothing/head/chicken,/obj/item/weapon/aiModule/syndicate,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bB" = (/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c500,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bC" = (/obj/item/weapon/spacecash/c50,/obj/structure/bed/chair{dir = 8},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bD" = (/obj/structure/AIcore,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bE" = (/obj/item/weapon/spacecash/c200,/obj/item/weapon/spacecash/c50,/obj/structure/bed/chair{dir = 1},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"aW" = (/obj/machinery/atmospherics/pipe/simple/visible,/obj/machinery/door/window{dir = 1; req_access = "150"},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"aX" = (/obj/machinery/atmospherics/pipe/simple/visible,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"aY" = (/obj/item/weapon/screwdriver{pixel_y = 15},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"aZ" = (/obj/item/weapon/organ/r_arm,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"ba" = (/obj/machinery/atmospherics/pipe/tank/nitrogen{dir = 1; initialize_directions = 1; start_pressure = 493.6},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bb" = (/obj/machinery/portable_atmospherics/canister/phoron,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bc" = (/obj/machinery/portable_atmospherics/canister/nitrogen,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bd" = (/obj/structure/table/rack,/obj/item/weapon/rcd,/obj/item/weapon/rcd_ammo,/obj/item/weapon/rcd_ammo,/obj/item/weapon/rcd_ammo,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"be" = (/obj/structure/table/rack,/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/nitrogen,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bf" = (/obj/structure/table/rack,/obj/item/clothing/tie/storage/black_vest,/obj/item/clothing/suit/space/vox/carapace,/obj/item/clothing/head/helmet/space/vox/carapace,/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bg" = (/obj/structure/table/rack,/obj/item/weapon/gun/dartgun/vox/raider,/obj/item/weapon/gun/dartgun/vox/medical,/obj/item/weapon/dart_cartridge,/obj/item/weapon/dart_cartridge,/obj/item/weapon/dart_cartridge,/obj/item/weapon/dart_cartridge,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bh" = (/obj/machinery/sleeper,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bi" = (/obj/machinery/sleep_console,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bj" = (/obj/machinery/bodyscanner,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bk" = (/obj/machinery/body_scanconsole,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bl" = (/turf/simulated/shuttle/wall{icon_state = "diagonalWall3"},/area/shuttle/vox/station)
+"bm" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/basic{dir = 1},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"bn" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/basic{dir = 1},/obj/structure/window/reinforced{dir = 4},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"bo" = (/obj/structure/table/rack,/obj/item/clothing/tie/storage/black_vest,/obj/item/clothing/suit/space/vox/medic,/obj/item/clothing/head/helmet/space/vox/medic,/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bp" = (/obj/structure/table/rack,/obj/item/weapon/gun/launcher/pneumatic,/obj/item/weapon/harpoon,/obj/item/weapon/harpoon,/obj/item/weapon/harpoon,/obj/item/weapon/harpoon,/obj/item/weapon/tank/nitrogen,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bq" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/basic{dir = 1},/obj/structure/window/reinforced{dir = 8},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"br" = (/turf/simulated/shuttle/wall{dir = 4; icon_state = "diagonalWall3"},/area/shuttle/vox/station)
+"bs" = (/obj/structure/shuttle/engine/propulsion,/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"bt" = (/obj/structure/table/rack,/obj/item/clothing/tie/storage/black_vest,/obj/item/clothing/suit/space/vox/pressure,/obj/item/clothing/head/helmet/space/vox/pressure,/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bu" = (/obj/structure/table/rack,/obj/item/weapon/gun/launcher/spikethrower,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bv" = (/obj/structure/table/rack,/obj/item/clothing/tie/storage/black_vest,/obj/item/clothing/suit/space/vox/stealth,/obj/item/clothing/head/helmet/space/vox/stealth,/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bw" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"bx" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"by" = (/obj/machinery/door/airlock/hatch{req_access_txt = "150"; req_one_access = null; req_one_access_txt = "0"},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"bz" = (/obj/item/clothing/head/bowler,/obj/item/weapon/broken_bottle,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bA" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bB" = (/obj/item/weapon/tank/emergency_oxygen,/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bC" = (/obj/item/clothing/head/bearpelt,/obj/item/xenos_claw,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bD" = (/obj/structure/bed/chair{dir = 4},/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bE" = (/obj/item/clothing/head/collectable/xenom,/obj/item/clothing/head/chicken,/obj/item/weapon/aiModule/syndicate,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bF" = (/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c500,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bG" = (/obj/item/weapon/spacecash/c50,/obj/structure/bed/chair{dir = 8},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bH" = (/obj/structure/AIcore,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bI" = (/obj/item/weapon/spacecash/c200,/obj/item/weapon/spacecash/c50,/obj/structure/bed/chair{dir = 1},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaabacacacadaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaeafagahaeaaaaaaaaaaaaaaaa
-aaabacacadaaaaabaeaiajakaeadaaaaabacacadaa
-aaaealamaeaaabaeanaoapaoaqaeadaaaearasaeaa
-aaaeatauaeacavawaqaoaxaoaqawavacaeayazaeaa
-aaaeaAaBaeacaCawaqaoaqaoaqawaCacaeaDaEaeaa
-aaaeaFaGaeaeaeaeaeaeaHaeaeaeaeaeaeaIaJaeaa
-acavaKaLaLaLaLaLaLaeaLaeaLaLaLaLaLaLaKavac
-acaMaNaOaPaQaRaeaHaeaHaeaHaeaSaTaUaVaNaMac
-acaCaNaqaqaqaWaeaqaqaqaqaqaeaqaqaXaqaNaCac
-abaeaYaZbabbbcaebdaqaqaqbeaebfbgbhbiaYaead
-bjaebkbkaeaeaeaeblaqaqaqbmaeaeaeaebkbkaebn
-aabjbobobnaaaaaebpaqaqaqbqaeaaaabjbobobnaa
-aaaaaaaaaaaaaaaebraqaqaqbqaeaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaebsbtbubsbtaeaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaebvbwaqbxbyaeaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaebzbAaqbBbCaeaaaaaaaaaaaaaa
-aaaaaaaaaaaaaabjaebDbEaqaebnaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaabjaeaeaebnaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaabaaaaaaacaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaadaeafagadaaaaaaaaaaaaaaaa
+aaabaaaaacaaaaabadahaiajadacaaaaabaaaaacaa
+aaadakaladaaabadamanaoanapadacaaadaqaradaa
+aaadasatadauavawapanaxanapawavauadayazadaa
+aaadaAaBadauaCawapanapanapawaCauadaDaEadaa
+aaadaFaGadadadadadadaHadadadadadadaIaJadaa
+aaavaKaLaLaLaLaLaLadaLadaLaLaLaLaLaLaKavaa
+aaaMaNaOaPaQaRadaHadaHadaHadaSaTaUaVaWaMaa
+aaaCaXapapapaYadapapapapapadapapaZapaXaCaa
+abadbabbbcbdbeadbfapapapbgadbhbibjbkbaadac
+bladbmbnadadadadboapapapbpadadadadbqbnadbr
+aablbsbsbraaaaadbtapapapbuadaaaablbsbsbraa
+aaaaaaaaaaaaaaadbvapapapbuadaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaadbwbxbybwbxadaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaadbzbAapbBbCadaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaadbDbEapbFbGadaaaaaaaaaaaaaa
+aaaaaaaaaaaaaabladbHbIapadbraaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaabladadadbraaaaaaaaaaaaaaaa
 "}

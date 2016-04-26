@@ -2,7 +2,7 @@
 /datum/shuttle/multi_shuttle
 
 	var/cloaked = 1
-	var/at_origin = 1
+	var/at_starting_hanger = 1
 	var/returned_home = 0
 	var/move_time = 240
 	var/cooldown = 20
@@ -11,8 +11,6 @@
 	var/announcer
 	var/arrival_message
 	var/departure_message
-
-	var/datum/hanger/origin
 	var/datum/hanger/last_departed
 
 	var/start_location
@@ -42,7 +40,7 @@
 				destination_dock_controllers[destination] = C
 
 	//might as well set this up here.
-	if(origin) last_departed = origin
+	if(starting_hanger) last_departed = starting_hanger
 	last_location = start_location
 
 /datum/shuttle/multi_shuttle/current_dock_target()
@@ -51,7 +49,7 @@
 /datum/shuttle/multi_shuttle/move(var/datum/hanger/trg_hanger, var/direction=null, var/long_j)
 	..(trg_hanger, direction, long_j)
 	last_move = world.time
-	if (trg_hanger == src.origin)
+	if (trg_hanger == src.starting_hanger)
 		returned_home = 1
 	docking_controller = destination_dock_controllers[last_location]
 
@@ -157,7 +155,7 @@
 	var/datum/shuttle/multi_shuttle/MS = shuttle_controller.shuttles[shuttle_tag]
 	if(!istype(MS)) return
 
-	//world << "multi_shuttle: last_departed=[MS.last_departed], origin=[MS.origin], interim=[MS.interim], travel_time=[MS.move_time]"
+	//world << "multi_shuttle: last_departed=[MS.last_departed], starting_hanger=[MS.starting_hanger], interim=[MS.interim], travel_time=[MS.move_time]"
 
 	if(href_list["refresh"])
 		updateUsrDialog()
@@ -176,7 +174,7 @@
 		return
 
 	if(href_list["start"])
-		if(MS.at_origin)
+		if(MS.at_starting_hanger)
 			usr << "<span class='alert'>You are already at your home base.</span>"
 			return
 
@@ -194,10 +192,10 @@
 			MS.return_warning = 1
 			return
 
-		MS.long_jump(MS.origin, MS.interim_hanger, MS.move_time, null)
-		MS.last_departed = MS.origin
+		MS.long_jump(MS.starting_hanger, MS.interim_hanger, MS.move_time, null)
+		MS.last_departed = MS.starting_hanger
 		MS.last_location = MS.start_location
-		MS.at_origin = 1
+		MS.at_starting_hanger = 1
 
 	if(href_list["toggle_cloak"])
 
@@ -218,17 +216,17 @@
 
 		usr << "<span class='notice'>[shuttle_tag] main computer recieved message.</span>"
 
-		if(MS.at_origin)
+		if(MS.at_starting_hanger)
 			MS.announce_arrival()
-			MS.last_departed = MS.origin
-			MS.at_origin = 0
+			MS.last_departed = MS.starting_hanger
+			MS.at_starting_hanger = 0
 
 			MS.long_jump(MS.destinations[choice], MS.interim_hanger, MS.move_time, null)
 			MS.last_departed = MS.destinations[choice]
 			MS.last_location = choice
 			return
 
-		else if(choice == MS.origin)
+		else if(choice == MS.starting_hanger)
 
 			MS.announce_departure()
 
