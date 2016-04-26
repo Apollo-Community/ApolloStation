@@ -7,7 +7,8 @@
 		if( M == user.mind ) // no voting for yourself
 			antags -= M
 			continue
-		factions += M.antagonist.faction
+		if( !(M.antagonist.faction in factions) )
+			factions += M.antagonist.faction
 
 	if( !antags.len )	return
 
