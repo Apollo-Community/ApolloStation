@@ -12,7 +12,7 @@
 
 	emergency_shuttle.shuttle_arrived()
 
-/datum/shuttle/ferry/emergency/long_jump(var/datum/hanger/trg_hanger, var/datum/hanger/hanger_interim, var/travel_time, var/direction)
+/datum/shuttle/ferry/emergency/long_jump(var/obj/hanger/trg_hanger, var/obj/hanger/hanger_interim, var/travel_time, var/direction)
 	if (!location)
 		travel_time = SHUTTLE_TRANSIT_DURATION_RETURN
 	else

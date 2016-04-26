@@ -7,45 +7,35 @@
 //Dimensional area based - No beacon just an area, used to calculate center point.
 //None dimensional area/beacon hybrit - An area and a beacon defining the center point. This can house non square ships
 
-//Make a global hanger for blue space travelers (this is hacky)
-var/global/datum/hanger/hanger_blue/blue_hanger = new/datum/hanger/hanger_blue()
-
-datum/hanger
-	var/beacon_tag
-	var/datum/coords/loc
-	var/list/hanger_turfs
+obj/hanger
+	var/htag
 	var/full = 0
 	var/exterior = 1
-	var/area/hanger_area
-	var/list/hanger_turf_atribs
 	var/dimx = 0
 	var/dimy = 0
 	var/square = 1
+	var/area/hanger_area
+	var/hanger_area_tag
+	var/list/hanger_turf_atribs
 	var/list/hanger_area_turfs
+	var/list/hanger_turfs
 
 //Initializes the hanger.
 //This is basically delayed constructor to make the creation of hangers
 //More user friendly in the hanger controller. (AKA nobody wants to pass a thousant arguments to have to pass)
-datum/hanger/proc/init_hanger()
-	//If we have a location beacon get the hanger location
-	if(!isnull(beacon_tag))
-		var/turf/locObj = locate(beacon_tag)
-		loc = new/datum/coords()
-		loc.x_pos = locObj.x
-		loc.y_pos = locObj.y
-		loc.z_pos = locObj.z
-
+obj/hanger/New()
 	//If we have an hanger area get its turfs we may or may not need this later.
 	//Note: the turfs gotten when else is reached will probably never be used but need them for debugging
+	hanger_area = locate(text2path(hanger_area_tag))
 	if(!isnull(hanger_area) && isnull(hanger_area_turfs))
 		hanger_area_turfs = get_area_turfs(hanger_area.type)
 	else
-		hanger_area_turfs = get_turfs_square(loc.x_pos, loc.y_pos, loc.z_pos, dimx, dimy)
+		hanger_area_turfs = get_turfs_square(x, y, z, dimx, dimy)
 
 	//If no location was assigned but we have hanger area turfs, calculate the aprocimate center of the hanger and take that as location.
 	//This is used to make hangers in space easier
 
-	if(isnull(loc) && !isnull(hanger_area_turfs))
+	if(!isnull(hanger_area_turfs) && dimx == 0 && dimy == 0)
 		loc = new/datum/coords
 		square = 1
 
@@ -58,27 +48,34 @@ datum/hanger/proc/init_hanger()
 		if(dimy % 2)
 			//odd dim y
 			dimy += round(1 + dimy)
-		loc.x_pos = dims.min_x + ((1/2)*dimx)
-		loc.y_pos = dims.min_y + ((1/2)*dimy)
-		loc.z_pos = dims.loc_z
+
+	add_to_controller()
 
 //Can the given shuttle land at this hanger ?
 //Give an x and y dimensions of the shuttle
 //If the hanger is not square look if the shuttle will fit in the hanger turfs
 //This is important for hangers with docking arms
-datum/hanger/proc/can_land_at(var/datum/shuttle/s, var/list/shuttle_turfs = null)
+obj/hanger/proc/can_land_at(var/datum/shuttle/s, var/list/shuttle_turfs = null)
 	////error("Can_land called by [s.template_path] in [tag]")
 	if(full)
-		//error("[tag] was full [s.template_path]")
 		return 0
 	if(square)
 		if(s.template_dim[1] > dimx || s.template_dim[2] > dimy)
-			//error("[s.template_path] does not fit in [tag]")
 			return 0
 	else
 		if(isnull(s.shuttle_turfs) || isnull(hanger_area_turfs))
 			return 0
 		else
+			var/datum/coords/current_loc = new /datum/coords
+			current_loc.x_pos = s.current_hanger.x
+			current_loc.y_pos = s.current_hanger.y
+			current_loc.z_pos = s.current_hanger.z
+
+			var/datum/coords/loc = new /datum/coords
+			loc.x_pos = x
+			loc.y_pos = y
+			loc.z_pos = z
+
 			shuttle_turfs = shift_turfs(s.current_hanger.loc, loc, s.shuttle_turfs)
 			for(var/turf/T in shuttle_turfs)
 				if(hanger_area_turfs.Find(T) >= 1)
@@ -87,19 +84,12 @@ datum/hanger/proc/can_land_at(var/datum/shuttle/s, var/list/shuttle_turfs = null
 
 
 //Shuttle indicating its going to land at a hanger
-datum/hanger/proc/land_at(var/datum/shuttle/s)
-	//The way the very first call is made is messy to say the least. this is because we don't have a
-	//Starting coord yet.. maybe calculate one ?
-	//error("[s.template_path] is going to land at [tag]")
+obj/hanger/proc/land_at(var/datum/shuttle/s)
 	if(!exterior)
-		//Need to find a way to fix this..
-		//if(s.shuttle_ingame)	hanger_turfs = shift_turfs(s.current_hanger.loc ,loc, s.shuttle_turfs)
-		//else	hanger_turfs = hanger_area_turfs
 		hanger_turfs = hanger_area_turfs
 		hanger_turf_atribs = truf_atrib_lister(hanger_turfs)
-		//error("[tag] saved [hanger_turfs.len] hanger turfs and [hanger_turf_atribs.len] atribs")
 
-datum/hanger/proc/take_off()
+obj/hanger/proc/take_off()
 	if(!full)
 		return
 
@@ -108,17 +98,15 @@ datum/hanger/proc/take_off()
 
 	full = 0
 
-//For when you have a long jump in blue space
-datum/hanger/hanger_blue
+obj/hanger/proc/add_to_controller()
+	hanger_controller.hangers += src
+	hanger_controller.hangers_as[tag] = src
 
-datum/hanger/hanger_blue/can_land_at(var/datum/shuttle/s = null, var/list/shuttle_turfs = null)
-	full = 0
-	return 1
 
-datum/hanger/hanger_blue/land_at(var/datum/shuttle/s = null)
-	full = 0
-	return
+obj/hanger/square/exterior/space_hanger/blue_space/add_to_controller()
+	hanger_controller.blue_space_hangers += src
+	hanger_controller.blue_space_hangers_as[tag] = src
 
-datum/hanger/hanger_blue/take_off()
-	full = 0
-	return
+obj/hanger/square/exterior/space_hanger/start_hanger/add_to_controller()
+	hanger_controller.start_hangers += src
+	hanger_controller.start_hangers_as[tag] = src

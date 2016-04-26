@@ -7,8 +7,8 @@
 	var/in_use = null	//tells the controller whether this shuttle needs processing
 	var/move_time = 0		//the time spent in the transition area
 	var/transit_direction = null	//needed for area/move_contents_to() to properly handle shuttle corners - not exactly sure how it works.
-	var/datum/hanger/hanger_station
-	var/datum/hanger/hanger_offsite
+	var/obj/hanger/hanger_station
+	var/obj/hanger/hanger_offsite
 	var/pod = 0
 
 	//TODO: change location to a string and use a mapping for area and dock targets.
@@ -31,7 +31,7 @@
 //Find out if we have a location, if so determin where we are going.
 //Ask the hanger if it allready has a shuttle in it. if not proceed with the jump
 //Call super to finsh the standart short jump
-/datum/shuttle/ferry/short_jump(var/datum/hanger/trg_hanger, var/direction)
+/datum/shuttle/ferry/short_jump(var/obj/hanger/trg_hanger, var/direction)
 	if(isnull(location))
 		return
 
@@ -46,7 +46,7 @@
 //Ferry long jump
 //Find out if we have a location, if so determin where we are going.
 //Call super with your destination and bluespace hanger
-/datum/shuttle/ferry/long_jump(var/datum/hanger/trg_hanger, var/datum/hanger/interim_hanger, var/travel_time, var/direction)
+/datum/shuttle/ferry/long_jump(var/obj/hanger/trg_hanger, var/obj/hanger/interim_hanger, var/travel_time, var/direction)
 	//world << "shuttle/ferry/long_jump: departing=[departing], destination=[destination], interim=[interim], travel_time=[travel_time]"
 	if(isnull(location))
 		return
@@ -60,7 +60,7 @@
 
 //Ferries have a few things that need to be done afther the standart move.
 //Call super with destination and change the location where are at accordingly
-/datum/shuttle/ferry/move(var/datum/hanger/trg_hanger, var/direction = null, var/long_j)
+/datum/shuttle/ferry/move(var/obj/hanger/trg_hanger, var/direction = null, var/long_j)
 	..(trg_hanger, null, long_j)
 
 	//if this is a long_jump retain the location we were last at until we get to the new one

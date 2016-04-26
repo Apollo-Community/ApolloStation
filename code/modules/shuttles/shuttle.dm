@@ -12,9 +12,9 @@
 	var/tag_interim
 	var/list/shuttle_turfs
 	var/shuttle_ingame = 0
-	var/datum/hanger/current_hanger
-	var/datum/hanger/interim_hanger
-	var/datum/hanger/starting_hanger
+	var/obj/hanger/current_hanger
+	var/obj/hanger/interim_hanger
+	var/obj/hanger/starting_hanger
 	var/docking_controller_tag	//tag of the controller used to coordinate docking
 	var/datum/computer/file/embedded_program/docking/docking_controller	//the controller itself. (micro-controller, not game controller)
 	var/arrive_time = 0	//the time at which the shuttle arrives when long jumping
@@ -43,7 +43,7 @@
 			world << "<span class='danger'>warning: shuttle with docking tag [docking_controller_tag] could not find it's controller!</span>"
 
 //Make a short jump to the target hanger
-/datum/shuttle/proc/short_jump(var/datum/hanger/trg_hanger, var/direction)
+/datum/shuttle/proc/short_jump(var/obj/hanger/trg_hanger, var/direction)
 	//error("shuttle [template_path] making short jump to [trg_hanger.tag]")
 	if(moving_status != SHUTTLE_IDLE) return
 
@@ -67,7 +67,7 @@
 
 //Make a long jump. First go the the interim position and then to the target hanger.
 //Wait at the interim position for the indicated time.
-/datum/shuttle/proc/long_jump(var/datum/hanger/trg_hanger, var/datum/hanger/interim_hanger, var/travel_time, var/direction)
+/datum/shuttle/proc/long_jump(var/obj/hanger/trg_hanger, var/obj/hanger/interim_hanger, var/travel_time, var/direction)
 	//world << "shuttle/long_jump: departing=[departing], destination=[destination], interim=[interim], travel_time=[travel_time]"
 	if(moving_status != SHUTTLE_IDLE) return
 
@@ -132,13 +132,13 @@
 //A note to anyone overriding move in a subtype. move() must absolutely not, under any circumstances, fail to move the shuttle.
 //If you want to conditionally cancel shuttle launches, that logic must go in short_jump() or long_jump()
 //world << "move_shuttle() called for [shuttle_tag] leaving [current_hanger.tag] en route to [trg_hanger.tag]."
-/datum/shuttle/proc/move(var/datum/hanger/trg_hanger, var/direction=null, var/long_j)
+/datum/shuttle/proc/move(var/obj/hanger/trg_hanger, var/direction=null, var/long_j)
 
 	if (docking_controller && !docking_controller.undocked())
 		docking_controller.force_undock()
 
 	//Do stuff to destination turfs this gets a square.. not so nice because we will gib people in it
-	var/list/destination = get_turfs_square(trg_hanger.loc.x_pos, trg_hanger.loc.y_pos, trg_hanger.loc.z_pos, template_dim[1] , template_dim[2] )
+	var/list/destination = get_turfs_square(trg_hanger.x, trg_hanger.y, trg_hanger.z, template_dim[1] , template_dim[2] )
 	//error("Move command called by [template_path] to [trg_hanger.tag] there are destination [destination.len] turfs in the shuttle destination area")
 	//error("The destination area is centered upon [trg_hanger.loc.x_pos] - [trg_hanger.loc.y_pos] - [trg_hanger.loc]")
 
@@ -158,10 +158,10 @@
 /datum/shuttle/proc/has_arrive_time()
 	return (moving_status == SHUTTLE_INTRANSIT)
 
-/datum/shuttle/proc/place_shuttle(var/datum/hanger/trg_hanger)
+/datum/shuttle/proc/place_shuttle(var/obj/hanger/trg_hanger)
 	if(isnull(trg_hanger) || shuttle_ingame) return
 	shuttle_ingame = 1
-	var/turf/location = get_corner_turf(trg_hanger.loc.x_pos, trg_hanger.loc.y_pos, trg_hanger.loc.z_pos, template_dim[1], template_dim[2])
+	var/turf/location = get_corner_turf(trg_hanger.x, trg_hanger.y, trg_hanger.z, template_dim[1], template_dim[2])
 
 	shuttle_turfs = template_controller.PlaceTemplateAt(location, template_path, docking_controller_tag, return_list = 1)
 	//error("shuttle [docking_controller_tag] placed via template the turfs contain [shuttle_turfs.len] turfs and are centered around [trg_hanger.loc.x_pos] - [trg_hanger.loc.y_pos] - [trg_hanger.loc.z_pos]")
