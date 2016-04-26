@@ -466,19 +466,24 @@ var/global/datum/controller/gameticker/ticker
 
 	statistics.call_stats() // Show the end-round stats
 
+	// End-round antag voting
 	var/list/datum/mind/all_antagonists = list()
 	//Look into all mobs in world, dead or alive
 	for(var/datum/mind/M in minds)
-		if(M.current.client && M.antagonist && !istype(M.antagonist, /datum/antagonist/traitor/persistant)) // Players that have left can't get commendations
+		if(( M.current && M.current.client ) && M.antagonist && !istype(M.antagonist, /datum/antagonist/traitor/persistant)) // Players that have left can't get commendations
 			all_antagonists += M
 
 	if(all_antagonists.len)
 		world << "<span class='notice'><B>Please vote on the antagonists' performance!</B></span>"
+	else
+		testing( "There were no antagonists." )
+		return 1
 
-	for(var/datum/mind/M in minds)
-		//if(!M.antagonist)
-		var/datum/browser/menu = new(null, "antag_vote", "Antagonist Vote", 400, 700)
-		open_antag_vote(M.current, menu, all_antagonists) // defined in modules/antagonist/menus/voting.dm
+	for(var/mob/M in player_list)
+		if(M.client)
+			testing( "Opening antag vote for [M.client]" )
+			var/datum/browser/menu = new( null, "antag_vote", "Antagonist Vote", 400, 700)
+			open_antag_vote( M, menu, all_antagonists ) // defined in modules/antagonist/menus/voting.dm
 
 	return 1
 
