@@ -1932,11 +1932,10 @@
 						valid_shuttles += shuttle_tag
 
 				var/shuttle_tag = input("Which shuttle do you want to launch?") as null|anything in valid_shuttles
-
+				var/datum/shuttle/ferry/S = shuttle_controller.shuttles[shuttle_tag]
 				if (!shuttle_tag)
 					return
 
-				var/datum/shuttle/ferry/S = shuttle_controller.shuttles[shuttle_tag]
 				if (S.can_launch())
 					S.launch(usr)
 					message_admins("<span class='notice'>[key_name_admin(usr)] launched the [shuttle_tag] shuttle</span>")
@@ -1976,29 +1975,38 @@
 
 				var/shuttle_tag = input("Which shuttle do you want to jump?") as null|anything in shuttle_controller.shuttles
 				if (!shuttle_tag) return
-
 				var/datum/shuttle/S = shuttle_controller.shuttles[shuttle_tag]
 
-				var/origin_area = input("Which area is the shuttle at now? (MAKE SURE THIS IS CORRECT OR THINGS WILL BREAK)") as null|area in world
-				if (!origin_area) return
+				var/list/valid_hangers = new /list()
+				for(var/datum/hanger/H in hanger_controller.hangers)
+					if(H.can_land_at(S))
+						valid_hangers += H.tag
 
-				var/destination_area = input("Which area is the shuttle at now? (MAKE SURE THIS IS CORRECT OR THINGS WILL BREAK)") as null|area in world
-				if (!destination_area) return
+				var/hanger_tag = input("Which hanger do you want to jump the shuttle to ? (All hangers given are valid this will not break the game)") as null|anything in valid_hangers
+				if (!hanger_tag) return
+				var/datum/hanger/destination_hanger = hanger_controller.hangers_as[hanger_tag]
+				if(isnull(destination_hanger)) return
 
 				var/long_jump = alert("Is there a transition area for this jump?","", "Yes", "No")
 				if (long_jump == "Yes")
-					var/transition_area = input("Which area is the transition area? (MAKE SURE THIS IS CORRECT OR THINGS WILL BREAK)") as null|area in world
-					if (!transition_area) return
+					valid_hangers = new /list()
+					for(var/datum/hanger/H in hanger_controller.blue_space_hangers)
+						if(H.can_land_at(S))
+							valid_hangers += H.tag
+					var/transition_hanger_tag = input("Bluespace hanger is the transition area? (All hangers given are valid this will nto break the game)") as null|anything in valid_hangers
+					if (isnull(transition_hanger_tag)) return
+					var/datum/hanger/transistion_hanger = hanger_controller.blue_space_hangers_as[transition_hanger_tag]
+					if (isnull(transistion_hanger)) return
 
 					var/move_duration = input("How many seconds will this jump take?") as num
 
-					S.long_jump(origin_area, destination_area, transition_area, move_duration)
-					message_admins("<span class='notice'>[key_name_admin(usr)] has initiated a jump from [origin_area] to [destination_area] lasting [move_duration] seconds for the [shuttle_tag] shuttle</span>")
-					log_admin("[key_name_admin(usr)] has initiated a jump from [origin_area] to [destination_area] lasting [move_duration] seconds for the [shuttle_tag] shuttle")
+					S.long_jump(destination_hanger, transistion_hanger, move_duration)
+					message_admins("<span class='notice'>[key_name_admin(usr)] has initiated a jump with [S.docking_controller_tag] to [destination_hanger.tag] via [transistion_hanger.tag] lasting [move_duration]</span>")
+					log_admin("[key_name_admin(usr)] has initiated a jump with [S.docking_controller_tag] to [destination_hanger.tag] lasting [move_duration]")
 				else
-					S.short_jump(origin_area, destination_area)
-					message_admins("<span class='notice'>[key_name_admin(usr)] has initiated a jump from [origin_area] to [destination_area] for the [shuttle_tag] shuttle</span>")
-					log_admin("[key_name_admin(usr)] has initiated a jump from [origin_area] to [destination_area] for the [shuttle_tag] shuttle")
+					S.short_jump(destination_hanger)
+					message_admins("<span class='notice'>[key_name_admin(usr)] has initiated a jump with [S.docking_controller_tag] to [destination_hanger.tag]</span>")
+					log_admin("[key_name_admin(usr)] has initiated a jump with [S.docking_controller_tag] to [destination_hanger.tag]")
 
 			if("moveshuttle")
 
@@ -2007,7 +2015,7 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ShM")
 
-				var/confirm = alert("This command directly moves a shuttle from one area to another. DO NOT USE THIS UNLESS YOU ARE DEBUGGING A SHUTTLE AND YOU KNOW WHAT YOU ARE DOING.", "Are you sure?", "Ok", "Cancel")
+				var/confirm = alert("THIS IS BROKEN RIGHT NOW!!! This command directly moves a shuttle from one area to another. DO NOT USE THIS UNLESS YOU ARE DEBUGGING A SHUTTLE AND YOU KNOW WHAT YOU ARE DOING.", "Are you sure?", "Ok", "Cancel")
 				if (confirm == "Cancel")
 					return
 
@@ -2022,7 +2030,7 @@
 				var/destination_area = input("Which area is the shuttle at now? (MAKE SURE THIS IS CORRECT OR THINGS WILL BREAK)") as null|area in world
 				if (!destination_area) return
 
-				S.move(origin_area, destination_area)
+				S.move(destination_area)
 				message_admins("<span class='notice'>[key_name_admin(usr)] moved the [shuttle_tag] shuttle</span>")
 				log_admin("[key_name(usr)] moved the [shuttle_tag] shuttle")
 

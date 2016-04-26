@@ -1,0 +1,62 @@
+"a" = (/turf/space,/area/space)
+"b" = (/turf/space,/area/shuttle/escape/spawn_area)
+"c" = (/turf/simulated/shuttle/wall{icon_state = "swall_f6"; dir = 2},/area/shuttle/escape/spawn_area)
+"d" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion"; dir = 1},/turf/space,/area/shuttle/escape/spawn_area)
+"e" = (/turf/simulated/shuttle/wall{dir = 3; icon_state = "swall_f10"; layer = 2},/area/shuttle/escape/spawn_area)
+"f" = (/turf/simulated/shuttle/wall{icon_state = "swall3"; dir = 2},/area/shuttle/escape/spawn_area)
+"g" = (/obj/structure/shuttle/engine/router,/turf/simulated/floor/bspace_safe,/area/shuttle/escape/spawn_area)
+"h" = (/obj/structure/spacepoddoor,/turf/simulated/floor/bspace_safe,/area/shuttle/escape/spawn_area)
+"i" = (/turf/simulated/shuttle/wall{icon_state = "swall7"; dir = 2},/area/shuttle/escape/spawn_area)
+"j" = (/obj/machinery/door/airlock/external{frequency = 1380; icon_state = "door_locked"; id_tag = "escape_shuttle_hatch"; locked = 1; name = "Shuttle Hatch"; req_access_txt = "13"},/turf/simulated/shuttle/floor,/area/shuttle/escape/spawn_area)
+"k" = (/turf/simulated/shuttle/wall{icon_state = "swall12"; dir = 2},/area/shuttle/escape/spawn_area)
+"l" = (/turf/simulated/shuttle/wall{icon_state = "swall7"; dir = 2},/area/space)
+"m" = (/turf/simulated/shuttle/wall{icon_state = "swall_f9"; dir = 2},/area/shuttle/escape/spawn_area)
+"n" = (/turf/simulated/floor/bspace_safe,/area/shuttle/escape/spawn_area)
+"o" = (/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/shuttle/escape/spawn_area)
+"p" = (/turf/simulated/shuttle/wall{icon_state = "swall11"; dir = 2},/area/shuttle/escape/spawn_area)
+"q" = (/turf/simulated/shuttle/floor,/area/shuttle/escape/spawn_area)
+"r" = (/turf/simulated/shuttle/wall{icon_state = "swall3"; dir = 2},/area/space)
+"s" = (/turf/simulated/shuttle/wall{icon_state = "swall11"; dir = 2},/area/space)
+"t" = (/obj/spacepod/command/complete,/turf/simulated/floor/bspace_safe,/area/shuttle/escape/spawn_area)
+"u" = (/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/space)
+"v" = (/turf/simulated/shuttle/wall{dir = 2; icon_state = "swall_floor_f9"},/area/shuttle/escape/spawn_area)
+"w" = (/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 4},/area/shuttle/escape/spawn_area)
+"x" = (/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 8},/area/shuttle/escape/spawn_area)
+"y" = (/turf/simulated/shuttle/wall{icon_state = "swall_f9"; dir = 2},/area/space)
+"z" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/shuttle/wall{icon_state = "swall3"; dir = 2},/area/shuttle/escape/spawn_area)
+"A" = (/obj/machinery/door/airlock/external{frequency = 1380; icon_state = "door_locked"; id_tag = "escape_shuttle_hatch"; locked = 1; name = "Shuttle Hatch"; req_access_txt = "13"},/obj/machinery/mech_sensor{dir = 8; frequency = 1380; id_tag = "shuttle_dock_south_mech"; pixel_y = 19},/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/escape/spawn_area)
+"B" = (/obj/machinery/door/airlock/external{frequency = 1380; icon_state = "door_locked"; id_tag = "escape_shuttle_hatch"; locked = 1; name = "Shuttle Hatch"; req_access_txt = "13"},/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/escape/spawn_area)
+"C" = (/obj/structure/window/shuttle,/turf/simulated/wall/mineral/glass,/area/shuttle/escape/spawn_area)
+"D" = (/obj/structure/spacepoddoor,/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 1},/area/shuttle/escape/spawn_area)
+"E" = (/obj/machinery/door/airlock/command,/turf/simulated/shuttle/floor,/area/shuttle/escape/spawn_area)
+"F" = (/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/shuttle/escape/spawn_area)
+"G" = (/turf/simulated/shuttle/wall{dir = 2; icon_state = "swall_floor_f5"},/area/space)
+"H" = (/turf/simulated/shuttle/wall{dir = 3; icon_state = "swall_f10"; layer = 2},/area/space)
+"I" = (/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"J" = (/obj/structure/window/shuttle{icon_state = "window4"},/turf/simulated/wall/mineral/glass,/area/space)
+"K" = (/obj/structure/window/shuttle{icon_state = "window8"},/turf/simulated/wall/mineral/glass,/area/space)
+
+(1,1,1) = {"
+abbbbbbbbba
+bbbbbbbbbbb
+cdebbcdebbb
+fgfhhfgijke
+lkmnnokpqqr
+rnnnnnnikjs
+rtnnntnfqqr
+rnnnnnnfqqr
+uennnncvqqr
+afwtnxfqqqr
+afwnnxfqqqr
+afwnnxfqqcy
+afwnnxzqqfa
+afwnnxfqqfa
+afwnnxfqqAa
+afwnnxfqqBa
+aoCDDCpqqfa
+abbbbboeqfa
+aabbbbbiEsa
+aabbbbbfFGH
+aabbbbbCFIr
+aaabbbboJKy
+"}
