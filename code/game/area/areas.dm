@@ -113,6 +113,10 @@ var/list/ghostteleportlocs = list()
 	ambience = list()
 	environment = PLAIN
 
+/area/space/inner
+	name = "\improper Inner Station Space"
+	icon_state = "space"
+
 area/space/atmosalert()
 	return
 
