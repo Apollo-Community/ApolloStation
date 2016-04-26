@@ -105,6 +105,17 @@ var/list/monkeystart = list()
 var/list/wizardstart = list()
 var/list/newplayer_start = list()
 
+//Hanger related lists
+var/list/hangers = list()
+var/list/hangers_as = list()
+var/list/blue_space_hangers = list()
+var/list/blue_space_hangers_as = list()
+var/list/start_hangers_as = list()
+var/list/start_hangers = list()
+
+
+
+
 //Spawnpoints.
 var/list/latejoin = list()
 var/list/latejoin_gateway = list()

@@ -36,9 +36,7 @@ obj/hanger/New()
 	//This is used to make hangers in space easier
 
 	if(!isnull(hanger_area_turfs) && dimx == 0 && dimy == 0)
-		loc = new/datum/coords
 		square = 1
-
 		var/datum/dim_min_max/dims = get_dim_and_minmax(hanger_area_turfs)
 		dimx = dims.dim_x
 		dimy = dims.dim_y
@@ -55,7 +53,8 @@ obj/hanger/New()
 //Give an x and y dimensions of the shuttle
 //If the hanger is not square look if the shuttle will fit in the hanger turfs
 //This is important for hangers with docking arms
-obj/hanger/proc/can_land_at(var/datum/shuttle/s, var/list/shuttle_turfs = null)
+obj/hanger/proc/can_land_at(var/datum/shuttle/s)
+	var/list/shuttle_turfs
 	////error("Can_land called by [s.template_path] in [tag]")
 	if(full)
 		return 0
@@ -70,13 +69,12 @@ obj/hanger/proc/can_land_at(var/datum/shuttle/s, var/list/shuttle_turfs = null)
 			current_loc.x_pos = s.current_hanger.x
 			current_loc.y_pos = s.current_hanger.y
 			current_loc.z_pos = s.current_hanger.z
+			var/datum/coords/hloc = new /datum/coords
+			hloc.x_pos = x
+			hloc.y_pos = y
+			hloc.z_pos = z
 
-			var/datum/coords/loc = new /datum/coords
-			loc.x_pos = x
-			loc.y_pos = y
-			loc.z_pos = z
-
-			shuttle_turfs = shift_turfs(s.current_hanger.loc, loc, s.shuttle_turfs)
+			shuttle_turfs = shift_turfs(current_loc, hloc, s.shuttle_turfs)
 			for(var/turf/T in shuttle_turfs)
 				if(hanger_area_turfs.Find(T) >= 1)
 					return 0
@@ -99,14 +97,15 @@ obj/hanger/proc/take_off()
 	full = 0
 
 obj/hanger/proc/add_to_controller()
-	hanger_controller.hangers += src
-	hanger_controller.hangers_as[tag] = src
+	hangers += src
+	hangers_as[htag] = src
+	error("[htag] created at [x], [y], [z]")
 
 
 obj/hanger/square/exterior/space_hanger/blue_space/add_to_controller()
-	hanger_controller.blue_space_hangers += src
-	hanger_controller.blue_space_hangers_as[tag] = src
+	blue_space_hangers += src
+	error("blue space hanger created at [x], [y], [z]")
 
 obj/hanger/square/exterior/space_hanger/start_hanger/add_to_controller()
-	hanger_controller.start_hangers += src
-	hanger_controller.start_hangers_as[tag] = src
+	start_hangers += src
+	error("space hanger created at [x], [y], [z]")

@@ -162,6 +162,7 @@
 	if(isnull(trg_hanger) || shuttle_ingame) return
 	shuttle_ingame = 1
 	var/turf/location = get_corner_turf(trg_hanger.x, trg_hanger.y, trg_hanger.z, template_dim[1], template_dim[2])
+	error("the shuttle [docking_controller_tag] has target hanger [trg_hanger] at [trg_hanger.x], [trg_hanger.y], [trg_hanger.z]")
 
 	shuttle_turfs = template_controller.PlaceTemplateAt(location, template_path, docking_controller_tag, return_list = 1)
 	//error("shuttle [docking_controller_tag] placed via template the turfs contain [shuttle_turfs.len] turfs and are centered around [trg_hanger.loc.x_pos] - [trg_hanger.loc.y_pos] - [trg_hanger.loc.z_pos]")

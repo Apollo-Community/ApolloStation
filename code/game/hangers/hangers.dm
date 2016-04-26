@@ -124,6 +124,38 @@ obj/hanger/square/exterior/space_hanger/west
 obj/hanger/square/exterior/space_hanger/north_west
 	htag = "s_space_north_west"
 
-obj/hanger/square/exterior/space_hanger/blue_space
+obj/hanger/square/exterior/space_hanger/blue_space/_1
 
-obj/hanger/square/exterior/space_hanger/start_hanger
+obj/hanger/square/exterior/space_hanger/blue_space/_2
+
+obj/hanger/square/exterior/space_hanger/blue_space/_3
+
+obj/hanger/square/exterior/space_hanger/blue_space/_4
+
+obj/hanger/square/exterior/space_hanger/blue_space/_5
+
+obj/hanger/square/exterior/space_hanger/blue_space/_6
+
+obj/hanger/square/exterior/space_hanger/blue_space/_7
+
+obj/hanger/square/exterior/space_hanger/blue_space/_8
+
+obj/hanger/square/exterior/space_hanger/start_hanger/_1
+
+obj/hanger/square/exterior/space_hanger/start_hanger/_2
+
+obj/hanger/square/exterior/space_hanger/start_hanger/_3
+
+obj/hanger/square/exterior/space_hanger/start_hanger/_4
+
+obj/hanger/square/exterior/space_hanger/start_hanger/_5
+
+obj/hanger/square/exterior/space_hanger/start_hanger/_6
+
+obj/hanger/square/exterior/space_hanger/start_hanger/_7
+
+obj/hanger/square/exterior/space_hanger/start_hanger/_8
+
+obj/hanger/square/exterior/space_hanger/start_hanger/_9
+
+obj/hanger/square/exterior/space_hanger/start_hanger/_10

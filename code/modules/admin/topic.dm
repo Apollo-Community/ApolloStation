@@ -1978,24 +1978,18 @@
 				var/datum/shuttle/S = shuttle_controller.shuttles[shuttle_tag]
 
 				var/list/valid_hangers = new /list()
-				for(var/obj/hanger/H in hanger_controller.hangers)
+				for(var/obj/hanger/H in hangers)
 					if(H.can_land_at(S))
 						valid_hangers += H.tag
 
 				var/hanger_tag = input("Which hanger do you want to jump the shuttle to ? (All hangers given are valid this will not break the game)") as null|anything in valid_hangers
 				if (!hanger_tag) return
-				var/obj/hanger/destination_hanger = hanger_controller.hangers_as[hanger_tag]
+				var/obj/hanger/destination_hanger = hangers_as[hanger_tag]
 				if(isnull(destination_hanger)) return
 
 				var/long_jump = alert("Is there a transition area for this jump?","", "Yes", "No")
 				if (long_jump == "Yes")
-					valid_hangers = new /list()
-					for(var/obj/hanger/H in hanger_controller.blue_space_hangers)
-						if(H.can_land_at(S))
-							valid_hangers += H.tag
-					var/transition_hanger_tag = input("Bluespace hanger is the transition area? (All hangers given are valid this will nto break the game)") as null|anything in valid_hangers
-					if (isnull(transition_hanger_tag)) return
-					var/obj/hanger/transistion_hanger = hanger_controller.blue_space_hangers_as[transition_hanger_tag]
+					var/obj/hanger/transistion_hanger = hanger_controller.get_free_interim_hanger(S)
 					if (isnull(transistion_hanger)) return
 
 					var/move_duration = input("How many seconds will this jump take?") as num
