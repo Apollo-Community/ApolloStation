@@ -91,14 +91,14 @@
 /datum/shuttle/ferry/proc/process()
 	switch(process_state)
 		if (WAIT_LAUNCH)
-			error("shuttle [docking_controller_tag] is waiting for docking controllers to agree its undocked.")
+			//error("shuttle [docking_controller_tag] is waiting for docking controllers to agree its undocked.")
 			if (skip_docking_checks() || docking_controller.can_launch())
-				error("shuttle [docking_controller_tag] is launching.")
+				//error("shuttle [docking_controller_tag] is launching.")
 				if (move_time && pod)
-					error("shuttle [docking_controller_tag] is making a long jump.")
+					//error("shuttle [docking_controller_tag] is making a long jump.")
 					long_jump(null, null, move_time, transit_direction)
 				else
-					error("shuttle [docking_controller_tag] is making a short jump.")
+					//error("shuttle [docking_controller_tag] is making a short jump.")
 					short_jump()
 
 				process_state = WAIT_ARRIVE

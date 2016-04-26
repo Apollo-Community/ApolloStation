@@ -61,7 +61,7 @@
 			return	//someone cancelled the launch
 
 		moving_status = SHUTTLE_INTRANSIT //shouldn't matter but just to be safe
-		error("shuttle [template_path] jumpint now to [trg_hanger.tag]")
+		//error("shuttle [template_path] jumpint now to [trg_hanger.tag]")
 		move(trg_hanger, null, 0)
 		moving_status = SHUTTLE_IDLE
 
@@ -164,8 +164,7 @@
 	var/turf/location = get_corner_turf(trg_hanger.loc.x_pos, trg_hanger.loc.y_pos, trg_hanger.loc.z_pos, template_dim[1], template_dim[2])
 
 	shuttle_turfs = template_controller.PlaceTemplateAt(location, template_path, docking_controller_tag, return_list = 1)
-	//copy_list_contents_to(shuttle_turfs, get_turfs_square(trg_hanger.loc.x_pos, trg_hanger.loc.y_pos, trg_hanger.loc.z_pos, template_dim[1], template_dim[2]))
-	error("shuttle [docking_controller_tag] placed via template the turfs contain [shuttle_turfs.len] turfs and are centered around [trg_hanger.loc.x_pos] - [trg_hanger.loc.y_pos] - [trg_hanger.loc.z_pos]")
+	//error("shuttle [docking_controller_tag] placed via template the turfs contain [shuttle_turfs.len] turfs and are centered around [trg_hanger.loc.x_pos] - [trg_hanger.loc.y_pos] - [trg_hanger.loc.z_pos]")
 
 //Shake effect
 /datum/shuttle/proc/shake_effect(var/list/turfs)
