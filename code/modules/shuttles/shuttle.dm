@@ -29,10 +29,12 @@
 		if(isnull(starting_hanger))
 			world << "<span class='danger'>warning: [docking_controller_tag] could not find a hanger to start at. </span>"
 	//Place down the template at the right spot further down in this process this will also aquere the right turfs for us.
-	starting_hanger.land_at(src)
 	current_hanger = starting_hanger
-	place_shuttle(starting_hanger)
+	current_hanger.full = 1
+	current_hanger.land_at(src)
+	place_shuttle()
 	shuttle_ingame = 1
+	error("current hanger = [current_hanger.htag]")
 
 
 //Initiate the docking controllers by locating them in the game world.
@@ -44,7 +46,7 @@
 
 //Make a short jump to the target hanger
 /datum/shuttle/proc/short_jump(var/obj/hanger/trg_hanger, var/direction)
-	//error("shuttle [template_path] making short jump to [trg_hanger.tag]")
+	error("shuttle [template_path] making short jump to [trg_hanger.htag]")
 	if(moving_status != SHUTTLE_IDLE) return
 
 	if(isnull(trg_hanger)) return
@@ -61,7 +63,7 @@
 			return	//someone cancelled the launch
 
 		moving_status = SHUTTLE_INTRANSIT //shouldn't matter but just to be safe
-		//error("shuttle [template_path] jumpint now to [trg_hanger.tag]")
+		error("shuttle [template_path] jumpint now to [trg_hanger.tag]")
 		move(trg_hanger, null, 0)
 		moving_status = SHUTTLE_IDLE
 
@@ -139,8 +141,8 @@
 
 	//Do stuff to destination turfs this gets a square.. not so nice because we will gib people in it
 	var/list/destination = get_turfs_square(trg_hanger.x, trg_hanger.y, trg_hanger.z, template_dim[1] , template_dim[2] )
-	//error("Move command called by [template_path] to [trg_hanger.tag] there are destination [destination.len] turfs in the shuttle destination area")
-	//error("The destination area is centered upon [trg_hanger.loc.x_pos] - [trg_hanger.loc.y_pos] - [trg_hanger.loc]")
+	error("Move command called by [template_path] to [trg_hanger.htag] the destination has [destination.len] turfs")
+	error("The destination area is centered upon [trg_hanger.x] - [trg_hanger.y] - [trg_hanger.loc]")
 
 	//Move and or gib who/what is/are under the arriving shuttle
 	move_gib(destination, trg_hanger.exterior)
@@ -158,11 +160,11 @@
 /datum/shuttle/proc/has_arrive_time()
 	return (moving_status == SHUTTLE_INTRANSIT)
 
-/datum/shuttle/proc/place_shuttle(var/obj/hanger/trg_hanger)
-	if(isnull(trg_hanger) || shuttle_ingame) return
+/datum/shuttle/proc/place_shuttle()
+	if(isnull(current_hanger) || shuttle_ingame) return
 	shuttle_ingame = 1
-	var/turf/location = get_corner_turf(trg_hanger.x, trg_hanger.y, trg_hanger.z, template_dim[1], template_dim[2])
-	error("the shuttle [docking_controller_tag] has target hanger [trg_hanger] at [trg_hanger.x], [trg_hanger.y], [trg_hanger.z]")
+	var/turf/location = get_corner_turf(current_hanger.x, current_hanger.y, current_hanger.z, template_dim[1], template_dim[2])
+	//error("the shuttle [docking_controller_tag] has target hanger [current_hanger] at [current_hanger.x], [current_hanger.y], [current_hanger.z]")
 
 	shuttle_turfs = template_controller.PlaceTemplateAt(location, template_path, docking_controller_tag, return_list = 1)
 	//error("shuttle [docking_controller_tag] placed via template the turfs contain [shuttle_turfs.len] turfs and are centered around [trg_hanger.loc.x_pos] - [trg_hanger.loc.y_pos] - [trg_hanger.loc.z_pos]")
@@ -192,7 +194,7 @@
 /datum/shuttle/proc/move_gib(var/list/turfs, var/exterior)
 	//Move and gib people that are in the are the ship is moving to.
 	//If the target hanger is an exerior one only do this to space tiles as we don't want to clip docking arms.
-	var/throwy = world.maxy
+
 	var/list/filtered_turfs = new/list()
 	if(exterior)
 		for(var/turf/T in turfs)
@@ -200,15 +202,15 @@
 				filtered_turfs += T
 	else
 		filtered_turfs = turfs
+//	var/throwy = world.maxy
+//	for(var/turf/T in filtered_turfs)
+//		if(T.y < throwy)
+//			throwy = T.y
 
-	for(var/turf/T in filtered_turfs)
-		if(T.y < throwy)
-			throwy = T.y
-
-	for(var/turf/T in filtered_turfs)
-		var/turf/D = locate(T.x, throwy - 1, 1)
-		for(var/atom/movable/AM as mob|obj in T)
-			AM.Move(D)
+//	for(var/turf/T in filtered_turfs)
+//		var/turf/D = locate(T.x, throwy - 1, 1)
+//		for(var/atom/movable/AM as mob|obj in T)
+//			AM.Move(D)
 
 	//If you get moved out of the way lets be nice and not gib you.
 	for(var/turf/T in filtered_turfs)

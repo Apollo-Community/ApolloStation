@@ -157,7 +157,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	ERT.warmup_time = 10
 	ERT.template_path ="maps/templates/shuttles/ERT.dmm"
 	ERT.hanger_station = hangers_as["f_hanger"]
-	ERT.hanger_offsite = hangers_as["c_hanger_c"]
+	ERT.hanger_offsite = hangers_as["s_hanger_c"]
 	ERT.docking_controller_tag = "specops_shuttle_port"
 	ERT.docking_controller_tag_station = "specops_shuttle_port"
 	ERT.docking_controller_tag_offsite = "specops_shuttle_fore"

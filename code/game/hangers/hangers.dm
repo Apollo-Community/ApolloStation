@@ -124,38 +124,56 @@ obj/hanger/square/exterior/space_hanger/west
 obj/hanger/square/exterior/space_hanger/north_west
 	htag = "s_space_north_west"
 
-obj/hanger/square/exterior/space_hanger/blue_space/_1
+obj/hanger/square/exterior/space_hanger/blue_space/h1
+	htag = "b_space_1"
 
-obj/hanger/square/exterior/space_hanger/blue_space/_2
+obj/hanger/square/exterior/space_hanger/blue_space/h2
+	htag = "b_space_2"
 
-obj/hanger/square/exterior/space_hanger/blue_space/_3
+obj/hanger/square/exterior/space_hanger/blue_space/h3
+	htag = "b_space_3"
 
-obj/hanger/square/exterior/space_hanger/blue_space/_4
+obj/hanger/square/exterior/space_hanger/blue_space/h4
+	htag = "b_space_4"
 
-obj/hanger/square/exterior/space_hanger/blue_space/_5
+obj/hanger/square/exterior/space_hanger/blue_space/h5
+	htag = "b_space_5"
 
-obj/hanger/square/exterior/space_hanger/blue_space/_6
+obj/hanger/square/exterior/space_hanger/blue_space/h6
+	htag = "b_space_6"
 
-obj/hanger/square/exterior/space_hanger/blue_space/_7
+obj/hanger/square/exterior/space_hanger/blue_space/h7
+	htag = "b_space_7"
 
-obj/hanger/square/exterior/space_hanger/blue_space/_8
+obj/hanger/square/exterior/space_hanger/blue_space/h8
+	htag = "b_space_8"
 
-obj/hanger/square/exterior/space_hanger/start_hanger/_1
+obj/hanger/square/exterior/space_hanger/start_hanger/h1
+	htag = "start_1"
 
-obj/hanger/square/exterior/space_hanger/start_hanger/_2
+obj/hanger/square/exterior/space_hanger/start_hanger/h2
+	htag = "start_2"
 
-obj/hanger/square/exterior/space_hanger/start_hanger/_3
+obj/hanger/square/exterior/space_hanger/start_hanger/h3
+	htag = "start_3"
 
-obj/hanger/square/exterior/space_hanger/start_hanger/_4
+obj/hanger/square/exterior/space_hanger/start_hanger/h4
+	htag = "start_4"
 
-obj/hanger/square/exterior/space_hanger/start_hanger/_5
+obj/hanger/square/exterior/space_hanger/start_hanger/h5
+	htag = "start_5"
 
-obj/hanger/square/exterior/space_hanger/start_hanger/_6
+obj/hanger/square/exterior/space_hanger/start_hanger/h6
+	htag = "start_6"
 
-obj/hanger/square/exterior/space_hanger/start_hanger/_7
+obj/hanger/square/exterior/space_hanger/start_hanger/h7
+	htag = "start_7"
 
-obj/hanger/square/exterior/space_hanger/start_hanger/_8
+obj/hanger/square/exterior/space_hanger/start_hanger/h8
+	htag = "start_8"
 
-obj/hanger/square/exterior/space_hanger/start_hanger/_9
+obj/hanger/square/exterior/space_hanger/start_hanger/h9
+	htag = "start_9"
 
-obj/hanger/square/exterior/space_hanger/start_hanger/_10
+obj/hanger/square/exterior/space_hanger/start_hanger/h10
+	htag = "start_10"

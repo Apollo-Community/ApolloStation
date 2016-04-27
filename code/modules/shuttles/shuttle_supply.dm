@@ -47,7 +47,7 @@
 	moving_status = SHUTTLE_INTRANSIT
 
 	//Waiting until we can move
-	while (world.time <= arrive_time)
+	while(world.time <= arrive_time)
 		sleep(5)
 
 	//Is the shuttle going to arrive late ?

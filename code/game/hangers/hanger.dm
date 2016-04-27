@@ -1,11 +1,5 @@
 //A hanger representing and keeping track of an area of turfs shuttles can land on.
 //Also keeps track if its in space and or occupied.
-//The hanger contains a "smart" init_hanger() part that is able to construct
-//a hanger from a range of arguments.
-//There are 3 types of hangers
-//Dimensional beacon based - Just a beacon and given dimensions
-//Dimensional area based - No beacon just an area, used to calculate center point.
-//None dimensional area/beacon hybrit - An area and a beacon defining the center point. This can house non square ships
 
 obj/hanger
 	var/htag
@@ -19,6 +13,13 @@ obj/hanger
 	var/list/hanger_turf_atribs
 	var/list/hanger_area_turfs
 	var/list/hanger_turfs
+	name = "Shuttle Jump Beacon"
+	desc = "Small machine which acts as a lock on point for shuttles"
+	anchored = 1
+	density = 0
+	layer = 2.46 // Above cables, but should be below floors.
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "floor_beacon" // If anyone wants to make better sprite, feel free to do so without asking me.
 
 //Initializes the hanger.
 //This is basically delayed constructor to make the creation of hangers
@@ -99,13 +100,12 @@ obj/hanger/proc/take_off()
 obj/hanger/proc/add_to_controller()
 	hangers += src
 	hangers_as[htag] = src
-	error("[htag] created at [x], [y], [z]")
+	//error("[htag] created at [x], [y], [z]")
 
+obj/hanger/square/interior/New()
+	..()
+	land_at(null)
 
-obj/hanger/square/exterior/space_hanger/blue_space/add_to_controller()
-	blue_space_hangers += src
-	error("blue space hanger created at [x], [y], [z]")
-
-obj/hanger/square/exterior/space_hanger/start_hanger/add_to_controller()
-	start_hangers += src
-	error("space hanger created at [x], [y], [z]")
+obj/hanger/oddshaped/interior/New()
+	..()
+	land_at(null)
