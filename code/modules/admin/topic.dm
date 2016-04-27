@@ -1717,6 +1717,15 @@
 
 				template.Reset()
 
+			if("jump")
+				var/datum/dmm_object_collection/template = locate(href_list["template"])
+				if(!template)
+					return 0
+				var/turf/T = template.location
+
+				message_admins("[key_name_admin(usr)] jumped to coordinates '[template.name]' ([T.x], [T.y], [T.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)")
+
+
 	else if(href_list["secretsfun"])
 		if(!check_rights(R_FUN))	return
 
