@@ -11,7 +11,11 @@
 
 /obj/structure/lattice/New()
 	..()
-	if(!( istype( src.loc, /turf/space )) && !( istype(src.loc, /turf/simulated/floor/plating/airless/fakespace )))
+
+	var/area/A = get_area( src )
+	var/base_turf = A.base_turf
+
+	if(!( istype( src.loc, base_turf )) && !( istype(src.loc, /turf/simulated/floor/plating/airless/fakespace )))
 		qdel(src)
 	for(var/obj/structure/lattice/LAT in src.loc)
 		if(LAT != src)
@@ -79,7 +83,10 @@
 		if(locate(/obj/structure/lattice, get_step(src, direction)))
 			dir_sum += direction
 		else
-			if(!(istype(get_step(src, direction), /turf/space))  && !( istype( get_step(src, direction), /turf/simulated/floor/plating/airless/fakespace )))
+			var/area/A = get_area( src )
+			var/base_turf = A.base_turf
+
+			if(!(istype(get_step(src, direction), base_turf))  && !( istype( get_step(src, direction), /turf/simulated/floor/plating/airless/fakespace )))
 				dir_sum += direction
 
 	icon_state = "[name][dir_sum]"
@@ -97,35 +104,36 @@
 	icon_state = "catwalkfull"
 
 /obj/structure/lattice/catwalk/New()
-	var/turf/Tsrc = get_turf(src)
-	Tsrc.ChangeTurf(/turf/simulated/floor/plating/airless/fakespace)
+	var/turf/T = get_turf( src )
+	if( istype( T, /turf/space ))
+		T.ChangeTurf( /turf/simulated/floor/plating/airless/fakespace )
 	..()
 
 /obj/structure/lattice/catwalk/Move()
-	var/turf/T = loc
+	var/turf/T = get_turf( src )
 	for(var/obj/structure/cable/C in T)
 		qdel(C)
 
-	var/turf/Tsrc = get_turf(src)
-	Tsrc.ChangeTurf(/turf/space)
+	if( istype( T, /turf/space ))
+		T.ChangeTurf( /turf/simulated/floor/plating/airless/fakespace )
 	..()
 
 /obj/structure/lattice/catwalk/Destroy()
-	var/turf/T = loc
+	var/turf/T = get_turf( src )
 	for(var/obj/structure/cable/C in T)
 		qdel(C)
 
-	var/turf/Tsrc = get_turf(src)
-	Tsrc.ChangeTurf(/turf/space)
+	if( istype( T, /turf/simulated/floor/plating/airless/fakespace ))
+		T.ChangeTurf( /turf/space )
 	..()
 
 /obj/structure/lattice/catwalk/Deconstruct()
-	var/turf/T = loc
+	var/turf/T = get_turf( src )
 	for(var/obj/structure/cable/C in T)
 		qdel(C)
 
-	var/turf/Tsrc = get_turf(src)
-	Tsrc.ChangeTurf(/turf/space)
+	if( istype( T, /turf/simulated/floor/plating/airless/fakespace ))
+		T.ChangeTurf( /turf/space )
 	..()
 
 /obj/structure/lattice/catwalk/attackby(obj/item/C as obj, mob/user as mob)
