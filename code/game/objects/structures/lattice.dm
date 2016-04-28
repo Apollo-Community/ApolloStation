@@ -11,7 +11,11 @@
 
 /obj/structure/lattice/New()
 	..()
-	if(!( istype( src.loc, /turf/space )) && !( istype(src.loc, /turf/simulated/floor/plating/airless/fakespace )))
+
+	var/area/A = get_area( src )
+	var/base_turf = A.base_turf
+
+	if(!( istype( src.loc, base_turf )) && !( istype(src.loc, /turf/simulated/floor/plating/airless/fakespace )))
 		qdel(src)
 	for(var/obj/structure/lattice/LAT in src.loc)
 		if(LAT != src)
@@ -79,7 +83,10 @@
 		if(locate(/obj/structure/lattice, get_step(src, direction)))
 			dir_sum += direction
 		else
-			if(!(istype(get_step(src, direction), /turf/space))  && !( istype( get_step(src, direction), /turf/simulated/floor/plating/airless/fakespace )))
+			var/area/A = get_area( src )
+			var/base_turf = A.base_turf
+
+			if(!(istype(get_step(src, direction), base_turf))  && !( istype( get_step(src, direction), /turf/simulated/floor/plating/airless/fakespace )))
 				dir_sum += direction
 
 	icon_state = "[name][dir_sum]"

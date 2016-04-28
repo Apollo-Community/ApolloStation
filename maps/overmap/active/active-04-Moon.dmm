@@ -1,54 +1,54 @@
 "aa" = (/turf/simulated/mineral/lunar,/area/planet/moon)
-"ab" = (/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"ac" = (/obj/machinery/floodlight{in_use = 0; on = 1},/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
+"ab" = (/turf/planet/lunar,/area/planet/moon)
+"ac" = (/obj/machinery/floodlight{in_use = 0; on = 1},/turf/planet/lunar,/area/planet/moon)
 "ad" = (/turf/simulated/floor/airless{icon_state = "asteroidwarning"; dir = 9},/area/planet/moon)
 "ae" = (/turf/simulated/floor/airless{icon_state = "asteroidwarning"; dir = 1},/area/planet/moon)
 "af" = (/turf/simulated/floor/airless{icon_state = "asteroidwarning"; dir = 5},/area/planet/moon)
 "ag" = (/turf/simulated/floor/airless{dir = 5; icon_state = "asteroidfloor"},/area/planet/moon)
-"ah" = (/obj/machinery/mining/brace,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"ai" = (/obj/machinery/mining/drill,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
+"ah" = (/obj/machinery/mining/brace,/turf/planet/lunar,/area/planet/moon)
+"ai" = (/obj/machinery/mining/drill,/turf/planet/lunar,/area/planet/moon)
 "aj" = (/turf/simulated/floor/airless{icon_state = "asteroidwarning"; dir = 8},/area/planet/moon)
 "ak" = (/turf/simulated/floor/airless{tag = "icon-concrete"; icon_state = "concrete"},/obj/machinery/light/small/firelight{tag = "icon-firelight1 (WEST)"; icon_state = "firelight1"; dir = 8},/turf/simulated/floor/airless{tag = "icon-wood_siding9"; icon_state = "wood_siding9"},/area/planet/moon)
 "al" = (/turf/simulated/floor/airless{tag = "icon-concrete"; icon_state = "concrete"},/turf/simulated/floor/airless{tag = "icon-wood_siding1"; icon_state = "wood_siding1"},/area/planet/moon)
 "am" = (/turf/simulated/floor/airless{tag = "icon-concrete"; icon_state = "concrete"},/obj/machinery/light/small/firelight{tag = "icon-firelight1 (EAST)"; icon_state = "firelight1"; dir = 4},/turf/simulated/floor/airless{tag = "icon-wood_siding5"; icon_state = "wood_siding5"},/area/planet/moon)
 "an" = (/turf/simulated/floor/airless{icon_state = "asteroidwarning"; dir = 4},/area/planet/moon)
-"ao" = (/obj/item/stack/flag/yellow,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
+"ao" = (/obj/item/stack/flag/yellow,/turf/planet/lunar,/area/planet/moon)
 "ap" = (/turf/simulated/floor/airless{tag = "icon-concrete"; icon_state = "concrete"},/turf/simulated/floor/airless{tag = "icon-wood_siding8"; icon_state = "wood_siding8"},/area/planet/moon)
 "aq" = (/turf/simulated/floor/airless{tag = "icon-concrete"; icon_state = "concrete"},/area/planet/moon)
 "ar" = (/turf/simulated/floor/airless/landing_pad{tag = "icon-1,3"; icon_state = "1,3"},/area/planet/moon)
 "as" = (/turf/simulated/floor/airless/landing_pad{tag = "icon-2,3"; icon_state = "2,3"},/area/planet/moon)
 "at" = (/turf/simulated/floor/airless{tag = "icon-concrete"; icon_state = "concrete"},/turf/simulated/floor/airless{tag = "icon-wood_siding4"; icon_state = "wood_siding4"},/area/planet/moon)
-"au" = (/obj/structure/table,/obj/item/weapon/tank/emergency_oxygen/engi,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"av" = (/obj/structure/table,/obj/item/weapon/wrench,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
+"au" = (/obj/structure/table,/obj/item/weapon/tank/emergency_oxygen/engi,/turf/planet/lunar,/area/planet/moon)
+"av" = (/obj/structure/table,/obj/item/weapon/wrench,/turf/planet/lunar,/area/planet/moon)
 "aw" = (/turf/simulated/floor/airless/landing_pad{tag = "icon-0,2"; icon_state = "0,2"},/area/planet/moon)
 "ax" = (/turf/simulated/floor/airless/landing_pad{tag = "icon-1,2"; icon_state = "1,2"},/area/planet/moon)
 "ay" = (/turf/simulated/floor/airless/landing_pad{tag = "icon-2,2"; icon_state = "2,2"},/area/planet/moon)
 "az" = (/turf/simulated/floor/airless/landing_pad{tag = "icon-3,2"; icon_state = "3,2"},/area/planet/moon)
-"aA" = (/obj/structure/table,/obj/item/device/flashlight,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"aB" = (/obj/structure/table,/obj/random/toolbox,/obj/random/tool,/obj/random/technology_scanner,/obj/random/powercell,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
+"aA" = (/obj/structure/table,/obj/item/device/flashlight,/turf/planet/lunar,/area/planet/moon)
+"aB" = (/obj/structure/table,/obj/random/toolbox,/obj/random/tool,/obj/random/technology_scanner,/obj/random/powercell,/turf/planet/lunar,/area/planet/moon)
 "aC" = (/turf/simulated/floor/airless/landing_pad{tag = "icon-0,1"; icon_state = "0,1"},/area/planet/moon)
 "aD" = (/turf/simulated/floor/airless/landing_pad{tag = "icon-1,1"; icon_state = "1,1"},/area/planet/moon)
 "aE" = (/turf/simulated/floor/airless/landing_pad{tag = "icon-2,1"; icon_state = "2,1"},/area/planet/moon)
 "aF" = (/turf/simulated/floor/airless/landing_pad{tag = "icon-3,1"; icon_state = "3,1"},/area/planet/moon)
-"aG" = (/obj/structure/table,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
+"aG" = (/obj/structure/table,/turf/planet/lunar,/area/planet/moon)
 "aH" = (/turf/simulated/floor/airless{icon_state = "asteroidwarning"; dir = 10},/area/planet/moon)
 "aI" = (/turf/simulated/floor/airless/landing_pad{tag = "icon-0,0"; icon_state = "0,0"},/area/planet/moon)
 "aJ" = (/turf/simulated/floor/airless/landing_pad{tag = "icon-1,0"; icon_state = "1,0"},/area/planet/moon)
 "aK" = (/turf/simulated/floor/airless/landing_pad{tag = "icon-2,0"; icon_state = "2,0"},/area/planet/moon)
 "aL" = (/turf/simulated/floor/airless{icon_state = "asteroidwarning"; dir = 6},/area/planet/moon)
-"aM" = (/obj/item/stack/flag/red,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
+"aM" = (/obj/item/stack/flag/red,/turf/planet/lunar,/area/planet/moon)
 "aN" = (/turf/simulated/floor/airless{tag = "icon-concrete"; icon_state = "concrete"},/obj/machinery/light/small/firelight{tag = "icon-firelight1 (WEST)"; icon_state = "firelight1"; dir = 8},/turf/simulated/floor/airless{tag = "icon-wood_siding10"; icon_state = "wood_siding10"},/area/planet/moon)
 "aO" = (/turf/simulated/floor/airless{tag = "icon-concrete"; icon_state = "concrete"},/turf/simulated/floor/airless{tag = "icon-wood_siding2"; icon_state = "wood_siding2"},/area/planet/moon)
 "aP" = (/turf/simulated/floor/airless{tag = "icon-concrete"; icon_state = "concrete"},/obj/machinery/light/small/firelight{tag = "icon-firelight1 (EAST)"; icon_state = "firelight1"; dir = 4},/turf/simulated/floor/airless{tag = "icon-wood_siding6"; icon_state = "wood_siding6"},/area/planet/moon)
 "aQ" = (/turf/simulated/floor/airless{icon_state = "asteroidwarning"; dir = 2},/area/planet/moon)
 "aR" = (/turf/simulated/floor/airless{tag = "icon-rampbottom"; icon_state = "rampbottom"; dir = 2},/area/planet/moon)
-"aS" = (/obj/structure/lattice/catwalk,/obj/machinery/power/solar{id = "moonsolar"; name = "Moonbase Solar Array"},/obj/structure/cable/yellow{d2 = 4; icon_state = "0-4"},/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"aT" = (/obj/structure/lattice/catwalk,/obj/structure/cable/yellow{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/structure/cable/yellow{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"aU" = (/obj/structure/lattice/catwalk,/obj/machinery/power/solar{id = "moonsolar"; name = "Moonbase Solar Array"},/obj/structure/cable/yellow{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"aV" = (/obj/structure/lattice/catwalk,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"aW" = (/obj/structure/lattice/catwalk,/obj/structure/cable/yellow{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/structure/cable/yellow{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"aX" = (/obj/item/weapon/caution/cone,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"aY" = (/obj/machinery/power/tracker,/obj/structure/lattice/catwalk,/obj/structure/cable/yellow{d2 = 2; icon_state = "0-2"},/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
+"aS" = (/obj/structure/lattice/catwalk,/obj/machinery/power/solar{id = "moonsolar"; name = "Moonbase Solar Array"},/obj/structure/cable/yellow{d2 = 4; icon_state = "0-4"},/turf/planet/lunar,/area/planet/moon)
+"aT" = (/obj/structure/lattice/catwalk,/obj/structure/cable/yellow{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/structure/cable/yellow{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/planet/lunar,/area/planet/moon)
+"aU" = (/obj/structure/lattice/catwalk,/obj/machinery/power/solar{id = "moonsolar"; name = "Moonbase Solar Array"},/obj/structure/cable/yellow{d2 = 8; icon_state = "0-8"},/turf/planet/lunar,/area/planet/moon)
+"aV" = (/obj/structure/lattice/catwalk,/turf/planet/lunar,/area/planet/moon)
+"aW" = (/obj/structure/lattice/catwalk,/obj/structure/cable/yellow{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/structure/cable/yellow{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/planet/lunar,/area/planet/moon)
+"aX" = (/obj/item/weapon/caution/cone,/turf/planet/lunar,/area/planet/moon)
+"aY" = (/obj/machinery/power/tracker,/obj/structure/lattice/catwalk,/obj/structure/cable/yellow{d2 = 2; icon_state = "0-2"},/turf/planet/lunar,/area/planet/moon)
 "aZ" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/airless{dir = 5; icon_state = "asteroidfloor"},/area/planet/moon)
 "ba" = (/obj/structure/cable/yellow{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/airless{dir = 5; icon_state = "asteroidfloor"},/area/planet/moon)
 "bb" = (/obj/structure/cable/yellow{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/airless{dir = 5; icon_state = "asteroidfloor"},/area/planet/moon)
@@ -164,8 +164,8 @@
 "dh" = (/turf/simulated/floor{dir = 5; icon_state = "blue"},/area/planet/moon)
 "di" = (/obj/machinery/door/airlock/multi_tile/glass,/obj/machinery/door/firedoor/border_only,/turf/simulated/floor{icon_state = "bot"},/area/planet/moon)
 "dj" = (/obj/machinery/door/firedoor/border_only,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor{icon_state = "bot"},/area/planet/moon)
-"dk" = (/obj/structure/table,/obj/item/stack/sheet/metal,/obj/item/stack/sheet/metal,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"dl" = (/obj/structure/table/rack,/obj/random/tech_supply,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
+"dk" = (/obj/structure/table,/obj/item/stack/sheet/metal,/obj/item/stack/sheet/metal,/turf/planet/lunar,/area/planet/moon)
+"dl" = (/obj/structure/table/rack,/obj/random/tech_supply,/turf/planet/lunar,/area/planet/moon)
 "dm" = (/mob/living/carbon/slime,/turf/simulated/floor/engine,/area/planet/moon)
 "dn" = (/obj/machinery/door/blast/regular{density = 0; icon_state = "pdoor0"; id = "xenobio1"; name = "Containment Blast Doors"; opacity = 0},/obj/machinery/door/window/northleft{base_state = "right"; dir = 8; icon_state = "right"; name = "Containment Pen"; req_access_txt = "55"},/turf/simulated/floor/engine,/area/planet/moon)
 "do" = (/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 8},/turf/simulated/floor{icon_state = "white"},/area/planet/moon)
@@ -193,8 +193,8 @@
 "dK" = (/obj/structure/bed/chair,/turf/simulated/floor{icon_state = "red"; dir = 1},/area/planet/moon)
 "dL" = (/obj/structure/reagent_dispensers/water_cooler,/turf/simulated/floor{icon_state = "red"; dir = 1},/area/planet/moon)
 "dM" = (/obj/structure/table,/obj/item/weapon/storage/box/cups{pixel_x = -1; pixel_y = 1},/obj/item/device/radio/intercom{dir = 0; name = "Station Intercom (General)"; pixel_x = 27},/turf/simulated/floor{icon_state = "red"; dir = 5},/area/planet/moon)
-"dN" = (/obj/effect/decal/mecha_wreckage/ripley{name = "APLU-pita wreckage"},/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"dO" = (/mob/living/simple_animal/hostile/mimic/crate,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
+"dN" = (/obj/effect/decal/mecha_wreckage/ripley{name = "APLU-pita wreckage"},/turf/planet/lunar,/area/planet/moon)
+"dO" = (/mob/living/simple_animal/hostile/mimic/crate,/turf/planet/lunar,/area/planet/moon)
 "dP" = (/obj/structure/window/reinforced{dir = 1; maxhealth = 1.#INF},/obj/structure/table/reinforced,/obj/machinery/door_control{id = "xenobio1"; name = "Containment Blast Doors"; pixel_x = 0; pixel_y = 4; req_access_txt = "55"},/turf/simulated/floor{dir = 4; icon_state = "warning"},/area/planet/moon)
 "dQ" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{tag = "icon-rwindow (WEST)"; icon_state = "rwindow"; dir = 8},/obj/machinery/door/blast/regular{density = 0; icon_state = "pdoor0"; id = "xenobio4"; name = "Containment Blast Doors"; opacity = 0},/turf/simulated/floor/plating,/area/planet/moon)
 "dR" = (/obj/machinery/atmospherics/pipe/simple/visible/supply{tag = "icon-intact-supply (SOUTHEAST)"; icon_state = "intact-supply"; dir = 6},/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{tag = "icon-intact-scrubbers (SOUTHEAST)"; icon_state = "intact-scrubbers"; dir = 6},/turf/simulated/floor/plating,/area/planet/moon)
@@ -225,7 +225,7 @@
 "eq" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 8},/turf/simulated/floor{icon_state = "red"},/area/planet/moon)
 "er" = (/turf/simulated/floor{icon_state = "red"},/area/planet/moon)
 "es" = (/obj/machinery/disposal,/turf/simulated/floor{tag = "icon-red (SOUTHEAST)"; icon_state = "red"; dir = 6},/area/planet/moon)
-"et" = (/obj/item/stack/tile,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
+"et" = (/obj/item/stack/tile,/turf/planet/lunar,/area/planet/moon)
 "eu" = (/obj/structure/closet/l3closet/scientist,/turf/simulated/floor{dir = 4; icon_state = "warning"},/area/planet/moon)
 "ev" = (/obj/structure/extinguisher_cabinet{pixel_x = 27; pixel_y = 0},/turf/simulated/floor{icon_state = "white"},/area/planet/moon)
 "ew" = (/obj/machinery/atmospherics/pipe/simple/visible/supply,/obj/machinery/atmospherics/pipe/simple/visible/scrubbers,/turf/simulated/floor/plating,/area/planet/moon)
@@ -242,7 +242,7 @@
 "eH" = (/turf/simulated/floor{icon_state = "green"; dir = 8},/area/planet/moon)
 "eI" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor{icon_state = "green"; dir = 4},/area/planet/moon)
 "eJ" = (/obj/machinery/door/airlock/security{name = "Security"; req_access_txt = "63"},/obj/machinery/door/firedoor/border_only,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor,/area/planet/moon)
-"eK" = (/obj/item/stack/sheet/metal,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
+"eK" = (/obj/item/stack/sheet/metal,/turf/planet/lunar,/area/planet/moon)
 "eL" = (/obj/structure/table/glass,/obj/item/weapon/paper_bin,/obj/item/weapon/pen,/turf/simulated/floor{icon_state = "white"},/area/planet/moon)
 "eM" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{tag = "icon-rwindow (WEST)"; icon_state = "rwindow"; dir = 8},/obj/machinery/door/blast/regular{density = 0; icon_state = "pdoor0"; id = "xenobio5"; name = "Containment Blast Doors"; opacity = 0},/turf/simulated/floor/plating,/area/planet/moon)
 "eN" = (/obj/structure/disposaloutlet{dir = 8},/obj/structure/disposalpipe/trunk,/turf/simulated/floor/engine,/area/planet/moon)
@@ -263,9 +263,9 @@
 "fc" = (/obj/machinery/recharger/wallcharger{pixel_y = 28},/obj/structure/bed/chair/office/dark{dir = 8},/turf/simulated/floor{icon_state = "red"; dir = 1},/area/planet/moon)
 "fd" = (/obj/structure/table/rack,/obj/machinery/firealarm{dir = 1; pixel_y = 24},/turf/simulated/floor{icon_state = "red"; dir = 1},/area/planet/moon)
 "fe" = (/obj/structure/table/rack,/obj/item/weapon/storage/toolbox/emergency,/turf/simulated/floor{icon_state = "red"; dir = 5},/area/planet/moon)
-"ff" = (/obj/structure/closet/wardrobe/chemistry_white,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"fg" = (/obj/random/tech_supply,/obj/random/tech_supply,/obj/random/tech_supply,/obj/random/tool,/mob/living/simple_animal/hostile/mimic/crate,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"fh" = (/obj/structure/closet/crate/freezer,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
+"ff" = (/obj/structure/closet/wardrobe/chemistry_white,/turf/planet/lunar,/area/planet/moon)
+"fg" = (/obj/random/tech_supply,/obj/random/tech_supply,/obj/random/tech_supply,/obj/random/tool,/mob/living/simple_animal/hostile/mimic/crate,/turf/planet/lunar,/area/planet/moon)
+"fh" = (/obj/structure/closet/crate/freezer,/turf/planet/lunar,/area/planet/moon)
 "fi" = (/obj/machinery/door/blast/regular{density = 0; icon_state = "pdoor0"; id = "xenobio2"; name = "Containment Blast Doors"; opacity = 0},/obj/machinery/door/window/northleft{base_state = "right"; dir = 8; icon_state = "right"; name = "Containment Pen"; req_access_txt = "55"},/turf/simulated/floor/engine,/area/planet/moon)
 "fj" = (/obj/structure/bed/chair/office/dark{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor{icon_state = "white"},/area/planet/moon)
 "fk" = (/obj/structure/table/glass,/obj/item/device/camera,/turf/simulated/floor{icon_state = "white"},/area/planet/moon)
@@ -361,8 +361,8 @@
 "gW" = (/obj/machinery/door/airlock/glass_research{name = "Moonbase Equipment"; req_access_txt = "65"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/planet/moon)
 "gX" = (/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 8},/turf/simulated/floor{icon_state = "green"; dir = 8},/area/planet/moon)
 "gY" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 8},/turf/simulated/floor{icon_state = "green"; dir = 4},/area/planet/moon)
-"gZ" = (/obj/structure/window/phoronreinforced,/obj/structure/window/phoronreinforced{dir = 8},/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"ha" = (/obj/machinery/camera{c_tag = "Toxins Testing"; network = list("Toxins Test Area")},/obj/structure/window/phoronreinforced,/obj/structure/window/phoronreinforced{dir = 4},/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
+"gZ" = (/obj/structure/window/phoronreinforced,/obj/structure/window/phoronreinforced{dir = 8},/turf/planet/lunar,/area/planet/moon)
+"ha" = (/obj/machinery/camera{c_tag = "Toxins Testing"; network = list("Toxins Test Area")},/obj/structure/window/phoronreinforced,/obj/structure/window/phoronreinforced{dir = 4},/turf/planet/lunar,/area/planet/moon)
 "hb" = (/obj/item/device/radio/intercom{dir = 0; name = "Station Intercom (General)"; pixel_x = -27},/turf/simulated/floor{dir = 4; icon_state = "warning"},/area/planet/moon)
 "hc" = (/obj/structure/table/reinforced,/obj/structure/window/reinforced{dir = 1; maxhealth = 1.#INF},/obj/item/device/slime_scanner,/obj/item/device/slime_scanner,/turf/simulated/floor{icon_state = "white"},/area/planet/moon)
 "hd" = (/obj/structure/table/reinforced,/obj/structure/window/reinforced{dir = 1; maxhealth = 1.#INF},/obj/item/weapon/storage/fancy/vials,/turf/simulated/floor{icon_state = "white"},/area/planet/moon)
@@ -380,7 +380,7 @@
 "hp" = (/obj/machinery/door/airlock{id_tag = "Dormitory 1"; name = "Dorm"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor,/area/planet/moon)
 "hq" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 8},/turf/simulated/floor/carpet,/area/planet/moon)
 "hr" = (/obj/structure/table/woodentable,/obj/item/device/flashlight/lamp/green,/turf/simulated/floor/carpet,/area/planet/moon)
-"hs" = (/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/space)
+"hs" = (/turf/planet/lunar,/area/space)
 "ht" = (/turf/simulated/floor{dir = 6; icon_state = "warning"},/area/planet/moon)
 "hu" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 5},/turf/simulated/floor{icon_state = "white"},/area/planet/moon)
 "hv" = (/obj/machinery/vending/wallmed1{name = "Emergency NanoMed"; pixel_x = 0; pixel_y = -32; req_access_txt = "0"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/planet/moon)
@@ -609,7 +609,7 @@
 "lK" = (/obj/structure/table/reinforced,/obj/item/weapon/paper_bin,/obj/item/weapon/folder/white,/obj/item/weapon/pen,/turf/simulated/floor{icon_state = "white"},/area/planet/moon)
 "lL" = (/obj/machinery/chem_dispenser/xenoarch,/turf/simulated/floor{icon_state = "white"},/area/planet/moon)
 "lM" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/box/monkeycubes,/obj/item/weapon/storage/box/monkeycubes,/obj/machinery/alarm{frequency = 1441; pixel_y = 22},/turf/simulated/floor{icon_state = "white"},/area/planet/moon)
-"lN" = (/obj/structure/table/reinforced,/obj/machinery/firealarm{dir = 1; pixel_y = 24},/obj/machinery/bunsen_burner{pixel_y = 10},/obj/item/weapon/reagent_containers/glass/beaker/large{step_y = 10},/obj/item/clothing/glasses/science,/turf/simulated/floor{icon_state = "white"},/area/planet/moon)
+"lN" = (/obj/structure/table/reinforced,/obj/machinery/firealarm{dir = 1; pixel_y = 24},/obj/machinery/bunsen_burner{pixel_y = 10},/obj/item/weapon/reagent_containers/glass/beaker/large,/obj/item/clothing/glasses/science,/turf/simulated/floor{icon_state = "white"},/area/planet/moon)
 "lO" = (/obj/structure/table/rack,/obj/item/weapon/weldingtool,/obj/item/weapon/melee/baton,/obj/item/weapon/extinguisher,/obj/item/clothing/head/welding,/turf/simulated/floor{icon_state = "white"},/area/planet/moon)
 "lP" = (/obj/structure/table/rack,/obj/item/weapon/crowbar,/obj/item/weapon/flame/lighter,/obj/item/weapon/screwdriver,/obj/item/weapon/wrench,/turf/simulated/floor{icon_state = "white"},/area/planet/moon)
 "lQ" = (/obj/machinery/portable_atmospherics/hydroponics{closed_system = 1; name = "isolation tray"},/obj/machinery/atmospherics/portables_connector{tag = "icon-map_connector (EAST)"; icon_state = "map_connector"; dir = 4},/turf/simulated/floor{icon_state = "hydrofloor"},/area/planet/moon)
@@ -836,7 +836,7 @@
 "qd" = (/obj/structure/table/reinforced,/obj/item/weapon/anobattery{pixel_x = -1; pixel_y = 1},/obj/item/weapon/anobattery{pixel_x = 1; pixel_y = -1},/turf/simulated/floor,/area/planet/moon)
 "qe" = (/obj/machinery/alarm{dir = 8; icon_state = "alarm0"; pixel_x = 16},/turf/simulated/floor{icon_state = "dark"},/area/planet/moon)
 "qf" = (/obj/structure/sign/securearea{desc = "A warning sign which reads 'HIGH PRESSURE'."; name = "\improper HIGH PRESSURE"},/turf/simulated/wall/a_wall,/area/planet/moon)
-"qg" = (/obj/item/weapon/stool,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
+"qg" = (/obj/item/weapon/stool,/turf/planet/lunar,/area/planet/moon)
 "qh" = (/obj/structure/girder,/turf/simulated/floor{dir = 9; icon_state = "warning"},/area/planet/moon)
 "qi" = (/obj/structure/girder,/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/planet/moon)
 "qj" = (/obj/structure/girder,/turf/simulated/floor{dir = 5; icon_state = "warning"},/area/planet/moon)
@@ -844,11 +844,11 @@
 "ql" = (/obj/machinery/radiocarbon_spectrometer,/turf/simulated/floor{dir = 2; icon_state = "whitegreen"},/area/planet/moon)
 "qm" = (/obj/structure/reagent_dispensers/coolanttank,/turf/simulated/floor{dir = 6; icon_state = "whitegreen"},/area/planet/moon)
 "qn" = (/turf/simulated/floor{tag = "icon-floorgrimecaution"; icon_state = "floorgrimecaution"; dir = 2},/area/planet/moon)
-"qo" = (/obj/structure/bed/chair/wood{tag = "icon-wooden_chair (EAST)"; icon_state = "wooden_chair"; dir = 4},/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"qp" = (/obj/structure/table/gamblingtable,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"qq" = (/obj/structure/table/gamblingtable,/obj/item/weapon/deck{pixel_y = 4},/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"qr" = (/obj/structure/bed/chair/wood{tag = "icon-wooden_chair (WEST)"; icon_state = "wooden_chair"; dir = 8},/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"qs" = (/obj/item/weapon/paper_bin{pixel_x = 1; pixel_y = 9},/obj/structure/table,/obj/item/weapon/pen/red,/obj/item/weapon/pen/blue,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
+"qo" = (/obj/structure/bed/chair/wood{tag = "icon-wooden_chair (EAST)"; icon_state = "wooden_chair"; dir = 4},/turf/planet/lunar,/area/planet/moon)
+"qp" = (/obj/structure/table/gamblingtable,/turf/planet/lunar,/area/planet/moon)
+"qq" = (/obj/structure/table/gamblingtable,/obj/item/weapon/deck{pixel_y = 4},/turf/planet/lunar,/area/planet/moon)
+"qr" = (/obj/structure/bed/chair/wood{tag = "icon-wooden_chair (WEST)"; icon_state = "wooden_chair"; dir = 8},/turf/planet/lunar,/area/planet/moon)
+"qs" = (/obj/item/weapon/paper_bin{pixel_x = 1; pixel_y = 9},/obj/structure/table,/obj/item/weapon/pen/red,/obj/item/weapon/pen/blue,/turf/planet/lunar,/area/planet/moon)
 "qt" = (/obj/machinery/newscaster{pixel_x = -30; pixel_y = 0},/turf/simulated/floor{icon_state = "white"},/area/planet/moon)
 "qu" = (/obj/structure/girder,/turf/simulated/floor{dir = 10; icon_state = "warning"},/area/planet/moon)
 "qv" = (/turf/simulated/floor{dir = 2; icon_state = "warning"},/area/planet/moon)
@@ -858,12 +858,12 @@
 "qz" = (/obj/machinery/atmospherics/pipe/simple/hidden/yellow{tag = "icon-intact (NORTHEAST)"; icon_state = "intact"; dir = 5},/turf/simulated/floor{icon_state = "vault"; dir = 5},/area/planet/moon)
 "qA" = (/obj/machinery/atmospherics/pipe/simple/hidden/yellow{tag = "icon-intact (SOUTHWEST)"; icon_state = "intact"; dir = 10},/turf/simulated/floor{icon_state = "vault"; dir = 5},/area/planet/moon)
 "qB" = (/turf/simulated/floor{icon_state = "vault"; dir = 5},/area/planet/moon)
-"qC" = (/obj/structure/table,/obj/item/weapon/dice/d20,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
+"qC" = (/obj/structure/table,/obj/item/weapon/dice/d20,/turf/planet/lunar,/area/planet/moon)
 "qD" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 4; use_power = 0},/turf/simulated/floor{icon_state = "vault"; dir = 5},/area/planet/moon)
 "qE" = (/obj/machinery/atmospherics/pipe/manifold/hidden/yellow,/turf/simulated/floor{icon_state = "vault"; dir = 5},/area/planet/moon)
 "qF" = (/obj/structure/bed/chair,/obj/machinery/atmospherics/unary/vent_scrubber{dir = 8},/turf/simulated/floor{icon_state = "vault"; dir = 5},/area/planet/moon)
-"qG" = (/obj/structure/table,/obj/item/weapon/dice,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"qH" = (/obj/structure/bed/chair/wood{tag = "icon-wooden_chair (NORTH)"; icon_state = "wooden_chair"; dir = 1},/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
+"qG" = (/obj/structure/table,/obj/item/weapon/dice,/turf/planet/lunar,/area/planet/moon)
+"qH" = (/obj/structure/bed/chair/wood{tag = "icon-wooden_chair (NORTH)"; icon_state = "wooden_chair"; dir = 1},/turf/planet/lunar,/area/planet/moon)
 "qI" = (/obj/machinery/door_control{id = "alloys1"; name = "Blast Chamber"; pixel_x = -10; pixel_y = -25},/turf/simulated/floor{icon_state = "white"},/area/planet/moon)
 "qJ" = (/obj/machinery/door_control{id = "alloys2"; name = "Blast Chamber"; pixel_x = 10; pixel_y = -25},/turf/simulated/floor{icon_state = "white"},/area/planet/moon)
 "qK" = (/obj/structure/table,/turf/simulated/floor{icon_state = "vault"; dir = 5},/area/planet/moon)
@@ -874,9 +874,9 @@
 "qP" = (/obj/machinery/r_n_d/alloy_synth,/turf/simulated/floor{icon_state = "white"},/area/planet/moon)
 "qQ" = (/obj/machinery/light/small{dir = 8},/turf/simulated/floor/engine,/area/planet/moon)
 "qR" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor/engine,/area/planet/moon)
-"qS" = (/obj/effect/decal/cleanable/blood,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"qT" = (/obj/item/clothing/suit/wizrobe/fake,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
-"qU" = (/obj/item/clothing/head/wizard/fake,/turf/simulated/floor/plating/airless/asteroid/lunar_turf,/area/planet/moon)
+"qS" = (/obj/effect/decal/cleanable/blood,/turf/planet/lunar,/area/planet/moon)
+"qT" = (/obj/item/clothing/suit/wizrobe/fake,/turf/planet/lunar,/area/planet/moon)
+"qU" = (/obj/item/clothing/head/wizard/fake,/turf/planet/lunar,/area/planet/moon)
 "qV" = (/obj/effect/mapinfo/sector/cybersun,/turf/simulated/mineral/lunar,/area/planet/moon)
 
 (1,1,1) = {"
@@ -1000,22 +1000,22 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababaaababababababababababababaaabababaaaaaaaaaaababababababagkkjGbYhMefklkmknkokpbMbMbMkqkrksjubgktcdkubgbgbgbgbgbgbgbgbgkvbkbkbkbkbkbkbkbkbkkwkwkwbkgXgYbkbkbkbkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababababaaaaaaaaaaabababababababagbkbkbkbkbkbgbgkxkykzkAkBbrcdkCcdjubgkDkskEbgkFkGkHkIkJjskIbgkKkLkLkLkMkLkLkNcokObYhMefhNkPefhphqhrbkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababababaaaaaaaaaaaaababababababagagagagagagbgkQbrkRkSkTkUbMksbgkVjubgbgjKjLbgkWkXkYkZlalblcbgcoldlelflgjcbglhbgbgliljeDbklkhZbkhPhQbkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaabababababababababababababababababababababaaaaaaaaaaabababababababababababagbgkQbrllbrbrbrbrlmlnlolpiNlqlriPbklsltlulvlalwlxbgbgbgbgbgbgbgbgkdlybgbgbgbgbgbgbgbgbgbgbkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaabababababababababababababababababaaaaaaaaaaabababababababababadaeaeaegFgFgFgFlzgFlAbrfNlBlCjsjsjslDlEbklFlGlHlIlJlHlIbglKlLlMlNlOlPhUkdlabklQlRlSlSlSlTlUlVbkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababaaaaaaaaaaaaababababababababababababababababababaaaaaaababababababababababajagagaglWlXlYlZmalZmbmcmdmemfhPmgmgkdlabkmhmimjmjmjmkmlbgmmkGjsjsmnbrmojHlEmpmqmrmsmtmtmumqmvbkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaababababababababababababababababababababababababababababababajagagaglWmwmxmymzmAmBmCmDbgmEhPmFmGjHbMefefkPefftbYbYbYbgmHlamImJmKbMmLkslamMmqmNbMbMbOmOmqmPbkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaababababababababababababaaaaababababababababababababababababajagagaglWmwmQlZmRlZmSmcmTbgmUhPmVmVkdbrmWbYhPmgmghPbYbYbgmXmYmZnanbncndcdlamMmqnenfnfnfngmqnhbkaaaaaaninininininiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababaaaaaaaaaaaaababababababababababababaaaaaaaaababababababaaaaaaabababababaHaQaQaQgFgFgFgFlzgFnjnknlbgbkbkbkbkkdlabklinmnnnonpbYnqbgfNnrnsntnunvbgkdlamMmqnwnxnxnxnymqnzbkaaaaaaninininininiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababaaaaaaaaaaababababababababababababaaaaaaaaaaaaabababababaaaaaaaaaaababababababagagcocococobgbgbgbgbgnAnBnCbkkdlabknDnmnnnnnpbYnEbgbgbgnFnGnHnIbgkdlanJmqnKnLnMnNnOmqnPbkaaaaaaninininininiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaabababababababababababababababababababababaaaaaaaaaaabababababababababagagagbgkQbrllbrbrbrbrlmlnlolpiNlqlriPbklsltlulvlalwlxbgbgbgbgbgbgbgbgkdlybgbgbgbgbgbgbgbgbgbgbkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaabababababababababababababababababaaaaaaaaaaabababababababababababababgFgFgFgFlzgFlAbrfNlBlCjsjsjslDlEbklFlGlHlIlJlHlIbglKlLlMlNlOlPhUkdlabklQlRlSlSlSlTlUlVbkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababaaaaaaaaaaaaababababababababababababababababababaaaaaaababababababababababababadaelWlXlYlZmalZmbmcmdmemfhPmgmgkdlabkmhmimjmjmjmkmlbgmmkGjsjsmnbrmojHlEmpmqmrmsmtmtmumqmvbkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaababababababababababababababababababababababababababababababababajaglWmwmxmymzmAmBmCmDbgmEhPmFmGjHbMefefkPefftbYbYbYbgmHlamImJmKbMmLkslamMmqmNbMbMbOmOmqmPbkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaababababababababababababaaaaababababababababababababababababababaHaQlWmwmQlZmRlZmSmcmTbgmUhPmVmVkdbrmWbYhPmgmghPbYbYbgmXmYmZnanbncndcdlamMmqnenfnfnfngmqnhbkaaaaaaninininininiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababaaaaaaaaaaaaababababababababababababaaaaaaaaababababababaaaaaaabababababababababgFgFgFgFlzgFnjnknlbgbkbkbkbkkdlabklinmnnnonpbYnqbgfNnrnsntnunvbgkdlamMmqnwnxnxnxnymqnzbkaaaaaaninininininiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababaaaaaaaaaaababababababababababababaaaaaaaaaaaaabababababaaaaaaaaaaabababababababagcocococobgbgbgbgbgnAnBnCbkkdlabknDnmnnnnnpbYnEbgbgbgnFnGnHnIbgkdlanJmqnKnLnMnNnOmqnPbkaaaaaaninininininiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababaaaaaaabababababababababababababaaaaaaaaaaaaabababababaaaaaaaaaaaaaaababababababagbkbkbknQbknRnRbYnSnTbYnUnVnWlabkbYhPmVmVhPbYnXbgcobgnYnZoaobbgkdlabkocodoeofoeogmqohbkaaaaaaninininininiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababaaababababababababababababaaaaaaaaaaababababababaaaaaaaaaaaaaaabababababagbkcoconQbkoiojojojojojokbkkVlabkbkbkbkbkbkbkbkbgbgbgbgbgbgbgbgjHbMolomonononoomqmqopbkaaaaaaninininininiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababaaababababababababababababaaaaaaaaaaababababababaaaaaaaaaaaaaaabababagagagbkcoconQbkoiojojojojojokbkkVlabkbkbkbkbkbkbkbkbgbgbgbgbgbgbgbgjHbMolomonononoomqmqopbkaaaaaaninininininiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababaaaaaaaaabababababababababababababaaaaaaababababababababaaaaaaaaaaababababanoqajbkcoconQbkororosotouovowbkoxlpiNoyoziNiNiNiNiNoAiNiNiNoAoAiNiNoBlabkoCoDoEoEoEoFmqmvbkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababaaaaaaaaabababababababababababababababaaaaaaagagagagaganoGoHgFgFgFnQbkororosotouovovbkoIjsjsoJcdbrjsjsjsjscdjsjsjsoJcdjsjscdoKbknzoLoMoMoMoNoOoObkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababadaeaeoHoPoQoQoQoRoSoToUgFoVbkbkbkbkbkbkbkbkbkoWoXoXoXoYoZoXoXoXbgpabgbgbgbgpbhUbgpcpdbgbgbgbkbkbkbkbkbkbkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababajagagpepfpgphpipjpkplpmpnpopppppppppppppppppppqoXprpscdbrptpuoXpvpwpxpybgpzcdpAbgpBpCmJpDbgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababaaaaaaaaabababababababababababababababaaaaaaaaagagagaganoGoHgFgFgFnQbkororosotouovovbkoIjsjsoJcdbrjsjsjsjscdjsjsjsoJcdjsjscdoKbknzoLoMoMoMoNoOoObkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababaaaaaaoHoPoQoQoQoRoSoToUgFoVbkbkbkbkbkbkbkbkbkoWoXoXoXoYoZoXoXoXbgpabgbgbgbgpbhUbgpcpdbgbgbgbkbkbkbkbkbkbkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababadaeaepepfpgphpipjpkplpmpnpopppppppppppppppppppqoXprpscdbrptpuoXpvpwpxpybgpzcdpAbgpBpCmJpDbgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababajagagpepEpFpGpHpIbYbYpJgFbkbkbkbkbkbkbkbkbkbkoXoXpubrcdbrbrpKoXpLpMpNpObgpPlmpQbgpRpSfRfRbgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababaaabajagagpepTpgpUpgpVpWpXpYgFaaaaaaababababaaaaaaoXbrbrbrlmbrbrbroXpZqaqbpObgpPbrqcbgqdpSfRqebgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababaaaaaHaQaQqfgFgFgFgFgFgFgFgFgFaaacabababqgabababaaoXbrqhbEqibEqjbroXoXqkbgbgbgqloeqmbgqnhtmJpDbgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababaaabaHaQaQpepTpgpUpgpVpWpXpYgFaaaaaaababababaaaaaaoXbrbrbrlmbrbrbroXpZqaqbpObgpPbrqcbgqdpSfRqebgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababaaaaaaaaaaqfgFgFgFgFgFgFgFgFgFaaacabababqgabababaaoXbrqhbEqibEqjbroXoXqkbgbgbgqloeqmbgqnhtmJpDbgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababqoqpqqqrababqsoXqtquqvqwqvqxbrqyoXqzqAqBbgbgbgbgbgbgbgbgbgbgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababaaaaaaaaaaaaaaaaaaaaaaaaaaqCabababababqoqpqpqrabababoXbrbrbrbrbrbrbrqyoXqDqEqFbgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababaaaaaaaaaaaaaaaaaaaaaaaaqGababababababqHqHababababoXbrbrqIbrbrqJbrbroXmImJqKbgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
