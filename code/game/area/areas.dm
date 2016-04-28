@@ -53,6 +53,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/list/ambience = list( 'sound/ambience/shipambience.ogg' )
 	var/list/music = list('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
 	var/sound/forced_ambience = null
+
+	var/base_turf = /turf/space
+
 	var/parallax_style = "space"
 
 	var/rad_shielded = 0
@@ -185,44 +188,26 @@ area/space/atmosalert()
 /area/space/bluespace/hanger_2
 	icon_state = "start"
 	name = "\improper Bluespace"
-	ambience = list('sound/ambience/ambbspace.ogg')
-	environment = UNDERWATER
-	parallax_style = "bluespace"
 
 /area/space/bluespace/hanger_3
 	icon_state = "start"
 	name = "\improper Bluespace"
-	ambience = list('sound/ambience/ambbspace.ogg')
-	environment = UNDERWATER
-	parallax_style = "bluespace"
 
 /area/space/bluespace/hanger_4
 	icon_state = "start"
 	name = "\improper Bluespace"
-	ambience = list('sound/ambience/ambbspace.ogg')
-	environment = UNDERWATER
-	parallax_style = "bluespace"
 
 /area/space/bluespace/hanger_5
 	icon_state = "start"
 	name = "\improper Bluespace"
-	ambience = list('sound/ambience/ambbspace.ogg')
-	environment = UNDERWATER
-	parallax_style = "bluespace"
 
 /area/space/bluespace/hanger_6
 	icon_state = "start"
 	name = "\improper Bluespace"
-	ambience = list('sound/ambience/ambbspace.ogg')
-	environment = UNDERWATER
-	parallax_style = "bluespace"
 
 /area/space/bluespace/hanger_7
 	icon_state = "start"
 	name = "\improper Bluespace"
-	ambience = list('sound/ambience/ambbspace.ogg')
-	environment = UNDERWATER
-	parallax_style = "bluespace"
 
 /area/engine/
 	music = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg' )
@@ -2602,6 +2587,7 @@ area/space/atmosalert()
 
 	ambience = list( 'sound/ambience/ambience_outpost.ogg' )
 	music = list()
+	base_turf = /turf/planet/lunar
 
 /area/planet/moon/landing_zone
 	name = "\improper landing zone"

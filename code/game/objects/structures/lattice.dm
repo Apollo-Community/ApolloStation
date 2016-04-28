@@ -97,35 +97,36 @@
 	icon_state = "catwalkfull"
 
 /obj/structure/lattice/catwalk/New()
-	var/turf/Tsrc = get_turf(src)
-	Tsrc.ChangeTurf(/turf/simulated/floor/plating/airless/fakespace)
+	var/turf/T = get_turf( src )
+	if( istype( T, /turf/space ))
+		T.ChangeTurf( /turf/simulated/floor/plating/airless/fakespace )
 	..()
 
 /obj/structure/lattice/catwalk/Move()
-	var/turf/T = loc
+	var/turf/T = get_turf( src )
 	for(var/obj/structure/cable/C in T)
 		qdel(C)
 
-	var/turf/Tsrc = get_turf(src)
-	Tsrc.ChangeTurf(/turf/space)
+	if( istype( T, /turf/space ))
+		T.ChangeTurf( /turf/simulated/floor/plating/airless/fakespace )
 	..()
 
 /obj/structure/lattice/catwalk/Destroy()
-	var/turf/T = loc
+	var/turf/T = get_turf( src )
 	for(var/obj/structure/cable/C in T)
 		qdel(C)
 
-	var/turf/Tsrc = get_turf(src)
-	Tsrc.ChangeTurf(/turf/space)
+	if( istype( T, /turf/simulated/floor/plating/airless/fakespace ))
+		T.ChangeTurf( /turf/space )
 	..()
 
 /obj/structure/lattice/catwalk/Deconstruct()
-	var/turf/T = loc
+	var/turf/T = get_turf( src )
 	for(var/obj/structure/cable/C in T)
 		qdel(C)
 
-	var/turf/Tsrc = get_turf(src)
-	Tsrc.ChangeTurf(/turf/space)
+	if( istype( T, /turf/simulated/floor/plating/airless/fakespace ))
+		T.ChangeTurf( /turf/space )
 	..()
 
 /obj/structure/lattice/catwalk/attackby(obj/item/C as obj, mob/user as mob)
