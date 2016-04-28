@@ -176,7 +176,6 @@ obj/machinery/chem_dispenser/RefreshParts()
 	return 1 // update UIs attached to this object
 
 /obj/machinery/chem_dispenser/attackby(var/obj/item/B as obj, var/mob/user as mob)
-	if(src.type == /obj/machinery/chem_dispenser)
 	if(isrobot(user))
 		return
 	if(src.beaker)
