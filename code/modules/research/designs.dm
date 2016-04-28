@@ -231,9 +231,9 @@ datum/design/circuit/dronecontrol
 	req_tech = list("programming" = 4)
 	build_path = /obj/item/weapon/circuitboard/drone_control
 
-datum/design/circuit/xenoflora
+datum/design/circuit/xenofauna
 	name = "fauna reconstitution console"
-	id = "xenoflora"
+	id = "xenofauna"
 	req_tech = list("biotech" = 4,"programming" = 3)
 	build_path = /obj/item/weapon/circuitboard/reconstitutor/animal
 
