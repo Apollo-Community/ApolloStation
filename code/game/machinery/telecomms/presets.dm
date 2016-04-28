@@ -23,6 +23,10 @@
 	id = "Mining Relay"
 	autolinkers = list("m_relay")
 
+/obj/machinery/telecomms/relay/preset/moon
+	id = "Moon Relay"
+	autolinkers = list("mn_relay")
+
 /obj/machinery/telecomms/relay/preset/ruskie
 	id = "Ruskie Relay"
 	hide = 1

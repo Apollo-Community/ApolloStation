@@ -1,8 +1,8 @@
 "aa" = (/turf/space,/area/space)
-"ab" = (/turf/simulated/shuttle/wall{icon_state = "swall_f6"; dir = 2},/area/shuttle/escape/spawn_area)
+"ab" = (/turf/space,/turf/simulated/shuttle/wall{icon_state = "swall_f6"; dir = 2},/area/shuttle/escape/spawn_area)
 "ac" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion"; dir = 1},/turf/simulated/floor/plating,/area/shuttle/escape/spawn_area)
 "ad" = (/turf/simulated/shuttle/wall{tag = "icon-swall2"; icon_state = "swall2"; dir = 2},/area/shuttle/escape/spawn_area)
-"ae" = (/turf/simulated/shuttle/wall{dir = 3; icon_state = "swall_f10"; layer = 2},/area/shuttle/escape/spawn_area)
+"ae" = (/turf/space,/turf/simulated/shuttle/wall{dir = 3; icon_state = "swall_f10"; layer = 2},/area/shuttle/escape/spawn_area)
 "af" = (/turf/simulated/shuttle/wall{icon_state = "swall3"; dir = 2},/area/shuttle/escape/spawn_area)
 "ag" = (/obj/structure/window/reinforced,/obj/structure/shuttle/engine/heater{icon_state = "heater"; dir = 1},/turf/simulated/floor/plating,/area/shuttle/escape/spawn_area)
 "ah" = (/obj/structure/closet/crate/freezer/rations,/turf/simulated/floor{tag = "icon-shuttle_floor2"; icon_state = "shuttle_floor2"},/area/shuttle/escape/spawn_area)
@@ -11,7 +11,7 @@
 "ak" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/regular{pixel_x = 2; pixel_y = 6},/obj/item/weapon/storage/firstaid/regular{pixel_x = -2; pixel_y = 4},/obj/item/bodybag/cryobag{pixel_x = 5},/obj/item/weapon/storage/firstaid/o2{layer = 2.8; pixel_x = 4; pixel_y = 6},/turf/simulated/floor{tag = "icon-shuttle_floor3"; icon_state = "shuttle_floor3"},/area/shuttle/escape/spawn_area)
 "al" = (/obj/machinery/sleep_console{icon_state = "sleeperconsole-r"; orient = "RIGHT"},/turf/simulated/floor{tag = "icon-shuttle_floor3"; icon_state = "shuttle_floor3"},/area/shuttle/escape/spawn_area)
 "am" = (/obj/machinery/sleeper,/turf/simulated/floor{tag = "icon-shuttle_floor3"; icon_state = "shuttle_floor3"},/area/shuttle/escape/spawn_area)
-"an" = (/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/shuttle/escape/spawn_area)
+"an" = (/turf/space,/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/shuttle/escape/spawn_area)
 "ao" = (/turf/simulated/shuttle/wall{icon_state = "swall11"; dir = 2},/area/shuttle/escape/spawn_area)
 "ap" = (/obj/structure/closet/walllocker/emerglocker{pixel_x = -28},/turf/simulated/floor{tag = "icon-shuttle_floor2"; icon_state = "shuttle_floor2"},/area/shuttle/escape/spawn_area)
 "aq" = (/turf/simulated/floor{tag = "icon-shuttle_floor2"; icon_state = "shuttle_floor2"},/area/shuttle/escape/spawn_area)
@@ -19,7 +19,7 @@
 "as" = (/turf/simulated/floor{tag = "icon-shuttle_floor3"; icon_state = "shuttle_floor3"},/area/shuttle/escape/spawn_area)
 "at" = (/obj/item/device/radio/intercom{dir = 4; name = "Station Intercom (General)"; pixel_x = 30},/obj/structure/bed/roller,/turf/simulated/floor{tag = "icon-shuttle_floor3"; icon_state = "shuttle_floor3"},/area/shuttle/escape/spawn_area)
 "au" = (/turf/simulated/shuttle/wall{icon_state = "swall7"; dir = 2},/area/shuttle/escape/spawn_area)
-"av" = (/turf/simulated/shuttle/wall{icon_state = "swall_f9"; dir = 2},/area/shuttle/escape/spawn_area)
+"av" = (/turf/space,/turf/simulated/shuttle/wall{icon_state = "swall_f9"; dir = 2},/area/shuttle/escape/spawn_area)
 "aw" = (/obj/item/device/radio/intercom{dir = 4; name = "Station Intercom (General)"; pixel_x = 30},/turf/simulated/floor{tag = "icon-shuttle_floor2"; icon_state = "shuttle_floor2"},/area/shuttle/escape/spawn_area)
 "ax" = (/turf/simulated/shuttle/wall{icon_state = "swall12"; dir = 2},/area/shuttle/escape/spawn_area)
 "ay" = (/obj/machinery/door/airlock/silver{name = "Cargo Storage"},/turf/simulated/floor{tag = "icon-shuttle_floor2"; icon_state = "shuttle_floor2"},/area/shuttle/escape/spawn_area)
@@ -35,7 +35,7 @@
 "aI" = (/obj/structure/window/shuttle{icon_state = "window1"},/obj/structure/grille,/turf/simulated/floor/plating,/area/shuttle/escape/spawn_area)
 "aJ" = (/obj/item/device/radio/intercom{dir = 4; name = "Station Intercom (General)"; pixel_x = 0; pixel_y = -30},/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/escape/spawn_area)
 "aK" = (/obj/machinery/door/airlock/glass_security{name = "Escape Shuttle Cell"; req_access_txt = "2"},/turf/simulated/floor{tag = "icon-shuttle_floor4"; icon_state = "shuttle_floor4"},/area/shuttle/escape/spawn_area)
-"aL" = (/turf/simulated/shuttle/wall{dir = 2; icon_state = "swallc1"},/area/shuttle/escape/spawn_area)
+"aL" = (/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/turf/simulated/shuttle/wall{dir = 3; icon_state = "swall_f10"; layer = 2},/area/shuttle/escape/spawn_area)
 "aM" = (/obj/structure/closet/walllocker/emerglocker{pixel_x = 28},/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/escape/spawn_area)
 "aN" = (/obj/machinery/door/airlock/external{frequency = 1380; icon_state = "door_locked"; id_tag = "escape_shuttle_hatch"; locked = 1; name = "Shuttle Hatch"; req_access_txt = "13"},/obj/machinery/mech_sensor{dir = 8; frequency = 1380; id_tag = "shuttle_dock_sec_mech"; pixel_y = 19},/turf/simulated/floor{tag = "icon-shuttle_floor4"; icon_state = "shuttle_floor4"},/area/shuttle/escape/spawn_area)
 "aO" = (/turf/simulated/floor{tag = "icon-shuttle_floor4"; icon_state = "shuttle_floor4"},/area/shuttle/escape/spawn_area)
@@ -55,13 +55,14 @@
 "bc" = (/obj/structure/bed/chair/shuttle,/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/escape/spawn_area)
 "bd" = (/obj/machinery/status_display{pixel_y = -30},/obj/machinery/computer/mecha,/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/escape/spawn_area)
 "be" = (/obj/machinery/status_display{pixel_y = -30},/obj/machinery/computer/security,/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/escape/spawn_area)
-"bf" = (/obj/machinery/computer/crew,/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/escape/spawn_area)
-"bg" = (/obj/machinery/computer/shuttle_control/emergency,/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/escape/spawn_area)
-"bh" = (/obj/machinery/computer/communications,/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/escape/spawn_area)
-"bi" = (/turf/simulated/shuttle/wall{tag = "icon-swallc2"; icon_state = "swallc2"; dir = 2},/area/shuttle/escape/spawn_area)
-"bj" = (/obj/structure/window/shuttle{icon_state = "window4"},/obj/structure/grille,/turf/simulated/floor/plating,/area/shuttle/escape/spawn_area)
-"bk" = (/obj/structure/window/shuttle{icon_state = "window12"},/obj/structure/grille,/turf/simulated/floor/plating,/area/shuttle/escape/spawn_area)
-"bl" = (/obj/structure/window/shuttle{icon_state = "window8"},/obj/structure/grille,/turf/simulated/floor/plating,/area/shuttle/escape/spawn_area)
+"bf" = (/turf/simulated/shuttle/wall{dir = 2; icon_state = "swallc1"},/area/shuttle/escape/spawn_area)
+"bg" = (/obj/machinery/computer/crew,/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/escape/spawn_area)
+"bh" = (/obj/machinery/computer/shuttle_control/emergency,/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/escape/spawn_area)
+"bi" = (/obj/machinery/computer/communications,/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/shuttle/escape/spawn_area)
+"bj" = (/turf/simulated/shuttle/wall{tag = "icon-swallc2"; icon_state = "swallc2"; dir = 2},/area/shuttle/escape/spawn_area)
+"bk" = (/obj/structure/window/shuttle{icon_state = "window4"},/obj/structure/grille,/turf/simulated/floor/plating,/area/shuttle/escape/spawn_area)
+"bl" = (/obj/structure/window/shuttle{icon_state = "window12"},/obj/structure/grille,/turf/simulated/floor/plating,/area/shuttle/escape/spawn_area)
+"bm" = (/obj/structure/window/shuttle{icon_state = "window8"},/obj/structure/grille,/turf/simulated/floor/plating,/area/shuttle/escape/spawn_area)
 
 (1,1,1) = {"
 aaabacacacadacacacaeaa
@@ -84,6 +85,6 @@ aaauaXaxaxaxazaYaXaoaa
 aaanaoaZaCbaaCbbauavaa
 aaaaaGbcaCaCaCbcaGaaaa
 aaaaaIbdbcbcbcbeaIaaaa
-aaaaanaLbfbgbhbiavaaaa
-aaaaaaanbjbkblavaaaaaa
+aaaaanbfbgbhbibjavaaaa
+aaaaaaanbkblbmavaaaaaa
 "}
