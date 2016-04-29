@@ -7,7 +7,7 @@ obj/hanger
 	var/exterior = 1
 	var/dimx = 0
 	var/dimy = 0
-	var/square = 1
+	var/square = 0
 	var/area/hanger_area
 	var/hanger_area_tag
 	var/list/hanger_turf_atribs
@@ -37,7 +37,6 @@ obj/hanger/New()
 	//This is used to make hangers in space easier
 
 	if(!isnull(hanger_area_turfs) && dimx == 0 && dimy == 0)
-		square = 1
 		var/datum/dim_min_max/dims = get_dim_and_minmax(hanger_area_turfs)
 		dimx = dims.dim_x
 		dimy = dims.dim_y
@@ -47,7 +46,7 @@ obj/hanger/New()
 		if(dimy % 2)
 			//odd dim y
 			dimy += round(1 + dimy)
-
+	error("hanger [htag] created with [hanger_area_turfs.len] turfs and is square [square]")
 	add_to_controller()
 
 //Can the given shuttle land at this hanger ?
@@ -55,15 +54,21 @@ obj/hanger/New()
 //If the hanger is not square look if the shuttle will fit in the hanger turfs
 //This is important for hangers with docking arms
 obj/hanger/proc/can_land_at(var/datum/shuttle/s)
+	error("can_land_at called by [s.template_path]")
 	var/list/shuttle_turfs
-	////error("Can_land called by [s.template_path] in [tag]")
 	if(full)
 		return 0
-	if(square)
+	error("Passed full test [s.template_path]")
+	if(square == 1)
+		error("Square testing")
 		if(s.template_dim[1] > dimx || s.template_dim[2] > dimy)
+			error("square test failed")
 			return 0
+		error("Passed square test")
 	else
+		error("null testing")
 		if(isnull(s.shuttle_turfs) || isnull(hanger_area_turfs))
+			error("null test failed")
 			return 0
 		else
 			var/datum/coords/current_loc = new /datum/coords
@@ -78,8 +83,11 @@ obj/hanger/proc/can_land_at(var/datum/shuttle/s)
 			shuttle_turfs = shift_turfs(current_loc, hloc, s.shuttle_turfs)
 			for(var/turf/T in shuttle_turfs)
 				if(hanger_area_turfs.Find(T) >= 1)
+					error("turfs check test failed")
 					return 0
+	error("returning with 1")
 	return 1
+
 
 
 //Shuttle indicating its going to land at a hanger
@@ -89,13 +97,11 @@ obj/hanger/proc/land_at(var/datum/shuttle/s)
 		hanger_turf_atribs = truf_atrib_lister(hanger_turfs)
 
 obj/hanger/proc/take_off()
-	if(!full)
-		return
-
+	error("take_off called")
 	if(!exterior)
 		truf_atrib_placer(hanger_turf_atribs)
-
 	full = 0
+	error("returning with [full]")
 
 obj/hanger/proc/add_to_controller()
 	hangers += src

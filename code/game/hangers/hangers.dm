@@ -93,7 +93,7 @@ obj/hanger/oddshaped/exterior/s_hanger_esc
 	htag = "s_hanger_esc"
 
 obj/hanger/oddshaped/exterior/c_hanger_esc
-	hanger_area_tag = "/area/podbay/hangar/c_hanger_e"
+	hanger_area_tag = "/area/shuttle/escape/centcom"
 	htag = "c_hanger_esc"
 
 obj/hanger/oddshaped/exterior/syndi_home

@@ -34,7 +34,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttles["Escape"] = shuttle
 	process_shuttles += shuttle
 
-
+/*
 	shuttle = new/datum/shuttle/ferry/escape_pod()
 	shuttle.location = 0
 	shuttle.warmup_time = 0
@@ -78,6 +78,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttles["Escape Pod 3"] = shuttle
 
 	//There is no pod 4, apparently.
+	//It was lost to metoers duh
 	shuttle = new/datum/shuttle/ferry/escape_pod()
 	shuttle.location = 0
 	shuttle.warmup_time = 0
@@ -91,7 +92,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttle.move_time = SHUTTLE_TRANSIT_DURATION_RETURN + rand(-30, 60)	//randomize this so it seems like the pods are being picked up one by one
 	process_shuttles += shuttle
 	shuttles["Escape Pod 5"] = shuttle
-
+	*/
 	//give the emergency shuttle controller it's shuttles
 	emergency_shuttle.shuttle = shuttles["Escape"]
 	emergency_shuttle.escape_pods = list(
@@ -187,7 +188,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	VS.announcer = "NSV Icarus"
 	VS.arrival_message = "Attention, Apollo, we just tracked a small target bypassing our defensive perimeter. Can't fire on it without hitting the station - you've got incoming visitors, like it or not."
 	VS.departure_message = "Your guests are pulling away, Apollo - moving too fast for us to draw a bead on them. Looks like they're heading out of the system at a rapid clip."
-	VS.docking_controller_tag = "Vox Shuttle"
+//	VS.docking_controller_tag = "Vox Shuttle"
 	VS.warmup_time = 0
 	shuttles["Vox Skipjack"] = VS
 
@@ -234,7 +235,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	NS.arrival_message = "Attention, Apollo, you have a large signature approaching the station - looks unarmed to surface scans. We're too far out to intercept - brace for visitors."
 	NS.departure_message = "Your visitors are on their way out of the system, Apollo, burning delta-v like it's nothing. Good riddance."
 	NS.warmup_time = 0
-	NS.docking_controller_tag = "Nuke_Shuttle"
+//	NS.docking_controller_tag = "Nuke_Shuttle"
 	shuttles["Mercenary"] = NS
 
 
@@ -257,7 +258,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	VALS.arrival_message = "Attention, Apollo, you have a large signature approaching the station - looks unarmed to surface scans. We're too far out to intercept - brace for visitors."
 	VALS.departure_message = "Your visitors are on their way out of the system Apollo. They are moving to fast for us to atempt an intercept."
 	VALS.warmup_time = 0
-	VALS.docking_controller_tag = "Valen's Shuttle"
+//	VALS.docking_controller_tag = "Valen's Shuttle"
 	shuttles["Valans"] = VALS
 
 /datum/shuttle_controller/proc/setup()

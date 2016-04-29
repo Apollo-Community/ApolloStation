@@ -40,22 +40,24 @@
 
 	if(isnull(direction))
 		direction = !location
-	error("shuttle ferry [template_path] making short jump to [trg_hanger.htag]")
 	..(trg_hanger, direction)
 
 //Ferry long jump
 //Find out if we have a location, if so determin where we are going.
 //Call super with your destination and bluespace hanger
 /datum/shuttle/ferry/long_jump(var/obj/hanger/trg_hanger, var/obj/hanger/interim_hanger, var/travel_time, var/direction)
-	//world << "shuttle/ferry/long_jump: departing=[departing], destination=[destination], interim=[interim], travel_time=[travel_time]"
+	error("Long jump called doing location pass. [location]")
 	if(isnull(location))
 		return
+	error("long jump location passed")
 
 	if(isnull(trg_hanger))
 		trg_hanger = get_hanger(!location)
+	error("our target hanger = [trg_hanger.htag]")
 
 	direction = !location
 	..(trg_hanger, interim_hanger, travel_time, direction)
+	error("shuttle/ferry/shuttle [docking_controller_tag] returning from long jump call.")
 
 
 //Ferries have a few things that need to be done afther the standart move.
@@ -83,7 +85,6 @@
 	else
 		return hanger_station
 
-
 /*
 	Please ensure that long_jump() and short_jump() are only called from here. This applies to subtypes as well.
 	Doing so will ensure that multiple jumps cannot be initiated in parallel.
@@ -91,14 +92,15 @@
 /datum/shuttle/ferry/proc/process()
 	switch(process_state)
 		if (WAIT_LAUNCH)
-			//error("shuttle [docking_controller_tag] is waiting for docking controllers to agree its undocked.")
-			if (skip_docking_checks() || docking_controller.can_launch())
-				//error("shuttle [docking_controller_tag] is launching.")
-				if (move_time && pod)
-					//error("shuttle [docking_controller_tag] is making a long jump.")
+			error("shuttle [docking_controller_tag] is waiting for docking controllers to agree its undocked.")
+			if (skip_docking_checks() || docking_controller.can_launch() || (docking_controller_tag == "escape_shuttle"))
+				error("shuttle [docking_controller_tag] is launching.")
+				if (move_time > 0)
+					error("shuttle [docking_controller_tag] is making a long jump.")
 					long_jump(null, null, move_time, transit_direction)
+					error("shuttle [docking_controller_tag] returing from long jump")
 				else
-					//error("shuttle [docking_controller_tag] is making a short jump.")
+					error("shuttle [docking_controller_tag] is making a short jump.")
 					short_jump()
 
 				process_state = WAIT_ARRIVE
@@ -132,12 +134,15 @@
 
 
 /datum/shuttle/ferry/proc/launch(var/user)
+	error("ferre shuttle launch called")
 	if (!can_launch()) return
-
+	error("can_launch check passed")
 	in_use = user	//obtain an exclusive lock on the shuttle
 
 	process_state = WAIT_LAUNCH
+	error("shuttle waiting for launch")
 	undock()
+	error("undock called")
 
 /datum/shuttle/ferry/proc/force_launch(var/user)
 	if (!can_force()) return

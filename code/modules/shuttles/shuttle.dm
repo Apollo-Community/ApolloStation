@@ -64,25 +64,35 @@
 
 		moving_status = SHUTTLE_INTRANSIT //shouldn't matter but just to be safe
 		error("shuttle [template_path] jumpint now to [trg_hanger.tag]")
-		move(trg_hanger, null, 0)
+		move(trg_hanger, direction, null, 0)
 		moving_status = SHUTTLE_IDLE
 
 //Make a long jump. First go the the interim position and then to the target hanger.
 //Wait at the interim position for the indicated time.
 /datum/shuttle/proc/long_jump(var/obj/hanger/trg_hanger, var/obj/hanger/interim_hanger, var/travel_time, var/direction)
 	//world << "shuttle/long_jump: departing=[departing], destination=[destination], interim=[interim], travel_time=[travel_time]"
+	error("long jump called in shuttle [template_path]")
+
 	if(moving_status != SHUTTLE_IDLE) return
+	error("moving status check passed")
 
 	if(isnull(trg_hanger)) return
-
+	error("trg_hanger check passed")
+	error("target hanger status [trg_hanger.full]")
+	error("target hanger can_land_at returns  [trg_hanger.can_land_at(src)]")
 	if(!trg_hanger.can_land_at(src)) return
 	trg_hanger.full = 1
+	error("Can we land at the trg_hanger ?")
 
 	if(isnull(interim_hanger))
 		interim_hanger = hanger_controller.get_free_interim_hanger(src)
+	error("what is our interim hanger ? [interim_hanger.htag]")
 
 	if(!isnull(interim_hanger) && interim_hanger.can_land_at(src))
 		interim_hanger.full = 1
+	error("interim hanger can_land_at passed")
+
+	error("shuttle/ferry/shuttle [docking_controller_tag]: departing=[current_hanger.htag], destination=[trg_hanger.htag], interim=[interim_hanger.htag], travel_time=[travel_time]")
 
 	//it would be cool to play a sound here
 	moving_status = SHUTTLE_WARMUP
@@ -93,13 +103,13 @@
 		arrive_time = world.time + travel_time*10
 		moving_status = SHUTTLE_INTRANSIT
 		//Needs to have interim_hanger
-		move(interim_hanger, direction, null, 0)
+		move(interim_hanger, direction, 1)
 
 
 		while (world.time < arrive_time)
 			sleep(5)
 
-		move(trg_hanger, direction, null, 0)
+		move(trg_hanger, direction, 0)
 		moving_status = SHUTTLE_IDLE
 
 //Dock at you current dock.
@@ -113,9 +123,11 @@
 	docking_controller.initiate_docking(dock_target)
 
 /datum/shuttle/proc/undock()
+	error("undock called")
 	if (!docking_controller)
 		return
 	docking_controller.initiate_undocking()
+	error("init undocking called")
 
 /datum/shuttle/proc/current_dock_target()
 	return null
@@ -149,6 +161,7 @@
 	trg_hanger.land_at(src)
 	shuttle_turfs = move_turfs_to_turfs(shuttle_turfs, destination, direction=direction)
 	current_hanger.take_off()
+	current_hanger.full = 0
 	current_hanger = trg_hanger
 	shake_effect(shuttle_turfs)
 

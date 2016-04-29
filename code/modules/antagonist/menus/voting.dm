@@ -1,5 +1,7 @@
 /datum/controller/gameticker/proc/open_antag_vote(var/mob/user, var/datum/browser/menu, var/list/datum/mind/antags)
-	if( !antags )	return
+	if( !antags )
+		testing( "No antags list" )
+		return
 
 	// this may seem backwards, but this is done so that antagonist factions that aren't part of the syndicate can show up
 	var/list/datum/faction/factions = list()
@@ -7,9 +9,12 @@
 		if( M == user.mind ) // no voting for yourself
 			antags -= M
 			continue
-		factions += M.antagonist.faction
+		if( !(M.antagonist.faction in factions) )
+			factions += M.antagonist.faction
 
-	if( !antags.len )	return
+	if( !antags.len )
+		testing( "No antags in list" )
+		return
 
 	. += "<html><head>"
 	. += {"<style>
@@ -44,6 +49,7 @@
 	menu.set_user( user )
 	menu.set_content( replacetext( ., "\improper", "" ))
 	menu.open()
+	testing( "Opened antag vote for [user.client]" )
 
 /datum/controller/gameticker/Topic(href, href_list)
 	if( ticker.restart_called )	return // too late

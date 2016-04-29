@@ -158,7 +158,10 @@
 
 	ex_act(severtiy)
 		if(1.0)
-			src.ChangeTurf(/turf/space)
+			var/area/A = get_area( src )
+			var/base_turf = A.base_turf
+
+			src.ChangeTurf( base_turf )
 		return
 
 /turf/simulated/floor/bluegrid
@@ -211,9 +214,12 @@
 	blocks_air = 1
 
 /turf/simulated/shuttle/wall/ex_act(severity)
+	var/area/A = get_area( src )
+	var/base_turf = A.base_turf
+
 	switch(severity)
 		if(1.0)
-			src.ChangeTurf(/turf/space)
+			src.ChangeTurf(base_turf)
 			statistics.increase_stat("damage_cost", rand( 4000, 5000 ))
 			return
 		if(2.0)
@@ -228,9 +234,12 @@
 
 /turf/simulated/shuttle/floor/ex_act(severity)
 	//set src in oview(1)
+	var/area/A = get_area( src )
+	var/base_turf = A.base_turf
+
 	switch(severity)
 		if(1.0)
-			src.ChangeTurf(/turf/space)
+			src.ChangeTurf(base_turf)
 			statistics.increase_stat("damage_cost", rand( 1900, 2100 ))
 		if(2.0)
 			switch(pick(1,2;75,3))
@@ -239,7 +248,7 @@
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 					statistics.increase_stat("damage_cost", rand( 1900, 2000 ))
 				if(2)
-					src.ChangeTurf(/turf/space)
+					src.ChangeTurf(base_turf)
 					statistics.increase_stat("damage_cost", rand( 1900, 2100 ))
 				if(3)
 					src.ChangeTurf(/turf/simulated/shuttle/plating)

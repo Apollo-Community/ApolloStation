@@ -801,8 +801,6 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 			var/mob/mob = M
 			if(mob.client || mob.key)
 				continue
-		if(istype(M, /obj/hanger))
-			continue
 		qdel(M)
 	qdel(T)
 
@@ -938,16 +936,16 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 
 
 					for(var/obj/O in T)
-						if(!istype(O,/obj/hanger))
-							// Reset the shuttle corners
-							if(O.tag == "delete me")
-								X.icon = 'icons/turf/shuttle.dmi'
-								X.icon_state = replacetext(O.icon_state, "_f", "_s") // revert the turf to the old icon_state
-								X.name = "wall"
-								qdel(O) // prevents multiple shuttle corners from stacking
-								continue
-							if(!istype(O,/obj)) continue
-							O.loc = X
+
+						// Reset the shuttle corners
+						if(O.tag == "delete me")
+							X.icon = 'icons/turf/shuttle.dmi'
+							X.icon_state = replacetext(O.icon_state, "_f", "_s") // revert the turf to the old icon_state
+							X.name = "wall"
+							qdel(O) // prevents multiple shuttle corners from stacking
+							continue
+						if(!istype(O,/obj)) continue
+						O.loc = X
 
 					for(var/mob/M in T)
 						if(!istype(M,/mob) || istype(M, /mob/aiEye)) continue // If we need to check for more mobs, I'll add a variable
