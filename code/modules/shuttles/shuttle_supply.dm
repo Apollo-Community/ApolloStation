@@ -2,7 +2,7 @@
 	var/late_chance = 80
 	var/max_late_time = 300
 
-/datum/shuttle/ferry/supply/short_jump(var/datum/hanger/trg_hanger)
+/datum/shuttle/ferry/supply/short_jump(var/obj/hanger/trg_hanger)
 	//Do some checks first
 	if(moving_status != SHUTTLE_IDLE)
 		return
@@ -47,7 +47,7 @@
 	moving_status = SHUTTLE_INTRANSIT
 
 	//Waiting until we can move
-	while (world.time <= arrive_time)
+	while(world.time <= arrive_time)
 		sleep(5)
 
 	//Is the shuttle going to arrive late ?
