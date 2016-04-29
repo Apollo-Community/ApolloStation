@@ -34,8 +34,6 @@
 	current_hanger.land_at(src)
 	place_shuttle()
 	shuttle_ingame = 1
-	error("current hanger = [current_hanger.htag]")
-
 
 //Initiate the docking controllers by locating them in the game world.
 /datum/shuttle/proc/init_docking_controllers()
