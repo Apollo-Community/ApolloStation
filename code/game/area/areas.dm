@@ -70,7 +70,7 @@ var/list/teleportlocs = list()
 		if(istype(AR, /area/shuttle) || istype(AR, /area/syndicate_station) || istype(AR, /area/wizard_station)) continue
 		if(teleportlocs.Find(AR.name)) continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z in config.station_levels)
+		if (picked.z in overmap.station_levels)
 			teleportlocs += AR.name
 			teleportlocs[AR.name] = AR
 
@@ -87,7 +87,7 @@ var/list/ghostteleportlocs = list()
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z in config.local_levels)
+		if (picked.z in overmap.local_levels)
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 

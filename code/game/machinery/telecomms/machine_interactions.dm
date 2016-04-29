@@ -186,7 +186,7 @@
 	var/turf/position = get_turf(src)
 
 	// Toggle on/off getting signals from the station or the current Z level
-	if(src.listening_level in config.station_levels) // equals the station
+	if(src.listening_level in overmap.station_levels) // equals the station
 		src.listening_level = position.z
 		return 1
 	else if(position.z == TELECOMM_Z)

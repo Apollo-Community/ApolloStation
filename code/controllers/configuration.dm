@@ -175,15 +175,6 @@ var/list/gamemode_cache = list()
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
 	var/use_lib_nudge = 0 //Use the C library nudge instead of the python nudge.
 
-	var/use_overmap = 1
-
-	var/list/known_levels = list() // Defines with Z-levels are known
-	var/list/station_levels = list()  // Defines which Z-levels the station exists on.
-	var/list/alert_levels = list()	// Defines which Z-levels which, for example, a Code Red announcement may affect including such areas as Central Command and the Syndicate Shuttle
-	var/list/local_levels = list()	// Defines all Z-levels a character can typically reach
-	var/list/admin_levels = list()  // Defines which Z-levels which are for admin functionality, for example
-	var/list/can_random_teleport_levels = list() // Levels that you can possibly teleport to
-
 	// Event settings
 	var/expected_round_length = 3 * 60 * 60 * 10 // 3 hours
 	// If the first delay has a custom start time
@@ -624,9 +615,6 @@ var/list/gamemode_cache = list()
 
 				if("max_maint_drones")
 					config.max_maint_drones = text2num(value)
-
-				if("use_overmap")
-					config.use_overmap = 1
 
 				if("expected_round_length")
 					config.expected_round_length = MinutesToTicks(text2num(value))

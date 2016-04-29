@@ -67,7 +67,7 @@
 	else // If we don't have a destination, toss them somewhere random
 		var/exit_x = rand( source.x-20, source.x+20 )
 		var/exit_y = rand( source.y-20, source.y+20 )
-		var/exit_z = pick( config.can_random_teleport_levels )
+		var/exit_z = pick( overmap.can_random_teleport_levels )
 
 		destination = locate( exit_x, exit_y, exit_z )
 

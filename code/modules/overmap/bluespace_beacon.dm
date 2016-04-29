@@ -43,7 +43,7 @@ var/global/list/bluespace_beacons = list()
 		warpable = 0
 
 	spawn(20)
-		sector = map_sectors["[z]"]
+		sector = overmap.map_sectors["[z]"]
 		if( !sector )
 			functional = 0
 			src.ping("[src] states, \"ERROR: Critical error with the bluespace network!\"")

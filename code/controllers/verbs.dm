@@ -56,7 +56,7 @@
 		usr.client.debug_variables(antag)
 		message_admins("Admin [key_name_admin(usr)] is debugging the [antag.role_text] template.")
 */
-/client/proc/debug_controller(controller in list("Master","Ticker","Ticker Process","Air","Air Process","Machine Process","Lighting Process","Obj Process","Mob Process", "Jobs","Sun","Radio","Supply","Shuttles","Emergency Shuttle","Configuration","pAI", "Cameras", "Transfer Controller", "Gas Data","Event","Faction","Plants","Alarm","Nano","Templates","Template Config"))
+/client/proc/debug_controller(controller in list("Master","Ticker","Ticker Process","Air","Air Process","Machine Process","Lighting Process","Obj Process", "Overmap","Mob Process", "Jobs","Sun","Radio","Supply","Shuttles","Emergency Shuttle","Configuration","pAI", "Cameras", "Transfer Controller", "Gas Data","Event","Faction","Plants","Alarm","Nano","Templates","Template Config"))
 	set category = "Debug"
 	set name = "Debug Controller"
 	set desc = "Debug the various periodic loop controllers for the game (be careful!)"
@@ -144,6 +144,10 @@
 		if("Template config")
 			debug_variables(template_config)
 			feedback_add_details("admin_verb", "DTemplateConf")
+		if("Overmap")
+			debug_variables(overmap)
+			feedback_add_details("admin_verb", "DOvermap")
+
 	message_admins("Admin [key_name_admin(usr)] is debugging the [controller] controller.")
 	return
 

@@ -177,7 +177,7 @@
 
 /proc/getOvermapLoc( var/atom )
 	var/turf/T = get_turf( atom )
-	var/obj/effect/map/M = map_sectors["[T.z]"]
+	var/obj/effect/map/M = overmap.map_sectors["[T.z]"]
 
 	return get_turf( M )
 
@@ -186,7 +186,7 @@
 	var/safety = 1
 
 	while(move_to_z == src.z)
-		var/obj/effect/map/sector/sector = map_sectors["[pick( config.local_levels )]"]
+		var/obj/effect/map/sector/sector = overmap.map_sectors["[pick( overmap.local_levels )]"]
 		if( sector.canRandomTeleport() )
 			move_to_z = sector.map_z
 
