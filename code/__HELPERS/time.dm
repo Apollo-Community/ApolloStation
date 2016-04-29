@@ -56,7 +56,6 @@ proc/isDay(var/month, var/day)
 			return 30
 		if( 12 )
 			return 31
-	return 31
 
 /proc/getMonthName( var/month )
 	if( month < 1 || month > 12 )
