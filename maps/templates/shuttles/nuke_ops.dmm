@@ -49,72 +49,71 @@
 "aW" = (/obj/machinery/vending/assist{contraband = null; name = "AntagCorpVent"; products = list(/obj/item/device/assembly/prox_sensor = 5, /obj/item/device/assembly/signaler = 4, /obj/item/device/assembly/infra = 4, /obj/item/device/assembly/prox_sensor = 4, /obj/item/weapon/handcuffs = 8, /obj/item/device/flash = 4, /obj/item/weapon/cartridge/signal = 4)},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
 "aX" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/turf/simulated/shuttle/plating,/area/space)
 "aY" = (/obj/machinery/door/airlock/external{frequency = 1331; icon_state = "door_closed"; id_tag = "synd_inner"; locked = 0; name = "Ship External Access"; req_access = null; req_access_txt = "0"},/obj/machinery/atmospherics/pipe/simple/visible,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"aZ" = (/obj/machinery/vending/cigarette{contraband = newlist(); premium = newlist(); prices = list(/obj/item/weapon/storage/fancy/cigarettes = 15, /obj/item/weapon/storage/box/matches = 1, /obj/item/weapon/flame/lighter/zippo = 4, /obj/item/clothing/mask/cigarette/cigar/havana = 20); products = list(/obj/item/weapon/storage/fancy/cigarettes = 10, /obj/item/weapon/storage/box/matches = 10, /obj/item/weapon/flame/lighter/zippo = 4, /obj/item/clothing/mask/cigarette/cigar/havana = 2)},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"ba" = (/obj/structure/bed/chair{dir = 8},/obj/machinery/flasher_button{id = "syndieflash"; name = "Flasher"; pixel_x = 27; pixel_y = 0; tag = "permflash"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bb" = (/obj/machinery/atmospherics/pipe/tank/air{dir = 4; start_pressure = 740.5},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bc" = (/obj/machinery/atmospherics/pipe/simple/visible{dir = 4},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bd" = (/obj/machinery/access_button{command = "cycle_interior"; frequency = 1331; master_tag = "synd_airlock"; name = "interior access button"; pixel_x = 25; pixel_y = 25; req_access_txt = "0"},/obj/machinery/atmospherics/pipe/simple/visible{tag = "icon-intact (NORTHWEST)"; icon_state = "intact"; dir = 9},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"be" = (/obj/machinery/suit_cycler/syndicate{locked = 0},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bf" = (/obj/structure/table,/obj/item/weapon/kitchen/utensil/knife{pixel_x = -6},/obj/item/weapon/reagent_containers/syringe/drugs{pixel_x = 3; pixel_y = -1},/obj/item/weapon/reagent_containers/syringe/drugs{pixel_x = 3; pixel_y = 4},/obj/item/weapon/reagent_containers/syringe/drugs{pixel_x = 3; pixel_y = 9},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bg" = (/obj/machinery/door/window{dir = 4; name = "Brig"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bh" = (/obj/machinery/door/window{base_state = "right"; dir = 8; icon_state = "right"; name = "Preparation"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bi" = (/obj/structure/closet/syndicate/suit{name = "suit closet"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bj" = (/obj/structure/closet{name = "custodial"},/obj/item/weapon/reagent_containers/glass/bucket,/obj/item/weapon/mop,/obj/item/weapon/reagent_containers/spray/cleaner,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bk" = (/obj/machinery/door/window{base_state = "right"; dir = 4; icon_state = "right"; name = "Brig"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bl" = (/obj/machinery/door/window{base_state = "left"; dir = 8; icon_state = "left"; name = "Preparation"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bm" = (/obj/structure/table,/obj/item/weapon/storage/toolbox/syndicate{pixel_x = -1; pixel_y = 3},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bn" = (/obj/machinery/sleeper,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"bo" = (/obj/machinery/sleep_console,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"bp" = (/obj/machinery/portable_atmospherics/canister/oxygen,/obj/structure/sign/nosmoking_1{pixel_y = 32},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"bq" = (/obj/structure/table,/obj/item/roller{pixel_y = 8},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"br" = (/obj/structure/table,/obj/structure/closet/secure_closet/medical_wall{pixel_y = 32; req_access = null; req_access_txt = "150"},/obj/item/bodybag,/obj/item/weapon/reagent_containers/syringe/antiviral,/obj/item/weapon/reagent_containers/syringe/antiviral,/obj/item/weapon/reagent_containers/syringe/antiviral,/obj/item/weapon/reagent_containers/glass/bottle/antitoxin{pixel_x = -4; pixel_y = 8},/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline{pixel_x = 4; pixel_y = 7},/obj/item/weapon/reagent_containers/syringe,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"bs" = (/obj/item/device/radio/intercom{desc = "Talk through this. Evilly"; freerange = 1; frequency = 1213; name = "Syndicate Intercom"; pixel_x = -32; subspace_transmission = 1; syndie = 1},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bt" = (/obj/structure/table,/obj/item/clothing/gloves/yellow,/obj/item/device/assembly/signaler{pixel_y = 2},/obj/item/clothing/glasses/night,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bu" = (/obj/structure/table,/obj/item/clothing/gloves/yellow,/obj/item/device/assembly/prox_sensor{pixel_x = -8; pixel_y = 4},/obj/item/clothing/glasses/night,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bv" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/machinery/door/blast/shutters{density = 0; dir = 8; icon_state = "shutter0"; id = "syndieshutters_infirmary"; name = "Blast Shutters"; opacity = 0},/turf/simulated/shuttle/plating,/area/space)
-"bw" = (/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"bx" = (/obj/structure/table,/obj/item/weapon/screwdriver,/obj/effect/spawner/newbomb/timer/syndicate,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"by" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/machinery/door/blast/shutters{density = 0; dir = 4; icon_state = "shutter0"; id = "syndieshutters_workshop"; name = "Blast Shutters"; opacity = 0},/turf/simulated/shuttle/plating,/area/space)
-"bz" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/machinery/door/blast/shutters{density = 0; dir = 8; icon_state = "shutter0"; id = "syndieshutters_infirmary"; name = "Blast Shutters"; opacity = 0},/turf/simulated/shuttle/plating,/area/space)
-"bA" = (/obj/machinery/bodyscanner,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"bB" = (/obj/machinery/body_scanconsole,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"bC" = (/obj/machinery/door/window{dir = 4; name = "Infirmary"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"bD" = (/obj/machinery/door/window/westright{name = "Tool Storage"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bE" = (/obj/item/weapon/stool{pixel_y = 8},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bF" = (/obj/structure/table,/obj/effect/spawner/newbomb/timer/syndicate,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bG" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/machinery/door/blast/shutters{density = 0; dir = 4; icon_state = "shutter0"; id = "syndieshutters_workshop"; name = "Blast Shutters"; opacity = 0},/turf/simulated/shuttle/plating,/area/space)
-"bH" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/machinery/door/blast/shutters{density = 0; dir = 8; icon_state = "shutter0"; id = "syndieshutters_infirmary"; name = "Blast Shutters"; opacity = 0},/turf/simulated/shuttle/plating,/area/space)
-"bI" = (/obj/machinery/door/window{base_state = "right"; dir = 4; icon_state = "right"; name = "Infirmary"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"bJ" = (/obj/machinery/door/window{dir = 8; name = "Tool Storage"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bK" = (/obj/structure/table,/obj/item/device/aicard,/obj/effect/spawner/newbomb/timer/syndicate,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bL" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/machinery/door/blast/shutters{density = 0; dir = 4; icon_state = "shutter0"; id = "syndieshutters_workshop"; name = "Blast Shutters"; opacity = 0},/turf/simulated/shuttle/plating,/area/space)
-"bM" = (/obj/machinery/door_control{id = "syndieshutters_infirmary"; name = "remote shutter control"; pixel_x = -25; req_access_txt = "0"},/obj/structure/mopbucket,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"bN" = (/obj/item/device/radio/intercom{desc = "Talk through this. Evilly"; freerange = 1; frequency = 1213; name = "Syndicate Intercom"; pixel_x = 32; subspace_transmission = 1; syndie = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"bO" = (/obj/machinery/door/window{dir = 1; name = "Secure Storage"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bP" = (/obj/structure/table/rack,/obj/item/weapon/storage/belt/utility/full,/obj/item/device/multitool,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bQ" = (/obj/machinery/door_control{id = "syndieshutters_telebay"; name = "remote shutter control"; pixel_x = 0; pixel_y = -25; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bR" = (/obj/machinery/door_control{id = "syndieshutters_workshop"; name = "remote shutter control"; pixel_x = 25; req_access_txt = "0"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bS" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/table,/obj/item/weapon/bonesetter,/obj/item/weapon/bonegel,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"bT" = (/obj/machinery/door/window{dir = 1; name = "Surgery"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"bU" = (/obj/structure/window/reinforced{dir = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"bV" = (/obj/structure/table,/obj/structure/window/reinforced{dir = 8},/obj/item/weapon/storage/firstaid/toxin{pixel_x = 3; pixel_y = 3},/obj/item/weapon/storage/firstaid/adv{pixel_x = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"bW" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/o2{pixel_x = 3; pixel_y = 3},/obj/item/weapon/storage/firstaid/fire{pixel_x = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"bX" = (/obj/item/weapon/weldingtool,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bY" = (/obj/structure/sign/securearea{name = "\improper CAUTION"; pixel_x = 32},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"bZ" = (/obj/machinery/telecomms/allinone{intercept = 1},/obj/machinery/door/window/northright{name = "Telecoms Mainframe"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"ca" = (/obj/machinery/door/blast/regular{id = "syndieshutters_telebay"; name = "Outer Airlock"},/turf/simulated/shuttle/plating,/area/space)
-"cb" = (/obj/structure/table,/obj/item/weapon/scalpel,/obj/item/weapon/circular_saw{pixel_y = 8},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"cc" = (/obj/structure/sink{dir = 4; icon_state = "sink"; pixel_x = 11; pixel_y = 0},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"cd" = (/obj/structure/closet/secure_closet/medical_wall{pixel_y = 0; req_access = null; req_access_txt = "150"},/obj/item/weapon/surgicaldrill,/obj/item/clothing/gloves/latex,/obj/item/clothing/mask/surgical,/obj/item/weapon/reagent_containers/glass/bottle/stoxin,/obj/item/weapon/reagent_containers/glass/bottle/stoxin,/obj/item/weapon/reagent_containers/syringe,/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/space)
-"ce" = (/obj/item/weapon/crowbar,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"cf" = (/obj/structure/sign/nosmoking_2{pixel_x = 32},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
-"cg" = (/obj/structure/table,/obj/item/weapon/cautery,/obj/item/weapon/hemostat,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"ch" = (/obj/machinery/optable,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"ci" = (/obj/structure/table,/obj/item/stack/medical/advanced/bruise_pack,/obj/item/weapon/retractor,/obj/item/device/radio/intercom{desc = "Talk through this. Evilly"; freerange = 1; frequency = 1213; name = "Syndicate Intercom"; pixel_x = 32; subspace_transmission = 1; syndie = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"cj" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating/airless,/area/space)
-"ck" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"},/turf/space,/area/space)
-"cl" = (/obj/structure/shuttle/engine/propulsion,/turf/space,/area/space)
-"cm" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_r"},/turf/space,/area/space)
+"aZ" = (/obj/structure/bed/chair{dir = 8},/obj/machinery/flasher_button{id = "syndieflash"; name = "Flasher"; pixel_x = 27; pixel_y = 0; tag = "permflash"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"ba" = (/obj/machinery/atmospherics/pipe/tank/air{dir = 4; start_pressure = 740.5},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bb" = (/obj/machinery/atmospherics/pipe/simple/visible{dir = 4},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bc" = (/obj/machinery/access_button{command = "cycle_interior"; frequency = 1331; master_tag = "synd_airlock"; name = "interior access button"; pixel_x = 25; pixel_y = 25; req_access_txt = "0"},/obj/machinery/atmospherics/pipe/simple/visible{tag = "icon-intact (NORTHWEST)"; icon_state = "intact"; dir = 9},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bd" = (/obj/machinery/suit_cycler/syndicate{locked = 0},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"be" = (/obj/structure/table,/obj/item/weapon/kitchen/utensil/knife{pixel_x = -6},/obj/item/weapon/reagent_containers/syringe/drugs{pixel_x = 3; pixel_y = -1},/obj/item/weapon/reagent_containers/syringe/drugs{pixel_x = 3; pixel_y = 4},/obj/item/weapon/reagent_containers/syringe/drugs{pixel_x = 3; pixel_y = 9},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bf" = (/obj/machinery/door/window{dir = 4; name = "Brig"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bg" = (/obj/machinery/door/window{base_state = "right"; dir = 8; icon_state = "right"; name = "Preparation"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bh" = (/obj/structure/closet/syndicate/suit{name = "suit closet"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bi" = (/obj/structure/closet{name = "custodial"},/obj/item/weapon/reagent_containers/glass/bucket,/obj/item/weapon/mop,/obj/item/weapon/reagent_containers/spray/cleaner,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bj" = (/obj/machinery/door/window{base_state = "right"; dir = 4; icon_state = "right"; name = "Brig"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bk" = (/obj/machinery/door/window{base_state = "left"; dir = 8; icon_state = "left"; name = "Preparation"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bl" = (/obj/structure/table,/obj/item/weapon/storage/toolbox/syndicate{pixel_x = -1; pixel_y = 3},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bm" = (/obj/machinery/sleeper,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bn" = (/obj/machinery/sleep_console,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bo" = (/obj/machinery/portable_atmospherics/canister/oxygen,/obj/structure/sign/nosmoking_1{pixel_y = 32},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bp" = (/obj/structure/table,/obj/item/roller{pixel_y = 8},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bq" = (/obj/structure/table,/obj/structure/closet/secure_closet/medical_wall{pixel_y = 32; req_access = null; req_access_txt = "150"},/obj/item/bodybag,/obj/item/weapon/reagent_containers/syringe/antiviral,/obj/item/weapon/reagent_containers/syringe/antiviral,/obj/item/weapon/reagent_containers/syringe/antiviral,/obj/item/weapon/reagent_containers/glass/bottle/antitoxin{pixel_x = -4; pixel_y = 8},/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline{pixel_x = 4; pixel_y = 7},/obj/item/weapon/reagent_containers/syringe,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"br" = (/obj/item/device/radio/intercom{desc = "Talk through this. Evilly"; freerange = 1; frequency = 1213; name = "Syndicate Intercom"; pixel_x = -32; subspace_transmission = 1; syndie = 1},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bs" = (/obj/structure/table,/obj/item/clothing/gloves/yellow,/obj/item/device/assembly/signaler{pixel_y = 2},/obj/item/clothing/glasses/night,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bt" = (/obj/structure/table,/obj/item/clothing/gloves/yellow,/obj/item/device/assembly/prox_sensor{pixel_x = -8; pixel_y = 4},/obj/item/clothing/glasses/night,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bu" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/machinery/door/blast/shutters{density = 0; dir = 8; icon_state = "shutter0"; id = "syndieshutters_infirmary"; name = "Blast Shutters"; opacity = 0},/turf/simulated/shuttle/plating,/area/space)
+"bv" = (/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bw" = (/obj/structure/table,/obj/item/weapon/screwdriver,/obj/effect/spawner/newbomb/timer/syndicate,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bx" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/machinery/door/blast/shutters{density = 0; dir = 4; icon_state = "shutter0"; id = "syndieshutters_workshop"; name = "Blast Shutters"; opacity = 0},/turf/simulated/shuttle/plating,/area/space)
+"by" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/machinery/door/blast/shutters{density = 0; dir = 8; icon_state = "shutter0"; id = "syndieshutters_infirmary"; name = "Blast Shutters"; opacity = 0},/turf/simulated/shuttle/plating,/area/space)
+"bz" = (/obj/machinery/bodyscanner,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bA" = (/obj/machinery/body_scanconsole,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bB" = (/obj/machinery/door/window{dir = 4; name = "Infirmary"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bC" = (/obj/machinery/door/window/westright{name = "Tool Storage"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bD" = (/obj/item/weapon/stool{pixel_y = 8},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bE" = (/obj/structure/table,/obj/effect/spawner/newbomb/timer/syndicate,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bF" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/machinery/door/blast/shutters{density = 0; dir = 4; icon_state = "shutter0"; id = "syndieshutters_workshop"; name = "Blast Shutters"; opacity = 0},/turf/simulated/shuttle/plating,/area/space)
+"bG" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/machinery/door/blast/shutters{density = 0; dir = 8; icon_state = "shutter0"; id = "syndieshutters_infirmary"; name = "Blast Shutters"; opacity = 0},/turf/simulated/shuttle/plating,/area/space)
+"bH" = (/obj/machinery/door/window{base_state = "right"; dir = 4; icon_state = "right"; name = "Infirmary"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bI" = (/obj/machinery/door/window{dir = 8; name = "Tool Storage"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bJ" = (/obj/structure/table,/obj/item/device/aicard,/obj/effect/spawner/newbomb/timer/syndicate,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bK" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/machinery/door/blast/shutters{density = 0; dir = 4; icon_state = "shutter0"; id = "syndieshutters_workshop"; name = "Blast Shutters"; opacity = 0},/turf/simulated/shuttle/plating,/area/space)
+"bL" = (/obj/machinery/door_control{id = "syndieshutters_infirmary"; name = "remote shutter control"; pixel_x = -25; req_access_txt = "0"},/obj/structure/mopbucket,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bM" = (/obj/item/device/radio/intercom{desc = "Talk through this. Evilly"; freerange = 1; frequency = 1213; name = "Syndicate Intercom"; pixel_x = 32; subspace_transmission = 1; syndie = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bN" = (/obj/machinery/door/window{dir = 1; name = "Secure Storage"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bO" = (/obj/structure/table/rack,/obj/item/weapon/storage/belt/utility/full,/obj/item/device/multitool,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bP" = (/obj/machinery/door_control{id = "syndieshutters_telebay"; name = "remote shutter control"; pixel_x = 0; pixel_y = -25; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bQ" = (/obj/machinery/door_control{id = "syndieshutters_workshop"; name = "remote shutter control"; pixel_x = 25; req_access_txt = "0"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bR" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/table,/obj/item/weapon/bonesetter,/obj/item/weapon/bonegel,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bS" = (/obj/machinery/door/window{dir = 1; name = "Surgery"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bT" = (/obj/structure/window/reinforced{dir = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bU" = (/obj/structure/table,/obj/structure/window/reinforced{dir = 8},/obj/item/weapon/storage/firstaid/toxin{pixel_x = 3; pixel_y = 3},/obj/item/weapon/storage/firstaid/adv{pixel_x = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bV" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/o2{pixel_x = 3; pixel_y = 3},/obj/item/weapon/storage/firstaid/fire{pixel_x = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bW" = (/obj/item/weapon/weldingtool,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bX" = (/obj/structure/sign/securearea{name = "\improper CAUTION"; pixel_x = 32},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bY" = (/obj/machinery/telecomms/allinone{intercept = 1},/obj/machinery/door/window/northright{name = "Telecoms Mainframe"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"bZ" = (/obj/machinery/door/blast/regular{id = "syndieshutters_telebay"; name = "Outer Airlock"},/turf/simulated/shuttle/plating,/area/space)
+"ca" = (/obj/structure/table,/obj/item/weapon/scalpel,/obj/item/weapon/circular_saw{pixel_y = 8},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"cb" = (/obj/structure/sink{dir = 4; icon_state = "sink"; pixel_x = 11; pixel_y = 0},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"cc" = (/obj/structure/closet/secure_closet/medical_wall{pixel_y = 0; req_access = null; req_access_txt = "150"},/obj/item/weapon/surgicaldrill,/obj/item/clothing/gloves/latex,/obj/item/clothing/mask/surgical,/obj/item/weapon/reagent_containers/glass/bottle/stoxin,/obj/item/weapon/reagent_containers/glass/bottle/stoxin,/obj/item/weapon/reagent_containers/syringe,/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/space)
+"cd" = (/obj/item/weapon/crowbar,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"ce" = (/obj/structure/sign/nosmoking_2{pixel_x = 32},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/space)
+"cf" = (/obj/structure/table,/obj/item/weapon/cautery,/obj/item/weapon/hemostat,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"cg" = (/obj/machinery/optable,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"ch" = (/obj/structure/table,/obj/item/stack/medical/advanced/bruise_pack,/obj/item/weapon/retractor,/obj/item/device/radio/intercom{desc = "Talk through this. Evilly"; freerange = 1; frequency = 1213; name = "Syndicate Intercom"; pixel_x = 32; subspace_transmission = 1; syndie = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"ci" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating/airless,/area/space)
+"cj" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"},/turf/space,/area/space)
+"ck" = (/obj/structure/shuttle/engine/propulsion,/turf/space,/area/space)
+"cl" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_r"},/turf/space,/area/space)
 
 (1,1,1) = {"
 aaaaaaaaaaabacadadadaeafaaaaaaaaaa
@@ -130,18 +129,18 @@ aaabagagagagaEayaqanaDagagagagafaa
 aaagaFaGaHaganaIanaJagagaKaLaMaNaa
 aaaOaPaQaPagagagaRagagaSaKaTaUaNaa
 aaagagaOaVagagananaWagagaXaYaXagaa
-aaagaZananbaaganananagbbbcbdbeagaa
-aaagbfanananbganananbhanananbiagaa
-aaagbjanananbkanananblanananbmagaa
+aaaganananaZaganananagbabbbcbdagaa
+aaagbeanananbfanananbganananbhagaa
+aaagbianananbjanananbkanananblagaa
 abagagagagagaganananagagagagagagaf
-agbnbobpbqbragbsananagbtbtbtbubuag
-bvbwbwbwbwbwaganananagbsanananbxby
-bzbAbBbwbwbwbCanananbDanananbEbFbG
-bHbwbwbwbwbwbIanananbJananananbKbL
-agbMbwbwbwbNagaXbOaXagbPbPbQanbRag
-agbSbTbUbVbWagbXanbYagbZagagcaagag
-agcbbwcccdagagananceagagaganancfag
-agcgchciagaaagcjcjcjagaaaganananag
-agcjcjcjagaaauckclcmawaaagcjcjcjag
-auckclcmawaaaaaaaaaaaaaaauckclcmaw
+agbmbnbobpbqagbrananagbsbsbsbtbtag
+bubvbvbvbvbvaganananagbranananbwbx
+bybzbAbvbvbvbBanananbCanananbDbEbF
+bGbvbvbvbvbvbHanananbIananananbJbK
+agbLbvbvbvbMagaXbNaXagbObObPanbQag
+agbRbSbTbUbVagbWanbXagbYagagbZagag
+agcabvcbccagaganancdagagagananceag
+agcfcgchagaaagciciciagaaaganananag
+agciciciagaaaucjckclawaaagciciciag
+aucjckclawaaaaaaaaaaaaaaaucjckclaw
 "}
