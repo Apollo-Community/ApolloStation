@@ -2580,13 +2580,16 @@ area/space/atmosalert()
 	icon_state = "smaint"
 
 //////////////// PLANET ///////////////////////////////////
+/area/planet
+	base_turf = /turf/planet
+
 /area/planet/moon
 	name = "\improper moon"
 	icon_state = "moon"
 	environment = PLAIN
 
 	ambience = list( 'sound/ambience/ambience_outpost.ogg' )
-	music = list()
+	music = list( 'sound/ambience/ambispace.ogg','sound/ambience/ambispace1.ogg','sound/ambience/ambispace2.ogg' )
 	base_turf = /turf/planet/lunar
 
 /area/planet/moon/landing_zone

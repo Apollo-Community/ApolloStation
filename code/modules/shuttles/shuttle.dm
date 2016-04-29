@@ -28,6 +28,8 @@
 		starting_hanger = hanger_controller.ger_free_starting_hanger(src)
 		if(isnull(starting_hanger))
 			world << "<span class='danger'>warning: [docking_controller_tag] could not find a hanger to start at. </span>"
+			return
+
 	//Place down the template at the right spot further down in this process this will also aquere the right turfs for us.
 	starting_hanger.land_at(src)
 	current_hanger = starting_hanger

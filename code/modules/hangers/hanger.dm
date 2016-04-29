@@ -21,7 +21,7 @@ datum/hanger
 	var/dimx = 0
 	var/dimy = 0
 	var/square = 1
-	var/list/hanger_area_turfs
+	var/list/hanger_area_turfs = list()
 
 //Initializes the hanger.
 //This is basically delayed constructor to make the creation of hangers
@@ -30,6 +30,8 @@ datum/hanger/proc/init_hanger()
 	//If we have a location beacon get the hanger location
 	if(!isnull(beacon_tag))
 		var/turf/locObj = locate(beacon_tag)
+		if( !locObj )
+			return
 		loc = new/datum/coords()
 		loc.x_pos = locObj.x
 		loc.y_pos = locObj.y
@@ -37,7 +39,7 @@ datum/hanger/proc/init_hanger()
 
 	//If we have an hanger area get its turfs we may or may not need this later.
 	//Note: the turfs gotten when else is reached will probably never be used but need them for debugging
-	if(!isnull(hanger_area) && isnull(hanger_area_turfs))
+	if(!isnull(hanger_area) && ( isnull(hanger_area_turfs) || !hanger_area_turfs:len ))
 		hanger_area_turfs = get_area_turfs(hanger_area.type)
 	else
 		hanger_area_turfs = get_turfs_square(loc.x_pos, loc.y_pos, loc.z_pos, dimx, dimy)

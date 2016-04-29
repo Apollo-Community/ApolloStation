@@ -296,7 +296,10 @@ datum/hanger_controller/New()
 /datum/hanger_controller/proc/init_hangers()
 	for(var/datum/hanger/H in hangers + blue_space_hangers + start_hangers)
 		H.init_hanger()
-		error("Hanger [H.tag] created at [H.hanger_area] has [H.hanger_area_turfs.len] turfs")
+		if( H.hanger_area_turfs )
+			error("Hanger [H.tag] created at [H.hanger_area] has [H.hanger_area_turfs.len] turfs")
+		else
+			error("Hanger [H.tag] created at [H.hanger_area] has no turfs!")
 
 //Need to make this
 /datum/hanger_controller/proc/get_free_interim_hanger(var/datum/shuttle/S)
