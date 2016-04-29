@@ -10,12 +10,10 @@
 	emergency_shuttle.shuttle_arrived()
 
 /datum/shuttle/ferry/emergency/long_jump(var/obj/hanger/trg_hanger, var/obj/hanger/hanger_interim, var/travel_time, var/direction)
-	error("long jump in eshuttle called")
 	if (!location)
 		travel_time = SHUTTLE_TRANSIT_DURATION_RETURN
 	else
 		travel_time = SHUTTLE_TRANSIT_DURATION
-	error("duration check passed")
 	//update move_time and launch_time so we get correct ETAs
 	move_time = travel_time
 	emergency_shuttle.launch_time = world.time
@@ -60,9 +58,7 @@
 	return ..()
 
 /datum/shuttle/ferry/emergency/launch(var/user)
-	error("e-shuttle luanch called")
 	if (!can_launch(user)) return
-	error("can launch check passed")
 	if (istype(user, /obj/machinery/computer/shuttle_control/emergency))	//if we were given a command by an emergency shuttle console
 		if (emergency_shuttle.autopilot)
 			emergency_shuttle.autopilot = 0

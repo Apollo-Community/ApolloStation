@@ -54,21 +54,14 @@ obj/hanger/New()
 //If the hanger is not square look if the shuttle will fit in the hanger turfs
 //This is important for hangers with docking arms
 obj/hanger/proc/can_land_at(var/datum/shuttle/s)
-	error("can_land_at called by [s.template_path]")
 	var/list/shuttle_turfs
 	if(full)
 		return 0
-	error("Passed full test [s.template_path]")
 	if(square == 1)
-		error("Square testing")
 		if(s.template_dim[1] > dimx || s.template_dim[2] > dimy)
-			error("square test failed")
 			return 0
-		error("Passed square test")
 	else
-		error("null testing")
 		if(isnull(s.shuttle_turfs) || isnull(hanger_area_turfs))
-			error("null test failed")
 			return 0
 		else
 			var/datum/coords/current_loc = new /datum/coords
@@ -83,9 +76,7 @@ obj/hanger/proc/can_land_at(var/datum/shuttle/s)
 			shuttle_turfs = shift_turfs(current_loc, hloc, s.shuttle_turfs)
 			for(var/turf/T in shuttle_turfs)
 				if(hanger_area_turfs.Find(T) >= 1)
-					error("turfs check test failed")
 					return 0
-	error("returning with 1")
 	return 1
 
 
@@ -97,16 +88,13 @@ obj/hanger/proc/land_at(var/datum/shuttle/s)
 		hanger_turf_atribs = truf_atrib_lister(hanger_turfs)
 
 obj/hanger/proc/take_off()
-	error("take_off called")
 	if(!exterior)
 		truf_atrib_placer(hanger_turf_atribs)
 	full = 0
-	error("returning with [full]")
 
 obj/hanger/proc/add_to_controller()
 	hangers += src
 	hangers_as[htag] = src
-	//error("[htag] created at [x], [y], [z]")
 
 obj/hanger/square/interior/New()
 	..()

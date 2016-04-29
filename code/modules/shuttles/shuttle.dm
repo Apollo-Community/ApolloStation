@@ -46,7 +46,6 @@
 
 //Make a short jump to the target hanger
 /datum/shuttle/proc/short_jump(var/obj/hanger/trg_hanger, var/direction)
-	error("shuttle [template_path] making short jump to [trg_hanger.htag]")
 	if(moving_status != SHUTTLE_IDLE) return
 
 	if(isnull(trg_hanger)) return
@@ -63,7 +62,6 @@
 			return	//someone cancelled the launch
 
 		moving_status = SHUTTLE_INTRANSIT //shouldn't matter but just to be safe
-		error("shuttle [template_path] jumpint now to [trg_hanger.tag]")
 		move(trg_hanger, direction, null, 0)
 		moving_status = SHUTTLE_IDLE
 
@@ -71,29 +69,18 @@
 //Wait at the interim position for the indicated time.
 /datum/shuttle/proc/long_jump(var/obj/hanger/trg_hanger, var/obj/hanger/interim_hanger, var/travel_time, var/direction)
 	//world << "shuttle/long_jump: departing=[departing], destination=[destination], interim=[interim], travel_time=[travel_time]"
-	error("long jump called in shuttle [template_path]")
 
 	if(moving_status != SHUTTLE_IDLE) return
-	error("moving status check passed")
 
 	if(isnull(trg_hanger)) return
-	error("trg_hanger check passed")
-	error("target hanger status [trg_hanger.full]")
-	error("target hanger can_land_at returns  [trg_hanger.can_land_at(src)]")
 	if(!trg_hanger.can_land_at(src)) return
 	trg_hanger.full = 1
-	error("Can we land at the trg_hanger ?")
 
 	if(isnull(interim_hanger))
 		interim_hanger = hanger_controller.get_free_interim_hanger(src)
-	error("what is our interim hanger ? [interim_hanger.htag]")
 
 	if(!isnull(interim_hanger) && interim_hanger.can_land_at(src))
 		interim_hanger.full = 1
-	error("interim hanger can_land_at passed")
-
-	error("shuttle/ferry/shuttle [docking_controller_tag]: departing=[current_hanger.htag], destination=[trg_hanger.htag], interim=[interim_hanger.htag], travel_time=[travel_time]")
-
 	//it would be cool to play a sound here
 	moving_status = SHUTTLE_WARMUP
 	spawn(warmup_time*10)
@@ -123,11 +110,9 @@
 	docking_controller.initiate_docking(dock_target)
 
 /datum/shuttle/proc/undock()
-	error("undock called")
 	if (!docking_controller)
 		return
 	docking_controller.initiate_undocking()
-	error("init undocking called")
 
 /datum/shuttle/proc/current_dock_target()
 	return null
@@ -153,8 +138,6 @@
 
 	//Do stuff to destination turfs this gets a square.. not so nice because we will gib people in it
 	var/list/destination = get_turfs_square(trg_hanger.x, trg_hanger.y, trg_hanger.z, template_dim[1] , template_dim[2] )
-	error("Move command called by [template_path] to [trg_hanger.htag] the destination has [destination.len] turfs")
-	error("The destination area is centered upon [trg_hanger.x] - [trg_hanger.y] - [trg_hanger.loc]")
 
 	//Move and or gib who/what is/are under the arriving shuttle
 	move_gib(destination, trg_hanger.exterior)

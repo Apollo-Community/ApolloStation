@@ -819,9 +819,6 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	//Takes: Two sets of coordinats and a list of turfs to shift
 	//Returns: List of turfs with shifted center and same relative position as input list
 	//Notes: Used in the hanger code
-	error("Shifting turfs called")
-	error("Origional pos [scr_coords.x_pos] - [scr_coords.x_pos]")
-	error("Destination pos [trg_coords.x_pos] - [trg_coords.x_pos]")
 	var/x_mov = scr_coords.x_pos - trg_coords.x_pos
 	var/y_mov = scr_coords.y_pos - trg_coords.y_pos
 

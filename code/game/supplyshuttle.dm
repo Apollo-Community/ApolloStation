@@ -224,18 +224,15 @@ var/list/mechtoys = list(
 
 	//Buyin
 	proc/buy()
-		error("Supply shuttle buying stuff")
 		if(!shoppinglist.len) return
 
 		var/list/turfs = shuttle.shuttle_turfs
-		error("[turfs.len]")
 		if(isnull(turfs)) return
 		var/list/clear_turfs = list()
 
 		for(var/turf/T in turfs)
 			if(T.density || T.contents.len) continue
 			clear_turfs += T
-		error("There are [clear_turfs.len] free turfs to place shit on")
 
 		for(var/S in shoppinglist)
 			if(!clear_turfs.len) break

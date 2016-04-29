@@ -23,34 +23,27 @@ var/global/datum/emergency_shuttle_controller/emergency_shuttle
 
 /datum/emergency_shuttle_controller/proc/process()
 	if (wait_for_launch)
-		error("Waiting for launch")
 		if (evac && auto_recall && world.time >= auto_recall_time)
-			error("Recalling")
 			recall()
 		if (world.time >= launch_time)	//time to launch the shuttle
-			error("It launch time")
 			stop_launch_countdown()
 
 			if(shuttle.location)	// leaving from centcom
 				close_airlock(shuttle.location)
-				error("We are leaving from centcom")
 				faction_controller.kill_contracts() // too late to recall now, the game must end
 			else	//leaving from the station
 				close_airlock(shuttle.location)
-				error("We are leaving from the station")
 				//launch the pods!
 				for (var/datum/shuttle/ferry/escape_pod/pod in escape_pods)
 					if (!pod.arming_controller || pod.arming_controller.armed)
 						pod.launch(src)
 
 			if (autopilot)
-				error("Shuttle launching from [shuttle.location]")
 				shuttle.launch(src)
 
 //called when the shuttle has arrived.
 
 /datum/emergency_shuttle_controller/proc/shuttle_arrived()
-	error("arrived called, location = [shuttle.location]")
 	if (!shuttle.location)	//at station
 		open_airlock(shuttle.location)
 		if (autopilot)
