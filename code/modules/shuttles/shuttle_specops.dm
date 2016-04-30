@@ -28,7 +28,7 @@
 	else
 		docking_controller = docking_controller_offsite
 
-/datum/shuttle/ferry/multidock/move(var/datum/hanger/trg_hanger, var/direction=null, var/long_j)
+/datum/shuttle/ferry/multidock/move(var/obj/hanger/trg_hanger, var/direction=null, var/long_j)
 	..(trg_hanger, direction, long_j)
 	if (!location)
 		docking_controller = docking_controller_station
@@ -86,18 +86,18 @@
 	radio_announce("ALERT: INITIATING LAUNCH SEQUENCE")
 	..(user)
 
-/datum/shuttle/ferry/multidock/specops/move(var/datum/hanger/trg_hanger, var/direction = null, var/long_j)
+/datum/shuttle/ferry/multidock/specops/move(var/obj/hanger/trg_hanger, var/direction = null, var/long_j)
 	..(trg_hanger, direction, long_j)
 
 	spawn(20)
 		if (!location)	//just arrived home
-			var/list/turfs = get_turfs_square(current_hanger.loc.x_pos, current_hanger.loc.y_pos, current_hanger.loc.z_pos, template_dim[1], template_dim[2])
+			var/list/turfs = get_turfs_square(current_hanger.x, current_hanger.y, current_hanger.z, template_dim[1], template_dim[2])
 			for(var/turf/T in turfs)
 				var/mob/M = locate(/mob) in T
 				M << "<span class='alert'>You have arrived at Central Command. Operation has ended!</span>"
 		else	//just left for the station
 			launch_mauraders()
-			var/list/turfs = get_turfs_square(current_hanger.loc.x_pos, current_hanger.loc.y_pos, current_hanger.loc.z_pos, template_dim[1], template_dim[2])
+			var/list/turfs = get_turfs_square(current_hanger.x, current_hanger.y, current_hanger.z, template_dim[1], template_dim[2])
 			for(var/turf/T in turfs)
 				var/mob/M = locate(/mob) in T
 				M << "<span class='alert'>You have arrived at [station_name]. Commence operation!</span>"

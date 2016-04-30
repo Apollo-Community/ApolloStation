@@ -11,7 +11,7 @@
 	var/announcer
 	var/arrival_message
 	var/departure_message
-	var/datum/hanger/last_departed
+	var/obj/hanger/last_departed
 
 	var/start_location
 	var/last_location
@@ -46,7 +46,7 @@
 /datum/shuttle/multi_shuttle/current_dock_target()
 	return destination_dock_targets[last_location]
 
-/datum/shuttle/multi_shuttle/move(var/datum/hanger/trg_hanger, var/direction=null, var/long_j)
+/datum/shuttle/multi_shuttle/move(var/obj/hanger/trg_hanger, var/direction=null, var/long_j)
 	..(trg_hanger, direction, long_j)
 	last_move = world.time
 	if (trg_hanger == src.starting_hanger)

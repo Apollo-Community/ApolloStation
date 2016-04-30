@@ -11,6 +11,14 @@ var/global/list/active_diseases = list()
 var/global/list/med_hud_users = list() //list of all entities using a medical HUD.
 var/global/list/sec_hud_users = list() //list of all entities using a security HUD.
 
+//Hanger related lists
+var/list/hangers = list()
+var/list/hangers_as = list()
+var/list/blue_space_hangers = list()
+var/list/blue_space_hangers_as = list()
+var/list/start_hangers_as = list()
+var/list/start_hangers = list()
+
 //Those networks can only be accessed by preexisting terminals. AIs and new terminals can't use them.
 var/list/restricted_camera_networks = list("thunder","ERT","NUKE")
 

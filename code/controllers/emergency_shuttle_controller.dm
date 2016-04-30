@@ -7,7 +7,6 @@ var/global/datum/emergency_shuttle_controller/emergency_shuttle
 /datum/emergency_shuttle_controller
 	var/datum/shuttle/ferry/emergency/shuttle
 	var/list/escape_pods
-
 	var/launch_time			//the time at which the shuttle will be launched
 	var/auto_recall = 0		//if set, the shuttle will be auto-recalled
 	var/auto_recall_time	//the time at which the shuttle will be auto-recalled
@@ -30,8 +29,10 @@ var/global/datum/emergency_shuttle_controller/emergency_shuttle
 			stop_launch_countdown()
 
 			if(shuttle.location)	// leaving from centcom
+				close_airlock(shuttle.location)
 				faction_controller.kill_contracts() // too late to recall now, the game must end
 			else	//leaving from the station
+				close_airlock(shuttle.location)
 				//launch the pods!
 				for (var/datum/shuttle/ferry/escape_pod/pod in escape_pods)
 					if (!pod.arming_controller || pod.arming_controller.armed)
@@ -44,6 +45,7 @@ var/global/datum/emergency_shuttle_controller/emergency_shuttle
 
 /datum/emergency_shuttle_controller/proc/shuttle_arrived()
 	if (!shuttle.location)	//at station
+		open_airlock(shuttle.location)
 		if (autopilot)
 			set_launch_countdown(SHUTTLE_LEAVETIME)	//get ready to return
 
@@ -57,6 +59,8 @@ var/global/datum/emergency_shuttle_controller/emergency_shuttle
 			for (var/datum/shuttle/ferry/escape_pod/pod in escape_pods)
 				if (pod.arming_controller)
 					pod.arming_controller.arm()
+	else
+		open_airlock(shuttle.location)
 
 //begins the launch countdown and sets the amount of time left until launch
 /datum/emergency_shuttle_controller/proc/set_launch_countdown(var/seconds)
@@ -130,6 +134,25 @@ var/global/datum/emergency_shuttle_controller/emergency_shuttle
 		return 0
 	return 1
 
+/datum/emergency_shuttle_controller/proc/open_airlock(var/location)
+	if(location)//at cc
+		for(var/obj/machinery/door/airlock/external/A in machines)
+			if(A.tag == "esc_cc")
+				A.do_command("ecure_open")
+	else
+		for(var/obj/machinery/door/airlock/external/A in machines)
+			if(A.tag == "esc_st")
+				A.do_command("ecure_open")
+
+/datum/emergency_shuttle_controller/proc/close_airlock(var/location)
+	if(location)//at cc
+		for(var/obj/machinery/door/airlock/external/A in machines)
+			if(A.tag == "esc_cc")
+				A.do_command("secure_close")
+	else
+		for(var/obj/machinery/door/airlock/external/A in machines)
+			if(A.tag == "esc_st")
+				A.do_command("secure_close")
 //this only returns 0 if it would absolutely make no sense to recall
 //e.g. the shuttle is already at the station or wasn't called to begin with
 //other reasons for the shuttle not being recallable should be handled elsewhere

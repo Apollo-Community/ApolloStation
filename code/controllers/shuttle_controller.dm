@@ -17,21 +17,18 @@ var/global/datum/shuttle_controller/shuttle_controller
 /datum/shuttle_controller/New()
 	shuttles = list()
 	process_shuttles = list()
-	hangers = hanger_controller.hangers_as
 
 	var/datum/shuttle/ferry/shuttle
 	// Escape shuttle and pods
 	shuttle = new/datum/shuttle/ferry/emergency()
 	shuttle.location = 1
 	shuttle.warmup_time = 10
-	shuttle.tag_interim = "escape_shuttle_interim"
 	shuttle.template_path ="maps/templates/shuttles/emergency_shuttle.dmm"
 	shuttle.docking_controller_tag = "escape_shuttle"
 	shuttle.dock_target_station = "escape_dock"
 	shuttle.dock_target_offsite = "centcom_dock"
-	shuttle.hanger_station = hangers["Station_ES_Hanger"]
-	shuttle.hanger_offsite = hangers["CentCom_ES_Hanger"]
-	shuttle.tag_interim = "e_shuttle_interim"
+	shuttle.hanger_station = hangers_as["s_hanger_esc"]
+	shuttle.hanger_offsite = hangers_as["c_hanger_esc"]
 	shuttle.transit_direction = NORTH
 	shuttle.move_time = SHUTTLE_TRANSIT_DURATION_RETURN
 	shuttles["Escape"] = shuttle
@@ -41,13 +38,12 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttle = new/datum/shuttle/ferry/escape_pod()
 	shuttle.location = 0
 	shuttle.warmup_time = 0
-	shuttle.tag_interim = "e_pod_1_interim"
 	shuttle.docking_controller_tag = "escape_pod_1"
 	shuttle.dock_target_station = "escape_pod_1_berth"
 	shuttle.dock_target_offsite = "escape_pod_1_recovery"
 	shuttle.template_path = "maps/templates/shuttles/escape_n.dmm"
-	shuttle.hanger_station = hangers["Station_E1_Hanger"]
-	shuttle.hanger_offsite = hangers["CentCom_E1_Hanger"]
+	shuttle.hanger_station = hangers_as["s_escape_pod_1"]
+	shuttle.hanger_offsite = hangers_as["c_escape_pod_1"]
 	shuttle.transit_direction = NORTH
 	shuttle.move_time = SHUTTLE_TRANSIT_DURATION_RETURN + rand(-30, 60)	//randomize this so it seems like the pods are being picked up one by one
 	process_shuttles += shuttle
@@ -56,13 +52,12 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttle = new/datum/shuttle/ferry/escape_pod()
 	shuttle.location = 0
 	shuttle.warmup_time = 0
-	shuttle.tag_interim = "e_pod_2_interim"
 	shuttle.template_path ="maps/templates/shuttles/escape_n2.dmm"
 	shuttle.docking_controller_tag = "escape_pod_2"
 	shuttle.dock_target_station = "escape_pod_2_berth"
 	shuttle.dock_target_offsite = "escape_pod_2_recovery"
-	shuttle.hanger_station = hangers["Station_E2_Hanger"]
-	shuttle.hanger_offsite = hangers["CentCom_E2_Hanger"]
+	shuttle.hanger_station = hangers_as["s_escape_pod_2"]
+	shuttle.hanger_offsite = hangers_as["c_escape_pod_2"]
 	shuttle.transit_direction = NORTH
 	shuttle.move_time = SHUTTLE_TRANSIT_DURATION_RETURN + rand(-30, 60)	//randomize this so it seems like the pods are being picked up one by one
 	process_shuttles += shuttle
@@ -71,29 +66,28 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttle = new/datum/shuttle/ferry/escape_pod()
 	shuttle.location = 0
 	shuttle.warmup_time = 0
-	shuttle.tag_interim = "e_pod_3_interim"
 	shuttle.template_path ="maps/templates/shuttles/escape_e.dmm"
 	shuttle.docking_controller_tag = "escape_pod_3"
 	shuttle.dock_target_station = "escape_pod_3_berth"
 	shuttle.dock_target_offsite = "escape_pod_3_recovery"
-	shuttle.hanger_station = hangers["Station_E3_Hanger"]
-	shuttle.hanger_offsite = hangers["CentCom_E3_Hanger"]
+	shuttle.hanger_station = hangers_as["s_escape_pod_3"]
+	shuttle.hanger_offsite = hangers_as["c_escape_pod_3"]
 	shuttle.transit_direction = EAST
 	shuttle.move_time = SHUTTLE_TRANSIT_DURATION_RETURN + rand(-30, 60)	//randomize this so it seems like the pods are being picked up one by one
 	process_shuttles += shuttle
 	shuttles["Escape Pod 3"] = shuttle
 
 	//There is no pod 4, apparently.
+	//It was lost to metoers duh
 	shuttle = new/datum/shuttle/ferry/escape_pod()
 	shuttle.location = 0
 	shuttle.warmup_time = 0
-	shuttle.tag_interim = "e_pod_5_interim"
 	shuttle.template_path ="maps/templates/shuttles/escape_w.dmm"
 	shuttle.docking_controller_tag = "escape_pod_5"
 	shuttle.dock_target_station = "escape_pod_5_berth"
 	shuttle.dock_target_offsite = "escape_pod_5_recovery"
-	shuttle.hanger_station = hangers["Station_E5_Hanger"]
-	shuttle.hanger_offsite = hangers["CentCom_E5_Hanger"]
+	shuttle.hanger_station = hangers_as["s_escape_pod_5"]
+	shuttle.hanger_offsite = hangers_as["c_escape_pod_5"]
 	shuttle.transit_direction = WEST
 	shuttle.move_time = SHUTTLE_TRANSIT_DURATION_RETURN + rand(-30, 60)	//randomize this so it seems like the pods are being picked up one by one
 	process_shuttles += shuttle
@@ -115,8 +109,8 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttle.docking_controller_tag = "supply_shuttle"
 	shuttle.template_path = "maps/templates/shuttles/supply.dmm"
 	shuttle.dock_target_station = "cargo_bay"
-	shuttle.hanger_station = hangers["Station_R_Hanger"]
-	shuttle.hanger_offsite = hangers["CentCom_R_Hanger"]
+	shuttle.hanger_station = hangers_as["s_hanger_r"]
+	shuttle.hanger_offsite = hangers_as["c_hanger_r"]
 	shuttles["Supply"] = shuttle
 	process_shuttles += shuttle
 	supply_controller.shuttle = shuttle
@@ -125,8 +119,8 @@ var/global/datum/shuttle_controller/shuttle_controller
 	var/datum/shuttle/ferry/admin_shuttle = new/datum/shuttle/ferry()
 	admin_shuttle.location = 1
 	admin_shuttle.warmup_time = 10
-	admin_shuttle.hanger_station = hangers["Station_L_Hanger"]
-	admin_shuttle.hanger_offsite = hangers["CentCom_L_Hanger"]
+	admin_shuttle.hanger_station = hangers_as["s_hanger_l"]
+	admin_shuttle.hanger_offsite = hangers_as["c_hanger_l"]
 	admin_shuttle.template_path ="maps/templates/shuttles/cc_transport.dmm"
 	admin_shuttle.docking_controller_tag = "centcom_shuttle"
 	admin_shuttle.dock_target_station = "centcom_shuttle_dock_airlock"
@@ -163,8 +157,8 @@ var/global/datum/shuttle_controller/shuttle_controller
 	ERT.location = 0 //ERT home base is the Frigate offsite
 	ERT.warmup_time = 10
 	ERT.template_path ="maps/templates/shuttles/ERT.dmm"
-	ERT.hanger_station = hangers["Frigate_Hanger"]
-	ERT.hanger_offsite = hangers["Station_C_Hanger"]
+	ERT.hanger_station = hangers_as["f_hanger"]
+	ERT.hanger_offsite = hangers_as["s_hanger_c"]
 	ERT.docking_controller_tag = "specops_shuttle_port"
 	ERT.docking_controller_tag_station = "specops_shuttle_port"
 	ERT.docking_controller_tag_offsite = "specops_shuttle_fore"
@@ -179,23 +173,22 @@ var/global/datum/shuttle_controller/shuttle_controller
 	VS.template_path ="maps/templates/shuttles/vox.dmm"
 	//With the starting hange schedular we don't need to worry about an origen hanger with ships that do not start at a dock
 	//VS.origin = hangers["Vox_Home_Hanger"]
-
 	//Need to add the mining shuttle and maybe moon base if it fits
 	VS.destinations = list(
-		"Port Solars" = hangers["Space_W_Hanger"],
-		"Starboard Solars" = hangers["Space_E_Hanger"],
-		"Fore Side" = hangers["Space_N_Hanger"],
-		"Fore Port Side" = hangers["Space_NW_Hanger"],
-		"Fore Starboard Side" = hangers["Space_NE_Hanger"],
-		"Aft Side" = hangers["Space_S_Hanger"],
-		"Aft Port Side" = hangers["Space_SW_Hanger"],
-		"Aft Starboard Side" = hangers["Space_SE_Hanger"]
+		"Port Solars" = hangers_as["s_space_west"],
+		"Starboard Solars" = hangers_as["s_space_east"],
+		"Fore Side" = hangers_as["s_space_north"],
+		"Fore Port Side" = hangers_as["s_space_north_west"],
+		"Fore Starboard Side" = hangers_as["s_space_north_east"],
+		"Aft Side" = hangers_as["s_space_south"],
+		"Aft Port Side" = hangers_as["s_space_south_west"],
+		"Aft Starboard Side" = hangers_as["s_space_south_east"]
 		)
 
 	VS.announcer = "NSV Icarus"
 	VS.arrival_message = "Attention, Apollo, we just tracked a small target bypassing our defensive perimeter. Can't fire on it without hitting the station - you've got incoming visitors, like it or not."
 	VS.departure_message = "Your guests are pulling away, Apollo - moving too fast for us to draw a bead on them. Looks like they're heading out of the system at a rapid clip."
-	VS.docking_controller_tag = "Vox Shuttle"
+//	VS.docking_controller_tag = "Vox Shuttle"
 	VS.warmup_time = 0
 	shuttles["Vox Skipjack"] = VS
 
@@ -226,23 +219,23 @@ var/global/datum/shuttle_controller/shuttle_controller
 	//Nuke ops shuttle
 	var/datum/shuttle/multi_shuttle/NS = new/datum/shuttle/multi_shuttle()
 	NS.template_path ="maps/templates/shuttles/nuke_ops.dmm"
-	NS.starting_hanger = hangers["Syndi_Home_Hanger"]
+	NS.starting_hanger = hangers_as["syndi_home"]
 	NS.destinations = list(
-		"Port Solars" = hangers["Space_W_Hanger"],
-		"Starboard Solars" = hangers["Space_E_Hanger"],
-		"Fore Side" = hangers["Space_N_Hanger"],
-		"Fore Port Side" = hangers["Space_NW_Hanger"],
-		"Fore Starboard Side" = hangers["Space_NE_Hanger"],
-		"Aft Side" = hangers["Space_S_Hanger"],
-		"Aft Port Side" = hangers["Space_SW_Hanger"],
-		"Aft Starboard Side" = hangers["Space_SE_Hanger"]
+		"Port Solars" = hangers_as["s_space_west"],
+		"Starboard Solars" = hangers_as["s_space_east"],
+		"Fore Side" = hangers_as["s_space_north"],
+		"Fore Port Side" = hangers_as["s_space_north_west"],
+		"Fore Starboard Side" = hangers_as["s_space_north_east"],
+		"Aft Side" = hangers_as["s_space_south"],
+		"Aft Port Side" = hangers_as["s_space_south_west"],
+		"Aft Starboard Side" = hangers_as["s_space_south_east"]
 		)
 
 	NS.announcer = "NSV Icarus"
 	NS.arrival_message = "Attention, Apollo, you have a large signature approaching the station - looks unarmed to surface scans. We're too far out to intercept - brace for visitors."
 	NS.departure_message = "Your visitors are on their way out of the system, Apollo, burning delta-v like it's nothing. Good riddance."
 	NS.warmup_time = 0
-	NS.docking_controller_tag = "Nuke_Shuttle"
+//	NS.docking_controller_tag = "Nuke_Shuttle"
 	shuttles["Mercenary"] = NS
 
 
@@ -251,21 +244,21 @@ var/global/datum/shuttle_controller/shuttle_controller
 	var/datum/shuttle/multi_shuttle/VALS = new/datum/shuttle/multi_shuttle()
 	VALS.template_path ="maps/templates/shuttles/valen_shuttle.dmm"
 	VALS.destinations = list(
-		"Port Solars" = hangers["Space_W_Hanger"],
-		"Starboard Solars" = hangers["Space_E_Hanger"],
-		"Fore Side" = hangers["Space_N_Hanger"],
-		"Fore Port Side" = hangers["Space_NW_Hanger"],
-		"Fore Starboard Side" = hangers["Space_NE_Hanger"],
-		"Aft Side" = hangers["Space_S_Hanger"],
-		"Aft Port Side" = hangers["Space_SW_Hanger"],
-		"Aft Starboard Side" = hangers["Space_SE_Hanger"]
+		"Port Solars" = hangers_as["s_space_west"],
+		"Starboard Solars" = hangers_as["s_space_east"],
+		"Fore Side" = hangers_as["s_space_north"],
+		"Fore Port Side" = hangers_as["s_space_north_west"],
+		"Fore Starboard Side" = hangers_as["s_space_north_east"],
+		"Aft Side" = hangers_as["s_space_south"],
+		"Aft Port Side" = hangers_as["s_space_south_west"],
+		"Aft Starboard Side" = hangers_as["s_space_south_east"]
 		)
 
 	VALS.announcer = "NSV Icarus"
 	VALS.arrival_message = "Attention, Apollo, you have a large signature approaching the station - looks unarmed to surface scans. We're too far out to intercept - brace for visitors."
 	VALS.departure_message = "Your visitors are on their way out of the system Apollo. They are moving to fast for us to atempt an intercept."
 	VALS.warmup_time = 0
-	VALS.docking_controller_tag = "Valen's Shuttle"
+//	VALS.docking_controller_tag = "Valen's Shuttle"
 	shuttles["Valans"] = VALS
 
 /datum/shuttle_controller/proc/setup()
