@@ -820,6 +820,8 @@
 #include "code\game\turfs\simulated.dm"
 #include "code\game\turfs\turf.dm"
 #include "code\game\turfs\unsimulated.dm"
+#include "code\game\turfs\planet\lunar.dm"
+#include "code\game\turfs\planet\planet.dm"
 #include "code\game\turfs\simulated\floor.dm"
 #include "code\game\turfs\simulated\floor_types.dm"
 #include "code\game\turfs\simulated\walls.dm"
