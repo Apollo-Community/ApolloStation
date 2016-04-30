@@ -25,7 +25,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttle.warmup_time = 10
 	shuttle.template_path ="maps/templates/shuttles/emergency_shuttle.dmm"
 	shuttle.docking_controller_tag = "escape_shuttle"
-	shuttle.dock_target_station = "escape_dock"
+	shuttle.dock_target_station = "sec_esc_dock"
 	shuttle.dock_target_offsite = "centcom_dock"
 	shuttle.hanger_station = hangers_as["s_hanger_esc"]
 	shuttle.hanger_offsite = hangers_as["c_hanger_esc"]
