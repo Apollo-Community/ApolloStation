@@ -702,6 +702,7 @@
 #include "code\game\objects\items\weapons\circuitboards\computer\telecomms.dm"
 #include "code\game\objects\items\weapons\circuitboards\machinery\cloning.dm"
 #include "code\game\objects\items\weapons\circuitboards\machinery\pacman.dm"
+#include "code\game\objects\items\weapons\circuitboards\machinery\paper_shredder.dm"
 #include "code\game\objects\items\weapons\circuitboards\machinery\power.dm"
 #include "code\game\objects\items\weapons\circuitboards\machinery\research.dm"
 #include "code\game\objects\items\weapons\circuitboards\machinery\shieldgen.dm"
