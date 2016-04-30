@@ -7,7 +7,7 @@
 	var/real_desc = ""
 	var/real_icon_state = "unknown"
 	var/map_z = 0
-	var/obj/effect/mapinfo/metadata = null
+	var/obj/effect/mapinfo/sector/metadata = null
 
 /obj/effect/map/New(var/obj/effect/mapinfo/data)
 	metadata = data
@@ -34,6 +34,21 @@
 		qdel( src )
 
 	loc = T
+
+	update_icon()
+
+/obj/effect/map/update_icon()
+	src.overlays.Cut()
+
+	var/sector_type
+	if(( metadata.sector_flags & SECTOR_KNOWN ) && ( metadata.sector_flags & SECTOR_LOCAL ))
+		sector_type = "known"
+	else
+		return
+
+	var/image/designation = image('icons/effects/sectors.dmi', sector_type)
+	src.overlays += designation
+
 
 /obj/effect/map/sector
 	real_name = "generic sector"
