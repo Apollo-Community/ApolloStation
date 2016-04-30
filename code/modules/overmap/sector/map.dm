@@ -43,6 +43,8 @@
 	var/sector_type
 	if(( metadata.sector_flags & SECTOR_KNOWN ) && ( metadata.sector_flags & SECTOR_LOCAL ))
 		sector_type = "known"
+/*	else if( SECTOR_LOCAL )
+		sector_type = "unknown"*/
 	else
 		return
 
