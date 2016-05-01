@@ -63,7 +63,7 @@
 		supply_controller.buy()
 	if (!at_station())
 		error("Selling stuff")
-		supply_controller.sell()
+		supply_controller.sell()dsfafsa
 
 	moving_status = SHUTTLE_IDLE
 
