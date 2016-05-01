@@ -196,15 +196,11 @@
 				filtered_turfs += T
 	else
 		filtered_turfs = turfs
-//	var/throwy = world.maxy
-//	for(var/turf/T in filtered_turfs)
-//		if(T.y < throwy)
-//			throwy = T.y
 
-//	for(var/turf/T in filtered_turfs)
-//		var/turf/D = locate(T.x, throwy - 1, 1)
-//		for(var/atom/movable/AM as mob|obj in T)
-//			AM.Move(D)
+	for(var/turf/T in filtered_turfs)
+		var/turf/D = locate(T.x, T.y + 12, T.z)
+		for(var/atom/movable/AM as mob|obj in T)
+			AM.Move(D)
 
 	//If you get moved out of the way lets be nice and not gib you.
 	for(var/turf/T in filtered_turfs)
