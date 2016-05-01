@@ -67,6 +67,7 @@
 	if(usr)
 		log_admin("[key_name(usr)] has overridden the shuttle autopilot and activated launch sequence")
 		message_admins("[key_name_admin(usr)] has overridden the shuttle autopilot and activated launch sequence")
+	error("calling launch in super")
 	..(user)
 
 /datum/shuttle/ferry/emergency/force_launch(var/user)

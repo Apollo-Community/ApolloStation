@@ -60,7 +60,6 @@ obj/hanger/proc/can_land_at(var/datum/shuttle/s)
 	if(square == 1)
 		if(s.template_dim[1] > dimx || s.template_dim[2] > dimy)
 			return 0
-		return check_hanger_obstructions(hanger_area_turfs)
 	else
 		if(isnull(s.shuttle_turfs) || isnull(hanger_area_turfs))
 			return 0
@@ -78,16 +77,9 @@ obj/hanger/proc/can_land_at(var/datum/shuttle/s)
 			for(var/turf/T in shuttle_turfs)
 				if(hanger_area_turfs.Find(T) >= 1)
 					return 0
-			return check_hanger_obstructions(shuttle_turfs)
 	return 1
 
-obj/hanger/proc/check_hanger_obstructions(var/list/turfs)
-	for(var/turf/T in turfs)
-		if(!(istype(T, /turf/simulated/floor) || istype(T, /turf/planet/lunar) || istype(T, /turf/space) || !istype(T, /turf/unsimulated/wall)))
-			error("hanger obstructions returning 0")
-			return 0
-	error("hanger obstructions returning 1")
-	return 1
+
 
 //Shuttle indicating its going to land at a hanger
 obj/hanger/proc/land_at(var/datum/shuttle/s)
