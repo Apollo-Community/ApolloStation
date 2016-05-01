@@ -32,24 +32,27 @@
 
 	//If we are at the station we will want to leave now.
 	//If we are at centcom we want to wait the movetime until we jump
+	var/movetime = 0
 	if(at_station())
 		arrive_time = world.time + 5
+		movetime = 5
 	else
+		movetime = supply_controller.movetime
 		arrive_time = world.time + supply_controller.movetime
 
 	//Shuttle is now in transit
 	moving_status = SHUTTLE_INTRANSIT
-
+	sleep(movetime)
 	//Waiting until we can move
-	while(world.time <= (arrive_time-5))
-		sleep(5)
-	//Is the shuttle going to arrive late ?
-	//We can only arrive late if we are going to the station
-	display_warning(trg_hanger)
-	sleep(50)
+//	while(world.time <= (arrive_time-5))
+//		sleep(5)
 
+	//We can only arrive late if we are going to the station
 	if (!at_station() && prob(late_chance))
 		sleep(rand(0,max_late_time))
+
+	display_warning(trg_hanger)
+	sleep(50)
 
 	//Move the shuttle
 	move(trg_hanger, null, 0)
