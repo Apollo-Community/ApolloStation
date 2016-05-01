@@ -58,10 +58,12 @@
 	spawn(warmup_time*10)
 		if (moving_status == SHUTTLE_IDLE)
 			return	//someone cancelled the launch
-
-		moving_status = SHUTTLE_INTRANSIT //shouldn't matter but just to be safe
-		move(trg_hanger, direction, null, 0)
-		moving_status = SHUTTLE_IDLE
+		display_warning(trg_hanger)
+		//Give people a few seccond to clear the area
+		spawn(50)
+			moving_status = SHUTTLE_INTRANSIT //shouldn't matter but just to be safe
+			move(trg_hanger, direction, null, 0)
+			moving_status = SHUTTLE_IDLE
 
 //Make a long jump. First go the the interim position and then to the target hanger.
 //Wait at the interim position for the indicated time.
@@ -93,6 +95,9 @@
 
 		while (world.time < arrive_time)
 			sleep(5)
+			//If we have 5 secconds left inform people in the hanger to gtfo now.
+			if((world.time - arrive_time) <= 50)
+				display_warning(trg_hanger)
 
 		move(trg_hanger, direction, 0)
 		moving_status = SHUTTLE_IDLE
@@ -138,7 +143,7 @@
 	var/list/destination = get_turfs_square(trg_hanger.x, trg_hanger.y, trg_hanger.z, template_dim[1] , template_dim[2] )
 
 	//Move and or gib who/what is/are under the arriving shuttle
-	move_gib(destination, trg_hanger.exterior)
+	move_gib(destination, trg_hanger)
 	trg_hanger.land_at(src)
 	shuttle_turfs = move_turfs_to_turfs(shuttle_turfs, destination, direction=direction)
 	current_hanger.take_off()
@@ -185,34 +190,60 @@
 					M.Weaken(3)
 
 
-/datum/shuttle/proc/move_gib(var/list/turfs, var/exterior)
+/datum/shuttle/proc/move_gib(var/list/turfs, var/obj/hanger/trg_hanger)
 	//Move and gib people that are in the are the ship is moving to.
 	//If the target hanger is an exerior one only do this to space tiles as we don't want to clip docking arms.
 
 	var/list/filtered_turfs = new/list()
-	if(exterior)
+	var/list/to_gib = new/list()
+	var/maxy = trg_hanger.y + template_dim[2]
+
+	if(trg_hanger.exterior)
 		for(var/turf/T in turfs)
 			if(istype(T, /turf/space))
 				filtered_turfs += T
 	else
 		filtered_turfs = turfs
-//	var/throwy = world.maxy
-//	for(var/turf/T in filtered_turfs)
-//		if(T.y < throwy)
-//			throwy = T.y
 
-//	for(var/turf/T in filtered_turfs)
-//		var/turf/D = locate(T.x, throwy - 1, 1)
-//		for(var/atom/movable/AM as mob|obj in T)
-//			AM.Move(D)
+	for(var/turf/T in filtered_turfs)
+		var/turf/D = locate(T.x, T.y + (maxy - T.y), T.z)
+		for(var/atom/movable/AM as mob|obj in T)
+			//Don't move the hanger !
+			if(!istype(AM, /obj/hanger))
+				AM.Move(D)
+
+		for(var/mob/living/M in T.contents)
+			to_gib += M
+
+	for(var/mob/living/M in to_gib)
+		M.gib()
+
+	sleep(5)
+	for(var/turf/T in filtered_turfs)
+		for(var/obj/O in T.contents)
+			if(!istype(O, /obj/hanger))
+				qdel(O)
+				if(!isnull(O))
+					del(O)
+
+
+/datum/shuttle/proc/display_warning(var/obj/hanger/trg_hanger)
+	//Move and gib people that are in the are the ship is moving to.
+	//If the target hanger is an exerior one only do this to space tiles as we don't want to clip docking arms.
+	//radio_announce("WARNING: SHUTTLE LANDING IN THE HANGER BAY CLEAR SHUTTLE AREAS")
+	var/list/filtered_turfs = new/list()
+	if(trg_hanger.exterior)
+		for(var/turf/T in trg_hanger.hanger_area_turfs)
+			if(istype(T, /turf/space))
+				filtered_turfs += T
+	else
+		filtered_turfs = trg_hanger.hanger_area_turfs
 
 	//If you get moved out of the way lets be nice and not gib you.
 	for(var/turf/T in filtered_turfs)
-		for(var/mob/living/carbon/bug in T.contents)
-			bug.gib()
+		for(var/mob/M in T)
+			M << "<span class='alert'>You see the shape of a shuttle approaching better move out of the way now!</span>"
 
-		for(var/mob/living/simple_animal/pest in T.contents)
-			pest.gib()
 
 /datum/shuttle/proc/power_check(var/list/turfs)
 	var/update_power = 0
