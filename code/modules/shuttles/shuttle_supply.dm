@@ -30,12 +30,6 @@
 			moving_status = SHUTTLE_IDLE
 			return
 
-		/*
-		Broken somehow. Shuttle now buys stuff when at station.
-		if (!at_station())	//at centcom
-			world << "Start buy stuff"
-			supply_controller.buy()
-		*/
 	//If we are at the station we will want to leave now.
 	//If we are at centcom we want to wait the movetime until we jump
 	if(at_station())
@@ -47,11 +41,13 @@
 	moving_status = SHUTTLE_INTRANSIT
 
 	//Waiting until we can move
-	while(world.time <= arrive_time)
+	while(world.time <= (arrive_time-5))
 		sleep(5)
-
 	//Is the shuttle going to arrive late ?
 	//We can only arrive late if we are going to the station
+	display_warning(trg_hanger)
+	sleep(50)
+
 	if (!at_station() && prob(late_chance))
 		sleep(rand(0,max_late_time))
 
@@ -63,7 +59,7 @@
 		supply_controller.buy()
 	if (!at_station())
 		error("Selling stuff")
-		supply_controller.sell()dsfafsa
+		supply_controller.sell()
 
 	moving_status = SHUTTLE_IDLE
 
