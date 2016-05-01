@@ -61,6 +61,7 @@ obj/hanger/proc/can_land_at(var/datum/shuttle/s)
 		if(s.template_dim[1] > dimx || s.template_dim[2] > dimy)
 			return 0
 		return check_hanger_obstructions(hanger_area_turfs)
+		
 	else
 		if(isnull(s.shuttle_turfs) || isnull(hanger_area_turfs))
 			return 0

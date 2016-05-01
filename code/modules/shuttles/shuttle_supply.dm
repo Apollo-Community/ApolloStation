@@ -44,8 +44,9 @@
 	moving_status = SHUTTLE_INTRANSIT
 	sleep(movetime)
 	//Waiting until we can move
-//	while(world.time <= (arrive_time-5))
-//		sleep(5)
+
+	while(world.time <= arrive_time)
+		sleep(5)
 
 	//We can only arrive late if we are going to the station
 	if (!at_station() && prob(late_chance))
