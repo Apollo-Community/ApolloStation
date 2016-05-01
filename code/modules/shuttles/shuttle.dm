@@ -204,7 +204,6 @@
 				filtered_turfs += T
 	else
 		filtered_turfs = turfs
-<<<<<<< HEAD
 
 	for(var/turf/T in filtered_turfs)
 		var/turf/D = locate(T.x, T.y + (maxy - T.y), T.z)
@@ -239,17 +238,6 @@
 				filtered_turfs += T
 	else
 		filtered_turfs = trg_hanger.hanger_area_turfs
-=======
-//	var/throwy = world.maxy
-//	for(var/turf/T in filtered_turfs)
-//		if(T.y < throwy)
-//			throwy = T.y
-
-//	for(var/turf/T in filtered_turfs)
-//		var/turf/D = locate(T.x, throwy - 1, 1)
-//		for(var/atom/movable/AM as mob|obj in T)
-//			AM.Move(D)
->>>>>>> cf68d57404abfd129270903a51598fc2d7dac59a
 
 	//If you get moved out of the way lets be nice and not gib you.
 	for(var/turf/T in filtered_turfs)
