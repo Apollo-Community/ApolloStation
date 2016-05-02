@@ -403,8 +403,10 @@ What a mess.*/
 					var/rec_hash = href_list["rec_hash"]
 					usr.drop_item()
 					P.loc = src
-					addToPaperworkRecord( usr, rec_hash, P.info, "[title]", "Unclassified", "Employment Notes" )
-					qdel( P )
+					if( !addToPaperworkRecord( usr, rec_hash, P.info, "[title]", "Unclassified", "Employment Notes" ))
+						buzz( "\The [src] buzzes, \"Could not add note!\"" )
+					else
+						ping( "\The [src] pings, \"Note successfully added!.\"" )
 				else
 					buzz( "\The [src] buzzes, \"This machine accepts paper for notes.\"" )
 
