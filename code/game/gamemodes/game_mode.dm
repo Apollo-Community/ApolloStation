@@ -482,7 +482,7 @@
 	// antags are then picked from a list of players with that weight
 	var/top_weight
 	for( var/datum/mind/M in possible_antags )
-		if( M.antagonist || ( assigned_role in restricted_jobs ))
+		if( M.antagonist || ( M.assigned_role in restricted_jobs ))
 			possible_antags -= M
 			continue
 
@@ -527,7 +527,7 @@
 
 	// there has to be a better way to do this
 	for( var/client/C in clients )
-		C.saveAntagData()
+		C.saveAntagWeights()
 
 	return chosen_antags
 
