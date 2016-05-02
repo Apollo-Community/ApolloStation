@@ -31,6 +31,7 @@
 	//Place down the template at the right spot further down in this process this will also aquere the right turfs for us.
 	current_hanger = starting_hanger
 	current_hanger.full = 1
+	error("shuttle [docking_controller_tag] landing at [current_hanger.htag]")
 	current_hanger.land_at(src)
 	place_shuttle()
 	shuttle_ingame = 1
@@ -221,10 +222,11 @@
 	sleep(5)
 	for(var/turf/T in filtered_turfs)
 		for(var/obj/O in T.contents)
-			if(!istype(O, /obj/hanger))
-				qdel(O)
-				if(!isnull(O))
-					del(O)
+			if(istype(O, /obj/hanger))
+				continue
+			qdel(O)
+			if(!isnull(O))
+				del(O)
 
 
 /datum/shuttle/proc/display_warning(var/obj/hanger/trg_hanger)

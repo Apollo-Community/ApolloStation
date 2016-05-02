@@ -670,6 +670,10 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 			cant_pass = 1
 	return cant_pass
 
+/proc/update_lights()
+	for(var/obj/machinery/light/L in machines)
+		L.update(0)
+
 /proc/get_step_towards2(var/atom/ref , var/atom/trg)
 	var/base_dir = get_dir(ref, get_step_towards(ref,trg))
 	var/turf/temp = get_step_towards(ref,trg)
@@ -1187,13 +1191,6 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	store.max_y = maxy
 	return store
 
-//Simple datum for storing turf atributes
-/datum/turf_atribs
-	var/dir = null
-	var/icon_state = null
-	var/icon = null
-	var/air = null
-	var/typ_store = null
 
 //Filters out any space turfs from a list of turfs
 /proc/filter_space(var/list/turfs, var/exlcu_obj_tile = 1)
@@ -1211,6 +1208,17 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 
 	return turfs
 
+//Simple datum for storing turf atributes
+/datum/turf_atribs
+	var/dir = null
+	var/icon_state = null
+	var/icon = null
+	var/air = null
+	var/typ_store = null
+	var/dynamic_lighting = null
+	var/lighting_overlay = null
+	var/list/affecting_lights = null
+	var/opacity = null
 
 /proc/truf_atrib_lister(var/list/turfs_src)
 	//Takes: List of turfs.
@@ -1230,9 +1238,10 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 		C.icon_state = T.icon_state
 		C.icon = T.icon
 		C.typ_store = T.type
-		var/turf/simulated/ST = T
-		if(istype(ST) && ST.zone)
-			C.air = ST.zone.air
+		C.dynamic_lighting = T.dynamic_lighting
+		C.lighting_overlay = T.lighting_overlay
+		C.affecting_lights = T.affecting_lights
+		C.opacity = T.opacity
 
 	return atribs_list
 
@@ -1243,21 +1252,15 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 
 	if(!refined_src)
 		return 0
-
 	for(var/turf/T in refined_src)
 		var/datum/turf_atribs/C = refined_src[T]
 		T.ChangeTurf(C.typ_store)
 		T.set_dir(C.dir)
 		T.icon_state = C.icon_state
 		T.icon = C.icon
-
-		/*
-		var/turf/simulated/ST = T
-		if(istype(ST))
-			if(!ST.air)
-				ST.make_air()
-			ST.air.copy_from(C.air)
-		*/
+		T.lighting_clear_overlays()
+		T.affecting_lights = C.affecting_lights
+		T.lighting_build_overlays()
 
 proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 	if(!original)

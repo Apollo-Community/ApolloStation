@@ -34,7 +34,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttles["Escape"] = shuttle
 	process_shuttles += shuttle
 
-
 	shuttle = new/datum/shuttle/ferry/escape_pod()
 	shuttle.location = 0
 	shuttle.warmup_time = 0
@@ -147,7 +146,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	//Alien shuttle can only be moved by admins
 	var/datum/shuttle/AS = new/datum/shuttle()
 	AS.template_path = "maps/templates/shuttles/alien_shuttle.dmm"
-	shuttles["Alien"] = shuttle
+	shuttles["Alien"] = AS
 	//process_shuttles += shuttle	//don't need to process this. It can only be moved using admin magic anyways.
 	//Admin magic can be found ingame under the admin/secrets tap. The shuttle is moved via the jump shuttle command
 
@@ -166,7 +165,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 	ERT.dock_target_offsite = "specops_dock_airlock"
 	shuttles["Special Operations"] = ERT
 	process_shuttles += ERT
-
 
 	//Vox Shuttle.
 	var/datum/shuttle/multi_shuttle/VS = new/datum/shuttle/multi_shuttle()
@@ -262,11 +260,11 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttles["Valans"] = VALS
 
 /datum/shuttle_controller/proc/setup()
-
 	var/datum/shuttle/shuttle
 	for (var/shuttle_tag in shuttles)
 		shuttle = shuttles[shuttle_tag]
 		shuttle.init_templates()
+		error("shuttle init starte [shuttle.docking_controller_tag]")
 	init_done = 1
 
 //This is called by gameticker after all the machines and radio frequencies have been properly initialized

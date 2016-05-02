@@ -1977,10 +1977,10 @@
 				if (!shuttle_tag) return
 				var/datum/shuttle/S = shuttle_controller.shuttles[shuttle_tag]
 
-				var/list/valid_hangers = new /list()
+				var/list/valid_hangers = new/list()
 				for(var/obj/hanger/H in hangers)
 					if(H.can_land_at(S))
-						valid_hangers += H.tag
+						valid_hangers += H.htag
 
 				var/hanger_tag = input("Which hanger do you want to jump the shuttle to ? (All hangers given are valid this will not break the game)") as null|anything in valid_hangers
 				if (!hanger_tag) return
