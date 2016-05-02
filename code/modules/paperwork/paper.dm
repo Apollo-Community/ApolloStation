@@ -590,7 +590,8 @@
 \[center\]\[b\]\[i\]NanoTrasen Departmental Termination Form\[/b\]\[/i\]\[/center\]\[hr\]
 Upon signature of this document by the Department authority on [date], the contract of appointment within the [job] for [employee] is hereby null and void. Abuse of this form may result in the termination of the Department authority.\[br\]
 
-\[b\]Department authority:\[/b\] \[field\]
+\[b\]Cause for Termination:\[/b\] \[field\]
+\[b\]Department Authority:\[/b\] \[field\]
 \[hr\]"}
 
 	..( set_department )
@@ -607,7 +608,7 @@ Upon signature of this document by the Department authority on [date], the contr
 Upon signature of this document by the employee, and witnessed by the Department authority of \the [job] on [date], the employee will legally be inducted into \the [job]. The Department authority is to provide them with instruction as to their role and function, or lack thereof, within the department.\[br\]
 
 \[b\]Employee:\[/b\] \[field\]
-\[b\]Department authority:\[/b\] \[field\]
+\[b\]Department Authority:\[/b\] \[field\]
 \[hr\]"}
 
 	..( set_department )
@@ -624,7 +625,7 @@ Upon signature of this document by the employee, and witnessed by the Department
 Upon signature of this document by the employee, and witnessed by the Department authority of the [department] on [date], the employee may legally fulfill all duties in authority as [job] as required of them. Failure to perform this responsibility hereto is subject to appointment termination without consent.\[br\]
 
 \[b\]Employee:\[/b\] \[field\]
-\[b\]Department authority:\[/b\] \[field\]
+\[b\]Department Authority:\[/b\] \[field\]
 \[hr\]"}
 
 	..(set_job)
@@ -655,7 +656,8 @@ Upon signature of this document by one or several Command Officers on [date], [n
 \[center\]\[b\]\[i\]NanoTrasen Employee Demotion Form\[/b\]\[/i\]\[/center\]\[hr\]
 Upon signature of this document by the Department authority on [date], the contract of appointment with the [department] for [employee] as [job] is hereby null and void. Abuse of this form may result in the termination of the Department authority.\[br\]
 
-\[b\]Department authority:\[/b\] \[field\]
+\[b\]Cause for Demotion:\[/b\] \[field\]
+\[b\]Department Authority:\[/b\] \[field\]
 \[hr\]"}
 
 	..(set_job)
