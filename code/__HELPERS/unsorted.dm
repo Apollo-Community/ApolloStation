@@ -670,6 +670,10 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 			cant_pass = 1
 	return cant_pass
 
+/proc/update_lights()
+	for(var/obj/machinery/light/L in machines)
+		L.update(0)
+
 /proc/get_step_towards2(var/atom/ref , var/atom/trg)
 	var/base_dir = get_dir(ref, get_step_towards(ref,trg))
 	var/turf/temp = get_step_towards(ref,trg)

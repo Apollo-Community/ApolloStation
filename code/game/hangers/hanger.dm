@@ -106,6 +106,7 @@ obj/hanger/proc/take_off()
 		for(var/turf/T in hanger_area_turfs)
 			clear_turf(T)
 		truf_atrib_placer(hanger_turf_atribs)
+		update_lights()
 	full = 0
 
 obj/hanger/proc/add_to_controller()
