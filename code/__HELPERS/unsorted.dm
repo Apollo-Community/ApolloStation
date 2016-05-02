@@ -1254,17 +1254,13 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 		return 0
 	for(var/turf/T in refined_src)
 		var/datum/turf_atribs/C = refined_src[T]
-		T.ChangeTurf(C.typ_store, tell_universe=1, force_lighting_update=1)
+		T.ChangeTurf(C.typ_store)
 		T.set_dir(C.dir)
 		T.icon_state = C.icon_state
 		T.icon = C.icon
-		T.dynamic_lighting = C.dynamic_lighting
-		T.lighting_overlay = C.lighting_overlay
+		T.lighting_clear_overlays()
 		T.affecting_lights = C.affecting_lights
-		T.opacity = C.opacity
-		T.contents = new/list()
 		T.lighting_build_overlays()
-		T.reconsider_lights()
 
 proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 	if(!original)
