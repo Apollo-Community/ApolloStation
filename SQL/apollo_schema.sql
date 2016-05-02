@@ -209,6 +209,7 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `fingerprints` varchar(32) NOT NULL,
   `DNA` varchar(32) NOT NULL,
   `unique_identifier` varchar(32) NOT NULL,
+  `antag_data` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
 

@@ -203,9 +203,12 @@
 	ChangeTurf(/turf/simulated/floor/plating)
 
 /turf/simulated/wall/ex_act(severity)
+	var/area/A = get_area( src )
+	var/base_turf = A.base_turf
+
 	switch(severity)
 		if(1.0)
-			src.ChangeTurf(/turf/space)
+			src.ChangeTurf(base_turf)
 			statistics.increase_stat("damage_cost", rand( 2000, 2200 ))
 			return
 		if(2.0)

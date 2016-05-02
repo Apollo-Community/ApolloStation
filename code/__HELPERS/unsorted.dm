@@ -670,6 +670,10 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 			cant_pass = 1
 	return cant_pass
 
+/proc/update_lights()
+	for(var/obj/machinery/light/L in machines)
+		L.update(0)
+
 /proc/get_step_towards2(var/atom/ref , var/atom/trg)
 	var/base_dir = get_dir(ref, get_step_towards(ref,trg))
 	var/turf/temp = get_step_towards(ref,trg)
@@ -794,6 +798,204 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 				atoms += A
 	return atoms
 
+//Clear the given turf of anything but living cliets or mobs that have keys
+/proc/clear_turf(var/turf/T)
+	for(var/atom/movable/M in T)
+		//NEVER EVER delete hanger beacons they are fixed to the map
+		if(istype(M, /obj/hanger))
+			continue
+		if(istype(M, /mob))
+			var/mob/mob = M
+			if(mob.client || mob.key)
+				continue
+		qdel(M)
+	qdel(T)
+
+//get the bottem left corner position from center coordinate and box dimensions
+/proc/get_corner_turf(var/x_pos, var/y_pos, var/z_pos, var/dimx, var/dimy)
+	var/corn_x = x_pos - ((1/2) * dimx)
+	var/corn_y = y_pos - ((1/2) * dimy)
+	if(dimx % 2)
+		corn_x += 1
+	if(dimy % 2)
+		corn_y += 1
+
+	return locate(corn_x, corn_y, z_pos)
+
+/proc/shift_turfs(var/datum/coords/scr_coords, var/datum/coords/trg_coords, var/list/scr_list)
+	//Takes: Two sets of coordinats and a list of turfs to shift
+	//Returns: List of turfs with shifted center and same relative position as input list
+	//Notes: Used in the hanger code
+	var/x_mov = scr_coords.x_pos - trg_coords.x_pos
+	var/y_mov = scr_coords.y_pos - trg_coords.y_pos
+
+	var/list/trg_list = new/list()
+	for(var/turf/T in scr_list)
+		trg_list += locate(T.x + x_mov, T.y + y_mov, trg_coords.z_pos)
+
+	return trg_list
+
+
+/proc/move_turfs_to_turfs(var/list/scr_list, var/list/trg_list, var/turftoleave=null, var/direction = null)
+	//Takes: Scource turf list, Target turf list. Optional: turf type to leave behind.
+	//Returns: List of turfs that where moved upon.
+	//Notes: Attempts to move the contents of one turfs list to another turfs list.
+	//       Movement based on lower left corner. Tiles that do not fit
+	//		 into the new area will not be moved.
+	if(isnull(scr_list) || isnull(trg_list))
+		return 0
+
+	var/list/turfs_src = scr_list
+	var/list/turfs_trg = trg_list
+
+	var/src_min_x = 0
+	var/src_min_y = 0
+	for (var/turf/T in turfs_src)
+		if(T.x < src_min_x || !src_min_x)
+			src_min_x	= T.x
+		if(T.y < src_min_y || !src_min_y)
+			src_min_y	= T.y
+
+	var/trg_min_x = 0
+	var/trg_min_y = 0
+	for (var/turf/T in turfs_trg)
+		if(T.x < trg_min_x || !trg_min_x)
+			trg_min_x	= T.x
+		if(T.y < trg_min_y || !trg_min_y)
+			trg_min_y	= T.y
+
+	var/list/refined_src = new/list()
+	for(var/turf/T in turfs_src)
+		refined_src += T
+		refined_src[T] = new/datum/coords
+		var/datum/coords/C = refined_src[T]
+		C.x_pos = (T.x - src_min_x)
+		C.y_pos = (T.y - src_min_y)
+
+	var/list/refined_trg = new/list()
+	for(var/turf/T in turfs_trg)
+		refined_trg += T
+		refined_trg[T] = new/datum/coords
+		var/datum/coords/C = refined_trg[T]
+		C.x_pos = (T.x - trg_min_x)
+		C.y_pos = (T.y - trg_min_y)
+
+	var/list/fromupdate = new/list()
+	var/list/toupdate = new/list()
+
+	var/list/adjusted_area = new/list()
+	moving:
+		for (var/turf/T in refined_src)
+			var/datum/coords/C_src = refined_src[T]
+			for (var/turf/B in refined_trg)
+				var/datum/coords/C_trg = refined_trg[B]
+				if(C_src.x_pos == C_trg.x_pos && C_src.y_pos == C_trg.y_pos)
+
+					adjusted_area += locate(B.x, B.y, B.z)
+
+					var/old_dir1 = T.dir
+					var/old_icon_state1 = T.icon_state
+					var/old_icon1 = T.icon
+
+
+
+					var/turf/X = B.ChangeTurf(T.type)
+					//hack
+					//if(isnull(X))	continue
+					X.set_dir(old_dir1)
+					X.icon_state = old_icon_state1
+					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
+
+					var/turf/simulated/ST = T
+					if(istype(ST) && ST.zone)
+						var/turf/simulated/SX = X
+						if(!SX.air)
+							SX.make_air()
+						SX.air.copy_from(ST.zone.air)
+						ST.zone.remove(ST)
+
+					// Quick visual fix for some weird shuttle corner artefacts when on transit space tiles
+					if(direction && findtext(X.icon_state, "swall_s"))
+
+						// Spawn a new shuttle corner object
+						var/obj/corner = new()
+						corner.loc = X
+						corner.density = 1
+						corner.anchored = 1
+						corner.icon = X.icon
+						corner.icon_state = replacetext(X.icon_state, "_s", "_f")
+						corner.tag = "delete me"
+						corner.name = "wall"
+
+						// Find a new turf to take on the property of
+						var/turf/nextturf = get_step(corner, direction)
+						if(!nextturf || !istype(nextturf, /turf/space))
+							nextturf = get_step(corner, turn(direction, 180))
+
+
+						// Take on the icon of a neighboring scrolling space icon
+						X.icon = nextturf.icon
+						X.icon_state = nextturf.icon_state
+
+
+
+					for(var/obj/O in T)
+						if(!istype(O, /obj/hanger))
+							// Reset the shuttle corners
+							if(O.tag == "delete me")
+								X.icon = 'icons/turf/shuttle.dmi'
+								X.icon_state = replacetext(O.icon_state, "_f", "_s") // revert the turf to the old icon_state
+								X.name = "wall"
+								qdel(O) // prevents multiple shuttle corners from stacking
+								continue
+							if(!istype(O,/obj)) continue
+							O.loc = X
+
+					for(var/mob/M in T)
+						if(!istype(M,/mob) || istype(M, /mob/aiEye)) continue // If we need to check for more mobs, I'll add a variable
+						M.loc = X
+
+//					var/area/AR = X.loc
+
+//					if(AR.lighting_use_dynamic)							//TODO: rewrite this code so it's not messed by lighting ~Carn
+//						X.opacity = !X.opacity
+//						X.set_opacity(!X.opacity)
+
+					toupdate += X
+
+					if(turftoleave)
+						fromupdate += T.ChangeTurf(turftoleave)
+					else
+						T.ChangeTurf(/turf/space)
+
+					refined_src -= T
+					refined_trg -= B
+					continue moving
+
+	var/list/doors = new/list()
+	if(toupdate.len)
+		for(var/turf/simulated/T1 in toupdate)
+			for(var/obj/machinery/door/D2 in T1)
+				doors += D2
+			/*if(T1.parent)
+				air_master.groups_to_rebuild += T1.parent
+			else
+				air_master.tiles_to_update += T1*/
+
+	if(fromupdate.len)
+		for(var/turf/simulated/T2 in fromupdate)
+			for(var/obj/machinery/door/D2 in T2)
+				doors += D2
+			/*if(T2.parent)
+				air_master.groups_to_rebuild += T2.parent
+			else
+				air_master.tiles_to_update += T2*/
+
+	for(var/obj/O in doors)
+		O:update_nearby_tiles(1)
+
+	return adjusted_area
+
 /datum/coords //Simple datum for storing coordinates.
 	var/x_pos = null
 	var/y_pos = null
@@ -814,14 +1016,18 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	var/src_min_x = 0
 	var/src_min_y = 0
 	for (var/turf/T in turfs_src)
-		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
-		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
+		if(T.x < src_min_x || !src_min_x)
+			src_min_x	= T.x
+		if(T.y < src_min_y || !src_min_y)
+			src_min_y	= T.y
 
 	var/trg_min_x = 0
 	var/trg_min_y = 0
 	for (var/turf/T in turfs_trg)
-		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
-		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
+		if(T.x < trg_min_x || !trg_min_x)
+			trg_min_x	= T.x
+		if(T.y < trg_min_y || !trg_min_y)
+			trg_min_y	= T.y
 
 	var/list/refined_src = new/list()
 	for(var/turf/T in turfs_src)
@@ -945,14 +1151,122 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	for(var/obj/O in doors)
 		O:update_nearby_tiles(1)
 
+//datum for storing 2d dimensions data
+/datum/dim_min_max
+	var/dim_x
+	var/dim_y
+	var/max_x
+	var/max_y
+	var/min_x
+	var/min_y
+	var/loc_z
 
+//Get the internal dim, maxx and maxy from a list of turfs
+//Arguments:
+//var/list/turfs - list of turfs (will only look for turfs and childs and ignore others)
+//Returns:
+///datum/dim_min_max
+/proc/get_dim_and_minmax(var/list/turfs)
+	var/maxx = 0
+	var/maxy = 0
+	var/minx = world.maxx
+	var/miny = world.maxy
+	var/datum/dim_min_max/store = new/datum/dim_min_max
+	for(var/turf/T in turfs)
+		if(T.x > maxx)
+			maxx = T.x
+		if(T.y > maxy)
+			maxy = T.y
+		if(T.x < minx)
+			minx = T.x
+		if(T.y < miny)
+			miny = T.y
+		if(isnull(store.loc_z))
+			store.loc_z = T.z
+	store.dim_x = maxx - minx
+	store.dim_y = maxy - miny
+	store.min_y = miny
+	store.min_x = minx
+	store.max_x = maxx
+	store.max_y = maxy
+	return store
+
+
+//Filters out any space turfs from a list of turfs
+/proc/filter_space(var/list/turfs, var/exlcu_obj_tile = 1)
+	var/list/space_turfs = new/list()
+
+
+	for(var/turf/T in turfs)
+		var/filter = exlcu_obj_tile
+		for(var/obj/O in T)
+			filter = 0
+		if(istype(T, /turf/space) && filter)
+			space_turfs += T
+
+	turfs.Remove(space_turfs)
+
+	return turfs
+
+//Simple datum for storing turf atributes
+/datum/turf_atribs
+	var/dir = null
+	var/icon_state = null
+	var/icon = null
+	var/air = null
+	var/typ_store = null
+	var/dynamic_lighting = null
+	var/lighting_overlay = null
+	var/list/affecting_lights = null
+	var/opacity = null
+
+/proc/truf_atrib_lister(var/list/turfs_src)
+	//Takes: List of turfs.
+	//Returns: Assosiated list with turfs and their properties stored in a datem.
+	//Notes: Attempts to
+
+	if(!turfs_src)
+		return 0
+
+	var/list/atribs_list = new/list()
+
+	for(var/turf/T in turfs_src)
+		atribs_list += T
+		atribs_list[T] = new/datum/turf_atribs
+		var/datum/turf_atribs/C = atribs_list[T]
+		C.dir = T.dir
+		C.icon_state = T.icon_state
+		C.icon = T.icon
+		C.typ_store = T.type
+		C.dynamic_lighting = T.dynamic_lighting
+		C.lighting_overlay = T.lighting_overlay
+		C.affecting_lights = T.affecting_lights
+		C.opacity = T.opacity
+
+	return atribs_list
+
+/proc/truf_atrib_placer(var/list/refined_src)
+	//Takes: Assosiated list of turfs with datums.
+	//Returns: Nothing.
+	//Notes: Attempts to set the properties of the turfs in its list as difined in the asociated datum.
+
+	if(!refined_src)
+		return 0
+	for(var/turf/T in refined_src)
+		var/datum/turf_atribs/C = refined_src[T]
+		T.ChangeTurf(C.typ_store)
+		T.set_dir(C.dir)
+		T.icon_state = C.icon_state
+		T.icon = C.icon
+		T.lighting_clear_overlays()
+		T.affecting_lights = C.affecting_lights
+		T.lighting_build_overlays()
 
 proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 	if(!original)
 		return null
 
 	var/obj/O = null
-
 	if(sameloc)
 		O=new original.type(original.loc)
 	else
@@ -965,6 +1279,147 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 					O.vars[V] = original.vars[V]
 	return O
 
+/proc/copy_list_contents_to(var/list/origen ,var/list/destination, var/platingRequired = 0 )
+	//Takes: list of turfs. Optional: If it should copy to areas that don't have plating
+	//Returns: list of turfs the turf content was copied to.
+	//Notes: Attempts to move the contents of one list of turfs to another list of turfs.
+	//       Movement based on lower left corner. Tiles that do not fit
+	//		 into the new area will not be moved.
+
+
+	if(isnull(origen) || isnull(destination)) return 0
+	var/list/turfs_src = origen
+	var/list/turfs_trg = destination
+	var/list/adjusted_area = new/list()
+
+	var/src_min_x = 0
+	var/src_min_y = 0
+	for (var/turf/T in turfs_src)
+		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
+		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
+
+	var/trg_min_x = 0
+	var/trg_min_y = 0
+	for (var/turf/T in turfs_trg)
+		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
+		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
+
+	var/list/refined_src = new/list()
+	for(var/turf/T in turfs_src)
+		refined_src += T
+		refined_src[T] = new/datum/coords
+		var/datum/coords/C = refined_src[T]
+		C.x_pos = (T.x - src_min_x)
+		C.y_pos = (T.y - src_min_y)
+
+	var/list/refined_trg = new/list()
+	for(var/turf/T in turfs_trg)
+		refined_trg += T
+		refined_trg[T] = new/datum/coords
+		var/datum/coords/C = refined_trg[T]
+		C.x_pos = (T.x - trg_min_x)
+		C.y_pos = (T.y - trg_min_y)
+
+	var/list/toupdate = new/list()
+
+	var/copiedobjs = list()
+
+
+	moving:
+		for (var/turf/T in refined_src)
+			var/datum/coords/C_src = refined_src[T]
+			for (var/turf/B in refined_trg)
+				var/datum/coords/C_trg = refined_trg[B]
+				if(C_src.x_pos == C_trg.x_pos && C_src.y_pos == C_trg.y_pos)
+
+					adjusted_area += B
+
+					var/old_dir1 = T.dir
+					var/old_icon_state1 = T.icon_state
+					var/old_icon1 = T.icon
+
+					if(platingRequired)
+						if(istype(B, /turf/space))
+							continue moving
+
+					var/turf/X = new T.type(B)
+					X.set_dir(old_dir1)
+					X.icon_state = old_icon_state1
+					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
+
+
+					var/list/objs = new/list()
+					var/list/newobjs = new/list()
+					var/list/mobs = new/list()
+					var/list/newmobs = new/list()
+
+					for(var/obj/O in T)
+
+						if(!istype(O,/obj))
+							continue
+
+						objs += O
+
+
+					for(var/obj/O in objs)
+					//Some wierd case that keeps giving errors
+						if(!(istype(O, /mob/living/simple_animal/hostile/mimic/crate)))
+							newobjs += DuplicateObject(O , 1)
+
+
+					for(var/obj/O in newobjs)
+						O.loc = X
+
+					for(var/mob/M in T)
+
+						if(!istype(M,/mob) || istype(M, /mob/aiEye)) continue // If we need to check for more mobs, I'll add a variable
+						mobs += M
+
+					for(var/mob/M in mobs)
+						newmobs += DuplicateObject(M , 1)
+
+					for(var/mob/M in newmobs)
+						M.loc = X
+
+					copiedobjs += newobjs
+					copiedobjs += newmobs
+
+
+
+					for(var/V in T.vars)
+						if(!(V in list("type","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "light_range")))
+							X.vars[V] = T.vars[V]
+
+//					var/area/AR = X.loc
+
+//					if(AR.lighting_use_dynamic)
+//						X.opacity = !X.opacity
+//						X.sd_set_opacity(!X.opacity)			//TODO: rewrite this code so it's not messed by lighting ~Carn
+
+					toupdate += X
+
+					refined_src -= T
+					refined_trg -= B
+					continue moving
+
+
+
+
+	var/list/doors = new/list()
+
+	if(toupdate.len)
+		for(var/turf/simulated/T1 in toupdate)
+			for(var/obj/machinery/door/D2 in T1)
+				doors += D2
+			/*if(T1.parent)
+				air_master.groups_to_rebuild += T1.parent
+			else
+				air_master.tiles_to_update += T1*/
+
+	for(var/obj/O in doors)
+		O:update_nearby_tiles(1)
+
+	return adjusted_area
 
 /area/proc/copy_contents_to(var/area/A , var/platingRequired = 0 )
 	//Takes: Area. Optional: If it should copy to areas that don't have plating
@@ -1101,12 +1556,7 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 	for(var/obj/O in doors)
 		O:update_nearby_tiles(1)
 
-
-
-
 	return copiedobjs
-
-
 
 proc/get_cardinal_dir(atom/A, atom/B)
 	var/dx = abs(B.x - A.x)
@@ -1155,6 +1605,39 @@ proc/get_mob_with_client_list()
 	else if (zone == "l_foot") return "left foot"
 	else if (zone == "r_foot") return "right foot"
 	else return zone
+
+/proc/get_turfs_square(x, y, z, dimx, dimy)
+//Needs: x and y coordinates, square dimensions
+//Returns: List of turfs
+	var/minx = x - (1/2) * dimx
+	var/maxx = x + (1/2) * dimx
+	var/miny = y - (1/2) * dimy
+	var/maxy = y + (1/2) * dimy
+
+	//Solving rounding problems
+
+
+	var/list/turfs = new/list()
+	//Actual tile storing
+	var/i = 1
+	for(i=minx+1 ,i <= maxx, i++)
+		var/j = 1
+		for(j=miny+1, j <= maxy, j++)
+			turfs += locate(i,j,z)
+
+	return turfs
+
+/proc/get_turfs(xmin, xmax, ymin, ymax)
+//Needs: two sets of coordinates, lower left and high right.
+//Returns: List of turfs
+
+	var/list/turfs = new/list()
+	var/x = 1
+	for(x=xmin+1 ,x <= xmax, x++)
+		var/y = 1
+		for(y=ymin+1, y <= ymax, y++)
+			turfs += locate(x,y,3)
+	return turfs
 
 //gets the turf the atom is located in (or itself, if it is a turf).
 //returns null if the atom is not in a turf.
