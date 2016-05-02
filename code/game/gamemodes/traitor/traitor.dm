@@ -21,12 +21,6 @@
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
-	var/list/possible_traitors = get_players_for_role(BE_TRAITOR)
-
-	// stop setup if no possible traitors
-	if(!possible_traitors.len)
-		return 0
-
 	var/num_traitors = 1
 
 	if(config.traitor_scaling)
@@ -34,11 +28,7 @@
 	else
 		num_traitors = max(1, min(num_players(), traitors_possible))
 
-	for(var/datum/mind/player in possible_traitors)
-		for(var/job in restricted_jobs)
-			if(player.assigned_role == job)
-				possible_traitors -= player
-		if(player.antagonist)	possible_traitors -= player // already a persistant antag
+	var/list/possible_traitors = pick_antagonists(BE_TRAITOR, num_traitors)
 
 	for(var/j = 0, j < num_traitors, j++)
 		if (!possible_traitors.len)
