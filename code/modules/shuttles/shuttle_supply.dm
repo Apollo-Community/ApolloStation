@@ -42,11 +42,7 @@
 
 	//Shuttle is now in transit
 	moving_status = SHUTTLE_INTRANSIT
-	sleep(movetime)
-	//Waiting until we can move
-
-	while(world.time <= arrive_time)
-		sleep(5)
+	sleep(movetime-50)
 
 	//We can only arrive late if we are going to the station
 	if (!at_station() && prob(late_chance))

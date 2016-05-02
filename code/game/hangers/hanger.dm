@@ -33,7 +33,7 @@ obj/hanger/New()
 	else
 		hanger_area_turfs = get_turfs_square(x, y, z, dimx, dimy)
 
-	//If no location was assigned but we have hanger area turfs, calculate the aprocimate center of the hanger and take that as location.
+	//If no location was assigned but we have hanger area turfs, calculate the dimensions of the hanger.
 	//This is used to make hangers in space easier
 
 	if(!isnull(hanger_area_turfs) && dimx == 0 && dimy == 0)
@@ -60,17 +60,20 @@ obj/hanger/proc/can_land_at(var/datum/shuttle/s)
 	if(square == 1)
 		if(s.template_dim[1] > dimx || s.template_dim[2] > dimy)
 			return 0
-		return check_hanger_obstructions(hanger_area_turfs)
-		
+
+		if(!exterior)
+			return !check_hanger_obstructions(hanger_area_turfs)
+
 	else
 		if(isnull(s.shuttle_turfs) || isnull(hanger_area_turfs))
 			return 0
 		else
+			//type conversion is ugly
 			var/datum/coords/current_loc = new /datum/coords
+			var/datum/coords/hloc = new /datum/coords
 			current_loc.x_pos = s.current_hanger.x
 			current_loc.y_pos = s.current_hanger.y
 			current_loc.z_pos = s.current_hanger.z
-			var/datum/coords/hloc = new /datum/coords
 			hloc.x_pos = x
 			hloc.y_pos = y
 			hloc.z_pos = z
@@ -79,16 +82,18 @@ obj/hanger/proc/can_land_at(var/datum/shuttle/s)
 			for(var/turf/T in shuttle_turfs)
 				if(hanger_area_turfs.Find(T) >= 1)
 					return 0
-			return check_hanger_obstructions(shuttle_turfs)
+			if(!exterior)
+				return !check_hanger_obstructions(hanger_area_turfs)
 	return 1
 
 obj/hanger/proc/check_hanger_obstructions(var/list/turfs)
 	for(var/turf/T in turfs)
-		if(!(istype(T, /turf/simulated/floor) || istype(T, /turf/planet/lunar) || istype(T, /turf/space) || !istype(T, /turf/unsimulated/wall)))
-			error("hanger obstructions returning 0")
-			return 0
-	error("hanger obstructions returning 1")
-	return 1
+		if(!istype(T, /turf/simulated/floor) && !istype(T, /turf/space) &&!istype(T, /turf/unsimulated/floor))
+			error("hanger obstructions has detected an obstruction")
+			error("The obstruction was : [T]")
+			return 1
+	error("hanger obstructions has detected no obstructions")
+	return 0
 
 //Shuttle indicating its going to land at a hanger
 obj/hanger/proc/land_at(var/datum/shuttle/s)
@@ -98,6 +103,8 @@ obj/hanger/proc/land_at(var/datum/shuttle/s)
 
 obj/hanger/proc/take_off()
 	if(!exterior)
+		for(var/turf/T in hanger_area_turfs)
+			clear_turf(T)
 		truf_atrib_placer(hanger_turf_atribs)
 	full = 0
 
