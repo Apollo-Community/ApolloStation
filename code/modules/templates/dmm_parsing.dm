@@ -116,7 +116,7 @@
 		if(delete_src)
 			qdel(src)
 
-	//Remove all space turfs from a collection
+	//Set all space turfs in a collection to be ignored when placing down turfs.
 	proc/RemoveSpaceTurfs()
 		for(var/y = 0; y < y_size; y++)
 			var/list/row = grid["[y]"]

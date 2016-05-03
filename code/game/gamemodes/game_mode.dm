@@ -470,6 +470,67 @@
 							//			recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,
 							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.
 
+///////////////////////////////////
+//Picks some antags for the round//
+///////////////////////////////////
+/datum/game_mode/proc/pick_antagonists(var/role, var/num_antags)
+	var/list/possible_antags = get_players_for_role(role)
+	var/list/chosen_antags = list()
+	var/list/clients = list()
+
+	// track the top weight and discard candidates below this top weight
+	// antags are then picked from a list of players with that weight
+	var/top_weight
+	for( var/datum/mind/M in possible_antags )
+		if( M.antagonist || ( M.assigned_role in restricted_jobs ))
+			possible_antags -= M
+			continue
+
+		var/weight = 0
+		var/client/C = M.current.client
+		if( !C )
+			possible_antags -= M
+			continue
+		clients += C
+
+		// antag token/commendation weight
+		if( !C.character_tokens["Antagonist"] )
+			C.character_tokens["Antagonist"] = 0
+		weight += ( C.character_tokens["Antagonist"] * 2 )
+
+		// last played as antag weight
+		weight += C.no_antag_weight
+		C.no_antag_weight++ // set to 0 for chosen antags later
+
+		if(!top_weight || weight >= top_weight)
+			top_weight = weight
+		else
+			possible_antags -= M
+
+	if( !possible_antags.len )
+		return chosen_antags
+
+	for( var/i = 0, i < num_antags, i++ )
+		if( !possible_antags.len )
+			break
+
+		var/datum/mind/antag = pick(possible_antags)
+		var/client/C = antag.current.client
+		if( !C )
+			possible_antags -= antag
+			continue
+
+		C.no_antag_weight = 0
+
+		chosen_antags += antag
+		possible_antags -= antag
+
+	// there has to be a better way to do this
+	for( var/client/C in clients )
+		C.saveAntagWeights()
+
+	return chosen_antags
+
 
 /datum/game_mode/proc/latespawn(var/mob)
 
