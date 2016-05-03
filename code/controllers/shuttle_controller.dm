@@ -169,9 +169,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 	//Vox Shuttle.
 	var/datum/shuttle/multi_shuttle/VS = new/datum/shuttle/multi_shuttle()
 	VS.template_path ="maps/templates/shuttles/vox.dmm"
-	//With the starting hange schedular we don't need to worry about an origen hanger with ships that do not start at a dock
-	//VS.origin = hangers["Vox_Home_Hanger"]
-	//Need to add the mining shuttle and maybe moon base if it fits
 	VS.destinations = list(
 		"Port Solars" = hangers_as["s_space_west"],
 		"Starboard Solars" = hangers_as["s_space_east"],
@@ -211,6 +208,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	MS.arrival_message = "Attention, Apollo, you have a shuttle sized signature approaching the station - looks unarmed to surface scans but we are reading allot of mechanical signatures. We're too far out to intercept - brace for visitors."
 	MS.departure_message = "Your visitors are on their way out of the system, Apollo, burning delta-v like it's nothing. Good riddance."
 	MS.warmup_time = 0
+	MS.docking_controller_tag = "Mech_Merc_Shuttle"
 	shuttles["Mech_Mercenary"] = MS
 
 	//Nuke ops shuttle
@@ -255,7 +253,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	VALS.arrival_message = "Attention, Apollo, you have a large signature approaching the station - looks unarmed to surface scans. We're too far out to intercept - brace for visitors."
 	VALS.departure_message = "Your visitors are on their way out of the system Apollo. They are moving to fast for us to atempt an intercept."
 	VALS.warmup_time = 0
-//	VALS.docking_controller_tag = "Valen's Shuttle"
+	VALS.docking_controller_tag = "Valen's Shuttle"
 	shuttles["Valans"] = VALS
 
 /datum/shuttle_controller/proc/setup()
