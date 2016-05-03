@@ -169,9 +169,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 	//Vox Shuttle.
 	var/datum/shuttle/multi_shuttle/VS = new/datum/shuttle/multi_shuttle()
 	VS.template_path ="maps/templates/shuttles/vox.dmm"
-	//With the starting hange schedular we don't need to worry about an origen hanger with ships that do not start at a dock
-	//VS.origin = hangers["Vox_Home_Hanger"]
-	//Need to add the mining shuttle and maybe moon base if it fits
 	VS.destinations = list(
 		"Port Solars" = hangers_as["s_space_west"],
 		"Starboard Solars" = hangers_as["s_space_east"],
@@ -186,33 +183,33 @@ var/global/datum/shuttle_controller/shuttle_controller
 	VS.announcer = "NSV Icarus"
 	VS.arrival_message = "Attention, Apollo, we just tracked a small target bypassing our defensive perimeter. Can't fire on it without hitting the station - you've got incoming visitors, like it or not."
 	VS.departure_message = "Your guests are pulling away, Apollo - moving too fast for us to draw a bead on them. Looks like they're heading out of the system at a rapid clip."
-//	VS.docking_controller_tag = "Vox Shuttle"
+	VS.docking_controller_tag = "Vox Shuttle"
 	VS.warmup_time = 0
 	shuttles["Vox Skipjack"] = VS
 
-
-	//Merc Shuttle not in the game at the moment
-	/*
+	//For when infrantry witn guns is not enough
 	var/datum/shuttle/multi_shuttle/MS = new/datum/shuttle/multi_shuttle()
 	MS.template_path ="maps/templates/shuttles/Merc.dmm"
-	MS.starting_hanger = hangers["Syndi_Home_Hanger"]
+	MS.starting_hanger = hangers_as["merc_home"]
 	MS.destinations = list(
-		"Port Solars" = hangers["Space_W_Hanger"],
-		"Starboard Solars" = hangers["Space_E_Hanger"],
-		"Fore Side" = hangers["Space_N_Hanger"],
-		"Fore Port Side" = hangers["Space_NW_Hanger"],
-		"Fore Starboard Side" = hangers["Space_NE_Hanger"],
-		"Aft Side" = hangers["Space_S_Hanger"],
-		"Aft Port Side" = hangers["Space_SW_Hanger"],
-		"Aft Starboard Side" = hangers["Space_SE_Hanger"]
+		"Port Solars" = hangers_as["s_space_west"],
+		"Starboard Solars" = hangers_as["s_space_east"],
+		"Fore Side" = hangers_as["s_space_north"],
+		"Fore Port Side" = hangers_as["s_space_north_west"],
+		"Fore Starboard Side" = hangers_as["s_space_north_east"],
+		"Aft Side" = hangers_as["s_space_south"],
+		"Aft Port Side" = hangers_as["s_space_south_west"],
+		"Aft Starboard Side" = hangers_as["s_space_south_east"],
+		"In-station Port hanger" = hangers_as["s_hanger_l"],
+		"In-station Starboard hanger" = hangers_as["s_hanger_r"]
 		)
 
 	MS.announcer = "NSV Icarus"
-	MS.arrival_message = "Attention, Apollo, you have a large signature approaching the station - looks unarmed to surface scans. We're too far out to intercept - brace for visitors."
+	MS.arrival_message = "Attention, Apollo, you have a shuttle sized signature approaching the station - looks unarmed to surface scans but we are reading allot of mechanical signatures. We're too far out to intercept - brace for visitors."
 	MS.departure_message = "Your visitors are on their way out of the system, Apollo, burning delta-v like it's nothing. Good riddance."
 	MS.warmup_time = 0
-	shuttles["Mercenary"] = MS
-	*/
+	MS.docking_controller_tag = "Mech_Merc_Shuttle"
+	shuttles["Mech_Mercenary"] = MS
 
 	//Nuke ops shuttle
 	var/datum/shuttle/multi_shuttle/NS = new/datum/shuttle/multi_shuttle()
@@ -233,7 +230,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	NS.arrival_message = "Attention, Apollo, you have a large signature approaching the station - looks unarmed to surface scans. We're too far out to intercept - brace for visitors."
 	NS.departure_message = "Your visitors are on their way out of the system, Apollo, burning delta-v like it's nothing. Good riddance."
 	NS.warmup_time = 0
-//	NS.docking_controller_tag = "Nuke_Shuttle"
+	NS.docking_controller_tag = "Nuke_Shuttle"
 	shuttles["Mercenary"] = NS
 
 
@@ -256,7 +253,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	VALS.arrival_message = "Attention, Apollo, you have a large signature approaching the station - looks unarmed to surface scans. We're too far out to intercept - brace for visitors."
 	VALS.departure_message = "Your visitors are on their way out of the system Apollo. They are moving to fast for us to atempt an intercept."
 	VALS.warmup_time = 0
-//	VALS.docking_controller_tag = "Valen's Shuttle"
+	VALS.docking_controller_tag = "Valen's Shuttle"
 	shuttles["Valans"] = VALS
 
 /datum/shuttle_controller/proc/setup()
@@ -264,7 +261,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 	for (var/shuttle_tag in shuttles)
 		shuttle = shuttles[shuttle_tag]
 		shuttle.init_templates()
-		error("shuttle init starte [shuttle.docking_controller_tag]")
 	init_done = 1
 
 //This is called by gameticker after all the machines and radio frequencies have been properly initialized
