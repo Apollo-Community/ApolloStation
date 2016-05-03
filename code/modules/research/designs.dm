@@ -267,6 +267,12 @@ datum/design/circuit/arcademachine
 	req_tech = list("programming" = 1)
 	build_path = /obj/item/weapon/circuitboard/arcade
 
+datum/design/circuit/papershredder
+	name = "paper shredder"
+	id = "papershredder"
+	req_tech = list("engineering" = 3)
+	build_path = /obj/item/weapon/circuitboard/papershredder
+
 datum/design/circuit/powermonitor
 	name = "power monitoring console"
 	id = "powermonitor"
