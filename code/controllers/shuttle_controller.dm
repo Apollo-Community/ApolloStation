@@ -261,7 +261,6 @@ var/global/datum/shuttle_controller/shuttle_controller
 	for (var/shuttle_tag in shuttles)
 		shuttle = shuttles[shuttle_tag]
 		shuttle.init_templates()
-		error("shuttle init starte [shuttle.docking_controller_tag]")
 	init_done = 1
 
 //This is called by gameticker after all the machines and radio frequencies have been properly initialized

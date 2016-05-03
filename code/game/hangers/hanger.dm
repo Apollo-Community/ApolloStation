@@ -46,7 +46,6 @@ obj/hanger/New()
 		if(dimy % 2)
 			//odd dim y
 			dimy += round(1 + dimy)
-	error("hanger [htag] created with [hanger_area_turfs.len] turfs and is square [square]")
 	add_to_controller()
 
 //Can the given shuttle land at this hanger ?
@@ -89,10 +88,10 @@ obj/hanger/proc/can_land_at(var/datum/shuttle/s)
 obj/hanger/proc/check_hanger_obstructions(var/list/turfs)
 	for(var/turf/T in turfs)
 		if(!istype(T, /turf/simulated/floor) && !istype(T, /turf/space) &&!istype(T, /turf/unsimulated/floor))
-			error("hanger obstructions has detected an obstruction")
-			error("The obstruction was : [T]")
+			//error("hanger [htag] obstructions has detected an obstruction")
+			//error("The obstruction was : [T]")
 			return 1
-	error("hanger obstructions has detected no obstructions")
+	//error("hanger [htag] obstructions has detected no obstructions")
 	return 0
 
 //Shuttle indicating its going to land at a hanger

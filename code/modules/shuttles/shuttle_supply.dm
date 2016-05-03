@@ -56,10 +56,8 @@
 	//Move the shuttle
 	move(finish_hanger, null, 0)
 	if (at_station())
-		error("Buying stuff")
 		supply_controller.buy()
 	if (!at_station())
-		error("Selling stuff")
 		supply_controller.sell()
 	moving_status = SHUTTLE_IDLE
 
