@@ -401,8 +401,6 @@ What a mess.*/
 						title = "Note"
 
 					var/rec_hash = href_list["rec_hash"]
-					usr.drop_item()
-					P.loc = src
 					if( !addToPaperworkRecord( usr, rec_hash, P.info, "[title]", "Unclassified", "Employment Notes" ))
 						buzz( "\The [src] buzzes, \"Could not add note!\"" )
 					else
