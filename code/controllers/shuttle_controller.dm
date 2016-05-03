@@ -193,7 +193,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	//For when infrantry witn guns is not enough
 	var/datum/shuttle/multi_shuttle/MS = new/datum/shuttle/multi_shuttle()
 	MS.template_path ="maps/templates/shuttles/Merc.dmm"
-	MS.starting_hanger = hangers["merc_home"]
+	MS.starting_hanger = hangers_as["merc_home"]
 	MS.destinations = list(
 		"Port Solars" = hangers_as["s_space_west"],
 		"Starboard Solars" = hangers_as["s_space_east"],
@@ -203,8 +203,8 @@ var/global/datum/shuttle_controller/shuttle_controller
 		"Aft Side" = hangers_as["s_space_south"],
 		"Aft Port Side" = hangers_as["s_space_south_west"],
 		"Aft Starboard Side" = hangers_as["s_space_south_east"],
-		"In-station Port hanger" = hangers["s_hanger_l"],
-		"In-station Starboard hanger" = hangers["s_hanger_r"]
+		"In-station Port hanger" = hangers_as["s_hanger_l"],
+		"In-station Starboard hanger" = hangers_as["s_hanger_r"]
 		)
 
 	MS.announcer = "NSV Icarus"
