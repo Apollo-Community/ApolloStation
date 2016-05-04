@@ -32,7 +32,7 @@
 	. += "</head><body>"
 
 	. += "<h1><span class='white'>Antagonist Commendation</span></h1>"
-	. += "<span class='white'>Commend an antagonist you think played their role well this round. Commending antagonists will allow them to accept more demanding contracts or even become a persistant antagonist that may appear every round. If you don't want to commend anyone, you may close the window.</span>"
+	. += "<span class='white'>Commend an antagonist you think played their role well this round. Commending antagonists makes them more likely to be picked for antagonist roles. It may also allow them to become a persistant antagonist that can appear every round and take on more demanding contracts. If you don't want to commend anyone, you may close the window.</span>"
 	. += "<hr>"
 	. += ""
 

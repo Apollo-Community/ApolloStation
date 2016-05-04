@@ -1976,7 +1976,7 @@ datum
 			name = "Snow White"
 			id = "snowwhite"
 			result = "snowwhite"
-			required_reagents = list("beer" = 1, "lemon_lime" = 1)
+			required_reagents = list( "rum" = 1, "limejuice" = 1, "sugar" = 1 )
 			result_amount = 2
 
 		irishcarbomb

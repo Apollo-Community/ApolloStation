@@ -88,6 +88,11 @@ obj/hanger/square/interior/frigate_hanger
 	dimy = 5
 	htag = "f_hanger"
 
+obj/hanger/square/exterior/merc_home_hanger
+	dimx = 11
+	dimy = 5
+	htag = "merc_home"
+
 obj/hanger/oddshaped/exterior/s_hanger_esc
 	hanger_area_tag = "/area/podbay/hangar/s_hanger_e"
 	htag = "s_hanger_esc"

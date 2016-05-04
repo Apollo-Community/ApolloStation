@@ -85,6 +85,21 @@
 	for( var/type in character_tokens )
 		character_tokens[type] = text2num( character_tokens[type] )
 
+/client/proc/loadAntagWeights()
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return 0
+
+	var/DBQuery/query
+
+	query = dbcon.NewQuery("SELECT no_antag_weight FROM player WHERE ckey = '[ckey( ckey )]'")
+	query.Execute()
+
+	if( !query.NextRow() )
+		return
+
+	no_antag_weight = text2num( query.item[1] )
+
 /client/proc/handle_spam_prevention(var/message, var/mute_type)
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
@@ -241,6 +256,7 @@
 	log_client_to_db()
 
 	loadTokens()
+	loadAntagWeights()
 
 	if(!prefs.passed_date)
 		src << "<span class='admin_channel'>We have detected that your ckey is less than one month old. To help get you started we strongly recommend \
@@ -348,6 +364,20 @@
 	var/sql_ckey = ckey( ckey )
 
 	var/DBQuery/query_insert = dbcon.NewQuery("UPDATE player SET character_tokens = [tokens] WHERE ckey = '[sql_ckey]'")
+	query_insert.Execute()
+
+/client/proc/saveAntagWeights()
+	if ( IsGuestKey(src.key) )
+		return 0
+
+	if( !no_antag_weight )
+		return 0
+
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return 0
+
+	var/DBQuery/query_insert = dbcon.NewQuery("UPDATE player SET no_antag_weight = [no_antag_weight] WHERE ckey = '[ckey( ckey )]'")
 	query_insert.Execute()
 
 /client/proc/log_client_to_db( var/log_playtime = 0 )

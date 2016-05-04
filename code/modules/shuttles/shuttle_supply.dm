@@ -1,6 +1,8 @@
 /datum/shuttle/ferry/supply
 	var/late_chance = 80
-	var/max_late_time = 300
+	var/max_late_time = 300.
+	var/traveling = 0
+	var/obj/hanger/finish_hanger
 
 /datum/shuttle/ferry/supply/short_jump(var/obj/hanger/trg_hanger)
 	//Do some checks first
@@ -30,12 +32,6 @@
 			moving_status = SHUTTLE_IDLE
 			return
 
-		/*
-		Broken somehow. Shuttle now buys stuff when at station.
-		if (!at_station())	//at centcom
-			world << "Start buy stuff"
-			supply_controller.buy()
-		*/
 	//If we are at the station we will want to leave now.
 	//If we are at centcom we want to wait the movetime until we jump
 	if(at_station())
@@ -44,26 +40,33 @@
 		arrive_time = world.time + supply_controller.movetime
 
 	//Shuttle is now in transit
+	finish_hanger = trg_hanger
 	moving_status = SHUTTLE_INTRANSIT
+	traveling = 1
 
-	//Waiting until we can move
-	while(world.time <= arrive_time)
-		sleep(5)
 
-	//Is the shuttle going to arrive late ?
+/datum/shuttle/ferry/supply/proc/short_jump_finish()
 	//We can only arrive late if we are going to the station
 	if (!at_station() && prob(late_chance))
 		sleep(rand(0,max_late_time))
 
-	//Move the shuttle
-	move(trg_hanger, null, 0)
+	display_warning(finish_hanger)
+	sleep(50)
 
+	//Move the shuttle
+	move(finish_hanger, null, 0)
 	if (at_station())
 		supply_controller.buy()
 	if (!at_station())
 		supply_controller.sell()
-
 	moving_status = SHUTTLE_IDLE
+
+/datum/shuttle/ferry/supply/process()
+	..()
+	if(traveling)
+		if(arrive_time <= world.time)
+			short_jump_finish()
+			traveling = 0
 
 // returns 1 if the supply shuttle should be prevented from moving because it contains forbidden atoms
 /datum/shuttle/ferry/supply/proc/forbidden_atoms_check()

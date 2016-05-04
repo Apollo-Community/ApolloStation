@@ -11,10 +11,10 @@
 "k" = (/obj/structure/bed/chair{dir = 8},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/syndicate_elite/mothership)
 "l" = (/obj/machinery/door/airlock/external{name = "Shuttle Airlock"; req_access_txt = "150"},/obj/machinery/door/blast/regular{density = 0; icon_state = "pdoor0"; id = "syndicate_elite"; name = "Side Hull Door"; opacity = 0},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/syndicate_elite/mothership)
 "m" = (/obj/machinery/computer/pod{id = "syndicate_elite"; name = "Hull Door Control"},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/syndicate_elite/mothership)
-"n" = (/obj/machinery/computer/syndicate_elite_shuttle,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/syndicate_elite/mothership)
-"o" = (/turf/space,/turf/simulated/shuttle/wall{icon_state = "diagonalWall3"},/area/shuttle/syndicate_elite/mothership)
+"n" = (/obj/machinery/computer/shuttle_control/multi/syndicate{req_access = list(103); req_access_txt = "0"; shuttle_tag = "Mech_Mercenary"},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/shuttle/syndicate_elite/mothership)
+"o" = (/turf/simulated/shuttle/wall{icon_state = "diagonalWall3"},/area/shuttle/syndicate_elite/mothership)
 "p" = (/obj/machinery/door/airlock/external{name = "Shuttle Airlock"; req_access_txt = "150"},/obj/machinery/door/blast/regular{icon_state = "pdoor1"; id = "syndicate_elite"; name = "Front Hull Door"; opacity = 1},/turf/simulated/shuttle/plating,/area/shuttle/syndicate_elite/mothership)
-"q" = (/turf/space,/turf/simulated/shuttle/wall{dir = 4; icon_state = "diagonalWall3"},/area/shuttle/syndicate_elite/mothership)
+"q" = (/turf/simulated/shuttle/wall{dir = 4; icon_state = "diagonalWall3"},/area/shuttle/syndicate_elite/mothership)
 "r" = (/turf/space,/area/space)
 "s" = (/turf/simulated/floor/plating/airless,/area/shuttle/syndicate_elite/mothership)
 
