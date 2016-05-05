@@ -127,14 +127,12 @@
 				addToPaperworkRecord( user, C.unique_identifier, J.info, "[capitalize( J.job_verb )] [J.job]", "Unclassified", "Employment" )
 
 			due_papers -= F
-			qdel( F )
 			ui_interact(user)
 			return
 		else
-			buzz( "\The [src] buzzes, \"This form was improperly filled out. Please try again.\"" )
+			buzz( "\The [src] buzzes, \"This form was improperly filled out. Destroy the form and try again.\"" )
 
 			due_papers -= F
-			qdel( F )
 			return
 
 	if( !istype( O, /obj/item/weapon/card/id ))

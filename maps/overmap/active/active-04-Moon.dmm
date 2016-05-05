@@ -870,8 +870,13 @@
 "qL" = (/obj/machinery/atmospherics/portables_connector,/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor,/area/planet/moon/outpost)
 "qM" = (/obj/machinery/atmospherics/pipe/tank/oxygen,/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/light/small/built{tag = "icon-bulb1 (NORTH)"; icon_state = "bulb1"; dir = 1},/turf/simulated/floor,/area/planet/moon/outpost)
 "qN" = (/obj/machinery/atmospherics/pipe/tank/phoron,/obj/structure/disposalpipe/segment{dir = 2; icon_state = "pipe-c"},/turf/simulated/floor,/area/planet/moon/outpost)
+<<<<<<< HEAD
 "qO" = (/obj/machinery/door/airlock/maintenance{name = "Maintenance Access"; req_access_txt = "0"; req_one_access_txt = "0"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/plating,/area/planet/moon/outpost)
 "qP" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "47"},/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/plating,/area/planet/moon/outpost)
+=======
+"qO" = (/obj/machinery/door/airlock/maintenance{name = "Maintenance Access"; req_access_txt = "0"; req_one_access_txt = "12;24;5"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/plating,/area/planet/moon/outpost)
+"qP" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "65"},/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/plating,/area/planet/moon/outpost)
+>>>>>>> refs/remotes/Apollo-Community/dev
 "qQ" = (/turf/simulated/wall/alloy{desc = "A big chunk of osimetallic alloy used to separate rooms."; effects = list("str" = 0.2, "blastres" = 5, "acidres" = 1); materials = list("metal" = 0.5, "osmium" = 0.5); name = "osimetallic wall"},/area/planet/moon/outpost)
 "qR" = (/obj/machinery/door/airlock/research{name = "Alloys Lab"; req_access_txt = "47"},/obj/machinery/door/firedoor/border_only,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor{icon_state = "white"},/area/planet/moon/outpost)
 "qS" = (/obj/machinery/door/airlock/research{name = "Alloys Lab"; req_access_txt = "47"},/obj/machinery/door/firedoor/border_only,/turf/simulated/floor{icon_state = "white"},/area/planet/moon/outpost)
