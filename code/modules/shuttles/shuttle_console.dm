@@ -15,7 +15,7 @@
 	if(!allowed(user))
 		user << "<span class='alert'>Access Denied.</span>"
 		return 1
-	
+
 	ui_interact(user)
 
 /obj/machinery/computer/shuttle_control/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)

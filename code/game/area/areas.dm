@@ -53,6 +53,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/list/ambience = list( 'sound/ambience/shipambience.ogg' )
 	var/list/music = list('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
 	var/sound/forced_ambience = null
+
+	var/base_turf = /turf/space
+
 	var/parallax_style = "space"
 
 	var/rad_shielded = 0
@@ -113,6 +116,50 @@ var/list/ghostteleportlocs = list()
 	ambience = list()
 	environment = PLAIN
 
+/area/space/s_hanger_1
+	name = "\improper Space"
+	icon_state = "space_1"
+
+/area/space/s_hanger_2
+	name = "\improper Space"
+	icon_state = "space_1"
+
+/area/space/s_hanger_3
+	name = "\improper Space"
+	icon_state = "space_1"
+
+/area/space/s_hanger_4
+	name = "\improper Space"
+	icon_state = "space_1"
+
+/area/space/s_hanger_5
+	name = "\improper Space"
+	icon_state = "space_1"
+
+/area/space/s_hanger_6
+	name = "\improper Space"
+	icon_state = "space_1"
+
+/area/space/s_hanger_7
+	name = "\improper Space"
+	icon_state = "space_1"
+
+/area/space/s_hanger_8
+	name = "\improper Space"
+	icon_state = "space_1"
+
+/area/space/s_hanger_9
+	name = "\improper Space"
+	icon_state = "space_1"
+
+/area/space/s_hanger_10
+	name = "\improper Space"
+	icon_state = "space_1"
+
+/area/space/inner
+	name = "\improper Inner Station Space"
+	icon_state = "space"
+
 area/space/atmosalert()
 	return
 
@@ -130,6 +177,37 @@ area/space/atmosalert()
 	ambience = list('sound/ambience/ambbspace.ogg')
 	environment = UNDERWATER
 	parallax_style = "bluespace"
+
+/area/space/bluespace/hanger_1
+	icon_state = "start"
+	name = "\improper Bluespace"
+	ambience = list('sound/ambience/ambbspace.ogg')
+	environment = UNDERWATER
+	parallax_style = "bluespace"
+
+/area/space/bluespace/hanger_2
+	icon_state = "start"
+	name = "\improper Bluespace"
+
+/area/space/bluespace/hanger_3
+	icon_state = "start"
+	name = "\improper Bluespace"
+
+/area/space/bluespace/hanger_4
+	icon_state = "start"
+	name = "\improper Bluespace"
+
+/area/space/bluespace/hanger_5
+	icon_state = "start"
+	name = "\improper Bluespace"
+
+/area/space/bluespace/hanger_6
+	icon_state = "start"
+	name = "\improper Bluespace"
+
+/area/space/bluespace/hanger_7
+	icon_state = "start"
+	name = "\improper Bluespace"
 
 /area/engine/
 	music = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg' )
@@ -158,9 +236,56 @@ area/space/atmosalert()
 	lighting_use_dynamic = 1
 	environment = CAVE
 
+/area/hanger
+	requires_power = 0
+	lighting_use_dynamic = 1
+	environment = CAVE
+
+/area/hanger/north
+	name = "\improper Hangar"
+	icon_state = "north"
+
+/area/hanger/northeast
+	name = "\improper Hangar"
+	icon_state = "northeast"
+
+/area/hanger/east
+	name = "\improper Hangar"
+	icon_state = "east"
+
+/area/hanger/southeast
+	name = "\improper Hangar"
+	icon_state = "southeast"
+
+/area/hanger/south
+	name = "\improper Hangar"
+	icon_state = "south"
+
+/area/hanger/southwest
+	name = "\improper Hangar"
+	icon_state = "southwest"
+
+/area/hanger/west
+	name = "\improper Hangar"
+	icon_state = "west"
+
+/area/hanger/northwest
+	name = "\improper Hangar"
+	icon_state = "northwest"
+
 /area/podbay
 	name = "\improper Podbay"
 	icon_state = "yellow"
+	environment = SEWER_PIPE
+
+/area/podbay/hangar
+	name = "\improper Hangar"
+	icon_state = "green"
+	environment = SEWER_PIPE
+
+/area/podbay/hangar/s_hanger_e
+	name = "\improper Hangar_loc_e"
+	icon_state = "green_e"
 	environment = SEWER_PIPE
 
 /area/shuttle/arrival
@@ -182,6 +307,10 @@ area/space/atmosalert()
 	icon_state = "shuttle2"
 
 /area/shuttle/escape/centcom
+	name = "\improper Emergency Shuttle Centcom"
+	icon_state = "shuttle"
+
+/area/shuttle/escape/spawn_area
 	name = "\improper Emergency Shuttle Centcom"
 	icon_state = "shuttle"
 
@@ -438,6 +567,14 @@ area/space/atmosalert()
 	name = "\improper Elite Mercenary Squad"
 	icon_state = "syndie-elite"
 
+/area/syndicate_mothership/shuttle
+	name = "\improper Elite Mercenary Squad"
+	icon_state = "syndie-elite"
+
+/area/syndicate_mothership/offsite_hanger
+	name = "\improper Elite Mercenary Squad"
+	icon_state = "syndie-elite"
+
 //EXTRA
 
 /area/asteroid					// -- TLE
@@ -690,8 +827,29 @@ area/space/atmosalert()
 	name = "Aft Maintenance"
 	icon_state = "amaint"
 
+/area/maintenance/portdorm
+	name = "Dormitory Maintenance"
+	icon_state = "pmaint"
+
+
+/area/maintenance/portkitchen
+	name = "Kitchen Maintenance"
+	icon_state = "amaint"
+
+/area/maintenance/bridge_aft
+	name = "Bridge Aft Maintenance"
+	icon_state = "amaint"
+
 /area/maintenance/fore
 	name = "Fore Maintenance"
+	icon_state = "fmaint"
+
+/area/maintenance/bridge_pfore
+	name = "Bridge Port Maintenance"
+	icon_state = "fmaint"
+
+/area/maintenance/bridge_sfore
+	name = "Bridge Starboard Maintenance"
 	icon_state = "fmaint"
 
 /area/maintenance/starboard
@@ -854,6 +1012,9 @@ area/space/atmosalert()
 /area/maintenance/substation/security // Security, Brig, Permabrig, etc.
 	name = "Security Substation"
 
+/area/maintenance/substation/hangar // Hangar, Pod Hangar, Arrivals, Depatures, etc...
+	name = "Hangar Substation"
+
 
 
 
@@ -866,9 +1027,20 @@ area/space/atmosalert()
 	name = "\improper Fore Primary Hallway"
 	icon_state = "hallF"
 
+/area/hallway/primary/central_fore
+	name = "\improper Central Fore Primary Hallway"
+	icon_state = "hallF"
 
 /area/hallway/primary/starboard
 	name = "\improper Starboard Primary Hallway"
+	icon_state = "hallS"
+
+/area/hallway/primary/fore_starboard
+	name = "\improper Fore Starboard Primary Hallway"
+	icon_state = "hallS"
+
+/area/hallway/primary/aft_starboard
+	name = "\improper Aft Starboard Primary Hallway"
 	icon_state = "hallS"
 
 /area/hallway/primary/aft
@@ -877,6 +1049,14 @@ area/space/atmosalert()
 
 /area/hallway/primary/port
 	name = "\improper Port Primary Hallway"
+	icon_state = "hallP"
+
+/area/hallway/primary/fore_port
+	name = "\improper Fore Port Primary Hallway"
+	icon_state = "hallP"
+
+/area/hallway/primary/aft_port
+	name = "\improper Aft Port Primary Hallway"
 	icon_state = "hallP"
 
 /area/hallway/primary/central_one
@@ -919,6 +1099,11 @@ area/space/atmosalert()
 
 /area/bridge
 	name = "\improper Bridge"
+	icon_state = "bridge"
+	environment = STONEROOM
+
+/area/bridge/bridgemed
+	name = "\improper Bridge Medical"
 	icon_state = "bridge"
 	environment = STONEROOM
 
@@ -981,6 +1166,18 @@ area/space/atmosalert()
 	icon_state = "toilet"
 	environment = BATHROOM
 
+/area/crew_quarters/observe
+	name = "\improper Observatory"
+	icon_state = "green"
+
+/area/crew_quarters/shop1
+	name = "\improper Shop One"
+	icon_state = "red"
+
+/area/crew_quarters/shop2
+	name = "\improper Shop One"
+	icon_state = "yellow"
+
 /area/crew_quarters/sleep
 	name = "\improper Dormitories"
 	icon_state = "Sleep"
@@ -1035,6 +1232,11 @@ area/space/atmosalert()
 /area/crew_quarters/bar
 	name = "\improper Bar"
 	icon_state = "bar"
+	environment = QUARRY
+
+/area/crew_quarters/lounge
+	name = "\improper Lounge"
+	icon_state = "Break Room"
 	environment = QUARRY
 
 /area/crew_quarters/diner
@@ -1483,8 +1685,32 @@ area/space/atmosalert()
 	name = "\improper Security Office"
 	icon_state = "security"
 
+/area/security/breakroom
+	name = "\improper Security Break Room"
+	icon_state = "security"
+
+/area/security/interrogate
+	name = "\improper Security Interrogation"
+	icon_state = "security"
+
+/area/security/meeting
+	name = "\improper Security Meeting Room"
+	icon_state = "security"
+
+/area/security/tribunal
+	name = "\improper Tribunal Hall"
+	icon_state = "security"
+
+/area/security/monitor
+	name = "\improper Security Monitoring"
+	icon_state = "security"
+
 /area/security/lobby
 	name = "\improper Security lobby"
+	icon_state = "security"
+
+/area/security/evidence
+	name = "\improper Security Evidence"
 	icon_state = "security"
 
 /area/security/brig
@@ -1641,6 +1867,10 @@ area/space/atmosalert()
 
 /area/rnd/research
 	name = "\improper Research and Development"
+	icon_state = "research"
+
+/area/rnd/researchbreak
+	name = "\improper Research Break Room"
 	icon_state = "research"
 
 /area/rnd/docking
@@ -2350,13 +2580,32 @@ area/space/atmosalert()
 	icon_state = "smaint"
 
 //////////////// PLANET ///////////////////////////////////
+/area/planet
+	base_turf = /turf/planet
+
 /area/planet/moon
 	name = "\improper moon"
 	icon_state = "moon"
 	environment = PLAIN
 
+	base_turf = /turf/planet/lunar
+
+/area/planet/exterior
+	name = "\improper moon"
+	icon_state = "moon"
+	environment = PLAIN
+
 	ambience = list( 'sound/ambience/ambience_outpost.ogg' )
-	music = list()
+	music = list( 'sound/ambience/ambispace.ogg','sound/ambience/ambispace1.ogg','sound/ambience/ambispace2.ogg' )
+
+/area/planet/moon/exterior
+	name = "\improper moon"
+	icon_state = "moon"
+	environment = PLAIN
+
+	ambience = list( 'sound/ambience/ambience_outpost.ogg' )
+	music = list( 'sound/ambience/ambispace.ogg','sound/ambience/ambispace1.ogg','sound/ambience/ambispace2.ogg' )
+
 
 /area/planet/moon/landing_zone
 	name = "\improper landing zone"
@@ -2372,6 +2621,154 @@ area/space/atmosalert()
 	name = "\improper outpost"
 	icon_state = "south"
 	requires_power = 0
+
+/area/planet/moon/base/
+	environment = HALLWAY
+
+/area/planet/moon/base/dorms
+	name = "\improper Dormitory"
+	icon_state = "Sleep"
+
+/area/planet/moon/base/arrivals
+	name = "\improper Moonbase Entry"
+	icon_state = "research"
+
+/area/planet/moon/base/security
+	name = "\improper Security Post"
+	icon_state = "security"
+
+/area/planet/moon/base/medbay
+	name = "\improper Medbay"
+	icon_state = "medbay"
+
+/area/planet/moon/base/engineering
+	name = "\improper Engineering"
+	icon_state = "engine"
+
+/area/planet/moon/base/maintenance/foreport
+	name = "\improper Fore Port Maintenance"
+	icon_state = "fpmaint"
+
+/area/planet/moon/base/maintenance/forestarboard
+	name = "\improper Fore Starboard Maintenance"
+	icon_state = "fsmaint"
+
+/area/planet/moon/base/maintenance/aftport
+	name = "\improper Aft Port Maintenance"
+	icon_state = "apmaint"
+
+/area/planet/moon/base/maintenance/aftstarboard
+	name = "\improper Aft Starboard Maintenance"
+	icon_state = "asmaint"
+
+/area/planet/moon/base/maintenance/solars
+	name = "\improper Solar Control Room"
+	icon_state = "SolarcontrolP"
+
+/area/planet/moon/base/maintenance/solarsex
+	name = "\improper Moonbase Solar Arrays"
+	icon_state = "panelsA"
+
+/area/planet/moon/base/dorms
+	name = "\improper Dormitory"
+	icon_state = "Sleep"
+
+/area/planet/moon/base/exterior
+	name = "\improper Moonbase Exterior"
+	icon_state = "research"
+
+/area/planet/moon/base/rnd/research
+	name = "\improper Research and Development"
+	icon_state = "research"
+
+/area/planet/moon/base/rnd/researchbreak
+	name = "\improper Research Break Room"
+	icon_state = "research"
+
+/area/planet/moon/base/rnd/docking
+	name = "\improper Research Dock"
+	icon_state = "research_dock"
+
+/area/planet/moon/base/rnd/iso1
+	name = "Isolation Cell 1"
+	icon_state = "iso1"
+
+/area/planet/moon/base/rnd/iso1_access
+	name = "Isolation Cell 1 - Access"
+	icon_state = "iso1"
+
+/area/planet/moon/base/rnd/iso2
+	name = "Isolation Cell 2"
+	icon_state = "iso2"
+
+/area/planet/moon/base/rnd/iso3
+	name = "Isolation Cell 3"
+	icon_state = "iso3"
+
+/area/planet/moon/base/rnd/anomaly
+	name = "Anomalous Materials Lab"
+	icon_state = "anolab"
+
+/area/planet/moon/base/incinerator
+	name = "Incinerator"
+	icon_state = "apmaint"
+
+/area/planet/moon/base/rnd/lab
+	name = "\improper Research Lab"
+	icon_state = "toxlab"
+
+/area/planet/moon/base/rnd/rdoffice
+	name = "\improper Research Director's Office"
+	icon_state = "head_quarters"
+
+/area/planet/moon/base/rnd/supermatter
+	name = "\improper Supermatter Lab"
+	icon_state = "toxlab"
+
+/area/planet/moon/base/rnd/xenobiology
+	name = "\improper Xenobiology Lab"
+	icon_state = "xeno_lab"
+
+/area/planet/moon/base/rnd/xenobiology/xenoflora_storage
+	name = "\improper Xenoflora Storage"
+	icon_state = "xeno_f_store"
+
+/area/planet/moon/base/rnd/xenobiology/xenoflora
+	name = "\improper Xenoflora Lab"
+	icon_state = "xeno_f_lab"
+
+/area/planet/moon/base/rnd/storage
+	name = "\improper Toxins Storage"
+	icon_state = "toxstorage"
+
+/area/planet/moon/base/rnd/storage2
+	name = "\improper Research Equipment Storage"
+	icon_state = "storage"
+
+/area/planet/moon/base/rnd/test_area
+	name = "\improper Toxins Test Area"
+	icon_state = "toxtest"
+
+/area/planet/moon/base/rnd/mixing
+	name = "\improper Toxins Mixing Room"
+	icon_state = "toxmix"
+
+/area/planet/moon/base/rnd/alloy_lab
+	name = "\improper Alloys Lab"
+	icon_state = "alloylab"
+
+/area/planet/moon/base/rnd/misc_lab
+	name = "\improper Miscellaneous Research"
+	icon_state = "toxmisc"
+
+/area/planet/moon/base/rnd/server
+	name = "\improper Server Room"
+	icon_state = "server"
+
+/area/planet/moon/base/rnd/hallway
+	name = "\improper Server Room"
+	icon_state = "research"
+
 
 
 

@@ -605,6 +605,10 @@
 #define BE_PAI        16384
 #define BE_BROODSWARM 32768
 
+#define FACTION_ID_NONE 0
+#define FACTION_ID_PHRASE 1
+#define FACTION_ID_COMPLETE 2
+
 //Not sure if moving this to global.dm would break the defines.
 var/list/be_special_flags = list(
 	"Traitor" = BE_TRAITOR,

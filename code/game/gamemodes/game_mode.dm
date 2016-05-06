@@ -23,6 +23,7 @@
 	var/list/datum/mind/modePlayer = new
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be traitors because
+	var/list/persistant_traitors = list()
 	var/required_players = 0
 	var/required_players_secret = 0 //Minimum number of players for that game mode to be chose in Secret
 	var/required_enemies = 0
@@ -34,54 +35,50 @@
 	var/uplink_uses = 10
 	var/list/datum/uplink_item/uplink_items = list(
 		"Highly Visible and Dangerous Weapons" = list(
-			 new/datum/uplink_item(/obj/item/weapon/gun/projectile, 6, "Revolver", "RE"),
-			 new/datum/uplink_item(/obj/item/ammo_magazine/a357, 2, "Ammo-357", "RA"),
-			 new/datum/uplink_item(/obj/item/weapon/gun/energy/crossbow, 5, "Energy Crossbow", "XB"),
-			 new/datum/uplink_item(/obj/item/weapon/melee/energy/sword, 4, "Energy Sword", "ES"),
-			 new/datum/uplink_item(/obj/item/mecha_parts/mecha_equipment/weapon/energy/riggedlaser, 6, "Exosuit Rigged Laser", "RL"),
-			 new/datum/uplink_item(/obj/item/weapon/storage/box/syndicate, 10, "Mercenary Bundle", "BU"),
-			 new/datum/uplink_item(/obj/item/weapon/storage/box/emps, 3, "5 EMP Grenades", "EM"),
-			 new/datum/uplink_item(/obj/item/weapon/grenade/spawnergrenade/bhole, 10, "Black Hole Grenade", "BH")
+			 new/datum/uplink_item(/obj/item/weapon/gun/projectile, 6000, "Revolver", "RE"),
+			 new/datum/uplink_item(/obj/item/ammo_magazine/a357, 2000, "Ammo-357", "RA"),
+			 new/datum/uplink_item(/obj/item/weapon/gun/energy/crossbow, 5000, "Energy Crossbow", "XB"),
+			 new/datum/uplink_item(/obj/item/weapon/melee/energy/sword, 4000, "Energy Sword", "ES"),
+			 new/datum/uplink_item(/obj/item/mecha_parts/mecha_equipment/weapon/energy/riggedlaser, 6000, "Exosuit Rigged Laser", "RL"),
+			 new/datum/uplink_item(/obj/item/weapon/storage/box/syndicate, 10000, "Mercenary Bundle", "BU"),
+			 new/datum/uplink_item(/obj/item/weapon/storage/box/emps, 3000, "5 EMP Grenades", "EM"),
+			 new/datum/uplink_item(/obj/item/weapon/grenade/spawnergrenade/bhole, 10000, "Black Hole Grenade", "BH")
 			),
 		"Stealthy and Inconspicuous Weapons" = list(
-			new/datum/uplink_item(/obj/item/weapon/pen/paralysis, 3, "Paralysis Pen", "PP"),
-			new/datum/uplink_item(/obj/item/weapon/soap/syndie, 1, "Subversive Soap", "SP"),
-			new/datum/uplink_item(/obj/item/weapon/cartridge/syndicate, 3, "Detomatix PDA Cartridge", "DC"),
-			new/datum/uplink_item(/obj/item/weapon/cane/pois_cane, 3, "Poison Tipped Cane", "PC"),
-			new/datum/uplink_item(/obj/item/device/flash/syndicamera, 2, "Flashy Camera", "CF")
+			new/datum/uplink_item(/obj/item/weapon/soap/syndie, 1000, "Subversive Soap", "SP"),
+			new/datum/uplink_item(/obj/item/weapon/cartridge/syndicate, 3000, "Detomatix PDA Cartridge", "DC"),
+			new/datum/uplink_item(/obj/item/weapon/cane/pois_cane, 3000, "Poison Tipped Cane", "PC"),
+			new/datum/uplink_item(/obj/item/device/flash/syndicamera, 2000, "Flashy Camera", "CF")
 			),
 		"Stealth and Camouflage Items" = list(
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/chameleon, 3, "Chameleon Kit", "CB"),
-			new/datum/uplink_item(/obj/item/clothing/shoes/syndigaloshes, 2, "No-Slip Shoes", "SH"),
-			new/datum/uplink_item(/obj/item/weapon/card/id/syndicate, 2, "Agent ID card", "AC"),
-			new/datum/uplink_item(/obj/item/clothing/mask/gas/voice, 4, "Voice Changer", "VC"),
-			new/datum/uplink_item(/obj/item/device/chameleon, 4, "Chameleon-Projector", "CP")
+			new/datum/uplink_item(/obj/item/clothing/shoes/syndigaloshes, 2000, "No-Slip Shoes", "SH")
 			),
 		"Devices and Tools" = list(
-			new/datum/uplink_item(/obj/item/weapon/card/emag, 4, "Cryptographic Sequencer", "CS"),
-			new/datum/uplink_item(/obj/item/weapon/card/emag/weak, 1, "Encryptic Sequencer", "CE"),
-			new/datum/uplink_item(/obj/item/weapon/reagent_containers/tube/syndicream, 2, "Syndicream Tube", "SC"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/spybug, 2, "Spybug Kit", "SK" ),
-			new/datum/uplink_item(/obj/item/weapon/storage/toolbox/syndicate, 1, "Fully Loaded Toolbox", "ST"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/clerical, 3, "Morphic Clerical Kit", "CK"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/space, 3, "Space Suit", "SS"),
-			new/datum/uplink_item(/obj/item/clothing/glasses/thermal/syndi, 3, "Thermal Imaging Glasses", "TM"),
-			new/datum/uplink_item(/obj/item/device/encryptionkey/binary, 3, "Binary Translator Key", "BT"),
-			new/datum/uplink_item(/obj/item/weapon/aiModule/syndicate, 7, "Hacked AI Upload Module", "AI"),
-			new/datum/uplink_item(/obj/item/weapon/plastique, 2, "C-4 (Destroys walls)", "C4"),
-			new/datum/uplink_item(/obj/item/device/powersink, 5, "Powersink (DANGER!)", "PS",),
-			new/datum/uplink_item(/obj/item/device/radio/beacon/syndicate, 7, "Singularity Beacon (DANGER!)", "SB"),
-			new/datum/uplink_item(/obj/item/weapon/circuitboard/teleporter, 20, "Teleporter Circuit Board", "TP")
+			new/datum/uplink_item(/obj/item/weapon/card/emag, 4000, "Cryptographic Sequencer", "CS"),
+			new/datum/uplink_item(/obj/item/weapon/card/emag/weak, 1000, "Encryptic Sequencer", "CE"),
+			new/datum/uplink_item(/obj/item/weapon/reagent_containers/tube/syndicream, 2000, "Syndicream Tube", "SC"),
+			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/spybug, 2000, "Spybug Kit", "SK" ),
+			new/datum/uplink_item(/obj/item/weapon/storage/toolbox/syndicate, 1000, "Fully Loaded Toolbox", "ST"),
+			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/clerical, 3000, "Morphic Clerical Kit", "CK"),
+			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/space, 3000, "Space Suit", "SS"),
+			new/datum/uplink_item(/obj/item/clothing/glasses/thermal/syndi, 3000, "Thermal Imaging Glasses", "TM"),
+			new/datum/uplink_item(/obj/item/device/encryptionkey/binary, 3000, "Binary Translator Key", "BT"),
+			new/datum/uplink_item(/obj/item/weapon/aiModule/syndicate, 7000, "Hacked AI Upload Module", "AI"),
+			new/datum/uplink_item(/obj/item/weapon/plastique, 2000, "C-4 (Destroys walls)", "C4"),
+			new/datum/uplink_item(/obj/item/device/powersink, 5000, "Powersink (DANGER!)", "PS",),
+			new/datum/uplink_item(/obj/item/device/radio/beacon/syndicate, 7000, "Singularity Beacon (DANGER!)", "SB"),
+			new/datum/uplink_item(/obj/item/weapon/circuitboard/teleporter, 20000, "Teleporter Circuit Board", "TP")
 			),
 		"Implants" = list(
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_freedom, 3, "Freedom Implant", "FI"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_uplink, 10, "Uplink Implant (Contains 5 Telecrystals)", "UI"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_explosive, 6, "Explosive Implant (DANGER!)", "EI"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_compress, 4, "Compressed Matter Implant", "CI")
+			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_explosive, 6000, "Explosive Implant (DANGER!)", "EI")
+			),
+		"Fun and Games" = list(
+			new/datum/uplink_item(/obj/item/weapon/storage/box/lube, 3000, "6 Lube Grenades", "LG"),
+			new/datum/uplink_item(/obj/item/weapon/reagent_containers/spray/pepper/alcohol, 2000, "Alcospray", "AS"),
 			),
 		"(Pointless) Badassery" = list(
-			new/datum/uplink_item(/obj/item/toy/syndicateballoon, 10, "For showing that You Are The BOSS (Useless Balloon)", "BS"),
-			new/datum/uplink_item(/obj/item/weapon/gun/projectile/automatic/bb_gun, 10, "BB Gun", "BB"),
+			new/datum/uplink_item(/obj/item/toy/syndicateballoon, 10000, "For showing that You Are The BOSS (Useless Balloon)", "BS"),
+			new/datum/uplink_item(/obj/item/weapon/gun/projectile/automatic/bb_gun, 10000, "BB Gun", "BB"),
 			)
 		)
 
@@ -116,6 +113,56 @@
 /datum/game_mode/proc/pre_setup()
 	return 1
 
+/datum/game_mode/proc/persistant_antag_pre_setup()
+	var/list/players = list()
+	var/list/candidates = list()
+
+	// Assemble a list of active players without jobbans.
+	for(var/mob/new_player/player in player_list)
+		if( player.client && player.ready )
+			if( !jobban_isbanned(player, "Syndicate" ))
+				players += player
+
+	// Shuffle the players list so that it becomes ping-independent.
+	players = shuffle(players)
+
+	// Get a list of all the people who want to be the antagonist for this round
+	for(var/mob/new_player/player in players)
+		if( player.client.prefs.selected_character && player.client.prefs.selected_character.isPersistantAntag() )
+			log_debug("[player.key] is a persistant antag.")
+			candidates += player.mind
+			players -= player
+
+	var/num_traitors = 1
+
+	// yes this is hardcoded, yes i know its bad, yes go away please
+	num_traitors = max(1, round( num_players()/5 ))
+
+	for(var/j = 0, j < num_traitors, j++)
+		if (!candidates.len)
+			log_debug("No candidates for persistant antag.")
+			break
+		var/datum/mind/traitor = pick(candidates)
+
+		log_debug("Picked [traitor.name] for persistant antag.")
+		persistant_traitors += traitor
+		var/faction = traitor.current.client.prefs.selected_character.getAntagFaction() // please dont break
+
+		traitor.antagonist = new /datum/antagonist/traitor/persistant( traitor, faction )
+		candidates.Remove(traitor)
+
+	if(!persistant_traitors.len)
+		return 0
+	return 1
+
+/datum/game_mode/proc/persistant_antag_post_setup()
+	for(var/datum/mind/traitor in persistant_traitors)
+		spawn(rand(10,100))
+			if(istype(traitor.current, /mob/living/silicon/ai))
+				traitor.antagonist.faction = /datum/faction/syndicate/self
+			traitor.antagonist.setup()
+
+	return 1
 
 ///post_setup()
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
@@ -227,6 +274,30 @@
 
 
 	return 0
+
+// persistant antag related stuff for after the game ends
+/datum/game_mode/proc/persistant_antag_game_end()
+	for( var/datum/mind/traitor in persistant_traitors )
+		var/datum/antagonist/antag = traitor.antagonist
+		if( antag )	continue // admin removed them or something, idk
+
+		// antag got caught check goes here
+
+		var/notoriety = traitor.original_character.antag_data["notoriety"]
+		var/contract_requirement = round( ( notoriety + 1 ) / 2 )
+		if( antag.completed_contracts.len > contract_requirement )
+			notoriety++
+			traitor.current << "<span class='notice'>You have gained notoriety for completing [antag.completed_contracts.len > contract_requirement ? "more than" : ""] [contract_requirement] contracts!</span>"
+		else if( antag.completed_contracts.len < ( notoriety - contract_requirement ))
+			notoriety--
+			traitor.current << "<span class='warning'>You have lost notoriety for not completing enough contracts!</span>"
+		else if( antag.failed_contracts.len > antag.completed_contracts.len )
+			notoriety--
+			traitor.current << "<span class='warning'>You have lost notoriety for failing more contracts than you completed!</span>"
+		traitor.original_character.antag_data["notoriety"] = notoriety
+		traitor.original_character.antag_data["career_length"]++
+
+		traitor.current << "<span class='notice'>Your career length is now [traitor.character.antag_data["career_length"]] rounds!</span>"
 
 
 /datum/game_mode/proc/check_win() //universal trigger to be called at mob death, nuke explosion, etc. To be called from everywhere.
@@ -399,6 +470,67 @@
 							//			recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,
 							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.
 
+///////////////////////////////////
+//Picks some antags for the round//
+///////////////////////////////////
+/datum/game_mode/proc/pick_antagonists(var/role, var/num_antags)
+	var/list/possible_antags = get_players_for_role(role)
+	var/list/chosen_antags = list()
+	var/list/clients = list()
+
+	// track the top weight and discard candidates below this top weight
+	// antags are then picked from a list of players with that weight
+	var/top_weight
+	for( var/datum/mind/M in possible_antags )
+		if( M.antagonist || ( M.assigned_role in restricted_jobs ))
+			possible_antags -= M
+			continue
+
+		var/weight = 0
+		var/client/C = M.current.client
+		if( !C )
+			possible_antags -= M
+			continue
+		clients += C
+
+		// antag token/commendation weight
+		if( !C.character_tokens["Antagonist"] )
+			C.character_tokens["Antagonist"] = 0
+		weight += ( C.character_tokens["Antagonist"] * 2 )
+
+		// last played as antag weight
+		weight += C.no_antag_weight
+		C.no_antag_weight++ // set to 0 for chosen antags later
+
+		if(!top_weight || weight >= top_weight)
+			top_weight = weight
+		else
+			possible_antags -= M
+
+	if( !possible_antags.len )
+		return chosen_antags
+
+	for( var/i = 0, i < num_antags, i++ )
+		if( !possible_antags.len )
+			break
+
+		var/datum/mind/antag = pick(possible_antags)
+		var/client/C = antag.current.client
+		if( !C )
+			possible_antags -= antag
+			continue
+
+		C.no_antag_weight = 0
+
+		chosen_antags += antag
+		possible_antags -= antag
+
+	// there has to be a better way to do this
+	for( var/client/C in clients )
+		C.saveAntagWeights()
+
+	return chosen_antags
+
 
 /datum/game_mode/proc/latespawn(var/mob)
 
@@ -555,12 +687,12 @@ proc/get_nt_opposed()
 /datum/game_mode/proc/print_player_full(var/datum/mind/ply)
 	var/text = print_player_lite(ply)
 
-	var/TC_uses = 0
+	var/money_spent = 0
 	var/uplink_true = 0
 	var/purchases = ""
 	for(var/obj/item/device/uplink/H in world_uplinks)
 		if(H && H.uplink_owner && H.uplink_owner == ply)
-			TC_uses += H.used_TC
+			money_spent = H.uplink_owner.antagonist.money_spent
 			uplink_true = 1
 			var/list/refined_log = new()
 			for(var/datum/uplink_item/UI in H.purchase_log)
@@ -569,7 +701,7 @@ proc/get_nt_opposed()
 				qdel(I)
 			purchases = english_list(refined_log, nothing_text = "")
 	if(uplink_true)
-		text += " (used [TC_uses] TC)"
+		text += " (Spent $[money_spent])"
 		if(purchases)
 			text += "<br>[purchases]"
 
