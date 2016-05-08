@@ -3,7 +3,7 @@
 /datum/controller/process/air/setup()
 	name = "air"
 	schedule_interval = 30 // every 3 seconds
-	cpu_threshold = 50
+	tick_allowance = 50
 
 	if(!air_master)
 		air_master = new

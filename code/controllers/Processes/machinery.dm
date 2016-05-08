@@ -4,7 +4,7 @@ var/list/MachineProcessing = list()
 /datum/controller/process/machinery/setup()
 	name = "machinery"
 	schedule_interval = 50 // every 5 seconds
-	cpu_threshold = 40	// just keep this chugging along
+	tick_allowance = 40	// just keep this chugging along
 
 	MachineProcess = src
 

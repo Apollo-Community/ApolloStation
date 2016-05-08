@@ -4,7 +4,7 @@ var/global/list/object_profiling = list()
 /datum/controller/process/obj/setup()
     name = "obj"
     schedule_interval = 40 // every 4 seconds
-    cpu_threshold = 50
+    tick_allowance = 50
 
     ObjProcess = src
 
