@@ -351,9 +351,9 @@
 /obj/machinery/power/supermatter/proc/transfer_energy()
 	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
 		var/distance = get_dist(R, src)
-		if(distance <= getSMVar( smlevel, "collector_range" ))
+		if(distance  && distance <= getSMVar( smlevel, "collector_range" ))		//sanity for 1/0
 			//for collectors using standard phoron tanks at 1013 kPa, the actual power generated will be this power*0.3*20*29 = power*174
-			R.receive_pulse(power*(distance/getSMVar( smlevel, "collector_range" )))
+			R.receive_pulse(power*(0.65/distance))			// mod = 0.65 : 0.325 : 0.211 ..... 0.065    outputs - ~400 - 435kW with default setup (tested via mapping > setup supermatter)
 	return
 
 /obj/machinery/power/supermatter/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
