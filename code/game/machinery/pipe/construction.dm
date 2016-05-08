@@ -32,6 +32,8 @@ Buildable meters
 #define PIPE_GAS_MIXER_M		25
 #define PIPE_OMNI_MIXER			26
 #define PIPE_OMNI_FILTER		27
+#define PIPE_OUTLET_INJECT		43
+#define PIPE_INLET_INJECT		44
 ///// Supply, scrubbers and universal pipes
 #define PIPE_UNIVERSAL				28
 #define PIPE_SUPPLY_STRAIGHT		29
@@ -95,6 +97,10 @@ Buildable meters
 			src.pipe_type = PIPE_SIMPLE_STRAIGHT + is_bent
 		else if(istype(make_from, /obj/machinery/atmospherics/portables_connector))
 			src.pipe_type = PIPE_CONNECTOR
+		else if(istype(make_from, /obj/machinery/atmospherics/unary/outlet_injector))
+			src.pipe_type = PIPE_OUTLET_INJECT
+		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent_pump/engine))
+			src.pipe_type = PIPE_INLET_INJECT
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold/visible/supply) || istype(make_from, /obj/machinery/atmospherics/pipe/manifold/hidden/supply))
 			src.pipe_type = PIPE_SUPPLY_MANIFOLD
 			connect_types = CONNECT_TYPE_SUPPLY
@@ -196,104 +202,112 @@ Buildable meters
 //update the name and icon of the pipe item depending on the type
 
 /obj/item/pipe/proc/update()
-	var/list/nlist = list( \
-		"pipe", \
-		"bent pipe", \
-		"h/e pipe", \
-		"bent h/e pipe", \
-		"connector", \
-		"manifold", \
-		"junction", \
-		"uvent", \
-		"mvalve", \
-		"pump", \
-		"scrubber", \
-		"insulated pipe", \
-		"bent insulated pipe", \
-		"gas filter", \
-		"gas mixer", \
-		"pressure regulator", \
-		"high power pump", \
-		"heat exchanger", \
-		"t-valve", \
-		"4-way manifold", \
-		"pipe cap", \
-///// Z-Level stuff
-		"pipe up", \
-		"pipe down", \
-///// Z-Level stuff
-		"gas filter m", \
-		"gas mixer t", \
-		"gas mixer m", \
-		"omni mixer", \
-		"omni filter", \
-///// Supply and scrubbers pipes
-		"universal pipe adapter", \
-		"supply pipe", \
-		"bent supply pipe", \
-		"scrubbers pipe", \
-		"bent scrubbers pipe", \
-		"supply manifold", \
-		"scrubbers manifold", \
-		"supply 4-way manifold", \
-		"scrubbers 4-way manifold", \
-		"supply pipe up", \
-		"scrubbers pipe up", \
-		"supply pipe down", \
-		"scrubbers pipe down", \
-		"supply pipe cap", \
-		"scrubbers pipe cap", \
-	)
-	name = nlist[pipe_type+1] + " fitting"
-	var/list/islist = list( \
-		"simple", \
-		"simple", \
-		"he", \
-		"he", \
-		"connector", \
-		"manifold", \
-		"junction", \
-		"uvent", \
-		"mvalve", \
-		"pump", \
-		"scrubber", \
-		"insulated", \
-		"insulated", \
-		"filter", \
-		"mixer", \
-		"passivegate", \
-		"volumepump", \
-		"heunary", \
-		"mtvalve", \
-		"manifold4w", \
-		"cap", \
-///// Z-Level stuff
-		"cap", \
-		"cap", \
-///// Z-Level stuff
-		"m_filter", \
-		"t_mixer", \
-		"m_mixer", \
-		"omni_mixer", \
-		"omni_filter", \
-///// Supply and scrubbers pipes
-		"universal", \
-		"simple", \
-		"simple", \
-		"simple", \
-		"simple", \
-		"manifold", \
-		"manifold", \
-		"manifold4w", \
-		"manifold4w", \
-		"cap", \
-		"cap", \
-		"cap", \
-		"cap", \
-		"cap", \
-		"cap", \
-	)
-	icon_state = islist[pipe_type + 1]
+	switch(pipe_type)
+		if(43)
+			name = "Coolant Injector fitting"
+			icon_state = "injector"
+		if(44)
+			name = "Engine Vent pump fitting"
+			icon_state = "event"
+		else
+			var/list/nlist = list( \
+				"pipe", \
+				"bent pipe", \
+				"h/e pipe", \
+				"bent h/e pipe", \
+				"connector", \
+				"manifold", \
+				"junction", \
+				"uvent", \
+				"mvalve", \
+				"pump", \
+				"scrubber", \
+				"insulated pipe", \
+				"bent insulated pipe", \
+				"gas filter", \
+				"gas mixer", \
+				"pressure regulator", \
+				"high power pump", \
+				"heat exchanger", \
+				"t-valve", \
+				"4-way manifold", \
+				"pipe cap", \
+		///// Z-Level stuff
+				"pipe up", \
+				"pipe down", \
+		///// Z-Level stuff
+				"gas filter m", \
+				"gas mixer t", \
+				"gas mixer m", \
+				"omni mixer", \
+				"omni filter", \
+		///// Supply and scrubbers pipes
+				"universal pipe adapter", \
+				"supply pipe", \
+				"bent supply pipe", \
+				"scrubbers pipe", \
+				"bent scrubbers pipe", \
+				"supply manifold", \
+				"scrubbers manifold", \
+				"supply 4-way manifold", \
+				"scrubbers 4-way manifold", \
+				"supply pipe up", \
+				"scrubbers pipe up", \
+				"supply pipe down", \
+				"scrubbers pipe down", \
+				"supply pipe cap", \
+				"scrubbers pipe cap", \
+			)
+			name = nlist[pipe_type+1] + " fitting"
+			var/list/islist = list( \
+				"simple", \
+				"simple", \
+				"he", \
+				"he", \
+				"connector", \
+				"manifold", \
+				"junction", \
+				"uvent", \
+				"mvalve", \
+				"pump", \
+				"scrubber", \
+				"insulated", \
+				"insulated", \
+				"filter", \
+				"mixer", \
+				"passivegate", \
+				"volumepump", \
+				"heunary", \
+				"mtvalve", \
+				"manifold4w", \
+				"cap", \
+		///// Z-Level stuff
+				"cap", \
+				"cap", \
+		///// Z-Level stuff
+				"m_filter", \
+				"t_mixer", \
+				"m_mixer", \
+				"omni_mixer", \
+				"omni_filter", \
+		///// Supply and scrubbers pipes
+				"universal", \
+				"simple", \
+				"simple", \
+				"simple", \
+				"simple", \
+				"manifold", \
+				"manifold", \
+				"manifold4w", \
+				"manifold4w", \
+				"cap", \
+				"cap", \
+				"cap", \
+				"cap", \
+				"cap", \
+				"cap", \
+			)
+			icon_state = islist[pipe_type + 1]
 
 //called when a turf is attacked with a pipe item
 /obj/item/pipe/afterattack(turf/simulated/floor/target, mob/user, proximity)
@@ -362,7 +376,7 @@ Buildable meters
 			return dir|flip
 		if(PIPE_SIMPLE_BENT, PIPE_INSULATED_BENT, PIPE_HE_BENT, PIPE_SUPPLY_BENT, PIPE_SCRUBBERS_BENT)
 			return dir //dir|acw
-		if(PIPE_CONNECTOR,PIPE_UVENT,PIPE_SCRUBBER,PIPE_HEAT_EXCHANGE)
+		if(PIPE_CONNECTOR,PIPE_OUTLET_INJECT,PIPE_INLET_INJECT,PIPE_UVENT,PIPE_SCRUBBER,PIPE_HEAT_EXCHANGE)
 			return dir
 		if(PIPE_MANIFOLD4W, PIPE_SUPPLY_MANIFOLD4W, PIPE_SCRUBBERS_MANIFOLD4W, PIPE_OMNI_MIXER, PIPE_OMNI_FILTER)
 			return dir|flip|cw|acw
@@ -552,6 +566,33 @@ Buildable meters
 				C.node.initialize()
 				C.node.build_network()
 
+		if(PIPE_OUTLET_INJECT)		// outlet_injector
+			var/obj/machinery/atmospherics/unary/outlet_injector/C = new( src.loc )
+			C.set_dir(dir)
+			C.initialize_directions = pipe_dir
+			if (pipename)
+				C.name = pipename
+			var/turf/T = C.loc
+			C.level = T.intact ? 2 : 1
+			C.initialize()
+			C.build_network()
+			if (C.node)
+				C.node.initialize()
+				C.node.build_network()
+
+		if(PIPE_INLET_INJECT)		// engine waste pump
+			var/obj/machinery/atmospherics/unary/vent_pump/engine/C = new( src.loc )
+			C.set_dir(dir)
+			C.initialize_directions = pipe_dir
+			if (pipename)
+				C.name = pipename
+			var/turf/T = C.loc
+			C.level = T.intact ? 2 : 1
+			C.initialize()
+			C.build_network()
+			if (C.node)
+				C.node.initialize()
+				C.node.build_network()
 
 		if(PIPE_MANIFOLD)		//manifold
 			var/obj/machinery/atmospherics/pipe/manifold/M = new( src.loc )
