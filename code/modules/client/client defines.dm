@@ -34,7 +34,7 @@
 		////////////
 	var/next_allowed_topic_time = 10
 	// comment out the line below when debugging locally to enable the options & messages menu
-	//control_freak = 1
+	control_freak = CONTROL_FREAK_ALL
 
 	var/received_irc_pm = -99999
 	var/irc_admin			//IRC admin that spoke with them last.
@@ -48,7 +48,13 @@
 	var/related_accounts_ip = "Requires database"	//So admins know why it isn't working - Used to determine what other accounts previously logged in from this ip
 	var/related_accounts_cid = "Requires database"	//So admins know why it isn't working - Used to determine what other accounts previously logged in from this computer id
 
+	// Special character tokens
+	var/list/character_tokens = list()
+
 	preload_rsc = 0 // This is 0 so we can set it to an URL once the player logs in and have them download the resources from a different server.
 
 	var/afk = 0
 	var/afk_start_time = 0 // Used to keep track of time they started being AFK
+
+	var/session_start_time = 0 // When did our session begin?
+	var/total_afk_time = 0 // How low have we been AFK this session?

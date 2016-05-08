@@ -8,7 +8,10 @@
 	var/list/hud_list[9]
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
-/mob/living/carbon/human/New(var/new_loc, var/new_species = null)
+/mob/living/carbon/human/New( var/new_loc, var/new_species = null )
+	if( !character )
+		character = new()
+		character.char_mob = src
 
 	if(!dna)
 		dna = new /datum/dna(null)
@@ -39,6 +42,10 @@
 	if(dna)
 		dna.real_name = real_name
 	make_blood()
+
+	spawn( 50 )
+		if( mind && !mind.character )
+			mind.character = character
 
 /mob/living/carbon/human/Move(NewLoc, direct)
 	..()
@@ -643,13 +650,8 @@
 				src << browse(null, "window=flavor_changes")
 				return
 			if("general")
-				var/msg = sanitize(input(usr,"Update the general description of your character. This will be shown regardless of clothing, and may include OOC notes and preferences.","Flavor Text",html_decode(flavor_texts[href_list["flavor_change"]])) as message, extra = 0)
-				flavor_texts[href_list["flavor_change"]] = msg
-				return
-			else
-				var/msg = sanitize(input(usr,"Update the flavor text for your [href_list["flavor_change"]].","Flavor Text",html_decode(flavor_texts[href_list["flavor_change"]])) as message, extra = 0)
-				flavor_texts[href_list["flavor_change"]] = msg
-				set_flavor()
+				var/msg = sanitize(input(usr,"Update the general description of your character. This will be shown regardless of clothing, and may include OOC notes and preferences.","Flavor Text",html_decode(character.flavor_texts_human)) as message, extra = 0)
+				character.flavor_texts_human = msg
 				return
 	..()
 	return
@@ -762,30 +764,24 @@
 		src.verbs -= /mob/living/carbon/human/proc/morph
 		return
 
-	var/new_facial = input("Please select facial hair color.", "Character Generation",rgb(r_facial,g_facial,b_facial)) as color
+	var/new_facial = input("Please select facial hair color.", "Character Generation", character.hair_face_color ) as color
 	if(new_facial)
-		r_facial = hex2num(copytext(new_facial, 2, 4))
-		g_facial = hex2num(copytext(new_facial, 4, 6))
-		b_facial = hex2num(copytext(new_facial, 6, 8))
+		character.hair_face_color = new_facial
 
-	var/new_hair = input("Please select hair color.", "Character Generation",rgb(r_hair,g_hair,b_hair)) as color
-	if(new_facial)
-		r_hair = hex2num(copytext(new_hair, 2, 4))
-		g_hair = hex2num(copytext(new_hair, 4, 6))
-		b_hair = hex2num(copytext(new_hair, 6, 8))
+	var/new_hair = input("Please select hair color.", "Character Generation", character.hair_color ) as color
+	if(new_hair)
+		character.hair_color = new_hair
 
-	var/new_eyes = input("Please select eye color.", "Character Generation",rgb(r_eyes,g_eyes,b_eyes)) as color
+	var/new_eyes = input("Please select eye color.", "Character Generation", character.eye_color ) as color
 	if(new_eyes)
-		r_eyes = hex2num(copytext(new_eyes, 2, 4))
-		g_eyes = hex2num(copytext(new_eyes, 4, 6))
-		b_eyes = hex2num(copytext(new_eyes, 6, 8))
+		character.eye_color = new_eyes
 
-	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation", "[35-s_tone]")  as text
+	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation", "[35-character.skin_tone]")  as text
 
 	if (!new_tone)
 		new_tone = 35
-	s_tone = max(min(round(text2num(new_tone)), 220), 1)
-	s_tone =  -s_tone + 35
+	character.skin_tone = max(min(round(text2num(new_tone)), 220), 1)
+	character.skin_tone = -character.skin_tone + 35
 
 	// hair
 	var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
@@ -797,11 +793,11 @@
 		hairs.Add(H.name) // add hair name to hairs
 		qdel(H) // delete the hair after it's all done
 
-	var/new_style = input("Please select hair style", "Character Generation",h_style)  as null|anything in hairs
+	var/new_style = input("Please select hair style", "Character Generation",character.hair_style)  as null|anything in hairs
 
 	// if new style selected (not cancel)
 	if (new_style)
-		h_style = new_style
+		character.hair_style = new_style
 
 	// facial hair
 	var/list/all_fhairs = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
@@ -812,10 +808,10 @@
 		fhairs.Add(H.name)
 		qdel(H)
 
-	new_style = input("Please select facial style", "Character Generation",f_style)  as null|anything in fhairs
+	new_style = input("Please select facial style", "Character Generation",character.hair_face_style)  as null|anything in fhairs
 
 	if(new_style)
-		f_style = new_style
+		character.hair_face_style = new_style
 
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
 	if (new_gender)
@@ -1115,13 +1111,9 @@
 
 	if(species.base_color && default_colour)
 		//Apply colour.
-		r_skin = hex2num(copytext(species.base_color,2,4))
-		g_skin = hex2num(copytext(species.base_color,4,6))
-		b_skin = hex2num(copytext(species.base_color,6,8))
+		character.skin_color = species.base_color
 	else
-		r_skin = 0
-		g_skin = 0
-		b_skin = 0
+		character.skin_color = "#000000"
 
 	species.handle_post_spawn(src)
 
@@ -1219,41 +1211,9 @@
 		user << "<span class='alert'>There is no exposed flesh or thin material [target_zone == "head" ? "on their head" : "on their body"] to inject into.</span>"
 
 /mob/living/carbon/human/print_flavor_text()
-	var/list/equipment = list(src.head,src.wear_mask,src.glasses,src.w_uniform,src.wear_suit,src.gloves,src.shoes)
-	var/head_exposed = 1
-	var/face_exposed = 1
-	var/eyes_exposed = 1
-	var/torso_exposed = 1
-	var/arms_exposed = 1
-	var/legs_exposed = 1
-	var/hands_exposed = 1
-	var/feet_exposed = 1
-
-	for(var/obj/item/clothing/C in equipment)
-		if(C.body_parts_covered & HEAD)
-			head_exposed = 0
-		if(C.body_parts_covered & FACE)
-			face_exposed = 0
-		if(C.body_parts_covered & EYES)
-			eyes_exposed = 0
-		if(C.body_parts_covered & UPPER_TORSO)
-			torso_exposed = 0
-		if(C.body_parts_covered & ARMS)
-			arms_exposed = 0
-		if(C.body_parts_covered & HANDS)
-			hands_exposed = 0
-		if(C.body_parts_covered & LEGS)
-			legs_exposed = 0
-		if(C.body_parts_covered & FEET)
-			feet_exposed = 0
-
-	flavor_text = flavor_texts["general"]
+	flavor_text = character.flavor_texts_human
 	flavor_text += "\n\n"
-	for (var/T in flavor_texts)
-		if(flavor_texts[T] && flavor_texts[T] != "")
-			if((T == "head" && head_exposed) || (T == "face" && face_exposed) || (T == "eyes" && eyes_exposed) || (T == "torso" && torso_exposed) || (T == "arms" && arms_exposed) || (T == "hands" && hands_exposed) || (T == "legs" && legs_exposed) || (T == "feet" && feet_exposed))
-				flavor_text += flavor_texts[T]
-				flavor_text += "\n\n"
+
 	return ..()
 
 /mob/living/carbon/human/getDNA()

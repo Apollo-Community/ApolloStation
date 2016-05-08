@@ -1,0 +1,17 @@
+"a" = (/turf/space,/area/space)
+"b" = (/turf/simulated/mineral/random,/area/space)
+"c" = (/turf/simulated/floor/plating/airless/asteroid,/area/space)
+"d" = (/mob/living/simple_animal/hostile/carp,/turf/simulated/floor/plating/airless/asteroid,/area/space)
+
+(1,1,1) = {"
+aababbbaaa
+abbbbbbbaa
+abbbbbbbba
+aabbbccbba
+abbbcccbbb
+abbccdbbbb
+bbbdcccbbb
+bbbbcbccca
+abbbbbbcca
+aabbbbbcaa
+"}

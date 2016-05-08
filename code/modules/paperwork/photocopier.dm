@@ -219,16 +219,19 @@
 	c.offset_y = copy.offset_y
 	var/list/temp_overlays = copy.overlays       //Iterates through stamps
 	var/image/img                                //and puts a matching
-	for (var/j = 1, j <= temp_overlays.len, j++) //gray overlay onto the copy
-		if (findtext(copy.ico[j], "cap") || findtext(copy.ico[j], "cent"))
-			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-circle")
-		else if (findtext(copy.ico[j], "deny"))
-			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-x")
-		else
-			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-dots")
-		img.pixel_x = copy.offset_x[j]
-		img.pixel_y = copy.offset_y[j]
-		c.overlays += img
+
+	if( copy.ico && copy.ico.len )
+		for (var/j = 1, j <= temp_overlays.len, j++) //gray overlay onto the copy
+			if (findtext(copy.ico[j], "cap") || findtext(copy.ico[j], "cent"))
+				img = image('icons/obj/bureaucracy.dmi', "paper_stamp-circle")
+			else if (findtext(copy.ico[j], "deny"))
+				img = image('icons/obj/bureaucracy.dmi', "paper_stamp-x")
+			else
+				img = image('icons/obj/bureaucracy.dmi', "paper_stamp-dots")
+			img.pixel_x = copy.offset_x[j]
+			img.pixel_y = copy.offset_y[j]
+			c.overlays += img
+
 	c.updateinfolinks()
 	toner--
 	if(toner == 0)

@@ -62,7 +62,7 @@ client/proc/one_click_antag()
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(applicant.client.prefs.be_special & BE_TRAITOR)
+		if(applicant.client.prefs.beSpecial() & BE_TRAITOR)
 			if(!applicant.stat)
 				if(applicant.mind)
 					if (!applicant.mind.special_role)
@@ -94,7 +94,7 @@ client/proc/one_click_antag()
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(applicant.client.prefs.be_special & BE_CHANGELING)
+		if(applicant.client.prefs.beSpecial() & BE_CHANGELING)
 			if(!applicant.stat)
 				if(applicant.mind)
 					if (!applicant.mind.special_role)
@@ -124,7 +124,7 @@ client/proc/one_click_antag()
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(applicant.client.prefs.be_special & BE_REV)
+		if(applicant.client.prefs.beSpecial() & BE_REV)
 			if(applicant.stat == CONSCIOUS)
 				if(applicant.mind)
 					if(!applicant.mind.special_role)
@@ -154,7 +154,7 @@ client/proc/one_click_antag()
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(applicant.client.prefs.be_special & BE_CULTIST)
+		if(applicant.client.prefs.beSpecial() & BE_CULTIST)
 			if(applicant.stat == CONSCIOUS)
 				if(applicant.mind)
 					if(!applicant.mind.special_role)
@@ -353,14 +353,14 @@ client/proc/one_click_antag()
 
 	new_character.gender = pick(MALE,FEMALE)
 
-	var/datum/preferences/A = new()
-	A.randomize_appearance_for(new_character)
+	var/datum/character/C = new()
+	C.randomize_appearance_for(new_character)
 	if(new_character.gender == MALE)
 		new_character.real_name = "[pick(first_names_male)] [pick(last_names)]"
 	else
 		new_character.real_name = "[pick(first_names_female)] [pick(last_names)]"
 	new_character.name = new_character.real_name
-	new_character.age = rand(17,45)
+	new_character.character.age = rand(17,45)
 
 	new_character.dna.ready_dna(new_character)
 	new_character.key = G_found.key
@@ -375,12 +375,12 @@ client/proc/one_click_antag()
 
 	new_syndicate_commando.gender = pick(MALE, FEMALE)
 
-	var/datum/preferences/A = new()//Randomize appearance for the commando.
-	A.randomize_appearance_for(new_syndicate_commando)
+	var/datum/character/C = new()//Randomize appearance for the commando.
+	C.randomize_appearance_for(new_syndicate_commando)
 
 	new_syndicate_commando.real_name = "[!syndicate_leader_selected ? syndicate_commando_rank : syndicate_commando_leader_rank] [syndicate_commando_name]"
 	new_syndicate_commando.name = new_syndicate_commando.real_name
-	new_syndicate_commando.age = !syndicate_leader_selected ? rand(23,35) : rand(35,45)
+	new_syndicate_commando.character.age = !syndicate_leader_selected ? rand(23,35) : rand(35,45)
 
 	new_syndicate_commando.dna.ready_dna(new_syndicate_commando)//Creates DNA.
 
@@ -458,7 +458,7 @@ client/proc/one_click_antag()
 	var/mob/living/carbon/human/new_vox = new(spawn_location.loc, "Vox")
 
 	new_vox.gender = pick(MALE, FEMALE)
-	new_vox.h_style = "Short Vox Quills"
+	new_vox.character.hair_style = "Short Vox Quills"
 	new_vox.regenerate_icons()
 
 	var/sounds = rand(2,10)
@@ -471,7 +471,7 @@ client/proc/one_click_antag()
 
 	new_vox.real_name = capitalize(newname)
 	new_vox.name = new_vox.real_name
-	new_vox.age = rand(12,20)
+	new_vox.character.age = rand(12,20)
 
 	new_vox.dna.ready_dna(new_vox) // Creates DNA.
 	new_vox.mind_initialize()

@@ -31,6 +31,7 @@
 	var/pressure_alert = 0
 	var/temperature_alert = 0
 	var/in_stasis = 0
+	var/obj/machinery/power/apc/attached_apc = null
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
@@ -117,16 +118,14 @@
 	handle_regular_status_updates()		//Optimized a bit
 	update_canmove()
 
-	//IPCs charging from APCs
-	if(istype(species, /datum/species/machine))
-		var/datum/species/machine/S = species
-		if(S.attached_apc)
-			handle_ipc_charging()
+	// Species-specific
+	if(species) species.handle_life(src)
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
 	handle_regular_hud_updates()
+	handle_regular_sound_updates()
 
 	pulse = handle_pulse()
 
@@ -314,10 +313,10 @@
 					if(!lying)
 						emote("collapse")
 				if(prob(5) && prob(100 * RADIATION_SPEED_COEFFICIENT) && species.name == "Human") //apes go bald
-					if((h_style != "Bald" || f_style != "Shaved" ))
+					if((character.hair_style != "Bald" || character.hair_face_style != "Shaved" ))
 						src << "<span class='warning'>Your hair falls out.</span>"
-						h_style = "Bald"
-						f_style = "Shaved"
+						character.hair_style = "Bald"
+						character.hair_face_style = "Shaved"
 						update_hair()
 
 			if (radiation > 75)
@@ -1161,6 +1160,26 @@
 
 		return 1
 
+	var/heartbeat_channel = 500
+
+	proc/handle_regular_sound_updates()
+		if( health <= 0 && stat != DEAD )
+			if( !heartbeat )
+				heartbeat = sound( 'sound/effects/heart_beat.ogg', channel = heartbeat_channel, repeat = 1, volume = 100-( health+80 ))
+				heartbeat.status = SOUND_UPDATE
+			else
+				heartbeat.volume = 100-( health+80 )
+
+			src << heartbeat
+		else
+			stop_regular_sounds()
+
+	proc/stop_regular_sounds()
+		if( heartbeat )
+			src << sound( null, channel = heartbeat_channel )
+			qdel( heartbeat )
+			heartbeat = null
+
 	proc/handle_regular_hud_updates()
 		if(hud_updateflag) // update our mob's hud overlays, AKA what others see flaoting above our head
 			handle_hud_list()
@@ -1390,8 +1409,8 @@
 						else
 							bodytemp.icon_state = "temp0"
 			if(blind)
-				if(blinded)		blind.layer = 18
-				else			blind.layer = 0
+				if(blinded)		blind.plane = 0
+				else			blind.plane = -100
 
 			if(disabilities & NEARSIGHTED)	//this looks meh but saves a lot of memory by not requiring to add var/prescription
 				if(glasses)					//to every /obj/item
@@ -1620,46 +1639,6 @@
 					temp = PULSE_NONE
 
 		return temp
-
-	proc/handle_ipc_charging()
-		var/datum/species/machine/S = species
-		var/obj/machinery/power/apc/A = S.attached_apc
-
-		if(!A.can_use(src) || !A.cell)
-			if(!in_range(A, src))
-				src << "<span class='warning'>You rip your fingers out of the APC!</span>"
-			S.attached_apc = null
-			return
-
-		if(a_intent == I_GRAB)
-			if(A.cell.charge <= 0)
-				src << "<span class='notice'>The power cell dries out, and you remove your fingers from the APC.</span>"
-				S.attached_apc = null
-				return
-			else if(nutrition >= 500)
-				src << "<span class='notice'>You remove your fingers from the APC as your power cell is fully charged.</span>"
-				S.attached_apc = null
-				return
-			else
-				nutrition += 10
-				A.cell.charge -= 100
-		else if(a_intent == I_DISARM)
-			if(A.cell.charge >= A.cell.maxcharge)
-				src << "<span class='notice'>You remove your fingers as the APC is fully charged.</span>"
-				S.attached_apc = null
-				return
-			else if(nutrition <= 30)
-				src << "<span class='notice'>You remove your fingers as your own power starts to run out.</span>"
-				return
-			else
-				nutrition -= 10
-				A.cell.charge += 100
-		else
-			src << "<span class='notice'>You remove your fingers from the APC.</span>"
-			S.attached_apc = null
-
-		A.charging = 1
-		A.update_icon()
 
 /*
 	Called by life(), instead of having the individual hud items update icons each tick and check for status changes

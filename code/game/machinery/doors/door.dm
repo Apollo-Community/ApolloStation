@@ -13,6 +13,7 @@
 	opacity = 1
 	density = 1
 	layer = DOOR_OPEN_LAYER
+
 	var/open_layer = DOOR_OPEN_LAYER
 	var/closed_layer = DOOR_CLOSED_LAYER
 
@@ -82,11 +83,14 @@
 	//return
 
 /obj/machinery/door/Bumped(atom/AM)
-	if(p_open || operating) return
+	if(p_open || operating)
+		return
+
+	if(( world.time - src.last_bumped ) <= 5) //Can bump-open twice per second. This is to prevent shock / noise spam.
+		return
+
 	if(ismob(AM))
 		var/mob/M = AM
-		if(world.time - M.last_bumped <= 10) return	//Can bump-open one airlock per second. This is to prevent shock spam.
-		M.last_bumped = world.time
 		if(!M.restrained() && !M.small)
 			bumpopen(M)
 		return

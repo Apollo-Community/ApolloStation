@@ -222,7 +222,7 @@ datum/track/New(var/title_name, var/audio)
 	return ..()
 
 /obj/machinery/media/jukebox/proc/StopPlaying()
-	for(var/mob/living/M in living_mob_list)
+	for( var/mob/M in mob_list )
 		kill_sound(M)
 
 	playing = 0
@@ -243,7 +243,7 @@ datum/track/New(var/title_name, var/audio)
 	update_icon()
 
 /obj/machinery/media/jukebox/process()
-	for(var/mob/living/M in living_mob_list)
+	for( var/mob/M in mob_list )
 		var/dist = get_dist(M,src)
 		if(dist <=15 && M.z == src.z)	// Only same z-level
 			if(playing)			//Plays the song to people within range while the song is active.
@@ -259,9 +259,9 @@ datum/track/New(var/title_name, var/audio)
 
 				M << M.jukebox_sound
 		else		// Catch all
-			kill_sound(M)
+			kill_sound( M )
 
-/obj/machinery/media/jukebox/proc/kill_sound(var/mob/living/M in living_mob_list)
+/obj/machinery/media/jukebox/proc/kill_sound(var/mob/M in mob_list)
 	if(M.jukebox_sound && M.jukebox_sound.channel == jukebox_id)	//Support for multiple jukeboxes
 		M << sound(null, channel = jukebox_id)
 		M.jukebox_sound = null

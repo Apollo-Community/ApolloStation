@@ -83,6 +83,7 @@
 	var/atom/movable/AM = A
 
 	AM.forceMove( bluespace )
+	bspace.Entered(AM)
 
 	spawn( transit_time )
 		if( !exit )
@@ -91,4 +92,5 @@
 				M << "<span class='alert'>You feel that something went very wrong.</span>"
 
 		AM.forceMove( destination )
+		destination.loc.Entered(AM)
 		playsound(AM.loc, 'sound/effects/pop1.ogg', 80, 1)

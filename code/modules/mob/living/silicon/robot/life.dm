@@ -14,6 +14,7 @@
 	if(client)
 		handle_regular_hud_updates()
 		update_items()
+
 	if (src.stat != DEAD) //still using power
 		use_power()
 		process_killswitch()
@@ -142,7 +143,6 @@
 	return 1
 
 /mob/living/silicon/robot/proc/handle_regular_hud_updates()
-
 	if (src.stat == 2 || XRAY in mutations || src.sight_mode & BORGXRAY)
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
@@ -271,9 +271,9 @@
 
 	if ((src.blind && src.stat != 2))
 		if(src.blinded)
-			src.blind.layer = 18
+			src.blind.plane = 0
 		else
-			src.blind.layer = 0
+			src.blind.plane = -100
 			if (src.disabilities & NEARSIGHTED)
 				src.client.screen += global_hud.vimpaired
 

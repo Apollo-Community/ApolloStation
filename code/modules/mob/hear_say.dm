@@ -78,7 +78,7 @@
 					sound_played = 1
 					src << sound( 'sound/effects/icalert.ogg' )
 
-				message = replacetext( message, word, "<span class='sayattention'>[word]</span>" )
+				message = replacetext( message, " [word] ", " <span class='triggerattention'>[word]</span> " )
 
 	if(language)
 		src << "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][language.format_message(message, verb)]</span>"
@@ -198,12 +198,12 @@
 	if( trigger_words && trigger_words.len && trigger_words.len < 50 )
 		var/sound_played = 0
 		for( var/word in trigger_words )
-			if( findtext( formatted, word ))
+			if( findtext( message, " [word] " ))
 				if( !sound_played && ( client.prefs.toggles & SOUND_NOTIFICATIONS ))
 					sound_played = 1
 					src << sound( 'sound/effects/icalert.ogg' )
 
-				formatted = replacetext( formatted, word, "<span class='radioattention'>[word]</span>" )
+				message = replacetext( message, " [word] ", " <span class='triggerattention'>[word]</span> " )
 
 	if(track)
 		src << "[part_a][track][part_b][formatted]</span></span>"

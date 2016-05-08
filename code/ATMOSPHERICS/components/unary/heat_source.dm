@@ -138,12 +138,12 @@
 	power_rating = max_power_rating * (power_setting/100)
 
 /obj/machinery/atmospherics/unary/heater/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(default_deconstruction_screwdriver(user, O))
-		return
-	if(default_deconstruction_crowbar(user, O))
-		return
-
-	..()
+	if(istype(O, /obj/item/weapon/screwdriver/))
+		default_deconstruction_screwdriver(user, icon_state, icon_state, O)
+	if(istype(O, /obj/item/weapon/wrench/))
+		..()
+	if(istype(O, /obj/item/weapon/crowbar/))
+		default_deconstruction_crowbar(O)
 
 /obj/machinery/atmospherics/unary/heater/examine(mob/user)
 	..(user)

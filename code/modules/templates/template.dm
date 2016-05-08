@@ -9,10 +9,6 @@ var/datum/template_controller/template_controller
 		world << "<span class='alert'><b>Placing random structures...</b></span>"
 
 		parser = new()
-		PlaceTemplates()
-
-		spawn(0)
-			makepowernets()
 
 	proc/PlaceTemplateAt(var/turf/location, var/path, var/name)
 		set background = 1
@@ -38,7 +34,7 @@ var/datum/template_controller/template_controller
 			var/tries = template_config.tries
 			var/turf/origin
 			do
-				var/turf/pick = locate(rand(1, world.maxx), rand(1, world.maxy), text2num(pick(template_config.zs)))
+				var/turf/pick = locate(rand(1, world.maxx), rand(1, world.maxy), text2num(pick(config.can_random_teleport_levels)))
 
 				// Keep a buffer of TRANSITIONEDGE+10 between the edges of the map
 				if(((pick.x + x) >= (world.maxx - TRANSITIONEDGE - 10)) || (pick.x < (TRANSITIONEDGE + 10)))

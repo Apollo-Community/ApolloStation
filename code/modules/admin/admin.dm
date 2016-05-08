@@ -28,6 +28,8 @@ var/global/floorIsLava = 0
 			style = "exploit_message"
 		if("BEWS:")
 			style = "bews_message"
+		if("CANON:")
+			style = "canon_message"
 
 	msg = "<span class=\"[style]\"><span class=\"prefix\">[prefix]</span> <span class=\"message\">[msg]</span></span>"
 	log_adminwarn(msg)
@@ -86,7 +88,6 @@ var/global/floorIsLava = 0
 		<a href='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</a>\] </b><br>
 		<b>Mob type</b> = [M.type]<br><br>
 		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
-		<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> |
 		<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> |
 		<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> |
 		<A href='?src=\ref[src];notes=show;mob=\ref[M]'>Notes</A>
@@ -198,17 +199,20 @@ var/global/floorIsLava = 0
 				<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>
 				<br>
 			"}
+
 	body += {"<br><br>
 			<b>Other actions:</b>
 			<br>
 			<A href='?src=\ref[src];forcespeech=\ref[M]'>Forcesay</A>
 			"}
+
 	if (M.client)
 		body += {" |
 			<A href='?src=\ref[src];tdome=\ref[M]'>Thunderdome Gladiator</A> |
 			<A href='?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> |
 			<A href='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> |
 		"}
+
 	// language toggles
 	body += "<br><br><b>Languages:</b><br>"
 	var/f = 1
@@ -229,72 +233,201 @@ var/global/floorIsLava = 0
 	usr << browse(body, "window=adminplayeropts;size=550x515")
 	feedback_add_details("admin_verb","SPP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-/datum/player_info/var/author // admin who authored the information
-/datum/player_info/var/rank //rank of admin who made the notes
-/datum/player_info/var/content // text content of the information
-/datum/player_info/var/timestamp // Because this is bloody annoying
-
-#define PLAYER_NOTES_ENTRIES_PER_PAGE 50
-/datum/admins/proc/PlayerNotes()
+/client/proc/playernotes()
 	set category = "Admin"
 	set name = "Player Notes"
-	if (!istype(src,/datum/admins))
-		src = usr.client.holder
-	if (!istype(src,/datum/admins))
-		usr << "Error: you are not an admin!"
+
+	if( !istype( src.holder, /datum/admins ))
+		src << "Error: you are not an admin!"
 		return
-	PlayerNotesPage(1)
 
-/datum/admins/proc/PlayerNotesPage(page)
-	var/dat = "<B>Player notes</B><HR>"
-	var/savefile/S=new("data/player_notes.sav")
-	var/list/note_keys
-	S >> note_keys
-	if(!note_keys)
-		dat += "No notes found."
+	src.holder.PlayerNotes()
+
+/datum/admins/proc/PlayerNotes( var/search = "a" )
+	menu.set_user( owner )
+	menu.set_content( player_notes_selection( search ))
+	menu.open()
+
+/datum/admins/proc/player_notes_selection( var/search, var/limit = 50 )
+	. = "<b>Player Notes</b><hr>"
+	. += "<a href='?src=\ref[src];notes=search'>Search</a>"
+
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		. += "<br>Database is not connected!"
+		return .
+
+	if( !search )
+		. += "<br>Please search a ckey. Partial searches are accepted."
+		return .
+
+	// Searching the player database because all entries are unique
+	var/DBQuery/db_query = dbcon.NewQuery( "SELECT ckey, ip, computerid FROM player WHERE ckey LIKE '%[ckey( search )]%' LIMIT [limit]" )
+
+	if(	!db_query.Execute() )
+		. += "<br>Invalid query!"
+		return .
+
+	. += "<table class='outline'>"
+	. += "<tr>"
+	. += "<th>Ckey</th>"
+	. += "<th>IP</th>"
+	. += "<th>Computer ID</th>"
+	. += "</tr>"
+	while( db_query.NextRow() )
+		var/ckey = db_query.item[1]
+
+		. += "<tr>"
+		. += "<td><a href='?src=\ref[src];notes=show;ckey=[ckey]'>[ckey]</a></td>"
+		. += "<td>[db_query.item[2]]</td>"
+		. += "<td>[db_query.item[3]]</td>"
+		. += "</tr>"
+
+	. += "</table><br>"
+
+	return .
+
+/datum/admins/proc/get_player_notes( var/rkey as text )
+	if( !rkey )
+		return
+
+	. = "<b>Player Notes</b><hr>"
+	. += "<a href='?src=\ref[src];notes=list'>Back</a>"
+	. += "<a href='?src=\ref[src];add_player_info=[rkey]'>Add Comment</a>"
+
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		. += {"<table class='outline'>
+<tr>
+<th>No connection to the external database!</th>
+</tr>
+</table>"}
+		return .
+
+	var/sql_rkey = ckey( rkey )
+
+	var/DBQuery/db_select = dbcon.NewQuery("SELECT ip, computerid FROM player WHERE ckey = '[sql_rkey]'")
+
+	var/ip
+	var/cid
+
+	if( db_select.Execute() && db_select.NextRow() )
+		ip = db_select.item[1]
+		cid = db_select.item[2]
 	else
-		dat += "<table>"
-		note_keys = sortList(note_keys)
+		. += {"<table class='outline'>
+<tr>
+<th>Bad database query!</th>
+</tr>
+</table>"}
+		return .
 
-		// Display the notes on the current page
-		var/number_pages = note_keys.len / PLAYER_NOTES_ENTRIES_PER_PAGE
-		// Emulate ceil(why does BYOND not have ceil)
-		if(number_pages != round(number_pages))
-			number_pages = round(number_pages) + 1
-		var/page_index = page - 1
-		if(page_index < 0 || page_index >= number_pages)
-			return
+	var/sql_rip = sql_sanitize_text( ip )
+	var/sql_rcid = sql_sanitize_text( cid )
 
-		var/lower_bound = page_index * PLAYER_NOTES_ENTRIES_PER_PAGE + 1
-		var/upper_bound = (page_index + 1) * PLAYER_NOTES_ENTRIES_PER_PAGE
-		upper_bound = min(upper_bound, note_keys.len)
-		for(var/index = lower_bound, index <= upper_bound, index++)
-			var/t = note_keys[index]
-			dat += "<tr><td><a href='?src=\ref[src];notes=show;ckey=[t]'>[t]</a></td></tr>"
+	var/list/general_notes = list()
+	var/list/ip_notes = list()
+	var/list/cid_notes = list()
 
-		dat += "</table><br>"
+	// Compiling the lists of entries
+	if( sql_rkey )
+		var/DBQuery/db_query = dbcon.NewQuery("SELECT date_time, info, author_ckey, author_rank, id FROM player_notes WHERE player_ckey = '[sql_rkey]'")
+		if( db_query.Execute() )
+			while( db_query.NextRow() )
+				var/list/entry = list( "date" = db_query.item[1], "info" = db_query.item[2], "author_ckey" = db_query.item[3], "author_rank" = db_query.item[4], "id" = db_query.item[5] )
+				general_notes += list( entry ) // Adding a list within a list because byond automatically adds the contents of lists to lists
 
-		// Display a footer to select different pages
-		for(var/index = 1, index <= number_pages, index++)
-			if(index == page)
-				dat += "<b>"
-			dat += "<a href='?src=\ref[src];notes=list;index=[index]'>[index]</a> "
-			if(index == page)
-				dat += "</b>"
+	if( sql_rip )
+		var/DBQuery/db_query = dbcon.NewQuery("SELECT date_time, info, author_ckey, author_rank, id FROM player_notes WHERE player_ip = '[sql_rip]' AND player_ckey != '[sql_rkey]'")
+		if( db_query.Execute() )
+			while( db_query.NextRow() )
+				var/list/entry = list( "date" = db_query.item[1], "info" = db_query.item[2], "author_ckey" = db_query.item[3], "author_rank" = db_query.item[4], "id" = db_query.item[5] )
+				ip_notes += list( entry )
 
-	usr << browse(dat, "window=player_notes;size=400x400")
+	if( sql_rcid )
+		var/DBQuery/db_query = dbcon.NewQuery("SELECT date_time, info, author_ckey, author_rank, id FROM player_notes WHERE player_cid = '[sql_rcid]' AND player_ckey != '[sql_rkey]' AND player_ip != '[sql_rip]'")
+		if( db_query.Execute() )
+			while( db_query.NextRow() )
+				var/list/entry = list( "date" = db_query.item[1], "info" = db_query.item[2], "author_ckey" = db_query.item[3], "author_rank" = db_query.item[4], "id" = db_query.item[5] )
+				cid_notes += list( entry )
 
+	// Display data
+	if( general_notes && general_notes.len )
+		. += "<table class='outline'>"
+		. += "<col width='80'>"
+		. += "<tr>"
+		. += "<th colspan='4'>General Notes</th>"
+		. += "</tr>"
 
-/datum/admins/proc/player_has_info(var/key as text)
-	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
-	var/list/infos
-	info >> infos
-	if(!infos || !infos.len) return 0
-	else return 1
+		. += "<tr>"
+		. += "<th style='width:80px'>Date</th>"
+		. += "<th>Note</th>"
+		. += "<th style='width:100px'>Author</th>"
+		. += "<th style='width:70px'></th>"
+		. += "</tr>"
 
+		for( var/list/entry in general_notes )
+			if( !islist( entry ))
+				continue
 
-/datum/admins/proc/show_player_info(var/key as text)
+			. += "<tr>"
+			. += "<td>[entry["date"]]</td>"
+			. += "<td>[entry["info"]]</td>"
+			. += "<td>[entry["author_ckey"]] ([entry["author_rank"]])</td>"
+			. += "<td><A href='?src=\ref[src];remove_player_info=[rkey];remove_index=[entry["id"]]'>Remove</A></td>"
+			. += "</tr>"
+
+		. += "</table><br>"
+
+	if( ip_notes && ip_notes.len )
+		. += "<table class='outline'>"
+		. += "<tr>"
+		. += "<th colspan='4'>IP Notes</th>"
+		. += "</tr>"
+
+		. += "<tr>"
+		. += "<th style='width:80px'>Date</th>"
+		. += "<th>Note</th>"
+		. += "<th style='width:100px'>Author</th>"
+		. += "<th style='width:70px'></th>"
+		. += "</tr>"
+
+		for( var/entry in ip_notes )
+			. += "<tr>"
+			. += "<td>[entry["date"]]</td>"
+			. += "<td>[entry["info"]]</td>"
+			. += "<td>[entry["author_ckey"]] ([entry["author_rank"]])</td>"
+			. += "<td><A href='?src=\ref[src];remove_player_info=[rkey];remove_index=[entry["id"]]'>Remove</A></td>"
+			. += "</tr>"
+
+		. += "</table><br>"
+
+	if( cid_notes && cid_notes.len )
+		. += "<table class='outline'>"
+		. += "<tr>"
+		. += "<th colspan='4'>Computer Notes</th>"
+		. += "</tr>"
+
+		. += "<tr>"
+		. += "<th style='width:80px'>Date</th>"
+		. += "<th>Note</th>"
+		. += "<th style='width:100px'>Author</th>"
+		. += "<th style='width:70px'></th>"
+		. += "</tr>"
+
+		for( var/entry in cid_notes )
+			. += "<tr>"
+			. += "<td>[entry["date"]]</td>"
+			. += "<td>[entry["info"]]</td>"
+			. += "<td>[entry["author_ckey"]] ([entry["author_rank"]])</td>"
+			. += "<td><A href='?src=\ref[src];remove_player_info=[rkey];remove_index=[entry["id"]]'>Remove</A></td>"
+			. += "</tr>"
+
+		. += "</table><br>"
+
+	return .
+
+/datum/admins/proc/show_player_info( var/key as text )
 	set category = "Admin"
 	set name = "Show Player Info"
 	if (!istype(src,/datum/admins))
@@ -302,38 +435,10 @@ var/global/floorIsLava = 0
 	if (!istype(src,/datum/admins))
 		usr << "Error: you are not an admin!"
 		return
-	var/dat = "<html><head><title>Info on [key]</title></head>"
-	dat += "<body>"
 
-	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
-	var/list/infos
-	info >> infos
-	if(!infos)
-		dat += "No information found on the given key.<br>"
-	else
-		var/update_file = 0
-		var/i = 0
-		for(var/datum/player_info/I in infos)
-			i += 1
-			if(!I.timestamp)
-				I.timestamp = "Pre-4/3/2012"
-				update_file = 1
-			if(!I.rank)
-				I.rank = "N/A"
-				update_file = 1
-			dat += "<font color=#008800>[I.content]</font> <i>by [I.author] ([I.rank])</i> on <i><font color=blue>[I.timestamp]</i></font> "
-			if(I.author == usr.key || I.author == "Adminbot" || ishost(usr))
-				dat += "<A href='?src=\ref[src];remove_player_info=[key];remove_index=[i]'>Remove</A>"
-			dat += "<br><br>"
-		if(update_file) info << infos
-
-	dat += "<br>"
-	dat += "<A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A><br>"
-
-	dat += "</body></html>"
-	usr << browse(dat, "window=adminplayerinfo;size=480x480")
-
-
+	menu.set_user( usr )
+	menu.set_content( get_player_notes( key ))
+	menu.open()
 
 /datum/admins/proc/access_news_network() //MARKER
 	set category = "Fun"
@@ -744,6 +849,9 @@ var/global/floorIsLava = 0
 		if(blackbox)
 			blackbox.save_all_data_to_sql()
 
+		if( config.canon )
+			canonHandleRoundEnd()
+
 		sleep(50)
 		world.Reboot()
 
@@ -943,6 +1051,9 @@ var/global/floorIsLava = 0
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
 
+	if( config.canon )
+		canonHandleRoundEnd()
+
 	world.Reboot()
 
 /datum/admins/proc/unprison(var/mob/M in mob_list)
@@ -1102,7 +1213,7 @@ var/global/floorIsLava = 0
 			S.laws.show_laws(usr)
 	if(!ai_number)
 		usr << "<b>No AIs located</b>" //Just so you know the thing is actually working and not just ignoring you.
-
+/*
 /datum/admins/proc/show_skills(var/mob/living/carbon/human/M as mob in world)
 	set category = "Admin"
 	set name = "Show Skills"
@@ -1116,6 +1227,7 @@ var/global/floorIsLava = 0
 	show_skill_window(usr, M)
 
 	return
+*/
 
 /client/proc/update_mob_sprite(mob/living/carbon/human/H as mob)
 	set category = "Admin"
@@ -1165,7 +1277,7 @@ var/global/floorIsLava = 0
 
 		if(2)	//Admins
 			var/ref_mob = "\ref[M]"
-			return "<b>[key_name(C, link, name, highlight_special)](<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=[ref_mob]'>JMP</A>) (<A HREF='?_src_=holder;check_antagonist=1'>CA</A>)</b>"
+			return "<b>[key_name(C, link, name, highlight_special)](<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;notes=show;mob=[ref_mob]'>N</A>) (<A HREF='?_src_=holder;adminplayerobservejump=[ref_mob]'>JMP</A>) (<A HREF='?_src_=holder;check_antagonist=1'>CA</A>)</b>"
 
 		if(3)	//Devs
 			var/ref_mob = "\ref[M]"
@@ -1173,7 +1285,7 @@ var/global/floorIsLava = 0
 
 		if(4)	//Mentors
 			var/ref_mob = "\ref[M]"
-			return "<b>[key_name(C, link, name, highlight_special)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=[ref_mob]'>JMP</A>)</b>"
+			return "<b>[key_name(C, link, name, highlight_special)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;notes=show;mob=[ref_mob]'>N</A>) (<A HREF='?_src_=holder;adminplayerobservejump=[ref_mob]'>JMP</A>)</b>"
 
 
 /proc/ishost(whom)

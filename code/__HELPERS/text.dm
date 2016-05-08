@@ -174,16 +174,16 @@
 /*
  * Text modification
  */
-
+/*
 /proc/replacetext(text, find, replacement)
 	return list2text(text2list(text, find), replacement)
 
 /proc/replacetextEx(text, find, replacement)
 	return list2text(text2listEx(text, find), replacement)
-
+*/
 /proc/replace_characters(var/t,var/list/repl_chars)
 	for(var/char in repl_chars)
-		replacetext(t, char, repl_chars[char])
+		t = replacetext(t, char, repl_chars[char])
 	return t
 
 //Adds 'u' number of zeros ahead of the text 't'
@@ -281,6 +281,6 @@ proc/TextPreview(var/string,var/len=40)
 //	to always create it and then throw it out.
 /var/icon/text_tag_icons = new('./icons/chattags.dmi')
 /proc/create_text_tag(var/tagname, var/tagdesc = tagname, var/client/C = null)
-	if(C && (C.prefs.toggles & CHAT_NOICONS))
+	if(C && C.prefs &&(C.prefs.toggles & CHAT_NOICONS))
 		return tagdesc
 	return "<IMG src='\ref[text_tag_icons.icon]' class='text_tag' iconstate='[tagname]'" + (tagdesc ? " alt='[tagdesc]'" : "") + ">"

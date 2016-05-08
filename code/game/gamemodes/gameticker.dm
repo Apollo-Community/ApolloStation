@@ -129,13 +129,15 @@ var/global/datum/controller/gameticker/ticker
 	shuttle_controller.setup_shuttle_docks()
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
+		universe.load_date()
 		mode.post_setup()
 		//Cleanup some stuff
 		for(var/obj/effect/landmark/start/S in landmarks_list)
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				qdel(S)
-		world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
+		world << "<font color='blue'><B>Enjoy the game!</B></font>"
+		world << "<h3>Today's date is [print_date( universe.date )]</h3>"
 		world << sound('sound/AI/welcome.ogg') // Skie
 
 	//start_events() //handles random events and space dust.
@@ -150,7 +152,8 @@ var/global/datum/controller/gameticker/ticker
 
 	processScheduler.start()
 
-	for(var/obj/multiz/ladder/L in world) L.connect() //Lazy hackfix for ladders. TODO: move this to an actual controller. ~ Z
+	for(var/obj/multiz/ladder/L in world)
+		L.connect() //Lazy hackfix for ladders. TODO: move this to an actual controller. ~ Z
 
 	if(config.sql_enabled)
 		statistic_cycle() // Polls population totals regularly and stores them in an SQL DB -- TLE
@@ -284,19 +287,12 @@ var/global/datum/controller/gameticker/ticker
 
 
 	proc/equip_characters()
-		var/captainless=1
 		for(var/mob/living/carbon/human/player in player_list)
 			if(player && player.mind && player.mind.assigned_role)
-				if(player.mind.assigned_role == "Captain")
-					captainless=0
 				if(player.mind.assigned_role != "MODE")
 					job_master.EquipRank(player, player.mind.assigned_role, 0)
 					UpdateFactionList(player)
 					EquipCustomItems(player)
-		if(captainless)
-			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
-					M << "Captainship not forced on anyone."
 
 
 	proc/process()
@@ -304,6 +300,7 @@ var/global/datum/controller/gameticker/ticker
 			return 0
 
 		mode.process()
+		process_newscaster()
 
 		emergency_shuttle.process()
 
@@ -335,8 +332,11 @@ var/global/datum/controller/gameticker/ticker
 						world << "<span class='notice'><B>Restarting in [restart_timeout/10] seconds</B></span>"
 
 
-				if(blackbox)
+				if( blackbox )
 					blackbox.save_all_data_to_sql()
+
+				if( config.canon )
+					canonHandleRoundEnd()
 
 				if(!delay_end)
 					sleep(restart_timeout)

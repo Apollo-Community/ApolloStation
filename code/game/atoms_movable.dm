@@ -56,10 +56,11 @@
 		src.throwing = 0
 
 	spawn(0)
-		if ((A && yes))
-			A.last_bumped = world.time
+		if(( A && yes ))
 			A.Bumped(src)
+			A.last_bumped = world.time
 		return
+
 	..()
 	return
 

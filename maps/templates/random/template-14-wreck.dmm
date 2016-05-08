@@ -1,0 +1,15 @@
+"a" = (/obj/item/stack/rods,/turf/space,/area/space)
+"b" = (/turf/space,/area/space)
+"c" = (/obj/item/weapon/shard,/turf/space,/area/space)
+"d" = (/obj/structure/lattice,/turf/space,/area/space)
+"e" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/space)
+"f" = (/turf/space,/turf/simulated/shuttle/wall{dir = 4; icon_state = "diagonalWall3"},/area/space)
+"g" = (/turf/space,/turf/simulated/shuttle/wall{icon_state = "diagonalWall3"},/area/space)
+
+(1,1,1) = {"
+abcbddbbbb
+bbddbbddbb
+bbddddeeef
+gedbdaabbb
+bgeebbbbbb
+"}

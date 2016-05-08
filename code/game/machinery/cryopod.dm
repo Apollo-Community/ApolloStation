@@ -184,7 +184,7 @@
 
 	var/mob/occupant = null       // Person waiting to be despawned.
 	var/orient_right = null       // Flips the sprite.
-	var/time_till_despawn = 18000 // 30 minutes-ish safe period before being despawned.
+	var/time_till_despawn = 3000
 	var/time_entered = 0          // Used to keep track of the safe period.
 	var/obj/item/device/radio/intercom/announce //
 
@@ -315,6 +315,12 @@
 // This function can not be undone; do not call this unless you are sure
 // Also make sure there is a valid control computer
 /obj/machinery/cryopod/proc/despawn_occupant()
+	if( istype( occupant, /mob/living/carbon/human ) && config.canon )
+		var/mob/living/carbon/human/H = occupant
+		if( H.character )
+			if( !H.character.new_character ) // If they've been saved to the database previously
+				H.character.saveCharacter()
+
 	//Drop all items into the pod.
 	for(var/obj/item/W in occupant)
 		occupant.drop_from_inventory(W)

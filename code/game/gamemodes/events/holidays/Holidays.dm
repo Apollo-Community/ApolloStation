@@ -37,6 +37,7 @@ var/global/Holiday = null
 				if(2)							Holiday = "Groundhog Day"
 				if(14)							Holiday = "Valentine's Day"
 				if(17)							Holiday = "Random Acts of Kindness Day"
+				if(29)							Holiday = "Leap Day"
 
 		if(3)	//Mar
 			switch(DD)

@@ -38,5 +38,6 @@
 		if(!config.objectives_disabled)
 			forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
+		changeling.character.temporary = 1 // Makes them non-canon
 	..()
 	return

@@ -31,7 +31,7 @@
 		if(jobban_isbanned(O, "AI") && jobban_isbanned(O, "Cyborg"))
 			continue
 		if(O.client)
-			if(O.client.prefs.be_special & BE_AI)
+			if(O.client.prefs.beSpecial() & BE_AI)
 				question(O.client)
 
 /obj/item/device/mmi/digital/posibrain/proc/question(var/client/C)
@@ -44,7 +44,7 @@
 		if(response == "Yes")
 			transfer_personality(C.mob)
 		else if (response == "Never for this round")
-			C.prefs.be_special ^= BE_AI
+			C.prefs.selected_character.job_antag ^= BE_AI
 
 
 /obj/item/device/mmi/digital/posibrain/transfer_identity(var/mob/living/carbon/H)
@@ -66,6 +66,7 @@
 	src.brainmob << "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
 	src.brainmob << "<b>Use say :b to speak to other artificial intelligences.</b>"
 	src.brainmob.mind.assigned_role = "Positronic Brain"
+	src.brainmob.mind.character = new()
 
 	var/turf/T = get_turf_or_move(src.loc)
 	for (var/mob/M in viewers(T))

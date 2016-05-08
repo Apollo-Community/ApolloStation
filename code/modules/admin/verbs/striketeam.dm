@@ -70,6 +70,7 @@ var/global/sent_strike_team = 0
 				commandos -= new_commando.key
 				new_commando.internal = new_commando.s_store
 				new_commando.internals.icon_state = "internal1"
+				new_commando.character.EditCharacterMenu( new_commando )
 
 			//So they don't forget their code or mission.
 			if(nuke_code)
@@ -105,11 +106,11 @@ var/global/sent_strike_team = 0
 
 	new_commando.gender = pick(MALE, FEMALE)
 
-	var/datum/preferences/A = new()//Randomize appearance for the commando.
-	A.randomize_appearance_for(new_commando)
+	var/datum/character/C = new()//Randomize appearance for the commando.
+	C.randomize_appearance_for(new_commando)
 
 	new_commando.real_name = "[!leader_selected ? commando_rank : commando_leader_rank] [commando_name]"
-	new_commando.age = !leader_selected ? rand(23,35) : rand(35,45)
+	new_commando.character.age = !leader_selected ? rand(23,35) : rand(35,45)
 
 	new_commando.dna.ready_dna(new_commando)//Creates DNA.
 

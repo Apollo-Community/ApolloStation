@@ -16,11 +16,29 @@
 	var/mob/living/occupant
 	var/heal_level = 90 //The clone is released once its health reaches this level.
 	var/locked = 0
+
 	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
 	var/mess = 0 //Need to clean out it if it's full of exploded clone.
 	var/attempting = 0 //One clone attempt at a time thanks
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
 	var/biomass = CLONE_BIOMASS * 3
+//Requires 2 Manipulator, 2 Scanning Module, 2 pieces of cable and 1 Console Screen."
+/obj/machinery/clonepod/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/clonepod(src)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
+	RefreshParts()
+
+/obj/machinery/clonepod/RefreshParts()
+	var/manip_rating = 0
+	for(var/obj/item/weapon/stock_parts/P in component_parts)
+		if(istype(P, /obj/item/weapon/stock_parts/manipulator))
+			manip_rating += P.rating
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -135,14 +153,18 @@
 //Start growing a human clone in the pod!
 /obj/machinery/clonepod/proc/growclone(var/datum/dna2/record/R)
 	if(mess || attempting)
+		world << "messy or already attempting"
 		return 0
 	var/datum/mind/clonemind = locate(R.mind)
 	if(!istype(clonemind,/datum/mind))	//not a mind
+		world << "no clone mind"
 		return 0
 	if( clonemind.current && clonemind.current.stat != DEAD )	//mind is associated with a non-dead body
+		world << "body not dead"
 		return 0
-	if(clonemind.active)	//somebody is using that mind
+	if( clonemind.active )	//somebody is using that mind
 		if( ckey(clonemind.key)!=R.ckey )
+			world << "somebody using that mind"
 			return 0
 	else
 		for(var/mob/dead/observer/G in player_list)
@@ -150,6 +172,7 @@
 				if(G.can_reenter_corpse)
 					break
 				else
+					world << "cannot reenter corpse"
 					return 0
 
 
@@ -214,7 +237,7 @@
 
 	for(var/datum/language/L in R.languages)
 		H.add_language(L.name)
-	H.flavor_texts = R.flavor.Copy()
+	H.character.flavor_texts_human = R.flavor
 	H.suiciding = 0
 	src.attempting = 0
 	return 1
@@ -278,7 +301,14 @@
 	return
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
-/obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/clonepod/attackby(obj/item/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/screwdriver))
+		default_deconstruction_screwdriver(user,icon_state,icon_state,W)
+	if(istype(W, /obj/item/weapon/crowbar	))
+		if (src.occupant)
+			src.locked = 0
+			src.go_out()
+		default_deconstruction_crowbar(W,0)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (!src.check_access(W))
 			user << "<span class='alert'>Access Denied.</span>"
@@ -299,8 +329,12 @@
 		src.go_out()
 		return
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
+		var/manip_rating = 0
+		for(var/obj/item/weapon/stock_parts/P in component_parts)
+			if(istype(P, /obj/item/weapon/stock_parts/manipulator))
+				manip_rating += P.rating
 		user << "<span class='notice'>\The [src] processes \the [W].</span>"
-		biomass += 50
+		biomass += 50*manip_rating/2
 		user.drop_item()
 		qdel(W)
 		return

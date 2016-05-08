@@ -50,7 +50,6 @@
 	var/locked = 0
 	var/mob/living/carbon/occupant = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
-	var/opened = 0
 
 /obj/machinery/dna_scannernew/New()
 	..()
@@ -120,7 +119,11 @@
 	src.add_fingerprint(usr)
 	return
 
-/obj/machinery/dna_scannernew/attackby(var/obj/item/weapon/item as obj, var/mob/user as mob)
+/obj/machinery/dna_scannernew/attackby(var/obj/item/item as obj, var/mob/user as mob)
+	if (istype(item, /obj/item/weapon/screwdriver))
+		default_deconstruction_screwdriver(user,icon_state,icon_state,item)
+	if(istype(item, /obj/item/weapon/crowbar	))
+		default_deconstruction_crowbar(item,0)
 	if(istype(item, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
 			user << "<span class='alert'>A beaker is already loaded into the machine.</span>"

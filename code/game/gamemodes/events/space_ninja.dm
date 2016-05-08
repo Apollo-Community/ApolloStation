@@ -153,7 +153,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 
 		var/list/candidates = list()	//list of candidate keys
 		for(var/mob/dead/observer/G in player_list)
-			if(G.client && !G.client.holder && !G.client.is_afk() && G.client.prefs.be_special & BE_NINJA)
+			if(G.client && !G.client.holder && !G.client.is_afk() && G.client.prefs.beSpecial() & BE_NINJA)
 				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
 					candidates += G
 		if(!candidates.len)	return
@@ -496,8 +496,8 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	var/ninja_name = pick(ninja_names)
 	new_ninja.gender = pick(MALE, FEMALE)
 
-	var/datum/preferences/A = new()//Randomize appearance for the ninja.
-	A.randomize_appearance_for(new_ninja)
+	var/datum/character/C = new()//Randomize appearance for the ninja.
+	C.randomize_appearance_for(new_ninja)
 	new_ninja.real_name = "[ninja_title] [ninja_name]"
 	new_ninja.dna.ready_dna(new_ninja)
 	new_ninja.create_mind_space_ninja()
