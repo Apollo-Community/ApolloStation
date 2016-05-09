@@ -2588,9 +2588,24 @@ area/space/atmosalert()
 	icon_state = "moon"
 	environment = PLAIN
 
+	base_turf = /turf/planet/lunar
+
+/area/planet/exterior
+	name = "\improper moon"
+	icon_state = "moon"
+	environment = PLAIN
+
 	ambience = list( 'sound/ambience/ambience_outpost.ogg' )
 	music = list( 'sound/ambience/ambispace.ogg','sound/ambience/ambispace1.ogg','sound/ambience/ambispace2.ogg' )
-	base_turf = /turf/planet/lunar
+
+/area/planet/moon/exterior
+	name = "\improper moon"
+	icon_state = "moon"
+	environment = PLAIN
+
+	ambience = list( 'sound/ambience/ambience_outpost.ogg' )
+	music = list( 'sound/ambience/ambispace.ogg','sound/ambience/ambispace1.ogg','sound/ambience/ambispace2.ogg' )
+
 
 /area/planet/moon/landing_zone
 	name = "\improper landing zone"
@@ -2606,6 +2621,154 @@ area/space/atmosalert()
 	name = "\improper outpost"
 	icon_state = "south"
 	requires_power = 0
+
+/area/planet/moon/base/
+	environment = HALLWAY
+
+/area/planet/moon/base/dorms
+	name = "\improper Dormitory"
+	icon_state = "Sleep"
+
+/area/planet/moon/base/arrivals
+	name = "\improper Moonbase Entry"
+	icon_state = "research"
+
+/area/planet/moon/base/security
+	name = "\improper Security Post"
+	icon_state = "security"
+
+/area/planet/moon/base/medbay
+	name = "\improper Medbay"
+	icon_state = "medbay"
+
+/area/planet/moon/base/engineering
+	name = "\improper Engineering"
+	icon_state = "engine"
+
+/area/planet/moon/base/maintenance/foreport
+	name = "\improper Fore Port Maintenance"
+	icon_state = "fpmaint"
+
+/area/planet/moon/base/maintenance/forestarboard
+	name = "\improper Fore Starboard Maintenance"
+	icon_state = "fsmaint"
+
+/area/planet/moon/base/maintenance/aftport
+	name = "\improper Aft Port Maintenance"
+	icon_state = "apmaint"
+
+/area/planet/moon/base/maintenance/aftstarboard
+	name = "\improper Aft Starboard Maintenance"
+	icon_state = "asmaint"
+
+/area/planet/moon/base/maintenance/solars
+	name = "\improper Solar Control Room"
+	icon_state = "SolarcontrolP"
+
+/area/planet/moon/base/maintenance/solarsex
+	name = "\improper Moonbase Solar Arrays"
+	icon_state = "panelsA"
+
+/area/planet/moon/base/dorms
+	name = "\improper Dormitory"
+	icon_state = "Sleep"
+
+/area/planet/moon/base/exterior
+	name = "\improper Moonbase Exterior"
+	icon_state = "research"
+
+/area/planet/moon/base/rnd/research
+	name = "\improper Research and Development"
+	icon_state = "research"
+
+/area/planet/moon/base/rnd/researchbreak
+	name = "\improper Research Break Room"
+	icon_state = "research"
+
+/area/planet/moon/base/rnd/docking
+	name = "\improper Research Dock"
+	icon_state = "research_dock"
+
+/area/planet/moon/base/rnd/iso1
+	name = "Isolation Cell 1"
+	icon_state = "iso1"
+
+/area/planet/moon/base/rnd/iso1_access
+	name = "Isolation Cell 1 - Access"
+	icon_state = "iso1"
+
+/area/planet/moon/base/rnd/iso2
+	name = "Isolation Cell 2"
+	icon_state = "iso2"
+
+/area/planet/moon/base/rnd/iso3
+	name = "Isolation Cell 3"
+	icon_state = "iso3"
+
+/area/planet/moon/base/rnd/anomaly
+	name = "Anomalous Materials Lab"
+	icon_state = "anolab"
+
+/area/planet/moon/base/incinerator
+	name = "Incinerator"
+	icon_state = "apmaint"
+
+/area/planet/moon/base/rnd/lab
+	name = "\improper Research Lab"
+	icon_state = "toxlab"
+
+/area/planet/moon/base/rnd/rdoffice
+	name = "\improper Research Director's Office"
+	icon_state = "head_quarters"
+
+/area/planet/moon/base/rnd/supermatter
+	name = "\improper Supermatter Lab"
+	icon_state = "toxlab"
+
+/area/planet/moon/base/rnd/xenobiology
+	name = "\improper Xenobiology Lab"
+	icon_state = "xeno_lab"
+
+/area/planet/moon/base/rnd/xenobiology/xenoflora_storage
+	name = "\improper Xenoflora Storage"
+	icon_state = "xeno_f_store"
+
+/area/planet/moon/base/rnd/xenobiology/xenoflora
+	name = "\improper Xenoflora Lab"
+	icon_state = "xeno_f_lab"
+
+/area/planet/moon/base/rnd/storage
+	name = "\improper Toxins Storage"
+	icon_state = "toxstorage"
+
+/area/planet/moon/base/rnd/storage2
+	name = "\improper Research Equipment Storage"
+	icon_state = "storage"
+
+/area/planet/moon/base/rnd/test_area
+	name = "\improper Toxins Test Area"
+	icon_state = "toxtest"
+
+/area/planet/moon/base/rnd/mixing
+	name = "\improper Toxins Mixing Room"
+	icon_state = "toxmix"
+
+/area/planet/moon/base/rnd/alloy_lab
+	name = "\improper Alloys Lab"
+	icon_state = "alloylab"
+
+/area/planet/moon/base/rnd/misc_lab
+	name = "\improper Miscellaneous Research"
+	icon_state = "toxmisc"
+
+/area/planet/moon/base/rnd/server
+	name = "\improper Server Room"
+	icon_state = "server"
+
+/area/planet/moon/base/rnd/hallway
+	name = "\improper Server Room"
+	icon_state = "research"
+
 
 
 
