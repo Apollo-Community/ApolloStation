@@ -820,9 +820,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 			stat("Commit:\t", "#[config.git_commit_id]")
 			stat("Instances:","[world.contents.len]")
 			stat("CPU:","[world.cpu]")
-			if(processScheduler && processScheduler.getIsRunning())
+			if(processScheduler && processScheduler.isRunning)
 				for(var/datum/controller/process/P in processScheduler.processes)
-					stat(P.getStatName(), P.getTickTime())
+					stat(P.getContext())
 			else
 				stat("processScheduler is not running.")
 

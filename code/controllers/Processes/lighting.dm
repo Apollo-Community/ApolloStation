@@ -4,7 +4,6 @@
 /datum/controller/process/lighting/setup()
 	name = "lighting"
 	schedule_interval = 10		//This was 5, buuut I'm a daredevil
-	cpu_threshold = 80
 
 	create_lighting_overlays()
 	LightingProcess = src

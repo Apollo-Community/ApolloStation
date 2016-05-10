@@ -4,8 +4,6 @@ var/global/list/object_profiling = list()
 /datum/controller/process/obj/setup()
     name = "obj"
     schedule_interval = 40 // every 4 seconds
-    cpu_threshold = 50
-
     ObjProcess = src
 
 /datum/controller/process/obj/doWork()
@@ -16,5 +14,5 @@ var/global/list/object_profiling = list()
         processing_objects.Remove(O)
         scheck()
 
-/datum/controller/process/obj/getStatName()
+/datum/controller/process/obj/getContext()
     return ..()+"([processing_objects.len])"

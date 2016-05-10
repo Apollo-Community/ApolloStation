@@ -4,8 +4,6 @@ var/list/MachineProcessing = list()
 /datum/controller/process/machinery/setup()
 	name = "machinery"
 	schedule_interval = 50 // every 5 seconds
-	cpu_threshold = 40	// just keep this chugging along
-
 	MachineProcess = src
 
 /datum/controller/process/machinery/doWork()
@@ -57,5 +55,5 @@ var/list/MachineProcessing = list()
 
 		pipe_networks.Remove(pipeNetwork)
 
-/datum/controller/process/machinery/getStatName()
+/datum/controller/process/machinery/getContext()
 	return ..()+"(MCH:[MachineProcessing.len] PWR:[powernets.len] PIP:[pipe_networks.len])"

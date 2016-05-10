@@ -3,8 +3,6 @@
 /datum/controller/process/mob/setup()
     name = "mob"
     schedule_interval = 20 // every 2 seconds
-    cpu_threshold = 50
-
     MobProcess = src
 
 /datum/controller/process/mob/doWork()
@@ -15,5 +13,5 @@
         mob_list.Remove(M)
         scheck()
 
-/datum/controller/process/mob/getStatName()
+/datum/controller/process/mob/getContext()
     return ..()+"([mob_list.len])"

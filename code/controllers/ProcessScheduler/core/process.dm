@@ -167,8 +167,7 @@ datum/controller/process/proc/handleHung()
 	if (TimeOfHour < run_start)
 		run_start -= 36000
 	var/msg = "[name] process hung at tick #[ticks]. Process was unresponsive for [(TimeOfHour - run_start) / 10] seconds and was restarted. Last task: [last_task]. Last Object Type: [lastObjType]"
-	logTheThing("debug", null, null, msg)
-	logTheThing("diary", null, null, msg, "debug")
+	log_debug(msg)
 	message_admins(msg)
 
 	main.restartProcess(src.name)
@@ -176,8 +175,7 @@ datum/controller/process/proc/handleHung()
 datum/controller/process/proc/kill()
 	if (!killed)
 		var/msg = "[name] process was killed at tick #[ticks]."
-		logTheThing("debug", null, null, msg)
-		logTheThing("diary", null, null, msg, "debug")
+		log_debug(msg)
 		//finished()
 
 		// Allow inheritors to clean up if needed

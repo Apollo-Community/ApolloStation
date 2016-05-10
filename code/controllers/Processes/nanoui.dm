@@ -3,8 +3,6 @@
 /datum/controller/process/nanoui/setup()
 	name = "nanoui"
 	schedule_interval = 20 // every 2 second
-	cpu_threshold = 30
-
 
 /datum/controller/process/nanoui/doWork()
 	for(var/datum/nanoui/N in nanomanager.processing_uis)
@@ -13,5 +11,5 @@
 			continue
 		nanomanager.processing_uis.Remove()
 
-/datum/controller/process/nanoui/getStatName()
+/datum/controller/process/nanoui/getContext()
 	return ..()+"([nanomanager.processing_uis.len])"

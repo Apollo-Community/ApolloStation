@@ -19,7 +19,6 @@ var/list/delayed_garbage = list()
 /datum/controller/process/garbage_collector/setup()
 	name = "garbage"
 	schedule_interval = 20	// every 2 seconds
-	cpu_threshold = 70
 
 	if(!garbage_collector)
 		garbage_collector = src
@@ -80,7 +79,7 @@ var/list/delayed_garbage = list()
 	destroyed -= "\ref[A]" // Removing any previous references that were GC'd so that the current object will be at the end of the list.
 	destroyed["\ref[A]"] = world.time
 
-/datum/controller/process/garbage_collector/getStatName()
+/datum/controller/process/garbage_collector/getContext()
 	return ..()+"([garbage_collector.destroyed.len]/[garbage_collector.dels]/[garbage_collector.hard_dels])"
 
 // Tests if an atom has been deleted.

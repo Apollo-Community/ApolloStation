@@ -3,7 +3,6 @@
 /datum/controller/process/disease/setup()
 	name = "disease"
 	schedule_interval = 30 // every 3 seconds
-	cpu_threshold = 20
 
 /datum/controller/process/disease/doWork()
 	for(var/datum/disease/D in active_diseases)
@@ -12,5 +11,5 @@
 			continue
 		active_diseases.Remove(D)
 
-/datum/controller/process/disease/getStatName()
+/datum/controller/process/disease/getContext()
 	return ..()+"([active_diseases.len])"
