@@ -4,7 +4,7 @@
  * This file contains constructs that the process scheduler expects to exist
  * in a standard ss13 fork.
  */
-/*
+
 /**
  * message_admins
  *
@@ -12,7 +12,7 @@
  */
 /proc/message_admins(msg)
 	world << msg
-*/
+
 /**
  * logTheThing
  *
@@ -33,6 +33,3 @@
  * or the object is placed in an object pool (effectively out-of-play so to speak)
  */
 /datum/var/disposed
-// Garbage collection (controller).
-/datum/var/gcDestroyed
-/datum/var/timeDestroyed
