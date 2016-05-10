@@ -6,10 +6,10 @@
 
 /datum/controller/process/nanoui/doWork()
 	for(var/datum/nanoui/N in nanomanager.processing_uis)
-		if(N)
+		if(!N.gcDestroyed)
 			N.process()
 			continue
 		nanomanager.processing_uis.Remove()
 
 /datum/controller/process/nanoui/getContext()
-	return ..()+"([nanomanager.processing_uis.len])"
+	return ..()+"(UIS:[nanomanager.processing_uis.len])"

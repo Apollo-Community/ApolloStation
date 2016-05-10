@@ -4,6 +4,3 @@
 
 /datum/controller/process/cell_auto/doWork()
 	cell_auto_manager.fire()
-
-/datum/controller/process/cell_auto/getContext()
-	return ..()

@@ -822,7 +822,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			stat("CPU:","[world.cpu]")
 			if(processScheduler && processScheduler.isRunning)
 				for(var/datum/controller/process/P in processScheduler.processes)
-					stat(P.getContext())
+					stat(P.name, P.getContext())
 			else
 				stat("processScheduler is not running.")
 

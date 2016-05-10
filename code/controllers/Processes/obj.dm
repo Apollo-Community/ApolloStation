@@ -7,12 +7,13 @@ var/global/list/object_profiling = list()
     ObjProcess = src
 
 /datum/controller/process/obj/doWork()
-    for(var/obj/O in processing_objects)
-        if(O)
-            O.process()
-            continue
-        processing_objects.Remove(O)
-        scheck()
+	var/c = 0
+	for(var/obj/O in processing_objects)
+		if(!O.gcDestroyed)
+			O.process()
+			if(!(c++ % 20))		scheck()
+		else
+			processing_objects.Remove(O)
 
 /datum/controller/process/obj/getContext()
-    return ..()+"([processing_objects.len])"
+    return ..()+"(OBJ:[processing_objects.len])"

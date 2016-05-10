@@ -99,11 +99,8 @@ datum/controller/process/New(var/datum/controller/processScheduler/scheduler)
 	last_object = null
 
 datum/controller/process/proc/started()
-	// Initialize last_slept so we can record timing information
-	last_slept = TimeOfHour
-
 	// Initialize run_start so we can detect hung processes.
-	run_start = TimeOfHour
+	run_start = TimeOfGame
 
 	// Initialize tick_start so we can know when to sleep
 	tick_start = world.tick_usage
@@ -163,10 +160,7 @@ datum/controller/process/proc/handleHung()
 	if(istype(lastObj))
 		lastObjType = lastObj.type
 
-	// If world.timeofday has rolled over, then we need to adjust.
-	if (TimeOfHour < run_start)
-		run_start -= 36000
-	var/msg = "[name] process hung at tick #[ticks]. Process was unresponsive for [(TimeOfHour - run_start) / 10] seconds and was restarted. Last task: [last_task]. Last Object Type: [lastObjType]"
+	var/msg = "[name] process hung at tick #[ticks]. Process was unresponsive for [(TimeOfGame - run_start) / 10] seconds and was restarted. Last task: [last_task]. Last Object Type: [lastObjType]"
 	log_debug(msg)
 	message_admins(msg)
 
@@ -200,7 +194,7 @@ datum/controller/process/proc/scheck(var/tickId = 0)
 	if (world.tick_usage > 100 || (world.tick_usage - tick_start) > tick_allowance)
 		sleep(world.tick_lag)
 		cpu_defer_count++
-		last_slept = TimeOfHour
+		last_slept = TimeOfTick
 		tick_start = world.tick_usage
 
 		return 1
@@ -225,15 +219,13 @@ datum/controller/process/proc/update()
 		setStatus(PROCESS_STATUS_MAYBE_HUNG)
 
 datum/controller/process/proc/getElapsedTime()
-	if (TimeOfHour < run_start)
-		return TimeOfHour - (run_start - 36000)
-	return TimeOfHour - run_start
+	return TimeOfGame - run_start
 
 datum/controller/process/proc/tickDetail()
 	return
 
 datum/controller/process/proc/getContext()
-	return "<tr><td>[name]</td><td>[main.averageRunTime(src)]</td><td>[main.last_run_time[src]]</td><td>[main.highest_run_time[src]]</td><td>[ticks]</td></tr>\n"
+	return "   {AVG:[main.averageRunTime(src)] -LAST:[main.last_run_time[src]] -HIGH:[main.highest_run_time[src]] #[ticks]}"
 
 datum/controller/process/proc/getContextData()
 	return list(

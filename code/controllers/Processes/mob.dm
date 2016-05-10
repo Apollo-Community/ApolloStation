@@ -6,12 +6,13 @@
     MobProcess = src
 
 /datum/controller/process/mob/doWork()
-    for(var/mob/M in mob_list)
-        if(M)
-            M.Life()
-            continue
-        mob_list.Remove(M)
-        scheck()
+	var/c = 0
+	for(var/mob/M in mob_list)
+		if(!M.gcDestroyed)
+			M.Life()
+			if(!(c++ % 3))		scheck()
+		else
+			mob_list.Remove(M)
 
 /datum/controller/process/mob/getContext()
-    return ..()+"([mob_list.len])"
+    return ..()+"(MOB:[mob_list.len])"

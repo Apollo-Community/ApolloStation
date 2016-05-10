@@ -6,10 +6,10 @@
 
 /datum/controller/process/disease/doWork()
 	for(var/datum/disease/D in active_diseases)
-		if(D)
+		if(!D.gcDestroyed)
 			D.process()
 			continue
 		active_diseases.Remove(D)
 
 /datum/controller/process/disease/getContext()
-	return ..()+"([active_diseases.len])"
+	return ..()+"(AMT:[active_diseases.len])"

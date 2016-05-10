@@ -7,53 +7,37 @@ var/list/MachineProcessing = list()
 	MachineProcess = src
 
 /datum/controller/process/machinery/doWork()
-	internal_process_pipenets()
-	internal_process_machinery()
-	internal_process_power()
-	internal_process_power_drain()
+	var/c = 0
+	//atmos pipes
+	for(var/datum/pipe_network/pipeNetwork in pipe_networks)
+		if(!pipeNetwork.disposed)
+			pipeNetwork.process()
+			if(!(c++ % 10))		scheck()
+		else
+			pipe_networks.Remove(pipeNetwork)
 
-/datum/controller/process/machinery/proc/internal_process_machinery()
-	//Going to try processing in batches of 400
-	var/tmp/ceil_val = Ceiling(MachineProcessing.len/400)
-	schedule_interval = 8+(4*ceil_val)	// fancy variable scheduling
-	for(var/i = 0; i < ceil_val; i++)	//have to ceiling this so we don't miss out on extras
-		var/adjusted_i = i == 0 ? i : i*400
-		spawn(4*i)
-			for(var/x = 1+adjusted_i; x < 400+adjusted_i; x++)
-				if(x > MachineProcessing.len)		break
-				var/obj/machinery/M = MachineProcessing[x]
-				if(M && !M.gcDestroyed)
-					if(M.process() == PROCESS_KILL)
-						MachineProcessing -= M
-						scheck()
-						continue
-					if(M.use_power)
-						M.auto_use_power()
+	//machinery
+	for(var/obj/machinery/M in MachineProcessing)
+		if(!M.gcDestroyed)
+			if(!(c++ % 40))		scheck()
+			if(M.process() == PROCESS_KILL)
+				MachineProcessing -= M
+				continue
+			if(M.use_power)				M.auto_use_power()
 
-/datum/controller/process/machinery/proc/internal_process_power()
+	//power network
 	for(var/datum/powernet/powerNetwork in powernets)
-		if(istype(powerNetwork) && !powerNetwork.disposed)
+		if(!powerNetwork.disposed)
 			powerNetwork.reset()
-			scheck()
+			if(!(c++ % 5))		scheck()
 			continue
 
 		powernets.Remove(powerNetwork)
 
-/datum/controller/process/machinery/proc/internal_process_power_drain()
-	// Currently only used by powersinks. These items get priority processed before machinery
+	//power sinks
 	for(var/obj/item/I in processing_power_items)
 		if(!I.pwr_drain()) // 0 = Process Kill, remove from processing list.
 			processing_power_items.Remove(I)
-		scheck()
-
-/datum/controller/process/machinery/proc/internal_process_pipenets()
-	for(var/datum/pipe_network/pipeNetwork in pipe_networks)
-		if(istype(pipeNetwork) && !pipeNetwork.disposed)
-			pipeNetwork.process()
-			scheck()
-			continue
-
-		pipe_networks.Remove(pipeNetwork)
 
 /datum/controller/process/machinery/getContext()
 	return ..()+"(MCH:[MachineProcessing.len] PWR:[powernets.len] PIP:[pipe_networks.len])"

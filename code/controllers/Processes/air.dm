@@ -1,7 +1,7 @@
 /var/global/datum/controller/process/air/AirProcess
 
 /datum/controller/process/air/setup()
-	name = "air"
+	name = "Air"
 	schedule_interval = 30 // every 3 seconds
 
 	if(!air_master)
