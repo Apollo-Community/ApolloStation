@@ -1,5 +1,6 @@
 var/global/datum/controller/process/machinery/MachineProcess
 var/list/MachineProcessing = list()
+var/list/SolarControl = list()
 
 /datum/controller/process/machinery/setup()
 	name = "machinery"
@@ -33,6 +34,19 @@ var/list/MachineProcessing = list()
 			continue
 
 		powernets.Remove(powerNetwork)
+
+	//solars -- no need to process all the panels if they're not connected to any control console	~323 panels saved @ 10 May 16
+	for(var/obj/machinery/power/solar_control/SC in SolarControl)
+		if(!SC.gcDestroyed)
+			SC.process()
+			for(var/obj/machinery/power/solar/P in SC.connected_panels)
+				if(!P.gcDestroyed)
+					P.process()
+					if(!(c++ % 30))		scheck()
+				else
+					SC.connected_panels -= P
+		else	
+			SolarControl -= SC
 
 	//power sinks
 	for(var/obj/item/I in processing_power_items)
