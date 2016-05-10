@@ -114,5 +114,5 @@
 /obj/effect/map/sector/engipost
 	real_icon_state = "Engi Outpost"
 
-/obj/effect/map/sector/cybersun
+/obj/effect/map/sector/moon
 	real_icon_state = "Moon"

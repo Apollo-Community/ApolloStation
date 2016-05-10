@@ -977,7 +977,7 @@
 "sO" = (/obj/effect/decal/cleanable/blood,/turf/planet/lunar,/area/planet/moon)
 "sP" = (/obj/item/clothing/suit/wizrobe/fake,/turf/planet/lunar,/area/planet/moon)
 "sQ" = (/obj/item/clothing/head/wizard/fake,/turf/planet/lunar,/area/planet/moon)
-"sR" = (/obj/effect/mapinfo/sector/cybersun,/turf/simulated/mineral/lunar,/area/planet/moon)
+"sR" = (/obj/effect/mapinfo/sector/moon,/turf/simulated/mineral/lunar,/area/planet/moon)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
