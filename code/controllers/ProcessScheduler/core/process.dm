@@ -178,7 +178,7 @@ datum/controller/process/proc/kill()
 		// This should del
 		del(src)
 
-datum/controller/process/proc/scheck(var/tickId = 0)
+datum/controller/process/proc/scheck()
 	if (killed)
 		// The kill proc is the only place where killed is set.
 		// The kill proc should have deleted this datum, and all sleeping procs that are
@@ -191,7 +191,7 @@ datum/controller/process/proc/scheck(var/tickId = 0)
 
 	// For each tick the process defers, it increments the cpu_defer_count so we don't
 	// defer indefinitely
-	if (world.tick_usage > 100 || (world.tick_usage - tick_start) > tick_allowance)
+	if (world.tick_usage > tick_allowance)
 		sleep(world.tick_lag)
 		cpu_defer_count++
 		last_slept = TimeOfTick
@@ -225,7 +225,7 @@ datum/controller/process/proc/tickDetail()
 	return
 
 datum/controller/process/proc/getContext()
-	return "   {AVG:[main.averageRunTime(src)] -LAST:[main.last_run_time[src]] -HIGH:[main.highest_run_time[src]] #[ticks]}"
+	return "[getStatusText()] - {AVG:[main.averageRunTime(src)] -LAST:[main.last_run_time[src]] -HIGH:[main.highest_run_time[src]] #[ticks]}"
 
 datum/controller/process/proc/getContextData()
 	return list(

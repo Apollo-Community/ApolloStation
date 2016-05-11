@@ -10,4 +10,4 @@ var/global/list/turf/processing_turfs = list()
 			processing_turfs.Remove(T)
 
 /datum/controller/process/turf/getContext()
-	return ..()+"(TURF:[processing_turfs.len])"
+	return ..()+" - (TURF:[processing_turfs.len])"

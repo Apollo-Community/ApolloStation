@@ -1,14 +1,12 @@
-var/global/datum/controller/process/machinery/MachineProcess
 var/list/MachineProcessing = list()
 var/list/SolarControl = list()
 
 /datum/controller/process/machinery/setup()
 	name = "machinery"
 	schedule_interval = 50 // every 5 seconds
-	MachineProcess = src
 
 /datum/controller/process/machinery/doWork()
-	var/c = 0
+	var/c = 10
 	//atmos pipes
 	for(var/datum/pipe_network/pipeNetwork in pipe_networks)
 		if(!pipeNetwork.disposed)
@@ -45,7 +43,7 @@ var/list/SolarControl = list()
 					if(!(c++ % 30))		scheck()
 				else
 					SC.connected_panels -= P
-		else	
+		else
 			SolarControl -= SC
 
 	//power sinks
@@ -54,4 +52,4 @@ var/list/SolarControl = list()
 			processing_power_items.Remove(I)
 
 /datum/controller/process/machinery/getContext()
-	return ..()+"(MCH:[MachineProcessing.len] PWR:[powernets.len] PIP:[pipe_networks.len])"
+	return ..()+" - (MCH:[MachineProcessing.len] PWR:[powernets.len] PIP:[pipe_networks.len])"

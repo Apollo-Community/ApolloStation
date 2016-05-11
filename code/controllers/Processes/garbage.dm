@@ -64,7 +64,7 @@ var/list/delayed_garbage = list()
 	destroyed["\ref[A]"] = world.time
 
 /datum/controller/process/garbage_collector/getContext()
-	return ..()+"(AMT:[garbage_collector.destroyed.len]/DEL:[garbage_collector.dels]/HDEL:[garbage_collector.hard_dels])"
+	return ..()+" - (AMT:[garbage_collector.destroyed.len]/DEL:[garbage_collector.dels]/HDEL:[garbage_collector.hard_dels])"
 
 // Tests if an atom has been deleted.
 /proc/deleted(atom/A)

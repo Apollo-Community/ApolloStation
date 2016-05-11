@@ -1,12 +1,9 @@
-/var/global/datum/controller/process/mob/MobProcess
-
 /datum/controller/process/mob/setup()
     name = "mob"
     schedule_interval = 20 // every 2 seconds
-    MobProcess = src
 
 /datum/controller/process/mob/doWork()
-	var/c = 0
+	var/c = 3
 	for(var/mob/M in mob_list)
 		if(!M.gcDestroyed)
 			M.Life()
@@ -15,4 +12,4 @@
 			mob_list.Remove(M)
 
 /datum/controller/process/mob/getContext()
-    return ..()+"(MOB:[mob_list.len])"
+    return ..()+" - (MOB:[mob_list.len])"

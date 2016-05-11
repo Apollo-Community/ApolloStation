@@ -93,16 +93,13 @@ var/global/datum/controller/processScheduler/processScheduler
 	for(var/datum/controller/process/p in running)
 		p.update()
 
-		if (isnull(p)) // Process was killed
+		if (!p) // Process was killed
 			continue
 
-		var/status = p.getStatus()
-		var/previousStatus = p.getPreviousStatus()
-
 		// Check status changes
-		if(status != previousStatus)
+		if(p.status != p.previousStatus)
 			//Status changed.
-			switch(status)
+			switch(p.status)
 				if(PROCESS_STATUS_PROBABLY_HUNG)
 					message_admins("Process '[p.name]' may be hung.")
 				if(PROCESS_STATUS_HUNG)
@@ -111,7 +108,7 @@ var/global/datum/controller/processScheduler/processScheduler
 /datum/controller/processScheduler/proc/queueProcesses()
 	for(var/datum/controller/process/p in processes)
 		// Don't double-queue, don't queue running processes
-		if (p.disabled || p.running || p.queued || !p.idle)
+		if(p.running || p.disabled || p.queued || !p.idle)
 			continue
 
 		// If world.timeofday has rolled over, then we need to adjust.

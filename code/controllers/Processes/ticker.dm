@@ -1,5 +1,3 @@
-var/global/datum/controller/process/ticker/tickerProcess
-
 /datum/controller/process/ticker
 	var/lastTickerTimeDuration
 	var/lastTickerTime
@@ -12,8 +10,6 @@ var/global/datum/controller/process/ticker/tickerProcess
 
 	if(!ticker)
 		ticker = new
-
-	tickerProcess = src
 
 	spawn(0)
 		if(ticker)

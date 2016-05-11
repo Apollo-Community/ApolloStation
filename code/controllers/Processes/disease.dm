@@ -12,4 +12,4 @@
 		active_diseases.Remove(D)
 
 /datum/controller/process/disease/getContext()
-	return ..()+"(AMT:[active_diseases.len])"
+	return ..()+" - (AMT:[active_diseases.len])"

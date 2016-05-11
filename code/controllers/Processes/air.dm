@@ -1,5 +1,3 @@
-/var/global/datum/controller/process/air/AirProcess
-
 /datum/controller/process/air/setup()
 	name = "Air"
 	schedule_interval = 30 // every 3 seconds
@@ -7,8 +5,6 @@
 	if(!air_master)
 		air_master = new
 		air_master.Setup()
-
-	AirProcess = src
 
 /datum/controller/process/air/doWork()
 	if(!air_processing_killed)

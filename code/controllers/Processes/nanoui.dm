@@ -12,4 +12,4 @@
 		nanomanager.processing_uis.Remove()
 
 /datum/controller/process/nanoui/getContext()
-	return ..()+"(UIS:[nanomanager.processing_uis.len])"
+	return ..()+" - (UIs:[nanomanager.processing_uis.len])"
