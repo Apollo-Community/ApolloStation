@@ -100,7 +100,7 @@ datum/controller/process/New(var/datum/controller/processScheduler/scheduler)
 
 datum/controller/process/proc/started()
 	// Initialize run_start so we can detect hung processes.
-	run_start = TimeOfGame
+	run_start = TimeOfHour
 
 	// Initialize tick_start so we can know when to sleep
 	tick_start = world.tick_usage
@@ -160,7 +160,7 @@ datum/controller/process/proc/handleHung()
 	if(istype(lastObj))
 		lastObjType = lastObj.type
 
-	var/msg = "[name] process hung at tick #[ticks]. Process was unresponsive for [(TimeOfGame - run_start) / 10] seconds and was restarted. Last task: [last_task]. Last Object Type: [lastObjType]"
+	var/msg = "[name] process hung at tick #[ticks]. Process was unresponsive for [(TimeOfHour - run_start) / 10] seconds and was restarted. Last task: [last_task]. Last Object Type: [lastObjType]"
 	log_debug(msg)
 	message_admins(msg)
 
@@ -194,7 +194,7 @@ datum/controller/process/proc/scheck()
 	if (world.tick_usage > tick_allowance)
 		sleep(world.tick_lag)
 		cpu_defer_count++
-		last_slept = TimeOfTick
+		last_slept = TimeOfHour
 		tick_start = world.tick_usage
 
 		return 1
@@ -219,7 +219,7 @@ datum/controller/process/proc/update()
 		setStatus(PROCESS_STATUS_MAYBE_HUNG)
 
 datum/controller/process/proc/getElapsedTime()
-	return TimeOfGame - run_start
+	return TimeOfHour - run_start
 
 datum/controller/process/proc/tickDetail()
 	return

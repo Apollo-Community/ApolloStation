@@ -112,11 +112,11 @@ var/global/datum/controller/processScheduler/processScheduler
 			continue
 
 		// If world.timeofday has rolled over, then we need to adjust.
-		if (TimeOfGame < last_start[p])
+		if (TimeOfHour < last_start[p])
 			last_start[p] -= 36000
 
 		// If the process should be running by now, go ahead and queue it
-		if (TimeOfGame > last_start[p] + p.schedule_interval)
+		if (TimeOfHour > last_start[p] + p.schedule_interval)
 			setQueuedProcessState(p)
 
 /datum/controller/processScheduler/proc/runQueuedProcesses()
@@ -220,13 +220,13 @@ var/global/datum/controller/processScheduler/processScheduler
 
 /datum/controller/processScheduler/proc/recordStart(var/datum/controller/process/process, var/time = null)
 	if (isnull(time))
-		time = TimeOfGame
+		time = TimeOfHour
 
 	last_start[process] = time
 
 /datum/controller/processScheduler/proc/recordEnd(var/datum/controller/process/process, var/time = null)
 	if (isnull(time))
-		time = TimeOfGame
+		time = TimeOfHour
 
 	// If world.timeofday has rolled over, then we need to adjust.
 	if (time < last_start[process])
