@@ -35,28 +35,51 @@
 		// Our Contracts
 		if(antag.active_contracts.len > 0)
 			. += "<h2><span class='white'>Active Contracts</span></h2>"
-			. += "<table>"
+			. += "<table><center>"
 			for(var/datum/contract/C in antag.active_contracts)
-				. += "<tr><table class='outline'><center>"
-				. += "<th width=20%>[C.title]</th>"
-				. += "<td width=60%><i>[C.desc]</i></td>"
+				. += "<tr><table class='outline'>"
+				. += "<tr><th colspan='3'>[C.title]</th></tr>"
+				. += "<tr><td colspan='3'>[C.desc]</td></tr>"
+				. += "<tr><td colspan='3'><hr></td></tr>"
+				. += "<tr>"
 				if(C.time_limit)
-					. += "<td width=20%>Expires: [worldtime2text(C.contract_start + C.time_limit)]</td>"
+					. += "<td>Expires: [worldtime2text(C.contract_start + C.time_limit)]</td>"
 				else
-					. += "<td width=20%>No expiry</td>"
-				. += "</center></table></tr>"
-			. += "</table>"
+					. += "<td>No expiry</td>"
+				. += "<td>Reward: $[C.reward]</td>"
+				. += "<td>Hirees: [C.workers.len]</td>"
+				. += "</tr>"
+				. += "<tr><td colspan='3'><hr></td></tr>"
+				. += "<tr><td colspan='3'><b>ACCEPTED</b></td></tr>"
+				. += "</table></tr>"
+
+				. += "<br>"
+			. += "</center></table>"
+
+		if(antag.active_contracts.len > 0)
+			. += "<hr>"
 
 		// Our completed contracts
 		if(antag.completed_contracts.len > 0)
 			. += "<h2><span class='white'>Completed Contracts</span></h2>"
-			. += "<table>"
+			. += "<table><center>"
 			for(var/datum/contract/C in antag.completed_contracts)
-				. += "<tr><table class='outline'><center>"
-				. += "<th width=20%>[C.title]</th>"
-				. += "<td width=80%><i>[C.desc]</i></td>"
-				. += "</center></table></tr>"
-			. += "</table>"
+				. += "<tr><table class='outline'>"
+				. += "<tr><th colspan='3'>[C.title]</th></tr>"
+				. += "<tr><td colspan='3'>[C.desc]</td></tr>"
+				. += "<tr><td colspan='3'><hr></td></tr>"
+				. += "<tr>"
+				if(C.time_limit)
+					. += "<td>Expires: COMPLETED</td>"
+				else
+					. += "<td>No expiry</td>"
+				. += "<td>Reward: $[C.reward]</td>"
+				. += "<td>Hirees: 0</td>"
+				. += "</tr>"
+				. += "</table></tr>"
+
+				. += "<br>"
+			. += "</center></table>"
 
 		if(antag.active_contracts.len > 0 || antag.completed_contracts.len > 0)
 			. += "<hr>"
@@ -69,11 +92,22 @@
 			for(var/datum/contract/C in available_contracts)
 				if(C.can_accept(user))
 					. += "<tr><table class='outline'>"
-					. += "<th width=20%>[C.title]</th>"
-					. += "<td width=40%><i>[C.desc]</i></td>"
-					. += "<td width=20%>Expires: [worldtime2text(C.contract_start + C.time_limit)]</td>"
-					. += "<th width=20%><a href='byond://?src=\ref[src];tgroup=[tgroup];task=accept_contract\ref[C]'>Accept Contract</a></th>"
+					. += "<tr><th colspan='3'>[C.title]</th></tr>"
+					. += "<tr><td colspan='3'>[C.desc]</td></tr>"
+					. += "<tr><td colspan='3'><hr></td></tr>"
+					. += "<tr>"
+					if(C.time_limit)
+						. += "<td>Expires: [worldtime2text(C.contract_start + C.time_limit)]</td>"
+					else
+						. += "<td>No expiry</td>"
+					. += "<td>Reward: $[C.reward]</td>"
+					. += "<td>Hirees: [C.workers.len]</td>"
+					. += "</tr>"
+					. += "<tr><td colspan='3'><hr></td></tr>"
+					. += "<tr><td colspan='3'><center><a style='padding: 0% 10% 0% 10%' href='byond://?src=\ref[src];tgroup=[tgroup];task=accept_contract\ref[C]'>Accept Contract</a></center></td></tr>"
 					. += "</table></tr>"
+
+					. += "<br>"
 			. += "</center></table>"
 		else
 			. += "<center><h2><span class='white'>No Available Contracts</span></h2></center>"
