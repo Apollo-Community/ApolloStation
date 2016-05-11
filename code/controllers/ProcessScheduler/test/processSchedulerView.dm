@@ -29,6 +29,7 @@
 /datum/processSchedulerView/proc/getProcessTable()
 	var/text = "<table class=\"table table-striped\"><thead><tr><td>Name</td><td>Avg(s)</td><td>Last(s)</td><td>Highest(s)</td><td>Tickcount</td><td>Tickrate</td><td>State</td><td>Action</td></tr></thead><tbody>"
 	// and the context of each
+	text += "<tr><th>world.cpu</th><td colspan=\"7\">[world.cpu]</td></tr>"
 	for (var/list/data in processScheduler.getStatusData())
 		text += "<tr>"
 		text += "<td>[data["name"]]</td>"

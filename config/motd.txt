@@ -1,0 +1,12 @@
+<h1>Welcome to Apollo Station!</h1>
+This is a roleplaying server. Our roleplaying style is defined in the rules and guidelines.<br>
+By joining the game you consent to having read and understood the <a href="https://apollo-community.org/viewtopic.php?f=4&t=6">full rule list.</a><br>
+<h2>The Golden Rules</h2>
+<b>If you decide to read nothing else, read these:</b><br>
+- Treat other players with respect. We&#39;re all here to have fun.<br>
+- Never do any of the following: Grief, Gank, ERP, ERG, Metagame or abuse bugs.<br>
+- Be aware that this is a heavy roleplaying server and you are expected to act accordingly.<br>
+- Erotic content of <i>any</i> kind is immediately permabannable. There are no exceptions to this rule.<br>
+- A staff member&#39;s primary role is to help you, however they are not always right. If you have an issue with a member of staff feel free to raise the issue on the forums.<br>
+<br><br>
+Find a bug or exploit? Let us know on our <a href="https://github.com/Apollo-Community/ApolloStation/issues">bugtracker!</a>

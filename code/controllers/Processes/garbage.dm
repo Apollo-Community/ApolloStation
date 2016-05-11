@@ -19,7 +19,6 @@ var/list/delayed_garbage = list()
 /datum/controller/process/garbage_collector/setup()
 	name = "garbage"
 	schedule_interval = 20	// every 2 seconds
-	cpu_threshold = 70
 
 	if(!garbage_collector)
 		garbage_collector = src
@@ -40,34 +39,18 @@ var/list/delayed_garbage = list()
 
 	while(destroyed.len && --checkRemain >= 0)
 		if(dels >= maxDels)
-			#ifdef GC_DEBUG
-			testing("GC: Reached max force dels per tick [dels] vs [maxDels]")
-			#endif
 			break // Server's already pretty pounded, everything else can wait 2 seconds
 		var/refID = destroyed[1]
 		var/GCd_at_time = destroyed[refID]
 		if(GCd_at_time > time_to_kill)
-			#ifdef GC_DEBUG
-			testing("GC: [refID] not old enough, breaking at [world.time] for [GCd_at_time - time_to_kill] deciseconds until [GCd_at_time + collection_timeout]")
-			#endif
 			break // Everything else is newer, skip them
 		var/datum/A = locate(refID)
-		#ifdef GC_DEBUG
-		testing("GC: [refID] old enough to test: GCd_at_time: [GCd_at_time] time_to_kill: [time_to_kill] current: [world.time]")
-		#endif
 		if(A && A.gcDestroyed == GCd_at_time) // So if something else coincidently gets the same ref, it's not deleted by mistake
 			// Something's still referring to the qdel'd object.  Kill it.
-			#ifdef GC_DEBUG
-			testing("GC: -- \ref[A] | [A.type] was unable to be GC'd and was deleted --")
-			#endif
 			logging["[A.type]"]++
 			del(A)
 			++dels
 			++hard_dels
-		#ifdef GC_DEBUG
-		else
-			testing("GC: [refID] properly GC'd at [world.time] with timeout [GCd_at_time]")
-		#endif
 		destroyed.Cut(1, 2)
 
 /datum/controller/process/garbage_collector/proc/AddTrash(datum/A)
@@ -80,8 +63,8 @@ var/list/delayed_garbage = list()
 	destroyed -= "\ref[A]" // Removing any previous references that were GC'd so that the current object will be at the end of the list.
 	destroyed["\ref[A]"] = world.time
 
-/datum/controller/process/garbage_collector/getStatName()
-	return ..()+"([garbage_collector.destroyed.len]/[garbage_collector.dels]/[garbage_collector.hard_dels])"
+/datum/controller/process/garbage_collector/getContext()
+	return ..()+"(AMT:[garbage_collector.destroyed.len]/DEL:[garbage_collector.dels]/HDEL:[garbage_collector.hard_dels])"
 
 // Tests if an atom has been deleted.
 /proc/deleted(atom/A)

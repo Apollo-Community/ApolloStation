@@ -3,17 +3,16 @@
 /datum/controller/process/mob/setup()
     name = "mob"
     schedule_interval = 20 // every 2 seconds
-    cpu_threshold = 50
-
     MobProcess = src
 
 /datum/controller/process/mob/doWork()
-    for(var/mob/M in mob_list)
-        if(M)
-            M.Life()
-            continue
-        mob_list.Remove(M)
-        scheck()
+	var/c = 0
+	for(var/mob/M in mob_list)
+		if(!M.gcDestroyed)
+			M.Life()
+			if(!(c++ % 3))		scheck()
+		else
+			mob_list.Remove(M)
 
-/datum/controller/process/mob/getStatName()
-    return ..()+"([mob_list.len])"
+/datum/controller/process/mob/getContext()
+    return ..()+"(MOB:[mob_list.len])"

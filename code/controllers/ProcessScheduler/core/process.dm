@@ -44,11 +44,10 @@
 	// process running again.
 	var/tmp/schedule_interval = PROCESS_DEFAULT_SCHEDULE_INTERVAL // run every 50 ticks
 
-	// Process sleep interval
-	// This controls how often the process will yield (call sleep(0)) while it is running.
-	// Every concurrent process should sleep periodically while running in order to allow other
-	// processes to execute concurrently.
-	var/tmp/sleep_interval = PROCESS_DEFAULT_SLEEP_INTERVAL
+	// Process tick allowance
+	// This controls what percentage a single tick (0 to 100) the process should be
+	// allowed to run before sleeping.
+	var/tmp/tick_allowance = PROCESS_DEFAULT_TICK_ALLOWANCE
 
 	// hang_warning_time - this is the time (in 1/10 seconds) after which the server will begin to show "maybe hung" in the context window
 	var/tmp/hang_warning_time = PROCESS_DEFAULT_HANG_WARNING_TIME
@@ -59,9 +58,6 @@
 	// hang_restart_time - After this much time(in 1/10 seconds), the server will automatically kill and restart the process.
 	var/tmp/hang_restart_time = PROCESS_DEFAULT_HANG_RESTART_TIME
 
-	// cpu_threshold - if world.cpu >= cpu_threshold, scheck() will call sleep(1) to defer further work until the next tick. This keeps a process from driving a tick into overtime (causing perceptible lag)
-	var/tmp/cpu_threshold = PROCESS_DEFAULT_CPU_THRESHOLD
-
 	// How many times in the current run has the process deferred work till the next tick?
 	var/tmp/cpu_defer_count = 0
 
@@ -69,11 +65,14 @@
 	 * recordkeeping vars
 	 */
 
-	// Records the time (server ticks) at which the process last finished sleeping
+	// Records the time (1/10s timeofday) at which the process last finished sleeping
 	var/tmp/last_slept = 0
 
-	// Records the time (s-ticks) at which the process last began running
+	// Records the time (1/10s timeofday) at which the process last began running
 	var/tmp/run_start = 0
+
+	// Records the world.tick_usage (0 to 100) at which the process last began running
+	/var/tmp/tick_start = 0
 
 	// Records the number of times this process has been killed and restarted
 	var/tmp/times_killed
@@ -92,19 +91,19 @@ datum/controller/process/New(var/datum/controller/processScheduler/scheduler)
 	idle()
 	name = "process"
 	schedule_interval = 50
-	sleep_interval = 2
 	last_slept = 0
 	run_start = 0
+	tick_start = 0
 	ticks = 0
 	last_task = 0
 	last_object = null
 
 datum/controller/process/proc/started()
-	// Initialize last_slept so we can know when to sleep
-	last_slept = world.timeofday
-
 	// Initialize run_start so we can detect hung processes.
-	run_start = world.timeofday
+	run_start = TimeOfGame
+
+	// Initialize tick_start so we can know when to sleep
+	tick_start = world.tick_usage
 
 	// Initialize defer count
 	cpu_defer_count = 0
@@ -161,13 +160,8 @@ datum/controller/process/proc/handleHung()
 	if(istype(lastObj))
 		lastObjType = lastObj.type
 
-	// If world.timeofday has rolled over, then we need to adjust.
-	if (world.timeofday < run_start)
-		run_start -= 864000
-
-	var/msg = "[name] process hung at tick #[ticks]. Process was unresponsive for [(world.timeofday - run_start) / 10] seconds and was restarted. Last task: [last_task]. Last Object Type: [lastObjType]"
-	logTheThing("debug", null, null, msg)
-	logTheThing("diary", null, null, msg, "debug")
+	var/msg = "[name] process hung at tick #[ticks]. Process was unresponsive for [(TimeOfGame - run_start) / 10] seconds and was restarted. Last task: [last_task]. Last Object Type: [lastObjType]"
+	log_debug(msg)
 	message_admins(msg)
 
 	main.restartProcess(src.name)
@@ -175,39 +169,37 @@ datum/controller/process/proc/handleHung()
 datum/controller/process/proc/kill()
 	if (!killed)
 		var/msg = "[name] process was killed at tick #[ticks]."
-		logTheThing("debug", null, null, msg)
-		logTheThing("diary", null, null, msg, "debug")
+		log_debug(msg)
 		//finished()
 
 		// Allow inheritors to clean up if needed
 		onKill()
 
-		killed = TRUE
+		// This should del
+		del(src)
 
-		del(src) // This should del
-
-datum/controller/process/proc/scheck()
+datum/controller/process/proc/scheck(var/tickId = 0)
 	if (killed)
 		// The kill proc is the only place where killed is set.
 		// The kill proc should have deleted this datum, and all sleeping procs that are
 		// owned by it.
 		CRASH("A killed process is still running somehow...")
+	if (hung)
+		// This will only really help if the doWork proc ends up in an infinite loop.
+		handleHung()
+		CRASH("Process [name] hung and was restarted.")
 
 	// For each tick the process defers, it increments the cpu_defer_count so we don't
 	// defer indefinitely
-	if (world.cpu > cpu_threshold + cpu_defer_count)
-		sleep(1)
-		cpu_defer_count+=5
-		last_slept = world.timeofday
-	else
-		// If world.timeofday has rolled over, then we need to adjust.
-		if (world.timeofday < last_slept)
-			last_slept -= 864000
+	if (world.tick_usage > 100 || (world.tick_usage - tick_start) > tick_allowance)
+		sleep(world.tick_lag)
+		cpu_defer_count++
+		last_slept = TimeOfTick
+		tick_start = world.tick_usage
 
-		if (world.timeofday > last_slept + sleep_interval)
-			// If we haven't slept in sleep_interval ticks, sleep to allow other work to proceed.
-			sleep(0)
-			last_slept = world.timeofday
+		return 1
+
+	return 0
 
 datum/controller/process/proc/update()
 	// Clear delta
@@ -216,7 +208,10 @@ datum/controller/process/proc/update()
 
 	var/elapsedTime = getElapsedTime()
 
-	if (elapsedTime > hang_restart_time)
+	if (hung)
+		handleHung()
+		return
+	else if (elapsedTime > hang_restart_time)
 		hung()
 	else if (elapsedTime > hang_alert_time)
 		setStatus(PROCESS_STATUS_PROBABLY_HUNG)
@@ -224,15 +219,13 @@ datum/controller/process/proc/update()
 		setStatus(PROCESS_STATUS_MAYBE_HUNG)
 
 datum/controller/process/proc/getElapsedTime()
-	if (world.timeofday < run_start)
-		return world.timeofday - (run_start - 864000)
-	return world.timeofday - run_start
+	return TimeOfGame - run_start
 
 datum/controller/process/proc/tickDetail()
 	return
 
 datum/controller/process/proc/getContext()
-	return "<tr><td>[name]</td><td>[main.averageRunTime(src)]</td><td>[main.last_run_time[src]]</td><td>[main.highest_run_time[src]]</td><td>[ticks]</td></tr>\n"
+	return "   {AVG:[main.averageRunTime(src)] -LAST:[main.last_run_time[src]] -HIGH:[main.highest_run_time[src]] #[ticks]}"
 
 datum/controller/process/proc/getContextData()
 	return list(
@@ -286,9 +279,9 @@ datum/controller/process/proc/_copyStateFrom(var/datum/controller/process/target
 	main = target.main
 	name = target.name
 	schedule_interval = target.schedule_interval
-	sleep_interval = target.sleep_interval
 	last_slept = 0
 	run_start = 0
+	tick_start = 0
 	times_killed = target.times_killed
 	ticks = target.ticks
 	last_task = target.last_task
@@ -308,15 +301,3 @@ datum/controller/process/proc/disable()
 
 datum/controller/process/proc/enable()
 	disabled = 0
-
-/datum/controller/process/proc/getLastRunTime()
-	return main.getProcessLastRunTime(src)
-
-/datum/controller/process/proc/getTicks()
-	return ticks
-
-/datum/controller/process/proc/getStatName()
-	return name
-
-/datum/controller/process/proc/getTickTime()
-	return "#[getTicks()] | LST:[getLastRunTime()] | AVG:[main.averageRunTime()]"

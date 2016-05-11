@@ -1,9 +1,8 @@
 /var/global/datum/controller/process/air/AirProcess
 
 /datum/controller/process/air/setup()
-	name = "air"
+	name = "Air"
 	schedule_interval = 30 // every 3 seconds
-	cpu_threshold = 50
 
 	if(!air_master)
 		air_master = new
