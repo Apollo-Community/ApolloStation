@@ -114,18 +114,18 @@
 			return
 
 		// Put in the local sector based on where they were in the overmap
-		var/obj_x = round((( pixel_x+16 )/32 )*( world.maxx-( 2*OVERMAP_EDGE )))+OVERMAP_EDGE
-		var/obj_y = round((( pixel_y+16 )/32 )*( world.maxy-( 2*OVERMAP_EDGE )))+OVERMAP_EDGE
+		var/obj_x = round((( pixel_x+16 )/32 )*( world.maxx-( 2*TRANSITION_EDGE_LENGTH )))+TRANSITION_EDGE_LENGTH
+		var/obj_y = round((( pixel_y+16 )/32 )*( world.maxy-( 2*TRANSITION_EDGE_LENGTH )))+TRANSITION_EDGE_LENGTH
 
 		switch( src.dir )
 			if( NORTH )
-				obj_y = ( OVERMAP_EDGE+3 )
+				obj_y = ( TRANSITION_EDGE_LENGTH+3 )
 			if( SOUTH )
-				obj_y = world.maxy-( OVERMAP_EDGE+3 )
+				obj_y = world.maxy-( TRANSITION_EDGE_LENGTH+3 )
 			if( WEST )
-				obj_x = world.maxx-( OVERMAP_EDGE+3 )
+				obj_x = world.maxx-( TRANSITION_EDGE_LENGTH+3 )
 			if( EAST )
-				obj_x = ( OVERMAP_EDGE+3 )
+				obj_x = ( TRANSITION_EDGE_LENGTH+3 )
 
 		var/turf/T = locate( obj_x, obj_y, sector.map_z )
 		if( T )

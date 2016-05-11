@@ -10,11 +10,18 @@
 	var/obj_type = null		// type of overmap object it spawns
 	var/landing_area = null	// if there's a specific area where incoming ships should land
 	var/zlevel
-	var/mapx			// coordinates on the
-	var/mapy			// overmap zlevel
 
 /obj/effect/mapinfo/New()
 	tag = "sector[z]"
 	zlevel = z
 	loc = null
 
+/obj/effect/mapinfo/proc/buildMap()
+	if( !obj_type )
+		return null
+
+	return new obj_type( src, getMapLoc() )
+
+// Defines where the map object spawns
+/obj/effect/mapinfo/proc/getMapLoc()
+	return locate( 1, 1, OVERMAP_ZLEVEL )

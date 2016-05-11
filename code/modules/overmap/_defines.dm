@@ -1,10 +1,10 @@
 //Zlevel where overmap objects should be
 #define OVERMAP_ZLEVEL 1
-#define STATION_X 128
-#define STATION_Y 128
-#define POPULATE_RADIUS 5 // Radius form the station x, y to populate sectors
-//How far from the edge of overmap zlevel could randomly placed objects spawn
-#define OVERMAP_EDGE 9
+#define OVERMAP_STATION_X 128
+#define OVERMAP_STATION_Y 128
+#define OVERMAP_POPULATE_RADIUS 5
+#define TRANSITION_EDGE_LENGTH 9
+#define OVERMAP_LOC_ATTEMPTS 10 // How many times it should attempt to place an item
 
 //list used to track which zlevels are being 'moved' by the proc below
 var/list/moving_levels = list()

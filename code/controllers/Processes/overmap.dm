@@ -82,28 +82,31 @@
 		error( "Failed to create overmap, no data!" )
 		return 0
 
-	var/list/sorted_lists = list()
+	var/list/list/sorted_lists = list() // a list of lists
 	var/max_priority = 0
 
-	for( var/S in data )
-/*		if( max_priority < S.build_priority )
+	// Finding the max priority level
+	for( var/obj/effect/mapinfo/sector/S in data )
+		if( max_priority < S.build_priority )
 			max_priority = S.build_priority
 			sorted_lists.len = max_priority
 
-		if( S.build_priority in data )
-			sorted_lists[S.build_priority] = list( list() )*/
-		testing("Reporting [S]")
-		reportSector( S )
-	/*
-		var/list/L = sorted_lists[S.build_priority]
-		L += S
+	// Adding individual lists
+	for( var/level in 1 to max_priority )
+		sorted_lists[level] = list( list() )
 
+	// Sorting the data into each individual priority level
+	for( var/obj/effect/mapinfo/sector/S in data )
+		if( istype( S ))
+			sorted_lists[S.build_priority] += S
+
+	// Building the map
 	for( var/level in 1 to max_priority )
 		if( !sorted_lists[level] )
 			continue
 		var/list/L = sorted_lists[level]
 		for( var/obj/effect/mapinfo/sector/S in L )
-*/
+			reportSector( S )
 
 	return 1
 
@@ -132,9 +135,9 @@
 	if( !data )
 		return 0
 
-	testing("Located sector \"[data.name]\" at [data.mapx],[data.mapy] corresponding to zlevel [data.zlevel]")
 	reportLevels( data )
-	map["[data.zlevel]"] = new data.obj_type( data )
+	map["[data.zlevel]"] = data.buildMap()
+	testing("Located sector \"[data.name]\" corresponding to zlevel [data.zlevel]")
 
 /datum/controller/process/overmap/proc/reportLevels( var/obj/effect/mapinfo/sector/S )
 	var/flags = S.sector_flags

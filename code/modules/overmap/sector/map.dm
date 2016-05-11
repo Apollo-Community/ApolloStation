@@ -9,33 +9,21 @@
 	var/map_z = 0
 	var/obj/effect/mapinfo/sector/metadata = null
 
-/obj/effect/map/New(var/obj/effect/mapinfo/data)
+/obj/effect/map/New( var/obj/effect/mapinfo/data, var/turf/T )
 	metadata = data
 
 	if( !metadata )
 		qdel( src )
 
+	loc = T
+
 	map_z = metadata.zlevel
 	real_name = metadata.name
 	real_desc = metadata.desc
 
-	var/turf/T = null
-	for( var/i = 0; i < 50; i++ )
-		var/new_x = metadata.mapx ? metadata.mapx : rand(STATION_X-POPULATE_RADIUS, STATION_X+POPULATE_RADIUS)
-		var/new_y = metadata.mapy ? metadata.mapx : rand(STATION_Y-POPULATE_RADIUS, STATION_Y+POPULATE_RADIUS)
-		T = locate(new_x, new_y, OVERMAP_ZLEVEL)
-
-		if( !sector_exists( T ) || ( metadata.mapx && metadata.mapy ))
-			break
-		else
-			T = null
-
-	if( !T )
-		qdel( src )
-
-	loc = T
-
 	update_icon()
+
+	tag = "OVERMAP [real_name]"
 
 /obj/effect/map/update_icon()
 	src.overlays.Cut()
