@@ -16,12 +16,27 @@
 	zlevel = z
 	loc = null
 
+// Defines where the map object spawns
+/obj/effect/mapinfo/proc/getMapLoc()
+	return locate( 1, 1, OVERMAP_ZLEVEL )
+
+// This attempts to build the map object on the overmap
 /obj/effect/mapinfo/proc/buildMap()
 	if( !obj_type )
 		return null
 
-	return new obj_type( src, getMapLoc() )
+	var/turf/T = getMapLoc()
 
-// Defines where the map object spawns
-/obj/effect/mapinfo/proc/getMapLoc()
-	return locate( 1, 1, OVERMAP_ZLEVEL )
+	if( !istype( T ))
+		return null
+
+	if( !initliazeMap() )
+		return null
+
+	return new obj_type( src, T )
+
+// Use this for any initialization that needs to be done if the sector is successfully created
+// Make sure to return true
+/obj/effect/mapinfo/proc/initliazeMap()
+	return 1
+

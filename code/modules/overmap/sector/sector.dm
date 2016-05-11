@@ -97,7 +97,65 @@
 	sector_flags = SECTOR_KNOWN | SECTOR_LOCAL
 	build_priority = 3
 
-/obj/effect/mapinfo/sector/asteroid/New()
-	..()
+/obj/effect/mapinfo/sector/asteroid/initliazeMap()
+	name = "asteroid [pick( alphabet_uppercase )]-[rand( 100, 999 )]"
 
-	name = "asteroid [pick( alphabet_phonetic )]-[rand( 100, 999 )]"
+	var/array_maxx = world.maxx-(TRANSITION_EDGE_LENGTH*4)
+	var/array_maxy = world.maxy-(TRANSITION_EDGE_LENGTH*4)
+
+	// The array for the asteroid data
+	var/list/list/asteroid[array_maxx][array_maxy]
+
+	// Populates the asteroid array with random data
+	for( var/y_pos = 1, y_pos <= array_maxx, y_pos++ )
+		for( var/x_pos = 1, x_pos <= array_maxx, x_pos++ )
+			if(( x_pos <= 1 ) || ( x_pos >= array_maxx ) || ( y_pos <= 1 ) || ( y_pos >= array_maxy ))
+				asteroid[x_pos][y_pos] = 0 // If we're on an edge, we are empty space
+			else
+				asteroid[x_pos][y_pos] = rand( 0, 1 )
+
+	// Generates the asteroid
+	for( var/I = 1, I <= 5, I++ )
+		var/list/list/buffer_asteroid = asteroid // We use a buffer so that we're not writing over the data we're reading
+		for( var/y_pos = 1, y_pos <= array_maxy, y_pos++ )
+			for( var/x_pos = 1, x_pos <= array_maxx, x_pos++ )
+				buffer_asteroid[x_pos][y_pos] = checkNeighbors( asteroid, x_pos, y_pos, array_maxx, array_maxy )
+
+		asteroid = buffer_asteroid // Writes this iteration onto the original data
+
+	var/start_x = TRANSITION_EDGE_LENGTH*2
+	var/start_y = TRANSITION_EDGE_LENGTH*2
+
+	// Placing the asteroid
+	for( var/y_pos = 1, y_pos <= array_maxy, y_pos++ )
+		for( var/x_pos = 1, x_pos <= array_maxx, x_pos++ )
+			if( asteroid[x_pos][y_pos] == 1 )
+				var/turf/T = locate( start_x+x_pos, start_y+y_pos, zlevel )
+				T.ChangeTurf( /turf/simulated/mineral/random )
+
+	create_lighting_overlays( zlevel )
+
+	return 1
+
+// This is used only by the generation algorithm, it checks neighbors with a 4-5 rule
+// Return 1 if the given position should become solid
+/obj/effect/mapinfo/sector/asteroid/proc/checkNeighbors( var/list/list/data, var/x_pos, var/y_pos, var/maxx, var/maxy )
+	if(( x_pos <= 1 ) || ( x_pos >= maxx ) || ( y_pos <= 1 ) || ( y_pos >= maxy ))
+		return 0
+
+	var/is_solid = data[x_pos][y_pos]
+	var/solid_count = 0
+	if( is_solid )
+		solid_count = -1 // We dont count ourselves when counting neighbors
+
+	for( var/y_neighbor = -1, y_neighbor <= 1, y_neighbor++ )
+		for( var/x_neighbor = -1, x_neighbor <= 1, x_neighbor++ )
+			if( data[x_pos+x_neighbor][y_pos+y_neighbor] == 1 )
+				solid_count++
+
+	if( is_solid && solid_count >= 4 )
+		return 1
+	else if( solid_count >= 5 )
+		return 1
+	else
+		return 0
