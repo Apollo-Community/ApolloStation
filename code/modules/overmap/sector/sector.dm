@@ -100,6 +100,9 @@
 /obj/effect/mapinfo/sector/asteroid/initliazeMap()
 	name = "asteroid [pick( alphabet_uppercase )]-[rand( 100, 999 )]"
 
+	var/fill_rate = 52 // % of the area that will be filled at the start
+	var/smoothness = 2 // How smooth the asteroid will be
+
 	var/array_maxx = world.maxx-(TRANSITION_EDGE_LENGTH*4)
 	var/array_maxy = world.maxy-(TRANSITION_EDGE_LENGTH*4)
 
@@ -112,10 +115,10 @@
 			if(( x_pos <= 1 ) || ( x_pos >= array_maxx ) || ( y_pos <= 1 ) || ( y_pos >= array_maxy ))
 				asteroid[x_pos][y_pos] = 0 // If we're on an edge, we are empty space
 			else
-				asteroid[x_pos][y_pos] = rand( 0, 1 )
+				asteroid[x_pos][y_pos] = prob( fill_rate )
 
 	// Generates the asteroid
-	for( var/I = 1, I <= 5, I++ )
+	for( var/I = 1, I <= smoothness, I++ )
 		var/list/list/buffer_asteroid = asteroid // We use a buffer so that we're not writing over the data we're reading
 		for( var/y_pos = 1, y_pos <= array_maxy, y_pos++ )
 			for( var/x_pos = 1, x_pos <= array_maxx, x_pos++ )
@@ -131,6 +134,10 @@
 		for( var/x_pos = 1, x_pos <= array_maxx, x_pos++ )
 			if( asteroid[x_pos][y_pos] == 1 )
 				var/turf/T = locate( start_x+x_pos, start_y+y_pos, zlevel )
+				if( !T )
+					continue
+
+				new /area/mine/unexplored( T )
 				T.ChangeTurf( /turf/simulated/mineral/random )
 
 	create_lighting_overlays( zlevel )
