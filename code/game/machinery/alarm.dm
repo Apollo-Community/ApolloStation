@@ -1323,7 +1323,7 @@ FIRE ALARM
 		A.firereset()
 
 /obj/machinery/firealarm/initialize()
-	if(z in config.alert_levels)
+	if(z in overmap.alert_levels)
 		if(security_level)
 			src.overlays += image('icons/obj/monitors.dmi', "overlay_[get_security_level()]")
 		else

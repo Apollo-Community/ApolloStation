@@ -42,7 +42,7 @@
 		var/area/A = get_area(C)
 		if(!A)
 			continue
-		if(!(A.z in config.station_levels))
+		if(!(A.z in overmap.station_levels))
 			continue
 		if(A.rad_shielded)
 			continue

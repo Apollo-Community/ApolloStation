@@ -206,6 +206,8 @@ var/DBConnection/dbcon = new()	// SQL Database
 
 //added for Xenoarchaeology, might be useful for other stuff
 var/global/list/alphabet_uppercase = list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
+// ss13's very own phonetic alphabet
+var/global/list/alphabet_phonetic = list("Alpha","Boson","Coffer","Dragon","Easy","Fair","Ginger","Helium","Ink","Jelly","Killer","Lemur","Malt","November","Orchard","Port","Quarry","Romeo","Stellar","Troll","Uniform","Vector","Whiskey","Xray","Yotta","Zeta")
 
 // Process status defines
 #define PROCESS_STATUS_IDLE 1

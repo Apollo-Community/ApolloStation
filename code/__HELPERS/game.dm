@@ -42,19 +42,19 @@
 	return heard
 
 /proc/isStationLevel(var/level)
-	return level in config.station_levels
+	return level in overmap.station_levels
 
 /proc/isNotStationLevel(var/level)
 	return !isStationLevel(level)
 
 /proc/isPlayerLevel(var/level)
-	return level in config.local_levels
+	return level in overmap.local_levels
 
 /proc/isAdminLevel(var/level)
-	return level in config.admin_levels
+	return level in overmap.admin_levels
 
 /proc/isAlertZLevel(var/level)
-	return level in config.alert_levels
+	return level in overmap.alert_levels
 
 /proc/isNotAdminLevel(var/level)
 	return !isAdminLevel(level)
