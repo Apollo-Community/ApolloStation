@@ -482,7 +482,7 @@ var/global/datum/controller/gameticker/ticker
 	for(var/mob/M in player_list)
 		if(M.client)
 			testing( "Opening antag vote for [M.client]" )
-			var/datum/browser/menu = new( null, "antag_vote", "Antagonist Vote", 400, 700)
+			var/datum/browser/menu = new( null, "antag_vote", "Antagonist Vote", 500, 700)
 			open_antag_vote( M, menu, all_antagonists.Copy() ) // defined in modules/antagonist/menus/voting.dm
 
 	return 1

@@ -39,7 +39,6 @@
 	for( var/datum/faction/F in factions )
 		. += "<h2><span class='white'>[F.name] Agents</span></h2>"
 		for( var/datum/mind/M in F.members )
-			var/role = M.assigned_role == "MODE" ? "\improper[M.special_role]" : "\improper[M.assigned_role]"
 			. += "<span class='white'><B>[M.name]</B> (<B>[M.key]</B> as a <B>[role]</B>)</span> | "
 			. += "<b><a href='byond://?src=\ref[ticker];task=[M.key]'>Commend</a></b>"
 			. += "<br>"

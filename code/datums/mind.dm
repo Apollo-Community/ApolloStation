@@ -317,7 +317,7 @@ datum/mind
 					if( !new_type || alert("Are you sure you want to make [current.name] a [new_type] antagonist? This may remove contracts/faction, etc.",,"Yes","No")=="No" )
 						return
 
-					var/datum/faction/fact = faction_controller.get_syndie_faction(src)
+					var/datum/faction/fact
 					if( antagonist )
 						fact = antagonist.faction // save this
 						current << "<b><font size=3 color=red>You are no longer a [antagonist.name]!</font></b>"
@@ -328,7 +328,8 @@ datum/mind
 						return
 
 					antagonist = new new_type(src)
-					antagonist.faction = fact
+					if(fact)
+						antagonist.faction = fact
 					antagonist.setup()
 
 					message_admins("[usr] has made [current.name] ([key]) an antagonist of type [new_type]")
