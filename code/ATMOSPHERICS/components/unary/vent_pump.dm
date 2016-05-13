@@ -94,6 +94,15 @@
 	..()
 	air_contents.volume = ATMOS_DEFAULT_VOLUME_PUMP + 500 //meant to match air injector
 
+/obj/machinery/atmospherics/unary/vent_pump/engine/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	if(!istype(W, /obj/item/device/multitool))
+		return ..()
+	id_tag = input(usr,"Enter new ID","[src.name] ID Modifier") as text
+	user << "You modify the id of [src.name]."
+
+	if(frequency != 2141)	set_frequency(2141)
+	broadcast_status()
+
 /obj/machinery/atmospherics/unary/vent_pump/update_icon(var/safety = 0)
 	if(!check_icon_cache())
 		return
@@ -249,7 +258,8 @@
 		src.name = new_name
 	initial_loc.air_vent_info[id_tag] = signal.data
 
-	radio_connection.post_signal(src, signal, radio_filter_out)
+	if(frequency == 2141)		radio_connection.post_signal(src,signal)
+	else						radio_connection.post_signal(src, signal, radio_filter_out)
 
 	return 1
 

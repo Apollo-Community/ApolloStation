@@ -231,6 +231,12 @@ datum/design/circuit/dronecontrol
 	req_tech = list("programming" = 4)
 	build_path = /obj/item/weapon/circuitboard/drone_control
 
+datum/design/circuit/xenofauna
+	name = "fauna reconstitution console"
+	id = "xenofauna"
+	req_tech = list("biotech" = 4,"programming" = 3)
+	build_path = /obj/item/weapon/circuitboard/reconstitutor/animal
+
 datum/design/circuit/clonecontrol
 	name = "cloning control console"
 	id = "clonecontrol"
@@ -260,6 +266,12 @@ datum/design/circuit/arcademachine
 	id = "arcademachine"
 	req_tech = list("programming" = 1)
 	build_path = /obj/item/weapon/circuitboard/arcade
+
+datum/design/circuit/papershredder
+	name = "paper shredder"
+	id = "papershredder"
+	req_tech = list("engineering" = 3)
+	build_path = /obj/item/weapon/circuitboard/papershredder
 
 datum/design/circuit/powermonitor
 	name = "power monitoring console"

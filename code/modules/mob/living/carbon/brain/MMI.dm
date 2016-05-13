@@ -41,6 +41,7 @@
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if(istype(O,/obj/item/organ/brain) && !brainmob) //Time to stick a brain in it --NEO
 
+			user << "<span class='notice'>You start putting \the [O] into \the [src].</span>"
 			var/obj/item/organ/brain/B = O
 			if(B.health <= 0)
 				user << "<span class='alert'>That brain is well and truly dead.</span>"
@@ -50,6 +51,12 @@
 				return
 			else if(!B.brainmob)
 				user << "<span class='alert'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain.</span>"
+				return
+			else if( !B.brainmob.client )
+				user << "<span class='alert'>This brain appears to be devoid of activity.</span>"
+				return
+			else if( alert( B.brainmob.client, "Someone is trying to put your brain in an MMI, do you want to allow this? Keep in mind, if you are placed in a borg, you will be a cyborg forever.", "MMI request", "Yes", "No" ) == "No" )
+				user << "<span class='alert'>This brain appears to be devoid of activity.</span>"
 				return
 
 			for(var/mob/V in viewers(src, null))

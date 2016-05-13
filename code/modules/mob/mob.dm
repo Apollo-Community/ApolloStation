@@ -815,14 +815,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(client && client.holder && !client.afk)
 		if(statpanel("Status"))	//not looking at that panel
-			stat("World Time:\t","[world.time]")
-			stat("Location:\t","([x], [y], [z])")
-			stat("Commit:\t", "#[config.git_commit_id]")
+			stat("World Time:","[world.time]")
+			stat("Location:","([x], [y], [z])")
+			stat("Commit:", "#[config.git_commit_id]")
 			stat("Instances:","[world.contents.len]")
 			stat("CPU:","[world.cpu]")
-			if(processScheduler && processScheduler.getIsRunning())
+			stat("Tick Usage:", "[world.tick_usage]")
+			if(processScheduler && processScheduler.isRunning)
 				for(var/datum/controller/process/P in processScheduler.processes)
-					stat(P.getStatName(), P.getTickTime())
+					stat(P.name, P.getContext())
 			else
 				stat("processScheduler is not running.")
 
