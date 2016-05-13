@@ -1044,7 +1044,7 @@ obj/spacepod/verb/toggleLights()
 		usr << "<span class='warning'>ERROR: Inaccurate readings, cannot calculate sector. Please stay still next time.</span>"
 		return
 
-	var/obj/effect/map/sector = map_sectors["[z]"]
+	var/obj/effect/map/sector = overmap.map["[z]"]
 	if( !sector )
 		usr << "<span class='warning'>ERROR: Critical error with the bluespace network!</span>"
 		return

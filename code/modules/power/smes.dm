@@ -385,7 +385,7 @@
 
 
 /obj/machinery/power/smes/proc/ion_act()
-	if(src.z in config.station_levels)
+	if(src.z in overmap.station_levels)
 		if(prob(1)) //explosion
 			for(var/mob/M in viewers(src))
 				M.show_message("<span class='alert'>The [src.name] is making strange noises!</span>", 3, "<span class='alert'>You hear sizzling electronics.</span>", 2)

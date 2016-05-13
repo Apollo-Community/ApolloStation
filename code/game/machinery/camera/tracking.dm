@@ -4,7 +4,7 @@
 /mob/living/silicon/ai/proc/InvalidTurf(turf/T as turf)
 	if(!T)
 		return 1
-	if(T.z in config.admin_levels)
+	if(T.z in overmap.admin_levels)
 		return 1
 	return 0
 
@@ -232,7 +232,7 @@
 
 /proc/trackable(var/mob/living/M)
 	var/turf/T = get_turf(M)
-	if(T && (T.z in config.station_levels) && hassensorlevel(M, SUIT_SENSOR_TRACKING))
+	if(T && (T.z in overmap.station_levels) && hassensorlevel(M, SUIT_SENSOR_TRACKING))
 		return 1
 
 	return near_camera(M)
