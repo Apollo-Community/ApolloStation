@@ -39,12 +39,18 @@
 	var/decay_rate = 0
 
 /datum/universal_state/proc/load_date()
-	loadFromDB()
+	var/max_attempts = 5
 
-	if( !date || date.len < 3 )
+	for( var/attempts = 1, attempts < max_attempts, attempts++ )
+		loadFromDB()
+
+		if( date && date.len == 3 && date != list( 2560, 1, 1 ))
+			handleDateProgression()
+			return
+
 		date = list( 2560, 1, 1 )
 
-	handleDateProgression()
+	error( "Failed to load the universe date after [max_attempts] attempts!" )
 
 // Returns the universe datetime in format "YYYY-MM-DD HH:MM:SS"
 /datum/universal_state/proc/getDateTime()
@@ -80,7 +86,12 @@
 
 /datum/universal_state/proc/saveToDB()
 	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if( !dbcon.IsConnected() )
+		error( "Could not save the universe date!" )
+		return
+
+	if( date == list( 2560, 1, 1 ))
+		error( "Didn't save because universe date was reset!" )
 		return
 
 	var/sql_name = sql_sanitize_text( name )
@@ -100,13 +111,11 @@
 			return
 
 	if(sql_id)
-		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
 		var/DBQuery/query_update
 
 		query_update = dbcon.NewQuery("UPDATE universe SET name = '[sql_name]', ic_date = '[sql_date]' WHERE id = '[sql_id]'")
 		query_update.Execute()
 	else
-		//New player!! Need to insert all the stuff
 		var/DBQuery/query_insert
 
 		query_insert = dbcon.NewQuery("INSERT INTO universe (id, name, ic_date) VALUES (null, '[sql_name]', '[sql_date]')")
@@ -125,7 +134,7 @@
 	if( !query.NextRow() )
 		date = list( 2560, 1, 1 )
 		name = univ_name
-		world << "Could not load from database!"
+		error( "Could not read the universe date!" )
 		return
 
 	var/list/date_text = params2list( html_decode( query.item[1] ))
