@@ -9,7 +9,6 @@ var/global/datum/controller/process/contractticker/contract_ticker
 /datum/controller/process/contractticker/setup()
 	name = "contract ticker"
 	schedule_interval = 50
-	cpu_threshold = 50
 
 	contracts = list()
 	contract_ticker = src

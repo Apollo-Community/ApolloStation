@@ -38,6 +38,16 @@ var/global/datum/controller/processScheduler/processScheduler
 	// Setup for these processes will be deferred until all the other processes are set up.
 	var/tmp/list/deferredSetupList = new
 
+	var/tmp/currentTick = 0
+
+	var/tmp/currentTickStart = 0
+
+	var/tmp/cpuAverage = 0
+
+/datum/controller/processScheduler/New()
+	..()
+	scheduler_sleep_interval = world.tick_lag
+
 /**
  * deferSetupFor
  * @param path processPath
@@ -83,37 +93,30 @@ var/global/datum/controller/processScheduler/processScheduler
 	for(var/datum/controller/process/p in running)
 		p.update()
 
-		if (isnull(p)) // Process was killed
+		if (!p) // Process was killed
 			continue
 
-		var/status = p.getStatus()
-		var/previousStatus = p.getPreviousStatus()
-
 		// Check status changes
-		if(status != previousStatus)
+		if(p.status != p.previousStatus)
 			//Status changed.
-
-			switch(status)
-				if(PROCESS_STATUS_MAYBE_HUNG)
-					message_admins("Process '[p.name]' is [p.getStatusText(status)].")
+			switch(p.status)
 				if(PROCESS_STATUS_PROBABLY_HUNG)
-					message_admins("Process '[p.name]' is [p.getStatusText(status)].")
+					message_admins("Process '[p.name]' may be hung.")
 				if(PROCESS_STATUS_HUNG)
-					message_admins("Process '[p.name]' is [p.getStatusText(status)].")
-					p.handleHung()
+					message_admins("Process '[p.name]' is hung and will be restarted.")
 
 /datum/controller/processScheduler/proc/queueProcesses()
 	for(var/datum/controller/process/p in processes)
 		// Don't double-queue, don't queue running processes
-		if (p.disabled || p.running || p.queued || !p.idle)
+		if(p.running || p.disabled || p.queued || !p.idle)
 			continue
 
 		// If world.timeofday has rolled over, then we need to adjust.
-		if (world.timeofday < last_start[p])
-			last_start[p] -= 864000
+		if (TimeOfHour < last_start[p])
+			last_start[p] -= 36000
 
 		// If the process should be running by now, go ahead and queue it
-		if (world.timeofday > last_start[p] + p.schedule_interval)
+		if (TimeOfHour > last_start[p] + p.schedule_interval)
 			setQueuedProcessState(p)
 
 /datum/controller/processScheduler/proc/runQueuedProcesses()
@@ -176,7 +179,6 @@ var/global/datum/controller/processScheduler/processScheduler
 
 	nameToProcessMap[newProcess.name] = newProcess
 
-
 /datum/controller/processScheduler/proc/runProcess(var/datum/controller/process/process)
 	spawn(0)
 		process.process()
@@ -197,8 +199,6 @@ var/global/datum/controller/processScheduler/processScheduler
 	if (!(process in idle))
 		idle += process
 
-	process.idle()
-
 /datum/controller/processScheduler/proc/setQueuedProcessState(var/datum/controller/process/process)
 	if (process in running)
 		running -= process
@@ -218,21 +218,19 @@ var/global/datum/controller/processScheduler/processScheduler
 	if (!(process in running))
 		running += process
 
-	process.running()
-
 /datum/controller/processScheduler/proc/recordStart(var/datum/controller/process/process, var/time = null)
 	if (isnull(time))
-		time = world.timeofday
+		time = TimeOfHour
 
 	last_start[process] = time
 
 /datum/controller/processScheduler/proc/recordEnd(var/datum/controller/process/process, var/time = null)
 	if (isnull(time))
-		time = world.timeofday
+		time = TimeOfHour
 
 	// If world.timeofday has rolled over, then we need to adjust.
 	if (time < last_start[process])
-		last_start[process] -= 864000
+		last_start[process] -= 36000
 
 	var/lastRunTime = time - last_start[process]
 
@@ -310,11 +308,7 @@ var/global/datum/controller/processScheduler/processScheduler
 		var/datum/controller/process/process = nameToProcessMap[processName]
 		process.disable()
 
-/datum/controller/processScheduler/proc/getProcess(var/name)
-	return nameToProcessMap[name]
-
-/datum/controller/processScheduler/proc/getProcessLastRunTime(var/datum/controller/process/process)
-	return last_run_time[process]
-
-/datum/controller/processScheduler/proc/getIsRunning()
-	return isRunning
+/datum/controller/processScheduler/proc/sign(var/x)
+	if (x == 0)
+		return 1
+	return x / abs(x)

@@ -27,7 +27,6 @@
 /datum/controller/process/overmap/setup()
 	name = "Overmap"
 	schedule_interval = 50
-	cpu_threshold = 20
 
 	// Collecting mapinfo objects
 	mapinfo += collect_map()
