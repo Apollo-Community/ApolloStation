@@ -2096,32 +2096,18 @@
 				world << "<span class='alert'><B><big>ALERT: STATION STRUCTURAL STRESS CRITICAL. SAFETY MECHANISMS FAILED!</big></B></span>"
 				sleep(40)
 
-				for(var/mob/M in world)
-					shake_camera(M, 400, 1)
-				for(var/obj/structure/window/W in world)
+				for(var/mob/M in living_mob_list)
+					if(M.mind && M.client)
+						shake_camera(M, 600, 1)
+
+				for(var/obj/O in world)
+					if(O.z != 3)	continue
+					if(world.tick_usage > 76)	sleep(world.tick_lag)	//stops server lagging a ton
 					spawn(0)
-						sleep(rand(10,400))
-						step_rand(W)
-				for(var/obj/structure/grille/G in world)
-					spawn(0)
-						sleep(rand(20,400))
-						step_rand(G)
-				for(var/obj/machinery/door/D in world)
-					spawn(0)
-						sleep(rand(20,400))
-						step_rand(D)
-				for(var/obj/structure/closet/Closet in world)
-					spawn(0)
-						sleep(rand(30,400))
-						step_rand(Closet)
-				for(var/obj/machinery/Machinery in world)
-					spawn(0)
-						sleep(rand(30,400))
-						step_rand(Machinery)
-				for(var/obj/structure/table/T in world)
-					spawn(0)
-						sleep(rand(30,400))
-						step_rand(T)
+						sleep(rand(10,600))
+						for(var/s = 0 to rand(1,20))
+							step_rand(O)
+							sleep(world.tick_lag)
 
 			if("wave")
 				feedback_inc("admin_secrets_fun_used",1)
@@ -2246,7 +2232,7 @@
 				message_admins("[key_name_admin(usr)] made the floor LAVA! It'll last [length] seconds and it will deal [damage] damage to everyone.", "ADMINBUS:")
 
 				for(var/turf/simulated/floor/F in world)
-					if(F.z in config.station_levels)
+					if(F.z in overmap.station_levels)
 						F.name = "lava"
 						F.desc = "The floor is LAVA!"
 						F.overlays += "lava"
@@ -2271,7 +2257,7 @@
 						sleep(10)
 
 					for(var/turf/simulated/floor/F in world) // Reset everything.
-						if(F.z in config.station_levels)
+						if(F.z in overmap.station_levels)
 							F.name = initial(F.name)
 							F.desc = initial(F.desc)
 							F.overlays.Cut()
@@ -2329,7 +2315,7 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","EgL")
 				for(var/obj/machinery/door/airlock/W in world)
-					if(W.z in config.station_levels && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
+					if(W.z in overmap.station_levels && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
 						W.req_access = list()
 				message_admins("[key_name_admin(usr)] activated Egalitarian Station mode", "ADMINBUS:")
 				command_announcement.Announce("Centcomm airlock control override activated. Please take this time to get acquainted with your coworkers.", new_sound = 'sound/AI/commandreport.ogg')

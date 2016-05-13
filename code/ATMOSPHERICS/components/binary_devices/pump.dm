@@ -63,11 +63,11 @@ Thus, the two variables affect pump operation are set in New():
 	update_underlays()
 
 /obj/machinery/atmospherics/binary/pump/process()
-	last_power_draw = 0
-	last_flow_rate = 0
-
 	if((stat & (NOPOWER|BROKEN)) || !use_power)
 		return
+		
+	last_power_draw = 0
+	last_flow_rate = 0
 
 	var/power_draw = -1
 	var/pressure_delta = target_pressure - air2.return_pressure()

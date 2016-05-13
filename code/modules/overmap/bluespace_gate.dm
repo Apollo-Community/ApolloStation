@@ -56,7 +56,7 @@
 	var/area/bspace = locate( /area/space/bluespace )
 	var/turf/bluespace = pick( get_area_turfs( bspace ))
 
-//	var/turf/bluespace = locate( rand( OVERMAP_EDGE, world.maxx-OVERMAP_EDGE ), rand( OVERMAP_EDGE, world.maxy-OVERMAP_EDGE ), BLUESPACE_LEVEL )
+//	var/turf/bluespace = locate( rand( TRANSITION_EDGE_LENGTH, world.maxx-TRANSITION_EDGE_LENGTH ), rand( TRANSITION_EDGE_LENGTH, world.maxy-TRANSITION_EDGE_LENGTH ), BLUESPACE_LEVEL )
 	var/turf/destination
 
 	// Getting the amount of time that the object will spend in bluespace
@@ -67,7 +67,7 @@
 	else // If we don't have a destination, toss them somewhere random
 		var/exit_x = rand( source.x-20, source.x+20 )
 		var/exit_y = rand( source.y-20, source.y+20 )
-		var/exit_z = pick( config.can_random_teleport_levels )
+		var/exit_z = pick( overmap.can_random_teleport_levels )
 
 		destination = locate( exit_x, exit_y, exit_z )
 

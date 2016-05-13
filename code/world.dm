@@ -71,6 +71,12 @@ var/global/datum/global_init/init = new ()
 		processScheduler.setup()
 		master_controller.setup()
 
+	#ifdef PRECISE_TIMER_AVAILABLE
+	world.log << "btime.[world.system_type==MS_WINDOWS?"dll":"so"] is in use"
+	#else
+	world.log << "## ERROR: btime.[world.system_type==MS_WINDOWS?"dll":"so"] is not in use, using legacy timer"
+	#endif
+
 	spawn(3000)		//so we aren't adding to the round-start lag
 		if(config.ToRban)
 			ToRban_autoupdate()

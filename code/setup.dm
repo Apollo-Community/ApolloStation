@@ -914,3 +914,11 @@ var/list/be_special_flags = list(
 #define INDUCTEE_SUCCESSION_LEVEL 3
 #define COMMAND_SUCCESSION_LEVEL 10
 #define CAPTAIN_SUCCESION_LEVEL COMMAND_SUCCESSION_LEVEL+2
+
+// Sector flags
+#define SECTOR_KNOWN 1 // Does this sector start out known?
+#define SECTOR_STATION 2 // Is this sector part of the station?
+#define SECTOR_ALERT 4 // Is this sector affected by alerts such as red alert?
+#define SECTOR_LOCAL 8 // Is this sector accessible from the overmap?
+#define SECTOR_ADMIN 16 // Is this sector accessible only through admoon intervention?
+#define SECTOR_FORBID_RANDOM_TP 32 // Prevents people from floating into it randomly

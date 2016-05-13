@@ -39,7 +39,7 @@ var/datum/template_controller/template_controller
 			var/turf/origin
 			do
 				// 3 is station Z
-				var/list/zs = (config.can_random_teleport_levels - config.station_levels)
+				var/list/zs = (overmap.can_random_teleport_levels - overmap.station_levels)
 				var/turf/pick = locate(rand(1, world.maxx), rand(1, world.maxy), text2num(pick(zs)))
 
 				// Keep a buffer of TRANSITIONEDGE+10 between the edges of the map

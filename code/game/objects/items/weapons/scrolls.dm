@@ -41,8 +41,8 @@
 
 	var/A
 
-	A = input(user, "Area to jump to", "BOOYEA", A) in teleportlocs
-	var/area/thearea = teleportlocs[A]
+	A = input(user, "Area to jump to", "BOOYEA", A) in overmap.teleportlocs
+	var/area/thearea = overmap.teleportlocs[A]
 
 	if (user.stat || user.restrained())
 		return
