@@ -77,9 +77,11 @@
 		return
 
 	if(href_list["move"])
-		shuttle.launch(src)
+		if(!shuttle.launch(src))
+			usr << "The shuttle navigation computers indicate the designated hanger is either occupied by another shuttle or obstructed in some way."
 	if(href_list["force"])
-		shuttle.force_launch(src)
+		if(!shuttle.force_launch(src))
+			usr << "The shuttle navigation computers indicate the designated hanger is either occupied by another shuttle or obstructed in some way."
 	else if(href_list["cancel"])
 		shuttle.cancel_launch(src)
 

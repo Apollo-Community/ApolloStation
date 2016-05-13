@@ -125,18 +125,20 @@
 
 
 /datum/shuttle/ferry/proc/launch(var/user)
-	if (!can_launch()) return
+	if (!can_launch()) return 0
 	in_use = user	//obtain an exclusive lock on the shuttle
 
 	process_state = WAIT_LAUNCH
 	undock()
+	return 1
 
 /datum/shuttle/ferry/proc/force_launch(var/user)
-	if (!can_force()) return
+	if (!can_force()) return 0
 
 	in_use = user	//obtain an exclusive lock on the shuttle
 
 	process_state = FORCE_LAUNCH
+	return 1
 
 /datum/shuttle/ferry/proc/cancel_launch(var/user)
 	if (!can_cancel()) return
@@ -160,12 +162,22 @@
 	if (in_use)
 		return 0
 
+	var/obj/hanger/H = get_hanger(!location)
+	if (!H.can_land_at(src))
+		error("Can land at returned 0")
+		return 0
+	error("Can land at returned 1")
 	return 1
 
 /datum/shuttle/ferry/proc/can_force()
+	var/obj/hanger/H = get_hanger(!location)
+	if (!H.can_land_at(src))
+		error("Can land at returned 0")
+		return 0
+
 	if (moving_status == SHUTTLE_IDLE && process_state == WAIT_LAUNCH)
+		error("Can land at returned 1")
 		return 1
-	return 0
 
 /datum/shuttle/ferry/proc/can_cancel()
 	if (moving_status == SHUTTLE_WARMUP || process_state == WAIT_LAUNCH || process_state == FORCE_LAUNCH)
