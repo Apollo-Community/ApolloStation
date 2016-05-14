@@ -164,19 +164,15 @@
 
 	var/obj/hanger/H = get_hanger(!location)
 	if (!H.can_land_at(src))
-		error("Can land at returned 0")
 		return 0
-	error("Can land at returned 1")
 	return 1
 
 /datum/shuttle/ferry/proc/can_force()
 	var/obj/hanger/H = get_hanger(!location)
 	if (!H.can_land_at(src))
-		error("Can land at returned 0")
 		return 0
 
 	if (moving_status == SHUTTLE_IDLE && process_state == WAIT_LAUNCH)
-		error("Can land at returned 1")
 		return 1
 
 /datum/shuttle/ferry/proc/can_cancel()

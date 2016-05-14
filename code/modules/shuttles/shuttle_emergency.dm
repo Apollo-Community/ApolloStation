@@ -188,6 +188,8 @@
 				shuttle_status = "Standing-by at [station_name]."
 			else
 				shuttle_status = "Standing-by at Central Command."
+			if(!shuttle.can_launch())
+				shuttle_status = "*WARNING* Target hanger obstructed. <br />" + shuttle_status
 		if(WAIT_LAUNCH, FORCE_LAUNCH)
 			shuttle_status = "Shuttle has recieved command and will depart shortly."
 		if(WAIT_ARRIVE)
