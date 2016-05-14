@@ -34,15 +34,15 @@
 	. += "<h1><span class='white'>Antagonist Commendation</span></h1>"
 	. += "<span class='white'>Commend an antagonist you think played their role well this round. Commending antagonists makes them more likely to be picked for antagonist roles. It may also allow them to become a persistant antagonist that can appear every round and take on more demanding contracts. If you don't want to commend anyone, you may close the window.</span>"
 	. += "<hr>"
-	. += ""
 
 	for( var/datum/faction/F in factions )
 		. += "<h2><span class='white'>[F.name] Agents</span></h2>"
 		for( var/datum/mind/M in F.members )
-			var/role = M.assigned_role == "MODE" ? "\improper[M.special_role]" : "\improper[M.assigned_role]"
-			. += "<span class='white'><B>[M.name]</B> (<B>[M.key]</B> as a <B>[role]</B>)</span> | "
-			. += "<b><a href='byond://?src=\ref[ticker];task=[M.key]'>Commend</a></b>"
-			. += "<br>"
+			if( M in antags )
+				var/role = M.assigned_role == "MODE" ? "\improper[M.special_role]" : "\improper[M.assigned_role]"
+				. += "<span class='white'><B>[M.name]</B> (<B>[M.key]</B> as a <B>[role]</B>)</span> | "
+				. += "<b><a href='byond://?src=\ref[ticker];task=[M.key]'>Commend</a></b>"
+				. += "<br>"
 
 	. += "</body></html>"
 
