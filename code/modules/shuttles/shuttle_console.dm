@@ -39,6 +39,8 @@
 				shuttle_status = "Standing-by at station."
 			else
 				shuttle_status = "Standing-by at offsite location."
+			if(!shuttle.can_launch())
+				shuttle_status += " The shuttle navigation computers indicate the target hanger is either occupied by another shuttle or obstructed in some way."
 		if(WAIT_LAUNCH, FORCE_LAUNCH)
 			shuttle_status = "Shuttle has recieved command and will depart shortly."
 		if(WAIT_ARRIVE)
