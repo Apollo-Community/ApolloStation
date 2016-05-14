@@ -15,8 +15,6 @@ $PRISONER_NAME was found guilty of $CRIME on $DATE. Their sentence was $SENTENCE
 	$DATE - Gets replaced with the current IC date
 */
 
-
-
 /datum/law
 	var/name = "Law"
 	var/desc = "Pay the court a fine or serve your sentence."
@@ -31,3 +29,4 @@ $PRISONER_NAME was found guilty of $CRIME on $DATE. Their sentence was $SENTENCE
 	var/max_prison_time = 0 // A sentence totalling 60 days or more is a life sentence
 
 	var/severity = 0 // 1 - Low, 2 - Medium, 3 - High
+	var/felony = 0 // Does this law carry a felony conviction?

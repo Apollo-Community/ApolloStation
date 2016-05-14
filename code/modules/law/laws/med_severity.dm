@@ -1,5 +1,6 @@
 /datum/law/med_severity
 	severity = 2
+	felony = 1
 
 /datum/law/med_severity/bodily_harm
 	name = "Bodily Harm"
@@ -66,19 +67,6 @@
 	min_fine = 800
 	max_fine = 1000
 
-/datum/law/med_severity/contraband_possession
-	name = "Possession of Contraband"
-	desc = "Where an individual possesses any item designated as contraband."
-
-	min_brig_time = 20
-	max_brig_time = 60
-
-	min_prison_time = 0
-	max_prison_time = 1
-
-	min_fine = 300
-	max_fine = 1000
-
 /datum/law/med_severity/perjury
 	name = "Perjury"
 	desc = "Where an individual falsely testifies under oath at a court or tribunal."
@@ -120,7 +108,7 @@
 
 /datum/law/med_severity/establish_hazards
 	name = "Establishing a Hazard"
-	desc = "Where an individual, without legitimate reason, renders an area inhospitable to crew."
+	desc = "Where an individual purposefully, and without legitimate reason, renders an area of the workplace inhospitable to crew."
 
 	min_brig_time = 60
 	max_brig_time = 60

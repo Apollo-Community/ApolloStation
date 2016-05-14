@@ -120,3 +120,13 @@
 
 	min_fine = 500
 	max_fine = 1000
+
+/datum/law/low_severity/contraband_possession
+	name = "Possession of Contraband"
+	desc = "Where an individual possesses any item designated as contraband for personal use without authorization."
+
+	min_brig_time = 20
+	max_brig_time = 40
+
+	min_fine = 300
+	max_fine = 1000
