@@ -5,7 +5,7 @@
 	desc = "Used to view, edit and maintain employment records."
 	icon_state = "medlaptop"
 	req_one_access = list(access_heads, access_lawyer)
-	circuit = "/obj/item/weapon/circuitboard/skills"
+	circuit = "/obj/item/weapon/circuitboard/records"
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
