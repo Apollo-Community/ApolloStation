@@ -203,8 +203,8 @@
 	item_state = "kodos_signaler"
 
 /obj/item/clothing/suit/storage/toggle/labcoat/ominousbrainworm
-	name = "Sidier's labcoat"
-	desc = "A labcoat that has a nametag noting that it belongs to Ezriki Sidier."
+	name = "Eriziki Sidier's labcoat"
+	desc = "A labcoat that has a nametag noting that it belongs to Eriziki Sidier."
 	icon_state = "labcoat_sidier"
 	item_state = "labcoat_sidier"
 	icon_open = "labcoat_sidier"
