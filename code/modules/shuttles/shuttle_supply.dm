@@ -27,7 +27,7 @@
 		if (moving_status == SHUTTLE_IDLE)
 			return	//someone cancelled the launch
 
-		if (at_station() && forbidden_atoms_check())
+		if (at_station() && forbidden_atoms_check(shuttle_turfs))
 			//cancel the launch because of forbidden atoms. announce over supply channel?
 			moving_status = SHUTTLE_IDLE
 			return
@@ -69,13 +69,18 @@
 			traveling = 0
 
 // returns 1 if the supply shuttle should be prevented from moving because it contains forbidden atoms
-/datum/shuttle/ferry/supply/proc/forbidden_atoms_check()
+/datum/shuttle/ferry/supply/proc/forbidden_atoms_check(var/list/turfs)
+	error("starting forbidden atoms check")
 	if (!at_station())
+		error("Not at station check passed")
 		return 0	//if badmins want to send mobs or a nuke on the supply shuttle from centcom we don't care
 	else
+		error("At station starting check. Checklist is [turfs.len] long.")
+		for(var/atom/A in turfs)
+			if (supply_controller.forbidden_atoms_check(A))
+				error("Atom [A] was forbidden. Returning with 1")
+				return 1
 		return 0
-	//return supply_controller.forbidden_atoms_check(get_location_area())
-	//return 0
 
 //returns 1 if the shuttle is idle and we can still mess with the cargo shopping list
 /datum/shuttle/ferry/supply/proc/idle()

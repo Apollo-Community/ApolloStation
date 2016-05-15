@@ -94,6 +94,12 @@ obj/hanger/proc/check_hanger_obstructions(var/list/turfs)
 	//error("hanger [htag] obstructions has detected no obstructions")
 	return 0
 
+obj/hanger/proc/check_hanger_obstructions_adv()
+	for(var/turf/T in hanger_area_turfs)
+		if(!istype(T, /turf/simulated/floor) && !istype(T, /turf/space) &&!istype(T, /turf/unsimulated/floor))
+			return 1
+	return 0
+
 //Shuttle indicating its going to land at a hanger
 obj/hanger/proc/land_at(var/datum/shuttle/s)
 	if(!exterior)
