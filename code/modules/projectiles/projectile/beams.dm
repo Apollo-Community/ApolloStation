@@ -181,3 +181,77 @@ var/list/beam_master = list()
 	nodamage = 1
 	agony = 40
 	damage_type = HALLOSS
+
+/obj/item/projectile/beam/continuous
+	name = "laser beam"
+	icon = 'icons/obj/projectiles_continuous.dmi'
+	icon_state = "emitter_end"
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	damage = 4
+	damage_type = BURN
+	flag = "laser"
+	eyeblur = 1
+
+	var/process_delay = 2
+	var/obj/item/projectile/beam/continuous/node1
+	var/obj/item/projectile/beam/continuous/node2
+
+/obj/item/projectile/beam/continuous/Destroy()
+	if(node1 && istype(node1))
+		node1.node2 = null
+	if(node2)
+		qdel(node2)
+
+	node1 = null
+	node2 = null
+
+	..()
+
+/obj/item/projectile/beam/continuous/Bump(var/atom/movable/A)
+	if(istype(A, /mob/living))
+		var/mob/living/M = A
+		M.bullet_act(src, "chest")
+
+	if(istype(A, /turf))
+		for(var/obj/O in A)
+			O.bullet_act(src)
+
+	if(istype(A, /obj))
+		var/obj/O = A
+		O.bullet_act(src)
+
+	qdel(src)
+
+/obj/item/projectile/beam/continuous/Crossed(var/atom/movable/A)
+	// bit of dupe code, but it's so that your chatbox isn't spammed with the message
+	if(istype(A, /mob/living))
+		var/mob/living/M = A
+		M << "<span class='warning'>You feel a concentrated, burning pain on your skin!</span>"
+	Bump(A)
+	return ..(A)
+
+/obj/item/projectile/beam/continuous/process()
+	if(!loc || loc.density || !node1)
+		Bump(loc)
+		return
+	if(node2)
+		spawn(process_delay)
+			process()
+		return
+ 
+ 	icon_state = "emitter_end"
+	var/obj/item/projectile/beam/continuous/B = new(src.loc)
+	node2 = B
+	B.node1 = src
+	B.dir = dir
+	step(B, dir)
+	spawn(0)
+		if(B.loc)
+			if(B.z != z) // pls no travel through zs
+				qdel(B)
+				return
+			B.process()
+			if(B)	icon_state = "emitter"
+
+	spawn(process_delay)
+		process()
