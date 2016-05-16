@@ -160,7 +160,6 @@ var/list/mechtoys = list(
 
 	//To stop things being sent to centcomm which should not be sent to centcomm. Recursively checks for these types.
 	proc/forbidden_atoms_check(atom/A)
-
 		if(istype(A,/mob/living))
 			return 1
 		if(istype(A,/obj/item/weapon/disk/nuclear))
