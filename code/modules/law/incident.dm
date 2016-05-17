@@ -6,8 +6,8 @@
 	var/list/arbiters = list() // The person or list of people who convicted the criminal
 	var/mob/living/carbon/human/criminal // The person who committed the crimes
 
-	var/brig_sentence // How long do they stay in the brig on the station, 60 minutes = permabrig
-	var/prison_sentence // How long do they stay in prison, 60 days = life sentence
+	var/brig_sentence = 0 // How long do they stay in the brig on the station, PERMABRIG_SENTENCE minutes = permabrig
+	var/prison_sentence = 0 // How long do they stay in prison, PERMAPRISON_SENTENCE days = life sentence
 
 	var/fine // how much space dosh do they need to cough up if they want to go free
 

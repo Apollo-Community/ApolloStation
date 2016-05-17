@@ -21,11 +21,13 @@
 	if( istype( O, /obj/item/weapon/paper/form/incident ) && menu_screen == "import_incident" )
 		usr.drop_item()
 		O.loc = src
+
 		if( import( O ))
 			ping( "\The [src] pings, \"Successfully imported incident report!\"" )
 			menu_screen = "incident_report"
 		else
 			buzz( "\The [src] buzzes, \"Could not import incident report.\"" )
+
 		qdel( O )
 	else if( istype( O, /obj/item/weapon/paper ) && menu_screen == "import_incident" )
 		buzz( "\The [src] buzzes, \"This console only accepts authentic incident reports. Copies are invalid.\"" )
@@ -76,30 +78,51 @@
 		. += "There was an error loading the report, please <a href='?src=\ref[src];button=change_menu;choice=main_menu'>Try Again</a>"
 		return .
 
-	. += "Criminal: <a href='?src=\ref[src];button=change_criminal;'>"
+	. += "<table class='border'>"
+
+	. += "<tr>"
+	. += "<th>Criminal:</th>"
+	. += "<td><a href='?src=\ref[src];button=change_criminal;'>"
 	if( incident.criminal )
 		. += "[incident.criminal]"
 	else
 		. += "None"
-	. += "</a><br><br>"
+	. += "</a></td>"
+	. += "</tr>"
 
-	. += "Brig Sentence: "
+	. += "<tr>"
+	. += "<th>Brig Sentence:</th>"
+	. += "<td><a href='?src=\ref[src];button=change_brig;'>"
 	if( incident.brig_sentence )
 		if( incident.brig_sentence < PERMABRIG_SENTENCE )
-			. += "<a href='?src=\ref[src];button=change_brig;'>[incident.brig_sentence] MINUTES</a>"
+			. += "[incident.brig_sentence] MINUTES"
 		else
-			. += "<a href='?src=\ref[src];button=change_brig;'>HOLDING UNTIL TRANSFER</a><br>"
+			. += "HOLDING UNTIL TRANSFER"
+			. += "</a></td>"
 
-			. += "Prison Sentence: "
+			. += "</tr><tr>"
+
+			. += "<th>Prison Sentence:</th>"
+			. += "<td><a href='?src=\ref[src];button=change_prison;'>"
 			if( incident.prison_sentence )
 				if( incident.prison_sentence < PERMAPRISON_SENTENCE )
-					. += "<a href='?src=\ref[src];button=change_prison;'>[incident.prison_sentence] DAYS</a>"
+					. += "[incident.prison_sentence] DAYS"
 				else
-					. += "<a href='?src=\ref[src];button=change_prison;'>LIFE SENTENCE</a>"
+					. += "LIFE SENTENCE"
 			else
-				. += "<a href='?src=\ref[src];button=change_prison;'>None</a>"
+				. += "None"
 	else
-		. += "<a href='?src=\ref[src];button=change_brig;'>None</a>"
+		. += "None"
+	. += "</a></td>"
+	. += "</tr>"
+
+	. += "</table>"
+
+	. += "<table class='border'>"
+	. += "<tr>"
+	. += "<th colspan='3'><a href='?src=\ref[src];button=add_charges;'>Add Charges</a></th>"
+	. += "</tr>"
+	. += "</table>"
 
 	. += "<br><br>"
 	. += "<center><a href='?src=\ref[src];button=print_encoded_form'>Print</a> <a href='?src=\ref[src];button=change_menu;choice=main_menu'>Cancel</a></center>"
@@ -162,6 +185,8 @@
 			print( I )
 			incident = null
 			menu_screen = "main_menu"
+		if( "add_charges" )
+			buzz( "LOL" )
 
 	add_fingerprint(usr)
 	updateUsrDialog()
