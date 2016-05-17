@@ -1,4 +1,6 @@
 /datum/crime_incident
+	var/UID // The unique identifier for this incident
+
 	var/list/laws = list() // What laws were broken in this incident
 
 	var/list/arbiters = list() // The person or list of people who convicted the criminal
@@ -8,6 +10,10 @@
 	var/prison_sentence // How long do they stay in prison, 60 days = life sentence
 
 	var/fine // how much space dosh do they need to cough up if they want to go free
+
+/datum/crime_incident/New()
+	UID = md5( "[world.realtime][rand(0, 1000000)]" )
+	..()
 
 /datum/crime_incident/proc/getMinFine()
 	var/min = 0

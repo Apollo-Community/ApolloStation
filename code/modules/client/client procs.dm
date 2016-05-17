@@ -566,7 +566,8 @@
 		'html/images/logo-nt.png',
 		'html/images/logo-anti.png',
 		'html/images/logo-apollo.png',
-		'html/images/talisman.png'
+		'html/images/talisman.png',
+		'html/images/barcode.png'
 		)
 
 

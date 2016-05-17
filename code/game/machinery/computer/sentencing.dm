@@ -26,6 +26,7 @@
 			menu_screen = "incident_report"
 		else
 			buzz( "\The [src] buzzes, \"Could not import incident report.\"" )
+		qdel( O )
 	else if( istype( O, /obj/item/weapon/paper ) && menu_screen == "import_incident" )
 		buzz( "\The [src] buzzes, \"This console only accepts authentic incident reports. Copies are invalid.\"" )
 
@@ -66,7 +67,7 @@
 
 /obj/machinery/computer/sentencing/proc/import_incident()
 	. = "<center><h2>Incident Import</h2><br>"
-	. += "Please insert the incident transfer paper or <a href='?src=\ref[src];button=change_menu;choice=main_menu'>Cancel</a></center>"
+	. += "Insert the encoded incident report paper or <a href='?src=\ref[src];button=change_menu;choice=main_menu'>Cancel</a></center>"
 
 	return .
 
@@ -101,7 +102,7 @@
 		. += "<a href='?src=\ref[src];button=change_brig;'>None</a>"
 
 	. += "<br><br>"
-	. += "<center><a href='?src=\ref[src];button=change_menu;choice=main_menu'>Cancel</a></center>"
+	. += "<center><a href='?src=\ref[src];button=print_encoded_form'>Print</a> <a href='?src=\ref[src];button=change_menu;choice=main_menu'>Cancel</a></center>"
 
 	return .
 
@@ -154,6 +155,13 @@
 				buzz( "\The [src] buzzes, \"The entered sentence was greater than the maximum sentence!\"" )
 			else
 				incident.prison_sentence = number
+		if( "print_encoded_form" )
+			var/obj/item/weapon/paper/form/incident/I = new /obj/item/weapon/paper/form/incident
+			I.incident = incident
+			I.name = "Encoded Incident Report"
+			print( I )
+			incident = null
+			menu_screen = "main_menu"
 
 	add_fingerprint(usr)
 	updateUsrDialog()
