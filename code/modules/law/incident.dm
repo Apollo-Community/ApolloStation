@@ -28,12 +28,18 @@
 	for( var/datum/law/L in laws )
 		min += L.min_brig_time
 
+	if( min < 0 )
+		min = 0
+
 	return min
 
 /datum/crime_incident/proc/getMaxBrigSentence()
 	var/max = 0
 	for( var/datum/law/L in laws )
 		max += L.max_brig_time
+
+	if( max > PERMABRIG_SENTENCE )
+		max = PERMABRIG_SENTENCE
 
 	return max
 
@@ -42,12 +48,26 @@
 	for( var/datum/law/L in laws )
 		min += L.min_prison_time
 
+	if( min < 0 )
+		min = 0
+
 	return min
 
 /datum/crime_incident/proc/getMaxPrisonSentence()
 	var/max = 0
 	for( var/datum/law/L in laws )
 		max += L.max_prison_time
+
+	if( max > PERMAPRISON_SENTENCE )
+		max = PERMAPRISON_SENTENCE
+
+	return max
+
+/datum/crime_incident/proc/getMaxSeverity()
+	var/max = 0
+	for( var/datum/law/L in laws )
+		if( L.severity > max )
+			max = L.severity
 
 	return max
 
