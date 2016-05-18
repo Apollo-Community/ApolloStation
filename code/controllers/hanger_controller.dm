@@ -58,11 +58,13 @@ datum/hanger_schedular/proc/add_shuttle(datum/shuttle/S, var/obj/hanger/H)
 	scheduled_shuttle.curr_hanger = S.current_hanger
 	shuttle_to_schedule += scheduled_shuttle
 	var/obj/hanger/J = hanger_controller.get_free_space_hanger(S)
+	S.in_transit = 1
 	S.short_jump(J,0)
 	inform_shuttle(S, 1)
 
 datum/hanger_schedular/proc/remove_shuttle(datum/shuttle/S)
 	shuttle_to_schedule -= S
+	S.in_transit = 0
 
 //Inform the occupants of the shuttle they are beeing moved to a holding location or their destination.
 datum/hanger_schedular/proc/inform_shuttle(datum/shuttle/S, var/type)

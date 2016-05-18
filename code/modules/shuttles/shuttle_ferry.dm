@@ -105,7 +105,7 @@
 			process_state = WAIT_ARRIVE
 
 		if (WAIT_ARRIVE)
-			if (moving_status == SHUTTLE_IDLE)
+			if (moving_status == SHUTTLE_IDLE && !in_transit)
 				dock()
 				in_use = null	//release lock
 				process_state = WAIT_FINISH
