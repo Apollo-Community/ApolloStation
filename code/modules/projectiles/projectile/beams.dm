@@ -182,6 +182,7 @@ var/list/beam_master = list()
 	agony = 40
 	damage_type = HALLOSS
 
+// emitter beam
 /obj/item/projectile/beam/continuous
 	name = "laser beam"
 	icon = 'icons/obj/projectiles_continuous.dmi'
@@ -192,9 +193,27 @@ var/list/beam_master = list()
 	flag = "laser"
 	eyeblur = 1
 
+	var/power = 40
 	var/process_delay = 2
 	var/obj/item/projectile/beam/continuous/node1
 	var/obj/item/projectile/beam/continuous/node2
+
+/obj/item/projectile/beam/continuous/New(var/loc, var/parent)
+	node1 = parent
+
+	var/parent_power = 0
+	if(istype(node1))
+		parent_power = node1.power
+	else if(istype(parent, /obj/machinery/power/emitter))
+		var/obj/machinery/power/emitter/E = parent
+		parent_power = E.active_power_usage / 1000
+
+	update_power(parent_power)
+
+	dir = node1.dir
+	step(src, dir)
+
+	process()
 
 /obj/item/projectile/beam/continuous/Destroy()
 	if(node1 && istype(node1))
@@ -234,17 +253,14 @@ var/list/beam_master = list()
 	if(!loc || loc.density || !node1)
 		Bump(loc)
 		return
-	if(node2)
+	if(node2 && node2.loc) // don't try to propagate if there's a beam segment ahead
 		spawn(process_delay)
 			process()
 		return
  
  	icon_state = "emitter_end"
-	var/obj/item/projectile/beam/continuous/B = new(src.loc)
+	var/obj/item/projectile/beam/continuous/B = new(src.loc, src)
 	node2 = B
-	B.node1 = src
-	B.dir = dir
-	step(B, dir)
 	spawn(0)
 		if(B.loc)
 			if(B.z != z) // pls no travel through zs
@@ -255,3 +271,13 @@ var/list/beam_master = list()
 
 	spawn(process_delay)
 		process()
+
+/obj/item/projectile/beam/continuous/proc/update_power(var/new_power)
+	if(new_power)
+		power = new_power
+
+	alpha = min(255, 255 * (power / EMITTER_POWER_MAX))
+	damage = power / 10
+
+	if(node2)
+		node2.update_power(power)

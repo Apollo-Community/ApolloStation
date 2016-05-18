@@ -318,9 +318,14 @@
 		return 0	// This stops people from being able to really power up the supermatter
 				// Then bring it inside to explode instantly upon landing on a valid turf.
 
-	if(istype(Proj, /obj/item/projectile/beam))
-		power += getSMVar( smlevel, "emitter_power" )
-		damage += getSMVar( smlevel, "emitter_damage" )
+	if(istype(Proj, /obj/item/projectile/beam/continuous))
+		var/factor = getSMVar( smlevel, "emitter_factor" )
+		var/obj/item/projectile/beam/continuous/B = Proj
+
+		power += ( 0.16 * ( 1.69 ** factor )) * ( B.power / ( EMITTER_POWER_MAX * ( 2/3 ))) // regression
+		damage += ( 0.5 * factor - 0.5 ) * ( B.power / ( EMITTER_POWER_MAX * ( 2/3 )))
+		world << "beam power: [B.power]"
+		world << "boy oh adding [( 0.16 * ( 1.69 ** factor )) * ( B.power / ( EMITTER_POWER_MAX * ( 2/3 )))] power. new is [power]"
 	else
 		damage += Proj.damage
 	return 0
@@ -356,7 +361,7 @@
 		var/distance = get_dist(R, src)
 		if(distance  && distance <= getSMVar( smlevel, "collector_range" ))		//sanity for 1/0
 			//for collectors using standard phoron tanks at 1013 kPa, the actual power generated will be this power*0.3*20*29 = power*174
-			R.receive_pulse(power*(0.9/distance))			// mod = 0.65 : 0.325 : 0.211 ..... 0.065    outputs - ~400 - 435kW with default setup (tested via mapping > setup supermatter)
+			R.receive_pulse(power*(0.7/distance))			// mod = 0.65 : 0.325 : 0.211 ..... 0.065    outputs - ~400 - 435kW with default setup (tested via mapping > setup supermatter)
 	return
 
 /obj/machinery/power/supermatter/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
