@@ -250,7 +250,7 @@
 		t = replacetext(t, "\[logo\]", "<img src = logo-nt.png>")
 		t = replacetext(t, "\[apollo\]", "<img src = logo-apollo.png>")
 		t = replacetext(t, "\[antilogo\]", "<img src = logo-anti.png>")	// Adds alternative anti-NT logo.
-		t = replacetext(t, "\[barcode\]", "<img src = barcode.png>")
+		t = replacetext(t, "\[barcode\]", "<img src = barcode[rand(0, 3)].png>")
 
 		t = "<font face=\"[deffont]\" color=[P ? P.colour : "black"]>[t]</font>"
 	else // If it is a crayon, and he still tries to use these, make them empty!
