@@ -18,6 +18,7 @@
 	var/docking_controller_tag	//tag of the controller used to coordinate docking
 	var/datum/computer/file/embedded_program/docking/docking_controller	//the controller itself. (micro-controller, not game controller)
 	var/arrive_time = 0	//the time at which the shuttle arrives when long jumping
+	var/in_transit = 0 //To help with the hanger schedular
 
 /datum/shuttle/proc/init_templates()
 	if(isnull(template_path))
