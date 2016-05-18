@@ -275,9 +275,12 @@
 			else // Nucleations get less hallucinatoins
 				l.hallucination = max(0, getSMVar( smlevel, "psionic_power" )/5 * sqrt(1 / max(1,get_dist(l, src))))
 
+// should probably be replaced with something more intricate sometime
 /obj/machinery/power/supermatter/proc/radiate()
-	for(var/mob/living/l in range( get_turf(src), round( sqrt(( power/getSMVar( smlevel, "base_power" ))*7 )/5 )))
-		var/rads = ((power/getSMVar( smlevel, "base_power" ))*getSMVar( smlevel, "radiation_power" )) * sqrt( 1 / get_dist(l, get_turf(src)) )
+	// 0.83 * (power/733) + 1.28 comes from regression analysis on wanted values for the radiation range
+	for(var/mob/living/l in range( get_turf(src), round( 0.83 * (power/733) + 1.28 )))
+		// regression and some other mathemagics
+		var/rads = ( -72 + ( 15.3 * log( power))) * ( 2 / ( get_dist(l, get_turf(src) + 1 )))
 		l.apply_effect(rads, IRRADIATE)
 
 	transfer_energy()
@@ -353,7 +356,7 @@
 		var/distance = get_dist(R, src)
 		if(distance  && distance <= getSMVar( smlevel, "collector_range" ))		//sanity for 1/0
 			//for collectors using standard phoron tanks at 1013 kPa, the actual power generated will be this power*0.3*20*29 = power*174
-			R.receive_pulse(power*(0.65/distance))			// mod = 0.65 : 0.325 : 0.211 ..... 0.065    outputs - ~400 - 435kW with default setup (tested via mapping > setup supermatter)
+			R.receive_pulse(power*(0.9/distance))			// mod = 0.65 : 0.325 : 0.211 ..... 0.065    outputs - ~400 - 435kW with default setup (tested via mapping > setup supermatter)
 	return
 
 /obj/machinery/power/supermatter/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
