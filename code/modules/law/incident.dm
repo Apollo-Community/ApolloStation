@@ -1,7 +1,7 @@
 /datum/crime_incident
 	var/UID // The unique identifier for this incident
 
-	var/list/laws = list() // What laws were broken in this incident
+	var/list/charges = list() // What laws were broken in this incident
 
 	var/list/arbiters = list() // The person or list of people who convicted the criminal
 	var/mob/living/carbon/human/criminal // The person who committed the crimes
@@ -17,32 +17,44 @@
 
 /datum/crime_incident/proc/getMinFine()
 	var/min = 0
-	for( var/datum/law/L in laws )
+	for( var/datum/law/L in charges )
 		min += L.min_fine
-
-	return min
-
-/datum/crime_incident/proc/getMaxFine()
-	var/max = 0
-	for( var/datum/law/L in laws )
-		max += L.max_fine
-
-	return max
-
-/datum/crime_incident/proc/getMinBrigSentence()
-	var/min = 0
-	for( var/datum/law/L in laws )
-		min += L.min_brig_time
 
 	if( min < 0 )
 		min = 0
 
 	return min
 
+/datum/crime_incident/proc/getMaxFine()
+	var/max = 0
+	for( var/datum/law/L in charges )
+		max += L.max_fine
+
+	if( max < 0 )
+		max = 0
+
+	return max
+
+/datum/crime_incident/proc/getMinBrigSentence()
+	var/min = 0
+	for( var/datum/law/L in charges )
+		min += L.min_brig_time
+
+	if( min < 0 )
+		min = 0
+
+	if( min > PERMABRIG_SENTENCE )
+		min = PERMABRIG_SENTENCE
+
+	return min
+
 /datum/crime_incident/proc/getMaxBrigSentence()
 	var/max = 0
-	for( var/datum/law/L in laws )
+	for( var/datum/law/L in charges )
 		max += L.max_brig_time
+
+	if( max < 0 )
+		max = 0
 
 	if( max > PERMABRIG_SENTENCE )
 		max = PERMABRIG_SENTENCE
@@ -51,18 +63,24 @@
 
 /datum/crime_incident/proc/getMinPrisonSentence()
 	var/min = 0
-	for( var/datum/law/L in laws )
+	for( var/datum/law/L in charges )
 		min += L.min_prison_time
 
 	if( min < 0 )
 		min = 0
 
+	if( min > PERMAPRISON_SENTENCE )
+		min = PERMAPRISON_SENTENCE
+
 	return min
 
 /datum/crime_incident/proc/getMaxPrisonSentence()
 	var/max = 0
-	for( var/datum/law/L in laws )
+	for( var/datum/law/L in charges )
 		max += L.max_prison_time
+
+	if( max < 0 )
+		max = 0
 
 	if( max > PERMAPRISON_SENTENCE )
 		max = PERMAPRISON_SENTENCE
@@ -71,7 +89,7 @@
 
 /datum/crime_incident/proc/getMaxSeverity()
 	var/max = 0
-	for( var/datum/law/L in laws )
+	for( var/datum/law/L in charges )
 		if( L.severity > max )
 			max = L.severity
 

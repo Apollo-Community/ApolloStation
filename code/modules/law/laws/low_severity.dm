@@ -13,7 +13,7 @@
 
 /datum/law/low_severity/petty_theft
 	name = "Petty Theft"
-	desc = "To take a low risk item from it’s rightful owner without consent or to possess critical equipment without need."
+	desc = "To take a mundane item from it’s rightful owner without consent or to possess critical equipment without need."
 
 	min_brig_time = 5
 	max_brig_time = 15

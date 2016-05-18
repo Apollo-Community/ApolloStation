@@ -52,6 +52,8 @@
 			. += import_incident()
 		if( "incident_report" )
 			. += incident_report()
+		if( "add_charges" )
+			. += add_charges()
 
 	menu.set_user( user )
 	menu.set_content( . )
@@ -74,8 +76,10 @@
 	return .
 
 /obj/machinery/computer/sentencing/proc/incident_report()
-	if( !incident )
-		. += "There was an error loading the report, please <a href='?src=\ref[src];button=change_menu;choice=main_menu'>Try Again</a>"
+	. = ""
+
+	if( !istype( incident ))
+		. += "There was an error loading the incident, please <a href='?src=\ref[src];button=change_menu;choice=main_menu'>Try Again</a>"
 		return .
 
 	. += "<table class='border'>"
@@ -118,14 +122,112 @@
 
 	. += "</table>"
 
+	. += "<br>"
+
 	. += "<table class='border'>"
 	. += "<tr>"
-	. += "<th colspan='3'><a href='?src=\ref[src];button=add_charges;'>Add Charges</a></th>"
+	. += "<th colspan='3'><a href='?src=\ref[src];button=change_menu;choice=add_charges'>Add Charges</a></th>"
 	. += "</tr>"
+	for( var/datum/law/L in incident.charges )
+		. += "<tr>"
+		. += "<td><b>[L.name]</b></td>"
+		. += "<td><i>[L.desc]</i></td>"
+		. += "<td><a href='?src=\ref[src];button=remove_charge;law=\ref[L]'>Remove</a></td>"
+		. += "</tr>"
 	. += "</table>"
 
 	. += "<br><br>"
 	. += "<center><a href='?src=\ref[src];button=print_encoded_form'>Print</a> <a href='?src=\ref[src];button=change_menu;choice=main_menu'>Cancel</a></center>"
+
+	return .
+
+/obj/machinery/computer/sentencing/proc/add_charges()
+	. = ""
+
+	if( !istype( incident ))
+		. += "There was an error loading the incident, please <a href='?src=\ref[src];button=change_menu;choice=main_menu'>Try Again</a>"
+		return .
+
+	if( !istype( corp_regs ))
+		. += "There was an error loading corporate regulations, please <a href='?src=\ref[src];button=change_menu;choice=main_menu'>Try Again</a>"
+		return .
+
+	// Low severity
+	. += "<table class='border'>"
+	. += "<tr>"
+	. += "<th colspan='5'>Misdemeanors</th>"
+	. += "</tr>"
+
+	. += "<tr>"
+	. += "<th>Name</th>"
+	. += "<th>Description</th>"
+	. += "<th>Brig Sentence</th>"
+	. += "<th>Fine</th>"
+	. += "<th>Button</th>"
+	. += "</tr>"
+
+	for( var/datum/law/L in corp_regs.low_severity )
+		. += "<tr>"
+		. += "<td><b>[L.name]</b></td>"
+		. += "<td><i>[L.desc]</i></td>"
+		. += "<td>[L.min_brig_time] - [L.max_brig_time] minutes</td>"
+		. += "<td>$[L.min_fine] - $[L.max_fine]</td>"
+		. += "<td><a href='?src=\ref[src];button=add_charge;law=\ref[L]'>Charge</a></td>"
+		. += "</tr>"
+
+	. += "</table>"
+
+	// Med severity
+	. += "<table class='border'>"
+	. += "<tr>"
+	. += "<th colspan='5'>Indictable Offences</th>"
+	. += "</tr>"
+
+	. += "<tr>"
+	. += "<th>Name</th>"
+	. += "<th>Description</th>"
+	. += "<th>Brig Sentence</th>"
+	. += "<th>Fine</th>"
+	. += "<th>Button</th>"
+	. += "</tr>"
+
+	for( var/datum/law/L in corp_regs.med_severity )
+		. += "<tr>"
+		. += "<td><b>[L.name]</b></td>"
+		. += "<td><i>[L.desc]</i></td>"
+		. += "<td>[L.min_brig_time] - [L.max_brig_time] minutes</td>"
+		. += "<td>$[L.min_fine] - $[L.max_fine]</td>"
+		. += "<td><a href='?src=\ref[src];button=add_charge;law=\ref[L]'>Charge</a></td>"
+		. += "</tr>"
+
+	. += "</table>"
+
+	// High severity
+	. += "<table class='border'>"
+	. += "<tr>"
+	. += "<th colspan='5'>Capital Offences</th>"
+	. += "</tr>"
+
+	. += "<tr>"
+	. += "<th>Name</th>"
+	. += "<th>Description</th>"
+	. += "<th>Brig Sentence</th>"
+	. += "<th>Prison Sentences</th>"
+	. += "<th>Button</th>"
+	. += "</tr>"
+
+	for( var/datum/law/L in corp_regs.high_severity )
+		. += "<tr>"
+		. += "<td><b>[L.name]</b></td>"
+		. += "<td><i>[L.desc]</i></td>"
+		. += "<td>[L.min_brig_time] - [L.max_brig_time] minutes</td>"
+		. += "<td>[L.min_prison_time] - [L.max_prison_time] days</td>"
+		. += "<td><a href='?src=\ref[src];button=add_charge;law=\ref[L]'>Charge</a></td>"
+		. += "</tr>"
+
+	. += "</table>"
+
+	. += "<center><a href='?src=\ref[src];button=change_menu;choice=incident_report'>Return</a></center>"
 
 	return .
 
@@ -185,8 +287,10 @@
 			print( I )
 			incident = null
 			menu_screen = "main_menu"
-		if( "add_charges" )
-			buzz( "LOL" )
+		if( "add_charge" )
+			incident.charges += locate( href_list["law"] )
+		if( "remove_charge" )
+			incident.charges -= locate( href_list["law"] )
 
 	add_fingerprint(usr)
 	updateUsrDialog()

@@ -8,16 +8,21 @@
 	var/list/high_severity = list()
 
 /datum/controller/process/law/New()
-	..()
-
 	corp_regs = src
+
+	..()
 
 /datum/controller/process/law/setup()
 	name = "Law"
 	schedule_interval = 100
 
-	low_severity = subtypes( /datum/law/low_severity )
-	med_severity = subtypes( /datum/law/med_severity )
-	high_severity = subtypes( /datum/law/high_severity )
+	for( var/L in subtypes( /datum/law/low_severity ))
+		low_severity += new L
+
+	for( var/L in subtypes( /datum/law/med_severity ))
+		med_severity += new L
+
+	for( var/L in subtypes( /datum/law/high_severity ))
+		high_severity += new L
 
 	laws = low_severity + med_severity + high_severity
