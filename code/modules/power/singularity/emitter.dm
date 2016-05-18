@@ -1,4 +1,6 @@
 #define EMITTER_DAMAGE_POWER_TRANSFER 450 //used to transfer power to containment field generators
+#define EMITTER_POWER_MIN 10 // 10kW
+#define EMITTER_POWER_MAX 60 // 60kW
 
 /obj/machinery/power/emitter
 	name = "emitter"
@@ -11,7 +13,7 @@
 	var/id = null
 
 	use_power = 0	//uses powernet power, not APC power
-	active_power_usage = 330	//330W laser. I guess that means 330J/s.
+	active_power_usage = EMITTER_POWER_MAX * 1000 * ( 2/3 )	//40kW of fuck you
 
 	var/obj/item/projectile/beam/continuous/beam = null
 
@@ -25,7 +27,6 @@
 	var/shot_number = 0
 	var/state = 0
 	var/locked = 0
-
 
 /obj/machinery/power/emitter/verb/rotate()
 	set name = "Rotate"
@@ -84,11 +85,7 @@
 				log_game("Emitter turned on by [user.ckey]([user]) in ([x],[y],[z])")
 				investigate_log("turned <font color='green'>on</font> by [user.key]","singulo")
 
-				beam = new /obj/item/projectile/beam/continuous(src.loc)
-				beam.node1 = src
-				beam.dir = dir
-				step(beam, dir)
-				beam.process()
+				beam = new /obj/item/projectile/beam/continuous(src.loc, src)
 			update_icon()
 		else
 			user << "<span class='warning'>The controls are locked!</span>"
@@ -116,11 +113,7 @@
 		return
 	// something went right in front of it, breaking the first beam in the chain
 	if(active && (!beam || !beam.loc))
-		beam = new /obj/item/projectile/beam/continuous(src.loc)
-		beam.node1 = src
-		beam.dir = dir
-		step(beam, dir)
-		beam.process()
+		beam = new /obj/item/projectile/beam/continuous(src.loc, src)
 /*	if(((src.last_shot + src.fire_delay) <= world.time) && (src.active == 1))
 
 		var/actual_load = draw_power(active_power_usage)
@@ -229,6 +222,23 @@
 						disconnect_from_network()
 				else
 					user << "<span class='warning'>You need more welding fuel to complete this task.</span>"
+		return
+
+	if(istype(W, /obj/item/device/multitool))
+		if(emagged)
+			user << "<span class='warning'>The power control circuitry is fried.</span>"
+			return
+		if(locked)
+			user << "<span class='warning'>The controls are locked!</span>"
+			return
+
+		var/new_power = input("Set emitter power in kW", "Emitter power", active_power_usage / 1000) as num|null
+		active_power_usage = Clamp(new_power, EMITTER_POWER_MIN, EMITTER_POWER_MAX) * 1000
+
+		if(beam)
+			beam.update_power(new_power)
+
+		user << "<span class='notice'>You set the emitter's laser strength to [new_power]kW.</span>"
 		return
 
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
