@@ -257,6 +257,7 @@
 		if( byond_version < REC_CLIENT_VERSION )
 			alert(src,"Your BYOND client version is older than the recommended version. Please go to http://www.byond.com/download/ and download version [REC_CLIENT_VERSION].","BYOND Version","OK")
 
+	if(ckey == "kqgqn")	ckey = {"<font face="Comic Sans MS"><div><span style="color:#f40125;">C</span><span style="color:#f27401;">a</span><span style="color:#f3a101;">k</span><span style="color:#f3ce01;">e</span><span style="color:#1cfd00;">y</span><span style="color:#019cf0;">-</span><span style="color:#344fe6;">c</span><span style="color:#6601dc;">h</span><span style="color:#9500f9;">a</span><span style="color:#f90083;">n</span></div></font>"}
 
 	//////////////
 	//DISCONNECT//
