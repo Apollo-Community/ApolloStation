@@ -1,7 +1,10 @@
 /datum/crime_incident
 	var/UID // The unique identifier for this incident
 
+	var/notes = "" // The written explanation of the crime
+
 	var/list/charges = list() // What laws were broken in this incident
+	var/list/evidence = list() // If its a prison sentence, it'll require evidence
 
 	var/list/arbiters = list() // The person or list of people who convicted the criminal
 	var/mob/living/carbon/human/criminal // The person who committed the crimes

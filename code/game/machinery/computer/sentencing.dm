@@ -46,14 +46,18 @@
 	. = ""
 
 	switch( menu_screen )
-		if( "main_menu" )
-			. += main_menu()
 		if( "import_incident" )
 			. += import_incident()
 		if( "incident_report" )
 			. += incident_report()
-		if( "add_charges" )
+		if( "low_severity" )
 			. += add_charges()
+		if( "med_severity" )
+			. += add_charges()
+		if( "high_severity" )
+			. += add_charges()
+		else
+			. += main_menu()
 
 	menu.set_user( user )
 	menu.set_content( . )
@@ -71,7 +75,10 @@
 
 /obj/machinery/computer/sentencing/proc/import_incident()
 	. = "<center><h2>Incident Import</h2><br>"
-	. += "Insert the encoded incident report paper or <a href='?src=\ref[src];button=change_menu;choice=main_menu'>Cancel</a></center>"
+	. += "Insert the encoded incident report paper"
+
+	. += "<br><hr>"
+	. += "<a href='?src=\ref[src];button=change_menu;choice=main_menu'>Cancel</a></center>"
 
 	return .
 
@@ -82,8 +89,8 @@
 		. += "There was an error loading the incident, please <a href='?src=\ref[src];button=change_menu;choice=main_menu'>Try Again</a>"
 		return .
 
+	// Criminal and sentence
 	. += "<table class='border'>"
-
 	. += "<tr>"
 	. += "<th>Criminal:</th>"
 	. += "<td><a href='?src=\ref[src];button=change_criminal;'>"
@@ -124,9 +131,22 @@
 
 	. += "<br>"
 
+	// Incident notes table
 	. += "<table class='border'>"
 	. += "<tr>"
-	. += "<th colspan='3'><a href='?src=\ref[src];button=change_menu;choice=add_charges'>Add Charges</a></th>"
+	. += "<th>Notes <a href='?src=\ref[src];button=add_notes'>Change</a></th>"
+	. += "</tr>"
+	. += "<tr>"
+	. += "<td>[incident.notes]</td>"
+	. += "</tr>"
+	. += "</table>"
+
+	. += "<br>"
+
+	// Charges list
+	. += "<table class='border'>"
+	. += "<tr>"
+	. += "<th colspan='3'>Charges <a href='?src=\ref[src];button=change_menu;choice=low_severity'>Add</a></th>"
 	. += "</tr>"
 	for( var/datum/law/L in incident.charges )
 		. += "<tr>"
@@ -136,7 +156,7 @@
 		. += "</tr>"
 	. += "</table>"
 
-	. += "<br><br>"
+	. += "<br><hr>"
 	. += "<center><a href='?src=\ref[src];button=print_encoded_form'>Print</a> <a href='?src=\ref[src];button=change_menu;choice=main_menu'>Cancel</a></center>"
 
 	return .
@@ -151,6 +171,48 @@
 	if( !istype( corp_regs ))
 		. += "There was an error loading corporate regulations, please <a href='?src=\ref[src];button=change_menu;choice=main_menu'>Try Again</a>"
 		return .
+
+	. += charges_header()
+	. += "<hr>"
+	switch( menu_screen )
+		if( "low_severity" )
+			. += low_severity()
+		if( "med_severity" )
+			. += med_severity()
+		if( "high_severity" )
+			. += high_severity()
+
+	. += "<br><hr>"
+	. += "<center><a href='?src=\ref[src];button=change_menu;choice=incident_report'>Return</a></center>"
+
+/obj/machinery/computer/sentencing/proc/charges_header()
+	. = "<center>"
+
+	if( menu_screen == "low_severity" )
+		. += "Low Severity"
+	else
+		. += "<a href='?src=\ref[src];button=change_menu;choice=low_severity'>Low Severity</a>"
+
+	. += " - "
+
+	if( menu_screen == "med_severity" )
+		. += "Medium Severity"
+	else
+		. += "<a href='?src=\ref[src];button=change_menu;choice=med_severity'>Medium Severity</a>"
+
+	. += " - "
+
+	if( menu_screen == "high_severity" )
+		. += "High Severity"
+	else
+		. += "<a href='?src=\ref[src];button=change_menu;choice=high_severity'>High Severity</a>"
+
+	. += "</center>"
+
+	return .
+
+/obj/machinery/computer/sentencing/proc/low_severity()
+	. = ""
 
 	// Low severity
 	. += "<table class='border'>"
@@ -177,6 +239,11 @@
 
 	. += "</table>"
 
+	return .
+
+/obj/machinery/computer/sentencing/proc/med_severity()
+	. = ""
+
 	// Med severity
 	. += "<table class='border'>"
 	. += "<tr>"
@@ -202,6 +269,11 @@
 
 	. += "</table>"
 
+	return .
+
+/obj/machinery/computer/sentencing/proc/high_severity()
+	. = ""
+
 	// High severity
 	. += "<table class='border'>"
 	. += "<tr>"
@@ -226,8 +298,6 @@
 		. += "</tr>"
 
 	. += "</table>"
-
-	. += "<center><a href='?src=\ref[src];button=change_menu;choice=incident_report'>Return</a></center>"
 
 	return .
 
@@ -291,6 +361,13 @@
 			incident.charges += locate( href_list["law"] )
 		if( "remove_charge" )
 			incident.charges -= locate( href_list["law"] )
+		if( "add_notes" )
+			if( !incident )
+				return
+
+			var/incident_notes  = sanitize( input( usr,"Describe the incident here:","Incident Report", html_decode( incident.notes )) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
+			if( incident_notes != null )
+				incident.notes = incident_notes
 
 	add_fingerprint(usr)
 	updateUsrDialog()
