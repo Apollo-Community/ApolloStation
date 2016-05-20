@@ -184,7 +184,6 @@
 //		new /obj/item/weapon/cartridge/security(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/weapon/storage/belt/security(src)
-		new /obj/item/device/flash(src)
 		new /obj/item/weapon/reagent_containers/spray/pepper(src)
 		new /obj/item/weapon/grenade/flashbang(src)
 		new /obj/item/clothing/glasses/sunglasses/sechud(src)
@@ -256,11 +255,7 @@
 		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/device/detective_scanner(src)
 		new /obj/item/clothing/suit/armor/det_suit(src)
-		new /obj/item/ammo_magazine/c45r(src)
-		new /obj/item/ammo_magazine/c45r(src)
 		new /obj/item/taperoll/police(src)
-		new /obj/item/weapon/gun/projectile/detective/semiauto(src)
-		new /obj/item/clothing/tie/holster/armpit(src)
 		return
 
 /obj/structure/closet/secure_closet/detective/update_icon()
