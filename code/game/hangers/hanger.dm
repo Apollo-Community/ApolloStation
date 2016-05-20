@@ -13,6 +13,7 @@ obj/hanger
 	var/list/hanger_turf_atribs
 	var/list/hanger_area_turfs
 	var/list/hanger_turfs
+	var/datum/shuttle
 	name = "Shuttle Jump Beacon"
 	desc = "Small machine which acts as a lock on point for shuttles"
 	anchored = 1
@@ -102,6 +103,8 @@ obj/hanger/proc/check_hanger_obstructions_adv()
 
 //Shuttle indicating its going to land at a hanger
 obj/hanger/proc/land_at(var/datum/shuttle/s)
+	shuttle = s
+	full = 1
 	if(!exterior)
 		hanger_turfs = hanger_area_turfs
 		hanger_turf_atribs = truf_atrib_lister(hanger_turfs)
@@ -114,6 +117,7 @@ obj/hanger/proc/take_off()
 		//Not working need to do something to the turfs.
 		update_lights()
 	full = 0
+	shuttle = null
 
 obj/hanger/proc/add_to_controller()
 	hangers += src

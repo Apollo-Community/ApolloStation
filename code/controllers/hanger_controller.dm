@@ -1,5 +1,5 @@
 var/global/datum/hanger_controller/hanger_controller
-var/global/datum/hanger_schedular/hanger_schedular
+var/global/datum/hanger_scheduler/hanger_schedular
 
 datum/hanger_controller
 
@@ -25,7 +25,7 @@ datum/hanger_controller
 	return hangers
 
 //Return a random free hanger.
-/datum/hanger_controller/proc/get_free_space_hanger(var/datum/shuttle/S)
+/datum/hanger_controller/proc/hanger_controller(var/datum/shuttle/S)
 	var/list/hangers = get_free_space_hangers(S)
 	if(isnull(hangers))
 		return null
@@ -33,7 +33,7 @@ datum/hanger_controller
 	return hangers[i]
 
 
-//Hanger schedular manages shuttle that are positioned in intermediate hangers.
+//Hanger scheduler manages shuttle that are positioned in intermediate hangers.
 //Shuttles need to request scheduling.
 datum/hanger_schedular
 
@@ -44,10 +44,10 @@ var/list/shuttle_to_schedule = list()
 datum/hanger_schedular/proc/process()
 	error("hanger_schedular heartbeat")
 	for(var/datum/scheduled_shuttle/S in shuttle_to_schedule)
-		if(S.dest_hanger.can_land_at(S.shuttle) && S.shuttle.moving_status == SHUTTLE_IDLE)
-			S.shuttle.short_jump(S.dest_hanger)
+		if(S.dest_hanger.can_land_at(S.shuttle) && S.shuttle.moving_status == SHUTTLE_SCHEDULING)
+			S.shuttle.move(S.dest_hanger, null, 0)
 			inform_shuttle(S.shuttle, 0)
-			shuttle_to_schedule.Remove(S)
+			shuttle_to_schedule.remove_shuttle(S)
 
 //Add the shuttle to the to schedule shuttles and park it at an empty spot near the station.
 //TODO: Build more logic into this it now just picks an emtpy space hanger at random.
@@ -57,23 +57,29 @@ datum/hanger_schedular/proc/add_shuttle(datum/shuttle/S, var/obj/hanger/H)
 	scheduled_shuttle.dest_hanger = H
 	scheduled_shuttle.curr_hanger = S.current_hanger
 	shuttle_to_schedule += scheduled_shuttle
-	var/obj/hanger/J = hanger_controller.get_free_space_hanger(S)
-	S.in_transit = 1
-	S.short_jump(J,0)
 	inform_shuttle(S, 1)
 
-datum/hanger_schedular/proc/remove_shuttle(datum/shuttle/S)
-	shuttle_to_schedule -= S
-	S.in_transit = 0
+datum/hanger_scheduler/proc/remove_shuttle(datum/shuttle/s)
+	shuttle_to_schedule -= s
+	s.in_transit = 0
 
 //Inform the occupants of the shuttle they are beeing moved to a holding location or their destination.
-datum/hanger_schedular/proc/inform_shuttle(datum/shuttle/S, var/type)
-	for(var/turf/T in S.shuttle_turfs)
+datum/hanger_scheduler/proc/inform_shuttle(datum/shuttle/s, var/type)
+	var/message = null
+	switch (type)
+		if(0)	message = "The shuttle computer prompts: The shuttle destination has been cleared proceeding to dock."
+		if(1)	message = "The shuttle computer prompts: The shuttle as been parked at a temporary location near the the station until its destination is cleared."
+		if(2)	message = "The shuttle computer prompts: Starting redirection to space to make room for priority shuttle"
+		else	return
+
+	for(var/turf/T in s.shuttle_turfs)
 		for(var/mob/M in T)
-			if(type)
-				M << "The shuttle computer prompts: The shuttle as been parked at a temporary location near the the station until its destination is cleared."
-			else
-				M << "The shuttle computer prompts: The shuttle destination has been cleared proceeding to dock."
+			M << message
+
+datum/hanger_scheduler/proc/divert(var/datum/shuttle/s)
+	var/hanger/H = get_free_space_hangers(s)
+	s.move(H,null,0)
+	inform_shuttle(S.shuttle, 2)
 
 
 //Wrapper datum

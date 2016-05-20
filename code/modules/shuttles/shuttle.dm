@@ -19,6 +19,7 @@
 	var/datum/computer/file/embedded_program/docking/docking_controller	//the controller itself. (micro-controller, not game controller)
 	var/arrive_time = 0	//the time at which the shuttle arrives when long jumping
 	var/in_transit = 0 //To help with the hanger schedular
+	var/priority = 0 //Does this shuttle move other shuttles out of its way ?
 
 /datum/shuttle/proc/init_templates()
 	if(isnull(template_path))
@@ -50,10 +51,21 @@
 
 	if(isnull(trg_hanger)) return
 
+	//When jumping to a hanger first look if its full.
+	//If its full check if we have priority (aka emergency shuttle).
+	//If not see if you can temporary divert to another spot near the station.
+	//If that fails just give up allready !
 	if(trg_hanger.can_land_at(src))
 		trg_hanger.full = 1
+	else if (priority)
+		hanger_scheduler.divert(trg_hanger.shuttle)
+		trg_hanger.full = 1
 	else
-		return
+		var/obj/hanger/J = hanger_controller.get_free_space_hanger(S)
+		if(!isnull(J))
+			hanger_scheduler.add_shuttle(src, trg_hanger)
+			in_transit = 1
+			trg_hanger = J
 
 	//it would be cool to play a sound here
 	moving_status = SHUTTLE_WARMUP
@@ -65,7 +77,11 @@
 		spawn(50)
 			moving_status = SHUTTLE_INTRANSIT //shouldn't matter but just to be safe
 			move(trg_hanger, direction, null, 0)
-			moving_status = SHUTTLE_IDLE
+
+			if(!in_transit)
+				moving_status = SHUTTLE_IDLE
+			else
+				moving_status == SHUTTLE_SCHEDULING
 
 //Make a long jump. First go the the interim position and then to the target hanger.
 //Wait at the interim position for the indicated time.
@@ -75,14 +91,27 @@
 	if(moving_status != SHUTTLE_IDLE) return
 
 	if(isnull(trg_hanger)) return
-	if(!trg_hanger.can_land_at(src)) return
-	trg_hanger.full = 1
+
+	if(trg_hanger.can_land_at(src))
+		trg_hanger.full = 1
+	else if (priority)
+		hanger_scheduler.divert(trg_hanger.shuttle)
+		trg_hanger.full = 1
+	else
+		var/obj/hanger/J = hanger_controller.get_free_space_hanger(S)
+		if(!isnull(J))
+			hanger_scheduler.add_shuttle(src, trg_hanger)
+			in_transit = 1
+			trg_hanger = J
 
 	if(isnull(interim_hanger))
 		interim_hanger = hanger_controller.get_free_interim_hanger(src)
 
 	if(!isnull(interim_hanger) && interim_hanger.can_land_at(src))
 		interim_hanger.full = 1
+	else
+		return
+
 	//it would be cool to play a sound here
 	moving_status = SHUTTLE_WARMUP
 	spawn(warmup_time*10)
@@ -102,7 +131,10 @@
 				display_warning(trg_hanger)
 
 		move(trg_hanger, direction, 0)
-		moving_status = SHUTTLE_IDLE
+		if(!in_transit)
+			moving_status = SHUTTLE_IDLE
+		else
+			moving_stauts = SHUTTLE_SCHEDULING
 
 //Dock at you current dock.
 /datum/shuttle/proc/dock()
