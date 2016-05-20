@@ -52,9 +52,9 @@ datum/hanger_scheduler/proc/process()
 		if(!S.dest_hanger.can_land_at(S.shuttle))
 			continue
 
+		remove_shuttle(S)
 		S.shuttle.move(S.dest_hanger, null, 0)
 		inform_shuttle(S.shuttle, 0)
-		remove_shuttle(S)
 
 //Add the shuttle to the to schedule shuttles and park it at an empty spot near the station.
 //TODO: Build more logic into this it now just picks an emtpy space hanger at random.

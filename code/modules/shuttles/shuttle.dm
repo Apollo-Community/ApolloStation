@@ -291,7 +291,8 @@
 	//If you get moved out of the way lets be nice and not gib you.
 	for(var/turf/T in filtered_turfs)
 		for(var/mob/M in T)
-			M << "<span class='alert'>You see the shape of a shuttle approaching better move out of the way now!</span>"
+			if(M.stat == 0)
+				M << "<span class='alert'>You see the shape of a shuttle approaching better move out of the way now!</span>"
 
 
 /datum/shuttle/proc/power_check(var/list/turfs)
