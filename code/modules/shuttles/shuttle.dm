@@ -53,19 +53,25 @@
 
 	//When jumping to a hanger first look if its full.
 	//If its full check if we have priority (aka emergency shuttle).
-	//If not see if you can temporary divert to another spot near the station.
+	//If not see if you can temporary divert to another spot near the station and just squash everything in the way !.
 	//If that fails just give up allready !
 	if(trg_hanger.can_land_at(src))
 		trg_hanger.full = 1
+		error("[docking_controller_tag] can land at [trg_hanger.htag]")
 	else if (priority)
 		hanger_scheduler.divert(trg_hanger.shuttle)
 		trg_hanger.full = 1
+		error("[docking_controller_tag] can land at [trg_hanger.htag] Priority used")
 	else
-		var/obj/hanger/J = hanger_controller.get_free_space_hanger(S)
+		var/obj/hanger/J = hanger_controller.get_free_space_hanger(src)
+		error("[docking_controller_tag] can not land at [trg_hanger.htag]")
 		if(!isnull(J))
 			hanger_scheduler.add_shuttle(src, trg_hanger)
 			in_transit = 1
 			trg_hanger = J
+			trg_hanger.full = 1
+			error("[docking_controller_tag] divertin to [J.htag]")
+
 
 	//it would be cool to play a sound here
 	moving_status = SHUTTLE_WARMUP
@@ -78,10 +84,11 @@
 			moving_status = SHUTTLE_INTRANSIT //shouldn't matter but just to be safe
 			move(trg_hanger, direction, null, 0)
 
+			error("[in_transit]")
 			if(!in_transit)
 				moving_status = SHUTTLE_IDLE
 			else
-				moving_status == SHUTTLE_SCHEDULING
+				moving_status = SHUTTLE_SCHEDULING
 
 //Make a long jump. First go the the interim position and then to the target hanger.
 //Wait at the interim position for the indicated time.
@@ -98,7 +105,7 @@
 		hanger_scheduler.divert(trg_hanger.shuttle)
 		trg_hanger.full = 1
 	else
-		var/obj/hanger/J = hanger_controller.get_free_space_hanger(S)
+		var/obj/hanger/J = hanger_controller.get_free_space_hanger(src)
 		if(!isnull(J))
 			hanger_scheduler.add_shuttle(src, trg_hanger)
 			in_transit = 1
@@ -134,7 +141,7 @@
 		if(!in_transit)
 			moving_status = SHUTTLE_IDLE
 		else
-			moving_stauts = SHUTTLE_SCHEDULING
+			moving_status = SHUTTLE_SCHEDULING
 
 //Dock at you current dock.
 /datum/shuttle/proc/dock()

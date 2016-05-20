@@ -54,11 +54,14 @@ obj/hanger/New()
 //If the hanger is not square look if the shuttle will fit in the hanger turfs
 //This is important for hangers with docking arms
 obj/hanger/proc/can_land_at(var/datum/shuttle/s)
+	error("hanger [htag] can_land_at called")
 	var/list/shuttle_turfs
 	if(full)
+		error("hanger is full returning 0")
 		return 0
 	if(square == 1)
 		if(s.template_dim[1] > dimx || s.template_dim[2] > dimy)
+			error("hanger dimensions do not fit returning 0")
 			return 0
 
 		if(!exterior)
@@ -66,6 +69,7 @@ obj/hanger/proc/can_land_at(var/datum/shuttle/s)
 
 	else
 		if(isnull(s.shuttle_turfs) || isnull(hanger_area_turfs))
+			error("shuttle turfs or hanger area turfs are null returning 0")
 			return 0
 		else
 			//type conversion is ugly
@@ -81,6 +85,7 @@ obj/hanger/proc/can_land_at(var/datum/shuttle/s)
 			shuttle_turfs = shift_turfs(current_loc, hloc, s.shuttle_turfs)
 			for(var/turf/T in shuttle_turfs)
 				if(hanger_area_turfs.Find(T) >= 1)
+					error("Shuttle does not fit returning 0")
 					return 0
 			if(!exterior)
 				return !check_hanger_obstructions(hanger_area_turfs)
@@ -89,10 +94,10 @@ obj/hanger/proc/can_land_at(var/datum/shuttle/s)
 obj/hanger/proc/check_hanger_obstructions(var/list/turfs)
 	for(var/turf/T in turfs)
 		if(!istype(T, /turf/simulated/floor) && !istype(T, /turf/space) &&!istype(T, /turf/unsimulated/floor))
-			//error("hanger [htag] obstructions has detected an obstruction")
-			//error("The obstruction was : [T]")
+			error("hanger [htag] obstructions has detected an obstruction")
+			error("The obstruction was : [T]")
 			return 1
-	//error("hanger [htag] obstructions has detected no obstructions")
+	error("hanger [htag] obstructions has detected no obstructions")
 	return 0
 
 obj/hanger/proc/check_hanger_obstructions_adv()
@@ -126,7 +131,9 @@ obj/hanger/proc/add_to_controller()
 obj/hanger/square/interior/New()
 	..()
 	land_at(null)
+	full = 0
 
 obj/hanger/oddshaped/interior/New()
 	..()
 	land_at(null)
+	full = 0

@@ -1,5 +1,5 @@
 /datum/shuttle/ferry/emergency
-	var/priority = 1
+	priority = 1
 
 /datum/shuttle/ferry/emergency/arrived()
 	if (istype(in_use, /obj/machinery/computer/shuttle_control/emergency))

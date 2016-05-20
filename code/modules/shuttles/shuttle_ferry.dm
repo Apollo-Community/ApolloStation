@@ -156,6 +156,7 @@
 	return
 
 /datum/shuttle/ferry/proc/can_launch()
+	error("can_launch called [docking_controller_tag] the moving status is [moving_status]")
 	if (moving_status != SHUTTLE_IDLE)
 		return 0
 
@@ -164,7 +165,9 @@
 
 	var/obj/hanger/H = get_hanger(!location)
 	if (!H.can_land_at(src))
+		error("in can_launch hanger [H.htag] can not be landed at")
 		return 0
+	error("in can_launch returning with 1")
 	return 1
 
 /datum/shuttle/ferry/proc/can_force()
