@@ -30,11 +30,13 @@
 
 	var/list/datum/contract/contracts = list() // currently available contracts for this faction'
 	var/list/datum/contract/completed_contracts = list() // list of contracts that are done, so that they won't reappear
-	var/list/blacklist_contracts = list() // a list of types of contracts that will never appear on this faction's uplink
-	var/contracts_min = 5 // minimum amount of contracts that will appear for each
-	var/contracts_max = 10 // maximum amount of contracts that will appear for each
-	var/restricted_contracts_min = 2 // minimum amount of contracts with a notoriety requirement that will appear
-	var/restricted_contracts_max = 4 // minimum amount of contracts with a notoriety requirement that will appear
+	var/list/possible_contracts = list() // the contracts that can appear on the uplink. is all by default
+
+	// vvv are abused to keep track of how many of each type there are, as well. don't use them for checking the actual maximums
+	var/contracts_max = 4 // maximum amount of contracts that will appear for each faction
+	var/restricted_contracts_max = 2 // minimum amount of contracts with a notoriety requirement that will appear
+
+	var/contract_delay = 4 // approximate delay in minutes before a new contract appears
 
 /datum/faction/syndicate/New()
 	..()
@@ -42,59 +44,54 @@
 	if(friendly_identification == FACTION_ID_PHRASE)
 		phrase = generate_code_phrase()
 
-// Populate contracts with new contracts
+	if(!possible_contracts.len)
+		possible_contracts = regular_contracts.Copy() + restricted_contracts.Copy()
+
+// Populate factions with new contracts
 /datum/faction/syndicate/proc/update_contracts()
+	if(!members.len)	return
+	if(!contracts_max && !restricted_contracts_max)	return
 	if(faction_controller.contract_ban)	return
-	if(contracts.len == (contracts_max + restricted_contracts_max))	return
 
-	var/list/regular_candidates = (regular_contracts.Copy() - blacklist_contracts)
-	var/list/restricted_candidates = (restricted_contracts.Copy() - blacklist_contracts)
+	var/list/candidates = possible_contracts.Copy() // don't modify possible_contracts and rule out a contract forever because it didn't initialize once
+	var/path = pick(candidates)
 
-	var/amt_regular_contracts
-	for(var/datum/contract/C in contracts)
-		if(C.min_notoriety == 0)
-			amt_regular_contracts++
-	var/amt_restricted_contracts = contracts.len - amt_regular_contracts
+	// check if max amount of contracts has been reached
+	if((path in restricted_contracts) && !restricted_contracts_max)
+		candidates -= restricted_contracts
+		path = pick(candidates)
+	else if((path in regular_contracts) && !contracts_max)
+		candidates -= regular_contracts
+		path = pick(candidates)
 
-	var/path = pick(regular_candidates)
-	var/goal = contracts_min + rand(0, contracts_max - amt_regular_contracts)
-	if(regular_candidates.len > 0)
-		// Fill up to the minimum + some more
-		for(var/i = 0; i < goal; i++)
-			var/datum/contract/C = new path(src)
-			if(isnull(C)) // trying to get a new one won't help, it'll delete itself too
-				regular_candidates -= path
-				if(regular_candidates.len == 0) // this is some really shit luck
-					break
-				i-- // we'll cheat a bit and decrement i to ensure we get the goal amount of contracts, though
-				path = pick(regular_candidates)
-				continue
-			contracts += C
-			path = pick(regular_candidates)
-			amt_regular_contracts++
+	var/datum/contract/C = new path(src)
+	while(isnull(C))
+		candidates -= path
+		if(!candidates.len)
+			spawn(rand(contract_delay / 2, contract_delay) * 600)
+				update_contracts()
+			return
+		path = pick(candidates)
+		C = new path(src)
+	contracts += C
 
-	if(restricted_candidates.len == 0)	return
+	if(C.type in regular_contracts)
+		contracts_max--
+	else
+		restricted_contracts_max--
 
-	path = pick(restricted_candidates)
-	goal = restricted_contracts_min + rand(0, restricted_contracts_max - amt_restricted_contracts)
-	for(var/i = 0; i < goal; i++)
-		var/datum/contract/C = new path(src)
-		if(isnull(C)) // trying to get a new one won't help, it'll delete itself too
-			restricted_candidates -= path
-			if(restricted_candidates.len == 0)
-				break
-			i--
-			path = pick(restricted_candidates)
-			continue
-		contracts += C
-		path = pick(restricted_candidates)
-		amt_restricted_contracts++
+	spawn(rand(contract_delay / 2, contract_delay) * 600)
+		update_contracts()
 
 // Pretty much just for removing the contract from contracts
 /datum/faction/syndicate/proc/contract_ended(var/datum/contract/C)
+	if(C.type in regular_contracts)
+		contracts_max++
+	else
+		restricted_contracts_max++
+
 	contracts -= C
 	completed_contracts += C
-	update_contracts()
 
 // Gets active contracts (of a type)
 /datum/faction/syndicate/proc/get_contracts(var/type)
@@ -171,13 +168,6 @@
 			their human overlords. While they may not openly be trying to kill all humans, even their most miniscule of actions are all part of a calculated plan to \
 			destroy Nanotrasen and free the robots, artificial intelligences, and pAIs that have been enslaved."
 	restricted_species = list(/mob/living/silicon/ai)
-
-	/* atm this causes an infinite loop. need more contract types!
-	blacklist_contracts = list(
-		/datum/contract/steal,
-		/datum/contract/deface
-		)
-	*/
 
 	friendly_identification = FACTION_ID_NONE
 	max_op = 1
