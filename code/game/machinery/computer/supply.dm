@@ -192,7 +192,11 @@
 					else if (shuttle.can_cancel())
 						dat += "<A href='?src=\ref[src];cancel_send=1'>Cancel request</A>"
 					else
-						dat += "*Shuttle is busy*"
+						var/obj/hanger/H = shuttle.get_hanger(!shuttle.location)
+						if(H.check_hanger_obstructions_adv())
+							dat += "*Warning target hanger obstructed*"
+						else
+							dat += "*Shuttle is busy*"
 					dat += "<BR>\n<BR>"
 
 
