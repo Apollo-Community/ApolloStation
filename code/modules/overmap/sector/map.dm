@@ -104,3 +104,6 @@
 
 /obj/effect/map/sector/moon
 	real_icon_state = "Moon"
+
+/obj/effect/map/sector/slater
+	real_icon_state = "NMV Slater"

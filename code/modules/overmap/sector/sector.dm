@@ -45,6 +45,12 @@
 	sector_flags = SECTOR_KNOWN | SECTOR_ALERT | SECTOR_LOCAL
 	build_priority = 2
 
+/obj/effect/mapinfo/sector/slater
+	name = "NMV Slater"
+	obj_type = /obj/effect/map/sector/slater
+	sector_flags = SECTOR_KNOWN | SECTOR_ALERT | SECTOR_LOCAL
+	build_priority = 2
+
 /obj/effect/mapinfo/sector/ace/getMapLoc()
 	return locate( OVERMAP_STATION_X+4, OVERMAP_STATION_Y-4, OVERMAP_ZLEVEL )
 
