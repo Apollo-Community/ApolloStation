@@ -40,6 +40,7 @@
 
 	if(isnull(direction))
 		direction = !location
+	error("short_jump called by [docking_controller_tag] trg_hanger [trg_hanger]")
 	..(trg_hanger, direction)
 
 //Ferry long jump
@@ -65,6 +66,8 @@
 	//First check if we even have an interum location
 	if(!long_j)
 		location = !location
+
+	error("move called by [docking_controller_tag] location afther move [location] long_j var [long_j]")
 
 //Docking magic
 /datum/shuttle/ferry/dock()

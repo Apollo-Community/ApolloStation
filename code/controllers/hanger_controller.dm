@@ -70,6 +70,7 @@ datum/hanger_scheduler/proc/add_shuttle(datum/shuttle/S, var/obj/hanger/H)
 datum/hanger_scheduler/proc/remove_shuttle(datum/scheduled_shuttle/s)
 	shuttle_to_schedule -= s
 	s.shuttle.in_transit = 0
+	s.shuttle.moving_status = SHUTTLE_IDLE
 
 //Inform the occupants of the shuttle they are beeing moved to a holding location or their destination.
 datum/hanger_scheduler/proc/inform_shuttle(datum/shuttle/s, var/type)
