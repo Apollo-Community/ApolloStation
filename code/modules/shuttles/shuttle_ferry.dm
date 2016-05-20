@@ -67,7 +67,7 @@
 	if(!long_j && !in_transit)
 		location = !location
 
-	error("move called by [docking_controller_tag] location afther move [location] long_j var [long_j]")
+	error("move called by [docking_controller_tag] location afther move [location] long_j var [long_j] in_transit var [in_transit]")
 
 //Docking magic
 /datum/shuttle/ferry/dock()

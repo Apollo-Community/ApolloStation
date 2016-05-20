@@ -184,7 +184,6 @@
 
 	//Check and update powered systems on the shuttle
 	power_check(shuttle_turfs)
-	return
 
 //returns 1 if the shuttle has a valid arrive time
 /datum/shuttle/proc/has_arrive_time()
@@ -203,8 +202,6 @@
 		A = T.loc
 		for(var/mob/M in T)
 			A.Entered(M)
-			//Have to find a fix for this
-			//destination.Entered(M)
 			if(M.client)
 				spawn(0)
 					if(M.buckled)
