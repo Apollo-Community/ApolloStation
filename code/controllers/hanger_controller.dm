@@ -17,13 +17,13 @@ datum/hanger_controller
 	return null
 
 /datum/hanger_controller/proc/get_free_space_hangers(var/datum/shuttle/S)
-	var/list/hangers = list()
+	var/list/free_hangers = list()
 	for(var/obj/hanger/square/exterior/space_hanger/H in hangers)
 		if(!istype(H, /obj/hanger/square/exterior/space_hanger/start_hanger) && !istype(H, /obj/hanger/square/exterior/space_hanger/blue_space/))
 			continue
 		if(H.can_land_at(S))
-				hangers += H
-	return hangers
+			free_hangers += H
+	return free_hangers
 
 //Return a random free hanger.
 /datum/hanger_controller/proc/get_free_space_hanger(var/datum/shuttle/S)
