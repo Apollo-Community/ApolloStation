@@ -19,7 +19,7 @@ datum/hanger_controller
 /datum/hanger_controller/proc/get_free_space_hangers(var/datum/shuttle/S)
 	var/list/free_hangers = list()
 	for(var/obj/hanger/square/exterior/space_hanger/H in hangers)
-		if(!istype(H, /obj/hanger/square/exterior/space_hanger/start_hanger) && !istype(H, /obj/hanger/square/exterior/space_hanger/blue_space/))
+		if(istype(H, /obj/hanger/square/exterior/space_hanger/start_hanger) || istype(H, /obj/hanger/square/exterior/space_hanger/blue_space/))
 			continue
 		if(H.can_land_at(S))
 			free_hangers += H

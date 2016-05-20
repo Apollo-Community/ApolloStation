@@ -64,7 +64,7 @@
 
 	//if this is a long_jump retain the location we were last at until we get to the new one
 	//First check if we even have an interum location
-	if(!long_j)
+	if(!long_j && !in_transit)
 		location = !location
 
 	error("move called by [docking_controller_tag] location afther move [location] long_j var [long_j]")
