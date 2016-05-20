@@ -163,17 +163,22 @@
 	if (in_use)
 		return 0
 
+	//With the new hanger scheduler we should be able to remove this.
+	/*
 	var/obj/hanger/H = get_hanger(!location)
 	if (!H.can_land_at(src))
 		error("in can_launch hanger [H.htag] can not be landed at")
 		return 0
+	*/
 	error("in can_launch returning with 1")
 	return 1
 
 /datum/shuttle/ferry/proc/can_force()
+	/*
 	var/obj/hanger/H = get_hanger(!location)
 	if (!H.can_land_at(src))
 		return 0
+	*/
 
 	if (moving_status == SHUTTLE_IDLE && process_state == WAIT_LAUNCH)
 		return 1

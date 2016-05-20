@@ -15,11 +15,7 @@
 	if(isnull(trg_hanger))
 		trg_hanger = get_hanger(!location)
 
-	//Check with the hanger if its full and occupy it if its not.
-	if(!trg_hanger.can_land_at(src))
-		return
-	else
-		trg_hanger.full = 1
+	trg_hanger = hanger_check(trg_hanger)
 
 	//Start warmup and do some checks while we are waiting
 	moving_status = SHUTTLE_WARMUP
@@ -59,7 +55,10 @@
 		supply_controller.buy()
 	if (!at_station())
 		supply_controller.sell()
-	moving_status = SHUTTLE_IDLE
+	if(in_transit)
+		moving_status = SHUTTLE_SCHEDULING
+	else
+		moving_status = SHUTTLE_IDLE
 
 /datum/shuttle/ferry/supply/process()
 	..()

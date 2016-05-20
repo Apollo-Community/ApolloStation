@@ -20,17 +20,19 @@ datum/hanger_controller
 	var/list/hangers = list()
 	for(var/obj/hanger/square/exterior/space_hanger/H in hangers)
 		if(!istype(H, /obj/hanger/square/exterior/space_hanger/start_hanger) && !istype(H, /obj/hanger/square/exterior/space_hanger/blue_space/))
-			if(H.can_land_at(S))
+			continue
+		if(H.can_land_at(S))
 				hangers += H
 	return hangers
 
 //Return a random free hanger.
 /datum/hanger_controller/proc/get_free_space_hanger(var/datum/shuttle/S)
-	var/list/hangers = get_free_space_hangers(S)
-	if(isnull(hangers))
+	var/list/free_hangers = get_free_space_hangers(S)
+	if(isnull(free_hangers))
 		return null
-	var/i = rand(1,hangers.len)
-	return hangers[i]
+	error("Getting a free space hanger for [S.docking_controller_tag] there are [free_hangers.len] hangers available")
+	var/i = round(rand(1,free_hangers.len))
+	return free_hangers[i]
 
 
 //Hanger scheduler manages shuttle that are positioned in intermediate hangers.
@@ -41,13 +43,18 @@ datum/hanger_scheduler
 var/list/shuttle_to_schedule = list()
 
 //Check for each shuttle in the list if they can jump to their final destination
+//Only think about moving if the shuttle is done moving to its parking position
 datum/hanger_scheduler/proc/process()
 	//error("hanger_schedular heartbeat")
 	for(var/datum/scheduled_shuttle/S in shuttle_to_schedule)
-		if(S.dest_hanger.can_land_at(S.shuttle) && S.shuttle.moving_status == SHUTTLE_SCHEDULING)
-			S.shuttle.move(S.dest_hanger, null, 0)
-			inform_shuttle(S.shuttle, 0)
-			remove_shuttle(S)
+		if(!S.shuttle.moving_status == SHUTTLE_SCHEDULING)
+			continue
+		if(!S.dest_hanger.can_land_at(S.shuttle))
+			continue
+
+		S.shuttle.move(S.dest_hanger, null, 0)
+		inform_shuttle(S.shuttle, 0)
+		remove_shuttle(S)
 
 //Add the shuttle to the to schedule shuttles and park it at an empty spot near the station.
 //TODO: Build more logic into this it now just picks an emtpy space hanger at random.
