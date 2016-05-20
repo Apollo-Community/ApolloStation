@@ -69,13 +69,13 @@
 
 /obj/machinery/computer/sentencing/proc/main_menu()
 	. = "<center><h2>Welcome! Please select an option!</h2><br>"
-	. += "<a href='?src=\ref[src];button=import_incident'>Import Report</a>   <a href='?src=\ref[src];button=new_incident'>New Report</a></center>"
+	. += "<a href='?src=\ref[src];button=import_incident'>Import Incident</a>   <a href='?src=\ref[src];button=new_incident'>New Report</a></center>"
 
 	return .
 
 /obj/machinery/computer/sentencing/proc/import_incident()
 	. = "<center><h2>Incident Import</h2><br>"
-	. += "Insert the encoded incident report paper"
+	. += "Insert an existing Securty Incident Report paper."
 
 	. += "<br><hr>"
 	. += "<a href='?src=\ref[src];button=change_menu;choice=main_menu'>Cancel</a></center>"
@@ -327,6 +327,7 @@
 					ping( "\The [src] pings, \"Criminal [C.mob] verified.\"" )
 			else
 				ping( "\The [src] buzzes, \"Criminal cleared.\"" )
+				incident.criminal = null
 		if( "change_brig" )
 			if( !incident )
 				return
@@ -359,8 +360,10 @@
 			menu_screen = "main_menu"
 		if( "add_charge" )
 			incident.charges += locate( href_list["law"] )
+			incident.brig_sentence = incident.getMinBrigSentence()
 		if( "remove_charge" )
 			incident.charges -= locate( href_list["law"] )
+			incident.brig_sentence = incident.getMinBrigSentence()
 		if( "add_notes" )
 			if( !incident )
 				return

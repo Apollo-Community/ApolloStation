@@ -16,6 +16,7 @@
 
 /datum/crime_incident/New()
 	UID = md5( "[world.realtime][rand(0, 1000000)]" )
+
 	..()
 
 /datum/crime_incident/proc/getMinFine()
@@ -99,4 +100,48 @@
 	return max
 
 /datum/crime_incident/proc/generateReport()
-	return "[criminal] was bad. He's going away for [prison_sentence] days."
+	. = "<center>Security Incident Report</center><hr>"
+
+	. += "<b>ARBITER(S)</b>: <i>"
+	for( var/i = 1, i <= arbiters.len, i++ )
+		var/mob/living/carbon/human/H = arbiters[i]
+
+		if( !istype( H ))
+			continue
+
+		if( i > 1 )
+			. += ", "
+
+		. += "[H]"
+
+	. += "</i><br>"
+	. += "<b>CRIMINAL</b>: <i>[criminal]</i><br><br>"
+
+	. += "[criminal] was found guilty of the following crimes on [print_date( universe.date )]. "
+
+	if( !brig_sentence && !prison_sentence )
+		. += "As decided by the arbiter(s), they will serve no time for their crimes."
+	else
+		. += "As decided by the arbiter(s), they will serve the following sentence:<br>"
+		if( brig_sentence )
+			if( brig_sentence >= PERMABRIG_SENTENCE )
+				. += "\t<b>BRIG</b>: <i>Imprisonment until transfer</i><br>"
+			else
+				. += "\t<b>BRIG</b>: <i>[brig_sentence] minutes</i><br>"
+			if( prison_sentence >= PERMAPRISON_SENTENCE )
+				. += "\t<b>PRISON</b>: <i>Life imprisonment</i><br>"
+			else
+				. += "\t<b>PRISON</b>: <i>[prison_sentence] days</i><br>"
+
+	. += "<br><table>"
+	. += "<tr><th colspan='2'>CHARGES</th></tr>"
+	for( var/datum/law/L in charges )
+		. += "<tr>"
+
+		. += "<td><b>[L.name]</b></td>"
+		. += "<td><i>[L.desc]</i></td>"
+
+		. += "</tr>"
+	. += "</table>"
+
+	return .

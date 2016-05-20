@@ -109,7 +109,7 @@ Upon signature of this document by the Department authority on [date], the contr
 
 /obj/item/weapon/paper/form/incident/New()
 	info = {"\[center\]\[logo\]\[/center\]
-\[center\]\[b\]\[i\]Encoded NanoTrasen Criminal Incident Form\[/b\]\[/i\]\[hr\]
+\[center\]\[b\]\[i\]Encoded NanoTrasen Security Incident Report\[/b\]\[/i\]\[hr\]
 \[small\]FOR USE BY SECURITY ONLY\[/small\]\[br\]
 \[barcode\]\[/center\]"}
 
