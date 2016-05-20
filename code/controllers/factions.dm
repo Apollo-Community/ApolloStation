@@ -19,9 +19,6 @@ var/global/list/restricted_contracts = list()
 	..()
 	faction_controller = src
 
-	for(var/path in (subtypes(/datum/faction) - /datum/faction/syndicate))
-		factions += new path()
-
 	for(var/path in subtypes(/datum/contract))
 		var/datum/contract/C = new path()
 		if(findtext(C.title, "!BASE!"))	continue
@@ -30,6 +27,9 @@ var/global/list/restricted_contracts = list()
 		else
 			regular_contracts += path
 		qdel(C)
+
+	for(var/path in (subtypes(/datum/faction) - /datum/faction/syndicate))
+		factions += new path()
 
 /datum/controller/faction_controller/Destroy()
 	..()
