@@ -33,7 +33,7 @@
 	//Place down the template at the right spot further down in this process this will also aquere the right turfs for us.
 	current_hanger = starting_hanger
 	current_hanger.full = 1
-	error("shuttle [docking_controller_tag] landing at [current_hanger.htag]")
+	//error("shuttle [docking_controller_tag] landing at [current_hanger.htag]")
 	current_hanger.land_at(src)
 	place_shuttle()
 	shuttle_ingame = 1
@@ -57,20 +57,20 @@
 	//If that fails just give up allready !
 	if(trg_hanger.can_land_at(src))
 		trg_hanger.full = 1
-		error("[docking_controller_tag] can land at [trg_hanger.htag]")
+		//error("[docking_controller_tag] can land at [trg_hanger.htag]")
 	else if (priority)
 		hanger_scheduler.divert(trg_hanger.shuttle)
 		trg_hanger.full = 1
-		error("[docking_controller_tag] can land at [trg_hanger.htag] Priority used")
+		//error("[docking_controller_tag] can land at [trg_hanger.htag] Priority used")
 	else
 		var/obj/hanger/J = hanger_controller.get_free_space_hanger(src)
-		error("[docking_controller_tag] can not land at [trg_hanger.htag]")
+		//error("[docking_controller_tag] can not land at [trg_hanger.htag]")
 		if(!isnull(J))
 			hanger_scheduler.add_shuttle(src, trg_hanger)
 			in_transit = 1
 			trg_hanger = J
 			trg_hanger.full = 1
-			error("[docking_controller_tag] diverting to [J.htag]")
+			//error("[docking_controller_tag] diverting to [J.htag]")
 
 
 	//it would be cool to play a sound here
@@ -84,7 +84,7 @@
 			moving_status = SHUTTLE_INTRANSIT //shouldn't matter but just to be safe
 			move(trg_hanger, direction, null, 0)
 
-			error("[in_transit]")
+			//error("[in_transit]")
 			if(!in_transit)
 				moving_status = SHUTTLE_IDLE
 			else
@@ -221,20 +221,20 @@
 /datum/shuttle/proc/hanger_check(var/obj/hanger/trg_hanger)
 	if(trg_hanger.can_land_at(src))
 		trg_hanger.full = 1
-		error("[docking_controller_tag] can land at [trg_hanger.htag]")
+		//error("[docking_controller_tag] can land at [trg_hanger.htag]")
 	else if (priority)
 		hanger_scheduler.divert(trg_hanger.shuttle)
 		trg_hanger.full = 1
-		error("[docking_controller_tag] can land at [trg_hanger.htag] Priority used")
+		//error("[docking_controller_tag] can land at [trg_hanger.htag] Priority used")
 	else
 		var/obj/hanger/J = hanger_controller.get_free_space_hanger(src)
-		error("[docking_controller_tag] can not land at [trg_hanger.htag]")
+		//error("[docking_controller_tag] can not land at [trg_hanger.htag]")
 		if(!isnull(J))
 			hanger_scheduler.add_shuttle(src, trg_hanger)
 			in_transit = 1
 			trg_hanger = J
 			trg_hanger.full = 1
-			error("[docking_controller_tag] divertin to [trg_hanger.htag]")
+			//error("[docking_controller_tag] divertin to [trg_hanger.htag]")
 	return trg_hanger
 
 
