@@ -5,7 +5,7 @@
 
 /datum/sm_control
 	var/base_power = 0 	// The power output that the engine will stabilize at, in kW
-	var/decay = 0.50 // Used to calculate power decay per tick
+	var/decay = 0.75 // Used to calculate power decay per tick
 	var/minimum_decay = 0.5 // Minimum amount of decay per tick, in kW
 
 	var/overcharge_heat_multiplier = 10.0 // 10x heat output when overcharged
@@ -29,8 +29,7 @@
 	var/phoron_release_heat_limit = 400 // phoron release is scaled down until this temperature
 	var/phoron_heal_rate = 0 // The rate that phoron heals the core, per mole
 
-	var/emitter_damage = 0 // The amount of damage the emitter does per hit
-	var/emitter_power = 0.4 // The amount of power added per emitter shot
+	var/emitter_factor = 1 // Determines damage and power generation from the emitter beam
 
 	var/thermal_factor = 0 // The amount of heat released to the environment at max power
 	var/heal_rate = 0 // The amount of damage the core will automatically heal
@@ -73,8 +72,7 @@
 	color_name = "cyan"
 	delamination_size = 30
 	vacuum_damage = 10
-	emitter_damage = 0.5
-	emitter_power = 6
+	emitter_factor = 2
 	thermal_factor = 300
 	damage_per_degree = 1.1
 	psionic_power = 15
@@ -94,8 +92,7 @@
 	explosion_size = 25
 	delamination_size = 35
 	vacuum_damage = 25
-	emitter_damage = 1
-	emitter_power = 8
+	emitter_factor = 3
 	thermal_factor = 400
 	damage_per_degree = 1.2
 	psionic_power = 20
@@ -115,8 +112,7 @@
 	explosion_size = 25
 	delamination_size = 40
 	vacuum_damage = 50
-	emitter_damage = 1.5
-	emitter_power = 10
+	emitter_factor = 4
 	thermal_factor = 500
 	damage_per_degree = 1.3
 	psionic_power = 25
@@ -141,8 +137,7 @@
 	explosion_size = 45
 	delamination_size = 45
 	vacuum_damage = 60
-	emitter_damage = 2
-	emitter_power = 25
+	emitter_factor = 5
 	thermal_factor = 600
 	damage_per_degree = 1.4
 	psionic_power = 30
@@ -167,8 +162,7 @@
 	explosion_size = 45
 	delamination_size = 55
 	vacuum_damage = 70
-	emitter_damage = 2.5
-	emitter_power = 50
+	emitter_factor = 6
 	thermal_factor = 700
 	damage_per_degree = 1.5
 	psionic_power = 50
@@ -193,8 +187,7 @@
 	explosion_size = 55
 	delamination_size = 65
 	vacuum_damage = 80
-	emitter_damage = 3
-	emitter_power = 80
+	emitter_factor = 7
 	thermal_factor = 500
 	damage_per_degree = 1.6
 	psionic_power = 70
@@ -219,8 +212,7 @@
 	explosion_size = 55
 	delamination_size = 75
 	vacuum_damage = 90
-	emitter_damage = 3.5
-	emitter_power = 120
+	emitter_factor = 8
 	thermal_factor = 900
 	damage_per_degree = 1.7
 	psionic_power = 90
@@ -245,8 +237,7 @@
 	explosion_size = 60
 	delamination_size = 85
 	vacuum_damage = 100
-	emitter_damage = 4
-	emitter_power = 240
+	emitter_factor = 9
 	thermal_factor = 1000
 	damage_per_degree = 1.8
 	psionic_power = 110
