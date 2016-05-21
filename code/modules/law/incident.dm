@@ -19,6 +19,14 @@
 
 	..()
 
+/datum/crime_incident/proc/setMinSentence()
+	incident.prison_sentence = incident.getMinPrisonSentence()
+
+	if( incident.prison_sentence )
+		incident.brig_sentence = PERMABRIG_SENTENCE
+	else
+		incident.brig_sentence = incident.getMinBrigSentence()
+
 /datum/crime_incident/proc/getMinFine()
 	var/min = 0
 	for( var/datum/law/L in charges )

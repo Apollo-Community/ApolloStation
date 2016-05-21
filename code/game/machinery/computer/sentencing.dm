@@ -224,7 +224,7 @@
 	. += "<th>Name</th>"
 	. += "<th>Description</th>"
 	. += "<th>Brig Sentence</th>"
-	. += "<th>Fine</th>"
+//	. += "<th>Fine</th>"
 	. += "<th>Button</th>"
 	. += "</tr>"
 
@@ -233,7 +233,7 @@
 		. += "<td><b>[L.name]</b></td>"
 		. += "<td><i>[L.desc]</i></td>"
 		. += "<td>[L.min_brig_time] - [L.max_brig_time] minutes</td>"
-		. += "<td>$[L.min_fine] - $[L.max_fine]</td>"
+//		. += "<td>$[L.min_fine] - $[L.max_fine]</td>"
 		. += "<td><a href='?src=\ref[src];button=add_charge;law=\ref[L]'>Charge</a></td>"
 		. += "</tr>"
 
@@ -254,7 +254,8 @@
 	. += "<th>Name</th>"
 	. += "<th>Description</th>"
 	. += "<th>Brig Sentence</th>"
-	. += "<th>Fine</th>"
+	. += "<th>Prison Sentence</th>"
+//	. += "<th>Fine</th>"
 	. += "<th>Button</th>"
 	. += "</tr>"
 
@@ -263,7 +264,8 @@
 		. += "<td><b>[L.name]</b></td>"
 		. += "<td><i>[L.desc]</i></td>"
 		. += "<td>[L.min_brig_time] - [L.max_brig_time] minutes</td>"
-		. += "<td>$[L.min_fine] - $[L.max_fine]</td>"
+		. += "<td>[L.min_prison_time] - [L.max_prison_time] days</td>"
+//		. += "<td>$[L.min_fine] - $[L.max_fine]</td>"
 		. += "<td><a href='?src=\ref[src];button=add_charge;law=\ref[L]'>Charge</a></td>"
 		. += "</tr>"
 
@@ -284,7 +286,7 @@
 	. += "<th>Name</th>"
 	. += "<th>Description</th>"
 	. += "<th>Brig Sentence</th>"
-	. += "<th>Prison Sentences</th>"
+	. += "<th>Prison Sentence</th>"
 	. += "<th>Button</th>"
 	. += "</tr>"
 
@@ -360,10 +362,11 @@
 			menu_screen = "main_menu"
 		if( "add_charge" )
 			incident.charges += locate( href_list["law"] )
-			incident.brig_sentence = incident.getMinBrigSentence()
+			incident.setMinSentence()
 		if( "remove_charge" )
 			incident.charges -= locate( href_list["law"] )
-			incident.brig_sentence = incident.getMinBrigSentence()
+			incident.setMinSentence()
+
 		if( "add_notes" )
 			if( !incident )
 				return
