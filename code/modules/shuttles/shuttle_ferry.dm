@@ -40,6 +40,7 @@
 
 	if(isnull(direction))
 		direction = !location
+	//error("short_jump called by [docking_controller_tag] trg_hanger [trg_hanger]")
 	..(trg_hanger, direction)
 
 //Ferry long jump
@@ -63,8 +64,10 @@
 
 	//if this is a long_jump retain the location we were last at until we get to the new one
 	//First check if we even have an interum location
-	if(!long_j)
+	if(!long_j && !in_transit)
 		location = !location
+
+	//error("move called by [docking_controller_tag] location afther move [location] long_j var [long_j] in_transit var [in_transit]")
 
 //Docking magic
 /datum/shuttle/ferry/dock()
@@ -105,7 +108,7 @@
 			process_state = WAIT_ARRIVE
 
 		if (WAIT_ARRIVE)
-			if (moving_status == SHUTTLE_IDLE)
+			if (moving_status == SHUTTLE_IDLE && !in_transit)
 				dock()
 				in_use = null	//release lock
 				process_state = WAIT_FINISH
@@ -156,21 +159,29 @@
 	return
 
 /datum/shuttle/ferry/proc/can_launch()
+	//error("can_launch called [docking_controller_tag] the moving status is [moving_status]")
 	if (moving_status != SHUTTLE_IDLE)
 		return 0
 
 	if (in_use)
 		return 0
 
+	//With the new hanger scheduler we should be able to remove this.
+	/*
 	var/obj/hanger/H = get_hanger(!location)
 	if (!H.can_land_at(src))
+		//error("in can_launch hanger [H.htag] can not be landed at")
 		return 0
+	*/
+	//error("in can_launch returning with 1")
 	return 1
 
 /datum/shuttle/ferry/proc/can_force()
+	/*
 	var/obj/hanger/H = get_hanger(!location)
 	if (!H.can_land_at(src))
 		return 0
+	*/
 
 	if (moving_status == SHUTTLE_IDLE && process_state == WAIT_LAUNCH)
 		return 1

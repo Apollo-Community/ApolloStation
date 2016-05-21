@@ -1,5 +1,5 @@
 /datum/shuttle/ferry/emergency
-	//pass
+	priority = 1
 
 /datum/shuttle/ferry/emergency/arrived()
 	if (istype(in_use, /obj/machinery/computer/shuttle_control/emergency))
