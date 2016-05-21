@@ -488,6 +488,7 @@
 	var/count = 2048	//*** can travel 2048 steps before going inactive (in case of loops)
 	var/destinationTag = "" // changes if contains a delivery container
 	var/tomail = 0 //changes if contains wrapped package
+	var/is_large = 0 // if its a large object, clang clang
 	var/hasmob = 0 //If it contains a mob
 
 	var/partialTag = "" //set by a partial tagger the first time round, then put in destinationTag if it goes through again.
@@ -496,6 +497,11 @@
 	// initialize a holder from the contents of a disposal unit
 	proc/init(var/obj/machinery/disposal/D, var/datum/gas_mixture/flush_gas)
 		gas = flush_gas// transfer gas resv. into holder object -- let's be explicit about the data this proc consumes, please.
+
+		for(var/obj/item/O in D )
+			if( O.w_class >= 4.0 )
+				is_large = 1
+				break
 
 		//Check for any living mobs trigger hasmob.
 		//hasmob effects whether the package goes to cargo or its tagged destination.
@@ -549,14 +555,20 @@
 			sleep(1)		// was 1
 			if(!loc) return // check if we got GC'd
 
+			var/play_sound = is_large // large packages make some noise
+
 			if(hasmob && prob(3))
 				for(var/mob/living/H in src)
 					if(!istype(H,/mob/living/silicon/robot/drone)) //Drones use the mailing code to move through the disposal system,
 						H.take_overall_damage(20, 0, "Blunt Trauma")//horribly maim any living creature jumping down disposals.  c'est la vie
+						play_sound = 1 // h00mans dont like riding the ghettocoaster
 
 			var/obj/structure/disposalpipe/curr = loc
 			last = curr
 			curr = curr.transfer(src)
+
+			if( play_sound )
+				playsound(src.loc, 'sound/machines/disposalbang.ogg', 50, 1)
 
 			if(!loc) return //side effects
 
