@@ -234,3 +234,20 @@
 		if(loc != user && ison == 1)
 			user.set_light(user.light_range - brightness_on)
 			ison = 0
+
+//////  Nijishadow - Aya's Formal uniform
+/obj/item/clothing/under/hosformalfem/fluff/nijishadow
+	name = "Aya's Formal Uniform"
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "aya_formal"
+	item_state = "aya_formal"
+
+//////  Nijishadow - Luna Vor labcoat
+/obj/item/clothing/suit/storage/toggle/labcoat/cmo/fluff/luna_vor //NijiShadow: Luna Vor
+	name = "Luna's labcoat"
+	desc = "Darker than the standard model and with a dash of rainbow on the back."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "luna_labcoat_cmo"
+	icon_open = "luna_labcoat_cmo_open"
+	icon_closed = "luna_labcoat_cmo"
+	item_state = "luna_labcoat_cmo"

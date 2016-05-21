@@ -37,3 +37,13 @@
 	display_name = "Bio-luminescent organ"
 	path = /obj/item/clothing/suit/dionalight/kingnexus
 	sort_category = "misc"
+
+/datum/gear/account/nijishadow_aya_formal
+	display_name = "Aya Formal Uniform"
+	path = /obj/item/clothing/under/hosformalfem/fluff/nijishadow
+	sort_category = slot_w_uniform
+
+/datum/gear/account/nijishadow_luna_vor
+	display_name = "Lunas labcoat"
+	path = /obj/item/clothing/suit/storage/toggle/labcoat/cmo/fluff/luna_vor
+	sort_category = slot_wear_suit
