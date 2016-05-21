@@ -13,6 +13,7 @@ obj/hanger
 	var/list/hanger_turf_atribs
 	var/list/hanger_area_turfs
 	var/list/hanger_turfs
+	var/datum/shuttle
 	name = "Shuttle Jump Beacon"
 	desc = "Small machine which acts as a lock on point for shuttles"
 	anchored = 1
@@ -53,11 +54,14 @@ obj/hanger/New()
 //If the hanger is not square look if the shuttle will fit in the hanger turfs
 //This is important for hangers with docking arms
 obj/hanger/proc/can_land_at(var/datum/shuttle/s)
+	//error("hanger [htag] can_land_at called")
 	var/list/shuttle_turfs
 	if(full)
+		//error("hanger is full returning 0")
 		return 0
 	if(square == 1)
 		if(s.template_dim[1] > dimx || s.template_dim[2] > dimy)
+			//error("hanger dimensions do not fit returning 0")
 			return 0
 
 		if(!exterior)
@@ -65,6 +69,7 @@ obj/hanger/proc/can_land_at(var/datum/shuttle/s)
 
 	else
 		if(isnull(s.shuttle_turfs) || isnull(hanger_area_turfs))
+			//error("shuttle turfs or hanger area turfs are null returning 0")
 			return 0
 		else
 			//type conversion is ugly
@@ -80,6 +85,7 @@ obj/hanger/proc/can_land_at(var/datum/shuttle/s)
 			shuttle_turfs = shift_turfs(current_loc, hloc, s.shuttle_turfs)
 			for(var/turf/T in shuttle_turfs)
 				if(hanger_area_turfs.Find(T) >= 1)
+					//error("Shuttle does not fit returning 0")
 					return 0
 			if(!exterior)
 				return !check_hanger_obstructions(hanger_area_turfs)
@@ -102,6 +108,8 @@ obj/hanger/proc/check_hanger_obstructions_adv()
 
 //Shuttle indicating its going to land at a hanger
 obj/hanger/proc/land_at(var/datum/shuttle/s)
+	shuttle = s
+	full = 1
 	if(!exterior)
 		hanger_turfs = hanger_area_turfs
 		hanger_turf_atribs = truf_atrib_lister(hanger_turfs)
@@ -114,6 +122,7 @@ obj/hanger/proc/take_off()
 		//Not working need to do something to the turfs.
 		update_lights()
 	full = 0
+	shuttle = null
 
 obj/hanger/proc/add_to_controller()
 	hangers += src
@@ -122,7 +131,9 @@ obj/hanger/proc/add_to_controller()
 obj/hanger/square/interior/New()
 	..()
 	land_at(null)
+	full = 0
 
 obj/hanger/oddshaped/interior/New()
 	..()
 	land_at(null)
+	full = 0

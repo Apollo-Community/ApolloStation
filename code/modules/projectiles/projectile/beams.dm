@@ -183,6 +183,7 @@ var/list/beam_master = list()
 	damage_type = HALLOSS
 
 // emitter beam
+// this was implemented kinda clunkily, so it doesn't work well as a base. keep its usage to emitter beams for now
 /obj/item/projectile/beam/continuous
 	name = "laser beam"
 	icon = 'icons/obj/projectiles_continuous.dmi'
@@ -234,6 +235,7 @@ var/list/beam_master = list()
 	if(istype(A, /turf))
 		for(var/obj/O in A)
 			O.bullet_act(src)
+		A.bullet_act(src)
 
 	if(istype(A, /obj))
 		var/obj/O = A
