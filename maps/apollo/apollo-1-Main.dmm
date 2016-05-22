@@ -6205,7 +6205,7 @@
 "cpq" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/bed/chair/comfy/brown,/turf/simulated/floor/carpet,/area/hallway/secondary/exit)
 "cpr" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/bed/chair/comfy/brown,/obj/machinery/status_display{density = 0; layer = 4; pixel_x = 0; pixel_y = 32},/turf/simulated/floor/carpet,/area/hallway/secondary/exit)
 "cps" = (/obj/machinery/camera{c_tag = "Hangar Starboard Aft"; dir = 8; network = list("SS13","Engineering")},/turf/simulated/floor/engine,/area/podbay/hangar)
-"cpt" = (/obj/structure/table,/obj/item/device/radio/intercom{dir = 0; name = "Station Intercom (General)"; pixel_x = -27},/turf/simulated/floor{dir = 8; icon_state = "brown"},/area/quartermaster/miningdock)
+"cpt" = (/obj/structure/table,/obj/item/device/radio/intercom{dir = 0; name = "Station Intercom (General)"; pixel_x = -27},/obj/item/weapon/storage/fancy/cigarettes,/turf/simulated/floor{dir = 8; icon_state = "brown"},/area/quartermaster/miningdock)
 "cpu" = (/turf/simulated/floor/carpet,/area/quartermaster/miningdock)
 "cpv" = (/obj/structure/bed/chair/office/dark,/obj/effect/landmark/start{name = "Shaft Miner"},/turf/simulated/floor/carpet,/area/quartermaster/miningdock)
 "cpw" = (/obj/machinery/light/spot{tag = "icon-tube1 (EAST)"; icon_state = "tube1"; dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor{dir = 4; icon = 'icons/turf/floors.dmi'; icon_state = "floor"; tag = "loading"},/area/quartermaster/miningdock)
