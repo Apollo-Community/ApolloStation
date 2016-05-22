@@ -508,6 +508,8 @@
 		for(var/mob/living/M in D)
 			if(M && M.stat != 2 && !istype(M,/mob/living/silicon/robot/drone))
 				hasmob = 1
+				is_large = 1
+				break
 
 		//Checks 1 contents level deep. This means that players can be sent through disposals...
 		//...but it should require a second person to open the package. (i.e. person inside a wrapped locker)
@@ -516,6 +518,8 @@
 				for(var/mob/living/M in O.contents)
 					if(M && M.stat != 2 && !istype(M,/mob/living/silicon/robot/drone))
 						hasmob = 1
+						is_large = 1
+						break
 
 		// now everything inside the disposal gets put into the holder
 		// note AM since can contain mobs or objs
@@ -555,19 +559,16 @@
 			sleep(1)		// was 1
 			if(!loc) return // check if we got GC'd
 
-			var/play_sound = is_large // large packages make some noise
-
-			if(hasmob && prob(3))
-				for(var/mob/living/H in src)
-					if(!istype(H,/mob/living/silicon/robot/drone)) //Drones use the mailing code to move through the disposal system,
-						H.take_overall_damage(20, 0, "Blunt Trauma")//horribly maim any living creature jumping down disposals.  c'est la vie
-						play_sound = 1 // h00mans dont like riding the ghettocoaster
-
 			var/obj/structure/disposalpipe/curr = loc
 			last = curr
 			curr = curr.transfer(src)
 
-			if( play_sound )
+			if( is_large && prob( 6 ) )
+				if( hasmob && prob( 50 ))
+					for(var/mob/living/H in src)
+						if(!istype(H,/mob/living/silicon/robot/drone)) //Drones use the mailing code to move through the disposal system,
+							H.take_overall_damage( rand( 20, 30 ), 0, "Blunt Trauma") //horribly maim any living creature jumping down disposals.  c'est la vie
+
 				playsound(src.loc, 'sound/machines/disposalbang.ogg', 50, 1)
 
 			if(!loc) return //side effects
@@ -636,11 +637,7 @@
 
 		U.last_special = world.time+100
 
-		if (src.loc)
-			for (var/mob/M in hearers(src.loc.loc))
-				M << "<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>"
-
-		playsound(src.loc, 'sound/effects/clang.ogg', 50, 0, 0)
+		playsound(src.loc, 'sound/machines/disposalbang.ogg', 50, 1)
 
 	// called to vent all gas in holder to a location
 	proc/vent_gas(var/atom/location)
