@@ -49,6 +49,6 @@
 	sort_category = slot_wear_suit
 
 /datum/gear/account/draco16_meson
-	display_name = "Gars mesons"
+	display_name = "Gar mesons"
 	path = /obj/item/clothing/glasses/meson/fluff/draco16
 	sort_category = slot_glasses

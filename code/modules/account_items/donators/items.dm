@@ -253,7 +253,8 @@
 	item_state = "luna_labcoat_cmo"
 
 /obj/item/clothing/glasses/meson/fluff/draco16
-	name = "Gar's mesons"
+	name = "gar mesons"
+	desc = "These mesons are the mesons that will see through the Heavens!"
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "garm"
 	item_state = "garm"
