@@ -33,7 +33,7 @@
 		return
 
 	// Emitter blasts are somewhat weaker as emitters have large rate of fire and don't require limited power cell to run
-	if(istype(Proj, /obj/item/projectile/beam/continuous))
+	if(istype(Proj, /obj/item/projectile/beam/continuous/emitter))
 		Proj.damage /= 4
 
 	if(istype(Proj, /obj/item/projectile/bullet ) && ( rand( 1, 3 ) == 1 ))

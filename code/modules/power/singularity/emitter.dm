@@ -15,7 +15,7 @@
 	use_power = 0	//uses powernet power, not APC power
 	active_power_usage = EMITTER_POWER_MAX * 1000 * ( 2/3 )	//40kW of fuck you
 
-	var/obj/item/projectile/beam/continuous/beam = null
+	var/obj/item/projectile/beam/continuous/emitter/beam = null
 
 	var/active = 0
 	var/powered = 0
@@ -85,7 +85,7 @@
 				log_game("Emitter turned on by [user.ckey]([user]) in ([x],[y],[z])")
 				investigate_log("turned <font color='green'>on</font> by [user.key]","singulo")
 
-				beam = new /obj/item/projectile/beam/continuous(src.loc, src)
+				beam = new /obj/item/projectile/beam/continuous/emitter(src.loc, src)
 			update_icon()
 		else
 			user << "<span class='warning'>The controls are locked!</span>"
@@ -111,9 +111,6 @@
 		beam = null
 		update_icon()
 		return
-	// something went right in front of it, breaking the first beam in the chain
-	if(active && (!beam || !beam.loc))
-		beam = new /obj/item/projectile/beam/continuous(src.loc, src)
 /*	if(((src.last_shot + src.fire_delay) <= world.time) && (src.active == 1))
 
 		var/actual_load = draw_power(active_power_usage)
