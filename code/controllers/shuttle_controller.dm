@@ -259,8 +259,9 @@ var/global/datum/shuttle_controller/shuttle_controller
 /datum/shuttle_controller/proc/setup()
 	var/datum/shuttle/shuttle
 	for (var/shuttle_tag in shuttles)
-		shuttle = shuttles[shuttle_tag]
-		shuttle.init_templates()
+		spawn(0)
+			shuttle = shuttles[shuttle_tag]
+			shuttle.init_templates()
 	init_done = 1
 
 //This is called by gameticker after all the machines and radio frequencies have been properly initialized

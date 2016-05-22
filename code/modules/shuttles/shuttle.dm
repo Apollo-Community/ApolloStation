@@ -18,6 +18,8 @@
 	var/docking_controller_tag	//tag of the controller used to coordinate docking
 	var/datum/computer/file/embedded_program/docking/docking_controller	//the controller itself. (micro-controller, not game controller)
 	var/arrive_time = 0	//the time at which the shuttle arrives when long jumping
+	var/in_transit = 0 //To help with the hanger schedular
+	var/priority = 0 //Does this shuttle move other shuttles out of its way ?
 
 /datum/shuttle/proc/init_templates()
 	if(isnull(template_path))
@@ -31,7 +33,7 @@
 	//Place down the template at the right spot further down in this process this will also aquere the right turfs for us.
 	current_hanger = starting_hanger
 	current_hanger.full = 1
-	error("shuttle [docking_controller_tag] landing at [current_hanger.htag]")
+	//error("shuttle [docking_controller_tag] landing at [current_hanger.htag]")
 	current_hanger.land_at(src)
 	place_shuttle()
 	shuttle_ingame = 1
@@ -49,10 +51,27 @@
 
 	if(isnull(trg_hanger)) return
 
+	//When jumping to a hanger first look if its full.
+	//If its full check if we have priority (aka emergency shuttle).
+	//If not see if you can temporary divert to another spot near the station and just squash everything in the way !.
+	//If that fails just give up allready !
 	if(trg_hanger.can_land_at(src))
 		trg_hanger.full = 1
+		//error("[docking_controller_tag] can land at [trg_hanger.htag]")
+	else if (priority)
+		hanger_scheduler.divert(trg_hanger.shuttle)
+		trg_hanger.full = 1
+		//error("[docking_controller_tag] can land at [trg_hanger.htag] Priority used")
 	else
-		return
+		var/obj/hanger/J = hanger_controller.get_free_space_hanger(src)
+		//error("[docking_controller_tag] can not land at [trg_hanger.htag]")
+		if(!isnull(J))
+			hanger_scheduler.add_shuttle(src, trg_hanger)
+			in_transit = 1
+			trg_hanger = J
+			trg_hanger.full = 1
+			//error("[docking_controller_tag] diverting to [J.htag]")
+
 
 	//it would be cool to play a sound here
 	moving_status = SHUTTLE_WARMUP
@@ -64,7 +83,12 @@
 		spawn(50)
 			moving_status = SHUTTLE_INTRANSIT //shouldn't matter but just to be safe
 			move(trg_hanger, direction, null, 0)
-			moving_status = SHUTTLE_IDLE
+
+			//error("[in_transit]")
+			if(!in_transit)
+				moving_status = SHUTTLE_IDLE
+			else
+				moving_status = SHUTTLE_SCHEDULING
 
 //Make a long jump. First go the the interim position and then to the target hanger.
 //Wait at the interim position for the indicated time.
@@ -74,14 +98,17 @@
 	if(moving_status != SHUTTLE_IDLE) return
 
 	if(isnull(trg_hanger)) return
-	if(!trg_hanger.can_land_at(src)) return
-	trg_hanger.full = 1
+
+	trg_hanger = hanger_check(trg_hanger)
 
 	if(isnull(interim_hanger))
 		interim_hanger = hanger_controller.get_free_interim_hanger(src)
 
 	if(!isnull(interim_hanger) && interim_hanger.can_land_at(src))
 		interim_hanger.full = 1
+	else
+		return
+
 	//it would be cool to play a sound here
 	moving_status = SHUTTLE_WARMUP
 	spawn(warmup_time*10)
@@ -101,7 +128,10 @@
 				display_warning(trg_hanger)
 
 		move(trg_hanger, direction, 0)
-		moving_status = SHUTTLE_IDLE
+		if(!in_transit)
+			moving_status = SHUTTLE_IDLE
+		else
+			moving_status = SHUTTLE_SCHEDULING
 
 //Dock at you current dock.
 /datum/shuttle/proc/dock()
@@ -154,7 +184,6 @@
 
 	//Check and update powered systems on the shuttle
 	power_check(shuttle_turfs)
-	return
 
 //returns 1 if the shuttle has a valid arrive time
 /datum/shuttle/proc/has_arrive_time()
@@ -173,8 +202,6 @@
 		A = T.loc
 		for(var/mob/M in T)
 			A.Entered(M)
-			//Have to find a fix for this
-			//destination.Entered(M)
 			if(M.client)
 				spawn(0)
 					if(M.buckled)
@@ -186,6 +213,29 @@
 			if(istype(M, /mob/living/carbon))
 				if(!M.buckled)
 					M.Weaken(3)
+
+//When jumping to a hanger first look if its full.
+//If its full check if we have priority (aka emergency shuttle).
+//If not see if you can temporary divert to another spot near the station and just squash everything in the way !.
+//If that fails just give up allready !
+/datum/shuttle/proc/hanger_check(var/obj/hanger/trg_hanger)
+	if(trg_hanger.can_land_at(src))
+		trg_hanger.full = 1
+		//error("[docking_controller_tag] can land at [trg_hanger.htag]")
+	else if (priority)
+		hanger_scheduler.divert(trg_hanger.shuttle)
+		trg_hanger.full = 1
+		//error("[docking_controller_tag] can land at [trg_hanger.htag] Priority used")
+	else
+		var/obj/hanger/J = hanger_controller.get_free_space_hanger(src)
+		//error("[docking_controller_tag] can not land at [trg_hanger.htag]")
+		if(!isnull(J))
+			hanger_scheduler.add_shuttle(src, trg_hanger)
+			in_transit = 1
+			trg_hanger = J
+			trg_hanger.full = 1
+			//error("[docking_controller_tag] divertin to [trg_hanger.htag]")
+	return trg_hanger
 
 
 /datum/shuttle/proc/move_gib(var/list/turfs, var/obj/hanger/trg_hanger)
@@ -241,7 +291,8 @@
 	//If you get moved out of the way lets be nice and not gib you.
 	for(var/turf/T in filtered_turfs)
 		for(var/mob/M in T)
-			M << "<span class='alert'>You see the shape of a shuttle approaching better move out of the way now!</span>"
+			if(M.stat == 0)
+				M << "<span class='alert'>You see the shape of a shuttle approaching better move out of the way now!</span>"
 
 
 /datum/shuttle/proc/power_check(var/list/turfs)

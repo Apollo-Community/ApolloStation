@@ -13,16 +13,8 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "core\_define.dm"
 #include "core\_stubs.dm"
 #include "core\process.dm"
 #include "core\processScheduler.dm"
-#include "test\processSchedulerView.dm"
-#include "test\testHarness.dm"
-#include "test\testHeavyProcess.dm"
-#include "test\testHungProcess.dm"
-#include "test\testNiceProcess.dm"
-#include "test\testSlowProcess.dm"
-#include "test\testZombieProcess.dm"
 // END_INCLUDE
 

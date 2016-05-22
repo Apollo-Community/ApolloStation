@@ -15,11 +15,7 @@
 	if(isnull(trg_hanger))
 		trg_hanger = get_hanger(!location)
 
-	//Check with the hanger if its full and occupy it if its not.
-	if(!trg_hanger.can_land_at(src))
-		return
-	else
-		trg_hanger.full = 1
+	trg_hanger = hanger_check(trg_hanger)
 
 	//Start warmup and do some checks while we are waiting
 	moving_status = SHUTTLE_WARMUP
@@ -59,7 +55,10 @@
 		supply_controller.buy()
 	if (!at_station())
 		supply_controller.sell()
-	moving_status = SHUTTLE_IDLE
+	if(in_transit)
+		moving_status = SHUTTLE_SCHEDULING
+	else
+		moving_status = SHUTTLE_IDLE
 
 /datum/shuttle/ferry/supply/process()
 	..()
@@ -70,15 +69,15 @@
 
 // returns 1 if the supply shuttle should be prevented from moving because it contains forbidden atoms
 /datum/shuttle/ferry/supply/proc/forbidden_atoms_check(var/list/turfs)
-	error("starting forbidden atoms check")
+	//error("starting forbidden atoms check")
 	if (!at_station())
-		error("Not at station check passed")
+		//error("Not at station check passed")
 		return 0	//if badmins want to send mobs or a nuke on the supply shuttle from centcom we don't care
 	else
-		error("At station starting check. Checklist is [turfs.len] long.")
+		//error("At station starting check. Checklist is [turfs.len] long.")
 		for(var/atom/A in turfs)
 			if (supply_controller.forbidden_atoms_check(A))
-				error("Atom [A] was forbidden. Returning with 1")
+				//error("Atom [A] was forbidden. Returning with 1")
 				return 1
 		return 0
 
