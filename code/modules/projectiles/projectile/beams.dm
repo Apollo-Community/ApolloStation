@@ -182,8 +182,7 @@ var/list/beam_master = list()
 	agony = 40
 	damage_type = HALLOSS
 
-// emitter beam
-// this was implemented kinda clunkily, so it doesn't work well as a base. keep its usage to emitter beams for now
+// continuous beams
 /obj/item/projectile/beam/continuous
 	name = "laser beam"
 	icon = 'icons/obj/projectiles_continuous.dmi'
@@ -194,7 +193,7 @@ var/list/beam_master = list()
 	flag = "laser"
 	eyeblur = 1
 
-	var/power = 40
+	var/icon_base = "emitter"
 	var/process_delay = 2
 	var/obj/item/projectile/beam/continuous/node1
 	var/obj/item/projectile/beam/continuous/node2
@@ -202,17 +201,12 @@ var/list/beam_master = list()
 /obj/item/projectile/beam/continuous/New(var/loc, var/parent)
 	node1 = parent
 
-	var/parent_power = 0
-	if(istype(node1))
-		parent_power = node1.power
-	else if(istype(parent, /obj/machinery/power/emitter))
-		var/obj/machinery/power/emitter/E = parent
-		parent_power = E.active_power_usage / 1000
-
-	update_power(parent_power)
-
 	dir = node1.dir
-	step(src, dir)
+	if(istype(node1))
+		step(src, dir)
+	else // beams whose node1 is not a continuous beam are considered beam spawners
+		alpha = 0
+		density = 0
 
 	process()
 
@@ -228,6 +222,8 @@ var/list/beam_master = list()
 	..()
 
 /obj/item/projectile/beam/continuous/Bump(var/atom/movable/A)
+	if(!istype(node1))	return // spawner
+
 	if(istype(A, /mob/living))
 		var/mob/living/M = A
 		M.bullet_act(src, "chest")
@@ -260,8 +256,8 @@ var/list/beam_master = list()
 			process()
 		return
  
- 	icon_state = "emitter_end"
-	var/obj/item/projectile/beam/continuous/B = new(src.loc, src)
+ 	icon_state = "[icon_base]_end"
+	var/obj/item/projectile/beam/continuous/B = new type(src.loc, src)
 	node2 = B
 	spawn(0)
 		if(B.loc)
@@ -269,17 +265,46 @@ var/list/beam_master = list()
 				qdel(B)
 				return
 			B.process()
-			if(B)	icon_state = "emitter"
+			if(B)	icon_state = icon_base
 
 	spawn(process_delay)
 		process()
 
-/obj/item/projectile/beam/continuous/proc/update_power(var/new_power)
+/obj/item/projectile/beam/continuous/emitter
+	name = "emitter beam"
+
+	var/power = 40
+
+/obj/item/projectile/beam/continuous/emitter/New(var/loc, var/parent)
+	node1 = parent
+
+	var/parent_power = 0
+	if(istype(node1))
+		var/obj/item/projectile/beam/continuous/emitter/B = node1
+		parent_power = B.power
+	else if(istype(parent, /obj/machinery/power/emitter))
+		var/obj/machinery/power/emitter/E = parent
+		parent_power = E.active_power_usage / 1000
+
+	update_power(parent_power)
+
+	..()
+
+/obj/item/projectile/beam/continuous/emitter/Destroy()
+	if(istype(node1, /obj/machinery/power/emitter))
+		var/obj/machinery/power/emitter/E = node1
+		E.beam = null
+
+	..()
+
+/obj/item/projectile/beam/continuous/emitter/proc/update_power(var/new_power)
 	if(new_power)
 		power = new_power
 
-	alpha = min(255, 255 * (power / EMITTER_POWER_MAX))
+	if(istype(node1))
+		alpha = min(255, 255 * (power / EMITTER_POWER_MAX))
 	damage = power / 10
 
 	if(node2)
-		node2.update_power(power)
+		var/obj/item/projectile/beam/continuous/emitter/E = node2
+		E.update_power(power)
