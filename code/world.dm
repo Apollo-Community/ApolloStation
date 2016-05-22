@@ -54,8 +54,6 @@ var/global/datum/global_init/init = new ()
 
 	. = ..()
 
-	sleep_offline = 1
-
 	// Set up roundstart seed list. This is here because vendors were
 	// bugging out and not populating with the correct packet names
 	// due to this list not being instantiated.
@@ -66,15 +64,18 @@ var/global/datum/global_init/init = new ()
 
 	processScheduler = new
 	master_controller = new /datum/controller/game_controller()
+
 	spawn(1)
 		processScheduler.deferSetupFor(/datum/controller/process/ticker)
 		processScheduler.setup()
 		master_controller.setup()
 
+		sleep_offline = 1 // go to sleep after the controllers are all set up
+
 	#ifdef PRECISE_TIMER_AVAILABLE
-	world.log << "btime.[world.system_type==MS_WINDOWS?"dll":"so"] is in use"
+	world.log << "btime.[world.system_type==MS_WINDOWS?"dll":"so"] will be used for timer"
 	#else
-	world.log << "## ERROR: btime.[world.system_type==MS_WINDOWS?"dll":"so"] is not in use, using legacy timer"
+	world.log << "## ERROR: btime.[world.system_type==MS_WINDOWS?"dll":"so"] could not be found, using legacy timer"
 	#endif
 
 	spawn(3000)		//so we aren't adding to the round-start lag
