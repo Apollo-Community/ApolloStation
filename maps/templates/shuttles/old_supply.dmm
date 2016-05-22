@@ -20,7 +20,7 @@
 "t" = (/turf/simulated/shuttle/wall{icon_state = "swall15"; dir = 2},/area/supply/dock)
 "u" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/heater,/turf/simulated/floor/plating/airless,/area/supply/dock)
 "v" = (/turf/space,/turf/simulated/shuttle/wall{icon_state = "swall_f9"; dir = 2},/area/supply/dock)
-"w" = (/turf/unsimulated/floor{tag = "icon-plating"; icon_state = "plating"},/area/centcom/suppy)
+"w" = (/turf/space,/area/space)
 "x" = (/obj/structure/shuttle/engine/propulsion{icon_state = "burst_l"},/turf/simulated/floor/plating,/area/supply/dock)
 "y" = (/obj/structure/shuttle/engine/propulsion,/turf/simulated/floor/plating,/area/supply/dock)
 "z" = (/obj/structure/shuttle/engine/propulsion{icon_state = "burst_r"},/turf/simulated/floor/plating,/area/supply/dock)
