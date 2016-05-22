@@ -298,4 +298,4 @@
 	var/active_engines = 0
 	for(var/obj/structure/shuttle/engine/propulsion/P in shuttle_turfs)
 		active_engines += 1
-	return = active_engines/default_engines
+	return active_engines/default_engines
