@@ -33,7 +33,7 @@
 	if(at_station())
 		arrive_time = world.time + 5
 	else
-		arrive_time = world.time + supply_controller.movetime
+		arrive_time = world.time + supply_controller.movetime*engine_modifier()
 
 	//Shuttle is now in transit
 	finish_hanger = trg_hanger
