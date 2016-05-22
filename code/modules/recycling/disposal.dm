@@ -1440,12 +1440,13 @@
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/mode = 0
+	var/strength = 10
 
 	New()
 		..()
 
 		spawn(1)
-			target = get_ranged_target_turf(src, dir, 10)
+			target = get_ranged_target_turf(src, dir, strength)
 
 
 			var/obj/structure/disposalpipe/trunk/trunk = locate() in src.loc
@@ -1511,6 +1512,7 @@
 
 // called when movable is expelled from a disposal pipe or outlet
 // by default does nothing, override for special behaviour
+
 
 /atom/movable/proc/pipe_eject(var/direction)
 	return
