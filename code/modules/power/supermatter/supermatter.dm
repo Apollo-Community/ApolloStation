@@ -318,9 +318,9 @@
 		return 0	// This stops people from being able to really power up the supermatter
 				// Then bring it inside to explode instantly upon landing on a valid turf.
 
-	if(istype(Proj, /obj/item/projectile/beam/continuous))
+	if(istype(Proj, /obj/item/projectile/beam/continuous/emitter))
 		var/factor = getSMVar( smlevel, "emitter_factor" )
-		var/obj/item/projectile/beam/continuous/B = Proj
+		var/obj/item/projectile/beam/continuous/emitter/B = Proj
 
 		power += ( 0.16 * ( 1.69 ** factor )) * ( B.power / ( EMITTER_POWER_MAX * ( 2/3 ))) // regression
 		damage += ( 0.5 * factor - 0.5 ) * ( B.power / ( EMITTER_POWER_MAX * ( 2/3 )))
