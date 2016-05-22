@@ -563,11 +563,13 @@
 			last = curr
 			curr = curr.transfer(src)
 
-			if( is_large && prob( 6 ) )
-				if( hasmob && prob( 50 ))
-					for(var/mob/living/H in src)
-						if(!istype(H,/mob/living/silicon/robot/drone)) //Drones use the mailing code to move through the disposal system,
-							H.take_overall_damage( rand( 20, 30 ), 0, "Blunt Trauma") //horribly maim any living creature jumping down disposals.  c'est la vie
+			if( is_large && hasmob && prob( 3 ))
+				for(var/mob/living/H in src)
+					//Drones use the mailing code to move through the disposal system
+					//Padded mailman suits prevents damage
+					var/mob/living/carbon/human/C = H
+					if(!istype(H,/mob/living/silicon/robot/drone) || (istype(C) && !istype(C.w_uniform, /obj/item/clothing/under/rank/mailman/padded)))
+						H.take_overall_damage( rand( 20, 30 ), 0, "Blunt Trauma") //horribly maim any living creature jumping down disposals.  c'est la vie
 
 				playsound(src.loc, 'sound/machines/disposalbang.ogg', 50, 1)
 
