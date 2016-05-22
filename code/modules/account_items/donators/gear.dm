@@ -47,3 +47,8 @@
 	display_name = "Lunas labcoat"
 	path = /obj/item/clothing/suit/storage/toggle/labcoat/cmo/fluff/luna_vor
 	sort_category = slot_wear_suit
+
+/datum/gear/account/draco16_meson
+	display_name = "Gars mesons"
+	path = /obj/item/clothing/glasses/meson/fluff/draco16
+	sort_category = slot_glasses

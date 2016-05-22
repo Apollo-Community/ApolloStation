@@ -251,3 +251,9 @@
 	icon_open = "luna_labcoat_cmo_open"
 	icon_closed = "luna_labcoat_cmo"
 	item_state = "luna_labcoat_cmo"
+
+/obj/item/clothing/glasses/meson/fluff/draco16
+	name = "Gar's mesons"
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "garm"
+	item_state = "garm"
