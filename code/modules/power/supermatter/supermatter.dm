@@ -324,8 +324,6 @@
 
 		power += ( 0.16 * ( 1.69 ** factor )) * ( B.power / ( EMITTER_POWER_MAX * ( 2/3 ))) // regression
 		damage += ( 0.5 * factor - 0.5 ) * ( B.power / ( EMITTER_POWER_MAX * ( 2/3 )))
-		world << "beam power: [B.power]"
-		world << "boy oh adding [( 0.16 * ( 1.69 ** factor )) * ( B.power / ( EMITTER_POWER_MAX * ( 2/3 )))] power. new is [power]"
 	else
 		damage += Proj.damage
 	return 0
