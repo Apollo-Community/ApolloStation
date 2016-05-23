@@ -1,17 +1,16 @@
-/datum/job/mining
-	title = "Asteroid Miner"
-	flag = MINER
+/datum/job/foreman
+	title = "Mining Foreman"
+	flag = FOREMAN
 	department_id = SUPPLY
 	faction = "Station"
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 1
+	spawn_positions = 1
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dddddd"
-	access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
-	minimal_access = list(access_mining, access_mint, access_mining_station)
-	alt_titles = list("Drill Technician","Prospector")
+	access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_slater)
+	minimal_access = list(access_mining, access_mint, access_mining_station, access_mailsorting, access_slater)
 
-	rank_succesion_level = 4
+	rank_succesion_level = 5
 
 /datum/job/mining/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0

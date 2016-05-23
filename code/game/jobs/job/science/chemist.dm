@@ -7,7 +7,7 @@
 	spawn_positions = 2
 	supervisors = "the research director"
 	selection_color = "#ffeef0"
-	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_xenoarch, access_chemistry )
+	access = list(access_robotics, access_tox, access_moon, access_research, access_xenobiology, access_xenoarch, access_chemistry )
 	minimal_access = list(access_chemistry, access_research, access_xenoarch)
 	alt_titles = list("Pharmacist")
 

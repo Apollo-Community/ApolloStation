@@ -7,7 +7,7 @@
 /var/const/access_medical = 5
 /var/const/access_morgue = 6
 /var/const/access_tox = 7
-/var/const/access_tox_storage = 8
+/var/const/access_moon = 8
 /var/const/access_genetics = 9
 /var/const/access_engine = 10
 /var/const/access_engine_equip= 11
@@ -66,8 +66,9 @@
 /var/const/access_psychiatrist = 64 // Psychiatrist's office
 /var/const/access_xenoarch = 65
 /var/const/access_energy_barrier = 66
-/var/const/access_shop_one = 67
-/var/const/access_shop_two = 68
+/var/const/access_shop1 = 67
+/var/const/access_shop2 = 68
+/var/const/access_slater = 69
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -198,7 +199,7 @@
 /proc/get_all_accesses()
 	return list(access_security, access_sec_doors, access_brig, access_armory, access_forensics_lockers, access_court,
 	            access_medical, access_genetics, access_morgue, access_rd,
-	            access_tox, access_tox_storage, access_chemistry, access_engine, access_engine_equip, access_maint_tunnels,
+	            access_tox, access_moon, access_chemistry, access_engine, access_engine_equip, access_maint_tunnels,
 	            access_external_airlocks, access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
@@ -206,7 +207,7 @@
 	            access_hydroponics, access_library, access_lawyer, access_virology, access_psychiatrist, access_cmo, access_qm, access_clown, access_mime, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
-	            access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_energy_barrier, access_cent_captain)
+	            access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_energy_barrier, access_cent_captain, access_shop1, access_shop2, access_slater)
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_ccrep, access_cent_captain)
@@ -256,8 +257,8 @@
 			return "Morgue"
 		if(access_tox)
 			return "R&D Lab"
-		if(access_tox_storage)
-			return "Toxins Lab"
+		if(access_moon)
+			return "Moonbase Labs"
 		if(access_chemistry)
 			return "Chemistry Lab"
 		if(access_rd)
@@ -364,6 +365,12 @@
 			return "Brig"
 		if(access_energy_barrier)
 			return "Energy Barriers"
+		if(access_shop1)
+			return "Shop One"
+		if(access_shop2)
+			return "Shop Two"
+		if(access_slater)
+			return "NMV Slater Cockpit"
 
 /proc/get_centcom_access_desc(A)
 	switch(A)

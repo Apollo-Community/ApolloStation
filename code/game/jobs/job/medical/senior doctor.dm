@@ -1,17 +1,17 @@
-/datum/job/doctor
-	title = "Medical Doctor"
-	flag = DOCTOR
+/datum/job/senior_doctor
+	title = "Senior Doctor"
+	flag = SENIOR_DOCTOR
 	department_id = MEDICAL
 	faction = "Station"
-	total_positions = 5
+	total_positions = 3
 	spawn_positions = 3
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
-	access = list(access_medical, access_morgue, access_genetics)
-	minimal_access = list(access_medical, access_morgue)
-	alt_titles = list("First Responder", "Psychiatrist", "Diagnostician", "Mortician")
+	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
+	minimal_access = list(access_medical, access_morgue, access_surgery, access_virology)
+	alt_titles = list("Virologist", "Pathologist", "Surgeon")
 
-	rank_succesion_level = 4
+	rank_succesion_level = 5
 
 /datum/job/doctor/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
@@ -24,9 +24,18 @@
 		if(4) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 	if (H.mind.role_alt_title)
 		switch(H.mind.role_alt_title)
-			if("First Responder")
-				H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
-				H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/fr_jacket(H), slot_wear_suit)
+			if("Surgeon")
+				H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/medical/blue(H), slot_w_uniform)
+				H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/labcoat(H), slot_wear_suit)
+				H.equip_to_slot_or_qdel(new /obj/item/clothing/head/surgery/blue(H), slot_head)
+			if("Virologist" || "Pathologist")
+				H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/virologist(H), slot_w_uniform)
+				H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/labcoat/virologist(H), slot_wear_suit)
+				H.equip_to_slot_or_qdel(new /obj/item/clothing/mask/surgical(H), slot_wear_mask)
+				switch(H.character.backpack)
+					if(2) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/virology(H), slot_back)
+					if(3) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel_vir(H), slot_back)
+					if(4) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 			else	//Catch all for medical titles.
 				H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 				H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/labcoat(H), slot_wear_suit)

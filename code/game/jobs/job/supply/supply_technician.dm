@@ -9,20 +9,34 @@
 	selection_color = "#dddddd"
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
 	minimal_access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
+	alt_titles = list("Mailroom Clerk")
 
 	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL
 
 /datum/job/supply_tech/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
-	H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/headset_cargo(H), slot_l_ear)
-	H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/cargotech(H), slot_w_uniform)
-	H.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/black(H), slot_shoes)
-	H.equip_to_slot_or_qdel(new /obj/item/device/pda/cargo(H), slot_belt)
-	if(H.character.backpack == 1)
-		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
+	if(H.job == "Mailroom Clerk")
+		H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/headset_service(H), slot_l_ear)
+		H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/chef(H), slot_w_uniform)
+		H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/chef(H), slot_wear_suit)
+		H.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/black(H), slot_shoes)
+		H.equip_to_slot_or_qdel(new /obj/item/clothing/head/chefhat(H), slot_head)
+		H.equip_to_slot_or_qdel(new /obj/item/device/pda/chef(H), slot_belt)
+		if(H.character.backpack == 1)
+			H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
+		else
+			H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+		return 1
 	else
-		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
-	return 1
+		H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/headset_cargo(H), slot_l_ear)
+		H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/cargotech(H), slot_w_uniform)
+		H.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/black(H), slot_shoes)
+		H.equip_to_slot_or_qdel(new /obj/item/device/pda/cargo(H), slot_belt)
+		if(H.character.backpack == 1)
+			H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
+		else
+			H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+		return 1
 
 /datum/job/supply_tech/make_preview_icon( var/backpack )
 	var/icon/clothes_s = null

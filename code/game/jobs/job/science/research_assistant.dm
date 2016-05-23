@@ -7,8 +7,8 @@
 	spawn_positions = -1
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
-	access = list( access_research, access_research )
-	minimal_access = list( access_research, access_research )
+	access = list( access_research, access_tox)
+	minimal_access = list( access_research, access_tox)
 	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL
 
 /datum/job/research_assistant/equip(var/mob/living/carbon/human/H)

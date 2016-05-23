@@ -1,5 +1,5 @@
 /datum/job/engineer_assistant
-	title = "Engineer Assistant"
+	title = "Technical Assistant"
 	flag = ENGINEER_ASSISTANT
 	department_id = ENGINEERING
 	faction = "Station"
@@ -7,8 +7,8 @@
 	spawn_positions = -1
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
-	access = list(access_eva, access_engine, access_engine_equip, access_engine_equip,access_maint_tunnels, access_external_airlocks, access_construction, access_atmospherics)
-	minimal_access = list(access_engine, access_engine_equip, access_maint_tunnels, access_external_airlocks, access_construction)
+	access = list(access_eva, access_engine, access_maint_tunnels, access_external_airlocks, access_construction)
+	minimal_access = list(access_eva, access_engine, access_maint_tunnels, access_external_airlocks, access_construction)
 
 	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL
 
