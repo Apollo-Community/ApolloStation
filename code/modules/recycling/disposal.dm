@@ -568,7 +568,7 @@
 					//Drones use the mailing code to move through the disposal system
 					//Padded mailman suits prevents damage
 					var/mob/living/carbon/human/C = H
-					if(!istype(H,/mob/living/silicon/robot/drone) || (istype(C) && !istype(C.w_uniform, /obj/item/clothing/under/rank/mailman/padded)))
+					if(!istype(H,/mob/living/silicon/robot/drone) && !(istype(C) && istype(C.w_uniform, /obj/item/clothing/under/rank/mailman/padded)))
 						H.take_overall_damage( rand( 20, 30 ), 0, "Blunt Trauma") //horribly maim any living creature jumping down disposals.  c'est la vie
 
 				playsound(src.loc, 'sound/machines/disposalbang.ogg', 50, 1)
