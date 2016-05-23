@@ -24,7 +24,6 @@
 		starting_hanger = hanger_station
 	else
 		starting_hanger = hanger_offsite
-
 	..()
 
 //Ferries have a simple short jump
