@@ -20,6 +20,7 @@
 	var/arrive_time = 0	//the time at which the shuttle arrives when long jumping
 	var/in_transit = 0 //To help with the hanger schedular
 	var/priority = 0 //Does this shuttle move other shuttles out of its way ?
+	var/default_engines = 0
 
 /datum/shuttle/proc/init_templates()
 	if(isnull(template_path))
@@ -37,6 +38,9 @@
 	current_hanger.land_at(src)
 	place_shuttle()
 	shuttle_ingame = 1
+	//Check how many engines the shuttle starts with
+	for(var/obj/structure/shuttle/engine/propulsion/P in shuttle_turfs)
+		default_engines += 1
 
 //Initiate the docking controllers by locating them in the game world.
 /datum/shuttle/proc/init_docking_controllers()
@@ -51,27 +55,7 @@
 
 	if(isnull(trg_hanger)) return
 
-	//When jumping to a hanger first look if its full.
-	//If its full check if we have priority (aka emergency shuttle).
-	//If not see if you can temporary divert to another spot near the station and just squash everything in the way !.
-	//If that fails just give up allready !
-	if(trg_hanger.can_land_at(src))
-		trg_hanger.full = 1
-		//error("[docking_controller_tag] can land at [trg_hanger.htag]")
-	else if (priority)
-		hanger_scheduler.divert(trg_hanger.shuttle)
-		trg_hanger.full = 1
-		//error("[docking_controller_tag] can land at [trg_hanger.htag] Priority used")
-	else
-		var/obj/hanger/J = hanger_controller.get_free_space_hanger(src)
-		//error("[docking_controller_tag] can not land at [trg_hanger.htag]")
-		if(!isnull(J))
-			hanger_scheduler.add_shuttle(src, trg_hanger)
-			in_transit = 1
-			trg_hanger = J
-			trg_hanger.full = 1
-			//error("[docking_controller_tag] diverting to [J.htag]")
-
+	trg_hanger = hanger_check(trg_hanger)
 
 	//it would be cool to play a sound here
 	moving_status = SHUTTLE_WARMUP
@@ -115,7 +99,7 @@
 		if (moving_status == SHUTTLE_IDLE)
 			return	//someone cancelled the launch
 
-		arrive_time = world.time + travel_time*10
+		arrive_time = world.time + travel_time*10*engine_modifier()
 		moving_status = SHUTTLE_INTRANSIT
 		//Needs to have interim_hanger
 		move(interim_hanger, direction, 1)
@@ -238,10 +222,9 @@
 	return trg_hanger
 
 
+//Move and gib people that are in the are the ship is moving to.
+//If the target hanger is an exerior one only do this to space tiles as we don't want to clip docking arms.
 /datum/shuttle/proc/move_gib(var/list/turfs, var/obj/hanger/trg_hanger)
-	//Move and gib people that are in the are the ship is moving to.
-	//If the target hanger is an exerior one only do this to space tiles as we don't want to clip docking arms.
-
 	var/list/filtered_turfs = new/list()
 	var/list/to_gib = new/list()
 	var/maxy = trg_hanger.y + template_dim[2]
@@ -294,7 +277,7 @@
 			if(M.stat == 0)
 				M << "<span class='alert'>You see the shape of a shuttle approaching better move out of the way now!</span>"
 
-
+//Check things that need power for power and update the power net.
 /datum/shuttle/proc/power_check(var/list/turfs)
 	var/update_power = 0
 	for(var/turf/T in turfs)
@@ -308,3 +291,11 @@
 
 	if(update_power)
 		makepowernets()
+
+//Changing the travel time according to the currently active engines
+//Returns a modifier that is applied to the travel time.
+/datum/shuttle/proc/engine_modifier()
+	var/active_engines = 0
+	for(var/obj/structure/shuttle/engine/propulsion/P in shuttle_turfs)
+		active_engines += 1
+	return active_engines/default_engines

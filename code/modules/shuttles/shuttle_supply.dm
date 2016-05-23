@@ -3,6 +3,12 @@
 	var/max_late_time = 300.
 	var/traveling = 0
 	var/obj/hanger/finish_hanger
+	var/list/supply_turfs
+
+/datum/shuttle/ferry/supply/init_templates()
+	..()
+	//so stuff is not spawn in the shuttle cockpit.
+	supply_turfs = get_turfs_square(current_hanger.x, current_hanger.y, current_hanger.z, 3, 3)
 
 /datum/shuttle/ferry/supply/short_jump(var/obj/hanger/trg_hanger)
 	//Do some checks first
@@ -33,7 +39,7 @@
 	if(at_station())
 		arrive_time = world.time + 5
 	else
-		arrive_time = world.time + supply_controller.movetime
+		arrive_time = world.time + supply_controller.movetime*engine_modifier()
 
 	//Shuttle is now in transit
 	finish_hanger = trg_hanger
@@ -51,6 +57,7 @@
 
 	//Move the shuttle
 	move(finish_hanger, null, 0)
+	supply_turfs = get_turfs_square(current_hanger.x, current_hanger.y, current_hanger.z, 3, 3)
 	if (at_station())
 		supply_controller.buy()
 	if (!at_station())
