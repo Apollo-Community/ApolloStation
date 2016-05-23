@@ -11,7 +11,7 @@
 	minimal_access = list(access_mining, access_mint, access_mining_station)
 	alt_titles = list("Drill Technician","Prospector")
 
-	rank_succesion_level = 4
+	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL
 
 /datum/job/mining/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
