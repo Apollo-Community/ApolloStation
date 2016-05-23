@@ -47,9 +47,6 @@ var/global/datum/global_init/init = new ()
 	load_mods()
 	//end-emergency fix
 
-	//loads custom titles
-	load_titles()
-
 	src.update_status()
 
 	. = ..()
