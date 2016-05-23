@@ -214,7 +214,8 @@
 	operative_notes = "We'd like to remind our operatives to keep it professional. You are not here to have a good time, you are here to accomplish your objectives. These vile communists must be stopped at all costs. You may collaborate with any friends of the Syndicate coalition, but keep an eye on any of those Tiger punks if they do show up. You are completely free to accomplish your objectives any way you see fit."
 
 	equipment = list(
-		new/datum/uplink_item(/obj/item/weapon/handcuffs/tuff, 1500, "Tuff Cuffs", "THC")
+		new/datum/uplink_item(/obj/item/weapon/handcuffs/tuff, 1500, "Tuff Cuffs", "THC"),
+		new/datum/uplink_item(/obj/item/clothing/under/rank/mailman/padded, 1500, "Disposals Safe Suit", "DSS")
 	)
 
 // Neutral to everyone, friendly to Marauders

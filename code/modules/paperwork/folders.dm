@@ -18,6 +18,10 @@
 	desc = "A yellow folder."
 	icon_state = "folder_yellow"
 
+/obj/item/weapon/folder/purple
+	desc = "A purple folder."
+	icon_state = "folder_purple"
+
 /obj/item/weapon/folder/white
 	desc = "A white folder."
 	icon_state = "folder_white"

@@ -48,7 +48,7 @@
 
 /obj/item/clothing/glasses/science
 	name = "Science Goggles"
-	desc = "The goggles do nothing!"
+	desc = "She blinded me with science!"
 	icon_state = "purple"
 	item_state = "glasses"
 

@@ -901,15 +901,6 @@
 	item_state = "mantle-unathi"
 	body_parts_covered = 0
 
-/obj/item/clothing/suit/storage/toggle/labcoat/cmo/fluff/luna_vor //NijiShadow: Luna Vor
-	name = "Luna's labcoat"
-	desc = "Darker than the standard model and with a dash of rainbow on the back."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "luna_labcoat_cmo"
-	icon_open = "luna_labcoat_cmo_open"
-	icon_closed = "luna_labcoat_cmo"
-	item_state = "luna_labcoat_cmo"
-
 /////////////////////////////// 50_n00b - R.A.N.G.E.'s blue dress //////////////////////////
 
 /obj/item/clothing/suit/fluff/b_dress
@@ -1327,14 +1318,6 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "retpoluniform"
 	item_color = "retpoluniform"
-
-//////  Nijishadow - Aya's Formal uniform
-
-/obj/item/clothing/under/hosformalfem/fluff/aya_formal
-	name = "Aya's Formal Uniform"
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "aya_formal"
-	item_state = "aya_formal"
 
 //////////// Weapons ////////////
 

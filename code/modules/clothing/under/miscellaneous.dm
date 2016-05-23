@@ -45,9 +45,17 @@
 /obj/item/clothing/under/rank/mailman
 	name = "mailman's jumpsuit"
 	desc = "<i>'Special delivery!'</i>"
-	icon_state = "mailman"
-	item_state = "b_suit"
-	item_color = "mailman"
+	icon_state = "mailman2"
+	item_state = "mailman2"
+	item_color = "mailman2"
+
+/obj/item/clothing/under/rank/mailman/padded
+	name = "mailman's jumpsuit"
+	desc = "Specially delivered!"
+	icon_state = "mailman2"
+	item_state = "mailman2"
+	item_color = "mailman2"
+	armor = list(melee = 5, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/sexyclown
 	name = "sexy-clown suit"

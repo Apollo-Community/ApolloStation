@@ -67,7 +67,7 @@
 		var/safety = M:eyecheck()
 		if(safety <= 0)
 			if( prob( 75 ))
-				M.Weaken(10)
+				M.confused = 5
 			flick("e_flash", M.flash)
 
 			if(ishuman(M) && ishuman(user) && M.stat!=DEAD)
@@ -186,7 +186,7 @@
 				var/safety = M.eyecheck()
 				if(safety <= 0)
 					if( prob( 75 ))
-						M.Weaken(10)
+						M.confused = 5
 					flick("e_flash", M.flash)
 					for(var/mob/O in viewers(M, null))
 						O.show_message("<span class='disarm'>[M] is blinded by the flash!</span>")
