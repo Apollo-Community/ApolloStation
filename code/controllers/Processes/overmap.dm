@@ -32,17 +32,13 @@
 	mapinfo += collect_map()
 	mapinfo += collect_asteroid_field()
 
-	testing( "Overmap has [mapinfo.len] objects" )
 	// Placing the map objects
 	build_map( mapinfo )
-
-	testing("Overmap built!")
 
 	// Generating the landmarks paper
 	generate_sectors_paper()
 
 /datum/controller/process/overmap/proc/collect_map()
-	testing("Collecting overmap objects...")
 	. = list()
 
 	var/obj/effect/mapinfo/sector/data
@@ -55,7 +51,6 @@
 
 // Creates a field of asteroids near the mining shuttle
 /datum/controller/process/overmap/proc/collect_asteroid_field()
-	testing("Collecting overmap asteroids...")
 	. = list()
 
 	var/asteroid_z_start = world.maxz+1 // The z level at the asteroid field starts at
@@ -75,8 +70,6 @@
 	return .
 
 /datum/controller/process/overmap/proc/build_map( var/list/data )
-	testing("Building overmap...")
-
 	if( !data )
 		error( "Failed to create overmap, no data!" )
 		return 0
@@ -136,7 +129,6 @@
 
 	reportLevels( data )
 	map["[data.zlevel]"] = data.buildMap()
-	testing("Located sector \"[data.name]\" corresponding to zlevel [data.zlevel]")
 
 /datum/controller/process/overmap/proc/reportLevels( var/obj/effect/mapinfo/sector/S )
 	var/flags = S.sector_flags
