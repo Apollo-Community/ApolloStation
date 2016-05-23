@@ -1,5 +1,5 @@
 "a" = (/turf/simulated/shuttle/wall{icon_state = "swall_f6"; dir = 2},/area/shuttle/escape/spawn_area)
-"b" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion"; dir = 1},/turf/space,/area/shuttle/escape/spawn_area)
+"b" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion"; dir = 1},/turf/simulated/floor/plating,/area/shuttle/escape/spawn_area)
 "c" = (/turf/simulated/shuttle/wall{dir = 3; icon_state = "swall_f10"; layer = 2},/area/shuttle/escape/spawn_area)
 "d" = (/turf/space,/area/shuttle/escape/spawn_area)
 "e" = (/turf/simulated/shuttle/wall{icon_state = "swall3"; dir = 2},/area/shuttle/escape/spawn_area)

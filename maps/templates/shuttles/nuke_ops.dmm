@@ -111,9 +111,9 @@
 "cg" = (/obj/machinery/optable,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/syndicate_mothership/shuttle)
 "ch" = (/obj/structure/table,/obj/item/stack/medical/advanced/bruise_pack,/obj/item/weapon/retractor,/obj/item/device/radio/intercom{desc = "Talk through this. Evilly"; freerange = 1; frequency = 1213; name = "Syndicate Intercom"; pixel_x = 32; subspace_transmission = 1; syndie = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/syndicate_mothership/shuttle)
 "ci" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating/airless,/area/syndicate_mothership/shuttle)
-"cj" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"},/turf/space,/area/syndicate_mothership/shuttle)
-"ck" = (/obj/structure/shuttle/engine/propulsion,/turf/space,/area/syndicate_mothership/shuttle)
-"cl" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_r"},/turf/space,/area/syndicate_mothership/shuttle)
+"cj" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"},/turf/simulated/floor/plating,/area/syndicate_mothership/shuttle)
+"ck" = (/obj/structure/shuttle/engine/propulsion,/turf/simulated/floor/plating,/area/syndicate_mothership/shuttle)
+"cl" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_r"},/turf/simulated/floor/plating,/area/syndicate_mothership/shuttle)
 
 (1,1,1) = {"
 aaaaaaaaaaabacadadadaeafaaaaaaaaaa
