@@ -1,5 +1,5 @@
 /datum/job/supply_tech
-	title = "Supply Technician"
+	title = "Cargo Technician"
 	flag = SUPPLYTECH
 	department_id = SUPPLY
 	faction = "Station"
@@ -15,43 +15,37 @@
 
 /datum/job/supply_tech/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
-	if(H.job == "Mailroom Clerk")
-		H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/headset_service(H), slot_l_ear)
-		H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/chef(H), slot_w_uniform)
-		H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/chef(H), slot_wear_suit)
-		H.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/black(H), slot_shoes)
-		H.equip_to_slot_or_qdel(new /obj/item/clothing/head/chefhat(H), slot_head)
-		H.equip_to_slot_or_qdel(new /obj/item/device/pda/chef(H), slot_belt)
-		if(H.character.backpack == 1)
-			H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
-		else
-			H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
-		return 1
-	else
-		H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/headset_cargo(H), slot_l_ear)
-		H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/cargotech(H), slot_w_uniform)
-		H.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/black(H), slot_shoes)
-		H.equip_to_slot_or_qdel(new /obj/item/device/pda/cargo(H), slot_belt)
-		if(H.character.backpack == 1)
-			H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
-		else
-			H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
-		return 1
+	if(H.job == "Mailroom Clerk")		H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/dispatch/mailroom(H), slot_w_uniform)
+	else								H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/cargotech(H), slot_w_uniform)
 
-/datum/job/supply_tech/make_preview_icon( var/backpack )
+	switch(H.character.backpack)
+		if(2) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack(H), slot_back)
+		if(3) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
+		if(4) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
+
+	H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/headset_cargo(H), slot_l_ear)
+	H.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/black(H), slot_shoes)
+	H.equip_to_slot_or_qdel(new /obj/item/device/pda/cargo(H), slot_belt)
+
+	if(H.character.backpack == 1)
+		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
+	else
+		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+	return 1
+
+/datum/job/supply_tech/make_preview_icon( var/backpack , var/job , var/gender )
 	var/icon/clothes_s = null
 
-	clothes_s = new /icon('icons/mob/uniform.dmi', "cargo_s")
+	if(job == "Mailroom Clerk")	clothes_s = new /icon('icons/mob/uniform.dmi', "mailman2_s")
+	else						clothes_s = new /icon('icons/mob/uniform.dmi', "cargo_s")
+
 	clothes_s.Blend(new /icon('icons/mob/feet.dmi', "black"), ICON_UNDERLAY)
 	clothes_s.Blend(new /icon('icons/mob/hands.dmi', "bgloves"), ICON_UNDERLAY)
-	if(prob(1))
-		clothes_s.Blend(new /icon('icons/mob/head.dmi', "flat_cap"), ICON_OVERLAY)
+	if(prob(1))		clothes_s.Blend(new /icon('icons/mob/head.dmi', "flat_cap"), ICON_OVERLAY)
+
 	switch(backpack)
-		if(2)
-			clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
-		if(3)
-			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-norm"), ICON_OVERLAY)
-		if(4)
-			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+		if(2)			clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
+		if(3)			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-norm"), ICON_OVERLAY)
+		if(4)			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
 
 	return clothes_s

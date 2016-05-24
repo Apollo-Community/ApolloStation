@@ -33,31 +33,21 @@
 			new_religion = religion_name
 
 		switch(lowertext(new_religion))
-			if("christianity")
-				B.name = pick("The Holy Bible","The Dead Sea Scrolls")
-			if("satanism")
-				B.name = "The Unholy Bible"
-			if("cthulu")
-				B.name = "The Necronomicon"
-			if("islam")
-				B.name = "Quran"
-			if("scientology")
-				B.name = pick("The Biography of L. Ron Hubbard","Dianetics")
-			if("chaos")
-				B.name = "The Book of Lorgar"
-			if("imperium")
-				B.name = "Uplifting Primer"
-			if("toolboxia")
-				B.name = "Toolbox Manifesto"
-			if("homosexuality")
-				B.name = "Guys Gone Wild"
+			if("christianity")		B.name = pick("The Holy Bible","The Dead Sea Scrolls")
+			if("satanism")			B.name = "The Unholy Bible"
+			if("cthulu")			B.name = "The Necronomicon"
+			if("islam")				B.name = "Quran"
+			if("scientology")		B.name = pick("The Biography of L. Ron Hubbard","Dianetics")
+			if("chaos")				B.name = "The Book of Lorgar"
+			if("imperium")			B.name = "Uplifting Primer"
+			if("toolboxia")			B.name = "Toolbox Manifesto"
+			if("homosexuality")		B.name = "Guys Gone Wild"
+			if("kwask")				B.name = pick("Foreman's Demise", "Fun Policing", "The Holy Kwak", "Redundant Positions")
 			//if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks")
 			//	B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition")
 			//	H.setBrainLoss(100) // starts off retarded as fuck
-			if("science")
-				B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
-			else
-				B.name = "The Holy Book of [new_religion]"
+			if("science")			B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
+			else					B.name = "The Holy Book of [new_religion]"
 		feedback_set_details("religion_name","[new_religion]")
 
 	spawn(1)
@@ -154,7 +144,7 @@
 		feedback_set_details("religion_book","[new_book_style]")
 	return 1
 
-/datum/job/chaplain/make_preview_icon( var/backpack )
+/datum/job/chaplain/make_preview_icon( var/backpack , var/job , var/gender )
 	var/icon/clothes_s = null
 
 	clothes_s = new /icon('icons/mob/uniform.dmi', "chapblack_s")
@@ -162,11 +152,8 @@
 	if(prob(1))
 		clothes_s.Blend(new /icon('icons/mob/suit.dmi', "imperium_monk"), ICON_OVERLAY)
 	switch(backpack)
-		if(2)
-			clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
-		if(3)
-			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-norm"), ICON_OVERLAY)
-		if(4)
-			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+		if(2)			clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
+		if(3)			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-norm"), ICON_OVERLAY)
+		if(4)			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
 
 	return clothes_s

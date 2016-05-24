@@ -229,7 +229,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 /obj/item/clothing/under/overalls
-	name = "laborer's overalls"
+	name = "Foreman's overalls"
 	desc = "A set of durable overalls for getting the job done."
 	icon_state = "overalls"
 	item_state = "lb_suit"
@@ -561,7 +561,18 @@
 
 /obj/item/clothing/under/black_tango
 	name = "tango dress"
-	desc = "Olé!"
+	desc = "Olï¿½!"
 	icon_state = "black_tango"
 	item_state = "black_tango"
 	item_color = "black_tango"
+
+/obj/item/clothing/under/black_tango/short
+	item_state = "black_tango_short"
+	item_color = "black_tango_short"
+
+/obj/item/clothing/under/tourist
+	name = "tourist's shirt"
+	desc = "Is this flower shirt even in fashion?"
+	icon_state = "tourist"
+	item_state = "tourist"
+	item_color = "tourist"

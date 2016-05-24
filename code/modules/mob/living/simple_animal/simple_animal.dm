@@ -269,7 +269,6 @@
 /mob/living/simple_animal/attackby(var/obj/item/O, var/mob/user)  //Marker -Agouri
 
 	if(istype(O, /obj/item/stack/medical))
-
 		if(stat != DEAD && health < maxHealth)
 			var/obj/item/stack/medical/medical_pack = O
 			if(medical_pack.use(1))
@@ -353,6 +352,10 @@
 	if (istype(target_mob,/obj/mecha))
 		var/obj/mecha/M = target_mob
 		if (M.occupant)
+			return (0)
+	if (istype(target_mob,/obj/spacepod))
+		var/obj/spacepod/S = target_mob
+		if( S.pilot || ( S.passengers && S.passengers.len ))
 			return (0)
 	if (istype(target_mob,/obj/machinery/bot))
 		var/obj/machinery/bot/B = target_mob

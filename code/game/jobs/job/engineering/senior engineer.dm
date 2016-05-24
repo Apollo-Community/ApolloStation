@@ -59,21 +59,25 @@
         H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/engineer(H.back), slot_in_backpack)
     return 1
 
-/datum/job/senior_engineer/make_preview_icon( var/backpack )
-    var/icon/clothes_s = null
+/datum/job/senior_engineer/make_preview_icon( var/backpack , var/job , var/gender )
+	var/icon/clothes_s = null
 
-    clothes_s = new /icon('icons/mob/uniform.dmi', "engine_s")
-    clothes_s.Blend(new /icon('icons/mob/feet.dmi', "orange"), ICON_UNDERLAY)
-    clothes_s.Blend(new /icon('icons/mob/belt.dmi', "utility"), ICON_OVERLAY)
-    clothes_s.Blend(new /icon('icons/mob/head.dmi', "hardhat0_yellow"), ICON_OVERLAY)
-    if(prob(1))
-        clothes_s.Blend(new /icon('icons/mob/suit.dmi', "hazard"), ICON_OVERLAY)
-    switch(backpack)
-        if(2)
-            clothes_s.Blend(new /icon('icons/mob/back.dmi', "engiepack"), ICON_OVERLAY)
-        if(3)
-            clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-eng"), ICON_OVERLAY)
-        if(4)
-            clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+	if(job == "Atmospherics Specialist")
+		clothes_s = new /icon('icons/mob/uniform.dmi', "atmos_s")
+		clothes_s.Blend(new /icon('icons/mob/feet.dmi', "black"), ICON_UNDERLAY)
+		if(prob(1))			clothes_s.Blend(new /icon('icons/mob/suit.dmi', "firesuit"), ICON_OVERLAY)
+	else
+		clothes_s = new /icon('icons/mob/uniform.dmi', "engine_s")
+		clothes_s.Blend(new /icon('icons/mob/head.dmi', "hardhat0_yellow"), ICON_OVERLAY)
+		clothes_s.Blend(new /icon('icons/mob/feet.dmi', "orange"), ICON_UNDERLAY)
+		if(prob(1))			clothes_s.Blend(new /icon('icons/mob/suit.dmi', "hazard"), ICON_OVERLAY)
 
-    return clothes_s
+
+	clothes_s.Blend(new /icon('icons/mob/belt.dmi', "utility"), ICON_OVERLAY)
+
+	switch(backpack)
+		if(2)            clothes_s.Blend(new /icon('icons/mob/back.dmi', "engiepack"), ICON_OVERLAY)
+		if(3)            clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-eng"), ICON_OVERLAY)
+		if(4)            clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+
+	return clothes_s
