@@ -33,8 +33,8 @@
 /obj/item/weapon/folder/tourist/New()
 	..()
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper
-	P += src
-	
+	P.loc = src
+
 /obj/item/weapon/folder/update_icon()
 	overlays.Cut()
 	if(contents.len)
