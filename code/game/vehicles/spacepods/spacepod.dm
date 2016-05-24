@@ -130,10 +130,10 @@
 		empulse(src, 1, 1)
 
 /obj/spacepod/proc/take_damage( var/damage )
-/*	if( equipment_system.shield_system )
+	if( equipment_system.shield_system )
 		equipment_system.shield_system.hit( damage )
-	else*/
-	deal_damage( damage )
+	else
+		deal_damage( damage )
 
 /obj/spacepod/blob_act()
 	deal_damage(30)
