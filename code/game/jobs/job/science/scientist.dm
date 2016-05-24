@@ -9,7 +9,7 @@
 	selection_color = "#ffeeff"
 	access = list(access_robotics, access_tox, access_research)
 	minimal_access = list(access_robotics, access_tox, access_research)
-	alt_titles = list("Robotocist", "Researcher", "Chemist")
+	alt_titles = list("Roboticist", "Researcher", "Chemist")
 
 	rank_succesion_level = 4
 
@@ -27,8 +27,7 @@
 			if(4) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/labcoat/chemist(H), slot_wear_suit)
-		return 1
-	else if(H.job == "Robotocist")
+	else if(H.job == "Roboticist")
 		H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/headset_sci(H), slot_l_ear)
 		if(H.character.backpack == 2) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack(H), slot_back)
 		if(H.character.backpack == 3) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
@@ -36,12 +35,7 @@
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/black(H), slot_shoes)
 		H.equip_to_slot_or_qdel(new /obj/item/device/pda/roboticist(H), slot_belt)
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/toolbox/mechanical(H), slot_l_hand)
-		if(H.character.backpack == 1)
-			H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
-		else
-			H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/labcoat(H), slot_wear_suit)
-		return 1
 	else
 		H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/headset_sci(H), slot_l_ear)
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/scientist(H), slot_w_uniform)
@@ -54,22 +48,39 @@
 			if(4) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/labcoat/science(H), slot_wear_suit)
-		return 1
 
-/datum/job/scientist/make_preview_icon( var/backpack )
+	if(H.character.backpack == 1)
+		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
+	else
+		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+
+	return 1
+
+/datum/job/scientist/make_preview_icon( var/backpack , var/job , var/gender )
 	var/icon/clothes_s = null
 
-	clothes_s = new /icon('icons/mob/uniform.dmi', "sciencewhite_s")
-	clothes_s.Blend(new /icon('icons/mob/feet.dmi', "white"), ICON_UNDERLAY)
-	clothes_s.Blend(new /icon('icons/mob/suit.dmi', "labcoat_tox_open"), ICON_OVERLAY)
-	if(prob(1))
-		clothes_s.Blend(new /icon('icons/mob/head.dmi', "metroid"), ICON_OVERLAY)
+	if(job == "Chemist")
+		clothes_s = new /icon('icons/mob/uniform.dmi', "chemistrywhite_s")
+		if(prob(1))			clothes_s.Blend(new /icon('icons/mob/suit.dmi', "labgreen"), ICON_OVERLAY)
+		else				clothes_s.Blend(new /icon('icons/mob/suit.dmi', "labcoat_chem_open"), ICON_OVERLAY)
+	else if(job == "Roboticist")
+		clothes_s = new /icon('icons/mob/uniform.dmi', "robotics_s")
+		clothes_s.Blend(new /icon('icons/mob/hands.dmi', "bgloves"), ICON_UNDERLAY)
+		clothes_s.Blend(new /icon('icons/mob/suit.dmi', "labcoat_open"), ICON_OVERLAY)
+		if(prob(1))			clothes_s.Blend(new /icon('icons/mob/items_righthand.dmi', "toolbox_blue"), ICON_OVERLAY)
+	else
+		clothes_s = new /icon('icons/mob/uniform.dmi', "sciencewhite_s")
+		clothes_s.Blend(new /icon('icons/mob/suit.dmi', "labcoat_tox_open"), ICON_OVERLAY)
+
+	if(prob(1))		clothes_s.Blend(new /icon('icons/mob/head.dmi', "metroid"), ICON_OVERLAY)
+
+	if(prob(1))		clothes_s.Blend(new /icon('icons/mob/head.dmi', "metroid"), ICON_OVERLAY)
+
+	clothes_s.Blend(new /icon('icons/mob/feet.dmi', "[job == "Roboticist" ? "black" : "white"]"), ICON_UNDERLAY)
+
 	switch(backpack)
-		if(2)
-			clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
-		if(3)
-			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-tox"), ICON_OVERLAY)
-		if(4)
-			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+		if(2)			clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
+		if(3)			clothes_s.Blend(new /icon('icons/mob/back.dmi', "[job == "Chemical Researcher" ? "satchel-chem" : "satchel-tox"]"), ICON_OVERLAY)
+		if(4)			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
 
 	return clothes_s

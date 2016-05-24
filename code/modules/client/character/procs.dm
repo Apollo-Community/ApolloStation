@@ -757,7 +757,7 @@
 	var/datum/job/job = job_master.GetJob( GetHighestLevelJob() )
 
 	if( job )
-		clothes_s = job.make_preview_icon( backpack )
+		clothes_s = job.make_preview_icon( backpack, GetPlayerAltTitle(job) , g)
 
 	if(disabilities & NEARSIGHTED)
 		preview_icon.Blend(new /icon('icons/mob/eyes.dmi', "glasses"), ICON_OVERLAY)

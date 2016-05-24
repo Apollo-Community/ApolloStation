@@ -34,7 +34,7 @@
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/tie/holster(H), slot_in_backpack)
 	return 1
 
-/datum/job/officer/make_preview_icon( var/backpack )
+/datum/job/officer/make_preview_icon( var/backpack , var/job , var/gender )
 	var/icon/clothes_s = null
 
 	clothes_s = new /icon('icons/mob/uniform.dmi', "secred_s")
