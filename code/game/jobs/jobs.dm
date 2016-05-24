@@ -71,34 +71,39 @@ var/list/command_positions = list(
 	"Head of Security",
 	"Chief Engineer",
 	"Research Director",
-	"Chief Medical Officer"
+	"Chief Medical Officer",
+	"Internal Affairs Agent"
 )
 
 
 var/list/engineering_positions = list(
 	"Chief Engineer",
+	"Senior Engineer",
 	"Engineer",
-	"Atmospheric Technician",
-	"Engineer Assistant"
+	"Technical Assistant"
 )
 
 
 var/list/medical_positions = list(
 	"Chief Medical Officer",
+	"Senior Doctor",
 	"Medical Doctor",
-	"Psychiatrist",
-	"Virologist",
 	"Nurse"
 )
 
 
 var/list/science_positions = list(
 	"Research Director",
+	"Senior Scientist",
 	"Scientist",
-	"Roboticist",
-	"Xenobiologist",
-	"Chemist",
 	"Research Assistant"
+)
+
+var/list/cargo_positions = list(
+	"Quartermaster",
+	"Foreman",
+	"Asteroid Miner",
+	"Cargo Technician"
 )
 
 //BS12 EDIT
@@ -108,12 +113,8 @@ var/list/civilian_positions = list(
 	"Chef",
 	"Janitor",
 	"Librarian",
-	"Quartermaster",
-	"Cargo Technician",
-	"Shaft Miner",
-	"Lawyer",
 	"Chaplain",
-	"Entertainer",
+	"Mime",
 	"Assistant"
 )
 
@@ -121,7 +122,7 @@ var/list/civilian_positions = list(
 var/list/security_positions = list(
 	"Head of Security",
 	"Warden",
-	"Detective",
+	"Forensic Technician",
 	"Security Officer",
 	"Security Cadet"
 )

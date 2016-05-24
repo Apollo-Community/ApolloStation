@@ -20,40 +20,30 @@
 		if(4) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 	H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/headset_service(H), slot_l_ear)
 	H.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/black(H), slot_shoes)
-	H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/bartender(H), slot_w_uniform)
+
+	if(prob(5))		H.equip_to_slot_or_qdel(new /obj/item/clothing/under/waiter(H), slot_w_uniform)
+	else			H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/bartender(H), slot_w_uniform)
+
+	if(prob(20))	H.equip_to_slot_or_qdel(new /obj/item/clothing/head/tophat(H), slot_head)
+
 	H.equip_to_slot_or_qdel(new /obj/item/device/pda/bar(H), slot_belt)
-	if(prob(20))
-		H.equip_to_slot_or_qdel(new /obj/item/clothing/head/tophat(H), slot_head)
 
 	if(H.character.backpack == 1)
-		var/obj/item/weapon/storage/box/survival/Barpack = new /obj/item/weapon/storage/box/survival(H)
-		H.equip_to_slot_or_qdel(Barpack, slot_r_hand)
-		new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
-		new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
-		new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
-		new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
+		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 	else
-		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H), slot_in_backpack)
-		H.equip_to_slot_or_qdel(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
-		H.equip_to_slot_or_qdel(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
-		H.equip_to_slot_or_qdel(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
-		H.equip_to_slot_or_qdel(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
+		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 
 	return 1
 
-/datum/job/bartender/make_preview_icon( var/backpack )
+/datum/job/bartender/make_preview_icon( var/backpack , var/job , var/gender )
 	var/icon/clothes_s = null
 
 	clothes_s = new /icon('icons/mob/uniform.dmi', "ba_suit_s")
 	clothes_s.Blend(new /icon('icons/mob/feet.dmi', "black"), ICON_UNDERLAY)
-	if(prob(1))
-		clothes_s.Blend(new /icon('icons/mob/head.dmi', "tophat"), ICON_OVERLAY)
+	if(prob(1))			clothes_s.Blend(new /icon('icons/mob/head.dmi', "tophat"), ICON_OVERLAY)
 	switch(backpack)
-		if(2)
-			clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
-		if(3)
-			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-norm"), ICON_OVERLAY)
-		if(4)
-			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+		if(2)			clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
+		if(3)			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-norm"), ICON_OVERLAY)
+		if(4)			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
 
 	return clothes_s

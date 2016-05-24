@@ -29,7 +29,7 @@
 	H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/labcoat(H), slot_wear_suit)
 	return 1
 
-/datum/job/roboticist/make_preview_icon( var/backpack )
+/datum/job/roboticist/make_preview_icon( var/backpack , var/job , var/gender )
 	var/icon/clothes_s = null
 
 	clothes_s = new /icon('icons/mob/uniform.dmi', "robotics_s")
