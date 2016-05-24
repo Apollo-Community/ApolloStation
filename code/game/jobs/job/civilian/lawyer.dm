@@ -13,7 +13,7 @@
 
 	minimal_playtime = 30
 
-	rank_succesion_level = 4
+	rank_succesion_level = COMMAND_SUCCESSION_LEVEL
 
 /datum/job/lawyer/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
