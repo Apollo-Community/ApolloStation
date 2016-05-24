@@ -27,6 +27,7 @@
 	icon_state = "folder_white"
 
 /obj/item/weapon/folder/tourist
+	name = "Pamplet"
 	desc = "A pamplet showing a happy young assistant running in the wind"
 	icon_state = "pamphlet"
 
