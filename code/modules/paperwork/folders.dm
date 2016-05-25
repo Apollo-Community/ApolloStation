@@ -27,14 +27,15 @@
 	icon_state = "folder_white"
 
 /obj/item/weapon/folder/tourist
+	name = "Pamplet"
 	desc = "A pamplet showing a happy young assistant running in the wind"
 	icon_state = "pamphlet"
 
 /obj/item/weapon/folder/tourist/New()
 	..()
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper
-	P += src
-	
+	P.loc = src
+
 /obj/item/weapon/folder/update_icon()
 	overlays.Cut()
 	if(contents.len)
