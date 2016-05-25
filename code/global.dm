@@ -266,4 +266,4 @@ var/global/datum/subsystem/cell_auto/cell_auto_manager = new()
 #define PROCESS_DEFAULT_HANG_ALERT_TIME 	1800 // 180 seconds
 #define PROCESS_DEFAULT_HANG_RESTART_TIME 	2400 // 240 seconds
 #define PROCESS_DEFAULT_SCHEDULE_INTERVAL 	50  // 50 ticks
-#define PROCESS_DEFAULT_TICK_ALLOWANCE		25	// 25% of one tick
+#define PROCESS_DEFAULT_TICK_ALLOWANCE		75	// 75% of one tick
