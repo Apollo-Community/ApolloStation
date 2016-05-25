@@ -366,7 +366,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 /client/proc/cmd_debug_make_area_powernets()
 	set category = "Debug"
 	set name = "Make Area Powernets"
-	
+
 	var/area/A = get_area(mob)
 	if(!A)
 		return
@@ -1142,3 +1142,16 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		log_admin("[key_name(src)] has toggled [M.key]'s [blockname] block [state]!")
 	else
 		alert("Invalid mob")
+
+/proc/generate_cpu_csv()
+	usr << "<b>Creating file and starting log.."
+	var/path = "data/logs/[time2text(world.realtime,"YYYY-MM-DD-(hh-mm-ss)")]-cpu_log.csv"
+	var/csv = file(path)
+	csv << "Time,CPU,Tick Usage"
+
+	for(var/i = 1, i<=5000; i++)
+		csv << "[world.time],[world.cpu],[world.tick_usage]"
+		if(!(i % 500))		usr << "<b>\[GEN-LOG\] Collected [i]/2000 logs."
+		sleep(world.tick_lag)
+
+	usr << "<b>\[GEN-LOG\] Logs have been gathered and saved as - [path]"
