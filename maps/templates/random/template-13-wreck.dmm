@@ -1,0 +1,22 @@
+"a" = (/obj/item/stack/rods,/turf/space,/area/space)
+"b" = (/turf/space,/area/space)
+"c" = (/obj/structure/shuttle/engine/propulsion{tag = "icon-propulsion_l (NORTH)"; icon_state = "propulsion_l"; dir = 1},/turf/space,/area/space)
+"d" = (/obj/structure/lattice,/turf/space,/area/space)
+"e" = (/obj/structure/shuttle/engine/heater{tag = "icon-heater (NORTH)"; icon_state = "heater"; dir = 1},/turf/space,/area/space)
+"f" = (/turf/simulated/shuttle/wall,/area/space)
+"g" = (/turf/simulated/floor/airless{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor"; tag = "icon-bluefull"},/area/space)
+"h" = (/obj/item/weapon/shard{icon_state = "small"},/turf/space,/area/space)
+"i" = (/obj/item/weapon/shard,/turf/space,/area/space)
+
+(1,1,1) = {"
+abcbbb
+bdeddb
+fdggff
+fddgdf
+fdggbf
+fddgdf
+bhddid
+bbdddf
+bdbdbb
+bbbbdb
+"}

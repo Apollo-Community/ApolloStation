@@ -58,7 +58,7 @@
 
 // timed process
 /obj/machinery/status_display/process()
-	if(stat & NOPOWER)
+	if(stat & (NOPOWER|BROKEN))
 		remove_display()
 		return
 	update()
@@ -186,8 +186,6 @@
 /obj/machinery/status_display/proc/remove_display()
 	if(overlays.len)
 		overlays.Cut()
-	if(maptext)
-		maptext = ""
 
 /obj/machinery/status_display/receive_signal(datum/signal/signal)
 	switch(signal.data["command"])

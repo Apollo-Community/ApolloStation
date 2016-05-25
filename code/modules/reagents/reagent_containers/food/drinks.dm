@@ -252,9 +252,9 @@
 
 	on_reagent_change()
 		if(reagents.total_volume)
-			icon_state = "coffe"
+			icon_state = "coffee"
 		else
-			icon_state = "coffe_e"
+			icon_state = "coffee_e"
 
 /obj/item/weapon/reagent_containers/food/drinks/tea
 	name = "Duke Purple Tea"

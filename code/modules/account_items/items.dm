@@ -7,13 +7,3 @@
 	display_name = "Lifetime ID Card"
 	path = /obj/item/weapon/card/id/fluff/lifetime
 	sort_category = "ID_card"
-
-/datum/gear/account/delta_dog
-	display_name = "Delta the dog"
-	path = /obj/item/weapon/holder/delta
-	sort_category = "misc"
-
-/datum/gear/account/halocat_balaclava
-	display_name = "Lunas balaclava"
-	path = /obj/item/clothing/mask/balaclava
-	sort_category = "misc"

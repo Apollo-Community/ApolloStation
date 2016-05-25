@@ -16,8 +16,20 @@
 		/obj/item/weapon/paper_bundle = 3,
 		)
 
-/obj/machinery/papershredder/attackby(var/obj/item/W, var/mob/user)
+/obj/machinery/papershredder/New()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
 
+/obj/machinery/papershredder/attackby(var/obj/item/W, var/mob/user)
+	if (istype(W, /obj/item/weapon/screwdriver))
+		default_deconstruction_screwdriver(user,icon_state,icon_state,W)
+	if(istype(W, /obj/item/weapon/crowbar	))
+		default_deconstruction_crowbar(W,0)
+	if(istype(W, /obj/item/weapon/wrench))
+		user.visible_message("<span class='warning'>[user] has [anchored ? "un" : ""]secured \the [src].</span>", "<span class='notice'>You [anchored ? "un" : ""]secure \the [src].</span>")
+		anchored = !anchored
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	if(istype(W, /obj/item/weapon/storage))
 		empty_bin(user, W)
 		return

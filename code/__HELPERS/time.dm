@@ -19,6 +19,7 @@ proc/isDay(var/month, var/day)
 		var/DD = text2num(time2text(world.timeofday, "DD")) // get the current day
 		if(month == MM && day == DD)
 			return 1
+	return 0
 
 // Returns whether or not time since start is greater than delay or less than 0
 /proc/delayPassed( var/delay, var/start )
@@ -55,6 +56,7 @@ proc/isDay(var/month, var/day)
 			return 30
 		if( 12 )
 			return 31
+	return 31
 
 /proc/getMonthName( var/month )
 	if( month < 1 || month > 12 )
