@@ -6897,7 +6897,7 @@
 "cCG" = (/obj/machinery/camera{c_tag = "Engine Port"; dir = 4; network = list("SS13","Engineering")},/turf/simulated/floor/plating,/area/engine/engine_room)
 "cCH" = (/obj/structure/grille,/obj/structure/window/phoronreinforced{dir = 4},/obj/structure/window/phoronreinforced{dir = 8},/turf/simulated/floor/plating,/area/engine/engine_room)
 "cCI" = (/turf/simulated/floor/engine/nitrogen{dir = 4; icon_state = "warnplate"; name = "plating"},/area/engine/engine_room)
-"cCJ" = (/obj/machinery/power/supermatter{step_x = 1; layer = 4},/obj/machinery/mass_driver{id = "enginecore"},/turf/simulated/floor/engine/nitrogen{icon_state = "gcircuit"; name = "floor"},/area/engine/engine_room)
+"cCJ" = (/obj/machinery/power/supermatter{pixel_x = 1; layer = 4},/obj/machinery/mass_driver{id = "enginecore"},/turf/simulated/floor/engine/nitrogen{icon_state = "gcircuit"; name = "floor"},/area/engine/engine_room)
 "cCK" = (/turf/simulated/floor/engine/nitrogen{dir = 8; icon_state = "warnplate"; name = "plating"},/area/engine/engine_room)
 "cCL" = (/obj/machinery/atmospherics/pipe/simple/visible/cyan{tag = "icon-intact (NORTHEAST)"; icon_state = "intact"; dir = 5},/obj/machinery/door_control{desc = "A remote control-switch for opening the engines blast doors."; id = "EngineRads"; name = "Radiation Collector Access"; pixel_x = 0; pixel_y = -25; req_access_txt = "10"},/turf/simulated/floor/plating,/area/engine/engine_room)
 "cCM" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/maintenance/engi_engine)
