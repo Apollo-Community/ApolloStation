@@ -42,6 +42,9 @@
 	else				icon_state = "pen_[col]"
 	colour = col
 
+	pixel_x = rand(-6,6)
+	pixel_y = rand(-6,6)
+
 /obj/item/weapon/pen/invisible
 	desc = "It's an invisble pen marker."
 	icon_state = "pen"
