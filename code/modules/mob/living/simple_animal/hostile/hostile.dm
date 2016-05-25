@@ -38,7 +38,7 @@
 			else if(L in friends)
 				continue
 			else
-				if(!L.stat)
+				if(!L.isDead())
 					stance = HOSTILE_STANCE_ATTACK
 					T = L
 					break
