@@ -192,6 +192,11 @@
 
 
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/device/multitool) || istype(W, /obj/item/weapon/wirecutters))
+		if(panel_open == 1)
+			wires.Interact(user)
+			return
+
 	if(istype(W, /obj/item/weapon/screwdriver))
 		default_deconstruction_screwdriver(user,icon_state,icon_state,W)
 		return

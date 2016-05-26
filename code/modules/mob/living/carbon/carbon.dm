@@ -97,6 +97,9 @@
 
 	return
 
+/mob/living/carbon/proc/damage_active_hand(var/amount = 0, var/type = BRUTE, var/used_weapon = null, var/def_zone = null)
+	src.apply_damage(amount, type, def_zone, used_weapon="Self")
+
 /mob/living/carbon/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0, var/def_zone = null)
 	if(status_flags & GODMODE)	return 0	//godmode
 	shock_damage *= siemens_coeff

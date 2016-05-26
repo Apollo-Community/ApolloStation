@@ -332,6 +332,11 @@ Class Procs:
 	uid = gl_uid
 	gl_uid++
 
+/obj/machinery/proc/damage_limb(mob/living/carbon/user)
+	if(isnull(user))
+		return
+	user.damage_active_hand(100, BRUTE, "Crushing", user.get_active_hand())
+
 /obj/machinery/proc/shock(mob/user, prb)
 	if(inoperable())
 		return 0
