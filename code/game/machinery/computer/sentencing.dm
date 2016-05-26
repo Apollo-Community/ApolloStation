@@ -166,9 +166,9 @@
 		if( 1.0 )
 			. += "<a href='?src=\ref[src];button=print_encoded_form'>Print Incident Report</a>"
 		if( 2.0 )
-			. += "<a href='?src=\ref[src];button=begin_court'>Begin Court Procedure</a></center>"
+			. += "<a href='?src=\ref[src];button=begin_court'>Begin Court Procedure</a>"
 		if( 3.0 )
-			. += "<a href='?src=\ref[src];button=begin_tribunal'>Begin Tribunal Procedure</a></center>"
+			. += "<a href='?src=\ref[src];button=begin_tribunal'>Begin Tribunal Procedure</a>"
 	. += "<a href='?src=\ref[src];button=change_menu;choice=main_menu'>Cancel</a></center>"
 
 	return .
@@ -178,7 +178,7 @@
 
 	. += "<table class='border'>"
 	. += "<tr>"
-	. += "<th>Judge:</th>"
+	. += "<th>Magistrate:</th>"
 	. += "<td><a href='?src=\ref[src];button=add_arbiter;title=Magistrate'>"
 
 	if( incident.arbiters["Magistrate"] )
@@ -189,21 +189,58 @@
 	. += "</a></td>"
 
 	. += "</tr>"
+	. += "<tr>"
 	. += "<th>Criminal:</th>"
-
 	. += "<td>"
 	if( incident.criminal )
 		. += "[incident.criminal]"
 	else
 		. += "None"
 	. += "</td>"
+	. += "</tr>"
+
+	. += "<tr>"
+	. += "<th>Brig Sentence:</th>"
+	. += "<td>"
+	if( incident.brig_sentence )
+		if( incident.brig_sentence < PERMABRIG_SENTENCE )
+			. += "[incident.brig_sentence] MINUTES"
+		else
+			. += "HOLDING UNTIL TRANSFER"
+	else
+		. += "None"
+	. += "</td>"
+
+	. += "</tr><tr>"
+
+	. += "<th>Prison Sentence:</th>"
+	. += "<td>"
+	if( incident.prison_sentence )
+		if( incident.prison_sentence < PERMAPRISON_SENTENCE )
+			. += "[incident.prison_sentence] DAYS"
+		else
+			. += "LIFE SENTENCE"
+	else
+		. += "None"
+	. += "</td>"
+	. += "</tr>"
 
 	. += "</table>"
+
+	. += "<br><hr>"
+	. += "<center>"
+	. += "<a href='?src=\ref[src];button=print_encoded_form'>Print Incident Report</a>"
+	. += "<a href='?src=\ref[src];button=change_menu;choice=incident_report'>Cancel Court</a></center>"
 
 	return .
 
 /obj/machinery/computer/sentencing/proc/tribunal_report()
 	. = ""
+
+	. += "<br><hr>"
+	. += "<center>"
+	. += "<a href='?src=\ref[src];button=print_encoded_form'>Print Incident Report</a>"
+	. += "<a href='?src=\ref[src];button=change_menu;choice=incident_report'>Cancel Tribunal</a></center>"
 
 	return .
 
@@ -427,6 +464,16 @@
 				menu_screen = "tribunal_report"
 			else
 				buzz( "\The [src] buzzes, \"[error]\"" )
+		if( "add_arbiter" )
+			var/title = href_list["title"]
+			var/obj/item/weapon/card/id/C = usr.get_active_hand()
+			if( istype( C ))
+				if( incident && C.mob )
+					incident.arbiters[title] = C.mob
+					ping( "\The [src] pings, \"[title] [C.mob] verified.\"" )
+			else
+				ping( "\The [src] buzzes, \"[title] cleared.\"" )
+				incident.arbiters[title] = null
 		if( "add_charge" )
 			incident.charges += locate( href_list["law"] )
 			incident.refreshSentences()
