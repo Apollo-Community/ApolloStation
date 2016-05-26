@@ -50,6 +50,10 @@
 			. += import_incident()
 		if( "incident_report" )
 			. += incident_report()
+		if( "court_report" )
+			. += court_report()
+		if( "tribunal_report" )
+			. += tribunal_report()
 		if( "low_severity" )
 			. += add_charges()
 		if( "med_severity" )
@@ -157,7 +161,49 @@
 	. += "</table>"
 
 	. += "<br><hr>"
-	. += "<center><a href='?src=\ref[src];button=print_encoded_form'>Print</a> <a href='?src=\ref[src];button=change_menu;choice=main_menu'>Cancel</a></center>"
+	. += "<center>"
+	switch( incident.getMaxSeverity() )
+		if( 1.0 )
+			. += "<a href='?src=\ref[src];button=print_encoded_form'>Print Incident Report</a>"
+		if( 2.0 )
+			. += "<a href='?src=\ref[src];button=begin_court'>Begin Court Procedure</a></center>"
+		if( 3.0 )
+			. += "<a href='?src=\ref[src];button=begin_tribunal'>Begin Tribunal Procedure</a></center>"
+	. += "<a href='?src=\ref[src];button=change_menu;choice=main_menu'>Cancel</a></center>"
+
+	return .
+
+/obj/machinery/computer/sentencing/proc/court_report()
+	. = ""
+
+	. += "<table class='border'>"
+	. += "<tr>"
+	. += "<th>Judge:</th>"
+	. += "<td><a href='?src=\ref[src];button=add_arbiter;title=Magistrate'>"
+
+	if( incident.arbiters["Magistrate"] )
+		.+= "[incident.arbiters["Magistrate"]]"
+	else
+		.+= "None"
+
+	. += "</a></td>"
+
+	. += "</tr>"
+	. += "<th>Criminal:</th>"
+
+	. += "<td>"
+	if( incident.criminal )
+		. += "[incident.criminal]"
+	else
+		. += "None"
+	. += "</td>"
+
+	. += "</table>"
+
+	return .
+
+/obj/machinery/computer/sentencing/proc/tribunal_report()
+	. = ""
 
 	return .
 
@@ -354,19 +400,39 @@
 			else
 				incident.prison_sentence = number
 		if( "print_encoded_form" )
-			var/obj/item/weapon/paper/form/incident/I = new /obj/item/weapon/paper/form/incident
-			I.incident = incident
-			I.name = "Encoded Incident Report"
-			print( I )
-			incident = null
-			menu_screen = "main_menu"
+			if( !incident.notes )
+				if( alert("No incident notes were added. Adding a short description of the incident is highly recommended. Do you still want to continue with the print?",,"Yes","No") == "No" )
+					return
+
+			var/error = incident.missingSentenceReq()
+
+			if( error )
+				buzz( "\The [src] buzzes, \"[error]\"" )
+			else
+				var/obj/item/weapon/paper/form/incident/I = new /obj/item/weapon/paper/form/incident
+				I.incident = incident
+				I.name = "Encoded Incident Report"
+				print( I )
+				incident = null
+				menu_screen = "main_menu"
+		if( "begin_court" )
+			var/error = incident.missingCourtReq()
+			if( !error )
+				menu_screen = "court_report"
+			else
+				buzz( "\The [src] buzzes, \"[error]\"" )
+		if( "begin_tribunal" )
+			var/error = incident.missingTribunalReq()
+			if( !error )
+				menu_screen = "tribunal_report"
+			else
+				buzz( "\The [src] buzzes, \"[error]\"" )
 		if( "add_charge" )
 			incident.charges += locate( href_list["law"] )
-			incident.setMinSentence()
+			incident.refreshSentences()
 		if( "remove_charge" )
 			incident.charges -= locate( href_list["law"] )
-			incident.setMinSentence()
-
+			incident.refreshSentences()
 		if( "add_notes" )
 			if( !incident )
 				return

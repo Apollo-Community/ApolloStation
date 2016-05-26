@@ -6,26 +6,60 @@
 	var/list/charges = list() // What laws were broken in this incident
 	var/list/evidence = list() // If its a prison sentence, it'll require evidence
 
-	var/list/arbiters = list() // The person or list of people who convicted the criminal
+	var/list/arbiters = list() // The person or list of people who were involved in the conviction of the criminal
 	var/mob/living/carbon/human/criminal // The person who committed the crimes
 
 	var/brig_sentence = 0 // How long do they stay in the brig on the station, PERMABRIG_SENTENCE minutes = permabrig
 	var/prison_sentence = 0 // How long do they stay in prison, PERMAPRISON_SENTENCE days = life sentence
 
 	var/fine // how much space dosh do they need to cough up if they want to go free
+	var/felony // will the criminal become a felon as a result of being found guilty of his crimes?
 
 /datum/crime_incident/New()
 	UID = md5( "[world.realtime][rand(0, 1000000)]" )
 
 	..()
 
-/datum/crime_incident/proc/setMinSentence()
-	incident.prison_sentence = incident.getMinPrisonSentence()
+/datum/crime_incident/proc/missingCourtReq()
+	var/error = missingSentenceReq()
+	if( error )
+		return error
 
-	if( incident.prison_sentence )
-		incident.brig_sentence = PERMABRIG_SENTENCE
+	if( getMaxSeverity() != 2.0 )
+		return "Selected crimes do not require a court!"
+
+	return 0
+
+/datum/crime_incident/proc/missingTribunalReq()
+	var/error = missingSentenceReq()
+	if( error )
+		return error
+
+	if( getMaxSeverity() != 3.0 )
+		return "Selected crimes do not require a tribunal!"
+
+	return 0
+
+/datum/crime_incident/proc/missingSentenceReq()
+	if( !istype( criminal ))
+		return "No criminal selected!"
+
+	if( !charges.len )
+		return "No criminal charges have been selected!"
+
+	return 0
+
+/datum/crime_incident/proc/refreshSentences()
+	felony = 0
+	if( getMaxSeverity() >= 2 )
+		felony = 1
+
+	prison_sentence = getMinPrisonSentence()
+
+	if( prison_sentence )
+		brig_sentence = PERMABRIG_SENTENCE
 	else
-		incident.brig_sentence = incident.getMinBrigSentence()
+		brig_sentence = getMinBrigSentence()
 
 /datum/crime_incident/proc/getMinFine()
 	var/min = 0
