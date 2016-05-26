@@ -241,8 +241,6 @@
 		if(panel_open == 1)
 			wires.Interact(user)
 			return
-		if(istype(W, /obj/item/weapon/wirecutters))
-			return
 		if(locked)
 			user << "<span class='warning'>The controls are locked!</span>"
 			return

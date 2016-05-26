@@ -17,7 +17,7 @@
 	. += "<BR>The warning light is [A.sabotaged ? "blinking" : "off"]."
 
 /datum/wires/r_n_d/CanUse()
-	var/obj/machinery/power/emitter/A = holder
+	var/obj/machinery/r_n_d/A = holder
 	if(A.panel_open)
 		return 1
 	return 0

@@ -213,6 +213,7 @@
 #include "code\datums\wires\smes.dm"
 #include "code\datums\wires\suit_storage_unit.dm"
 #include "code\datums\wires\vending.dm"
+#include "code\datums\wires\windowdoor_wires.dm"
 #include "code\datums\wires\wires.dm"
 #include "code\defines\obj.dm"
 #include "code\defines\obj\weapon.dm"

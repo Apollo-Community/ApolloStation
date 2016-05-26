@@ -97,8 +97,24 @@
 
 	return
 
-/mob/living/carbon/proc/damage_active_hand(var/amount = 0, var/type = BRUTE, var/used_weapon = null, var/def_zone = null)
-	src.apply_damage(amount, type, def_zone, used_weapon="Self")
+/proc/damage_mob_active_hand(mob/living/carbon/M as mob, damage)
+	if(istype(M.loc,/obj/mecha))	return 0	//feckin mechs are dumb
+
+	if( istype( M, /mob/living/simple_animal/rodent ))
+		M.gib()
+
+	M.damage_active_hand(damage)
+
+//Get the active hand and do the
+/mob/living/carbon/proc/damage_active_hand(var/damage, var/def_zone = null)
+	if(status_flags & GODMODE)	return 0	//godmode
+	var/datum/organ/external/temp
+	if (hasorgans(src))
+		temp = src:organs_by_name["r_hand"]
+		if (src.hand)
+			temp = src:organs_by_name["l_hand"]
+	src.apply_damage(damage, BRUTE, temp, used_weapon="Electrocution")
+	return damage
 
 /mob/living/carbon/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0, var/def_zone = null)
 	if(status_flags & GODMODE)	return 0	//godmode

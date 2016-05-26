@@ -64,7 +64,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if (sabotaged)
 		user << "<span class='alert'>With a powerfull sucking force the destructive analyzer suckes your arm in and bites down.</span>"
 		playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
-		damage_limb(user)
+		damage_limb(user, 100)
 
 	if (istype(O, /obj/item) && !loaded_item)
 		if(isrobot(user)) //Don't put your module items in there!
