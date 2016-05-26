@@ -86,10 +86,9 @@ datum/hanger_scheduler/proc/inform_shuttle(datum/shuttle/s, var/type)
 			M << message
 
 datum/hanger_scheduler/proc/divert(var/datum/shuttle/s)
-	var/obj/hanger/H = hanger_controller.get_free_space_hangers(s)
+	var/obj/hanger/H = hanger_controller.get_free_space_hanger(s)
 	s.move(H,null,0)
 	inform_shuttle(s, 2)
-
 
 //Wrapper datum
 datum/scheduled_shuttle
