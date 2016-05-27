@@ -187,6 +187,16 @@ obj/machinery/door/blast/regular
 	icon_state = "shutter1"
 	emitter_resistance = 20
 
+/obj/machinery/door/blast/shutters/open()
+	if(..())
+		playsound( src.loc, 'sound/machines/shutter_open.ogg', 30, 1)
+	return 1
+
+/obj/machinery/door/blast/shutters/close()
+	if(..())
+		playsound( src.loc, 'sound/machines/shutter_close.ogg', 30, 1)
+	return 1
+
 obj/machinery/door/blast/curtain
 	name = "curtain"
 	desc = "A red velvet curtain."

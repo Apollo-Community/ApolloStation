@@ -4,7 +4,7 @@
 	department_id = SECURITY
 	faction = "Station"
 	total_positions = -1
-	spawn_positions = -1
+	spawn_positions = 3
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	access = list(access_security, access_sec_doors, access_court, access_maint_tunnels )

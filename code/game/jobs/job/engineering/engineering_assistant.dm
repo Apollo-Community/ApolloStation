@@ -4,7 +4,7 @@
 	department_id = ENGINEERING
 	faction = "Station"
 	total_positions = -1
-	spawn_positions = -1
+	spawn_positions = 3
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
 	access = list(access_eva, access_engine, access_maint_tunnels, access_external_airlocks, access_construction)
