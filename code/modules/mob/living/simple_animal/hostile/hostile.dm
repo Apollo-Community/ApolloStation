@@ -15,11 +15,14 @@
 	var/destroy_surroundings = 1
 
 /mob/living/simple_animal/hostile/proc/FindTarget()
-
 	var/atom/T = null
+	var/list/targets = ListTargets(10)
 	stop_automated_movement = 0
-	for(var/atom/A in ListTargets(10))
 
+	if( target_mob in targets ) // If our current target is in the mobs list, keep trying to attack them
+		return target_mob
+
+	for(var/atom/A in targets)
 		if(A == src)
 			continue
 
@@ -35,7 +38,7 @@
 			else if(L in friends)
 				continue
 			else
-				if(!L.stat)
+				if(!L.isDead())
 					stance = HOSTILE_STANCE_ATTACK
 					T = L
 					break
@@ -45,6 +48,13 @@
 			if (M.occupant)
 				stance = HOSTILE_STANCE_ATTACK
 				T = M
+				break
+
+		else if(istype(A, /obj/spacepod))
+			var/obj/spacepod/S = A
+			if( S.pilot || ( S.passengers && S.passengers.len ))
+				stance = HOSTILE_STANCE_ATTACK
+				T = S
 				break
 
 		if(istype(A, /obj/machinery/bot))
@@ -100,9 +110,14 @@
 		var/obj/mecha/M = target_mob
 		M.attack_generic(src,rand(melee_damage_lower,melee_damage_upper),attacktext)
 		return M
+	if(istype(target_mob,/obj/spacepod))
+		var/obj/spacepod/S = target_mob
+		S.attack_generic(src,rand(melee_damage_lower,melee_damage_upper),attacktext)
+		return S
 	if(istype(target_mob,/obj/machinery/bot))
 		var/obj/machinery/bot/B = target_mob
 		B.attack_generic(src,rand(melee_damage_lower,melee_damage_upper),attacktext)
+		return B
 
 /mob/living/simple_animal/hostile/proc/LoseTarget()
 	stance = HOSTILE_STANCE_IDLE
@@ -121,11 +136,19 @@
 		if (get_dist(src, M) <= dist)
 			L += M
 
-	for (var/obj/mecha/M in spacepods_list)
-		if (get_dist(src, M) <= dist)
-			L += M
+	for (var/obj/spacepod/S in spacepods_list)
+		if (get_dist(src, S) <= dist)
+			L += S
 
 	return L
+
+/mob/living/simple_animal/hostile/attackby(var/obj/item/O, var/mob/user)
+	if( istype( O, /obj/item/weapon ) && user.a_intent != I_HELP )
+		var/obj/item/weapon/W = O
+		if( prob( W.force*10 )) // the greater the damage, the greater the chance to switch targets
+			target_mob = user // If the hostile gets attacked, have a chance to change target to attacker
+
+	..()
 
 /mob/living/simple_animal/hostile/death()
 	..()

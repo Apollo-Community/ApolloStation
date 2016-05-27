@@ -191,6 +191,7 @@
 
 /mob/living/simple_animal/spiderbot/New()
 
+	verbs += /mob/living/proc/ventcrawl
 	radio = new /obj/item/device/radio/borg(src)
 	camera = new /obj/machinery/camera(src)
 	camera.c_tag = "Spiderbot-[real_name]"
@@ -278,3 +279,6 @@
 	..(user)
 	if(src.held_item)
 		user << "It is carrying \a [src.held_item] \icon[src.held_item]."
+
+/mob/living/simple_animal/spiderbot/can_use_vents()
+	return

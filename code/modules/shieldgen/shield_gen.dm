@@ -29,6 +29,8 @@
 	var/time_since_fail = 100
 	var/energy_conversion_rate = 0.0002	//how many renwicks per watt?
 	use_power = 0	//doesn't use APC power
+	var/disabled = 0
+	var/datum/wires/shield_gen/wires = null
 
 /obj/machinery/shield_gen/New()
 	spawn(10)
@@ -38,6 +40,8 @@
 				break
 	field = new/list()
 	..()
+	wires = new(src)
+
 
 /obj/machinery/shield_gen/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/card/id))
@@ -77,6 +81,20 @@
 			if(owned_capacitor && owned_capacitor.owned_gen == src)
 				owned_capacitor.owned_gen = null
 			owned_capacitor = null
+
+	else if(istype(W, /obj/item/device/multitool) || istype(W, /obj/item/weapon/wirecutters))
+		if(!anchored)
+			user << "Bolt it to the floor first."
+			return
+		if(panel_open == 1)
+			wires.Interact(user)
+			return
+
+	else if(istype(W, /obj/item/weapon/screwdriver))
+		if(!anchored)
+			user << "Bolt it to the floor first."
+		default_deconstruction_screwdriver(user,icon_state,icon_state,W)
+		return
 	else
 		..()
 
@@ -89,6 +107,9 @@
 	interact(user)
 
 /obj/machinery/shield_gen/interact(mob/user)
+	if(disabled)
+		user << "You try to interact but the display stays empty."
+		return
 	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN)) )
 		if (!istype(user, /mob/living/silicon))
 			user.unset_machine()

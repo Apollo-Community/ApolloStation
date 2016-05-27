@@ -35,11 +35,20 @@
 	icon_state = "pen_red"
 	colour = "red"
 
+/obj/item/weapon/pen/random/New()
+	var/col = pick("red", "blue", "black")
+	desc = "It's a normal [col] ink pen."
+	if(col == "black")	icon_state = "pen"
+	else				icon_state = "pen_[col]"
+	colour = col
+
+	pixel_x = rand(-6,6)
+	pixel_y = rand(-6,6)
+
 /obj/item/weapon/pen/invisible
 	desc = "It's an invisble pen marker."
 	icon_state = "pen"
 	colour = "white"
-
 
 /obj/item/weapon/pen/attack(mob/M as mob, mob/user as mob)
 	if(!ismob(M))

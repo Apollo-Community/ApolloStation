@@ -4,7 +4,7 @@
 	department_id = SECURITY
 	faction = "Station"
 	total_positions = -1
-	spawn_positions = -1
+	spawn_positions = 3
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	access = list(access_security, access_sec_doors, access_court, access_maint_tunnels )
@@ -30,7 +30,7 @@
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
 	return 1
 
-/datum/job/cadet/make_preview_icon( var/backpack )
+/datum/job/cadet/make_preview_icon( var/backpack , var/job , var/gender )
 	var/icon/clothes_s = null
 
 	clothes_s = new /icon('icons/mob/uniform.dmi', "redshirt2_s")

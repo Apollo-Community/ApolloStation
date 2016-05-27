@@ -332,6 +332,16 @@ Class Procs:
 	uid = gl_uid
 	gl_uid++
 
+/obj/machinery/proc/damage_limb(mob/user, prb)
+	if(inoperable())
+		return 0
+	if(!prob(prb))
+		return 0
+	if (damage_mob_active_hand(user, 100))
+		return 1
+	else
+		return 0
+
 /obj/machinery/proc/shock(mob/user, prb)
 	if(inoperable())
 		return 0

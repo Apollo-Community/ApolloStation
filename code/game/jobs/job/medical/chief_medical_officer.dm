@@ -39,7 +39,7 @@
 
 	return 1
 
-/datum/job/cmo/make_preview_icon( var/backpack )
+/datum/job/cmo/make_preview_icon( var/backpack , var/job , var/gender )
 	var/icon/clothes_s = null
 
 	clothes_s = new /icon('icons/mob/uniform.dmi', "cmo_s")
@@ -49,11 +49,8 @@
 	else
 		clothes_s.Blend(new /icon('icons/mob/suit.dmi', "labcoat_cmo_open"), ICON_OVERLAY)
 	switch(backpack)
-		if(2)
-			clothes_s.Blend(new /icon('icons/mob/back.dmi', "medicalpack"), ICON_OVERLAY)
-		if(3)
-			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-med"), ICON_OVERLAY)
-		if(4)
-			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+		if(2)			clothes_s.Blend(new /icon('icons/mob/back.dmi', "medicalpack"), ICON_OVERLAY)
+		if(3)			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-med"), ICON_OVERLAY)
+		if(4)			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
 
 	return clothes_s

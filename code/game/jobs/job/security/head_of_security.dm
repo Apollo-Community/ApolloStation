@@ -42,7 +42,7 @@
 	H.implant_loyalty(H)
 	return 1
 
-/datum/job/hos/make_preview_icon( var/backpack )
+/datum/job/hos/make_preview_icon( var/backpack , var/job , var/gender )
 	var/icon/clothes_s = null
 
 	clothes_s = new /icon('icons/mob/uniform.dmi', "hosred_s")

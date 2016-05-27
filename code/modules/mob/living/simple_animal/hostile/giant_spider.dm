@@ -177,8 +177,6 @@
 								C.pixel_x = cocoon_target.pixel_x
 								C.pixel_y = cocoon_target.pixel_y
 								for(var/mob/living/M in C.loc)
-									if(istype(M, /mob/living/simple_animal/hostile/giant_spider))
-										continue
 									large_cocoon = 1
 									fed++
 									src.visible_message("<span class='alert'>\the [src] sticks a proboscis into \the [cocoon_target] and sucks a viscous substance out.</span>")
