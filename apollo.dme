@@ -345,6 +345,7 @@
 #include "code\game\jobs\job\civilian\head_of_personnel.dm"
 #include "code\game\jobs\job\civilian\internal_affairs_agent.dm"
 #include "code\game\jobs\job\civilian\janitor.dm"
+#include "code\game\jobs\job\civilian\lawyer.dm"
 #include "code\game\jobs\job\civilian\librarian.dm"
 #include "code\game\jobs\job\engineering\chief_engineer.dm"
 #include "code\game\jobs\job\engineering\engineer.dm"

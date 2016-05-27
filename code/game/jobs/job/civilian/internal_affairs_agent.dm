@@ -1,12 +1,12 @@
 //var/global/lawyer = 0//Checks for another lawyer //This changed clothes on 2nd lawyer, both IA get the same dreds.
 /datum/job/iaa
 	title = "Internal Affairs Agent"
-	flag = LAWYER
+	flag = IAA
 	department_id = CIVILIAN
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "the captain"
+	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	access = list(access_iaa, access_court, access_sec_doors, access_maint_tunnels)
 	minimal_access = list(access_iaa, access_court, access_sec_doors)

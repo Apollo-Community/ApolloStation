@@ -69,6 +69,7 @@
 /var/const/access_shop1 = 67
 /var/const/access_shop2 = 68
 /var/const/access_slater = 69
+/var/const/access_lawyer = 70
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
