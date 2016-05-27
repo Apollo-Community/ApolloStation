@@ -203,8 +203,8 @@
 	item_state = "kodos_signaler"
 
 /obj/item/clothing/suit/storage/toggle/labcoat/ominousbrainworm
-	name = "Sidier's labcoat"
-	desc = "A labcoat that has a nametag noting that it belongs to Ezriki Sidier."
+	name = "Eriziki Sidier's labcoat"
+	desc = "A labcoat that has a nametag noting that it belongs to Eriziki Sidier."
 	icon_state = "labcoat_sidier"
 	item_state = "labcoat_sidier"
 	icon_open = "labcoat_sidier"
@@ -234,3 +234,27 @@
 		if(loc != user && ison == 1)
 			user.set_light(user.light_range - brightness_on)
 			ison = 0
+
+//////  Nijishadow - Aya's Formal uniform
+/obj/item/clothing/under/hosformalfem/fluff/nijishadow
+	name = "Aya's Formal Uniform"
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "aya_formal"
+	item_state = "aya_formal"
+
+//////  Nijishadow - Luna Vor labcoat
+/obj/item/clothing/suit/storage/toggle/labcoat/cmo/fluff/luna_vor //NijiShadow: Luna Vor
+	name = "Luna's labcoat"
+	desc = "Darker than the standard model and with a dash of rainbow on the back."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "luna_labcoat_cmo"
+	icon_open = "luna_labcoat_cmo_open"
+	icon_closed = "luna_labcoat_cmo"
+	item_state = "luna_labcoat_cmo"
+
+/obj/item/clothing/glasses/meson/fluff/draco16
+	name = "gar mesons"
+	desc = "These mesons are the mesons that will see through the Heavens!"
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "garm"
+	item_state = "garm"

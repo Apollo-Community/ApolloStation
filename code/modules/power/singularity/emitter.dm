@@ -15,7 +15,7 @@
 	use_power = 0	//uses powernet power, not APC power
 	active_power_usage = EMITTER_POWER_MAX * 1000 * ( 2/3 )	//40kW of fuck you
 
-	var/obj/item/projectile/beam/continuous/beam = null
+	var/obj/item/projectile/beam/continuous/emitter/beam = null
 
 	var/active = 0
 	var/powered = 0
@@ -27,6 +27,8 @@
 	var/shot_number = 0
 	var/state = 0
 	var/locked = 0
+	var/datum/wires/emitter/wires = null
+	var/disabled = 0
 
 /obj/machinery/power/emitter/verb/rotate()
 	set name = "Rotate"
@@ -43,6 +45,7 @@
 	..()
 	if(state == 2 && anchored)
 		connect_to_network()
+	wires = new(src)
 
 /obj/machinery/power/emitter/Destroy()
 	message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
@@ -70,6 +73,9 @@
 			return 1
 		if(!src.locked)
 			if(src.active==1)
+				if(disabled)
+					user << "You try to turn [src] off but nothing happens."
+					return 1
 				src.active = 0
 				user << "You turn off [src]."
 				message_admins("Emitter turned off by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
@@ -79,13 +85,16 @@
 				qdel(beam)
 				beam = null
 			else if(avail(active_power_usage))
+				if(disabled)
+					user << "You try to turn [src] on but nothing happens."
+					return 1
 				src.active = 1
 				user << "You turn on [src]."
 				message_admins("Emitter turned on by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 				log_game("Emitter turned on by [user.ckey]([user]) in ([x],[y],[z])")
 				investigate_log("turned <font color='green'>on</font> by [user.key]","singulo")
 
-				beam = new /obj/item/projectile/beam/continuous(src.loc, src)
+				beam = new /obj/item/projectile/beam/continuous/emitter(src.loc, src)
 			update_icon()
 		else
 			user << "<span class='warning'>The controls are locked!</span>"
@@ -111,9 +120,6 @@
 		beam = null
 		update_icon()
 		return
-	// something went right in front of it, breaking the first beam in the chain
-	if(active && (!beam || !beam.loc))
-		beam = new /obj/item/projectile/beam/continuous(src.loc, src)
 /*	if(((src.last_shot + src.fire_delay) <= world.time) && (src.active == 1))
 
 		var/actual_load = draw_power(active_power_usage)
@@ -224,9 +230,16 @@
 					user << "<span class='warning'>You need more welding fuel to complete this task.</span>"
 		return
 
-	if(istype(W, /obj/item/device/multitool))
+	if(istype(W, /obj/item/weapon/screwdriver))
+		default_deconstruction_screwdriver(user,icon_state,icon_state,W)
+		return
+
+	if(istype(W, /obj/item/device/multitool) || istype(W, /obj/item/weapon/wirecutters))
 		if(emagged)
 			user << "<span class='warning'>The power control circuitry is fried.</span>"
+			return
+		if(panel_open == 1)
+			wires.Interact(user)
 			return
 		if(locked)
 			user << "<span class='warning'>The controls are locked!</span>"

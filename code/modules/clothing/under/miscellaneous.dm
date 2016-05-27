@@ -45,9 +45,17 @@
 /obj/item/clothing/under/rank/mailman
 	name = "mailman's jumpsuit"
 	desc = "<i>'Special delivery!'</i>"
-	icon_state = "mailman"
-	item_state = "b_suit"
-	item_color = "mailman"
+	icon_state = "mailman2"
+	item_state = "mailman2"
+	item_color = "mailman2"
+
+/obj/item/clothing/under/rank/mailman/padded
+	name = "mailman's jumpsuit"
+	desc = "Specially delivered!"
+	icon_state = "mailman2"
+	item_state = "mailman2"
+	item_color = "mailman2"
+	armor = list(melee = 5, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/sexyclown
 	name = "sexy-clown suit"
@@ -221,7 +229,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 /obj/item/clothing/under/overalls
-	name = "laborer's overalls"
+	name = "Foreman's overalls"
 	desc = "A set of durable overalls for getting the job done."
 	icon_state = "overalls"
 	item_state = "lb_suit"
@@ -553,7 +561,18 @@
 
 /obj/item/clothing/under/black_tango
 	name = "tango dress"
-	desc = "Olé!"
+	desc = "Olï¿½!"
 	icon_state = "black_tango"
 	item_state = "black_tango"
 	item_color = "black_tango"
+
+/obj/item/clothing/under/black_tango/short
+	item_state = "black_tango_short"
+	item_color = "black_tango_short"
+
+/obj/item/clothing/under/tourist
+	name = "tourist's shirt"
+	desc = "Is this flower shirt even in fashion?"
+	icon_state = "tourist"
+	item_state = "tourist"
+	item_color = "tourist"

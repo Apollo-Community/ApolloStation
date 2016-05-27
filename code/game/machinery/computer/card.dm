@@ -239,7 +239,7 @@
 	data["locked_jobs"] = format_jobs(locked_jobs)
 	data["unlocked_jobs"] = format_jobs(unlocked_jobs)
 
-	if (modify)
+	if (modify && scan)
 		var/list/regions = list()
 		for(var/datum/department/D in job_master.departments)
 			var/list/accesses = list()

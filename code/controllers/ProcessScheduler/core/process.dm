@@ -66,13 +66,13 @@
 	 */
 
 	// Records the time (1/10s timeofday) at which the process last finished sleeping
-	var/tmp/last_slept = 0
+//	var/tmp/last_slept = 0
 
 	// Records the time (1/10s timeofday) at which the process last began running
 	var/tmp/run_start = 0
 
 	// Records the world.tick_usage (0 to 100) at which the process last began running
-	/var/tmp/tick_start = 0
+//	/var/tmp/tick_start = 0
 
 	// Records the number of times this process has been killed and restarted
 	var/tmp/times_killed
@@ -91,9 +91,9 @@ datum/controller/process/New(var/datum/controller/processScheduler/scheduler)
 	idle()
 	name = "process"
 	schedule_interval = 50
-	last_slept = 0
+//	last_slept = 0
 	run_start = 0
-	tick_start = 0
+//	tick_start = 0
 	ticks = 0
 	last_task = 0
 	last_object = null
@@ -103,7 +103,7 @@ datum/controller/process/proc/started()
 	run_start = TimeOfHour
 
 	// Initialize tick_start so we can know when to sleep
-	tick_start = world.tick_usage
+//	tick_start = world.tick_usage
 
 	// Initialize defer count
 	cpu_defer_count = 0
@@ -189,17 +189,10 @@ datum/controller/process/proc/scheck()
 		handleHung()
 		CRASH("Process [name] hung and was restarted.")
 
-	// For each tick the process defers, it increments the cpu_defer_count so we don't
-	// defer indefinitely
-	if (world.tick_usage > tick_allowance)
-		sleep(world.tick_lag)
-		cpu_defer_count++
-		last_slept = TimeOfHour
-		tick_start = world.tick_usage
-
-		return 1
-
-	return 0
+	. = 1
+	do
+		sleep(world.tick_lag * .);. *= 2
+	while(world.tick_usage > tick_allowance && (. * world.tick_lag) < 16)
 
 datum/controller/process/proc/update()
 	// Clear delta
@@ -279,9 +272,9 @@ datum/controller/process/proc/_copyStateFrom(var/datum/controller/process/target
 	main = target.main
 	name = target.name
 	schedule_interval = target.schedule_interval
-	last_slept = 0
+//	last_slept = 0
 	run_start = 0
-	tick_start = 0
+//	tick_start = 0
 	times_killed = target.times_killed
 	ticks = target.ticks
 	last_task = target.last_task

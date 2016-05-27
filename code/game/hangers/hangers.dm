@@ -1,6 +1,7 @@
 obj/hanger/square/exterior
 	exterior = 1
 	square = 1
+	invisibility = 101
 
 obj/hanger/square/exterior/space_hanger
 	dimx =35
@@ -17,6 +18,7 @@ obj/hanger/oddshaped/interior
 obj/hanger/oddshaped/exterior
 	exterior = 1
 	square = 0
+	invisibility = 101
 
 obj/hanger/square/exterior/s_escape_pod_1
 	dimx =3

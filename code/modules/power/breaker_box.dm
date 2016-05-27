@@ -18,6 +18,9 @@
 	var/directions = list(1,2,4,8,5,6,9,10)
 	var/RCon_tag = "NO_TAG"
 	var/update_locked = 0
+	var/datum/wires/breakerbox/wires = null
+	var/disabled = 0
+
 /obj/machinery/power/breakerbox/New()
 	..()
 	component_parts = list()
@@ -25,6 +28,8 @@
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
 	component_parts += new /obj/item/stack/cable_coil(src,2)
+	wires = new(src)
+	set_state(1)
 
 /obj/machinery/power/breakerbox/Destroy()
 	..()
@@ -34,8 +39,10 @@
 /obj/machinery/power/breakerbox/activated
 	icon_state = "bbox_on"
 
-	// Enabled on server startup. Used in substations to keep them in bypass mode.
+// Enabled on server startup. Used in substations to keep them in bypass mode.
 /obj/machinery/power/breakerbox/activated/initialize()
+	..()
+	wires = new(src)
 	set_state(1)
 
 /obj/machinery/power/breakerbox/examine(mob/user)
@@ -66,6 +73,10 @@
 
 
 /obj/machinery/power/breakerbox/attack_hand(mob/user)
+	//If the panel is open you cannot reprogram the breaker.
+	if(panel_open)
+		return
+
 	if(update_locked)
 		user << "<span class='alert'>System locked. Please try again later.</span>"
 		return
@@ -93,14 +104,17 @@
 		default_deconstruction_screwdriver(user,icon_state,icon_state,W)
 	if(istype(W, /obj/item/weapon/crowbar))
 		default_deconstruction_crowbar(W)
-	if(istype(W, /obj/item/device/multitool))
-		var/newtag = input(user, "Enter new RCON tag. Use \"NO_TAG\" to disable RCON or leave empty to cancel.", "SMES RCON system") as text
-		if(newtag)
-			RCon_tag = newtag
-			user << "<span class='notice'>You changed the RCON tag to: [newtag]</span>"
+	if(istype(W, /obj/item/device/multitool) || istype(W, /obj/item/weapon/wirecutters))
+		//If the panel is open start wire interaction with wires.
+		if(panel_open == 1)
+			wires.Interact(user)
 
-
-
+		//If the panel is closed and you are using a multitool start RCON tag interaction.
+		if(istype(W, /obj/item/device/multitool) && panel_open == 0)
+			var/newtag = input(user, "Enter new RCON tag. Use \"NO_TAG\" to disable RCON or leave empty to cancel.", "SMES RCON system") as text
+			if(newtag)
+				RCon_tag = newtag
+				user << "<span class='notice'>You changed the RCON tag to: [newtag]</span>"
 
 
 /obj/machinery/power/breakerbox/proc/set_state(var/state)
@@ -137,7 +151,8 @@
 
 // Used by RCON to toggle the breaker box.
 /obj/machinery/power/breakerbox/proc/auto_toggle()
-	if(!update_locked)
+	//If the box is not update locked or wire disabled.
+	if(!update_locked && !disabled)
 		set_state(!on)
 		update_locked = 1
 		spawn(600)

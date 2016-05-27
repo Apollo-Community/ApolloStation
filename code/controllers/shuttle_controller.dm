@@ -259,8 +259,9 @@ var/global/datum/shuttle_controller/shuttle_controller
 /datum/shuttle_controller/proc/setup()
 	var/datum/shuttle/shuttle
 	for (var/shuttle_tag in shuttles)
-		shuttle = shuttles[shuttle_tag]
-		shuttle.init_templates()
+		spawn(0)
+			shuttle = shuttles[shuttle_tag]
+			shuttle.init_templates()
 	init_done = 1
 
 //This is called by gameticker after all the machines and radio frequencies have been properly initialized
@@ -276,8 +277,11 @@ var/global/datum/shuttle_controller/shuttle_controller
 	var/list/dock_controller_map_station = list()
 	var/list/dock_controller_map_offsite = list()
 
+	//We dont want to check the mutli_shuttle because it will (almost) only dock in space
 	for (var/shuttle_tag in shuttles)
 		shuttle = shuttles[shuttle_tag]
+		if(istype(shuttle, /datum/shuttle/multi_shuttle))
+			continue
 		if (shuttle.docking_controller_tag)
 			dock_controller_map[shuttle.docking_controller_tag] = shuttle
 		if (istype(shuttle, /datum/shuttle/ferry/multidock))

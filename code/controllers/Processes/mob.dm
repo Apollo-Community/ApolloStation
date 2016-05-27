@@ -3,11 +3,11 @@
     schedule_interval = 20 // every 2 seconds
 
 /datum/controller/process/mob/doWork()
-	var/c = 3
+	var/c = 0
 	for(var/mob/M in mob_list)
 		if(!M.gcDestroyed)
 			M.Life()
-			if(!(c++ % 3))		scheck()
+			if(!(c++ % 20))		scheck()
 		else
 			mob_list.Remove(M)
 
