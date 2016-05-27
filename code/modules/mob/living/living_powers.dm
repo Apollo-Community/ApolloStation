@@ -5,8 +5,10 @@
 
 	if( !isConscious() )
 		return
-
-	handle_ventcrawl()
+	if(istype(src, /mob/living/simple_animal/spiderbot))
+		handle_ventcrawl(null, 1)
+	else
+		handle_ventcrawl()
 
 /mob/living/proc/hide()
 	set name = "Hide"
