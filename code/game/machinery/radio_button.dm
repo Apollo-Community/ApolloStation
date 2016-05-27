@@ -13,6 +13,8 @@ obj/machinery/radio_button
 	var/datum/radio_frequency/radio_connection
 	var/on = 1
 	var/buildstage = 0
+	panel_open = 1
+	icon_state = "access_button_frame"
 
 obj/machinery/radio_button/initialize()
 	set_frequency(frequency)
@@ -52,35 +54,56 @@ obj/machinery/radio_button/attackby(obj/item/I as obj, mob/user as mob)
 		return
 
 	if(istype(I, /obj/item/weapon/screwdriver))
-		default_deconstruction_screwdriver(user,icon_state,icon_state,W)
+		if(buildstage == 1 || buildstage == 2)
+			default_deconstruction_screwdriver(user,"access_button_frame_wired","access_button_standby",I)
+		else if (buildstage == 0)
+			default_deconstruction_screwdriver(user,"access_button_frame","access_button_standby",I)
 		return
 
 	if(panel_open == 1)
 		switch(buildstage)
 			if(2)
+				if(istype(I, /obj/item/weapon/crowbar))
+					user << "You pry out the signaler!"
+					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+					spawn(1)
+						var/obj/item/device/assembly/signaler/S = new /obj/item/device/assembly/signaler()
+						S.loc = user.loc
+						buildstage = 1
+
+			if(1)
 				if (istype(I, /obj/item/weapon/wirecutters))
 					user.visible_message("<span class='alert'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
 					playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-					buildstage = 1
-					update_icon()
+					icon_state = "access_button_frame"
+					spawn(1)
+						var/obj/item/stack/cable_coil/S = new /obj/item/stack/cable_coil()
+						S.amount = 1
+						S.icon_state = "coil1"
+						S.loc = user.loc
+						buildstage = 0
 
 				else if(istype(I, /obj/item/device/assembly/signaler))
-
+					var/obj/item/device/assembly/signaler/S = I
+					code = S.code
+					frequency = S.frequency
 					qdel(I)
 					user.visible_message("<span class='alert'>[user] You put the signaler inside \the [src] finishing it.</span>", "You put the signaler inside \the [src] finishing it.")
 					if(radio_controller)
 						set_frequency(frequency)
-			if(1)
+					icon_state = "access_button_frame_wired"
+					buildstage = 2
+			if(0)
 				if(istype(I, /obj/item/stack/cable_coil))
-					var/obj/item/stack/cable_coil/C = W
+					var/obj/item/stack/cable_coil/C = I
 					if (C.use(1))
 						user << "<span class='notice'>You wire \the [src].</span>"
-						buildstage = 2
+						buildstage = 1
+						icon_state = "access_button_frame_wired"
 						return
 					else
 						user << "<span class='warning'>You need 1 pieces of cable to do wire \the [src].</span>"
 						return
-			if(0)
 				if(istype(I, /obj/item/weapon/wrench))
 					user << "You remove the fire alarm assembly from the wall!"
 					var/obj/item/radio_button_frame/frame = new /obj/item/radio_button_frame()
@@ -91,6 +114,12 @@ obj/machinery/radio_button/attackby(obj/item/I as obj, mob/user as mob)
 	..()
 
 obj/machinery/radio_button/attack_hand(mob/user)
+	if(panel_open) //Panel is open you cannot interact.
+		user << "Close the panel first"
+		return
+	if(buildstage != 2) //The button is not finished yet finish it first.
+		user << "Finish its construction first."
+		return
 	add_fingerprint(usr)
 	if(!allowed(user))
 		user << "<span class='alert'>Access Denied</span>"
@@ -125,7 +154,7 @@ Code shamelessly copied from firealarm_frame
 	name = "radio button frame"
 	desc = "Used for building radio buttons"
 	icon = 'icons/obj/airlock_machines.dmi'
-	icon_state = "access_button_standby"
+	icon_state = "access_button_frame"
 	flags = CONDUCT
 
 /obj/item/radio_button_frame/attack(var/M as mob|turf, mob/living/user as mob, def_zone)
@@ -142,7 +171,6 @@ Code shamelessly copied from firealarm_frame
 		return
 
 	var/turf/loc = get_turf(usr)
-	var/area/A = loc.loc
 
 	if(gotwallitem(loc, ndir))
 		usr << "<span class='alert'>There's already an item on this wall!</span>"
