@@ -1,5 +1,5 @@
 //var/global/lawyer = 0//Checks for another lawyer //This changed clothes on 2nd lawyer, both IA get the same dreds.
-/datum/job/lawyer
+/datum/job/iaa
 	title = "Internal Affairs Agent"
 	flag = LAWYER
 	department_id = CIVILIAN
@@ -8,14 +8,14 @@
 	spawn_positions = 2
 	supervisors = "the captain"
 	selection_color = "#dddddd"
-	access = list(access_lawyer, access_court, access_sec_doors, access_maint_tunnels)
-	minimal_access = list(access_lawyer, access_court, access_sec_doors)
+	access = list(access_iaa, access_court, access_sec_doors, access_maint_tunnels)
+	minimal_access = list(access_iaa, access_court, access_sec_doors)
 
 	minimal_playtime = 30
 
 	rank_succesion_level = COMMAND_SUCCESSION_LEVEL
 
-/datum/job/lawyer/equip(var/mob/living/carbon/human/H)
+/datum/job/iaa/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
 	H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/heads/hop/iaa(H), slot_l_ear)
 	switch(H.character.backpack)
@@ -35,7 +35,7 @@
 
 	return 1
 
-/datum/job/lawyer/make_preview_icon( var/backpack , var/job , var/gender )
+/datum/job/iaa/make_preview_icon( var/backpack , var/job , var/gender )
 	var/icon/clothes_s = null
 
 	clothes_s = new /icon('icons/mob/uniform.dmi', "internalaffairs_s")
