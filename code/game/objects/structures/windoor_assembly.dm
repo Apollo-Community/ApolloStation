@@ -158,7 +158,7 @@ obj/structure/windoor_assembly/Destroy()
 					user << "<span class='notice'>You cut the windoor wires.!</span>"
 					var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(get_turf(user), 1)
 					CC.amount = 2
-					CC.icon_state = coil2
+					CC.icon_state = "coil2"
 					src.state = "01"
 					if(src.secure)
 						src.name = "Secure Anchored Windoor Assembly"
