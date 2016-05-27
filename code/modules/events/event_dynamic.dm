@@ -76,8 +76,8 @@ var/list/event_last_fired = list()
 	if(!spacevines_spawned)
 		possibleEvents[/datum/event/spacevine] = 10 + 5 * active_with_role["Engineer"]
 	if(minutes_passed >= 30) // Give engineers time to set up engine
-		possibleEvents[/datum/event/meteor_wave] = 10 * active_with_role["Engineer"]
-		possibleEvents[/datum/event/blob] = 10 * active_with_role["Engineer"]
+		possibleEvents[/datum/event/meteor_wave] = 5 * active_with_role["Engineer"]
+		possibleEvents[/datum/event/blob] = 5 * active_with_role["Engineer"]
 
 	if(active_with_role["Medical"] > 0)
 		possibleEvents[/datum/event/radiation_storm] = active_with_role["Medical"] * 10
