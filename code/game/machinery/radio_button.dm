@@ -12,14 +12,23 @@ obj/machinery/radio_button
 	var/command = "cycle"
 	var/datum/radio_frequency/radio_connection
 	var/on = 1
+	var/buildstage = 0
 
 obj/machinery/radio_button/initialize()
 	set_frequency(frequency)
 
-obj/machinery/radio_button/New()
+obj/machinery/radio_button/New(loc, dir, building)
 	..()
-	if(radio_controller)
-		set_frequency(frequency)
+
+	if(loc)
+		src.loc = loc
+
+	if(dir)
+		src.set_dir(dir)
+
+	if(building)
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
+		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 
 obj/machinery/radio_button/update_icon()
 	if(on)
@@ -40,6 +49,44 @@ obj/machinery/radio_button/attackby(obj/item/I as obj, mob/user as mob)
 	//Swiping ID on the access button
 	if (istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
 		attack_hand(user)
+		return
+
+	if(istype(I, /obj/item/weapon/screwdriver))
+		default_deconstruction_screwdriver(user,icon_state,icon_state,W)
+		return
+
+	if(panel_open == 1)
+		switch(buildstage)
+			if(2)
+				if (istype(I, /obj/item/weapon/wirecutters))
+					user.visible_message("<span class='alert'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
+					playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+					buildstage = 1
+					update_icon()
+
+				else if(istype(I, /obj/item/device/assembly/signaler))
+
+					qdel(I)
+					user.visible_message("<span class='alert'>[user] You put the signaler inside \the [src] finishing it.</span>", "You put the signaler inside \the [src] finishing it.")
+					if(radio_controller)
+						set_frequency(frequency)
+			if(1)
+				if(istype(I, /obj/item/stack/cable_coil))
+					var/obj/item/stack/cable_coil/C = W
+					if (C.use(1))
+						user << "<span class='notice'>You wire \the [src].</span>"
+						buildstage = 2
+						return
+					else
+						user << "<span class='warning'>You need 1 pieces of cable to do wire \the [src].</span>"
+						return
+			if(0)
+				if(istype(I, /obj/item/weapon/wrench))
+					user << "You remove the fire alarm assembly from the wall!"
+					var/obj/item/radio_button_frame/frame = new /obj/item/radio_button_frame()
+					frame.loc = user.loc
+					playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+					qdel(src)
 		return
 	..()
 
@@ -81,12 +128,10 @@ Code shamelessly copied from firealarm_frame
 	icon_state = "access_button_standby"
 	flags = CONDUCT
 
-/obj/item/radio_button_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
-		qdel(src)
+/obj/item/radio_button_frame/attack(var/M as mob|turf, mob/living/user as mob, def_zone)
+	if(try_build(M))
 		return
-	..()
+	..(M, user, def_zone)
 
 /obj/item/radio_button_frame/proc/try_build(turf/on_wall)
 	if (get_dist(on_wall,usr)>1)
@@ -97,9 +142,7 @@ Code shamelessly copied from firealarm_frame
 		return
 
 	var/turf/loc = get_turf(usr)
-	if (!istype(loc, /turf/simulated/floor))
-		usr << "<span class='alert'>Radio button can not be placed on this spot.</span>"
-		return
+	var/area/A = loc.loc
 
 	if(gotwallitem(loc, ndir))
 		usr << "<span class='alert'>There's already an item on this wall!</span>"
@@ -108,3 +151,5 @@ Code shamelessly copied from firealarm_frame
 	new /obj/machinery/radio_button(loc, ndir, 1)
 
 	qdel(src)
+
+	return 1
