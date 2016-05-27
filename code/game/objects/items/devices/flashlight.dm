@@ -22,9 +22,11 @@
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		set_light(brightness_on)
+		playsound(src.loc, 'sound/effects/flashlight_on.ogg', 30, 1)
 	else
 		icon_state = initial(icon_state)
 		set_light(0)
+		playsound(src.loc, 'sound/effects/flashlight_off.ogg', 30, 1)
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	if(!isturf(user.loc))
