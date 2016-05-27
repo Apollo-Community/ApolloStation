@@ -6,7 +6,7 @@
 	var/list/charges = list() // What laws were broken in this incident
 	var/list/evidence = list() // If its a prison sentence, it'll require evidence
 
-	var/list/arbiters = list() // The person or list of people who were involved in the conviction of the criminal
+	var/list/arbiters = list( "Witness" = list() ) // The person or list of people who were involved in the conviction of the criminal
 	var/mob/living/carbon/human/criminal // The person who committed the crimes
 
 	var/brig_sentence = 0 // How long do they stay in the brig on the station, PERMABRIG_SENTENCE minutes = permabrig
@@ -19,6 +19,36 @@
 	UID = md5( "[world.realtime][rand(0, 1000000)]" )
 
 	..()
+
+// I know there's a better way to do this, but we're rarely going to add new court roles, so this works well enough
+/datum/crime_incident/proc/addArbiter( var/obj/item/weapon/card/id/C, var/title )
+	if( !istype( C ))
+		return "Invalid ID card!"
+
+	if( !istype( C ))
+		return "ID card not tied to a NanoTrasen Employee!"
+
+	var/list/same_access
+
+	switch( title )
+		if( "Witness" )
+			same_access = C.access & get_all_accesses() // anyone can be a witness
+		if( "Magistrate" )
+			same_access = C.access & list( access_brig, access_heads ) // The card requires one of these access codes to become this title
+		if( "Justice" )
+			same_access = C.access & list( access_heads )
+		if( "Chief Justice" )
+			same_access = C.access & list( access_hop, access_captain ) // Only HOP or captain can preside as chief justice in a tribunal
+		if( "Prosecutor" )
+			same_access = C.access & list( access_hop, access_captain ) // Only HOP or captain can preside as chief justice in a tribunal
+		if( "Defendant" )
+			same_access = C.access & list( access_hop, access_captain ) // Only HOP or captain can preside as chief justice in a tribunal
+
+	if( same_access && same_access.len )
+		arbiters[title] = C.mob
+		return 0
+	else
+		return "Could not add [C.mob] as [title]. They do not have sufficient access to act in that capacity."
 
 /datum/crime_incident/proc/missingCourtReq()
 	var/error = missingSentenceReq()

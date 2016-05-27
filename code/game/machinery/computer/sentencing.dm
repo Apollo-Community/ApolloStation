@@ -176,6 +176,10 @@
 /obj/machinery/computer/sentencing/proc/court_report()
 	. = ""
 
+	. += "<table>"
+	. += "<tr>"
+	. += "<td>"
+
 	. += "<table class='border'>"
 	. += "<tr>"
 	. += "<th>Magistrate:</th>"
@@ -198,6 +202,9 @@
 		. += "None"
 	. += "</td>"
 	. += "</tr>"
+
+	. += "</td>"
+	. += "<td>"
 
 	. += "<tr>"
 	. += "<th>Brig Sentence:</th>"
@@ -225,6 +232,10 @@
 	. += "</td>"
 	. += "</tr>"
 
+	. += "</table>"
+
+	. += "</td>"
+	. += "</tr>"
 	. += "</table>"
 
 	. += "<br><hr>"
@@ -411,7 +422,7 @@
 					incident.criminal = C.mob
 					ping( "\The [src] pings, \"Criminal [C.mob] verified.\"" )
 			else
-				ping( "\The [src] buzzes, \"Criminal cleared.\"" )
+				ping( "\The [src] pings, \"Criminal cleared.\"" )
 				incident.criminal = null
 		if( "change_brig" )
 			if( !incident )
@@ -456,12 +467,14 @@
 			var/error = incident.missingCourtReq()
 			if( !error )
 				menu_screen = "court_report"
+				ping( "\The [src] pings, \"Beginning court proceedings!\"" )
 			else
 				buzz( "\The [src] buzzes, \"[error]\"" )
 		if( "begin_tribunal" )
 			var/error = incident.missingTribunalReq()
 			if( !error )
 				menu_screen = "tribunal_report"
+				ping( "\The [src] pings, \"Beginning tribunal proceedings!\"" )
 			else
 				buzz( "\The [src] buzzes, \"[error]\"" )
 		if( "add_arbiter" )
@@ -469,10 +482,13 @@
 			var/obj/item/weapon/card/id/C = usr.get_active_hand()
 			if( istype( C ))
 				if( incident && C.mob )
-					incident.arbiters[title] = C.mob
-					ping( "\The [src] pings, \"[title] [C.mob] verified.\"" )
+					var/error = incident.addArbiter( C, title )
+					if( !error )
+						ping( "\The [src] pings, \"[title] [C.mob] verified.\"" )
+					else
+						buzz( "\The [src] buzzes, \"[error]\"" )
 			else
-				ping( "\The [src] buzzes, \"[title] cleared.\"" )
+				ping( "\The [src] pings, \"[title] cleared.\"" )
 				incident.arbiters[title] = null
 		if( "add_charge" )
 			incident.charges += locate( href_list["law"] )
