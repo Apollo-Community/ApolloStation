@@ -4,7 +4,7 @@
 
 /obj/machinery/power/emitter
 	name = "emitter"
-	desc = "It is a heavy duty industrial laser. The power dial is set to \"[EMITTER_POWER_MAX * ( 2/3 )]\"kW."
+	desc = "It is a heavy duty industrial laser. The power dial is set to 40kW."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
 	anchored = 0
@@ -256,7 +256,7 @@
 			beam.update_power(new_power)
 
 		user << "<span class='notice'>You set the emitter's laser strength to [new_power]kW.</span>"
-		desc = "It is a heavy duty industrial laser. The power dial is set to \"[new_power]\"kW."
+		desc = "It is a heavy duty industrial laser. The power dial is set to [new_power]kW."
 		return
 
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
