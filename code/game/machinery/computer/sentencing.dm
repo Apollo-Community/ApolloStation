@@ -50,10 +50,8 @@
 			. += import_incident()
 		if( "incident_report" )
 			. += incident_report()
-		if( "court_report" )
-			. += court_report()
-		if( "tribunal_report" )
-			. += tribunal_report()
+		if( "process_judiciary_report" )
+			. += process_judiciary_report()
 		if( "low_severity" )
 			. += add_charges()
 		if( "med_severity" )
@@ -166,48 +164,111 @@
 		if( 1.0 )
 			. += "<a href='?src=\ref[src];button=print_encoded_form'>Print Incident Report</a>"
 		if( 2.0 )
-			. += "<a href='?src=\ref[src];button=begin_court'>Begin Court Procedure</a>"
+			. += "<a href='?src=\ref[src];button=begin_process'>Begin Court Procedure</a>"
 		if( 3.0 )
-			. += "<a href='?src=\ref[src];button=begin_tribunal'>Begin Tribunal Procedure</a>"
+			. += "<a href='?src=\ref[src];button=begin_process'>Begin Tribunal Procedure</a>"
 	. += "<a href='?src=\ref[src];button=change_menu;choice=main_menu'>Cancel</a></center>"
 
 	return .
 
-/obj/machinery/computer/sentencing/proc/court_report()
+/obj/machinery/computer/sentencing/proc/process_judiciary_report()
 	. = ""
 
-	. += "<table>"
-	. += "<tr>"
-	. += "<td>"
+	. += "<table><tr><td valign='top'>"
+
+	. += list_judges()
+
+	. += "</td><td valign='top'>"
+
+	. += list_sentence()
+
+	. += "</td></tr></table>"
+
+	. += list_witnesses()
+
+	. += "<br><hr>"
+	. += "<center>"
+	. += "<a href='?src=\ref[src];button=print_encoded_form'>Print Incident Report</a>"
+	. += "<a href='?src=\ref[src];button=change_menu;choice=incident_report'>Cancel Court</a></center>"
+
+	return .
+
+/obj/machinery/computer/sentencing/proc/list_judges()
+	. = ""
+
+	var/severity = incident.getMaxSeverity()
 
 	. += "<table class='border'>"
+	. += "<tr><th colspan='2'>Judges</th></tr>"
 	. += "<tr>"
-	. += "<th>Magistrate:</th>"
-	. += "<td><a href='?src=\ref[src];button=add_arbiter;title=Magistrate'>"
 
-	if( incident.arbiters["Magistrate"] )
-		.+= "[incident.arbiters["Magistrate"]]"
-	else
-		.+= "None"
+	if( severity == 2.0 )
+		. += "<td>Magistrate:</td>"
+		. += "<td><a href='?src=\ref[src];button=add_arbiter;title=Magistrate'>"
 
-	. += "</a></td>"
+		if( incident.arbiters["Magistrate"] )
+			. += "[incident.arbiters["Magistrate"]]"
+		else
+			. += "None"
+
+		. += "</a></td>"
+	else if( severity == 3.0 )
+		. += "<td>Chief Justice:</td>"
+		. += "<td><a href='?src=\ref[src];button=add_arbiter;title=Chief Justice'>"
+
+		if( incident.arbiters["Chief Justice"] )
+			. += "[incident.arbiters["Chief Justice"]]"
+		else
+			. += "None"
+
+		. += "</a></td>"
+
+		. += "</tr><tr>"
+
+		. += "<td>Justice #1:</td>"
+		. += "<td><a href='?src=\ref[src];button=add_arbiter;title=Justice1'>"
+
+		if( incident.arbiters["Justice1"] )
+			. += "[incident.arbiters["Justice1"]]"
+		else
+			. += "None"
+
+		. += "</a></td>"
+
+		. += "</tr><tr>"
+
+		. += "<td>Justice #2:</td>"
+		. += "<td><a href='?src=\ref[src];button=add_arbiter;title=Justice2'>"
+
+		if( incident.arbiters["Justice2"] )
+			. += "[incident.arbiters["Justice2"]]"
+		else
+			. += "None"
+
+		. += "</a></td>"
 
 	. += "</tr>"
-	. += "<tr>"
-	. += "<th>Criminal:</th>"
-	. += "<td>"
+	. += "</table>"
+
+	return .
+
+/obj/machinery/computer/sentencing/proc/list_sentence()
+	. = ""
+
+	. += "<table class='border'>"
+
+	. += "<tr><th colspan='2'>Criminal</th></tr>"
+	. += "<tr><td colspan='2'><center>"
 	if( incident.criminal )
 		. += "[incident.criminal]"
 	else
 		. += "None"
-	. += "</td>"
-	. += "</tr>"
-
-	. += "</td>"
-	. += "<td>"
+	. += "</center></td></tr>"
 
 	. += "<tr>"
-	. += "<th>Brig Sentence:</th>"
+	. += "<th colspan='2'>Sentence</th>"
+	. += "</tr><tr>"
+	. += "<td>Brig</td>"
 	. += "<td>"
 	if( incident.brig_sentence )
 		if( incident.brig_sentence < PERMABRIG_SENTENCE )
@@ -220,7 +281,7 @@
 
 	. += "</tr><tr>"
 
-	. += "<th>Prison Sentence:</th>"
+	. += "<td>Prison</td>"
 	. += "<td>"
 	if( incident.prison_sentence )
 		if( incident.prison_sentence < PERMAPRISON_SENTENCE )
@@ -234,24 +295,24 @@
 
 	. += "</table>"
 
-	. += "</td>"
-	. += "</tr>"
-	. += "</table>"
-
-	. += "<br><hr>"
-	. += "<center>"
-	. += "<a href='?src=\ref[src];button=print_encoded_form'>Print Incident Report</a>"
-	. += "<a href='?src=\ref[src];button=change_menu;choice=incident_report'>Cancel Court</a></center>"
-
 	return .
 
-/obj/machinery/computer/sentencing/proc/tribunal_report()
+/obj/machinery/computer/sentencing/proc/list_witnesses()
 	. = ""
 
-	. += "<br><hr>"
-	. += "<center>"
-	. += "<a href='?src=\ref[src];button=print_encoded_form'>Print Incident Report</a>"
-	. += "<a href='?src=\ref[src];button=change_menu;choice=incident_report'>Cancel Tribunal</a></center>"
+	var/list/witnesses = incident.arbiters["Witness"]
+
+	. += "<table class='border'>"
+	. += "<th colspan='2'>Witnesses <a href='?src=\ref[src];button=add_arbiter;title=Witness'>Add</a></th>"
+
+	for( var/witness in witnesses )
+		. += "<tr><td>"
+		. += "[witness]"
+		. += "</td><td>"
+		. += "<a href='?src=\ref[src];button=remove_witness;choice=\ref[witness]'>Remove</a>"
+		. += "</td></tr>"
+
+	. += "</table>"
 
 	return .
 
@@ -463,18 +524,20 @@
 				print( I )
 				incident = null
 				menu_screen = "main_menu"
-		if( "begin_court" )
-			var/error = incident.missingCourtReq()
-			if( !error )
-				menu_screen = "court_report"
-				ping( "\The [src] pings, \"Beginning court proceedings!\"" )
+		if( "begin_process" )
+			var/severity = incident.getMaxSeverity()
+			var/error
+
+			if( severity == 2.0 )
+				error = incident.missingCourtReq()
+			else if( severity == 3.0 )
+				error = incident.missingTribunalReq()
 			else
-				buzz( "\The [src] buzzes, \"[error]\"" )
-		if( "begin_tribunal" )
-			var/error = incident.missingTribunalReq()
+				error = "Selected crimes do not require a tribunal!"
+
 			if( !error )
-				menu_screen = "tribunal_report"
-				ping( "\The [src] pings, \"Beginning tribunal proceedings!\"" )
+				menu_screen = "process_judiciary_report"
+				ping( "\The [src] pings, \"Beginning [ severity == 2.0 ? "court" : "tribunal"] proceedings!\"" )
 			else
 				buzz( "\The [src] buzzes, \"[error]\"" )
 		if( "add_arbiter" )
@@ -496,6 +559,10 @@
 		if( "remove_charge" )
 			incident.charges -= locate( href_list["law"] )
 			incident.refreshSentences()
+		if( "remove_witness" )
+			var/list/L = incident.arbiters["Witness"]
+			L -= locate( href_list["choice"] )
+			incident.arbiters["Witness"] = L
 		if( "add_notes" )
 			if( !incident )
 				return

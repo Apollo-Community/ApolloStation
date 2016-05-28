@@ -28,14 +28,20 @@
 	if( !istype( C ))
 		return "ID card not tied to a NanoTrasen Employee!"
 
-	var/list/same_access
+	var/list/same_access // The card requires one of these access codes to become this titl
 
 	switch( title )
-		if( "Witness" )
-			same_access = C.access & get_all_accesses() // anyone can be a witness
+		if( "Witness" ) // anyone can be a witness
+			var/list/L = arbiters[title]
+			L += list( C.mob ) // some reason adding a mob counts as adding a list, so it would add the mob contents
+			arbiters[title] = L
+
+			return 0
 		if( "Magistrate" )
-			same_access = C.access & list( access_brig, access_heads ) // The card requires one of these access codes to become this title
-		if( "Justice" )
+			same_access = C.access & list( access_brig, access_heads )
+		if( "Justice1" )
+			same_access = C.access & list( access_heads )
+		if( "Justice2")
 			same_access = C.access & list( access_heads )
 		if( "Chief Justice" )
 			same_access = C.access & list( access_hop, access_captain ) // Only HOP or captain can preside as chief justice in a tribunal
