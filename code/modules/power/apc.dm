@@ -156,8 +156,9 @@
 	if (building==0)
 		init()
 	else
-		area = src.loc.loc:master
-		area.apc |= src
+	//area = src.loc.loc:master
+		area = src.loc.loc
+		area.apc.Add(src)
 		opened = 1
 		operating = 0
 		name = "[area.name] APC"
@@ -169,7 +170,7 @@
 /obj/machinery/power/apc/Destroy()
 /*	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
-			if (src.z in config.station_levels) //if (is_type_in_list(get_area(src), the_station_areas))
+			if (src.z in overmap.station_levels) //if (is_type_in_list(get_area(src), the_station_areas))
 				ticker.mode:apcs--*/
 	area.power_light = 0
 	area.power_equip = 0
@@ -182,7 +183,7 @@
 		qdel(cell) // qdel
 	if(terminal)
 		disconnect_terminal()
-
+	area.apc.Remove(src)
 	//If there's no more APC then there shouldn't be a cause for alarm I guess
 	area.poweralert(1, src) //so that alarms don't go on forever
 
@@ -213,7 +214,7 @@
 	else
 		src.area = get_area_name(areastring)
 		name = "\improper [area.name] APC"
-	area.apc |= src
+	area.apc += src
 	update_icon()
 
 	make_terminal()
@@ -952,7 +953,7 @@
 					malfai.malfhacking = 0
 					locked = 1
 					if (ticker.mode.config_tag == "malfunction")
-						if (src.z in config.station_levels) //if (is_type_in_list(get_area(src), the_station_areas))
+						if (src.z in overmap.station_levels) //if (is_type_in_list(get_area(src), the_station_areas))
 							ticker.mode:apcs++
 					if(usr:parent)
 						src.malfai = usr:parent
@@ -984,7 +985,7 @@
 
 /*	if(malfai)
 		if (ticker.mode.config_tag == "malfunction")
-			if (src.z in config.station_levels) //if (is_type_in_list(get_area(src), the_station_areas))
+			if (src.z in overmap.station_levels) //if (is_type_in_list(get_area(src), the_station_areas))
 				operating ? ticker.mode:apcs++ : ticker.mode:apcs--*/
 
 	src.update()
@@ -1321,7 +1322,7 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 /obj/machinery/power/apc/proc/set_broken()
 /*	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
-			if (src.z in config.station_levels) //if (is_type_in_list(get_area(src), the_station_areas))
+			if (src.z in overmap.station_levels) //if (is_type_in_list(get_area(src), the_station_areas))
 				ticker.mode:apcs--*/
 	// Aesthetically much better!
 	src.visible_message("<span class='notice'>[src]'s screen flickers with warnings briefly!</span>")
