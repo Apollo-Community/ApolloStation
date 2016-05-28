@@ -294,8 +294,12 @@
 
 //Changing the travel time according to the currently active engines
 //Returns a modifier that is applied to the travel time.
+//Broken right now will fix later
 /datum/shuttle/proc/engine_modifier()
+	/*
 	var/active_engines = 0
 	for(var/obj/structure/shuttle/engine/propulsion/P in shuttle_turfs)
 		active_engines += 1
 	return active_engines/default_engines
+	*/
+	return 1
