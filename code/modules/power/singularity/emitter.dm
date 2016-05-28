@@ -4,7 +4,8 @@
 
 /obj/machinery/power/emitter
 	name = "emitter"
-	desc = "It is a heavy duty industrial laser. The power dial is set to \"[EMITTER_POWER_MAX * ( 2/3 )]\"kW."
+	desc = "test"
+	//"It is a heavy duty industrial laser. The power dial is set to \"[EMITTER_POWER_MAX * ( 2/3 )]\"kW."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
 	anchored = 0
