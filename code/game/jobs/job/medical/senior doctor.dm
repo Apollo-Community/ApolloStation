@@ -1,5 +1,5 @@
 /datum/job/senior_doctor
-	title = "Senior Doctor"
+	title = "Senior Medical Doctor"
 	flag = SENIOR_DOCTOR
 	department_id = MEDICAL
 	faction = "Station"

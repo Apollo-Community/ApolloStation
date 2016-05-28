@@ -4,7 +4,7 @@
 
 /obj/machinery/power/emitter
 	name = "emitter"
-	desc = "It is a heavy duty industrial laser."
+	desc = "It is a heavy duty industrial laser. The power dial is set to \"[EMITTER_POWER_MAX * ( 2/3 )]\"kW."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
 	anchored = 0
@@ -27,6 +27,8 @@
 	var/shot_number = 0
 	var/state = 0
 	var/locked = 0
+	var/datum/wires/emitter/wires = null
+	var/disabled = 0
 
 /obj/machinery/power/emitter/verb/rotate()
 	set name = "Rotate"
@@ -43,6 +45,7 @@
 	..()
 	if(state == 2 && anchored)
 		connect_to_network()
+	wires = new(src)
 
 /obj/machinery/power/emitter/Destroy()
 	message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
@@ -70,6 +73,9 @@
 			return 1
 		if(!src.locked)
 			if(src.active==1)
+				if(disabled)
+					user << "You try to turn [src] off but nothing happens."
+					return 1
 				src.active = 0
 				user << "You turn off [src]."
 				message_admins("Emitter turned off by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
@@ -79,6 +85,9 @@
 				qdel(beam)
 				beam = null
 			else if(avail(active_power_usage))
+				if(disabled)
+					user << "You try to turn [src] on but nothing happens."
+					return 1
 				src.active = 1
 				user << "You turn on [src]."
 				message_admins("Emitter turned on by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
@@ -221,21 +230,33 @@
 					user << "<span class='warning'>You need more welding fuel to complete this task.</span>"
 		return
 
-	if(istype(W, /obj/item/device/multitool))
+	if(istype(W, /obj/item/weapon/screwdriver))
+		default_deconstruction_screwdriver(user,icon_state,icon_state,W)
+		return
+
+	if(istype(W, /obj/item/device/multitool) || istype(W, /obj/item/weapon/wirecutters))
 		if(emagged)
 			user << "<span class='warning'>The power control circuitry is fried.</span>"
+			return
+		if(panel_open == 1)
+			wires.Interact(user)
 			return
 		if(locked)
 			user << "<span class='warning'>The controls are locked!</span>"
 			return
 
 		var/new_power = input("Set emitter power in kW", "Emitter power", active_power_usage / 1000) as num|null
-		active_power_usage = Clamp(new_power, EMITTER_POWER_MIN, EMITTER_POWER_MAX) * 1000
+		if(!new_power)
+			return
+
+		new_power = Clamp(new_power, EMITTER_POWER_MIN, EMITTER_POWER_MAX)
+		active_power_usage = new_power * 1000
 
 		if(beam)
 			beam.update_power(new_power)
 
 		user << "<span class='notice'>You set the emitter's laser strength to [new_power]kW.</span>"
+		desc = "It is a heavy duty industrial laser. The power dial is set to \"[new_power]\"kW."
 		return
 
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
