@@ -94,7 +94,7 @@
 	// Criminal and sentence
 	. += "<table class='border'>"
 	. += "<tr>"
-	. += "<th>Criminal:</th>"
+	. += "<th>Defendant:</th>"
 	. += "<td><a href='?src=\ref[src];button=change_criminal;'>"
 	if( incident.criminal )
 		. += "[incident.criminal]"
@@ -133,30 +133,12 @@
 
 	. += "<br>"
 
-	// Incident notes table
-	. += "<table class='border'>"
-	. += "<tr>"
-	. += "<th>Notes <a href='?src=\ref[src];button=add_notes'>Change</a></th>"
-	. += "</tr>"
-	. += "<tr>"
-	. += "<td>[incident.notes]</td>"
-	. += "</tr>"
-	. += "</table>"
+	. += list_notes()
 
 	. += "<br>"
 
 	// Charges list
-	. += "<table class='border'>"
-	. += "<tr>"
-	. += "<th colspan='3'>Charges <a href='?src=\ref[src];button=change_menu;choice=low_severity'>Add</a></th>"
-	. += "</tr>"
-	for( var/datum/law/L in incident.charges )
-		. += "<tr>"
-		. += "<td><b>[L.name]</b></td>"
-		. += "<td><i>[L.desc]</i></td>"
-		. += "<td><a href='?src=\ref[src];button=remove_charge;law=\ref[L]'>Remove</a></td>"
-		. += "</tr>"
-	. += "</table>"
+	. += list_charges( 1 )
 
 	. += "<br><hr>"
 	. += "<center>"
@@ -176,15 +158,29 @@
 
 	. += "<table><tr><td valign='top'>"
 
-	. += list_judges()
+	. += list_sentence()
 
 	. += "</td><td valign='top'>"
 
-	. += list_sentence()
+	. += list_judges()
 
-	. += "</td></tr></table>"
+	. += "</td></tr><tr><td valign='top' colspan='2'>"
+
+	. += list_charges()
+
+	. += "</td></tr><tr><td valign='top' colspan='2'>"
+
+	. += list_notes()
+
+	. += "</td></tr><tr><td valign='top' colspan='2'>"
 
 	. += list_witnesses()
+
+	. += "</td></tr><tr><td valign='top' colspan='2'>"
+
+	. += list_evidence()
+
+	. += "</td></tr></table>"
 
 	. += "<br><hr>"
 	. += "<center>"
@@ -192,6 +188,23 @@
 	. += "<a href='?src=\ref[src];button=change_menu;choice=incident_report'>Cancel Court</a></center>"
 
 	return .
+
+/obj/machinery/computer/sentencing/proc/list_charges( var/buttons = 0 )
+	. += "<table class='border'>"
+	. += "<tr>"
+	if( buttons )
+		. += "<th colspan='3'>Charges <a href='?src=\ref[src];button=change_menu;choice=low_severity'>Add</a></th>"
+	else
+		. += "<th colspan='2'>Charges</th>"
+	. += "</tr>"
+	for( var/datum/law/L in incident.charges )
+		. += "<tr>"
+		. += "<td><b>[L.name]</b></td>"
+		. += "<td><i>[L.desc]</i></td>"
+		if( buttons )
+			. += "<td><a href='?src=\ref[src];button=remove_charge;law=\ref[L]'>Remove</a></td>"
+		. += "</tr>"
+	. += "</table>"
 
 /obj/machinery/computer/sentencing/proc/list_judges()
 	. = ""
@@ -257,7 +270,7 @@
 
 	. += "<table class='border'>"
 
-	. += "<tr><th colspan='2'>Criminal</th></tr>"
+	. += "<tr><th colspan='2'>Defendant</th></tr>"
 	. += "<tr><td colspan='2'><center>"
 	if( incident.criminal )
 		. += "[incident.criminal]"
@@ -303,15 +316,70 @@
 	var/list/witnesses = incident.arbiters["Witness"]
 
 	. += "<table class='border'>"
-	. += "<th colspan='2'>Witnesses <a href='?src=\ref[src];button=add_arbiter;title=Witness'>Add</a></th>"
+	. += "<th colspan='3'>Witnesses <a href='?src=\ref[src];button=add_arbiter;title=Witness'>Add</a></th>"
 
 	for( var/witness in witnesses )
-		. += "<tr><td>"
-		. += "[witness]"
+		. += "<tr>"
+
+		if( witnesses[witness] )
+			. += "<td>"
+			. += "</b>[witness]</b>"
+			. += "</td><td>"
+			. += "<i>[witnesses[witness]]</i>"
+		else
+			. += "<td colspan='2'>"
+			. += "<b>[witness]</b>"
+
 		. += "</td><td>"
+		. += "<a href='?src=\ref[src];button=add_witness_notes;choice=\ref[witness]'>Notes</a><br>"
 		. += "<a href='?src=\ref[src];button=remove_witness;choice=\ref[witness]'>Remove</a>"
 		. += "</td></tr>"
 
+	. += "</table>"
+
+	return .
+
+/obj/machinery/computer/sentencing/proc/list_evidence()
+	. = ""
+
+	var/list/evidence = incident.evidence
+
+	. += "<table class='border'>"
+	. += "<th colspan='3'>Evidence <a href='?src=\ref[src];button=add_evidence'>Add</a></th>"
+
+	for( var/item in evidence )
+		. += "<tr>"
+
+		if( evidence[item] )
+			. += "<td>"
+			. += "<b>[item]</b>"
+			. += "</td><td>"
+			. += "<i>[evidence[item]]</i>"
+		else
+			. += "<td colspan='2'>"
+			. += "<b>[item]</b>"
+
+		. += "</td><td>"
+		. += "<a href='?src=\ref[src];button=add_evidence_notes;choice=\ref[item]'>Notes</a><br>"
+		. += "<a href='?src=\ref[src];button=remove_evidence;choice=\ref[item]'>Remove</a>"
+		. += "</td></tr>"
+
+	. += "</table>"
+
+	return .
+
+/obj/machinery/computer/sentencing/proc/list_notes()
+	. = ""
+
+	// Incident notes table
+	. += "<table class='border'>"
+	. += "<tr>"
+	. += "<th>Incident Summary <a href='?src=\ref[src];button=add_notes'>Change</a></th>"
+	. += "</tr>"
+	if( incident.notes )
+		. += "<tr>"
+		. += "<td><i>[incident.notes]</i></td>"
+		. += "</tr>"
 	. += "</table>"
 
 	return .
@@ -481,9 +549,9 @@
 			if( istype( C ))
 				if( incident && C.mob )
 					incident.criminal = C.mob
-					ping( "\The [src] pings, \"Criminal [C.mob] verified.\"" )
+					ping( "\The [src] pings, \"Defendant [C.mob] verified.\"" )
 			else
-				ping( "\The [src] pings, \"Criminal cleared.\"" )
+				ping( "\The [src] pings, \"Defendant cleared.\"" )
 				incident.criminal = null
 		if( "change_brig" )
 			if( !incident )
@@ -553,6 +621,13 @@
 			else
 				ping( "\The [src] pings, \"[title] cleared.\"" )
 				incident.arbiters[title] = null
+		if( "add_evidence" )
+			var/obj/O = usr.get_active_hand()
+
+			if( istype( O ))
+				var/list/L = incident.evidence
+				L += O
+				incident.evidence = L
 		if( "add_charge" )
 			incident.charges += locate( href_list["law"] )
 			incident.refreshSentences()
@@ -563,6 +638,28 @@
 			var/list/L = incident.arbiters["Witness"]
 			L -= locate( href_list["choice"] )
 			incident.arbiters["Witness"] = L
+		if( "remove_evidence" )
+			var/list/L = incident.evidence
+			L -= locate( href_list["choice"] )
+			incident.evidence = L
+		if( "add_witness_notes" )
+			var/list/L = incident.arbiters["Witness"]
+			var/W = locate( href_list["choice"] )
+
+			var/notes  = sanitize( input( usr,"Summarize what the witness said:","Witness Report", html_decode( L[W] )) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
+			if( notes != null )
+				L[W] = notes
+
+			incident.arbiters["Witness"] = L
+		if( "add_evidence_notes" )
+			var/list/L = incident.evidence
+			var/E = locate( href_list["choice"] )
+
+			var/notes  = sanitize( input( usr,"Describe the relevance of this evidence:","Evidence Report", html_decode( L[E] )) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
+			if( notes != null )
+				L[E] = notes
+
+			incident.evidence = L
 		if( "add_notes" )
 			if( !incident )
 				return
