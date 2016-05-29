@@ -57,7 +57,7 @@
 		message_admins("Admin [key_name_admin(usr)] is debugging the [antag.role_text] template.")
 */
 //A list that stores all of the controllers in the game.
-/var/list/active_controllers = list()
+/var/list/active_controllers = list(config)
 
 //Manages all controllers in the game so we can easily access them from debug_controller()
 /datum/controller/New()

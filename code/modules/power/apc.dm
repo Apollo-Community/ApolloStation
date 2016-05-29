@@ -214,7 +214,7 @@
 	else
 		src.area = get_area_name(areastring)
 		name = "\improper [area.name] APC"
-	area.apc.Add(src)
+	area.apc += src
 	update_icon()
 
 	make_terminal()
