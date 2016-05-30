@@ -1136,6 +1136,7 @@
 #include "code\modules\hydroponics\vines.dm"
 #include "code\modules\law\incident.dm"
 #include "code\modules\law\law.dm"
+#include "code\modules\law\scanner.dm"
 #include "code\modules\law\laws\high_severity.dm"
 #include "code\modules\law\laws\low_severity.dm"
 #include "code\modules\law\laws\med_severity.dm"

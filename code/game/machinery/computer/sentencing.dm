@@ -2,13 +2,20 @@
 	name = "criminal sentencing console"
 	desc = "Used to generate a criminal sentence."
 	icon_state = "sentence"
-	req_one_access = list(access_security, access_forensics_lockers)
+	req_one_access = list(access_security, access_forensics_lockers, access_heads)
 	circuit = "/obj/item/weapon/circuitboard/sentencing"
 
 	var/datum/crime_incident/incident
 	var/menu_screen = "main_menu"
 
 	var/datum/browser/menu = new( null, "crim_sentence", "Criminal Sentencing", 710, 725 )
+	var/console_tag
+
+/obj/machinery/computer/sentencing/New()
+	..()
+
+	if( console_tag )
+		tag = console_tag
 
 /obj/machinery/computer/sentencing/attack_hand(mob/user as mob)
 	if(..())
@@ -239,10 +246,10 @@
 		. += "</tr><tr>"
 
 		. += "<td>Justice #1:</td>"
-		. += "<td><a href='?src=\ref[src];button=add_arbiter;title=Justice1'>"
+		. += "<td><a href='?src=\ref[src];button=add_arbiter;title=Justice #1'>"
 
-		if( incident.arbiters["Justice1"] )
-			. += "[incident.arbiters["Justice1"]]"
+		if( incident.arbiters["Justice #1"] )
+			. += "[incident.arbiters["Justice #1"]]"
 		else
 			. += "None"
 
@@ -251,10 +258,10 @@
 		. += "</tr><tr>"
 
 		. += "<td>Justice #2:</td>"
-		. += "<td><a href='?src=\ref[src];button=add_arbiter;title=Justice2'>"
+		. += "<td><a href='?src=\ref[src];button=add_arbiter;title=Justice #2'>"
 
-		if( incident.arbiters["Justice2"] )
-			. += "[incident.arbiters["Justice2"]]"
+		if( incident.arbiters["Justice #2"] )
+			. += "[incident.arbiters["Justice #2"]]"
 		else
 			. += "None"
 
@@ -670,3 +677,6 @@
 
 	add_fingerprint(usr)
 	updateUsrDialog()
+
+/obj/machinery/computer/sentencing/courtroom
+	console_tag = "sentencing_courtroom"

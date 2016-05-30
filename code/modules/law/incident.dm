@@ -38,17 +38,17 @@
 
 			return 0
 		if( "Magistrate" )
-			same_access = C.access & list( access_brig, access_heads )
-		if( "Justice1" )
+			same_access = C.access & list( access_brig, access_heads ) // Anyone who can perform arrests / any command officers can sentence in medium crimes
+		if( "Justice #1" )
 			same_access = C.access & list( access_heads )
-		if( "Justice2")
+		if( "Justice #2")
 			same_access = C.access & list( access_heads )
 		if( "Chief Justice" )
 			same_access = C.access & list( access_hop, access_captain ) // Only HOP or captain can preside as chief justice in a tribunal
-		if( "Prosecutor" )
-			same_access = C.access & list( access_hop, access_captain ) // Only HOP or captain can preside as chief justice in a tribunal
-		if( "Defendant" )
-			same_access = C.access & list( access_hop, access_captain ) // Only HOP or captain can preside as chief justice in a tribunal
+		if( "Prosecuting Attorney" )
+			same_access = C.access & list( access_lawyer, access_iaa ) // IAA or lawyers can be attorneys
+		if( "Defending Attorney" )
+			same_access = C.access & list( access_lawyer, access_iaa ) // IAA or lawyers can be attorneys
 
 	if( same_access && same_access.len )
 		arbiters[title] = C.mob
