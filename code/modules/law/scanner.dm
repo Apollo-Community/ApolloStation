@@ -2,7 +2,7 @@
 	name = "ID scanner"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "scanner_id"
-	desc = "A scanner for IDs. Used in courts and tribunals for entering participants."
+	desc = "A scanner for IDs. Used in trials for registering a participant."
 
 	anchored = 1.0
 	use_power = 1
@@ -33,7 +33,7 @@
 				ping( "\The [src] pings, \"Defendant [C.mob] verified.\"" )
 		else
 			if( !console.incident )
-				buzz( "\The [src] buzzes, \"Console has no active incident!\"" )
+				buzz( "\The [src] buzzes, \"Console has no active trial!\"" )
 			else if( !C.mob )
 				buzz( "\The [src] buzzes, \"ID is not tied to a NanoTrasen Employee\"" )
 		return
@@ -54,7 +54,7 @@
 				buzz( "\The [src] buzzes, \"[error]\"" )
 		else
 			if( !console.incident )
-				buzz( "\The [src] buzzes, \"Console has no active incident!\"" )
+				buzz( "\The [src] buzzes, \"Console has no active trial!\"" )
 			else if( !C.mob )
 				buzz( "\The [src] buzzes, \"ID is not tied to a NanoTrasen Employee\"" )
 

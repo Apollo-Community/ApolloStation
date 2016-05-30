@@ -1134,6 +1134,7 @@
 #include "code\modules\hydroponics\seed_mobs.dm"
 #include "code\modules\hydroponics\seeds.dm"
 #include "code\modules\hydroponics\vines.dm"
+#include "code\modules\law\gavel.dm"
 #include "code\modules\law\incident.dm"
 #include "code\modules\law\law.dm"
 #include "code\modules\law\scanner.dm"

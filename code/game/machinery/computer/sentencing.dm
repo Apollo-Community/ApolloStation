@@ -189,7 +189,7 @@
 
 	. += "<br><hr>"
 	. += "<center>"
-	. += "<a href='?src=\ref[src];button=print_encoded_form'>Print Incident Report</a>"
+	. += "<a href='?src=\ref[src];button=verdict'>Render Verdict</a>"
 	. += "<a href='?src=\ref[src];button=change_menu;choice=incident_report'>Cancel Court</a></center>"
 
 	return .
@@ -522,6 +522,41 @@
 
 	return .
 
+/obj/machinery/computer/sentencing/proc/render_innocent()
+	ping( "\The [src] pings, \"[incident.criminal] has been found innocent of the accused crimes!\"" )
+
+	qdel( incident )
+	incident = null
+	menu_screen = "main_menu"
+
+/obj/machinery/computer/sentencing/proc/render_guilty()
+	if( !incident )
+		buzz( "\The [src] buzzes, \"There is no active case!\"" )
+
+	var/error = print_incident_report()
+
+	if( error )
+		buzz( "\The [src] buzzes, \"[error]\"" )
+		return
+
+	ping( "\The [src] pings, \"[incident.criminal] has been found guilty of their crimes!\"" )
+
+	incident = null
+	menu_screen = "main_menu"
+
+/obj/machinery/computer/sentencing/proc/print_incident_report()
+	var/error = incident.missingSentenceReq()
+
+	if( error )
+		return error
+
+	var/obj/item/weapon/paper/form/incident/I = new /obj/item/weapon/paper/form/incident
+	I.incident = incident
+	I.name = "Encoded Incident Report"
+	print( I )
+
+	return 0
+
 /obj/machinery/computer/sentencing/Topic(href, href_list)
 	if(..())
 		return
@@ -577,15 +612,11 @@
 				if( alert("No incident notes were added. Adding a short description of the incident is highly recommended. Do you still want to continue with the print?",,"Yes","No") == "No" )
 					return
 
-			var/error = incident.missingSentenceReq()
+			var/error = print_incident_report()
 
 			if( error )
 				buzz( "\The [src] buzzes, \"[error]\"" )
 			else
-				var/obj/item/weapon/paper/form/incident/I = new /obj/item/weapon/paper/form/incident
-				I.incident = incident
-				I.name = "Encoded Incident Report"
-				print( I )
 				incident = null
 				menu_screen = "main_menu"
 		if( "begin_process" )
@@ -663,6 +694,15 @@
 			var/incident_notes  = sanitize( input( usr,"Describe the incident here:","Incident Report", html_decode( incident.notes )) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
 			if( incident_notes != null )
 				incident.notes = incident_notes
+		if( "verdict" )
+			var/verdict = alert("What was decided as the verdict?",,"Guilty","Innocent", "Cancel")
+			switch( verdict )
+				if( "Cancel" )
+					return
+				if( "Guilty" )
+					render_guilty()
+				if( "Innocent" )
+					render_innocent()
 
 	add_fingerprint(usr)
 	updateUsrDialog()
