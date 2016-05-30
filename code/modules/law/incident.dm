@@ -25,10 +25,17 @@
 	if( !istype( C ))
 		return "Invalid ID card!"
 
-	if( !istype( C ))
+	if( !C.mob )
 		return "ID card not tied to a NanoTrasen Employee!"
 
+	if( criminal == C.mob )
+		return "The criminal cannot hold official court positions in his own trial!"
+
+	if( title != "Witness" && arbiters[title] )
+		return "Someone has already filled the role of [title]! Clear them from the console to take their place."
+
 	var/list/same_access // The card requires one of these access codes to become this titl
+	var/minSeverity = 1
 
 	switch( title )
 		if( "Witness" ) // anyone can be a witness
@@ -37,24 +44,34 @@
 			arbiters[title] = L
 
 			return 0
-		if( "Magistrate" )
-			same_access = C.access & list( access_brig, access_heads ) // Anyone who can perform arrests / any command officers can sentence in medium crimes
 		if( "Justice #1" )
+			minSeverity = 3.0
 			same_access = C.access & list( access_heads )
 		if( "Justice #2")
+			minSeverity = 3.0
 			same_access = C.access & list( access_heads )
 		if( "Chief Justice" )
-			same_access = C.access & list( access_hop, access_captain ) // Only HOP or captain can preside as chief justice in a tribunal
+			minSeverity = 2.0
+
+			if( getMaxSeverity() < 3.0 ) // If its a court
+				same_access = C.access & list( access_brig, access_heads ) // Anyone who can perform arrests / any command officers can sentence in medium crimes
+			else // If its a tribunal
+				same_access = C.access & list( access_hop, access_captain ) // Only HOP or captain can preside as chief justice in a tribunal
 		if( "Prosecuting Attorney" )
+			minSeverity = 2.0
 			same_access = C.access & list( access_lawyer, access_iaa ) // IAA or lawyers can be attorneys
 		if( "Defending Attorney" )
+			minSeverity = 2.0
 			same_access = C.access & list( access_lawyer, access_iaa ) // IAA or lawyers can be attorneys
+
+	if( minSeverity > getMaxSeverity() )
+		return "The severity of the incident does not call for a [title]."
 
 	if( same_access && same_access.len )
 		arbiters[title] = C.mob
 		return 0
 	else
-		return "Could not add [C.mob] as [title]. They do not have sufficient access to act in that capacity."
+		return "Could not add [C.mob] as [title]. They do not have sufficient access to act in that capacity in a [getCourtType()]."
 
 /datum/crime_incident/proc/missingCourtReq()
 	var/error = missingSentenceReq()
@@ -176,6 +193,13 @@
 			max = L.severity
 
 	return max
+
+/datum/crime_incident/proc/getCourtType()
+	switch( getMaxSeverity() )
+		if( 2.0 )
+			return "Court"
+		if( 3.0 )
+			return "Tribunal"
 
 /datum/crime_incident/proc/generateReport()
 	. = "<center>Security Incident Report</center><hr>"

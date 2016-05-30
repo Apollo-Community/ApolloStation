@@ -2,7 +2,7 @@
 	name = "criminal sentencing console"
 	desc = "Used to generate a criminal sentence."
 	icon_state = "sentence"
-	req_one_access = list(access_security, access_forensics_lockers, access_heads)
+	req_one_access = list( access_brig, access_heads )
 	circuit = "/obj/item/weapon/circuitboard/sentencing"
 
 	var/datum/crime_incident/incident
@@ -149,13 +149,11 @@
 
 	. += "<br><hr>"
 	. += "<center>"
-	switch( incident.getMaxSeverity() )
-		if( 1.0 )
-			. += "<a href='?src=\ref[src];button=print_encoded_form'>Print Incident Report</a>"
-		if( 2.0 )
-			. += "<a href='?src=\ref[src];button=begin_process'>Begin Court Procedure</a>"
-		if( 3.0 )
-			. += "<a href='?src=\ref[src];button=begin_process'>Begin Tribunal Procedure</a>"
+	if( incident.getMaxSeverity() <= 1.0 )
+		. += "<a href='?src=\ref[src];button=print_encoded_form'>Print Incident Report</a>"
+	else
+		. += "<a href='?src=\ref[src];button=begin_process'>Begin [incident.getCourtType()] Procedure</a>"
+
 	. += "<a href='?src=\ref[src];button=change_menu;choice=main_menu'>Cancel</a></center>"
 
 	return .
@@ -222,30 +220,20 @@
 	. += "<tr><th colspan='2'>Judges</th></tr>"
 	. += "<tr>"
 
-	if( severity == 2.0 )
-		. += "<td>Magistrate:</td>"
-		. += "<td><a href='?src=\ref[src];button=add_arbiter;title=Magistrate'>"
+	. += "<td><b>Chief Justice:</b></td>"
+	. += "<td><a href='?src=\ref[src];button=add_arbiter;title=Chief Justice'>"
 
-		if( incident.arbiters["Magistrate"] )
-			. += "[incident.arbiters["Magistrate"]]"
-		else
-			. += "None"
+	if( incident.arbiters["Chief Justice"] )
+		. += "[incident.arbiters["Chief Justice"]]"
+	else
+		. += "None"
 
-		. += "</a></td>"
-	else if( severity == 3.0 )
-		. += "<td>Chief Justice:</td>"
-		. += "<td><a href='?src=\ref[src];button=add_arbiter;title=Chief Justice'>"
+	. += "</a></td></tr>"
 
-		if( incident.arbiters["Chief Justice"] )
-			. += "[incident.arbiters["Chief Justice"]]"
-		else
-			. += "None"
+	if( severity == 3.0 )
+		. += "<tr>"
 
-		. += "</a></td>"
-
-		. += "</tr><tr>"
-
-		. += "<td>Justice #1:</td>"
+		. += "<td><b>Justice #1:</b></td>"
 		. += "<td><a href='?src=\ref[src];button=add_arbiter;title=Justice #1'>"
 
 		if( incident.arbiters["Justice #1"] )
@@ -257,7 +245,7 @@
 
 		. += "</tr><tr>"
 
-		. += "<td>Justice #2:</td>"
+		. += "<td><b>Justice #2:</b></td>"
 		. += "<td><a href='?src=\ref[src];button=add_arbiter;title=Justice #2'>"
 
 		if( incident.arbiters["Justice #2"] )
@@ -267,7 +255,8 @@
 
 		. += "</a></td>"
 
-	. += "</tr>"
+		. += "</tr>"
+
 	. += "</table>"
 
 	return .
@@ -612,7 +601,7 @@
 
 			if( !error )
 				menu_screen = "process_judiciary_report"
-				ping( "\The [src] pings, \"Beginning [ severity == 2.0 ? "court" : "tribunal"] proceedings!\"" )
+				ping( "\The [src] pings, \"Beginning [incident.getCourtType()] proceedings!\"" )
 			else
 				buzz( "\The [src] buzzes, \"[error]\"" )
 		if( "add_arbiter" )
@@ -678,5 +667,10 @@
 	add_fingerprint(usr)
 	updateUsrDialog()
 
-/obj/machinery/computer/sentencing/courtroom
+/obj/machinery/computer/sentencing/wall
+	name = "criminal sentencing wall console"
+	icon_state = "sentencew"
+	density = 0
+
+/obj/machinery/computer/sentencing/wall/courtroom
 	console_tag = "sentencing_courtroom"

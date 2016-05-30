@@ -23,8 +23,14 @@
 	if( console && istype( O ))
 		var/obj/item/weapon/card/id/C = O
 		if( console.incident && C.mob )
-			console.incident.criminal = C.mob
-			ping( "\The [src] pings, \"Defendant [C.mob] verified.\"" )
+			if( console.incident.criminal == C.mob ) // Wont ping if you accindetally click it after being verified
+				return
+
+			if( console.incident.criminal )
+				buzz( "\The [src] buzzes, \"There is already a defendant! Clear them from the console to take their place.\"" )
+			else
+				console.incident.criminal = C.mob
+				ping( "\The [src] pings, \"Defendant [C.mob] verified.\"" )
 		else
 			if( !console.incident )
 				buzz( "\The [src] buzzes, \"Console has no active incident!\"" )
@@ -61,10 +67,6 @@
 
 /obj/machinery/court_scanner/arbiter/courtroom
 	console_tag = "sentencing_courtroom"
-
-/obj/machinery/court_scanner/arbiter/courtroom/magistrate
-	name = "Magistrate ID scanner"
-	title = "Magistrate"
 
 /obj/machinery/court_scanner/arbiter/courtroom/chief_justice
 	name = "Chief Justice ID scanner"
