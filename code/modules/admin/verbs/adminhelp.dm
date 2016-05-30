@@ -114,7 +114,10 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	src << "<font color='blue'>PM to-<b>Staff </b>: [original_msg]</font>"
 
 	var/admin_number_present = admins.len - admin_number_afk
-	log_adminpm("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins.")
+	var/active_admins = ""
+	for(var/client/C in admins)		//So we can simplify trialmod logs
+		if(!C.afk)	active_admins+= "[C.key],"
+	log_adminpm("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins. ([active_admins])")
 	if(admin_number_present <= 0)
 		send2adminirc("Request for Help from [key_name(src)]: [html_decode(original_msg)] - !![admin_number_afk ? "All admins AFK ([admin_number_afk])" : "No admins online"]!!")
 	else
