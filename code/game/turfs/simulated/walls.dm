@@ -486,6 +486,11 @@
 		AH.try_build(src)
 		return
 
+	else if(istype(W,/obj/item/radio_button_frame))
+		var/obj/item/radio_button_frame/B = W
+		B.try_build(src)
+		return
+
 	else if(istype(W,/obj/item/frame/light))
 		var/obj/item/frame/light/AH = W
 		AH.try_build(src)
