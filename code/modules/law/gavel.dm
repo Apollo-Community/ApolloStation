@@ -38,17 +38,12 @@
 /obj/machinery/verdict_render/attackby( obj/item/weapon/gavel/O as obj, user as mob)
 	if( console && istype( O ))
 		if( console.incident )
-			var/verdict = alert("What was decided as the verdict?",,"Guilty","Innocent", "Cancel")
-			switch( verdict )
-				if( "Cancel" )
-					return
-				if( "Guilty" )
-					console.render_guilty()
-				if( "Innocent" )
-					console.render_innocent()
+			console.render_verdict( user )
 			playsound(get_turf( src ), 'sound/items/gavel.ogg', 50, 1)
 		else
 			user << "<span class='alert'>There is no active trial!</span>"
+		return
+
 	..()
 
 /obj/machinery/verdict_render/courtroom

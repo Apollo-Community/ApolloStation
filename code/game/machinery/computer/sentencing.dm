@@ -522,16 +522,42 @@
 
 	return .
 
-/obj/machinery/computer/sentencing/proc/render_innocent()
+/obj/machinery/computer/sentencing/proc/render_verdict( var/mob/living/user )
+	if( menu_screen != "process_judiciary_report" )
+		user << "<span class='alert'>The trial is not in session!</span>"
+		return
+
+	if( !istype( user ) || incident.arbiters["Chief Justice"] != user )
+		user << "<span class='alert'>You are not the Chief Justice!</span>"
+		return
+
+	if( incident.getMaxSeverity() >= 3.0 && ( !incident.arbiters["Justice #1"] || !incident.arbiters["Justice #2"] ))
+		user << "<span class='alert'>Theres not enough judges to reach a verdict!</span>"
+		return
+
+	var/verdict = alert( user, "What was decided as the verdict?",,"Guilty","Innocent", "Cancel" )
+	switch( verdict )
+		if( "Cancel" )
+			return
+		if( "Guilty" )
+			render_guilty( usr )
+		if( "Innocent" )
+			render_innocent( usr )
+
+/obj/machinery/computer/sentencing/proc/render_innocent( var/mob/user )
 	ping( "\The [src] pings, \"[incident.criminal] has been found innocent of the accused crimes!\"" )
 
 	qdel( incident )
 	incident = null
 	menu_screen = "main_menu"
 
-/obj/machinery/computer/sentencing/proc/render_guilty()
+/obj/machinery/computer/sentencing/proc/render_guilty( var/mob/living/user )
 	if( !incident )
 		buzz( "\The [src] buzzes, \"There is no active case!\"" )
+
+	if( !istype( user ) || incident.arbiters["Chief Justice"] != user )
+		user << "<span class='alert'>You are not the Chief Justice!</span>"
+		return
 
 	var/error = print_incident_report()
 
@@ -695,14 +721,7 @@
 			if( incident_notes != null )
 				incident.notes = incident_notes
 		if( "verdict" )
-			var/verdict = alert("What was decided as the verdict?",,"Guilty","Innocent", "Cancel")
-			switch( verdict )
-				if( "Cancel" )
-					return
-				if( "Guilty" )
-					render_guilty()
-				if( "Innocent" )
-					render_innocent()
+			render_verdict( usr )
 
 	add_fingerprint(usr)
 	updateUsrDialog()
