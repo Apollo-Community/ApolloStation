@@ -66,7 +66,7 @@
 			new /obj/item/weapon/storage/backpack/medic(src)
 		else
 			new /obj/item/weapon/storage/backpack/satchel_med(src)
-		new /obj/item/clothing/under/rank/nursesuit (src)
+		new /obj/item/clothing/under/rank/nurse_suit (src)
 		new /obj/item/clothing/head/nursehat (src)
 		switch(pick("blue", "green", "purple"))
 			if ("blue")

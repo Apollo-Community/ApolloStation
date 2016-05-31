@@ -1960,6 +1960,82 @@ area/space/atmosalert()
 	icon_state = "LP"
 	environment = SEWER_PIPE
 
+//NMV SLATER
+/area/slater
+	environment = PLAIN
+
+/area/slater/hallway1
+	name = "\improper Primary Hallway"
+	icon_state = "hallP"
+	environment = HALLWAY
+
+/area/slater/hallway2
+	name = "\improper Secondary Hallway"
+	icon_state = "hallS"
+	environment = HALLWAY
+
+/area/slater/bridge
+	name = "\improper NMV Slater Bridge"
+	icon_state = "bridge"
+
+/area/slater/bridge
+	name = "\improper NMV Slater Bridge"
+	icon_state = "bridge"
+
+/area/slater/foreman
+	name = "\improper Foreman's Office"
+	icon_state = "bridge"
+
+/area/slater/maint1
+	name = "\improper Fore Maintenance"
+	icon_state = "fmaint"
+
+/area/slater/maint2
+	name = "\improper Aft Maintenance"
+	icon_state = "amaint"
+
+/area/slater/maint3
+	name = "\improper Secondary Maintenance"
+	icon_state = "pmaint"
+
+/area/slater/engine
+	name = "\improper Engine Room"
+	icon_state = "engine"
+
+/area/slater/disposals
+	name = "\improper Disposals Control"
+	icon_state = "disposal"
+
+/area/slater/refinery
+	name = "\improper Refinery"
+	icon_state = "mining_production"
+
+/area/slater/cargo
+	name = "\improper Cargo Hold"
+	icon_state = "storage"
+
+/area/slater/hangar
+	name = "\improper Hangar"
+	icon_state = "green"
+
+/area/slater/expeditionprep
+	name = "\improper Expedition Prep"
+	icon_state = "mining_eva"
+
+/area/slater/medbay
+	name = "\improper Medbay"
+	icon_state = "medbay"
+
+/area/slater/lounge
+	name = "\improper Break Room"
+	icon_state = "cafeteria"
+
+/area/slater/dorm
+	name = "\improper Dormitory"
+	icon_state = "Sleep"
+
+
+
 //DERELICT
 
 /area/derelict
