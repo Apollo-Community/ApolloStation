@@ -1,15 +1,18 @@
+/proc/is_food(var/item)
+	if(istype(item, /obj/item/weapon/reagent_containers/food/snacks/))
+		return 1
+
+	usr << "<span class='warning'>That doesn't look tasty.</span>"
+	return 0
+
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/attackby(obj/item/W as obj, mob/user as mob)
-	if(!istype(W, /obj/item/weapon/reagent_containers/food/snacks/))
-		user << "<span class='warning'>That doesn't look tasty.</span>"
-		return
+	if(!is_food(W))	return
 	var/obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich/S = new(get_turf(user))
 	S.attackby(W,user)
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/bun/attackby(obj/item/W as obj, mob/user as mob)
-	if(!istype(W, /obj/item/weapon/reagent_containers/food/snacks/))
-		user << "<span class='warning'>That doesn't look tasty.</span>"
-		return
+	if(!is_food(W))	return
 	var/obj/item/weapon/reagent_containers/food/snacks/customizable/burger/S = new(get_turf(user))
 	S.attackby(W,user)
 	qdel(src)
@@ -17,27 +20,21 @@
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/kitchenknife/))
 		return ..()
-	if(!istype(W, /obj/item/weapon/reagent_containers/food/snacks/))
-		user << "<span class='warning'>That doesn't look tasty.</span>"
-		return
+	if(!is_food(W))	return
 	var/obj/item/weapon/reagent_containers/food/snacks/customizable/pizza/S = new(get_turf(user))
 	S.attackby(W,user)
 	qdel(src)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspagetti/attackby(obj/item/W as obj, mob/user as mob)
-	if(!istype(W, /obj/item/weapon/reagent_containers/food/snacks/))
-		user << "<span class='warning'>That doesn't look tasty.</span>"
-		return
+	if(!is_food(W))	return
 	var/obj/item/weapon/reagent_containers/food/snacks/customizable/pasta/S = new(get_turf(user))
 	S.attackby(W,user)
 	qdel(src)
 
 
 /obj/item/trash/plate/attackby(obj/item/W as obj, mob/user as mob)
-	if(!istype(W, /obj/item/weapon/reagent_containers/food/snacks/))
-		user << "<span class='warning'>That doesn't look tasty.</span>"
-		return
+	if(!is_food(W))	return
 	if(istype(W, /obj/item/trash/plate) || istype(W, /obj/item/trash/bowl))
 		return
 	var/obj/item/weapon/reagent_containers/food/snacks/customizable/fullycustom/S = new(get_turf(user))
@@ -51,9 +48,7 @@
 	icon_state = "soup"
 
 /obj/item/trash/bowl/attackby(obj/item/W as obj, mob/user as mob)
-	if(!istype(W, /obj/item/weapon/reagent_containers/food/snacks/))
-		user << "<span class='warning'>That doesn't look tasty.</span>"
-		return
+	if(!is_food(W))	return
 	if(istype(W, /obj/item/trash/plate) || istype(W, /obj/item/trash/bowl))
 		return
 	if(istype(W,/obj/item/))
@@ -83,7 +78,7 @@
 	var/obj/item/toptype
 	var/add_overlays = 1	//Do we stack?
 //	var/offsetstuff = 1 //Do we offset the overlays?
-	var/sandwich_limit = 40
+	var/sandwich_limit = 5
 	var/fullycustom = 0
 	trash = /obj/item/trash/plate
 	bitesize = 2
@@ -310,7 +305,7 @@
 	basename = "on a plate"
 	add_overlays = 0
 	top = 0
-	sandwich_limit = 20
+	sandwich_limit = 8
 	fullycustom = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/soup
@@ -389,6 +384,8 @@
 				O.show_message(msg, 1)
 			F.reagents.trans_to(src, F.reagents.total_volume)
 			return
+
+	if(!is_food(I))	return
 
 	user << "<span class='notice'>You add [I] to [src].</span>"
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable))
