@@ -139,7 +139,6 @@ var/global/datum/controller/gameticker/ticker
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		game_start = world.time
-		universe.load_date()
 		mode.persistant_antag_post_setup()
 		mode.post_setup()
 		//Cleanup some stuff

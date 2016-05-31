@@ -54,7 +54,7 @@
 	name = "Civilian"
 	department_id = CIVILIAN
 	background_color = "#dddddd"
-	starting_positions = list( "Assistant" = "Low", "Bartender" = "None", "Chaplain" = "None", "Chef" = "None", "Mime" = "None", "Janitor" = "None", "Librarian" = "None" )
+	starting_positions = list( "Assistant" = "Low", "Bartender" = "None", "Chaplain" = "None", "Chef" = "None", "Mime" = "None", "Janitor" = "None", "Librarian" = "None", "Attorney" = "None" )
 	region_access = list(access_kitchen,access_bar, access_hydroponics, access_janitor, access_chapel_office, access_crematorium, access_library, access_theatre, access_clown, access_mime)
 
 /datum/department/engineering
