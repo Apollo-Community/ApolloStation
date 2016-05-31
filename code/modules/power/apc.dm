@@ -156,8 +156,9 @@
 	if (building==0)
 		init()
 	else
-		area = src.loc.loc:master
-		area.apc |= src
+	//area = src.loc.loc:master
+		area = src.loc.loc
+		area.apc.Add(src)
 		opened = 1
 		operating = 0
 		name = "[area.name] APC"
@@ -182,7 +183,7 @@
 		qdel(cell) // qdel
 	if(terminal)
 		disconnect_terminal()
-
+	area.apc.Remove(src)
 	//If there's no more APC then there shouldn't be a cause for alarm I guess
 	area.poweralert(1, src) //so that alarms don't go on forever
 
@@ -213,7 +214,7 @@
 	else
 		src.area = get_area_name(areastring)
 		name = "\improper [area.name] APC"
-	area.apc |= src
+	area.apc += src
 	update_icon()
 
 	make_terminal()
