@@ -27,7 +27,9 @@
 	if (A.requires_power == 0 || istype(A, /area/space))
 		usr << "<span class='alert'>APC cannot be placed in this area.</span>"
 		return
-	if (A.get_apc())
+	var/list/apc = A.get_apc()
+	var/apc_len = apc.len
+	if (apc_len > 0)
 		usr << "<span class='alert'>This area already has APC.</span>"
 		return //only one APC per area
 	for(var/obj/machinery/power/terminal/T in loc)
