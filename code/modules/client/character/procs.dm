@@ -222,6 +222,11 @@
 
 	variables["antag_data"] = html_encode( list2params( antag_data ))
 
+	// Status effects
+	variables["employment_status"] = html_encode( sql_sanitize_text( employment_status ))
+	variables["felon"] = sanitize_integer( felon, 0, BITFLAGS_MAX, 0 )
+	variables["prison_date"] = html_encode( list2params( prison_date ))
+
 	var/list/names = list()
 	var/list/values = list()
 	for( var/name in variables )
@@ -405,6 +410,10 @@
 	variables["unique_identifier"] = "text"
 	variables["antag_data"] = "antag_data"
 
+	variables["employment_status"] = "text"
+	variables["felon"] = "number"
+	variables["prison_date"] = "prison_date"
+
 	var/query_names = list2text( variables, "," )
 	var/sql_ckey = ckey( ckey )
 	var/sql_character_name = html_encode( sql_sanitize_text( character_name ))
@@ -465,6 +474,19 @@
 					if( V != "faction" ) // hardcode but pls go away
 						L[V] = text2num( L[V] )
 				value = L
+			if( "prison_date" )
+				prison_date = list()
+
+				for( var/num in params2list( value ))
+					if( istext( num ))
+						num = text2num( html_decode( num ))
+						if( num )
+							prison_date.Add( num )
+
+				if( prison_date && prison_date.len == 3 )
+					var/days = daysTilDate( universe.date, prison_date )
+					if( employment_status == "Active" && days > 0 )
+						employment_status = "[days] days left in prison"
 
 		vars[variables[i]] = value
 
@@ -866,3 +888,9 @@
 		return 0
 
 	return faction_controller.get_faction(antag_data["faction"])
+
+/datum/character/proc/canJoin()
+	if( employment_status != "Active" )
+		return 0
+
+	return 1

@@ -43,7 +43,7 @@ for reference:
 	access_hydroponics = 35
 	access_manufacturing = 36
 	access_library = 37
-	access_lawyer = 38
+	access_iaa = 38
 	access_virology = 39
 	access_cmo = 40
 	access_qm = 41

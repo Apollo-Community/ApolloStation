@@ -9,7 +9,7 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 	icon = 'icons/obj/library.dmi'
 	icon_state = "fax"
 	insert_anim = "faxsend"
-	req_one_access = list(access_lawyer, access_heads, access_armory) //Warden needs to be able to Fax solgov too.
+	req_one_access = list(access_iaa, access_heads, access_armory) //Warden needs to be able to Fax solgov too.
 
 	use_power = 1
 	idle_power_usage = 30

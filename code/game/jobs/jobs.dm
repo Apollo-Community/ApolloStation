@@ -10,7 +10,7 @@ var/const/LIBRARIAN			=(1<<6)
 var/const/LAWYER			=(1<<7)
 var/const/CHAPLAIN			=(1<<8)
 var/const/ENTERTAINER		=(1<<9)
-
+var/const/IAA				=(1<<10)
 
 var/const/ENGINEERING		= 1
 

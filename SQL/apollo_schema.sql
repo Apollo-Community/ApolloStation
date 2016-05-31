@@ -211,6 +211,9 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `DNA` varchar(32) NOT NULL,
   `unique_identifier` varchar(32) NOT NULL,
   `antag_data` text,
+  `employment_status` varchar(100) NOT NULL DEFAULT "Active",
+  `felon` int UNSIGNED NOT NULL DEFAULT '0',
+  `prison_date` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
 
