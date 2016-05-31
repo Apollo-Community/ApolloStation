@@ -201,6 +201,24 @@
 		if( 3.0 )
 			return "Tribunal"
 
+/datum/crime_incident/proc/renderGuilty( var/user )
+	if( !criminal )
+		return
+
+	addToPaperworkRecord( user, criminal.character.unique_identifier,  generateReport(), "Criminal Sentence", "Classified", "Security Records" )
+
+	if( prison_sentence )
+		if( prison_sentence >= PERMAPRISON_SENTENCE )
+			criminal.character.employment_status = "Serving a Life Sentence"
+		else
+			criminal.character.prison_date = progessDate( universe.date, prison_sentence )
+
+	if( getMaxSeverity() >= FELONY_LEVEL )
+		criminal.character.felon = 1
+
+	if( !criminal.character.new_character ) // If they already exist in the database
+		criminal.character.saveCharacter()
+
 /datum/crime_incident/proc/generateReport()
 	. = "<center>Security Incident Report</center><hr>"
 

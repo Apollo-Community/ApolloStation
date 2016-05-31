@@ -106,6 +106,7 @@ Upon signature of this document by the Department authority on [date], the contr
 
 /obj/item/weapon/paper/form/incident
 	var/datum/crime_incident/incident
+	var/sentence = 1 // Is this form contain a sentence of guilty?
 
 /obj/item/weapon/paper/form/incident/New()
 	info = {"\[center\]\[logo\]\[/center\]

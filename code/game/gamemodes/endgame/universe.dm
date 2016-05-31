@@ -45,7 +45,7 @@
 		loadFromDB()
 
 		if( date && date.len == 3 && date != list( 2560, 1, 1 ))
-			handleDateProgression()
+			date = progessDate( date )
 			return
 
 		date = list( 2560, 1, 1 )
@@ -66,23 +66,6 @@
 		return 2560
 
 	return date[1]
-
-/datum/universal_state/proc/handleDateProgression()
-	var/days = date[3]
-	var/month = date[2]
-	var/year = date[1]
-
-	days++
-
-	if( days > getMonthDays( month ))
-		days = 1
-		month++
-
-	if( month > 12 )
-		month = 1
-		year++
-
-	date = list( year, month, days )
 
 /datum/universal_state/proc/saveToDB()
 	establish_db_connection()

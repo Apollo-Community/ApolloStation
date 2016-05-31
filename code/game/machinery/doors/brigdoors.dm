@@ -293,6 +293,10 @@
 		buzz( "\The [src] buzzes, \"Report has no incident encoded!\"" )
 		return 0
 
+	if( !I.sentence )
+		buzz( "\The [src] buzzes, \"Report does not contain a guilty sentence!\"" )
+		return 0
+
 	var/datum/crime_incident/crime = I.incident
 
 	if( !istype( crime.criminal ))
@@ -303,9 +307,9 @@
 		buzz( "\The [src] buzzes, \"Report had no brig sentence.\"" )
 		return 0
 
-	var/datum/character/C = crime.criminal.character
-
-	addToPaperworkRecord( user, C.unique_identifier,  crime.generateReport(), "Criminal Sentence", "Classified", "Security Records" )
+	if( crime.brig_sentence >= PERMABRIG_SENTENCE )
+		buzz( "\The [src] buzzes, \"The criminal has a permabrig sentence and needs to be frozen.\"" )
+		return 0
 
 	var/addtime = timetoset
 	addtime += crime.brig_sentence MINUTES

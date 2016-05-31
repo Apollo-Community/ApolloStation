@@ -222,6 +222,11 @@
 
 	variables["antag_data"] = html_encode( list2params( antag_data ))
 
+	// Status effects
+	variables["employment_status"] = html_encode( sql_sanitize_text( employment_status ))
+	variables["felon"] = sanitize_integer( felon, 0, BITFLAGS_MAX, 0 )
+	variables["prison_date"] = html_encode( list2params( prison_date ))
+
 	var/list/names = list()
 	var/list/values = list()
 	for( var/name in variables )
@@ -404,6 +409,10 @@
 	variables["DNA"] = "text"
 	variables["unique_identifier"] = "text"
 	variables["antag_data"] = "antag_data"
+
+	variables["employment_status"] = "text"
+	variables["felon"] = "number"
+	variables["prison_date"] = "params"
 
 	var/query_names = list2text( variables, "," )
 	var/sql_ckey = ckey( ckey )

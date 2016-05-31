@@ -83,3 +83,23 @@ proc/isDay(var/month, var/day)
 		day = 1
 
 	return "[getMonthName( month )] [day], [year]"
+
+/proc/progessDate( var/list/date, var/progression = 1 )
+	var/year = date[1]
+	var/month = date[2]
+	var/days = date[3]
+
+	days += progression
+
+	while( days > getMonthDays( month ))
+		days -= getMonthDays( month )
+		month++
+
+		if( month > 12 )
+			month = 1
+			year++
+
+	if( days < 1 )
+		days = 1
+
+	return list( year, month, days )

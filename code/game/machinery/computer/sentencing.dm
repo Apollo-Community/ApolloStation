@@ -150,10 +150,11 @@
 	. += "<br><hr>"
 	. += "<center>"
 	if( incident.getMaxSeverity() <= 1.0 )
-		. += "<a href='?src=\ref[src];button=print_encoded_form'>Print Incident Report</a>"
+		. += "<a href='?src=\ref[src];button=render_guilty'>Render Guilty</a>"
 	else
 		. += "<a href='?src=\ref[src];button=begin_process'>Begin [incident.getCourtType()] Procedure</a>"
 
+	. += " <a href='?src=\ref[src];button=print_encoded_form'>Export Incident</a> "
 	. += "<a href='?src=\ref[src];button=change_menu;choice=main_menu'>Cancel</a></center>"
 
 	return .
@@ -555,7 +556,10 @@
 	if( !incident )
 		buzz( "\The [src] buzzes, \"There is no active case!\"" )
 
-	if( !istype( user ) || incident.arbiters["Chief Justice"] != user )
+	if( !istype( user ))
+		return
+
+	if( incident.getMaxSeverity() >= 2.0 && incident.arbiters["Chief Justice"] != user )
 		user << "<span class='alert'>You are not the Chief Justice!</span>"
 		return
 
@@ -565,12 +569,14 @@
 		buzz( "\The [src] buzzes, \"[error]\"" )
 		return
 
+	incident.renderGuilty( user )
+
 	ping( "\The [src] pings, \"[incident.criminal] has been found guilty of their crimes!\"" )
 
 	incident = null
 	menu_screen = "main_menu"
 
-/obj/machinery/computer/sentencing/proc/print_incident_report()
+/obj/machinery/computer/sentencing/proc/print_incident_report( var/sentence = 1 )
 	var/error = incident.missingSentenceReq()
 
 	if( error )
@@ -578,6 +584,7 @@
 
 	var/obj/item/weapon/paper/form/incident/I = new /obj/item/weapon/paper/form/incident
 	I.incident = incident
+	I.sentence = sentence
 	I.name = "Encoded Incident Report"
 	print( I )
 
@@ -634,11 +641,7 @@
 			else
 				incident.prison_sentence = number
 		if( "print_encoded_form" )
-			if( !incident.notes )
-				if( alert("No incident notes were added. Adding a short description of the incident is highly recommended. Do you still want to continue with the print?",,"Yes","No") == "No" )
-					return
-
-			var/error = print_incident_report()
+			var/error = print_incident_report( 0 )
 
 			if( error )
 				buzz( "\The [src] buzzes, \"[error]\"" )
@@ -720,7 +723,17 @@
 			var/incident_notes  = sanitize( input( usr,"Describe the incident here:","Incident Report", html_decode( incident.notes )) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
 			if( incident_notes != null )
 				incident.notes = incident_notes
+		if( "render_guilty" )
+			if( !incident.notes )
+				if( alert("No incident notes were added. Adding a short description of the incident is highly recommended. Do you still want to continue with the print?",,"Yes","No") == "No" )
+					return
+
+			render_guilty( usr )
 		if( "verdict" )
+			if( !incident.notes )
+				if( alert("No incident notes were added. Adding a short description of the incident is highly recommended. Do you still want to continue with the print?",,"Yes","No") == "No" )
+					return
+
 			render_verdict( usr )
 
 	add_fingerprint(usr)
