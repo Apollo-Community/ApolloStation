@@ -35,17 +35,18 @@
 		. += "<h2><span class='white'>Uplink Market</span></h2>"
 		. += "<h3><span class='white'>Available Funds: $[A.money]</span></h3>"
 
-		if(!ItemsCategory["[antag.faction.name] Equipment"] && antag.faction.equipment.len)
-			ItemsCategory["[antag.faction.name] Equipment"] = antag.faction.equipment
+		var/categories = ItemsCategory.Copy()
+		if(!categories["[antag.faction.name] Equipment"] && antag.faction.equipment.len)
+			categories["[antag.faction.name] Equipment"] = antag.faction.equipment
 			// copypaste cause im tired
 			var/datum/nano_item_lists/IL = generate_item_lists()
 			nanoui_items = IL.items_nano
 			ItemsReference = IL.items_reference
 
-		for(var/category in ItemsCategory)
+		for(var/category in categories)
 			. += "<h3><span class='white'>[category]</span></h3>"
 			. += "<table><center>"
-			for(var/datum/uplink_item/I in ItemsCategory[category])
+			for(var/datum/uplink_item/I in categories[category])
 				. += "<tr><table class='outline'>"
 				. += "<th width=20%>[I.name]</th>"
 				. += "<td width=40%>$[I.cost]</td>"
