@@ -1245,7 +1245,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 
 	return atribs_list
 
-/proc/truf_atrib_placer(var/list/refined_src)
+/proc/truf_atrib_placer(var/list/refined_src, var/no_space_overlay = 0)
 	//Takes: Assosiated list of turfs with datums.
 	//Returns: Nothing.
 	//Notes: Attempts to set the properties of the turfs in its list as difined in the asociated datum.

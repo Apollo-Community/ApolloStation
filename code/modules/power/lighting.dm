@@ -22,8 +22,15 @@
 	var/sheets_refunded = 2
 	var/obj/machinery/light/newlight = null
 
-/obj/machinery/light_construct/New()
+/obj/machinery/light_construct/New(loc, dir, building)
 	..()
+
+	if(loc)
+		src.loc = loc
+
+	if(dir)
+		src.set_dir(dir)
+
 	if (fixture_type == "bulb")
 		icon_state = "bulb-construct-stage1"
 

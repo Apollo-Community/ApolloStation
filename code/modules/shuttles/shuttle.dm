@@ -240,14 +240,24 @@
 		var/turf/D = locate(T.x, T.y + (maxy - T.y), T.z)
 		for(var/atom/movable/AM as mob|obj in T)
 			//Don't move the hanger !
+			//Destroy any space pods
+			if(istype(AM, /obj/spacepod))
+				spawn(0)
+					var/exp_loc = AM.loc
+					AM.Destroy()
+					explosion(exp_loc, 1, 2, 4, 4)
+				continue
+
 			if(!istype(AM, /obj/hanger))
-				AM.Move(D)
+				spawn(0)
+					AM.Move(D)
 
 		for(var/mob/living/M in T.contents)
 			to_gib += M
 
 	for(var/mob/living/M in to_gib)
-		M.gib()
+		spawn(0)
+			M.gib()
 
 	sleep(5)
 	for(var/turf/T in filtered_turfs)

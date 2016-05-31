@@ -119,7 +119,7 @@ obj/hanger/proc/take_off()
 		for(var/turf/T in hanger_area_turfs)
 			clear_turf(T)
 		truf_atrib_placer(hanger_turf_atribs)
-		//Not working need to do something to the turfs.
+
 		update_lights()
 	full = 0
 	shuttle = null
