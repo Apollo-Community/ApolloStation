@@ -575,7 +575,11 @@
 		'html/images/logo-nt.png',
 		'html/images/logo-anti.png',
 		'html/images/logo-apollo.png',
-		'html/images/talisman.png'
+		'html/images/talisman.png',
+		'html/images/barcode0.png',
+		'html/images/barcode1.png',
+		'html/images/barcode2.png',
+		'html/images/barcode3.png',
 		)
 
 

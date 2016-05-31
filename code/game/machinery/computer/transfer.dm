@@ -25,12 +25,12 @@
 				flick( "jobchange_deny", src )
 				return
 
-		if( !C.character )
+		if( !istype( C.mob ))
 			buzz("\The [src] buzzes, \"Card is not tied to a NanoTrasen Employee!\"")
 			flick( "jobchange_deny", src )
 			return
 
-		var/job = input(usr, "Choose the role you want to change to:", "Department Transfer")  as null|anything in C.character.roles
+		var/job = input(usr, "Choose the role you want to change to:", "Department Transfer")  as null|anything in C.mob.character.roles
 
 		if( !job )
 			return

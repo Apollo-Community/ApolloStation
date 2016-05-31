@@ -222,28 +222,43 @@
 
 	establish_db_connection()
 	if( dbcon.IsConnected() )
-		var/DBQuery/query = dbcon.NewQuery("SELECT name, gender, birth_date, department FROM characters WHERE ckey = '[sql_ckey]' ORDER BY name")
+		var/DBQuery/query = dbcon.NewQuery("SELECT employment_status, prison_date, name, gender, department FROM characters WHERE ckey = '[sql_ckey]' ORDER BY name")
 		query.Execute()
 
 		. += "<tr>"
 		. += "<td><b>Name</b></td>"
 		. += "<td><b>Gender</b></td>"
-		. += "<td><b>Birth Date</b></td>"
+		. += "<td><b>Employment Status</b></td>"
 		. += "<td><b>Department</b></td>"
 		. += "</tr>"
 
 		while( query.NextRow() )
+			var/status = query.item[1]
+			var/list/prison_date = params2list( html_decode( query.item[2] ))
+
+			for( var/i = 1, i <= prison_date.len, i++ )
+				prison_date[i] = text2num( prison_date[i] )
+
+			var/employment = status
+			if( prison_date && prison_date.len )
+				var/days = daysTilDate( universe.date, prison_date )
+				if( employment == "Active" && days > 0 )
+					employment = "[days] days left in prison"
+
 			. += "<tr>"
-			var/name = query.item[1]
+			var/name = query.item[3]
 			if( selected_character && selected_character.name == name )
-				. += "<td><b>[query.item[1]]</b> - Selected</td>"
+				. += "<td><b>[name]</b> - Selected</td>"
 			else
-				. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=choose;name=[name]'>[name]</a></td>"
+				if( employment != "Active" )
+					. += "<td>[name] - Locked</td>"
+				else
+					. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=choose;name=[name]'>[name]</a></td>"
 
-			. += "<td>[capitalize( query.item[2] )]</td>"
-			. += "<td style='text-align:right'>[print_date( params2list( html_decode( query.item[3] )))]</td>"
+			. += "<td>[capitalize( query.item[4] )]</td>"
+			. += "<td style='text-align:left'>[employment]</td>"
 
-			var/datum/department/D = job_master.GetDepartment( text2num( query.item[4] ))
+			var/datum/department/D = job_master.GetDepartment( text2num( query.item[5] ))
 			if( D )
 				. += "<td>[D.name]</td>"
 			else

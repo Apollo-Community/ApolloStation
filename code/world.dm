@@ -67,6 +67,8 @@ var/global/datum/global_init/init = new ()
 		processScheduler.setup()
 		master_controller.setup()
 
+		universe.load_date()
+
 		sleep_offline = 1 // go to sleep after the controllers are all set up
 
 	#ifdef PRECISE_TIMER_AVAILABLE

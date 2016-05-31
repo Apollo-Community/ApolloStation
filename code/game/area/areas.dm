@@ -1662,7 +1662,7 @@ area/space/atmosalert()
 	icon_state = "security"
 
 /area/security/tribunal
-	name = "\improper Tribunal Hall"
+	name = "\improper Courtroom"
 	icon_state = "security"
 
 /area/security/monitor
