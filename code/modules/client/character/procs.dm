@@ -412,7 +412,7 @@
 
 	variables["employment_status"] = "text"
 	variables["felon"] = "number"
-	variables["prison_date"] = "params"
+	variables["prison_date"] = "prison_date"
 
 	var/query_names = list2text( variables, "," )
 	var/sql_ckey = ckey( ckey )
@@ -474,6 +474,19 @@
 					if( V != "faction" ) // hardcode but pls go away
 						L[V] = text2num( L[V] )
 				value = L
+			if( "prison_date" )
+				prison_date = list()
+
+				for( var/num in params2list( value ))
+					if( istext( num ))
+						num = text2num( html_decode( num ))
+						if( num )
+							prison_date.Add( num )
+
+				if( prison_date && prison_date.len == 3 )
+					var/days = daysTilDate( universe.date, prison_date )
+					if( employment_status == "Active" && days > 0 )
+						employment_status = "[days] days left in prison"
 
 		vars[variables[i]] = value
 
@@ -875,3 +888,9 @@
 		return 0
 
 	return faction_controller.get_faction(antag_data["faction"])
+
+/datum/character/proc/canJoin()
+	if( employment_status != "Active" )
+		return 0
+
+	return 1

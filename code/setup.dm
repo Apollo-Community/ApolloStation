@@ -928,3 +928,5 @@ var/list/be_special_flags = list(
 #define PERMABRIG_SENTENCE 60 // Measured in minutes
 #define PERMAPRISON_SENTENCE 60 // Measured in IC days
 #define FELONY_LEVEL 2.0 // What is the minimum law severity that counts as a felony?
+
+#define START_YEAR 2560

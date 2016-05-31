@@ -103,3 +103,22 @@ proc/isDay(var/month, var/day)
 		days = 1
 
 	return list( year, month, days )
+
+// Returns how many days are between current and future
+/proc/daysTilDate( var/list/current, var/list/future )
+	return daysSinceDefaultDate( future )-daysSinceDefaultDate( current )
+
+/proc/daysSinceDefaultDate( var/list/date )
+	if( !date || date.len != 3 )
+		return 0
+
+	var/years = date[1]-START_YEAR
+	var/months = date[2]-1
+	var/days = date[3]-1
+
+	for( var/i = 1, i <= months, i++ )
+		days += getMonthDays( i )
+
+	days += years*365
+
+	return days

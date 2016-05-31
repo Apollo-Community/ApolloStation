@@ -122,7 +122,7 @@ var/list/all_characters = list() // A list of all loaded characters
 	// A few status effects
 	var/employment_status = "Active" // Is this character employed and alive or gone for good?
 	var/felon = 0 // Is this character a convicted felon?
-	var/prison_date // The date that they get released from prison
+	var/list/prison_date // The date that they get released from prison
 
 	var/datum/browser/menu
 

@@ -209,7 +209,7 @@
 
 	if( prison_sentence )
 		if( prison_sentence >= PERMAPRISON_SENTENCE )
-			criminal.character.employment_status = "Serving a Life Sentence"
+			criminal.character.employment_status = "Serving a life sentence"
 		else
 			criminal.character.prison_date = progessDate( universe.date, prison_sentence )
 
