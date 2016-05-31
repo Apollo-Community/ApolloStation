@@ -79,5 +79,6 @@
 		usr << "<span class='notice'>Graph generated and saved on server as data/graph/[f_name].png</span>"
 		var/new_filename="data/graphs/[f_name].png"
 		usr << ftp(new_filename,"[f_name].png")					//would be nicer in a window but I'd prefer to save it localy
+		usr << file2text("data/graphs/data.txt")
 	else
 		usr << "<span class='warning'>An error occurred generating the graph, please contract a developer</span>"
