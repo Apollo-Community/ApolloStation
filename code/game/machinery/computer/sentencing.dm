@@ -152,7 +152,7 @@
 	if( incident.getMaxSeverity() <= 1.0 )
 		. += "<a href='?src=\ref[src];button=render_guilty'>Render Guilty</a>"
 	else
-		. += "<a href='?src=\ref[src];button=begin_process'>Begin [incident.getCourtType()] Procedure</a>"
+		. += "<a href='?src=\ref[src];button=begin_process'>Begin [incident.getCourtType()]</a>"
 
 	. += " <a href='?src=\ref[src];button=print_encoded_form'>Export Incident</a> "
 	. += "<a href='?src=\ref[src];button=change_menu;choice=main_menu'>Cancel</a></center>"
