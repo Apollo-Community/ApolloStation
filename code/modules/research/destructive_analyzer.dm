@@ -46,6 +46,9 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if(istype(O, /obj/item/weapon/screwdriver))
 		default_deconstruction_screwdriver(user,"d_analyzer_t","d_analyzer",O)
 		return
+	if(istype(O, /obj/item/device/multitool) || istype(O, /obj/item/weapon/wirecutters))
+		if(panel_open == 1)
+			wires.Interact()
 	if (panel_open == 1)
 		if(istype(O, /obj/item/weapon/crowbar))
 			default_deconstruction_crowbar(O)

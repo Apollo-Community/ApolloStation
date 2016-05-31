@@ -101,7 +101,7 @@
 	no_antag_weight = text2num( query.item[1] )
 
 /client/proc/handle_spam_prevention(var/message, var/mute_type)
-	if(config.automute_on && !holder && src.last_message == message)
+	if(config.automute_on && !holder && src.last_message == message && non_spawn_check(message))
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
 			src << "<span class='alert'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>"
@@ -114,6 +114,15 @@
 		last_message = message
 		src.last_message_count = 0
 		return 0
+
+//Checks if the message is not in the allowed list
+//UPDATE: also checks if the message around the sring check is not to long for abuse reasons
+/client/proc/non_spawn_check(var/message)
+	for(var/string in non_spawn_emote)
+		if(findtext(message, string) && ((lentext(message) - lentext(string)) < 6))
+			continue
+		else
+			return 1
 
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
 /client/AllowUpload(filename, filelength)
