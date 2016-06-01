@@ -131,6 +131,29 @@
 		return
 	..()
 
+/obj/item/roller_frame
+	name = "roller bed frame"
+	desc = "A roller bed frame made out of metal"
+	icon = 'icons/obj/rollerbed.dmi'
+	icon_state = "frame"
+	w_class = 4.0 // Can't be put in backpacks. Oh well.
+
+/obj/item/roller_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
+
+	if(istype(W,/obj/item/clothing/under) || istype(W, /obj/item/clothing/suit))
+		var/obj/structure/bed/roller/R = new /obj/structure/bed/roller(user.loc)
+		R.add_fingerprint(user)
+		qdel(src)
+		return
+
+	else if(istype(W, /obj/item/weapon/wrench))
+		var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(user.loc)
+		M.amount = 5
+		qdel(src)
+		return
+
+	..()
+
 /obj/item/roller
 	name = "roller bed"
 	desc = "A collapsed roller bed that can be carried around."
@@ -144,6 +167,12 @@
 		qdel(src)
 
 /obj/item/roller/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/wirecutters))
+		user << "<span class='notice'>Cut the cloth from the roller bed.</span>"
+		//spawn cloth at user.loc
+		var/obj/item/roller_frame/R = new /obj/item/roller_frame(user.loc)
+		R.add_fingerprint(user)
+		qdel(src)
 
 	if(istype(W,/obj/item/roller_holder))
 		var/obj/item/roller_holder/RH = W
