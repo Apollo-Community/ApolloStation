@@ -174,6 +174,7 @@
 		var/obj/item/roller_frame/R = new /obj/item/roller_frame(get_turf(src))
 		R.add_fingerprint(user)
 		qdel(src)
+		return
 
 	if(istype(W,/obj/item/roller_holder))
 		var/obj/item/roller_holder/RH = W
@@ -251,3 +252,14 @@
 		spawn(0)
 			qdel(src)
 		return
+
+/obj/structure/bed/roller/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/wirecutters))
+		user << "<span class='notice'>Cut the cloth from the roller bed.</span>"
+		//spawn cloth at user.loc
+		var/obj/item/roller_frame/R = new /obj/item/roller_frame(get_turf(src))
+		R.add_fingerprint(user)
+		qdel(src)
+		return
+	..()
+
