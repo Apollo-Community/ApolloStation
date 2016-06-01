@@ -49,6 +49,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if(istype(O, /obj/item/device/multitool) || istype(O, /obj/item/weapon/wirecutters))
 		if(panel_open == 1)
 			wires.Interact()
+			return
 	if (panel_open == 1)
 		if(istype(O, /obj/item/weapon/crowbar))
 			default_deconstruction_crowbar(O)
@@ -69,7 +70,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
 		damage_limb(user, 100)
 
-	if (istype(O, /obj/item) && !loaded_item)
+	if (istype(O, /obj/item) && !loaded_item && panel_open == 0)
 		if(isrobot(user)) //Don't put your module items in there!
 			return
 		if(!O.origin_tech)
