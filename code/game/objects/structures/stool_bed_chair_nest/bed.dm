@@ -141,13 +141,14 @@
 /obj/item/roller_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if(istype(W,/obj/item/clothing/under) || istype(W, /obj/item/clothing/suit))
-		var/obj/structure/bed/roller/R = new /obj/structure/bed/roller(user.loc)
+		var/obj/structure/bed/roller/R = new /obj/structure/bed/roller(get_turf(src))
 		R.add_fingerprint(user)
 		qdel(src)
+		qdel(W)
 		return
 
 	else if(istype(W, /obj/item/weapon/wrench))
-		var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(user.loc)
+		var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(get_turf(src))
 		M.amount = 5
 		qdel(src)
 		return
@@ -170,7 +171,7 @@
 	if(istype(W, /obj/item/weapon/wirecutters))
 		user << "<span class='notice'>Cut the cloth from the roller bed.</span>"
 		//spawn cloth at user.loc
-		var/obj/item/roller_frame/R = new /obj/item/roller_frame(user.loc)
+		var/obj/item/roller_frame/R = new /obj/item/roller_frame(get_turf(src))
 		R.add_fingerprint(user)
 		qdel(src)
 
