@@ -14,7 +14,6 @@
 	var/datum/data/record/active2 = null
 	var/a_id = null
 	var/temp = null
-	var/printing = null
 	light_color = COMPUTER_BLUE
 
 /obj/machinery/computer/med_data/verb/eject_id()
