@@ -15,6 +15,9 @@
 
 	var/damtype = "brute"
 	var/force = 0
+	var/buildstage = 0
+	var/panel_open = 0
+	var/base_name = ""
 
 /obj/Destroy()
 	processing_objects -= src
@@ -140,3 +143,86 @@
 
 /obj/proc/see_emote(mob/M as mob, text, var/emote_type)
 	return
+
+/obj/proc/attackby_construction(obj/item/I as obj, mob/user as mob, var/m_icon_state)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		if(buildstage == 2)
+			default_deconstruction_screwdriver(user,"[m_icon_state]_frame_wired","[m_icon_state]",I)
+			return 1
+		else
+			user << "There is no panel to open or close yet."
+			return 1
+
+	else if(panel_open == 1)
+		switch(buildstage)
+			if(2)
+				if(istype(I, /obj/item/weapon/crowbar))
+					user << "You pry out the circuitboard!"
+					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+					spawn(1)
+						var/type = text2path("/obj/item/weapon/[src.base_name]_electronics")
+						var/obj/item/weapon/S = new type()
+						S.loc = user.loc
+						buildstage = 1
+					return 1
+
+			if(1)
+				if (istype(I, /obj/item/weapon/wirecutters))
+					user.visible_message("<span class='alert'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
+					playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+					var/obj/item/stack/cable_coil/S = new /obj/item/stack/cable_coil()
+					S.amount = 2
+					S.icon_state = "coil2"
+					S.loc = user.loc
+					buildstage = 0
+					return 1
+
+				else if(istype(I, text2path("/obj/item/weapon/[src.base_name]_electronics")))
+					qdel(I)
+					user.visible_message("<span class='alert'>[user] You put the circuitboard inside \the [src].</span>", "You put the circuitboard inside \the [src] finishing it.")
+					buildstage = 2
+					return 1
+			if(0)
+				if(istype(I, /obj/item/stack/cable_coil))
+					var/obj/item/stack/cable_coil/C = I
+					if (C.use(2))
+						user << "<span class='notice'>You wire \the [src].</span>"
+						buildstage = 1
+						return 1
+					else
+						user << "<span class='warning'>You need 2 pieces of cable to do wire \the [src].</span>"
+						return 1
+				if(istype(I, /obj/item/weapon/wrench))
+					user << "You remove the fire alarm assembly from the wall!"
+					var/obj/item/intercom_frame/frame = new /obj/item/intercom_frame()
+					frame.loc = user.loc
+					playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+					qdel(src)
+					return 1
+		update_build_icon(m_icon_state)
+		return 0
+	return 0
+
+obj/proc/default_deconstruction_screwdriver(var/mob/user, var/icon_state_open, var/icon_state_closed, var/obj/item/weapon/screwdriver/S)
+	if(istype(S))
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		if(!panel_open)
+			panel_open = 1
+			icon_state = icon_state_open
+			user << "<span class='notice'>You open the maintenance hatch of [src].</span>"
+		else
+			panel_open = 0
+			icon_state = icon_state_closed
+			user << "<span class='notice'>You close the maintenance hatch of [src].</span>"
+		return 1
+	return 0
+
+obj/proc/update_build_icon(m_icon_state)
+	switch(buildstage)
+		if(0)
+			icon_state = "[base_name]_frame"
+		if(1)
+			icon_state = "[base_name]_frame_wired"
+		if(2)
+			if(panel_open)
+				icon_state = "[base_name]_frame_wired"

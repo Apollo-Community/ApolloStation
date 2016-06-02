@@ -4,7 +4,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /obj/item/weapon/reagent_containers/glass
 	name = " "
-	var/base_name = " "
+	base_name = " "
 	desc = " "
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "null"

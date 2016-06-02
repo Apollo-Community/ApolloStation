@@ -6,7 +6,7 @@
 	density = 1
 	var/state = 0
 	var/base_icon_state = ""
-	var/base_name = "Airlock"
+	base_name = "Airlock"
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/airlock_type = "" //the type path of the airlock once completed
 	var/glass_type = "/glass"
