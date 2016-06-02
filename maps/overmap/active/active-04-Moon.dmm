@@ -190,7 +190,7 @@
 "dH" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 1; maxhealth = 1.#INF},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/machinery/door/firedoor/border_only,/turf/simulated/floor/plating,/area/planet/moon/base/rnd/researchbreak)
 "dI" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 1; maxhealth = 1.#INF},/obj/structure/window/reinforced,/obj/machinery/door/firedoor/border_only,/turf/simulated/floor/plating,/area/planet/moon/base/rnd/researchbreak)
 "dJ" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 1; maxhealth = 1.#INF},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/machinery/door/firedoor/border_only,/turf/simulated/floor/plating,/area/planet/moon/base/rnd/researchbreak)
-"dK" = (/obj/machinery/power/smes/buildable{charge = 0; input_level_max = 500000; output_level_max = 500000; RCon_tag = "Moon"},/obj/structure/cable{d2 = 2; icon_state = "0-2"; pixel_y = 0},/turf/simulated/floor/plating,/area/planet/moon/base/maintenance/solars)
+"dK" = (/obj/machinery/power/smes/magical,/obj/structure/cable{d2 = 2; icon_state = "0-2"; pixel_y = 0},/turf/simulated/floor/plating,/area/space)
 "dL" = (/obj/machinery/power/terminal{dir = 8},/obj/structure/cable/yellow,/obj/structure/cable/yellow{d2 = 4; icon_state = "0-4"},/turf/simulated/floor/plating,/area/planet/moon/base/maintenance/solars)
 "dM" = (/obj/machinery/power/solar_control{id = "moonsolar"; name = "Moonbase Solar Control"; track = 0},/obj/structure/cable/yellow{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/plating,/area/planet/moon/base/maintenance/solars)
 "dN" = (/turf/simulated/floor/plating,/area/planet/moon/base/arrivals)
