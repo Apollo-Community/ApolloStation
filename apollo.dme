@@ -788,6 +788,7 @@
 #include "code\game\objects\structures\morgue.dm"
 #include "code\game\objects\structures\musician.dm"
 #include "code\game\objects\structures\noticeboard.dm"
+#include "code\game\objects\structures\rc_blast_door_assembly.dm"
 #include "code\game\objects\structures\safe.dm"
 #include "code\game\objects\structures\signs.dm"
 #include "code\game\objects\structures\stage_curtain.dm"

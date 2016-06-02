@@ -19,6 +19,7 @@ log transactions
 	desc = "For all your monetary needs!"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "atm"
+	base_name = "atm"	//For use in build stages and electronics
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 10
@@ -34,15 +35,26 @@ log transactions
 	var/view_screen = NO_SCREEN
 	var/datum/effect/effect/system/spark_spread/spark_system
 
-/obj/machinery/atm/New()
+/obj/machinery/atm/New(loc, dir, building)
 	..()
+
+	if(loc)
+		src.loc = loc
+
+	if(dir)
+		src.set_dir(dir)
+
+	if(building)
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
+		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
+
 	machine_id = "[station_name()] RT #[num_financial_terminals++]"
 	spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
 /obj/machinery/atm/process()
-	if(stat & NOPOWER)
+	if(stat & NOPOWER || panel_open)
 		return
 
 	if(ticks_left_timeout > 0)
@@ -63,7 +75,14 @@ log transactions
 		break
 
 /obj/machinery/atm/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I, /obj/item/weapon/card))
+	if (attackby_construction(I ,user, "atm"))
+		update_build_icon()
+		return
+
+	else if(istype(I, /obj/item/weapon/card))
+		if(panel_open)
+			user << "Close the panel first."
+			return
 		if(emagged > 0)
 			//prevent inserting id into an emagged ATM
 			user << "<span class='alert'>\icon[src] CARD READER ERROR. This system has been compromised!</span>"
@@ -89,6 +108,9 @@ log transactions
 			if(authenticated_account && held_card.associated_account_number != authenticated_account.account_number)
 				authenticated_account = null
 	else if(authenticated_account)
+		if(panel_open)
+			user << "Close the panel first."
+			return
 		if(istype(I,/obj/item/weapon/spacecash))
 			//consume the money
 			authenticated_account.money += I:worth
@@ -114,6 +136,10 @@ log transactions
 		..()
 
 /obj/machinery/atm/attack_hand(mob/user as mob)
+	if(panel_open)
+		return
+		user << "Close the panel first"
+
 	if(istype(user, /mob/living/silicon))
 		user << "<span class='alert'>\icon[src] Artificial unit recognized. Artificial units do not currently receive monetary compensation, as per NanoTrasen regulation #1005.</span>"
 		return
@@ -483,3 +509,54 @@ log transactions
 		human_user.put_in_hands(E)
 	E.worth = sum
 	E.owner_name = authenticated_account.owner_name
+
+/*
+INTERCOM FRAME ITEM
+Handheld intercom frame, for placing on walls
+Code shamelessly copied from firealarm_frame
+*/
+/obj/item/atm_frame
+	name = "ATM Frame"
+	desc = "Used for building ATMs"
+	icon = 'icons/obj/terminals.dmi'
+	icon_state = "atm_frame"
+	flags = CONDUCT
+
+/obj/item/atm_frame/attack(var/M as mob|turf, mob/living/user as mob, def_zone)
+	if(try_build(M))
+		return
+	..(M, user, def_zone)
+
+/obj/item/atm_frame/try_build(turf/on_wall)
+	if (get_dist(on_wall,usr)>1)
+		return
+
+	var/ndir = get_dir(on_wall,usr)
+	if (!(ndir in cardinal))
+		return
+
+	var/turf/loc = get_turf(usr)
+
+	if(gotwallitem(loc, ndir))
+		usr << "<span class='alert'>There's already an item on this wall!</span>"
+		return
+
+	var/obj/machinery/atm/M = new /obj/machinery/atm(loc, ndir, 1)
+	M.panel_open = 1
+	M.buildstage = 0
+	M.update_build_icon()
+	qdel(src)
+	return 1
+
+
+/*
+ATM CIRCUIT
+Just a object used in constructing air alarms
+*/
+/obj/item/weapon/atm_electronics
+	name = "intercom electronics"
+	icon = 'icons/obj/doors/door_assembly.dmi'
+	icon_state = "door_electronics"
+	desc = "Looks like a circuit. Probably is."
+	w_class = 2.0
+	matter = list("metal" = 50, "glass" = 50)

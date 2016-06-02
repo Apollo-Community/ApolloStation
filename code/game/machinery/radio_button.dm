@@ -12,7 +12,7 @@ obj/machinery/radio_button
 	var/command = "cycle"
 	var/datum/radio_frequency/radio_connection
 	var/on = 1
-	var/buildstage = 0
+	buildstage = 0
 	panel_open = 1
 	icon_state = "access_button_frame"
 
@@ -162,7 +162,7 @@ Code shamelessly copied from firealarm_frame
 		return
 	..(M, user, def_zone)
 
-/obj/item/radio_button_frame/proc/try_build(turf/on_wall)
+/obj/item/radio_button_frame/try_build(turf/on_wall)
 	if (get_dist(on_wall,usr)>1)
 		return
 
