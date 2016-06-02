@@ -4,8 +4,8 @@
 	name = "employment records console"
 	desc = "Used to view, edit and maintain employment records."
 	icon_state = "medlaptop"
-	req_one_access = list(access_heads, access_lawyer)
-	circuit = "/obj/item/weapon/circuitboard/skills"
+	req_one_access = list(access_heads, access_iaa)
+	circuit = "/obj/item/weapon/circuitboard/records"
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
@@ -60,7 +60,7 @@
 	ui_interact( user )
 
 /obj/machinery/computer/employment/ui_interact( mob/user as mob )
-	if( src.z in config.admin_levels )
+	if( src.z in overmap.admin_levels )
 		user << "<span class='alert'><b>Unable to establish a connection</b>: </span><span class='black'>You're too far away from the station!</span>"
 		return
 

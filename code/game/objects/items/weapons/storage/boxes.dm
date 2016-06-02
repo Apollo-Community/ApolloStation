@@ -514,3 +514,16 @@
 		new /obj/item/weapon/light/tube(src)
 	for(var/i = 0; i < 7; i++)
 		new /obj/item/weapon/light/bulb(src)
+
+/obj/item/weapon/storage/box/lube
+	name = "box of lube grenades"
+	desc = "A box with 6 lube grenades."
+	icon_state = "flashbang"
+
+	New()
+		..()
+		new /obj/item/weapon/grenade/chem_grenade/lube(src)
+		new /obj/item/weapon/grenade/chem_grenade/lube(src)
+		new /obj/item/weapon/grenade/chem_grenade/lube(src)
+		new /obj/item/weapon/grenade/chem_grenade/lube(src)
+		new /obj/item/weapon/grenade/chem_grenade/lube(src)

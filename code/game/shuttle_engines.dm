@@ -19,6 +19,21 @@
 	density = 1
 	anchored = 1.0
 
+//Adding some fuctionality to the engine. The engine is going to move to machines but this will have to do for now.
+/obj/structure/shuttle/engine/attackby(obj/item/W, mob/user)
+	default_unfasten_wrench(user, W)
+
+/obj/structure/shuttle/engine/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+	if(istype(W))
+		user << "<span class='notice'>Now [anchored ? "un" : ""]securing [name].</span>"
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(do_after(user, time))
+			user << "<span class='notice'>You've [anchored ? "un" : ""]secured [name].</span>"
+			anchored = !anchored
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		return 1
+	return 0
+
 /obj/structure/shuttle/engine/heater
 	name = "heater"
 	icon_state = "heater"

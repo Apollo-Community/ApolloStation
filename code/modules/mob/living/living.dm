@@ -706,10 +706,11 @@
 
 /mob/living/proc/isDead()
 	if( stat && stat & DEAD )
-		return 0
+		return 1
+	return 0
 
 /mob/living/proc/isConscious()
-	if( stat || stat & DEAD || paralysis || weakened || stunned || sleeping )
+	if( isDead() || paralysis || weakened || stunned || sleeping )
 		return 0
 
 	return 1

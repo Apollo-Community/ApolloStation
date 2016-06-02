@@ -173,7 +173,7 @@ datum/design/circuit/teleconsole
 datum/design/circuit/emp_data
 	name = "employment records console"
 	id = "emp_data"
-	build_path = /obj/item/weapon/circuitboard/skills
+	build_path = /obj/item/weapon/circuitboard/records
 
 datum/design/circuit/med_data
 	name = "medical records console"

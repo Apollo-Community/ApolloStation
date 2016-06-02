@@ -7,7 +7,7 @@
 /var/const/access_medical = 5
 /var/const/access_morgue = 6
 /var/const/access_tox = 7
-/var/const/access_tox_storage = 8
+/var/const/access_moon = 8
 /var/const/access_genetics = 9
 /var/const/access_engine = 10
 /var/const/access_engine_equip= 11
@@ -74,7 +74,7 @@
 /var/const/access_cent_living = 105//Living quarters.
 /var/const/access_cent_storage = 106//Generic storage areas.
 /var/const/access_cent_teleporter = 107//Teleporter.
-/var/const/access_cent_creed = 108//Creed's office.
+/var/const/access_cent_ccrep = 108//Creed's office.
 /var/const/access_cent_captain = 109//Captain's office/ID comp/AI.
 
 	//The Syndicate
@@ -211,15 +211,15 @@
 		if("Correctional Advisor")
 			return list(access_security, access_sec_doors, access_brig, access_armory, access_court)
 		if("Scientist")
-			return list(access_tox, access_tox_storage, access_research, access_xenobiology)
+			return list(access_tox, access_moon, access_research, access_xenobiology)
 		if("Safety Administrator")
-			return list(access_medical, access_morgue, access_tox, access_tox_storage, access_chemistry, access_genetics, access_court,
+			return list(access_medical, access_morgue, access_tox, access_moon, access_chemistry, access_genetics, access_court,
 			            access_teleporter, access_heads, access_tech_storage, access_security, access_sec_doors, access_brig, access_atmospherics,
 			            access_maint_tunnels, access_bar, access_janitor, access_kitchen, access_robotics, access_armory, access_hydroponics,
 			            access_theatre, access_research, access_hos, access_RC_announce, access_forensics_lockers, access_keycard_auth, access_gateway)
 		if("Head of Personnel")
 			return list(access_security, access_sec_doors, access_brig, access_court, access_forensics_lockers,
-			            access_tox, access_tox_storage, access_chemistry, access_medical, access_genetics, access_engine,
+			            access_tox, access_moon, access_chemistry, access_medical, access_genetics, access_engine,
 			            access_emergency_storage, access_change_ids, access_ai_upload, access_eva, access_heads,
 			            access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 			            access_crematorium, access_kitchen, access_robotics, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
@@ -254,7 +254,7 @@
 			            access_mint, access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_sec_doors)
 		if("Research Director")
 			return list(access_rd, access_heads, access_tox, access_genetics,
-			            access_tox_storage, access_teleporter,
+			            access_moon, access_teleporter,
 			            access_research, access_robotics, access_xenobiology,
 			            access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_sec_doors)
 		if("Virologist")
@@ -283,14 +283,14 @@
 		if("Research Officer")
 			return list(access_cent_general, access_cent_specops, access_cent_medical, access_cent_teleporter, access_cent_storage)
 		if("BlackOps Commander")
-			return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_living, access_cent_storage, access_cent_creed)
+			return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_living, access_cent_storage, access_cent_ccrep)
 		if("Supreme Commander")
 			return get_all_centcom_access()
 
 /proc/get_all_accesses()
 	return list(access_security, access_sec_doors, access_brig, access_armory, access_forensics_lockers, access_court,
 	            access_medical, access_genetics, access_morgue, access_rd,
-	            access_tox, access_tox_storage, access_chemistry, access_engine, access_engine_equip, access_maint_tunnels,
+	            access_tox, access_moon, access_chemistry, access_engine, access_engine_equip, access_maint_tunnels,
 	            access_external_airlocks, access_emergency_storage, access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
@@ -301,7 +301,7 @@
 	            access_keycard_auth, access_tcomsat, access_gateway)
 
 /proc/get_all_centcom_access()
-	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_creed, access_cent_captain)
+	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_ccrep, access_cent_captain)
 
 /proc/get_all_syndicate_access()
 	return list(access_syndicate)
@@ -315,7 +315,7 @@
 		if(2) //medbay
 			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_virology, access_surgery, access_cmo)
 		if(3) //research
-			return list(access_research, access_tox, access_tox_storage, access_xenobiology, access_rd)
+			return list(access_research, access_tox, access_moon, access_xenobiology, access_rd)
 		if(4) //engineering and maintenance
 			return list(access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_construction, access_robotics, access_ce)
 		if(5) //command
@@ -367,7 +367,7 @@
 			return "Morgue"
 		if(access_tox)
 			return "Research Lab"
-		if(access_tox_storage)
+		if(access_moon)
 			return "Toxins Storage"
 		if(access_chemistry)
 			return "Chemistry Lab"
@@ -490,7 +490,7 @@
 			return "Code Blue"
 		if(access_cent_specops)
 			return "Code Black"
-		if(access_cent_creed)
+		if(access_cent_ccrep)
 			return "Code Silver"
 		if(access_cent_captain)
 			return "Code Gold"

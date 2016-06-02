@@ -25,6 +25,7 @@ var/list/wireColours = list("red", "blue", "green", "darkred", "orange", "brown"
 	var/row_options2 = " width='260px'"
 	var/window_x = 370
 	var/window_y = 470
+	var/mob/living/user
 
 /datum/wires/New(var/atom/holder)
 	..()
@@ -65,8 +66,8 @@ var/list/wireColours = list("red", "blue", "green", "darkred", "orange", "brown"
 		//wires = shuffle(wires)
 
 
-/datum/wires/proc/Interact(var/mob/living/user)
-
+/datum/wires/proc/Interact(var/mob/living/u)
+	user = u
 	var/html = null
 	if(holder && CanUse(user))
 		html = GetInteractWindow()

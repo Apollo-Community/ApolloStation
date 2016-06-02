@@ -33,7 +33,7 @@
 		return
 
 	// Emitter blasts are somewhat weaker as emitters have large rate of fire and don't require limited power cell to run
-	if(istype(Proj, /obj/item/projectile/beam/emitter))
+	if(istype(Proj, /obj/item/projectile/beam/continuous/emitter))
 		Proj.damage /= 4
 
 	if(istype(Proj, /obj/item/projectile/bullet ) && ( rand( 1, 3 ) == 1 ))
@@ -203,9 +203,12 @@
 	ChangeTurf(/turf/simulated/floor/plating)
 
 /turf/simulated/wall/ex_act(severity)
+	var/area/A = get_area( src )
+	var/base_turf = A.base_turf
+
 	switch(severity)
 		if(1.0)
-			src.ChangeTurf(/turf/space)
+			src.ChangeTurf(base_turf)
 			statistics.increase_stat("damage_cost", rand( 2000, 2200 ))
 			return
 		if(2.0)
@@ -481,6 +484,11 @@
 	else if(istype(W,/obj/item/firealarm_frame))
 		var/obj/item/firealarm_frame/AH = W
 		AH.try_build(src)
+		return
+
+	else if(istype(W,/obj/item/radio_button_frame))
+		var/obj/item/radio_button_frame/B = W
+		B.try_build(src)
 		return
 
 	else if(istype(W,/obj/item/frame/light))

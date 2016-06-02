@@ -10,14 +10,18 @@ var/datum/template_controller/template_controller
 
 		parser = new()
 
-	proc/PlaceTemplateAt(var/turf/location, var/path, var/name)
+	proc/PlaceTemplateAt(var/turf/location, var/path, var/name, var/return_list = 0)
 		set background = 1
-
 		var/datum/dmm_object_collection/collection = parser.GetCollection(file2list(path))
-		collection.Place(location, name)
+		var/list/turfs = new /list()
+		collection.RemoveSpaceTurfs()
+		turfs = collection.Place(location, name)
 		log_game("TEMPL: Spawned template [name] at ([location.x], [location.y], [location.z]).")
 
-		return collection
+		if(return_list)
+			return turfs
+		else
+			return collection
 
 	proc/PlaceTemplates()
 		set background = 1
@@ -34,7 +38,9 @@ var/datum/template_controller/template_controller
 			var/tries = template_config.tries
 			var/turf/origin
 			do
-				var/turf/pick = locate(rand(1, world.maxx), rand(1, world.maxy), text2num(pick(config.can_random_teleport_levels)))
+				// 3 is station Z
+				var/list/zs = (overmap.can_random_teleport_levels - overmap.station_levels)
+				var/turf/pick = locate(rand(1, world.maxx), rand(1, world.maxy), text2num(pick(zs)))
 
 				// Keep a buffer of TRANSITIONEDGE+10 between the edges of the map
 				if(((pick.x + x) >= (world.maxx - TRANSITIONEDGE - 10)) || (pick.x < (TRANSITIONEDGE + 10)))

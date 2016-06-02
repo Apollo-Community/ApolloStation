@@ -153,7 +153,7 @@ var/list/gamemode_cache = list()
 
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
-	var/use_playtime_restriction_for_jobs = 1 //Do jobs use account age restrictions? --requires database
+	var/use_playtime_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 
 	var/simultaneous_pm_warning_timeout = 100
 
@@ -174,15 +174,6 @@ var/list/gamemode_cache = list()
 	var/admin_irc = ""
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
 	var/use_lib_nudge = 0 //Use the C library nudge instead of the python nudge.
-
-	var/use_overmap = 1
-
-	var/list/known_levels = list() // Defines with Z-levels are known
-	var/list/station_levels = list()  // Defines which Z-levels the station exists on.
-	var/list/alert_levels = list()	// Defines which Z-levels which, for example, a Code Red announcement may affect including such areas as Central Command and the Syndicate Shuttle
-	var/list/local_levels = list()	// Defines all Z-levels a character can typically reach
-	var/list/admin_levels = list()  // Defines which Z-levels which are for admin functionality, for example
-	var/list/can_random_teleport_levels = list() // Levels that you can possibly teleport to
 
 	// Event settings
 	var/expected_round_length = 3 * 60 * 60 * 10 // 3 hours
@@ -220,7 +211,7 @@ var/list/gamemode_cache = list()
 	var/canon = 1 // Is this round a canon round?
 
 /datum/configuration/New()
-	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
+	var/list/L = subtypes(/datum/game_mode)
 	for (var/T in L)
 		// I wish I didn't have to instance the game modes in order to look up
 		// their information, but it is the only way (at least that I know of).
@@ -624,9 +615,6 @@ var/list/gamemode_cache = list()
 
 				if("max_maint_drones")
 					config.max_maint_drones = text2num(value)
-
-				if("use_overmap")
-					config.use_overmap = 1
 
 				if("expected_round_length")
 					config.expected_round_length = MinutesToTicks(text2num(value))

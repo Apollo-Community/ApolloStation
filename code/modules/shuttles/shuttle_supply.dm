@@ -1,68 +1,92 @@
 /datum/shuttle/ferry/supply
-	var/away_location = 1	//the location to hide at while pretending to be in-transit
 	var/late_chance = 80
-	var/max_late_time = 300
+	var/max_late_time = 300.
+	var/traveling = 0
+	var/obj/hanger/finish_hanger
+	var/list/supply_turfs
 
-/datum/shuttle/ferry/supply/short_jump(var/area/origin,var/area/destination)
+/datum/shuttle/ferry/supply/init_templates()
+	..()
+	//so stuff is not spawn in the shuttle cockpit.
+	supply_turfs = get_turfs_square(current_hanger.x, current_hanger.y, current_hanger.z, 3, 3)
+
+/datum/shuttle/ferry/supply/short_jump(var/obj/hanger/trg_hanger)
+	//Do some checks first
 	if(moving_status != SHUTTLE_IDLE)
 		return
-	
+
 	if(isnull(location))
 		return
 
-	if(!destination)
-		destination = get_location_area(!location)
-	if(!origin)
-		origin = get_location_area(location)
+	if(isnull(trg_hanger))
+		trg_hanger = get_hanger(!location)
 
-	//it would be cool to play a sound here
+	trg_hanger = hanger_check(trg_hanger)
+
+	//Start warmup and do some checks while we are waiting
 	moving_status = SHUTTLE_WARMUP
 	spawn(warmup_time*10)
-		if (moving_status == SHUTTLE_IDLE) 
+		if (moving_status == SHUTTLE_IDLE)
 			return	//someone cancelled the launch
-		
-		if (at_station() && forbidden_atoms_check())
+
+		if (at_station() && forbidden_atoms_check(shuttle_turfs))
 			//cancel the launch because of forbidden atoms. announce over supply channel?
 			moving_status = SHUTTLE_IDLE
 			return
-		
-		if (!at_station())	//at centcom
-			supply_controller.buy()
-		
-		//We pretend it's a long_jump by making the shuttle stay at centcom for the "in-transit" period.
-		var/area/away_area = get_location_area(away_location)
-		moving_status = SHUTTLE_INTRANSIT
-		
-		//If we are at the away_area then we are just pretending to move, otherwise actually do the move
-		if (origin != away_area)
-			move(origin, away_area)
 
-		//wait ETA here.
-		arrive_time = world.time + supply_controller.movetime
-		while (world.time <= arrive_time)
-			sleep(5)
+	//If we are at the station we will want to leave now.
+	//If we are at centcom we want to wait the movetime until we jump
+	if(at_station())
+		arrive_time = world.time + 5
+	else
+		arrive_time = world.time + supply_controller.movetime*engine_modifier()
 
-		if (destination != away_area)
-			//late
-			if (prob(late_chance))
-				sleep(rand(0,max_late_time))
-		
-			move(away_area, destination)
-		
+	//Shuttle is now in transit
+	finish_hanger = trg_hanger
+	moving_status = SHUTTLE_INTRANSIT
+	traveling = 1
+
+
+/datum/shuttle/ferry/supply/proc/short_jump_finish()
+	//We can only arrive late if we are going to the station
+	if (!at_station() && prob(late_chance))
+		sleep(rand(0,max_late_time))
+
+	display_warning(finish_hanger)
+	sleep(50)
+
+	//Move the shuttle
+	move(finish_hanger, null, 0)
+	supply_turfs = get_turfs_square(current_hanger.x, current_hanger.y, current_hanger.z, 3, 3)
+	if (at_station())
+		supply_controller.buy()
+	if (!at_station())
+		supply_controller.sell()
+	if(in_transit)
+		moving_status = SHUTTLE_SCHEDULING
+	else
 		moving_status = SHUTTLE_IDLE
-		
-		if (!at_station())	//at centcom
-			supply_controller.sell()
+
+/datum/shuttle/ferry/supply/process()
+	..()
+	if(traveling)
+		if(arrive_time <= world.time)
+			short_jump_finish()
+			traveling = 0
 
 // returns 1 if the supply shuttle should be prevented from moving because it contains forbidden atoms
-/datum/shuttle/ferry/supply/proc/forbidden_atoms_check()
+/datum/shuttle/ferry/supply/proc/forbidden_atoms_check(var/list/turfs)
+	//error("starting forbidden atoms check")
 	if (!at_station())
+		//error("Not at station check passed")
 		return 0	//if badmins want to send mobs or a nuke on the supply shuttle from centcom we don't care
-	
-	return supply_controller.forbidden_atoms_check(get_location_area())
-
-/datum/shuttle/ferry/supply/proc/at_station()
-	return (!location)
+	else
+		//error("At station starting check. Checklist is [turfs.len] long.")
+		for(var/atom/A in turfs)
+			if (supply_controller.forbidden_atoms_check(A))
+				//error("Atom [A] was forbidden. Returning with 1")
+				return 1
+		return 0
 
 //returns 1 if the shuttle is idle and we can still mess with the cargo shopping list
 /datum/shuttle/ferry/supply/proc/idle()

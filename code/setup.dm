@@ -605,6 +605,10 @@
 #define BE_PAI        16384
 #define BE_BROODSWARM 32768
 
+#define FACTION_ID_NONE 0
+#define FACTION_ID_PHRASE 1
+#define FACTION_ID_COMPLETE 2
+
 //Not sure if moving this to global.dm would break the defines.
 var/list/be_special_flags = list(
 	"Traitor" = BE_TRAITOR,
@@ -738,6 +742,7 @@ var/list/be_special_flags = list(
 #define SHUTTLE_IDLE		0
 #define SHUTTLE_WARMUP		1
 #define SHUTTLE_INTRANSIT	2
+#define SHUTTLE_SCHEDULING	3
 
 //Ferry shuttle processing status
 #define IDLE_STATE		0
@@ -910,3 +915,18 @@ var/list/be_special_flags = list(
 #define INDUCTEE_SUCCESSION_LEVEL 3
 #define COMMAND_SUCCESSION_LEVEL 10
 #define CAPTAIN_SUCCESION_LEVEL COMMAND_SUCCESSION_LEVEL+2
+
+// Sector flags
+#define SECTOR_KNOWN 1 // Does this sector start out known?
+#define SECTOR_STATION 2 // Is this sector part of the station?
+#define SECTOR_ALERT 4 // Is this sector affected by alerts such as red alert?
+#define SECTOR_LOCAL 8 // Is this sector accessible from the overmap?
+#define SECTOR_ADMIN 16 // Is this sector accessible only through admoon intervention?
+#define SECTOR_FORBID_RANDOM_TP 32 // Prevents people from floating into it randomly
+
+// Law settings
+#define PERMABRIG_SENTENCE 60 // Measured in minutes
+#define PERMAPRISON_SENTENCE 60 // Measured in IC days
+#define FELONY_LEVEL 2.0 // What is the minimum law severity that counts as a felony?
+
+#define START_YEAR 2560

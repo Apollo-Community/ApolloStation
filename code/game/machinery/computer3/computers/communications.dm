@@ -60,7 +60,7 @@
 	Topic(var/href, var/list/href_list)
 		if(!interactable() || !computer.radio || ..(href,href_list) )
 			return
-		if( computer.z in config.station_levels )
+		if( computer.z in overmap.station_levels )
 			usr << "<span class='alert'><b>Unable to establish a connection</b>: </span><span class='black'>You're too far away from the station!</span>"
 			return
 

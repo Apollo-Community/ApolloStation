@@ -424,7 +424,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 				processing_objects.Remove(src)
 			if ("emp")
 				var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-				var/name = prob(50) ? t.name : pick(teleportlocs)
+				var/name = prob(50) ? t.name : pick(overmap.teleportlocs)
 				a.autosay("[mobname] has died in [name]!", "[mobname]'s Death Alarm")
 				qdel(a)
 			else

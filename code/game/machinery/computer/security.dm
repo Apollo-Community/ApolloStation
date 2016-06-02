@@ -55,7 +55,7 @@
 /obj/machinery/computer/secure_data/attack_hand(mob/user as mob)
 	if(..())
 		return
-	if (src.z in config.admin_levels)
+	if (src.z in overmap.admin_levels)
 		user << "<span class='alert'><b>Unable to establish a connection</b>: </span><span class='black'>You're too far away from the station!</span>"
 		return
 	var/dat

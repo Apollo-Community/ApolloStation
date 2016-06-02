@@ -78,6 +78,12 @@
 	for( var/mob/passenger in passengers )
 		passenger.loc = src.loc
 
+	qdel( pr_int_temp_processor )
+	qdel( pr_give_air )
+
+	pr_int_temp_processor = null
+	pr_give_air = null
+
 	..()
 
 /obj/spacepod/process()
@@ -119,12 +125,15 @@
 
 /obj/spacepod/bullet_act(var/obj/item/projectile/P)
 	if(P.damage && !P.nodamage)
-		if( equipment_system.shield_system )
-			equipment_system.shield_system.hit( P.damage )
-		else
-			deal_damage(P.damage)
+		take_damage( P.damage )
 	else if(P.flag == "energy" && istype(P,/obj/item/projectile/ion)) //needed to make sure ions work properly
 		empulse(src, 1, 1)
+
+/obj/spacepod/proc/take_damage( var/damage )
+	if( equipment_system.shield_system )
+		equipment_system.shield_system.hit( damage )
+	else
+		deal_damage( damage )
 
 /obj/spacepod/blob_act()
 	deal_damage(30)
@@ -132,7 +141,8 @@
 
 /obj/spacepod/proc/deal_damage(var/damage)
 	var/oldhealth = health
-	health = max(0, health - damage)
+	health = max(0, min( health - damage, max_health ))
+
 	var/percentage = (health / initial(health)) * 100
 	if( oldhealth > health && percentage <= 25 && percentage > 0)
 		play_interior_sound('sound/effects/engine_alert2.ogg')
@@ -197,10 +207,10 @@
 			qdel(ion_trail)
 			qdel(src)
 		if(2)
-			deal_damage(100)
+			take_damage( 100 )
 		if(3)
 			if(prob(40))
-				deal_damage(50)
+				take_damage( 50 )
 
 /obj/spacepod/emp_act(severity)
 	var/obj/item/weapon/cell/battery = equipment_system.battery
@@ -301,6 +311,14 @@
 			return
 	else if( equipment_system.cargohold )
 		equipment_system.cargohold.put_inside( W, user )
+
+/obj/spacepod/attack_generic(var/mob/user, var/damage, var/attack_message)
+	if(!damage)
+		return 0
+
+	take_damage( damage )
+	visible_message("<span class='alert'><B>[user]</B> [attack_message] [src]!</span>")
+	user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 
 /obj/spacepod/attack_hand(mob/user as mob)
 	if(!hatch_open)
@@ -1044,7 +1062,7 @@ obj/spacepod/verb/toggleLights()
 		usr << "<span class='warning'>ERROR: Inaccurate readings, cannot calculate sector. Please stay still next time.</span>"
 		return
 
-	var/obj/effect/map/sector = map_sectors["[z]"]
+	var/obj/effect/map/sector = overmap.map["[z]"]
 	if( !sector )
 		usr << "<span class='warning'>ERROR: Critical error with the bluespace network!</span>"
 		return

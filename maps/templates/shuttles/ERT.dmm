@@ -1,0 +1,29 @@
+"a" = (/obj/structure/shuttle/engine/propulsion{icon_state = "burst_l"; dir = 4},/turf/simulated/floor/plating,/area/shuttle/specops/centcom)
+"b" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/shuttle/specops/centcom)
+"c" = (/obj/machinery/door/airlock/external{frequency = 1380; icon_state = "door_locked"; id_tag = "specops_shuttle_fore_hatch"; locked = 1; name = "Port Docking Hatch"; req_access_txt = "13"},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/specops/centcom)
+"d" = (/turf/simulated/shuttle/wall{dir = 1; icon_state = "diagonalWall3"},/area/shuttle/specops/centcom)
+"e" = (/turf/space,/area/space)
+"f" = (/obj/structure/shuttle/engine/propulsion{icon_state = "burst_r"; dir = 4},/turf/simulated/floor/plating,/area/shuttle/specops/centcom)
+"g" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/shuttle/engine/heater{icon_state = "heater"; dir = 8},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/shuttle/specops/centcom)
+"h" = (/obj/machinery/recharger/wallcharger{pixel_x = 4; pixel_y = 32},/obj/machinery/embedded_controller/radio/simple_docking_controller{frequency = 1380; id_tag = "specops_shuttle_port"; name = "aft docking hatch controller"; pixel_x = 0; pixel_y = 25; req_access_txt = "0"; req_one_access_txt = "0"; tag_door = "specops_shuttle_port_hatch"},/obj/structure/bed/chair/shuttle,/turf/simulated/floor{tag = "icon-shuttle_floor4"; icon_state = "shuttle_floor4"},/area/shuttle/specops/centcom)
+"i" = (/obj/machinery/light/small{dir = 1},/obj/structure/bed/chair/shuttle,/obj/machinery/recharger/wallcharger{pixel_x = 4; pixel_y = 32},/turf/simulated/floor{tag = "icon-shuttle_floor4"; icon_state = "shuttle_floor4"},/area/shuttle/specops/centcom)
+"j" = (/obj/structure/bed/chair,/obj/structure/bed/chair/shuttle,/turf/simulated/floor{tag = "icon-shuttle_floor4"; icon_state = "shuttle_floor4"},/area/shuttle/specops/centcom)
+"k" = (/turf/simulated/floor{tag = "icon-shuttle_floor4"; icon_state = "shuttle_floor4"},/area/shuttle/specops/centcom)
+"l" = (/obj/structure/bed/chair/shuttle,/obj/machinery/embedded_controller/radio/simple_docking_controller{frequency = 1380; id_tag = "specops_shuttle_fore"; name = "port docking hatch controller"; pixel_x = 0; pixel_y = 25; req_access_txt = "0"; req_one_access_txt = "0"; tag_door = "specops_shuttle_fore_hatch"},/turf/simulated/floor{tag = "icon-shuttle_floor4"; icon_state = "shuttle_floor4"},/area/shuttle/specops/centcom)
+"m" = (/obj/machinery/light/small{dir = 1},/obj/machinery/computer/communications,/turf/simulated/floor{tag = "icon-shuttle_floor4"; icon_state = "shuttle_floor4"},/area/shuttle/specops/centcom)
+"n" = (/obj/machinery/door/airlock/external{frequency = 1380; icon_state = "door_locked"; id_tag = "specops_shuttle_port_hatch"; locked = 1; name = "Aft Docking Hatch"; req_access_txt = "13"},/turf/simulated/floor{tag = "icon-shuttle_floor4"; icon_state = "shuttle_floor4"},/area/shuttle/specops/centcom)
+"o" = (/obj/structure/bed/chair/shuttle{tag = "icon-chair3 (EAST)"; icon_state = "chair3"; dir = 4},/turf/simulated/floor{tag = "icon-shuttle_floor4"; icon_state = "shuttle_floor4"},/area/shuttle/specops/centcom)
+"p" = (/obj/machinery/computer/shuttle_control/specops,/turf/simulated/floor{tag = "icon-shuttle_floor4"; icon_state = "shuttle_floor4"},/area/shuttle/specops/centcom)
+"q" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/shuttle/engine/heater{icon_state = "heater"; dir = 8},/obj/structure/window/reinforced{dir = 1; maxhealth = 1.#INF},/turf/simulated/floor/plating,/area/shuttle/specops/centcom)
+"r" = (/obj/structure/bed/chair/shuttle{tag = "icon-chair3 (NORTH)"; icon_state = "chair3"; dir = 1},/turf/simulated/floor{tag = "icon-shuttle_floor4"; icon_state = "shuttle_floor4"},/area/shuttle/specops/centcom)
+"s" = (/obj/machinery/light/small,/obj/structure/bed/chair/shuttle{tag = "icon-chair3 (NORTH)"; icon_state = "chair3"; dir = 1},/turf/simulated/floor{tag = "icon-shuttle_floor4"; icon_state = "shuttle_floor4"},/area/shuttle/specops/centcom)
+"t" = (/obj/machinery/light/small,/obj/item/device/radio/intercom{broadcasting = 0; dir = 1; frequency = 1443; listening = 1; name = "Spec Ops Intercom"; pixel_y = -28},/obj/machinery/computer/prisoner{name = "Implant Management"},/turf/simulated/floor{tag = "icon-shuttle_floor4"; icon_state = "shuttle_floor4"},/area/shuttle/specops/centcom)
+"u" = (/turf/simulated/shuttle/wall{dir = 4; icon_state = "diagonalWall3"},/area/shuttle/specops/centcom)
+
+(1,1,1) = {"
+abbbbccbbde
+fghijkklmbd
+enkkkkkkopb
+aqrsrrrrtbu
+fbbbbbbbbue
+"}

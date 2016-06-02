@@ -28,13 +28,14 @@ datum/controller/game_controller/New()
 		job_master.LoadJobs("config/jobs.txt")
 		admin_notice("<span class='danger'>Job setup complete</span>", R_DEBUG)
 
+	//Load order is important as we may need controllers in subsequent controllers
 	if(!ticker)						ticker = new /datum/controller/gameticker()
-	if(!syndicate_code_phrase.len )		syndicate_code_phrase	= generate_code_phrase()
-	if(!syndicate_code_response.len )	syndicate_code_response	= generate_code_phrase()
-	if(!emergency_shuttle)			emergency_shuttle = new /datum/emergency_shuttle_controller()
-	if(!shuttle_controller)			shuttle_controller = new /datum/shuttle_controller()
+	if(!faction_controller)			faction_controller = new /datum/controller/faction_controller()
 	if(!template_config)			template_config = new /datum/template_config()
 	if(!template_controller)		template_controller = new /datum/template_controller()
+	if(!hanger_controller)			hanger_controller = new /datum/hanger_controller()
+	if(!emergency_shuttle)			emergency_shuttle = new /datum/emergency_shuttle_controller()
+	if(!shuttle_controller)			shuttle_controller = new /datum/shuttle_controller()
 
 datum/controller/game_controller/proc/setup()
 	world.tick_lag = config.Ticklag
@@ -43,7 +44,9 @@ datum/controller/game_controller/proc/setup()
 	setupgenetics()
 	SetupXenoarch()
 
+	//Place templates and spawn in shuttles
 	template_controller.PlaceTemplates()
+	shuttle_controller.setup()
 
 	// Pick a new race to unwhitelist for today's week
 	var/deciseconds_in_week = DECISECONDS_IN_SECOND*SECONDS_IN_WEEK

@@ -1333,7 +1333,7 @@ var/list/robot_verbs_default = list(
 /mob/living/silicon/robot/syndicate/canUseTopic(atom/movable/M)
 	if(stat || lockcharge || stunned || weakened)
 		return
-	if(z in config.admin_levels)
+	if(z in overmap.admin_levels)
 		return 1
 	if(istype(M, /obj/machinery))
 		var/obj/machinery/Machine = M

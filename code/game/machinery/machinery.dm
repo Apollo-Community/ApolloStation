@@ -246,7 +246,7 @@ Class Procs:
 		return
 	// Prevents the AI from using Topic on admin levels (by for example viewing through the court/thunderdome cameras)
 	// unless it's on the same level as the object it's interacting with.
-	if(!( z == M.z ) || M.z in config.admin_levels )
+	if(!( z == M.z ) || M.z in overmap.admin_levels )
 		return
 	//stop AIs from leaving windows open and using then after they lose vision
 	//apc_override is needed here because AIs use their own APC when powerless
@@ -331,6 +331,16 @@ Class Procs:
 /obj/machinery/proc/assign_uid()
 	uid = gl_uid
 	gl_uid++
+
+/obj/machinery/proc/damage_limb(mob/user, prb)
+	if(inoperable())
+		return 0
+	if(!prob(prb))
+		return 0
+	if (damage_mob_active_hand(user, 100))
+		return 1
+	else
+		return 0
 
 /obj/machinery/proc/shock(mob/user, prb)
 	if(inoperable())

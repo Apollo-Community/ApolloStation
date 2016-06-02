@@ -3511,6 +3511,10 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=12)
 
 			on_mob_life(var/mob/living/M as mob)
+				// glorious donk
+				if(M.mind.antagonist && istype(M.mind.antagonist.faction, /datum/faction/syndicate/donk))
+					M.reagents.add_reagent("hyperzine", 0.5)
+
 				M.radiation = max(M.radiation-1,0)
 				..()
 				return
@@ -4472,6 +4476,47 @@ datum
 					M.confused = max(M.confused+15,15)
 				..()
 				return
+
+		// alcospray stuff
+		ethanol/concentrated
+			name = "Minified ethanol"
+			id = "alcospray_ethanol"
+			description = "Concentrated and quantum-minified ethanol that packs a big punch."
+			nutriment_factor = 0
+			color = "#4084C2" // rgb: 64, 132, 194
+			boozepwr = 4
+			slurr_adj = 25
+			confused_adj = 15
+			slur_start = 7
+			confused_start = 10
+			blur_start = 35
+			pass_out = 60
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+				if(!istype(M, /mob/living))
+					return
+				if(method == TOUCH)
+					if(istype(M, /mob/living/carbon/human))
+						var/mob/living/carbon/human/victim = M
+						var/mouth_covered = 0
+						var/obj/item/safe_thing = null
+
+						if( victim.wear_mask )
+							if ( victim.wear_mask.flags & MASKCOVERSMOUTH )
+								mouth_covered = 1
+								safe_thing = victim.wear_mask
+						if( victim.head )
+							if ( victim.head.flags & MASKCOVERSMOUTH )
+								mouth_covered = 1
+								safe_thing = victim.head
+
+						if ( mouth_covered )
+							victim << "<span class='alert'>Your [safe_thing] protects you from the alcospray!</span>"
+							return
+						else
+							victim << "<span class='alert'>You're sprayed directly in the mouth with alcospray!</span>"
+							on_mob_life(M, M.species.reagent_tag)
+
 
 datum/reagent/lithium_hydroxide/reaction_turf(var/turf/simulated/T, var/volume)
 	if( !T ) return

@@ -7,7 +7,7 @@
 	spawn_positions = 2
 	supervisors = "the research director"
 	selection_color = "#ffeef0"
-	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_xenoarch, access_chemistry )
+	access = list(access_robotics, access_tox, access_moon, access_research, access_xenobiology, access_xenoarch, access_chemistry )
 	minimal_access = list(access_chemistry, access_research, access_xenoarch)
 	alt_titles = list("Pharmacist")
 
@@ -28,7 +28,7 @@
 	H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/labcoat/chemist(H), slot_wear_suit)
 	return 1
 
-/datum/job/chemist/make_preview_icon( var/backpack )
+/datum/job/chemist/make_preview_icon( var/backpack , var/job , var/gender )
 	var/icon/clothes_s = null
 
 	clothes_s = new /icon('icons/mob/uniform.dmi', "chemistrywhite_s")
@@ -38,11 +38,8 @@
 	else
 		clothes_s.Blend(new /icon('icons/mob/suit.dmi', "labcoat_chem_open"), ICON_OVERLAY)
 	switch(backpack)
-		if(2)
-			clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
-		if(3)
-			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-chem"), ICON_OVERLAY)
-		if(4)
-			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+		if(2)			clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
+		if(3)			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-chem"), ICON_OVERLAY)
+		if(4)			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
 
 	return clothes_s

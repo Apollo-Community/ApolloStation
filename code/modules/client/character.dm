@@ -108,6 +108,22 @@ var/list/all_characters = list() // A list of all loaded characters
 
 	var/list/birth_date = list()
 
+	/*
+	The var below stores antag data, all current indexes are
+		notoriety	-	How infamous this antag is, the more infamous, the better contracts they can acquire
+		persistant 	-	Is this character a persistant antag? If not, none of the following indexes will be used
+
+	/// - persistant antag variables - ///
+		faction		-	Which syndicate faction is this antag a member of?
+		dismissed	-	Has this player been dismissed from the syndicate?
+	*/
+	var/list/antag_data = list()
+
+	// A few status effects
+	var/employment_status = "Active" // Is this character employed and alive or gone for good?
+	var/felon = 0 // Is this character a convicted felon?
+	var/list/prison_date // The date that they get released from prison
+
 	var/datum/browser/menu
 
 	// Skills
@@ -123,109 +139,4 @@ var/list/all_characters = list() // A list of all loaded characters
 
 	var/new_character = 1 // Is this a new character?
 	var/temporary = 1 // Is this character only for this round?
-
-/datum/character/New( var/key, var/new_char = 1, var/temp = 1 )
-	ckey = ckey( key )
-
-	blood_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
-
-	gender = pick(MALE, FEMALE)
-	name = random_name(gender,species)
-
-	gear = list()
-
-	DNA = md5( "DNA[name][blood_type][gender][eye_color][time2text(world.timeofday,"hh:mm")]" )
-	fingerprints = md5( DNA )
-	unique_identifier = md5( fingerprints )
-
-	new_character = new_char
-	temporary = temp
-
-	change_age( 30 )
-
-	if( !department )
-		LoadDepartment( CIVILIAN )
-
-	menu = new( null, "creator", "Character Creator", 710, 610 )
-	menu.window_options = "focus=0;can_close=0;"
-
-	all_characters += src
-
-/datum/character/Destroy()
-	all_characters -= src
-
-	..()
-
-/datum/character/proc/copy_to( mob/living/carbon/human/character )
-	if( !istype( character ))
-		return
-
-	if(config.humans_need_surnames)
-		var/firstspace = findtext(name, " ")
-		var/name_length = length(name)
-		if(!firstspace)	//we need a surname
-			name += " [pick(last_names)]"
-		else if(firstspace == name_length)
-			name += "[pick(last_names)]"
-
-	char_mob = character
-
-	character.gender = gender
-	character.real_name = name
-	character.name = character.real_name
-	if(character.dna)
-		character.dna.real_name = character.real_name
-
-	character.character = src
-
-	character.set_species( species, 1 )
-
-	// Destroy/cyborgize organs
-	for(var/name in organ_data)
-		var/status = organ_data[name]
-		var/datum/organ/external/O = character.organs_by_name[name]
-		if(O)
-			if(status == "amputated")
-				O.amputated = 1
-				O.status |= ORGAN_DESTROYED
-				O.destspawn = 1
-			else if(status == "cyborg")
-				O.status |= ORGAN_ROBOT
-		else
-			var/datum/organ/internal/I = character.internal_organs_by_name[name]
-			if(I)
-				if(status == "assisted")
-					I.mechassist()
-				else if(status == "mechanical")
-					I.mechanize()
-
-	if(underwear > underwear_m.len || underwear < 1)
-		underwear = 0 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me. //HAH NOW NO MORE MAGIC CLONING UNDIES
-
-	if(undershirt > undershirt_t.len || undershirt < 1)
-		undershirt = 0
-
-	if(backpack > 4 || backpack < 1)
-		backpack = 1 //Same as above
-
-	//Debugging report to track down a bug, which randomly assigned the plural gender to people.
-	if(gender in list(PLURAL, NEUTER))
-		if(isliving(character)) //Ghosts get neuter by default
-			message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
-			gender = MALE
-
-/datum/character/proc/setHairColor( var/r, var/g, var/b )
-	hair_color = rgb( r, g, b )
-
-/datum/character/proc/setFacialHairColor( var/r, var/g, var/b )
-	hair_face_color = rgb( r, g, b )
-
-/datum/character/proc/setSkinTone( var/r, var/g, var/b )
-	skin_tone = rgb( r, g, b )
-
-/datum/character/proc/setSkinColor( var/r, var/g, var/b )
-	skin_color = rgb( r, g, b )
-
-/datum/character/proc/setEyeColor( var/r, var/g, var/b )
-	eye_color = rgb( r, g, b )
 
