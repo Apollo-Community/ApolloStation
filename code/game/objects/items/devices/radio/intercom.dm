@@ -10,8 +10,9 @@
 	var/anyai = 1
 	var/mob/living/silicon/ai/ai = list()
 	var/last_tick //used to delay the powercheck
-	var/buildstage = 0
+	var/buildstage = 2
 	var/panel_open = 0
+	on = 0
 
 /obj/item/device/radio/intercom/New(loc, dir, building)
 	..()
@@ -25,6 +26,7 @@
 	if(building)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
+	update_icon()
 
 /obj/item/device/radio/intercom/Destroy()
 	processing_objects -= src
@@ -39,6 +41,12 @@
 	src.add_fingerprint(user)
 	spawn (0)
 		attack_self(user)
+
+/obj/item/device/radio/intercom/attack_self(mob/user as mob)
+	if(panel_open || buildstage != 2)
+		user << "You must close the panel before you can interact with the intercom."
+		return
+	..(user)
 
 /obj/item/device/radio/intercom/receive_range(freq, level)
 	if (!on)
@@ -64,6 +72,11 @@
 /obj/item/device/radio/intercom/process()
 	if(((world.timeofday - last_tick) > 30) || ((world.timeofday - last_tick) < 0))
 		last_tick = world.timeofday
+		if(buildstage != 2)
+			update_icon()
+			return
+		if(panel_open)
+			on = 0
 
 		if(!src.loc)
 			on = 0
@@ -73,11 +86,13 @@
 				on = 0
 			else
 				on = A.powered(EQUIP) // set "on" to the power status
-
 		if(!on)
 			icon_state = "intercom-p"
 		else
 			icon_state = "intercom"
+
+		if(panel_open)
+			icon_state = "intercom_frame_wired"
 
 /obj/item/device/radio/intercom/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -87,7 +102,7 @@
 			user << "There is no panel to open or close yet."
 		return
 
-	if(panel_open == 1)
+	else if(panel_open == 1)
 		switch(buildstage)
 			if(2)
 				if(istype(I, /obj/item/weapon/crowbar))
@@ -142,7 +157,8 @@
 		if(1)
 			icon_state = "intercom_frame_wired"
 		if(2)
-			icon_state = "intercom_frame_wired"
+			if(panel_open)
+				icon_state = "intercom_frame_wired"
 
 /*
 INTERCOM FRAME ITEM
@@ -177,6 +193,7 @@ Code shamelessly copied from firealarm_frame
 
 	var/obj/item/device/radio/intercom/M = new /obj/item/device/radio/intercom(loc, ndir, 1)
 	M.panel_open = 1
+	M.buildstage = 0
 	qdel(src)
 
 	return 1

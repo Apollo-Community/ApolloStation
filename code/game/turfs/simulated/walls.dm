@@ -511,6 +511,11 @@
 		AH.try_build(src)
 		return
 
+	else if(istype(W,/obj/item/intercom_frame))
+		var/obj/item/intercom_frame/AH = W
+		AH.try_build(src)
+		return
+
 	else if(istype(W,/obj/item/weapon/rcd)) //I bitterly resent having to write this. ~Z
 		return
 
