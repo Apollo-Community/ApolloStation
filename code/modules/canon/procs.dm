@@ -1,4 +1,8 @@
 /proc/canonHandleRoundEnd()
+	if( ticker.current_state == GAME_STATE_PREGAME )
+		testing( "Didn't save the world because we were in the lobby" )
+		return
+
 	saveAllActiveCharacters()
 	universe.saveToDB()
 

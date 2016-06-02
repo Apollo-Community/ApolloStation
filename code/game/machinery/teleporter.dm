@@ -5,6 +5,7 @@
 	circuit = "/obj/item/weapon/circuitboard/teleporter"
 	dir = 4
 	var/obj/item/locked = null
+	req_access = list(access_teleporter)
 	var/id = null
 	var/one_time_use = 0 //Used for one-time-use teleport cards (such as clown planet coordinates.)
 						 //Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
@@ -168,11 +169,22 @@
 	idle_power_usage = 10
 	active_power_usage = 2000
 	var/obj/machinery/computer/teleporter/com
-
+//"Requires 1 Ansible Crystal, 2 Subspace Transmitter and 2 pieces of cable."
 /obj/machinery/teleport/hub/New()
 	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/teleporterhub
+	component_parts += new /obj/item/weapon/stock_parts/subspace/crystal
+	component_parts += new /obj/item/weapon/stock_parts/subspace/transmitter
+	component_parts += new /obj/item/weapon/stock_parts/subspace/transmitter
 	underlays.Cut()
 	underlays += image('icons/obj/stationobjs.dmi', icon_state = "tele-wires")
+
+/obj/machinery/teleport/hub/attackby(obj/item/B as obj, var/mob/user as mob)
+	if (istype(B, /obj/item/weapon/screwdriver))
+		default_deconstruction_screwdriver(user,icon_state,icon_state,B)
+	if(istype(B, /obj/item/weapon/crowbar	))
+		default_deconstruction_crowbar(B,0)
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
 	spawn()
@@ -305,14 +317,25 @@
 	idle_power_usage = 10
 	active_power_usage = 2000
 	var/obj/machinery/teleport/hub/com
-
+//"Requires 1 Subspace Transmitter,2 Manipulator, 2 Scanning Module and 2 pieces of cable."
 /obj/machinery/teleport/station/New()
 	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/teleporterstation
+	component_parts += new /obj/item/weapon/stock_parts/subspace/transmitter
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/manipulator
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module
+	RefreshParts()
 	overlays.Cut()
 	overlays += image('icons/obj/stationobjs.dmi', icon_state = "controller-wires")
 
-/obj/machinery/teleport/station/attackby(var/obj/item/weapon/W)
-	src.attack_hand()
+/obj/machinery/teleport/station/attackby(obj/item/B as obj, var/mob/user as mob)
+	if (istype(B, /obj/item/weapon/screwdriver))
+		default_deconstruction_screwdriver(user,icon_state,icon_state,B)
+	if(istype(B, /obj/item/weapon/crowbar	))
+		default_deconstruction_crowbar(B,0)
 
 /obj/machinery/teleport/station/attack_ai()
 	src.attack_hand()

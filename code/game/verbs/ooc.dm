@@ -72,8 +72,6 @@
 				target << "<font color='[src.prefs.OOC_color]'><span class='ooc'>" + create_text_tag("ooc", "OOC:", target) + " <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
 			else if( donator_tier( src ) == DONATOR_TIER_1 )
 				target << "<span class='ooc'><span class='donator'>" + create_text_tag("ooc", "OOC:", target) + " <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></span></font>"
-			else if( get_title( src ) == 2 )
-				target << "<span class='ooc'><span class='spriter'>" + create_text_tag("ooc", "OOC:", target) + " <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></span></font>"	//for founded, don't have a colour for event team yet.
 			else
 				target << "<span class='ooc'><span class='[ooc_style]'>" + create_text_tag("ooc", "OOC:", target) + " <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></span>"
 

@@ -114,6 +114,56 @@
 			the riots. More on this at 6."}
 			round_time = 60 * 60
 
+	nyx_developments
+
+		legal_struggle
+			channel_name = "Curious Commoner"
+			author = "Editor Brad Oakley"
+
+			message = {"A \"turf war\" between several megacorporations has broken out over a much disputed asteroid field
+			in the Nyx system. Reports indicate the legal teams of Mattermonger and NanoTrasen have been hard at work.
+			The past week, a total of over 100 legal papers from these two companies have flowed through the
+			RAO (Regional Administration Office) in charge of Nyx. At least 90% of these are assumed to concern the
+			disputed territory. The RAO have so far refused to provide any more details."}
+			round_time = 60 * 10
+
+		organized_crime
+			channel_name = "Curious Commoner"
+			author = "Journalist Reisso Ilsa"
+
+			message = {"An increase in the activity of organized crime has Nyx officials worried. Experts fear that the
+			sudden burst in criminal activity may be evidence of larger sleeper cells existing in the system.
+			Director of System Security John Kelper from Safespace, the company tasked with the Nyx system's protection,
+			says they still lack a lot of information, but mention that the criminals may be part of multiple organizations
+			that are cooperating in a coalition. He also emphazises that even though civilian and logistics
+			stations have been attacked, the ulterior motive seems to be corporate espionage."}
+			round_time = 60 * 20
+
+		new_station
+			channel_name = "Curious Commoner"
+			author = "Reporter Carly Baker"
+
+			message = {"The recent discovery of a mineral rich asteroid field in close proximity to a planetary mist in
+			the Nyx solar system has prompted the construction of a new research station. An asteroid prospecting drone investigating
+			the asteroid field gave results that may indicate the existence of new, promising phoron structures. While Curious Commoner
+			investiagors were turned away by construction site security, few companies have described an interest in working asteroids like
+			the ones found in this field. It is most likely that Jenk Research, Mattermonger, NanoTrasen or Vagrant Exploration
+			are behind the new station. Curious Commoner is following the case closely, and will follow up with more detailed reports."}
+			round_time = 60 * 30
+
+		legal_struggle_end
+			channel_name = "Curious Commoner"
+			author = "Editor Brad Oakley"
+
+			message = {"Investigations carried out by the Regional Administration Office in the Nyx system seems to have put an end
+			to the legal struggle between several megacorporations interested in a mineral rich asteroid field. Upon arrival at the
+			fields, the inspectors were turned away by security officers assigned to the protection of the construction site. It has now
+			become clear that NanoTrasen is behind the construction of the new station. The RAO claims to have \"granted NanoTrasen full
+			permission and authority over the asteroid field in question\". NanoTrasen has commented on the case, saying \"we're excited to
+			to be the pioneers behind what may very well be the beginning of a new field within phoron research. Nearly all of our Nyx resources
+			have now been moved to the construction of this new research station\"."}
+			round_time = 60 * 45
+
 
 var/global/list/newscaster_standard_feeds = list(/datum/news_announcement/bluespace_research, /datum/news_announcement/lotus_tree, /datum/news_announcement/random_junk,  /datum/news_announcement/food_riots)
 
@@ -122,7 +172,7 @@ proc/process_newscaster()
 
 var/global/tmp/announced_news_types = list()
 proc/check_for_newscaster_updates(type)
-	for(var/subtype in typesof(type)-type)
+	for(var/subtype in (typesof(type)-type + typesof(/datum/news_announcement/nyx_developments))) // development news are always shown
 		var/datum/news_announcement/news = new subtype()
 		if(news.round_time * 10 <= world.time && !(subtype in announced_news_types))
 			announced_news_types += subtype

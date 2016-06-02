@@ -8,7 +8,6 @@ var/datum/template_config/template_config
 
 	var/list/chances = list()
 	var/list/ignore_types = list()
-	var/list/zs = list()
 	var/list/place_last = list()
 	var/tries = 10
 	var/directory
@@ -24,9 +23,6 @@ var/datum/template_config/template_config
 			else
 				value = values[val]
 			vars[val] = value
-
-	spawn( 1 )
-		zs = config.can_random_teleport_levels
 
 	PostInit()
 

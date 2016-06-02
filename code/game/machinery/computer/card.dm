@@ -96,20 +96,20 @@
 				if( istype( J, /obj/item/weapon/paper/form/job/induct ))
 					C.SetDepartment( job_master.GetDepartmentByName( J.job ))
 					job_datum = C.department.getLowestPosition()
-					admin_log_and_message_admins("[usr] has inducted [C.name] into [C.department.name]")
+					message_admins( "[usr] has inducted [C.name] into [C.department.name]", "CANON:" )
 				else if( istype( J, /obj/item/weapon/paper/form/job/termination ))
-					admin_log_and_message_admins("[usr] has terminated [C.name] from [C.department.name]")
 					C.LoadDepartment( CIVILIAN )
 					job_datum = job_master.GetJob( "Assistant" )
+					message_admins( "[usr] has terminated [C.name] from [C.department.name]", "CANON:" )
 				else if( istype( J, /obj/item/weapon/paper/form/job/promotion ))
 					C.AddJob( J.job )
 					job_datum = job_master.GetJob( J.job )
 					if( job_datum.rank_succesion_level >= COMMAND_SUCCESSION_LEVEL )
-						admin_log_and_message_admins("[usr] has promoted [C.name] to [modify.rank]")
+						message_admins( "[usr] has promoted [C.name] to [modify.rank]", "CANON:" )
 				else if( istype( J, /obj/item/weapon/paper/form/job/demotion ))
 					C.RemoveJob( J.job )
 					job_datum = C.department.getLowestPosition()
-					admin_log_and_message_admins("[usr] has demoted [C.name] from [modify.rank]")
+					message_admins( "[usr] has demoted [C.name] from [modify.rank]", "CANON:" )
 				else
 					return
 
@@ -127,14 +127,12 @@
 				addToPaperworkRecord( user, C.unique_identifier, J.info, "[capitalize( J.job_verb )] [J.job]", "Unclassified", "Employment" )
 
 			due_papers -= F
-			qdel( F )
 			ui_interact(user)
 			return
 		else
-			buzz( "\The [src] buzzes, \"This form was improperly filled out. Please try again.\"" )
+			buzz( "\The [src] buzzes, \"This form was improperly filled out. Destroy the form and try again.\"" )
 
 			due_papers -= F
-			qdel( F )
 			return
 
 	if( !istype( O, /obj/item/weapon/card/id ))

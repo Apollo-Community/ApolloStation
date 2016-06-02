@@ -277,10 +277,11 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 		src.updateUsrDialog()
 
 /obj/machinery/computer/general_air_control/supermatter_core
+	name = "Engine Cooling Control"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "tank"
 
-	frequency = 1438
+	frequency = 2141
 	var/input_tag
 	var/output_tag
 
@@ -291,6 +292,18 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 	var/pressure_setting = 100
 	circuit = /obj/item/weapon/circuitboard/air_management/supermatter_core
 
+/obj/machinery/computer/general_air_control/supermatter_core/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	if(!istype(W, /obj/item/device/multitool))
+		return ..()
+	var/type = input(usr, "Which port is being configured?", "Port Modifier") as null|anything in list("input", "output")
+	if(type)
+		var/tag = input(usr,"Enter new ID","[src.name] ID Modifier") as text
+		if(type == "input")		input_tag = tag
+		else					output_tag = tag
+		//Have to change the frequency if modified cause.. reasons?
+		frequency = 2141
+
+		user << "You modify the [type] id of [src.name]."
 
 /obj/machinery/computer/general_air_control/supermatter_core/return_text()
 	var/output = ..()
@@ -385,7 +398,9 @@ Min Core Pressure: [pressure_limit] kPa<BR>"}
 		signal.data = list ("tag" = output_tag, "set_external_pressure" = "[pressure_setting]", "checks" = 1)
 
 	signal.data["sigtype"]="command"
-	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+
+	if(frequency == 2141)			radio_connection.post_signal(src, signal)
+	else							radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 	spawn(5)
 		src.updateUsrDialog()

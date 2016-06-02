@@ -1,5 +1,5 @@
 #ifndef T_BOARD
-#error T_BOARD macro is not defined but we need it! 
+#error T_BOARD macro is not defined but we need it!
 #endif
 
 /obj/item/weapon/circuitboard/smes
@@ -25,3 +25,26 @@
 	board_type = "machine"
 	frame_desc = "Requires 3 power cells."
 	req_components = list("/obj/item/weapon/cell" = 3)
+
+/obj/item/weapon/circuitboard/rechargestation
+	name = T_BOARD("recharge station")
+	build_path = "/obj/machinery/recharge_station"
+	board_type = "machine"
+	origin_tech = "powerstorage = 4;engineering = 3"
+	frame_desc = "Requires 2 power cells, 1 scanning module, 1 capacitor and 1 manipulator"
+	req_components = list(
+						"/obj/item/weapon/cell" = 2,
+						"/obj/item/weapon/stock_parts/scanning_module" = 1,
+						"/obj/item/weapon/stock_parts/capacitor" = 1,
+						"/obj/item/weapon/stock_parts/manipulator" = 1)
+
+/obj/item/weapon/circuitboard/breakerbox
+	name = T_BOARD("breaker box")
+	build_path = "/obj/machinery/power/breakerbox"
+	board_type = "machine"
+	origin_tech = "engineering = 4;"
+	frame_desc = "Requires 1 scanning module, 1 manipulator and 2 cable lengths"
+	req_components = list(
+						"/obj/item/weapon/stock_parts/scanning_module" = 1,
+						"/obj/item/weapon/stock_parts/manipulator" = 1,
+						"/obj/item/stack/cable_coil" = 2)

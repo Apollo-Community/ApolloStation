@@ -34,7 +34,7 @@
 	if( !client )
 		return 0
 
-	if ( IsGuestKey( client.ckey ))
+	if( IsGuestKey( client.ckey ))
 		return 0
 
 	establish_db_connection()
@@ -74,7 +74,7 @@
 	// Saved characters
 	var/sql_select_char = "None"
 	if( selected_character )
-		sql_select_char = sql_sanitize_text( selected_character.name )
+		sql_select_char = html_encode( sql_sanitize_text( selected_character.name ))
 
 	if(sql_id)
 		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
@@ -111,7 +111,7 @@
 		UI_style_color = query.item[4]
 		UI_style_alpha = text2num( query.item[5] )
 		toggles = text2num( query.item[6] )
-		var/selected_char_name = query.item[7]
+		var/selected_char_name =  html_decode( query.item[7] )
 
 		if( checkCharacter( selected_char_name, client.ckey ))
 			selected_character = new( client.ckey, 0, 0 )
@@ -135,7 +135,7 @@
 		return 0
 
 	var/sql_ckey = ckey( ckey )
-	var/sql_name = sql_sanitize_text( character_name )
+	var/sql_name = sql_sanitize_text( html_encode(  character_name ))
 
 	var/DBQuery/query = dbcon.NewQuery("DELETE FROM characters WHERE ckey = '[sql_ckey]' AND name = '[sql_name]'")
 

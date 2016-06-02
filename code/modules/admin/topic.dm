@@ -721,7 +721,9 @@
 							msg = job
 						else
 							msg += ", [job]"
-					notes_add(M.ckey, "Banned  from [msg] - [reason]")
+
+
+
 					message_admins("<span class='notice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes</span>")
 					M << "<span class='alert'><BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG></span>"
 					M << "<span class='alert'><B>The reason is: [reason]</B></span>"
@@ -742,7 +744,6 @@
 							jobban_fullban(M, job, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
 							if(!msg)	msg = job
 							else		msg += ", [job]"
-						notes_add(M.ckey, "Banned  from [msg] - [reason]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg]</span>")
 						M << "<span class='alert'><BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG></span>"
 						M << "<span class='alert'><B>The reason is: [reason]</B></span>"
@@ -2107,32 +2108,18 @@
 				world << "<span class='alert'><B><big>ALERT: STATION STRUCTURAL STRESS CRITICAL. SAFETY MECHANISMS FAILED!</big></B></span>"
 				sleep(40)
 
-				for(var/mob/M in world)
-					shake_camera(M, 400, 1)
-				for(var/obj/structure/window/W in world)
+				for(var/mob/M in living_mob_list)
+					if(M.mind && M.client)
+						shake_camera(M, 600, 1)
+
+				for(var/obj/O in world)
+					if(O.z != 3)	continue
+					if(world.tick_usage > 76)	sleep(world.tick_lag)	//stops server lagging a ton
 					spawn(0)
-						sleep(rand(10,400))
-						step_rand(W)
-				for(var/obj/structure/grille/G in world)
-					spawn(0)
-						sleep(rand(20,400))
-						step_rand(G)
-				for(var/obj/machinery/door/D in world)
-					spawn(0)
-						sleep(rand(20,400))
-						step_rand(D)
-				for(var/obj/structure/closet/Closet in world)
-					spawn(0)
-						sleep(rand(30,400))
-						step_rand(Closet)
-				for(var/obj/machinery/Machinery in world)
-					spawn(0)
-						sleep(rand(30,400))
-						step_rand(Machinery)
-				for(var/obj/structure/table/T in world)
-					spawn(0)
-						sleep(rand(30,400))
-						step_rand(T)
+						sleep(rand(10,600))
+						for(var/s = 0 to rand(1,20))
+							step_rand(O)
+							sleep(world.tick_lag)
 
 			if("wave")
 				feedback_inc("admin_secrets_fun_used",1)
@@ -2714,14 +2701,14 @@
 		var/add = sanitize(input("Add Player Info") as null|text)
 		if(!add) return
 
-		notes_add(key,add,usr)
-		show_player_info(key)
+		note_add( usr, add, key )
+		show_player_info( key )
 
 	if(href_list["remove_player_info"])
 		var/key = href_list["remove_player_info"]
 		var/index = text2num(href_list["remove_index"])
 
-		notes_qdel(key, index)
+		note_del(key, index)
 		show_player_info(key)
 
 	if(href_list["notes"])
@@ -2735,5 +2722,10 @@
 			if("show")
 				show_player_info(ckey)
 			if("list")
-				PlayerNotesPage(text2num(href_list["index"]))
+				PlayerNotes()
+			if("search")
+				var/search = ckey( input( usr,"Ckey to search","Search Ckey", null ) as text|null )
+				if( !search )
+					return
+				PlayerNotes( search )
 		return

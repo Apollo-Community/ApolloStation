@@ -366,7 +366,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 /client/proc/cmd_debug_make_area_powernets()
 	set category = "Debug"
 	set name = "Make Area Powernets"
-	
+
 	var/area/A = get_area(mob)
 	if(!A)
 		return

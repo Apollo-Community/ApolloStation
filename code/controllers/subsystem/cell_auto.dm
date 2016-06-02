@@ -21,7 +21,11 @@ var/global/datum/cell_auto_handler/explosion_handler = new(1)
 /datum/subsystem/cell_auto/fire()
 	if( !handlers )
 		return
+	var/c = 1
 
 	for( var/datum/cell_auto_handler/handler in handlers )
+		if(!(c++ % 2))			//Stops explosions and stuff taking more than 70% CPU
+			if (world.tick_usage > 70)		sleep(world.tick_lag)
+
 		if( handler.shouldProcess() )
 			handler.process()

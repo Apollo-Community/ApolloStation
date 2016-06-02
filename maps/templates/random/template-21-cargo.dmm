@@ -1,0 +1,25 @@
+"a" = (/turf/space,/area/space)
+"b" = (/obj/machinery/light/small/firelight,/turf/space,/area/space)
+"c" = (/turf/simulated/wall,/area/space)
+"d" = (/turf/simulated/floor/plating/airless{tag = "icon-warnplate (NORTHWEST)"; icon_state = "warnplate"; dir = 9},/area/space)
+"e" = (/turf/simulated/floor/plating/airless{dir = 1; icon_state = "warnplate"},/area/space)
+"f" = (/obj/item/stack/sheet/mineral/gold,/obj/item/stack/sheet/mineral/gold,/obj/item/stack/sheet/mineral/gold,/obj/item/stack/sheet/mineral/gold,/obj/item/stack/sheet/mineral/gold,/obj/item/stack/sheet/mineral/gold,/obj/structure/closet/crate,/obj/item/weapon/coin/gold,/obj/item/weapon/coin/gold,/obj/item/weapon/coin/gold,/turf/simulated/floor/plating/airless{tag = "icon-warnplate (NORTHEAST)"; icon_state = "warnplate"; dir = 5},/area/space)
+"g" = (/obj/item/stack/sheet/mineral/silver,/obj/item/stack/sheet/mineral/silver,/obj/item/stack/sheet/mineral/silver,/obj/item/stack/sheet/mineral/silver,/obj/item/stack/sheet/mineral/silver,/obj/item/stack/sheet/mineral/silver,/obj/item/stack/sheet/mineral/silver,/obj/structure/closet/crate,/obj/item/weapon/coin/silver,/obj/item/weapon/coin/silver,/obj/item/weapon/coin/silver,/turf/simulated/floor/plating/airless{tag = "icon-warnplate (WEST)"; icon_state = "warnplate"; dir = 8},/area/space)
+"h" = (/turf/simulated/floor/plating/airless,/area/space)
+"i" = (/turf/simulated/floor/plating/airless{tag = "icon-warnplate (EAST)"; icon_state = "warnplate"; dir = 4},/area/space)
+"j" = (/obj/structure/lattice,/turf/space,/area/space)
+"k" = (/turf/simulated/floor/plating/airless{tag = "icon-warnplate (SOUTHWEST)"; icon_state = "warnplate"; dir = 10},/area/space)
+"l" = (/turf/simulated/floor/plating/airless{tag = "icon-warnplate"; icon_state = "warnplate"; dir = 2},/area/space)
+"m" = (/turf/simulated/floor/plating/airless{tag = "icon-warnplate (SOUTHEAST)"; icon_state = "warnplate"; dir = 6},/area/space)
+"n" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/plating,/area/space)
+
+(1,1,1) = {"
+abaaab
+accccc
+acdefc
+acghic
+ajklmc
+jaancc
+jajaaa
+aaaaja
+"}

@@ -47,9 +47,6 @@ var/global/datum/global_init/init = new ()
 	load_mods()
 	//end-emergency fix
 
-	//loads custom titles
-	load_titles()
-
 	src.update_status()
 
 	. = ..()
@@ -70,6 +67,12 @@ var/global/datum/global_init/init = new ()
 		processScheduler.deferSetupFor(/datum/controller/process/ticker)
 		processScheduler.setup()
 		master_controller.setup()
+
+	#ifdef PRECISE_TIMER_AVAILABLE
+	world.log << "btime.[world.system_type==MS_WINDOWS?"dll":"so"] is in use"
+	#else
+	world.log << "## ERROR: btime.[world.system_type==MS_WINDOWS?"dll":"so"] is not in use, using legacy timer"
+	#endif
 
 	spawn(3000)		//so we aren't adding to the round-start lag
 		if(config.ToRban)
@@ -192,26 +195,6 @@ var/world_topic_spam_protect_time = world.timeofday
 
 		return "Message Successful"
 
-	else if(copytext(T,1,6) == "notes")
-		/*
-			We got a request for notes from the IRC Bot
-			expected output:
-				1. notes = ckey of person the notes lookup is for
-				2. validationkey = the key the bot has, it should match the gameservers commspassword in it's configuration.
-		*/
-		var/input[] = params2list(T)
-		if(input["key"] != config.comms_password)
-			if(world_topic_spam_protect_ip == addr && abs(world_topic_spam_protect_time - world.time) < 50)
-
-				spawn(50)
-					world_topic_spam_protect_time = world.time
-					return "Bad Key (Throttled)"
-
-			world_topic_spam_protect_time = world.time
-			world_topic_spam_protect_ip = addr
-			return "Bad Key"
-
-		return show_player_info_irc(ckey(input["notes"]))
 
 	else if(copytext(T,1,4) == "age")
 		var/input[] = params2list(T)

@@ -73,8 +73,9 @@ var/list/command_positions = list(
 
 var/list/engineering_positions = list(
 	"Chief Engineer",
-	"Station Engineer",
+	"Engineer",
 	"Atmospheric Technician",
+	"Engineer Assistant"
 )
 
 
@@ -82,7 +83,8 @@ var/list/medical_positions = list(
 	"Chief Medical Officer",
 	"Medical Doctor",
 	"Psychiatrist",
-	"Virologist"
+	"Virologist",
+	"Nurse"
 )
 
 
@@ -91,7 +93,8 @@ var/list/science_positions = list(
 	"Scientist",
 	"Roboticist",
 	"Xenobiologist",
-	"Chemist"
+	"Chemist",
+	"Research Assistant"
 )
 
 //BS12 EDIT
@@ -115,7 +118,8 @@ var/list/security_positions = list(
 	"Head of Security",
 	"Warden",
 	"Detective",
-	"Security Officer"
+	"Security Officer",
+	"Security Cadet"
 )
 
 

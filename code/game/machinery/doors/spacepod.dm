@@ -7,7 +7,7 @@
 	density = 0
 	anchored = 1
 	unacidable = 1
-	req_access_txt = "66"
+	req_access = list( access_energy_barrier )
 
 	New() //set the turf below the flaps to block air
 		var/turf/T = get_turf(loc)

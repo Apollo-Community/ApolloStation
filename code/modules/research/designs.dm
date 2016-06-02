@@ -127,6 +127,12 @@ datum/design/circuit/borgupload
 	req_tech = list("programming" = 4)
 	build_path = /obj/item/weapon/circuitboard/borgupload
 
+datum/design/circuit/borgrecharge
+	name = "cyborg recharging station"
+	id = "borgrecharge"
+	req_tech = list("powerstorage" = 4)
+	build_path = /obj/item/weapon/circuitboard/rechargestation
+
 datum/design/circuit/operating
 	name = "patient monitoring console"
 	id = "operating"
@@ -162,6 +168,7 @@ datum/design/circuit/teleconsole
 	name = "teleporter control console"
 	id = "teleconsole"
 	req_tech = list("programming" = 3, "bluespace" = 2)
+	build_path = /obj/item/weapon/circuitboard/teleporter
 
 datum/design/circuit/emp_data
 	name = "employment records console"
@@ -172,6 +179,11 @@ datum/design/circuit/med_data
 	name = "medical records console"
 	id = "med_data"
 	build_path = /obj/item/weapon/circuitboard/med_data
+
+datum/design/circuit/chemdispenser
+	name = "Chemical dispenser"
+	id = "chemdispenser"
+	build_path = /obj/item/weapon/circuitboard/chemdispenser
 
 datum/design/circuit/secdata
 	name = "security records console"
@@ -194,6 +206,12 @@ datum/design/circuit/rcon_console
 	req_tech = list("programming" = 4, "engineering" = 3, "powerstorage" = 5)
 	build_path = /obj/item/weapon/circuitboard/rcon_console
 
+datum/design/circuit/breakerbox
+	name = "breaker box"
+	id = "breakerbox"
+	req_tech = list("Engineering" = 4)
+	build_path = /obj/item/weapon/circuitboard/breakerbox
+
 /* Uncomment if someone makes these buildable
 datum/design/circuit/general_alert
 	name = "general alert console"
@@ -213,6 +231,12 @@ datum/design/circuit/dronecontrol
 	req_tech = list("programming" = 4)
 	build_path = /obj/item/weapon/circuitboard/drone_control
 
+datum/design/circuit/xenofauna
+	name = "fauna reconstitution console"
+	id = "xenofauna"
+	req_tech = list("biotech" = 4,"programming" = 3)
+	build_path = /obj/item/weapon/circuitboard/reconstitutor/animal
+
 datum/design/circuit/clonecontrol
 	name = "cloning control console"
 	id = "clonecontrol"
@@ -231,11 +255,23 @@ datum/design/circuit/clonescanner
 	req_tech = list("programming" = 3, "biotech" = 3)
 	build_path = /obj/item/weapon/circuitboard/clonescanner
 
+datum/design/circuit/cryocell
+	name = "cryogenics cell"
+	id = "cryocell"
+	req_tech = list("biotech" = 4,"engineering" = 3)
+	build_path = /obj/item/weapon/circuitboard/cryocell
+
 datum/design/circuit/arcademachine
 	name = "arcade machine"
 	id = "arcademachine"
 	req_tech = list("programming" = 1)
 	build_path = /obj/item/weapon/circuitboard/arcade
+
+datum/design/circuit/papershredder
+	name = "paper shredder"
+	id = "papershredder"
+	req_tech = list("engineering" = 3)
+	build_path = /obj/item/weapon/circuitboard/papershredder
 
 datum/design/circuit/powermonitor
 	name = "power monitoring console"
@@ -297,6 +333,18 @@ datum/design/circuit/message_monitor
 	id = "message_monitor"
 	req_tech = list("programming" = 5)
 	build_path = /obj/item/weapon/circuitboard/message_monitor
+
+datum/design/circuit/teleporterstation
+	name = "Teleporter station"
+	id = "teleporterstation"
+	req_tech = list("bluespace" = 4)
+	build_path = /obj/item/weapon/circuitboard/teleporterstation
+
+datum/design/circuit/teleporterhub
+	name = "Teleporter hub"
+	id = "teleporterhub"
+	req_tech = list("bluespace" = 4)
+	build_path = /obj/item/weapon/circuitboard/teleporterhub
 
 datum/design/circuit/aifixer
 	name = "AI integrity restorer"
