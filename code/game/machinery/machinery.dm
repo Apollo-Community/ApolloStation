@@ -110,7 +110,7 @@ Class Procs:
 	var/manual = 0
 	var/global/gl_uid = 1
 	var/custom_aghost_alerts=0
-	var/panel_open = 0
+	panel_open = 0
 	var/area/myArea
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 	var/use_log = list()
@@ -372,20 +372,6 @@ Class Procs:
 				I.crit_fail = 1
 			I.loc = src.loc
 		qdel(src)
-
-/obj/machinery/proc/default_deconstruction_screwdriver(var/mob/user, var/icon_state_open, var/icon_state_closed, var/obj/item/weapon/screwdriver/S)
-	if(istype(S))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(!panel_open)
-			panel_open = 1
-			icon_state = icon_state_open
-			user << "<span class='notice'>You open the maintenance hatch of [src].</span>"
-		else
-			panel_open = 0
-			icon_state = icon_state_closed
-			user << "<span class='notice'>You close the maintenance hatch of [src].</span>"
-		return 1
-	return 0
 
 /obj/machinery/proc/default_change_direction_wrench(var/mob/user, var/obj/item/weapon/wrench/W)
 	if(panel_open && istype(W))
