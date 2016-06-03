@@ -29,7 +29,6 @@
 	var/temp = null
 	var/tempname = null
 
-	var/printing = null
 	var/can_change_id = 0
 	var/list/Perp
 
