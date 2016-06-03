@@ -70,6 +70,7 @@
 /var/const/access_shop2 = 68
 /var/const/access_slater = 69
 /var/const/access_lawyer = 70
+/var/const/access_engine_core = 71
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -371,7 +372,9 @@
 		if(access_shop2)
 			return "Shop Two"
 		if(access_slater)
-			return "NMV Slater Cockpit"
+			return "NMV Slater Command"
+		if(access_engine_core)
+			return "Engine Core"
 
 /proc/get_centcom_access_desc(A)
 	switch(A)
