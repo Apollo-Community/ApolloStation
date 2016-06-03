@@ -525,6 +525,12 @@ var/global/list/gear_datums = list()
 	cost = 3
 	slot = slot_wear_suit
 
+/datum/gear/fponcho
+	display_name = "poncho, festive"
+	path = /obj/item/clothing/suit/poncho/festive
+	cost = 3
+	slot = slot_wear_suit
+
 /datum/gear/gponcho
 	display_name = "poncho, green"
 	path = /obj/item/clothing/suit/poncho/green
