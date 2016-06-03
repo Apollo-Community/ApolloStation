@@ -775,6 +775,14 @@ datum/design/tech_disk
 	materials = list("$metal" = 30, "$glass" = 10)
 	build_path = /obj/item/weapon/disk/tech_disk
 
+datum/design/flora_disk
+	name = "Flora Data Disk"
+	desc = "Produce additional disks for storing flora data."
+	id = "flora_disk"
+	req_tech = list("biotech" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 30,"$glass" = 10)
+	build_path = /obj/item/weapon/disk/botany
 ///////////////////////////////////
 /////Non-Board Computer Stuff//////
 ///////////////////////////////////
