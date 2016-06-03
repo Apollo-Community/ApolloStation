@@ -547,7 +547,7 @@
 
 /obj/item/weapon/paper/hos
 	name = "Armory Inventory"
-	info = "<center><Large><b>NSS Apollo</b></large><br> <small>Armoury Inventory</small></center> <hr> <hr> <br> <b>Weaponry</b><br> <field> Energy Gun(s)<br> <field> Laser Gun(s)<br> <field> Ion Rifle(s)<br> <field> Combat Shotgun(s) <hr> <b>Armour</b><br> <field> Bulletproof Vest(s)<br> <field> Abalative Vest(s)<br> <field> Biohazard Suit(s)<br> <field> Bomb Suit(s) <hr> <b>Auxiliary Equipment</b><br> <field> Gasmask(s)<br> <field> box(es) of Flashbangs<br> <field> box(es) of Handcuffs<br> <field> box(es) of R.O.B.U.S.T. Cartridges <hr> <b>Riot Equipment</b><br> <field> Stun Baton(s)<br> <field> Riot Suit(s)<br> <field> Riot Shield(s) <hr> <b>Tactical Equipment</b><br> <field> Tactical Armour(s)<br> <field> Tactical Helmet(s)<br> <field> Tactical Jumpsuit(s)<br> <field> Green Balaclava(s)<br> <field> Tactical HUD(s)<br> <field> Combat Belt(s)<br> <field> Black Glove(s)<br> <field> Jackboot(s) <hr> <b>Implants</b><br> <field> Tracking Implant Box(es)<br> <field> Chemical Implant Box(es) <hr> <b>Defense Systems</b><br> <field> Deployable Barrier(s)<br> <field> Portable Flasher(s) <hr> <b>Other</b><br> <field> Holobadge Box(es) <hr> <b><center>Warden's's Signature:</b> <field></center> <hr>"
+	info = "<center><Large><b>NOS Apollo</b></large><br> <small>Armoury Inventory</small></center> <hr> <hr> <br> <b>Weaponry</b><br> <field> Energy Gun(s)<br> <field> Laser Gun(s)<br> <field> Ion Rifle(s)<br> <field> Combat Shotgun(s) <hr> <b>Armour</b><br> <field> Bulletproof Vest(s)<br> <field> Abalative Vest(s)<br> <field> Biohazard Suit(s)<br> <field> Bomb Suit(s) <hr> <b>Auxiliary Equipment</b><br> <field> Gasmask(s)<br> <field> box(es) of Flashbangs<br> <field> box(es) of Handcuffs<br> <field> box(es) of R.O.B.U.S.T. Cartridges <hr> <b>Riot Equipment</b><br> <field> Stun Baton(s)<br> <field> Riot Suit(s)<br> <field> Riot Shield(s) <hr> <b>Tactical Equipment</b><br> <field> Tactical Armour(s)<br> <field> Tactical Helmet(s)<br> <field> Tactical Jumpsuit(s)<br> <field> Green Balaclava(s)<br> <field> Tactical HUD(s)<br> <field> Combat Belt(s)<br> <field> Black Glove(s)<br> <field> Jackboot(s) <hr> <b>Implants</b><br> <field> Tracking Implant Box(es)<br> <field> Chemical Implant Box(es) <hr> <b>Defense Systems</b><br> <field> Deployable Barrier(s)<br> <field> Portable Flasher(s) <hr> <b>Other</b><br> <field> Holobadge Box(es) <hr> <b><center>Warden's's Signature:</b> <field></center> <hr>"
 
 /obj/item/weapon/paper/wiz
 	name = "List of Available Spells"
@@ -571,7 +571,7 @@
 			<li>One (1) Box of Seven (7) Beanbag Shells</li>
 		</ul>
 		<BR>
-		<b>Name of Receiver:</b> NSS Apollo Bartender
+		<b>Name of Receiver:</b> NOS Apollo Bartender
 		<BR><BR>
 		Note: The items recieved may not be taken outside of the Bar or Bar Backroom. The reciever of the recieved items may openly display the recieved items, but this privilege may be revoked by any command staff. The Captain or the Head of Security may revoke this permit at their discretion.
 		<BR><HR>
