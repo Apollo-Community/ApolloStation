@@ -19,6 +19,10 @@
 	id = "Telecomms Relay"
 	autolinkers = list("relay")
 
+/obj/machinery/telecomms/relay/preset/slater
+	id = "NMV Slater Relay"
+	autolinkers = list("relay")
+
 /obj/machinery/telecomms/relay/preset/mining
 	id = "Mining Relay"
 	autolinkers = list("m_relay")
