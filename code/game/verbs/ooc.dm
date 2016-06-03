@@ -51,8 +51,6 @@
 	STUI.ooc.Add("\[[time_stamp()]] <font color='#0066FF'>OOC: [mob.name]/[key]: [msg]</font><br>")
 	STUI.processing |= 4
 
-	msg = emoji_parse(msg)
-
 	for(var/client/target in clients)
 		if(target.prefs.toggles & CHAT_OOC)
 			var/display_name = src.key
