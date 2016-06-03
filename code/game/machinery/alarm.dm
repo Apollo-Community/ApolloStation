@@ -61,7 +61,7 @@
 	var/screen = AALARM_SCREEN_MAIN
 	var/area_uid
 	var/area/alarm_area
-	var/buildstage = 2 //2 is built, 1 is building, 0 is frame.
+	buildstage = 2 //2 is built, 1 is building, 0 is frame.
 
 	var/target_temperature = T0C+20
 	var/regulating_temperature = 0
@@ -1023,7 +1023,7 @@ Code shamelessly copied from apc_frame
 		return
 	..()
 
-/obj/item/alarm_frame/proc/try_build(turf/on_wall)
+/obj/item/alarm_frame/try_build(turf/on_wall)
 	if (get_dist(on_wall,usr)>1)
 		return
 
@@ -1067,7 +1067,7 @@ FIRE ALARM
 	power_channel = ENVIRON
 	var/last_process = 0
 	var/wiresexposed = 0
-	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
+	buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 
 /obj/machinery/firealarm/update_icon()
 
@@ -1363,7 +1363,7 @@ Code shamelessly copied from apc_frame
 		return
 	..()
 
-/obj/item/firealarm_frame/proc/try_build(turf/on_wall)
+/obj/item/firealarm_frame/try_build(turf/on_wall)
 	if (get_dist(on_wall,usr)>1)
 		return
 

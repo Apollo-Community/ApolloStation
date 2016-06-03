@@ -16,7 +16,7 @@
 		return
 	..()
 
-/obj/item/frame/proc/try_build(turf/on_wall)
+/obj/item/frame/try_build(turf/on_wall)
 	if(!build_machine_type)
 		return
 

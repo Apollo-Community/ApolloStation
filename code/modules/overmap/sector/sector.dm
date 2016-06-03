@@ -135,6 +135,9 @@
 	var/start_x = TRANSITION_EDGE_LENGTH*2
 	var/start_y = TRANSITION_EDGE_LENGTH*2
 
+	var/area/mine/unexplored/A = new
+	A.name = name
+
 	// Placing the asteroid
 	for( var/y_pos = 1, y_pos <= array_maxy, y_pos++ )
 		for( var/x_pos = 1, x_pos <= array_maxx, x_pos++ )
@@ -143,10 +146,8 @@
 				if( !T )
 					continue
 
-				new /area/mine/unexplored( T )
 				T.ChangeTurf( /turf/simulated/mineral/random )
-
-	create_lighting_overlays( zlevel )
+				A.contents += T
 
 	return 1
 

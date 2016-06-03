@@ -3,7 +3,8 @@
 	name = "lighting"
 	schedule_interval = 10		//This was 5, buuut I'm a daredevil
 
-	create_lighting_overlays()
+	spawn( 10 )
+		create_lighting_overlays()
 
 /datum/controller/process/lighting/doWork()
 	var/c = 0

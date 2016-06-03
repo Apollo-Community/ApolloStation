@@ -23,19 +23,23 @@
 	if( console && istype( O ))
 		var/obj/item/weapon/card/id/C = O
 		if( console.incident && C.mob )
+			if( console.incident.isInTrial( C.mob ) )
+				user << "<span class='alert'>That person already has a role in the trial! Clear them from the console first to change their role.</span>"
+				return
+
 			if( console.incident.criminal == C.mob ) // Wont ping if you accindetally click it after being verified
 				return
 
 			if( console.incident.criminal )
-				buzz( "\The [src] buzzes, \"There is already a defendant! Clear them from the console to take their place.\"" )
+				user << "<span class='alert'>There is already a defendant! Clear them from the console to take their place.</span>"
 			else
 				console.incident.criminal = C.mob
 				ping( "\The [src] pings, \"Defendant [C.mob] verified.\"" )
 		else
 			if( !console.incident )
-				buzz( "\The [src] buzzes, \"Console has no active trial!\"" )
+				user << "<span class='alert'>Console has no active trial!</span>"
 			else if( !C.mob )
-				buzz( "\The [src] buzzes, \"ID is not tied to a NanoTrasen Employee\"" )
+				user << "<span class='alert'>ID is not tied to a NanoTrasen Employee!</span>"
 		return
 
 	..()
@@ -51,12 +55,12 @@
 			if( !error )
 				ping( "\The [src] pings, \"[title] [C.mob] verified.\"" )
 			else
-				buzz( "\The [src] buzzes, \"[error]\"" )
+				user << "<span class='alert'>[error]</span>"
 		else
 			if( !console.incident )
-				buzz( "\The [src] buzzes, \"Console has no active trial!\"" )
+				user << "<span class='alert'>Console has no active trial!</span>"
 			else if( !C.mob )
-				buzz( "\The [src] buzzes, \"ID is not tied to a NanoTrasen Employee\"" )
+				user << "<span class='alert'>ID is not tied to a NanoTrasen Employee!</span>"
 
 		return
 

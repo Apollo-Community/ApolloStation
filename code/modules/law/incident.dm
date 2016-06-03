@@ -20,6 +20,16 @@
 
 	..()
 
+/datum/crime_incident/proc/isInTrial( var/mob/M )
+	if( criminal == M )
+		return 1
+
+	for( var/arbiter in arbiters )
+		if( arbiters[arbiter] == M )
+			return 1
+
+	return 0
+
 // I know there's a better way to do this, but we're rarely going to add new court roles, so this works well enough
 /datum/crime_incident/proc/addArbiter( var/obj/item/weapon/card/id/C, var/title )
 	if( !istype( C ))
@@ -33,6 +43,9 @@
 
 	if( title != "Witness" && arbiters[title] )
 		return "Someone has already filled the role of [title]! Clear them from the console to take their place."
+
+	if( title != "Witness" && isInTrial( C.mob ))
+		return "That person already has a role in the trial! Clear them from the console first to change their role."
 
 	var/list/same_access // The card requires one of these access codes to become this titl
 	var/minSeverity = 1
