@@ -33,6 +33,22 @@
 	item_state = "mining_voidsuit"
 	armor = list(melee = 50, bullet = 5, laser = 20,energy = 5, bomb = 55, bio = 100, rad = 20)
 
+/obj/item/clothing/head/helmet/space/void/foreman
+	name = "foreman's voidsuit helmet"
+	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has reinforced plating. Lookin' good."
+	icon_state = "rig0-foreman"
+	item_state = "mining_helm"
+	item_color = "mining"
+	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 20)
+	light_overlay = "helmet_light_dual"
+
+/obj/item/clothing/suit/space/void/foreman
+	icon_state = "rig-foreman"
+	name = "foreman's voidsuit"
+	desc = "A special suit that protects against hazardous, low pressure environments. Has reinforced plating. You're the boss around here."
+	item_state = "foreman_voidsuit"
+	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 20)
+
 //Medical Rig
 /obj/item/clothing/head/helmet/space/void/medical
 	name = "medical voidsuit helmet"

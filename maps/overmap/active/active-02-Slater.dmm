@@ -568,7 +568,7 @@
 "kV" = (/obj/structure/table,/obj/random/tech_supply,/obj/random/tech_supply,/obj/item/weapon/wrench,/turf/simulated/floor/plating,/area/slater/disposals)
 "kW" = (/obj/machinery/door/airlock/maintenance_hatch{icon_state = "door_closed"; locked = 0; name = "Engine Access"; req_access_txt = "0"; req_one_access_txt = "11;24"},/turf/simulated/floor/plating,/area/slater/disposals)
 "kX" = (/obj/structure/table,/obj/item/weapon/storage/fancy/cigarettes/lucky7,/obj/item/weapon/storage/box/matches,/turf/simulated/floor/plating,/area/slater/disposals)
-"kY" = (/obj/structure/table/rack,/turf/simulated/floor/carpet,/area/slater/foreman)
+"kY" = (/obj/structure/table/rack,/obj/item/clothing/head/helmet/space/void/foreman,/obj/item/clothing/mask/breath,/obj/item/clothing/suit/space/void/foreman,/obj/item/weapon/mining_scanner,/turf/simulated/floor/carpet,/area/slater/foreman)
 "kZ" = (/obj/structure/bed,/obj/item/weapon/bedsheet/brown,/turf/simulated/floor/carpet,/area/slater/foreman)
 "la" = (/obj/structure/closet/secure_closet/personal/cabinet,/turf/simulated/floor/carpet,/area/slater/foreman)
 "lb" = (/obj/machinery/door/airlock/maintenance_hatch{req_access_txt = "54"},/obj/machinery/door/firedoor,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/plating{dir = 1; icon_state = "warnplate"; nitrogen = 0.01; oxygen = 0.01},/area/slater/maint1)
@@ -621,7 +621,12 @@
 "lW" = (/obj/machinery/portable_atmospherics/canister/air,/turf/simulated/floor/plating,/area/slater/maint2)
 "lX" = (/obj/machinery/light/small,/turf/simulated/floor/plating,/area/slater/maint2)
 "lY" = (/obj/structure/closet,/obj/item/weapon/storage/backpack,/obj/item/weapon/storage/backpack,/obj/item/weapon/storage/backpack,/turf/simulated/floor/plating,/area/slater/maint2)
-"lZ" = (/obj/effect/mapinfo/sector/slater,/turf/space,/area/space)
+"lZ" = (/obj/structure/sign/securearea{desc = "The NMV Slater's plaque. What a beauty she is."; icon = 'icons/NMV-SLATER.dmi'; icon_state = "1"},/turf/simulated/wall/alloy/reinforced,/area/slater/maint2)
+"ma" = (/obj/structure/sign/securearea{tag = "icon-2"; desc = "The NMV Slater's plaque. What a beauty she is."; icon = 'icons/NMV-SLATER.dmi'; icon_state = "2"},/turf/simulated/wall/alloy/reinforced,/area/slater/maint2)
+"mb" = (/obj/structure/sign/securearea{tag = "icon-3"; desc = "The NMV Slater's plaque. What a beauty she is."; icon = 'icons/NMV-SLATER.dmi'; icon_state = "3"},/turf/simulated/wall/alloy/reinforced,/area/slater/maint2)
+"mc" = (/obj/structure/sign/securearea{tag = "icon-4"; desc = "The NMV Slater's plaque. What a beauty she is."; icon = 'icons/NMV-SLATER.dmi'; icon_state = "4"},/turf/simulated/wall/alloy/reinforced,/area/slater/maint2)
+"md" = (/obj/structure/sign/securearea{tag = "icon-5"; desc = "The NMV Slater's plaque. What a beauty she is."; icon = 'icons/NMV-SLATER.dmi'; icon_state = "5"},/turf/simulated/wall/alloy/reinforced,/area/slater/maint2)
+"me" = (/obj/effect/mapinfo/sector/slater,/turf/space,/area/space)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -685,7 +690,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiXiXiXiXkYkZlahpijgagbgdgfgfgfgegbgbgdgfgegb
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiXlnlolpiXlqlrlrlrlrlrlrlrlsltlrlrlrlrlulvivivlwlxlxlxlyivivkeeReReReReReReRbBbBbBcmcQlzlAlBlClClDlClBlClElFaaaaieieieieieieieieaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalGlGlGlGlHlIlIlIlJlGlGlHlIlJlGlKlLlrlrlrlrlrlrlrlulrlMlrlrlrlulrlrlNlOlOlOlPlClQlRlFlFlFlFlFlFlFlFlFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalGlGlGlGlGlHlIlIlIlJlGlGlGlGlGlSlTlUhrlGlVlVlVlFlWlXlYlFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalGlGlGlGlGlGaaaaaalFlFlFlFlFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalGlGlGlGlGlGaaaaaalZmambmcmdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -723,5 +728,5 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-lZaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+meaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
