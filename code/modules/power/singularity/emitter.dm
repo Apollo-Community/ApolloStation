@@ -95,6 +95,8 @@
 				investigate_log("turned <font color='green'>on</font> by [user.key]","singulo")
 
 				beam = new /obj/item/projectile/beam/continuous/emitter(src.loc, src)
+
+				do_sound()
 			update_icon()
 		else
 			user << "<span class='warning'>The controls are locked!</span>"
@@ -283,3 +285,11 @@
 
 	..()
 	return
+
+/obj/machinery/power/emitter/proc/do_sound()
+	if(!active)	return
+
+	playsound(src.loc, 'sound/effects/emitter.ogg', 50)
+
+	spawn(87) // sfx lasts 8.71 seconds
+		do_sound()
