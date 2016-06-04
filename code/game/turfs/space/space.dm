@@ -82,8 +82,14 @@
 
 	inertial_drift(A)
 
+	var/obj/effect/mapinfo/M = getSectorInfo( src.z )
+	if( !istype( M ))
+		return
+
+	var/edge_length = M.edge_length
+
 	if(ticker && ticker.mode)
-		if (A.x <= TRANSITIONEDGE || A.x >= (world.maxx - TRANSITIONEDGE - 1) || A.y <= TRANSITIONEDGE || A.y >= (world.maxy - TRANSITIONEDGE - 1))
+		if (A.x <= edge_length || A.x >= ( world.maxx - edge_length - 1) || A.y <= edge_length || A.y >= (world.maxy - edge_length - 1))
 			A.overmapTravel()
 
 /turf/space/proc/Sandbox_Spacemove(atom/movable/A as mob|obj)

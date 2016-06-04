@@ -10,6 +10,7 @@
 	var/obj_type = null		// type of overmap object it spawns
 	var/landing_area = null	// if there's a specific area where incoming ships should land
 	var/zlevel
+	var/edge_length = TRANSITION_EDGE_LENGTH
 
 /obj/effect/mapinfo/New()
 	tag = "sector[z]"
@@ -43,3 +44,10 @@
 /obj/effect/mapinfo/proc/initliazeMap()
 	return 1
 
+/proc/getSectorInfo( var/level )
+	var/obj/effect/map/sector/S = overmap.map["[level]"]
+
+	if( !istype( S ))
+		return null
+
+	return S.metadata

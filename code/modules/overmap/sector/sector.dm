@@ -47,6 +47,7 @@
 	obj_type = /obj/effect/map/sector/slater
 	sector_flags = SECTOR_KNOWN | SECTOR_ALERT | SECTOR_LOCAL
 	build_priority = 2
+	edge_length = 55
 
 /obj/effect/mapinfo/sector/slater/getMapLoc()
 	return locate( OVERMAP_STATION_X+4, OVERMAP_STATION_Y-4, OVERMAP_ZLEVEL )
