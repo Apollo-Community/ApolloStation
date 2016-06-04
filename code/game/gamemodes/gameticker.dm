@@ -327,8 +327,8 @@ var/global/datum/controller/gameticker/ticker
 			message_admins("[contract_delay/10] seconds have passed since game start. Contracts are now available to traitor antagonists.")
 			faction_controller.update_contracts()
 			for(var/datum/mind/M in minds)
-				var/datum/antagonist/traitor/antag = M.antagonist
-				if( antag && istype( antag))	antag.pick_contracts()
+				if( M.antagonist && istype( M.antagonist, /datum/antagonist/traitor ))
+					M.current << "Contracts are now available from your uplink."
 
 		var/game_finished = 0
 		var/mode_finished = 0

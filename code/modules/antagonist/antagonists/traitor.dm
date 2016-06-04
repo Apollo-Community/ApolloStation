@@ -1,12 +1,12 @@
 /datum/antagonist/traitor
 	name = "Traitor"
 	greeting = "You are a traitor."
+	obligatory_contracts = 2
 
 /datum/antagonist/traitor/setup()
 	..()
 
 	if(ticker.contracts_made) // for traitors that are created mid-round, after the contracts have been made available
-		pick_contracts()
 		antag.current << "" // newline
 	
 /datum/antagonist/traitor/equip()
@@ -62,30 +62,3 @@
 
 		antag.current << "An Uplink interface has been installed in your [P.name]. Enter the code \"[pass]\" into the ringtone select to access it."
 		antag.store_memory("<B>Uplink Access Passcode:</B> [pass] ([P.name]).")
-
-/datum/antagonist/traitor/proc/pick_contracts()
-	var/list/datum/contract/candidates = faction.contracts.Copy()
-
-	for(var/datum/contract/C in candidates)
-		if(isnull(C) || !C.can_accept(antag.current))	candidates -= C
-	if(candidates.len == 0)
-		message_admins("Couldn't pick obligatory contract(s) for [antag.current.real_name] ([antag.key]). No possible contract candidates.")
-		return 0
-
-	for(var/i = 0; i < obligatory_contracts; i++)
-		var/datum/contract/C = pick(candidates)
-		C.start(antag.current)
-		candidates -= C
-
-	antag.current << ""
-	antag.current << "<B><font size=3 color=red>\The [faction.name] has decided on your orders.</font></B>"
-	if(active_contracts.len > 0)
-		antag.current << "Your employers have signed the following contracts in your name:"
-		for(var/datum/contract/C in active_contracts)
-			var/time = worldtime2text(world.time + C.time_limit)
-			antag.current << "<B>[C.title]</B>\n<I>[C.desc]</I>\nYou have until [time], station time to complete the contract."
-	else
-		antag.current << "You are declared autonomous. You may accept contracts freely, but are not obligated to do so."
-		obligatory_contracts = 0
-	antag.current << "<B>Contracts are now available from your Uplink.</B>"
-	antag.current << ""
