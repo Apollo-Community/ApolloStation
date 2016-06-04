@@ -507,6 +507,9 @@
 						if( "Atmospheric Technician" )
 							L.Remove( "Atmospheric Technician" )
 							L["Senior Engineer"] = "High"
+						if( "Virologist" )
+							L.Remove( "Virologist" )
+							L["Senior Medical Doctor"] = "High"
 				value = L
 
 		vars[variables[i]] = value
