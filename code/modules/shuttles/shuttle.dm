@@ -38,6 +38,7 @@
 	current_hanger.land_at(src)
 	place_shuttle()
 	shuttle_ingame = 1
+	//fix_corners(current_hanger.exterior)
 	//Check how many engines the shuttle starts with
 	for(var/obj/structure/shuttle/engine/propulsion/P in shuttle_turfs)
 		default_engines += 1
@@ -161,6 +162,7 @@
 	move_gib(destination, trg_hanger)
 	trg_hanger.land_at(src)
 	shuttle_turfs = move_turfs_to_turfs(shuttle_turfs, destination, direction=direction)
+	//fix_corners(trg_hanger.exterior)
 	current_hanger.take_off()
 	current_hanger.full = 0
 	current_hanger = trg_hanger
@@ -301,6 +303,30 @@
 
 	if(update_power)
 		makepowernets()
+
+/datum/shuttle/proc/fix_corners(var/exterior)
+	if(exterior)
+		for(var/turf/simulated/shuttle/wall/T in shuttle_turfs)
+			switch(T.icon_state)
+				if("swall_p5")
+					T.icon_state = "swall_s5"
+				if("swall_p6")
+					T.icon_state = "swall_s6"
+				if("swall_p9")
+					T.icon_state = "swall_s9"
+				if("swall_p10")
+					T.icon_state = "swall_s10"
+	else
+		for(var/turf/simulated/shuttle/wall/T in shuttle_turfs)
+			switch(T.icon_state)
+				if("swall_s5")
+					T.icon_state = "swall_p5"
+				if("swall_s6")
+					T.icon_state = "swall_p6"
+				if("swall_s9")
+					T.icon_state = "swall_p9"
+				if("swall_s10")
+					T.icon_state = "swall_p10"
 
 //Changing the travel time according to the currently active engines
 //Returns a modifier that is applied to the travel time.
