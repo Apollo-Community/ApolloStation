@@ -9,14 +9,14 @@
 	selection_color = "#ffeeaa"
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
-	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
+	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_engine_core,
 			            access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
 			            access_heads, access_construction, access_sec_doors,
-			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_ai_upload, access_change_ids)
-	minimal_access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
+			            access_ce, access_RC_announce, access_keycard_auth, access_change_ids)
+	minimal_access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_engine_core,
 			            access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
 			            access_heads, access_construction, access_sec_doors,
-			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_ai_upload, access_change_ids)
+			            access_ce, access_RC_announce, access_keycard_auth, access_change_ids)
 
 	rank_succesion_level = COMMAND_SUCCESSION_LEVEL
 
@@ -39,7 +39,7 @@
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/engineer(H.back), slot_in_backpack)
 	return 1
 
-/datum/job/chief_engineer/make_preview_icon( var/backpack )
+/datum/job/chief_engineer/make_preview_icon( var/backpack , var/job , var/gender )
 	var/icon/clothes_s = null
 
 	clothes_s = new /icon('icons/mob/uniform.dmi', "chief_s")
@@ -50,11 +50,8 @@
 	if(prob(1))
 		clothes_s.Blend(new /icon('icons/mob/items_righthand.dmi', "blueprints"), ICON_OVERLAY)
 	switch(backpack)
-		if(2)
-			clothes_s.Blend(new /icon('icons/mob/back.dmi', "engiepack"), ICON_OVERLAY)
-		if(3)
-			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-eng"), ICON_OVERLAY)
-		if(4)
-			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+		if(2)			clothes_s.Blend(new /icon('icons/mob/back.dmi', "engiepack"), ICON_OVERLAY)
+		if(3)			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-eng"), ICON_OVERLAY)
+		if(4)			clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
 
 	return clothes_s

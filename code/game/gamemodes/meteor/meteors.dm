@@ -25,7 +25,7 @@
 /proc/spawn_meteor(var/list/meteortypes)
 	var/turf/pickedstart
 	var/turf/pickedgoal
-	var/picked_station_level = pick(config.station_levels)
+	var/picked_station_level = pick(overmap.station_levels)
 	var/max_i = 10//number of tries to spawn meteor.
 	while (!istype(pickedstart, /turf/space))
 		var/startSide = pick(cardinal)

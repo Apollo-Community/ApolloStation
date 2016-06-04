@@ -88,7 +88,7 @@ var/global/economy_init = 0
 
 	create_station_account()
 
-	for(var/department in station_departments)
+	for(var/department in job_master.departments)
 		create_department_account(department)
 	create_department_account("Vendor")
 	vendor_account = department_accounts["Vendor"]
@@ -121,11 +121,18 @@ var/global/economy_init = 0
 		station_account.transaction_log.Add(T)
 		all_money_accounts.Add(station_account)
 
-/proc/create_department_account(department)
-	next_account_number = rand(111111, 999999)
-
+/proc/create_department_account( var/department )
 	var/datum/money_account/department_account = new()
-	department_account.owner_name = "[department] Account"
+
+	var/name = department
+
+	if( istype( department, /datum/department ))
+		var/datum/department/D = department
+		name = "[D.name]"
+
+	department_account.owner_name = "[name] Account"
+
+	next_account_number = rand(111111, 999999)
 	department_account.account_number = rand(111111, 999999)
 	department_account.remote_access_pin = rand(1111, 111111)
 	department_account.money = 5000
@@ -143,4 +150,4 @@ var/global/economy_init = 0
 	department_account.transaction_log.Add(T)
 	all_money_accounts.Add(department_account)
 
-	department_accounts[department] = department_account
+	department_accounts[name] = department_account

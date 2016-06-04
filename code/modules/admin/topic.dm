@@ -493,6 +493,27 @@
 				counter = 0
 		jobs += "</tr></table>"
 
+	//Supply (Brown)
+		counter = 0
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='926239'><th colspan='[length(cargo_positions)]'><a href='?src=\ref[src];jobban3=supplydept;jobban4=\ref[M]'>Supply Positions</a></th></tr><tr align='center'>"
+		for(var/jobPos in cargo_positions)
+			if(!jobPos)	continue
+			var/datum/job/job = job_master.GetJob(jobPos)
+			if(!job) continue
+
+			if(jobban_isbanned(M, job.title))
+				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'><font color=red>[replacetext(job.title, " ", "&nbsp")]</font></a></td>"
+				counter++
+			else
+				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				counter++
+
+			if(counter >= 5) //So things dont get squiiiiished!
+				jobs += "</tr><tr align='center'>"
+				counter = 0
+		jobs += "</tr></table>"
+
 	//Civilian (Grey)
 		counter = 0
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
@@ -668,6 +689,12 @@
 					joblist += temp.title
 			if("sciencedept")
 				for(var/jobPos in science_positions)
+					if(!jobPos)	continue
+					var/datum/job/temp = job_master.GetJob(jobPos)
+					if(!temp) continue
+					joblist += temp.title
+			if("supplydept")
+				for(var/jobPos in cargo_positions)
 					if(!jobPos)	continue
 					var/datum/job/temp = job_master.GetJob(jobPos)
 					if(!temp) continue
@@ -1904,35 +1931,21 @@
 				if(!ticker)
 					alert("The game hasn't started yet!")
 					return
-				var/objective = sanitize(copytext(input("Enter an objective"),1,MAX_MESSAGE_LEN))
-				if(!objective)
-					return
 				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","TA([objective])")
+				feedback_add_details("admin_secrets_fun_used","TA")
 				for(var/mob/living/carbon/human/H in player_list)
 					if(H.stat == 2 || !H.client || !H.mind) continue
 					if(is_special_character(H)) continue
 					//traitorize(H, objective, 0)
 					ticker.mode.traitors += H.mind
-					H.mind.special_role = "traitor"
-					var/datum/objective/new_objective = new
-					new_objective.owner = H
-					new_objective.explanation_text = objective
-					H.mind.objectives += new_objective
-					ticker.mode.greet_traitor(H.mind)
-					//ticker.mode.forge_traitor_objectives(H.mind)
-					ticker.mode.finalize_traitor(H.mind)
+					H.mind.antagonist = new /datum/antagonist/traitor(H.mind)
+					H.mind.antagonist.setup()
 				for(var/mob/living/silicon/A in player_list)
 					ticker.mode.traitors += A.mind
-					A.mind.special_role = "traitor"
-					var/datum/objective/new_objective = new
-					new_objective.owner = A
-					new_objective.explanation_text = objective
-					A.mind.objectives += new_objective
-					ticker.mode.greet_traitor(A.mind)
-					ticker.mode.finalize_traitor(A.mind)
-				message_admins("<span class='notice'>[key_name_admin(usr)] used everyone is a traitor secret. Objective is [objective]</span>")
-				log_admin("[key_name(usr)] used everyone is a traitor secret. Objective is [objective]")
+					A.mind.antagonist = new /datum/antagonist/traitor(A.mind)
+					A.mind.antagonist.setup()
+				message_admins("<span class='notice'>[key_name_admin(usr)] used everyone is a traitor secret.</span>")
+				log_admin("[key_name(usr)] used everyone is a traitor secret.")
 
 			if("launchshuttle")
 				if(!shuttle_controller) return // Something is very wrong, the shuttle controller has not been created.
@@ -1946,11 +1959,10 @@
 						valid_shuttles += shuttle_tag
 
 				var/shuttle_tag = input("Which shuttle do you want to launch?") as null|anything in valid_shuttles
-
+				var/datum/shuttle/ferry/S = shuttle_controller.shuttles[shuttle_tag]
 				if (!shuttle_tag)
 					return
 
-				var/datum/shuttle/ferry/S = shuttle_controller.shuttles[shuttle_tag]
 				if (S.can_launch())
 					S.launch(usr)
 					message_admins("<span class='notice'>[key_name_admin(usr)] launched the [shuttle_tag] shuttle</span>")
@@ -1990,29 +2002,32 @@
 
 				var/shuttle_tag = input("Which shuttle do you want to jump?") as null|anything in shuttle_controller.shuttles
 				if (!shuttle_tag) return
-
 				var/datum/shuttle/S = shuttle_controller.shuttles[shuttle_tag]
 
-				var/origin_area = input("Which area is the shuttle at now? (MAKE SURE THIS IS CORRECT OR THINGS WILL BREAK)") as null|area in world
-				if (!origin_area) return
+				var/list/valid_hangers = new/list()
+				for(var/obj/hanger/H in hangers)
+					if(H.can_land_at(S))
+						valid_hangers += H.htag
 
-				var/destination_area = input("Which area is the shuttle at now? (MAKE SURE THIS IS CORRECT OR THINGS WILL BREAK)") as null|area in world
-				if (!destination_area) return
+				var/hanger_tag = input("Which hanger do you want to jump the shuttle to ? (All hangers given are valid this will not break the game)") as null|anything in valid_hangers
+				if (!hanger_tag) return
+				var/obj/hanger/destination_hanger = hangers_as[hanger_tag]
+				if(isnull(destination_hanger)) return
 
 				var/long_jump = alert("Is there a transition area for this jump?","", "Yes", "No")
 				if (long_jump == "Yes")
-					var/transition_area = input("Which area is the transition area? (MAKE SURE THIS IS CORRECT OR THINGS WILL BREAK)") as null|area in world
-					if (!transition_area) return
+					var/obj/hanger/transistion_hanger = hanger_controller.get_free_interim_hanger(S)
+					if (isnull(transistion_hanger)) return
 
 					var/move_duration = input("How many seconds will this jump take?") as num
 
-					S.long_jump(origin_area, destination_area, transition_area, move_duration)
-					message_admins("<span class='notice'>[key_name_admin(usr)] has initiated a jump from [origin_area] to [destination_area] lasting [move_duration] seconds for the [shuttle_tag] shuttle</span>")
-					log_admin("[key_name_admin(usr)] has initiated a jump from [origin_area] to [destination_area] lasting [move_duration] seconds for the [shuttle_tag] shuttle")
+					S.long_jump(destination_hanger, transistion_hanger, move_duration)
+					message_admins("<span class='notice'>[key_name_admin(usr)] has initiated a jump with [S.docking_controller_tag] to [destination_hanger.tag] via [transistion_hanger.tag] lasting [move_duration]</span>")
+					log_admin("[key_name_admin(usr)] has initiated a jump with [S.docking_controller_tag] to [destination_hanger.tag] lasting [move_duration]")
 				else
-					S.short_jump(origin_area, destination_area)
-					message_admins("<span class='notice'>[key_name_admin(usr)] has initiated a jump from [origin_area] to [destination_area] for the [shuttle_tag] shuttle</span>")
-					log_admin("[key_name_admin(usr)] has initiated a jump from [origin_area] to [destination_area] for the [shuttle_tag] shuttle")
+					S.short_jump(destination_hanger)
+					message_admins("<span class='notice'>[key_name_admin(usr)] has initiated a jump with [S.docking_controller_tag] to [destination_hanger.tag]</span>")
+					log_admin("[key_name_admin(usr)] has initiated a jump with [S.docking_controller_tag] to [destination_hanger.tag]")
 
 			if("moveshuttle")
 
@@ -2021,7 +2036,7 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ShM")
 
-				var/confirm = alert("This command directly moves a shuttle from one area to another. DO NOT USE THIS UNLESS YOU ARE DEBUGGING A SHUTTLE AND YOU KNOW WHAT YOU ARE DOING.", "Are you sure?", "Ok", "Cancel")
+				var/confirm = alert("THIS IS BROKEN RIGHT NOW!!! This command directly moves a shuttle from one area to another. DO NOT USE THIS UNLESS YOU ARE DEBUGGING A SHUTTLE AND YOU KNOW WHAT YOU ARE DOING.", "Are you sure?", "Ok", "Cancel")
 				if (confirm == "Cancel")
 					return
 
@@ -2036,7 +2051,7 @@
 				var/destination_area = input("Which area is the shuttle at now? (MAKE SURE THIS IS CORRECT OR THINGS WILL BREAK)") as null|area in world
 				if (!destination_area) return
 
-				S.move(origin_area, destination_area)
+				S.move(destination_area)
 				message_admins("<span class='notice'>[key_name_admin(usr)] moved the [shuttle_tag] shuttle</span>")
 				log_admin("[key_name(usr)] moved the [shuttle_tag] shuttle")
 
@@ -2244,7 +2259,7 @@
 				message_admins("[key_name_admin(usr)] made the floor LAVA! It'll last [length] seconds and it will deal [damage] damage to everyone.", "ADMINBUS:")
 
 				for(var/turf/simulated/floor/F in world)
-					if(F.z in config.station_levels)
+					if(F.z in overmap.station_levels)
 						F.name = "lava"
 						F.desc = "The floor is LAVA!"
 						F.overlays += "lava"
@@ -2269,7 +2284,7 @@
 						sleep(10)
 
 					for(var/turf/simulated/floor/F in world) // Reset everything.
-						if(F.z in config.station_levels)
+						if(F.z in overmap.station_levels)
 							F.name = initial(F.name)
 							F.desc = initial(F.desc)
 							F.overlays.Cut()
@@ -2327,7 +2342,7 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","EgL")
 				for(var/obj/machinery/door/airlock/W in world)
-					if(W.z in config.station_levels && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
+					if(W.z in overmap.station_levels && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
 						W.req_access = list()
 				message_admins("[key_name_admin(usr)] activated Egalitarian Station mode", "ADMINBUS:")
 				command_announcement.Announce("Centcomm airlock control override activated. Please take this time to get acquainted with your coworkers.", new_sound = 'sound/AI/commandreport.ogg')

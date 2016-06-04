@@ -26,7 +26,7 @@
 			T.visible_message("\icon[src] [src] [pick("chirps","chirrups","cheeps")], \"I couldn't tell where we are. Don't wander so much next time!\"")
 			return
 
-		var/obj/effect/map/sector = map_sectors["[T.z]"]
+		var/obj/effect/map/sector = overmap.map["[T.z]"]
 		if( !sector )
 
 			T.visible_message("\icon[src] [src] [pick("chirps","chirrups","cheeps")], \"I couldn't seem to find any nearby beacons!\"")

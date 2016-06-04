@@ -387,6 +387,7 @@ var/global/list/holodeck_programs = list(
 	anchored = 1.0
 	layer = 2.8
 	throwpass = 1	//You can throw objects over this, despite it's density.
+	parts = null
 
 /obj/structure/table/holotable/attack_hand(mob/user as mob)
 	return // HOLOTABLE DOES NOT GIVE A FUCK
@@ -433,10 +434,6 @@ var/global/list/holodeck_programs = list(
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = 1.0
 	flags = ON_BORDER
-
-
-/obj/structure/holowindow/Destroy()
-	..()
 
 /obj/item/weapon/holo
 	damtype = HALLOSS

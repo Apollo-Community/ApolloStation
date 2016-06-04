@@ -13,7 +13,7 @@ for reference:
 	access_medical = 5
 	access_morgue = 6
 	access_tox = 7
-	access_tox_storage = 8
+	access_moon = 8
 	access_genetics = 9
 	access_engine = 10
 	access_engine_equip= 11
@@ -43,7 +43,7 @@ for reference:
 	access_hydroponics = 35
 	access_manufacturing = 36
 	access_library = 37
-	access_lawyer = 38
+	access_iaa = 38
 	access_virology = 39
 	access_cmo = 40
 	access_qm = 41

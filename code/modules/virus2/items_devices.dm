@@ -36,7 +36,7 @@
 ///////////////VIRUS DISH///////////////
 
 /obj/item/weapon/virusdish
-	var/base_name = "virus sample"
+	base_name = "virus sample"
 	name = "virus sample"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-b"
@@ -45,7 +45,7 @@
 	var/info = 0
 	var/analysed = 0
 	var/label_text = ""
-	
+
 	proc/update_name_label()
 		if(src.label_text == "")
 			src.name = src.base_name

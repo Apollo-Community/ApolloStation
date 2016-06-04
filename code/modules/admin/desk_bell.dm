@@ -21,3 +21,6 @@
 		H.put_in_hands( src )
 
 	..()
+
+/obj/item/desk_bell/MouseDrop()		//stops people picking it up
+	return

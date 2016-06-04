@@ -6,7 +6,7 @@
 	network = "tcomms"
 
 /obj/machinery/telecomms/relay/preset/apollo
-	id = "NSS Apollo Relay"
+	id = "NOS Apollo Relay"
 	listening_level = 3
 	autolinkers = list("s_relay")
 
@@ -19,9 +19,17 @@
 	id = "Telecomms Relay"
 	autolinkers = list("relay")
 
+/obj/machinery/telecomms/relay/preset/slater
+	id = "NMV Slater Relay"
+	autolinkers = list("relay")
+
 /obj/machinery/telecomms/relay/preset/mining
 	id = "Mining Relay"
 	autolinkers = list("m_relay")
+
+/obj/machinery/telecomms/relay/preset/moon
+	id = "Moon Relay"
+	autolinkers = list("mn_relay")
 
 /obj/machinery/telecomms/relay/preset/ruskie
 	id = "Ruskie Relay"

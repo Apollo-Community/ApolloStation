@@ -9,7 +9,6 @@
 	var/obj/item/weapon/card/id/scan = null
 	var/obj/item/weapon/card/id/modify = null
 	var/mode = 0.0
-	var/printing = null
 
 	var/list/due_papers = list() // The promotion / demotion papers that the machine is still expecting
 
@@ -164,10 +163,10 @@
 	if( !istype( C ))
 		return
 
-	if( !C.character )
+	if( !istype( C.mob ))
 		return
 
-	return C.character.department.name
+	return C.mob.character.department.name
 
 /obj/machinery/computer/card/proc/is_inducted()
 	if( !modify || !scan )
@@ -225,13 +224,13 @@
 	var/list/locked_jobs = list()
 	var/list/unlocked_jobs = list()
 
-	if( modify && modify.character && scan && scan.character && scan.character.department )
-		var/datum/department/D = scan.character.department
+	if( modify && modify.mob && modify.mob.character && scan && scan.mob && scan.mob.character && scan.mob.character.department )
+		var/datum/department/D = scan.mob.character.department
 		if( is_centcom() )
-			locked_jobs = modify.character.getAllPromotablePositions( COMMAND_SUCCESSION_LEVEL+1 )
-			unlocked_jobs = modify.character.getAllDemotablePositions( COMMAND_SUCCESSION_LEVEL+1 )
+			locked_jobs = modify.mob.character.getAllPromotablePositions( COMMAND_SUCCESSION_LEVEL+1 )
+			unlocked_jobs = modify.mob.character.getAllDemotablePositions( COMMAND_SUCCESSION_LEVEL+1 )
 		else
-			unlocked_jobs = D.getPromotablePositionNames() & modify.character.roles
+			unlocked_jobs = D.getPromotablePositionNames() & modify.mob.character.roles
 
 			locked_jobs = D.getPromotablePositionNames()
 			locked_jobs.Remove( unlocked_jobs )
@@ -239,7 +238,7 @@
 	data["locked_jobs"] = format_jobs(locked_jobs)
 	data["unlocked_jobs"] = format_jobs(unlocked_jobs)
 
-	if (modify)
+	if (modify && scan)
 		var/list/regions = list()
 		for(var/datum/department/D in job_master.departments)
 			var/list/accesses = list()
@@ -440,43 +439,47 @@
 
 			var/obj/item/weapon/paper/form/job/termination/P = new( print_date( universe.date ), department_name( modify ), modify.registered_name)
 			P.required_signatures = names
-			due_papers[P] = modify.character
+			due_papers[P] = modify.mob.character
 			print( P )
 			spawn( 45 )
 				ping( "\The [src] pings, \"Please fill out this form and return it to this console when complete.\"" )
 
 		if ("induct")
-			if( !scan.character )
+			if( !istype( scan.mob ))
 				buzz("\The [src] buzzes, \"Authorized card is not tied to a NanoTrasen Employee!\"")
 				return
 
-			if( !scan.character.department )
+			if( !scan.mob.character.department )
 				buzz("\The [src] buzzes, \"Authorized card has no active department!\"")
 				return
 
-			if( !modify.character )
+			if( !istype( modify.mob ))
 				buzz("\The [src] buzzes, \"Modification card is not tied to a NanoTrasen Employee!\"")
 				return
 
 			if( !modifyingSubordinate() )
 				buzz( "\The [src] buzzes, \"Not authorized to modify this card!" )
+				return
+
+			if( scan.mob == modify.mob )
+				buzz("\The [src] buzzes, \"You may not modify your own card!\"")
 				return
 
 			var/list/names = list( modify.registered_name, scan.registered_name )
 
 			var/obj/item/weapon/paper/form/job/induct/P = new( print_date( universe.date ), department_name( scan ))
 			P.required_signatures = names
-			due_papers[P] = modify.character
+			due_papers[P] = modify.mob.character
 			print( P )
 			spawn( 45 )
 				ping( "\The [src] pings, \"Please fill out this form and return it to this console when complete.\"" )
 
 		if ("change_role")
-			if( !scan.character )
+			if( !istype( scan.mob ))
 				buzz("\The [src] buzzes, \"Authorized card is not tied to a NanoTrasen Employee!\"")
 				return
 
-			if( !modify.character )
+			if( !istype( modify.mob ))
 				buzz("\The [src] buzzes, \"Modification card is not tied to a NanoTrasen Employee!\"")
 				return
 
@@ -484,7 +487,11 @@
 				buzz( "\The [src] buzzes, \"Not authorized to modify this card!" )
 				return
 
-			var/datum/department/J = input(usr, "Choose the department to transfer to:", "Department Transfer")  as null|anything in modify.character.roles
+			if( scan.mob == modify.mob )
+				buzz("\The [src] buzzes, \"You may not modify your own card!\"")
+				return
+
+			var/datum/department/J = input(usr, "Choose the department to transfer to:", "Department Transfer")  as null|anything in modify.mob.character.roles
 
 			var/datum/job/job_datum = job_master.GetJob( J )
 			if( !istype( job_datum ))
@@ -499,20 +506,24 @@
 			ping( "\The [src] pings, \"[modify.registered_name]'s role has been changed to [modify.rank].\"" )
 
 		if ("transfer")
-			if( !scan.character )
+			if( !istype( scan.mob ))
 				buzz("\The [src] buzzes, \"Authorized card is not tied to a NanoTrasen Employee!\"")
 				return
 
-			if( !scan.character.department )
+			if( !scan.mob.character.department )
 				buzz("\The [src] buzzes, \"Authorized card has no active department!\"")
 				return
 
-			if( !modify.character )
+			if( !istype( modify.mob ))
 				buzz("\The [src] buzzes, \"Modification card is not tied to a NanoTrasen Employee!\"")
 				return
 
 			if( !modifyingSubordinate() )
 				buzz( "\The [src] buzzes, \"Not authorized to modify this card!" )
+				return
+
+			if( scan.mob == modify.mob )
+				buzz("\The [src] buzzes, \"You may not modify your own card!\"")
 				return
 
 			var/datum/department/D = input(usr, "Choose the department to transfer to:", "Department Transfer")  as null|anything in job_master.departments
@@ -521,22 +532,26 @@
 
 			var/obj/item/weapon/paper/form/job/induct/P = new( print_date( universe.date ), D.name )
 			P.required_signatures = names
-			due_papers[P] = modify.character
+			due_papers[P] = modify.mob.character
 			print( P )
 			spawn( 45 )
 				ping( "\The [src] pings, \"Please fill out this form and return it to this console when complete.\"" )
 
 		if( "promote" )
-			if( !scan.character )
+			if( !istype( scan.mob ))
 				buzz("\The [src] buzzes, \"Authorized card is not tied to a NanoTrasen Employee!\"")
 				return
 
-			if( !modify.character )
+			if( !istype( modify.mob ))
 				buzz("\The [src] buzzes, \"Modification card is not tied to a NanoTrasen Employee!\"")
 				return
 
 			if( !modifyingSubordinate() )
 				buzz( "\The [src] buzzes, \"Not authorized to modify this card!" )
+				return
+
+			if( scan.mob == modify.mob )
+				buzz("\The [src] buzzes, \"You may not modify your own card!\"")
 				return
 
 			var/job_name = href_list["promote_role"]
@@ -545,40 +560,48 @@
 
 			var/obj/item/weapon/paper/form/job/promotion/P = new( print_date( universe.date ), job_name, department_name( modify ))
 			P.required_signatures = names
-			due_papers[P] = modify.character
+			due_papers[P] = modify.mob.character
 			print( P )
 			spawn( 45 )
 				ping( "\The [src] pings, \"Please fill out this form and return it to this console when complete.\"" )
 
 		if( "recommend" )
-			if( !scan.character )
+			if( !istype( scan.mob ))
 				buzz("\The [src] buzzes, \"Authorized card is not tied to a NanoTrasen Employee!\"")
 				return
 
-			if( !modify.character )
+			if( !istype( modify.mob ))
 				buzz("\The [src] buzzes, \"Modification card is not tied to a NanoTrasen Employee!\"")
+				return
+
+			if( scan.mob == modify.mob )
+				buzz("\The [src] buzzes, \"You may not recommend yourself!\"")
 				return
 
 			var/list/names = list( scan.registered_name )
 
 			var/obj/item/weapon/paper/form/command_recommendation/P = new( print_date( universe.date ), modify.registered_name )
 			P.required_signatures = names
-			due_papers[P] = modify.character
+			due_papers[P] = modify.mob.character
 			print( P )
 			spawn( 45 )
 				ping( "\The [src] pings, \"Please fill out this form and return it to this console when complete.\"" )
 
 		if( "demote" )
-			if( !scan.character )
+			if( !istype( scan.mob ))
 				buzz("\The [src] buzzes, \"Authorized card is not tied to a NanoTrasen Employee!\"")
 				return
 
-			if( !modify.character )
+			if( !istype( modify.mob ))
 				buzz("\The [src] buzzes, \"Modification card is not tied to a NanoTrasen Employee!\"")
 				return
 
 			if( !modifyingSubordinate() )
 				buzz( "\The [src] buzzes, \"Not authorized to modify this card!\"" )
+				return
+
+			if( scan.mob == modify.mob )
+				buzz("\The [src] buzzes, \"You may not modify your own card!\"")
 				return
 
 			var/job_name = href_list["demote_role"]
@@ -587,7 +610,7 @@
 
 			var/obj/item/weapon/paper/form/job/demotion/P = new( print_date( universe.date ), job_name, modify.registered_name, department_name( modify ))
 			P.required_signatures = names
-			due_papers[P] = modify.character
+			due_papers[P] = modify.mob.character
 			print( P )
 			spawn( 40 )
 				ping( "\The [src] pings, \"Please fill out this form and return it to this console when complete." )

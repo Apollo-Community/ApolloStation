@@ -29,7 +29,7 @@
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/engineer(H.back), slot_in_backpack)
 	return 1
 
-/datum/job/atmos/make_preview_icon( var/backpack )
+/datum/job/atmos/make_preview_icon( var/backpack , var/job , var/gender )
 	var/icon/clothes_s = null
 
 	clothes_s = new /icon('icons/mob/uniform.dmi', "atmos_s")

@@ -16,7 +16,7 @@
 		return
 	..()
 
-/obj/item/frame/proc/try_build(turf/on_wall)
+/obj/item/frame/try_build(turf/on_wall)
 	if(!build_machine_type)
 		return
 
@@ -74,3 +74,9 @@
 	icon_state = "bulb-construct-item"
 	refund_amt = 1
 	build_machine_type = /obj/machinery/light_construct/small
+
+/obj/item/frame/radio_button
+	icon = 'icons/obj/airlock_machines.dmi'
+	icon_state = "access_button_off"
+	refund_amt = 1
+	build_machine_type = /obj/machinery/radio_button

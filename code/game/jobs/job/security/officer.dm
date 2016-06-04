@@ -23,7 +23,6 @@
 	H.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
 	H.equip_to_slot_or_qdel(new /obj/item/device/pda/security(H), slot_belt)
 	H.equip_to_slot_or_qdel(new /obj/item/weapon/handcuffs(H), slot_s_store)
-	H.equip_to_slot_or_qdel(new /obj/item/device/flash(H), slot_l_store)
 	if(H.character.backpack == 1)
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/handcuffs(H), slot_l_hand)
@@ -32,10 +31,11 @@
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/melee/baton/loaded(H), slot_in_backpack)
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/gun/energy/taser(H), slot_in_backpack)
+		H.equip_to_slot_or_qdel(new /obj/item/device/flash(H), slot_in_backpack)
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/tie/holster(H), slot_in_backpack)
 	return 1
 
-/datum/job/officer/make_preview_icon( var/backpack )
+/datum/job/officer/make_preview_icon( var/backpack , var/job , var/gender )
 	var/icon/clothes_s = null
 
 	clothes_s = new /icon('icons/mob/uniform.dmi', "secred_s")

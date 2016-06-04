@@ -250,6 +250,7 @@
 		t = replacetext(t, "\[logo\]", "<img src = logo-nt.png>")
 		t = replacetext(t, "\[apollo\]", "<img src = logo-apollo.png>")
 		t = replacetext(t, "\[antilogo\]", "<img src = logo-anti.png>")	// Adds alternative anti-NT logo.
+		t = replacetext(t, "\[barcode\]", "<img src = barcode[rand(0, 3)].png>")
 
 		t = "<font face=\"[deffont]\" color=[P ? P.colour : "black"]>[t]</font>"
 	else // If it is a crayon, and he still tries to use these, make them empty!
@@ -546,7 +547,7 @@
 
 /obj/item/weapon/paper/hos
 	name = "Armory Inventory"
-	info = "<center><Large><b>NSS Apollo</b></large><br> <small>Armoury Inventory</small></center> <hr> <hr> <br> <b>Weaponry</b><br> <field> Energy Gun(s)<br> <field> Laser Gun(s)<br> <field> Ion Rifle(s)<br> <field> Combat Shotgun(s) <hr> <b>Armour</b><br> <field> Bulletproof Vest(s)<br> <field> Abalative Vest(s)<br> <field> Biohazard Suit(s)<br> <field> Bomb Suit(s) <hr> <b>Auxiliary Equipment</b><br> <field> Gasmask(s)<br> <field> box(es) of Flashbangs<br> <field> box(es) of Handcuffs<br> <field> box(es) of R.O.B.U.S.T. Cartridges <hr> <b>Riot Equipment</b><br> <field> Stun Baton(s)<br> <field> Riot Suit(s)<br> <field> Riot Shield(s) <hr> <b>Tactical Equipment</b><br> <field> Tactical Armour(s)<br> <field> Tactical Helmet(s)<br> <field> Tactical Jumpsuit(s)<br> <field> Green Balaclava(s)<br> <field> Tactical HUD(s)<br> <field> Combat Belt(s)<br> <field> Black Glove(s)<br> <field> Jackboot(s) <hr> <b>Implants</b><br> <field> Tracking Implant Box(es)<br> <field> Chemical Implant Box(es) <hr> <b>Defense Systems</b><br> <field> Deployable Barrier(s)<br> <field> Portable Flasher(s) <hr> <b>Other</b><br> <field> Holobadge Box(es) <hr> <b><center>Warden's's Signature:</b> <field></center> <hr>"
+	info = "<center><Large><b>NOS Apollo</b></large><br> <small>Armoury Inventory</small></center> <hr> <hr> <br> <b>Weaponry</b><br> <field> Energy Gun(s)<br> <field> Laser Gun(s)<br> <field> Ion Rifle(s)<br> <field> Combat Shotgun(s) <hr> <b>Armour</b><br> <field> Bulletproof Vest(s)<br> <field> Abalative Vest(s)<br> <field> Biohazard Suit(s)<br> <field> Bomb Suit(s) <hr> <b>Auxiliary Equipment</b><br> <field> Gasmask(s)<br> <field> box(es) of Flashbangs<br> <field> box(es) of Handcuffs<br> <field> box(es) of R.O.B.U.S.T. Cartridges <hr> <b>Riot Equipment</b><br> <field> Stun Baton(s)<br> <field> Riot Suit(s)<br> <field> Riot Shield(s) <hr> <b>Tactical Equipment</b><br> <field> Tactical Armour(s)<br> <field> Tactical Helmet(s)<br> <field> Tactical Jumpsuit(s)<br> <field> Green Balaclava(s)<br> <field> Tactical HUD(s)<br> <field> Combat Belt(s)<br> <field> Black Glove(s)<br> <field> Jackboot(s) <hr> <b>Implants</b><br> <field> Tracking Implant Box(es)<br> <field> Chemical Implant Box(es) <hr> <b>Defense Systems</b><br> <field> Deployable Barrier(s)<br> <field> Portable Flasher(s) <hr> <b>Other</b><br> <field> Holobadge Box(es) <hr> <b><center>Warden's's Signature:</b> <field></center> <hr>"
 
 /obj/item/weapon/paper/wiz
 	name = "List of Available Spells"
@@ -555,112 +556,6 @@
 /obj/item/weapon/paper/cmo
 	name = "CMO's Outgoing Notes"
 	info = "<i><center>To the incoming CMO of Apollo:</center><br><br>I wish you and your crew well. Do take note:<br><br><br>The Medical Emergency Red Phone system has proven itself well. Take care to keep the phones in their designated places as they have been optimised for broadcast. The two handheld green radios (I have left one in this office, and one near the Emergency Entrance) are free to be used. The system has proven effective at alerting Medbay of important details, especially during power outages.<br><br>I think I may have left the toilet cubicle doors shut. It might be a good idea to open them so the staff and patients know they are not engaged.<br><br>The new syringe gun has been stored in secondary storage. I tend to prefer it stored in my office, but 'guidelines' are 'guidelines'.<br><br>Also in secondary storage is the grenade equipment crate. I've just realised I've left it open - you may wish to shut it.<br><br>There were a few problems with their installation, but the Medbay Quarantine shutters should now be working again  - they lock down the Emergency and Main entrances to prevent travel in and out. Pray you shan't have to use them.<br><br>The new version of the Medical Diagnostics Manual arrived. I distributed them to the shelf in the staff break room, and one on the table in the corner of this room.<br><br>The exam/triage room has the walking canes in it. I'm not sure why we'd need them - but there you have it.<br><br>Emergency Cryo bags are beside the emergency entrance, along with a kit.<br><br>Spare paper cups for the reception are on the left side of the reception desk.<br><br>I've fed Runtime. She should be fine.<br><br><br><center>That should be all. Good luck!</center>"
-
-// Forms are a type of paper that can be checked for the require signatures, usually used in conjuction with computers
-/obj/item/weapon/paper/form
-	var/list/required_signatures = list()
-	deffont = "Courier"
-
-/obj/item/weapon/paper/form/proc/numberOfRequiredSignatures()
-	var/list/check = required_signatures & signatures
-	return check.len
-
-/obj/item/weapon/paper/form/proc/isFilledOut()
-	if( numberOfRequiredSignatures() == required_signatures.len )
-		return 1
-	return 0
-
-/obj/item/weapon/paper/form/job
-	var/job // What job is being granted?
-	var/job_verb
-
-/obj/item/weapon/paper/form/job/New( var/set_job )
-	job = set_job
-
-	..()
-
-/obj/item/weapon/paper/form/job/termination
-	name = "NanoTrasen Departmental Termination Form"
-	job_verb = "terminated from"
-
-/obj/item/weapon/paper/form/job/termination/New( var/date, var/set_department, var/employee )
-	job = set_department
-
-	info = {"\[center\]\[logo\]\[/center\]
-\[center\]\[b\]\[i\]NanoTrasen Departmental Termination Form\[/b\]\[/i\]\[/center\]\[hr\]
-Upon signature of this document by the Department authority on [date], the contract of appointment within the [job] for [employee] is hereby null and void. Abuse of this form may result in the termination of the Department authority.\[br\]
-
-\[b\]Cause for Termination:\[/b\] \[field\]
-\[b\]Department Authority:\[/b\] \[field\]
-\[hr\]"}
-
-	..( set_department )
-
-/obj/item/weapon/paper/form/job/induct
-	name = "NanoTrasen Departmental Induction Form"
-	job_verb = "inducted into"
-
-/obj/item/weapon/paper/form/job/induct/New( var/date, var/set_department )
-	job = set_department
-
-	info = {"\[center\]\[logo\]\[/center\]
-\[center\]\[b\]\[i\]NanoTrasen Departmental Induction Form\[/b\]\[/i\]\[/center\]\[hr\]
-Upon signature of this document by the employee, and witnessed by the Department authority of \the [job] on [date], the employee will legally be inducted into \the [job]. The Department authority is to provide them with instruction as to their role and function, or lack thereof, within the department.\[br\]
-
-\[b\]Employee:\[/b\] \[field\]
-\[b\]Department Authority:\[/b\] \[field\]
-\[hr\]"}
-
-	..( set_department )
-
-/obj/item/weapon/paper/form/job/promotion
-	name = "NanoTrasen Employee Promotion Form"
-	job_verb = "promoted to"
-
-/obj/item/weapon/paper/form/job/promotion/New( var/date, var/set_job, var/department )
-	job = set_job
-
-	info = {"\[center\]\[logo\]\[/center\]
-\[center\]\[b\]\[i\]NanoTrasen Employee Promotion Form\[/b\]\[/i\]\[/center\]\[hr\]
-Upon signature of this document by the employee, and witnessed by the Department authority of the [department] on [date], the employee may legally fulfill all duties in authority as [job] as required of them. Failure to perform this responsibility hereto is subject to appointment termination without consent.\[br\]
-
-\[b\]Employee:\[/b\] \[field\]
-\[b\]Department Authority:\[/b\] \[field\]
-\[hr\]"}
-
-	..(set_job)
-
-/obj/item/weapon/paper/form/command_recommendation
-	name = "NanoTrasen Command Recommendation Form"
-
-/obj/item/weapon/paper/form/command_recommendation/New( var/date, var/name )
-	info = {"\[center\]\[logo\]\[/center\]
-\[center\]\[b\]\[i\]NanoTrasen Command Recommendation Form\[/b\]\[/i\]\[/center\]\[hr\]
-Upon signature of this document by one or several Command Officers on [date], [name] is hereby recommended for expanded responsibilities as a member of command staff. The signer of this form recognizes the potential in [name], and understands their skills to be a valuable addition to command. Misuse of this form may result in the Command Officer being pressed with criminal charges.\[br\]
-
-\[b\]Cause for Recommendation:\[/b\] \[field\]
-\[b\]Recommended Position:\[/b\] \[field\]
-\[b\]Command Officer(s) Signature(s):\[/b\] \[field\]
-\[hr\]"}
-
-	..()
-
-/obj/item/weapon/paper/form/job/demotion
-	name = "NanoTrasen Employee Demotion Form"
-	job_verb = "demoted from"
-
-/obj/item/weapon/paper/form/job/demotion/New( var/date, var/set_job, var/employee, var/department )
-	job = set_job
-
-	info = {"\[center\]\[logo\]\[/center\]
-\[center\]\[b\]\[i\]NanoTrasen Employee Demotion Form\[/b\]\[/i\]\[/center\]\[hr\]
-Upon signature of this document by the Department authority on [date], the contract of appointment with the [department] for [employee] as [job] is hereby null and void. Abuse of this form may result in the termination of the Department authority.\[br\]
-
-\[b\]Cause for Demotion:\[/b\] \[field\]
-\[b\]Department Authority:\[/b\] \[field\]
-\[hr\]"}
-
-	..(set_job)
 
 /obj/item/weapon/paper/shotgun_permit
 	name = "Bartender Shotgun Permit"
@@ -676,7 +571,7 @@ Upon signature of this document by the Department authority on [date], the contr
 			<li>One (1) Box of Seven (7) Beanbag Shells</li>
 		</ul>
 		<BR>
-		<b>Name of Receiver:</b> NSS Apollo Bartender
+		<b>Name of Receiver:</b> NOS Apollo Bartender
 		<BR><BR>
 		Note: The items recieved may not be taken outside of the Bar or Bar Backroom. The reciever of the recieved items may openly display the recieved items, but this privilege may be revoked by any command staff. The Captain or the Head of Security may revoke this permit at their discretion.
 		<BR><HR>

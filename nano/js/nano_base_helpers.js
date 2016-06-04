@@ -180,6 +180,29 @@ NanoBaseHelpers = function ()
                 html += '</div>';
 
 				return html;
+			},
+			// For the Uplink
+			contractTime: function(start, time, limit) {
+				var left = (start + (limit / 10)) - time;
+				var hours = Math.floor(left / 3600);
+				var minutes = Math.floor((left / 60) % 60);
+				var seconds = Math.floor(left % 60);
+
+				var time_string = '';
+				if(hours > 0)
+				{
+					time_string += (hours + ' hour' + ((hours > 1) ? 's' : ''));
+				}
+				if(minutes > 0)
+				{
+					time_string += (((seconds > 0 && hours > 0) ? ', ' : ((hours > 0) ? ' and ' : '')) + minutes + ' minute') + ((minutes > 1) ? 's' : '');
+				}
+				if(seconds > 0)
+				{
+					time_string += ((hours > 0 || minutes > 0) ? ' and ' : '') + seconds + ' second' + ((seconds > 1) ? 's' : '');
+				}
+
+				return time_string;
 			}
 		};
 		

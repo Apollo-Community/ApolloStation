@@ -23,6 +23,9 @@
 	name += " - No. [serial_number]"
 	..(loc)
 
+	pixel_x = rand(-6,6)
+	pixel_y = rand(-6,6)
+
 //Places the poster on a wall
 /obj/item/weapon/contraband/poster/afterattack(var/atom/A, var/mob/user, var/adjacent, var/clickparams)
 	if (!adjacent)

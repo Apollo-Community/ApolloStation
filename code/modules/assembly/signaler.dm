@@ -179,3 +179,12 @@
 		radio_controller.remove_object(src,frequency)
 	frequency = 0
 	..()
+
+/*
+/obj/item/device/assembly/signaler/attackby(obj/item/weapon/P as obj, mob/user as mob)
+	if(istype(P, /obj/item/weapon/tape_roll))
+		var/obj/item/weapon/tape_roll/tape = P
+		tape.stick(src, user)
+		return
+	..()
+*/

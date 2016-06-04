@@ -32,7 +32,7 @@
 
 
 	interact()
-		if(!interactable() || computer.z in config.admin_levels)
+		if(!interactable() || computer.z in overmap.admin_levels)
 			return
 		var/dat
 		if (src.temp)

@@ -70,3 +70,11 @@
 
 /obj/item/trash/attack(mob/M as mob, mob/living/user as mob)
 	return
+
+/obj/item/trash/map
+	name = "\improper \"NOS Apollo\" map"
+	icon_state = "map"
+
+/obj/item/trash/map/attack_self( mob/user )
+	user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY><img src = apollo_map.png></BODY></HTML>", "window=[name];size=765x730")
+	onclose(user, "[name]")

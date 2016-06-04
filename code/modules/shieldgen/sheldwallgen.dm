@@ -25,6 +25,16 @@
 		var/power_draw = 30000 //30 kW. How much power is drawn from powernet. Increase this to allow the generator to sustain longer shields, at the cost of more power draw.
 		var/max_stored_power = 50000 //50 kW
 		use_power = 0	//Draws directly from power net. Does not use APC power.
+		var/datum/wires/shieldwallgen/wires = null
+		var/disabled = 0
+
+/obj/machinery/shieldwallgen/New()
+	..()
+	wires = new(src)
+
+/obj/machinery/shieldwallgen/initialize()
+	..()
+	wires = new(src)
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user as mob)
 	if(state != 1)
@@ -38,6 +48,12 @@
 		return 1
 
 	if(src.active >= 1)
+		if(disabled)
+			user.visible_message("[user] tried to turn the shield generator off.", \
+			"You try  to turn off the shield generator, but nothing happens", \
+			"")
+			return
+
 		src.active = 0
 		icon_state = "Shield_Gen"
 
@@ -46,12 +62,30 @@
 			"You hear heavy droning fade out.")
 		for(var/dir in list(1,2,4,8)) src.cleanup(dir)
 	else
+		if(disabled)
+			user.visible_message("[user] tries to turn the shield generator on.", \
+				"You try turn on the shield generator, but nothing happens", \
+				"")
+			return
 		src.active = 1
 		icon_state = "Shield_Gen +a"
 		user.visible_message("[user] turned the shield generator on.", \
 			"You turn on the shield generator.", \
 			"You hear heavy droning.")
 	src.add_fingerprint(user)
+
+/obj/machinery/shieldwallgen/proc/switch_state()
+	if(state != 1)
+		return 1
+	if(power != 1)
+		return 1
+	if(src.active)
+		src.active = 0
+		icon_state = "Shield_Gen"
+		for(var/dir in list(1,2,4,8)) src.cleanup(dir)
+	else
+		src.active = 1
+		icon_state = "Shield_Gen +a"
 
 /obj/machinery/shieldwallgen/proc/power()
 	if(!anchored)
@@ -158,6 +192,14 @@
 
 
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/device/multitool) || istype(W, /obj/item/weapon/wirecutters))
+		if(panel_open == 1)
+			wires.Interact(user)
+			return
+
+	if(istype(W, /obj/item/weapon/screwdriver))
+		default_deconstruction_screwdriver(user,icon_state,icon_state,W)
+		return
 	if(istype(W, /obj/item/weapon/wrench))
 		if(active)
 			user << "Turn off the field generator first."

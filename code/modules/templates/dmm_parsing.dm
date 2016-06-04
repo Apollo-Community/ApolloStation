@@ -47,23 +47,21 @@
 
 		area = A
 
-	proc/Place(var/turf/origin, var/template_name)
+	proc/Place(var/turf/origin, var/template_name = "default", var/return_list)
 		name = template_name
+		var/list/to_return = new /list()
 
-		for(var/turf/T in block(origin, locate(origin.x + (x_size - 1), origin.y + (y_size - 1), origin.z)))
-			for(var/atom/movable/M in T)
-				if(istype(M, /mob))
-					var/mob/mob = M
-					if(mob.client || mob.key)
-						continue
-				qdel(M)
-			qdel(T)
-
+		//Place in the actual objects on the right tiles.
+		//Igonore any objects with the ignore
 		for(var/y = 0; y < y_size; y++)
 			var/list/row = grid["[y]"]
 			var/x = 0
 			for(var/datum/dmm_object/object in row)
-				turfs += object.Instantiate(locate(origin.x + x, origin.y + y, origin.z))
+				if(!object.ignore)
+					var/turf/T = locate(origin.x + x, origin.y + y, origin.z)
+					clear_turf(T)
+					turfs += object.Instantiate(T)
+					to_return += T
 				x++
 
 		HandleEdgeCases()
@@ -74,6 +72,7 @@
 
 		spawn(10)
 			for(var/turf/T in place_last_turfs)
+
 				var/datum/dmm_sub_object/sub = place_last_objects[place_last_turfs.Find(T)]
 				var/atom/last = new sub.object_path(T)
 				for(var/or in sub.var_overrides)
@@ -89,7 +88,7 @@
 			spawn(10)
 				makeareapowernets(area)
 
-		return 1
+		return to_return
 
 	proc/Reset()
 		Delete()
@@ -117,10 +116,19 @@
 		if(delete_src)
 			qdel(src)
 
+	//Set all space turfs in a collection to be ignored when placing down turfs.
+	proc/RemoveSpaceTurfs()
+		for(var/y = 0; y < y_size; y++)
+			var/list/row = grid["[y]"]
+			for(var/datum/dmm_object/object in row)
+				if(object.SubHasSpace())
+					object.ignore = 1
+
 /datum/dmm_object
 	var/id
 	var/list/sub_objects = list()
 	var/datum/dmm_object_collection/parent
+	var/ignore = 0
 
 	// We want the turf first and area second.
 	proc/SortSubObjects()
@@ -180,6 +188,32 @@
 					return sub
 
 		return 0
+
+	//Get all subobjects with a given path from the subojects list
+	proc/GetAllSubOfType(var/path, var/strict = 0)
+		var/list/sub_objs = new /list()
+		for(var/datum/dmm_sub_object/sub in sub_objects)
+			if(strict)
+				if(istype(sub.object_path, path))
+					sub_objs += sub
+			else
+				if(sub.object_path == path)
+					sub_objs += sub
+
+		return sub_objs
+
+	proc/SubHasSpace()
+		for(var/datum/dmm_sub_object/sub in sub_objects)
+			if(istype(sub.object_path, text2path("/turf/space")) || sub.object_path == text2path("/turf/space"))
+				return 1
+		return 0
+
+	//Removes all subobjects with the path /turf/space from the object
+	proc/RemoveSpaceTurfs()
+		var/list/space_turfs = GetAllSubOfType(text2path("/turf/space"), 1)
+		sub_objects.Remove(space_turfs)
+
+
 
 	// Has area other than space
 	proc/HasArea()

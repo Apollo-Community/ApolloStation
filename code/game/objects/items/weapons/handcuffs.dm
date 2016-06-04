@@ -138,6 +138,11 @@ var/last_chew = 0
 
 	last_chew = world.time
 
+/obj/item/weapon/handcuffs/tuff
+	name = "tuff cuffs"
+	desc = "A special brand of handcuffs with a more complex lock mechanism."
+	breakouttime = 1800 // 3 minutes!
+
 /obj/item/weapon/handcuffs/cable
 	name = "cable restraints"
 	desc = "Looks like some cables tied together. Could be used to tie something up."

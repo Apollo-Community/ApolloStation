@@ -146,6 +146,16 @@
 	path = /obj/item/weapon/module/power_control
 	category = "Engineering"
 
+/datum/autolathe/recipe/intercom
+	name = "intercom electronics"
+	path = /obj/item/weapon/intercom_electronics
+	category = "Engineering"
+
+/datum/autolathe/recipe/atm
+	name = "atm electronics"
+	path = /obj/item/weapon/atm_electronics
+	category = "Engineering"
+
 /datum/autolathe/recipe/rcd_ammo
 	name = "matter cartridge"
 	path = /obj/item/weapon/rcd_ammo

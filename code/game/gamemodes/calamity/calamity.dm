@@ -314,16 +314,10 @@
 /datum/game_mode/calamity/proc/spawn_traitors(var/list/candidates)
 
 	for(var/datum/mind/player in candidates)
-		traitors |= player
+		traitors += player
 
-		if(!config.objectives_disabled)
-			player.objectives += new /datum/objective/escape()
-			player.objectives += new /datum/objective/survive()
-
-		show_objectives(player)
-
-		finalize_traitor(player)
-		greet_traitor(player)
+		player.antagonist = new /datum/antagonist/traitor(player)
+		player.antagonist.setup()
 
 /datum/game_mode/calamity/proc/spawn_cabal(var/list/candidates)
 

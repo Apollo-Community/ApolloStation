@@ -49,7 +49,7 @@
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..())
 		return
-	if ( !( src.z in config.station_levels ))
+	if ( !( src.z in overmap.station_levels ))
 		usr << "<span class='alert'><b>Unable to establish a connection</b>: </span><span class='black'>You're too far away from the station!</span>"
 		return
 	usr.set_machine(src)
@@ -280,7 +280,7 @@
 /obj/machinery/computer/communications/attack_hand(var/mob/user as mob)
 	if(..())
 		return
-	if ( src.z in config.admin_levels )
+	if ( src.z in overmap.admin_levels )
 		user << "<span class='alert'><b>Unable to establish a connection</b>: </span><span class='black'>You're too far away from the station!</span>"
 		return
 

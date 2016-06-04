@@ -1,6 +1,6 @@
 /obj/machinery/door/airlock
 	name = "Airlock"
-	icon = 'icons/obj/doors/Doorint.dmi'
+	icon = 'icons/obj/doors/doorint.dmi'
 	icon_state = "door_closed"
 	power_channel = ENVIRON
 
@@ -61,7 +61,7 @@
 
 /obj/machinery/door/airlock/medical
 	name = "Airlock"
-	icon = 'icons/obj/doors/Doormed.dmi'
+	icon = 'icons/obj/doors/doormed.dmi'
 	assembly_type = /obj/structure/door_assembly/door_assembly_med
 
 /obj/machinery/door/airlock/maintenance
@@ -141,7 +141,7 @@
 
 /obj/machinery/door/airlock/glass_medical
 	name = "Maintenance Hatch"
-	icon = 'icons/obj/doors/Doormedglass.dmi'
+	icon = 'icons/obj/doors/doormedglass.dmi'
 	hitsound = 'sound/effects/Glasshit.ogg'
 	maxhealth = 300
 	opacity = 0
@@ -160,12 +160,12 @@
 
 /obj/machinery/door/airlock/research
 	name = "Airlock"
-	icon = 'icons/obj/doors/Doorresearch.dmi'
+	icon = 'icons/obj/doors/doorresearch.dmi'
 	assembly_type = /obj/structure/door_assembly/door_assembly_research
 
 /obj/machinery/door/airlock/glass_research
 	name = "Maintenance Hatch"
-	icon = 'icons/obj/doors/Doorresearchglass.dmi'
+	icon = 'icons/obj/doors/doorresearchglass.dmi'
 	hitsound = 'sound/effects/Glasshit.ogg'
 	maxhealth = 300
 	opacity = 0
@@ -1036,11 +1036,14 @@ About the new airlock wires panel:
 	if(!forced)
 		if( !arePowerSystemsOn() || isWireCut(AIRLOCK_WIRE_OPEN_DOOR) )
 			return 0
+
+		if(istype(src, /obj/machinery/door/airlock/glass))
+			playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
+		else
+			playsound(src.loc, 'sound/machines/airlock.ogg', 30, 1)
+	else	playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
 	use_power(360)	//360 W seems much more appropriate for an actuator moving an industrial door capable of crushing people
-	if(istype(src, /obj/machinery/door/airlock/glass))
-		playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
-	else
-		playsound(src.loc, 'sound/machines/airlock.ogg', 30, 1)
+
 	if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 		src.closeOther.close()
 
@@ -1089,10 +1092,13 @@ About the new airlock wires panel:
 				location.add_blood(M)
 
 	use_power(360)	//360 W seems much more appropriate for an actuator moving an industrial door capable of crushing people
-	if(istype(src, /obj/machinery/door/airlock/glass))
-		playsound(src.loc, 'sound/machines/windowdoor.ogg', 30, 1)
-	else
-		playsound(src.loc, 'sound/machines/airlock.ogg', 30, 1)
+	if(!forced)
+		if(istype(src, /obj/machinery/door/airlock/glass))
+			playsound(src.loc, 'sound/machines/windowdoor.ogg', 30, 1)
+		else
+			playsound(src.loc, 'sound/machines/airlock.ogg', 30, 1)
+	else	playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
+
 	for(var/turf/turf in locs)
 		var/obj/structure/window/killthis = (locate(/obj/structure/window) in turf)
 		if(killthis)

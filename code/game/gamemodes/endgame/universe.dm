@@ -8,7 +8,7 @@
  // Called by master controller.
 
 /proc/set_date( var/year, var/month, var/day )
-	if( !year || year < 2560 )
+	if( !year || year < START_YEAR )
 		return
 
 	if( !month || month < 1 || month > 12 )
@@ -44,11 +44,11 @@
 	for( var/attempts = 1, attempts < max_attempts, attempts++ )
 		loadFromDB()
 
-		if( date && date.len == 3 && date != list( 2560, 1, 1 ))
-			handleDateProgression()
+		if( date && date.len == 3 && date != list( START_YEAR, 1, 1 ))
+			date = progessDate( date )
 			return
 
-		date = list( 2560, 1, 1 )
+		date = list( START_YEAR, 1, 1 )
 
 	error( "Failed to load the universe date after [max_attempts] attempts!" )
 
@@ -63,26 +63,9 @@
 
 /datum/universal_state/proc/getYear()
 	if( !date || date.len < 3 )
-		return 2560
+		return START_YEAR
 
 	return date[1]
-
-/datum/universal_state/proc/handleDateProgression()
-	var/days = date[3]
-	var/month = date[2]
-	var/year = date[1]
-
-	days++
-
-	if( days > getMonthDays( month ))
-		days = 1
-		month++
-
-	if( month > 12 )
-		month = 1
-		year++
-
-	date = list( year, month, days )
 
 /datum/universal_state/proc/saveToDB()
 	establish_db_connection()
@@ -90,7 +73,7 @@
 		error( "Could not save the universe date!" )
 		return
 
-	if( date == list( 2560, 1, 1 ))
+	if( date == list( START_YEAR, 1, 1 ))
 		error( "Didn't save because universe date was reset!" )
 		return
 
@@ -132,14 +115,14 @@
 	query.Execute()
 
 	if( !query.NextRow() )
-		date = list( 2560, 1, 1 )
+		date = list( START_YEAR, 1, 1 )
 		name = univ_name
 		error( "Could not read the universe date!" )
 		return
 
 	var/list/date_text = params2list( html_decode( query.item[1] ))
-	if( date_text && date_text.len >= 3 )
-		date = list( text2num( date_text[1] ), text2num( date_text[2] ), text2num( date_text[3] ))
+	for( var/i = 1, i <= date.len, i++ )
+		date[i] = text2num( date_text[i] )
 
 // Actually decay the turf.
 /datum/universal_state/proc/DecayTurf(var/turf/T)

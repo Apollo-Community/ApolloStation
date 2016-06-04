@@ -127,19 +127,21 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		use_power(max(1000, (3750*amount/10)))
 		var/stacktype = stack.type
 		stack.use(amount)
-		if(do_after(usr,16))
-			user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
-			switch(stacktype)
-				if(/obj/item/stack/sheet/glass)
-					g_amount += amount * 3750
-				if(/obj/item/stack/sheet/mineral/gold)
-					gold_amount += amount * 2000
-				if(/obj/item/stack/sheet/mineral/diamond)
-					diamond_amount += amount * 2000
-				if(/obj/item/stack/sheet/mineral/uranium)
-					uranium_amount += amount * 2000
-		else
-			new stacktype(src.loc, amount)
+		var/turf/T = get_turf(user)
+		spawn(16)
+			if(T == get_turf(user))
+				user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
+				switch(stacktype)
+					if(/obj/item/stack/sheet/glass)
+						g_amount += amount * 3750
+					if(/obj/item/stack/sheet/mineral/gold)
+						gold_amount += amount * 2000
+					if(/obj/item/stack/sheet/mineral/diamond)
+						diamond_amount += amount * 2000
+					if(/obj/item/stack/sheet/mineral/uranium)
+						uranium_amount += amount * 2000
+			else
+				new stacktype(src.loc, amount)
 		busy = 0
 		src.updateUsrDialog()
 

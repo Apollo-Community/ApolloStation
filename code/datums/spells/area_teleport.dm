@@ -21,11 +21,11 @@
 	var/A = null
 
 	if(!randomise_selection)
-		A = input("Area to teleport to", "Teleport", A) in teleportlocs
+		A = input("Area to teleport to", "Teleport", A) in overmap.teleportlocs
 	else
-		A = pick(teleportlocs)
+		A = pick(overmap.teleportlocs)
 
-	var/area/thearea = teleportlocs[A]
+	var/area/thearea = overmap.teleportlocs[A]
 
 	return thearea
 

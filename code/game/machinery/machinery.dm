@@ -110,10 +110,11 @@ Class Procs:
 	var/manual = 0
 	var/global/gl_uid = 1
 	var/custom_aghost_alerts=0
-	var/panel_open = 0
+	panel_open = 0
 	var/area/myArea
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 	var/use_log = list()
+	var/printing = 0 // Is this machine currently printing anything?
 
 /obj/machinery/New()
 	..()
@@ -246,7 +247,7 @@ Class Procs:
 		return
 	// Prevents the AI from using Topic on admin levels (by for example viewing through the court/thunderdome cameras)
 	// unless it's on the same level as the object it's interacting with.
-	if(!( z == M.z ) || M.z in config.admin_levels )
+	if(!( z == M.z ) || M.z in overmap.admin_levels )
 		return
 	//stop AIs from leaving windows open and using then after they lose vision
 	//apc_override is needed here because AIs use their own APC when powerless
@@ -332,6 +333,16 @@ Class Procs:
 	uid = gl_uid
 	gl_uid++
 
+/obj/machinery/proc/damage_limb(mob/user, prb)
+	if(inoperable())
+		return 0
+	if(!prob(prb))
+		return 0
+	if (damage_mob_active_hand(user, 100))
+		return 1
+	else
+		return 0
+
 /obj/machinery/proc/shock(mob/user, prb)
 	if(inoperable())
 		return 0
@@ -362,20 +373,6 @@ Class Procs:
 				I.crit_fail = 1
 			I.loc = src.loc
 		qdel(src)
-
-/obj/machinery/proc/default_deconstruction_screwdriver(var/mob/user, var/icon_state_open, var/icon_state_closed, var/obj/item/weapon/screwdriver/S)
-	if(istype(S))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(!panel_open)
-			panel_open = 1
-			icon_state = icon_state_open
-			user << "<span class='notice'>You open the maintenance hatch of [src].</span>"
-		else
-			panel_open = 0
-			icon_state = icon_state_closed
-			user << "<span class='notice'>You close the maintenance hatch of [src].</span>"
-		return 1
-	return 0
 
 /obj/machinery/proc/default_change_direction_wrench(var/mob/user, var/obj/item/weapon/wrench/W)
 	if(panel_open && istype(W))
@@ -460,11 +457,22 @@ Class Procs:
 	else
 		return 0
 
+
+
 /obj/machinery/proc/print( var/obj/paper )
+	if( printing )
+		return 0
+
+	printing = 1
+
 	playsound(src.loc, 'sound/machines/print.ogg', 50, 1)
 	visible_message("<span class='notice'>[src] rattles to life and spits out a paper titled [paper].</span>")
+
 	spawn(40)
 		paper.loc = src.loc
+		printing = 0
+
+	return 1
 
 /obj/machinery/floor
 	opacity = 0

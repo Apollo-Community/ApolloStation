@@ -7,7 +7,7 @@
 /var/const/access_medical = 5
 /var/const/access_morgue = 6
 /var/const/access_tox = 7
-/var/const/access_tox_storage = 8
+/var/const/access_moon = 8
 /var/const/access_genetics = 9
 /var/const/access_engine = 10
 /var/const/access_engine_equip= 11
@@ -37,7 +37,7 @@
 /var/const/access_hydroponics = 35
 /var/const/access_manufacturing = 36
 /var/const/access_library = 37
-/var/const/access_lawyer = 38
+/var/const/access_iaa = 38
 /var/const/access_virology = 39
 /var/const/access_cmo = 40
 /var/const/access_qm = 41
@@ -66,6 +66,11 @@
 /var/const/access_psychiatrist = 64 // Psychiatrist's office
 /var/const/access_xenoarch = 65
 /var/const/access_energy_barrier = 66
+/var/const/access_shop1 = 67
+/var/const/access_shop2 = 68
+/var/const/access_slater = 69
+/var/const/access_lawyer = 70
+/var/const/access_engine_core = 71
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -77,7 +82,7 @@
 /var/const/access_cent_living = 105//Living quarters.
 /var/const/access_cent_storage = 106//Generic storage areas.
 /var/const/access_cent_teleporter = 107//Teleporter.
-/var/const/access_cent_creed = 108//Creed's office.
+/var/const/access_cent_ccrep = 108//CCRep's office.
 /var/const/access_cent_captain = 109//Captain's office/ID comp/AI.
 
 	//The Syndicate
@@ -189,25 +194,25 @@
 		if("Research Officer")
 			return list(access_cent_general, access_cent_specops, access_cent_medical, access_cent_teleporter, access_cent_storage)
 		if("BlackOps Commander")
-			return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_living, access_cent_storage, access_cent_creed)
+			return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_living, access_cent_storage, access_cent_ccrep)
 		if("Supreme Commander")
 			return get_all_centcom_access()
 
 /proc/get_all_accesses()
 	return list(access_security, access_sec_doors, access_brig, access_armory, access_forensics_lockers, access_court,
 	            access_medical, access_genetics, access_morgue, access_rd,
-	            access_tox, access_tox_storage, access_chemistry, access_engine, access_engine_equip, access_maint_tunnels,
+	            access_tox, access_moon, access_chemistry, access_engine, access_engine_equip, access_maint_tunnels,
 	            access_external_airlocks, access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_construction,
-	            access_hydroponics, access_library, access_lawyer, access_virology, access_psychiatrist, access_cmo, access_qm, access_clown, access_mime, access_surgery,
+	            access_hydroponics, access_library, access_iaa, access_virology, access_psychiatrist, access_cmo, access_qm, access_clown, access_mime, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
-	            access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_energy_barrier, access_cent_captain)
+	            access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_energy_barrier, access_cent_captain, access_shop1, access_shop2, access_slater)
 
 /proc/get_all_centcom_access()
-	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_creed, access_cent_captain)
+	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_ccrep, access_cent_captain)
 
 /proc/get_all_syndicate_access()
 	return list(access_syndicate)
@@ -254,8 +259,8 @@
 			return "Morgue"
 		if(access_tox)
 			return "R&D Lab"
-		if(access_tox_storage)
-			return "Toxins Lab"
+		if(access_moon)
+			return "Moonbase Labs"
 		if(access_chemistry)
 			return "Chemistry Lab"
 		if(access_rd)
@@ -306,7 +311,7 @@
 			return "Hydroponics"
 		if(access_library)
 			return "Library"
-		if(access_lawyer)
+		if(access_iaa)
 			return "Law Office"
 		if(access_robotics)
 			return "Robotics"
@@ -362,6 +367,14 @@
 			return "Brig"
 		if(access_energy_barrier)
 			return "Energy Barriers"
+		if(access_shop1)
+			return "Shop One"
+		if(access_shop2)
+			return "Shop Two"
+		if(access_slater)
+			return "NMV Slater Command"
+		if(access_engine_core)
+			return "Engine Core"
 
 /proc/get_centcom_access_desc(A)
 	switch(A)
@@ -379,7 +392,7 @@
 			return "Code Blue"
 		if(access_cent_specops)
 			return "Code Black"
-		if(access_cent_creed)
+		if(access_cent_ccrep)
 			return "Code Silver"
 		if(access_cent_captain)
 			return "Code Gold"

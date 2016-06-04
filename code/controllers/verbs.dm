@@ -57,7 +57,8 @@
 		message_admins("Admin [key_name_admin(usr)] is debugging the [antag.role_text] template.")
 */
 //A list that stores all of the controllers in the game.
-/var/list/active_controllers = list(config)
+
+/var/global/list/active_controllers = list(config)
 
 //Manages all controllers in the game so we can easily access them from debug_controller()
 /datum/controller/New()
@@ -72,7 +73,23 @@
 	set desc = "Debug the various periodic loop controllers for the game (be careful!)"
 
 	if(!holder)	return
+
 	var/controller = input("Which controller?") in active_controllers	//Removes the stupid special casing implemented previously.
+
 	debug_variables(controller)
+
 	message_admins("Admin [key_name_admin(usr)] is debugging the [controller] controller.")
 	return
+
+// Debug verb for antagonist update
+/client/proc/debug_antag(item in list("Faction controller", "Contract Ticker"))
+	set category = "Debug"
+	set name = "Debug Antagonists"
+	set desc = "Debug antagonist-related stuff"
+
+	if(!holder)	return
+	switch(item)
+		if("Faction controller")
+			debug_variables(faction_controller)
+		if("Contract Ticker")
+			debug_variables(contract_ticker)

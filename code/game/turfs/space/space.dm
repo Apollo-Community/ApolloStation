@@ -1,7 +1,7 @@
 /turf/space
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
-	icon_state = ""
+	icon_state = "0"
 	dynamic_lighting = 0
 	plane = SPACE_PARALLAX_PLANE - 1
 
@@ -11,6 +11,7 @@
 //	heat_capacity = 700000 No.
 
 /turf/space/New()
+	icon_state = ""
 	/*
 	if(!istype(src, /turf/space/transit) && !istype(src, /turf/space/bluespace))
 		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
@@ -81,8 +82,14 @@
 
 	inertial_drift(A)
 
+	var/obj/effect/mapinfo/M = getSectorInfo( src.z )
+	if( !istype( M ))
+		return
+
+	var/edge_length = M.edge_length
+
 	if(ticker && ticker.mode)
-		if (A.x <= TRANSITIONEDGE || A.x >= (world.maxx - TRANSITIONEDGE - 1) || A.y <= TRANSITIONEDGE || A.y >= (world.maxy - TRANSITIONEDGE - 1))
+		if (A.x <= edge_length || A.x >= ( world.maxx - edge_length - 1) || A.y <= edge_length || A.y >= (world.maxy - edge_length - 1))
 			A.overmapTravel()
 
 /turf/space/proc/Sandbox_Spacemove(atom/movable/A as mob|obj)

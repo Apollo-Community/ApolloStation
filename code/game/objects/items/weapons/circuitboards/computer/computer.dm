@@ -57,9 +57,13 @@
 	name = T_BOARD("security records console")
 	build_path = /obj/machinery/computer/secure_data
 
-/obj/item/weapon/circuitboard/skills
+/obj/item/weapon/circuitboard/records
 	name = T_BOARD("employment records console")
 	build_path = /obj/machinery/computer/employment
+
+/obj/item/weapon/circuitboard/sentencing
+	name = T_BOARD("criminal sentencing console")
+	build_path = /obj/machinery/computer/sentencing
 
 /obj/item/weapon/circuitboard/stationalert
 	name = T_BOARD("station alert console")

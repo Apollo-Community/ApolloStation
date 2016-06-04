@@ -29,7 +29,8 @@
 			if(other)
 				dat += "<td>"
 				dat += "<a href='?_src_=holder;template_panel=1;action=delete;template=\ref[template]'>Delete</a> | "
-				dat += "<a href='?_src_=holder;template_panel=1;action=reset;template=\ref[template]'>Reset</a>"
+				dat += "<a href='?_src_=holder;template_panel=1;action=reset;template=\ref[template]'>Reset</a> | "
+				dat += "<a href='?_src_=holder;template_panel=1;action=jump;template=\ref[template]'>Jump</a>"
 				dat += "</td>"
 
 			dat += "</tr>"

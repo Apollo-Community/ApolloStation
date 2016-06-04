@@ -41,7 +41,7 @@
 
 /obj/machinery/computer/crew/Topic(href, href_list)
 	if(..()) return
-	if (src.z in  config.admin_levels)
+	if (src.z in  overmap.admin_levels)
 		usr << "<span class='alert'><b>Unable to establish a connection</b>: </span><span class='black'>You're too far away from the station!</span>"
 		return 0
 	if( href_list["close"] )
@@ -101,7 +101,7 @@
 
 				crewmembers[++crewmembers.len] = crewmemberData
 
-	crewmembers = sortByKey(crewmembers, "name")
+	//crewmembers = sortByKey(crewmembers, "name")
 
 	data["crewmembers"] = crewmembers
 

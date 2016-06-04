@@ -111,3 +111,9 @@
 	for(var/datum/money_account/D in all_money_accounts)
 		if(D.account_number == account_number)
 			return D
+
+/proc/find_account(var/mob/M)
+	for(var/datum/money_account/A in all_money_accounts)
+		if(A.owner_name == M.real_name)
+			return A
+	return null
