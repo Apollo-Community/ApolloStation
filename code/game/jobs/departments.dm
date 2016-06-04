@@ -83,7 +83,7 @@
 	department_id = SCIENCE
 	background_color = "#ffeeff"
 	starting_positions = list( "Research Assistant" = "High" )
-	region_access = list(access_research, access_tox, access_chemistry, access_moon, access_robotics, access_xenobiology, access_xenoarch, access_rd)
+	region_access = list(access_research, access_tox, access_moon, access_robotics, access_xenobiology, access_xenoarch, access_rd, access_tcomsat)
 
 /datum/department/security
 	name = "Security Department"
