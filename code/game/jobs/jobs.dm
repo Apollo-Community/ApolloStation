@@ -86,7 +86,7 @@ var/list/engineering_positions = list(
 
 var/list/medical_positions = list(
 	"Chief Medical Officer",
-	"Senior Doctor",
+	"Senior Medical Doctor",
 	"Medical Doctor",
 	"Nurse"
 )
