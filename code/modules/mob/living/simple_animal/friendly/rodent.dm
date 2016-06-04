@@ -112,7 +112,7 @@ var/global/list/world_rodents = list()
 /mob/living/simple_animal/rodent/attackby(var/obj/item/O, var/mob/user)
 	var/obj/item/stack/rods/R = O
 	if(!istype(R))
-		return ..()
+		return ..(O, user)
 
 	if(stat == DEAD)
 		R.use(1)
