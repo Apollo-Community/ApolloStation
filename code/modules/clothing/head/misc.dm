@@ -180,6 +180,12 @@
 	item_state = "fedora"
 	desc = "A sharp, stylish hat."
 
+/obj/item/clothing/head/sombrero
+	name = "\improper sombrero"
+	icon_state = "sombrero"
+	item_state = "sombrero"
+	desc = "Ayyyyyy caramba!!"
+
 /obj/item/clothing/head/feathertrilby
 	name = "\improper feather trilby"
 	icon_state = "feather_trilby"
