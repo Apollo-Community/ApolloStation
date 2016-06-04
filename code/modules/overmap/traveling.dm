@@ -87,7 +87,7 @@
 		fadeout()
 
 		sleep( 5 )
-		if( alert_user( "Would you like to enter sector \"[sector]\"?" ) == "No" )
+		if( alert_user( "Would you like to enter sector \"[sector.real_name]\"?" ) == "No" )
 			fadein()
 
 			src.dir = turn( src.dir, 180 )

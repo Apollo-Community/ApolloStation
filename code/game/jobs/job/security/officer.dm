@@ -31,6 +31,7 @@
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/melee/baton/loaded(H), slot_in_backpack)
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/gun/energy/taser(H), slot_in_backpack)
+		H.equip_to_slot_or_qdel(new /obj/item/device/flash(H), slot_in_backpack)
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/tie/holster(H), slot_in_backpack)
 	return 1
 

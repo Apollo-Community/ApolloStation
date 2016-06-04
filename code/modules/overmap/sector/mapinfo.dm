@@ -33,6 +33,9 @@
 	if( !initliazeMap() )
 		return null
 
+	if( !obj_type )
+		return null
+
 	return new obj_type( src, T )
 
 // Use this for any initialization that needs to be done if the sector is successfully created

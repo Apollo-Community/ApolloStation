@@ -6,7 +6,7 @@
 	network = "tcomms"
 
 /obj/machinery/telecomms/relay/preset/apollo
-	id = "NSS Apollo Relay"
+	id = "NOS Apollo Relay"
 	listening_level = 3
 	autolinkers = list("s_relay")
 
