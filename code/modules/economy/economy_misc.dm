@@ -121,14 +121,18 @@ var/global/economy_init = 0
 		station_account.transaction_log.Add(T)
 		all_money_accounts.Add(station_account)
 
-/proc/create_department_account( var/datum/department/department )
-	if( !istype( department ))
-		return
+/proc/create_department_account( var/department )
+	var/datum/money_account/department_account = new()
+
+	var/name = department
+
+	if( istype( department, /datum/department ))
+		var/datum/department/D = department
+		name = "[D.name]"
+
+	department_account.owner_name = "[name] Account"
 
 	next_account_number = rand(111111, 999999)
-
-	var/datum/money_account/department_account = new()
-	department_account.owner_name = "[department.name] Account"
 	department_account.account_number = rand(111111, 999999)
 	department_account.remote_access_pin = rand(1111, 111111)
 	department_account.money = 5000
@@ -146,4 +150,4 @@ var/global/economy_init = 0
 	department_account.transaction_log.Add(T)
 	all_money_accounts.Add(department_account)
 
-	department_accounts[department.name] = department_account
+	department_accounts[name] = department_account
