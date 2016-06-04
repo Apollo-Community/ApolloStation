@@ -8,7 +8,7 @@
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
 	access = list(access_tcomsat, access_robotics, access_tox, access_research, access_moon, access_xenobiology, access_xenoarch)
-	minimal_access = list(access_tcomsat, access_robotics, access_tox, access_research, access_moon)
+	minimal_access = list(access_robotics, access_tox, access_research, access_moon, access_xenobiology, access_xenoarch)
 	alt_titles = list("Xenobiologist", "Xenobotanist", "Xenoarcheologist", "Toxins Specialist", "Research Specialist", "Mechatronic Specialist", "Chemical Researcher")
 
 	rank_succesion_level = 5
