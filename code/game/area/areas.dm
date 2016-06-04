@@ -255,9 +255,9 @@ area/space/atmosalert()
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
 
-/area/shuttle/arrival/nssapollo
+/area/shuttle/arrival/apollo
 	icon_state = "shuttle"
-	name = "\improper NSS Apollo Arrival Shuttle"
+	name = "\improper NOS Apollo Arrival Shuttle"
 
 /area/shuttle/arrival/nssartemis
 	icon_state = "shuttle"

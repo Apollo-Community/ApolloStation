@@ -76,14 +76,14 @@
 	department_id = MEDICAL
 	background_color = "#EEFFEE"
 	starting_positions = list( "Nurse" = "High" )
-	region_access = list(access_medical, access_genetics, access_morgue, access_chemistry, access_psychiatrist, access_virology, access_surgery, access_cmo)
+	region_access = list(access_medical, access_genetics, access_morgue, access_psychiatrist, access_virology, access_surgery, access_cmo)
 
 /datum/department/science
 	name = "Research Division"
 	department_id = SCIENCE
 	background_color = "#ffeeff"
 	starting_positions = list( "Research Assistant" = "High" )
-	region_access = list(access_research, access_tox, access_moon, access_robotics, access_xenobiology, access_xenoarch, access_rd)
+	region_access = list(access_research, access_tox, access_chemistry, access_moon, access_robotics, access_xenobiology, access_xenoarch, access_rd)
 
 /datum/department/security
 	name = "Security Department"

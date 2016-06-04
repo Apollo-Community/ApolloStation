@@ -148,55 +148,42 @@ var/world_topic_spam_protect_time = world.timeofday
 
 		return list2params(s)
 
-	else if(copytext(T,1,9) == "adminmsg")
-		/*
-			We got an adminmsg from IRC bot lets split the input then validate the input.
-			expected output:
-				1. adminmsg = ckey of person the message is to
-				2. msg = contents of message, parems2list requires
-				3. validatationkey = the key the bot has, it should match the gameservers commspassword in it's configuration.
-				4. sender = the ircnick that send the message.
-		*/
+	if(copytext(T,1,9) == "adminmsg")					//This recieves messages from slack (/pm command) and processes it before updating slack chat
+	//TODO: Add security check here
+		var/input[] = params2list(copytext(T,9))
 
+		//Create a fake client that slackbot will use
 
-		var/input[] = params2list(T)
-		if(input["key"] != config.comms_password)
-			if(world_topic_spam_protect_ip == addr && abs(world_topic_spam_protect_time - world.time) < 50)
+		var/message = sanitize(input["text"])
+		if(!message)	return
+		var/target = input["target"]
+		var/admin = input["admin"]
 
-				spawn(50)
-					world_topic_spam_protect_time = world.time
-					return "Bad Key (Throttled)"
-
-			world_topic_spam_protect_time = world.time
-			world_topic_spam_protect_ip = addr
-
-			return "Bad Key"
-
-		var/client/C
-		var/req_ckey = ckey(input["adminmsg"])
-
-		for(var/client/K in clients)
-			if(K.ckey == req_ckey)
-				C = K
+		//get the target and send PM
+		for(var/client/C in clients)
+			if(C.ckey == target)
+				//Code to send PMS....
+				slack_admin(C, admin, message,0)
+				. = "Sent message to [target]!"
 				break
-		if(!C)
-			return "No client with that name on server"
 
-		var/message =	"<font color='red'>IRC-Admin PM from <b><a href='?irc_msg=1'>[C.holder ? "IRC-" + input["sender"] : "Administrator"]</a></b>: [input["msg"]]</font>"
-		var/amessage =  "<font color='blue'>IRC-Admin PM from <a href='?irc_msg=1'>IRC-[input["sender"]]</a> to <b>[key_name(C)]</b> : [input["msg"]]</font>"
+		if(!.)	return			//Don't continue if we couldn't find a target
 
-		C.received_irc_pm = world.time
-		C.irc_admin = input["sender"]
+		//Gets the timestamp and initial message to edit slack chat with
+		var/time = recent_slack_times["[target]"]
+		var/init_msg = recent_slack_msg["[target]"]
+		//Edits slack chat
+		shell("python scripts/update_message.py [time] [admin] '*[target]*: [init_msg]\n&gt;[message]'")
 
-		C << 'sound/effects/adminhelp.ogg'
-		C << message
+		//Adds the current message to the slack buffer (if admins answer multiple times before player does again)
+		recent_slack_msg["[target]"] = "[init_msg]\n&gt;[message]~    @[admin]"
 
+	else if(copytext(T,1,10) == "admintime")			//This adds the timestamp to recent_slack_times[ckey] so it can be edited when replied to
+		var/input[] = params2list(copytext(T,10))
 
-		for(var/client/A in admins)
-			if(A != C)
-				A << amessage
-
-		return "Message Successful"
+		if(!recent_slack_times.Find(input["user"]))
+			recent_slack_times.Add(input["user"])		//adds the user to list if it exists
+		recent_slack_times[input["user"]] = input["time"]
 
 
 	else if(copytext(T,1,4) == "age")

@@ -28,6 +28,7 @@
 	else
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
+		H.equip_to_slot_or_qdel(new /obj/item/device/flash(H), slot_in_backpack)
 	return 1
 
 /datum/job/cadet/make_preview_icon( var/backpack , var/job , var/gender )
