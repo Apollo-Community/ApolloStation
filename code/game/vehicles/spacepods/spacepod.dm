@@ -960,7 +960,7 @@
 
 /obj/spacepod/proc/toggleDoors( user as mob )
 	for(var/obj/machinery/door/poddoor/P in oview(3,src))
-		if(istype(P, /obj/machinery/door/poddoor/three_tile_hor) || istype(P, /obj/machinery/door/poddoor/three_tile_ver) || istype(P, /obj/machinery/door/poddoor/four_tile_hor) || istype(P, /obj/machinery/door/poddoor/four_tile_ver))
+		if(istype(P, /obj/machinery/door/poddoor/three_tile_hor) || istype(P, /obj/machinery/door/poddoor/three_tile_ver) || istype(P, /obj/machinery/door/poddoor/four_tile_hor) || istype(P, /obj/machinery/door/poddoor/four_tile_ver) || istype(P, /obj/machinery/door/poddoor/five_tile_hor) || istype(P, /obj/machinery/door/poddoor/five_tile_ver))
 			if( P.check_access( equipment_system.card ))
 				if(P.density)
 					P.open()
