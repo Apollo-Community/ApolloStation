@@ -323,7 +323,7 @@
 	item_state = "classicponcho"
 
 /obj/item/clothing/suit/poncho/festive
-	name = "poncho"
+	name = "festive poncho"
 	desc = "A simple, comfortable poncho. This one brings out your festive vibes."
 	icon_state = "poncho"
 	item_state = "poncho"
