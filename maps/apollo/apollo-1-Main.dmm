@@ -4415,7 +4415,7 @@
 "bGU" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/plating,/area/maintenance/asmaint2)
 "bGV" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/mob/living/simple_animal/rodent,/turf/simulated/floor/plating,/area/maintenance/asmaint2)
 "bGW" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/plating,/area/maintenance/asmaint2)
-"bGX" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/structure/hobo_barrel{pixel_x = -8; pixel_y = 10},/turf/simulated/floor/plating,/area/maintenance/asmaint2)
+"bGX" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/structure/hobo_barrel{pixel_x = 0; pixel_y = 0},/turf/simulated/floor/plating,/area/maintenance/asmaint2)
 "bGY" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/item/weapon/holder/bones2,/turf/simulated/floor/plating,/area/maintenance/asmaint2)
 "bGZ" = (/obj/structure/bed/chair{dir = 1},/turf/simulated/floor/wood{icon_state = "wood-broken4"},/area/maintenance/asmaint2)
 "bHa" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor,/area/chapel/main)
