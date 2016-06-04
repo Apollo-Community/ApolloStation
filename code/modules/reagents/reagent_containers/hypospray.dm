@@ -66,6 +66,16 @@
 	update_icon()
 	return
 
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if (istype(W, /obj/item/weapon/screwdriver))
+		if (OPENCONTAINER)
+			user << "<span class='notice'>You repair the autoinjector.</span>"
+			volume = 5
+			flags &= ~OPENCONTAINER
+			icon_state = "[initial(icon_state)]1"
+	return
+
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/update_icon()
 	if(reagents.total_volume > 0)
 		icon_state = "[initial(icon_state)]1"
