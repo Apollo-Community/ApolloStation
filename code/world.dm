@@ -149,10 +149,13 @@ var/world_topic_spam_protect_time = world.timeofday
 		return list2params(s)
 
 	if(copytext(T,1,9) == "adminmsg")					//This recieves messages from slack (/pm command) and processes it before updating slack chat
-	//TODO: Add security check here
 		var/input[] = params2list(copytext(T,9))
-
-		//Create a fake client that slackbot will use
+		//security check
+		if(fexists("config/slack.txt"))
+			if(input["token"] != file2text("config/slack.txt"))
+				message_admins("TOPIC: WARNING: [addr] tried to fake an admin message! Please contact a developer")
+				return
+		else	return
 
 		var/message = sanitize(input["text"])
 		if(!message)	return
