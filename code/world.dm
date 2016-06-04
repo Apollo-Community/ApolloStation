@@ -169,14 +169,7 @@ var/world_topic_spam_protect_time = world.timeofday
 
 		if(!.)	return			//Don't continue if we couldn't find a target
 
-		//Gets the timestamp and initial message to edit slack chat with
-		var/time = recent_slack_times["[target]"]
-		var/init_msg = recent_slack_msg["[target]"]
-		//Edits slack chat
-		shell("python scripts/update_message.py [time] [admin] '*[target]*: [init_msg]\n&gt;[message]'")
-
-		//Adds the current message to the slack buffer (if admins answer multiple times before player does again)
-		recent_slack_msg["[target]"] = "[init_msg]\n&gt;[message]~    @[admin]"
+		update_slack(admin, target, message)
 
 	else if(copytext(T,1,10) == "admintime")			//This adds the timestamp to recent_slack_times[ckey] so it can be edited when replied to
 		var/input[] = params2list(copytext(T,10))
