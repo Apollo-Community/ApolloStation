@@ -264,7 +264,7 @@
 "fd" = (/obj/machinery/atmospherics/pipe/manifold/hidden/purple{tag = "icon-map (NORTH)"; icon_state = "map"; dir = 1},/turf/simulated/floor/plating,/area/slater/engine)
 "fe" = (/obj/machinery/atmospherics/pipe/simple/hidden/purple{tag = "icon-intact (SOUTHWEST)"; icon_state = "intact"; dir = 10},/obj/structure/table/rack,/obj/random/bomb_supply,/obj/random/tech_supply,/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/simulated/floor/plating,/area/slater/engine)
 "ff" = (/obj/machinery/computer/atmos_alert,/turf/simulated/floor{icon_state = "dark"},/area/slater/bridge)
-"fg" = (/obj/structure/window/reinforced{dir = 8},/obj/machinery/computer/shuttle,/turf/simulated/floor{icon_state = "bot"; dir = 1},/area/slater/bridge)
+"fg" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/computerframe,/turf/simulated/floor{icon_state = "bot"; dir = 1},/area/slater/bridge)
 "fh" = (/obj/structure/bed/chair/shuttle{tag = "icon-chair3 (WEST)"; icon_state = "chair3"; dir = 8},/turf/simulated/floor,/area/slater/bridge)
 "fi" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor,/area/slater/bridge)
 "fj" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/turf/simulated,/area/slater/bridge)
