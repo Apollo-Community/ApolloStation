@@ -6,14 +6,14 @@
 	// this may seem backwards, but this is done so that antagonist factions that aren't part of the syndicate can show up
 	var/list/datum/faction/factions = list()
 	for( var/datum/mind/M in antags )
-		if( M == user.mind ) // no voting for yourself
+		/*if( M == user.mind ) // no voting for yourself
 			antags -= M
-			continue
+			continue*/
 		if( !(M.antagonist.faction in factions) )
 			factions += M.antagonist.faction
 
 	if( !antags.len )
-		testing( "No antags in list" )
+		user << "You are unable to vote for antagonist performances since you were the only antagonist this round."
 		return
 
 	. += "<html><head>"
@@ -40,7 +40,7 @@
 		for( var/datum/mind/M in F.members )
 			if( M in antags )
 				var/role = M.assigned_role == "MODE" ? "\improper[M.special_role]" : "\improper[M.assigned_role]"
-				. += "<span class='white'><B>[M.name]</B> (<B>[M.key]</B> as a <B>[role]</B>)</span> | "
+				. += "<span class='white'><B>[M.name]</B> (<B>[role]</B>)</span> | "
 				. += "<b><a href='byond://?src=\ref[ticker];task=[M.key]'>Commend</a></b>"
 				. += "<br>"
 
