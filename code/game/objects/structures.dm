@@ -5,10 +5,11 @@
 	var/breakable
 	var/parts
 
-/obj/structure/Destroy()
+/obj/structure/proc/deconstruct()
 	if(parts)
 		new parts(loc)
-	..()
+
+	qdel( src )
 
 /obj/structure/attack_hand(mob/user)
 	user.do_attack_animation(src)
@@ -24,7 +25,7 @@
 
 /obj/structure/blob_act()
 	if(prob(50))
-		qdel(src)
+		deconstruct()
 
 /obj/structure/attack_tk()
 	return
@@ -32,11 +33,11 @@
 /obj/structure/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			qdel(src)
+			deconstruct()
 			return
 		if(2.0)
 			if(prob(50))
-				qdel(src)
+				deconstruct()
 				return
 		if(3.0)
 			return
@@ -45,9 +46,6 @@
 	..()
 	if(climbable)
 		verbs += /obj/structure/proc/climb_on
-
-/obj/structure/Destroy()
-	..()
 
 /obj/structure/proc/climb_on()
 
@@ -121,7 +119,7 @@
 				playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
 				usr.visible_message("<span class='alert'>The [src] smashes!</span>")
 				new /obj/item/weapon/shard(src.loc)
-				qdel(src)
+				deconstruct()
 		else
 			usr.visible_message("<span class='warning'>[user] climbs onto \the [src]!</span>")
 
@@ -189,7 +187,7 @@
 	if(!breakable || !damage || !wallbreaker)
 		return 0
 	visible_message("<span class='danger'>[user] [attack_verb] the [src] apart!</span>")
-	qdel()
+	deconstruct()
 	return 1
 
 /obj/structure/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)

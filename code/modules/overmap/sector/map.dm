@@ -26,19 +26,20 @@
 	tag = "OVERMAP [real_name]"
 
 /obj/effect/map/update_icon()
+	icon_state = real_icon_state
+
 	src.overlays.Cut()
 
 	var/sector_type
 	if(( metadata.sector_flags & SECTOR_KNOWN ) && ( metadata.sector_flags & SECTOR_LOCAL ))
 		sector_type = "known"
-/*	else if( SECTOR_LOCAL )
-		sector_type = "unknown"*/
+	else if( metadata.sector_flags & SECTOR_LOCAL )
+		sector_type = "unknown"
 	else
 		return
 
 	var/image/designation = image('icons/effects/sectors.dmi', sector_type)
 	src.overlays += designation
-
 
 /obj/effect/map/sector
 	real_name = "generic sector"
@@ -48,6 +49,9 @@
 /obj/effect/map/sector/New()
 	..()
 
+	if( icon_state )
+		name = real_name
+
 	spawn( 5 )
 		if( isKnown() )
 			reveal()
@@ -56,7 +60,7 @@
 	return 1
 
 /obj/effect/map/sector/Crossed(atom/movable/A)
-	if( !isKnown() )
+	if( !( metadata.sector_flags & SECTOR_LOCAL ))
 		return
 
 	if( istype( A,/obj/effect/traveler ))
@@ -91,10 +95,9 @@
 	overmap.reportLevels( metadata )
 
 //Space stragglers go here
-
-/obj/effect/map/sector/nssapollo
-	real_icon_state = "NSS Apollo"
-	real_desc = "The NSS Apollo, state-of-the-art phoron research station."
+/obj/effect/map/sector/apollo
+	real_icon_state = "NOS Apollo"
+	real_desc = "The NOS Apollo, the hub of operations in this sector of the Nyx system."
 
 /obj/effect/map/sector/ace
 	real_icon_state = "ACE"
@@ -107,3 +110,7 @@
 
 /obj/effect/map/sector/slater
 	real_icon_state = "NMV Slater"
+
+/obj/effect/map/sector/asteroid/New()
+	real_icon_state = "asteroid[rand(0,3)]"
+	..()

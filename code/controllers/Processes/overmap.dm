@@ -110,6 +110,9 @@
 		var/known = 0
 		var/obj/effect/map/sector = map["[level]"]
 
+		if( !istype( sector ))
+			continue
+
 		if( sector.z in overmap.known_levels )
 			added = 1
 			known = 1

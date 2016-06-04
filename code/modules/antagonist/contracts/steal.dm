@@ -1,6 +1,6 @@
 /datum/contract/steal
 	title = "Retrieve Object of Interest"
-	desc = "An object on board the NSS Apollo has caught our attention."
+	desc = "An object on board the NOS Apollo has caught our attention."
 	time_limit = 1800
 	max_contracts = 3
 	reward = 2000

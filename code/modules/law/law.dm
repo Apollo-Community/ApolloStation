@@ -4,7 +4,7 @@
 	that was broken, and a crime datum is created.
 
 	record_template = {"
-<center>NSS Apollo Incident Report</center><hr>
+<center>NOS Apollo Incident Report</center><hr>
 $PRISONER_NAME was found guilty of $CRIME on $DATE. Their sentence was $SENTENCE and they were fined $FINE.
 	"}
 
