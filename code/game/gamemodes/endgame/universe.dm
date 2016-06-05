@@ -42,11 +42,18 @@
 	var/max_attempts = 5
 
 	for( var/attempts = 1, attempts < max_attempts, attempts++ )
-		loadFromDB()
+		date = loadFromDB()
 
 		if( date && date.len == 3 && date != list( START_YEAR, 1, 1 ))
 			date = progessDate( date )
 			return
+
+		var/message = "Loaded date: "
+
+		for( var/i in date )
+			message += "[i] "
+
+		error( message )
 
 		date = list( START_YEAR, 1, 1 )
 
@@ -73,7 +80,7 @@
 		error( "Could not save the universe date!" )
 		return
 
-	if( date == list( START_YEAR, 1, 1 ))
+	if( daysTilDate( date, loadFromDB() ) >= 0 ) // If our database date is ahead of IC date
 		error( "Didn't save because universe date was reset!" )
 		return
 
@@ -109,20 +116,22 @@
 	if(!dbcon.IsConnected())
 		return
 
+	var/list/D = list( START_YEAR, 1, 1 )
+
 	var/sql_name = sql_sanitize_text( univ_name )
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT ic_date FROM universe WHERE name = '[sql_name]'")
 	query.Execute()
 
 	if( !query.NextRow() )
-		date = list( START_YEAR, 1, 1 )
-		name = univ_name
 		error( "Could not read the universe date!" )
-		return
+		return D
 
 	var/list/date_text = params2list( html_decode( query.item[1] ))
-	for( var/i = 1, i <= date.len, i++ )
-		date[i] = text2num( date_text[i] )
+	for( var/i = 1, i <= date_text.len, i++ )
+		D[i] = text2num( date_text[i] )
+
+	return D
 
 // Actually decay the turf.
 /datum/universal_state/proc/DecayTurf(var/turf/T)
