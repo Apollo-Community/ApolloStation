@@ -896,8 +896,9 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 					var/old_dir1 = T.dir
 					var/old_icon_state1 = T.icon_state
 					var/old_icon1 = T.icon
-
-
+					var/saved_icon = B.icon
+					var/saved_icon_state = B.icon_state
+					var/saved_type = B.type
 
 					var/turf/X = B.ChangeTurf(T.type)
 					//hack
@@ -951,6 +952,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 							if(!istype(O,/obj)) continue
 							O.loc = X
 
+
 					for(var/mob/M in T)
 						if(!istype(M,/mob) || istype(M, /mob/aiEye)) continue // If we need to check for more mobs, I'll add a variable
 						M.loc = X
@@ -968,9 +970,67 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 					else
 						T.ChangeTurf(/turf/space)
 
+					//Fix underlays
+					//OMG THIS IS UGLY
+					X.underlays.Cut()
+					if(saved_type == "/turf/space")
+						error("no space tile detected putting underlay under")
+						error("the tile was [saved_type]")
+						switch(X.icon_state)
+							if("diagonalWall")
+								X.underlays.Cut()
+								X.icon_state = "diagonalWall"
+								X.underlays.Add(saved_icon,saved_icon_state,1.9, B.dir)
+							if("diagonalWall2")
+								X.underlays.Cut()
+								X.icon_state = "diagonalWall2"
+								X.underlays.Add(saved_icon,saved_icon_state,1.9, B.dir)
+							if("diagonalWall3")
+								X.underlays.Cut()
+								X.icon_state = "diagonalWall3"
+								X.underlays.Add(saved_icon,saved_icon_state,1.9, B.dir)
+							if("vwall_f5")
+								X.underlays.Cut()
+								X.icon_state = "vwall_f5"
+								X.underlays.Add(saved_icon,saved_icon_state,1.9, B.dir)
+							if("vwall_f6")
+								X.underlays.Cut()
+								X.icon_state = "vwall_f6"
+								X.underlays.Add(saved_icon,saved_icon_state,1.9, B.dir)
+							if("vwall_f9")
+								X.underlays.Cut()
+								X.icon_state = "vwall_f9"
+								X.underlays.Add(saved_icon,saved_icon_state,1.9, B.dir)
+							if("vwall_f10")
+								X.underlays.Cut()
+								X.icon_state = "vwall_f10"
+								X.underlays.Add(saved_icon,saved_icon_state,1.9, B.dir)
+							if("swall_f5")
+								X.underlays.Cut()
+								X.icon_state = "swall_f5"
+								X.underlays.Add(saved_icon,saved_icon_state,1.9, B.dir)
+							if("swall_f6")
+								X.underlays.Cut()
+								X.icon_state = "swall_f6"
+								X.underlays.Add(saved_icon,saved_icon_state,1.9, B.dir)
+							if("swall_f9")
+								X.underlays.Cut()
+								X.icon_state = "swall_f9"
+								X.underlays.Add(saved_icon,saved_icon_state,1.9, B.dir)
+							if("swall_f10")
+								X.underlays.Cut()
+								X.icon_state = "swall_f10"
+								X.underlays.Add(saved_icon,saved_icon_state,1.9, B.dir)
+					else
+						error("space tile detected putting the space underlay on")
+						error("the tile was [saved_type]")
+						X.underlays.Cut()
+						//X.underlays.Add(saved_icon,"black",1.99, B.dir)
+
 					refined_src -= T
 					refined_trg -= B
 					continue moving
+
 
 	var/list/doors = new/list()
 	if(toupdate.len)

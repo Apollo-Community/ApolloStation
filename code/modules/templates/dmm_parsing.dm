@@ -146,6 +146,9 @@
 		return sub_objects
 
 	proc/Instantiate(var/turf/position)
+		//var/saved_icon = position.icon
+		//var/saved_icon_state = position.icon_state
+
 		for(var/datum/dmm_sub_object/sub in SortSubObjects())
 			if(!sub.object_path)
 				continue
@@ -175,6 +178,10 @@
 			catch(var/exception/ex)
 				message_admins("Error while creating template object: [ex.name]: [ex.desc] @ [ex.file] L:[ex.line]. Additional info: object_path = [sub.object_path] position = [position ? position : "null"]")
 				break
+
+		//Fixing the turfs underlays
+		//position.underlays = new /list()
+		//position.underlays.Add(saved_icon,saved_icon_state,1.9, position.dir)
 
 		return position
 

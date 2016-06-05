@@ -20,7 +20,7 @@
 	var/arrive_time = 0	//the time at which the shuttle arrives when long jumping
 	var/in_transit = 0 //To help with the hanger schedular
 	var/priority = 0 //Does this shuttle move other shuttles out of its way ?
-	var/default_engines = 0
+	var/default_engines = 0	//
 
 /datum/shuttle/proc/init_templates()
 	if(isnull(template_path))
@@ -38,7 +38,7 @@
 	current_hanger.land_at(src)
 	place_shuttle()
 	shuttle_ingame = 1
-	//fix_corners(current_hanger.exterior)
+	fix_corners(current_hanger.exterior)
 	//Check how many engines the shuttle starts with
 	for(var/obj/structure/shuttle/engine/propulsion/P in shuttle_turfs)
 		default_engines += 1
@@ -102,10 +102,7 @@
 
 		arrive_time = world.time + travel_time*10*engine_modifier()
 		moving_status = SHUTTLE_INTRANSIT
-		//Needs to have interim_hanger
 		move(interim_hanger, direction, 1)
-
-
 		while (world.time < arrive_time)
 			sleep(5)
 			//If we have 5 secconds left inform people in the hanger to gtfo now.
@@ -162,7 +159,7 @@
 	move_gib(destination, trg_hanger)
 	trg_hanger.land_at(src)
 	shuttle_turfs = move_turfs_to_turfs(shuttle_turfs, destination, direction=direction)
-	//fix_corners(trg_hanger.exterior)
+	fix_corners(trg_hanger.exterior)
 	current_hanger.take_off()
 	current_hanger.full = 0
 	current_hanger = trg_hanger
@@ -305,29 +302,25 @@
 		makepowernets()
 
 /datum/shuttle/proc/fix_corners(var/exterior)
-	if(exterior)
-		for(var/turf/simulated/shuttle/wall/T in shuttle_turfs)
-			switch(T.icon_state)
-				if("swall_p5")
-					T.icon_state = "swall_s5"
-				if("swall_p6")
-					T.icon_state = "swall_s6"
-				if("swall_p9")
-					T.icon_state = "swall_s9"
-				if("swall_p10")
-					T.icon_state = "swall_s10"
-	else
-		for(var/turf/simulated/shuttle/wall/T in shuttle_turfs)
-			switch(T.icon_state)
-				if("swall_s5")
-					T.icon_state = "swall_p5"
-				if("swall_s6")
-					T.icon_state = "swall_p6"
-				if("swall_s9")
-					T.icon_state = "swall_p9"
-				if("swall_s10")
-					T.icon_state = "swall_p10"
-
+/*	for(var/turf/simulated/shuttle/wall/T in shuttle_turfs)
+		switch(T.icon_state)
+			if("swall_f5")
+				T.underlays = new /list()
+				T.icon_state = "swall_f5"
+				T.underlays.Add(image(icon = initial(T.icon), icon_state = initial(T.icon_state), layer = 1.9, dir = T:dir))
+			if("swall_f6")
+				T.underlays = new /list()
+				T.icon_state = "swall_f6"
+				T.underlays.Add(image(icon = initial(T.icon), icon_state = initial(T.icon_state), layer = 1.9, dir = T:dir))
+			if("swall_f9")
+				T.underlays = new /list()
+				T.icon_state = "swall_f9"
+				T.underlays.Add(image(icon = initial(T.icon), icon_state = initial(T.icon_state), layer = 1.9, dir = T:dir))
+			if("swall_f10")
+				T.underlays = new /list()
+				T.icon_state = "swall_f10"
+				T.underlays.Add(image(icon = initial(T.icon), icon_state = initial(T.icon_state), layer = 1.9, dir = T:dir))
+*/
 //Changing the travel time according to the currently active engines
 //Returns a modifier that is applied to the travel time.
 //Broken right now will fix later

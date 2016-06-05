@@ -1,9 +1,9 @@
 "a" = (/turf/space,/area/space)
-"b" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s6"; icon_state = "swall_s6"; dir = 2},/area/supply/dock)
+"b" = (/turf/simulated/shuttle/wall{icon_state = "swall_f6"; dir = 2},/area/supply/dock)
 "c" = (/obj/structure/window/shuttle{icon_state = "window4"},/obj/structure/grille,/turf/simulated/floor/plating,/area/supply/dock)
 "d" = (/obj/structure/window/shuttle{icon_state = "window12"},/obj/structure/grille,/turf/simulated/floor/plating,/area/supply/dock)
 "e" = (/obj/structure/window/shuttle{tag = "icon-17 (NORTHEAST)"; icon_state = "17"},/obj/structure/grille,/turf/simulated/floor/plating,/area/supply/dock)
-"f" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s10"; icon_state = "swall_s10"; dir = 2},/area/supply/dock)
+"f" = (/turf/simulated/shuttle/wall{dir = 3; icon_state = "swall_f10"; layer = 2},/area/supply/dock)
 "g" = (/turf/simulated/shuttle/wall{icon_state = "swall3"; dir = 2},/area/supply/dock)
 "h" = (/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/supply/dock)
 "i" = (/obj/structure/bed/chair/shuttle{tag = "icon-chair3 (NORTH)"; icon_state = "chair3"; dir = 1},/turf/simulated/floor{tag = "icon-shuttle_floor1"; icon_state = "shuttle_floor1"},/area/supply/dock)
@@ -23,8 +23,8 @@
 "w" = (/turf/simulated/shuttle/wall{icon_state = "swall11"; dir = 2},/area/supply/dock)
 "x" = (/obj/structure/shuttle/engine/propulsion,/turf/simulated/floor/plating,/area/supply/dock)
 "y" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/supply/dock)
-"z" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s5"; icon_state = "swall_s5"; dir = 2},/area/supply/dock)
-"A" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s9"; icon_state = "swall_s9"; dir = 2},/area/supply/dock)
+"z" = (/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/supply/dock)
+"A" = (/turf/simulated/shuttle/wall{icon_state = "swall_f9"; dir = 2},/area/supply/dock)
 
 (1,1,1) = {"
 abcdefa
