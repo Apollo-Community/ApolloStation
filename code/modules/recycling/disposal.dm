@@ -488,6 +488,7 @@
 	var/count = 2048	//*** can travel 2048 steps before going inactive (in case of loops)
 	var/destinationTag = "" // changes if contains a delivery container
 	var/tomail = 0 //changes if contains wrapped package
+	var/is_large = 0 // if its a large object, clang clang
 	var/hasmob = 0 //If it contains a mob
 
 	var/partialTag = "" //set by a partial tagger the first time round, then put in destinationTag if it goes through again.
@@ -497,11 +498,18 @@
 	proc/init(var/obj/machinery/disposal/D, var/datum/gas_mixture/flush_gas)
 		gas = flush_gas// transfer gas resv. into holder object -- let's be explicit about the data this proc consumes, please.
 
+		for(var/obj/item/O in D )
+			if( O.w_class >= 4.0 )
+				is_large = 1
+				break
+
 		//Check for any living mobs trigger hasmob.
 		//hasmob effects whether the package goes to cargo or its tagged destination.
 		for(var/mob/living/M in D)
 			if(M && M.stat != 2 && !istype(M,/mob/living/silicon/robot/drone))
 				hasmob = 1
+				is_large = 1
+				break
 
 		//Checks 1 contents level deep. This means that players can be sent through disposals...
 		//...but it should require a second person to open the package. (i.e. person inside a wrapped locker)
@@ -510,6 +518,8 @@
 				for(var/mob/living/M in O.contents)
 					if(M && M.stat != 2 && !istype(M,/mob/living/silicon/robot/drone))
 						hasmob = 1
+						is_large = 1
+						break
 
 		// now everything inside the disposal gets put into the holder
 		// note AM since can contain mobs or objs
@@ -549,14 +559,19 @@
 			sleep(1)		// was 1
 			if(!loc) return // check if we got GC'd
 
-			if(hasmob && prob(3))
-				for(var/mob/living/H in src)
-					if(!istype(H,/mob/living/silicon/robot/drone)) //Drones use the mailing code to move through the disposal system,
-						H.take_overall_damage(20, 0, "Blunt Trauma")//horribly maim any living creature jumping down disposals.  c'est la vie
-
 			var/obj/structure/disposalpipe/curr = loc
 			last = curr
 			curr = curr.transfer(src)
+
+			if( is_large && hasmob && prob( 3 ))
+				for(var/mob/living/H in src)
+					//Drones use the mailing code to move through the disposal system
+					//Padded mailman suits prevents damage
+					var/mob/living/carbon/human/C = H
+					if(!istype(H,/mob/living/silicon/robot/drone) && !(istype(C) && istype(C.w_uniform, /obj/item/clothing/under/rank/mailman/padded)))
+						H.take_overall_damage( rand( 20, 30 ), 0, "Blunt Trauma") //horribly maim any living creature jumping down disposals.  c'est la vie
+
+				playsound(src.loc, 'sound/machines/disposalbang.ogg', 50, 1)
 
 			if(!loc) return //side effects
 
@@ -624,11 +639,7 @@
 
 		U.last_special = world.time+100
 
-		if (src.loc)
-			for (var/mob/M in hearers(src.loc.loc))
-				M << "<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>"
-
-		playsound(src.loc, 'sound/effects/clang.ogg', 50, 0, 0)
+		playsound(src.loc, 'sound/machines/disposalbang.ogg', 50, 1)
 
 	// called to vent all gas in holder to a location
 	proc/vent_gas(var/atom/location)
@@ -1429,12 +1440,13 @@
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/mode = 0
+	var/strength = 10
 
 	New()
 		..()
 
 		spawn(1)
-			target = get_ranged_target_turf(src, dir, 10)
+			target = get_ranged_target_turf(src, dir, strength)
 
 
 			var/obj/structure/disposalpipe/trunk/trunk = locate() in src.loc
@@ -1500,6 +1512,7 @@
 
 // called when movable is expelled from a disposal pipe or outlet
 // by default does nothing, override for special behaviour
+
 
 /atom/movable/proc/pipe_eject(var/direction)
 	return

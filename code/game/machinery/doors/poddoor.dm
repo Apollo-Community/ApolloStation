@@ -17,6 +17,9 @@
 	icon = 'icons/obj/doors/1x5blast_vert.dmi'
 	layer = 3.3
 
+/obj/machinery/door/poddoor/five_tile_ver/rad
+	icon = 'icons/obj/doors/1x5blast_vert_rad.dmi'
+
 /obj/machinery/door/poddoor/four_tile_ver/
 	name = "Large Pod Door"
 	icon = 'icons/obj/doors/1x4blast_vert.dmi'
@@ -302,6 +305,9 @@
 	sleep(10)
 	src.operating = 0
 	return
+
+/obj/machinery/door/poddoor/five_tile_hor/rad
+	icon = 'icons/obj/doors/1x5blast_hor_rad.dmi'
 
 /*
 /obj/machinery/door/poddoor/two_tile_ver/open()

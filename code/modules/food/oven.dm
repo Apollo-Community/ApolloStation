@@ -37,6 +37,9 @@
 		C = input("Select food to make.", "Cooking", C) in food_choices
 		if(!C)
 			return
+		if(I.loc != user)
+			user << "Oh no! where did the [I.name] go?"
+			return
 		else
 			user << "You put [F] into [src] for cooking."
 			user.drop_item()

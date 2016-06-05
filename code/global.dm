@@ -11,6 +11,14 @@ var/global/list/active_diseases = list()
 var/global/list/med_hud_users = list() //list of all entities using a medical HUD.
 var/global/list/sec_hud_users = list() //list of all entities using a security HUD.
 
+//Hanger related lists
+var/list/hangers = list()
+var/list/hangers_as = list()
+var/list/blue_space_hangers = list()
+var/list/blue_space_hangers_as = list()
+var/list/start_hangers_as = list()
+var/list/start_hangers = list()
+
 //Those networks can only be accessed by preexisting terminals. AIs and new terminals can't use them.
 var/list/restricted_camera_networks = list("thunder","ERT","NUKE")
 
@@ -198,6 +206,8 @@ var/DBConnection/dbcon = new()	// SQL Database
 
 //added for Xenoarchaeology, might be useful for other stuff
 var/global/list/alphabet_uppercase = list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
+// ss13's very own phonetic alphabet
+var/global/list/alphabet_phonetic = list("Alpha","Boson","Coffer","Dragon","Easy","Fair","Ginger","Helium","Ink","Jelly","Killer","Lemur","Malt","November","Orchard","Port","Quarry","Romeo","Stellar","Troll","Uniform","Vector","Whiskey","Xray","Yotta","Zeta")
 
 // Chemistry lists.
 var/list/tachycardics = list("coffee", "inaprovaline", "hyperzine", "nitroglycerin", "thirteenloko", "nicotine")	//increase heart rate
@@ -256,4 +266,7 @@ var/global/datum/subsystem/cell_auto/cell_auto_manager = new()
 #define PROCESS_DEFAULT_HANG_ALERT_TIME 	1800 // 180 seconds
 #define PROCESS_DEFAULT_HANG_RESTART_TIME 	2400 // 240 seconds
 #define PROCESS_DEFAULT_SCHEDULE_INTERVAL 	50  // 50 ticks
-#define PROCESS_DEFAULT_TICK_ALLOWANCE		25	// 25% of one tick
+#define PROCESS_DEFAULT_TICK_ALLOWANCE		75	// 75% of one tick
+
+//For client IC automute management
+var/global/list/non_spawn_emote = list("gasps","shivers","drools","chokes","moans","twitches violently","twitches","sneezes","snores","yawns")

@@ -72,7 +72,7 @@
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
 		rev_mind.current.verbs += /mob/living/carbon/human/proc/RevConvert
-		equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
+		rev_mind.antagonist.setup()
 
 	modePlayer += head_revolutionaries
 	spawn (rand(waittime_l, waittime_h))
@@ -124,7 +124,7 @@
 			//       probably wanna export this stuff into a separate function for use by both
 			//       revs and heads
 			//assume that only carbon mobs can become rev heads for now
-			if(!rev_mind.current:handcuffed && T && T.z in config.station_levels)
+			if(!rev_mind.current:handcuffed && T && T.z in overmap.station_levels)
 				return 0
 	return 1
 

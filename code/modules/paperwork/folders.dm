@@ -18,9 +18,23 @@
 	desc = "A yellow folder."
 	icon_state = "folder_yellow"
 
+/obj/item/weapon/folder/purple
+	desc = "A purple folder."
+	icon_state = "folder_purple"
+
 /obj/item/weapon/folder/white
 	desc = "A white folder."
 	icon_state = "folder_white"
+
+/obj/item/weapon/folder/tourist
+	name = "Pamplet"
+	desc = "A pamplet showing a happy young assistant running in the wind"
+	icon_state = "pamphlet"
+
+/obj/item/weapon/folder/tourist/New()
+	..()
+	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper
+	P.loc = src
 
 /obj/item/weapon/folder/update_icon()
 	overlays.Cut()

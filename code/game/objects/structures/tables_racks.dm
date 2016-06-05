@@ -443,7 +443,7 @@
 				G.affecting.loc = src.loc
 				G.affecting.Weaken(5)
 				visible_message("<span class='danger'>[G.assailant] puts [G.affecting] on \the [src].</span>")
-			qdel(W)
+			deconstruct()
 			return
 
 	// Handle dissembly.
@@ -454,7 +454,7 @@
 		user << "<span class='notice'>You locate the bolts and begin disassembling \the [src]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user,50))
-			Destroy()
+			deconstruct()
 		return
 
 	// Handle weakening.
@@ -497,7 +497,7 @@
 		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 		playsound(src.loc, "sparks", 50, 1)
 		user.visible_message("<span class='danger'>The [src] was sliced apart by [user]!</span>")
-		qdel()
+		deconstruct()
 
 	user.drop_item(src)
 	return

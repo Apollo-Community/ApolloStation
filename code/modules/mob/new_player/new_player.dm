@@ -101,7 +101,15 @@
 			return 1
 
 		if(href_list["ready"])
-			if(!ticker || ticker.current_state <= GAME_STATE_PREGAME) // Make sure we don't ready up after the round has started
+			if( !client.prefs.selected_character )
+				client << "<span class='notice'>You have no character selected!</span>"
+				return
+
+			if( !client.prefs.selected_character.canJoin() )
+				client << "<span class='notice'>You're not allowed to join the game as that character!</span>"
+				return
+
+			if((!ticker || ticker.current_state <= GAME_STATE_PREGAME)) // Make sure we don't ready up after the round has started, or without a selected character
 				ready = text2num(href_list["ready"])
 			else
 				ready = 0
@@ -289,6 +297,12 @@
 			return 0
 		if(!config.enter_allowed)
 			usr << "<span class='notice'>There is an administrative lock on entering the game!</span>"
+			return 0
+		if( !client.prefs.selected_character )
+			usr << "<span class='notice'>You have no character selected!</span>"
+			return
+		if( !client.prefs.selected_character.canJoin() )
+			usr << "<span class='notice'>You're not allowed to join the game as that character!</span>"
 			return 0
 		if(!IsJobAvailable(rank))
 			src << alert("[rank] is not available. Please try another.")

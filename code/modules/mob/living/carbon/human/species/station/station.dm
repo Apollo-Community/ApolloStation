@@ -283,7 +283,7 @@
 	have adapted extremely well to cold environments though have lost most of their muscles over generations.\
 	In order to communicate and work with multi-species crew Wryn were forced to take on names. Wryn have tended towards using only \
 	first names, these names are generally simplistic and easy to pronounce. Wryn have rarely had to communicate using their mouths, \
-	so in order to integrate with the multi-species crew they have been taught broken sol’."
+	so in order to integrate with the multi-species crew they have been taught broken solï¿½."
 
 	cold_level_1 = 200 //Default 260 - Lower is better
 	cold_level_2 = 150 //Default 200
@@ -359,7 +359,9 @@
 	return ..()
 
 /datum/species/nucleation/handle_death(var/mob/living/carbon/human/H)
+	var/client/C = H.client
 	var/turf/T = get_turf(H)
 	H.visible_message("<span class='alert'>[H]'s body explodes, leaving behind a pile of microscopic crystals!</span>")
 	supermatter_delamination( T, 4, 1, 0, 0 ) // Create a small supermatter burst upon death
 	qdel(H)
+	spawn(100)		C.mob.timeofdeath = world.time		//Give it some time to ghost you

@@ -136,11 +136,20 @@
 	var/malfunction = 0 //Malfunction causes parts of the shield to slowly dissapate
 	var/list/deployed_shields = list()
 	var/list/regenerating = list()
-	var/is_open = 0 //Whether or not the wires are exposed
 	var/locked = 0
 	var/check_delay = 60	//periodically recheck if we need to rebuild a shield
 	use_power = 0
 	idle_power_usage = 0
+	var/datum/wires/shieldgen/wires = null
+	var/disabled = 0
+
+/obj/machinery/shieldgen/New()
+	..()
+	wires = new(src)
+
+/obj/machinery/power/emitter/initialize()
+	..()
+	wires = new(src)
 
 /obj/machinery/shieldgen/Destroy()
 	collapse_shields()
@@ -255,17 +264,27 @@
 	if(locked)
 		user << "The machine is locked, you are unable to use it."
 		return
-	if(is_open)
+	if(panel_open)
 		user << "The panel must be closed before operating this machine."
 		return
 
 	if (src.active)
+		if(disabled)
+			user.visible_message("<span class='notice'>\icon[src] [user] tries to deactivate the shield generator.</span>", \
+			"<span class='notice'>\icon[src] You try deactivate the shield generator but nothing happens.</span>", \
+			"")
+			return
 		user.visible_message("<span class='notice'>\icon[src] [user] deactivated the shield generator.</span>", \
 			"<span class='notice'>\icon[src] You deactivate the shield generator.</span>", \
 			"You hear heavy droning fade out.")
 		src.shields_down()
 	else
 		if(anchored)
+			if(disabled)
+				user.visible_message("<span class='notice'>\icon[src] [user] tries to activate the shield generator.</span>", \
+				"<span class='notice'>\icon[src] You try to activate the shield generator but nothing happens.</span>", \
+				"")
+				return
 			user.visible_message("<span class='notice'>\icon[src] [user] activated the shield generator.</span>", \
 				"<span class='notice'>\icon[src] You activate the shield generator.</span>", \
 				"You hear heavy droning.")
@@ -275,23 +294,22 @@
 	return
 
 /obj/machinery/shieldgen/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/device/multitool) || istype(W, /obj/item/weapon/wirecutters))
+		if(panel_open == 1)
+			wires.Interact(user)
+			return
+
 	if(istype(W, /obj/item/weapon/card/emag))
 		malfunction = 1
 		update_icon()
 
-	else if(istype(W, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
-		if(is_open)
-			user << "<span class='notice'>You close the panel.</span>"
-			is_open = 0
-		else
-			user << "<span class='notice'>You open the panel and expose the wiring.</span>"
-			is_open = 1
+	if(istype(W, /obj/item/weapon/screwdriver))
+		default_deconstruction_screwdriver(user,icon_state,icon_state,W)
+		return
 
-	else if(istype(W, /obj/item/stack/cable_coil) && malfunction && is_open)
+	else if(istype(W, /obj/item/stack/cable_coil) && malfunction && panel_open)
 		var/obj/item/stack/cable_coil/coil = W
 		user << "<span class='notice'>You begin to replace the wires.</span>"
-		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
 		if(do_after(user, 30))
 			if (coil.use(1))
 				health = max_health

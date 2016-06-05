@@ -13,7 +13,7 @@
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
 		qdel(src)
 
-/obj/item/apc_frame/proc/try_build(turf/on_wall)
+/obj/item/apc_frame/try_build(turf/on_wall)
 	if (get_dist(on_wall,usr)>1)
 		return
 	var/ndir = get_dir(usr,on_wall)

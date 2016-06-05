@@ -35,6 +35,9 @@ datum/mind
 	var/mob/living/current
 	var/mob/living/original	//TODO: remove.not used in any meaningful way ~Carn. First I'll need to tweak the way silicon-mobs handle minds.
 	var/datum/character/character
+	var/datum/character/original_character
+
+	var/datum/browser/memory_browser
 
 	var/active = 0
 
@@ -52,6 +55,7 @@ datum/mind
 
 	var/has_been_rev = 0//Tracks if this mind has been a rev or not
 
+	var/datum/antagonist/antagonist
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
 
@@ -116,385 +120,574 @@ datum/mind
 			alert("Not before round-start!", "Alert")
 			return
 
-		var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
-		out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
-		out += "Assigned role: [assigned_role]. <a href='?src=\ref[src];role_edit=1'>Edit</a><br>"
-		out += "Factions and special roles:<br>"
+		// 400 + 17 for the scroll bar
+		memory_browser = new(null, "antagpanel_[key]", "Antagonist Panel", 417, 500)
 
-		var/list/sections = list(
-			"implant",
-			"revolution",
-			"cult",
-			"changeling",
-			"mercenary",
-			"traitor", // "traitorchan",
-			"malfunction",
-		)
-		var/text = ""
 		var/mob/living/carbon/human/H = current
-		if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/human/monkey))
-			/** Impanted**/
-			if(istype(current, /mob/living/carbon/human))
-				if(H.is_loyalty_implanted(H))
-					text = "Loyalty Implant:<a href='?src=\ref[src];implant=remove'>Remove</a>|<b>Implanted</b></br>"
-				else
-					text = "Loyalty Implant:<b>No Implant</b>|<a href='?src=\ref[src];implant=add'>Implant him!</a></br>"
-			else
-				text = "Loyalty Implant: Don't implant that monkey!</br>"
-			sections["implant"] = text
-			/** REVOLUTION ***/
-			text = "revolution"
-			if (ticker.mode.config_tag=="revolution")
-				text += uppertext(text)
-			text = "<i><b>[text]</b></i>: "
-			if (istype(current, /mob/living/carbon/human/monkey) || H.is_loyalty_implanted(H))
-				text += "<b>LOYAL EMPLOYEE</b>|headrev|rev"
-			else if (src in ticker.mode.head_revolutionaries)
-				text = "<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
-				text += "<br>Flash: <a href='?src=\ref[src];revolution=flash'>give</a>"
+		// START NEW ANTAGONIST SYSTEM PANEL //
+		. = "<table><tr><td>"
+		. += "<font size=3>[name] - @[key]</font>"
+		. += "<hr>"
+		. += "</td></tr>"
 
-				var/list/L = current.get_contents()
-				var/obj/item/device/flash/flash = locate() in L
-				if (flash)
-					if(!flash.broken)
-						text += "|<a href='?src=\ref[src];revolution=takeflash'>take</a>."
-					else
-						text += "|<a href='?src=\ref[src];revolution=takeflash'>take</a>|<a href='?src=\ref[src];revolution=repairflash'>repair</a>."
-				else
-					text += "."
+		. += "<tr><td><table class='outline'>"
+		. += "<tr><th align='left' style='padding-left: 6px'><b>New Antag System</b></th></tr>"
 
-				text += " <a href='?src=\ref[src];revolution=reequip'>Reequip</a> (gives traitor uplink)."
-				if (objectives.len==0)
-					text += "<br>Objectives are empty! <a href='?src=\ref[src];revolution=autoobjectives'>Set to kill all heads</a>."
-			else if (src in ticker.mode.revolutionaries)
-				text += "<a href='?src=\ref[src];revolution=clear'>employee</a>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<b>REV</b>"
-			else
-				text += "<b>EMPLOYEE</b>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
-			sections["revolution"] = text
+		// COMMANDS
+		if(antagonist)
+			. += "<tr><td><table>"
 
-			/** CULT ***/
-			text = "cult"
-			if (ticker.mode.config_tag=="cult")
-				text = uppertext(text)
-			text = "<i><b>[text]</b></i>: "
-			if (istype(current, /mob/living/carbon/human/monkey) || H.is_loyalty_implanted(H))
-				text += "<B>LOYAL EMPLOYEE</B>|cultist"
-			else if (src in ticker.mode.cult)
-				text += "<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
-				text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=amulet'>amulet</a>."
-/*
-				if (objectives.len==0)
-					text += "<br>Objectives are empty! Set to sacrifice and <a href='?src=\ref[src];cult=escape'>escape</a> or <a href='?src=\ref[src];cult=summon'>summon</a>."
-*/
-			else
-				text += "<b>EMPLOYEE</b>|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
-			sections["cult"] = text
+			. += "<tr>"
+			. += "<td>Antagonist type: <a href='byond://?src=\ref[src];command=antag_type'><b>[antagonist.name]</b></a></td>"
+			. += "<td>Persistent: <b>[istype(antagonist, /datum/antagonist/traitor/persistant) ? "Yes" : "No"]</b></td>"
+			. += "</tr>"
+			. += "<tr>"
+			. += "<td>Faction: <a href='byond://?src=\ref[src];command=antag_faction'><b>[antagonist.faction.name]</b></a></td>"
+			. += "<td>Notoriety: <a href='byond://?src=\ref[src];command=edit_notoriety'>[antagonist.notoriety]</a></td>"
+			. += "</tr>"
 
-			/** CHANGELING ***/
-			text = "changeling"
-			if (ticker.mode.config_tag=="changeling" || ticker.mode.config_tag=="traitorchan")
-				text = uppertext(text)
-			text = "<i><b>[text]</b></i>: "
-			if (src in ticker.mode.changelings)
-				text += "<b>YES</b>|<a href='?src=\ref[src];changeling=clear'>no</a>"
-				if (objectives.len==0)
-					text += "<br>Objectives are empty! <a href='?src=\ref[src];changeling=autoobjectives'>Randomize!</a>"
-				if( changeling && changeling.absorbed_dna.len && (current.real_name != changeling.absorbed_dna[1]) )
-					text += "<br><a href='?src=\ref[src];changeling=initialdna'>Transform to initial appearance.</a>"
-			else
-				text += "<a href='?src=\ref[src];changeling=changeling'>yes</a>|<b>NO</b>"
-//			var/datum/game_mode/changeling/changeling = ticker.mode
-//			if (istype(changeling) && changeling.changelingdeath)
-//				text += "<br>All the changelings are dead! Restart in [round((changeling.TIME_TO_GET_REVIVED-(world.time-changeling.changelingdeathtime))/10)] seconds."
-			sections["changeling"] = text
+			. += "</table></td></tr>"
 
-			/** NUCLEAR ***/
-			text = "mercenary"
-			if (ticker.mode.config_tag=="mercenary")
-				text = uppertext(text)
-			text = "<i><b>[text]</b></i>: "
-			if (src in ticker.mode.syndicates)
-				text += "<b>OPERATIVE</b>|<a href='?src=\ref[src];mercenary=clear'>nanotrasen</a>"
-				text += "<br><a href='?src=\ref[src];mercenary=lair'>To shuttle</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];mercenary=dressup'>dress up</a>."
-				var/code
-				for (var/obj/machinery/nuclearbomb/bombue in machines)
-					if (length(bombue.r_code) <= 5 && bombue.r_code != "LOLNO" && bombue.r_code != "ADMIN")
-						code = bombue.r_code
-						break
-				if (code)
-					text += " Code is [code]. <a href='?src=\ref[src];mercenary=tellcode'>tell the code.</a>"
-			else
-				text += "<a href='?src=\ref[src];mercenary=mercenary'>operative</a>|<b>NANOTRASEN</b>"
-			sections["mercenary"] = text
+			. += "<tr><td><hr></td></tr>"
 
-		/** TRAITOR ***/
-		text = "traitor"
-		if (ticker.mode.config_tag=="traitor" || ticker.mode.config_tag=="traitorchan")
-			text = uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		if(istype(current, /mob/living/carbon/human))
-			if (H.is_loyalty_implanted(H))
-				text +="traitor|<b>LOYAL EMPLOYEE</b>"
-			else
-				if (src in ticker.mode.traitors)
-					text += "<b>TRAITOR</b>|<a href='?src=\ref[src];traitor=clear'>Employee</a>"
-					if (objectives.len==0)
-						text += "<br>Objectives are empty! <a href='?src=\ref[src];traitor=autoobjectives'>Randomize</a>!"
-				else
-					text += "<a href='?src=\ref[src];traitor=traitor'>traitor</a>|<b>Employee</b>"
-		sections["traitor"] = text
+			. += "<tr><td><table>"
 
-		/** SILICON ***/
+			. += "<tr><td>General</td></tr>"
+			. += "<tr><td><a href='byond://?src=\ref[src];command=toggle_uplink'>[antagonist.uplink_blocked ? "Enable Uplink" : "Disable Uplink"]</a> | <a href='byond://?src=\ref[src];command=random_contract'>Random contract</a> | <a href='byond://?src=\ref[src];command=custom_contract'>Custom contract</a></td></tr>"
 
-		if (istype(current, /mob/living/silicon))
-			text = "silicon"
-			if (ticker.mode.config_tag=="malfunction")
-				text = uppertext(text)
-			text = "<i><b>[text]</b></i>: "
-/*			if (istype(current, /mob/living/silicon/ai))
-				if (src in ticker.mode.malf_ai)
-					text += "<b>MALF</b>|<a href='?src=\ref[src];silicon=unmalf'>not malf</a>"
-				else
-					text += "<a href='?src=\ref[src];silicon=malf'>malf</a>|<b>NOT MALF</b>"*/
-			var/mob/living/silicon/robot/robot = current
-			if (istype(robot) && robot.emagged)
-				text += "<br>Cyborg: Is emagged! <a href='?src=\ref[src];silicon=unemag'>Unemag!</a><br>0th law: [robot.laws.zeroth]"
-			var/mob/living/silicon/ai/ai = current
-			if (istype(ai) && ai.connected_robots.len)
-				var/n_e_robots = 0
-				for (var/mob/living/silicon/robot/R in ai.connected_robots)
-					if (R.emagged)
-						n_e_robots++
-				text += "<br>[n_e_robots] of [ai.connected_robots.len] slaved cyborgs are emagged. <a href='?src=\ref[src];silicon=unemagcyborgs'>Unemag</a>"
-			sections["malfunction"] = text
+			. += "<tr><td>Fun</td></tr>"
+			. += "<tr><td><a href='byond://?src=\ref[src];command=edit_money'>Set cash</a> | <a href='byond://?src=\ref[src];command=buy_random'>Buy random</a> | <a href='byond://?src=\ref[src];command=buy_random_faction'>Buy random (faction)</a> | <a href='byond://?src=\ref[src];command=randomize_char'>Randomize character</a> | <a href='byond://?src=\ref[src];command=save_char'>Save character</a> | <a href='byond://?src=\ref[src];command=give_token'>Give token</a></td></tr>"
 
-		if (ticker.mode.config_tag == "traitorchan")
-			if (sections["traitor"])
-				out += sections["traitor"]+"<br>"
-			if (sections["changeling"])
-				out += sections["changeling"]+"<br>"
-			sections -= "traitor"
-			sections -= "changeling"
+			if(check_rights(R_DEBUG))
+				. += "<tr><td>Debug</td></tr>"
+				. += "<tr><td><a href='byond://?src=\ref[src];command_debug=equip'>Equip</a> | <a href='byond://?src=\ref[src];command_debug=setup'>Force setup</a> | <a href='byond://?src=\ref[src];command_debug=greet'>Greet</a> | <a href='byond://?src=\ref[src];command_debug=commend'>Commend</a></td></tr>"
+
+			. += "</table></td></tr>"
 		else
-			if (sections[ticker.mode.config_tag])
-				out += sections[ticker.mode.config_tag]+"<br>"
-			sections -= ticker.mode.config_tag
-		for (var/i in sections)
-			if (sections[i])
-				out += sections[i]+"<br>"
+			. += "<tr><td><table>"
+			. += "<tr><td>Antagonist type: <a href='byond://?src=\ref[src];command=antag_type'><b>Not antagonist</b></a></td></tr>"
+			. += "</table></td></tr>"
 
+		// CONTRACTS
+		if(antagonist)
+			. += "<tr><td><hr></td></tr>"
 
-		if (((src in ticker.mode.head_revolutionaries) || \
-			(src in ticker.mode.traitors)              || \
-			(src in ticker.mode.syndicates))           && \
-			istype(current,/mob/living/carbon/human)      )
+			. += "<tr><td><table>"
+			. += "<tr><td>Active Contracts</td></tr>"
+			. += "<tr><td>"
+			if(antagonist.active_contracts.len)
+				for(var/datum/contract/contract in antagonist.active_contracts)
+					. += "<table><tr>"
+					. += "<th width=70%>[contract.informal_name]</th>"
+					. += "<td><a href='byond://?src=\ref[src];command_contract=fail;contract=\ref[contract]'>Fail</a></td>"
+					. += "<td><a href='byond://?src=\ref[src];command_contract=complete;contract=\ref[contract]'>Complete</a></td>"
+					. += "</tr></table>"
+			else
+				. += "<table><tr><td>No active contracts</td></tr></table>"
 
-			text = "Uplink: <a href='?src=\ref[src];common=uplink'>give</a>"
-			var/obj/item/device/uplink/hidden/suplink = find_syndicate_uplink()
-			var/crystals
-			if (suplink)
-				crystals = suplink.uses
-			if (suplink)
-				text += "|<a href='?src=\ref[src];common=takeuplink'>take</a>"
-				if (usr.client.holder.rights & R_FUN)
-					text += ", <a href='?src=\ref[src];common=crystals'>[crystals]</a> crystals"
-				else
-					text += ", [crystals] crystals"
-			text += "." //hiel grammar
-			out += text
+			. += "</td></tr>"
+			. += "</table></td></tr>"
 
-		out += "<br>"
+			. += "<tr><td><table>"
+			. += "<tr><td>Completed Contracts</td></tr>"
+			. += "<tr><td>"
 
-		out += "<b>Memory:</b><br>"
-		out += memory
-		out += "<br><a href='?src=\ref[src];memory_edit=1'>Edit memory</a><br>"
-		out += "Objectives:<br>"
-		if (objectives.len == 0)
-			out += "EMPTY<br>"
+			if(antagonist.completed_contracts.len)
+				for(var/datum/contract/C in antagonist.completed_contracts)
+					. += "<table><tr>"
+					. += "<th>[C.informal_name]</th>"
+					. += "</tr></table>"
+			else
+				. += "<table><tr><td>No completed contracts</td></tr></table>"
+
+			. += "</td></tr>"
+			. += "</table></td></tr>"
+
+		. += "</table></td></tr>"
+		// END NEW ANTAGONIST SYSTEM PANEL //
+
+		// START OLD ANTAGONIST SYSTEM PANEL //
+		. += "<tr><td><table class='outline'>"
+		. += "<tr><th align='left' style='padding-left: 6px'><b>Old Antag System</b></th></tr>"
+
+		. += "<tr><td><table>"
+		. += "<tr><td>General</td></tr>"
+		. += "<tr>"
+		. += "<td>Loyalty implant:</td>"
+
+		// LOYALTY IMPLANTS
+		if(H.is_loyalty_implanted(H))
+			. += "<td>Implanted | <a href='byond://?src=\ref[src];command_old=remove_implant'>Not implanted</a></td>"
 		else
-			var/obj_count = 1
+			. += "<td><a href='byond://?src=\ref[src];command_old=give_implant'>Implanted</a> | Not implanted</td>"
+
+		. += "</tr></table>"
+		. += "</td></tr>"
+
+		. += "<tr><td><hr></td></tr>"
+
+		. += "<tr><td><table>"
+		. += "<tr><td>Antagonists</td></tr>"
+
+		. += "<tr>"
+		. += "<td>Revolutionary:</td>"
+
+		// REVOLUTIONARY
+		if(src in ticker.mode.head_revolutionaries)
+			. += "<td><a href='byond://?src=\ref[src];command_old=rev_employee'>Employee</a> | <a href='byond://?src=\ref[src];command_old=rev_rev'>Rev</a> | Head Rev</td>"
+		else if(src in ticker.mode.revolutionaries)
+			. += "<td><a href='byond://?src=\ref[src];command_old=rev_employee'>Employee</a> | Rev | <a href='byond://?src=\ref[src];command_old=rev_head'>Head Rev</a></td>"
+		else
+			. += "<td>Employee | <a href='byond://?src=\ref[src];command_old=rev_rev'>Rev</a> | <a href='byond://?src=\ref[src];command_old=rev_head'>Head Rev</a></td>"
+
+		. += "</tr>"
+		. += "<tr>"
+		. += "<td>Cultist:</td>"
+
+		// CULTIST
+		if(src in ticker.mode.cult)
+			. += "<td><a href='byond://?src=\ref[src];command_old=cult_employee'>Employee</a> | Cultist | <a href='byond://?src=\ref[src];command_old=cult_tome'>Give tome</a></td>"
+		else
+			. += "<td>Employee | <a href='byond://?src=\ref[src];command_old=cult_cultist'>Cultist</a></td>"
+
+		. += "</tr>"
+		. += "<tr>"
+		. += "<td>Changeling:</td>"
+
+		// CHANGELING
+		if(src in ticker.mode.changelings)
+			. += "<td><a href='byond://?src=\ref[src];command_old=ling_employee'>Employee</a> | Changeling</td>"
+		else
+			. += "<td>Employee | <a href='byond://?src=\ref[src];command_old=ling_changeling'>Changeling</a></td>"
+
+		. += "</tr></table>"
+		. += "</td></tr>"
+
+		. += "</table></td></tr>"
+		// END OLD ANTAGONIST SYSTEM PANEL //
+
+		// START OBJECTIVES PANEL //
+		. += "<tr><td><table class='outline'>"
+		. += "<tr><th align='left' style='padding-left: 6px'><b>Objectives</b></th></tr>"
+
+		. += "<tr><td><table>"
+		. += "<tr><td>Commands</td></tr>"
+		. += "<tr><td><a href='byond://?src=\ref[src];command_objective=add'>Add objective</a> | <a href='byond://?src=\ref[src];command_objective=announce'>Announce objectives</a></td></tr>"
+		. += "</table></td></tr>"
+
+		. += "<tr><td><hr></td></tr>"
+
+		. += "<tr><td><table>"
+		. += "<tr><td>Current objectives</td></tr>"
+		. += "<tr><td>"
+
+		// OBJECTIVES LIST
+		if(objectives.len)
 			for(var/datum/objective/objective in objectives)
-				out += "<B>[obj_count]</B>: [objective.explanation_text] <a href='?src=\ref[src];obj_edit=\ref[objective]'>Edit</a> <a href='?src=\ref[src];obj_delete=\ref[objective]'>Delete</a> <a href='?src=\ref[src];obj_completed=\ref[objective]'><font color=[objective.completed ? "green" : "red"]>Toggle Completion</font></a><br>"
-				obj_count++
-		out += "<a href='?src=\ref[src];obj_add=1'>Add objective</a><br><br>"
+				. += "<table><tr>"
+				. += "<td width=60%>[objective.explanation_text]</td>"
+				. += "<td> <a href='byond://?src=\ref[src];command_objective=edit;objective=\ref[objective]'>Edit</a> | <a href='byond://?src=\ref[src];command_objective=delete;objective=\ref[objective]'>Delete</a> | <a href='byond://?src=\ref[src];command_objective=toggle_completion;objective=\ref[objective]'><font color=[objective.completed ? "blue" : "yellow"]>Toggle completion</font></a></td>"
+				. += "</tr></table>"
+		else
+			. += "<table><tr><td>No objectives</td></tr></table>"
 
-		out += "<a href='?src=\ref[src];obj_announce=1'>Announce objectives</a><br><br>"
+		. += "</td></tr></table>"
+		. += "</td></tr></table>"
 
-		usr << browse(out, "window=edit_memory[src]")
+		. += "</td></tr>"
+		. += "</table>"
+		// END OBJECTIVES PANEL //
+			
+		memory_browser.set_user( usr )
+		memory_browser.set_content( replacetext( ., "\improper", "" ) )
+		memory_browser.open()
+
 
 	Topic(href, href_list)
-		if(!check_rights(R_ADMIN))	return
+		if( !check_rights( R_ADMIN ))	return
 
-		if (href_list["role_edit"])
-			var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in joblist
-			if (!new_role) return
-			assigned_role = new_role
+		// NEW ANTAG SYSTEM STUFF
 
-		else if (href_list["memory_edit"])
-			var/new_memo = sanitize(input("Write new memory", "Memory", memory) as null|message)
-			if (isnull(new_memo)) return
-			memory = new_memo
-
-		else if (href_list["obj_edit"] || href_list["obj_add"])
-			var/datum/objective/objective
-			var/objective_pos
-			var/def_value
-
-			if (href_list["obj_edit"])
-				objective = locate(href_list["obj_edit"])
-				if (!objective) return
-				objective_pos = objectives.Find(objective)
-
-				//Text strings are easy to manipulate. Revised for simplicity.
-				var/temp_obj_type = "[objective.type]"//Convert path into a text string.
-				def_value = copytext(temp_obj_type, 19)//Convert last part of path into an objective keyword.
-				if(!def_value)//If it's a custom objective, it will be an empty string.
-					def_value = "custom"
-
-			var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "debrain", "protect", "prevent", "harm", "brig", "hijack", "escape", "survive", "steal", "download", "mercenary", "capture", "absorb", "custom")
-			if (!new_obj_type) return
-
-			var/datum/objective/new_objective = null
-
-			switch (new_obj_type)
-				if ("assassinate","protect","debrain", "harm", "brig")
-					//To determine what to name the objective in explanation text.
-					var/objective_type_capital = uppertext(copytext(new_obj_type, 1,2))//Capitalize first letter.
-					var/objective_type_text = copytext(new_obj_type, 2)//Leave the rest of the text.
-					var/objective_type = "[objective_type_capital][objective_type_text]"//Add them together into a text string.
-
-					var/list/possible_targets = list("Free objective")
-					for(var/datum/mind/possible_target in ticker.minds)
-						if ((possible_target != src) && istype(possible_target.current, /mob/living/carbon/human))
-							possible_targets += possible_target.current
-
-					var/mob/def_target = null
-					var/objective_list[] = list(/datum/objective/assassinate, /datum/objective/protect, /datum/objective/debrain)
-					if (objective&&(objective.type in objective_list) && objective:target)
-						def_target = objective:target.current
-
-					var/new_target = input("Select target:", "Objective target", def_target) as null|anything in possible_targets
-					if (!new_target) return
-
-					var/objective_path = text2path("/datum/objective/[new_obj_type]")
-					if (new_target == "Free objective")
-						new_objective = new objective_path
-						new_objective.owner = src
-						new_objective:target = null
-						new_objective.explanation_text = "Free objective"
-					else
-						new_objective = new objective_path
-						new_objective.owner = src
-						new_objective:target = new_target:mind
-						//Will display as special role if the target is set as MODE. Ninjas/commandos/nuke ops.
-						new_objective.explanation_text = "[objective_type] [new_target:real_name], the [new_target:mind:assigned_role=="MODE" ? (new_target:mind:special_role) : (new_target:mind:assigned_role)]."
-
-				if ("prevent")
-					new_objective = new /datum/objective/block
-					new_objective.owner = src
-
-				if ("hijack")
-					new_objective = new /datum/objective/hijack
-					new_objective.owner = src
-
-				if ("escape")
-					new_objective = new /datum/objective/escape
-					new_objective.owner = src
-
-				if ("survive")
-					new_objective = new /datum/objective/survive
-					new_objective.owner = src
-
-				if ("mercenary")
-					new_objective = new /datum/objective/nuclear
-					new_objective.owner = src
-
-				if ("steal")
-					if (!istype(objective, /datum/objective/steal))
-						new_objective = new /datum/objective/steal
-						new_objective.owner = src
-					else
-						new_objective = objective
-					var/datum/objective/steal/steal = new_objective
-					if (!steal.select_target())
+		// GENERAL COMMANDS
+		if( href_list["command"] )
+			if( !current )	return
+			switch( href_list["command"] )
+				if( "antag_type" ) // Change antagonist type
+					var/new_type = input("Select new antagonist type", "Antagonist type edit", "[antagonist ? "[antagonist.type]" : ""]") in (subtypes(/datum/antagonist) + list("De-antag"))
+					if( !new_type || alert("Are you sure you want to make [current.name] a [new_type] antagonist? This may remove contracts/faction, etc.",,"Yes","No")=="No" )
 						return
 
-				if("download","capture","absorb")
-					var/def_num
-					if(objective&&objective.type==text2path("/datum/objective/[new_obj_type]"))
-						def_num = objective.target_amount
+					var/datum/faction/fact
+					if( antagonist )
+						fact = antagonist.faction // save this
+						current << "<b><font size=3 color=red>You are no longer a [antagonist.name]!</font></b>"
+						qdel(antagonist)
 
-					var/target_number = input("Input target number:", "Objective", def_num) as num|null
-					if (isnull(target_number))//Ordinarily, you wouldn't need isnull. In this case, the value may already exist.
+					if(new_type == "De-antag")
+						message_admins("[usr] has removed [current.name]'s antagonist status")
 						return
 
-					switch(new_obj_type)
-						if("download")
-							new_objective = new /datum/objective/download
-							new_objective.explanation_text = "Download [target_number] research levels."
-						if("capture")
-							new_objective = new /datum/objective/capture
-							new_objective.explanation_text = "Accumulate [target_number] capture points."
-						if("absorb")
-							new_objective = new /datum/objective/absorb
-							new_objective.explanation_text = "Absorb [target_number] compatible genomes."
-					new_objective.owner = src
-					new_objective.target_amount = target_number
+					antagonist = new new_type(src)
+					if(fact)
+						antagonist.faction = fact
+					antagonist.setup()
 
-				if ("custom")
-					var/expl = sanitize(input("Custom objective:", "Objective", objective ? objective.explanation_text : "") as text|null)
-					if (!expl) return
-					new_objective = new /datum/objective
-					new_objective.owner = src
-					new_objective.explanation_text = expl
+					message_admins("[usr] has made [current.name] ([key]) an antagonist of type [new_type]")
 
-			if (!new_objective) return
+				if( "antag_faction" ) // Edit the syndicate faction of the antagonist
+					var/list/names = list()
+					for( var/datum/faction/F in faction_controller.factions )
+						names += F.name
 
-			if (objective)
-				objectives -= objective
-				objectives.Insert(objective_pos, new_objective)
-			else
-				objectives += new_objective
+					var/new_faction = input("Select a new faction", "Faction edit") in names
+					if( !new_faction || alert("Are you sure you want to set [current.name]'s faction to [new_faction]? This will remove all their active contracts.",,"Yes","No")=="No" )
+						return
 
-		else if (href_list["obj_delete"])
-			var/datum/objective/objective = locate(href_list["obj_delete"])
-			if(!istype(objective))	return
-			objectives -= objective
+					var/datum/faction/faction = faction_controller.get_faction(new_faction)
+					if( faction )
+						var/obj/item/device/pda/P = locate() in current.contents
+						var/obj/item/device/uplink/U = P.hidden_uplink
+						current << "<b><font size=3 color=red></font>You no longer work for [antagonist.faction.name]</b>"
 
-		else if(href_list["obj_completed"])
-			var/datum/objective/objective = locate(href_list["obj_completed"])
-			if(!istype(objective))	return
-			objective.completed = !objective.completed
+						if( U )
+							if( U.ItemsCategory["[antagonist.faction.name] Equipment"] )
+								U.ItemsCategory.Cut()
+								U.ItemsCategory = ticker.mode.uplink_items
+								var/datum/nano_item_lists/IL = U.generate_item_lists()
+								U.nanoui_items = IL.items_nano
+								U.ItemsReference = IL.items_reference
 
-		else if(href_list["implant"])
+						for(var/datum/contract/C in antagonist.active_contracts)
+							C.workers -= antagonist
+						antagonist.active_contracts.Cut()
+
+						faction.join(antagonist)
+
+						current << "<b><font size=3 color=red>You are now an agent of [faction.name]</font></b>"
+						message_admins("[usr] has set [current.name]'s ([key]) faction to [faction.name]")
+
+				if( "edit_notoriety" ) // Edit the amount of notoriety a character has (FOR THE ORIGINAL CHARACTER TOO!)
+					var/datum/character/char = (isnull(original_character) ? character : original_character)
+
+					var/new_notoriety = input("New notoriety amount", "Notoriety edit", char.antag_data["notoriety"]) as num|null
+					antagonist.notoriety = new_notoriety
+
+					character.antag_data["notoriety"] = new_notoriety
+					if( original_character )
+						original_character.antag_data["notoriety"] = new_notoriety
+
+					message_admins("[usr] has set [current.name]'s ([key]) notoriety to [new_notoriety]")
+
+				// GENERAL COMMANDS
+
+				if( "toggle_uplink" ) // Disables access to the contract board & market
+					antagonist.uplink_blocked = !antagonist.uplink_blocked
+
+				if( "random_contract" ) // Assigns the antagonist a random contract from their faction
+					var/list/datum/contract/contracts = antagonist.faction.contracts.Copy()
+					for( var/datum/contract/C in contracts )
+						if( C in antagonist.active_contracts || !C.can_accept( current ) )
+							contracts -= C
+
+					var/datum/contract/chosen = pick(contracts)
+					chosen.start( current )
+
+					current << "<b><font size=3 color=red>You have been assigned a contract.</font></b>"
+					current << "<B>[chosen.title]</B>\n<I>[chosen.desc]</I>\nYou have until [worldtime2text(chosen.contract_start + chosen.time_limit)], station time to complete the contract."
+
+				if( "custom_contract" ) // Make a custom contract
+					var/datum/contract/custom/custom = new( antagonist.faction )
+
+					custom.title = sanitize( input( "Title of the contract", "Custom contract title", "" ))
+					custom.desc = sanitize( input( "Description of the contract", "Custom contract description", "" ))
+					custom.informal_name = sanitize( input( "Short description of the contract objective", "Custom contract informal name", "" ))
+
+					custom.time_limit = input( "Time limit in seconds", "Time limit", "" ) as num|null
+					if( custom.time_limit )
+						custom.time_limit *= 10
+						custom.contract_start = world.time
+						if( contract_ticker )
+							contract_ticker.contracts += custom
+					custom.reward = input( "Monetary reward in $$$", "Reward", "" ) as num|null
+
+					custom.start( current )
+
+					usr << "<span class='notice'>Custom contract created successfully!</span>"
+					current << "<b><font size=3 color=red>You have been assigned a contract.</font></b>"
+					current << "<B>[custom.title]</B>\n<I>[custom.desc]</I>\nYou have until [worldtime2text(world.time + custom.time_limit)], station time to complete the contract."
+
+				// FUN COMMANDS
+
+				if( "edit_money" ) // Edit the antag's cash reserve
+					var/datum/money_account/M
+					for(var/datum/money_account/D in all_money_accounts)
+						if(D.owner_name == current.real_name)
+							M = D
+
+					if( !M )	return
+
+					var/cash = input( "New balance", "Edit money", "" ) as num|null
+					if( cash )
+						M.money = cash
+						message_admins( "[usr] has set [current.name]'s cash to [cash]" )
+
+				if( "buy_random" ) // Forces the antagonist to buy a random item from the uplink
+					var/obj/item/device/pda/P = locate() in current.contents
+					var/obj/item/device/uplink/U = P.hidden_uplink
+					if( !U )	return
+
+					U.buy_topic( "", list( "task" = "random" ), current, 1 )
+
+				if( "buy_random_faction" ) // Forces the antagonist to buy a random faction item from the uplink
+					var/obj/item/device/pda/P = locate() in current.contents
+					var/obj/item/device/uplink/U = P.hidden_uplink
+					if( !U )	return
+
+					if( !U.ItemsCategory["[antagonist.faction.name] Equipment"] )
+						usr << "<span class='notice'>[current.name] belongs to a faction that has no faction-specific equipment!</span>"
+						return
+
+					var/datum/uplink_item/UI = pick(U.ItemsCategory["[antagonist.faction.name] Equipment"])
+					U.buy_topic( "", list( "task" = "\ref[UI]" ), current, 1 )
+
+				if( "randomize_char" ) // Randomizes the antagonist character
+					antagonist.randomize_character()
+
+					character.copy_to( current )
+					current.fully_replace_character_name( current.name, character.name )
+
+				if( "save_char" ) // Saves the antagonist's character. Useful is somebody got attached to their randomized character
+					if( character.saveCharacter() )
+						message_admins("[usr] initiated a character save for [key]. Their antagonist character was saved successfully")
+						return
+					message_admins("[usr] initiated a character save for [key]. Their antagonist character couldn't be saved!")
+
+				if( "give_token" ) // Not exactly "fun", but it grants the player an antagonist token
+					var/client/C = current.client
+					if( !C )	return
+
+					if( !C.character_tokens["Antagonist"] )
+						C.character_tokens["Antagonist"] = 0
+					C.character_tokens["Antagonist"] += 1
+					message_admins("[usr] has given [key] an antagonist token.")
+
+					current << "<span class='notice'>You have been awarded an antagonist token!</span>"
+
+		// DEBUG COMMANDS
+		if( href_list["command_debug"] )
+			switch( href_list["command_debug"] )
+				if( "equip" ) // Calls equip()
+					antagonist.equip()
+
+				if( "setup" ) // Calls setup()
+					antagonist.setup()
+
+				if( "greet" ) // Calls greet()
+					antagonist.greet()
+
+				if( "commend" ) // Commends the antagonist once
+					var/client/C = current.client
+					if( !C )	return
+
+					if( !C.character_tokens["Antagonist"] )
+						C.character_tokens["Antagonist"] = 0
+					C.character_tokens["Antagonist"] += 0.03125 // 32 commendations = 1 token
+
+					var/progress = C.character_tokens["Antagonist"] - round(C.character_tokens["Antagonist"])
+					log_debug("[usr] has commended [key] as an antagonist via admin command.")
+					message_admins("[usr] has commended [key] as an antagonist.")
+					current << "<span class='notice'>You have received an antagonist commendation!</span>"
+					current << "<span class='notice'>You are now <B>[progress * 100]%</B> on the way to your next antagonist token.</span>"
+
+		// CONTRACT COMMANDS
+		if( href_list["command_contract"] )
+			var/datum/contract/contract = locate(href_list["contract"]) in antagonist.faction.contracts
+			if( !contract )	return
+			switch( href_list["command_contract"] )
+				if( "fail" ) // Fails the contract immediately
+					if( !current )	return
+					if( contract.workers.len > 1 )
+						if( alert("Are you sure you want to end this contract? It will end the contract for all antagonists who have accepted it, not only the chosen player!",,"Yes","No")=="No" )
+							return
+
+					contract.end(0)
+
+				if( "complete" ) // Forces completion of the contract in the antagonist's favor
+					if( !current )	return
+					if( contract.workers.len > 1 )
+						if( alert("Are you sure you want to end this contract? It will end the contract for all antagonists who have accepted it, not only the chosen player!",,"Yes","No")=="No" )
+							return
+
+					contract.end(1, current)
+
+		// OBJECTIVE STUFF & COMMANDS
+		// mess
+		if( href_list["command_objective"] )
+			if( href_list["command_objective"] == "announce" ) // Announce objectives
+				var/obj_count = 1
+				current << "<span class='notice'>Your current objectives:</span>"
+				for(var/datum/objective/objs in objectives)
+					current << "<B>Objective #[obj_count]</B>: [objs.explanation_text]"
+					obj_count++
+
+			if( href_list["command_objective"] == "add" || href_list["command_objective"] == "edit")
+				var/datum/objective/objective
+				var/objective_pos
+				var/def_value
+
+				if( href_list["command_objective"] == "edit" )
+					objective = locate(href_list["objective"])
+					if (!objective) return
+					objective_pos = objectives.Find(objective)
+
+					//Text strings are easy to manipulate. Revised for simplicity.
+					var/temp_obj_type = "[objective.type]"//Convert path into a text string.
+					def_value = copytext(temp_obj_type, 19)//Convert last part of path into an objective keyword.
+					if(!def_value)//If it's a custom objective, it will be an empty string.
+						def_value = "custom"
+
+				var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "debrain", "block", "harm", "brig", "hijack", "escape", "survive", "steal", "download", "nuclear", "capture", "absorb", "custom")
+				if( !new_obj_type )	return
+
+				var/datum/objective/new_objective = null
+
+				switch( new_obj_type )
+					if( "assassinate", "block", "debrain", "harm", "brig" )
+						//To determine what to name the objective in explanation text.
+						var/objective_type_capital = uppertext(copytext(new_obj_type, 1,2))//Capitalize first letter.
+						var/objective_type_text = copytext(new_obj_type, 2)//Leave the rest of the text.
+						var/objective_type = "[objective_type_capital][objective_type_text]"//Add them together into a text string.
+
+						var/list/possible_targets = list("Free objective")
+						for(var/datum/mind/possible_target in ticker.minds)
+							if ((possible_target != src) && istype(possible_target.current, /mob/living/carbon/human))
+								possible_targets += possible_target.current
+
+						var/mob/def_target = null
+						var/objective_list[] = list(/datum/objective/assassinate, /datum/objective/protect, /datum/objective/debrain)
+						if (objective&&(objective.type in objective_list) && objective:target)
+							def_target = objective:target.current
+
+						var/new_target = input("Select target:", "Objective target", def_target) as null|anything in possible_targets
+						if (!new_target) return
+
+						var/objective_path = text2path("/datum/objective/[new_obj_type]")
+						if (new_target == "Free objective")
+							new_objective = new objective_path
+							new_objective.owner = src
+							new_objective:target = null
+							new_objective.explanation_text = "Free objective"
+						else
+							new_objective = new objective_path
+							new_objective.owner = src
+							new_objective:target = new_target:mind
+							//Will display as special role if the target is set as MODE. Ninjas/commandos/nuke ops.
+							new_objective.explanation_text = "[objective_type] [new_target:real_name], the [new_target:mind:assigned_role=="MODE" ? (new_target:mind:special_role) : (new_target:mind:assigned_role)]."
+
+					if( "download", "capture", "absorb" )
+						var/def_num
+						if(objective&&objective.type==text2path("/datum/objective/[new_obj_type]"))
+							def_num = objective.target_amount
+
+						var/target_number = input("Input target number:", "Objective", def_num) as num|null
+						if (isnull(target_number))//Ordinarily, you wouldn't need isnull. In this case, the value may already exist.
+							return
+
+						switch(new_obj_type)
+							if("download")
+								new_objective = new /datum/objective/download
+								new_objective.explanation_text = "Download [target_number] research levels."
+							if("capture")
+								new_objective = new /datum/objective/capture
+								new_objective.explanation_text = "Accumulate [target_number] capture points."
+							if("absorb")
+								new_objective = new /datum/objective/absorb
+								new_objective.explanation_text = "Absorb [target_number] compatible genomes."
+						new_objective.owner = src
+						new_objective.target_amount = target_number
+
+					if( "steal" )
+						if (!istype(objective, /datum/objective/steal))
+							new_objective = new /datum/objective/steal
+							new_objective.owner = src
+						else
+							new_objective = objective
+						var/datum/objective/steal/steal = new_objective
+						if (!steal.select_target())
+							return
+
+					if( "custom" )
+						var/expl = sanitize(input("Custom objective:", "Objective", objective ? objective.explanation_text : "") as text|null)
+						if (!expl) return
+						new_objective = new /datum/objective
+						new_objective.owner = src
+						new_objective.explanation_text = expl
+
+					else
+						var/path = text2path("/datum/objective/[new_obj_type]")
+						new_objective = new path()
+						new_objective.owner = src
+
+				if (objective)
+					objectives -= objective
+					objectives.Insert(objective_pos, new_objective)
+				else
+					objectives += new_objective
+
+
+			var/datum/objective/objective = locate(href_list["objective"])
+			if( !objective )	return
+			var/def_value = copytext("[objective.type]", 19)
+			if( !def_value )
+				def_value = "custom"
+
+			switch( href_list["command_objective"] )
+				if( "edit" ) // Edit the objective
+
+
+				if( "delete" ) // Delete the objective
+					objectives -= objective
+
+				if( "toggle_completion" ) // Toggle completion for the objective
+					objective.completed = !objective.completed
+
+		// OLD ANTAG SYSTEM STUFF
+		// This stuff can be removed as stuff is ported to the new antagonist system
+
+		if( href_list["command_old"] )
 			var/mob/living/carbon/human/H = current
+			if( !H || !istype(H) )	return
 
-			H.hud_updateflag |= (1 << IMPLOYAL_HUD)   // updates that players HUD images so secHUD's pick up they are implanted or not.
+			switch( href_list["command_old"] )
+				// LOYALTY IMPLANT
 
-			switch(href_list["implant"])
-				if("remove")
+				if( "remove_implant" ) // Remove loyalty implant
 					for(var/obj/item/weapon/implant/loyalty/I in H.contents)
 						for(var/datum/organ/external/organs in H.organs)
 							if(I in organs.implants)
 								qdel(I)
 								break
 					H << "<span class='notice'><Font size =3><B>Your loyalty implant has been deactivated.</B></FONT></span>"
+					H.hud_updateflag |= (1 << IMPLOYAL_HUD)   // updates that players HUD images so secHUD's pick up they are implanted or not.
 
-				if("add")
+				if( "give_implant" ) // Give loyalty implant
 					H.implant_loyalty(H, override = TRUE)
 					H << "<span class='alert'><Font size =3><B>You somehow have become the recepient of a loyalty transplant, and it just activated!</B></FONT></span>"
 					if(src in ticker.mode.revolutionaries)
 						special_role = null
+						antagonist = null
 						ticker.mode.revolutionaries -= src
 						src << "<span class='alert'><Font size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a revolutionary.  Get back to work!</B></Font></span>"
 					if(src in ticker.mode.head_revolutionaries)
 						special_role = null
+						antagonist = null
 						ticker.mode.head_revolutionaries -=src
 						src << "<span class='alert'><Font size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a revolutionary.  Get back to work!</B></Font></span>"
 					if(src in ticker.mode.cult)
 						ticker.mode.cult -= src
 						ticker.mode.update_cult_icons_removed(src)
 						special_role = null
+						antagonist = null
 						var/datum/game_mode/cult/cult = ticker.mode
 						if (istype(cult))
 							cult.memorize_cult_objectives(src)
@@ -503,16 +696,15 @@ datum/mind
 					if(src in ticker.mode.traitors)
 						ticker.mode.traitors -= src
 						special_role = null
+						antagonist = null
 						current << "<span class='alert'><FONT size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a traitor to Nanotrasen.  Have a nice day!</B></FONT></span>"
 						log_admin("[key_name_admin(usr)] has de-traitor'ed [current].")
-				else
+						message_admins("[key_name_admin(usr)] has de-traitor'ed [current].")
+					H.hud_updateflag |= (1 << IMPLOYAL_HUD)   // updates that players HUD images so secHUD's pick up they are implanted or not.
 
+				// REVOLUTIONARY
 
-		else if (href_list["revolution"])
-			current.hud_updateflag |= (1 << SPECIALROLE_HUD)
-
-			switch(href_list["revolution"])
-				if("clear")
+				if( "rev_employee" ) // De-rev
 					if(src in ticker.mode.revolutionaries)
 						ticker.mode.revolutionaries -= src
 						current << "<span class='alert'><FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary!</B></FONT></span>"
@@ -526,7 +718,7 @@ datum/mind
 						current.verbs -= /mob/living/carbon/human/proc/RevConvert
 					log_admin("[key_name_admin(usr)] has de-rev'ed [current].")
 
-				if("rev")
+				if( "rev_rev" )
 					if(src in ticker.mode.head_revolutionaries)
 						ticker.mode.head_revolutionaries -= src
 						ticker.mode.update_rev_icons_removed(src)
@@ -541,8 +733,9 @@ datum/mind
 					ticker.mode.update_rev_icons_added(src)
 					special_role = "Revolutionary"
 					log_admin("[key_name(usr)] has rev'ed [current].")
+					message_admins("[key_name(usr)] has rev'ed [current].")
 
-				if("headrev")
+				if( "rev_head" )
 					if(src in ticker.mode.revolutionaries)
 						ticker.mode.revolutionaries -= src
 						ticker.mode.update_rev_icons_removed(src)
@@ -569,46 +762,11 @@ datum/mind
 					ticker.mode.update_rev_icons_added(src)
 					special_role = "Head Revolutionary"
 					log_admin("[key_name_admin(usr)] has head-rev'ed [current].")
+					message_admins("[key_name_admin(usr)] has head-rev'ed [current].")
 
-				if("autoobjectives")
-					ticker.mode.forge_revolutionary_objectives(src)
-					ticker.mode.greet_revolutionary(src,0)
-					usr << "<span class='notice'>The objectives for revolution have been generated and shown to [key]</span>"
+				// CULT
 
-				if("flash")
-					if (!ticker.mode.equip_revolutionary(current))
-						usr << "<span class='alert'>Spawning flash failed!</span>"
-
-				if("takeflash")
-					var/list/L = current.get_contents()
-					var/obj/item/device/flash/flash = locate() in L
-					if (!flash)
-						usr << "<span class='alert'>Deleting flash failed!</span>"
-					qdel(flash)
-
-				if("repairflash")
-					var/list/L = current.get_contents()
-					var/obj/item/device/flash/flash = locate() in L
-					if (!flash)
-						usr << "<span class='alert'>Repairing flash failed!</span>"
-					else
-						flash.broken = 0
-
-				if("reequip")
-					var/list/L = current.get_contents()
-					var/obj/item/device/flash/flash = locate() in L
-					qdel(flash)
-					take_uplink()
-					var/fail = 0
-					fail |= !ticker.mode.equip_traitor(current, 1)
-					fail |= !ticker.mode.equip_revolutionary(current)
-					if (fail)
-						usr << "<span class='alert'>Reequipping revolutionary goes wrong!</span>"
-
-		else if (href_list["cult"])
-			current.hud_updateflag |= (1 << SPECIALROLE_HUD)
-			switch(href_list["cult"])
-				if("clear")
+				if( "cult_employee" )
 					if(src in ticker.mode.cult)
 						ticker.mode.cult -= src
 						ticker.mode.update_cult_icons_removed(src)
@@ -620,7 +778,9 @@ datum/mind
 						current << "<span class='alert'><FONT size = 3><B>You have been brainwashed! You are no longer a cultist!</B></FONT></span>"
 						memory = ""
 						log_admin("[key_name_admin(usr)] has de-cult'ed [current].")
-				if("cultist")
+						message_admins("[key_name_admin(usr)] has de-cult'ed [current].")
+
+				if( "cult_cultist" )
 					if(!(src in ticker.mode.cult))
 						ticker.mode.cult += src
 						ticker.mode.update_cult_icons_added(src)
@@ -634,32 +794,27 @@ datum/mind
 								cult.memorize_cult_objectives(src)
 						show_objectives(src)
 						log_admin("[key_name_admin(usr)] has cult'ed [current].")
-				if("tome")
-					var/mob/living/carbon/human/H = current
-					if (istype(H))
-						var/obj/item/weapon/book/tome/T = new(H)
+						message_admins("[key_name_admin(usr)] has cult'ed [current].")
 
-						var/list/slots = list (
-							"backpack" = slot_in_backpack,
-							"left pocket" = slot_l_store,
-							"right pocket" = slot_r_store,
-							"left hand" = slot_l_hand,
-							"right hand" = slot_r_hand,
-						)
-						var/where = H.equip_in_one_of_slots(T, slots)
-						if (!where)
-							usr << "<span class='alert'>Spawning tome failed!</span>"
-						else
+				if( "cult_tome" )
+					var/obj/item/weapon/book/tome/T = new(H)
 
-				if("amulet")
-					if (!ticker.mode.equip_cultist(current))
-						usr << "<span class='alert'>Spawning amulet failed!</span>"
+					var/list/slots = list (
+						"backpack" = slot_in_backpack,
+						"left pocket" = slot_l_store,
+						"right pocket" = slot_r_store,
+						"left hand" = slot_l_hand,
+						"right hand" = slot_r_hand,
+					)
+					var/where = H.equip_in_one_of_slots(T, slots)
+					if (!where)
+						usr << "<span class='alert'>Spawning tome failed!</span>"
+					else
+						usr << "<span class='notice'>Spawned tome successfully!</span>"
 
+				// CHANGELING
 
-		else if (href_list["changeling"])
-			current.hud_updateflag |= (1 << SPECIALROLE_HUD)
-			switch(href_list["changeling"])
-				if("clear")
+				if( "ling_employee" )
 					if(src in ticker.mode.changelings)
 						ticker.mode.changelings -= src
 						special_role = null
@@ -668,7 +823,9 @@ datum/mind
 						if(changeling)	qdel(changeling)
 						current << "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</B></FONT>"
 						log_admin("[key_name_admin(usr)] has de-changeling'ed [current].")
-				if("changeling")
+						message_admins("[key_name_admin(usr)] has de-changeling'ed [current].")
+
+				if( "ling_changeling" )
 					if(!(src in ticker.mode.changelings))
 						ticker.mode.changelings += src
 						ticker.mode.grant_changeling_powers(current)
@@ -677,208 +834,10 @@ datum/mind
 						current << "<h3><B>Make sure to read the rules about ganking and be sure to make the round interesting for everyone!</B></h3>"
 						show_objectives(src)
 						log_admin("[key_name_admin(usr)] has changeling'ed [current].")
-				if("autoobjectives")
-					if(!config.objectives_disabled)
-						ticker.mode.forge_changeling_objectives(src)
-					usr << "<span class='notice'>The objectives for changeling [key] have been generated. You can edit them and anounce manually.</span>"
-
-				if("initialdna")
-					if( !changeling || !changeling.absorbed_dna.len )
-						usr << "<span class='alert'>Resetting DNA failed!</span>"
-					else
-						current.dna = changeling.absorbed_dna[1]
-						current.real_name = current.dna.real_name
-						current.UpdateAppearance()
-						domutcheck(current, null)
-
-		else if (href_list["mercenary"])
-			var/mob/living/carbon/human/H = current
-
-			current.hud_updateflag |= (1 << SPECIALROLE_HUD)
-
-			switch(href_list["mercenary"])
-				if("clear")
-					if(src in ticker.mode.syndicates)
-						ticker.mode.syndicates -= src
-						ticker.mode.update_synd_icons_removed(src)
-						special_role = null
-						for (var/datum/objective/nuclear/O in objectives)
-							objectives-=O
-						current << "<span class='alert'><FONT size = 3><B>You have been brainwashed! You are no longer an operative!</B></FONT></span>"
-						log_admin("[key_name_admin(usr)] has de-merc'd [current].")
-				if("mercenary")
-					if(!(src in ticker.mode.syndicates))
-						ticker.mode.syndicates += src
-						ticker.mode.update_synd_icons_added(src)
-						if (ticker.mode.syndicates.len==1)
-							ticker.mode.prepare_syndicate_leader(src)
-						else
-							current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
-						special_role = "Mercenary"
-						current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
-						current << "<h3><B>Make sure to read the rules about ganking and be sure to make the round interesting for everyone!</B></h3>"
-						ticker.mode.forge_syndicate_objectives(src)
-						ticker.mode.greet_syndicate(src)
-						log_admin("[key_name_admin(usr)] has merc'd [current].")
-				if("lair")
-					current.loc = pick(synd_spawn)
-				if("dressup")
-					qdel(H.belt)
-					qdel(H.back)
-					qdel(H.l_ear)
-					qdel(H.r_ear)
-					qdel(H.gloves)
-					qdel(H.head)
-					qdel(H.shoes)
-					qdel(H.wear_id)
-					qdel(H.wear_suit)
-					qdel(H.w_uniform)
-
-					if (!ticker.mode.equip_syndicate(current))
-						usr << "<span class='alert'>Equipping an operative failed!</span>"
-				if("tellcode")
-					var/code
-					for (var/obj/machinery/nuclearbomb/bombue in machines)
-						if (length(bombue.r_code) <= 5 && bombue.r_code != "LOLNO" && bombue.r_code != "ADMIN")
-							code = bombue.r_code
-							break
-					if (code)
-						store_memory("<B>Nuclear Bomb Code</B>: [code]", 0, 0)
-						current << "The nuclear authorization code is: <B>[code]</B>"
-					else
-						usr << "<span class='alert'>No valid nuke found!</span>"
-
-		else if (href_list["traitor"])
-			current.hud_updateflag |= (1 << SPECIALROLE_HUD)
-			switch(href_list["traitor"])
-				if("clear")
-					if(src in ticker.mode.traitors)
-						ticker.mode.traitors -= src
-						special_role = null
-						current << "<span class='alert'><FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT></span>"
-						log_admin("[key_name_admin(usr)] has de-traitor'ed [current].")
-						if(isAI(current))
-							var/mob/living/silicon/ai/A = current
-							A.set_zeroth_law("")
-							A.show_laws()
-
-
-				if("traitor")
-					if(!(src in ticker.mode.traitors))
-						ticker.mode.traitors += src
-						special_role = "traitor"
-						current << "<B><span class='alert'>You are a traitor!</span></B>"
-						current << "<h3><B>Make sure to read the rules about ganking and be sure to make the round interesting for everyone!</B></h3>"
-						log_admin("[key_name_admin(usr)] has traitor'ed [current].")
-						show_objectives()
-
-						if(istype(current, /mob/living/silicon))
-							var/mob/living/silicon/A = current
-							call(/datum/game_mode/proc/add_law_zero)(A)
-							A.show_laws()
-
-				if("autoobjectives")
-					if (!config.objectives_disabled)
-						ticker.mode.forge_traitor_objectives(src)
-						usr << "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>"
-
-		else if (href_list["silicon"])
-			current.hud_updateflag |= (1 << SPECIALROLE_HUD)
-			switch(href_list["silicon"])
-				/*if("unmalf")
-					if(src in ticker.mode.malf_ai)
-						ticker.mode.malf_ai -= src
-						special_role = null
-
-						current.verbs.Remove(/mob/living/silicon/ai/proc/choose_modules,
-							/datum/game_mode/malfunction/proc/takeover,
-							/datum/game_mode/malfunction/proc/ai_win,
-							/client/proc/fireproof_core,
-							/client/proc/upgrade_turrets,
-							/client/proc/disable_rcd,
-							/client/proc/overload_machine,
-							/client/proc/blackout,
-							/client/proc/interhack,
-							/client/proc/reactivate_camera)
-
-						current:laws = new /datum/ai_laws/nanotrasen
-						qdel(current:malf_picker)
-						current:show_laws()
-						current.icon_state = "ai"
-
-						current << "<span class='alert'><FONT size = 3><B>You have been patched! You are no longer malfunctioning!</B></FONT></span>"
-						log_admin("[key_name_admin(usr)] has de-malf'ed [current].")
-
-				if("malf")
-					make_AI_Malf()
-					log_admin("[key_name_admin(usr)] has malf'ed [current].")*/
-
-				if("unemag")
-					var/mob/living/silicon/robot/R = current
-					if (istype(R))
-						R.emagged = 0
-						if (R.activated(R.module.emag))
-							R.module_active = null
-						if(R.module_state_1 == R.module.emag)
-							R.module_state_1 = null
-							R.contents -= R.module.emag
-						else if(R.module_state_2 == R.module.emag)
-							R.module_state_2 = null
-							R.contents -= R.module.emag
-						else if(R.module_state_3 == R.module.emag)
-							R.module_state_3 = null
-							R.contents -= R.module.emag
-						log_admin("[key_name_admin(usr)] has unemag'ed [R].")
-
-				if("unemagcyborgs")
-					if (istype(current, /mob/living/silicon/ai))
-						var/mob/living/silicon/ai/ai = current
-						for (var/mob/living/silicon/robot/R in ai.connected_robots)
-							R.emagged = 0
-							if (R.module)
-								if (R.activated(R.module.emag))
-									R.module_active = null
-								if(R.module_state_1 == R.module.emag)
-									R.module_state_1 = null
-									R.contents -= R.module.emag
-								else if(R.module_state_2 == R.module.emag)
-									R.module_state_2 = null
-									R.contents -= R.module.emag
-								else if(R.module_state_3 == R.module.emag)
-									R.module_state_3 = null
-									R.contents -= R.module.emag
-						log_admin("[key_name_admin(usr)] has unemag'ed [ai]'s Cyborgs.")
-
-		else if (href_list["common"])
-			switch(href_list["common"])
-				if("undress")
-					for(var/obj/item/W in current)
-						current.drop_from_inventory(W)
-				if("takeuplink")
-					take_uplink()
-					memory = null//Remove any memory they may have had.
-				if("crystals")
-					if (usr.client.holder.rights & R_FUN)
-						var/obj/item/device/uplink/hidden/suplink = find_syndicate_uplink()
-						var/crystals
-						if (suplink)
-							crystals = suplink.uses
-						crystals = input("Amount of telecrystals for [key]","Operative uplink", crystals) as null|num
-						if (!isnull(crystals))
-							if (suplink)
-								suplink.uses = crystals
-				if("uplink")
-					if (!ticker.mode.equip_traitor(current, !(src in ticker.mode.traitors)))
-						usr << "<span class='alert'>Equipping an operative failed!</span>"
-
-		else if (href_list["obj_announce"])
-			var/obj_count = 1
-			current << "<span class='notice'>Your current objectives:</span>"
-			for(var/datum/objective/objective in objectives)
-				current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-				obj_count++
+						message_admins("[key_name_admin(usr)] has changeling'ed [current].")
 
 		edit_memory()
+
 /*
 	proc/clear_memory(var/silent = 1)
 		var/datum/game_mode/current_mode = ticker.mode
@@ -907,7 +866,7 @@ datum/mind
 
 		// clear memory
 		memory = ""
-		special_role = null
+		antagonist = null
 
 */
 
@@ -940,13 +899,9 @@ datum/mind
 
 	proc/make_Traitor()
 		if(!(src in ticker.mode.traitors))
-			character.temporary = 1 // Makes them non-canon
 			ticker.mode.traitors += src
-			special_role = "traitor"
-			if (!config.objectives_disabled)
-				ticker.mode.forge_traitor_objectives(src)
-			ticker.mode.finalize_traitor(src)
-			ticker.mode.greet_traitor(src)
+			antagonist = new /datum/antagonist/traitor(src)
+			antagonist.setup()
 
 	proc/make_Nuke()
 		if(!(src in ticker.mode.syndicates))
@@ -957,11 +912,12 @@ datum/mind
 				ticker.mode.prepare_syndicate_leader(src)
 			else
 				current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
-			special_role = "Mercenary"
+			antagonist = new /datum/antagonist/mercenary(src)
 			assigned_role = "MODE"
 			current << "<span class='notice'>You are a [syndicate_name()] mercenary!</span>"
-			ticker.mode.forge_syndicate_objectives(src)
-			ticker.mode.greet_syndicate(src)
+			if(istype(ticker.mode, /datum/game_mode/mercenary))
+				ticker.mode.merc_contract.start(current)
+			antagonist.setup()
 
 			current.loc = pick(synd_spawn)
 

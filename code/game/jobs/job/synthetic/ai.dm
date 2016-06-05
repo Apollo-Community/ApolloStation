@@ -16,7 +16,7 @@
 	if(!H)	return 0
 	return 1
 
-/datum/job/ai/make_preview_icon( var/backpack )
+/datum/job/ai/make_preview_icon( var/backpack , var/job , var/gender )
 	var/icon/clothes_s = null
 
 	clothes_s = new /icon('icons/mob/uniform.dmi', "grey_s")

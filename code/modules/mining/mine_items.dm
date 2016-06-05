@@ -216,6 +216,8 @@
 /obj/item/stack/flag/New()
 	..()
 	base_state = icon_state
+	pixel_x = rand(-6,6)
+	pixel_y = rand(-6,6)
 
 /obj/item/stack/flag/red
 	name = "red flags"

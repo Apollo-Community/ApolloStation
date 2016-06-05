@@ -7,7 +7,7 @@
 
 	for(var/obj/machinery/power/smes/S in world)
 		var/area/current_area = get_area(S)
-		if(current_area.type in skipped_areas || !(S.z in config.station_levels))
+		if(current_area.type in skipped_areas || !(S.z in overmap.station_levels))
 			continue
 		S.last_charge			= S.charge
 		S.last_output_attempt	= S.output_attempt
@@ -20,7 +20,7 @@
 
 
 	for(var/obj/machinery/power/apc/C in world)
-		if(C.cell && C.z in config.station_levels)
+		if(C.cell && C.z in overmap.station_levels)
 			spawn(rand(1, 50))
 				C.cell.charge = 0
 
@@ -30,7 +30,7 @@
 	if(announce)
 		command_announcement.Announce("Station power will be restored at this time. We apologize for the inconvenience.", "Power Systems Nominal", new_sound = 'sound/AI/poweron.ogg')
 	for(var/obj/machinery/power/apc/C in world)
-		if(C.cell && C.z in config.station_levels)
+		if(C.cell && C.z in overmap.station_levels)
 			spawn(rand(1, 50))
 				C.cell.charge = C.cell.maxcharge
 	for(var/obj/machinery/power/smes/S in world)

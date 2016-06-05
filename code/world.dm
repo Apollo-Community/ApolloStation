@@ -51,8 +51,6 @@ var/global/datum/global_init/init = new ()
 
 	. = ..()
 
-	sleep_offline = 1
-
 	// Set up roundstart seed list. This is here because vendors were
 	// bugging out and not populating with the correct packet names
 	// due to this list not being instantiated.
@@ -63,15 +61,20 @@ var/global/datum/global_init/init = new ()
 
 	processScheduler = new
 	master_controller = new /datum/controller/game_controller()
+
 	spawn(1)
 		processScheduler.deferSetupFor(/datum/controller/process/ticker)
 		processScheduler.setup()
 		master_controller.setup()
 
+		universe.load_date()
+
+		sleep_offline = 1 // go to sleep after the controllers are all set up
+
 	#ifdef PRECISE_TIMER_AVAILABLE
-	world.log << "btime.[world.system_type==MS_WINDOWS?"dll":"so"] is in use"
+	world.log << "btime.[world.system_type==MS_WINDOWS?"dll":"so"] will be used for timer"
 	#else
-	world.log << "## ERROR: btime.[world.system_type==MS_WINDOWS?"dll":"so"] is not in use, using legacy timer"
+	world.log << "## ERROR: btime.[world.system_type==MS_WINDOWS?"dll":"so"] could not be found, using legacy timer"
 	#endif
 
 	spawn(3000)		//so we aren't adding to the round-start lag
@@ -145,55 +148,42 @@ var/world_topic_spam_protect_time = world.timeofday
 
 		return list2params(s)
 
-	else if(copytext(T,1,9) == "adminmsg")
+	if(copytext(T,1,9) == "adminmsg")					//This recieves messages from slack (/pm command) and processes it before updating slack chat
+		var/input[] = params2list(copytext(T,9))
+		//security check
 		/*
-			We got an adminmsg from IRC bot lets split the input then validate the input.
-			expected output:
-				1. adminmsg = ckey of person the message is to
-				2. msg = contents of message, parems2list requires
-				3. validatationkey = the key the bot has, it should match the gameservers commspassword in it's configuration.
-				4. sender = the ircnick that send the message.
+		if(fexists("config/slack.txt"))
+			if(input["token"] != file2text("config/slack.txt"))
+				message_admins("TOPIC: WARNING: [addr] tried to fake an admin message! Please contact a developer")
+				return
+		else	return
 		*/
+		for(var/a in world.GetConfig("admin"))
+			a << input["token"]
 
+		var/message = sanitize(input["text"])
+		if(!message)	return
+		var/target = input["target"]
+		var/admin = input["admin"]
 
-		var/input[] = params2list(T)
-		if(input["key"] != config.comms_password)
-			if(world_topic_spam_protect_ip == addr && abs(world_topic_spam_protect_time - world.time) < 50)
-
-				spawn(50)
-					world_topic_spam_protect_time = world.time
-					return "Bad Key (Throttled)"
-
-			world_topic_spam_protect_time = world.time
-			world_topic_spam_protect_ip = addr
-
-			return "Bad Key"
-
-		var/client/C
-		var/req_ckey = ckey(input["adminmsg"])
-
-		for(var/client/K in clients)
-			if(K.ckey == req_ckey)
-				C = K
+		//get the target and send PM
+		for(var/client/C in clients)
+			if(C.ckey == target)
+				//Code to send PMS....
+				slack_admin(C, admin, message,0)
+				. = "Sent message to [target]!"
 				break
-		if(!C)
-			return "No client with that name on server"
 
-		var/message =	"<font color='red'>IRC-Admin PM from <b><a href='?irc_msg=1'>[C.holder ? "IRC-" + input["sender"] : "Administrator"]</a></b>: [input["msg"]]</font>"
-		var/amessage =  "<font color='blue'>IRC-Admin PM from <a href='?irc_msg=1'>IRC-[input["sender"]]</a> to <b>[key_name(C)]</b> : [input["msg"]]</font>"
+		if(!.)	return			//Don't continue if we couldn't find a target
 
-		C.received_irc_pm = world.time
-		C.irc_admin = input["sender"]
+		update_slack(admin, target, message)
 
-		C << 'sound/effects/adminhelp.ogg'
-		C << message
+	else if(copytext(T,1,10) == "admintime")			//This adds the timestamp to recent_slack_times[ckey] so it can be edited when replied to
+		var/input[] = params2list(copytext(T,10))
 
-
-		for(var/client/A in admins)
-			if(A != C)
-				A << amessage
-
-		return "Message Successful"
+		if(!recent_slack_times.Find(input["user"]))
+			recent_slack_times.Add(input["user"])		//adds the user to list if it exists
+		recent_slack_times[input["user"]] = input["time"]
 
 
 	else if(copytext(T,1,4) == "age")

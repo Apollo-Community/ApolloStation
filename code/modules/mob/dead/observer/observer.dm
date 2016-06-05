@@ -289,7 +289,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		M.antagHUD = 1
 		src << "<span class='notice'><B>AntagHUD Enabled</B></span>"
 
-/mob/dead/observer/proc/dead_tele(A in ghostteleportlocs)
+/mob/dead/observer/proc/dead_tele(A in overmap.ghostteleportlocs)
 	set category = "Ghost"
 	set name = "Teleport"
 	set desc= "Teleport to a location"
@@ -299,7 +299,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	usr.verbs -= /mob/dead/observer/proc/dead_tele
 	spawn(30)
 		usr.verbs += /mob/dead/observer/proc/dead_tele
-	var/area/thearea = ghostteleportlocs[A]
+	var/area/thearea = overmap.ghostteleportlocs[A]
 	if(!thearea)	return
 
 	var/list/L = list()

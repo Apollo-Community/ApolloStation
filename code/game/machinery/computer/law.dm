@@ -25,7 +25,7 @@
 
 
 	attackby(obj/item/weapon/O as obj, mob/user as mob)
-		if ( user.z in config.admin_levels )
+		if ( user.z in overmap.admin_levels )
 			user << "<span class='alert'><b>Unable to establish a connection</b>: </span><span class='black'>You're too far away from the station!</span>"
 			return
 		if(istype(O, /obj/item/weapon/aiModule))

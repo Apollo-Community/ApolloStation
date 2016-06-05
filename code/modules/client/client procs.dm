@@ -46,6 +46,30 @@
 		cmd_admin_pm(C,null)
 		return
 
+	if(href_list["priv_msg_slack"])
+		var/msg = sanitize(input(src,"Message:", "Private message to Admins") as text|null)
+		if(!msg)	return
+
+		var/client/C = locate(href_list["priv_msg_slack"])
+		if(ismob(C)) 		//Old stuff can feed-in mobs instead of clients
+			var/mob/M = C
+			C = M.client
+
+		var/admin = href_list["admin"]
+
+		//sends the ahelp to game
+		slack_admin(C, admin, msg, 1)
+
+		//Sends the ahelp to slack chat
+		spawn(0)	//So we don't hold up the rest
+			shell("python scripts/adminbus.py ahelp [C.ckey] '*[C.ckey]*: `[msg]`'")
+			if(!recent_slack_msg.Find(usr.ckey))
+				recent_slack_msg.Add(usr.ckey)
+			recent_slack_msg[usr.ckey] = "`[msg]`"
+
+		return
+
+
 	if(href_list["irc_msg"])
 		if(!holder && received_irc_pm < world.time - 6000) //Worse they can do is spam IRC for 10 minutes
 			usr << "<span class='warning'>You are no longer able to use this, it's been more then 10 minutes since an admin on IRC has responded to you</span>"
@@ -85,8 +109,23 @@
 	for( var/type in character_tokens )
 		character_tokens[type] = text2num( character_tokens[type] )
 
+/client/proc/loadAntagWeights()
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return 0
+
+	var/DBQuery/query
+
+	query = dbcon.NewQuery("SELECT no_antag_weight FROM player WHERE ckey = '[ckey( ckey )]'")
+	query.Execute()
+
+	if( !query.NextRow() )
+		return
+
+	no_antag_weight = text2num( query.item[1] )
+
 /client/proc/handle_spam_prevention(var/message, var/mute_type)
-	if(config.automute_on && !holder && src.last_message == message)
+	if(config.automute_on && !holder && src.last_message == message && non_spawn_check(message))
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
 			src << "<span class='alert'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>"
@@ -99,6 +138,15 @@
 		last_message = message
 		src.last_message_count = 0
 		return 0
+
+//Checks if the message is not in the allowed list
+//UPDATE: also checks if the message around the sring check is not to long for abuse reasons
+/client/proc/non_spawn_check(var/message)
+	for(var/string in non_spawn_emote)
+		if(findtext(message, string) && ((lentext(message) - lentext(string)) < 6))
+			continue
+		else
+			return 1
 
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
 /client/AllowUpload(filename, filelength)
@@ -241,6 +289,7 @@
 	log_client_to_db()
 
 	loadTokens()
+	loadAntagWeights()
 
 	if(!prefs.passed_date)
 		src << "<span class='admin_channel'>We have detected that your ckey is less than one month old. To help get you started we strongly recommend \
@@ -348,6 +397,20 @@
 	var/sql_ckey = ckey( ckey )
 
 	var/DBQuery/query_insert = dbcon.NewQuery("UPDATE player SET character_tokens = [tokens] WHERE ckey = '[sql_ckey]'")
+	query_insert.Execute()
+
+/client/proc/saveAntagWeights()
+	if ( IsGuestKey(src.key) )
+		return 0
+
+	if( !no_antag_weight )
+		return 0
+
+	establish_db_connection()
+	if( !dbcon.IsConnected() )
+		return 0
+
+	var/DBQuery/query_insert = dbcon.NewQuery("UPDATE player SET no_antag_weight = [no_antag_weight] WHERE ckey = '[ckey( ckey )]'")
 	query_insert.Execute()
 
 /client/proc/log_client_to_db( var/log_playtime = 0 )
@@ -536,7 +599,12 @@
 		'html/images/logo-nt.png',
 		'html/images/logo-anti.png',
 		'html/images/logo-apollo.png',
-		'html/images/talisman.png'
+		'html/images/talisman.png',
+		'html/images/barcode0.png',
+		'html/images/barcode1.png',
+		'html/images/barcode2.png',
+		'html/images/barcode3.png',
+		'html/images/apollo_map.png',
 		)
 
 

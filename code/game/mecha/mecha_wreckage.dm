@@ -57,6 +57,10 @@
 			var/type = prob(70)?pick(wirecutters_salvage):null
 			if(type)
 				var/N = new type(get_turf(user))
+				if(istype(W, /obj/item/weapon/wirecutters))
+					var/obj/item/stack/cable_coil/S = new(N)
+					S.amount = 1
+					S.icon_state = "coil1"
 				user.visible_message("[user] cuts [N] from [src].", "You cut [N] from [src].")
 				salvage_num--
 			else

@@ -1,67 +1,87 @@
 #define DOCK_ATTEMPT_TIMEOUT 200	//how long in ticks we wait before assuming the docking controller is broken or blown up.
 
 /datum/shuttle/ferry
-	var/location = 0	//0 = at area_station, 1 = at area_offsite
+	var/location	//0 = at area_station, 1 = at area_offsite
 	var/direction = 0	//0 = going to station, 1 = going to offsite.
 	var/process_state = IDLE_STATE
-
 	var/in_use = null	//tells the controller whether this shuttle needs processing
-
-	var/area_transition
 	var/move_time = 0		//the time spent in the transition area
 	var/transit_direction = null	//needed for area/move_contents_to() to properly handle shuttle corners - not exactly sure how it works.
+	var/obj/hanger/hanger_station
+	var/obj/hanger/hanger_offsite
+	var/pod = 0
 
-	var/area_station
-	var/area_offsite
 	//TODO: change location to a string and use a mapping for area and dock targets.
 	var/dock_target_station
 	var/dock_target_offsite
-	
+
 	var/last_dock_attempt_time = 0
 
-/datum/shuttle/ferry/short_jump(var/area/origin,var/area/destination)
+//Ferries always have two stops so they must be ingame at round start
+/datum/shuttle/ferry/init_templates()
+	//What is our home base ?
+	if(location == 0)
+		starting_hanger = hanger_station
+	else
+		starting_hanger = hanger_offsite
+	..()
+
+//Ferries have a simple short jump
+//Find out if we have a location, if so determin where we are going.
+//Ask the hanger if it allready has a shuttle in it. if not proceed with the jump
+//Call super to finsh the standart short jump
+/datum/shuttle/ferry/short_jump(var/obj/hanger/trg_hanger, var/direction)
 	if(isnull(location))
 		return
 
-	if(!destination)
-		destination = get_location_area(!location)
-	if(!origin)
-		origin = get_location_area(location)
+	if(isnull(trg_hanger))
+		trg_hanger = get_hanger(!location)
 
-	direction = !location
-	..(origin, destination)
+	if(isnull(direction))
+		direction = !location
+	//error("short_jump called by [docking_controller_tag] trg_hanger [trg_hanger]")
+	..(trg_hanger, direction)
 
-/datum/shuttle/ferry/long_jump(var/area/departing, var/area/destination, var/area/interim, var/travel_time, var/direction)
-	//world << "shuttle/ferry/long_jump: departing=[departing], destination=[destination], interim=[interim], travel_time=[travel_time]"
+//Ferry long jump
+//Find out if we have a location, if so determin where we are going.
+//Call super with your destination and bluespace hanger
+/datum/shuttle/ferry/long_jump(var/obj/hanger/trg_hanger, var/obj/hanger/interim_hanger, var/travel_time, var/direction)
 	if(isnull(location))
 		return
 
-	if(!destination)
-		destination = get_location_area(!location)
-	if(!departing)
-		departing = get_location_area(location)
+	if(isnull(trg_hanger))
+		trg_hanger = get_hanger(!location)
 
 	direction = !location
-	..(departing, destination, interim, travel_time, direction)
+	..(trg_hanger, interim_hanger, travel_time, direction)
 
-/datum/shuttle/ferry/move(var/area/origin,var/area/destination)
-	..(origin, destination)
 
-	if (destination == area_station) location = 0
-	if (destination == area_offsite) location = 1
+//Ferries have a few things that need to be done afther the standart move.
+//Call super with destination and change the location where are at accordingly
+/datum/shuttle/ferry/move(var/obj/hanger/trg_hanger, var/direction = null, var/long_j)
+	..(trg_hanger, null, long_j)
+
 	//if this is a long_jump retain the location we were last at until we get to the new one
+	//First check if we even have an interum location
+	if(!long_j && !in_transit)
+		location = !location
 
+	//error("move called by [docking_controller_tag] location afther move [location] long_j var [long_j] in_transit var [in_transit]")
+
+//Docking magic
 /datum/shuttle/ferry/dock()
 	..()
 	last_dock_attempt_time = world.time
 
-/datum/shuttle/ferry/proc/get_location_area(location_id = null)
-	if (isnull(location_id))
+//What hanger is at this location ?
+/datum/shuttle/ferry/proc/get_hanger(location_id)
+	if(isnull(location_id))
 		location_id = location
 
-	if (!location_id)
-		return area_station
-	return area_offsite
+	if(location_id)
+		return hanger_offsite
+	else
+		return hanger_station
 
 /*
 	Please ensure that long_jump() and short_jump() are only called from here. This applies to subtypes as well.
@@ -70,30 +90,28 @@
 /datum/shuttle/ferry/proc/process()
 	switch(process_state)
 		if (WAIT_LAUNCH)
-			if (skip_docking_checks() || docking_controller.can_launch())
-
-				//world << "shuttle/ferry/process: area_transition=[area_transition], travel_time=[travel_time]"
-				if (move_time && area_transition)
-					long_jump(interim=area_transition, travel_time=move_time, direction=transit_direction)
+			if (skip_docking_checks() || docking_controller.can_launch() || (docking_controller_tag == "escape_shuttle"))
+				if (move_time > 0)
+					long_jump(null, null, move_time, transit_direction)
 				else
 					short_jump()
 
 				process_state = WAIT_ARRIVE
 
 		if (FORCE_LAUNCH)
-			if (move_time && area_transition)
-				long_jump(interim=area_transition, travel_time=move_time, direction=transit_direction)
+			if (move_time && pod)
+				long_jump(null, null, move_time, transit_direction)
 			else
 				short_jump()
-			
+
 			process_state = WAIT_ARRIVE
-		
+
 		if (WAIT_ARRIVE)
-			if (moving_status == SHUTTLE_IDLE)
+			if (moving_status == SHUTTLE_IDLE && !in_transit)
 				dock()
 				in_use = null	//release lock
 				process_state = WAIT_FINISH
-		
+
 		if (WAIT_FINISH)
 			if (skip_docking_checks() || docking_controller.docked() || world.time > last_dock_attempt_time + DOCK_ATTEMPT_TIMEOUT)
 				process_state = IDLE_STATE
@@ -109,19 +127,20 @@
 
 
 /datum/shuttle/ferry/proc/launch(var/user)
-	if (!can_launch()) return
-
+	if (!can_launch()) return 0
 	in_use = user	//obtain an exclusive lock on the shuttle
 
 	process_state = WAIT_LAUNCH
 	undock()
+	return 1
 
 /datum/shuttle/ferry/proc/force_launch(var/user)
-	if (!can_force()) return
+	if (!can_force()) return 0
 
 	in_use = user	//obtain an exclusive lock on the shuttle
 
 	process_state = FORCE_LAUNCH
+	return 1
 
 /datum/shuttle/ferry/proc/cancel_launch(var/user)
 	if (!can_cancel()) return
@@ -139,18 +158,32 @@
 	return
 
 /datum/shuttle/ferry/proc/can_launch()
+	//error("can_launch called [docking_controller_tag] the moving status is [moving_status]")
 	if (moving_status != SHUTTLE_IDLE)
 		return 0
 
 	if (in_use)
 		return 0
 
+	//With the new hanger scheduler we should be able to remove this.
+	/*
+	var/obj/hanger/H = get_hanger(!location)
+	if (!H.can_land_at(src))
+		//error("in can_launch hanger [H.htag] can not be landed at")
+		return 0
+	*/
+	//error("in can_launch returning with 1")
 	return 1
 
 /datum/shuttle/ferry/proc/can_force()
+	/*
+	var/obj/hanger/H = get_hanger(!location)
+	if (!H.can_land_at(src))
+		return 0
+	*/
+
 	if (moving_status == SHUTTLE_IDLE && process_state == WAIT_LAUNCH)
 		return 1
-	return 0
 
 /datum/shuttle/ferry/proc/can_cancel()
 	if (moving_status == SHUTTLE_WARMUP || process_state == WAIT_LAUNCH || process_state == FORCE_LAUNCH)
@@ -166,3 +199,5 @@
 /datum/shuttle/ferry/proc/arrived()
 	return	//do nothing for now
 
+/datum/shuttle/ferry/proc/at_station()
+	return (!location)

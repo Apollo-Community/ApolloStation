@@ -480,9 +480,11 @@ var/global/datum/controller/occupations/job_master
 			H.mind.initial_account = M
 
 		// If they're head, give them the account info for their department
-		if(H.mind && job.head_position)
+		if( H.mind && job.rank_succesion_level >= COMMAND_SUCCESSION_LEVEL )
 			var/remembered_info = ""
-			var/datum/money_account/department_account = department_accounts[job.department]
+
+			var/datum/department/D = GetDepartment( job.department_id )
+			var/datum/money_account/department_account = department_accounts[D.name]
 
 			if(department_account)
 				remembered_info += "<b>Your department's account number is:</b> #[department_account.account_number]<br>"

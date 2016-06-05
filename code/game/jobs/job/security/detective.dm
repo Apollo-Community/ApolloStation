@@ -42,7 +42,7 @@
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/head/det_hat(H), slot_head)
 	return 1
 
-/datum/job/detective/make_preview_icon( var/backpack )
+/datum/job/detective/make_preview_icon( var/backpack , var/job , var/gender )
 	var/icon/clothes_s = null
 
 	clothes_s = new /icon('icons/mob/uniform.dmi', "detective_s")

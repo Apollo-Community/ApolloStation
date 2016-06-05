@@ -15,6 +15,10 @@
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	explosion_resistance = 5
 	air_properties_vary_with_direction = 1
+	var/datum/wires/windowdoor/wires = null
+	var/shocked = 0
+	var/power = 1
+	var/hasShocked = 0
 
 /obj/machinery/door/window/New()
 	..()
@@ -22,6 +26,7 @@
 	if (src.req_access && src.req_access.len)
 		src.icon_state = "[src.icon_state]"
 		src.base_state = src.icon_state
+	wires = new(src)
 	return
 
 /obj/machinery/door/window/Destroy()
@@ -31,9 +36,13 @@
 	..()
 
 /obj/machinery/door/window/Bumped(atom/movable/AM as mob|obj)
+	if(!power) //power wire cut
+		return
 	if (!( ismob(AM) ))
 		var/mob/living/bot/bot = AM
 		if(istype(bot))
+			if(shocked)
+				shock(AM, 100)
 			if(density && src.check_access(bot.botcard))
 				open()
 				sleep(50)
@@ -51,6 +60,8 @@
 		return
 	if (src.operating)
 		return
+	if(shocked)
+		shock(AM, 100)
 	if (src.density && !M.small && src.allowed(AM))
 		open()
 		if(src.check_access(null))
@@ -78,9 +89,13 @@
 		return 1
 
 /obj/machinery/door/window/open()
+	if (!power)
+		return 0
 	if (src.operating == 1) //doors can still open when emag-disabled
 		return 0
 	if (!ticker)
+		return 0
+	if (src.density == 0) //its allready open
 		return 0
 	if(!src.operating) //in case of emag
 		src.operating = 1
@@ -99,7 +114,11 @@
 	return 1
 
 /obj/machinery/door/window/close()
+	if (!power) //power wire cut
+		return
 	if (src.operating)
+		return 0
+	if (src.density == 1) //its allready closed
 		return 0
 	src.operating = 1
 	flick(text("[]closing", src.base_state), src)
@@ -151,6 +170,8 @@
 
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
+		if(shocked && power)
+			shock(user, 100)
 		if(H.species.can_shred(H))
 			playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 			visible_message("<span class='alert'><B>[user] smashes against the [src.name].</B></span>", 1)
@@ -160,20 +181,44 @@
 
 /obj/machinery/door/window/attackby(obj/item/weapon/I as obj, mob/user as mob)
 
+	if(istype(I, /obj/item/weapon/screwdriver))
+		default_deconstruction_screwdriver(user,icon_state,icon_state,I)
+		return
+
+	if(istype(I, /obj/item/device/multitool) || istype(I, /obj/item/weapon/wirecutters))
+		if(src.operating == -1)
+			user << "<span class='warning'>The windoor circuitry is fried.</span>"
+			return
+		if(panel_open == 1)
+			wires.Interact(user)
+			return
+
 	//If it's in the process of opening/closing, ignore the click
 	if (src.operating == 1)
 		return
 
 	//Emags and ninja swords? You may pass.
-	if (src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
+	if(istype(I, /obj/item/weapon/card/emag))
+		if (!src.density)
+			return
+		if(!power)
+			return
 		src.operating = -1
-		if(istype(I, /obj/item/weapon/melee/energy/blade))
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-			spark_system.set_up(5, 0, src.loc)
-			spark_system.start()
-			playsound(src.loc, "sparks", 50, 1)
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			visible_message("<span class='notice'>The glass door was sliced open by [user]!</span>")
+		flick("[src.base_state]spark", src)
+		sleep(6)
+		open()
+		return 1
+
+	if(istype(I, /obj/item/weapon/melee/energy/blade))
+		if (!src.density)
+			return
+		src.operating = -1
+		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		spark_system.set_up(5, 0, src.loc)
+		spark_system.start()
+		playsound(src.loc, "sparks", 50, 1)
+		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
+		visible_message("<span class='notice'>The glass door was sliced open by [user]!</span>")
 		flick("[src.base_state]spark", src)
 		sleep(6)
 		open()
@@ -223,10 +268,14 @@
 		var/aforce = I.force
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("<span class='alert'><B>[src] was hit by [I].</B></span>")
+		if(shocked && power)
+			shock(user, 100)
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			take_damage(aforce)
 		return
 
+	if(shocked && power)
+		shock(user, 100)
 
 	src.add_fingerprint(user)
 	if (!src.requiresID())
@@ -244,6 +293,18 @@
 
 	return
 
+/obj/machinery/door/window/shock(mob/user, prb)
+	if(!power)
+		return 0
+	if(hasShocked)
+		return 0	//Already shocked someone recently?
+	if(..())
+		hasShocked = 1
+		sleep(10)
+		hasShocked = 0
+		return 1
+	else
+		return 0
 
 
 /obj/machinery/door/window/brigdoor

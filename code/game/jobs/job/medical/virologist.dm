@@ -30,7 +30,7 @@
 	rng_join_virus()
 	return 1
 
-/datum/job/virologist/make_preview_icon( var/backpack )
+/datum/job/virologist/make_preview_icon( var/backpack , var/job , var/gender )
 	var/icon/clothes_s = null
 
 	clothes_s = new /icon('icons/mob/uniform.dmi', "virologywhite_s")

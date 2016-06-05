@@ -1,9 +1,3 @@
-//Config stuff
-#define SUPPLY_DOCKZ 2          //Z-level of the Dock.
-#define SUPPLY_STATIONZ 1       //Z-level of the Station.
-#define SUPPLY_STATION_AREATYPE "/area/supply/station" //Type of the supply shuttle area for station
-#define SUPPLY_DOCK_AREATYPE "/area/supply/dock"	//Type of the supply shuttle area for dock
-
 //Supply packs are in /code/defines/obj/supplypacks.dm
 //Computers are in /code/game/machinery/computer/supply.dm
 
@@ -176,43 +170,44 @@ var/list/mechtoys = list(
 
 	//Sellin
 	proc/sell()
-		var/area/area_shuttle = shuttle.get_location_area()
-		if(!area_shuttle)	return
+		var/list/turfs = shuttle.current_hanger.hanger_area_turfs
+		if(isnull(turfs))	return
 
 		var/phoron_count = 0
 		var/plat_count = 0
+		for(var/turf/T in turfs)
+			for(var/atom/movable/MA in T)
+				if(MA.anchored)	continue
 
-		for(var/atom/movable/MA in area_shuttle)
-			if(MA.anchored)	continue
+				// Must be in a crate!
+				if(istype(MA,/obj/structure/closet/crate))
+					//This is probably a safty check need to look into it
+					//callHook("sell_crate", list(MA, area_shuttle))
 
-			// Must be in a crate!
-			if(istype(MA,/obj/structure/closet/crate))
-				callHook("sell_crate", list(MA, area_shuttle))
+					points += points_per_crate
+					var/find_slip = 1
 
-				points += points_per_crate
-				var/find_slip = 1
+					for(var/atom in MA)
+						// Sell manifests
+						var/atom/A = atom
+						if(find_slip && istype(A,/obj/item/weapon/paper/manifest))
+							var/obj/item/weapon/paper/slip = A
+							if(slip.stamped && slip.stamped.len) //yes, the clown stamp will work. clown is the highest authority on the station, it makes sense
+								points += points_per_slip
+								find_slip = 0
+							continue
 
-				for(var/atom in MA)
-					// Sell manifests
-					var/atom/A = atom
-					if(find_slip && istype(A,/obj/item/weapon/paper/manifest))
-						var/obj/item/weapon/paper/slip = A
-						if(slip.stamped && slip.stamped.len) //yes, the clown stamp will work. clown is the highest authority on the station, it makes sense
-							points += points_per_slip
-							find_slip = 0
-						continue
+						// Sell phoron
+						if(istype(A, /obj/item/stack/sheet/mineral/phoron))
+							var/obj/item/stack/sheet/mineral/phoron/P = A
+							phoron_count += P.get_amount()
 
-					// Sell phoron
-					if(istype(A, /obj/item/stack/sheet/mineral/phoron))
-						var/obj/item/stack/sheet/mineral/phoron/P = A
-						phoron_count += P.get_amount()
+						// Sell platinum
+						if(istype(A, /obj/item/stack/sheet/mineral/platinum))
+							var/obj/item/stack/sheet/mineral/platinum/P = A
+							plat_count += P.get_amount()
 
-					// Sell platinum
-					if(istype(A, /obj/item/stack/sheet/mineral/platinum))
-						var/obj/item/stack/sheet/mineral/platinum/P = A
-						plat_count += P.get_amount()
-
-			qdel(MA)
+				qdel(MA)
 
 		if(phoron_count)
 			points += phoron_count * points_per_phoron
@@ -224,17 +219,16 @@ var/list/mechtoys = list(
 	proc/buy()
 		if(!shoppinglist.len) return
 
-		var/area/area_shuttle = shuttle.get_location_area()
-		if(!area_shuttle)	return
-
+		var/list/turfs = shuttle.supply_turfs
+		if(isnull(turfs)) return
 		var/list/clear_turfs = list()
 
-		for(var/turf/T in area_shuttle)
-			if(T.density || T.contents.len)	continue
+		for(var/turf/T in turfs)
+			if(T.density || T.contents.len) continue
 			clear_turfs += T
 
 		for(var/S in shoppinglist)
-			if(!clear_turfs.len)	break
+			if(!clear_turfs.len) break
 			var/i = rand(1,clear_turfs.len)
 			var/turf/pickedloc = clear_turfs[i]
 			clear_turfs.Cut(i,i+1)
