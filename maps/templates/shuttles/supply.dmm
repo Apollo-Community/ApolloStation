@@ -13,27 +13,29 @@
 "m" = (/obj/machinery/light/small{dir = 8},/turf/simulated/floor{tag = "icon-shuttle_floor2"; icon_state = "shuttle_floor2"},/area/supply/dock)
 "n" = (/turf/simulated/floor{tag = "icon-shuttle_floor2"; icon_state = "shuttle_floor2"},/area/supply/dock)
 "o" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor{tag = "icon-shuttle_floor2"; icon_state = "shuttle_floor2"},/area/supply/dock)
-"p" = (/obj/machinery/door/airlock/external{frequency = 1380; icon_state = "door_locked"; id_tag = "supply_shuttle_hatch"; locked = 1; name = "Shuttle Hatch"; req_access_txt = "13"},/turf/simulated/floor{tag = "icon-shuttle_floor2"; icon_state = "shuttle_floor2"},/area/supply/dock)
-"q" = (/obj/machinery/embedded_controller/radio/simple_docking_controller{frequency = 1380; id_tag = "supply_shuttle"; pixel_x = 25; pixel_y = 0; req_access_txt = "0"; req_one_access_txt = "13;31"; tag_door = "supply_shuttle_hatch"},/obj/machinery/light/small{dir = 4},/turf/simulated/floor{tag = "icon-shuttle_floor2"; icon_state = "shuttle_floor2"},/area/supply/dock)
-"r" = (/turf/simulated/shuttle/wall{icon_state = "swall7"; dir = 2},/area/supply/dock)
-"s" = (/turf/simulated/floor{tag = "icon-shuttle_floor2"; icon_state = "shuttle_floor2"},/turf/simulated/shuttle/wall{dir = 3; icon_state = "swall_f10"; layer = 2},/area/supply/dock)
-"t" = (/turf/simulated/floor{tag = "icon-shuttle_floor2"; icon_state = "shuttle_floor2"},/turf/simulated/shuttle/wall{icon_state = "swall_f6"; dir = 2},/area/supply/dock)
-"u" = (/turf/simulated/shuttle/wall{icon_state = "swall11"; dir = 2},/area/supply/dock)
-"v" = (/obj/structure/shuttle/engine/propulsion,/turf/simulated/floor/plating,/area/supply/dock)
-"w" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/supply/dock)
-"x" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s5"; icon_state = "swall_s5"; dir = 2},/area/supply/dock)
-"y" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s9"; icon_state = "swall_s9"; dir = 2},/area/supply/dock)
+"p" = (/obj/machinery/door/airlock/external{frequency = 1380; icon_state = "door_locked"; id_tag = "supply_shuttle_hatch"; locked = 1; name = "Shuttle Hatch"; req_access_txt = "13"},/turf/simulated/shuttle/floor,/area/supply/dock)
+"q" = (/obj/machinery/conveyor{dir = 4; id = "ShuttleLoad2"},/turf/simulated/floor{tag = "icon-shuttle_floor2"; icon_state = "shuttle_floor2"},/area/supply/dock)
+"r" = (/obj/machinery/conveyor{dir = 4; id = "ShuttleLoad"},/turf/simulated/floor{tag = "icon-shuttle_floor2"; icon_state = "shuttle_floor2"},/area/supply/dock)
+"s" = (/obj/machinery/embedded_controller/radio/simple_docking_controller{frequency = 1380; id_tag = "supply_shuttle"; pixel_x = 25; pixel_y = 0; req_access_txt = "0"; req_one_access_txt = "13;31"; tag_door = "supply_shuttle_hatch"},/obj/machinery/light/small{dir = 4},/turf/simulated/floor{tag = "icon-shuttle_floor2"; icon_state = "shuttle_floor2"},/area/supply/dock)
+"t" = (/turf/simulated/shuttle/wall{icon_state = "swall7"; dir = 2},/area/supply/dock)
+"u" = (/turf/simulated/floor{tag = "icon-shuttle_floor2"; icon_state = "shuttle_floor2"},/turf/simulated/shuttle/wall{dir = 3; icon_state = "swall_f10"; layer = 2},/area/supply/dock)
+"v" = (/turf/simulated/floor{tag = "icon-shuttle_floor2"; icon_state = "shuttle_floor2"},/turf/simulated/shuttle/wall{icon_state = "swall_f6"; dir = 2},/area/supply/dock)
+"w" = (/turf/simulated/shuttle/wall{icon_state = "swall11"; dir = 2},/area/supply/dock)
+"x" = (/obj/structure/shuttle/engine/propulsion,/turf/simulated/floor/plating,/area/supply/dock)
+"y" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/supply/dock)
+"z" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s5"; icon_state = "swall_s5"; dir = 2},/area/supply/dock)
+"A" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s9"; icon_state = "swall_s9"; dir = 2},/area/supply/dock)
 
 (1,1,1) = {"
 abcdefa
 aghihga
 bjklkjf
 gmnnnog
-pnnnnng
+pqnnnng
 gnnnnog
-pnnnnng
-gmnnnqg
-rsnnntu
-vrwwwuv
-axvvvya
+prnnnng
+gmnnnsg
+tunnnvw
+xtyyywx
+azxxxAa
 "}
