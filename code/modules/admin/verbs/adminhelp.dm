@@ -94,6 +94,14 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	var/mentor_msg = "<span class='notice'><b><font color=red>Request for Help: </font>[get_options_bar(mob, 4, 1, 1, 0)][ai_cl]:</b> [msg]</span>"
 	STUI.staff.Add("\[[time_stamp()]] <font color=red>AHELP: </font><font color='#0066ff'>[key_name(mob)]:</b> [msg]</font><br>")
 	STUI.processing |= 3
+
+	//Sends the ahelp to slack chat
+	spawn(0)	//So we don't hold up the rest
+		shell("python scripts/adminbus.py ahelp [usr.ckey] '*[usr.ckey]*: `[original_msg]`'")
+		if(!recent_slack_msg.Find(usr.ckey))
+			recent_slack_msg.Add(usr.ckey)
+		recent_slack_msg[usr.ckey] = "`[msg]`"
+
 	msg = "<span class='notice'><b><font color=red>Request for Help:: </font>[get_options_bar(mob, 2, 1, 1)][ai_cl]:</b> [msg]</span>"
 
 	var/admin_number_afk = 0
@@ -124,3 +132,15 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 		send2adminirc("Request for Help from [key_name(src)]: [html_decode(original_msg)]")
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
+
+/proc/slack_admin(var/client/C, var/admin, var/message, var/dir)
+	C << "<span class='pm'><span class='in'>" + create_text_tag("pm_[dir ? "out" : "in"]", "", C) + " <b>\[SLACK PM\]</b> <span class='name'><b><a href='?priv_msg_slack=\ref[C];admin=[admin]'>[admin]</a></b></span>: <span class='message'>[message]</span></span></span>"
+
+	//STUI stuff
+	log_admin("PM: [admin]->[key_name(C)]: [message]")
+	STUI.staff.Add("\[[time_stamp()]] <font color=red>PM: </font><font color='#0066ff'>[admin] -> [key_name(C)] : [message]</font><br>")
+	STUI.processing |= 3
+
+	//We can blindly send this to all admins cause it is from slack
+	for(var/client/X in admins)
+		X << "<span class='pm'><span class='other'>" + create_text_tag("pm_other", "PM:", X) + " <span class='name'>[admin]:</span> to <span class='name'>[key_name(C, X, 0)]</span>: <span class='message'>[message]</span></span></span>"

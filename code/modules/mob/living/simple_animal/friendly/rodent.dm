@@ -109,6 +109,19 @@ var/global/list/world_rodents = list()
 
 	..()
 
+/mob/living/simple_animal/rodent/attackby(var/obj/item/O, var/mob/user)
+	var/obj/item/stack/rods/R = O
+	if(!istype(R))
+		return ..(O, user)
+
+	if(stat == DEAD)
+		R.use(1)
+		var/obj/item/weapon/reagent_containers/food/snacks/ratrod/raw/food = new()
+		food.loc = get_turf(user)
+		user.put_in_any_hand_if_possible(food)
+		user << "<span class='warning'>You skewer \the [src] with a metal rod!</span>"
+		qdel(src)
+
 /*
  * Mouse types
  */
@@ -124,6 +137,12 @@ var/global/list/world_rodents = list()
 /mob/living/simple_animal/rodent/brown
 	body_color = "brown"
 	icon_state = "mouse_brown"
+
+
+//Cake's got too much money!!!!!
+/mob/living/simple_animal/rodent/white/cake
+	body_color = "cake"
+	icon_state = "mouse_cake"
 
 //TOM IS ALIVE! SQUEEEEEEEE~K :)
 /mob/living/simple_animal/rodent/brown/Tom

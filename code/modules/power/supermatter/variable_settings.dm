@@ -5,7 +5,7 @@
 
 /datum/sm_control
 	var/base_power = 0 	// The power output that the engine will stabilize at, in kW
-	var/decay = 0.50 // Used to calculate power decay per tick
+	var/decay = 0.75 // Used to calculate power decay per tick
 	var/minimum_decay = 0.5 // Minimum amount of decay per tick, in kW
 
 	var/overcharge_heat_multiplier = 10.0 // 10x heat output when overcharged
@@ -29,8 +29,7 @@
 	var/phoron_release_heat_limit = 400 // phoron release is scaled down until this temperature
 	var/phoron_heal_rate = 0 // The rate that phoron heals the core, per mole
 
-	var/emitter_damage = 0 // The amount of damage the emitter does per hit
-	var/emitter_power = 40 // The amount of power added per emitter shot
+	var/emitter_factor = 1 // Determines damage and power generation from the emitter beam
 
 	var/thermal_factor = 0 // The amount of heat released to the environment at max power
 	var/heal_rate = 0 // The amount of damage the core will automatically heal
@@ -69,13 +68,11 @@
 	o2_turbo_multiplier = 1.6/CANISTER_MOLARITY
 	n2o_power_loss = 500/CANISTER_MOLARITY
 	phoron_heal_rate = 800/CANISTER_MOLARITY
-	emitter_damage = 10
 	color = "#00FF99"
 	color_name = "cyan"
 	delamination_size = 30
 	vacuum_damage = 10
-	emitter_damage = 5
-	emitter_power = 60
+	emitter_factor = 2
 	thermal_factor = 300
 	damage_per_degree = 1.1
 	psionic_power = 15
@@ -90,14 +87,12 @@
 	co2_heat_multiplier = 1.1/CANISTER_MOLARITY
 	n2o_power_loss = 800/CANISTER_MOLARITY
 	phoron_heal_rate = 600/CANISTER_MOLARITY
-	emitter_damage = 20
 	color = "#0099FF"
 	color_name = "blue"
 	explosion_size = 25
 	delamination_size = 35
 	vacuum_damage = 25
-	emitter_damage = 10
-	emitter_power = 80
+	emitter_factor = 3
 	thermal_factor = 400
 	damage_per_degree = 1.2
 	psionic_power = 20
@@ -112,14 +107,12 @@
 	co2_heat_multiplier = 1.2/CANISTER_MOLARITY
 	n2o_power_loss = 1400/CANISTER_MOLARITY
 	phoron_heal_rate = 400/CANISTER_MOLARITY
-	emitter_damage = 30
 	color = "#6600FF"
 	color_name = "purple"
 	explosion_size = 25
 	delamination_size = 40
 	vacuum_damage = 50
-	emitter_damage = 15
-	emitter_power = 100
+	emitter_factor = 4
 	thermal_factor = 500
 	damage_per_degree = 1.3
 	psionic_power = 25
@@ -139,14 +132,12 @@
 	co2_heat_multiplier = 1.3/CANISTER_MOLARITY
 	n2o_power_loss = 1400/CANISTER_MOLARITY
 	phoron_heal_rate = 200/CANISTER_MOLARITY
-	emitter_damage = 40
 	color = "#FF00FF"
 	color_name = "pink"
 	explosion_size = 45
 	delamination_size = 45
 	vacuum_damage = 60
-	emitter_damage = 20
-	emitter_power = 250
+	emitter_factor = 5
 	thermal_factor = 600
 	damage_per_degree = 1.4
 	psionic_power = 30
@@ -166,14 +157,12 @@
 	co2_heat_multiplier = 1.4/CANISTER_MOLARITY
 	n2o_power_loss = 5200/CANISTER_MOLARITY
 	phoron_heal_rate = 0/CANISTER_MOLARITY
-	emitter_damage = 50
 	color = "#FF3399"
 	color_name = "magenta"
 	explosion_size = 45
 	delamination_size = 55
 	vacuum_damage = 70
-	emitter_damage = 25
-	emitter_power = 500
+	emitter_factor = 6
 	thermal_factor = 700
 	damage_per_degree = 1.5
 	psionic_power = 50
@@ -193,14 +182,12 @@
 	co2_heat_multiplier = 1.5/CANISTER_MOLARITY
 	n2o_power_loss = 5200/CANISTER_MOLARITY
 	phoron_heal_rate = 0/CANISTER_MOLARITY
-	emitter_damage = 60
 	color = "#FFFF00"
 	color_name = "yellow"
 	explosion_size = 55
 	delamination_size = 65
 	vacuum_damage = 80
-	emitter_damage = 30
-	emitter_power = 800
+	emitter_factor = 7
 	thermal_factor = 500
 	damage_per_degree = 1.6
 	psionic_power = 70
@@ -220,14 +207,12 @@
 	co2_heat_multiplier = 1.6/CANISTER_MOLARITY
 	n2o_power_loss = 10400/CANISTER_MOLARITY
 	phoron_heal_rate = 0/CANISTER_MOLARITY
-	emitter_damage = 70
 	color = "#FF6600"
 	color_name = "orange"
 	explosion_size = 55
 	delamination_size = 75
 	vacuum_damage = 90
-	emitter_damage = 35
-	emitter_power = 1200
+	emitter_factor = 8
 	thermal_factor = 900
 	damage_per_degree = 1.7
 	psionic_power = 90
@@ -247,14 +232,12 @@
 	co2_heat_multiplier = 1.7/CANISTER_MOLARITY
 	n2o_power_loss = 10400/CANISTER_MOLARITY
 	phoron_heal_rate = -10/CANISTER_MOLARITY
-	emitter_damage = 80
 	color = "#FF0000"
 	color_name = "red"
 	explosion_size = 60
 	delamination_size = 85
 	vacuum_damage = 100
-	emitter_damage = 40
-	emitter_power = 2400
+	emitter_factor = 9
 	thermal_factor = 1000
 	damage_per_degree = 1.8
 	psionic_power = 110

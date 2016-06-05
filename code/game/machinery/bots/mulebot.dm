@@ -59,7 +59,7 @@
 	..()
 	wires = new(src)
 	botcard = new(src)
-	var/datum/job/cargo_tech/J = new/datum/job/cargo_tech
+	var/datum/job/supply_tech/J = new /datum/job/supply_tech
 	botcard.access = J.get_access()
 //	botcard.access += access_robotics //Why --Ikki
 	cell = new(src)

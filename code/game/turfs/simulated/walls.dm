@@ -33,7 +33,7 @@
 		return
 
 	// Emitter blasts are somewhat weaker as emitters have large rate of fire and don't require limited power cell to run
-	if(istype(Proj, /obj/item/projectile/beam/emitter))
+	if(istype(Proj, /obj/item/projectile/beam/continuous/emitter))
 		Proj.damage /= 4
 
 	if(istype(Proj, /obj/item/projectile/bullet ) && ( rand( 1, 3 ) == 1 ))
@@ -203,9 +203,12 @@
 	ChangeTurf(/turf/simulated/floor/plating)
 
 /turf/simulated/wall/ex_act(severity)
+	var/area/A = get_area( src )
+	var/base_turf = A.base_turf
+
 	switch(severity)
 		if(1.0)
-			src.ChangeTurf(/turf/space)
+			src.ChangeTurf(base_turf)
 			statistics.increase_stat("damage_cost", rand( 2000, 2200 ))
 			return
 		if(2.0)
@@ -378,6 +381,13 @@
 
 	var/turf/T = user.loc	//get user's location for delay checks
 
+	//WALL FRAMES
+	for(var/frame in wall_frames)
+		if(istype(W, text2path(frame)))
+			var/obj/item/WF = W
+			WF.try_build(src)
+			return
+
 	//DECONSTRUCTION
 	if( istype(W, /obj/item/weapon/weldingtool) )
 
@@ -468,44 +478,8 @@
 				O.show_message("<span class='warning'>The wall was sliced apart by [user]!</span>", 1, "<span class='warning'>You hear metal being sliced apart and sparks flying.</span>", 2)
 		return
 
-	else if(istype(W,/obj/item/apc_frame))
-		var/obj/item/apc_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/alarm_frame))
-		var/obj/item/alarm_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/firealarm_frame))
-		var/obj/item/firealarm_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/frame/light))
-		var/obj/item/frame/light/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/frame/light/small))
-		var/obj/item/frame/light/small/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/rust_fuel_compressor_frame))
-		var/obj/item/rust_fuel_compressor_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/rust_fuel_assembly_port_frame))
-		var/obj/item/rust_fuel_assembly_port_frame/AH = W
-		AH.try_build(src)
-		return
-
 	else if(istype(W,/obj/item/weapon/rcd)) //I bitterly resent having to write this. ~Z
 		return
-
 	else
 		return attack_hand(user)
 	return
@@ -548,3 +522,15 @@
 /turf/simulated/wall/security
 	paint_type = /datum/paint/wall/security
 
+var/global/wall_frames = list( \
+	"/obj/item/apc_frame", \
+	"/obj/item/alarm_frame", \
+	"/obj/item/firealarm_frame", \
+	"/obj/item/radio_button_frame", \
+	"/obj/item/frame/light", \
+	"/obj/item/frame/light/small", \
+	"/obj/item/rust_fuel_compressor_frame", \
+	"/obj/item/rust_fuel_assembly_port_frame", \
+	"/obj/item/intercom_frame", \
+	"/obj/item/atm_frame", \
+)

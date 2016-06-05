@@ -17,7 +17,7 @@
 	var/damage = 0                          // Current total damage
 	var/brute_damage = 0                    // Specifically brute damage.
 	var/burn_damage = 0                     // Specifically burn damage.
-	var/base_name                           // Used to keep the original name safe while we apply modifiers.
+	base_name                           // Used to keep the original name safe while we apply modifiers.
 
 /obj/item/clothing/suit/space/New()
 	..()

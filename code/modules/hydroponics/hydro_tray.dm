@@ -579,7 +579,6 @@
 	return
 
 /obj/machinery/portable_atmospherics/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
-
 	if (O.is_open_container())
 		return 0
 
@@ -740,7 +739,7 @@
 
 /obj/machinery/portable_atmospherics/hydroponics/attack_hand(mob/user as mob)
 
-	if(istype(usr,/mob/living/silicon))
+	if(istype(usr,/mob/living/silicon) || user.stat)
 		return
 
 	if(harvest)

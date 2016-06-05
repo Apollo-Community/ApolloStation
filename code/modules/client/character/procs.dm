@@ -1,3 +1,100 @@
+/datum/character/New( var/key, var/new_char = 1, var/temp = 1 )
+	ckey = ckey( key )
+
+	blood_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
+
+	gender = pick(MALE, FEMALE)
+	name = random_name(gender,species)
+
+	gear = list()
+
+	DNA = md5( "DNA[name][blood_type][gender][eye_color][time2text(world.timeofday,"hh:mm")]" )
+	fingerprints = md5( DNA )
+	unique_identifier = md5( fingerprints )
+
+	new_character = new_char
+	temporary = temp
+
+	change_age( 30 )
+
+	if( !department )
+		LoadDepartment( CIVILIAN )
+
+	menu = new( null, "creator", "Character Creator", 710, 610 )
+	menu.window_options = "focus=0;can_close=0;"
+
+	all_characters += src
+
+/datum/character/Destroy()
+	all_characters -= src
+
+	..()
+
+// Primarily for copying role data to antags
+/datum/character/proc/copy_metadata_to( var/datum/character/C )
+	C.roles = src.roles
+	C.department = src.department
+	C.antag_data = src.antag_data.Copy()
+	C.uplink_location = src.uplink_location
+
+/datum/character/proc/copy_to( mob/living/carbon/human/character )
+	if( !istype( character ))
+		return
+
+	if(config.humans_need_surnames)
+		var/firstspace = findtext(name, " ")
+		var/name_length = length(name)
+		if(!firstspace)	//we need a surname
+			name += " [pick(last_names)]"
+		else if(firstspace == name_length)
+			name += "[pick(last_names)]"
+
+	char_mob = character
+
+	character.gender = gender
+	character.real_name = name
+	character.name = character.real_name
+	if(character.dna)
+		character.dna.real_name = character.real_name
+
+	character.character = src
+
+	character.set_species( species, 1 )
+
+	// Destroy/cyborgize organs
+	for(var/name in organ_data)
+		var/status = organ_data[name]
+		var/datum/organ/external/O = character.organs_by_name[name]
+		if(O)
+			if(status == "amputated")
+				O.amputated = 1
+				O.status |= ORGAN_DESTROYED
+				O.destspawn = 1
+			else if(status == "cyborg")
+				O.status |= ORGAN_ROBOT
+		else
+			var/datum/organ/internal/I = character.internal_organs_by_name[name]
+			if(I)
+				if(status == "assisted")
+					I.mechassist()
+				else if(status == "mechanical")
+					I.mechanize()
+
+	if(underwear > underwear_m.len || underwear < 1)
+		underwear = 0 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me. //HAH NOW NO MORE MAGIC CLONING UNDIES
+
+	if(undershirt > undershirt_t.len || undershirt < 1)
+		undershirt = 0
+
+	if(backpack > 4 || backpack < 1)
+		backpack = 1 //Same as above
+
+	//Debugging report to track down a bug, which randomly assigned the plural gender to people.
+	if(gender in list(PLURAL, NEUTER))
+		if(isliving(character)) //Ghosts get neuter by default
+			message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
+			gender = MALE
+
 /datum/character/proc/saveCharacter( var/prompt = 0 )
 	if( istype( char_mob ))
 		copy_to( char_mob )
@@ -123,6 +220,13 @@
 	variables["DNA"] = html_encode( sql_sanitize_text( DNA ))
 	variables["unique_identifier"] = html_encode( sql_sanitize_text( unique_identifier ))
 
+	variables["antag_data"] = html_encode( list2params( antag_data ))
+
+	// Status effects
+	variables["employment_status"] = html_encode( sql_sanitize_text( employment_status ))
+	variables["felon"] = sanitize_integer( felon, 0, BITFLAGS_MAX, 0 )
+	variables["prison_date"] = html_encode( list2params( prison_date ))
+
 	var/list/names = list()
 	var/list/values = list()
 	for( var/name in variables )
@@ -155,12 +259,11 @@
 			return 0
 
 		var/query_params = ""
-		for( var/i = 1; i < names.len; i++ )
+		for( var/i = 1; i <= names.len; i++ )
 			query_params += "[names[i]]='[values[i]]'"
-			if( i != names.len-1 )
+			if( i != names.len )
 				query_params += ","
 
-		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
 		var/DBQuery/query_update = dbcon.NewQuery("UPDATE characters SET [query_params] WHERE ckey = '[variables["ckey"]]' AND name = '[variables["name"]]'")
 		if( !query_update.Execute())
 			testing( "SAVE CHARACTER: Didn't save [name] / ([ckey]) because the SQL update failed" )
@@ -267,7 +370,7 @@
 	variables["religion"] = "text"
 
 	// Jobs, uses bitflags
-	variables["roles"] = "params"
+	variables["roles"] = "roles"
 	variables["department"] = "department"
 
 	// Special role selection
@@ -305,6 +408,11 @@
 	variables["fingerprints"] = "text"
 	variables["DNA"] = "text"
 	variables["unique_identifier"] = "text"
+	variables["antag_data"] = "antag_data"
+
+	variables["employment_status"] = "text"
+	variables["felon"] = "number"
+	variables["prison_date"] = "prison_date"
 
 	var/query_names = list2text( variables, "," )
 	var/sql_ckey = ckey( ckey )
@@ -358,6 +466,54 @@
 			if( "department" )
 				LoadDepartment( text2num( value ))
 				continue // Dont need to set the variable on this one
+			if( "antag_data" )
+				var/list/L = params2list( html_decode( value ))
+				if( !L || !L.len )
+					L = list( "notoriety" =  0, "persistant" = 0, "faction" = "Gorlex Marauders", "career_length" = 0 )
+				for(var/V in L)
+					if( V != "faction" ) // hardcode but pls go away
+						L[V] = text2num( L[V] )
+				value = L
+			if( "prison_date" )
+				prison_date = list()
+
+				for( var/num in params2list( value ))
+					if( istext( num ))
+						num = text2num( html_decode( num ))
+						if( num )
+							prison_date.Add( num )
+
+				if( prison_date && prison_date.len == 3 )
+					var/days = daysTilDate( universe.date, prison_date )
+					if( employment_status == "Active" && days > 0 )
+						employment_status = "[days] days left in prison"
+			if( "roles" )
+				var/list/L = params2list( html_decode( value ))
+
+				if( !L )
+					L = list()
+
+				for( var/role in L )
+					switch( role )
+						if( "Chemist" )
+							L.Remove( "Chemist" )
+							L["Senior Scientist"] = "High"
+						if( "Roboticist" )
+							L.Remove( "Roboticist" )
+							L["Roboticist"] = "High"
+						if( "Xenobiologist" )
+							L.Remove( "Xenobiologist" )
+							L["Xenobiologist"] = "High"
+						if( "Atmospheric Technician" )
+							L.Remove( "Atmospheric Technician" )
+							L["Senior Engineer"] = "High"
+						if( "Virologist" )
+							L.Remove( "Virologist" )
+							L["Senior Medical Doctor"] = "High"
+						if( "Psychiatrist" )
+							L.Remove( "Psychiatrist" )
+							L["Medical Doctor"] = "High"
+				value = L
 
 		vars[variables[i]] = value
 
@@ -391,7 +547,7 @@
 	var/green
 	var/blue
 
-	var/col = pick ("blonde", "black", "chestnut", "copper", "brown", "wheat", "old", "punk")
+	var/col = pick ("blonde", "black", "chestnut", "copper", "brown", "wheat", "old")
 	switch(col)
 		if("blonde")
 			red = 255
@@ -421,10 +577,12 @@
 			red = rand (100, 255)
 			green = red
 			blue = red
+/* those darn kids and their skateboards
 		if("punk")
 			red = rand (0, 255)
 			green = rand (0, 255)
 			blue = rand (0, 255)
+*/
 
 	red = max(min(red + rand (-25, 25), 255), 0)
 	green = max(min(green + rand (-25, 25), 255), 0)
@@ -648,7 +806,7 @@
 	var/datum/job/job = job_master.GetJob( GetHighestLevelJob() )
 
 	if( job )
-		clothes_s = job.make_preview_icon( backpack )
+		clothes_s = job.make_preview_icon( backpack, GetPlayerAltTitle(job) , g)
 
 	if(disabilities & NEARSIGHTED)
 		preview_icon.Blend(new /icon('icons/mob/eyes.dmi', "glasses"), ICON_OVERLAY)
@@ -680,6 +838,9 @@
 				LoadDepartment( CIVILIAN )
 
 			roles |= getAllPromotablePositions()
+
+		if( "Antagonist" )
+			antag_data["persistant"] = 1
 
 	num--
 
@@ -724,3 +885,39 @@
 		. += role
 
 	return .
+
+/datum/character/proc/setHairColor( var/r, var/g, var/b )
+	hair_color = rgb( r, g, b )
+
+/datum/character/proc/setFacialHairColor( var/r, var/g, var/b )
+	hair_face_color = rgb( r, g, b )
+
+/datum/character/proc/setSkinTone( var/r, var/g, var/b )
+	skin_tone = rgb( r, g, b )
+
+/datum/character/proc/setSkinColor( var/r, var/g, var/b )
+	skin_color = rgb( r, g, b )
+
+/datum/character/proc/setEyeColor( var/r, var/g, var/b )
+	eye_color = rgb( r, g, b )
+
+/datum/character/proc/isPersistantAntag()
+	if( !antag_data )
+		return 0
+
+	if( !antag_data["persistant"] )
+		return 0
+
+	return 1
+
+/datum/character/proc/getAntagFaction()
+	if( !isPersistantAntag() )
+		return 0
+
+	return faction_controller.get_faction(antag_data["faction"])
+
+/datum/character/proc/canJoin()
+	if( employment_status != "Active" )
+		return 0
+
+	return 1

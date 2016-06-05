@@ -77,10 +77,12 @@ var/list/wood_icons = list("wood","wood-broken")
 //	return ..()
 
 /turf/simulated/floor/ex_act(severity)
-	//set src in oview(1)
+	var/area/A = get_area( src )
+	var/base_turf = A.base_turf
+
 	switch(severity)
 		if(1.0)
-			src.ChangeTurf(/turf/space)
+			src.ChangeTurf(base_turf)
 			statistics.increase_stat("damage_cost", rand( 900, 1100 ))
 		if(2.0)
 			switch(pick(1,2;75,3))
@@ -89,7 +91,9 @@ var/list/wood_icons = list("wood","wood-broken")
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 					statistics.increase_stat("damage_cost", rand( 900, 1000 ))
 				if(2)
-					src.ChangeTurf(/turf/space)
+
+
+					src.ChangeTurf(base_turf)
 					statistics.increase_stat("damage_cost", rand( 900, 1100 ))
 				if(3)
 					if(prob(80))
@@ -576,7 +580,10 @@ turf/simulated/floor/update_icon()
 	if( prob( 80 ))
 		src.ReplaceWithLattice()
 	else
-		src.ChangeTurf(/turf/space)
+		var/area/A = get_area( src )
+		var/base_turf = A.base_turf
+
+		src.ChangeTurf( base_turf )
 
 #undef LIGHTFLOOR_ON_BIT
 

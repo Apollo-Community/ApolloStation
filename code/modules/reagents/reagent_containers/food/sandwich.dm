@@ -1,3 +1,4 @@
+/*
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/attackby(obj/item/W as obj, mob/user as mob)
 
 	if(istype(W,/obj/item/weapon/shard) || istype(W,/obj/item/weapon/reagent_containers/food/snacks))
@@ -5,7 +6,7 @@
 		S.attackby(W,user)
 		qdel(src)
 	..()
-
+*/
 /obj/item/weapon/reagent_containers/food/snacks/csandwich
 	name = "sandwich"
 	desc = "The best thing since sliced bread."

@@ -5,11 +5,11 @@ var/global/list/object_profiling = list()
     schedule_interval = 40 // every 4 seconds
 
 /datum/controller/process/obj/doWork()
-	var/c = 15
+	var/c = 0
 	for(var/obj/O in processing_objects)
 		if(!O.gcDestroyed)
 			O.process()
-			if(!(c++ % 15))		scheck()
+			if(!(c++ % 100))		scheck()
 		else
 			processing_objects.Remove(O)
 

@@ -1,30 +1,31 @@
 /datum/shuttle/ferry/emergency
-	//pass
+	priority = 1
 
 /datum/shuttle/ferry/emergency/arrived()
 	if (istype(in_use, /obj/machinery/computer/shuttle_control/emergency))
 		var/obj/machinery/computer/shuttle_control/emergency/C = in_use
 		C.reset_authorization()
 
+	//We are calling the controller here not the e shuttle itself.
 	emergency_shuttle.shuttle_arrived()
 
-/datum/shuttle/ferry/emergency/long_jump(var/area/departing, var/area/destination, var/area/interim, var/travel_time, var/direction)
-	//world << "shuttle/ferry/emergency/long_jump: departing=[departing], destination=[destination], interim=[interim], travel_time=[travel_time]"
+/datum/shuttle/ferry/emergency/long_jump(var/obj/hanger/trg_hanger, var/obj/hanger/hanger_interim, var/travel_time, var/direction)
 	if (!location)
 		travel_time = SHUTTLE_TRANSIT_DURATION_RETURN
 	else
 		travel_time = SHUTTLE_TRANSIT_DURATION
-
 	//update move_time and launch_time so we get correct ETAs
 	move_time = travel_time
 	emergency_shuttle.launch_time = world.time
+	..(trg_hanger, hanger_interim, travel_time, direction)
 
-	..()
+/datum/shuttle/ferry/emergency/move(trg_hanger, var/direction = null, var/long_j)
+	var/leaving_station = at_station()
 
-/datum/shuttle/ferry/emergency/move(var/area/origin,var/area/destination)
-	..(origin, destination)
+	..(trg_hanger, direction, long_j)
 
-	if (origin == area_station)	//leaving the station
+	//Are we leaving the station ?
+	if (leaving_station && long_j)
 		emergency_shuttle.departed = 1
 
 		if (emergency_shuttle.evac)
@@ -58,7 +59,6 @@
 
 /datum/shuttle/ferry/emergency/launch(var/user)
 	if (!can_launch(user)) return
-
 	if (istype(user, /obj/machinery/computer/shuttle_control/emergency))	//if we were given a command by an emergency shuttle console
 		if (emergency_shuttle.autopilot)
 			emergency_shuttle.autopilot = 0
@@ -67,7 +67,6 @@
 	if(usr)
 		log_admin("[key_name(usr)] has overridden the shuttle autopilot and activated launch sequence")
 		message_admins("[key_name_admin(usr)] has overridden the shuttle autopilot and activated launch sequence")
-
 	..(user)
 
 /datum/shuttle/ferry/emergency/force_launch(var/user)
@@ -112,6 +111,7 @@
 /obj/machinery/computer/shuttle_control/emergency/proc/reset_authorization()
 	//no need to reset emagged status. If they really want to go back to the station they can.
 	authorized = initial(authorized)
+
 
 //returns 1 if the ID was accepted and a new authorization was added, 0 otherwise
 /obj/machinery/computer/shuttle_control/emergency/proc/read_authorization(var/obj/item/ident)
@@ -188,6 +188,8 @@
 				shuttle_status = "Standing-by at [station_name]."
 			else
 				shuttle_status = "Standing-by at Central Command."
+			if(!shuttle.can_launch())
+				shuttle_status = "*WARNING* Target hanger obstructed. <br />" + shuttle_status
 		if(WAIT_LAUNCH, FORCE_LAUNCH)
 			shuttle_status = "Shuttle has recieved command and will depart shortly."
 		if(WAIT_ARRIVE)

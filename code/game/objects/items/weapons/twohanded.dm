@@ -209,5 +209,86 @@
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 
 /obj/item/weapon/twohanded/spear/update_icon()
-	icon_state = "spearglass"
+	item_state = "spearglass[wielded]"
 	return
+
+// exolitic spear. religious weaponry for tiger cooperative
+// starts out weaker than a normal spear, but can be charged to greatly increase damage
+/obj/item/weapon/twohanded/spear/exolitic
+	name = "crystal spear"
+	desc = "An odd spear with sharp, jagged and barely pulsating crystals entwining the grip."
+	icon_state = "exolitic_spear"
+	item_state = "exoliticspear0"
+	force = 10
+	w_class = 3.0
+	force_wielded = 16
+	throwforce = 13
+	throw_speed = 4
+
+	var/obj/item/weapon/cell/bcell = null
+	var/charged = 0
+
+// from stunbaton
+/obj/item/weapon/twohanded/spear/exolitic/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/cell))
+		if(!bcell)
+			user.drop_item()
+			W.loc = src
+			bcell = W
+			user << "<span class='notice'>You jam the battery cell into spearhead. It seems to melt into the crystals as they begin pulsating strongly.</span>"
+			set_charged(1)
+		else
+			user << "<span class='warning'>[src] begins to spark and crackle as you bring the cell close.</span>"
+
+/obj/item/weapon/twohanded/spear/exolitic/afterattack(atom/A, mob/user as mob, proximity)
+	if(!proximity) return
+	..()
+
+	if(A && wielded && charged != 2 && istype(A,/obj/machinery/power/apc))
+		user << "<span class='warning'>You thrust the spear directly into the APC!</span>"
+		user << "<span class='warning'>The crystals on the spear pulsate wildly and begin to collapse inwards on themselves!</span>"
+		if(prob(10))
+			user << "<span class='notice'>You hear a weak shattering noise as the spear's crystals realign.</span>"
+			set_charged(2)
+		else
+			user << "<span class='alert'>A bright flash blinds you as the spear violently explodes in a burst of energy!</span>"
+
+			explosion(A.loc, 0, 1, 4, 4)
+			qdel(src)
+	else
+		if(prob(15))
+			// intimidating
+			playsound(src.loc, 'sound/items/bubblewrap.ogg', 30, 1)
+			visible_message("<span class='alert'>\The [src] crackles and glows ominously!</span>")
+		else if(charged && prob(5))
+			playsound(src.loc, 'sound/effects/heart_beat.ogg', 10, 1)
+
+
+/obj/item/weapon/twohanded/spear/exolitic/update_icon()
+	item_state = "exoliticspear[wielded]"
+	return
+
+// viva la hardcode
+/obj/item/weapon/twohanded/spear/exolitic/proc/set_charged(var/level)
+	charged = level
+
+	switch(charged)
+		if(0)
+			desc = "An odd spear with sharp, jagged and barely pulsating crystals entwining the grip."
+			icon_state = "exolitic_spear"
+			force = 10
+			force_wielded = 16
+			throwforce = 13
+		if(1)
+			desc = "An odd spear with sharp, jagged and strongly pulsating crystals entwining the grip."
+			icon_state = "exolitic_spear_charged"
+			force = 23
+			force_wielded = 32
+			throwforce = 29
+		if(2)
+			desc = "An odd spear with sharp, jagged and wildly pulsating crystals entwining the grip."
+			icon_state = "exolitic_spear_charged"
+
+			force = 32
+			force_wielded = 50
+			throwforce = 37

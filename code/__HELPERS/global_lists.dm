@@ -136,6 +136,10 @@ var/global/list/alloy_postfix = list("metal" = "metallic", "glass" = "glaseous")
 
 	return 1
 
+//Slack lists
+/var/global/list/recent_slack_times = list()
+/var/global/list/recent_slack_msg = list()
+
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()
 

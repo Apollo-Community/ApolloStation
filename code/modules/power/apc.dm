@@ -1052,7 +1052,7 @@
 
 /obj/machinery/power/apc/proc/ion_act()
 	//intended to be exactly the same as an AI malf attack
-	if(!src.malfhack && src.z in config.station_levels)
+	if(!src.malfhack && src.z in overmap.station_levels)
 		if(prob(3))
 			src.locked = 1
 			if (src.cell.charge > 0)

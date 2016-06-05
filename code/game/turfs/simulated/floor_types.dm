@@ -95,6 +95,10 @@
 	name = "engraved floor"
 	icon_state = "cult"
 
+/turf/simulated/floor/shuttle_beacon_floor
+	name = "Floor plating with intergratged shuttle beacon"
+	icon = 'icons/mecha/mech_bay.dmi'
+	icon_state = "recharge_floor"
 
 /turf/simulated/floor/engine/n20
 	New()
@@ -154,7 +158,10 @@
 
 	ex_act(severtiy)
 		if(1.0)
-			src.ChangeTurf(/turf/space)
+			var/area/A = get_area( src )
+			var/base_turf = A.base_turf
+
+			src.ChangeTurf( base_turf )
 		return
 
 /turf/simulated/floor/bluegrid
@@ -165,6 +172,31 @@
 /turf/simulated/floor/greengrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "gcircuit"
+	light_range = 1
+
+/turf/simulated/floor/dock_one
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "One"
+	light_range = 1
+
+/turf/simulated/floor/dock_two
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "Two"
+	light_range = 1
+
+/turf/simulated/floor/dock_tree
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "Tree"
+	light_range = 1
+
+/turf/simulated/floor/dock_Five
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "Five"
+	light_range = 1
+
+/turf/simulated/floor/dock_tile
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "Dock"
 	light_range = 1
 
 /turf/simulated/shuttle
@@ -182,9 +214,12 @@
 	blocks_air = 1
 
 /turf/simulated/shuttle/wall/ex_act(severity)
+	var/area/A = get_area( src )
+	var/base_turf = A.base_turf
+
 	switch(severity)
 		if(1.0)
-			src.ChangeTurf(/turf/space)
+			src.ChangeTurf(base_turf)
 			statistics.increase_stat("damage_cost", rand( 4000, 5000 ))
 			return
 		if(2.0)
@@ -199,9 +234,12 @@
 
 /turf/simulated/shuttle/floor/ex_act(severity)
 	//set src in oview(1)
+	var/area/A = get_area( src )
+	var/base_turf = A.base_turf
+
 	switch(severity)
 		if(1.0)
-			src.ChangeTurf(/turf/space)
+			src.ChangeTurf(base_turf)
 			statistics.increase_stat("damage_cost", rand( 1900, 2100 ))
 		if(2.0)
 			switch(pick(1,2;75,3))
@@ -210,7 +248,7 @@
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 					statistics.increase_stat("damage_cost", rand( 1900, 2000 ))
 				if(2)
-					src.ChangeTurf(/turf/space)
+					src.ChangeTurf(base_turf)
 					statistics.increase_stat("damage_cost", rand( 1900, 2100 ))
 				if(3)
 					src.ChangeTurf(/turf/simulated/shuttle/plating)

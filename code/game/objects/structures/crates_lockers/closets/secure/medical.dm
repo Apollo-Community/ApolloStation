@@ -52,7 +52,7 @@
 
 /obj/structure/closet/secure_closet/medical3
 	name = "medical doctor's locker"
-	req_access = list(access_surgery)
+	req_access = list(access_medical)
 	icon_state = "securemed1"
 	icon_closed = "securemed"
 	icon_locked = "securemed1"
@@ -66,7 +66,7 @@
 			new /obj/item/weapon/storage/backpack/medic(src)
 		else
 			new /obj/item/weapon/storage/backpack/satchel_med(src)
-		new /obj/item/clothing/under/rank/nursesuit (src)
+		new /obj/item/clothing/under/rank/nurse_suit (src)
 		new /obj/item/clothing/head/nursehat (src)
 		switch(pick("blue", "green", "purple"))
 			if ("blue")

@@ -17,6 +17,7 @@ var/list/SolarControl = list()
 
 	//machinery
 	for(var/obj/machinery/M in MachineProcessing)
+		last_object = "[M] ([M.x],[M.y],[M.z])"
 		if(!M.gcDestroyed)
 			if(!(c++ % 40))		scheck()
 			if(M.process() == PROCESS_KILL)

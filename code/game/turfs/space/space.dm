@@ -1,16 +1,19 @@
 /turf/space
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
-	icon_state = ""
+	icon_state = "0"
 	dynamic_lighting = 0
 	plane = SPACE_PARALLAX_PLANE - 1
 
 	temperature = 3
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	var/obj/effect/light_emitter/starlight/starlight = null
+	var/overmap_transition = 0 // Do objects / mobs transit to the overmap on this turf?
+
 //	heat_capacity = 700000 No.
 
 /turf/space/New()
+	icon_state = ""
 	/*
 	if(!istype(src, /turf/space/transit) && !istype(src, /turf/space/bluespace))
 		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
@@ -82,7 +85,7 @@
 	inertial_drift(A)
 
 	if(ticker && ticker.mode)
-		if (A.x <= TRANSITIONEDGE || A.x >= (world.maxx - TRANSITIONEDGE - 1) || A.y <= TRANSITIONEDGE || A.y >= (world.maxy - TRANSITIONEDGE - 1))
+		if( overmap_transition )
 			A.overmapTravel()
 
 /turf/space/proc/Sandbox_Spacemove(atom/movable/A as mob|obj)

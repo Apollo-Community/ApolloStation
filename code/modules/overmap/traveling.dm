@@ -87,7 +87,7 @@
 		fadeout()
 
 		sleep( 5 )
-		if( alert_user( "Would you like to enter sector \"[sector]\"?" ) == "No" )
+		if( alert_user( "Would you like to enter sector \"[sector.real_name]\"?" ) == "No" )
 			fadein()
 
 			src.dir = turn( src.dir, 180 )
@@ -113,19 +113,24 @@
 			fadein()
 			return
 
+		var/edge_length = sector.metadata.edge_length
+
+		var/x_normal = ( pixel_x+16 )/32 // Normalized values to find out where along they edge they are
+		var/y_normal = ( pixel_y+16 )/32
+
 		// Put in the local sector based on where they were in the overmap
-		var/obj_x = round((( pixel_x+16 )/32 )*( world.maxx-( 2*OVERMAP_EDGE )))+OVERMAP_EDGE
-		var/obj_y = round((( pixel_y+16 )/32 )*( world.maxy-( 2*OVERMAP_EDGE )))+OVERMAP_EDGE
+		var/obj_x = round( x_normal*( world.maxx-( edge_length*2 )))+edge_length
+		var/obj_y = round( y_normal*( world.maxy-( edge_length*2 )))+edge_length
 
 		switch( src.dir )
 			if( NORTH )
-				obj_y = ( OVERMAP_EDGE+3 )
+				obj_y = ( edge_length+TRANSITION_EDGE_BUFFER )
 			if( SOUTH )
-				obj_y = world.maxy-( OVERMAP_EDGE+3 )
+				obj_y = world.maxy-( edge_length+TRANSITION_EDGE_BUFFER )
 			if( WEST )
-				obj_x = world.maxx-( OVERMAP_EDGE+3 )
+				obj_x = world.maxx-( edge_length+TRANSITION_EDGE_BUFFER )
 			if( EAST )
-				obj_x = ( OVERMAP_EDGE+3 )
+				obj_x = ( edge_length+TRANSITION_EDGE_BUFFER )
 
 		var/turf/T = locate( obj_x, obj_y, sector.map_z )
 		if( T )
@@ -177,7 +182,7 @@
 
 /proc/getOvermapLoc( var/atom )
 	var/turf/T = get_turf( atom )
-	var/obj/effect/map/M = map_sectors["[T.z]"]
+	var/obj/effect/map/M = overmap.map["[T.z]"]
 
 	return get_turf( M )
 
@@ -186,7 +191,7 @@
 	var/safety = 1
 
 	while(move_to_z == src.z)
-		var/obj/effect/map/sector/sector = map_sectors["[pick( config.local_levels )]"]
+		var/obj/effect/map/sector/sector = overmap.map["[pick( overmap.local_levels )]"]
 		if( sector.canRandomTeleport() )
 			move_to_z = sector.map_z
 

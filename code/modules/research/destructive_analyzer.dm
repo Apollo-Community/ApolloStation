@@ -43,20 +43,14 @@ Note: Must be placed within 3 tiles of the R&D Console
 /obj/machinery/r_n_d/destructive_analyzer/attackby(var/obj/O as obj, var/mob/user as mob)
 	if (shocked)
 		shock(user,50)
-	if (istype(O, /obj/item/weapon/screwdriver))
-		if (!panel_open)
-			panel_open = 1// This is for the default proc
-			if(linked_console)
-				linked_console.linked_destroy = null
-				linked_console = null
-			icon_state = "d_analyzer_t"
-			user << "You open the maintenance hatch of [src]."
-		else
-			panel_open = 0
-			icon_state = "d_analyzer"
-			user << "You close the maintenance hatch of [src]."
+	if(istype(O, /obj/item/weapon/screwdriver))
+		default_deconstruction_screwdriver(user,"d_analyzer_t","d_analyzer",O)
 		return
-	if (opened)
+	if(istype(O, /obj/item/device/multitool) || istype(O, /obj/item/weapon/wirecutters))
+		if(panel_open == 1)
+			wires.Interact()
+			return
+	if (panel_open == 1)
 		if(istype(O, /obj/item/weapon/crowbar))
 			default_deconstruction_crowbar(O)
 			return 1
@@ -71,7 +65,12 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if (busy)
 		user << "<span class='alert'>The destructive analyzer is busy right now.</span>"
 		return
-	if (istype(O, /obj/item) && !loaded_item)
+	if (sabotaged)
+		user << "<span class='alert'>With a powerfull sucking force the destructive analyzer suckes your arm in and bites down.</span>"
+		playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
+		damage_limb(user, 100)
+
+	if (istype(O, /obj/item) && !loaded_item && panel_open == 0)
 		if(isrobot(user)) //Don't put your module items in there!
 			return
 		if(!O.origin_tech)

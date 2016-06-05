@@ -1066,6 +1066,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				Pump.target_pressure = 4500
 				Pump.update_icon()
 
+			else if(istype(M,/obj/machinery/atmospherics/unary/freezer) && response == "Setup Completely")	// Turn on coolers
+				var/obj/machinery/atmospherics/unary/freezer/F = M
+				F.set_temperature = 0
+				F.use_power = 1
+
 			else if(istype(M,/obj/machinery/power/supermatter))
 				SM = M
 				spawn(50)
@@ -1142,3 +1147,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		log_admin("[key_name(src)] has toggled [M.key]'s [blockname] block [state]!")
 	else
 		alert("Invalid mob")
+
+/client/proc/advanced_wincall()
+	set category = "Debug"
+	set name = "Advanced WinCall"
+	set desc = "Allows you to open specific windows typically unavailable"
+	
+	winset(src, null, "command=.command")

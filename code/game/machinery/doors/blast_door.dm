@@ -187,6 +187,14 @@ obj/machinery/door/blast/regular
 	icon_state = "shutter1"
 	emitter_resistance = 20
 
+/obj/machinery/door/blast/shutters/open()
+    playsound( src.loc, 'sound/machines/shutter_open.ogg', 30, 1)
+    . = ..()
+
+/obj/machinery/door/blast/shutters/close()
+    playsound( src.loc, 'sound/machines/shutter_close.ogg', 30, 1)
+    . = ..()
+
 obj/machinery/door/blast/curtain
 	name = "curtain"
 	desc = "A red velvet curtain."
@@ -196,3 +204,64 @@ obj/machinery/door/blast/curtain
 	icon_state_closing = "curtainc1"
 	icon_state = "curtainc0"
 	maxhealth = 30
+
+//Radio controlled blast doors and shutters these are not present in the game normaly but can be build.
+/obj/machinery/door/blast/rc
+	var/code = 30
+	var/frequency = 1457
+	var/delay = 0
+	var/datum/radio_frequency/radio_connection
+
+
+
+	New()
+		..()
+		spawn(40)
+			set_frequency(frequency)
+		return
+
+	receive_signal(datum/signal/signal)
+		if(!signal)
+			return 0
+		if(signal.encryption != code)
+			return 0
+		force_toggle()
+		return
+
+	proc/set_frequency(new_frequency)
+		if(!frequency)
+			return
+		if(!radio_controller)
+			sleep(20)
+		if(!radio_controller)
+			return
+		radio_controller.remove_object(src, frequency)
+		frequency = new_frequency
+		radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
+		return
+
+/obj/machinery/door/blast/rc/attackby(obj/item/I as obj, mob/user as mob)
+	if(istype(I, /obj/item/device/multitool))
+		var/new_freq = input("Set button signal frequentie", "Button frequentie", frequency) as num|null
+		var/new_code = input("Set button signal code", "Signal code", code) as num|null
+		if(new_freq != frequency)
+			set_frequency(new_freq)
+		if(new_code != code)
+			code = new_code
+		return
+
+/obj/machinery/door/blast/rc/regular
+	icon_state_open = "pdoor0"
+	icon_state_opening = "pdoorc0"
+	icon_state_closed = "pdoor1"
+	icon_state_closing = "pdoorc1"
+	icon_state = "pdoor1"
+	maxhealth = 600
+
+/obj/machinery/door/blast/rc/shutters
+	icon_state_open = "pdoor0"
+	icon_state_opening = "pdoorc0"
+	icon_state_closed = "pdoor1"
+	icon_state_closing = "pdoorc1"
+	icon_state = "pdoor1"
+	maxhealth = 600

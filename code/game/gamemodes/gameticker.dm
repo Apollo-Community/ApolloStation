@@ -9,9 +9,11 @@ var/global/datum/controller/gameticker/ticker
 /datum/controller/gameticker
 	var/const/restart_timeout = 600
 	var/current_state = GAME_STATE_PREGAME
+	var/restart_called = 0
 
 	var/hide_mode = 1
 	var/datum/game_mode/mode = null
+	var/game_start = 0 // world.time when the game started
 	var/post_game = 0
 	var/event_time = null
 	var/event = 0
@@ -24,6 +26,9 @@ var/global/datum/controller/gameticker/ticker
 	var/Bible_item_state	// item_state the chaplain has chosen for his bible
 	var/Bible_name			// name of the bible
 	var/Bible_deity_name
+
+	var/const/contract_delay = 18000 // this (in 1/10 seconds) is how long it takes before traitors get their contracts, and the factions are populated with contracts
+	var/contracts_made = 0
 
 	var/random_players = 0 	// if set to nonzero, ALL players who latejoin or declare-ready join will have random appearances/genders
 
@@ -41,6 +46,7 @@ var/global/datum/controller/gameticker/ticker
 
 /datum/controller/gameticker/proc/pregame()
 	login_music = pick(\
+	'sound/music/space_asshole.ogg',\
 	'sound/music/space.ogg',\
 	'sound/music/traitor.ogg',\
 	'sound/music/title2.ogg',\
@@ -114,6 +120,8 @@ var/global/datum/controller/gameticker/ticker
 
 	job_master.ResetOccupations()
 	job_master.DivideOccupations() // Apparently important for new antagonist system to register specific job antags properly.
+
+	src.mode.persistant_antag_pre_setup() // Sets up persistant antags
 	src.mode.pre_setup()
 
 	create_characters() //Create player characters and transfer them
@@ -129,7 +137,8 @@ var/global/datum/controller/gameticker/ticker
 	shuttle_controller.setup_shuttle_docks()
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
-		universe.load_date()
+		game_start = world.time
+		mode.persistant_antag_post_setup()
 		mode.post_setup()
 		//Cleanup some stuff
 		for(var/obj/effect/landmark/start/S in landmarks_list)
@@ -196,7 +205,7 @@ var/global/datum/controller/gameticker/ticker
 				switch(M.z)
 					if(0)	//inside a crate or something
 						var/turf/T = get_turf(M)
-						if(T && T.z in config.station_levels)				//we don't use M.death(0) because it calls a for(/mob) loop and
+						if(T && T.z in overmap.station_levels)				//we don't use M.death(0) because it calls a for(/mob) loop and
 							M.health = 0
 							M.stat = DEAD
 					if(1)	//on a z-level 1 turf.
@@ -256,7 +265,7 @@ var/global/datum/controller/gameticker/ticker
 						world << sound('sound/effects/explosionfar.ogg')
 						cinematic.icon_state = "summary_selfdes"
 				for(var/mob/living/M in living_mob_list)
-					if(M.loc.z in config.station_levels)
+					if(M.loc.z in overmap.station_levels)
 						M.death()//No mercy
 		//If its actually the end of the round, wait for it to end.
 		//Otherwise if its a verb it will continue on afterwards.
@@ -296,6 +305,14 @@ var/global/datum/controller/gameticker/ticker
 
 
 	proc/process()
+		if( current_state == GAME_STATE_FINISHED )
+			if( restart_called )
+				sleep(restart_timeout)
+				if(!delay_end)
+					world.Reboot()
+				else
+					world << "<span class='notice'><B>An admin has delayed the round end</B>. Retrying restart in [restart_timeout/10] seconds.</span>"
+
 		if(current_state != GAME_STATE_PLAYING)
 			return 0
 
@@ -303,6 +320,14 @@ var/global/datum/controller/gameticker/ticker
 		process_newscaster()
 
 		emergency_shuttle.process()
+
+		if(!contracts_made && world.time > (game_start + contract_delay))
+			contracts_made = 1
+			message_admins("[contract_delay/10] seconds have passed since game start. Contracts are now available to traitor antagonists.")
+			faction_controller.update_contracts()
+			for(var/datum/mind/M in minds)
+				if( M.antagonist && istype( M.antagonist, /datum/antagonist/traitor ))
+					M.current << "Contracts are now available from your uplink."
 
 		var/game_finished = 0
 		var/mode_finished = 0
@@ -328,24 +353,7 @@ var/global/datum/controller/gameticker/ticker
 						world << "<span class='notice'><B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B></span>"
 				else
 					feedback_set_details("end_proper","proper completion")
-					if(!delay_end)
-						world << "<span class='notice'><B>Restarting in [restart_timeout/10] seconds</B></span>"
-
-
-				if( blackbox )
-					blackbox.save_all_data_to_sql()
-
-				if( config.canon )
-					canonHandleRoundEnd()
-
-				if(!delay_end)
-					sleep(restart_timeout)
-					if(!delay_end)
-						world.Reboot()
-					else
-						world << "<span class='notice'><B>An admin has delayed the round end</B></span>"
-				else
-					world << "<span class='notice'><B>An admin has delayed the round end</B></span>"
+					world << "<span class='notice'><B>The game is now over. You may vote to restart when you wish to start a new round.</B></span>"
 
 		else if (mode_finished)
 			post_game = 1
@@ -430,23 +438,25 @@ var/global/datum/controller/gameticker/ticker
 
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))
-		if (findtext("[handler]","auto_declare_completion_"))
+		if (findtext("[handler]","auto_declare_completion_[mode.name]"))
 			call(mode, handler)()
 
 	//Ask the event manager to print round end information
 	event_manager.RoundEnd()
 
+	mode.persistant_antag_game_end() // After-the-game persistant antag stuff
+
 	//Print a list of antagonists to the server log
 	var/list/total_antagonists = list()
 	//Look into all mobs in world, dead or alive
 	for(var/datum/mind/Mind in minds)
-		var/temprole = Mind.special_role
-		if(temprole)							//if they are an antagonist of some sort.
-			if(temprole in total_antagonists)	//If the role exists already, add the name to it
-				total_antagonists[temprole] += ", [Mind.name]([Mind.key])"
+		var/datum/antagonist/antag = Mind.antagonist
+		if(antag)							//if they are an antagonist of some sort.
+			if(antag.name in total_antagonists)	//If the role exists already, add the name to it
+				total_antagonists[antag.name] += ", [Mind.name]([Mind.key])"
 			else
-				total_antagonists.Add(temprole) //If the role doesnt exist in the list, create it and add the mob
-				total_antagonists[temprole] += ": [Mind.name]([Mind.key])"
+				total_antagonists.Add(antag.name) //If the role doesnt exist in the list, create it and add the mob
+				total_antagonists[antag.name] += ": [Mind.name]([Mind.key])"
 
 	//Now print them all into the log!
 	log_game("Antagonists at round end were...")
@@ -454,6 +464,25 @@ var/global/datum/controller/gameticker/ticker
 		log_game("[i]s[total_antagonists[i]].")
 
 	statistics.call_stats() // Show the end-round stats
+
+	// End-round antag voting
+	var/list/datum/mind/all_antagonists = list()
+	//Look into all mobs in world, dead or alive
+	for(var/datum/mind/M in minds)
+		if(( M.current && M.current.client ) && M.antagonist && !istype(M.antagonist, /datum/antagonist/traitor/persistant)) // Players that have left can't get commendations
+			all_antagonists += M
+
+	if(all_antagonists.len)
+		world << "<span class='notice'><B>Please vote on the antagonists' performance!</B></span>"
+	else
+		testing( "There were no antagonists." )
+		return 1
+
+	for(var/mob/M in player_list)
+		if(M.client)
+			testing( "Opening antag vote for [M.client]" )
+			var/datum/browser/menu = new( null, "antag_vote", "Antagonist Vote", 500, 700)
+			open_antag_vote( M, menu, all_antagonists.Copy() ) // defined in modules/antagonist/menus/voting.dm
 
 	return 1
 

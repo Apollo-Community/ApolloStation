@@ -98,7 +98,7 @@
 
 	for (var/ch_name in channels)
 		dat+=text_sec_channel(ch_name, channels[ch_name])
-	dat+={"[text_wires()]</TT></body></html>"}
+	wires.Interact(user)
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
@@ -191,7 +191,7 @@
 	Broadcast_Message(connection, A,
 						0, "*garbled automated announcement*", src,
 						message, from, "Automated Announcement", from, "synthesized voice",
-						4, 0, config.station_levels, PUB_FREQ)
+						4, 0, overmap.station_levels, PUB_FREQ)
 	qdel(A)
 	return
 

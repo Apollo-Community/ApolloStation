@@ -27,12 +27,15 @@ datum/nano_item_lists
 	var/uses 				// Numbers of crystals
 	var/list/ItemsCategory	// List of categories with lists of items
 	var/list/ItemsReference	// List of references with an associated item
+
+	var/datum/browser/menu
+
 	var/list/nanoui_items	// List of items for NanoUI use
-	var/nanoui_menu = 0		// The current menu we are in
+	var/nanoui_menu = "contracts"		// The current menu we are in
 	var/list/nanoui_data = new // Additional data for NanoUI use
 
 	var/list/purchase_log = new
-	var/uplink_owner = null//text-only
+	var/datum/mind/uplink_owner = null
 	var/used_TC = 0
 
 /obj/item/device/uplink/New()
@@ -46,6 +49,8 @@ datum/nano_item_lists
 	ItemsReference = IL.items_reference
 
 	world_uplinks += src
+
+	menu = new(null, "uplink", "Uplink", 700, 600)
 
 /obj/item/device/uplink/Destroy()
 	world_uplinks -= src
@@ -107,32 +112,6 @@ datum/nano_item_lists
 			random_items += UI
 	return pick(random_items)
 
-/obj/item/device/uplink/Topic(href, href_list)
-	if(href_list["buy_item"] == "random")
-		var/datum/uplink_item/UI = chooseRandomItem()
-		href_list["buy_item"] = UI.reference
-		return buy(UI, "RN")
-	else
-		var/datum/uplink_item/UI = ItemsReference[href_list["buy_item"]]
-		return buy(UI, UI ? UI.reference : "")
-	return 0
-
-/obj/item/device/uplink/proc/buy(var/datum/uplink_item/UI, var/reference)
-	if(UI && UI.cost <= uses)
-		uses -= UI.cost
-		used_TC += UI.cost
-		feedback_add_details("traitor_uplink_items_bought", reference)
-
-		var/obj/I = new UI.path(get_turf(usr))
-		if(ishuman(usr))
-			var/mob/living/carbon/human/A = usr
-			A.put_in_any_hand_if_possible(I)
-
-		purchase_log[UI] = purchase_log[UI] + 1
-
-		return 1
-	return 0
-
 // HIDDEN UPLINK - Can be stored in anything but the host item has to have a trigger for it.
 /* How to create an uplink in 3 easy steps!
 
@@ -180,7 +159,7 @@ datum/nano_item_lists
 	NANO UI FOR UPLINK WOOP WOOP
 */
 /obj/item/device/uplink/hidden/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
-	var/title = "Remote Uplink"
+	var/title = "The Uplink"
 	var/data[0]
 
 	data["welcome"] = welcome
@@ -194,7 +173,7 @@ datum/nano_item_lists
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "uplink.tmpl", title, 450, 600)
+		ui = new(user, src, ui_key, "uplink.tmpl", title, 528, 600)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
 		// open the new ui window
@@ -203,34 +182,8 @@ datum/nano_item_lists
 
 // Interaction code. Gathers a list of items purchasable from the paren't uplink and displays it. It also adds a lock button.
 /obj/item/device/uplink/hidden/interact(mob/user)
-	ui_interact(user)
-
-// The purchasing code.
-/obj/item/device/uplink/hidden/Topic(href, href_list)
-	if (usr.stat || usr.restrained())
-		return
-
-	if (!( istype(usr, /mob/living/carbon/human)))
-		return 0
-	var/mob/user = usr
-	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
-	if ((usr.contents.Find(src.loc) || (in_range(src.loc, usr) && istype(src.loc.loc, /turf))))
-		usr.set_machine(src)
-		if(..(href, href_list))
-			return 1
-		else if(href_list["lock"])
-			toggle()
-			ui.close()
-			return 1
-		if(href_list["return"])
-			nanoui_menu = round(nanoui_menu/10)
-			update_nano_data()
-		if(href_list["menu"])
-			nanoui_menu = text2num(href_list["menu"])
-			update_nano_data(href_list["id"])
-
-	interact(usr)
-	return 1
+	//ui_interact(user)
+	contract_menu(user) // defined in modules/antagonist/menus/contracts.dm
 
 /obj/item/device/uplink/hidden/proc/update_nano_data(var/id)
 	if(nanoui_menu == 1)

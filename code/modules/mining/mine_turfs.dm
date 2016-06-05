@@ -8,7 +8,7 @@
 	opacity = 1
 	density = 1
 	blocks_air = 1
-	temperature = T0C
+	temperature = 3 // Chilled in the vacuum of space
 	var/mineral/mineral
 	var/mined_ore = 0
 	var/last_act = 0
@@ -395,7 +395,7 @@
 	icon_state = "lunar_rock"
 	side_type = "lunar_rock"
 	has_resources = 0
-	dug_type = /turf/simulated/floor/plating/airless/asteroid/lunar_turf
+	dug_type = /turf/planet/lunar
 
 /turf/simulated/mineral/lunar/MineralSpread()
 	return
@@ -409,7 +409,7 @@
 	icon_state = "asteroid"
 	oxygen = 0
 	nitrogen = 0
-	temperature = T20C-270
+	temperature = 3
 	icon_plating = "asteroid"
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
 	var/overlay_detail
@@ -526,8 +526,3 @@
 				attackby(R.module_state_3,R)
 			else
 				return
-
-/turf/simulated/floor/plating/airless/asteroid/lunar_turf
-	name = "lunar regolith"
-	icon_state = "lunar_regolith"
-	has_resources = 0

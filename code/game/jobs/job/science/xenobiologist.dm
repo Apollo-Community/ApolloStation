@@ -7,7 +7,7 @@
 	spawn_positions = 2
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
-	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology)
+	access = list(access_robotics, access_tox, access_moon, access_research, access_xenobiology)
 	minimal_access = list(access_research, access_xenobiology)
 
 	rank_succesion_level = 4
@@ -27,7 +27,7 @@
 	H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/labcoat/science(H), slot_wear_suit)
 	return 1
 
-/datum/job/xenobiologist/make_preview_icon( var/backpack )
+/datum/job/xenobiologist/make_preview_icon( var/backpack , var/job , var/gender )
 	var/icon/clothes_s = null
 
 	clothes_s = new /icon('icons/mob/uniform.dmi', "sciencewhite_s")
