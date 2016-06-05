@@ -16,19 +16,17 @@
 		/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped,
 		/obj/item/device/mmi/digital/posibrain,
 		/obj/item/pod_parts/core
-		)
+	)
 
 	var/area/dropoff = null // The area where the item must be dropped off at
 	var/area/list/dropoff_areas = list(
-		/area/security/vacantoffice,
-		/area/maintenance/disposal,
-		/area/quartermaster/storage,
-		/area/storage/tech,
-		/area/construction,
+		/area/library,
+		/area/crew_quarters/locker,
+		/area/crew_quarters/observe,
+		/area/security/vacantoffice2,
 		/area/maintenance/incinerator,
-		/area/storage/emergency,
-		/area/library
-		)
+		/area/maintenance/disposal
+	)
 
 	var/dropoff_time
 
@@ -37,10 +35,12 @@
 	if(!.)	return
 
 	target = get_target()
+	var/list/candidate_areas = dropoff_areas.Copy()
 	dropoff = locate(pick(dropoff_areas))
 	// much easier to pick a new dropoff area rather than a new target
-	while((locate(target) in dropoff))
-		dropoff = locate(pick(dropoff_areas))
+	while((locate(target) in dropoff) && candidate_areas.len)
+		candidate_areas -= dropoff.type
+		dropoff = locate(pick(candidate_areas))
 
 	if(!dropoff || !target)
 		qdel(src)

@@ -357,8 +357,11 @@ datum/mind
 								U.nanoui_items = IL.items_nano
 								U.ItemsReference = IL.items_reference
 
+						for(var/datum/contract/C in antagonist.active_contracts)
+							C.workers -= antagonist
 						antagonist.active_contracts.Cut()
-						antagonist.faction = faction
+
+						faction.join(antagonist)
 
 						current << "<b><font size=3 color=red>You are now an agent of [faction.name]</font></b>"
 						message_admins("[usr] has set [current.name]'s ([key]) faction to [faction.name]")

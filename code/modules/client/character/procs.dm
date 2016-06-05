@@ -370,7 +370,7 @@
 	variables["religion"] = "text"
 
 	// Jobs, uses bitflags
-	variables["roles"] = "params"
+	variables["roles"] = "roles"
 	variables["department"] = "department"
 
 	// Special role selection
@@ -487,6 +487,30 @@
 					var/days = daysTilDate( universe.date, prison_date )
 					if( employment_status == "Active" && days > 0 )
 						employment_status = "[days] days left in prison"
+			if( "roles" )
+				var/list/L = params2list( html_decode( value ))
+
+				if( !L )
+					L = list()
+
+				for( var/role in L )
+					switch( role )
+						if( "Chemist" )
+							L.Remove( "Chemist" )
+							L["Senior Scientist"] = "High"
+						if( "Roboticist" )
+							L.Remove( "Roboticist" )
+							L["Roboticist"] = "High"
+						if( "Xenobiologist" )
+							L.Remove( "Xenobiologist" )
+							L["Xenobiologist"] = "High"
+						if( "Atmospheric Technician" )
+							L.Remove( "Atmospheric Technician" )
+							L["Senior Engineer"] = "High"
+						if( "Virologist" )
+							L.Remove( "Virologist" )
+							L["Senior Medical Doctor"] = "High"
+				value = L
 
 		vars[variables[i]] = value
 

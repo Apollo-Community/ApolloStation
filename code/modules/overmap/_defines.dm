@@ -3,7 +3,8 @@
 #define OVERMAP_STATION_X 128
 #define OVERMAP_STATION_Y 128
 #define OVERMAP_POPULATE_RADIUS 5
-#define TRANSITION_EDGE_LENGTH 9
+#define TRANSITION_EDGE_LENGTH 9 // How far from the edge of the map is the transition zone to the overmap
+#define TRANSITION_EDGE_BUFFER 3 // How far should someone be placed from the edge if they're entering a sector?
 #define OVERMAP_LOC_ATTEMPTS 10 // How many times it should attempt to place an item
 
 //list used to track which zlevels are being 'moved' by the proc below

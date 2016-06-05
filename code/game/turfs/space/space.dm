@@ -8,6 +8,8 @@
 	temperature = 3
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	var/obj/effect/light_emitter/starlight/starlight = null
+	var/overmap_transition = 0 // Do objects / mobs transit to the overmap on this turf?
+
 //	heat_capacity = 700000 No.
 
 /turf/space/New()
@@ -83,7 +85,7 @@
 	inertial_drift(A)
 
 	if(ticker && ticker.mode)
-		if (A.x <= TRANSITIONEDGE || A.x >= (world.maxx - TRANSITIONEDGE - 1) || A.y <= TRANSITIONEDGE || A.y >= (world.maxy - TRANSITIONEDGE - 1))
+		if( overmap_transition )
 			A.overmapTravel()
 
 /turf/space/proc/Sandbox_Spacemove(atom/movable/A as mob|obj)

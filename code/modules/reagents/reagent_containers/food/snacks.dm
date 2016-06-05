@@ -3030,18 +3030,20 @@
 		reagents.add_reagent("nutriment", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/ratrod
-	name = "Ratrod"
+	name = "ratrod"
 	desc = "A rodent with a metal rod stuck through it. It's been cooked."
 	icon_state = "ratrod"
 	bitesize = 2
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("nutriment", 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/ratrod/raw
-	name = "Raw Ratrod"
+	name = "raw ratrod"
 	desc = "A rodent with a metal rod stuck through it."
 	icon_state = "ratrod_raw"
 
-	On_Consume()
+	On_Consume(var/mob/M)
+		M << "You feel unwell."
+		// todo: severely punish anyone who tries to eat raw rats. ew
 		return

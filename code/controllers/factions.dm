@@ -44,15 +44,11 @@ var/global/list/restricted_contracts = list()
 
 // makes the mind join a faction. also works if a type is passed as the faction
 /datum/controller/faction_controller/proc/join_faction(var/datum/mind/M, var/datum/faction/F)
-	if(!istype(F) && ispath(F))
-		for(var/datum/faction/faction in factions)
-			if(faction.type == F)
-				F = faction
-				break
-	if(!F || ispath(F))
-		return 0
-	F.members += M
-	M.faction = F
+	if(ispath(F))
+		F = (locate(F) in factions)
+	if(!F || ispath(F))	return 0
+
+	F.join(M)
 
 	return F
 
@@ -60,9 +56,9 @@ var/global/list/restricted_contracts = list()
 /datum/controller/faction_controller/proc/leave_faction(var/datum/mind/M, var/datum/faction/F)
 	if(ispath(F))
 		F = (locate(F) in factions)
-	if(!F || !(M in F.members))	return 0
-	F.members -= M
-	M.faction = null
+	if(!F || ispath(F) || !(M in F.members))	return 0
+	
+	F.leave(M)
 
 	return 1
 

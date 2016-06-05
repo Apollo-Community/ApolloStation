@@ -519,6 +519,12 @@ var/global/list/gear_datums = list()
 	cost = 2
 	slot = slot_wear_suit
 
+/datum/gear/sombrero
+	display_name = "sombrero"
+	path = /obj/item/clothing/head/sombrero
+	cost = 2
+	slot = slot_head
+
 /datum/gear/bponcho
 	display_name = "poncho, blue"
 	path = /obj/item/clothing/suit/poncho/blue
@@ -820,6 +826,12 @@ var/global/list/gear_datums = list()
 /datum/gear/matchbook
 	display_name = "matchbook"
 	path = /obj/item/weapon/storage/box/matches
+	sort_category = "misc"
+	cost = 2
+
+/datum/gear/zippo
+	display_name = "zippo lighter"
+	path = /obj/item/weapon/flame/lighter/zippo
 	sort_category = "misc"
 	cost = 2
 

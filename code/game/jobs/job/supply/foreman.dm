@@ -7,8 +7,8 @@
 	spawn_positions = 1
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dddddd"
-	access = list(access_maint_tunnels, access_mint, access_mining, access_slater)
-	minimal_access = list(access_mining, access_mint, access_slater)
+	access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
+	minimal_access = list(access_mining, access_mint, access_mining_station, access_slater)
 
 	rank_succesion_level = 5
 

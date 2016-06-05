@@ -13,6 +13,14 @@
 		return 0
 	return 1
 
+/datum/faction/proc/join(var/datum/mind/M)
+	members += M
+	M.faction = src
+
+/datum/faction/proc/leave(var/datum/mind/M)
+	members -= M
+	M.faction = null
+
 // Factions, members of the syndicate coalition:
 
 /datum/faction/syndicate
@@ -47,10 +55,19 @@
 	if(!possible_contracts.len)
 		possible_contracts = regular_contracts.Copy() + restricted_contracts.Copy()
 
+/datum/faction/syndicate/join(var/datum/mind/M)
+	..(M)
+
+	if(members.len == 1) // first member, start making contracts
+		update_contracts()
+
 // Populate factions with new contracts
 /datum/faction/syndicate/proc/update_contracts()
 	if(!members.len)	return
-	if(!contracts_max && !restricted_contracts_max)	return
+	if(!contracts_max && !restricted_contracts_max)
+		spawn(rand(contract_delay / 2, contract_delay) * 600)
+			update_contracts()
+		return
 	if(faction_controller.contract_ban)	return
 
 	var/list/candidates = possible_contracts.Copy() // don't modify possible_contracts and rule out a contract forever because it didn't initialize once

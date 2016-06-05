@@ -604,6 +604,7 @@
 		'html/images/barcode1.png',
 		'html/images/barcode2.png',
 		'html/images/barcode3.png',
+		'html/images/apollo_map.png',
 		)
 
 

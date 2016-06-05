@@ -113,19 +113,24 @@
 			fadein()
 			return
 
+		var/edge_length = sector.metadata.edge_length
+
+		var/x_normal = ( pixel_x+16 )/32 // Normalized values to find out where along they edge they are
+		var/y_normal = ( pixel_y+16 )/32
+
 		// Put in the local sector based on where they were in the overmap
-		var/obj_x = round((( pixel_x+16 )/32 )*( world.maxx-( 2*TRANSITION_EDGE_LENGTH )))+TRANSITION_EDGE_LENGTH
-		var/obj_y = round((( pixel_y+16 )/32 )*( world.maxy-( 2*TRANSITION_EDGE_LENGTH )))+TRANSITION_EDGE_LENGTH
+		var/obj_x = round( x_normal*( world.maxx-( edge_length*2 )))+edge_length
+		var/obj_y = round( y_normal*( world.maxy-( edge_length*2 )))+edge_length
 
 		switch( src.dir )
 			if( NORTH )
-				obj_y = ( TRANSITION_EDGE_LENGTH+3 )
+				obj_y = ( edge_length+TRANSITION_EDGE_BUFFER )
 			if( SOUTH )
-				obj_y = world.maxy-( TRANSITION_EDGE_LENGTH+3 )
+				obj_y = world.maxy-( edge_length+TRANSITION_EDGE_BUFFER )
 			if( WEST )
-				obj_x = world.maxx-( TRANSITION_EDGE_LENGTH+3 )
+				obj_x = world.maxx-( edge_length+TRANSITION_EDGE_BUFFER )
 			if( EAST )
-				obj_x = ( TRANSITION_EDGE_LENGTH+3 )
+				obj_x = ( edge_length+TRANSITION_EDGE_BUFFER )
 
 		var/turf/T = locate( obj_x, obj_y, sector.map_z )
 		if( T )

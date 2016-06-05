@@ -36,8 +36,3 @@
 		antag.current << "There are credible reports claiming that <B>[M.real_name]</B> might be willing to help our cause. If you need assistance, consider contacting them."
 		antag.current.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
 		antag.current << ""
-
-/datum/antagonist/traitor/persistant/pick_contracts()
-	antag.current << "[faction.name] has unlocked your full Uplink functionality. You may accept contracts freely, but are not obligated to do so."
-	antag.current << "<B>Contracts are now available from your Uplink.</B>"
-	antag.current << ""

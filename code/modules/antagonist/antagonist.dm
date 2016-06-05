@@ -83,10 +83,6 @@
 	antag.current << "<B><font size=3 color=red>[greeting]</font></B>"
 	antag.current << "<B><font size=2 color=red>You are working for \The [faction.name].</font></B>"
 	antag.current << "[faction.operative_notes]"
-	if(!ticker.contracts_made)
-		antag.current << "You are a sleeper cell agent, and your employer has recently ordered you to <B>stand by for further instructions</B>."
-	else
-		antag.current << "Your services have been requested <B>now</B>."
 	antag.current << ""
 
 	switch(faction.friendly_identification)
@@ -110,6 +106,12 @@
 		antag.current << "There are credible reports claiming that <B>[M.real_name]</B> might be willing to help our cause. If you need assistance, consider contacting them."
 		antag.current.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
 		antag.current << ""
+
+	// How many contracts you have to complete
+	if(obligatory_contracts)
+		antag.current << "[faction.name] has ordered you to complete <B>at least [obligatory_contracts] contracts</B> during this shift."
+	else
+		antag.current << "[faction.name] has given you free reigns. They are not expecting you to complete any contracts this shift."
 
 // Equip the antagonist here
 /datum/antagonist/proc/equip()
