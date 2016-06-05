@@ -111,7 +111,7 @@
 	STUI.processing |= 3
 
 	log_debug("c = [C]([C.ckey]) , src = [src.ckey] , msg = [msg]")
-	if(!C.ckey in admins)		update_slack(src.ckey, C.ckey, msg)
+	update_slack(src.ckey, C.ckey, msg)
 
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/X in admins)

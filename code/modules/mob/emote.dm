@@ -37,6 +37,8 @@
 				continue
 			if(findtext(message," snores.")) //Because we have so many sleeping people.
 				break
+			if(!src.client)
+				break		//so we don't spam ghosts with garbage emotes
 			if(M.stat == 2 && (M.client.prefs.toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
 				M.show_message(message)
 

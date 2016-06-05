@@ -168,7 +168,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/callproc,
 	/client/proc/toggledebuglogs,
 	/client/proc/SDQL_query,
-	/client/proc/SDQL2_query
+	/client/proc/SDQL2_query,
+	/client/proc/advanced_wincall
 	)
 
 var/list/admin_verbs_paranoid_debug = list(

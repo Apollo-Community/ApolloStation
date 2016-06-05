@@ -1147,3 +1147,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		log_admin("[key_name(src)] has toggled [M.key]'s [blockname] block [state]!")
 	else
 		alert("Invalid mob")
+
+/client/proc/advanced_wincall()
+	set category = "Debug"
+	set name = "Advanced WinCall"
+	set desc = "Allows you to open specific windows typically unavailable"
+	
+	winset(src, null, "command=.command")
