@@ -158,8 +158,7 @@ var/world_topic_spam_protect_time = world.timeofday
 				return
 		else	return
 		*/
-		for(var/a in world.GetConfig("admin"))
-			a << input["token"]
+		log_debug(input["token"])			//Just for testing
 
 		var/message = sanitize(input["text"])
 		if(!message)	return

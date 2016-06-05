@@ -110,7 +110,8 @@
 	STUI.staff.Add("\[[time_stamp()]] <font color=red>PM: </font><font color='#0066ff'>[key_name(src)] -> [key_name(C)] : [msg]</font><br>")
 	STUI.processing |= 3
 
-	if(!C in admins)		update_slack(src.ckey, C.ckey, msg)
+	log_debug("c = [C]([C.ckey]) , src = [src.ckey] , msg = [msg]")
+	update_slack(src.ckey, C.ckey, msg)
 
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/X in admins)
