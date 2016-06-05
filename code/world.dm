@@ -151,11 +151,15 @@ var/world_topic_spam_protect_time = world.timeofday
 	if(copytext(T,1,9) == "adminmsg")					//This recieves messages from slack (/pm command) and processes it before updating slack chat
 		var/input[] = params2list(copytext(T,9))
 		//security check
+		/*
 		if(fexists("config/slack.txt"))
 			if(input["token"] != file2text("config/slack.txt"))
 				message_admins("TOPIC: WARNING: [addr] tried to fake an admin message! Please contact a developer")
 				return
 		else	return
+		*/
+		for(var/a in world.GetConfig("admin"))
+			a << input["token"]
 
 		var/message = sanitize(input["text"])
 		if(!message)	return
