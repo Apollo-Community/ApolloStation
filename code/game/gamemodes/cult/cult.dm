@@ -46,6 +46,8 @@
 	var/const/max_cultists_to_start = 4
 	var/acolytes_survived = 0
 
+	votable = 0
+
 
 /datum/game_mode/cult/announce()
 /*
