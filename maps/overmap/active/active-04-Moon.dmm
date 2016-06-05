@@ -1042,7 +1042,7 @@
 "ub" = (/turf/simulated/floor{dir = 2; icon_state = "whitegreen"},/area/planet/moon/base/rnd/xenobiology/xenoflora)
 "uc" = (/turf/simulated/floor{dir = 6; icon_state = "whitegreen"},/area/planet/moon/base/rnd/xenobiology/xenoflora)
 "ud" = (/obj/structure/table/reinforced,/obj/machinery/requests_console{department = "Science"; departmentType = 2; name = "Science Requests Console"; pixel_x = 30; pixel_y = 0},/obj/item/weapon/storage/box/botanydisk{pixel_x = 4; pixel_y = 4},/obj/item/weapon/storage/box/botanydisk,/turf/simulated/floor{icon_state = "hydrofloor"},/area/planet/moon/base/rnd/xenobiology/xenoflora)
-"ue" = (/obj/machinery/atmospherics/portables_connector{dir = 1},/obj/machinery/portable_atmospherics/canister/air/airlock,/turf/simulated/floor/plating,/area/planet/moon/base/maintenance/aftport)
+"ue" = (/obj/machinery/atmospherics/portables_connector{dir = 1},/obj/machinery/portable_atmospherics/canister/air,/turf/simulated/floor/plating,/area/planet/moon/base/maintenance/aftport)
 "uf" = (/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plating,/area/planet/moon/base/maintenance/aftport)
 "ug" = (/obj/item/device/radio/intercom{dir = 0; name = "Station Intercom (General)"; pixel_x = -27},/turf/simulated/floor{icon_state = "warning"},/area/planet/moon/base/rnd/storage)
 "uh" = (/turf/simulated/floor{icon_state = "warning"},/area/planet/moon/base/rnd/storage)

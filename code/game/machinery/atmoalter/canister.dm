@@ -59,9 +59,6 @@
 	canister_color = "grey"
 	can_label = 0
 
-/obj/machinery/portable_atmospherics/canister/air/airlock
-	start_pressure = 3 * ONE_ATMOSPHERE
-
 /obj/machinery/portable_atmospherics/canister/empty/
 	start_pressure = 0
 	can_label = 1

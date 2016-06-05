@@ -71,6 +71,7 @@
 /var/const/access_slater = 69
 /var/const/access_lawyer = 70
 /var/const/access_engine_core = 71
+/var/const/access_courtroom = 72
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -375,6 +376,8 @@
 			return "NMV Slater Command"
 		if(access_engine_core)
 			return "Engine Core"
+		if(access_courtroom)
+			return "Courtroom"
 
 /proc/get_centcom_access_desc(A)
 	switch(A)

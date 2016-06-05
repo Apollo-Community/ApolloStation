@@ -62,14 +62,14 @@
 	department_id = ENGINEERING
 	background_color = "#ffeeaa"
 	starting_positions = list( "Technical Assistant" = "High" )
-	region_access = list(access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_ce, access_energy_barrier)
+	region_access = list(access_engine_core, access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_ce, access_energy_barrier)
 
 /datum/department/supply
 	name = "Cargo Bay"
 	department_id = SUPPLY
 	background_color = "#FFF3D8"
 	starting_positions = list( "Cargo Technician" = "High" , "Asteroid Miner" = "High")
-	region_access = list(access_mailsorting, access_mining, access_mining_station, access_cargo, access_qm)
+	region_access = list(access_slater, access_mailsorting, access_mining, access_mining_station, access_cargo, access_qm)
 
 /datum/department/medical
 	name = "Medical Bay"
