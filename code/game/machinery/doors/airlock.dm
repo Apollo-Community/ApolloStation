@@ -973,7 +973,7 @@ About the new airlock wires panel:
 		else
 			user << "<span class='notice'>You force open the airlock.</span>"
 			playsound(src.loc, 'sound/effects/xenoDoorForced.ogg', 100, 1)
-			open(1)
+			open(2)
 	else if(istype(C, /obj/item/weapon/doorjack))
 		for(var/obj/item/weapon/doorjack/D in get_turf(src))
 			// there's already a doorjack in place
@@ -992,7 +992,7 @@ About the new airlock wires panel:
 					return
 				user << "With a loud creak, you force the airlock fully open."
 				playsound(user.loc, 'sound/effects/xenoDoorForced.ogg', 100, 3)
-				open(1)
+				open(2)
 			else
 				user << "You rapidly deploy the door jack in the doorway."
 				for(var/mob/M in range(2, src))
@@ -1033,15 +1033,17 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/open(var/forced=0)
 	if( operating || welded || locked )
 		return 0
-	if(!forced)
-		if( !arePowerSystemsOn() || isWireCut(AIRLOCK_WIRE_OPEN_DOOR) )
-			return 0
+	switch(forced)
+		if(0)
+			if( !arePowerSystemsOn() || isWireCut(AIRLOCK_WIRE_OPEN_DOOR) )
+				return 0
 
-		if(istype(src, /obj/machinery/door/airlock/glass))
-			playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
-		else
-			playsound(src.loc, 'sound/machines/airlock.ogg', 30, 1)
-	else	playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
+			if(istype(src, /obj/machinery/door/airlock/glass))
+				playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
+			else
+				playsound(src.loc, 'sound/machines/airlock.ogg', 30, 1)
+		if(1)	playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
+
 	use_power(360)	//360 W seems much more appropriate for an actuator moving an industrial door capable of crushing people
 
 	if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)

@@ -4,7 +4,7 @@
 	icon_state = "off"
 	desc = "A cold piece of cylindrical metal."
 	var/obj/structure/hobo_barrel/lit = 0
-	anchored = 1 //About time someone fixed this.
+	anchored = 1
 	density = 1
 	light_color = FIRE_COLOR
 	light_range = 0
@@ -21,9 +21,8 @@
 			icon_state = "hobo_barrel"
 			user << "You throw the lit [I.name] into the barrel, and the paper inside lights up in flames!"
 			desc = "A hot piece of cylindrical metal."
-			
-			light_range = 2
-			update_light()
+
+			set_light(4)
 		else
 			user << "You throw the [I.name] into the barrel."
 		qdel(C)

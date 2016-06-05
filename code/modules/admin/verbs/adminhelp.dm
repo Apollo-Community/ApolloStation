@@ -97,7 +97,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 
 	//Sends the ahelp to slack chat
 	spawn(0)	//So we don't hold up the rest
-		shell("python scripts/adminbus.py ahelp [usr.ckey] '*[usr.ckey]*: `[msg]`'")
+		shell("python scripts/adminbus.py ahelp [usr.ckey] '*[usr.ckey]*: `[original_msg]`'")
 		if(!recent_slack_msg.Find(usr.ckey))
 			recent_slack_msg.Add(usr.ckey)
 		recent_slack_msg[usr.ckey] = "`[msg]`"

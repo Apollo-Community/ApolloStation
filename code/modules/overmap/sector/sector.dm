@@ -124,6 +124,8 @@
 
 
 /obj/effect/mapinfo/sector/asteroid/initliazeMap()
+	..()
+
 	name = "asteroid [pick( alphabet_uppercase )]-[rand( 100, 999 )]"
 
 	var/fill_rate = 52 // % of the area that will be filled at the start
