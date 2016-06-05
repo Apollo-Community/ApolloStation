@@ -1983,55 +1983,55 @@ area/space/atmosalert()
 	icon_state = "bridge"
 
 /area/slater/foreman
-	name = "\improper Foreman's Office"
+	name = "\improper NMV Slater Foreman's Office"
 	icon_state = "bridge"
 
 /area/slater/maint1
-	name = "\improper Fore Maintenance"
+	name = "\improper NMV Slater Fore Maintenance"
 	icon_state = "fmaint"
 
 /area/slater/maint2
-	name = "\improper Aft Maintenance"
+	name = "\improper NMV Slater Aft Maintenance"
 	icon_state = "amaint"
 
 /area/slater/maint3
-	name = "\improper Secondary Maintenance"
+	name = "\improper NMV Slater Secondary Maintenance"
 	icon_state = "pmaint"
 
 /area/slater/engine
-	name = "\improper Engine Room"
+	name = "\improper NMV Slater Engine Room"
 	icon_state = "engine"
 
 /area/slater/disposals
-	name = "\improper Disposals Control"
+	name = "\improper NMV Slater Disposals Control"
 	icon_state = "disposal"
 
 /area/slater/refinery
-	name = "\improper Refinery"
+	name = "\improper NMV Slater Refinery"
 	icon_state = "mining_production"
 
 /area/slater/cargo
-	name = "\improper Cargo Hold"
+	name = "\improper NMV Slater Cargo Hold"
 	icon_state = "storage"
 
 /area/slater/hangar
-	name = "\improper Hangar"
+	name = "\improper NMV Slater Hangar"
 	icon_state = "green"
 
 /area/slater/expeditionprep
-	name = "\improper Expedition Prep"
+	name = "\improper NMV Slater Expedition Prep"
 	icon_state = "mining_eva"
 
 /area/slater/medbay
-	name = "\improper Medbay"
+	name = "\improper NMV Slater Medbay"
 	icon_state = "medbay"
 
 /area/slater/lounge
-	name = "\improper Break Room"
+	name = "\improper NMV Slater Break Room"
 	icon_state = "cafeteria"
 
 /area/slater/dorm
-	name = "\improper Dormitory"
+	name = "\improper NMV Slater Dormitory"
 	icon_state = "Sleep"
 
 
