@@ -21,13 +21,12 @@
 
 	var/obj/machinery/power/apc/target = null
 	var/list/areas = list(
-		/area/hydroponics/garden,
+		/area/crew_quarters/observe,
 		/area/hallway/secondary/exit,
 		/area/medical/reception,
 		/area/crew_quarters/bar,
-		/area/crew_quarters/sleep,
 		/area/security/lobby,
-		/area/hallway/primary/aft,
+		/area/hallway/primary/aft_port,
 		/area/storage/primary
 		)
 
