@@ -896,8 +896,10 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 					var/old_dir1 = T.dir
 					var/old_icon_state1 = T.icon_state
 					var/old_icon1 = T.icon
-
-
+					var/saved_icon = B.icon
+					var/saved_icon_state = B.icon_state
+					var/saved_type = B.type
+					var/saved_dir = B.dir
 
 					var/turf/X = B.ChangeTurf(T.type)
 					//hack
@@ -951,6 +953,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 							if(!istype(O,/obj)) continue
 							O.loc = X
 
+
 					for(var/mob/M in T)
 						if(!istype(M,/mob) || istype(M, /mob/aiEye)) continue // If we need to check for more mobs, I'll add a variable
 						M.loc = X
@@ -968,9 +971,51 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 					else
 						T.ChangeTurf(/turf/space)
 
+					//Fix underlays
+					//OMG THIS IS UGLY
+					X.underlays.Cut()
+					if(ispath(saved_type, /turf/space))
+						if(ispath(saved_type, /turf/space/bluespace))
+							X.underlays.Add(image(icon='icons/turf/space.dmi',icon_state="bluespace",layer=1.9, dir=saved_dir))
+					else
+						switch(X.icon_state)
+							if("diagonalWall")
+								X.icon_state = "diagonalWall"
+								X.underlays.Add(image(icon=saved_icon,icon_state=saved_icon_state,layer=1.9, dir=saved_dir))
+							if("diagonalWall2")
+								X.icon_state = "diagonalWall2"
+								X.underlays.Add(image(icon=saved_icon,icon_state=saved_icon_state,layer=1.9, dir=saved_dir))
+							if("diagonalWall3")
+								X.icon_state = "diagonalWall3"
+								X.underlays.Add(image(icon=saved_icon,icon_state=saved_icon_state,layer=1.9, dir=saved_dir))
+							if("vwall_f5")
+								X.icon_state = "vwall_f5"
+								X.underlays.Add(image(icon=saved_icon,icon_state=saved_icon_state,layer=1.9, dir=saved_dir))
+							if("vwall_f6")
+								X.icon_state = "vwall_f6"
+								X.underlays.Add(image(icon=saved_icon,icon_state=saved_icon_state,layer=1.9, dir=saved_dir))
+							if("vwall_f9")
+								X.icon_state = "vwall_f9"
+								X.underlays.Add(image(icon=saved_icon,icon_state=saved_icon_state,layer=1.9, dir=saved_dir))
+							if("vwall_f10")
+								X.icon_state = "vwall_f10"
+								X.underlays.Add(image(icon=saved_icon,icon_state=saved_icon_state,layer=1.9, dir=saved_dir))
+							if("swall_f5")
+								X.icon_state = "swall_f5"
+								X.underlays.Add(image(icon=saved_icon,icon_state=saved_icon_state,layer=1.9, dir=saved_dir))
+							if("swall_f6")
+								X.icon_state = "swall_f6"
+								X.underlays.Add(image(icon=saved_icon,icon_state=saved_icon_state,layer=1.9, dir=saved_dir))
+							if("swall_f9")
+								X.icon_state = "swall_f9"
+								X.underlays.Add(image(icon=saved_icon,icon_state=saved_icon_state,layer=1.9, dir=saved_dir))
+							if("swall_f10")
+								X.icon_state = "swall_f10"
+								X.underlays.Add(image(icon=saved_icon,icon_state=saved_icon_state,layer=1.9, dir=saved_dir))
 					refined_src -= T
 					refined_trg -= B
 					continue moving
+
 
 	var/list/doors = new/list()
 	if(toupdate.len)

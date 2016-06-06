@@ -57,7 +57,7 @@
 
 	//Move the shuttle
 	move(finish_hanger, null, 0)
-	supply_turfs = get_turfs_square(current_hanger.x, current_hanger.y, current_hanger.z, 3, 3)
+	supply_turfs = get_turfs_square(current_hanger.x, current_hanger.y, current_hanger.z, 5, 5)
 	if (at_station())
 		supply_controller.buy()
 	if (!at_station())
