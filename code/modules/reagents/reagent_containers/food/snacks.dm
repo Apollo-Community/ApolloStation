@@ -3030,7 +3030,7 @@
 		reagents.add_reagent("nutriment", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/ratrod
-	name = "ratrod"
+	name = "roasted ratrod"
 	desc = "A rodent with a metal rod stuck through it. It's been cooked."
 	icon_state = "ratrod"
 	bitesize = 2
