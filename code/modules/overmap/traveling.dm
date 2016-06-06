@@ -187,6 +187,8 @@
 	return get_turf( M )
 
 /atom/movable/proc/overmapTravel()
+	src << "This feature is disabled currently until @kwask can fix it."
+	return 1
 	var/move_to_z = src.z
 	var/safety = 1
 
