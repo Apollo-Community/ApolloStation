@@ -58,7 +58,7 @@
 /datum/faction/syndicate/join(var/datum/mind/M)
 	..(M)
 
-	if(members.len == 1) // first member, start making contracts
+	if(ticker.contracts_made && members.len == 1) // first member, start making contracts
 		update_contracts()
 
 // Populate factions with new contracts
