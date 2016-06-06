@@ -93,3 +93,10 @@
 
 	//Adds the current message to the slack buffer (if admins answer multiple times before player does again)
 	recent_slack_msg["[target]"] = "[init_msg]\n&gt;[message]~    @[admin]"
+
+/proc/send_slack(var/sender, var/message)
+	//Sends the ahelp to slack chat
+	shell("python scripts/adminbus.py ahelp [sender] '*[sender]*: `[message]`'")
+	if(!recent_slack_msg.Find(sender))
+		recent_slack_msg.Add(sender)
+	recent_slack_msg[usr.ckey] = "`[message]`"
