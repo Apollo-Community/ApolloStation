@@ -187,8 +187,6 @@
 	return get_turf( M )
 
 /atom/movable/proc/overmapTravel()
-	src << "This feature is disabled currently until @kwask can fix it."
-	return 1
 	var/move_to_z = src.z
 	var/safety = 1
 
@@ -206,7 +204,7 @@
 		if( sector.canRandomTeleport() )
 			move_to_z = sector.map_z
 
-	if(!move_to_z)
+	if(move_to_z == src.z)
 		return
 
 	src.z = move_to_z
@@ -230,6 +228,3 @@
 	spawn (0)
 		if ((src && src.loc))
 			src.loc.Entered(src)
-
-/obj/item/overmapTravel()
-	qdel( src )
