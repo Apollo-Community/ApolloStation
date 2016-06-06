@@ -58,7 +58,7 @@
 */
 //A list that stores all of the controllers in the game.
 
-/var/global/list/active_controllers = list(config)
+/var/global/list/active_controllers = list( config, universe )
 
 //Manages all controllers in the game so we can easily access them from debug_controller()
 /datum/controller/New()
