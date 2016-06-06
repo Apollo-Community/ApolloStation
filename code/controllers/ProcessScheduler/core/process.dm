@@ -155,15 +155,6 @@ datum/controller/process/proc/hung()
 	setStatus(PROCESS_STATUS_HUNG)
 
 datum/controller/process/proc/handleHung()
-	var/datum/lastObj = last_object
-	var/lastObjType = "null"
-	if(istype(lastObj))
-		lastObjType = lastObj.type
-
-	var/msg = "[name] process hung at tick #[ticks]. Process was unresponsive for [(TimeOfHour - run_start) / 10] seconds and was restarted. Last task: [last_task]. Last Object Type: [lastObjType]"
-	log_debug(msg)
-	message_admins(msg)
-
 	main.restartProcess(src.name)
 
 datum/controller/process/proc/kill()
@@ -186,13 +177,24 @@ datum/controller/process/proc/scheck()
 		CRASH("A killed process is still running somehow...")
 	if (hung)
 		// This will only really help if the doWork proc ends up in an infinite loop.
+		var/msg = "[name] process hung at tick #[ticks]. Process was unresponsive for [(TimeOfHour - run_start) / 10] seconds and was restarted. Last task: [last_task]."
+		log_debug(msg)
+		message_admins(msg)
 		handleHung()
 		CRASH("Process [name] hung and was restarted.")
 
-	. = 1
+	var/time = 1
 	do
+	/*
 		sleep(world.tick_lag * .);. *= 2
 	while(world.tick_usage > tick_allowance && (. * world.tick_lag) < 16)
+	*/
+		sleep(world.tick_lag * time)
+		time *= 2
+	while(world.tick_usage > tick_allowance && time < 16)
+
+	if(time>16)		return 1
+	else			return 0
 
 datum/controller/process/proc/update()
 	// Clear delta
