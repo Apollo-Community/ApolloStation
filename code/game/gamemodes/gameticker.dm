@@ -27,8 +27,6 @@ var/global/datum/controller/gameticker/ticker
 	var/Bible_name			// name of the bible
 	var/Bible_deity_name
 
-	var/const/contract_delay = 18000 // this (in 1/10 seconds) is how long it takes before traitors get their contracts, and the factions are populated with contracts
-	var/contracts_made = 0
 
 	var/random_players = 0 	// if set to nonzero, ALL players who latejoin or declare-ready join will have random appearances/genders
 
@@ -320,14 +318,6 @@ var/global/datum/controller/gameticker/ticker
 		process_newscaster()
 
 		emergency_shuttle.process()
-
-		if(!contracts_made && world.time > (game_start + contract_delay))
-			contracts_made = 1
-			message_admins("[contract_delay/10] seconds have passed since game start. Contracts are now available to traitor antagonists.")
-			faction_controller.update_contracts()
-			for(var/datum/mind/M in minds)
-				if( M.antagonist && istype( M.antagonist, /datum/antagonist/traitor ))
-					M.current << "Contracts are now available from your uplink."
 
 		var/game_finished = 0
 		var/mode_finished = 0

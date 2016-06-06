@@ -6,9 +6,9 @@
 /datum/antagonist/traitor/setup()
 	..()
 
-	if(ticker.contracts_made) // for traitors that are created mid-round, after the contracts have been made available
+	if(faction_controller.contracts_made) // for traitors that are created mid-round, after the contracts have been made available
 		antag.current << "" // newline
-	
+
 /datum/antagonist/traitor/equip()
 	var/mob/living/M = antag.current
 
