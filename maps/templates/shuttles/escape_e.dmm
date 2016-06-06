@@ -1,11 +1,11 @@
 "a" = (/obj/structure/shuttle/engine/propulsion/burst{dir = 4},/turf/simulated/floor/plating,/area/shuttle/escape_pod3/station)
 "b" = (/turf/simulated/shuttle/wall{icon_state = "swall12"; dir = 2},/area/shuttle/escape_pod3/station)
-"c" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s10"; icon_state = "swall_s10"; dir = 2},/area/shuttle/escape_pod3/station)
+"c" = (/turf/simulated/shuttle/wall{icon_state = "swall_f10"; dir = 2},/area/shuttle/escape_pod3/station)
 "d" = (/obj/machinery/door/airlock/external{frequency = 1380; icon_state = "door_locked"; id_tag = "escape_pod_3_hatch"; locked = 0; name = "Escape Pod Hatch"; req_access_txt = "13"},/turf/simulated/shuttle/plating,/area/shuttle/escape_pod3/station)
 "e" = (/obj/structure/bed/chair{dir = 4},/obj/item/device/radio/intercom{broadcasting = 0; listening = 1; name = "Station Intercom (General)"; pixel_y = 20},/turf/simulated/shuttle/floor,/area/shuttle/escape_pod3/station)
 "f" = (/obj/structure/bed/chair{dir = 4},/obj/machinery/status_display{density = 0; layer = 4; pixel_x = 0; pixel_y = 32},/obj/machinery/embedded_controller/radio/simple_docking_controller/escape_pod{frequency = 1380; id_tag = "escape_pod_3"; pixel_x = 0; pixel_y = -25; req_access_txt = "0"; req_one_access_txt = "0"; tag_door = "escape_pod_3_hatch"},/turf/simulated/shuttle/floor,/area/shuttle/escape_pod3/station)
 "g" = (/obj/structure/window/shuttle,/obj/structure/grille,/turf/simulated/shuttle/plating,/area/shuttle/escape_pod3/station)
-"h" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s9"; icon_state = "swall_s9"; dir = 2},/area/shuttle/escape_pod3/station)
+"h" = (/turf/simulated/shuttle/wall{icon_state = "swall_f9"; dir = 2},/area/shuttle/escape_pod3/station)
 
 (1,1,1) = {"
 abbc
