@@ -60,3 +60,10 @@
 
 	min_prison_time = 4
 	max_prison_time = 30
+
+/datum/law/high_severity/breach_information
+	name = "Breach of Information"
+	desc = "To provide classified information to an unauthorized personnel."
+
+	min_prison_time = 30
+	max_prison_time = 60

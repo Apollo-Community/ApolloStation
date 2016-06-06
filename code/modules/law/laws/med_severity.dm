@@ -160,7 +160,7 @@
 
 /datum/law/med_severity/tampering_crit_systems
 	name = "Tampering Critical Systems"
-	desc = "Where an unauthorised individual alters any critical system in order to alter functionality."
+	desc = "Where an unauthorized individual alters any critical system in order to alter functionality."
 
 	min_brig_time = 60
 	max_brig_time = 60
