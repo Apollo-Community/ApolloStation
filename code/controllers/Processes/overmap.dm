@@ -71,7 +71,7 @@
 
 /datum/controller/process/overmap/proc/build_map( var/list/data )
 	if( !data )
-		error( "Failed to create overmap, no data!" )
+		log_debug( "Failed to create overmap, no data!" )
 		return 0
 
 	var/list/list/sorted_lists = list() // a list of lists
