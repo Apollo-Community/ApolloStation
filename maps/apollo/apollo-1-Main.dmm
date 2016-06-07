@@ -7577,7 +7577,7 @@
 "cPK" = (/turf/simulated/floor/plating,/area/engine/drone_fabrication)
 "cPL" = (/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 4},/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 4},/area/engine/drone_fabrication)
 "cPM" = (/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{tag = "icon-intact-scrubbers (NORTHWEST)"; icon_state = "intact-scrubbers"; dir = 9},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/simulated/floor/plating,/area/engine/drone_fabrication)
-"cPN" = (/obj/machinery/disposal,/turf/simulated/floor/plating,/area/engine/drone_fabrication)
+"cPN" = (/obj/machinery/disposal,/obj/structure/disposalpipe/trunk{dir = 8},/turf/simulated/floor/plating,/area/engine/drone_fabrication)
 "cPO" = (/turf/simulated/floor/plating{dir = 1; icon_state = "warnplate"; nitrogen = 0.01; oxygen = 0.01},/area/maintenance/asmaint2)
 "cPP" = (/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plating,/area/maintenance/asmaint2)
 "cPQ" = (/mob/living/simple_animal/rodent,/turf/simulated/floor/plating,/area/maintenance/asmaint2)
