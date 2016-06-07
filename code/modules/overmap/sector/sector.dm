@@ -26,7 +26,7 @@
 		if( !sector_exists( T ))
 			return T
 
-	error( "Could not place [src]!" )
+	log_debug( "Could not place [src]!" )
 
 /obj/effect/mapinfo/sector/station
 	name = "NOS Apollo"

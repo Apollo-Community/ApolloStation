@@ -44,8 +44,10 @@
 	for( var/attempts = 1, attempts < max_attempts, attempts++ )
 		date = loadFromDB()
 
-		if( date && date.len == 3 && date != list( START_YEAR, 1, 1 ))
+		if( date && date.len == 3 && daysTilDate( date, list( START_YEAR, 1, 1 )) >= 0)
+			log_debug( "Loaded date: [print_date( date )]!" )
 			date = progessDate( date )
+			log_debug( "Date progressed: [print_date( date )]!" )
 			return
 
 		var/message = "Loaded date: "
@@ -53,11 +55,11 @@
 		for( var/i in date )
 			message += "[i] "
 
-		error( message )
+		testing( message )
 
 		date = list( START_YEAR, 1, 1 )
 
-	error( "Failed to load the universe date after [max_attempts] attempts!" )
+	log_debug( "Failed to load the universe date after [max_attempts] attempts!" )
 
 // Returns the universe datetime in format "YYYY-MM-DD HH:MM:SS"
 /datum/universal_state/proc/getDateTime()
@@ -69,7 +71,7 @@
 	return timestamp
 
 /datum/universal_state/proc/getYear()
-	if( !date || date.len < 3 )
+	if( !date || date.len != 3 )
 		return START_YEAR
 
 	return date[1]
@@ -77,11 +79,11 @@
 /datum/universal_state/proc/saveToDB()
 	establish_db_connection()
 	if( !dbcon.IsConnected() )
-		error( "Could not save the universe date!" )
+		log_debug( "Could not save the universe date!" )
 		return
 
 	if( daysTilDate( date, loadFromDB() ) >= 0 ) // If our database date is ahead of IC date
-		error( "Didn't save because universe date was reset!" )
+		log_debug( "Didn't save because universe date was reset!" )
 		return
 
 	var/sql_name = sql_sanitize_text( name )
@@ -124,7 +126,7 @@
 	query.Execute()
 
 	if( !query.NextRow() )
-		error( "Could not read the universe date!" )
+		log_debug( "Could not read the universe date!" )
 		return D
 
 	var/list/date_text = params2list( html_decode( query.item[1] ))
