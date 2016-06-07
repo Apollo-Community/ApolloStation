@@ -19,7 +19,7 @@ Dependencies: [pandas](https://github.com/pydata/pandas), [matplotlib](https://g
 
 Generates a graph of CPU and Tick Usage directly from a live server. Writes the file to `data/graphs/*.png` for sending to administrators via ftp().
 
-#### Adminbus.py & Update_message.py
+#### Slack.py
 
 Dependencies: [SlackClient](https://github.com/slackhq/python-slackclient), Slack API token
 
@@ -28,4 +28,15 @@ pip install SlackClient --upgrade
 export SLACKTOKEN [token]
 ```
 
-These scripts control admin helps being sent to slack, the game world interacts with these by calling them as shell scripts. You must add your personal slack token to your systems enviroment variables. Messages from slack fake a world.Export() to be sent into the game.
+This script controls admin helps and admin PMs being sent to slack, the game world interacts with these by calling them as shell scripts. You must add your personal slack token to your systems enviroment variables.
+
+#### Adminbus.py
+
+Dependencies: [SlackClient](https://github.com/slackhq/python-slackclient), Slack API token
+
+```
+pip install SlackClient --upgrade
+export SLACKTOKEN [token]
+```
+
+This script is Depreciated and has been replaced with `slack.py` and only exists for legacy reference.

@@ -83,20 +83,6 @@
 	else
 		usr << "<span class='warning'>An error occurred generating the graph, please contract a developer</span>"
 
-
-/proc/update_slack(var/admin, var/target, var/message)
-	//Gets the timestamp and initial message to edit slack chat with
-	var/time = recent_slack_times["[target]"]
-	var/init_msg = recent_slack_msg["[target]"]
-	//Edits slack chat
-	shell("python scripts/update_message.py [time] [admin] '*[target]*: [init_msg]\n&gt;[message]'")
-
-	//Adds the current message to the slack buffer (if admins answer multiple times before player does again)
-	recent_slack_msg["[target]"] = "[init_msg]\n&gt;[message]~    @[admin]"
-
-/proc/send_slack(var/sender, var/message)
+/proc/send_slack(var/source, var/target = "1", var/message, var/col = "0")
 	//Sends the ahelp to slack chat
-	shell("python scripts/adminbus.py ahelp [sender] '*[sender]*: `[message]`'")
-	if(!recent_slack_msg.Find(sender))
-		recent_slack_msg.Add(sender)
-	recent_slack_msg[usr.ckey] = "`[message]`"
+	shell("python scripts/slack.py [source] [target] [col] [html_encode(sanitize(message))]")

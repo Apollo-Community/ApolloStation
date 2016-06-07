@@ -36,7 +36,7 @@
 //takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
 //Fetching a message if needed. src is the sender and C is the target client
 
-/client/proc/cmd_admin_pm(var/client/C, var/msg = null)
+/client/proc/cmd_admin_pm(var/client/C, var/msg = null, var/slack = 0)
 	if(prefs.muted & MUTE_ADMINHELP)
 		src << "<font color='red'>Error: Private-Message: You are unable to use PM-s (muted).</font>"
 		return
@@ -75,7 +75,7 @@
 			else
 				recieve_pm_type = holder.rank
 
-	else if(!C.holder)
+	else if(!C.holder && !slack)
 		src << "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>"
 		return
 
@@ -98,8 +98,11 @@
 					else
 						adminhelp(reply)													//sender has left, adminhelp instead
 				return
-	src << "<span class='pm'><span class='out'>" + create_text_tag("pm_out_alt", "PM", src) + " to <span class='name'>[get_options_bar(C, holder ? 1 : 0, holder ? 1 : 0, 1)]</span>: <span class='message'>[msg]</span></span></span>"
-	C << "<span class='pm'><span class='in'>" + create_text_tag("pm_in", "", C) + " <b>\[[recieve_pm_type] PM\]</b> <span class='name'>[get_options_bar(src, C.holder ? 1 : 0, C.holder ? 1 : 0, 1)]</span>: <span class='message'>[msg]</span></span></span>"
+	if(!slack)
+		src << "<span class='pm'><span class='out'>" + create_text_tag("pm_out_alt", "PM", src) + " to <span class='name'>[get_options_bar(C, holder ? 1 : 0, holder ? 1 : 0, 1)]</span>: <span class='message'>[msg]</span></span></span>"
+		C << "<span class='pm'><span class='in'>" + create_text_tag("pm_in", "", C) + " <b>\[[recieve_pm_type] PM\]</b> <span class='name'>[get_options_bar(src, C.holder ? 1 : 0, C.holder ? 1 : 0, 1)]</span>: <span class='message'>[msg]</span></span></span>"
+	else
+		src << "<span class='pm'><span class='out'>" + create_text_tag("pm_out_alt", "PM", src) + " to <span class='name'><a href='?priv_msg=\ref[C];slack=[slack]'>[slack]</a></span>: <span class='message'>[msg]</span></span></span>"
 
 	if( angry )
 		C << 'sound/effects/adminhelpLOUD.ogg'
@@ -112,15 +115,14 @@
 
 	log_debug("c = [C]([C.ckey]) , src = [src.ckey] , msg = [msg]")
 
-	//we need to make new ahelp if the target is an admin
-	if(src.key in admins)			update_slack(C.ckey, src.ckey, msg)
-	else							send_slack(src.ckey, msg)
+	if(C.key in admins)		send_slack(src.ckey, slack ? slack : C.ckey, msg, 0)		//So we can set the colour to orange/green
+	else					send_slack(src.ckey, slack ? slack : C.ckey, msg, 1)
 	//oh god I hope this works :V
 
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/X in admins)
 		//check client/X is an admin and isn't the sender or recipient
-		if(X == C || X == src)
+		if(X == C || X == src || X == slack)
 			continue
 		if(X.key != key && X.key != C.key && (X.holder.rights & (R_ADMIN|R_MOD|R_MENTOR)))
 			X << "<span class='pm'><span class='other'>" + create_text_tag("pm_other", "PM:", X) + " <span class='name'>[key_name(src, X, 0)]</span> to <span class='name'>[key_name(C, X, 0)]</span>: <span class='message'>[msg]</span></span></span>"
