@@ -27,8 +27,6 @@ var/global/datum/controller/gameticker/ticker
 	var/Bible_name			// name of the bible
 	var/Bible_deity_name
 
-	var/const/contract_delay = 18000 // this (in 1/10 seconds) is how long it takes before traitors get their contracts, and the factions are populated with contracts
-	var/contracts_made = 0
 
 	var/random_players = 0 	// if set to nonzero, ALL players who latejoin or declare-ready join will have random appearances/genders
 
@@ -321,14 +319,6 @@ var/global/datum/controller/gameticker/ticker
 
 		emergency_shuttle.process()
 
-		if(!contracts_made && world.time > (game_start + contract_delay))
-			contracts_made = 1
-			message_admins("[contract_delay/10] seconds have passed since game start. Contracts are now available to traitor antagonists.")
-			faction_controller.update_contracts()
-			for(var/datum/mind/M in minds)
-				if( M.antagonist && istype( M.antagonist, /datum/antagonist/traitor ))
-					M.current << "Contracts are now available from your uplink."
-
 		var/game_finished = 0
 		var/mode_finished = 0
 		if (config.continous_rounds)
@@ -353,7 +343,10 @@ var/global/datum/controller/gameticker/ticker
 						world << "<span class='notice'><B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B></span>"
 				else
 					feedback_set_details("end_proper","proper completion")
-					world << "<span class='notice'><B>The game is now over. You may vote to restart when you wish to start a new round.</B></span>"
+					world << "<span class='notice'><B>The game is now over. The round will restart in 60 seconds.</B></span>"
+					if(!restart_called)
+						spawn(600)		world.Reboot()
+						restart_called = 1
 
 		else if (mode_finished)
 			post_game = 1

@@ -22,6 +22,8 @@ datum/game_mode/mutiny
 	uplink_welcome = "Mutineers Uplink Console:"
 	uplink_uses = 0
 
+	votable = 0
+
 	New()
 		fluff = new(src)
 

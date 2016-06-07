@@ -192,14 +192,19 @@
 
 	while(move_to_z == src.z)
 		var/obj/effect/map/sector/sector = overmap.map["[pick( overmap.local_levels )]"]
-		if( sector.canRandomTeleport() )
-			move_to_z = sector.map_z
 
 		safety++
+
 		if(safety > 10)
 			break
 
-	if(!move_to_z)
+		if( !istype( sector ))
+			continue
+
+		if( sector.canRandomTeleport() )
+			move_to_z = sector.map_z
+
+	if(move_to_z == src.z)
 		return
 
 	src.z = move_to_z

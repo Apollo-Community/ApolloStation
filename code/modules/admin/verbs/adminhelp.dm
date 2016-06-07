@@ -95,12 +95,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	STUI.staff.Add("\[[time_stamp()]] <font color=red>AHELP: </font><font color='#0066ff'>[key_name(mob)]:</b> [msg]</font><br>")
 	STUI.processing |= 3
 
-	//Sends the ahelp to slack chat
-	spawn(0)	//So we don't hold up the rest
-		shell("python scripts/adminbus.py ahelp [usr.ckey] '*[usr.ckey]*: `[original_msg]`'")
-		if(!recent_slack_msg.Find(usr.ckey))
-			recent_slack_msg.Add(usr.ckey)
-		recent_slack_msg[usr.ckey] = "`[msg]`"
+	send_slack(usr.ckey, original_msg)
 
 	msg = "<span class='notice'><b><font color=red>Request for Help:: </font>[get_options_bar(mob, 2, 1, 1)][ai_cl]:</b> [msg]</span>"
 

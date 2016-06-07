@@ -30,7 +30,6 @@ datum/controller/game_controller/New()
 
 	//Load order is important as we may need controllers in subsequent controllers
 	if(!ticker)						ticker = new /datum/controller/gameticker()
-	if(!faction_controller)			faction_controller = new /datum/controller/faction_controller()
 	if(!template_config)			template_config = new /datum/template_config()
 	if(!template_controller)		template_controller = new /datum/template_controller()
 	if(!hanger_controller)			hanger_controller = new /datum/hanger_controller()

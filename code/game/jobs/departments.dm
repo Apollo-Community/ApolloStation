@@ -55,14 +55,14 @@
 	department_id = CIVILIAN
 	background_color = "#dddddd"
 	starting_positions = list( "Assistant" = "Low", "Bartender" = "None", "Chaplain" = "None", "Chef" = "None", "Mime" = "None", "Janitor" = "None", "Librarian" = "None", "Attorney" = "None" )
-	region_access = list(access_kitchen,access_bar, access_hydroponics, access_janitor, access_chapel_office, access_crematorium, access_library, access_theatre, access_clown, access_mime)
+	region_access = list(access_kitchen,access_bar, access_hydroponics, access_janitor, access_chapel_office, access_crematorium, access_library, access_theatre, access_clown, access_mime, access_lawyer, access_shop2, access_shop1)
 
 /datum/department/engineering
 	name = "Engineering Division"
 	department_id = ENGINEERING
 	background_color = "#ffeeaa"
 	starting_positions = list( "Technical Assistant" = "High" )
-	region_access = list(access_engine_core, access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_ce, access_energy_barrier)
+	region_access = list(access_engine_core, access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_ce, access_energy_barrier, access_engine_core)
 
 /datum/department/supply
 	name = "Cargo Bay"

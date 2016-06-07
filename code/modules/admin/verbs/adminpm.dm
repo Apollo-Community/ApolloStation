@@ -111,7 +111,11 @@
 	STUI.processing |= 3
 
 	log_debug("c = [C]([C.ckey]) , src = [src.ckey] , msg = [msg]")
-	update_slack(src.ckey, C.ckey, msg)
+
+	//we need to make new ahelp if the target is an admin
+	if(src.key in admins)			update_slack(src.ckey, C.ckey, msg)
+	else							send_slack(C.ckey, msg)
+	//oh god I hope this works :V
 
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/X in admins)
