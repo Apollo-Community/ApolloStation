@@ -85,4 +85,4 @@
 
 /proc/send_slack(var/source, var/target = "1", var/message, var/col = "0")
 	//Sends the ahelp to slack chat
-	shell("python scripts/slack.py [source] [target] [col] [html_encode(sanitize(message))]")
+	shell("python scripts/slack.py [source] [target] [col] '[sanitize(message)]'")
