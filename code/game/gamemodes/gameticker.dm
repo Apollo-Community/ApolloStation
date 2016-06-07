@@ -343,7 +343,10 @@ var/global/datum/controller/gameticker/ticker
 						world << "<span class='notice'><B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B></span>"
 				else
 					feedback_set_details("end_proper","proper completion")
-					world << "<span class='notice'><B>The game is now over. You may vote to restart when you wish to start a new round.</B></span>"
+					world << "<span class='notice'><B>The game is now over. The round will restart in 60 seconds.</B></span>"
+					if(!restart_called)
+						spawn(600)		world.Reboot()
+						restart_called = 1
 
 		else if (mode_finished)
 			post_game = 1
