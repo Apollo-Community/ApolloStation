@@ -204,7 +204,7 @@
 		if( sector.canRandomTeleport() )
 			move_to_z = sector.map_z
 
-	if(!move_to_z)
+	if(move_to_z == src.z)
 		return
 
 	src.z = move_to_z
@@ -228,6 +228,3 @@
 	spawn (0)
 		if ((src && src.loc))
 			src.loc.Entered(src)
-
-/obj/item/overmapTravel()
-	qdel( src )

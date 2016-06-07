@@ -102,6 +102,8 @@
 	return
 
 /obj/singularity/proc/admin_investigate_setup()
+	if(istype(src, /obj/singularity/bluespace_gate))	return
+	
 	last_warning = world.time
 	var/count = locate(/obj/machinery/containment_field) in orange(30, src)
 
