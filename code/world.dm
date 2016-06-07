@@ -161,7 +161,7 @@ var/world_topic_spam_protect_time = world.timeofday
 		log_debug(input["token"])			//Just for testing
 
 		var/message = input["text"]
-		var/target = input["target"]
+		var/target = lowertext(input["target"])
 		var/admin = input["admin"]
 
 		//get the target and send PM
