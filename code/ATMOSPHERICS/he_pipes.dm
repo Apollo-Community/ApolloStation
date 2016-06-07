@@ -75,7 +75,7 @@ obj/machinery/atmospherics/pipe/simple/heat_exchanging
 					var/h_g = heat2color_g(icon_temperature)
 					var/h_b = heat2color_b(icon_temperature)
 
-					if(icon_temperature < 2000) //scale up overlay until 2000K
+					if(icon_temperature < 8000) //scale up overlay until 2000K
 						var/scale = (icon_temperature - 500) / 1500
 						h_r = 64 + (h_r - 64)*scale
 						h_g = 64 + (h_g - 64)*scale
