@@ -9,9 +9,9 @@
 	selection_color = "#dddddd"
 	access = list()			//See /datum/job/assistant/get_access()
 	minimal_access = list()	//See /datum/job/assistant/get_access()
-	alt_titles = list( "Off-Duty Personnel", "Garcon", "Tourist")
+	alt_titles = list( "Off-Duty Personnel", "Waiter", "Steward", "Attendant", "Tourist")
 
-	rank_succesion_level = ASSISTANT_SUCCESSION_LEVEL
+ 	rank_succesion_level = ASSISTANT_SUCCESSION_LEVEL
 
 /datum/job/assistant/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
@@ -20,7 +20,7 @@
 		if(2) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack(H), slot_back)
 		if(3) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
 		if(4) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
-		
+
 	if(H.job == "Garcon")
 		if(H.gender == FEMALE)	H.equip_to_slot_or_qdel(new /obj/item/clothing/under/black_tango/short(H), slot_w_uniform)
 		else					H.equip_to_slot_or_qdel(new /obj/item/clothing/under/waiter(H), slot_w_uniform)
