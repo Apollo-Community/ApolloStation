@@ -811,6 +811,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(statpanel("Status"))
 		if(ticker && ticker.current_state != GAME_STATE_PREGAME)
+			stat("Date", print_date( universe.date ))
 			stat("Station Time", worldtime2text())
 
 	if(client && client.holder && !client.afk)
