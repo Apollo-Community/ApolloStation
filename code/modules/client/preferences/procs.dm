@@ -32,13 +32,16 @@
 
 /datum/preferences/proc/savePreferences()
 	if( !client )
+		error( "Failed to save client prefs because theres no client!" )
 		return 0
 
 	if( IsGuestKey( client.ckey ))
+		error( "Failed to save client prefs because the client is a guest!" )
 		return 0
 
 	establish_db_connection()
 	if( !dbcon.IsConnected() )
+		error( "Failed to save client prefs because the database isnt connected!" )
 		return 0
 
 	var/sql_ckey = ckey( client.ckey )
@@ -55,7 +58,8 @@
 		if(istext(sql_id))
 			sql_id = text2num(sql_id)
 		if(!isnum(sql_id))
-			return
+			error( "Failed to save client prefs because the index isnt a number!" )
+			return 0
 
 	// Ckey join date
 	var/sql_join_date = sql_sanitize_text( joined_date )
