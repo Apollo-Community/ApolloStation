@@ -113,7 +113,7 @@
 	log_debug("c = [C]([C.ckey]) , src = [src.ckey] , msg = [msg]")
 
 	//we need to make new ahelp if the target is an admin
-	if(src.ckey in admins)			update_slack(src.ckey, C.ckey, msg)
+	if(src.key in admins)			update_slack(src.ckey, C.ckey, msg)
 	else							send_slack(C.ckey, msg)
 	//oh god I hope this works :V
 
