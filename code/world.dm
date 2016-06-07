@@ -160,8 +160,7 @@ var/world_topic_spam_protect_time = world.timeofday
 		*/
 		log_debug(input["token"])			//Just for testing
 
-		var/message = sanitize(input["text"])
-		if(!message)	return
+		var/message = input["text"]
 		var/target = input["target"]
 		var/admin = input["admin"]
 
@@ -169,21 +168,8 @@ var/world_topic_spam_protect_time = world.timeofday
 		for(var/client/C in clients)
 			if(C.ckey == target)
 				//Code to send PMS....
-				slack_admin(C, admin, message,0)
-				. = "Sent message to [target]!"
+				slack_admin(C, admin, message, 0)
 				break
-
-		if(!.)	return			//Don't continue if we couldn't find a target
-
-		update_slack(admin, target, message)
-
-	else if(copytext(T,1,10) == "admintime")			//This adds the timestamp to recent_slack_times[ckey] so it can be edited when replied to
-		var/input[] = params2list(copytext(T,10))
-
-		if(!recent_slack_times.Find(input["user"]))
-			recent_slack_times.Add(input["user"])		//adds the user to list if it exists
-		recent_slack_times[input["user"]] = input["time"]
-
 
 	else if(copytext(T,1,4) == "age")
 		var/input[] = params2list(T)

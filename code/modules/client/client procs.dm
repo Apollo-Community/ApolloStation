@@ -43,32 +43,8 @@
 		if(ismob(C)) 		//Old stuff can feed-in mobs instead of clients
 			var/mob/M = C
 			C = M.client
-		cmd_admin_pm(C,null)
+		cmd_admin_pm(C,null,href_list["slack"])
 		return
-
-	if(href_list["priv_msg_slack"])
-		var/msg = sanitize(input(src,"Message:", "Private message to Admins") as text|null)
-		if(!msg)	return
-
-		var/client/C = locate(href_list["priv_msg_slack"])
-		if(ismob(C)) 		//Old stuff can feed-in mobs instead of clients
-			var/mob/M = C
-			C = M.client
-
-		var/admin = href_list["admin"]
-
-		//sends the ahelp to game
-		slack_admin(C, admin, msg, 1)
-
-		//Sends the ahelp to slack chat
-		spawn(0)	//So we don't hold up the rest
-			shell("python scripts/adminbus.py ahelp [C.ckey] '*[C.ckey]*: `[msg]`'")
-			if(!recent_slack_msg.Find(usr.ckey))
-				recent_slack_msg.Add(usr.ckey)
-			recent_slack_msg[usr.ckey] = "`[msg]`"
-
-		return
-
 
 	if(href_list["irc_msg"])
 		if(!holder && received_irc_pm < world.time - 6000) //Worse they can do is spam IRC for 10 minutes

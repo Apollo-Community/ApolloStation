@@ -1,3 +1,5 @@
+#Depreciated script
+#
 #USAGE: python adminbus.py [slack_channel] [user] [message]
 from slackclient import SlackClient
 import sys, os, socket, struct
@@ -12,6 +14,16 @@ def send_data(user, timestamp):
 	#Crafts a fake world.Export()
 	query  = '\x00\x83' + struct.pack(">H", len(senddata)+6) + '\x00'*5 + senddata + '\x00'
 	s.send(query)
+
+def update_timestamp(timestamp, user, message):
+	#updates a message given a timestamp		-- channel needs to be in ID form cause lazy
+	sc.api_call("chat.update", \
+				ts=timestamp, \
+				channel="G1DDCRNN7", \
+				text=message.replace("&#39;","'").replace("&#34;", "\"").encode('ascii',errors='ignore')+"~    @" + user, \
+				username="apollo", \
+				as_user="true", \
+				link_names="true")
 
 #Loads the slack token - set this with '$~ export SLACKTOKEN [token]'
 sc = SlackClient(os.environ['SLACKTOKEN'])
