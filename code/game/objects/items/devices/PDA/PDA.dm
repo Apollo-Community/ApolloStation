@@ -415,6 +415,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		data["cartridge"] = cartdata
 
 	data["stationTime"] = worldtime2text()
+	data["stationDate"] = print_date( universe.date )
 	data["new_Message"] = new_message
 	data["new_News"] = new_news
 
