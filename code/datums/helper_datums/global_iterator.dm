@@ -67,7 +67,6 @@ Data storage vars:
 		return
 
 	proc/main()
-		message_admins("GLOBAL IT: [src.type]")
 		state = 1
 		while(src && control_switch)
 			last_exec = world.timeofday
