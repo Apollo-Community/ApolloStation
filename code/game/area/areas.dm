@@ -1146,6 +1146,42 @@ area/space/atmosalert()
 	name = "\improper Dormitories"
 	icon_state = "Sleep"
 
+/area/crew_quarters/maintrooms/medroom
+	name = "\improper Fore Port Private Quarter"
+	icon_state = "Sleep"
+
+/area/crew_quarters/maintrooms/secroom1
+	name = "\improper Fore Starboard Private Quarter One"
+	icon_state = "Sleep"
+
+/area/crew_quarters/maintrooms/secroom2
+	name = "\improper Fore Starboard Private Quarter Two"
+	icon_state = "Sleep"
+
+/area/crew_quarters/maintrooms/secroom3
+	name = "\improper Fore Starboard Private Quarter Three"
+	icon_state = "Sleep"
+
+/area/crew_quarters/maintrooms/sciroom1
+	name = "\improper Aft Starboard Private Quarter One"
+	icon_state = "Sleep"
+
+/area/crew_quarters/maintrooms/sciroom2
+	name = "\improper Aft Starboard Private Quarter Two"
+	icon_state = "Sleep"
+
+/area/crew_quarters/maintrooms/sciroom3
+	name = "\improper Aft Starboard Private Quarter Three"
+	icon_state = "Sleep"
+
+/area/crew_quarters/maintrooms/civroom
+	name = "\improper Aft Port Private Quarter"
+	icon_state = "Sleep"
+
+/area/crew_quarters/maintrooms/centroom
+	name = "\improper Central Private Quarter"
+	icon_state = "Sleep"
+
 /area/crew_quarters/sleep/engi_wash
 	name = "\improper Engineering Washroom"
 	icon_state = "toilet"
