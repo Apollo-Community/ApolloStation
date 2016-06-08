@@ -44,7 +44,7 @@
 	name = "lantern"
 	icon_state = "lantern"
 	desc = "A mining lantern."
-	light_color = "#1A0A00"
+	light_color = "#ff944d"
 	brightness_on = 6			// light_range when on
 
 /obj/item/device/flashlight/lantern/update_brightness(var/mob/user = null)

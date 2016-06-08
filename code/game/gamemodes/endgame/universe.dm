@@ -41,7 +41,7 @@
 /datum/universal_state/proc/load_date()
 	var/max_attempts = 5
 
-	for( var/attempts = 1, attempts < max_attempts, attempts++ )
+	for( var/attempts = 1, attempts <= max_attempts, attempts++ )
 		date = loadFromDB()
 
 		if( date && date.len == 3 && daysTilDate( date, list( START_YEAR, 1, 1 )) >= 0)
@@ -55,7 +55,7 @@
 		for( var/i in date )
 			message += "[i] "
 
-		testing( message )
+		log_debug( "[message]" )
 
 		date = list( START_YEAR, 1, 1 )
 
@@ -116,6 +116,7 @@
 /datum/universal_state/proc/loadFromDB( var/univ_name = "C-137" )
 	establish_db_connection()
 	if(!dbcon.IsConnected())
+		log_debug( "Database is not connected yet!" )
 		return
 
 	var/list/D = list( START_YEAR, 1, 1 )
