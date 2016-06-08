@@ -22,6 +22,7 @@
 	H.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
 	H.equip_to_slot_or_qdel(new /obj/item/device/pda/security(H), slot_belt)
 	H.equip_to_slot_or_qdel(new /obj/item/weapon/handcuffs(H), slot_s_store)
+	H.equip_to_slot_or_qdel(new /obj/item/device/flash(H), slot_s_store)
 	if(H.character.backpack == 1)
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/handcuffs(H), slot_l_hand)

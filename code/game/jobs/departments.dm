@@ -68,7 +68,7 @@
 	name = "Cargo Bay"
 	department_id = SUPPLY
 	background_color = "#FFF3D8"
-	starting_positions = list( "Cargo Technician" = "High" , "Asteroid Miner" = "High")
+	starting_positions = list( "Cargo Technician" = "High" , "Asteroid Miner" = "None")
 	region_access = list(access_slater, access_mailsorting, access_mining, access_mining_station, access_cargo, access_qm)
 
 /datum/department/medical
