@@ -44,12 +44,6 @@
 	for( var/attempts = 1, attempts <= max_attempts, attempts++ )
 		date = loadFromDB()
 
-		if( date && date.len == 3 && daysTilDate( date, list( START_YEAR, 1, 1 )) >= 0)
-			log_debug( "Loaded date: [print_date( date )]!" )
-			date = progessDate( date )
-			log_debug( "Date progressed: [print_date( date )]!" )
-			return
-
 		var/message = "Loaded date: "
 
 		for( var/i in date )
@@ -57,7 +51,26 @@
 
 		log_debug( "[message]" )
 
-		date = list( START_YEAR, 1, 1 )
+		if( !date )
+			log_debug( "Loaded date does not exist!" )
+			continue
+
+		if( date.len != 3 )
+			log_debug( "Loaded date was [date.len] in length!" )
+			continue
+
+		var/days = daysTilDate( list( START_YEAR, 1, 1 ), date )
+
+		if( days <= 0 )
+			log_debug( "Loaded date was [days] days behind the default date!" )
+			continue
+
+		log_debug( "Loaded date: [print_date( date )]!" )
+		date = progessDate( date )
+		log_debug( "Date progressed: [print_date( date )]!" )
+		return
+
+	date = list( START_YEAR, 1, 1 )
 
 	log_debug( "Failed to load the universe date after [max_attempts] attempts!" )
 
