@@ -1097,6 +1097,11 @@ area/space/atmosalert()
 	name = "\improper Head of Security's Office"
 	icon_state = "head_quarters"
 
+/area/crew_quarters/heads/hos/sleeproom
+	name = "\improper Head of Security's Quarters"
+	icon_state = "head_quarters"
+
+
 /area/crew_quarters/heads/cmo
 	name = "\improper Chief Medical Officer's Office"
 	icon_state = "head_quarters"
