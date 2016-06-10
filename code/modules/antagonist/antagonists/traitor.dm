@@ -22,9 +22,10 @@
 		return 1
 
 	var/datum/money_account/A = find_account(M)
-	A.money += faction.start_cash
 
-	antag.current << "Your employer has provided you with an extra $[faction.start_cash] to purchase equipment with."
+	if( A )
+		A.money += faction.start_cash
+		antag.current << "Your employer has provided you with an extra $[faction.start_cash] to purchase equipment with."
 
 	var/backpack = locate(/obj/item/weapon/storage/backpack) in M.contents
 	if(backpack)
