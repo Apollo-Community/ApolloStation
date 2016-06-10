@@ -113,7 +113,15 @@
 		if(istext(sql_id))
 			sql_id = text2num(sql_id)
 		if(!isnum(sql_id))
+			log_debug( "SQL ID is invalid!" )
 			return
+
+	var/message = "Saved date: "
+
+	for( var/i in date )
+		message += "[i] "
+
+	log_debug( "[message]" )
 
 	if(sql_id)
 		var/DBQuery/query_update

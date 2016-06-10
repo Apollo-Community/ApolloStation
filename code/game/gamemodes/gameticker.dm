@@ -337,6 +337,12 @@ var/global/datum/controller/gameticker/ticker
 			spawn(50)
 				callHook("roundend")
 
+				if( blackbox )
+					blackbox.save_all_data_to_sql()
+
+				if( config.canon )
+					canonHandleRoundEnd()
+
 				if (mode.station_was_nuked)
 					feedback_set_details("end_proper","nuke")
 					if(!delay_end)

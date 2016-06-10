@@ -21,15 +21,11 @@
 
 /obj/machinery/telecomms/relay/preset/slater
 	id = "NMV Slater Relay"
-	autolinkers = list("relay")
-
-/obj/machinery/telecomms/relay/preset/mining
-	id = "Mining Relay"
-	autolinkers = list("m_relay")
+	autolinkers = list("s_relay")
 
 /obj/machinery/telecomms/relay/preset/moon
-	id = "Moon Relay"
-	autolinkers = list("mn_relay")
+	id = "NSB Hecate Relay"
+	autolinkers = list("s_relay")
 
 /obj/machinery/telecomms/relay/preset/ruskie
 	id = "Ruskie Relay"
