@@ -1799,7 +1799,7 @@ area/space/atmosalert()
 	icon_state = "checkpoint1"
 
 /area/security/vacantoffice
-	name = "\improper Vacant Office"
+	name = "\improper Bridge Vacant Office"
 	icon_state = "security"
 	environment = QUARRY
 
