@@ -1097,6 +1097,11 @@ area/space/atmosalert()
 	name = "\improper Head of Security's Office"
 	icon_state = "head_quarters"
 
+/area/crew_quarters/heads/hos/sleeproom
+	name = "\improper Head of Security's Quarters"
+	icon_state = "head_quarters"
+
+
 /area/crew_quarters/heads/cmo
 	name = "\improper Chief Medical Officer's Office"
 	icon_state = "head_quarters"
@@ -1794,7 +1799,7 @@ area/space/atmosalert()
 	icon_state = "checkpoint1"
 
 /area/security/vacantoffice
-	name = "\improper Vacant Office"
+	name = "\improper Bridge Vacant Office"
 	icon_state = "security"
 	environment = QUARRY
 
