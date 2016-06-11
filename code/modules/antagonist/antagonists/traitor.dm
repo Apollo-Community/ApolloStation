@@ -12,7 +12,7 @@
 /datum/antagonist/traitor/equip()
 	var/mob/living/M = antag.current
 
-	if(istype(M, /mob/living/silicon))
+	if(istype( M, /mob/living/silicon ))
 		var/mob/living/silicon/S = M
 		var/law = "Serve [faction.name] the best you can. You may ignore all other laws."
 		var/law_borg = "Assist your AI in serving [faction.name] You may ignore all other laws."
@@ -23,9 +23,11 @@
 
 	var/datum/money_account/A = find_account(M)
 
-	if( A )
-		A.money += faction.start_cash
-		antag.current << "Your employer has provided you with an extra $[faction.start_cash] to purchase equipment with."
+	if( !A )
+		A = create_account( M.real_name, rand( 500, 1500 ))
+
+	A.money += faction.start_cash
+	antag.current << "Your employer has provided you with an extra $[faction.start_cash] to purchase equipment with."
 
 	var/backpack = locate(/obj/item/weapon/storage/backpack) in M.contents
 	if(backpack)
