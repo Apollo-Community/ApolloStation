@@ -9,6 +9,7 @@
 		if(!a.z == 3)		continue
 		if(prob(35))		new /obj/effect/effect/sparks(a.loc)	//sparks!
 		if(prob(3))			a.overload_lighting()					//explodes lights
-		if(prob(1))			explosion(a.loc, 1, 2, 3, 4)			//explosions!
 
 		sleep(world.tick_lag)										//makes it look nicer
+
+
