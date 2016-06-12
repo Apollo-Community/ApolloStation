@@ -65,11 +65,17 @@
 	if(world.time < dropoff_interval)	return
 
 	var/obj/O = locate(target) in dropoff
+	if(!O) // locate sucks >:(
+		for(var/obj/P in dropoff)
+			O = locate(target) in P
+			if(O)	break
+	if(!O)	return
+
 	var/mob/list/audience = viewers(O)
 	for(var/mob/M in audience)
-		if( ( !issilicon(M) || !ishuman(M) ) || !M.client )	audience -= M // only crew players matter. mice and the likes can freak out all they like when stuff disappears before their very eyes
+		if( ( !issilicon(M) && !ishuman(M) ) || isnull(M.client) )	audience -= M // only crew players matter. mice and the likes can freak out all they like when stuff disappears before their very eyes
 
-	if(O && audience.len == 0)
+	if(audience.len == 0)
 		var/mob/living/completer = null
 		for(var/mob/M in workers)
 			if(M.client.key == O.fingerprintslast)
