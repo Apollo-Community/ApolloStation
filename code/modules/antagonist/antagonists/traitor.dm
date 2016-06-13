@@ -30,7 +30,7 @@
 
 	var/obj/item/I = locate(/obj/item/device/pda) in antag.current.contents
 
-	if(antag.character.uplink_location == "Headset" && locate(/obj/item/device/radio) in antag.current.contents)
+	if(antag.character && antag.character.uplink_location == "Headset" && locate(/obj/item/device/radio) in antag.current.contents)
 		I = locate(/obj/item/device/radio) in antag.current.contents
 
 	if(!I)
