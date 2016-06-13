@@ -3,12 +3,6 @@
 	greeting = "You are a traitor."
 	obligatory_contracts = 2
 
-/datum/antagonist/traitor/setup()
-	..()
-
-	if(faction_controller.contracts_made) // for traitors that are created mid-round, after the contracts have been made available
-		antag.current << "" // newline
-
 /datum/antagonist/traitor/equip()
 	var/mob/living/M = antag.current
 
