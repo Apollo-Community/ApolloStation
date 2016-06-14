@@ -3,8 +3,9 @@
 /mob/new_player
 	var/ready = 0
 	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
-	var/totalPlayers = 0		 //Player counts for the Lobby tab
-	var/totalPlayersReady = 0
+	var/global/totalPlayers = 0		 //Player counts for the Lobby tab
+	var/global/totalPlayersReady = 0
+	var/global/list/statMessage = list() // The message displayed on the lobby panel
 	universal_speak = 1
 
 	invisibility = 101
@@ -70,24 +71,11 @@
 		if( !client )
 			return
 
-		statpanel("Lobby")
-		if(client.statpanel=="Lobby" && ticker)
-			if(ticker.hide_mode)
-				stat("Game Mode:", "Hidden")
-			else
-				if(ticker.hide_mode == 0)
-//					stat("Game Mode:", "[master_mode]") // Old setting for showing the game mode
-					stat("Game Mode:", "Hidden")
-
-			if(ticker.current_state == GAME_STATE_PREGAME)
-				stat("Time To Start:", "[ticker.pregame_timeleft][going ? "" : " (DELAYED)"]")
-				stat("Players: [totalPlayers]", "Players Ready: [totalPlayersReady]")
-				totalPlayers = 0
-				totalPlayersReady = 0
-				for(var/mob/new_player/player in player_list)
-					stat("[player.key]", (player.ready)?("(Playing)"):(null))
-					totalPlayers++
-					if(player.ready)totalPlayersReady++
+		if( client.statpanel == "Lobby" && ticker )
+			if( ticker.current_state == GAME_STATE_PREGAME && statMessage && statMessage.len )
+				statpanel("Lobby")
+				for( var/variable in statMessage )
+					stat( "[variable]", "[statMessage[variable]]" )
 
 	Topic(href, href_list[])
 		if(!client)	return 0
@@ -113,6 +101,27 @@
 				ready = text2num(href_list["ready"])
 			else
 				ready = 0
+
+			totalPlayers = 0
+			totalPlayersReady = 0
+
+
+
+			for(var/mob/new_player/player in player_list)
+				totalPlayers++
+				if(player.ready)totalPlayersReady++
+
+
+
+			statMessage = list()
+
+			statMessage["Time To Start:"] = "[ticker.pregame_timeleft][going ? "" : " (DELAYED)"]"
+			statMessage["Players Ready:"] = "[totalPlayersReady] / [totalPlayers]"
+
+
+			statMessage[
+
+
 
 		if(href_list["refresh"])
 			src << browse(null, "window=playersetup") //closes the player setup window
