@@ -71,11 +71,24 @@
 		if( !client )
 			return
 
-		if( client.statpanel == "Lobby" && ticker )
-			if( ticker.current_state == GAME_STATE_PREGAME && statMessage && statMessage.len )
-				statpanel("Lobby")
+		if( ticker )
+			statpanel("Lobby")
+
+		if( client.statpanel == "Lobby" )
+			if( !statMessage )
+				statMessage = list()
+
+			statMessage["Time To Start:"] = "[ticker.pregame_timeleft][going ? "" : " (DELAYED)"]"
+
+			if( ticker.current_state == GAME_STATE_PREGAME && statMessage )
 				for( var/variable in statMessage )
-					stat( "[variable]", "[statMessage[variable]]" )
+					var/list/L = statMessage[variable]
+					if( !istype( L ))
+						stat( "[variable]", "[L]" )
+					else
+						stat( "[variable]", null )
+						for( var/V in L )
+							stat( null, "[V]" )
 
 	Topic(href, href_list[])
 		if(!client)	return 0
@@ -105,23 +118,37 @@
 			totalPlayers = 0
 			totalPlayersReady = 0
 
-
+			statMessage = list( "Time To Start:" = null, "Players Ready:" = null, "------------  Department  ------------" = "------------  Readied Roles  ------------")
+			for( var/D in job_master.getDepartmentNames() )
+				statMessage[D] = list()
 
 			for(var/mob/new_player/player in player_list)
 				totalPlayers++
-				if(player.ready)totalPlayersReady++
+				if( player.ready && player.client )
+					var/client/C = player.client
+					if( !istype( C ))
+						continue
+					if( !C.prefs )
+						continue
+					if( !C.prefs.selected_character )
+						continue
 
+					totalPlayersReady++
 
+					var/datum/character/H = C.prefs.selected_character
+					var/department = H.department.name
 
-			statMessage = list()
+					if( !department )
+						continue
 
-			statMessage["Time To Start:"] = "[ticker.pregame_timeleft][going ? "" : " (DELAYED)"]"
+					var/list/L = statMessage[department]
+					if( !L )
+						L = list()
+
+					L += H.GetHighestLevelJob() // Adding this character's job
+					statMessage[department] = L
+
 			statMessage["Players Ready:"] = "[totalPlayersReady] / [totalPlayers]"
-
-
-			statMessage[
-
-
 
 		if(href_list["refresh"])
 			src << browse(null, "window=playersetup") //closes the player setup window
@@ -134,7 +161,6 @@
 
 				spawning = 1
 				src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
-
 
 				observer.started_as_observer = 1
 				close_spawn_windows()
