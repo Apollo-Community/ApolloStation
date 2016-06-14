@@ -20,6 +20,8 @@
 			antag.current << "\The [faction.name] has provided all its agents with the following code phrases to identify other agents:"
 			antag.current << "<B>[list2text(faction.phrase, ", ")]</B>"
 			antag.current << ""
+
+			antag.current.trigger_words += faction.phrase
 		if(FACTION_ID_COMPLETE)
 			if((faction.members.len - 1) > 0)
 				antag.current << "\The [faction.name] has provided all its agents with the identity of their fellow agents. Your co-workers are as follows:"

@@ -89,7 +89,7 @@
 	for(var/datum/data/record/L in data_core.locked)
 		if(href_list["task"] == L.fields["id"])
 			info["exploit_record"] = html_encode(L.fields["exploit_record"])	// Change stuff into html
-			info["exploit_record"] = replacetext(info["nanoui_exploit_record"], "\n", "<br>")	// change line breaks into <br>
+			info["exploit_record"] = replacetext(info["exploit_record"], "\n", "<br>")	// change line breaks into <br>
 			info["name"] =  html_encode(L.fields["name"])
 			info["sex"] =  html_encode(L.fields["sex"])
 			info["age"] =  html_encode(L.fields["age"])

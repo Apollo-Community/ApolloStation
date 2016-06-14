@@ -311,17 +311,20 @@
 */
 /client/proc/gen_infraction_table()
 	if(!holder && (!prefs.passed_date || (related_accounts_ip && !findtext(related_accounts_ip, "[ckey]")) || (related_accounts_cid && !findtext(related_accounts_cid, "[ckey]"))))
-		var/message =  "\n<tt><font color='#386AFF'>\
-						+------------------+---------+------------+-----------------------------------+-----------------------------------+\n\
-						| Ckey             | Country | Join Date  | Related CIDs                      | Related IPs                       |\n\
-						+------------------+---------+------------+-----------------------------------+-----------------------------------+\n"
-					/*	| [ckey]           | ***     | 2010-09-11 | [related_accounts_cid]            | [related_accounts_ip]             |
-						+------------------+---------+------------+-----------------------------------+-----------------------------------+*/
+		var/message =  "<br><font color='#386AFF'><table><tr>"
+		message += "<td>Ckey</td><td>Country</td><td>Join Date</td><td>Related CIDs</td><td>Related IPs</td>"
+		message += "</tr><tr>"
+		message += "<td>[ckey]</td>"
+		message += "<td>[prefs.country_code]</td>"
+		message += "<td>[prefs.passed_date ? "[prefs.joined_date]" : "<font color='#ff0000'>[prefs.joined_date]</font>"]</td>"
+		message += "<td>[related_accounts_cid]</td>"
+		message += "<td>[related_accounts_ip]</td>"
+		message += "</tr></table></font>"
 
-		var/list/padding_ammount = list(16 - (lentext(ckey) + 3) ,7 - lentext(prefs.country_code), 1, 33 - lentext(related_accounts_cid), 33 - lentext(related_accounts_ip))
+/*		var/list/padding_ammount = list(16 - (lentext(ckey) + 3) ,7 - lentext(prefs.country_code), 1, 33 - lentext(related_accounts_cid), 33 - lentext(related_accounts_ip))
 		var/list/padding_message = list("| <a href='?src=\ref[usr];priv_msg=\ref[src.mob]'>[padding_ammount[1] < 0 ? "[copytext(ckey,1,12)].." : "[ckey]"]</a>(<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</a>) ",
 										"| [prefs.country_code] ",
-										"| [prefs.passed_date ? "[prefs.joined_date]" : "<font color='#ff0000'>[prefs.joined_date]</font>"]",
+										"| [prefs.passed_date ? "[prefs.joined_date]" : "<font color='#ff0000'>[prefs.joined_date]</font>"] ",
 										"| [padding_ammount[4] < 0 ? "[copytext(related_accounts_cid,1,32)].." : "[related_accounts_cid]"] ",
 										"| [padding_ammount[5] < 0 ? "[copytext(related_accounts_ip,1,32)].." : "[related_accounts_ip]"] ")
 
@@ -330,6 +333,7 @@
 			for(var/p = 1; p <= padding_ammount[i]; p++)	message += " "
 
 		message += "|\n+------------------+---------+------------+-----------------------------------+-----------------------------------+</font></tt>\n"	//Closing table
+*/
 
 		for(var/client/C in admins)		C << "[message]"
 

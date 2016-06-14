@@ -351,7 +351,6 @@ var/global/datum/controller/gameticker/ticker
 					feedback_set_details("end_proper","proper completion")
 					world << "<span class='notice'><B>The game is now over. The round will restart in 60 seconds.</B></span>"
 					if(!restart_called)
-						spawn(600)		world.Reboot()
 						restart_called = 1
 
 		else if (mode_finished)

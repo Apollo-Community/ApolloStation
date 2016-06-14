@@ -61,6 +61,12 @@
 	if(faction_controller.contracts_made && members.len == 1) // first member, start making contracts
 		update_contracts()
 
+	// notify any other agents in their faction about a new agent
+	if( world.time > ( ticker.game_start + 100 ) && friendly_identification == FACTION_ID_COMPLETE) // hacky hacks
+		for(var/datum/mind/P in (members - P))
+			P.current << "Your employers have notified you that a fellow [name] agent has been activated:"
+			P.current << "<B>[P.current.real_name]</B>, [station_name] [P.assigned_role]"
+
 // Populate factions with new contracts
 /datum/faction/syndicate/proc/update_contracts()
 	if(!members.len)	return

@@ -497,13 +497,13 @@
 					switch( role )
 						if( "Chemist" )
 							L.Remove( "Chemist" )
-							L["Senior Scientist"] = "High"
+							L["Scientist"] = "High"
 						if( "Roboticist" )
 							L.Remove( "Roboticist" )
-							L["Roboticist"] = "High"
+							L["Scientist"] = "High"
 						if( "Xenobiologist" )
 							L.Remove( "Xenobiologist" )
-							L["Xenobiologist"] = "High"
+							L["Senior Scientist"] = "High"
 						if( "Atmospheric Technician" )
 							L.Remove( "Atmospheric Technician" )
 							L["Senior Engineer"] = "High"
