@@ -363,5 +363,6 @@
 	var/turf/T = get_turf(H)
 	H.visible_message("<span class='alert'>[H]'s body explodes, leaving behind a pile of microscopic crystals!</span>")
 	supermatter_delamination( T, 4, 1, 0, 0 ) // Create a small supermatter burst upon death
+	H.character.species = "Human"		// CC don't have nuc DNA on hand so you turn back into a human.
 	qdel(H)
 	spawn(100)		C.mob.timeofdeath = world.time		//Give it some time to ghost you

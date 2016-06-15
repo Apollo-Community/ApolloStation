@@ -1124,6 +1124,9 @@
 		vessel.add_reagent("blood",560-vessel.total_volume)
 		fixblood()
 
+	// Save the species to their character
+	character.species = new_species
+	
 	// Rebuild the HUD. If they aren't logged in then login() should reinstantiate it for them.
 	if(client && client.screen)
 		client.screen.len = null

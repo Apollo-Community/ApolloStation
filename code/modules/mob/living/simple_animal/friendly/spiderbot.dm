@@ -135,19 +135,7 @@
 			spawn(300)	src.explode()
 
 	else
-		if(O.force)
-			var/damage = O.force
-			if (O.damtype == HALLOSS)
-				damage = 0
-			adjustBruteLoss(damage)
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='alert'>\b [src] has been attacked with the [O] by [user]. </span>")
-		else
-			usr << "<span class='alert'>This weapon is ineffective, it does no damage.</span>"
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("<span class='alert'>[user] gently taps [src] with the [O]. </span>")
+		. = ..()
 
 /mob/living/simple_animal/spiderbot/proc/transfer_personality(var/obj/item/device/mmi/M as obj)
 
@@ -204,14 +192,7 @@
 	living_mob_list -= src
 	dead_mob_list += src
 
-	if(camera)
-		camera.status = 0
-
-	held_item.loc = src.loc
-	held_item = null
-
-	gibs(loc, viruses, null, null, /obj/effect/gibspawner/robot) //TODO: use gib() or refactor spiderbots into synthetics.
-	qdel()
+	new /obj/effect/gibspawner/robot(get_turf(src))
 	return
 
 //Cannibalized from the parrot mob. ~Zuhayr
