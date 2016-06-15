@@ -65,6 +65,7 @@
 		if(istype(A, /area/bridge))
 			var/obj/O = locate(/obj/item/weapon/storage/secure/briefcase) in A
 			document = new(O)
+			break
 
 	if( isnull(document) )
 		qdel( src )
