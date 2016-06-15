@@ -66,6 +66,13 @@ var/global/datum/controller/occupations/job_master
 				return D
 		return null
 
+	proc/getDepartmentNames()
+		. = list()
+		for( var/datum/department/D in departments )
+			. += D.name
+
+		return .
+
 	proc/GetPlayerAltTitle(mob/new_player/player, rank)
 		return player.client.prefs.GetPlayerAltTitle(GetJob(rank))
 

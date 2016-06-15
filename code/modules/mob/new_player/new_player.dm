@@ -3,8 +3,9 @@
 /mob/new_player
 	var/ready = 0
 	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
-	var/totalPlayers = 0		 //Player counts for the Lobby tab
-	var/totalPlayersReady = 0
+	var/global/totalPlayers = 0		 //Player counts for the Lobby tab
+	var/global/totalPlayersReady = 0
+	var/global/list/statMessage = list() // The message displayed on the lobby panel
 	universal_speak = 1
 
 	invisibility = 101
@@ -70,24 +71,24 @@
 		if( !client )
 			return
 
-		statpanel("Lobby")
-		if(client.statpanel=="Lobby" && ticker)
-			if(ticker.hide_mode)
-				stat("Game Mode:", "Hidden")
-			else
-				if(ticker.hide_mode == 0)
-//					stat("Game Mode:", "[master_mode]") // Old setting for showing the game mode
-					stat("Game Mode:", "Hidden")
+		if( ticker )
+			statpanel("Lobby")
 
-			if(ticker.current_state == GAME_STATE_PREGAME)
-				stat("Time To Start:", "[ticker.pregame_timeleft][going ? "" : " (DELAYED)"]")
-				stat("Players: [totalPlayers]", "Players Ready: [totalPlayersReady]")
-				totalPlayers = 0
-				totalPlayersReady = 0
-				for(var/mob/new_player/player in player_list)
-					stat("[player.key]", (player.ready)?("(Playing)"):(null))
-					totalPlayers++
-					if(player.ready)totalPlayersReady++
+		if( client.statpanel == "Lobby" )
+			if( !statMessage )
+				statMessage = list()
+
+			statMessage["Time To Start:"] = "[ticker.pregame_timeleft][going ? "" : " (DELAYED)"]"
+
+			if( ticker.current_state == GAME_STATE_PREGAME && statMessage )
+				for( var/variable in statMessage )
+					var/list/L = statMessage[variable]
+					if( !istype( L ))
+						stat( "[variable]", "[L]" )
+					else
+						stat( "[variable]", null )
+						for( var/V in L )
+							stat( null, "[V]" )
 
 	Topic(href, href_list[])
 		if(!client)	return 0
@@ -114,6 +115,41 @@
 			else
 				ready = 0
 
+			totalPlayers = 0
+			totalPlayersReady = 0
+
+			statMessage = list( "Time To Start:" = null, "Players Ready:" = null, "------------  Department  ------------" = "------------  Readied Roles  ------------")
+			for( var/D in job_master.getDepartmentNames() )
+				statMessage[D] = list()
+
+			for(var/mob/new_player/player in player_list)
+				totalPlayers++
+				if( player.ready && player.client )
+					var/client/C = player.client
+					if( !istype( C ))
+						continue
+					if( !C.prefs )
+						continue
+					if( !C.prefs.selected_character )
+						continue
+
+					totalPlayersReady++
+
+					var/datum/character/H = C.prefs.selected_character
+					var/department = H.department.name
+
+					if( !department )
+						continue
+
+					var/list/L = statMessage[department]
+					if( !L )
+						L = list()
+
+					L += H.GetHighestLevelJob() // Adding this character's job
+					statMessage[department] = L
+
+			statMessage["Players Ready:"] = "[totalPlayersReady] / [totalPlayers]"
+
 		if(href_list["refresh"])
 			src << browse(null, "window=playersetup") //closes the player setup window
 			new_player_panel_proc()
@@ -125,7 +161,6 @@
 
 				spawning = 1
 				src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
-
 
 				observer.started_as_observer = 1
 				close_spawn_windows()

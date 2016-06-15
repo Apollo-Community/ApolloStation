@@ -75,7 +75,6 @@ Flip
 Francis
 Frank
 Frankie
-Fridge
 Fulton
 Gannon
 Garret
@@ -300,7 +299,6 @@ Liam
 Hayden
 Nathaniel
 Henry
-Jesus
 Ian
 Tristan
 Bryan
