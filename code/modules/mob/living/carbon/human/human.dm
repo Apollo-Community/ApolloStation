@@ -1085,9 +1085,9 @@
 			new_species = dna.species
 		else
 			dna.species = new_species
+			character.species = "[new_species]"
 
 	if(species)
-
 		if(species.name && species.name == new_species)
 			return
 		if(species.language)
