@@ -1,3 +1,4 @@
+
 // DM Environment file for baystation12.dme.
 // All manual changes should be made outside the BEGIN_ and END_ blocks.
  // New source code should be placed in .dm files: choose File/New --> Code File.
@@ -1771,5 +1772,3 @@
 #include "maps\overmap\active\active-02-Slater.dmm"
 #include "maps\overmap\active\active-03-CentComm.dmm"
 #include "maps\overmap\active\active-04-Moon.dmm"
-#include "maps\overmap\active\active-05-Basesteroid.dmm"
-// END_INCLUDE
