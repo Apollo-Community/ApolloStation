@@ -35,7 +35,7 @@ var/list/codenames = list(
 	return 1
 
 /datum/game_mode/mercenary/pre_setup()
-	var/list/possible_syndicates = pick_antagonists(BE_OPERATIVE,)
+	var/list/possible_syndicates = pick_antagonists(BE_OPERATIVE, recommended_enemies)
 
 	// Merc number should scale to active crew.
 	var/n_players = num_players()
