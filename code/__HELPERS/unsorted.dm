@@ -1953,7 +1953,6 @@ var/mob/dview/dview_mob = new
 		totweight += weight
 
 	totweight *= rand()
-	world << rand()
 
 	for(var/i=1, i<=L.len, ++i)
 		var/weight = L[L[i]]

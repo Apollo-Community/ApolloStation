@@ -13,7 +13,7 @@ var/list/codenames = list(
 /datum/game_mode/mercenary
 	name = "mercenary"
 	config_tag = "mercenary"
-	required_players = 20
+	required_players = 0
 	required_players_secret = 25 // 25 players - 5 players to be the nuke ops = 20 players remaining
 	required_enemies = 1
 	recommended_enemies = 5
@@ -102,27 +102,65 @@ var/list/codenames = list(
 	return ..()
 
 /datum/game_mode/mercenary/check_finished()
-	world << "[merc_contract.finished]"
 	if( merc_contract.finished )
 		return 1
 
 	if( !syndicates.len )
 		return 1
 
-	var/fluke_ops = 0
-	for( var/datum/mind/M in syndicates )
-		if( M.current.isDead() )	fluke_ops++
-	if( fluke_ops == syndicates.len )
+	if( are_operatives_dead() )
 		return 1
 
 	return ..()
 
+/datum/game_mode/mercenary/send_intercept()
+	..()
+
+	// wait a bit longer to keep the reports separate
+	spawn(rand(600, 900))
+		var/text = "<FONT size = 3><B>Cent. Com. Security Report</B> concerning <B>especially</B> subversive elements<HR>"
+		text += "Even more reliable sources&trade; have provided us with promising information regarding a possible attack on NOS Apollo. "
+
+		switch(merc_contract.type)
+			if(/datum/contract/mercenary/kidnap)
+				var/datum/contract/mercenary/kidnap/K = merc_contract
+				var/role = K.target.assigned_role
+
+				text += "A certain member of the crew has been observed to have been under watch by unknown people. Following a break-in at their residence, we fear the "
+
+				// 80% chance of correct information
+				if(prob(80))
+					text += "[role]"
+				else
+					var/list/fakes = (list("Captain", "Head of Security", "Research Director") - role)
+					text += "[pick(fakes)]"
+				text += " <B>may be kidnapped this shift</B>."
+			if(/datum/contract/mercenary/document)
+				// 90% that crew will be informed of the top secret document
+				if(prob(90))
+					text += "We have stored top secret documents with you this shift as part of its transport. It seems that this information has leaked to a third party. "
+					text += "The documents which, if read, will <B>lead to your immediate termination</B> is located in a secure briefcase in the Bridge."
+				else
+					return // no report
+
+		text += "<BR><BR>We expect you to act on this information in such a way that NanoTrasen assets are properly secured, and ultimately protected."
+		text += "<HR><FONT size = 2><i>[random_name(pick(list(MALE, FEMALE)))] - NanoTrasen Navy Officer of Information</i></FONT>"
+
+		for(var/obj/machinery/computer/communications/comm in machines)
+			if(!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
+				var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
+				intercept.name = "Cent. Com. Security Report"
+				intercept.info = text
+
+				comm.messagetitle.Add("Cent. Com. Security Report")
+				comm.messagetext.Add(text)
+
+		command_announcement.Announce("Special NanoTrasen Update available at all communication consoles.", new_sound = 'sound/AI/commandreport.ogg')
+
 /datum/game_mode/proc/are_operatives_dead()
 	for(var/datum/mind/operative_mind in syndicates)
-		if (!istype(operative_mind.current,/mob/living/carbon/human))
-			if(operative_mind.current)
-				if(operative_mind.current.stat!=2)
-					return 0
+		if(operative_mind.current && !operative_mind.current.isDead())
+			return 0
 	return 1
 
 /datum/game_mode/proc/auto_declare_completion_mercenary()
@@ -135,24 +173,18 @@ var/list/codenames = list(
 			text += "<B>The Gorlex operatives have completed their contract!</B><br><br>"
 			text += "Their contract was:<br>"
 			text += "<B>[merc_contract.informal_name]</B>"
+		else if( are_operatives_dead() )
+			feedback_set_details("round_end_result","lose - mercenary - mercs died")
+			text += "<font size=3 color=green><B>Crew Victory!</B></font><br>"
+			text += "<B>The crew prevented the Gorlex operatives from completing their contract by murdering all of them!</B><br><br>"
+			text += "Their contract was:<br>"
+			text += "<B>[merc_contract.informal_name]</B>"
 		else
-			var/fluke_ops = 0
-			for( var/datum/mind/M in syndicates )
-				if( M.current.isDead() )	fluke_ops++
-				
-			// all ops are dead
-			if( fluke_ops == syndicates.len )
-				feedback_set_details("round_end_result","lose - mercenary - mercs died")
-				text += "<font size=3 color=green><B>Crew Victory!</B></font><br>"
-				text += "<B>The crew prevented the Gorlex operatives from completing their contract by murdering all of them!</B><br><br>"
-				text += "Their contract was:<br>"
-				text += "<B>[merc_contract.informal_name]</B>"
-			else
-				feedback_set_details("round_end_result","lose - mercenary - failed contract")
-				text += "<font size=3 color=green><B>Crew Victory!</B></font><br>"
-				text += "<B>The crew prevented the Gorlex operatives from completing their contract!</B><br><br>"
-				text += "Their contract was:<br>"
-				text += "<B>[merc_contract.informal_name]</B>"
+			feedback_set_details("round_end_result","lose - mercenary - failed contract")
+			text += "<font size=3 color=green><B>Crew Victory!</B></font><br>"
+			text += "<B>The crew prevented the Gorlex operatives from completing their contract!</B><br><br>"
+			text += "Their contract was:<br>"
+			text += "<B>[merc_contract.informal_name]</B>"
 		text += "<br><br>"
 
 		text += "<font size=2>The mercenaries were:</font><br>"
