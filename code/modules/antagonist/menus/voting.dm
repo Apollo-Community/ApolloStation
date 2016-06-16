@@ -52,7 +52,7 @@
 	testing( "Opened antag vote for [user.client]" )
 
 /datum/controller/gameticker/Topic(href, href_list)
-	if( ticker.restart_called )	return // too late
+	//if( ticker.restart_called )	return // too late
 
 	var/datum/mind/antag = null
 	for( var/datum/mind/M in minds )
