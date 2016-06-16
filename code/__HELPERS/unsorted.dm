@@ -1936,27 +1936,3 @@ var/mob/dview/dview_mob = new
 // call to generate a stack trace and print to runtime logs
 /proc/crash_with(msg)
 	CRASH(msg)
-
-// performs a weighted pick from an associative list
-// value is treated as the weight
-// tyvm lummox
-/proc/pick_weighted(list/L)
-	var/totweight = 0
-	var/item
-
-	for(item in L)
-		var/weight = L[item]
-		if(isnull(weight))
-			weight = 1
-			L[item] = 1
-
-		totweight += weight
-
-	totweight *= rand()
-
-	for(var/i=1, i<=L.len, ++i)
-		var/weight = L[L[i]]
-		totweight -= weight
-
-		if(totweight <= 0)
-			return L[i]
