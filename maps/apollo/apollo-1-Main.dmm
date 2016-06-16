@@ -1587,7 +1587,7 @@
 "aEA" = (/turf/simulated/wall,/area/medical/psych)
 "aEB" = (/obj/machinery/bodyscanner,/obj/machinery/firealarm,/turf/simulated/floor{tag = "icon-whitered_a (NORTHWEST)"; icon_state = "whitered_a"; dir = 9},/area/medical/exam_room)
 "aEC" = (/obj/machinery/body_scanconsole,/obj/machinery/light{dir = 1},/obj/machinery/alarm{frequency = 1441; pixel_y = 22},/turf/simulated/floor{dir = 1; icon_state = "whitered"},/area/medical/exam_room)
-"aED" = (/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_y = 25},/obj/machinery/camera{c_tag = "Medical Examination"; dir = 2; network = list("SS13")},/turf/simulated/floor{tag = "icon-whitered_c (NORTHEAST)"; icon_state = "whitered_c"; dir = 5},/area/medical/exam_room)
+"aED" = (/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_y = 25},/obj/machinery/camera{c_tag = "Medical Examination"; dir = 2; network = list("SS13")},/obj/structure/bed/chair,/turf/simulated/floor{tag = "icon-whitered_c (NORTHEAST)"; icon_state = "whitered_c"; dir = 5},/area/medical/exam_room)
 "aEE" = (/obj/machinery/smartfridge/secure/medbay,/turf/simulated/wall,/area/medical/exam_room)
 "aEF" = (/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor{tag = "icon-whiteblue (EAST)"; icon_state = "whiteblue"; dir = 4},/area/medical/medbay)
 "aEG" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/medical/reception)
