@@ -102,8 +102,19 @@ var/list/codenames = list(
 	return ..()
 
 /datum/game_mode/mercenary/check_finished()
+	world << "[merc_contract.finished]"
 	if( merc_contract.finished )
 		return 1
+
+	if( !syndicates.len )
+		return 1
+
+	var/fluke_ops = 0
+	for( var/datum/mind/M in syndicates )
+		if( M.current.isDead() )	fluke_ops++
+	if( fluke_ops == syndicates.len )
+		return 1
+
 	return ..()
 
 /datum/game_mode/proc/are_operatives_dead()
@@ -125,11 +136,23 @@ var/list/codenames = list(
 			text += "Their contract was:<br>"
 			text += "<B>[merc_contract.informal_name]</B>"
 		else
-			feedback_set_details("round_end_result","lose - mercenary - failed contract")
-			text += "<font size=3 color=green><B>Crew Victory!</B></font><br>"
-			text += "<B>The crew prevented the Gorlex operatives from completing their objective!</B><br><br>"
-			text += "Their contract was:<br>"
-			text += "<B>[merc_contract.informal_name]</B>"
+			var/fluke_ops = 0
+			for( var/datum/mind/M in syndicates )
+				if( M.current.isDead() )	fluke_ops++
+				
+			// all ops are dead
+			if( fluke_ops == syndicates.len )
+				feedback_set_details("round_end_result","lose - mercenary - mercs died")
+				text += "<font size=3 color=green><B>Crew Victory!</B></font><br>"
+				text += "<B>The crew prevented the Gorlex operatives from completing their contract by murdering all of them!</B><br><br>"
+				text += "Their contract was:<br>"
+				text += "<B>[merc_contract.informal_name]</B>"
+			else
+				feedback_set_details("round_end_result","lose - mercenary - failed contract")
+				text += "<font size=3 color=green><B>Crew Victory!</B></font><br>"
+				text += "<B>The crew prevented the Gorlex operatives from completing their contract!</B><br><br>"
+				text += "Their contract was:<br>"
+				text += "<B>[merc_contract.informal_name]</B>"
 		text += "<br><br>"
 
 		text += "<font size=2>The mercenaries were:</font><br>"
