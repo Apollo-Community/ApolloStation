@@ -495,8 +495,11 @@
 		weight += ( C.character_tokens["Antagonist"] )
 
 		// last played as antag weight
-		weight += C.no_antag_weight
-		C.no_antag_weight++ // set to 0 for chosen antags later
+		weight += C.antag_weights["no_antag"]
+		C.antag_weights["no_antag"]++ // set to 0 for chosen antags later
+
+		// static (admin-defined) weight
+		weight += C.antag_weights["static"]
 
 		possible_antags[M] = weight
 
@@ -510,7 +513,7 @@
 		var/datum/mind/antag = pick_weighted(possible_antags)
 
 		var/client/C = antag.current.client
-		C.no_antag_weight = 0
+		C.antag_weights["no_antag"] = 0
 
 		chosen_antags += antag
 		possible_antags.Remove(antag)

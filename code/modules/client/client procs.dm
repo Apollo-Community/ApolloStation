@@ -92,13 +92,14 @@
 
 	var/DBQuery/query
 
-	query = dbcon.NewQuery("SELECT no_antag_weight FROM player WHERE ckey = '[ckey( ckey )]'")
+	query = dbcon.NewQuery("SELECT antag_weights FROM player WHERE ckey = '[ckey( ckey )]'")
 	query.Execute()
 
 	if( !query.NextRow() )
 		return
 
-	no_antag_weight = text2num( query.item[1] )
+	if( !isnull( query.item[1] ))
+		antag_weights = params2list( query.item[1] )
 
 /client/proc/handle_spam_prevention(var/message, var/mute_type)
 	if(config.automute_on && !holder && src.last_message == message && non_spawn_check(message))
@@ -387,14 +388,14 @@
 	if ( IsGuestKey(src.key) )
 		return 0
 
-	if( !no_antag_weight )
+	if( !antag_weights )
 		return 0
 
 	establish_db_connection()
 	if( !dbcon.IsConnected() )
 		return 0
 
-	var/DBQuery/query_insert = dbcon.NewQuery("UPDATE player SET no_antag_weight = [no_antag_weight] WHERE ckey = '[ckey( ckey )]'")
+	var/DBQuery/query_insert = dbcon.NewQuery("UPDATE player SET antag_weights = '[list2params( antag_weights )]' WHERE ckey = '[ckey( ckey )]'")
 	query_insert.Execute()
 
 /client/proc/log_client_to_db( var/log_playtime = 0 )
