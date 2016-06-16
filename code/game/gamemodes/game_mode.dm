@@ -501,7 +501,7 @@
 		// static (admin-defined) weight
 		weight += C.antag_weights["static"]
 
-		possible_antags[M] = weight
+		possible_antags[M] = max(weight, 0)
 
 	if( !possible_antags.len )
 		return chosen_antags
