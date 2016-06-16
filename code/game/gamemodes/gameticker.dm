@@ -108,7 +108,7 @@ var/global/datum/controller/gameticker/ticker
 		var/totalPlayersReady = 0
 		for(var/mob/new_player/player in player_list)
 			if(player.ready)	totalPlayersReady++
-		world << "<B><font color='blue'>Silly crew, you're missing [mode.required_players - totalPlayersReady] crew member(s) to play [mode.name].\nPicking random gamemode instead!</B></font>"
+		//world << "<B><font color='blue'>Silly crew, you're missing [mode.required_players - totalPlayersReady] crew member(s) to play [mode.name].\nPicking random gamemode instead!</B></font>"
 		current_state = GAME_STATE_PREGAME
 
 		src.mode = pick_random_gamemode(runnable_modes)

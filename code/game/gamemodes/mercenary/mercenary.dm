@@ -7,18 +7,13 @@ var/list/codenames = list(
 	"female" = list("Queen", "Czar", "Boss", "Kingpin", "Director", "Empress", "Duchess", "Lady", "Baronet")
 	)
 
-var/list/codenames_last = list(
-	"male" = list("King", "Czar", "Boss", "Kingpin", "Director", "Emperor", "Duke", "Lord", "Baron"),
-	"female" = list("Queen", "Czar", "Boss", "Kingpin", "Director", "Empress", "Duchess", "Lady", "Baronet")
-	)
-
 /datum/game_mode
 	var/datum/contract/merc_contract = null
 
 /datum/game_mode/mercenary
 	name = "mercenary"
 	config_tag = "mercenary"
-	required_players = 1
+	required_players = 20
 	required_players_secret = 25 // 25 players - 5 players to be the nuke ops = 20 players remaining
 	required_enemies = 1
 	recommended_enemies = 5
@@ -40,7 +35,7 @@ var/list/codenames_last = list(
 	return 1
 
 /datum/game_mode/mercenary/pre_setup()
-	var/list/possible_syndicates = get_players_for_role(BE_OPERATIVE)
+	var/list/possible_syndicates = pick_antagonists(BE_OPERATIVE,)
 
 	// Merc number should scale to active crew.
 	var/n_players = num_players()
@@ -107,10 +102,9 @@ var/list/codenames_last = list(
 	return ..()
 
 /datum/game_mode/mercenary/check_finished()
-	..()
 	if( merc_contract.finished )
 		return 1
-	return 0
+	return ..()
 
 /datum/game_mode/proc/are_operatives_dead()
 	for(var/datum/mind/operative_mind in syndicates)

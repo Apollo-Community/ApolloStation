@@ -264,13 +264,13 @@
 
 	if( log_client_to_db() == 2.0 ) // if we're an entirely new player
 		src << "<span class='admin_channel'>Hello and welcome to Apollo Station! Since this is your first time connecting, we'll be tossing some info \
-		your way. If you've never played SS13 before, we high recommend you read this <a href='http://wiki.apollo-community.org/index.php?title=The_Basics'>new player guide</a>. \
+		your way. If you've never played SS13 before, we highly recommend you read this <a href='http://wiki.apollo-community.org/index.php?title=The_Basics'>new player guide</a>. \
 		Otherwise, if you're a veteran SS13 player who's new to Apollo, we'd recommend this <a href='http://wiki.apollo-community.org/index.php?title=Apollo_Crash_Course'>crash course guide</a>, \
 		which explains the major differences of Apollo.\
 		<br>In addition feel free message a member of staff for help at any time by either pressing <b>F1</b> or using the <b>\"ahelp\"</b> command.<br><br><i>~Apollo Team</i></span>"
 	else if( !prefs.passed_date )
 		src << "<span class='admin_channel'>We have detected that your ckey is less than one month old. To help get you started we strongly recommend \
-		that you read this wiki page: <a></a>http://wiki.apollo-community.org/index.php?title=The_Basics</a><br>In addition feel free message a member \
+		that you read this wiki page: <a></a>http://wiki.apollo-community.org/index.php?title=The_Basics</a><br>In addition, feel free message a member \
 		of staff for help at any time by either pressing <b>F1</b> or using the <b>\"ahelp\"</b> command.<br><br><i>~Apollo Team</i></span>"
 
 	loadTokens()
