@@ -492,7 +492,7 @@
 		// antag token/commendation weight
 		if( !C.character_tokens["Antagonist"] )
 			C.character_tokens["Antagonist"] = 0
-		weight += ( C.character_tokens["Antagonist"] * 10 )
+		weight += min( (C.character_tokens["Antagonist"] * 10), 1 ) // capped at 1 weight "point"
 
 		// last played as antag weight
 		weight += C.antag_weights["no_antag"]
