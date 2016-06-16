@@ -12,6 +12,8 @@
 
 	rank_succesion_level = 6
 
+	dep_authority = list( SUPPLY )
+
 /datum/job/qm/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
 	H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/headset_cargo(H), slot_l_ear)

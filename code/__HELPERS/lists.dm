@@ -595,3 +595,31 @@ datum/proc/dd_SortValue()
 	for(var/path in subtypes( prototype ))
 		L += new path()
 	return L
+
+// performs a weighted pick from an associative list
+// value is treated as the weight
+// tyvm lummox
+/proc/pick_weighted(list/L)
+	var/totweight = 0
+	var/item
+
+	// sanity shuffle
+	shuffle(L)
+
+	for(item in L)
+		var/weight = L[item]
+		if(isnull(weight))
+			weight = 1
+			L[item] = 1
+
+		totweight += weight
+
+	totweight *= rand()
+
+	for(var/i=1, i<=L.len, ++i)
+		var/weight = L[L[i]]
+		totweight -= weight
+
+		if(totweight <= 0)
+			return L[i]
+

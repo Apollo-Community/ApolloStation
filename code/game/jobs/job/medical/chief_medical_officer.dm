@@ -18,6 +18,8 @@
 
 	rank_succesion_level = COMMAND_SUCCESSION_LEVEL
 
+	dep_authority = list( MEDICAL )
+
 /datum/job/cmo/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
 	H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/heads/cmo(H), slot_l_ear)

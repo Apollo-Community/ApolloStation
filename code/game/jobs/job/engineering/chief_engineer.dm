@@ -20,6 +20,8 @@
 
 	rank_succesion_level = COMMAND_SUCCESSION_LEVEL
 
+	dep_authority = list( ENGINEERING )
+
 /datum/job/chief_engineer/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
 	H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/heads/ce(H), slot_l_ear)

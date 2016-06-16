@@ -20,6 +20,8 @@
 
 	rank_succesion_level = COMMAND_SUCCESSION_LEVEL
 
+	dep_authority = list( SECURITY )
+
 /datum/job/hos/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
 	switch(H.character.backpack)

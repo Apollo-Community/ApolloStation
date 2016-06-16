@@ -26,6 +26,7 @@
 			            access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
 			            access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_cent_captain, access_teleporter)
 
+	dep_authority = list( CIVILIAN, SUPPLY )
 
 /datum/job/hop/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
