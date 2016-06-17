@@ -121,7 +121,6 @@ var/global/list/alloy_postfix = list("metal" = "metallic", "glass" = "glaseous")
 		all_species[S.name] = S
 
 		if( !( S.flags & IS_RESTRICTED ) && ( S.flags & CAN_JOIN ) )
-			world << "[S.name]"
 			playable_species |= S.name
 		if( S.flags & IS_WHITELISTED )
 			whitelisted_species |= S.name

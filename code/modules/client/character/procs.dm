@@ -482,11 +482,12 @@
 						num = text2num( html_decode( num ))
 						if( num )
 							prison_date.Add( num )
-
+/* Disabling this for now until we find out why date proc is messing up
 				if( prison_date && prison_date.len == 3 )
 					var/days = daysTilDate( universe.date, prison_date )
-					if( employment_status == "Active" && days > 0 )
-						employment_status = "[days] days left in prison"
+					if( employment_status == "Active" && days >= PERMAPRISON_SENTENCE )
+						employment_status = "Serving a life sentence"
+*/
 			if( "roles" )
 				var/list/L = params2list( html_decode( value ))
 
