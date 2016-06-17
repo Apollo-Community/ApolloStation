@@ -4,8 +4,8 @@
 	flag = LAWYER
 	department_id = CIVILIAN
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 2
+	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	access = list( access_lawyer, access_court, access_sec_doors, access_maint_tunnels)
