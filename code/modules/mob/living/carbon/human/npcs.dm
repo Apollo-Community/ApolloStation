@@ -13,6 +13,14 @@
 		maxHealth = 100
 		w_uniform = new /obj/item/clothing/under/punpun(src)
 
+/mob/living/carbon/human/monkey/joejoe/New()
+	..()
+	spawn(1)
+		name = "Joe Joe"
+		real_name = name
+		maxHealth = 100
+		w_uniform = new /obj/item/clothing/under/punpun(src)
+
 /mob/living/carbon/human/monkey/punpun/Life()
 	..()
 	//Pun pun gets heals!
@@ -43,7 +51,7 @@
 			else			attack_serverity = 3
 	else
 		attack_serverity = force_fight
-		
+
 	if(lastattacker == user)	attack_serverity++
 
 	if(!attack_serverity)	return
