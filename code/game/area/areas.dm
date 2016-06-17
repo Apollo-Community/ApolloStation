@@ -368,6 +368,18 @@ area/space/atmosalert()
 	requires_power = 1
 	luminosity = 0
 
+/area/shuttle/merchant
+	icon_state = "shuttle"
+	name = "\improper Merchant Shuttle"
+	requires_power = 1
+	luminosity = 0
+
+/area/shuttle/merchant/dock
+	icon_state = "shuttle"
+	name = "\improper Merchant Shuttle Dock"
+	requires_power = 1
+	luminosity = 0
+
 /area/shuttle/alien/mine
 	icon_state = "shuttle"
 	name = "\improper Alien Shuttle Mine"
@@ -563,10 +575,18 @@ area/space/atmosalert()
 	icon_state = "honk"
 	requires_power = 0
 
+/area/antagasteroid
+	name = "\improper Antagonist Hideout"
+	icon_state = "red"
+	requires_power = 0
+	lighting_use_dynamic = 0
+	ambience = list('sound/music/traitor.ogg')
+
 /area/tdome
 	name = "\improper Thunderdome"
 	icon_state = "thunder"
 	requires_power = 0
+	lighting_use_dynamic = 0
 	ambience = list('sound/music/THUNDERDOME.ogg')
 
 /area/tdome/arena

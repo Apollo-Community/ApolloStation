@@ -148,6 +148,7 @@ obj/hanger/square/exterior/space_hanger/blue_space/h5
 
 obj/hanger/square/exterior/space_hanger/blue_space/h6
 	htag = "b_space_6"
+	hanger_area_tag = "/area/shuttle/merchant/dock"
 
 obj/hanger/square/exterior/space_hanger/blue_space/h7
 	htag = "b_space_7"
