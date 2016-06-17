@@ -50,8 +50,8 @@
 	if( config.usealienwhitelist )
 		if(!is_alien_whitelisted( user, current_species.name ))
 			dat += "<font color='red'><b>You cannot play as this species.</br><small>If you wish to be whitelisted, you can make an application post on <a href='byond://?src=\ref[src];character=open_whitelist_forum'>the forums</a>.</small></b></font></br>"
-		else if(!(current_species.flags & CAN_JOIN) && !check_rights(R_ADMIN, 0))
-			dat += "<font color='red'><b>You cannot play as this species.</br><small>This species is not available for play as a station race..</small></b></font></br>"
+		else if( !( current_species.flags & CAN_JOIN ) && !check_rights( R_ADMIN, 0 ))
+			dat += "<font color='red'><b>You cannot create a new character with this species!</br><small>You'll need to find some other way to play as this race...</small></b></font></br>"
 		else
 			dat += "<a href='byond://?src=\ref[src];character=[menu_name];task=select_species;species=[species_preview]'>select</a>"
 	else
