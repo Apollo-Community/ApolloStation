@@ -37,6 +37,7 @@
 	flags = IS_RESTRICTED
 
 	var/holder_type = /obj/item/weapon/holder/monkey
+
 /datum/species/monkey/handle_npc(var/mob/living/carbon/human/H)
 	if(H.stat != CONSCIOUS)
 		return

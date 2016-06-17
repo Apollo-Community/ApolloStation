@@ -120,7 +120,7 @@ var/global/list/alloy_postfix = list("metal" = "metallic", "glass" = "glaseous")
 		S.race_key = rkey //Used in mob icon caching.
 		all_species[S.name] = S
 
-		if(!(S.flags & IS_RESTRICTED))
+		if( !( S.flags & IS_RESTRICTED ) && ( S.flags & CAN_JOIN ) )
 			world << "[S.name]"
 			playable_species |= S.name
 		if( S.flags & IS_WHITELISTED )
