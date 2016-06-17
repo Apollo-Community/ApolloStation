@@ -189,7 +189,7 @@ var/list/codenames = list(
 
 		text += "<font size=2>The mercenaries were:</font><br>"
 		for(var/datum/mind/syndicate in syndicates)
-			text += "<B>[syndicate.character.name]</B>, played by <B>[syndicate.key]</B><br>"
+			text += "<B>[syndicate.current.real_name]</B><br>"
 
 		world << text
 	return 1
