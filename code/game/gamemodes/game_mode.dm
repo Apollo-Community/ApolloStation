@@ -473,39 +473,35 @@
 ///////////////////////////////////
 //Picks some antags for the round//
 ///////////////////////////////////
-/datum/game_mode/proc/pick_antagonists(var/role, var/num_antags)
+/datum/game_mode/proc/pick_antagonists(var/role, var/num_antags = required_enemies)
+	if(!num_antags)	return null
+
 	var/list/possible_antags = get_players_for_role(role)
 	var/list/chosen_antags = list()
 	var/list/clients = list()
 
-	// track the top weight and discard candidates below this top weight
-	// antags are then picked from a list of players with that weight
-	var/top_weight
+	// assign players an increased probability of being picked from a candidate list based on their commendations and amount of rounds they haven't played an antagonist
 	for( var/datum/mind/M in possible_antags )
-		if( M.antagonist || ( M.assigned_role in restricted_jobs ))
-			possible_antags -= M
-			continue
-
 		var/weight = 0
 		var/client/C = M.current.client
 		if( !C )
-			possible_antags -= M
+			possible_antags.Remove(M)
 			continue
 		clients += C
 
 		// antag token/commendation weight
 		if( !C.character_tokens["Antagonist"] )
 			C.character_tokens["Antagonist"] = 0
-		weight += ( C.character_tokens["Antagonist"] * 2 )
+		weight += min( (C.character_tokens["Antagonist"] * 10), 1 ) // capped at 1 weight "point"
 
 		// last played as antag weight
-		weight += C.no_antag_weight
-		C.no_antag_weight++ // set to 0 for chosen antags later
+		weight += C.antag_weights["no_antag"]
+		C.antag_weights["no_antag"]++ // set to 0 for chosen antags later
 
-		if(!top_weight || weight >= top_weight)
-			top_weight = weight
-		else
-			possible_antags -= M
+		// static (admin-defined) weight
+		weight += C.antag_weights["static"]
+
+		possible_antags[M] = max(weight, 0)
 
 	if( !possible_antags.len )
 		return chosen_antags
@@ -514,23 +510,19 @@
 		if( !possible_antags.len )
 			break
 
-		var/datum/mind/antag = pick(possible_antags)
-		var/client/C = antag.current.client
-		if( !C )
-			possible_antags -= antag
-			continue
+		var/datum/mind/antag = pick_weighted(possible_antags)
 
-		C.no_antag_weight = 0
+		var/client/C = antag.current.client
+		C.antag_weights["no_antag"] = 0
 
 		chosen_antags += antag
-		possible_antags -= antag
+		possible_antags.Remove(antag)
 
 	// there has to be a better way to do this
 	for( var/client/C in clients )
 		C.saveAntagWeights()
 
 	return chosen_antags
-
 
 /datum/game_mode/proc/latespawn(var/mob)
 

@@ -9,7 +9,7 @@
 
 /datum/contract/mercenary/end( var/success = 0, var/mob/living/worker )
 	..( success, worker )
-	ticker.mode.check_win()
+	
 
 // BEGIN WITH ACTUAL MERCENARY CONTRACTS & STUFF //
 
@@ -26,7 +26,7 @@
 	if( !. )	return
 
 	for( var/datum/mind/M in ticker.minds )
-		if( !M.antagonist && ( M.assigned_role in list("Captain", "Head of Security")))
+		if( !M.antagonist && ( M.assigned_role in list("Captain", "Head of Security", "Research Director")))
 			target = M
 			break
 
@@ -82,7 +82,7 @@
 	informal_name = "Steal the top secret documents"
 
 /datum/contract/mercenary/document/check_completion()
-	if( !document || get_area(document) == locate(/area/space) ) // destroying the document is a big no-no
+	if( !document ) // destroying the document is a big no-no
 		end(1)
 	if( get_area(document) == locate( /area/syndicate_mothership ))
 		end(1)
