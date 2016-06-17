@@ -205,7 +205,7 @@
 				src << alert("Your select species does not exist!")
 				return 0
 
-			if(!(S.flags & IS_RESTRICTED))
+			if( S.flags & IS_RESTRICTED )
 				src << alert("Your current species, [species], is not available for play on the station.")
 				return 0
 
@@ -250,7 +250,7 @@
 				src << alert("Your select species does not exist!")
 				return 0
 
-			if(!(S.flags & IS_RESTRICTED))
+			if( S.flags & IS_RESTRICTED )
 				src << alert("Your current species, [S], is not available for play on the station.")
 				return 0
 
