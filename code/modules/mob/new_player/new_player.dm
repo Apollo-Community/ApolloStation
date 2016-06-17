@@ -136,7 +136,10 @@
 					totalPlayersReady++
 
 					var/datum/character/H = C.prefs.selected_character
-					var/department = H.department.name
+					var/datum/job/J = job_master.GetJob( H.GetHighestLevelJob() )
+
+					var/datum/department/D = job_master.GetDepartment( J.department_id )
+					var/department = D.name
 
 					if( !department )
 						continue
@@ -145,7 +148,7 @@
 					if( !L )
 						L = list()
 
-					L += H.GetHighestLevelJob() // Adding this character's job
+					L += J.title // Adding this character's job
 					statMessage[department] = L
 
 			statMessage["Players Ready:"] = "[totalPlayersReady] / [totalPlayers]"
