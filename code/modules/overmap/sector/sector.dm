@@ -171,6 +171,9 @@
 				T.ChangeTurf( /turf/simulated/mineral/random )
 				A.contents += T
 
+	spawn( 10 )
+		master_controller.asteroid_ore_map.apply_to_asteroid( zlevel )
+
 	return 1
 
 // This is used only by the generation algorithm, it checks neighbors with a 4-5 rule

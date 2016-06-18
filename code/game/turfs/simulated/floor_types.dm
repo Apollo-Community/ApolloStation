@@ -139,10 +139,6 @@
 	nitrogen = 0
 	temperature = TCMB
 
-	New()
-		..()
-		name = "plating"
-
 /turf/simulated/floor/plating/airless/fakespace
 	icon = 'icons/turf/space.dmi'
 	icon_state = ""

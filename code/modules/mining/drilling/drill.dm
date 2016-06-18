@@ -15,6 +15,7 @@
 	var/active = 0
 	var/list/resource_field = list()
 	var/open = 0
+	var/scan_distance = 15
 
 	var/ore_types = list(
 		"iron" = /obj/item/weapon/ore/iron,
@@ -279,16 +280,11 @@
 	need_update_field = 0
 
 	var/turf/T = get_turf(src)
-	if(!istype(T)) return
+	if( !istype( T )) return
 
-	var/tx = T.x-2
-	var/ty = T.y-2
-	var/turf/mine_turf
-	for(var/iy=0,iy<5,iy++)
-		for(var/ix=0,ix<5,ix++)
-			mine_turf = locate(tx+ix,ty+iy,T.z)
-			if(mine_turf && istype(mine_turf) && mine_turf.has_resources)
-				resource_field += mine_turf
+	for( var/turf/mine in range( scan_distance, T ))
+		if( istype( mine ) && mine.has_resources )
+			resource_field += mine
 
 	if(!resource_field.len)
 		system_error("resources depleted")
