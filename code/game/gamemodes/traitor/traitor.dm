@@ -61,10 +61,16 @@
 	if(traitors.len)
 		var/text = "<font size=2><B>The syndicate factions with active agents were:</B></font><br>"
 		for(var/datum/faction/syndicate/S in faction_controller.factions)
-			if(S.members.len > 0)
-				text += "<B>\The [S.name]</B>, with [S.members.len] agent[S.members.len > 1 ? "s" : ""] present.<br>"
+			var/list/normal_members = S.members.Copy()
+
+			for(var/datum/mind/M in normal_members)
+				if(istype(M.antagonist, /datum/antagonist/traitor/persistant))
+					normal_members -= M
+
+			if(normal_members.len > 0)
+				text += "<B>\The [S.name]</B>, with [normal_members.len] agent[normal_members.len > 1 ? "s" : ""] present.<br>"
 				text += "The [S.name] agents were:<br>"
-				for(var/datum/mind/M in S.members)
+				for(var/datum/mind/M in normal_members)
 					text += print_player_full(M)
 					text += "<br>"
 					text += "[M.name] had to complete at least [M.antagonist.obligatory_contracts] contract. They took on the following contracts:<br>"
@@ -75,7 +81,7 @@
 						text += "<br>[C.informal_name ? C.informal_name : C.title]. <font color='red'>Fail</font>"
 						feedback_add_details("traitor_contract","[C.type]|SUCCESS")
 
-					if(M.antagonist.completed_contracts.len > M.antagonist.obligatory_contracts)
+					if(M.antagonist.completed_contracts.len >= M.antagonist.obligatory_contracts)
 						text += "<br><font color='green'><B>The [lowertext(M.antagonist.name)] was successful!</B></font>"
 						feedback_add_details("traitor_success","SUCCESS")
 					else

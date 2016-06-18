@@ -41,7 +41,6 @@ datum/controller/game_controller/proc/setup()
 
 	setup_objects()
 	setupgenetics()
-	SetupXenoarch()
 
 	//Place templates and spawn in shuttles
 	template_controller.PlaceTemplates()

@@ -28,4 +28,6 @@
 /datum/species/slime/handle_death(var/mob/living/carbon/human/H)
 	spawn(1)
 		if(H)
+			H.character.species = "Human" // CC don't have slime DNA on hand so you turn back into a human.
+			H << "<span class='ooc_notice'>Since you died as a slime-person, your character will be re-cloned as a normal human the next time you play as them.</span>"
 			H.gib()

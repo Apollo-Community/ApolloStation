@@ -202,8 +202,8 @@
 
 	clonemind.transfer_to(H)
 	H.ckey = R.ckey
-	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"
-	H << "<span class='notice'><b>You are now suffering from Cloning Memory Disorder. You do not remember dying, and you cannot recall any memories up to 30 minutes before your death.</b></span>"
+	H << "<span class='notice'>Consciousness slowly creeps over you as your body regenerates.<br><i>So this is what cloning feels like?</i></span>"
+	H << "<span class='ooc_notice'>You are now suffering from Cloning Memory Disorder. You do not remember dying, and you cannot recall any memories up to 30 minutes before your death.</span>"
 	statistics.increase_stat("clones")
 
 	// -- Mode/mind specific stuff goes here

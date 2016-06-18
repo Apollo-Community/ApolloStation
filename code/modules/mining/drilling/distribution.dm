@@ -91,12 +91,6 @@ Deep minerals:
 		generate_distribution_map(1,1,size)
 	while(attempts < ITERATE_BEFORE_FAIL && !map_is_sane())
 
-	if(attempts >= ITERATE_BEFORE_FAIL)
-		world << "<b><font color='red'>Could not generate a sane distribution map. Aborting.</font></b>"
-		map = null
-		return
-	else
-		apply_to_asteroid()
 
 /datum/ore_distribution/proc/clear_distribution_map()
 	for(var/x = 1, x <= real_size, x++)
@@ -134,7 +128,7 @@ Deep minerals:
 		generate_distribution_map(x,y+(input_size/2),input_size/2)
 		generate_distribution_map(x+(input_size/2),y+(input_size/2),input_size/2)
 
-/datum/ore_distribution/proc/apply_to_asteroid()
+/datum/ore_distribution/proc/apply_to_asteroid( var/z_level = 6 )
 
 	// THESE VALUES DETERMINE THE AREA THAT THE DISTRIBUTION MAP IS APPLIED TO.
 	// IF YOU DO NOT RUN OFFICIAL BAYCODE ASTEROID MAP YOU NEED TO CHANGE THEM.
@@ -145,7 +139,7 @@ Deep minerals:
 	var/origin_y = 38  //...and here...
 	var/limit_x = 227  //...and iterate until here...
 	var/limit_y = 242  //...and here...
-	var/asteroid_z = 6 //...on this Z-level.
+	var/asteroid_z = z_level //...on this Z-level.
 
 	var/tx = origin_x
 	var/ty = origin_y
@@ -203,7 +197,7 @@ Deep minerals:
 		tx = origin_x
 		ty += chunk_size
 
-	world << "<b><font color='red'>Resource map generation complete.</font></b>"
+	log_debug( "Resource map generation complete for z-level [z_level]" )
 	return
 
 #undef MAP_CELL
