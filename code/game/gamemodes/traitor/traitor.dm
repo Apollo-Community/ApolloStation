@@ -75,7 +75,7 @@
 						text += "<br>[C.informal_name ? C.informal_name : C.title]. <font color='red'>Fail</font>"
 						feedback_add_details("traitor_contract","[C.type]|SUCCESS")
 
-					if(M.antagonist.completed_contracts.len > M.antagonist.obligatory_contracts)
+					if(M.antagonist.completed_contracts.len >= M.antagonist.obligatory_contracts)
 						text += "<br><font color='green'><B>The [lowertext(M.antagonist.name)] was successful!</B></font>"
 						feedback_add_details("traitor_success","SUCCESS")
 					else
