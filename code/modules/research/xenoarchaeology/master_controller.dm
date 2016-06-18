@@ -38,13 +38,16 @@
 #define ARTIFACTSPAWNNUM_LOWER 6
 #define ARTIFACTSPAWNNUM_UPPER 12
 
-datum/controller/game_controller/proc/SetupXenoarch()
+datum/controller/game_controller/proc/SetupXenoarch( var/z_level )
 	//create digsites
-	for(var/turf/simulated/mineral/M in block(locate(1,1,1), locate(world.maxx, world.maxy, world.maxz)))
+	for( var/turf/simulated/mineral/M in block(locate( 1, 1, z_level ), locate( world.maxx, world.maxy, z_level )))
 		if(isnull(M.geologic_data))
 			M.geologic_data = new/datum/geosample(M)
 
 		if(!prob(XENOARCH_SPAWN_CHANCE))
+			continue
+
+		if( !M.has_artifacts )
 			continue
 
 		digsite_spawning_turfs.Add(M)
@@ -54,6 +57,9 @@ datum/controller/game_controller/proc/SetupXenoarch()
 		var/list/turfs_to_process = list(M)
 		while(turfs_to_process.len)
 			var/turf/simulated/mineral/archeo_turf = pop(turfs_to_process)
+
+			if( !archeo_turf.has_artifacts )
+				continue
 
 			if(target_digsite_size > 1)
 				var/list/viable_adjacent_turfs = orange(1, archeo_turf)

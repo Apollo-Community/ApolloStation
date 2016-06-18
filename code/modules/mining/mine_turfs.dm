@@ -25,6 +25,7 @@
 	var/side_type = "rock"
 	var/dug_type = /turf/simulated/floor/plating/airless/asteroid // what is it turned into when it is dug?
 
+	var/has_artifacts = 0 // Does this type of rock hold xenoarch artifacts?
 	has_resources = 1
 
 /turf/simulated/mineral/New()
@@ -395,6 +396,7 @@
 	icon_state = "lunar_rock"
 	side_type = "lunar_rock"
 	has_resources = 0
+	has_artifacts = 1
 	dug_type = /turf/planet/lunar
 
 /turf/simulated/mineral/lunar/MineralSpread()
