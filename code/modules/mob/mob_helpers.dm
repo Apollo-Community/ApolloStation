@@ -51,6 +51,9 @@
 /proc/isslime(A)
 	if(istype(A, /mob/living/carbon/slime))
 		return 1
+	if( istype( A, /mob/living/carbon/human ))
+		var/mob/living/carbon/human/H = A
+		return istype( H.species, /datum/species/slime )
 	return 0
 
 /proc/isrobot(A)
