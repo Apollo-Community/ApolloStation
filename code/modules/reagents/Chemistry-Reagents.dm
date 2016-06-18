@@ -326,13 +326,23 @@ datum
 			color = "#13BC5E" // rgb: 19, 188, 94
 			overdose = REAGENTS_OVERDOSE
 
-			on_mob_life(var/mob/living/M as mob)
+			on_mob_life(var/mob/living/carbon/human/M as mob)
 				if(!M) M = holder.my_atom
-				if(ishuman(M))
-					var/mob/living/carbon/human/human = M
-					if(human.species.name != "Slime")
+				if( istype( M ) )
+					if( prob( 30 ) && M.species.name == "Human" )
 						M << "<span class='danger'>Your flesh rapidly mutates!</span>"
-						human.set_species("Slime")
+						M.set_species( "Slime" )
+					else // this is some nasty stuff if you're unlucky
+						M.radiation = max( M.radiation-70*REM, 0 )
+						M.adjustToxLoss( -10*REM )
+						if( prob( 15 ))
+							M.take_organ_damage( 20, 0 )
+
+						randmuti(M)
+						if(prob(98))	randmutb(M)
+						else			randmutg(M)
+						domutcheck(M, null)
+						M.UpdateAppearance()
 				..()
 				return
 
