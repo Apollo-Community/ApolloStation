@@ -252,7 +252,8 @@
 				if(raw_choice)
 					choice = sanitize(raw_choice)
 			religion = choice
-
+		if("disabilities")
+			disabilities = !disabilities
 		if( "pAI" )
 			paiController.recruitWindow(user, 0)
 			return 1

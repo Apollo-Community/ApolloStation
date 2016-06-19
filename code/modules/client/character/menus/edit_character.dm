@@ -392,17 +392,6 @@
 			if(new_backpack)
 				backpack = backpacklist.Find(new_backpack)
 
-
-		if("disabilities")
-			return
-			/*if(text2num(href_list["disabilities"]) >= -1)
-				if(text2num(href_list["disabilities"]) >= 0)
-					disabilities ^= (1<<text2num(href_list["disabilities"])) //MAGIC
-				SetDisabilities(user)
-				return
-			else
-				user << browse(null, "window=disabil")*/
-
 		if("organs_adjust")
 			var/choice = input(user, "Which type do you want to change?") as null|anything in list("Limb","Organ")
 			if( choice == "Limb" )
