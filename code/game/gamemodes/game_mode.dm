@@ -285,7 +285,7 @@
 
 		var/notoriety = traitor.original_character.antag_data["notoriety"]
 		var/contract_requirement = round( ( notoriety + 1 ) / 2 )
-		if( antag.completed_contracts.len > contract_requirement )
+		if( antag.completed_contracts.len >= contract_requirement )
 			notoriety++
 			traitor.current << "<span class='notice'>You have gained notoriety for completing [antag.completed_contracts.len > contract_requirement ? "more than" : ""] [contract_requirement] contracts!</span>"
 		else if( antag.completed_contracts.len < ( notoriety - contract_requirement ))
