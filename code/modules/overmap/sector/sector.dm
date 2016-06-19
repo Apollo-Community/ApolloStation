@@ -72,9 +72,12 @@
 	return locate( OVERMAP_STATION_X+2, OVERMAP_STATION_Y+2, OVERMAP_ZLEVEL )
 
 /obj/effect/mapinfo/sector/moon/initliazeMap()
-	master_controller.SetupXenoarch( zlevel )
-
 	..()
+
+	spawn( 10 )
+		master_controller.SetupXenoarch( zlevel )
+
+	return 1
 
 /obj/effect/mapinfo/sector/tcomm_old
 	name = "Abandoned Satellite"
@@ -176,7 +179,8 @@
 				T.ChangeTurf( /turf/simulated/mineral/random )
 				A.contents += T
 
-	master_controller.asteroid_ore_map.apply_to_asteroid( zlevel )
+	spawn( 10 )
+		master_controller.asteroid_ore_map.apply_to_asteroid( zlevel )
 
 	return 1
 
