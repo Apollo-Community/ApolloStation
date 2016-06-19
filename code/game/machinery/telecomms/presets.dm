@@ -51,7 +51,7 @@
 	network = "tcomms"
 	autolinkers = list("hub", "relay", "c_relay", "s_relay", "m_relay", "r_relay", "science", "medical",
 	"supply", "service", "common", "command", "engineering", "security",
-	"receiverA", "receiverB", "broadcasterA", "broadcasterB")
+	"receiver", "broadcaster")
 
 /obj/machinery/telecomms/hub/preset_cent
 	id = "CentComm Hub"
@@ -61,7 +61,7 @@
 	 "centcomm", "receiverCent", "broadcasterCent")
 
 //Receivers
-
+/*
 //--PRESET LEFT--//
 
 /obj/machinery/telecomms/receiver/preset_left
@@ -71,12 +71,12 @@
 	freq_listening = list(SCI_FREQ, MED_FREQ, SUP_FREQ, SRV_FREQ) // science, medical, supply, service
 
 //--PRESET RIGHT--//
-
+*/
 /obj/machinery/telecomms/receiver/preset_right
-	id = "Receiver B"
+	id = "Receiver"
 	network = "tcomms"
-	autolinkers = list("receiverB") // link to relay
-	freq_listening = list(COMM_FREQ, ENG_FREQ, SEC_FREQ) //command, engineering, security
+	autolinkers = list("receiver") // link to relay
+	freq_listening = list(COMM_FREQ, ENG_FREQ, SEC_FREQ,SCI_FREQ, MED_FREQ, SUP_FREQ, SRV_FREQ)
 
 	//Common and other radio frequencies for people to freely use
 	New()
@@ -222,17 +222,17 @@
 //--PRESET LEFT--//
 
 /obj/machinery/telecomms/broadcaster/preset_left
-	id = "Broadcaster A"
+	id = "Broadcaster"
 	network = "tcomms"
 	autolinkers = list("broadcasterA")
 
 //--PRESET RIGHT--//
-
+/*
 /obj/machinery/telecomms/broadcaster/preset_right
 	id = "Broadcaster B"
 	network = "tcomms"
 	autolinkers = list("broadcasterB")
-
+*/
 /obj/machinery/telecomms/broadcaster/preset_cent
 	id = "CentComm Broadcaster"
 	network = "tcomms"
