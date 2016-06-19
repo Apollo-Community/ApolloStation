@@ -177,12 +177,12 @@ Please contact me on #coderbus IRC. ~Carn x
 		M.Turn(90)
 		M.Scale(size_multiplier)
 		M.Translate(1,-6)
-		src.transform = M
+		animate(src, transform=M, time=1.4)
 	else
 		var/matrix/M = matrix()
 		M.Scale(size_multiplier)
 		M.Translate(0, 16*(size_multiplier-1))
-		src.transform = M
+		animate(src, transform=M, time=1.4)
 
 var/global/list/damage_icon_parts = list()
 
