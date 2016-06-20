@@ -95,6 +95,8 @@
 			message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
 			gender = MALE
 
+	round_number = universe.round_number
+
 /datum/character/proc/saveCharacter( var/prompt = 0 )
 	if( istype( char_mob ))
 		copy_to( char_mob )
@@ -414,8 +416,6 @@
 	variables["employment_status"] = "text"
 	variables["felon"] = "number"
 	variables["prison_date"] = "prison_date"
-
-	round_number = universe.round_number
 
 	var/query_names = list2text( variables, "," )
 	var/sql_ckey = ckey( ckey )
