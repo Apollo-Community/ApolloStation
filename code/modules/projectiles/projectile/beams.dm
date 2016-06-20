@@ -251,6 +251,10 @@ var/list/beam_master = list()
 	if(!loc || loc.density || !node1)
 		Bump(loc)
 		return
+	for(var/atom/A in loc)
+		if(A.density)
+			Bump(A)
+			return
 	if(node2 && node2.loc) // don't try to propagate if there's a beam segment ahead
 		spawn(process_delay)
 			process()
