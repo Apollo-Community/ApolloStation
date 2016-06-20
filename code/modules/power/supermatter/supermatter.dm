@@ -449,3 +449,5 @@
 	spawn(0)
 		over.MouseDrop_T(src,usr)
 	return
+
+	qdel( src )
