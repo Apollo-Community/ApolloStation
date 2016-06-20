@@ -40,27 +40,31 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		var/returnval = null
 		var/class = null
 
-		switch(alert("Proc owned by something?",,"Yes","No"))
-			if("Yes")
-				targetselected = 1
-				class = input("Proc owned by...","Owner",null) as null|anything in list("Obj","Mob","Area or Turf","Client")
-				switch(class)
-					if("Obj")
-						target = input("Enter target:","Target",usr) as obj in world
-					if("Mob")
-						target = input("Enter target:","Target",usr) as mob in world
-					if("Area or Turf")
-						target = input("Enter target:","Target",usr.loc) as area|turf in world
-					if("Client")
-						var/list/keys = list()
-						for(var/client/C)
-							keys += C
-						target = input("Please, select a player!", "Selection", null, null) as null|anything in keys
-					else
-						return
-			if("No")
-				target = null
-				targetselected = 0
+		if(alert("Proc owned by something?",,"Yes","No") == "Yes")
+			targetselected = 1
+			var/list/options = list("Obj","Mob","Area or Turf","Client")
+			if(src.holder && src.holder.marked_datum)
+				options += "Marked object"
+			class = input("Proc owned by...","Owner",null) as null|anything in options
+			switch(class)
+				if("Obj")
+					target = input("Enter target:","Target",usr) as obj in world
+				if("Mob")
+					target = input("Enter target:","Target",usr) as mob in world
+				if("Area or Turf")
+					target = input("Enter target:","Target",usr.loc) as area|turf in world
+				if("Client")
+					var/list/keys = list()
+					for(var/client/C)
+						keys += C
+					target = input("Please, select a player!", "Selection", null, null) as null|anything in keys
+				if("Marked object")
+					target = src.holder.marked_datum
+				else
+					return
+		else
+			target = null
+			targetselected = 0
 
 		var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
 		if(!procname)	return
