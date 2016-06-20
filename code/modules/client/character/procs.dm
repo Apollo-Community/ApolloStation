@@ -226,6 +226,7 @@
 	variables["employment_status"] = html_encode( sql_sanitize_text( employment_status ))
 	variables["felon"] = sanitize_integer( felon, 0, BITFLAGS_MAX, 0 )
 	variables["prison_date"] = html_encode( list2params( prison_date ))
+	variables["round_number"] = sanitize_integer( round_number, 0, 1.8446744e+19, 0 )
 
 	var/list/names = list()
 	var/list/values = list()
@@ -413,6 +414,8 @@
 	variables["employment_status"] = "text"
 	variables["felon"] = "number"
 	variables["prison_date"] = "prison_date"
+
+	round_number = universe.round_number
 
 	var/query_names = list2text( variables, "," )
 	var/sql_ckey = ckey( ckey )

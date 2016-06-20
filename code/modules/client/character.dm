@@ -124,6 +124,8 @@ var/list/all_characters = list() // A list of all loaded characters
 	var/felon = 0 // Is this character a convicted felon?
 	var/list/prison_date // The date that they get released from prison
 
+	var/round_number = 0 // When was this character last played?
+
 	var/datum/browser/menu
 
 	// Skills
@@ -139,4 +141,3 @@ var/list/all_characters = list() // A list of all loaded characters
 
 	var/new_character = 1 // Is this a new character?
 	var/temporary = 1 // Is this character only for this round?
-

@@ -214,6 +214,7 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `employment_status` varchar(100) NOT NULL DEFAULT "Active",
   `felon` int UNSIGNED NOT NULL DEFAULT '0',
   `prison_date` text,
+  `round_number` bigint UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
 
