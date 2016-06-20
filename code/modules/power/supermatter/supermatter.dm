@@ -450,4 +450,5 @@
 		over.MouseDrop_T(src,usr)
 	return
 
+/obj/machinery/power/supermatter/overmapTravel()
 	qdel( src )
