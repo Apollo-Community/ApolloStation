@@ -129,6 +129,9 @@
 		see_in_dark = 2
 		see_invisible = SEE_INVISIBLE_LIVING
 
+	if(is_ventcrawling)
+		see_invisible = 100
+
 	if (healths)
 		if (stat != 2)
 			switch(health)
