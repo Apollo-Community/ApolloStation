@@ -99,10 +99,12 @@
 
 /datum/character/proc/saveCharacter( var/prompt = 0 )
 	if( istype( char_mob ))
+		char_mob.fully_replace_character_name( char_mob.real_name, name )
 		copy_to( char_mob )
 		char_mob.update_hair()
 		char_mob.update_body()
 		char_mob.check_dna( char_mob )
+
 
 	if( temporary ) // If we're just a temporary character, dont save to database
 		return 1
