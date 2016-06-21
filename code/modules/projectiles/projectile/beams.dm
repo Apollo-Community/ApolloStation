@@ -270,6 +270,9 @@ var/list/beam_master = list()
 	spawn(process_delay)
 		process()
 
+/obj/item/projectile/beam/continuous/singularity_pull()
+	return
+
 /obj/item/projectile/beam/continuous/emitter
 	name = "emitter beam"
 

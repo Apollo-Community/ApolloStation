@@ -224,7 +224,7 @@
 /obj/machinery/telecomms/broadcaster/preset_left
 	id = "Broadcaster"
 	network = "tcomms"
-	autolinkers = list("broadcasterA")
+	autolinkers = list("broadcaster")
 
 //--PRESET RIGHT--//
 /*
