@@ -290,8 +290,8 @@ var/list/robot_verbs_default = list(
 			module_sprites["Drone"] = "drone-miner"
 			module_sprites["Ravensdale"] = "ravensdale-Miner"
 
-		if("Crisis")
-			module = new /obj/item/weapon/robot_module/crisis(src)
+		if("Medical")
+			module = new /obj/item/weapon/robot_module/medical(src)
 			module.channels = list("Medical" = 1)
 			if(camera && "Robots" in camera.network)
 				camera.network.Add("Medical")
@@ -300,19 +300,6 @@ var/list/robot_verbs_default = list(
 			module_sprites["Advanced Droid"] = "droid-medical"
 			module_sprites["Needles"] = "medicalrobot"
 			module_sprites["Drone" ] = "drone-medical"
-			module_sprites["Ravensdale"] = "ravensdale-Medical"
-
-		if("Surgeon")
-			module = new /obj/item/weapon/robot_module/surgeon(src)
-			module.channels = list("Medical" = 1)
-			if(camera && "Robots" in camera.network)
-				camera.network.Add("Medical")
-
-			module_sprites["Basic"] = "Medbot"
-			module_sprites["Standard"] = "surgeon"
-			module_sprites["Advanced Droid"] = "droid-medical"
-			module_sprites["Needles"] = "medicalrobot"
-			module_sprites["Drone"] = "drone-surgery"
 			module_sprites["Ravensdale"] = "ravensdale-Medical"
 
 		if("Security")
@@ -328,18 +315,6 @@ var/list/robot_verbs_default = list(
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
-			module.channels = list("Engineering" = 1)
-			if(camera && "Robots" in camera.network)
-				camera.network.Add("Engineering")
-			module_sprites["Basic"] = "Engineering"
-			module_sprites["Antique"] = "engineerrobot"
-			module_sprites["Landmate"] = "landmate"
-			module_sprites["Landmate - Treaded"] = "engiborg+tread"
-			module_sprites["Drone"] = "drone-engineer"
-			module_sprites["Ravensdale"] = "ravensdale-Engineering"
-
-		if("Construction")
-			module = new /obj/item/weapon/robot_module/construction(src)
 			module.channels = list("Engineering" = 1)
 			if(camera && "Robots" in camera.network)
 				camera.network.Add("Engineering")
