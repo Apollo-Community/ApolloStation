@@ -577,7 +577,7 @@
 				src << "The vent is welded shut!"
 				return
 			for(var/mob/O in viewers(src, null))
-				O.show_message(text("<B>[src] [pick(list("squeezes","plops","hops",""))] out from the ventilation ducts!</B>"), 1)
+				O.show_message(text("<B>[src] [pick(list("squeezes","plops","hops"))] out from the ventilation ducts!</B>"), 1)
 
 			is_ventcrawling = 0
 			see_invisible = SEE_INVISIBLE_LIVING
