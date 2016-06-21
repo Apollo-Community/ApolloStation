@@ -46,7 +46,7 @@
 	var/datum/mind/list/taken = list()
 	for(var/datum/contract/C in (faction.contracts + faction.completed_contracts))
 		var/datum/contract/kill/K = C
-		if((istype(K) || istype(C, /datum/contract/protect)) && K.target)	taken += K.target
+		if((istype(K)) && K.target)	taken += K.target
 	return taken
 
 /datum/contract/kill/proc/get_target()
@@ -63,7 +63,7 @@
 	title = "Assassinate Head of Staff"
 	desc = "We're looking to instate one of our own agents in a position higher up. That means someone already there has to go."
 	time_limit = 2700
-	min_notoriety = 5
+	min_notoriety = 4
 
 	reward = 5000
 
@@ -86,7 +86,7 @@
 	var/datum/mind/list/taken = list()
 	for(var/datum/contract/C in (faction.contracts + faction.completed_contracts))
 		var/datum/contract/kill/head/K = C
-		if((istype(K) || istype(C, /datum/contract/protect)) && K.target)	taken += K.target
+		if((istype(K)) && K.target)	taken += K.target
 	return taken
 
 /datum/contract/kill/head/get_target()
@@ -95,3 +95,70 @@
 		if(ishuman(M.current) && M.current.stat != 2 && M.assigned_role in command_positions)
 			candidates += M
 	target = (candidates.len > 0 ? pick(candidates) : null)
+
+// Kill someone's pet. You monster
+/datum/contract/kill/pet
+	title = "Murder some poor guy's pet"
+	desc = "be an asshole"
+	time_limit = 1800
+	min_notoriety = 0
+
+	reward = 1500
+
+	var/mob/living/pet_target = null
+
+/datum/contract/kill/pet/New()
+	. = ..()
+	if(!.)	return
+
+	pet_target = get_target()
+	if(!pet_target)
+		qdel(src)
+		return 0
+
+	set_details()
+
+/datum/contract/kill/pet/set_details()
+	if(istype(faction, /datum/faction/syndicate/arc))
+		title = "Euthanize [pet_target.name]"
+		desc = "[pet_target.name] is being held in captivity, [pick(list("set the poor soul free!", "free the animal from its miserable life!"))]"
+	else
+		title = "[pick(list("Kill", "Murder", "Eliminate"))] [pet_target.name]"
+		desc = "[pet_target.name] is a dear mascot to their department. [pick(list("Please, murder the animal.", "Just kill them."))]"
+	informal_name = "Kill [pet_target.name]"
+
+/datum/contract/kill/pet/check_completion()
+	if(workers.len == 0)	return
+
+	if(pet_target.isDead())
+		if(pet_target.lastattacker in workers)
+			end(1, pet_target.lastattacker)
+			return
+		end()
+	else
+		return
+
+/datum/contract/kill/pet/get_taken_targets()
+	var/datum/mind/list/taken = list()
+	for(var/datum/contract/C in (faction.contracts + faction.completed_contracts))
+		var/datum/contract/kill/pet/K = C
+		if((istype(K)) && K.pet_target)	taken += K.pet_target
+	return taken
+
+/datum/contract/kill/pet/get_target()
+	var/datum/mind/list/candidates = list()
+	var/mob/living/simple_animal/list/taken = get_taken_targets()
+
+	var/mob/living/simple_animal/pets = list(
+		/mob/living/simple_animal/parrot/Poly,
+		/mob/living/simple_animal/dog/labrador/beaker,
+		/mob/living/simple_animal/cat/Runtime,
+		/mob/living/simple_animal/dog/german_shep/sirius,
+		/mob/living/simple_animal/dog/corgi/Ian
+	)
+
+	for(var/P in pets)
+		var/mob/living/simple_animal/M = locate(P)
+		if(M && !M.isDead() && !(M in taken))
+			candidates += M
+	pet_target = (candidates.len > 0 ? pick(candidates) : null)

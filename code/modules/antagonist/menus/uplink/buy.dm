@@ -31,7 +31,8 @@
 	. += " - <b><a href='byond://?src=\ref[src];tgroup=close'>Close</a></b>"
 	. += "<hr></center>"
 
-	if(antag && antag.can_buy && !faction_controller.contract_ban && !antag.uplink_blocked)
+	// REMOVE USER.MIND.CHANGELING CHECK WHEN CHANGELING GETS PORTED! it's just there to prevent old lings having uplink access for now
+	if(antag && antag.can_buy && !faction_controller.contract_ban && !antag.uplink_blocked && !user.mind.changeling)
 		. += "<h2><span class='white'>Uplink Market</span></h2>"
 		. += "<h3><span class='white'>Available Funds: $[A.money]</span></h3>"
 

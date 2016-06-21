@@ -38,6 +38,8 @@
 	// Simulates stuff getting broken due to molecular bonds decaying.
 	var/decay_rate = 0
 
+	var/round_number = 0 // How many days has it been since Jan 1, 2560?
+
 /datum/universal_state/proc/load_date()
 	var/max_attempts = 5
 
@@ -65,6 +67,7 @@
 			log_debug( "Loaded date was [days] days behind the default date!" )
 			continue
 
+		round_number = days
 		log_debug( "Loaded date: [print_date( date )]!" )
 		date = progessDate( date )
 		log_debug( "Date progressed: [print_date( date )]!" )
