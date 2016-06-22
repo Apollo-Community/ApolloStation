@@ -64,3 +64,15 @@
 
 	var/session_start_time = 0 // When did our session begin?
 	var/total_afk_time = 0 // How low have we been AFK this session?
+
+	////////////
+	//PARALLAX//
+	////////////
+	var/updating_parallax = 0
+	var/list/parallax = list()
+	var/list/parallax_offset = list()
+	var/turf/previous_turf = null
+	var/obj/screen/plane_master/parallax_master/parallax_master = null
+	var/obj/screen/plane_master/parallax_dustmaster/parallax_dustmaster = null
+	var/obj/screen/plane_master/parallax_spacemaster/parallax_spacemaster = null
+	var/last_parallax_shift 

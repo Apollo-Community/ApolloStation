@@ -143,7 +143,7 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = ""
 	name = "space"
-	plane = SPACE_PARALLAX_PLANE - 1
+	plane = PLANE_SPACE_BACKGROUND
 
 	temperature = T20C-270
 

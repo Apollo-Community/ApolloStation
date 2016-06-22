@@ -33,3 +33,7 @@ var/list/preferences_datums = list()
 
 	// Items tied to the account
 	var/list/account_items = list()
+
+	var/space_parallax = 1
+	var/space_dust = 1
+	var/parallax_speed = 3

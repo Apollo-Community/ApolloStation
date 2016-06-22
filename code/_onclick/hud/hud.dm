@@ -41,16 +41,6 @@ var/list/global_huds = list(
 	return screen
 
 /datum/global_hud/New()
-	var/star_count = 1000
-
-	parallax_stars = list()
-	for( var/i = 0; i < star_count; i++ )
-		parallax_stars += new /image/space_star()
-
-	parallax_bluespace_stars = list()
-	for( var/i = 0; i < star_count; i++ )
-		parallax_bluespace_stars += new /image/space_star/bluespace()
-
 	//420erryday psychedellic colours screen overlay for when you are high
 	druggy = new /obj/screen()
 	druggy.screen_loc = "WEST,SOUTH to EAST,NORTH"
@@ -237,34 +227,6 @@ datum/hud/New(mob/owner)
 					if(slot_r_store)
 						if(H.r_store) H.r_store.screen_loc = null
 
-/datum/hud/proc/create_parallax()
-	// SPESS BACKGROUND
-	mymob.parallax_master = new /obj/screen/parallax_master()
-	mymob.space_parallax = new /obj/screen/space_parallax()
-	mymob.space_parallax.overlays += global_hud.parallax_stars
-
-	mymob.client.screen += mymob.parallax_master
-	mymob.client.screen += mymob.space_parallax
-	//mymob.client.screen += global_hud.parallax_stars
-
-	var/area/A = get_area( mymob )
-	if( istype( A ))
-		update_parallax_style(A.parallax_style)
-
-// updates the style of the parallax background
-// made this way so its easier to expand upon later
-/datum/hud/proc/update_parallax_style(var/style)
-	if(mymob.space_parallax.icon_state == style)	return
-
-	mymob.space_parallax.icon_state = style
-	mymob.space_parallax.overlays.Cut()
-
-	switch(style)
-		if("bluespace")
-			mymob.space_parallax.overlays += global_hud.parallax_bluespace_stars
-		if("space")
-			mymob.space_parallax.overlays += global_hud.parallax_stars
-
 /datum/hud/proc/instantiate()
 	if(!ismob(mymob)) return 0
 	if(!mymob.client) return 0
@@ -286,8 +248,6 @@ datum/hud/New(mob/owner)
 		robot_hud()
 	else if(isobserver(mymob))
 		ghost_hud()
-
-	create_parallax()
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12(var/full = 0 as null)

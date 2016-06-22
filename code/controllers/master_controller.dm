@@ -46,6 +46,11 @@ datum/controller/game_controller/proc/setup()
 	template_controller.PlaceTemplates()
 	shuttle_controller.setup()
 
+	var/start = world.time
+	admin_notice("Caching space parallax simulation...")
+	cachespaceparallax()
+	admin_notice("Finished caching space parallax simulation in [(world.time - start)/10]s.")
+
 	// Pick a new race to unwhitelist for today's week
 	var/deciseconds_in_week = DECISECONDS_IN_SECOND*SECONDS_IN_WEEK
 	var/selected_race = ((world.realtime/deciseconds_in_week) % whitelisted_species.len)
