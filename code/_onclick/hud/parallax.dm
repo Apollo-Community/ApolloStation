@@ -14,7 +14,7 @@ var/list/parallax_on_clients = list()
 	name = ""
 	blend_mode = BLEND_ADD
 	layer = AREA_LAYER
-	plane = PLANE_SPACE_PARALLAX
+	plane = PLANE_SPACE_BACKGROUND
 	var/parallax_speed = 0
 	var/last_accumulated_offset_x = 0
 	var/last_accumulated_offset_y = 0
@@ -49,6 +49,7 @@ var/list/parallax_on_clients = list()
 	var/client/C = mymob.client
 	if(!parallax_initialized || C.updating_parallax) return
 
+	// why update if you can't even see any space
 	for(var/turf/space/T in view(C.view, get_turf(C.eye)))
 		C.updating_parallax = 1
 		break
@@ -222,7 +223,7 @@ var/list/parallax_on_clients = list()
 
 		parallax_layer.overlays = L
 		parallax_layer.parallax_speed = 0
-		parallax_layer.plane = PLANE_SPACE_PARALLAX
+		parallax_layer.plane = PLANE_SPACE_BACKGROUND
 		calibrate_parallax(parallax_layer,i+1)
 		parallax_icon[index] = parallax_layer
 		index++
@@ -241,7 +242,7 @@ var/list/parallax_on_clients = list()
 
 		parallax_layer.overlays = L
 		parallax_layer.parallax_speed = 1
-		parallax_layer.plane = PLANE_SPACE_PARALLAX
+		parallax_layer.plane = PLANE_SPACE_BACKGROUND
 		calibrate_parallax(parallax_layer,i+1)
 		parallax_icon[index] = parallax_layer
 		index++
@@ -259,7 +260,7 @@ var/list/parallax_on_clients = list()
 
 		parallax_layer.overlays = L
 		parallax_layer.parallax_speed = 2
-		parallax_layer.plane = PLANE_SPACE_PARALLAX
+		parallax_layer.plane = PLANE_SPACE_BACKGROUND
 		calibrate_parallax(parallax_layer,i+1)
 		parallax_icon[index] = parallax_layer
 		index++
