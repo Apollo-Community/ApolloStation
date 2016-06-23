@@ -179,7 +179,7 @@
 "dw" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 6},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 6},/obj/machinery/firealarm{dir = 8; pixel_x = -16},/turf/simulated/floor/plating,/area/slater/engine)
 "dx" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 10},/turf/simulated/floor/plating,/area/slater/engine)
 "dy" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 10},/turf/simulated/floor/plating,/area/slater/engine)
-"dz" = (/obj/structure/cable,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/power/apc{dir = 4; name = "east bump"; pixel_x = 24},/obj/structure/table/rack,/obj/item/clothing/glasses/meson,/obj/item/clothing/glasses/meson,/obj/random/tech_supply,/turf/simulated/floor/plating,/area/slater/engine)
+"dz" = (/obj/structure/cable,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/power/apc{dir = 4; name = "east bump"; pixel_x = 24},/obj/structure/table/rack,/obj/random/tech_supply,/turf/simulated/floor/plating,/area/slater/engine)
 "dA" = (/obj/structure/closet/crate/solar,/turf/simulated/floor/plating{dir = 2; icon_state = "platebot"; nitrogen = 82.1472; oxygen = 21.8366; tag = "icon-platebot"},/area/slater/engine)
 "dB" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/obj/machinery/door/firedoor,/turf/simulated,/area/slater/bridge)
 "dC" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/obj/machinery/door/firedoor,/turf/simulated,/area/slater/bridge)
