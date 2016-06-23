@@ -482,11 +482,13 @@
 			if( "prison_date" )
 				prison_date = list()
 
-				for( var/num in params2list( value ))
+				for( var/num in params2list( html_decode( value )))
 					if( istext( num ))
-						num = text2num( html_decode( num ))
+						num = text2num( num )
 						if( num )
 							prison_date.Add( num )
+
+				value = prison_date
 /* Disabling this for now until we find out why date proc is messing up
 				if( prison_date && prison_date.len == 3 )
 					var/days = daysTilDate( universe.date, prison_date )
@@ -925,5 +927,10 @@
 /datum/character/proc/canJoin()
 	if( employment_status != "Active" )
 		return 0
+
+	if( prison_date && prison_date.len )
+		var/days = daysTilDate( universe.date, prison_date )
+		if( days > 0 )
+			return 0
 
 	return 1
