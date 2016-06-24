@@ -331,6 +331,7 @@ var/list/parallax_on_clients = list()
 		index++
 
 	parallax_initialized = 1
+	apply_parallax()
 
 /proc/calibrate_parallax(var/obj/screen/parallax/p_layer,var/i)
 	if(!p_layer || !i) return
@@ -350,6 +351,13 @@ var/list/parallax_on_clients = list()
 			p_layer.base_offset_y = 480
 		if(7,8,9)
 			p_layer.base_offset_y = -480
+
+// just to apply parallax to players before they see it
+// helps against space going wacky when you see it the first time
+/proc/apply_parallax()
+	for(var/client/C in clients)
+		if(C.mob && C.mob.hud_used)
+			C.mob.hud_used.update_parallax()
 
 #undef PARALLAX4_ICON_NUMBER
 #undef PARALLAX3_ICON_NUMBER

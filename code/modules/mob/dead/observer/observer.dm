@@ -145,6 +145,7 @@ Works together with spawning an observer, noted above.
 		ghost.key = key
 		if(ghost.client && !ghost.client.holder && !config.antag_hud_allowed)		// For new ghosts we remove the verb from even showing up if it's not allowed.
 			ghost.verbs -= /mob/dead/observer/verb/toggle_antagHUD	// Poor guys, don't know what they are missing!
+		ghost.hud_used.update_parallax() // so you don't have to move to get parallax
 		return ghost
 
 /*
