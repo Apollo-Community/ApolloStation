@@ -84,7 +84,7 @@
 
 mob/update_client_hook(atom/destination)
 	..()
-	
+
 	if(client && hud_used)
 		hud_used.update_parallax()
 
