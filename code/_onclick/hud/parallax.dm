@@ -110,6 +110,8 @@ var/list/parallax_on_clients = list()
 	if(!C.parallax_canvas)
 		C.parallax_canvas = new /obj/screen/parallax_canvas
 
+	C.parallax_canvas.color = space_color
+
 	return 1
 
 /datum/hud/proc/update_parallax2(forcerecalibrate = 0)
@@ -155,7 +157,7 @@ var/list/parallax_on_clients = list()
 	for(var/turf/space/S in view(C.view, get_turf(C.eye)))
 		// normal space -> bluespace
 		if(S.type == /turf/space/bluespace)
-			if(C.parallax_canvas.color == "#000000")	change_space("#060e26", "bluespace")
+			if(C.parallax_canvas.color != "#060e26")	change_space("#060e26", "bluespace")
 			break
 
 		// bluespace -> normal space
@@ -216,10 +218,10 @@ var/list/parallax_on_clients = list()
 			bgobj.screen_loc = "CENTER-7:[bgobj.base_offset_x],CENTER-7:[bgobj.base_offset_y]"
 
 // swapping between normal and bluespace
-/datum/hud/proc/change_space(var/space_color = "#000000", var/kind = "")
+/datum/hud/proc/change_space(var/color = space_color, var/kind = "")
 	var/client/C = mymob.client
 
-	C.parallax_canvas.color = space_color
+	C.parallax_canvas.color = color
 
 	for(var/obj/screen/parallax/bgobj in C.screen)
 		C.screen -= bgobj
