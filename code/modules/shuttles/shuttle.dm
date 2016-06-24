@@ -163,7 +163,7 @@
 	current_hanger.take_off()
 	current_hanger.full = 0
 	current_hanger = trg_hanger
-	shake_effect(shuttle_turfs)
+	do_effects(shuttle_turfs)
 
 	//Check and update powered systems on the shuttle
 	power_check(shuttle_turfs)
@@ -178,8 +178,8 @@
 	var/turf/location = get_corner_turf(current_hanger.x, current_hanger.y, current_hanger.z, template_dim[1], template_dim[2])
 	shuttle_turfs = template_controller.PlaceTemplateAt(location, template_path, docking_controller_tag, return_list = 1)
 
-//Shake effect
-/datum/shuttle/proc/shake_effect(var/list/turfs)
+//Shake effect & parallax space change
+/datum/shuttle/proc/do_effects(var/list/turfs)
 	var/area/A
 	for(var/turf/T in turfs)
 		A = T.loc
@@ -187,6 +187,9 @@
 			A.Entered(M)
 			if(M.client)
 				spawn(0)
+					if(M.hud_used)
+						M.hud_used.update_parallax()
+
 					if(M.buckled)
 						M << "<span class='alert'>Sudden acceleration presses you into your chair!</span>"
 						shake_camera(M, 3, 1)

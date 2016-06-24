@@ -18,6 +18,7 @@ var/list/parallax_on_clients = list()
 	var/parallax_speed = 0
 	var/last_accumulated_offset_x = 0
 	var/last_accumulated_offset_y = 0
+	var/kind = "" // used to differentiate between normal and bluespace
 
 /obj/screen/plane_master
 	appearance_flags = PLANE_MASTER
@@ -44,6 +45,16 @@ var/list/parallax_on_clients = list()
 
 /obj/screen/plane_master/parallax_dustmaster
 	plane = PLANE_SPACE_DUST
+
+/obj/screen/parallax_canvas
+	mouse_opacity = 0
+	icon = 'icons/turf/space.dmi'
+	icon_state = "white"
+	color = "#000000"
+	name = ""
+	blend_mode = BLEND_ADD
+	plane = PLANE_SPACE_PARALLAX
+	screen_loc = "WEST,SOUTH to EAST,NORTH"
 
 /datum/hud/proc/update_parallax()
 	var/client/C = mymob.client
@@ -88,6 +99,7 @@ var/list/parallax_on_clients = list()
 		C.screen -= C.parallax_master
 		C.screen -= C.parallax_spacemaster
 		C.screen -= C.parallax_dustmaster
+		C.screen -= C.parallax_canvas
 		return 0
 
 	if(!C.parallax_master)
@@ -96,6 +108,8 @@ var/list/parallax_on_clients = list()
 		C.parallax_spacemaster = new /obj/screen/plane_master/parallax_spacemaster
 	if(!C.parallax_dustmaster)
 		C.parallax_dustmaster = new /obj/screen/plane_master/parallax_dustmaster
+	if(!C.parallax_canvas)
+		C.parallax_canvas = new /obj/screen/parallax_canvas
 
 	return 1
 
@@ -106,6 +120,7 @@ var/list/parallax_on_clients = list()
 	if(!C.parallax.len)
 		for(var/obj/screen/parallax/bgobj in parallax_icon)
 			var/obj/screen/parallax/parallax_layer = new /obj/screen/parallax
+			parallax_layer.kind = bgobj.kind
 			parallax_layer.appearance = bgobj.appearance
 			parallax_layer.base_offset_x = bgobj.base_offset_x
 			parallax_layer.base_offset_y = bgobj.base_offset_y
@@ -118,12 +133,13 @@ var/list/parallax_on_clients = list()
 		break
 
 	if(forcerecalibrate || !parallax_loaded)
-		for(var/obj/screen/parallax/bgobj in C.parallax)
-			C.screen |= bgobj
+		change_space()
 
 		C.screen |= C.parallax_master
 		C.screen |= C.parallax_spacemaster
 		C.screen |= C.parallax_dustmaster
+		C.screen |= C.parallax_canvas
+
 		C.parallax_dustmaster.color = list(0,0,0,0)
 		if(C.prefs.space_dust)
 			C.parallax_dustmaster.color = list(
@@ -135,6 +151,18 @@ var/list/parallax_on_clients = list()
 	if(!C.parallax_offset.len)
 		C.parallax_offset["horizontal"] = 0
 		C.parallax_offset["vertical"] = 0
+
+	// check if we've gone from normal space to bluespace
+	for(var/turf/space/S in view(C.view, get_turf(C.eye)))
+		// normal space -> bluespace
+		if(S.type == /turf/space/bluespace)
+			if(C.parallax_canvas.color == "#000000")	change_space("#060e26", "bluespace")
+			break
+
+		// bluespace -> normal space
+		if(C.parallax_canvas.color == "#060e26")
+			change_space()
+			break
 
 /datum/hud/proc/update_parallax3()
 	var/client/C = mymob.client
@@ -188,11 +216,25 @@ var/list/parallax_on_clients = list()
 		else
 			bgobj.screen_loc = "CENTER-7:[bgobj.base_offset_x],CENTER-7:[bgobj.base_offset_y]"
 
+// swapping between normal and bluespace
+/datum/hud/proc/change_space(var/space_color = "#000000", var/kind = "")
+	var/client/C = mymob.client
+
+	C.parallax_canvas.color = space_color
+
+	for(var/obj/screen/parallax/bgobj in C.screen)
+		C.screen -= bgobj
+
+	for(var/obj/screen/parallax/bgobj in C.parallax)
+		if(bgobj.kind == kind)
+			C.screen |= bgobj
+
 //Parallax generation code below
 
 #define PARALLAX4_ICON_NUMBER 20
 #define PARALLAX3_ICON_NUMBER 14
 #define PARALLAX2_ICON_NUMBER 10
+#define BLUEPARALLAX_ICON_NUMBER 7
 
 /datum/controller/game_controller/proc/cachespaceparallax()
 	var/list/plane1 = list()
@@ -208,6 +250,8 @@ var/list/parallax_on_clients = list()
 			plane3 += rand(1,26)
 		pixel_x += 32 * (i%15)
 		pixel_y += 32 * round(i/15)
+
+	// NORMAL SPACE
 
 	for(var/i in 0 to 8)
 		var/obj/screen/parallax/parallax_layer = new /obj/screen/parallax()
@@ -260,6 +304,27 @@ var/list/parallax_on_clients = list()
 
 		parallax_layer.overlays = L
 		parallax_layer.parallax_speed = 2
+		parallax_layer.plane = PLANE_SPACE_BACKGROUND
+		calibrate_parallax(parallax_layer,i+1)
+		parallax_icon[index] = parallax_layer
+		index++
+
+	// BLUESPACE
+
+	for(var/i in 0 to 8)
+		var/obj/screen/parallax/parallax_layer = new /obj/screen/parallax()
+		var/list/L = list()
+		for(var/j in 1 to 225)
+			if(plane1[j+i*225] <= BLUEPARALLAX_ICON_NUMBER)
+				var/image/I = image('icons/turf/bluespace_parallax.dmi',"[plane3[j+i*225]]")
+				I.pixel_x = pixel_x[j]
+				I.pixel_y = pixel_y[j]
+				I.plane = PLANE_SPACE_PARALLAX
+				L += I
+
+		parallax_layer.kind = "bluespace"
+		parallax_layer.overlays = L
+		parallax_layer.parallax_speed = 6
 		parallax_layer.plane = PLANE_SPACE_BACKGROUND
 		calibrate_parallax(parallax_layer,i+1)
 		parallax_icon[index] = parallax_layer

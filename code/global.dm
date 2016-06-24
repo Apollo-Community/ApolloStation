@@ -71,8 +71,7 @@ var/SMALLSIZEBLOCK = 0
 
 //SPACE PARALLAX
 var/parallax_initialized = 0
-var/space_color = "#050505"
-var/list/parallax_icon[27]
+var/list/parallax_icon[36]
 
 var/skipupdate = 0
 	///////////////

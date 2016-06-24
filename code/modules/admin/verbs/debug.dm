@@ -1154,3 +1154,16 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set desc = "Allows you to open specific windows typically unavailable"
 	
 	winset(src, null, "command=.command")
+
+/client/proc/space_color()
+	set category = "Debug"
+	set name = "Change space color"
+	set desc = "Pink space!"
+	if(!check_rights(R_DEBUG))	return
+
+	var/color = input("Enter the HEX value of the new space color:","spess color",null) as text
+	if(!color)	return
+
+	for(var/client/C in clients)
+		if(C.mob && C.mob.hud_used)
+			C.mob.hud_used.change_space(space_color=color)
