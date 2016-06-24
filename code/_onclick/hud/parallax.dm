@@ -60,8 +60,7 @@ var/list/parallax_on_clients = list()
 	var/client/C = mymob.client
 	if(!parallax_initialized || C.updating_parallax) return
 
-	// why update if you can't even see any space
-	for(var/turf/space/T in view(C.view, get_turf(C.eye)))
+	for(var/turf/space/T in range(C.view + 1, get_turf(C.eye)))
 		C.updating_parallax = 1
 		break
 
