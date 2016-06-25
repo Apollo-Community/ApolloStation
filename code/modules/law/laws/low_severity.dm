@@ -91,6 +91,16 @@
 	min_fine = 100
 	max_fine = 200
 
+/datum/law/low_severity/resisting_arrest
+	name = "Resisting Arrest"
+	desc = "Where an individual attempts to prevent a lawful arrest by a Security Officer."
+
+	min_brig_time = 10
+	max_brig_time = 30
+
+	min_fine = 200
+	max_fine = 600
+
 /datum/law/low_severity/tampering_systems
 	name = "Tampering Systems"
 	desc = "Where an unauthorized individual alters any non critical system in order to alter functionality."
