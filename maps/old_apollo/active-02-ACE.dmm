@@ -855,7 +855,7 @@
 "qw" = (/obj/structure/noticeboard/anomaly,/turf/simulated/wall/alloy/reinforced,/area/space)
 "qx" = (/obj/effect/decal/cleanable/blood/oil,/obj/item/weapon/shard,/obj/effect/decal/cleanable/ash,/turf/simulated/floor/wood{tag = "icon-wood-broken"; icon_state = "wood-broken"},/area/mine/maint_s)
 "qy" = (/turf/simulated/floor/wood,/area/mine/maint_s)
-"qz" = (/obj/machinery/telecomms/relay/preset/mining,/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor{icon_state = "dark"},/area/mine/maintenance)
+"qz" = (/obj/item/weapon/circuitboard/security/mining,/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor{icon_state = "dark"},/area/mine/maintenance)
 "qA" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 6},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/simulated/floor{icon_state = "dark"},/area/mine/maintenance)
 "qB" = (/obj/machinery/door/airlock/hatch{name = "Telecomms Relay"; req_access_txt = "54"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/simulated/floor,/area/mine/maintenance)
 "qC" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/floor,/area/mine/lobby)
