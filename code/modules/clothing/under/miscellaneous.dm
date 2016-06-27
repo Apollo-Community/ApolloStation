@@ -534,9 +534,9 @@
 /obj/item/clothing/under/camo
 	name = "camo jumpsuit"
 	desc = "Doesn't exactly blend with space, now does it?"
-	icon_state = "camoblue"
-	item_state = "camoblue"
-	item_color = "camoblue"
+	icon_state = "camo"
+	item_state = "camo"
+	item_color = "camo"
 
 /obj/item/clothing/under/red_gown
 	name = "evening gown"
