@@ -272,7 +272,7 @@ var/list/ai_verbs_default = list(
 
 		for(var/line in lines)
 		// split & clean up
-			var/list/Entry = text2list(line, ":")
+			var/list/Entry = text2list(line, "-")
 			for(var/i = 1 to Entry.len)
 				Entry[i] = trim(Entry[i])
 
