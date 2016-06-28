@@ -71,6 +71,7 @@
 /var/const/access_slater = 69
 /var/const/access_lawyer = 70
 /var/const/access_engine_core = 71
+/var/const/access_desublimation = 72
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -377,6 +378,8 @@
 			return "Engine Core"
 		if(access_lawyer)
 			return "Lawyer"
+		if(access_desublimation)
+			return "Desublimation Lab"
 
 /proc/get_centcom_access_desc(A)
 	switch(A)
