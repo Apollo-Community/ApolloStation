@@ -183,18 +183,10 @@ datum/controller/process/proc/scheck()
 		handleHung()
 		CRASH("Process [name] hung and was restarted.")
 
-	var/time = 1
+	. = 1
 	do
-	/*
 		sleep(world.tick_lag * .);. *= 2
 	while(world.tick_usage > tick_allowance && (. * world.tick_lag) < 16)
-	*/
-		sleep(world.tick_lag * time)
-		time *= 2
-	while(world.tick_usage > tick_allowance && time < 16)
-
-	if(time>16)		return 1
-	else			return 0
 
 datum/controller/process/proc/update()
 	// Clear delta
