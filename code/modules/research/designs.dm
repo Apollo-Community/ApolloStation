@@ -219,6 +219,12 @@ datum/design/circuit/general_alert
 	build_path = /obj/item/weapon/circuitboard/general_alert
 */
 
+datum/design/circuit/supermatter_core
+	name = "core control console"
+	id = "corecontrol"
+	req_tech = list("engineering" = 4)
+	build_path = /obj/item/weapon/circuitboard/air_management/supermatter_core
+
 datum/design/circuit/robocontrol
 	name = "robotics control console"
 	id = "robocontrol"

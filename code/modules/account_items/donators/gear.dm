@@ -52,3 +52,8 @@
 	display_name = "Gar mesons"
 	path = /obj/item/clothing/glasses/meson/fluff/draco16
 	sort_category = slot_glasses
+
+/datum/gear/account/seph491_coin
+	display_name = "old coin"
+	path = /obj/item/weapon/coin/silver
+	sort_category = "misc"
