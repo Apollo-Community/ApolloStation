@@ -66,6 +66,7 @@
 
 	var/translator_on = 0 // keeps track of the translator module
 
+	var/custom_sprite = 0
 
 /mob/living/silicon/pai/New(var/obj/item/device/paicard)
 
@@ -290,6 +291,32 @@
 /mob/living/silicon/pai/proc/choose_chassis()
 	set category = "pAI Commands"
 	set name = "Choose Chassis"
+
+	if(!custom_sprite) //Check to see if custom sprite time, checking the appopriate file to change a var
+		var/file = file2text("config/custom_sprites.txt")
+		var/lines = text2list(file, "\n")
+
+		for(var/line in lines)
+		// split & clean up
+			var/list/Entry = text2list(line, "-")
+			for(var/i = 1 to Entry.len)
+				Entry[i] = trim(Entry[i])
+
+			if(Entry.len < 2)
+				continue
+
+			if( ckey( Entry[1] ) == ckey( src.ckey ) && ckey( Entry[2] ) == ckey( src.real_name ))
+				custom_sprite = 1 //They're in the list? Custom sprite time
+				src << "<span class='ooc_notice'>Using custom sprite for [Entry[2]]!</span>"
+
+				icon = 'icons/mob/custom-synthetic.dmi'
+				var/line_san = ckey( line )
+				icon_state = "[line_san]"
+				chassis = "[line_san]"
+
+				verbs -= /mob/living/silicon/pai/proc/choose_chassis
+				verbs += /mob/living/proc/hide
+				return
 
 	var/choice
 	var/finalized = "No"
