@@ -62,7 +62,7 @@
 	department_id = ENGINEERING
 	background_color = "#ffeeaa"
 	starting_positions = list( "Technical Assistant" = "High" )
-	region_access = list(access_engine_core, access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_ce, access_energy_barrier, access_engine_core)
+	region_access = list(access_desublimation, access_engine_core, access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_ce, access_energy_barrier, access_engine_core)
 
 /datum/department/supply
 	name = "Cargo Bay"
