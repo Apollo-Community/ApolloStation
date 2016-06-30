@@ -156,6 +156,9 @@
 		src.m_flag = 1
 		if ((A != src.loc && A && A.z == src.z))
 			src.last_move = get_dir(A, src.loc)
+
+	update_client_hook(loc)
+
 	return
 
 /client/proc/Move_object(direct)

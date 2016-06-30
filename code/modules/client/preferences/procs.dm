@@ -80,9 +80,14 @@
 	if( selected_character )
 		sql_select_char = html_encode( sql_sanitize_text( selected_character.name ))
 
+	// Space parallax
+	var/sql_space_parallax = sanitize_integer( space_parallax, default=1 )
+	var/sql_space_dust = sanitize_integer( space_dust, default=1 )
+	var/sql_parallax_speed = sanitize_integer( parallax_speed, 0, 10, 2 )
+
 	if(sql_id)
 		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
-		var/DBQuery/query_update = dbcon.NewQuery("UPDATE preferences SET OOC_color = '[sql_OOC_color]', UI_style = '[sql_UI_style]', UI_style_color = '[sql_UI_color]', UI_style_alpha = '[sql_UI_alpha]', toggles = '[sql_toggles]', last_character = '[sql_select_char]' WHERE id = [sql_id]")
+		var/DBQuery/query_update = dbcon.NewQuery("UPDATE preferences SET OOC_color = '[sql_OOC_color]', UI_style = '[sql_UI_style]', UI_style_color = '[sql_UI_color]', UI_style_alpha = '[sql_UI_alpha]', toggles = '[sql_toggles]', last_character = '[sql_select_char]', space_parallax = '[sql_space_parallax]', space_dust = '[sql_space_dust]', parallax_speed = '[sql_parallax_speed]' WHERE id = [sql_id]")
 		query_update.Execute()
 	else
 		//New player!! Need to insert all the stuff
@@ -105,7 +110,7 @@
 
 	var/sql_ckey = ckey( client.ckey )
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT joined_date, OOC_color, UI_style, UI_style_color, UI_style_alpha, toggles, last_character FROM preferences WHERE ckey = '[sql_ckey]'")
+	var/DBQuery/query = dbcon.NewQuery("SELECT joined_date, OOC_color, UI_style, UI_style_color, UI_style_alpha, toggles, last_character, space_parallax, space_dust, parallax_speed FROM preferences WHERE ckey = '[sql_ckey]'")
 	query.Execute()
 
 	while(query.NextRow())
@@ -115,6 +120,9 @@
 		UI_style_color = query.item[4]
 		UI_style_alpha = text2num( query.item[5] )
 		toggles = text2num( query.item[6] )
+		space_parallax = text2num( query.item[8] )
+		space_dust = text2num( query.item[9] )
+		parallax_speed = text2num( query.item[10] )
 		var/selected_char_name =  html_decode( query.item[7] )
 
 		if( checkCharacter( selected_char_name, client.ckey ))
