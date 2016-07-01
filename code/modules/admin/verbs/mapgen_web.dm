@@ -1,59 +1,27 @@
 // Credit to @Tastyfish
 
-client/verb/vendgen()
-	set category = "Debug"
-	set name = "Vender JSON"
+/proc/generate_every_map()
+	//generate apollo map first
+	genmapall(3, "/apollo")
+	gen_special_all(3, "apollo/")
 
-	// generate names file
-	fdel("vtypes.json")
-	var/txt = "{"
-	for(var/type in typesof(/obj/machinery/vending))
-		var/obj/inst = new type()
-		txt += {""[type]":"[inst.name]","}
-		qdel(inst)
-	txt = copytext(txt, 1, length(txt))
-	txt += "}"
-	file("vtypes.json") << txt
+	world.log << "Apollo done..."
 
-	// generate full listing
-	fdel("vinsts.json")
-	txt = "\["
-	for(var/obj/machinery/vending/O)
-		if(O.z == 1)
-			txt += {"{"type":"[O.type]","loc":\[[O.x],[O.y]\]},"}
-	txt = copytext(txt, 1, length(txt))
-	txt += "\]"
-	file("vinsts.json") << txt
+	//generate slater map
+	genmapall(5, {"/slater"})
+	gen_special_all(5, "slater/")
 
-client/verb/areagen()
-	set category = "Debug"
-	set name = "Area JSON"
-
-	// generate areas file
-	fdel("areas.json")
-	var/txt = "\["
-	for(var/type in typesof(/area))
-		var/area/inst = new type()
-		txt += {""[inst.name]","}
-		qdel(inst)
-	txt = copytext(txt, 1, length(txt))
-	txt += "\]"
-	file("areas.json") << txt
-
+	world.log << "Slater done..."
+	
 // generate ALL MAP TILES
-client/verb/genmapall()
-	set category = "Debug"
-	set name = "Generate Map All Zooms"
-
-	genmap()
+/proc/genmapall(var/z_level = null, var/prefix = null)
+	genmap(z_level, prefix)
 	for(var/i = 4; i >= 2; i--)
-		genmapzooms(i)
+		genmapzooms(i, prefix )
 
 // generate the zoomed out tiles
-client/verb/genmapzooms(z as num)
-	set category = "Debug"
-	set name = "Generate Map Zoom"
-
+/proc/genmapzooms(z as num, prefix = "")
+	var/path = ".[prefix]/tiles"
 	// figure out output grid size
 	var/size = 32 / 2 ** (5 - z)
 
@@ -61,40 +29,34 @@ client/verb/genmapzooms(z as num)
 		for(var/y = 0; y < size; y++)
 			var/icon/res = icon('icons/effects/96x96.dmi', "")
 			res.Scale(256, 256)
-			// Initialize to black.
-			var/icon/i = icon("./tiles/[z+1]/[round(x*2)]/[round(y*2)].png")
+			var/icon/i = icon("[path]/[z+1]/[round(x*2)]/[round(y*2)].png")
 			i.Scale(128,128)
 			res.Blend(i,ICON_OVERLAY,x=1,y=1)
-			i = icon("./tiles/[z+1]/[round(x*2+1)]/[round(y*2)].png")
+			i = icon("[path]/[z+1]/[round(x*2+1)]/[round(y*2)].png")
 			i.Scale(128,128)
 			res.Blend(i,ICON_OVERLAY,x=129,y=1)
-			i = icon("./tiles/[z+1]/[round(x*2)]/[round(y*2+1)].png")
+			i = icon("[path]/[z+1]/[round(x*2)]/[round(y*2+1)].png")
 			i.Scale(128,128)
 			res.Blend(i,ICON_OVERLAY,x=1,y=129)
-			i = icon("./tiles/[z+1]/[round(x*2+1)]/[round(y*2+1)].png")
+			i = icon("[path]/[z+1]/[round(x*2+1)]/[round(y*2+1)].png")
 			i.Scale(128,128)
 			res.Blend(i,ICON_OVERLAY,x=129,y=129)
-			fcopy(res, "./tiles/[z]/[round(x)]/[round(y)].png")
+			fcopy(res, "[path]/[z]/[round(x)]/[round(y)].png")
 
 // generate the 1:1 zoom tiles
-client/verb/genmap()
-	set category = "Debug"
-	set name = "Generate Web Map"
+/proc/genmap(z_level = null, var/prefix = null)
+	if(!z_level)	z_level = input("which z-level?") as num|null
 
-	var/z_level = input("which z-level?") as num|null
 	for(var/x = 1; x <= world.maxx; x += 8)
 		for(var/y = 1; y <= world.maxy; y += 8)
-			var/icon/I = map_get_icon(
-				block(locate(max(1,x - 1), max(1,y - 1), z_level),locate(min(world.maxx,x + 8), min(world.maxy,y + 8), z_level)),
-				locate(x + 3.5, y + 3.5, 1))
-			fcopy(new/icon(I, "", SOUTH, 1, 0),
-				"./tiles/5/[round(x/8)]/[round(y/8)].png")
+			var/icon/I = map_get_icon(	block(locate(max(1,x - 1), max(1,y - 1), z_level),
+										locate(min(world.maxx,x + 8), min(world.maxy,y + 8), z_level)),
+										locate(x + 3.5, y + 3.5, 1))
+			fcopy(new/icon(I, "", SOUTH, 1, 0),	".[prefix]/tiles/5/[round(x/8)]/[round(y/8)].png")
 
-client/proc/map_get_icon(list/turfs, turf/center)
+/proc/map_get_icon(list/turfs, turf/center)
 	var/icon/res = icon('icons/effects/96x96.dmi', "")
 	res.Scale(8*32, 8*32)
-	// Initialize to black.
-	//res.Blend("#ff1aff", ICON_OVERLAY)
 
 	var/atoms[] = list()
 	for(var/turf/the_turf in turfs)
@@ -115,10 +77,6 @@ client/proc/map_get_icon(list/turfs, turf/center)
 
 			// If what we got back is actually a picture, draw it.
 			if(istype(img, /icon))
-				// Check if we're looking at a mob that's lying down
-				if(istype(A, /mob/living) && A:lying)
-					// If they are, apply that effect to their picture.
-					img.BecomeLying()
 				// Calculate where we are relative to the center of the photo
 				var/xoff = (A.x - center.x) * 32 + center_offset
 				var/yoff = (A.y - center.y) * 32 + center_offset
@@ -136,24 +94,21 @@ client/proc/map_get_icon(list/turfs, turf/center)
 
 	return res
 
-client/verb/gen_special_all()
-	set category = "Debug"
-	set name = "Generate Special Maps All Zooms"
+/proc/gen_special_all(var/z_level = null, var/prefix = null)
+	if(!z_level)	z_level = input("which z-level?") as num|null
 
-	var/z_level = input("which z-level?") as num|null
-
-	gen_special_mapall("wires", list(/obj/structure/cable, /obj/machinery/power), z_level)
-	gen_special_mapall("disposals", list(/obj/structure/disposalpipe, /obj/structure/disposaloutlet, /obj/machinery/disposal), z_level)
-	gen_special_mapall("atmos", list(/obj/machinery/atmospherics, /obj/machinery/portable_atmospherics), z_level)
+	gen_special_mapall("[prefix]wires", list(/obj/structure/cable, /obj/machinery/power), z_level)
+	gen_special_mapall("[prefix]disposals", list(/obj/structure/disposalpipe, /obj/structure/disposaloutlet, /obj/machinery/disposal), z_level)
+	gen_special_mapall("[prefix]atmos", list(/obj/machinery/atmospherics, /obj/machinery/portable_atmospherics), z_level)
 
 // generate ALL MAP TILES
-client/proc/gen_special_mapall(path, list/types, z_level)
+/proc/gen_special_mapall(path, list/types, z_level)
 	gen_special_map(path, types, z_level)
 	for(var/i = 4; i >= 2; i--)
 		gen_special_mapzooms(path, i)
 
 // generate the zoomed out tiles
-client/proc/gen_special_mapzooms(path, z)
+/proc/gen_special_mapzooms(path, z)
 	// figure out output grid size
 	var/size = 32 / 2 ** (5 - z)
 
@@ -176,17 +131,16 @@ client/proc/gen_special_mapzooms(path, z)
 			fcopy(res, "./[path]/[z]/[round(x)]/[round(y)].png")
 
 // generate the 1:1 zoom tiles
-client/proc/gen_special_map(path, list/types, z_level = 3)
+/proc/gen_special_map(path, list/types, z_level = 3)
 	for(var/x = 1; x <= world.maxx; x += 8)
 		for(var/y = 1; y <= world.maxy; y += 8)
-			var/icon/I = map_get_special_icon(
-				block(locate(max(1,x - 1), max(1,y - 1), z_level),locate(min(world.maxx,x + 8), min(world.maxy,y + 8), z_level)),
-				locate(x + 3.5, y + 3.5, 1),
-				types)
-			fcopy(new/icon(I, "", SOUTH, 1, 0),
-				"./[path]/5/[round(x/8)]/[round(y/8)].png")
+			var/icon/I = map_get_special_icon(	block(locate(max(1,x - 1), max(1,y - 1), z_level),
+												locate(min(world.maxx,x + 8), min(world.maxy,y + 8), z_level)),
+												locate(x + 3.5, y + 3.5, 1),
+												types)
+			fcopy(new/icon(I, "", SOUTH, 1, 0),	"./[path]/5/[round(x/8)]/[round(y/8)].png")
 
-client/proc/map_get_special_icon(list/turfs, turf/center, list/types)
+/proc/map_get_special_icon(list/turfs, turf/center, list/types)
 	var/icon/res = icon('icons/effects/96x96.dmi', "")
 	res.Scale(8*32, 8*32)
 
@@ -209,10 +163,6 @@ client/proc/map_get_special_icon(list/turfs, turf/center, list/types)
 
 			// If what we got back is actually a picture, draw it.
 			if(istype(img, /icon))
-				// Check if we're looking at a mob that's lying down
-				if(istype(A, /mob/living) && A:lying)
-					// If they are, apply that effect to their picture.
-					img.BecomeLying()
 				// Calculate where we are relative to the center of the photo
 				var/xoff = (A.x - center.x) * 32 + center_offset
 				var/yoff = (A.y - center.y) * 32 + center_offset
