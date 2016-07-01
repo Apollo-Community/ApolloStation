@@ -5,14 +5,14 @@
 	genmapall(3, "/apollo")
 	gen_special_all(3, "apollo/")
 
-	world.log << "Apollo done..."
-
 	//generate slater map
 	genmapall(5, {"/slater"})
 	gen_special_all(5, "slater/")
 
-	world.log << "Slater done..."
-	
+	shell("sh scripts/move_map.sh")
+
+	shutdown()
+
 // generate ALL MAP TILES
 /proc/genmapall(var/z_level = null, var/prefix = null)
 	genmap(z_level, prefix)
