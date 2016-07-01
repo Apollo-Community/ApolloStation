@@ -5,8 +5,8 @@
 #define MINUTES *600
 
 //Returns the world time in english
-proc/worldtime2text(time = world.time)
-	var/hours = round(time / 36000)+8
+proc/worldtime2text(time = world.time, var/bonus_time = 8)
+	var/hours = round(time / 36000)+bonus_time
 	return "[hours < 10 ? hours : add_zero( hours )]:[(time / 600 % 60) < 10 ? add_zero(time / 600 % 60, 1) : time / 600 % 60]"
 
 proc/time_stamp()
