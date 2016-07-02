@@ -894,6 +894,7 @@
 /obj/effect/landmark/spacepod/random/New()
 	..()
 
+/*
 /obj/spacepod/verb/fly_up()
 	if( src.pilot == usr )
 		set category = "Spacepod"
@@ -943,6 +944,7 @@
 			else
 				pilot << "<span class='warning'>There's nothing of interest below you!!</span>"
 		return
+*/
 
 /obj/spacepod/verb/move_inside()
 	set category = "Object"
