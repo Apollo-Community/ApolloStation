@@ -102,3 +102,9 @@
 	display_name = "Detectives black jacket"
 	path = /obj/item/clothing/suit/storage/det_suit/black
 	sort_category = slot_wear_suit
+
+/datum/gear/account/venoxi_labcoat
+	display_name = "Red labcoat"
+	path = /obj/item/clothing/suit/storage/toggle/labcoat/red
+	sort_category = slot_wear_suit
+
