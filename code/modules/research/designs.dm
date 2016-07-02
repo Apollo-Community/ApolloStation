@@ -146,6 +146,7 @@ datum/design/circuit/pandemic
 datum/design/circuit/scan_console
 	name = "DNA machine"
 	id = "scan_console"
+	req_tech = list("programming" = 5, "biotech" = 7)
 	build_path = /obj/item/weapon/circuitboard/scan_consolenew
 
 datum/design/circuit/comconsole
