@@ -258,3 +258,10 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "garm"
 	item_state = "garm"
+
+/obj/item/clothing/under/fluff/callmanfok
+	name = "red jumpsuit"
+	desc = "A vest tagged with the name \"Phoebe Weisgarber\". Underneath it has a embroidered badge that says, \"From your friends aboard the NOS Apollo.\""
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "callmanfok"
+	item_state = "callmanfok"
