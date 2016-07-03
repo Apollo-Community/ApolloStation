@@ -85,6 +85,7 @@ var/global/datum/controller/processScheduler/processScheduler
 		queueProcesses()
 		runQueuedProcesses()
 		sleep(scheduler_sleep_interval)
+		if(world.tick_usage > 75)	sleep(world.tick_lag * ((100-world.tick_lag)/12.5))			//adds more time to scheduler if world is lagging..
 
 /datum/controller/processScheduler/proc/stop()
 	isRunning = 0

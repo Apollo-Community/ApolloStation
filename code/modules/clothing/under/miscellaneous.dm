@@ -1,6 +1,3 @@
-/obj/item/clothing/under/apollo
-	icon = 'icons/obj/clothing/uniforms.dmi'
-
 /obj/item/clothing/under/pj/red
 	name = "red pj's"
 	desc = "Sleepwear."

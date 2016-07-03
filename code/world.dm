@@ -21,6 +21,14 @@ var/global/datum/global_init/init = new ()
 
 #define RECOMMENDED_VERSION 510
 /world/New()
+	// if we're being called by command line then lets do stuff!
+	if(params.len)
+		world.log << "Command-line parameters:"
+		for(var/p in params)	world.log << "[p] = [params[p]]"
+		if(params["genmap"])
+			world.log << "Geneating web maps..."
+			generate_every_map()
+
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
@@ -89,7 +97,7 @@ var/world_topic_spam_protect_ip = "0.0.0.0"
 var/world_topic_spam_protect_time = world.timeofday
 
 /world/Topic(T, addr, master, key)
-	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key][log_end]"
+	log_debug("TOPIC: \"[T]\", from:[addr], master:[master], key:[key][log_end]")
 
 	if (T == "ping")
 		var/x = 1
@@ -103,6 +111,9 @@ var/world_topic_spam_protect_time = world.timeofday
 			if(M.client)
 				n++
 		return n
+
+	else if (copytext(T,1,7) == "sitest")	//returns num of players, round duration (starting at 0:00)
+		return list2params(list("players" = clients.len, "time" = worldtime2text(bonus_time = 0)))
 
 	else if (copytext(T,1,7) == "status")
 		var/input[] = params2list(T)
