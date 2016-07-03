@@ -812,6 +812,38 @@ area/space/atmosalert()
 	name = "Aft Maintenance"
 	icon_state = "amaint"
 
+/area/maintenance/secret/room1
+	name = "Secret Room"
+	icon_state = "fpmaint"
+/area/maintenance/secret/room2
+	name = "Secret Room"
+	icon_state = "smaint"
+/area/maintenance/secret/room3
+	name = "Secret Room"
+	icon_state = "smaint"
+/area/maintenance/secret/room4
+	name = "Secret Room"
+	icon_state = "asmaint"
+/area/maintenance/secret/room5
+	name = "Secret Room"
+	icon_state = "asmaint"
+/area/maintenance/secret/room6
+	name = "Secret Room"
+	icon_state = "amaint"
+/area/maintenance/secret/room7
+	name = "Secret Room"
+	icon_state = "fsmaint"
+/area/maintenance/secret/room8
+	name = "Secret Room"
+	icon_state = "fsmaint"
+/area/maintenance/secret/room9
+	name = "Secret Room"
+	icon_state = "asmaint"
+
+/area/maintenance/secret/room10
+	name = "Secret Room"
+	icon_state = "asmaint"
+
 /area/maintenance/portdorm
 	name = "Dormitory Maintenance"
 	icon_state = "pmaint"
