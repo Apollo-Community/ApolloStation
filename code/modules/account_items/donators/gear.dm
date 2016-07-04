@@ -109,6 +109,6 @@
 	sort_category = slot_wear_suit
 
 /datum/gear/account/callmanfok_jumpsuit
-	display_name = "Phoebes jumpsuit"
-	path = /obj/item/clothing/under/fluff/callmanfok
-	sort_category = slot_w_uniform
+	display_name = "Phoebes labcoat"
+	path = /obj/item/clothing/suit/storage/toggle/labcoat/fluff/callmanfok
+	sort_category = slot_wear_suit
