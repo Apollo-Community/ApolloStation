@@ -79,6 +79,11 @@ var/global/list/world_rodents = list()
 
 	world_rodents += src
 
+/mob/living/simple_animal/rodent/ghostize()
+	..()
+	if(client)
+		client.time_died_as_rodent = world.time
+
 /mob/living/simple_animal/rodent/proc/splat()
 	src.health = 0
 	src.stat = DEAD
