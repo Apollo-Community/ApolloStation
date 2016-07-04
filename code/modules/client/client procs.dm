@@ -119,6 +119,7 @@
 //Checks if the message is not in the allowed list
 //UPDATE: also checks if the message around the sring check is not to long for abuse reasons
 /client/proc/non_spawn_check(var/message)
+	if(message == "gasps for air!")		return
 	for(var/string in non_spawn_emote)
 		if(findtext(message, string) && ((lentext(message) - lentext(string)) < 6))
 			continue
