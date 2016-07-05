@@ -291,27 +291,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		M.antagHUD = 1
 		src << "<span class='notice'><B>AntagHUD Enabled</B></span>"
 
-/mob/dead/observer/proc/dead_tele(A in overmap.ghostteleportlocs)
+/mob/dead/observer/proc/dead_tele(var/area/A in return_sorted_areas())
 	set category = "Ghost"
 	set name = "Teleport"
 	set desc= "Teleport to a location"
+
 	if(!istype(usr, /mob/dead/observer))
 		usr << "Not when you're not dead!"
 		return
 	usr.verbs -= /mob/dead/observer/proc/dead_tele
-	spawn(30)
-		usr.verbs += /mob/dead/observer/proc/dead_tele
-	var/area/thearea = overmap.ghostteleportlocs[A]
-	if(!thearea)	return
+	spawn(30)		usr.verbs += /mob/dead/observer/proc/dead_tele
 
-	var/list/L = list()
-	for(var/turf/T in get_area_turfs(thearea.type))
-		L+=T
-
-	if(!L || !L.len)
-		usr << "No area available."
-
-	usr.loc = pick(L)
+	usr.loc = pick(get_area_turfs(A))
 	following = null
 
 /mob/dead/observer/verb/follow(input in getmobs())

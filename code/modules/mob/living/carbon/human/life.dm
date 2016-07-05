@@ -1175,8 +1175,8 @@
 			stop_regular_sounds()
 
 	proc/stop_regular_sounds()
+		src << sound( null, channel = heartbeat_channel )
 		if( heartbeat )
-			src << sound( null, channel = heartbeat_channel )
 			qdel( heartbeat )
 			heartbeat = null
 

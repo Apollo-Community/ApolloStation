@@ -22,7 +22,7 @@
 		if(4) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 
 	if(H.job == "Waiter" || H.job == "Attendant" || H.job == "Steward")
-		if(H.gender == FEMALE)	H.equip_to_slot_or_qdel(new /obj/item/clothing/under/black_tango/short(H), slot_w_uniform)
+		if(H.gender == FEMALE)	H.equip_to_slot_or_qdel(new /obj/item/clothing/under/black_tango(H), slot_w_uniform)
 		else					H.equip_to_slot_or_qdel(new /obj/item/clothing/under/waiter(H), slot_w_uniform)
 	else if(H.job == "Tourist")
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/under/tourist(H), slot_w_uniform)

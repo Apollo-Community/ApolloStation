@@ -45,8 +45,9 @@
 	. += "<hr><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>\[Done\]</a>"
 
 
-	user << browse( ., "window=[menu_name];size=360x300;can_close=0")
-	winshow( user, "client_menu", 1)
+	var/datum/browser/popup = new(user, "[menu_name]", "Client Menu", 360, 300)
+	popup.set_content(.)
+	popup.open()
 
 /datum/preferences/proc/ClientMenuDisable( mob/user )
 	winshow( user, "client_menu", 0)
@@ -152,8 +153,10 @@
 
 	. += "<hr><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>\[Done\]</a>"
 
-	user << browse( ., "window=[menu_name];size=350x340;can_close=0" )
-	winshow( user, "[menu_name]", 1)
+	var/datum/browser/popup = new(user, "[menu_name]", "Client Preferences", 350, 340)
+	popup.set_content(.)
+	popup.open()
+
 
 /datum/preferences/proc/PreferencesMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )
@@ -270,8 +273,10 @@
 
 	. += "<hr><center><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>\[Done\]</a></center>"
 
-	user << browse( ., "window=[menu_name];size=710x560;can_close=0" )
-	winshow( user, "[menu_name]", 1)
+	var/datum/browser/popup = new(user, "[menu_name]", "Character Selection Menu", 710, 560)
+	popup.set_content(.)
+	popup.open()
+
 
 /datum/preferences/proc/SelectCharacterMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )
