@@ -1641,6 +1641,7 @@ datum/design/item/omnitool
 	materials = list("$metal" = 7500, "$glass" = 1000)
 	build_path = /obj/item/weapon/omnitool
 */
+/*
 datum/design/item/syndietool
 	name = "Synditool"
 	desc = "An advanced tool capable of replacing many of the tools on a toolbelt."
@@ -1648,3 +1649,4 @@ datum/design/item/syndietool
 	req_tech = list("materials" = 3, "engineering" = 5, "syndicate" = 3)
 	materials = list("$metal" = 7500, "$glass" = 1000)
 	build_path = /obj/item/weapon/omnitool/syndie
+*/
