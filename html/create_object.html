@@ -26,7 +26,7 @@
 	<form name="spawner" action="byond://?src=/* ref src */" method="get">
 		<input type="hidden" name="src" value="/* ref src */">
 
-		Type <input type="text" name="filter" value="" onkeypress="submitFirst(event)" style="width:280px;height:25"> <input type = "button" value = "Search" onclick = "updateSearch()" /><br>
+		Type: <input type="text" name="filter" value="" onkeypress="updateSearch(50)" style="width:280px;height:25"> <input type = "button" value = "Search" onclick = "updateSearch(0)" /><br>
 		Offset: <input type="text" name="offset" value="x,y,z" style="width:250px">
 
 		A <input type="radio" name="offset_type" value="absolute">
@@ -51,24 +51,31 @@
 		var object_list = document.spawner.object_list;
 		var object_paths = null /* object types */;
 		var objects = object_paths == null ? new Array() : object_paths.split(";");
+		
+		objects.sort(function(a, b) {	return a.length - b.length || a.localeCompare(b); });
 
 		document.spawner.filter.focus();
 
-		function populateList(from_list)
+		populateList(objects, 20);
+
+		function populateList(from_list, cap)
 		{
 			object_list.options.length = 0;
 
 			var i;
+			var c = 0;
+
 			for (i in from_list)
 			{
 				var new_option = document.createElement("option");
 				new_option.value = from_list[i];
 				new_option.text = from_list[i];
 				object_list.options.add(new_option);
+				if ( cap && c++ >= cap) {	break;		}					
 			}
 		}
 
-		function updateSearch()
+		function updateSearch(cap)
 		{
 			old_search = document.spawner.filter.value;
 
@@ -85,7 +92,7 @@
 				filtered.push(objects[i]);
 			}
 
-			populateList(filtered);
+			populateList(filtered, cap);
 		}
 
 		function submitFirst(event)
