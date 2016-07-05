@@ -111,7 +111,7 @@
 				return
 
 			if((!ticker || ticker.current_state <= GAME_STATE_PREGAME)) // Make sure we don't ready up after the round has started, or without a selected character
-				ready = text2num(href_list["ready"])
+				ready = !ready
 			else
 				ready = 0
 
