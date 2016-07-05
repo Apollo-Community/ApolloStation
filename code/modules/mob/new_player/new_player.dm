@@ -62,7 +62,7 @@
 
 		output += "</div>"
 
-		var/datum/browser/popup = new(src, "player_options", "New Player Options", 210, 280)
+		var/datum/browser/popup = new(src, "playersetup", "New Player Options", 210, 280)
 		popup.window_options = "focus=0;can_close=0;"
 		popup.set_content(output)
 		popup.open()
@@ -522,7 +522,7 @@
 		dat += "<h4>Show Crew Manifest</h4>"
 		dat += data_core.get_manifest(OOC = 1)
 
-		var/datum/browser/popup = new(src, "show_crew_manifest", "Show Crew Manifest", 370, 420)
+		var/datum/browser/popup = new(src, "manifest", "Show Crew Manifest", 370, 420)
 		popup.set_content(dat)
 		popup.open()
 
