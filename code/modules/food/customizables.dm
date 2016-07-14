@@ -1,5 +1,5 @@
 /proc/is_food(var/item)
-	if(istype(item, /obj/item/weapon/reagent_containers/food/snacks/))
+	if(istype(item, /obj/item/weapon/reagent_containers/food/snacks/) || istype(item, /obj/item/weapon/shard))
 		return 1
 
 	usr << "<span class='warning'>That doesn't look tasty.</span>"
