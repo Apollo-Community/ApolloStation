@@ -838,7 +838,7 @@
 
 /datum/character/proc/useCharacterToken( var/type, var/mob/user )
 	var/num = user.client.character_tokens[type]
-	if( !num || num <= 0 )
+	if( !num || num < 1 )
 		return
 
 	switch( type )
@@ -855,6 +855,7 @@
 
 	user.client.character_tokens[type] = num
 	user.client.saveTokens()
+	saveCharacter()
 
 /datum/character/proc/getAllPromotablePositions( var/succession_level )
 	. = list()
