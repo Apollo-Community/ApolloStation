@@ -247,11 +247,6 @@ area/space/atmosalert()
 	icon_state = "green"
 	environment = SEWER_PIPE
 
-/area/podbay/hangar/s_hanger_e
-	name = "\improper Hangar_loc_e"
-	icon_state = "green_e"
-	environment = SEWER_PIPE
-
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
 

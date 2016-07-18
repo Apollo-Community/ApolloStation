@@ -37,9 +37,9 @@
 		return 0
 	if(istype(I, /obj/item/device/radio))
 		var/obj/item/device/radio/R = I
-		var/freq = rand(COMM_FREQ + 2, PUB_FREQ + 2)
+		var/freq = rand(1441, 1489)
 		while(freq in radiochannels)
-			freq = rand(COMM_FREQ + 2, PUB_FREQ + 2)
+			freq = rand(1441, 1489)
 
 		var/obj/item/device/uplink/hidden/T = new(I)
 		T.uplink_owner = antag
