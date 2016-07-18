@@ -117,7 +117,7 @@ var/list/all_characters = list() // A list of all loaded characters
 		faction		-	Which syndicate faction is this antag a member of?
 		dismissed	-	Has this player been dismissed from the syndicate?
 	*/
-	var/list/antag_data = list()
+	var/list/antag_data = list("notoriety" =  0, "persistant" = 0, "faction" = "Gorlex Marauders", "career_length" = 0)
 
 	// A few status effects
 	var/employment_status = "Active" // Is this character employed and alive or gone for good?
