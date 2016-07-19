@@ -52,6 +52,14 @@
 		S << "New law: 0. [law]"
 		return 1
 
+	var/datum/money_account/A = find_account(M)
+
+	if( !A )
+		A = create_account( M.real_name, rand( 500, 1500 ))
+
+	A.money += faction.start_cash
+	antag.current << "Your employer has provided you with an extra $[faction.start_cash] to purchase equipment with."
+
 	var/obj/item/I = locate(/obj/item/device/pda) in antag.current.contents
 
 	if(antag.character && antag.character.uplink_location == "Headset" && locate(/obj/item/device/radio) in antag.current.contents)
