@@ -25,6 +25,7 @@
 
 /datum/faction/syndicate
 
+	var/gamemode_faction = 0 // Is this faction gamemode-specific? Prevents persistant antags from joining it, etc.
 	var/list/alliances = list() // these alliances work together
 	var/list/datum/uplink_item/equipment = list() // list of equipment available for this faction and its prices
 	var/friendly_identification	// 0 to 2, the level of identification of fellow operatives or allied factions
@@ -298,6 +299,7 @@
 
 /datum/faction/syndicate/marauders/mercenaries
 	name = "Gorlex Mercenaries"
+	gamemode_faction = 1
 
 /datum/faction/syndicate/marauders/mercenaries/can_join(var/datum/mind/M)
 	if( M.antagonist && istype(M.antagonist, /datum/antagonist/mercenary) )
