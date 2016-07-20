@@ -107,15 +107,18 @@
 			var/obj/machinery/power/supermatter/core = sm_piece
 			total_size += ( SM_CORE_SIZE*core.smlevel ) // A level 3 core is worth as many as three level 1 cores
 
+	for( var/sm_piece in sm_pieces )
+		qdel( sm_piece )
+
+	sm_pieces.Cut()
+
 	if( total_size > SM_CORE_SIZE )
 		var/smlevel = round( total_size/SM_CORE_SIZE )
 		var/obj/machinery/power/supermatter/core = new ( src, smlevel )
 		sm_pieces += core
-
-		for( var/sm_piece in sm_pieces )
-			qdel( sm_piece )
-
-		sm_pieces.Cut()
+	else
+		var/obj/item/weapon/shard/supermatter/shard = new( src, 1, total_size )
+		sm_pieces += shard
 
 	active = 0
 
