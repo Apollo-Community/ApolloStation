@@ -230,5 +230,5 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 	var/msg = "<span class='notice'><b><font color='[font_colour]'>[faxname]: </font>[key_name(sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<a href='?_src_=holder;[reply_type]=\ref[sender];originfax=\ref[src]'>REPLY</a>)</b>: Receiving '[sent.name]' via secure connection ... <a href='?_src_=holder;AdminFaxView=\ref[sent]'>view message</a></span>"
 	log_admin(msg)
 	for(var/client/C in admins)
-		if(R_ADMIN & C.holder.rights)
+		if( !check_rights( R_MOD, usr_client = C ) && check_rights( R_ADMIN, usr_client = C ))
 			C << msg
