@@ -455,15 +455,20 @@
 				else
 					value = "None"
 			if( "birth_date" )
-				birth_date = list()
+				birth_date = params2list( html_decode( value ))
 
-				for( var/num in params2list( value ))
-					if( istext( num ))
-						num = text2num( html_decode( num ))
-						if( num )
-							birth_date.Add( num )
+				var/randomize = 0
+
+				for( var/j in birth_date )
+					if( birth_date[j] )
+						birth_date[j] = text2num( birth_date[j] )
+					else
+						randomize = 1
 
 				if( !birth_date || !birth_date.len == 3 )
+					randomize = 1
+
+				if( randomize )
 					change_age( rand( 25, 45 ))
 
 				calculate_age()
@@ -480,13 +485,21 @@
 						L[V] = text2num( L[V] )
 				value = L
 			if( "prison_date" )
-				prison_date = list()
+				prison_date = params2list( html_decode( value ))
 
-				for( var/num in params2list( html_decode( value )))
-					if( istext( num ))
-						num = text2num( num )
-						if( num )
-							prison_date.Add( num )
+				var/clear = 0
+
+				for( var/j in prison_date )
+					if( prison_date[j] )
+						prison_date[j] = text2num( prison_date[j] )
+					else
+						clear = 1
+
+				if( !prison_date || !prison_date.len == 3 )
+					clear = 1
+
+				if( clear )
+					prison_date = list()
 
 				value = prison_date
 /* Disabling this for now until we find out why date proc is messing up
@@ -605,7 +618,7 @@
 
 // Call this to change the character's age, will recalculate their birthday given an age
 /datum/character/proc/change_age( var/new_age, var/age_min = AGE_MIN, var/age_max = AGE_MAX )
-	new_age = max(min( round( new_age ), age_max), age_min)
+	new_age = max( min( round( new_age ), age_max), age_min)
 
 	var/birth_year = game_year-new_age
 
@@ -617,9 +630,8 @@
 
 	var/birth_day = rand( 1, getMonthDays( birth_month ))
 
-	birth_date = list( birth_year, birth_month, birth_day )
+	birth_date = list( "year" = birth_year, "month" = birth_month, "day" = birth_day )
 	age = calculate_age()
-
 
 // Calculates the characters age from their birthdate
 /datum/character/proc/calculate_age()
@@ -630,9 +642,9 @@
 	if( !birth_date || birth_date.len < 3 )
 		change_age( rand( 20, 50 )) // If we dont have a birthdate, we better get one
 
-	var/birth_year = birth_date[1]
-	var/birth_month = birth_date[2]
-	var/birth_day = birth_date[3]
+	var/birth_year = birth_date["year"]
+	var/birth_month = birth_date["month"]
+	var/birth_day = birth_date["day"]
 
 	age = ( cur_year-birth_year )+1
 
