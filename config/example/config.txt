@@ -174,7 +174,7 @@ GUEST_BAN
 FORUMURL http://apollo-community.org/
 
 ## Wiki address
-WIKIURL http://wiki.apollo-community.org/
+WIKIURL https://apollo-community.org/wiki/
 
 ## Git repository
 GITREPOURL https://github.com/Apollo-Community/ApolloStation
