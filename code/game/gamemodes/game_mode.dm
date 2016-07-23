@@ -279,9 +279,7 @@
 /datum/game_mode/proc/persistant_antag_game_end()
 	for( var/datum/mind/traitor in persistant_traitors )
 		var/datum/antagonist/antag = traitor.antagonist
-		if( antag )	continue // admin removed them or something, idk
-
-		// antag got caught check goes here
+		if( !antag )	continue // admin removed them or something, idk
 
 		var/notoriety = traitor.original_character.antag_data["notoriety"]
 		var/contract_requirement = round( ( notoriety + 1 ) / 2 )

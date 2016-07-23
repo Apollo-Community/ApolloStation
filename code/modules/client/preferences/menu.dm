@@ -239,7 +239,7 @@
 			var/status = query.item[1]
 			var/list/prison_date = params2list( html_decode( query.item[2] ))
 
-			for( var/i = 1, i <= prison_date.len, i++ )
+			for( var/i in prison_date )
 				prison_date[i] = text2num( prison_date[i] )
 
 			var/employment = status
