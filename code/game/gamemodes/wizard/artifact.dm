@@ -16,29 +16,70 @@
 	desc = "It looks pretty radical on the other side!"
 	icon = 'icons/obj/biomass.dmi'
 	icon_state = "rift"
-	density = 1
+	density = 1			// set this to 0 when you've setup the portal
 	unacidable = 1
-	anchored = 1.0
-	var/x_target
-	var/y_target
-	var/z_target
+	anchored = 1
+	var/x_target = 129
+	var/y_target = 184
+	var/z_target = 3
 
-/obj/effect/custom_portal/Crossed(var/mob/A)
-	if(istype(A, /mob/living/silicon))		return		//no silicons!
-	if(x_target && y_target && z_target)
-		A.x = x_target
-		A.y = y_target
-		A.z = z_target
-		A << "<span class='danger'>You jump through the portal and end up in some unknown place! Oh god how will you get back?</span>"
-	else
-		A << "<span class='warning'>You can't seem to go through the portal! It is like a wall!</span>"
+	var/only_mob = 0
 
-/obj/effect/custom_portal/Crossed(var/obj/O)
-	if(istype(O, /obj/mecha))		return			//no mechs!
-	if(x_target && y_target && z_target)
-		O.x = x_target
-		O.y = y_target
-		O.z = z_target
+/obj/effect/custom_portal/Crossed(var/atom/movable/A)
+	if(istype(A, /mob/living/silicon) || istype(A, /obj/mecha))		return
+
+	if(!x_target || !y_target || !z_target)		return
+
+	A.loc = locate(x_target, y_target, z_target)
+
+	if(istype(A, /mob/living/carbon))
+		var/mob/living/carbon/C = A
+		C.alpha = 127
+
+		C << "<span class='danger'>You jump through the portal and end up in some unknown place! Oh god how will you get back?</span>"
+
+/obj/structure/dimensional_storage
+	name = "Strange Microwave"
+	desc = "Looks like something from one of those Japanese anime."
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "mw-spook-off"
+	var/linked_storage = null
+	var/on = 0
+	light_color = "#00e800"
+	light_power = 3
+	light_range = 3
+
+/obj/structure/dimensional_storage/New()
+	for(var/obj/structure/dimensional_storage/D in world)
+		if(D == src)	continue
+		D.linked_storage = src
+		linked_storage = D
+		break
+
+/obj/structure/dimensional_storage/attackby(var/obj/W, var/mob/user)
+	if(on)
+		user << "<span class='danger'>The microwave is doing something! You probably shouldn't mess with it!"
+		return
+	user.visible_message("<span class='notice'>[user] puts the [W] into the [src]!</span>", "<b>You put the [W] into the [src]!</b>")
+	user.drop_item()
+	W.loc = src
+	W.SpinAnimation()
+	set_link(1)
+	playsound(loc, 'sound/effects/neutron_charge.ogg', 50, 1, -1)
+	spawn(rand(40,120))
+		W.SpinAnimation(,0)
+		W.loc = get_turf(linked_storage)
+		set_link(0)
+		playsound(loc, 'sound/machines/ding.ogg', 50, 1, -1)
+
+/obj/structure/dimensional_storage/proc/set_link(var/state)
+	if(linked_storage)
+		var/obj/structure/dimensional_storage/D = linked_storage
+		on = state
+		D.on = state
+
+		icon_state = "mw-spook[state ? "" : "-off"]"
+		D.icon_state = "mw-spook[state ? "" : "-off"]"
 
 /obj/effect/rend
 	name = "Tear in the fabric of reality"
