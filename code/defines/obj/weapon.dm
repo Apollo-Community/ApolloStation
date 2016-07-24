@@ -35,7 +35,7 @@
 	throw_speed = 4
 	throw_range = 20
 
-/obj/item/weapon/bananapeel-green
+/obj/item/weapon/bananapeelgreen
 	name = "green banana peel"
 	desc = "A peel from a gooey, green banana. Looks disgusting."
 	icon = 'icons/obj/items.dmi'

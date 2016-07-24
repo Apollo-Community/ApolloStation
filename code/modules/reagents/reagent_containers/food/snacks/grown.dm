@@ -344,7 +344,7 @@
 	icon_state = "banana-green"
 	item_state = "banana-green"
 	filling_color = "#339933"
-	trash = /obj/item/weapon/bananapeel-green
+	trash = /obj/item/weapon/bananapeelgreen
 	potency = 35
 	plantname = "banana"
 
