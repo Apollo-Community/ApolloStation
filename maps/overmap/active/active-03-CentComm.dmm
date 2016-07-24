@@ -720,7 +720,7 @@
 "nR" = (/obj/machinery/computer/card,/obj/machinery/light{dir = 4},/turf/unsimulated/floor{icon = 'icons/turf/shuttle.dmi'; icon_state = "floor4"},/area/centcom/evac)
 "nS" = (/obj/structure/table/woodentable{dir = 5},/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,/turf/unsimulated/floor{icon_state = "cafeteria"; dir = 2},/area/centcom/holding)
 "nT" = (/obj/structure/table/woodentable{dir = 5},/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,/turf/unsimulated/floor{icon_state = "bar"; dir = 2},/area/centcom/holding)
-"nU" = (/obj/machinery/door/airlock/centcom{name = "Diner"; opacity = 1; req_access_txt = "105"},/turf/unsimulated/wall,/area/centcom/holding)
+"nU" = (/obj/machinery/door/airlock/centcom{name = "Diner"; opacity = 1; req_access_txt = "105"},/turf/unsimulated/floor{icon_state = "floor"},/area/centcom/holding)
 "nV" = (/turf/unsimulated/floor{dir = 10; icon_state = "carpetside"},/area/centcom/holding)
 "nW" = (/turf/unsimulated/floor{dir = 2; icon_state = "carpetside"},/area/centcom/holding)
 "nX" = (/obj/structure/table/woodentable{dir = 5},/obj/item/ashtray/bronze,/turf/unsimulated/floor{dir = 2; icon_state = "carpetside"},/area/centcom/holding)
