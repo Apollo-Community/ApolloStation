@@ -35,6 +35,17 @@
 	throw_speed = 4
 	throw_range = 20
 
+/obj/item/weapon/bananapeelgreen
+	name = "green banana peel"
+	desc = "A peel from a gooey, green banana. Looks disgusting."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "banana_peel-green"
+	item_state = "banana_peel-green"
+	w_class = 2.0
+	throwforce = 0
+	throw_speed = 4
+	throw_range = 20
+
 /obj/item/weapon/soap
 	name = "soap"
 	desc = "A cheap bar of soap. Doesn't smell."
@@ -238,7 +249,7 @@
 			M << "<span class='alert'>You feel your leg above your ankle being pierced and cut up! [has_poison ? "<b>It burns like hell!</b>" : ""]</span>"
 			var/emote_sound = M.species.voice_sounds.getScream(gender)
 			if(emote_sound)	playsound(loc, emote_sound, 80, M.species.mod_sound)
-			
+
 			leg.take_damage(rand(6, 12))
 			if(has_poison)
 				has_poison = 0
