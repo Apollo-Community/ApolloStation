@@ -475,6 +475,7 @@
 	if(!num_antags)	return null
 
 	var/list/possible_antags = get_players_for_role(role)
+	log_debug("(pick_antagonists) Amount of possible antags: [possible_antags.len]")
 	var/list/chosen_antags = list()
 	var/list/clients = list()
 
