@@ -26,8 +26,8 @@
 	var/only_mob = 0
 
 /obj/effect/custom_portal/Crossed(var/atom/movable/A)
+	if(only_mob && !istype(A, /mob))		return
 	if(istype(A, /mob/living/silicon) || istype(A, /obj/mecha))		return
-
 	if(!x_target || !y_target || !z_target)		return
 
 	A.loc = locate(x_target, y_target, z_target)
