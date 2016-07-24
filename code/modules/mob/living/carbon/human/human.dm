@@ -1126,7 +1126,7 @@
 
 	// Save the species to their character
 	character.species = new_species
-	
+
 	// Rebuild the HUD. If they aren't logged in then login() should reinstantiate it for them.
 	if(client && client.screen)
 		client.screen.len = null
@@ -1250,6 +1250,9 @@
 
 
 /mob/living/carbon/human/start_pulling(var/atom/movable/AM)
+	if(istype(AM, /mob/living/carbon/human))
+		var/mob/living/carbon/C = AM
+		if(C.status_flags & GODMODE)		return
 	if( isBaldie( src ))
 		if( istype( AM, /obj/structure/reagent_dispensers/fueltank ))
 			message_admins("[src.ckey]/[src.real_name] is pulling a [AM] around <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>", "BEWS:")
