@@ -329,7 +329,7 @@
 
 	// Removing the equipment
 	var/obj/item/SPE = input(user, "Remove which equipment?", null, null) as null|anything in equipment_system.spacepod_equipment
-	if( SPE )
+	if( SPE && in_range(src, user) )
 		equipment_system.dequip( SPE, user )
 		update_HUD( pilot )
 
