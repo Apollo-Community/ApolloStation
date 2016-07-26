@@ -1114,6 +1114,17 @@ area/space/atmosalert()
 	icon_state = "bridge"
 	environment = STONEROOM
 
+/area/bridge/bridgedorm
+	name = "\improper Bridge Dormitory"
+	icon_state = "bridge"
+	environment = STONEROOM
+
+/area/bridge/bridgelocker
+	name = "\improper Bridge Locker Room"
+	icon_state = "bridge"
+	environment = STONEROOM
+
+
 /area/bridge/bridgemed
 	name = "\improper Bridge Medical"
 	icon_state = "bridge"

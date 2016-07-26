@@ -343,7 +343,6 @@
 #include "code\game\jobs\job\civilian\captain.dm"
 #include "code\game\jobs\job\civilian\chaplain.dm"
 #include "code\game\jobs\job\civilian\chef.dm"
-#include "code\game\jobs\job\civilian\entertainer.dm"
 #include "code\game\jobs\job\civilian\head_of_personnel.dm"
 #include "code\game\jobs\job\civilian\internal_affairs_agent.dm"
 #include "code\game\jobs\job\civilian\janitor.dm"
