@@ -1218,6 +1218,10 @@ area/space/atmosalert()
 	name = "\improper Fore Starboard Private Quarter One"
 	icon_state = "Sleep"
 
+/area/crew_quarters/maintrooms/arrivalroom1
+	name = "\improper Port Private Quarter One"
+	icon_state = "Sleep"
+
 /area/crew_quarters/maintrooms/secroom2
 	name = "\improper Fore Starboard Private Quarter Two"
 	icon_state = "Sleep"
