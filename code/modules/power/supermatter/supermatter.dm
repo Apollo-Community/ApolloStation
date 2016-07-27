@@ -321,9 +321,10 @@
 	if(istype(Proj, /obj/item/projectile/beam/continuous/emitter))
 		var/factor = getSMVar( smlevel, "emitter_factor" )
 		var/obj/item/projectile/beam/continuous/emitter/B = Proj
-
-		power += ( 0.16 * ( 1.69 ** factor )) * ( B.power / ( EMITTER_POWER_MAX * ( 2/3 ))) // regression
-		damage += ( 0.5 * factor - 0.5 ) * ( B.power / ( EMITTER_POWER_MAX * ( 2/3 )))
+		power += ( 0.16 * ( 1.69 ** factor )) * ( B.power / ( EMITTER_POWER_MAX * 0.6667)) // regression
+		//damage += ( factor / 25 ) * ( B.power / ( EMITTER_POWER_MAX * 0.6667))
+		//faster calculation which outputs the same as above ^
+		if(smlevel > 1)		damage += (factor * B.power) / 100
 	else
 		damage += Proj.damage
 	return 0
@@ -357,7 +358,9 @@
 /obj/machinery/power/supermatter/proc/transfer_energy()
 	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
 		var/distance = get_dist(R, src)
-		if(distance  && distance <= getSMVar( smlevel, "collector_range" ))		//sanity for 1/0
+		if(distance && distance <= getSMVar( smlevel, "collector_range" ))		//sanity for 1/0
+			//stop their being a massive benifit to moving the rad collectors closer
+			if(distance < 3)	distance = 2.67			// between 25 - 50k benifit 	(level 1)
 			//for collectors using standard phoron tanks at 1013 kPa, the actual power generated will be this power*0.3*20*29 = power*174
 			R.receive_pulse(power*(0.7/distance))			// mod = 0.65 : 0.325 : 0.211 ..... 0.065    outputs - ~400 - 435kW with default setup (tested via mapping > setup supermatter)
 	return
