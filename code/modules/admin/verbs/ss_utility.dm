@@ -76,3 +76,7 @@
 /proc/send_slack(var/source, var/target = "1", var/message, var/col = "0")
 	//Sends the ahelp to slack chat
 	shell("python scripts/slack.py [source] [target] [col] '[sanitize(message)]'")
+
+// sends ahelps from the server to discord
+/proc/send_discord(var/source, var/target = "1", var/message)
+	shell("python scripts/discord_bot.py [source] [target] '[sanitize(message)]'")

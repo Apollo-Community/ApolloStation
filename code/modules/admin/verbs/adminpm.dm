@@ -117,6 +117,7 @@
 
 	if(C.key in admins)		send_slack(src.ckey, slack ? slack : C.ckey, msg, 0)		//So we can set the colour to orange/green
 	else					send_slack(src.ckey, slack ? slack : C.ckey, msg, 1)
+	send_discord(src.ckey, slack ? slack : C.ckey, msg)
 	//oh god I hope this works :V
 
 	//we don't use message_admins here because the sender/receiver might get it too
