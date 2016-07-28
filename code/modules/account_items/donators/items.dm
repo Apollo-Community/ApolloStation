@@ -205,6 +205,7 @@
 /obj/item/clothing/suit/storage/toggle/labcoat/ominousbrainworm
 	name = "Eriziki Sidier's labcoat"
 	desc = "A labcoat that has a nametag noting that it belongs to Eriziki Sidier."
+	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "labcoat_sidier"
 	item_state = "labcoat_sidier"
 	icon_open = "labcoat_sidier"
