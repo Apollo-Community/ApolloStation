@@ -52,6 +52,8 @@
 	if(ai.holo)
 		ai.holo.move_hologram(ai)
 
+	cameranet.visibility(src)
+
 	return 1
 
 /mob/aiEye/proc/getLoc()
