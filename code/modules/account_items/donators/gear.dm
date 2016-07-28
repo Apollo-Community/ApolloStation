@@ -112,3 +112,8 @@
 	display_name = "Phoebes labcoat"
 	path = /obj/item/clothing/suit/storage/toggle/labcoat/fluff/callmanfok
 	sort_category = slot_wear_suit
+
+/datum/gear/account/notmegatron_mimemask
+	display_name = "Alfreds mask"
+	path = /obj/item/clothing/mask/gas/mime
+	sort_category = slot_wear_mask
