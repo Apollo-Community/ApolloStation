@@ -157,8 +157,8 @@
 	updateDesc()
 	return 1
 
-/obj/machinery/poewr/supermatter/proc/updateDesc()
-	if(damage < 200)
+/obj/machinery/power/supermatter/proc/updateDesc()
+	if(damage < 200 )
 		desc = "A strangely translucent and iridescent crystal. <span class='alert'>You get headaches just from looking at it.</span>"
 	else if(damage > 200)
 		desc += "/n <span class='alert'>You can see tiny cracks in the crystal.</span>"
