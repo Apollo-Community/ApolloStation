@@ -342,11 +342,11 @@
 		set src = usr.loc
 		set popup_menu = 0
 
-		if( istype( get_area( src ), /area/planet ))
+		if( istype( get_area( src ), /area/planet/moon/exterior ) || istype( get_area( src ), /area/planet/moon/base/exterior ) || istype( get_area( src ), /area/planet/moon/landing_zone ))
 			occupants_announce( "<span class='notice'>Leaving the planet surface and returning to space.</span>" )
 			overmapTravel()
 		else
-			usr << "<span class='warning'>Not currently on a planet.</span>"
+			usr << "<span class='warning'>Not currently on a planet or inside.</span>"
 
 		return
 
