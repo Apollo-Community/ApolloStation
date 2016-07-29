@@ -43,6 +43,10 @@
 			active = 0
 			return
 
+		if( !target.has_beacon() )
+			active = 0
+			return
+
 		if( src.charge >= src.max_charge )
 			if(  istype( target.loc, /obj/effect/traveler ))
 				var/obj/effect/traveler/traveler = target.loc
@@ -60,6 +64,8 @@
 		ping("[src] states, \"ERROR: No local beacon set!\"")
 	if( !target )
 		ping("[src] states, \"ERROR: No pod linked!\"")
+	if( !target.has_beacon())
+		ping("[src] states, \"ERROR: Pod beacon offline or not installed, pod could not be located!\"")
 
 	if( alert(usr, "Would you like recall [target]? \nWARNING: Do not recall the shuttle if it is inside a structure.", "Recall Shuttle", "Yes", "No") == "Yes")
 		ping("[src] states, \"Recalling [target] to [beacon]\"")
