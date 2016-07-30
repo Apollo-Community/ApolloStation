@@ -1,6 +1,6 @@
 /datum/shuttle/ferry/supply
 	var/late_chance = 80
-	var/max_late_time = 300.
+	var/max_late_time = 300
 	var/traveling = 0
 	var/obj/hanger/finish_hanger
 	var/list/supply_turfs
