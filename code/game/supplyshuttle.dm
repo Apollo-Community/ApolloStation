@@ -170,6 +170,7 @@ var/list/mechtoys = list(
 
 	//Sellin
 	proc/sell()
+		world << "Sup selling started"
 		var/list/turfs = shuttle.current_hanger.hanger_area_turfs
 		if(isnull(turfs))	return
 
@@ -207,6 +208,8 @@ var/list/mechtoys = list(
 							var/obj/item/stack/sheet/mineral/platinum/P = A
 							plat_count += P.get_amount()
 
+						world << "selling [A]"
+
 				qdel(MA)
 
 		if(phoron_count)
@@ -217,6 +220,7 @@ var/list/mechtoys = list(
 
 	//Buyin
 	proc/buy()
+		world << "buying started"
 		if(!shoppinglist.len) return
 
 		var/list/turfs = shuttle.supply_turfs
@@ -227,11 +231,16 @@ var/list/mechtoys = list(
 			if(T.density || T.contents.len) continue
 			clear_turfs += T
 
+		world << "There are [clear_turfs.len] turfs to place stuff on."
+		world << "shopping list:"
+		for(var/item in shoppinglist)
+			world << "/n [item]"
+
 		for(var/S in shoppinglist)
 			if(!clear_turfs.len) break
 			var/i = rand(1,clear_turfs.len)
 			var/turf/pickedloc = clear_turfs[i]
-			clear_turfs.Cut(i,i+1)
+			clear_turfs.Remove(pickedloc)
 
 			var/datum/supply_order/SO = S
 			var/datum/supply_packs/SP = SO.object
