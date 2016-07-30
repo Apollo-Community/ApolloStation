@@ -543,7 +543,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/friedegg
 	name = "Fried egg"
-	desc = "A fried egg, with a touch of salt and pepper."
+	desc = "Wait a second, this was grilled!"
 	icon_state = "friedegg"
 	filling_color = "#FFDF78"
 
@@ -691,8 +691,8 @@
 		reagents.add_reagent("hyperzine", 5)
 		src.bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/spidermeat
-	name = "spider meat"
+/obj/item/weapon/reagent_containers/food/snacks/meat/spidermeat
+	name = "meat"
 	desc = "A green slab of meat, oozing with disgusting puss."
 	icon_state = "spidermeat"
 	filling_color = "#43DE18"
@@ -704,7 +704,7 @@
 		src.bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/spiderleg
-	name = "spider leg"
+	name = "leg"
 	desc = "A squirmy spider leg... Looks crunchy."
 	icon_state = "spiderleg"
 	filling_color = "#111111"
@@ -716,7 +716,7 @@
 		src.bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/spideregg
-	name = "spider eggs"
+	name = "eggs"
 	desc = "A cluster of spider eggs. I think they might still be alive in there.."
 	icon_state = "spidereggs"
 	filling_color = "#43DE18"
@@ -888,6 +888,17 @@
 	name = "xenoburger"
 	desc = "Smells caustic. Tastes like heresy."
 	icon_state = "xburger"
+	filling_color = "#43DE18"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/spidersandwich
+	name = "spider leg sandwich"
+	desc = "Is that a leg inbetween that bread..?"
+	icon_state = "notasandwich"
 	filling_color = "#43DE18"
 
 	New()
@@ -1094,7 +1105,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/wingfangchu
 	name = "Wing Fang Chu"
-	desc = "A savory dish of alien wing wang in soy."
+	desc = "A savory dish of spider wing wang in soy."
 	icon_state = "wingfangchu"
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#43DE18"
@@ -1104,6 +1115,29 @@
 		reagents.add_reagent("nutriment", 6)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/spidereggsham
+	name = "Wing Fang Chu"
+	desc = "Boiled eggs, spider style. Probably not healthy."
+	icon_state = "spidereggsham"
+	trash = /obj/item/trash/plate
+	filling_color = "#43DE18"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sashimi
+	name = "sashimi"
+	desc = "traditional sliced fish, with a side of soy sauce. Now with carp spin-off!"
+	icon_state = "sashimi"
+	filling_color = "#E3D796"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("carpotoxin", 3)
+		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/human/kabob
 	name = "-kabob"
@@ -2200,6 +2234,27 @@
 	filling_color = "#8AFF75"
 	bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/spidermeatbread
+	name = "spiderbread loaf"
+	desc = "Now with extra goo!"
+	icon_state = "spidermeatbread"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/spidermeatbreadslice
+	slices_num = 5
+	filling_color = "#8AFF75"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 30)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/spidermeatbreadslice
+	name = "spiderbread slice"
+	desc = "Now with less goo!"
+	icon_state = "spidermeatslice"
+	filling_color = "#8AFF75"
+	trash = /obj/item/trash/plate
+	filling_color = "#8AFF75"
+	bitesize = 2
+
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/bananabread
 	name = "Banana-nut bread"
 	desc = "A heavenly and filling treat."
@@ -2997,6 +3052,16 @@
 		..()
 		reagents.add_reagent("nutriment", 7)
 
+
+/obj/item/weapon/reagent_containers/food/snacks/wrap
+	name = "wrap"
+	desc = "For all your vegetarian needs!"
+	icon_state = "wrap"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("nutriment", 7)
+
 /obj/item/weapon/reagent_containers/food/snacks/rawcutlet
 	name = "raw cutlet"
 	desc = "A thin piece of raw meat."
@@ -3008,7 +3073,7 @@
 		reagents.add_reagent("nutriment", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/cutlet
-	name = "cutlet"
+	name = "burger patty"
 	desc = "A tasty meat slice."
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "cutlet"

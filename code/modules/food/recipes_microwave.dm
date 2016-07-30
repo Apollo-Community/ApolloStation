@@ -8,6 +8,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
 		/obj/item/device/assembly/signaler
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/telebacon
 
 I said no!
@@ -16,6 +17,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh,
 		/obj/item/device/assembly/signaler
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/telebacon
 */
 
@@ -24,6 +26,7 @@ I said no!
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/egg
 	)
+	cookingmethod = "grill"
 	result = /obj/item/weapon/reagent_containers/food/snacks/friedegg
 
 /datum/recipe/boiledegg
@@ -31,6 +34,7 @@ I said no!
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/egg
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/boiledegg
 
 /datum/recipe/dionaroast
@@ -39,6 +43,7 @@ I said no!
 		/obj/item/weapon/holder/diona,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/dionaroast
 
 
@@ -49,6 +54,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
 		/obj/item/device/radio
 	)
+	cookingmethod = "microwave"
 	result = /obj/item/weapon/reagent_containers/food/snacks/bananaphone
 */
 
@@ -57,6 +63,7 @@ I said no!
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/dough
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/jelly
 
 /datum/recipe/jellydonut/slime
@@ -64,6 +71,7 @@ I said no!
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/dough
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly
 
 /datum/recipe/jellydonut/cherry
@@ -71,6 +79,7 @@ I said no!
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/dough
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly
 
 /datum/recipe/donut
@@ -78,8 +87,9 @@ I said no!
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/dough
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
-
+/*CAKEY FIX THIS
 /datum/recipe/human/burger
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat/human,
@@ -165,12 +175,31 @@ I said no!
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/hotdog
 
+/datum/recipe/spidersandwich
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
+		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
+		/obj/item/weapon/reagent_containers/food/snacks/spiderleg
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/spidersandwich
+
+*/
+
+/datum/recipe/spidereggsham
+	reagents = list("water" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/spideregg
+	)
+	cookingmethod = "pot"
+	result = /obj/item/weapon/reagent_containers/food/snacks/spidereggsham
+
 /datum/recipe/waffles
 	reagents = list("sugar" = 10)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
 		/obj/item/weapon/reagent_containers/food/snacks/dough
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/waffles
 
 /datum/recipe/donkpocket
@@ -178,6 +207,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
 		/obj/item/weapon/reagent_containers/food/snacks/meatball
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket //SPECIAL
 	proc/warm_up(var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked)
 		being_cooked.warm = 1
@@ -195,6 +225,7 @@ I said no!
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/donkpocket
 	)
+	cookingmethod = "microwave"
 	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket //SPECIAL
 	make_food(var/obj/container as obj)
 		var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked = locate() in container
@@ -214,6 +245,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/meatbread
 
 /datum/recipe/syntibread
@@ -228,7 +260,23 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/meatbread
+
+/datum/recipe/spidermeatbread
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/spidermeat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/spidermeat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/spidermeat,
+		/obj/item/weapon/reagent_containers/food/snacks/spideregg,
+		/obj/item/weapon/reagent_containers/food/snacks/spideregg,
+		/obj/item/weapon/reagent_containers/food/snacks/spideregg,
+	)
+	cookingmethod = "oven"
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/spidermeatbread
 
 /datum/recipe/xenomeatbread
 	items = list(
@@ -242,6 +290,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/xenomeatbread
 
 /datum/recipe/bananabread
@@ -252,6 +301,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/bananabread
 
 /datum/recipe/omelette
@@ -261,6 +311,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 	)
+	cookingmethod = "grill"
 	result = /obj/item/weapon/reagent_containers/food/snacks/omelette
 
 /datum/recipe/muffin
@@ -268,6 +319,7 @@ I said no!
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/muffin
 
 /datum/recipe/eggplantparm
@@ -276,6 +328,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/eggplantparm
 
 /datum/recipe/soylenviridians
@@ -285,6 +338,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/flour,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
 	)
+	cookingmethod = "microwave"
 	result = /obj/item/weapon/reagent_containers/food/snacks/soylenviridians
 
 /datum/recipe/soylentgreen
@@ -295,6 +349,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/meat/human,
 		/obj/item/weapon/reagent_containers/food/snacks/meat/human,
 	)
+	cookingmethod = "microwave"
 	result = /obj/item/weapon/reagent_containers/food/snacks/soylentgreen
 
 /datum/recipe/carrotcake
@@ -307,6 +362,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/carrotcake
 
 /datum/recipe/cheesecake
@@ -318,6 +374,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesecake
 
 /datum/recipe/plaincake
@@ -327,6 +384,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/plaincake
 
 /datum/recipe/meatpie
@@ -334,6 +392,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/meatpie
 
 /datum/recipe/tofupie
@@ -341,6 +400,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
 		/obj/item/weapon/reagent_containers/food/snacks/tofu,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/tofupie
 
 /datum/recipe/xemeatpie
@@ -348,6 +408,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
 		/obj/item/weapon/reagent_containers/food/snacks/xenomeat,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/xemeatpie
 
 /datum/recipe/pie
@@ -356,6 +417,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie
 
 /datum/recipe/cherrypie
@@ -364,6 +426,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/cherrypie
 
 /datum/recipe/berryclafoutis
@@ -371,13 +434,15 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/berries,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/berryclafoutis
 
 /datum/recipe/wingfangchu
 	reagents = list("soysauce" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/xenomeat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/spidermeat,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/wingfangchu
 
 /datum/recipe/chaosdonut
@@ -385,8 +450,10 @@ I said no!
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/dough
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/chaos
 
+/*CAKEY FIX THIS
 /datum/recipe/human/kabob
 	items = list(
 		/obj/item/stack/rods,
@@ -418,7 +485,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/tofu,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/tofukabob
-
+*/
 /datum/recipe/tofubread
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
@@ -431,6 +498,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/tofubread
 
 /datum/recipe/loadedbakedpotato
@@ -438,27 +506,39 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato
 
+/*CAKEY FIX THIS
 /datum/recipe/cheesyfries
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/fries,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/cheesyfries
-
+*/
 /datum/recipe/cubancarp
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/chili,
 		/obj/item/weapon/reagent_containers/food/snacks/carpmeat,
 	)
+	cookingmethod = "grill"
 	result = /obj/item/weapon/reagent_containers/food/snacks/cubancarp
+
+/datum/recipe/sashimi
+	reagents = list("soysauce" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/carpmeat,
+	)
+	cookingmethod = "board"
+	result = /obj/item/weapon/reagent_containers/food/snacks/sashimi
 
 /datum/recipe/popcorn
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/corn
 	)
+	cookingmethod = "microwave"
 	result = /obj/item/weapon/reagent_containers/food/snacks/popcorn
 
 
@@ -468,6 +548,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/cookie
 
 /datum/recipe/fortunecookie
@@ -476,6 +557,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/doughslice,
 		/obj/item/weapon/paper,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/fortunecookie
 	make_food(var/obj/container as obj)
 		var/obj/item/weapon/paper/paper = locate() in container
@@ -497,6 +579,7 @@ I said no!
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat
 	)
+	cookingmethod = "grill"
 	result = /obj/item/weapon/reagent_containers/food/snacks/meatsteak
 
 /datum/recipe/syntisteak
@@ -504,6 +587,7 @@ I said no!
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh
 	)
+	cookingmethod = "grill"
 	result = /obj/item/weapon/reagent_containers/food/snacks/meatsteak
 
 /datum/recipe/pizzamargherita
@@ -515,6 +599,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita
 
 /datum/recipe/meatpizza
@@ -526,6 +611,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza
 
 /datum/recipe/syntipizza
@@ -537,6 +623,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza
 
 /datum/recipe/mushroompizza
@@ -550,6 +637,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/mushroompizza
 
 /datum/recipe/vegetablepizza
@@ -561,8 +649,9 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/vegetablepizza
-
+/*CAKEY FIX THIS
 /datum/recipe/spacylibertyduff
 	reagents = list("water" = 5, "vodka" = 5)
 	items = list(
@@ -584,7 +673,7 @@ I said no!
 		var/obj/item/weapon/reagent_containers/food/snacks/amanitajelly/being_cooked = ..(container)
 		being_cooked.reagents.del_reagent("amatoxin")
 		return being_cooked
-
+*/
 /datum/recipe/meatballsoup
 	reagents = list("water" = 10)
 	items = list(
@@ -592,6 +681,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/meatballsoup
 
 /datum/recipe/vegetablesoup
@@ -602,6 +692,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/eggplant,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
 	)
+	cookingmethod = "pot"
 	result = /obj/item/weapon/reagent_containers/food/snacks/vegetablesoup
 
 /datum/recipe/nettlesoup
@@ -611,11 +702,13 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 	)
+	cookingmethod = "pot"
 	result = /obj/item/weapon/reagent_containers/food/snacks/nettlesoup
 
 /datum/recipe/wishsoup
 	reagents = list("water" = 20)
 	result= /obj/item/weapon/reagent_containers/food/snacks/wishsoup
+	cookingmethod = "pot"
 
 /datum/recipe/hotchili
 	items = list(
@@ -623,6 +716,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/chili,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
 	)
+	cookingmethod = "pot"
 	result = /obj/item/weapon/reagent_containers/food/snacks/hotchili
 
 /datum/recipe/coldchili
@@ -631,6 +725,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/icepepper,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
 	)
+	cookingmethod = "pot"
 	result = /obj/item/weapon/reagent_containers/food/snacks/coldchili
 
 /datum/recipe/amanita_pie
@@ -638,6 +733,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/amanita_pie
 
 /datum/recipe/plump_pie
@@ -645,8 +741,10 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/plump_pie
 
+/*CAKEY FIX THIS
 /datum/recipe/spellburger
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/monkeyburger,
@@ -670,14 +768,16 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/bigbiteburger
+*/
 
 /datum/recipe/enchiladas
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/cutlet,
+		/obj/item/weapon/reagent_containers/food/snacks/rawcutlet,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/chili,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/chili,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/corn,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/enchiladas
 
 /datum/recipe/creamcheesebread
@@ -688,6 +788,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/creamcheesebread
 
 /datum/recipe/monkeysdelight
@@ -697,6 +798,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/monkeycube,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/monkeysdelight
 
 /datum/recipe/baguette
@@ -705,6 +807,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/baguette
 
 /datum/recipe/fishandchips
@@ -712,6 +815,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/fries,
 		/obj/item/weapon/reagent_containers/food/snacks/carpmeat,
 	)
+	cookingmethod = "grill"
 	result = /obj/item/weapon/reagent_containers/food/snacks/fishandchips
 
 /datum/recipe/birthdaycake
@@ -722,6 +826,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
 		/obj/item/clothing/head/cakehat
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/birthdaycake
 
 /datum/recipe/bread
@@ -729,8 +834,10 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
 		/obj/item/weapon/reagent_containers/food/snacks/egg
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread
 
+/*CAKEY FIX THIS
 /datum/recipe/sandwich
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meatsteak,
@@ -753,6 +860,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/grilledcheese
+*/
 
 /datum/recipe/tomatosoup
 	reagents = list("water" = 10)
@@ -760,6 +868,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
 	)
+	cookingmethod = "pot"
 	result = /obj/item/weapon/reagent_containers/food/snacks/tomatosoup
 
 /datum/recipe/rofflewaffles
@@ -768,6 +877,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/rofflewaffles
 
 /datum/recipe/stew
@@ -780,8 +890,10 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/eggplant,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom,
 	)
+	cookingmethod = "pot"
 	result = /obj/item/weapon/reagent_containers/food/snacks/stew
 
+/*CAKEY FIX THIS
 /datum/recipe/slimetoast
 	reagents = list("slimejelly" = 5)
 	items = list(
@@ -795,6 +907,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/cherry
+*/
 
 /datum/recipe/milosoup
 	reagents = list("water" = 10)
@@ -804,6 +917,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/tofu,
 		/obj/item/weapon/reagent_containers/food/snacks/tofu,
 	)
+	cookingmethod = "pot"
 	result = /obj/item/weapon/reagent_containers/food/snacks/milosoup
 
 /datum/recipe/stewedsoymeat
@@ -813,6 +927,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
 	)
+	cookingmethod = "pot"
 	result = /obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat
 
 /*/datum/recipe/spagetti We have the processor now
@@ -826,15 +941,18 @@ I said no!
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/spagetti,
 	)
+	cookingmethod = "pot"
 	result = /obj/item/weapon/reagent_containers/food/snacks/boiledspagetti
 
 /datum/recipe/boiledrice
 	reagents = list("water" = 5, "rice" = 10)
 	result = /obj/item/weapon/reagent_containers/food/snacks/boiledrice
+	cookingmethod = "pot"
 
 /datum/recipe/ricepudding
 	reagents = list("milk" = 5, "rice" = 10)
 	result = /obj/item/weapon/reagent_containers/food/snacks/ricepudding
+	cookingmethod = "oven"
 
 /datum/recipe/pastatomato
 	reagents = list("water" = 5)
@@ -843,6 +961,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
 	)
+	cookingmethod = "pot"
 	result = /obj/item/weapon/reagent_containers/food/snacks/pastatomato
 
 /datum/recipe/poppypretzel
@@ -859,6 +978,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/meatball,
 		/obj/item/weapon/reagent_containers/food/snacks/meatball,
 	)
+	cookingmethod = "pot"
 	result = /obj/item/weapon/reagent_containers/food/snacks/meatballspagetti
 
 /datum/recipe/spesslaw
@@ -870,8 +990,10 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/meatball,
 		/obj/item/weapon/reagent_containers/food/snacks/meatball,
 	)
+	cookingmethod = "pot"
 	result = /obj/item/weapon/reagent_containers/food/snacks/spesslaw
 
+/*CAKEY FIX THIS
 /datum/recipe/superbiteburger
 	reagents = list("sodiumchloride" = 5, "blackpepper" = 5)
 	items = list(
@@ -883,12 +1005,14 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/boiledegg,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/superbiteburger
+*/
 
 /datum/recipe/candiedapple
 	reagents = list("water" = 5, "sugar" = 5)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple
 	)
+	cookingmethod = "pot"
 	result = /obj/item/weapon/reagent_containers/food/snacks/candiedapple
 
 /datum/recipe/applepie
@@ -896,6 +1020,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/applepie
 
 /datum/recipe/applecake
@@ -907,8 +1032,9 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/applecake
-
+/*CAKEY FIX THIS
 /datum/recipe/slimeburger
 	reagents = list("slimejelly" = 5)
 	items = list(
@@ -946,6 +1072,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/cherry
+*/
 
 /datum/recipe/orangecake
 	reagents = list("milk" = 5)
@@ -959,6 +1086,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/orange,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/orange,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/orangecake
 
 /datum/recipe/limecake
@@ -973,6 +1101,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/lime,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/lime,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/limecake
 
 /datum/recipe/lemoncake
@@ -987,6 +1116,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/lemon,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/lemon,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/lemoncake
 
 /datum/recipe/chocolatecake
@@ -1001,6 +1131,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/chocolatecake
 
 /datum/recipe/bloodsoup
@@ -1009,11 +1140,12 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato,
 	)
+	cookingmethod = "pot"
 	result = /obj/item/weapon/reagent_containers/food/snacks/bloodsoup
 
 /datum/recipe/slimesoup
 	reagents = list("water" = 10, "slimejelly" = 5)
-	items = list()
+	cookingmethod = "pot"
 	result = /obj/item/weapon/reagent_containers/food/snacks/slimesoup
 
 /datum/recipe/boiledslimeextract
@@ -1021,6 +1153,7 @@ I said no!
 	items = list(
 		/obj/item/slime_extract,
 	)
+	cookingmethod = "pot"
 	result = /obj/item/weapon/reagent_containers/food/snacks/boiledslimecore
 
 /datum/recipe/braincake
@@ -1034,6 +1167,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/organ/brain
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/braincake
 
 /datum/recipe/chocolateegg
@@ -1041,13 +1175,15 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
 	)
+	cookingmethod = "pot"
 	result = /obj/item/weapon/reagent_containers/food/snacks/chocolateegg
 
 /datum/recipe/sausage
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meatball,
-		/obj/item/weapon/reagent_containers/food/snacks/cutlet,
+		/obj/item/weapon/reagent_containers/food/snacks/rawcutlet,
 	)
+	cookingmethod = "board"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sausage
 
 /datum/recipe/fishfingers
@@ -1057,6 +1193,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/carpmeat,
 	)
+	cookingmethod = "board"
 	result = /obj/item/weapon/reagent_containers/food/snacks/fishfingers
 
 /datum/recipe/mysterysoup
@@ -1067,6 +1204,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 	)
+	cookingmethod = "pot"
 	result = /obj/item/weapon/reagent_containers/food/snacks/mysterysoup
 
 /datum/recipe/pumpkinpie
@@ -1076,6 +1214,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pumpkinpie
 
 /datum/recipe/plumphelmetbiscuit
@@ -1084,6 +1223,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/flour,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit
 
 /datum/recipe/mushroomsoup
@@ -1091,6 +1231,7 @@ I said no!
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle,
 	)
+	cookingmethod = "pot"
 	result = /obj/item/weapon/reagent_containers/food/snacks/mushroomsoup
 
 /datum/recipe/chawanmushi
@@ -1100,6 +1241,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/chawanmushi
 
 /datum/recipe/beetsoup
@@ -1108,6 +1250,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage,
 	)
+	cookingmethod = "pot"
 	result = /obj/item/weapon/reagent_containers/food/snacks/beetsoup
 
 /datum/recipe/appletart
@@ -1119,6 +1262,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/goldapple,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/appletart
 
 /datum/recipe/tossedsalad
@@ -1129,6 +1273,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple,
 	)
+	cookingmethod = "board"
 	result = /obj/item/weapon/reagent_containers/food/snacks/tossedsalad
 
 /datum/recipe/aesirsalad
@@ -1138,6 +1283,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/goldapple,
 	)
+	cookingmethod = "board"
 	result = /obj/item/weapon/reagent_containers/food/snacks/aesirsalad
 
 /datum/recipe/validsalad
@@ -1148,6 +1294,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
 		/obj/item/weapon/reagent_containers/food/snacks/meatball,
 	)
+	cookingmethod = "board"
 	result = /obj/item/weapon/reagent_containers/food/snacks/validsalad
 	make_food(var/obj/container as obj)
 		var/obj/item/weapon/reagent_containers/food/snacks/validsalad/being_cooked = ..(container)
@@ -1159,6 +1306,7 @@ I said no!
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/doughslice
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/cracker
 
 /datum/recipe/stuffing
@@ -1166,6 +1314,7 @@ I said no!
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/stuffing
 
 /datum/recipe/tofurkey
@@ -1174,6 +1323,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/tofu,
 		/obj/item/weapon/reagent_containers/food/snacks/stuffing,
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/tofurkey
 
 // Fuck Science!
@@ -1181,7 +1331,18 @@ I said no!
 	items = list(
 		/obj/item/weapon/virusdish
 	)
+	cookingmethod = "microwave"
 	result = /obj/item/weapon/ruinedvirusdish
+
+/datum/recipe/wrap
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge
+	)
+	cookingmethod = "board"
+	result = /obj/item/weapon/reagent_containers/food/snacks/wrap
 
 //////////////////////////////////////////
 // bs12 food port stuff
@@ -1190,43 +1351,51 @@ I said no!
 /datum/recipe/taco
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/doughslice,
-		/obj/item/weapon/reagent_containers/food/snacks/cutlet,
+		/obj/item/weapon/reagent_containers/food/snacks/rawcutlet,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/taco
 
 /datum/recipe/bun
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/dough
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/bun
 
 /datum/recipe/flatbread
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/flatbread
 
 /datum/recipe/meatball
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/rawmeatball
 	)
+	cookingmethod = "oven"
 	result = /obj/item/weapon/reagent_containers/food/snacks/meatball
 
 /datum/recipe/cutlet
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/rawcutlet
 	)
+	cookingmethod = "grill"
 	result = /obj/item/weapon/reagent_containers/food/snacks/cutlet
 
+/*CAKEY FIX THIS
 /datum/recipe/fries
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/rawsticks
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/fries
+*/
 
 /datum/recipe/mint
 	reagents = list("sugar" = 5, "frostoil" = 5)
 	result = /obj/item/weapon/reagent_containers/food/snacks/mint
+	cookingmethod = "pot"
 
 

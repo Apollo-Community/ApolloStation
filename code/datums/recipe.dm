@@ -38,6 +38,7 @@
 	var/list/items // example: =list(/obj/item/weapon/crowbar, /obj/item/weapon/welder) // place /foo/bar before /foo
 	var/result //example: = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
 	var/time = 100 // 1/10 part of second
+	var/cookingmethod //oven, microwave, grill, board, pot.
 
 
 /datum/recipe/proc/check_reagents(var/datum/reagents/avail_reagents) //1=precisely, 0=insufficiently, -1=superfluous
