@@ -691,6 +691,42 @@
 		reagents.add_reagent("hyperzine", 5)
 		src.bitesize = 3
 
+/obj/item/weapon/reagent_containers/food/snacks/spidermeat
+	name = "spider meat"
+	desc = "A green slab of meat, oozing with disgusting puss."
+	icon_state = "spidermeat"
+	filling_color = "#43DE18"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("hyperzine", 4)
+		src.bitesize = 4
+
+/obj/item/weapon/reagent_containers/food/snacks/spiderleg
+	name = "spider leg"
+	desc = "A squirmy spider leg... Looks crunchy."
+	icon_state = "spiderleg"
+	filling_color = "#111111"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("hyperzine", 2)
+		src.bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/spideregg
+	name = "spider eggs"
+	desc = "A cluster of spider eggs. I think they might still be alive in there.."
+	icon_state = "spidereggs"
+	filling_color = "#43DE18"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("hyperzine", 2)
+		src.bitesize = 2
+
 /obj/item/weapon/reagent_containers/food/snacks/xenomeat
 	name = "meat"
 	desc = "A slab of green meat. Smells like acid."

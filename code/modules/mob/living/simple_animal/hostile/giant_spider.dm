@@ -16,7 +16,7 @@
 	speak_chance = 5
 	turns_per_move = 5
 	see_in_dark = 10
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/bearmeat
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/spidermeat
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "pokes"
@@ -41,6 +41,7 @@
 	icon_state = "nurse"
 	icon_living = "nurse"
 	icon_dead = "nurse_dead"
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/spideregg
 	maxHealth = 40
 	health = 40
 	melee_damage_lower = 5
@@ -56,6 +57,7 @@
 	icon_state = "hunter"
 	icon_living = "hunter"
 	icon_dead = "hunter_dead"
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/spiderleg
 	maxHealth = 120
 	health = 120
 	melee_damage_lower = 10
