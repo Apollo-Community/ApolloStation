@@ -719,7 +719,7 @@
 /mob/living/carbon/human/proc/play_xylophone()
 	if(!src.xylophone)
 		visible_message("<span class='alert'>[src] begins playing his ribcage like a xylophone. It's quite spooky.</span>","<span class='notice'>You begin to play a spooky refrain on your ribcage.</span>","<span class='alert'>You hear a spooky xylophone melody.</span>")
-		var/song = pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg')
+		var/song = pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg','sound/effects/xylophone4.ogg','sound/effects/xylophone5.ogg')
 		playsound(loc, song, 50, 1, -1)
 		xylophone = 1
 		spawn(1200)

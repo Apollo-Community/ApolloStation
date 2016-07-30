@@ -114,6 +114,12 @@
 	if( is_on_fire() )
 		overlays += pod_overlays[FIRE]
 
+//Check if the pod has a beacon
+/obj/spacepod/proc/has_beacon()
+	if (equipment_system.spacepod_equipment.Find(/obj/item/device/spacepod_equipment/misc/tracker) > 0)
+		return 1
+	return 0
+
 /obj/spacepod/proc/is_on_fire()
 	if( equipment_system )
 		if( equipment_system.engine_system )
@@ -342,11 +348,11 @@
 		set src = usr.loc
 		set popup_menu = 0
 
-		if( istype( get_area( src ), /area/planet ))
+		if( istype( get_area( src ), /area/planet/moon/exterior ) || istype( get_area( src ), /area/planet/moon/base/exterior ) || istype( get_area( src ), /area/planet/moon/landing_zone ))
 			occupants_announce( "<span class='notice'>Leaving the planet surface and returning to space.</span>" )
 			overmapTravel()
 		else
-			usr << "<span class='warning'>Not currently on a planet.</span>"
+			usr << "<span class='warning'>Not currently on a planet or inside.</span>"
 
 		return
 

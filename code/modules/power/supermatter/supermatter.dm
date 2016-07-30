@@ -153,7 +153,24 @@
 	// SUPERMATTER DECAY
 	decay()
 
+	// UPDATE DESC
+	updateDesc()
 	return 1
+
+/obj/machinery/power/supermatter/proc/updateDesc()
+	if(damage < 200 )
+		desc = "A strangely translucent and iridescent crystal. <span class='alert'>You get headaches just from looking at it.</span>"
+	else if(damage > 200)
+		desc += "/n <span class='alert'>You can see tiny cracks in the crystal.</span>"
+
+	else if(damage > 400)
+		desc += "/n <span class='alert'>A web of cracks span the crystal.</span>"
+
+	else if(damage > 600)
+		desc += "/n <span class='alert'>A web of deep cracks span the crystal.</span>"
+
+	else if(damage > 800)
+		desc += "/n <span class='alert'>A deep fissure of cracks span the crystal a pulsing glow is emanating from them.</span>"
 
 /obj/machinery/power/supermatter/proc/turfCheck()
 	var/turf/L = loc
@@ -312,6 +329,7 @@
 
 	update_icon()
 
+//Hitting the core with anything, this includes power and damage calculations from the emitter.
 /obj/machinery/power/supermatter/bullet_act(var/obj/item/projectile/Proj)
 	var/turf/L = loc
 	if(!istype(L))		// We don't run process() when we are in space
@@ -324,7 +342,10 @@
 		power += ( 0.16 * ( 1.69 ** factor )) * ( B.power / ( EMITTER_POWER_MAX * 0.6667)) // regression
 		//damage += ( factor / 25 ) * ( B.power / ( EMITTER_POWER_MAX * 0.6667))
 		//faster calculation which outputs the same as above ^
-		if(smlevel > 1)		damage += (factor * B.power) / 100
+		if(smlevel > 1)
+			//damage += (factor * B.power) / 100
+			//More dam calc, cause that is just to much damage.
+			damage += ((0.5*(1.3 ** factor)) * B.power)/100
 	else
 		damage += Proj.damage
 	return 0

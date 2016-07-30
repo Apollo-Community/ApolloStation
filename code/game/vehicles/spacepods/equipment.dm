@@ -8,7 +8,7 @@
 	var/obj/item/device/spacepod_equipment/misc/misc_system // misc system
 	var/obj/item/device/spacepod_equipment/engine/engine_system // engine system
 	var/obj/item/device/spacepod_equipment/shield/shield_system // shielding system
-	var/obj/item/device/spacepod_equipment/misc/cargo/cargohold // shielding system
+	var/obj/item/device/spacepod_equipment/misc/cargo/cargohold // cargo hold system
 	var/obj/item/weapon/cell/battery // the battery, durh
 	var/obj/item/weapon/card/id/card // the access card for the spacepod, without this it cannot pass energy barriers
 	var/obj/item/pod_parts/armor/armor // what kind of armor it has
