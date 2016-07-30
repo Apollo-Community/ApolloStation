@@ -27,6 +27,18 @@
 	machinetype = "grill"
 	icontype = "gr"
 
+/obj/machinery/microwave/oven
+	name = "Grill"
+	icon_state = "ov"
+	machinetype = "oven"
+	icontype = "ov"
+
+/obj/machinery/microwave/pot
+	name = "Cooking Pot"
+	icon_state = "pt"
+	machinetype = "pot"
+	icontype = "pt"
+
 // see code/modules/food/recipes_microwave.dm for recipes
 
 /*******************
@@ -138,6 +150,7 @@
 			user.visible_message( \
 				"<span class='notice'>[user] has added one of [O] to \the [src].</span>", \
 				"<span class='notice'>You add one of [O] to \the [src].</span>")
+			if((machinetype = "grill") overlays.Add(image(O.icon, O.icon_state))
 		else
 		//	user.before_take_item(O)	//This just causes problems so far as I can tell. -Pete
 			user.drop_item()
@@ -145,6 +158,7 @@
 			user.visible_message( \
 				"<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
 				"<span class='notice'>You add \the [O] to \the [src].</span>")
+			if((machinetype = "grill") overlays.Add(image(O.icon, O.icon_state))
 	else if(istype(O,/obj/item/weapon/reagent_containers/glass) || \
 	        istype(O,/obj/item/weapon/reagent_containers/food/drinks) || \
 	        istype(O,/obj/item/weapon/reagent_containers/food/condiment) \
@@ -304,6 +318,12 @@
 		if (stat & (NOPOWER|BROKEN))
 			return 0
 		use_power(500)
+		overlays = 0
+		if (i < 2)
+			img.color = "#C28566"
+		else if (i <2)
+			img.color = "#A34719"
+		overlays += img
 		sleep(10)
 	return 1
 
@@ -332,6 +352,7 @@
 	src.operating = 0 // Turn it off again aferwards
 	src.icon_state = "[icontype]"
 	src.updateUsrDialog()
+	src.overlays.Cut()
 
 /obj/machinery/microwave/proc/dispose()
 	for (var/obj/O in contents)
@@ -340,6 +361,7 @@
 		src.dirty++
 	src.reagents.clear_reagents()
 	usr << "<span class='notice'>You dispose of the [machinetype] contents.</span>"
+	src.overlays.Cut()
 	src.updateUsrDialog()
 
 /obj/machinery/microwave/proc/muck_start()
@@ -353,6 +375,7 @@
 	src.flags = null //So you can't add condiments
 	src.icon_state = "[icontype]bloody" // Make it look dirty too
 	src.operating = 0 // Turn it off again aferwards
+	src.overlays.Cut()
 	src.updateUsrDialog()
 
 /obj/machinery/microwave/proc/broke()
