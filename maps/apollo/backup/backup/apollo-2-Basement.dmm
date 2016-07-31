@@ -167,7 +167,7 @@
 "dk" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 1},/turf/simulated/floor{icon_state = "grimy"},/area/basement/civilian/dancefloor)
 "dl" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{tag = "icon-intact-scrubbers (NORTH)"; icon_state = "intact-scrubbers"; dir = 1},/turf/simulated/floor{icon_state = "grimy"},/area/basement/civilian/dancefloor)
 "dm" = (/obj/structure/table/reinforced,/obj/machinery/door/blast/shutters{dir = 4; id = "wetbar"; layer = 3.1; name = "Wet Bar Shutters"},/obj/machinery/door/firedoor,/turf/simulated/floor{icon_state = "grimy"},/area/basement/civilian/dancefloor)
-"dn" = (/obj/item/weapon/stool,/turf/simulated/floor{icon_state = "dark"},/area/basement/civilian/dancefloor)
+"dn" = (/obj/structure/stool,/turf/simulated/floor{icon_state = "dark"},/area/basement/civilian/dancefloor)
 "do" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{tag = "icon-intact-scrubbers (NORTH)"; icon_state = "intact-scrubbers"; dir = 1},/turf/simulated/floor{icon_state = "dark"},/area/basement/civilian/dancefloor)
 "dp" = (/obj/machinery/alarm{frequency = 1441; pixel_y = 22},/turf/simulated/floor{icon_state = "dark"},/area/basement/civilian/dancefloor)
 "dq" = (/obj/machinery/light{dir = 1},/obj/machinery/camera{c_tag = "Dance Floor"; dir = 2},/turf/simulated/floor{icon_state = "dark"},/area/basement/civilian/dancefloor)
@@ -328,11 +328,11 @@
 "gp" = (/obj/machinery/telecomms/server/presets/service,/turf/simulated/floor{dir = 1; icon_state = "vault"; name = "Mainframe floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/tcomms/chamber)
 "gq" = (/obj/machinery/telecomms/broadcaster/preset_left,/turf/simulated/floor{dir = 1; icon_state = "vault"; name = "Mainframe floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/tcomms/chamber)
 "gr" = (/obj/machinery/telecomms/hub/preset,/turf/simulated/floor{dir = 1; icon_state = "vault"; name = "Mainframe floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/tcomms/chamber)
-"gs" = (/obj/machinery/telecomms/receiver/preset_right,/turf/simulated/floor{dir = 1; icon_state = "vault"; name = "Mainframe floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/tcomms/chamber)
+"gs" = (/obj/machinery/telecomms/broadcaster/preset_right,/turf/simulated/floor{dir = 1; icon_state = "vault"; name = "Mainframe floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/tcomms/chamber)
 "gt" = (/obj/machinery/telecomms/server/presets/common,/turf/simulated/floor{dir = 1; icon_state = "vault"; name = "Mainframe floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/tcomms/chamber)
 "gu" = (/obj/machinery/telecomms/server/presets/engineering,/turf/simulated/floor{dir = 1; icon_state = "vault"; name = "Mainframe floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/tcomms/chamber)
 "gv" = (/obj/structure/sign/nosmoking_2{pixel_x = -32; pixel_y = 0},/turf/simulated/floor/bluegrid{name = "Mainframe Base"; nitrogen = 100; oxygen = 0; temperature = 80},/area/tcomms/chamber)
-"gw" = (/obj/machinery/telecomms/broadcaster/preset_left,/turf/simulated/floor{dir = 1; icon_state = "vault"; name = "Mainframe floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/tcomms/chamber)
+"gw" = (/obj/machinery/telecomms/receiver/preset_left,/turf/simulated/floor{dir = 1; icon_state = "vault"; name = "Mainframe floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/tcomms/chamber)
 "gx" = (/obj/structure/sign/nosmoking_2{pixel_x = 32; pixel_y = 0},/turf/simulated/floor/bluegrid{name = "Mainframe Base"; nitrogen = 100; oxygen = 0; temperature = 80},/area/tcomms/chamber)
 "gy" = (/obj/machinery/porta_turret{dir = 1},/turf/simulated/floor/plating,/area/turret_protected/tcommbreaker)
 "gz" = (/obj/machinery/porta_turret{dir = 1},/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/turret_protected/tcommbreaker)
@@ -361,7 +361,7 @@
 "gW" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/light/small,/turf/simulated/floor/plating,/area/turret_protected/tcommbreaker)
 "gX" = (/obj/structure/cable/green{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/machinery/camera{c_tag = "Telecomms Breaker Room"; dir = 1; network = list("Tcom")},/turf/simulated/floor/plating,/area/turret_protected/tcommbreaker)
 "gY" = (/turf/space,/area/syndicate_station/commssat)
-"gZ" = (/obj/effect/landmark/zcontroller/level_2_top{down = 0; down_target = 0; up = 1; up_target = 3},/area/basement,/turf/space,/area/space)
+"gZ" = (/obj/effect/landmark/zcontroller/level_2_top{down = 0; down_target = 0; up = 1; up_target = 3},/obj/effect/mapinfo/sector/station/basement,/turf/space,/area/space)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
