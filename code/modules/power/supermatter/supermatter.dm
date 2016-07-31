@@ -346,7 +346,7 @@
 			//damage += (factor * B.power) / 100
 			//More dam calc, cause that is just to much damage.
 			//Also using regressiong here so the damage is more related to power.
-			damage += ((0.7*(1.4 ** factor)) * B.power)/500
+			damage += ((damcalc_a*(damcalc_b ** factor)) * B.power)/damcalc_c
 	else
 		damage += Proj.damage
 	return 0
