@@ -345,7 +345,8 @@
 		if(smlevel > 1)
 			//damage += (factor * B.power) / 100
 			//More dam calc, cause that is just to much damage.
-			damage += ((0.5*(1.3 ** factor)) * B.power)/100
+			//Also using regressiong here so the damage is more related to power.
+			damage += ((0.7*(1.4 ** factor)) * B.power)/500
 	else
 		damage += Proj.damage
 	return 0
