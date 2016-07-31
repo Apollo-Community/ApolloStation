@@ -170,7 +170,7 @@
 "dn" = (/turf/simulated/floor/mech_bay_recharge_floor,/area/engioutpost)
 "do" = (/obj/machinery/computer/mech_bay_power_console,/turf/simulated/floor/plating,/area/engioutpost)
 "dp" = (/obj/machinery/atmospherics/pipe/tank/air{dir = 1},/turf/simulated/floor/plating,/area/engioutpost)
-"dq" = (/obj/structure/table,/obj/machinery/microwave{pixel_y = 8},/turf/simulated/floor{icon_state = "bar"},/area/engioutpost)
+"dq" = (/obj/structure/table,/obj/machinery/cooking_machines/microwave{pixel_y = 8},/turf/simulated/floor{icon_state = "bar"},/area/engioutpost)
 "dr" = (/obj/structure/bed/chair{dir = 1},/obj/machinery/atmospherics/pipe/simple/hidden,/turf/simulated/floor{icon_state = "bar"},/area/engioutpost)
 "ds" = (/obj/structure/bed/chair{dir = 1},/turf/simulated/floor{icon_state = "bar"},/area/engioutpost)
 "dt" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plating,/area/engioutpost)

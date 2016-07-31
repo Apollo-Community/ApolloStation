@@ -438,7 +438,7 @@
 "iv" = (/obj/machinery/door/firedoor,/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/floor{tag = "icon-cafeteria"; icon_state = "cafeteria"},/area/slater/lounge)
 "iw" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 10},/turf/simulated/floor{tag = "icon-cafeteria"; icon_state = "cafeteria"},/area/slater/lounge)
 "ix" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 8},/turf/simulated/floor{tag = "icon-cafeteria"; icon_state = "cafeteria"},/area/slater/lounge)
-"iy" = (/obj/structure/table,/obj/machinery/cooking_machines/microwave,/turf/simulated/floor{tag = "icon-cafeteria"; icon_state = "cafeteria"},/area/slater/lounge)
+"iy" = (/obj/structure/table,/obj/machinery/microwave,/turf/simulated/floor{tag = "icon-cafeteria"; icon_state = "cafeteria"},/area/slater/lounge)
 "iz" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/turf/simulated,/area/slater/lounge)
 "iA" = (/turf/simulated/wall,/area/slater/medbay)
 "iB" = (/obj/machinery/door/airlock/glass_medical{name = "Emergency Treatment Centre"; req_access_txt = "0"},/turf/simulated/floor{tag = "icon-warning"; icon_state = "warning"},/area/slater/medbay)
