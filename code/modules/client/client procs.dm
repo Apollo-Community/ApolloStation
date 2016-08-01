@@ -43,7 +43,7 @@
 		if(ismob(C)) 		//Old stuff can feed-in mobs instead of clients
 			var/mob/M = C
 			C = M.client
-		cmd_admin_pm(C,null,href_list["slack"])
+		cmd_admin_pm(C,null,href_list["discord"])
 		return
 
 	if(href_list["irc_msg"])

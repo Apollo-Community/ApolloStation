@@ -1523,9 +1523,9 @@ window "rpane"
 		right-click = false
 		saved-params = "is-checked"
 		on-size = ""
-		text = "Slack"
+		text = "Discord"
 		image = ""
-		command = "slack"
+		command = "discord"
 		is-flat = false
 		stretch = false
 		is-checked = false

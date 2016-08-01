@@ -95,7 +95,6 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	STUI.staff.Add("\[[time_stamp()]] <font color=red>AHELP: </font><font color='#0066ff'>[key_name(mob)]:</b> [msg]</font><br>")
 	STUI.processing |= 3
 
-	send_slack(usr.ckey, 1, original_msg)
 	send_discord(usr.ckey, 1, original_msg)
 
 	msg = "<span class='notice'><b><font color=red>Request for Help:: </font>[get_options_bar(mob, 2, 1, 1)][ai_cl]:</b> [msg]</span>"

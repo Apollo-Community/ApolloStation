@@ -28,7 +28,18 @@ pip install SlackClient --upgrade
 export SLACKTOKEN [token]
 ```
 
-This script controls admin helps and admin PMs being sent to slack, the game world interacts with these by calling them as shell scripts. You must add your personal slack token to your systems enviroment variables.
+This script controls admin helps and admin PMs being sent to slack, the game world interacts with these by calling them as shell scripts. You must add your personal slack token to your systems enviroment variables. This script is no longer being used due to a migration to discord, but setting it up again should not be difficult.
+
+#### Discord_bot.py
+
+Dependencies: [discord.py](https://github.com/Rapptz/discord.py), Discord API token, python 3.4+
+
+```
+pip install discord.py --upgrade
+export DISCORDTOKEN [token]
+```
+
+Similar to slack.py, this script sends ahelps to discord. The script itself requires some configuration (server and text channel IDs), and as with the slack script, you need to add the bot user's token to your environment variables.
 
 #### Adminbus.py
 
