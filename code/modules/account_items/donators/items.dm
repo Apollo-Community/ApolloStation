@@ -206,10 +206,10 @@
 	name = "Eriziki Sidier's labcoat"
 	desc = "A labcoat that has a nametag noting that it belongs to Eriziki Sidier."
 	icon = 'icons/obj/clothing/suits.dmi'
-	icon_state = "labcoat_sidier"
-	item_state = "labcoat_sidier"
-	icon_open = "labcoat_sidier"
-	icon_closed = "labcoat"
+	icon_state = "labcoat_sidier_open"
+	item_state = "labcoat_sidier_open"
+	icon_open = "labcoat_sidier_open"
+	icon_closed = "labcoat_sidier_closed"
 
 //////////////////// King_nexus
 
