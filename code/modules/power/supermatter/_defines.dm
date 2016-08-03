@@ -20,13 +20,30 @@ var/global/list/datum/sm_control/sm_levels = list(	  new /datum/sm_control/level
 													  new /datum/sm_control/level_7, \
 													  new /datum/sm_control/level_8, \
 													  new /datum/sm_control/level_9 )
+/proc/setSMVar( var/level, var/variable, var/value)
+	//Sanity check
+	if( level < MIN_SUPERMATTER_LEVEL )
+		level = 0
 
-//Damage calc vars
-//These are global so all supermatters use the same vars.
-//This needs to be intergrated into the sm_control datum..
-var/global/damcalc_a = 0.7
-var/global/damcalc_b = 1.4
-var/global/damcalc_c = 500
+	if( level > MAX_SUPERMATTER_LEVEL )
+		level = MAX_SUPERMATTER_LEVEL
+
+	//If level 0 (or lower) was given edit vars in all levels.
+	if(level == 0)
+		for(var/datum/sm_control/sm_level in sm_levels)
+			for(var/V in sm_level.vars)
+				if (V == variable)
+					sm_level.vars[V] = value
+		return
+	//Else only edit the level indicated
+	else
+		var/datum/sm_control/sm_level = sm_levels[level]
+		for( var/V in sm_level.vars )
+			if( V == variable )
+				sm_level.vars[V] = value
+				return
+
+	log_debug("[variable] doesn't exist in sm_levels!")
 
 /proc/getSMVar( var/level, var/variable )
 	if( level < MIN_SUPERMATTER_LEVEL )

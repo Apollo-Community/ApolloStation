@@ -30,6 +30,9 @@
 	var/phoron_heal_rate = 0 // The rate that phoron heals the core, per mole
 
 	var/emitter_factor = 1 // Determines power generation from the emitter beam
+	var/dama = 0.7
+	var/damb = 1.4
+	var/damc = 500
 
 	var/thermal_factor = 0 // The amount of heat released to the environment at max power
 	var/heal_rate = 0 // The amount of damage the core will automatically heal
