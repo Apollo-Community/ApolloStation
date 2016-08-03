@@ -138,7 +138,7 @@
 		/obj/item/stack/sheet/alloy/plasteel = 10,
 		/obj/item/stack/sheet/glass/reinforced = 50,
 		/obj/item/stack/rods = 50,
-		/obj/item/stack/cable_coil/cyborg = 90,
+		/obj/item/stack/cable_coil/cyborg = 50,
 		/obj/item/stack/tile/plasteel = 15
 		)
 

@@ -546,7 +546,7 @@ obj/structure/cable/proc/cableColor(var/colorC)
 	gender = NEUTER
 	matter = null
 	stacktype = /obj/item/stack/cable_coil
-	max_amount = 90
+	max_amount = 50
 
 /obj/item/stack/cable_coil/cyborg/attack_self(mob/user as mob)
 	var/mob/living/silicon/robot/R = user
