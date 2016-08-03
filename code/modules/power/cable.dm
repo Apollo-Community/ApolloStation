@@ -512,6 +512,33 @@ obj/structure/cable/proc/cableColor(var/colorC)
 	if(istype(W,/obj/item/device/cable_painter))
 		var/obj/item/device/cable_painter/P = W
 		src.color = P.mode //proc defined earlier on the code, up up
+	if(istype(W, /obj/item/stack/cable_coil/cyborg))
+		var/obj/item/stack/cable_coil/cyborg/C = W
+		var/to_transfer = min(src.amount,C.max_amount - C.amount)
+		if(!to_transfer)
+			user << "<span class='warning'>Your internal cable storage is already at full capacity, you cannot add more cable to it.</span>"
+			return
+		C.add(to_transfer)
+		src.use(to_transfer)
+		user << "<span class='notice'>You refill your internal cable storage with [to_transfer] length\s of cable.</span>"
+	else if(istype(W, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = W
+		if(C.amount >= MAXCOIL)
+			user << "<span class='warning'>The coil is too long, you cannot add any more cable to it!</span>"
+			return
+
+		if( (C.amount + src.amount <= MAXCOIL) )
+			user << "<span class='notice'>You join the cable coils together.</span>"
+			C.give(src.amount) // give it cable
+			src.use(src.amount) // make sure this one cleans up right
+			return
+
+		else
+			var/amt = MAXCOIL - C.amount
+			user << "<span class='notice'>You transfer [amt] length\s of cable from one coil to the other.</span>"
+			C.give(amt)
+			src.use(amt)
+			return
 
 /obj/item/stack/cable_coil/cyborg
 	name = "cable coil synthesizer"
@@ -519,6 +546,17 @@ obj/structure/cable/proc/cableColor(var/colorC)
 	gender = NEUTER
 	matter = null
 	stacktype = /obj/item/stack/cable_coil
+	max_amount = 90
+
+/obj/item/stack/cable_coil/cyborg/attack_self(mob/user as mob)
+	var/mob/living/silicon/robot/R = user
+	var/to_add = max_amount - amount
+	if(!to_add)
+		user << "<span class='warning'>Your internal cable storage is already at full capacity, you cannot synthesize anymore cable.</span>"
+		return
+	src.add(to_add)
+	user << "<span class='notice'>You synthesize [to_add] length\s of cable and add it to your internal cable storage.</span>"
+	R.cell.use(to_add*5)
 
 /obj/item/stack/cable_coil/suicide_act(mob/user)
 	if(locate(/obj/item/weapon/stool) in user.loc)
@@ -536,6 +574,13 @@ obj/structure/cable/proc/cableColor(var/colorC)
 	pixel_y = rand(-2,2)
 	update_icon()
 	update_wclass()
+
+/obj/item/stack/cable_coil/proc/give(var/extra)
+	if(amount + extra > MAXCOIL)
+		amount = MAXCOIL
+	else
+		amount += extra
+	update_icon()
 
 ///////////////////////////////////
 // General procedures
