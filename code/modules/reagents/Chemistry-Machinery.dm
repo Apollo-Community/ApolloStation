@@ -231,6 +231,13 @@ obj/machinery/chem_dispenser/RefreshParts()
 			dispensable_reagents -= list("thirteenloko","grapesoda")
 			hackedcheck = 0
 			return
+	if(istype(B, /obj/item/weapon/wrench))
+		if(anchored)
+			user << "<span class='notice'>You unfasten [src].</span>"
+			anchored = 0
+		else
+			user << "<span class='notice'>You wrench down [src].</span>"
+			anchored = 1
 
 /obj/machinery/chem_dispenser/beer
 	icon_state = "booze_dispenser"
@@ -257,6 +264,13 @@ obj/machinery/chem_dispenser/RefreshParts()
 			dispensable_reagents -= list("goldschlager","patron","watermelonjuice","berryjuice")
 			hackedcheck = 0
 			return
+	if(istype(B, /obj/item/weapon/wrench))
+		if(anchored)
+			user << "<span class='notice'>You unfasten [src].</span>"
+			anchored = 0
+		else
+			user << "<span class='notice'>You wrench down [src].</span>"
+			anchored = 1
 
 /obj/machinery/chem_dispenser/meds
 	name = "chem dispenser magic"
