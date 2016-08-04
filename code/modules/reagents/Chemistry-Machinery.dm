@@ -205,6 +205,8 @@ obj/machinery/chem_dispenser/RefreshParts()
 /obj/machinery/chem_dispenser/attack_hand(mob/user as mob)
 	if(stat & BROKEN)
 		return
+	if(!anchored)
+		user << "<span class='warning'>[src] is unsecured and unable to be used.</span>"
 	ui_interact(user)
 
 /obj/machinery/chem_dispenser/soda
