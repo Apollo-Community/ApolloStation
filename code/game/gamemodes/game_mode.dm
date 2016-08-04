@@ -62,7 +62,7 @@
 			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/clerical, 3000, "Morphic Clerical Kit", "CK"),
 			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/space, 3000, "Space Suit", "SS"),
 			new/datum/uplink_item(/obj/item/clothing/glasses/thermal/syndi, 3000, "Thermal Imaging Glasses", "TM"),
-			new/datum/uplink_item(/obj/item/device/encryptionkey/binary, 3000, "Binary Translator Key", "BT"),
+			new/datum/uplink_item(/obj/item/device/encryptionkey/binary, 3000, "Binary Translator Key (Use :f to communicate with silicons)", "BT"),
 			new/datum/uplink_item(/obj/item/weapon/aiModule/syndicate, 7000, "Hacked AI Upload Module", "AI"),
 			new/datum/uplink_item(/obj/item/weapon/plastique, 2000, "C-4 (Destroys walls)", "C4"),
 			new/datum/uplink_item(/obj/item/device/powersink, 5000, "Powersink (DANGER!)", "PS",),
