@@ -45,6 +45,10 @@
 		else
 			return
 
+	switch(alert(user,"Do you want to put [I] into [src]?","Evidence bag","Yes","No"))
+		if("No")
+			return
+
 	user.visible_message("[user] puts [I] into [src].", "<span class='notice'>You put [I] inside [src].</span>",\
 	"<span class='italics'>You hear a rustle as someone puts something into a plastic bag.</span>")
 
