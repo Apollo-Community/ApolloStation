@@ -10,18 +10,20 @@
 	var/obj/item/stored_item = null
 
 /obj/item/weapon/evidencebag/afterattack(obj/item/I, mob/user,proximity)
+	if(!istype(I) || I.anchored == 1)
+		return
+	switch(alert(user,"Do you want to try to put [I] into [src]?","Evidence bag","Yes","No"))
+		if("No")
+			return
 	if(!proximity || loc == I)
 		return
 	evidencebagEquip(I, user)
 
 /obj/item/weapon/evidencebag/attackby(obj/item/I, mob/user, params)
-	if(evidencebagEquip(I, user))
+	if(evidencebagEquip(I, user,))
 		return 1
 
-/obj/item/weapon/evidencebag/proc/evidencebagEquip(obj/item/I, mob/user)
-	if(!istype(I) || I.anchored == 1)
-		return
-
+/obj/item/weapon/evidencebag/proc/evidencebagEquip(obj/item/I, mob/user, bagattack = 1)
 	if(istype(I, /obj/item/weapon/evidencebag))
 		user << "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>"
 		return 1 //now this is podracing
@@ -45,9 +47,18 @@
 		else
 			return
 
-	switch(alert(user,"Do you want to put [I] into [src]?","Evidence bag","Yes","No"))
-		if("No")
+	if (!(user.l_hand == src || user.r_hand == src))
+		return //bag must be in your hands to use
+
+	if (isturf(I.loc))
+		if (!user.Adjacent(I))
 			return
+	else
+		//If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
+		if(istype(I.loc,/obj/item/weapon/storage))	//in a container.
+			var/sdepth = I.storage_depth(user)
+			if (sdepth == -1 || sdepth > 1)
+				return	//too deeply nested to access
 
 	user.visible_message("[user] puts [I] into [src].", "<span class='notice'>You put [I] inside [src].</span>",\
 	"<span class='italics'>You hear a rustle as someone puts something into a plastic bag.</span>")
