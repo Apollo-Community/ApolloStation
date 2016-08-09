@@ -42,7 +42,7 @@
 
 /obj/item/weapon/storage/box/sokeGrenades
 	name = "box"
-	desc = "A box with smoke grenades.."
+	desc = "A box with smoke grenades."
 
 	New()
 		..()

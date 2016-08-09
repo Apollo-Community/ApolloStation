@@ -1,15 +1,21 @@
-                                                                                                         
+ If you want to add a form keep to the following template:
+    [center][logo][/center]
+ [small][center][b]NanoTrasen Inc. [br]
+ Whatever Branch of Operation [br]
+ Form name
+ [/b][/small][br]
+                                                                                                           
 --start--
  [center][logo][/center]
- [small][center][b]NanoTrasen Inc. [br]
- Civilian Branch of Operation [br]
+ [small][center][b]NanoTrasen Inc.
+ Civilian Branch of Operation
  Additional Access Application Form
- [/b][/small][br]
+ [/b]
  
  
- [small]Form HoP-01[/center][hr][b]Facility[/b]: NOS Apollo[br]
- [b]Date:[/b] [field] [br]
- [b]Index:[/b] [field] [br]
+ Form HoP-01[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
  
  [b]Employee Name:[/b] [field][br]
  [b]Employee Occupation:[/b] [field][br]
@@ -22,8 +28,8 @@
  [u][i][field][/i][/u](Current Department Head)[br]
  [u][i][field][/i][/u](Head of Personnel’s Signature)[br][/center]
  [hr]
- This document can be considered void if the following events occur.[br]
- [list][*]If the department in which the requester is requesting access has not been contacted regarding this document, and the chief (acting or otherwise) had not authorized this request.[*]If any criminal activity is done with the help of this extra access.[*]If the chief of the affected department wishes this form void.[/list] [br]
+ This document can be considered void if the following events occur.
+ [list][*]If the department in which the requester is requesting access has not been contacted regarding this document, and the chief (acting or otherwise) had not authorized this request.[*]If any criminal activity is done with the help of this extra access.[*]If the chief of the affected department wishes this form void.[/list]
  [hr][/small]
  
   
@@ -31,14 +37,15 @@
 --stop--     
 --start--
  [center][logo][/center]
- [small][center][b]NanoTrasen Inc. [br]
- Civilian Branch of Operation [br]
+ [small][center][b]NanoTrasen Inc.
+ Civilian Branch of Operation
  Job Transfer Application Form
- [/b][/b][/small][br]
+ [/b]
  
- [small]Form HoP-02[/center][hr][b]Facility[/b]: NOS Apollo [br]
- [b]Date:[/b] [field] [br]
- [b]Index:[/b] [field] [br]
+ 
+ Form HoP-02[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
  [b]Employee Name:[/b] [field][br]
  [b]Employee Occupation:[/b] [field][br]
  [b]Job Requested:[/b] [field][br]
@@ -52,40 +59,39 @@
  [u][i][field][/i][/u](Head of Personnel’s Signature)[br][/center]
  [hr]
  This document can be considered void if the following events occur.
- [list][*]If the department in which the requester is requesting a job in has not been contacted regarding this document, and the chief (acting or otherwise) had not authorized this request.[*]If any criminal activity is done with the help of this extra access.[*]If the chief of the affected department wishes this form void.[/list][br]
+ [list][*]If the department in which the requester is requesting a job in has not been contacted regarding this document, and the chief (acting or otherwise) had not authorized this request.[*]If any criminal activity is done with the help of this extra access.[*]If the chief of the affected department wishes this form void.[/list]
  [hr][/small]
  
 --stop--      
 --start--
- [center][logo][/center] [br]
- [small][center][b]NanoTrasen Inc. [br]
- Civilian Branch of Operation [br]
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Civilian Branch of Operation
  Lawsuit Form
- [/b][br][/small]
+ [/b]
  
  
- [small]Form Attorney-01[/center][hr][b]Facility[/b]: NOS Apollo[/center][br]
+ Form Attorney-01[/center][hr][b]Facility[/b]: NOS Apollo[/center][br]
  Date: [field][br]
  Appellant: [field][br]
  Respondent: [field][br]
  Cause(s): [field][br]
  Requested Action: [field][br]
- [hr][center]Attorney's part[/center][br]
+ [hr][center]Attorney's part[/center]
  I certify that I delivered a copy of this document to my client, and accept the accusation of Neglect of Duty if this statement is found false.[br]
  Signature of party or attorney: [field][br]
  [hr][center]Authorizations[/center][br]
  Signature of head of concerned department/Head of personnel: [field][br]
  Signature of Chief Justice: [field][br]
- Concerned heads may stamp below instead of signing [br][hr][/small]
+ Concerned heads may stamp below instead of signing [br][hr]
  
 --stop--      
 --start--
- [center][logo][/center] [br]
- [small][center][b]NanoTrasen Inc. [br]
- Civilian Branch of Operation [br]
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Civilian Branch of Operation
  Bar Menu
- [/b][/small][br]
- 
+ [/b]
  [b][large][u]THE MALTESE FALCON[/u][/b][/large][br]
  [br]
  [br]
@@ -96,12 +102,11 @@
  
 --stop--     
 --start--
- [center][logo][/center] [br]
- [small][center][b]NanoTrasen Inc. [br]
- Civilian Branch of Operation [br]
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Civilian Branch of Operation
  Kitchen Menu
- [/b][/small][br]
- 
+ [/b]
  [center][large][b]APOLLO KITCHEN MENU[/b][/large][/center][hr]
  [center][large]= A la Carte =[/large][/center][br][hr]
  [u][b]Appetizers[/b][/u][br][list][*]Plump biscuit[*]fortune cookie[*]cracker[*]Popcorn[*]Poppy Pretzel[/list][hr]
@@ -125,12 +130,11 @@
  
 --stop--     
 --start--
- [center][logo][/center] [br]
- [small][center][b]NanoTrasen Inc. [br]
- Civilian Branch of Operation [br]
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Civilian Branch of Operation
  Syndies and 'Sisstants info sheet
- [/b][/small][br]
- 
+ [/b]
  [b][u][center]Syndies and ‘Sisstants[/b][/u][/center][br]
  [br]
  [center]You’re plunged into deep space upon a station of misfortune and terrorism, a child of fate destined to traverse a path ordained long ago by your own insanity, self chosen to pursue a greater goal to change the universe forever. [br]
@@ -203,15 +207,16 @@
  
 --stop--      
 --start--
- [center][logo][/center] [br]
- [small][center][b]NanoTrasen Inc. [br]
- Logistic Branch of Operation [br]
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Logistic Branch of Operation
  Parcel Delivery Request Form
- [/b][/small][br]
+ [/b]
  
- [small]Form CD-01-02[/center][hr][b]Facility[/b]: NOS Apollo[br]
- [b]Date:[/b] [field][br]
- [b]Index:[/b] [field][br]
+ 
+ Form CD-01-02[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
  [i][center]Cargo Staff are under the sworn oath to never disclose details regarding your package unless specifically requested by higher command personnel during hightened alert levels.[/i][/center][br]
  [br]
  [b]Security Level:[/b][br]
@@ -220,9 +225,9 @@
  [[field]]Red[br]
  [br]
  [u][b]Delivery by[/u][/b][small] (Please check appropriate)[br]
- Mail[[field]][br]
- Delivery[[field]][br]
- Pick-up[[field]][br]
+ Mail[[field]]
+ Delivery[[field]]
+ Pick-up[[field]]
  [br]
  [b]Contents of Parcel:[/b][i][u][field][/i][/u][br]
  [b]Parcel Destination*:[/b] [i][u][field][/i][/u][br]
@@ -241,77 +246,78 @@
  
 --stop--     
 --start--
- [center][logo][/center] [br]
- [small][center][b]NanoTrasen Inc. [br]
- Logistic Branch of Operation [br]
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Logistic Branch of Operation
  Ore and Material Inventory Form
- [/b][/small][br]
+ [/b]
  
- [small]Form CD-02[/center][hr][b]Facility[/b]: NOS Apollo[br]
- [b]Date:[/b] [field][br]
+ 
+ Form CD-02[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
  [b]Station Time:[/b][field][br]
  [b]Shipment Number:[/b][field][br]
  
- [b]Ores/Material in this shipment:[/b][br]
- [small]Leave blank or write 0 if none[/small][br]
- Iron Ore: [field], Metal: [field], C.Alloy: [field][br]
- Sand: [field], Glass: [field], Reinforced Glass: [field][br]
- Platinum Ore: [field], Platinum Bar(s): [field][br]
- Gold Ore: [field], Gold Bar(s): [field][br]
- Silver Ore: [field], Silver Bar(s): [field][br]
- Phoron Ore: [field], Solid Phoron:[field][br]
- Uranium Ore: [field], Uranium: [field][br]
- Diamond Ore: [field], Diamond(s): [field][br]
- [b]miscellaneous:[/b][br]
- [Field][br]
- [b]Supply personnel's signature:[/b][field][br]
+ [b]Ores/Material in this shipment:[/b]
+ [small]Leave blank or write 0 if none[/small]
+ Iron Ore: [field], Metal: [field], C.Alloy: [field]
+ Sand: [field], Glass: [field], Reinforced Glass: [field]
+ Platinum Ore: [field], Platinum Bar(s): [field]
+ Gold Ore: [field], Gold Bar(s): [field]
+ Silver Ore: [field], Silver Bar(s): [field]
+ Phoron Ore: [field], Solid Phoron:[field]
+ Uranium Ore: [field], Uranium: [field]
+ Diamond Ore: [field], Diamond(s): [field]
+ [b]miscellaneous:[/b]
+ [Field]
+ [b]Supply personnel's signature:[/b][field]
  [hr][/small]
  
 --stop--     
 --start--
- [center][logo][/center] [br]
- [small][center][b]NanoTrasen Inc. [br]
- Logistic Branch of Operation [br]
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Logistic Branch of Operation
  Warehouse Inventory Form
- [/b][/small][br]
+ [/b]
  
  
- [small]Form CD-03[/center][hr][b]Facility[/b]: NOS Apollo[br]
- [b]Date:[/b] [field][br]
+ Form CD-03[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
  [b]Inventory Number:[/b][field][br]
  
- [/small][b]Warehouse Inventory:[/b][small][br]
- [b]Materials:[/b][br]
- Wood: [field][br]
- Metal: [field][br]
- Catametallic Alloy: [field][br]
- Glass: [field][br]
- Reinforced Glass: [field][br]
- Metal rods: [field][br]
- Cardboard: [field][br]
- Iron Bar(s): [field][br]
- Platinum Bar(s): [field][br]
- Gold Bar(s): [field][br]
- Silver Bar(s): [field][br]
- Solid Phoron: [field][br]
- Uranium: [field][br]
- Diamond: [field][br]
- [b]Miscellaneous:[/b][br]
- [field][br]
- [b]Supply personnel's signature:[/b][field][br]
- [hr][/small][br]
+ [/small][b]Warehouse Inventory:[/b][small]
+ [b]Materials:[/b]
+ Wood: [field]
+ Metal: [field]
+ Catametallic Alloy: [field]
+ Glass: [field]
+ Reinforced Glass: [field]
+ Metal rods: [field]
+ Cardboard: [field]
+ Iron Bar(s): [field]
+ Platinum Bar(s): [field]
+ Gold Bar(s): [field]
+ Silver Bar(s): [field]
+ Solid Phoron: [field]
+ Uranium: [field]
+ Diamond: [field]
+ [b]Miscellaneous:[/b]
+ [field]
+ [b]Supply personnel's signature:[/b][field]
+ [hr][/small]
  
 --stop--     
 --start--
- [center][logo][/center] [br]
- [small][center][b]NanoTrasen Inc. [br]
- Logistic Branch of Operation [br]
- Cargo Inventory Request Form
- [/b][/small][br]
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Cargo Branch of Operation
+ Logistic Inventory Request Form
+ [/b]
  
- [small]Form CD-04[/center][hr][b]Facility[/b]: NOS Apollo[br]
- [b]Date:[/b] [field][br]
- [b]Index:[/b] [field][br]
+ Form CD-04[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
  [b]Security Level:[/b][br]
  [[field]]Green[br]
  [[field]]Blue[br]
@@ -337,15 +343,16 @@
  
 --stop--     
 --start--
- [center][logo][/center] [br]
- [small][center][b]NanoTrasen Inc. [br]
- Logistic Branch of Operation [br]
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Logistic Branch of Operation
  Cargo Acquisition Form
- [/b][/small][br]
+ [/b]
  
- [small]Form CD-05[/center][hr][b]Facility[/b]: NOS Apollo[br]
- [b]Date:[/b] [field][br]
- [b]Index:[/b] [field][br]
+ 
+ Form CD-05[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
  [i][center]Cargo Staff are under the sworn oath to never disclose details regarding your package unless specifically requested by higher command personnel during hightened alert levels.[/i][/center][br]
  [br]
  [b]Security Level:[/b][br]
@@ -354,9 +361,9 @@
  [[field]]Red[br]
  [br][hr][large]PLEASE CONFIRM CARGO CONTENTS FIRST[/large][hr][br]
  [u][b]Received by[/u][/b][small] (Please check appropriate)[br]
- Mail[[field]][br]
- Delivery[[field]][br]
- Pick-up[[field]][br]
+ Mail[[field]]
+ Delivery[[field]]
+ Pick-up[[field]]
  [br]
  [b]Contents of Parcel:[/b][i][u][field][/i][/u][br]
  [b]Actual Time of Receiving:[/b] [i][u][field][/i][/u][br]
@@ -373,15 +380,16 @@
  
 --stop--     
 --start--
- [center][logo][/center] [br]
- [small][center][b]NanoTrasen Inc. [br]
- Logistic Branch of Operation [br]
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Logistic Branch of Operation
  Cargo Pickup Safety Waiver
- [/b][/small][br]
+ [/b]
  
- [small]Form CD-S-06[/center][hr][b]Facility[/b]: NOS Apollo[br]
- [b]Date:[/b] [field][br]
- [b]Index:[/b] [field][br]
+ 
+ Form CD-S-06[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
  [b]Security Level:[/b][br]
  [[field]]Green[br]
  [[field]]Blue[br]
@@ -409,22 +417,23 @@
  
 --stop--     
 --start--
- [center][logo][/center] [br]
- [small][center][b]NanoTrasen Inc. [br]
- Logistic Branch of Operation [br]
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Logistic Branch of Operation
  Official Notice
- [/b][/small][br]
+ [/b]
  
- [small]Form CD-06[/center][hr][b]Facility[/b]: NOS Apollo[br]
- [b]Date:[/b] [field][br]
- [b]Index:[/b] [field][br]
+ 
+ Form CD-06[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
  [/i][/center][br]
  [br]
  [b]Security Level:[/b][br]
  [[field]]Green[br]
  [[field]]Blue[br]
  [[field]]Red[br]
- [large][field][/large][br]
+ [large][field][/large]
  [br]
  [hr]
  [br]
@@ -436,31 +445,31 @@
  
 --stop--     
 --start--
- [center][logo][/center] [br]
- [small][center][b]NanoTrasen Inc.[br]
- Logistic Branch of Operation[br]
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Logistic Branch of Operation
  Cargo Acquisition Form-02
- [/b][/small][br]
+ [/b]
  
  
- [small]Form CD-05-02[/center][hr][b]Facility[/b]: NOS Apollo[br]
- [b]Date:[/b] [field][br]
- [b]Index:[/b] [field][br]
+ Form CD-05-02[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
  [i][center]Cargo Staff are under the sworn oath to never disclose details regarding your package unless specifically requested by higher command personnel during hightened alert levels.[/i][/center][br]
  [br]
  [b]Security Level:[/b][br]
  [[field]]Green[br]
  [[field]]Blue[br]
  [[field]]Red[br]
- [br][hr][large]PLEASE CONFIRM CARGO CONTENTS FIRST[/large][hr][br]
- [br][large]TO BE USED INCASE THE ORIGINAL RECIPIENT IS UNABLE TO RECEIVE SAID PACKAGE[/large][br]
+ [br][hr][large]PLEASE CONFIRM CARGO CONTENTS FIRST[/large][hr]
+ [br][large]TO BE USED INCASE THE ORIGINAL RECIPIENT IS UNABLE TO RECEIVE SAID PACKAGE[/large]
  [hr][br]
- [u]Goodday! We have attempted to[br]
- Mail[[field]][br]
+ [u]Goodday! We have attempted to
+ Mail[[field]]
  Deliver[[field]][br]
  your packages, but you were not able to pick it up! Instead your package has been[br]
- Stored in the warehouse [[field]][br]
- Given to crewmember [[field]] to hold on to.[br]
+ Stored in the warehouse [[field]]
+ Given to crewmember [[field]] to hold on to.
  [br]
  [b]Contents of Parcel:[/b][i][u][field][/i][/u][br]
  [b]Actual Time of delivery:[/b] [i][u][field][/i][/u][br]
@@ -476,16 +485,16 @@
  
 --stop--     
 --start--
- [center][logo][/center][br]
- [small][center][b]NanoTrasen Inc.[br]
- Logistic Branch of Operation[br]
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Logistic Branch of Operation
  Return of property
- [/b][/small][br]
+ [/b]
  
  
- [/small]Form CD-07[/center][hr][b]Facility[/b]: NOS Apollo[br]
- [b]Date:[/b] [field][br]
- [b]Index:[/b] [field][br]
+ Form CD-07[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
  [/i][/center][br]
  [br]
  [b]Security Level:[/b][br]
@@ -494,7 +503,7 @@
  [[field]]Red[br]
  [large]Hello! The Cargo department of operations reports that it has found this/these item(s),
   and has found them to be (re)usable, and destined for you(r department). 
- This service is provided free of charge. Have a good shift![/large][br]
+ This service is provided free of charge. Have a good shift![/large]
  [br]
  [hr]
  [br]
@@ -510,10 +519,10 @@
  [small][center][b]NanoTrasen Inc.
  Security Branch of Operation
  Incident Report Form
- [/b][/small][br]
+ [/b]
  
  
- [/small]Form SEC-01
+ Form SEC-01
  Security Report[/center][hr][b]Facility[/b]: NOS Apollo
  [b]Date:[/b] [field]
  [b]Index:[/b] [field]
@@ -544,10 +553,10 @@
  [small][center][b]NanoTrasen Inc.
  Security Branch of Operation
  Investigation Warrant
- [/b][/small][br]
+ [/b]
  
  
- [small]Form SEC-02
+ Form SEC-02
  Security Report[/center][hr][b]Facility[/b]: NOS Apollo
  [b]Date:[/b] [field]
  [b]Index:[/b] [field]
@@ -566,25 +575,26 @@
  
 --stop--     
 --start--
- [center][logo][/center][br]
- [small][center][b]NanoTrasen Inc.[br]
- Security Branch of Operation[br]
- On-Site Training Report[/b]
- [/b][/small][br]
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Security Branch of Operation
+ On-Site Training Report
+ [/b]
  
- [/small]Form SEC-03[br]
- Security Report[/center][hr][b]Facility[/b]: NOS Apollo[br]
- [b]Date:[/b] [field][br]
- [b]Index:[/b] [field][br]
+ 
+ Form SEC-03
+ Security Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
  [b]Training carried out by:[/b][u][field][/u][br]
- [b]Training types:[/b][br]
- ([field]) CQC Training: [field][br]
- ([field]) Energy Weapons: [field][br]
- ([field]) Forensics Training: [field][br]
- ([field]) Corporate Regulations:[field][br]
- [b]Trainee:[/b] [field][br]
- [b]Trainer's Notes:[/b][br]
- [field][br]
+ [b]Training types:[/b]
+ ([field]) CQC Training: [field]
+ ([field]) Energy Weapons: [field]
+ ([field]) Forensics Training: [field]
+ ([field]) Corporate Regulations:[field]
+ [b]Trainee:[/b] [field]
+ [b]Trainer's Notes:[/b]
+ [field]
  [hr]
  [field] (Trainee's Signiature)[br]
  [b]Signature:[/b] [field][br]
@@ -592,7 +602,12 @@
  
 --stop--     
 --start--
- [center][b]Security Guidelines[/b][/center][br]
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Security Branch of Operation
+ Security Guidelines
+ [/b]
+ 
  [hr][br]
  [b]Golden rule:[/b] [center]Keep communications up at all times on the Security Channel and
  report all movements, arrests and all security matters over the radio.[/center][br]
@@ -617,7 +632,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Security Branch of Operation
- Armory Item Supply Form[/b]
+ Armory Item Supply Form
+ [/b]
  
  
  Form SEC-04
@@ -645,7 +661,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Security Branch of Operation
- Interrogation Report Form[/b]
+ Interrogation Report Form
+ [/b]
  
  
  Form SEC-05
@@ -675,7 +692,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Security Branch of Operation
- Lawful Injunction Form[/b]
+ Lawful Injunction Form
+ [/b]
  
  
  Form SEC-06
@@ -696,7 +714,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Security Branch of Operation
- Criminal confession Form[/b]
+ Criminal confession Form
+ [/b]
  
  
  Form SEC-07
@@ -714,7 +733,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Security Branch of Operation
- Security Activity Log Form[/b]
+ Security Activity Log Form
+ [/b]
  
  
  Form SEC-08
@@ -743,7 +763,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Medical Branch of Operation
- Autopsy Report Form[/b]
+ Autopsy Report Form
+ [/b]
  
  
  Form MD-01
@@ -772,7 +793,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Medical Branch of Operation
- Organ Donation Form[/b]
+ Organ Donation Form
+ [/b]
  
  
  Form MD-02
@@ -788,7 +810,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Medical Branch of Operation
- Cloning Refusal Form[/b]
+ Cloning Refusal Form
+ [/b]
  
  
  Form MD-03
@@ -835,7 +858,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Scientific Branch of Operation
- Pharmaceuticals Request Form[/b]
+ Pharmaceuticals Request Form
+ [/b]
  
  
  Form RD-01
@@ -857,7 +881,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Scientific Branch of Operation
- Robotic Assimilation Application Form[/b]
+ Robotic Assimilation Application Form
+ [/b]
  
  
  Form RD-02
@@ -880,7 +905,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Scientific Branch of Operation
- Protolathe Request Form[/b]
+ Protolathe Request Form
+ [/b]
  
  
  Form RD-03
@@ -899,7 +925,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Scientific Branch of Operation
- Exosuit Production Request Form[/b]
+ Exosuit Production Request Form
+ [/b]
  
  
  Form RD-04a
@@ -925,7 +952,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Scientific Branch of Operation
- Exosuit Production Request Form[/b]
+ Exosuit Production Request Form
+ [/b]
  
  
  Form RD-04b
@@ -951,7 +979,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Scientific Branch of Operation
- Advanced Tools Request Form[/b]
+ Advanced Tools Request Form
+ [/b]
  
  
  Form RD-05
@@ -971,7 +1000,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Scientific Branch of Operation
- Pod Construction Request Form[/b]
+ Pod Construction Request Form
+ [/b]
  
  
  Form RD-06
@@ -986,7 +1016,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Scientific Branch of Operation
- Artifact Document Form[/b]
+ Artifact Document Form
+ [/b]
  
  
  Form RD-07
@@ -1028,7 +1059,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Scientific Branch of Operation
- Slime Breeding Log Form[/b]
+ Slime Breeding Log Form
+ [/b]
  
  
  Form RD-08
@@ -1065,7 +1097,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Scientific Branch of Operation
- Slime Core Experimentation Form[/b]
+ Slime Core Experimentation Form
+ [/b]
  
  
  Form RD-09
@@ -1088,7 +1121,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Civilian Branch of Operation
- Employee Observation[/b]
+ Employee Observation
+ [/b]
  
  
  Form IA-01
@@ -1120,7 +1154,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Civilian Branch of Operation 
- Department Audit Form[/b]
+ Department Audit Form
+ [/b]
  
  Form IA-02
  Internal Affairs Department Audit[/center][hr][b]Facility[/b]: NOS Apollo
@@ -1147,39 +1182,40 @@
  
 --stop--     
 --start--
- [center][logo][/center][br]
- [small][center][b]NanoTrasen Inc.[br]
- Civilian Branch of Operation[/b][br]
- Complaint Form
- [br]
- Form IA-03a[br]
- Complaint Form[/center][hr][b]Facility[/b]: NOS Apollo[br]
- [b]Date:[/b] [field][br]
- [b]Index:[/b] [field][br]
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Civilian Branch of Operation
+ [/b]
  
- [i]Complaint Form[/i][/center][hr][center][small]This section is to be filled out by the complainant.[/small][/center][br]
- [b]Complainant[/b]:[br]
- [field][br]
- [b]Other Involved Person(s)[/b]:[br]
- [field][br]
- [b]Complaint[/b]:[br]
- [field][br]
+ Form IA-03a
+ Complaint Form[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
  
- [center][small]I understand that filing a false complaint may result in detention or a fine, as well as the loss of the privilege to file complaints, and that it is up to the receiving agent's discretion on how this complaint is handled, if at all.[/small][/center][br]
- [b]Signature[/b]:[br]
- [field][hr][center][small]This section is to be filled out by the receiving agent.[/small][/center][br]
- [b]Action taken[/b]:[br]
- [field][br]
- [b]Notes[/b]:[br]
- [field][hr][small][sign];[br]
- Internal Affairs Agent, NOS Apollo.[/small][br]
+ [i]Complaint Form[/i][/center][hr][center][small]This section is to be filled out by the complainant.[/small][/center]
+ [b]Complainant[/b]:
+ [field]
+ [b]Other Involved Person(s)[/b]:
+ [field]
+ [b]Complaint[/b]:
+ [field]
+ 
+ [center][small]I understand that filing a false complaint may result in detention or a fine, as well as the loss of the privilege to file complaints, and that it is up to the receiving agent's discretion on how this complaint is handled, if at all.[/small][/center]
+ [b]Signature[/b]:
+ [field][hr][center][small]This section is to be filled out by the receiving agent.[/small][/center]
+ [b]Action taken[/b]:
+ [field]
+ [b]Notes[/b]:
+ [field][hr][small][sign];
+ Internal Affairs Agent, NOS Apollo.[/small]
  
 --stop--     
 --start--
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Civilian Branch of Operation
- Station Report[/b]
+ Station Report
+ [/b]
  
  
  Form IA-03b[/center][hr][b]Facility[/b]: NOS Apollo
@@ -1197,7 +1233,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Engineering Branch of Operation
- Renovations Request Form[/b]
+ Renovations Request Form
+ [/b]
  
  Form ED-01
  Request Form[/center][hr][b]Facility[/b]: NOS Apollo
@@ -1219,7 +1256,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Engineering Branch of Operation
- Station Sattelite Construction Form[/b]
+ Station Sattelite Construction Form
+ [/b]
  
  Form ED-02
  Request Form[/center][hr][b]Facility[/b]: NOS Apollo
@@ -1240,7 +1278,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Engineering Branch of Operation
- Autolathe Construction Request Form[/b]
+ Autolathe Construction Request Form
+ [/b]
  
  Form ED-03
  Request Form[/center][hr][b]Facility[/b]: NOS Apollo
@@ -1260,7 +1299,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Engineering Branch of Operation
- Core Set-Up Qualification Cerificate Form[/b]
+ Core Set-Up Qualification Cerificate Form
+ [/b]
  
  Form ED-04
  [b]Facility[/b]: NOS Apollo[/center][hr]
@@ -1280,7 +1320,8 @@
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
  Engineering Branch of Operation
- Atmospherics Qualification Cerificate Form[/b]
+ Atmospherics Qualification Cerificate Form
+ [/b]
  
  Form ED-05
  [b]Facility[/b]: NOS Apollo[/center][hr]
@@ -1296,6 +1337,12 @@
  
 --stop--      
 --start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Civilian Branch of Operation
+ Pet ownership request/documentation form
+ [/b]
+ 
  It is hereby confirmed by the appropriate ranking personnel that [u][i][field][/i][/u][small](Name)[/small] has been deemed competent and able of taking care of the following small animal(s): [u][i][field][small](name and species)[/small][/i][/u][br]
  I am of  Species: [[field]]Human [[field]]Tajaran [[field]]Skrellian [[field]]Unathi[br]
  Sex: [[field]]Male [[field]]Female[br]
@@ -1309,6 +1356,9 @@
 --start--
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
+ Command Branch of Operation
+ Message Form
+ [/b]
  
  Form GT-01
  [b]Facility[/b]: NOS Apollo[/center][hr]
@@ -1340,6 +1390,9 @@
 --start--
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
+ Command Branch of Operation
+ Allert From
+ [/b]
  
  Form GT-02
  [b]Facility[/b]: NOS Apollo[/center][hr]
@@ -1382,7 +1435,9 @@
 --start--
  [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
- Departmental Progress Report Form[/b]
+ Command Branch of Operation
+ Departmental Progress Report Form
+ [/b]
  
  Form DR-01
  [b]Facility[/b]: NOS Apollo[/center][hr]
@@ -1409,8 +1464,11 @@
  
 --stop--     
 --start--
+ [center][logo][/center]
  [small][center][b]NanoTrasen Inc.
- AWOL/MIA Report Form[/b]
+ Command Branch of Operation
+ AWOL/MIA Report Form
+ [/b]
  
  Form DR-02
  [b]Facility[/b]: NOS Apollo[/center][hr]
@@ -1433,8 +1491,11 @@
  
 --stop--     
 --start--
- [small][center][b]NanoTrasen Inc. 
- Commendation Form[/b] 
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Command Branch of Operation
+ Commendation Form
+ [/b]
   
  Form DR-056 
  [b]Facility[/b]: NOS Apollo[/center][hr] 
@@ -1453,6 +1514,11 @@
  
 --stop--     
 --start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Hurtfull Branch of Operation
+ Hurtfull feelings report form
+ [/b]
  [large][center]HURT FEELINGS REPORT[/center][/large][hr]
  
  [center]For use of this form, see FM 22-102; the proponent agency is the NT Department of Human Resources[/center][hr]
@@ -1492,13 +1558,13 @@
  [small] Please refer to Form 1703 'Hug Request Form' for supplemental support. Upon written request, we will make every reasonable effort to provide you with a "blankey", a "binky" and/or a bottle if you so desire.[/small]
  
 --stop--  NewPP limit report
- Cached time: 20160808155841
+ Cached time: 20160809134620
  Cache expiry: 86400
  Dynamic content: false
- CPU time usage: 0.129 seconds
- Real time usage: 0.130 seconds
- Preprocessor visited node count: 829/1000000
- Preprocessor generated node count: 1530/1000000
+ CPU time usage: 0.128 seconds
+ Real time usage: 0.128 seconds
+ Preprocessor visited node count: 838/1000000
+ Preprocessor generated node count: 1550/1000000
  Post‐expand include size: 0/2097152 bytes
  Template argument size: 0/2097152 bytes
  Highest expansion depth: 2/40

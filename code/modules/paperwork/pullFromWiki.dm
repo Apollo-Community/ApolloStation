@@ -8,7 +8,7 @@ var/global/list/public_forms[0]
 proc/getFormsFromWiki()
 
 	var/url = "[config.wikiurl]index.php?title=Example_Paperwork"
-	shell("python scripts/pullFromWiki.py [url]")
+	shell("python3 scripts/pullFromWiki.py [url]")
 
 	//Lets start the extracting and parsing
 	var/page = file2text("scripts/wikiForms.txt")
@@ -30,7 +30,7 @@ proc/getFormsFromWiki()
 			while(!(findtext(lineList[i], "--stop--") != 0))
 				if(findtext(lineList[i], "Branch of Operation") != 0)
 					formName = lineList[i+1]
-				formContent += lineList[i]
+				formContent += "[lineList[i]] \[br\]"
 				i++
 			if(!isnull(formContent) && formContent != "" && !isnull(formName) && formName != "")
 				public_forms["[formName]"] = formContent
