@@ -16,19 +16,17 @@
 		/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped,
 		/obj/item/device/mmi/digital/posibrain,
 		/obj/item/pod_parts/core
-		)
+	)
 
 	var/area/dropoff = null // The area where the item must be dropped off at
 	var/area/list/dropoff_areas = list(
-		/area/security/vacantoffice,
-		/area/maintenance/disposal,
-		/area/quartermaster/storage,
-		/area/storage/tech,
-		/area/construction,
+		/area/library,
+		/area/crew_quarters/locker,
+		/area/crew_quarters/observe,
+		/area/security/vacantoffice2,
 		/area/maintenance/incinerator,
-		/area/storage/emergency,
-		/area/library
-		)
+		/area/maintenance/disposal
+	)
 
 	var/dropoff_time
 
@@ -37,10 +35,12 @@
 	if(!.)	return
 
 	target = get_target()
+	var/list/candidate_areas = dropoff_areas.Copy()
 	dropoff = locate(pick(dropoff_areas))
 	// much easier to pick a new dropoff area rather than a new target
-	while((locate(target) in dropoff))
-		dropoff = locate(pick(dropoff_areas))
+	while((locate(target) in dropoff) && candidate_areas.len)
+		candidate_areas -= dropoff.type
+		dropoff = locate(pick(candidate_areas))
 
 	if(!dropoff || !target)
 		qdel(src)
@@ -65,11 +65,17 @@
 	if(world.time < dropoff_interval)	return
 
 	var/obj/O = locate(target) in dropoff
+	if(!O) // locate sucks >:(
+		for(var/obj/P in dropoff)
+			O = locate(target) in P
+			if(O)	break
+	if(!O)	return
+
 	var/mob/list/audience = viewers(O)
 	for(var/mob/M in audience)
-		if( ( !issilicon(M) || !ishuman(M) ) || !M.client )	audience -= M // only crew players matter. mice and the likes can freak out all they like when stuff disappears before their very eyes
+		if( ( !issilicon(M) && !ishuman(M) ) || isnull(M.client) )	audience -= M // only crew players matter. mice and the likes can freak out all they like when stuff disappears before their very eyes
 
-	if(O && audience.len == 0)
+	if(audience.len == 0)
 		var/mob/living/completer = null
 		for(var/mob/M in workers)
 			if(M.client.key == O.fingerprintslast)

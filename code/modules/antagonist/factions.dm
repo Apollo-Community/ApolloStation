@@ -25,6 +25,7 @@
 
 /datum/faction/syndicate
 
+	var/gamemode_faction = 0 // Is this faction gamemode-specific? Prevents persistant antags from joining it, etc.
 	var/list/alliances = list() // these alliances work together
 	var/list/datum/uplink_item/equipment = list() // list of equipment available for this faction and its prices
 	var/friendly_identification	// 0 to 2, the level of identification of fellow operatives or allied factions
@@ -58,8 +59,14 @@
 /datum/faction/syndicate/join(var/datum/mind/M)
 	..(M)
 
-	if(members.len == 1) // first member, start making contracts
+	if(faction_controller.contracts_made && members.len == 1) // first member, start making contracts
 		update_contracts()
+
+	// notify any other agents in their faction about a new agent
+	if( world.time > ( ticker.game_start + 100 ) && friendly_identification == FACTION_ID_COMPLETE) // hacky hacks
+		for(var/datum/mind/P in (members - P))
+			P.current << "Your employers have notified you that a fellow [name] agent has been activated:"
+			P.current << "<B>[P.current.real_name]</B>, [station_name] [P.assigned_role]"
 
 // Populate factions with new contracts
 /datum/faction/syndicate/proc/update_contracts()
@@ -292,6 +299,7 @@
 
 /datum/faction/syndicate/marauders/mercenaries
 	name = "Gorlex Mercenaries"
+	gamemode_faction = 1
 
 /datum/faction/syndicate/marauders/mercenaries/can_join(var/datum/mind/M)
 	if( M.antagonist && istype(M.antagonist, /datum/antagonist/mercenary) )

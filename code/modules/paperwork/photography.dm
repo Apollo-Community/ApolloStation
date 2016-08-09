@@ -37,6 +37,13 @@ var/global/photo_count = 0
 	var/icon/tiny
 	var/photo_size = 3
 
+/obj/item/weapon/photo/moon
+	name = "old photo"
+	img = 'icons/MoonPhoto.gif'	//Big photo image
+	scribble = "Moonbase Origin Crew"	//Scribble on the back.
+	photo_size = 7
+	desc = "You can see Russel Thompson on the photo. They are holding a camera. You can see David Baker on the photo... You can see Wouter Groundwalker on the photo... You can see Sam Karson on the photo... You can see Aaden Mckendrick on the photo..."
+
 /obj/item/weapon/photo/New()
 	id = photo_count++
 
@@ -181,7 +188,7 @@ var/global/photo_count = 0
 	var/atoms[] = list()
 	for(var/turf/the_turf in turfs)
 		// Add outselves to the list of stuff to draw
-		atoms.Add(the_turf);
+		if(!istype(the_turf, /turf/space) && !istype(the_turf, /turf/simulated/floor/plating/airless/fakespace))	atoms.Add(the_turf)
 		// As well as anything that isn't invisible.
 		for(var/atom/A in the_turf)
 			if(A.invisibility) continue

@@ -337,6 +337,17 @@
 	trash = /obj/item/weapon/bananapeel
 	plantname = "banana"
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/bananagreen
+	name = "green banana"
+	desc = "It looks gooey and disgusting."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "banana-green"
+	item_state = "banana-green"
+	filling_color = "#339933"
+	trash = /obj/item/weapon/bananapeelgreen
+	potency = 35
+	plantname = "banana"
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	name = "chili"
 	desc = "It's spicy! Wait... IT'S BURNING ME!!"

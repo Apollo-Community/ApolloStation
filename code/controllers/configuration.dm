@@ -22,7 +22,7 @@ var/list/gamemode_cache = list()
 	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
 	var/log_runtime = 0					// logs world.log to a file
 	var/sql_enabled = 1					// for sql switching
-	var/allow_admin_OOC_color = 0		// Allows admins with relevant permissions to have their own ooc colour
+	var/allow_admin_OOC_color = 1		// Allows admins with relevant permissions to have their own ooc colour
 	var/allow_vote_restart = 0 			// allow votes to restart
 	var/ert_admin_call_only = 0
 	var/allow_vote_mode = 0				// allow votes to change mode
@@ -99,7 +99,7 @@ var/list/gamemode_cache = list()
 	var/wikiurl
 	var/forumurl
 	var/gitrepourl
-	var/slackinvurl
+	var/discordinvurl
 
 	//Alert level description
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
@@ -407,8 +407,8 @@ var/list/gamemode_cache = list()
 				if ("gitrepourl")
 					config.gitrepourl = value
 
-				if ("slackinvurl")
-					config.slackinvurl = value
+				if ("discordinvurl")
+					config.discordinvurl = value
 
 				if ("guest_jobban")
 					config.guest_jobban = 1

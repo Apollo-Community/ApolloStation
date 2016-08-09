@@ -95,12 +95,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	STUI.staff.Add("\[[time_stamp()]] <font color=red>AHELP: </font><font color='#0066ff'>[key_name(mob)]:</b> [msg]</font><br>")
 	STUI.processing |= 3
 
-	//Sends the ahelp to slack chat
-	spawn(0)	//So we don't hold up the rest
-		shell("python scripts/adminbus.py ahelp [usr.ckey] '*[usr.ckey]*: `[original_msg]`'")
-		if(!recent_slack_msg.Find(usr.ckey))
-			recent_slack_msg.Add(usr.ckey)
-		recent_slack_msg[usr.ckey] = "`[msg]`"
+	send_discord(usr.ckey, 1, original_msg)
 
 	msg = "<span class='notice'><b><font color=red>Request for Help:: </font>[get_options_bar(mob, 2, 1, 1)][ai_cl]:</b> [msg]</span>"
 
@@ -134,12 +129,15 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	return
 
 /proc/slack_admin(var/client/C, var/admin, var/message, var/dir)
-	C << "<span class='pm'><span class='in'>" + create_text_tag("pm_[dir ? "out" : "in"]", "", C) + " <b>\[SLACK PM\]</b> <span class='name'><b><a href='?priv_msg_slack=\ref[C];admin=[admin]'>[admin]</a></b></span>: <span class='message'>[message]</span></span></span>"
+	C << "<span class='pm'><span class='in'>" + create_text_tag("pm_[dir ? "out" : "in"]", "", C) + " <b>\[SLACK PM\]</b> <span class='name'><b><a href='?priv_msg=\ref[C];slack=[admin]'>[admin]</a></b></span>: <span class='message'>[message]</span></span></span>"
 
 	//STUI stuff
 	log_admin("PM: [admin]->[key_name(C)]: [message]")
 	STUI.staff.Add("\[[time_stamp()]] <font color=red>PM: </font><font color='#0066ff'>[admin] -> [key_name(C)] : [message]</font><br>")
 	STUI.processing |= 3
+
+	//now send it back to slack
+	send_slack(admin, C.ckey, message)
 
 	//We can blindly send this to all admins cause it is from slack
 	for(var/client/X in admins)

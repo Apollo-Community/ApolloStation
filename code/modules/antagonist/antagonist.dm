@@ -48,8 +48,12 @@
 	C.temporary = 1
 	antag.current.client.prefs.selected_character = C
 
-	if( istype( antag.current, /mob/living/carbon/human ))
-		C.copy_to( antag.current ) // for latespawns
+	// for latespawns
+	if( istype( antag.current, /mob/living ))
+		C.copy_to( antag.current )
+		antag.current.fully_replace_character_name(antag.original_character.name, antag.current.name)
+
+	antag.current << "<span class='ooc_notice'>You are a non-persistent antagonist and have received a randomized character!</span>"
 
 /datum/antagonist/proc/setup(var/skip_greet=0)
 	if(faction) 
@@ -65,13 +69,6 @@
 		return 0
 
 	notoriety = antag.character.antag_data["notoriety"]
-
-	// notify any other agents in their faction about a new agent
-	if( world.time > ( ticker.game_start + 100 )) // hacky hacks
-		if(faction.friendly_identification == FACTION_ID_COMPLETE)
-			for(var/datum/mind/M in (faction.members - antag))
-				M.current << "Your employers have notified you that a fellow [faction.name] agent has been activated:"
-				M.current << "<B>[M.current.real_name]</B>, [station_name] [M.assigned_role]"
 
 	// greet the antagonist and give them any info concerning their task(s)
 	if(!skip_greet)
@@ -90,6 +87,8 @@
 			antag.current << "\The [faction.name] has provided all its agents with the following code phrases to identify other agents:"
 			antag.current << "<B>[list2text(faction.phrase, ", ")]</B>"
 			antag.current << ""
+
+			antag.current.trigger_words += faction.phrase
 		if(FACTION_ID_COMPLETE)
 			if((faction.members.len - 1) > 0)
 				antag.current << "\The [faction.name] has provided all its agents with the identity of their fellow agents. Your co-workers are as follows:"

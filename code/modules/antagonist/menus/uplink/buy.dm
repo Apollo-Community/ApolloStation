@@ -31,17 +31,21 @@
 	. += " - <b><a href='byond://?src=\ref[src];tgroup=close'>Close</a></b>"
 	. += "<hr></center>"
 
-	if(antag && antag.can_buy && !faction_controller.contract_ban && !antag.uplink_blocked)
+	// REMOVE USER.MIND.CHANGELING CHECK WHEN CHANGELING GETS PORTED! it's just there to prevent old lings having uplink access for now
+	if(antag && antag.can_buy && !faction_controller.contract_ban && !antag.uplink_blocked && !user.mind.changeling)
 		. += "<h2><span class='white'>Uplink Market</span></h2>"
 		. += "<h3><span class='white'>Available Funds: $[A.money]</span></h3>"
 
 		var/categories = ItemsCategory.Copy()
 		if(!categories["[antag.faction.name] Equipment"] && antag.faction.equipment.len)
 			categories["[antag.faction.name] Equipment"] = antag.faction.equipment
-			// copypaste cause im tired
+
+			// hacky workaround - if the equipment is left in ItemsCategory the player can still buy it even if their faction is changed
+			ItemsCategory["[antag.faction.name] Equipment"] = antag.faction.equipment
 			var/datum/nano_item_lists/IL = generate_item_lists()
 			nanoui_items = IL.items_nano
 			ItemsReference = IL.items_reference
+			ItemsCategory["[antag.faction.name] Equipment"] = null
 
 		for(var/category in categories)
 			. += "<h3><span class='white'>[category]</span></h3>"
@@ -88,6 +92,9 @@
 		return buy(I, I ? I.reference : "", user, secret)
 
 	var/datum/uplink_item/I = ItemsReference[href_list["task"]]
+	for(var/datum/uplink_item/UI in ItemsReference)
+		world << UI
+	world << I
 	return buy(I, I ? I.reference : "", user, secret)
 
 /obj/item/device/uplink/proc/buy(var/datum/uplink_item/UI, var/reference, var/mob/user, var/secret=0)

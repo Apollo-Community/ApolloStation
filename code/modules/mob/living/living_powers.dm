@@ -5,6 +5,8 @@
 
 	if( !isConscious() )
 		return
+
+	src.stop_pulling()
 	//Drones and spiderbots can crawl with their manipulaters attached
 	if(istype(src, /mob/living/simple_animal/spiderbot) || istype(src, /mob/living/silicon/robot/drone))
 		handle_ventcrawl(null, 1)

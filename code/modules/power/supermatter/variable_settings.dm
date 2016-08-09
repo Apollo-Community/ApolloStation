@@ -29,7 +29,10 @@
 	var/phoron_release_heat_limit = 400 // phoron release is scaled down until this temperature
 	var/phoron_heal_rate = 0 // The rate that phoron heals the core, per mole
 
-	var/emitter_factor = 1 // Determines damage and power generation from the emitter beam
+	var/emitter_factor = 1 // Determines power generation from the emitter beam
+	var/dama = 0.7
+	var/damb = 1.4
+	var/damc = 500
 
 	var/thermal_factor = 0 // The amount of heat released to the environment at max power
 	var/heal_rate = 0 // The amount of damage the core will automatically heal
@@ -86,7 +89,7 @@
 	o2_turbo_multiplier = 1.7/CANISTER_MOLARITY
 	co2_heat_multiplier = 1.1/CANISTER_MOLARITY
 	n2o_power_loss = 800/CANISTER_MOLARITY
-	phoron_heal_rate = 600/CANISTER_MOLARITY
+	phoron_heal_rate = 800/CANISTER_MOLARITY
 	color = "#0099FF"
 	color_name = "blue"
 	explosion_size = 25
@@ -106,7 +109,7 @@
 	o2_turbo_multiplier = 1.8/CANISTER_MOLARITY
 	co2_heat_multiplier = 1.2/CANISTER_MOLARITY
 	n2o_power_loss = 1400/CANISTER_MOLARITY
-	phoron_heal_rate = 400/CANISTER_MOLARITY
+	phoron_heal_rate = 700/CANISTER_MOLARITY
 	color = "#6600FF"
 	color_name = "purple"
 	explosion_size = 25
@@ -131,7 +134,7 @@
 	crit_fail_damage = 100
 	co2_heat_multiplier = 1.3/CANISTER_MOLARITY
 	n2o_power_loss = 1400/CANISTER_MOLARITY
-	phoron_heal_rate = 200/CANISTER_MOLARITY
+	phoron_heal_rate = 600/CANISTER_MOLARITY
 	color = "#FF00FF"
 	color_name = "pink"
 	explosion_size = 45
@@ -156,7 +159,7 @@
 	crit_fail_damage = 500
 	co2_heat_multiplier = 1.4/CANISTER_MOLARITY
 	n2o_power_loss = 5200/CANISTER_MOLARITY
-	phoron_heal_rate = 0/CANISTER_MOLARITY
+	phoron_heal_rate = 550/CANISTER_MOLARITY
 	color = "#FF3399"
 	color_name = "magenta"
 	explosion_size = 45
@@ -181,7 +184,7 @@
 	crit_fail_damage = 1000
 	co2_heat_multiplier = 1.5/CANISTER_MOLARITY
 	n2o_power_loss = 5200/CANISTER_MOLARITY
-	phoron_heal_rate = 0/CANISTER_MOLARITY
+	phoron_heal_rate = 500/CANISTER_MOLARITY
 	color = "#FFFF00"
 	color_name = "yellow"
 	explosion_size = 55
@@ -206,7 +209,7 @@
 	crit_fail_damage = 5000
 	co2_heat_multiplier = 1.6/CANISTER_MOLARITY
 	n2o_power_loss = 10400/CANISTER_MOLARITY
-	phoron_heal_rate = 0/CANISTER_MOLARITY
+	phoron_heal_rate = 450/CANISTER_MOLARITY
 	color = "#FF6600"
 	color_name = "orange"
 	explosion_size = 55
@@ -217,7 +220,7 @@
 	damage_per_degree = 1.7
 	psionic_power = 90
 	radiation_power = 90
-	heal_rate = 0.01
+	heal_rate = 0.02
 
 /datum/sm_control/level_9
 	base_power = 83200

@@ -15,7 +15,10 @@ proc/get_donator(client/C)
 
 	return donator
 
-proc/donator_tier(client/C)
+/proc/donator_tier(client/C)
+	if( !C )
+		return 0
+
 	if( C.donator & DONATOR_TIER_BYOND )
 		return "BYOND" // TIER BYOND MASTERRACE?
 	else if( C.donator & DONATOR_TIER_2 )

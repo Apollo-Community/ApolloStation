@@ -88,6 +88,7 @@ h1.alert, h2.alert		{color: #000000;}
 .rose					{color: #ff5050;}
 .info					{color: #0000CC;}
 .notice					{color: #000099;}
+.ooc_notice				{color: #660066;	font-weight: bold;}
 .alium					{color: #00ff00;}
 
 /* Languages */

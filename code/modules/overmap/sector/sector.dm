@@ -26,7 +26,7 @@
 		if( !sector_exists( T ))
 			return T
 
-	error( "Could not place [src]!" )
+	log_debug( "Could not place [src]!" )
 
 /obj/effect/mapinfo/sector/station
 	name = "NOS Apollo"
@@ -70,6 +70,14 @@
 
 /obj/effect/mapinfo/sector/moon/getMapLoc()
 	return locate( OVERMAP_STATION_X+2, OVERMAP_STATION_Y+2, OVERMAP_ZLEVEL )
+
+/obj/effect/mapinfo/sector/moon/initliazeMap()
+	..()
+
+	spawn( 10 )
+		master_controller.SetupXenoarch( zlevel )
+
+	return 1
 
 /obj/effect/mapinfo/sector/tcomm_old
 	name = "Abandoned Satellite"
@@ -124,6 +132,8 @@
 
 
 /obj/effect/mapinfo/sector/asteroid/initliazeMap()
+	..()
+
 	name = "asteroid [pick( alphabet_uppercase )]-[rand( 100, 999 )]"
 
 	var/fill_rate = 52 // % of the area that will be filled at the start
@@ -168,6 +178,9 @@
 
 				T.ChangeTurf( /turf/simulated/mineral/random )
 				A.contents += T
+
+	spawn( 10 )
+		master_controller.asteroid_ore_map.apply_to_asteroid( zlevel )
 
 	return 1
 

@@ -6,9 +6,9 @@
 	// this may seem backwards, but this is done so that antagonist factions that aren't part of the syndicate can show up
 	var/list/datum/faction/factions = list()
 	for( var/datum/mind/M in antags )
-		/*if( M == user.mind ) // no voting for yourself
+		if( M == user.mind ) // no voting for yourself
 			antags -= M
-			continue*/
+			continue
 		if( !(M.antagonist.faction in factions) )
 			factions += M.antagonist.faction
 
@@ -52,7 +52,7 @@
 	testing( "Opened antag vote for [user.client]" )
 
 /datum/controller/gameticker/Topic(href, href_list)
-	if( ticker.restart_called )	return // too late
+	//if( ticker.restart_called )	return // too late
 
 	var/datum/mind/antag = null
 	for( var/datum/mind/M in minds )

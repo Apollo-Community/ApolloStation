@@ -230,7 +230,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		ownrank = newrank
 	else
 		ownrank = ownjob
-	name = newname + " (" + ownjob + ")"
+	generateName()
 
 
 //AI verb and proc for sending PDA messages.
@@ -415,6 +415,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		data["cartridge"] = cartdata
 
 	data["stationTime"] = worldtime2text()
+	data["stationDate"] = print_date( universe.date )
 	data["new_Message"] = new_message
 	data["new_News"] = new_news
 
@@ -604,7 +605,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if("UpdateInfo")
 			ownjob = id.assignment
 			ownrank = id.rank
-			name = "PDA-[owner] ([ownjob])"
+			generateName()
 		if("Eject")//Ejects the cart, only done from hub.
 			if (!isnull(cartridge))
 				var/turf/T = loc
@@ -1137,7 +1138,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			owner = idcard.registered_name
 			ownjob = idcard.assignment
 			ownrank = idcard.rank
-			name = "PDA-[owner] ([ownjob])"
+			generateName()
 			user << "<span class='notice'>Card scanned.</span>"
 		else
 			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
@@ -1401,3 +1402,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/emp_act(severity)
 	for(var/atom/A in src)
 		A.emp_act(severity)
+
+/obj/item/device/pda/proc/generateName()
+	name = "PDA-[owner] ([ownjob])"

@@ -126,6 +126,9 @@
 		O.set_dir(user.dir)
 		O.add_fingerprint(user)
 
+		if( recipe.trigger_bews )
+			message_admins("[user.ckey]/[user.real_name] is constructing an [O] <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>", "BEWS:")
+
 		if (istype(O, /obj/item/stack))
 			var/obj/item/stack/S = O
 			S.amount = produced
@@ -292,7 +295,9 @@
 	var/time = 0
 	var/one_per_turf = 0
 	var/on_floor = 0
-	New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = 0, on_floor = 0)
+	var/trigger_bews = 0
+
+	New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = 0, on_floor = 0, trigger_bews = 0)
 		src.title = title
 		src.result_type = result_type
 		src.req_amount = req_amount
@@ -301,6 +306,7 @@
 		src.time = time
 		src.one_per_turf = one_per_turf
 		src.on_floor = on_floor
+		src.trigger_bews = trigger_bews
 
 /*
  * Recipe list datum

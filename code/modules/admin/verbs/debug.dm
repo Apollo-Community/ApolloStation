@@ -40,27 +40,31 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		var/returnval = null
 		var/class = null
 
-		switch(alert("Proc owned by something?",,"Yes","No"))
-			if("Yes")
-				targetselected = 1
-				class = input("Proc owned by...","Owner",null) as null|anything in list("Obj","Mob","Area or Turf","Client")
-				switch(class)
-					if("Obj")
-						target = input("Enter target:","Target",usr) as obj in world
-					if("Mob")
-						target = input("Enter target:","Target",usr) as mob in world
-					if("Area or Turf")
-						target = input("Enter target:","Target",usr.loc) as area|turf in world
-					if("Client")
-						var/list/keys = list()
-						for(var/client/C)
-							keys += C
-						target = input("Please, select a player!", "Selection", null, null) as null|anything in keys
-					else
-						return
-			if("No")
-				target = null
-				targetselected = 0
+		if(alert("Proc owned by something?",,"Yes","No") == "Yes")
+			targetselected = 1
+			var/list/options = list("Obj","Mob","Area or Turf","Client")
+			if(src.holder && src.holder.marked_datum)
+				options += "Marked object"
+			class = input("Proc owned by...","Owner",null) as null|anything in options
+			switch(class)
+				if("Obj")
+					target = input("Enter target:","Target",usr) as obj in world
+				if("Mob")
+					target = input("Enter target:","Target",usr) as mob in world
+				if("Area or Turf")
+					target = input("Enter target:","Target",usr.loc) as area|turf in world
+				if("Client")
+					var/list/keys = list()
+					for(var/client/C)
+						keys += C
+					target = input("Please, select a player!", "Selection", null, null) as null|anything in keys
+				if("Marked object")
+					target = src.holder.marked_datum
+				else
+					return
+		else
+			target = null
+			targetselected = 0
 
 		var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
 		if(!procname)	return
@@ -1101,7 +1105,28 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	message_admins("<span class='notice'>[key_name_admin(usr)] setup the supermatter engine  [response == "Setup except coolant" ? "without coolant": ""]</span>")
 	return
 
+/client/proc/supermatter_dam_debug()
+	set category = "Debug"
+	set name = "Debug supermatter dam calc"
+	set desc = "Change the supermatter damage calculation vars"
 
+	if(!check_rights(R_DEBUG|R_ADMIN))      return
+	var/dama = getSMVar(1, "dama")
+	var/damb = getSMVar(1, "damb")
+	var/damc = getSMVar(1, "damc")
+	alert("Adjust the damage calculation formula, standart: (0.7*1.4^CoreLevel*EmitterPower)/500. Current: ([dama]*[damb]^CoreLevel*EmitterPower/[damc]",,"ok")
+
+	var/a = input("Select a (leave blank for no change)") as null|num
+	if(!isnull(a))	setSMVar(0, "dama", a)
+	var/b = input("Select b (leave blank for no change)") as null|num
+	if(!isnull(b))	setSMVar(0, "damb", b)
+	var/c = input("Select c (leave blank for no change)") as null|num
+	if(!isnull(c))	setSMVar(0, "damc", c)
+
+	var/ndama = getSMVar(1, "dama")
+	var/ndamb = getSMVar(1, "damb")
+	var/ndamc = getSMVar(1, "damc")
+	alert("The new formula is: ([ndama]*[ndamb]^CoreLevel*EmitterPower/[ndamc]",,"Okay")
 
 /client/proc/cmd_debug_mob_lists()
 	set category = "Debug"
@@ -1147,3 +1172,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		log_admin("[key_name(src)] has toggled [M.key]'s [blockname] block [state]!")
 	else
 		alert("Invalid mob")
+
+/client/proc/advanced_wincall()
+	set category = "Debug"
+	set name = "Advanced WinCall"
+	set desc = "Allows you to open specific windows typically unavailable"
+
+	winset(src, null, "command=.command")

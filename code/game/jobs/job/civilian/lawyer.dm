@@ -4,12 +4,12 @@
 	flag = LAWYER
 	department_id = CIVILIAN
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 2
+	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	access = list( access_lawyer, access_court, access_sec_doors, access_maint_tunnels)
-	minimal_access = list( access_lawyer, access_court, access_sec_doors )
+	minimal_access = list(access_lawyer, access_court)
 	alt_titles = list("Lawyer")
 
 	minimal_playtime = 2
@@ -26,6 +26,7 @@
 	H.equip_to_slot_or_qdel(new suit(H), slot_w_uniform)
 	H.equip_to_slot_or_qdel(new /obj/item/device/pda(H), slot_belt)
 	H.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/black(H), slot_shoes)
+	H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/briefcase(H), slot_l_hand)
 
 	if(H.character.backpack == 1)
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)

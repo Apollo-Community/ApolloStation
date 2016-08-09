@@ -1,6 +1,3 @@
-/obj/item/clothing/under/apollo
-	icon = 'icons/obj/clothing/uniforms.dmi'
-
 /obj/item/clothing/under/pj/red
 	name = "red pj's"
 	desc = "Sleepwear."
@@ -565,10 +562,6 @@
 	icon_state = "black_tango"
 	item_state = "black_tango"
 	item_color = "black_tango"
-
-/obj/item/clothing/under/black_tango/short
-	item_state = "black_tango_short"
-	item_color = "black_tango_short"
 
 /obj/item/clothing/under/tourist
 	name = "tourist's shirt"

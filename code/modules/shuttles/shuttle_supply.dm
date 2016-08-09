@@ -1,6 +1,6 @@
 /datum/shuttle/ferry/supply
 	var/late_chance = 80
-	var/max_late_time = 300.
+	var/max_late_time = 300
 	var/traveling = 0
 	var/obj/hanger/finish_hanger
 	var/list/supply_turfs
@@ -11,6 +11,7 @@
 	supply_turfs = get_turfs_square(current_hanger.x, current_hanger.y, current_hanger.z, 3, 3)
 
 /datum/shuttle/ferry/supply/short_jump(var/obj/hanger/trg_hanger)
+	log_debug("sup shuttle short jump 1 called")
 	//Do some checks first
 	if(moving_status != SHUTTLE_IDLE)
 		return
@@ -46,8 +47,10 @@
 	moving_status = SHUTTLE_INTRANSIT
 	traveling = 1
 
+	log_debug("sup shuttle short jump 1 finished")
 
 /datum/shuttle/ferry/supply/proc/short_jump_finish()
+	log_debug("sup shuttle short jump 2 called")
 	//We can only arrive late if we are going to the station
 	if (!at_station() && prob(late_chance))
 		sleep(rand(0,max_late_time))
@@ -57,7 +60,8 @@
 
 	//Move the shuttle
 	move(finish_hanger, null, 0)
-	supply_turfs = get_turfs_square(current_hanger.x, current_hanger.y, current_hanger.z, 3, 3)
+
+	supply_turfs = get_turfs_square(current_hanger.x, current_hanger.y, current_hanger.z, 5, 5)
 	if (at_station())
 		supply_controller.buy()
 	if (!at_station())
@@ -66,6 +70,8 @@
 		moving_status = SHUTTLE_SCHEDULING
 	else
 		moving_status = SHUTTLE_IDLE
+
+	log_debug("sup shuttle short jump 2 finished")
 
 /datum/shuttle/ferry/supply/process()
 	..()

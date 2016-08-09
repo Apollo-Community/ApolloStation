@@ -167,7 +167,9 @@
 		src.cameraFollow = null
 
 	var/mob/target = (isnull(track.humans[target_name]) ? track.others[target_name] : track.humans[target_name])
+
 	src.track = null
+
 	ai_actual_track(target)
 
 /mob/living/silicon/ai/proc/ai_cancel_tracking(var/forced = 0)
@@ -248,6 +250,7 @@
 /mob/living/silicon/ai/attack_ai(var/mob/user as mob)
 	ai_camera_list()
 
+/*
 /mob/living/silicon/ai/proc/go_down_z()
 	set category = "AI Commands"
 	set name = "Go Downstairs"
@@ -274,3 +277,4 @@
 			src.eyeobj.setLoc( upwards )
 		else
 			usr << "Can't go any higher!"
+*/

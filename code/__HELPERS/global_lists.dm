@@ -120,8 +120,7 @@ var/global/list/alloy_postfix = list("metal" = "metallic", "glass" = "glaseous")
 		S.race_key = rkey //Used in mob icon caching.
 		all_species[S.name] = S
 
-		if(!(S.flags & IS_RESTRICTED))
-			world << "[S.name]"
+		if( !( S.flags & IS_RESTRICTED ) && ( S.flags & CAN_JOIN ) )
 			playable_species |= S.name
 		if( S.flags & IS_WHITELISTED )
 			whitelisted_species |= S.name
@@ -135,10 +134,6 @@ var/global/list/alloy_postfix = list("metal" = "metallic", "glass" = "glaseous")
 		poster_designs += P
 
 	return 1
-
-//Slack lists
-/var/global/list/recent_slack_times = list()
-/var/global/list/recent_slack_msg = list()
 
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()

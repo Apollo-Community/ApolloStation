@@ -33,22 +33,28 @@
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
 /mob/aiEye/proc/setLoc(var/T, var/cancel_tracking = 1)
+	if(!ai)
+		return 0
 
-	if(ai)
-		if(!isturf(ai.loc))
-			return
+	T = get_turf(T)
+	if(!T || T == loc)
+		return 0
 
-		if(cancel_tracking)
-			ai.ai_cancel_tracking()
+	forceMove(T)
 
-		T = get_turf(T)
-		loc = T
-		cameranet.visibility(src)
-		if(ai.client)
-			ai.client.eye = src
-		//Holopad
-		if(ai.holo)
-			ai.holo.move_hologram()
+	if(ai.client)
+		ai.client.eye = src
+
+	if(cancel_tracking)
+		ai.ai_cancel_tracking()
+
+	//Holopad
+	if(ai.holo)
+		ai.holo.move_hologram(ai)
+
+	cameranet.visibility(src)
+
+	return 1
 
 /mob/aiEye/proc/getLoc()
 

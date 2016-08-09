@@ -247,11 +247,6 @@ area/space/atmosalert()
 	icon_state = "green"
 	environment = SEWER_PIPE
 
-/area/podbay/hangar/s_hanger_e
-	name = "\improper Hangar_loc_e"
-	icon_state = "green_e"
-	environment = SEWER_PIPE
-
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
 
@@ -365,6 +360,18 @@ area/space/atmosalert()
 /area/shuttle/alien/base
 	icon_state = "shuttle"
 	name = "\improper Alien Shuttle Base"
+	requires_power = 1
+	luminosity = 0
+
+/area/shuttle/merchant
+	icon_state = "shuttle"
+	name = "\improper Merchant Shuttle"
+	requires_power = 1
+	luminosity = 0
+
+/area/shuttle/merchant/dock
+	icon_state = "shuttle"
+	name = "\improper Merchant Shuttle Dock"
 	requires_power = 1
 	luminosity = 0
 
@@ -563,10 +570,18 @@ area/space/atmosalert()
 	icon_state = "honk"
 	requires_power = 0
 
+/area/antagasteroid
+	name = "\improper Antagonist Hideout"
+	icon_state = "red"
+	requires_power = 0
+	lighting_use_dynamic = 0
+	ambience = list('sound/music/traitor.ogg')
+
 /area/tdome
 	name = "\improper Thunderdome"
 	icon_state = "thunder"
 	requires_power = 0
+	lighting_use_dynamic = 0
 	ambience = list('sound/music/THUNDERDOME.ogg')
 
 /area/tdome/arena
@@ -647,6 +662,7 @@ area/space/atmosalert()
 	name = "\improper Wizard's Den"
 	icon_state = "yellow"
 	requires_power = 0
+	lighting_use_dynamic = 0
 
 /area/vox_station
 	requires_power = 0
@@ -790,6 +806,38 @@ area/space/atmosalert()
 /area/maintenance/aft
 	name = "Aft Maintenance"
 	icon_state = "amaint"
+
+/area/maintenance/secret/room1
+	name = "Secret Room"
+	icon_state = "fpmaint"
+/area/maintenance/secret/room2
+	name = "Secret Room"
+	icon_state = "smaint"
+/area/maintenance/secret/room3
+	name = "Secret Room"
+	icon_state = "smaint"
+/area/maintenance/secret/room4
+	name = "Secret Room"
+	icon_state = "asmaint"
+/area/maintenance/secret/room5
+	name = "Secret Room"
+	icon_state = "asmaint"
+/area/maintenance/secret/room6
+	name = "Secret Room"
+	icon_state = "amaint"
+/area/maintenance/secret/room7
+	name = "Secret Room"
+	icon_state = "fsmaint"
+/area/maintenance/secret/room8
+	name = "Secret Room"
+	icon_state = "fsmaint"
+/area/maintenance/secret/room9
+	name = "Secret Room"
+	icon_state = "asmaint"
+
+/area/maintenance/secret/room10
+	name = "Secret Room"
+	icon_state = "asmaint"
 
 /area/maintenance/portdorm
 	name = "Dormitory Maintenance"
@@ -1066,6 +1114,17 @@ area/space/atmosalert()
 	icon_state = "bridge"
 	environment = STONEROOM
 
+/area/bridge/bridgedorm
+	name = "\improper Bridge Dormitory"
+	icon_state = "bridge"
+	environment = STONEROOM
+
+/area/bridge/bridgelocker
+	name = "\improper Bridge Locker Room"
+	icon_state = "bridge"
+	environment = STONEROOM
+
+
 /area/bridge/bridgemed
 	name = "\improper Bridge Medical"
 	icon_state = "bridge"
@@ -1096,6 +1155,11 @@ area/space/atmosalert()
 /area/crew_quarters/heads/hos
 	name = "\improper Head of Security's Office"
 	icon_state = "head_quarters"
+
+/area/crew_quarters/heads/hos/sleeproom
+	name = "\improper Head of Security's Quarters"
+	icon_state = "head_quarters"
+
 
 /area/crew_quarters/heads/cmo
 	name = "\improper Chief Medical Officer's Office"
@@ -1144,6 +1208,46 @@ area/space/atmosalert()
 
 /area/crew_quarters/sleep
 	name = "\improper Dormitories"
+	icon_state = "Sleep"
+
+/area/crew_quarters/maintrooms/medroom
+	name = "\improper Fore Port Private Quarter"
+	icon_state = "Sleep"
+
+/area/crew_quarters/maintrooms/secroom1
+	name = "\improper Fore Starboard Private Quarter One"
+	icon_state = "Sleep"
+
+/area/crew_quarters/maintrooms/arrivalroom1
+	name = "\improper Port Private Quarter One"
+	icon_state = "Sleep"
+
+/area/crew_quarters/maintrooms/secroom2
+	name = "\improper Fore Starboard Private Quarter Two"
+	icon_state = "Sleep"
+
+/area/crew_quarters/maintrooms/secroom3
+	name = "\improper Fore Starboard Private Quarter Three"
+	icon_state = "Sleep"
+
+/area/crew_quarters/maintrooms/sciroom1
+	name = "\improper Aft Starboard Private Quarter One"
+	icon_state = "Sleep"
+
+/area/crew_quarters/maintrooms/sciroom2
+	name = "\improper Aft Starboard Private Quarter Two"
+	icon_state = "Sleep"
+
+/area/crew_quarters/maintrooms/sciroom3
+	name = "\improper Aft Starboard Private Quarter Three"
+	icon_state = "Sleep"
+
+/area/crew_quarters/maintrooms/civroom
+	name = "\improper Aft Port Private Quarter"
+	icon_state = "Sleep"
+
+/area/crew_quarters/maintrooms/centroom
+	name = "\improper Central Private Quarter"
 	icon_state = "Sleep"
 
 /area/crew_quarters/sleep/engi_wash
@@ -1649,6 +1753,10 @@ area/space/atmosalert()
 	name = "\improper Security Office"
 	icon_state = "security"
 
+/area/security/eva
+	name = "\improper Security EVA Storage"
+	icon_state = "security"
+
 /area/security/breakroom
 	name = "\improper Security Break Room"
 	icon_state = "security"
@@ -1758,7 +1866,7 @@ area/space/atmosalert()
 	icon_state = "checkpoint1"
 
 /area/security/vacantoffice
-	name = "\improper Vacant Office"
+	name = "\improper Bridge Vacant Office"
 	icon_state = "security"
 	environment = QUARRY
 
@@ -1983,55 +2091,55 @@ area/space/atmosalert()
 	icon_state = "bridge"
 
 /area/slater/foreman
-	name = "\improper Foreman's Office"
+	name = "\improper NMV Slater Foreman's Office"
 	icon_state = "bridge"
 
 /area/slater/maint1
-	name = "\improper Fore Maintenance"
+	name = "\improper NMV Slater Fore Maintenance"
 	icon_state = "fmaint"
 
 /area/slater/maint2
-	name = "\improper Aft Maintenance"
+	name = "\improper NMV Slater Aft Maintenance"
 	icon_state = "amaint"
 
 /area/slater/maint3
-	name = "\improper Secondary Maintenance"
+	name = "\improper NMV Slater Secondary Maintenance"
 	icon_state = "pmaint"
 
 /area/slater/engine
-	name = "\improper Engine Room"
+	name = "\improper NMV Slater Engine Room"
 	icon_state = "engine"
 
 /area/slater/disposals
-	name = "\improper Disposals Control"
+	name = "\improper NMV Slater Disposals Control"
 	icon_state = "disposal"
 
 /area/slater/refinery
-	name = "\improper Refinery"
+	name = "\improper NMV Slater Refinery"
 	icon_state = "mining_production"
 
 /area/slater/cargo
-	name = "\improper Cargo Hold"
+	name = "\improper NMV Slater Cargo Hold"
 	icon_state = "storage"
 
 /area/slater/hangar
-	name = "\improper Hangar"
+	name = "\improper NMV Slater Hangar"
 	icon_state = "green"
 
 /area/slater/expeditionprep
-	name = "\improper Expedition Prep"
+	name = "\improper NMV Slater Expedition Prep"
 	icon_state = "mining_eva"
 
 /area/slater/medbay
-	name = "\improper Medbay"
+	name = "\improper NMV Slater Medbay"
 	icon_state = "medbay"
 
 /area/slater/lounge
-	name = "\improper Break Room"
+	name = "\improper NMV Slater Break Room"
 	icon_state = "cafeteria"
 
 /area/slater/dorm
-	name = "\improper Dormitory"
+	name = "\improper NMV Slater Dormitory"
 	icon_state = "Sleep"
 
 

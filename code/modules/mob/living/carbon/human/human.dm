@@ -719,7 +719,7 @@
 /mob/living/carbon/human/proc/play_xylophone()
 	if(!src.xylophone)
 		visible_message("<span class='alert'>[src] begins playing his ribcage like a xylophone. It's quite spooky.</span>","<span class='notice'>You begin to play a spooky refrain on your ribcage.</span>","<span class='alert'>You hear a spooky xylophone melody.</span>")
-		var/song = pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg')
+		var/song = pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg','sound/effects/xylophone4.ogg','sound/effects/xylophone5.ogg')
 		playsound(loc, song, 50, 1, -1)
 		xylophone = 1
 		spawn(1200)
@@ -1085,9 +1085,9 @@
 			new_species = dna.species
 		else
 			dna.species = new_species
+			character.species = "[new_species]"
 
 	if(species)
-
 		if(species.name && species.name == new_species)
 			return
 		if(species.language)
@@ -1123,6 +1123,9 @@
 		regenerate_icons()
 		vessel.add_reagent("blood",560-vessel.total_volume)
 		fixblood()
+
+	// Save the species to their character
+	character.species = new_species
 
 	// Rebuild the HUD. If they aren't logged in then login() should reinstantiate it for them.
 	if(client && client.screen)
@@ -1247,6 +1250,9 @@
 
 
 /mob/living/carbon/human/start_pulling(var/atom/movable/AM)
+	if(istype(AM, /mob/living/carbon/human))
+		var/mob/living/carbon/C = AM
+		if(C.status_flags & GODMODE)		return
 	if( isBaldie( src ))
 		if( istype( AM, /obj/structure/reagent_dispensers/fueltank ))
 			message_admins("[src.ckey]/[src.real_name] is pulling a [AM] around <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>", "BEWS:")

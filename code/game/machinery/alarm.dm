@@ -1067,6 +1067,7 @@ FIRE ALARM
 	power_channel = ENVIRON
 	var/last_process = 0
 	var/wiresexposed = 0
+	pixel_y = 28
 	buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 
 /obj/machinery/firealarm/update_icon()

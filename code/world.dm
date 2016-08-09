@@ -21,6 +21,14 @@ var/global/datum/global_init/init = new ()
 
 #define RECOMMENDED_VERSION 510
 /world/New()
+	// if we're being called by command line then lets do stuff!
+	if(params.len)
+		world.log << "Command-line parameters:"
+		for(var/p in params)	world.log << "[p] = [params[p]]"
+		if(params["genmap"])
+			world.log << "Geneating web maps..."
+			generate_every_map()
+
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
@@ -89,7 +97,7 @@ var/world_topic_spam_protect_ip = "0.0.0.0"
 var/world_topic_spam_protect_time = world.timeofday
 
 /world/Topic(T, addr, master, key)
-	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key][log_end]"
+	log_debug("TOPIC: \"[T]\", from:[addr], master:[master], key:[key][log_end]")
 
 	if (T == "ping")
 		var/x = 1
@@ -103,6 +111,9 @@ var/world_topic_spam_protect_time = world.timeofday
 			if(M.client)
 				n++
 		return n
+
+	else if (copytext(T,1,7) == "sitest")	//returns num of players, round duration (starting at 0:00)
+		return list2params(list("players" = clients.len, "time" = worldtime2text(bonus_time = 0)))
 
 	else if (copytext(T,1,7) == "status")
 		var/input[] = params2list(T)
@@ -148,43 +159,30 @@ var/world_topic_spam_protect_time = world.timeofday
 
 		return list2params(s)
 
+	/*
 	if(copytext(T,1,9) == "adminmsg")					//This recieves messages from slack (/pm command) and processes it before updating slack chat
 		var/input[] = params2list(copytext(T,9))
 		//security check
-		/*
+
 		if(fexists("config/slack.txt"))
 			if(input["token"] != file2text("config/slack.txt"))
 				message_admins("TOPIC: WARNING: [addr] tried to fake an admin message! Please contact a developer")
 				return
 		else	return
-		*/
-		for(var/a in world.GetConfig("admin"))
-			a << input["token"]
+		
+		log_debug(input["token"])			//Just for testing
 
-		var/message = sanitize(input["text"])
-		if(!message)	return
-		var/target = input["target"]
+		var/message = input["text"]
+		var/target = lowertext(input["target"])
 		var/admin = input["admin"]
 
 		//get the target and send PM
 		for(var/client/C in clients)
 			if(C.ckey == target)
 				//Code to send PMS....
-				slack_admin(C, admin, message,0)
-				. = "Sent message to [target]!"
+				slack_admin(C, admin, message, 0)
 				break
-
-		if(!.)	return			//Don't continue if we couldn't find a target
-
-		update_slack(admin, target, message)
-
-	else if(copytext(T,1,10) == "admintime")			//This adds the timestamp to recent_slack_times[ckey] so it can be edited when replied to
-		var/input[] = params2list(copytext(T,10))
-
-		if(!recent_slack_times.Find(input["user"]))
-			recent_slack_times.Add(input["user"])		//adds the user to list if it exists
-		recent_slack_times[input["user"]] = input["time"]
-
+	*/
 
 	else if(copytext(T,1,4) == "age")
 		var/input[] = params2list(T)

@@ -1,12 +1,28 @@
-"a" = (/turf/unsimulated/wall{icon_state = "phoron6"},/area/shuttle/alien/base)
-"b" = (/turf/unsimulated/wall{icon_state = "phoron12"},/area/shuttle/alien/base)
-"c" = (/turf/unsimulated/wall{icon_state = "phoron3"},/area/shuttle/alien/base)
-"d" = (/turf/unsimulated/floor{icon_state = "floor5"},/area/shuttle/alien/base)
-"e" = (/obj/machinery/door/airlock/hatch,/turf/unsimulated/floor{icon_state = "floor5"},/area/shuttle/alien/base)
-"f" = (/turf/unsimulated/wall{icon_state = "phoron5"},/area/shuttle/alien/base)
+"a" = (/turf/space,/area/space)
+"b" = (/turf/unsimulated/wall{tag = "icon-phoron2"; icon_state = "phoron2"},/area/shuttle/alien/base)
+"c" = (/turf/unsimulated/wall/fakeglass{dir = 1; icon = 'icons/mob/alien.dmi'; icon_state = "resinmembrane"},/area/shuttle/alien/base)
+"d" = (/turf/unsimulated/wall{icon_state = "phoron6"},/area/shuttle/alien/base)
+"e" = (/turf/unsimulated/wall{tag = "icon-phoron9"; icon_state = "phoron9"},/area/shuttle/alien/base)
+"f" = (/turf/unsimulated/floor{icon_state = "floor5"},/area/shuttle/alien/base)
+"g" = (/turf/unsimulated/wall{icon_state = "phoron5"},/area/shuttle/alien/base)
+"h" = (/turf/unsimulated/wall{tag = "icon-phoron10"; icon_state = "phoron10"},/area/shuttle/alien/base)
+"i" = (/turf/unsimulated/wall{tag = "icon-phoron4"; icon_state = "phoron4"},/area/shuttle/alien/base)
+"j" = (/turf/unsimulated/wall{tag = "icon-phoron8"; icon_state = "phoron8"},/area/shuttle/alien/base)
+"k" = (/turf/unsimulated/wall{icon_state = "phoron3"},/area/shuttle/alien/base)
+"l" = (/obj/structure/bed/alien,/turf/unsimulated/floor{icon_state = "floor5"},/area/shuttle/alien/base)
+"m" = (/turf/unsimulated/wall{tag = "icon-phoron1"; icon_state = "phoron1"},/area/shuttle/alien/base)
+"n" = (/obj/machinery/door/airlock/phoron,/turf/unsimulated/floor{icon_state = "floor5"},/area/shuttle/alien/base)
 
 (1,1,1) = {"
-abbb
-cdde
-fbbb
+aabcccccbaa
+adefffffgha
+iefffffffgh
+cffdjcihffk
+cffklflkffm
+cffnfffnffn
+cffklflkffb
+cffgjcieffk
+ihfffffffde
+aghfffffdea
+aamcccccmaa
 "}

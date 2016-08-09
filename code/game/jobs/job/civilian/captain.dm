@@ -17,6 +17,8 @@ var/datum/announcement/minor/captain_announcement = new(do_newscast = 1)
 
 	rank_succesion_level = CAPTAIN_SUCCESION_LEVEL
 
+	dep_authority = list( CIVILIAN, SUPPLY, MEDICAL, ENGINEERING, SCIENCE, SECURITY )
+
 /datum/job/captain/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
 	H.equip_to_slot_or_qdel(new /obj/item/device/radio/headset/heads/captain(H), slot_l_ear)

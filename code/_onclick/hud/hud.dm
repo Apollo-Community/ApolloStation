@@ -140,6 +140,8 @@ var/list/global_huds = list(
 	var/obj/screen/l_hand_hud_object
 	var/obj/screen/action_intent
 	var/obj/screen/move_intent
+	var/obj/screen/pipe_blind
+	var/obj/screen/position_indicator
 
 	var/list/adding
 	var/list/other

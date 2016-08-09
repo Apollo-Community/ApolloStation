@@ -586,7 +586,7 @@
 #define SHOW_TYPING 		16384
 #define CHAT_NOICONS		32768
 
-#define TOGGLES_DEFAULT (SOUND_NOTIFICATIONS|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_ATTACKLOGS|CHAT_LOOC)
+#define TOGGLES_DEFAULT (SOUND_NOTIFICATIONS|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_ATTACKLOGS|CHAT_DEBUGLOGS|CHAT_LOOC|CHAT_GHOSTRADIO|SHOW_TYPING|CHAT_NOICONS)
 
 #define BE_TRAITOR    1
 #define BE_OPERATIVE  2
@@ -930,3 +930,14 @@ var/list/be_special_flags = list(
 #define FELONY_LEVEL 2.0 // What is the minimum law severity that counts as a felony?
 
 #define START_YEAR 2560
+
+//Zlevel where overmap objects should be
+#define OVERMAP_ZLEVEL 1
+#define OVERMAP_STATION_X 128
+#define OVERMAP_STATION_Y 128
+#define OVERMAP_POPULATE_RADIUS 5
+#define TRANSITION_EDGE_LENGTH 9 // How far from the edge of the map is the transition zone to the overmap
+
+#define TRANSITION_EDGE_BUFFER 3 // How far should someone be placed from the edge if they're entering a sector?
+#define OVERMAP_LOC_ATTEMPTS 10 // How many times it should attempt to place an item
+

@@ -43,32 +43,8 @@
 		if(ismob(C)) 		//Old stuff can feed-in mobs instead of clients
 			var/mob/M = C
 			C = M.client
-		cmd_admin_pm(C,null)
+		cmd_admin_pm(C,null,href_list["discord"])
 		return
-
-	if(href_list["priv_msg_slack"])
-		var/msg = sanitize(input(src,"Message:", "Private message to Admins") as text|null)
-		if(!msg)	return
-
-		var/client/C = locate(href_list["priv_msg_slack"])
-		if(ismob(C)) 		//Old stuff can feed-in mobs instead of clients
-			var/mob/M = C
-			C = M.client
-
-		var/admin = href_list["admin"]
-
-		//sends the ahelp to game
-		slack_admin(C, admin, msg, 1)
-
-		//Sends the ahelp to slack chat
-		spawn(0)	//So we don't hold up the rest
-			shell("python scripts/adminbus.py ahelp [C.ckey] '*[C.ckey]*: `[msg]`'")
-			if(!recent_slack_msg.Find(usr.ckey))
-				recent_slack_msg.Add(usr.ckey)
-			recent_slack_msg[usr.ckey] = "`[msg]`"
-
-		return
-
 
 	if(href_list["irc_msg"])
 		if(!holder && received_irc_pm < world.time - 6000) //Worse they can do is spam IRC for 10 minutes
@@ -116,13 +92,14 @@
 
 	var/DBQuery/query
 
-	query = dbcon.NewQuery("SELECT no_antag_weight FROM player WHERE ckey = '[ckey( ckey )]'")
+	query = dbcon.NewQuery("SELECT antag_weights FROM player WHERE ckey = '[ckey( ckey )]'")
 	query.Execute()
 
 	if( !query.NextRow() )
 		return
 
-	no_antag_weight = text2num( query.item[1] )
+	if( !isnull( query.item[1] ))
+		antag_weights = params2list( query.item[1] )
 
 /client/proc/handle_spam_prevention(var/message, var/mute_type)
 	if(config.automute_on && !holder && src.last_message == message && non_spawn_check(message))
@@ -142,6 +119,7 @@
 //Checks if the message is not in the allowed list
 //UPDATE: also checks if the message around the sring check is not to long for abuse reasons
 /client/proc/non_spawn_check(var/message)
+	if(message == "gasps for air!")		return
 	for(var/string in non_spawn_emote)
 		if(findtext(message, string) && ((lentext(message) - lentext(string)) < 6))
 			continue
@@ -286,15 +264,19 @@
 		stat_player_list[key] = O
 		stat_player_list = sortAssoc(stat_player_list)
 
-	log_client_to_db()
+	if( log_client_to_db() == 2.0 ) // if we're an entirely new player
+		src << "<span class='admin_channel'>Hello and welcome to Apollo Station! Since this is your first time connecting, we'll be tossing some info \
+		your way. If you've never played SS13 before, we highly recommend you read this <a href='http://wiki.apollo-community.org/index.php?title=The_Basics'>new player guide</a>. \
+		Otherwise, if you're a veteran SS13 player who's new to Apollo, we'd recommend this <a href='http://wiki.apollo-community.org/index.php?title=Apollo_Crash_Course'>crash course guide</a>, \
+		which explains the major differences of Apollo.\
+		<br>In addition feel free message a member of staff for help at any time by either pressing <b>F1</b> or using the <b>\"ahelp\"</b> command.<br><br><i>~Apollo Team</i></span>"
+	else if( !prefs.passed_date )
+		src << "<span class='admin_channel'>We have detected that your ckey is less than one month old. To help get you started we strongly recommend \
+		that you read this wiki page: <a></a>http://wiki.apollo-community.org/index.php?title=The_Basics</a><br>In addition, feel free message a member \
+		of staff for help at any time by either pressing <b>F1</b> or using the <b>\"ahelp\"</b> command.<br><br><i>~Apollo Team</i></span>"
 
 	loadTokens()
 	loadAntagWeights()
-
-	if(!prefs.passed_date)
-		src << "<span class='admin_channel'>We have detected that your ckey is less than one month old. To help get you started we strongly recommend \
-		that you read this wiki page: <a></a>http://wiki.apollo-community.org/index.php?title=The_Basics</a>\nIn addition feel free to a member of staff \
-		for help by using the \"ahelp\" command.\n\n~Apollo Team</span>"
 
 	gen_infraction_table()
 
@@ -335,17 +317,20 @@
 */
 /client/proc/gen_infraction_table()
 	if(!holder && (!prefs.passed_date || (related_accounts_ip && !findtext(related_accounts_ip, "[ckey]")) || (related_accounts_cid && !findtext(related_accounts_cid, "[ckey]"))))
-		var/message =  "\n<tt><font color='#386AFF'>\
-						+------------------+---------+------------+-----------------------------------+-----------------------------------+\n\
-						| Ckey             | Country | Join Date  | Related CIDs                      | Related IPs                       |\n\
-						+------------------+---------+------------+-----------------------------------+-----------------------------------+\n"
-					/*	| [ckey]           | ***     | 2010-09-11 | [related_accounts_cid]            | [related_accounts_ip]             |
-						+------------------+---------+------------+-----------------------------------+-----------------------------------+*/
+		var/message =  "<br><font color='#386AFF'><table><tr>"
+		message += "<td>Ckey</td><td>Country</td><td>Join Date</td><td>Related CIDs</td><td>Related IPs</td>"
+		message += "</tr><tr>"
+		message += "<td>[ckey]</td>"
+		message += "<td>[prefs.country_code]</td>"
+		message += "<td>[prefs.passed_date ? "[prefs.joined_date]" : "<font color='#ff0000'>[prefs.joined_date]</font>"]</td>"
+		message += "<td>[related_accounts_cid]</td>"
+		message += "<td>[related_accounts_ip]</td>"
+		message += "</tr></table></font>"
 
-		var/list/padding_ammount = list(16 - (lentext(ckey) + 3) ,7 - lentext(prefs.country_code), 1, 33 - lentext(related_accounts_cid), 33 - lentext(related_accounts_ip))
+/*		var/list/padding_ammount = list(16 - (lentext(ckey) + 3) ,7 - lentext(prefs.country_code), 1, 33 - lentext(related_accounts_cid), 33 - lentext(related_accounts_ip))
 		var/list/padding_message = list("| <a href='?src=\ref[usr];priv_msg=\ref[src.mob]'>[padding_ammount[1] < 0 ? "[copytext(ckey,1,12)].." : "[ckey]"]</a>(<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</a>) ",
 										"| [prefs.country_code] ",
-										"| [prefs.passed_date ? "[prefs.joined_date]" : "<font color='#ff0000'>[prefs.joined_date]</font>"]",
+										"| [prefs.passed_date ? "[prefs.joined_date]" : "<font color='#ff0000'>[prefs.joined_date]</font>"] ",
 										"| [padding_ammount[4] < 0 ? "[copytext(related_accounts_cid,1,32)].." : "[related_accounts_cid]"] ",
 										"| [padding_ammount[5] < 0 ? "[copytext(related_accounts_ip,1,32)].." : "[related_accounts_ip]"] ")
 
@@ -354,6 +339,7 @@
 			for(var/p = 1; p <= padding_ammount[i]; p++)	message += " "
 
 		message += "|\n+------------------+---------+------------+-----------------------------------+-----------------------------------+</font></tt>\n"	//Closing table
+*/
 
 		for(var/client/C in admins)		C << "[message]"
 
@@ -403,14 +389,14 @@
 	if ( IsGuestKey(src.key) )
 		return 0
 
-	if( !no_antag_weight )
+	if( !antag_weights )
 		return 0
 
 	establish_db_connection()
 	if( !dbcon.IsConnected() )
 		return 0
 
-	var/DBQuery/query_insert = dbcon.NewQuery("UPDATE player SET no_antag_weight = [no_antag_weight] WHERE ckey = '[ckey( ckey )]'")
+	var/DBQuery/query_insert = dbcon.NewQuery("UPDATE player SET antag_weights = '[list2params( antag_weights )]' WHERE ckey = '[ckey( ckey )]'")
 	query_insert.Execute()
 
 /client/proc/log_client_to_db( var/log_playtime = 0 )
@@ -476,6 +462,8 @@
 		else
 			query_update = dbcon.NewQuery("UPDATE player SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]' WHERE id = [sql_id]")
 		query_update.Execute()
+
+		return 1
 	else
 		//New player!! Need to insert all the stuff
 		var/DBQuery/query_insert
@@ -484,6 +472,7 @@
 		else
 			query_insert = dbcon.NewQuery("INSERT INTO player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]')")
 		query_insert.Execute()
+		return 2
 
 	//Logging player access
 	//var/serverip = "[world.internet_address]:[world.port]"

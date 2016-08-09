@@ -16,23 +16,12 @@
 		usr << "<span class='danger'>The update command could not be found on the server.</span>"
 		return
 
-	var/result = shell(command)		//Use exit codes to determine what occured
+	message_admins("[src.ckey] is remotely updating the server. Shout at them if something goes horribly wrong.")
+	usr << "<b>Update log can be accessed with '.getupdatelog'</b>"
+	log_debug("IG UPDATE: Origin = [src.ckey]")
+	shell(command)		//Error handling and such is handled server side. The data_log is sufficient to see what the issue was.
 
-	switch(result)
-		if(0)
-			message_admins("[src.ckey] is remotely updating the server. Shout at them if something goes horribly wrong.")
-			usr << "<b>Server updated sucessfully. Currently re-compiling...</b>"
-			usr << "<b>Update log can be accessed with '.getupdatelog'</b>"
-		if(1)
-			usr << "<b>Server is already running this commit.</b>"
-		if(2)
-			usr << "<b>Server requires the resource file to be re-compiled - update unsucessful.</b>"
-		if(3)
-			usr << "<span class='danger'>This server is already compiling. Please try again in a few minutes.</span>"
-		else
-			usr << "<span class='danger'>Error: A catastrphic error has occured. Please contact a developer about this</span>"
-
-	log_debug("IG UPDATE: exit code [result]")
+/* We don't use these anymore so should disable them for safety.
 
 /proc/safe_write(var/text, var/file_path, var/type = "in the file")         //In-case we decide to do more with this
     if(text_exists(text, file_path))
@@ -53,6 +42,7 @@
 /proc/delete_text(var/message, var/path)
     shell("sed '/[message]/d' [path]")
     message_admins("[key_name_admin(usr)] has deleted '[message]' from : [path]")
+*/
 
 /client/proc/generate_cpu_graph()
 	set category = "Debug"
@@ -83,13 +73,10 @@
 	else
 		usr << "<span class='warning'>An error occurred generating the graph, please contract a developer</span>"
 
+/proc/send_slack(var/source, var/target = "1", var/message, var/col = "0")
+	//Sends the ahelp to slack chat
+	shell("python scripts/slack.py [source] [target] [col] '[sanitize(message)]'")
 
-/proc/update_slack(var/admin, var/target, var/message)
-	//Gets the timestamp and initial message to edit slack chat with
-	var/time = recent_slack_times["[target]"]
-	var/init_msg = recent_slack_msg["[target]"]
-	//Edits slack chat
-	shell("python scripts/update_message.py [time] [admin] '*[target]*: [init_msg]\n&gt;[message]'")
-
-	//Adds the current message to the slack buffer (if admins answer multiple times before player does again)
-	recent_slack_msg["[target]"] = "[init_msg]\n&gt;[message]~    @[admin]"
+// sends ahelps from the server to discord
+/proc/send_discord(var/source, var/target = "1", var/message)
+	shell("python scripts/discord_bot.py [source] [target] '[sanitize(message)]'")

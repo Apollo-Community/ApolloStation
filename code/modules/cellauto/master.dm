@@ -26,6 +26,7 @@
 	group_age++
 
 	for( var/atom/movable/cell/cell in cells )
+		if(!(.++%10))	lag_kill()
 		cell.process()
 
 /datum/cell_auto_master/proc/shouldProcess()

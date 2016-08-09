@@ -16,24 +16,35 @@
 		"get out",
 		"piss off")
 
+	var/area/target = null
+	var/area/list/target_areas = list(
+		/area/hallway/primary/fore_starboard,
+		/area/hallway/primary/aft_starboard,
+		/area/hallway/primary/aft_port,
+		/area/hallway/primary/fore_port,
+		/area/hallway/primary/central_fore,
+		/area/hallway/primary/aft
+	)
+
 /datum/contract/deface/New()
 	. = ..()
 	if(!.)	return
 
 	phrase = get_phrase()
+	target = pick(target_areas)
 
-	if(!phrase)
+	if(!target || !phrase)
 		qdel(src)
 		return
 
 	set_details()
 
 /datum/contract/deface/set_details()
-	desc = "[pick(list("We've a surprisingly serious contract for you", "There's an urgent task at hand"))]. Write \"[phrase]\" in the Central Primary Hallway with crayons."
-	informal_name = "Deface the central hallway with \"[phrase]\""
+	desc = "[pick(list("We've a surprisingly serious contract for you", "There's an urgent task at hand"))]. Write \"[phrase]\" in \the [target.name] with crayons."
+	informal_name = "Deface \the [target.name] by writing \"[phrase]\" with crayons"
 
 /datum/contract/deface/check_completion()
-	var/hallway = locate(/area/hallway/primary)
+	var/hallway = locate(target)
 
 	var/found_phrase = ""
 	var/atom/O = locate(/obj/effect/decal/cleanable/crayon) in hallway // so that we don't have to make an even bigger scope pyramid
@@ -42,7 +53,7 @@
 	for(var/obj/effect/decal/cleanable/crayon/L in hallway)
 		if(found_phrase == phrase)	break // we found it in the last loop!
 		var/list/namelist = text2list(L.name)
-		if(namelist.len > 1)	continue
+		if(namelist.len > 1)	continue // filtering out runes, grafitti
 
 		found_phrase = ""
 		found_phrase += L.name

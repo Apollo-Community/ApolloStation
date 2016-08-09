@@ -26,6 +26,13 @@
 		return 1
 	return 0
 
+/obj/machinery/computer/card/proc/canPermanentlyPromote( var/datum/job/job_datum )
+	var/datum/job/superior = job_master.GetJob( scan.assignment )
+
+	if( superior && ( job_datum.department_id in superior.dep_authority ))
+		return 1
+	return 0
+
 /obj/machinery/computer/card/proc/is_authenticated()
 	return scan ? check_access(scan) : 0
 
@@ -75,63 +82,73 @@
 
 /obj/machinery/computer/card/attackby( obj/O, mob/user)
 	var/obj/item/weapon/paper/form/F = O
-	if( F in due_papers )
-		if( F.isFilledOut() )
-			var/datum/character/C = due_papers[F]
+	if( istype( O, /obj/item/weapon/paper ))
+		if( F in due_papers )
+			if( F.isFilledOut() )
+				var/datum/character/C = due_papers[F]
 
-			if( istype( O, /obj/item/weapon/paper/form/command_recommendation ))
-				ping( "\The [src] pings, \"[C.name] has been recommended for additional command positions!\"" )
-				addToPaperworkRecord( user, C.unique_identifier,  F.info, "Command Recommendation", "Unclassified", "Employment Recommendation" )
-				var/obj/item/rcvdcopy
+				if( istype( O, /obj/item/weapon/paper/form/command_recommendation ))
+					ping( "\The [src] pings, \"[C.name] has been recommended for additional command positions!\"" )
+					addToPaperworkRecord( user, C.unique_identifier,  F.info, "Command Recommendation", "Unclassified", "Employment Recommendation" )
+					var/obj/item/rcvdcopy
 
-				rcvdcopy = copy(F)
-				rcvdcopy.loc = null //hopefully this shouldn't cause trouble
-				adminfaxes += rcvdcopy
+					rcvdcopy = copy(F)
+					rcvdcopy.loc = null //hopefully this shouldn't cause trouble
+					adminfaxes += rcvdcopy
 
-				src.message_admins( user, "CENTCOMM FAX", rcvdcopy, "#006100" )
-			else if( istype( O, /obj/item/weapon/paper/form/job ))
-				var/obj/item/weapon/paper/form/job/J = O
-				var/datum/job/job_datum
-				if( istype( J, /obj/item/weapon/paper/form/job/induct ))
-					C.SetDepartment( job_master.GetDepartmentByName( J.job ))
-					job_datum = C.department.getLowestPosition()
-					message_admins( "[usr] has inducted [C.name] into [C.department.name]", "CANON:" )
-				else if( istype( J, /obj/item/weapon/paper/form/job/termination ))
-					C.LoadDepartment( CIVILIAN )
-					job_datum = job_master.GetJob( "Assistant" )
-					message_admins( "[usr] has terminated [C.name] from [C.department.name]", "CANON:" )
-				else if( istype( J, /obj/item/weapon/paper/form/job/promotion ))
-					C.AddJob( J.job )
-					job_datum = job_master.GetJob( J.job )
-					if( job_datum.rank_succesion_level >= COMMAND_SUCCESSION_LEVEL )
-						message_admins( "[usr] has promoted [C.name] to [modify.rank]", "CANON:" )
-				else if( istype( J, /obj/item/weapon/paper/form/job/demotion ))
-					C.RemoveJob( J.job )
-					job_datum = C.department.getLowestPosition()
-					message_admins( "[usr] has demoted [C.name] from [modify.rank]", "CANON:" )
+					src.message_admins( user, "CENTCOMM FAX", rcvdcopy, "#006100" )
+				else if( istype( O, /obj/item/weapon/paper/form/job ))
+					var/obj/item/weapon/paper/form/job/J = O
+					var/datum/job/job_datum
+					if( istype( J, /obj/item/weapon/paper/form/job/induct ))
+						C.SetDepartment( job_master.GetDepartmentByName( J.job ))
+						job_datum = C.department.getLowestPosition()
+						message_admins( "[usr] has inducted [C.name] into [C.department.name]", "CANON:" )
+					else if( istype( J, /obj/item/weapon/paper/form/job/termination ))
+						C.LoadDepartment( CIVILIAN )
+						job_datum = job_master.GetJob( "Assistant" )
+						message_admins( "[usr] has terminated [C.name] from [C.department.name]", "CANON:" )
+					else if( istype( J, /obj/item/weapon/paper/form/job/promotion ))
+						job_datum = job_master.GetJob( J.job )
+
+						if( job_datum.rank_succesion_level < COMMAND_SUCCESSION_LEVEL )
+							C.AddJob( J.job )
+
+						if( job_datum.rank_succesion_level >= COMMAND_SUCCESSION_LEVEL ) // Only admins can add head positions
+							message_admins( "[usr] has promoted [C.name] to [modify.rank]", "CANON:" )
+					else if( istype( J, /obj/item/weapon/paper/form/job/demotion ))
+						C.RemoveJob( J.job )
+						job_datum = C.department.getLowestPosition()
+						message_admins( "[usr] has demoted [C.name] from [modify.rank]", "CANON:" )
+					else
+						buzz( "\The [src] buzzes, \"This job form is invalid!\"" )
+						return
+
+					if( !istype( job_datum ))
+						buzz( "\The [src] buzzes, \"The paper has an invalid job written on it.\"" )
+						return
+
+					modify.access = job_datum.get_access()
+					modify.assignment = job_datum.title
+					modify.rank = job_datum.title
+
+					modify.generateName()
+					callHook("reassign_employee", list(modify))
+
+					ping( "\The [src] pings, \"[C.name] has been [J.job_verb] [J.job]!\"" )
+					addToPaperworkRecord( user, C.unique_identifier, J.info, "[capitalize( J.job_verb )] [J.job]", "Unclassified", "Employment" )
 				else
-					return
+					buzz( "\The [src] buzzes, \"Unknown form!\"" )
+				due_papers -= F
+				ui_interact(user)
+				return
+			else
+				buzz( "\The [src] buzzes, \"This form was improperly filled out. Destroy the form and try again.\"" )
 
-				if( !istype( job_datum ))
-					return
-
-				modify.access = job_datum.get_access()
-				modify.assignment = job_datum.title
-				modify.rank = job_datum.title
-
-				modify.generateName()
-				callHook("reassign_employee", list(modify))
-
-				ping( "\The [src] pings, \"[C.name] has been [J.job_verb] [J.job]!\"" )
-				addToPaperworkRecord( user, C.unique_identifier, J.info, "[capitalize( J.job_verb )] [J.job]", "Unclassified", "Employment" )
-
-			due_papers -= F
-			ui_interact(user)
-			return
+				due_papers -= F
+				return
 		else
-			buzz( "\The [src] buzzes, \"This form was improperly filled out. Destroy the form and try again.\"" )
-
-			due_papers -= F
+			buzz( "\The [src] buzzes, \"This paper isn't registered to this computer.\"" )
 			return
 
 	if( !istype( O, /obj/item/weapon/card/id ))
@@ -419,7 +436,7 @@
 		if ("terminate")
 /*			if (is_authenticated() && is_centcom())
 				if( !modifyingSubordinate() )
-					buzz( "\The [src] buzzes, \"Not authorized to modify this card!\"" )
+				buzz( "\The [src] buzzes, \"Not authorized to modify this card!\"" )
 
 				ping( "\The [src] pings, \"[modify.registered_name] has been fired from NanoTrasen.\"")
 
@@ -555,15 +572,26 @@
 				return
 
 			var/job_name = href_list["promote_role"]
+			var/datum/job/job_datum = job_master.GetJob( job_name )
 
-			var/list/names = list( modify.registered_name, scan.registered_name )
+			if( !canPermanentlyPromote( job_datum ) )
+				if( !istype( job_datum ))
+					return
 
-			var/obj/item/weapon/paper/form/job/promotion/P = new( print_date( universe.date ), job_name, department_name( modify ))
-			P.required_signatures = names
-			due_papers[P] = modify.mob.character
-			print( P )
-			spawn( 45 )
-				ping( "\The [src] pings, \"Please fill out this form and return it to this console when complete.\"" )
+				modify.access = job_datum.get_access()
+				modify.assignment = job_datum.title
+				modify.rank = job_datum.title
+
+				ping( "\The [src] pings, \"[modify.mob.character] has been temporarily promoted to the position of [job_name].\"" )
+			else
+				var/list/names = list( modify.registered_name, scan.registered_name )
+
+				var/obj/item/weapon/paper/form/job/promotion/P = new( print_date( universe.date ), job_name, department_name( modify ))
+				P.required_signatures = names
+				due_papers[P] = modify.mob.character
+				print( P )
+				spawn( 45 )
+					ping( "\The [src] pings, \"Please fill out this form and return it to this console when complete.\"" )
 
 		if( "recommend" )
 			if( !istype( scan.mob ))

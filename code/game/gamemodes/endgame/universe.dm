@@ -17,7 +17,7 @@
 	if( !day || day < 1 )
 		day = 1
 
-	universe.date = list( year, month, day )
+	universe.date = list( "year" = year, "month" = month, "day" = day )
 
  // Default shit.
 /datum/universal_state
@@ -38,19 +38,44 @@
 	// Simulates stuff getting broken due to molecular bonds decaying.
 	var/decay_rate = 0
 
+	var/round_number = 0 // How many days has it been since Jan 1, 2560?
+
 /datum/universal_state/proc/load_date()
 	var/max_attempts = 5
 
-	for( var/attempts = 1, attempts < max_attempts, attempts++ )
-		loadFromDB()
+	for( var/attempts = 1, attempts <= max_attempts, attempts++ )
+		date = loadFromDB()
 
-		if( date && date.len == 3 && date != list( START_YEAR, 1, 1 ))
-			date = progessDate( date )
-			return
+		var/message = "Loaded date: "
 
-		date = list( START_YEAR, 1, 1 )
+		for( var/i in date )
+			message += "[i] "
 
-	error( "Failed to load the universe date after [max_attempts] attempts!" )
+		log_debug( "[message]" )
+
+		if( !date )
+			log_debug( "Loaded date does not exist!" )
+			continue
+
+		if( date.len != 3 )
+			log_debug( "Loaded date was [date.len] in length!" )
+			continue
+
+		var/days = daysTilDate( list( "year" = START_YEAR, "month" = 1, "day" = 1 ), date )
+
+		if( days <= 0 )
+			log_debug( "Loaded date was [days] days behind the default date!" )
+			continue
+
+		round_number = days
+		log_debug( "Loaded date: [print_date( date )]!" )
+		date = progessDate( date )
+		log_debug( "Date progressed: [print_date( date )]!" )
+		return
+
+	date = list( "year" = START_YEAR, "month" = 1, "day" = 1 )
+
+	log_debug( "Failed to load the universe date after [max_attempts] attempts!" )
 
 // Returns the universe datetime in format "YYYY-MM-DD HH:MM:SS"
 /datum/universal_state/proc/getDateTime()
@@ -62,7 +87,7 @@
 	return timestamp
 
 /datum/universal_state/proc/getYear()
-	if( !date || date.len < 3 )
+	if( !date || date.len != 3 )
 		return START_YEAR
 
 	return date[1]
@@ -70,11 +95,11 @@
 /datum/universal_state/proc/saveToDB()
 	establish_db_connection()
 	if( !dbcon.IsConnected() )
-		error( "Could not save the universe date!" )
+		log_debug( "Could not save the universe date!" )
 		return
 
-	if( date == list( START_YEAR, 1, 1 ))
-		error( "Didn't save because universe date was reset!" )
+	if( daysTilDate( date, loadFromDB() ) >= 0 ) // If our database date is ahead of IC date
+		log_debug( "Didn't save because universe date was reset!" )
 		return
 
 	var/sql_name = sql_sanitize_text( name )
@@ -91,7 +116,15 @@
 		if(istext(sql_id))
 			sql_id = text2num(sql_id)
 		if(!isnum(sql_id))
+			log_debug( "SQL ID is invalid!" )
 			return
+
+	var/message = "Saved date: "
+
+	for( var/i in date )
+		message += "[date[i]] "
+
+	log_debug( "[message]" )
 
 	if(sql_id)
 		var/DBQuery/query_update
@@ -107,7 +140,10 @@
 /datum/universal_state/proc/loadFromDB( var/univ_name = "C-137" )
 	establish_db_connection()
 	if(!dbcon.IsConnected())
+		log_debug( "Database is not connected yet!" )
 		return
+
+	var/list/D = list( "year" = START_YEAR, "month" = 1, "day" = 1 )
 
 	var/sql_name = sql_sanitize_text( univ_name )
 
@@ -115,14 +151,14 @@
 	query.Execute()
 
 	if( !query.NextRow() )
-		date = list( START_YEAR, 1, 1 )
-		name = univ_name
-		error( "Could not read the universe date!" )
-		return
+		log_debug( "Could not read the universe date!" )
+		return D
 
 	var/list/date_text = params2list( html_decode( query.item[1] ))
-	for( var/i = 1, i <= date.len, i++ )
-		date[i] = text2num( date_text[i] )
+	for( var/i in date_text )
+		D[i] = text2num( date_text[i] )
+
+	return D
 
 // Actually decay the turf.
 /datum/universal_state/proc/DecayTurf(var/turf/T)

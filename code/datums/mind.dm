@@ -130,6 +130,22 @@ datum/mind
 		. += "<hr>"
 		. += "</td></tr>"
 
+		// ANTAG WEIGHTS
+		if(current)
+			var/client/C = current.client
+
+			. += "<tr><td><table class='outline'>"
+			. += "<tr><th align='left' style='padding-left: 6px'><b>Antagonist Weights</b></th></tr>"
+
+			. += "<tr><td><table>"
+			. += "<tr>"
+			. += "<td>No antag weight: [C.antag_weights["no_antag"]]</td>"
+			. += "<td>Static weight: <a href='byond://?src=\ref[src];command_weight=static_weight'>[C.antag_weights["static"]]</a></td>"
+			. += "</tr>"
+			. += "</table></td></tr>"
+
+			. += "</table></td></tr>"
+
 		. += "<tr><td><table class='outline'>"
 		. += "<tr><th align='left' style='padding-left: 6px'><b>New Antag System</b></th></tr>"
 
@@ -307,6 +323,17 @@ datum/mind
 		if( !check_rights( R_ADMIN ))	return
 
 		// NEW ANTAG SYSTEM STUFF
+
+		// ANTAG WEIGHTS
+		if( href_list["command_weight"] )
+			// only static weight atm so no switchy
+			if( !current )	return
+
+			var/client/C = current.client
+			var/static_weight = input( "Input static weight", "Edit static weight", C.antag_weights["static"] ) as num
+
+			C.antag_weights["static"] = static_weight
+			C.saveAntagWeights()
 
 		// GENERAL COMMANDS
 		if( href_list["command"] )

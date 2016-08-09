@@ -20,6 +20,8 @@
 
 	rank_succesion_level = COMMAND_SUCCESSION_LEVEL
 
+	dep_authority = list( SECURITY )
+
 /datum/job/hos/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
 	switch(H.character.backpack)
@@ -33,6 +35,7 @@
 	H.equip_to_slot_or_qdel(new /obj/item/clothing/gloves/black(H), slot_gloves)
 	H.equip_to_slot_or_qdel(new /obj/item/clothing/glasses/sunglasses/sechud(H), slot_glasses)
 	H.equip_to_slot_or_qdel(new /obj/item/weapon/gun/energy/gun(H), slot_s_store)
+	H.equip_to_slot_or_qdel(new /obj/item/device/flash(H), slot_s_store)
 	if(H.character.backpack == 1)
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/handcuffs(H), slot_l_store)

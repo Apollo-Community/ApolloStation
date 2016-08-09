@@ -7,6 +7,9 @@
 	var/list/minimal_access = list()		//Useful for servers which prefer to only have access given to the places a job absolutely needs (Larger server population)
 	var/list/access = list()				//Useful for servers which either have fewer players, so each person needs to fill more than one role, or servers which like to give more access, so players can't hide forever in their super secure departments (I'm looking at you, chemistry!)
 
+	// Departments this job can promote people in, this pretty is only for heads
+	var/list/dep_authority = list()
+
 	//Bitflags for the job
 	var/flag = 0
 	var/department_id = 0

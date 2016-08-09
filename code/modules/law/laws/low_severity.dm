@@ -53,7 +53,7 @@
 
 /datum/law/low_severity/public_disturbance
 	name = "Public Disturbance"
-	desc = "A public disturbance is where an individual presents an unnecessary nuisance to members of the crew including excessive radio usage for private affairs."
+	desc = "Where an individual presents an unnecessary nuisance to members of the crew including excessive radio usage for private affairs."
 
 	min_brig_time = 3
 	max_brig_time = 5
@@ -73,7 +73,7 @@
 
 /datum/law/low_severity/vandalism
 	name = "Vandalism"
-	desc = "To deface or modify any area of the station without an Engineer or highers written permission"
+	desc = "To deface or modify any area of the station without an Engineer or superior's written permission"
 
 	min_brig_time = 2
 	max_brig_time = 10
@@ -91,9 +91,19 @@
 	min_fine = 100
 	max_fine = 200
 
+/datum/law/low_severity/resisting_arrest
+	name = "Resisting Arrest"
+	desc = "Where an individual attempts to prevent a lawful arrest by a Security Officer."
+
+	min_brig_time = 10
+	max_brig_time = 30
+
+	min_fine = 200
+	max_fine = 600
+
 /datum/law/low_severity/tampering_systems
 	name = "Tampering Systems"
-	desc = "Where an unauthorised individual alters any non critical system in order to alter functionality."
+	desc = "Where an unauthorized individual alters any non critical system in order to alter functionality."
 
 	min_brig_time = 10
 	max_brig_time = 20
@@ -130,3 +140,13 @@
 
 	min_fine = 300
 	max_fine = 1000
+
+/datum/law/low_severity/slander
+	name = "Slander"
+	desc = "To damage the public image of another crewmember or organization by spreading fictitious information about them."
+
+	min_brig_time = 5
+	max_brig_time = 20
+
+	min_fine = 50
+	max_fine = 100

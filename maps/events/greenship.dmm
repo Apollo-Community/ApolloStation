@@ -1,0 +1,86 @@
+"aa" = (/turf/space,/area/space)
+"ab" = (/turf/unsimulated/wall,/area/generic{requires_power = 0})
+"ac" = (/turf/unsimulated/wall/fakeglass{tag = "icon-g_wall"; icon_state = "g_wall"},/area/generic{requires_power = 0})
+"ad" = (/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"ae" = (/obj/machinery/computer/shuttle{tag = "icon-comm_logs"; name = "Ship Computer"; icon_state = "comm_logs"},/turf/simulated/floor/bluegrid{icon_state = "bcircuitoff"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+"af" = (/obj/machinery/turret{lasers = 1},/turf/simulated/floor/bluegrid{icon_state = "bcircuitoff"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+"ag" = (/turf/simulated/floor/bluegrid{icon_state = "bcircuitoff"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+"ah" = (/obj/structure/bed/chair/shuttle{tag = "icon-chair3 (NORTH)"; name = "bridge chair"; icon_state = "chair3"; dir = 1},/turf/simulated/floor/bluegrid{icon_state = "bcircuitoff"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+"ai" = (/obj/machinery/turret{tag = "icon-grey_target_prism (EAST)"; icon_state = "grey_target_prism"; dir = 4; lasers = 1},/turf/simulated/floor/bluegrid{icon_state = "bcircuitoff"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+"aj" = (/obj/machinery/door/blast/regular{density = 0; icon_state = "pdoor0"; id = ""; name = "Blast Doors"; opacity = 0},/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"ak" = (/obj/machinery/door/blast/regular/invincible,/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"al" = (/obj/item/device/flashlight/slime,/obj/structure/table/glass,/turf/simulated/floor/bluegrid{icon_state = "bcircuitoff"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+"am" = (/obj/item/slime_extract/green,/obj/structure/table/glass,/turf/simulated/floor/bluegrid{icon_state = "bcircuitoff"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+"an" = (/obj/structure/table/glass,/obj/item/weapon/gun/energy/noisecannon,/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"ao" = (/obj/structure/bed/chair/shuttle{name = "ship chair"},/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"ap" = (/obj/machinery/door/blast/regular{density = 0; icon_state = "pdoor0"; id = ""; name = "Blast Doors"; opacity = 0},/turf/simulated/floor/bluegrid{icon_state = "bcircuitoff"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+"aq" = (/mob/living/simple_animal/hostile/hivebot/strong,/turf/simulated/floor/bluegrid{icon_state = "bcircuitoff"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+"ar" = (/obj/machinery/door/blast/regular/invincible,/turf/simulated/floor/bluegrid{icon_state = "bcircuitoff"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+"as" = (/obj/structure/bed/chair/shuttle{dir = 4; icon_state = "chair3"; name = "bridge chair"; tag = "icon-chair3 (EAST)"},/turf/simulated/floor/bluegrid{icon_state = "bcircuitoff"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+"at" = (/mob/living/simple_animal/hostile/hivebot/strong,/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"au" = (/obj/machinery/power/bluespace_inducer,/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"av" = (/obj/machinery/gravity_generator,/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"aw" = (/obj/machinery/crystal,/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"ax" = (/obj/structure/table/glass,/obj/item/weapon/reagent_containers/food/snacks/jellyburger/slime,/turf/simulated/floor/bluegrid{icon_state = "bcircuitoff"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+"ay" = (/obj/structure/table/glass,/obj/item/weapon/reagent_containers/food/snacks/jellyburger/slime,/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"az" = (/obj/structure/table/glass,/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"aA" = (/obj/structure/table/glass,/obj/item/weapon/reagent_containers/food/snacks/jellysandwich/slime,/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"aB" = (/obj/machinery/power/fractal_reactor,/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"aC" = (/obj/machinery/replicator,/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"aD" = (/obj/structure/bed/chair/shuttle{dir = 1; icon_state = "chair3"; name = "ship chair"; tag = "icon-chair3 (NORTH)"},/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"aE" = (/obj/machinery/turret{tag = "icon-grey_target_prism (NORTH)"; icon_state = "grey_target_prism"; dir = 1; lasers = 1},/turf/simulated/floor/bluegrid{icon_state = "bcircuitoff"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+"aF" = (/obj/machinery/turretid,/obj/structure/table/glass,/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"aG" = (/obj/machinery/replicator,/turf/simulated/floor/bluegrid{icon_state = "bcircuitoff"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+"aH" = (/obj/structure/table/glass,/obj/item/weapon/reagent_containers/food/snacks/jellysandwich/slime,/turf/simulated/floor/bluegrid{icon_state = "bcircuitoff"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+"aI" = (/obj/structure/table/glass,/obj/item/weapon/reagent_containers/glass/beaker/slime,/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"aJ" = (/obj/structure/table/glass,/obj/machinery/bunsen_burner,/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"aK" = (/obj/structure/table/glass,/obj/item/weapon/scalpel/manager,/turf/simulated/floor/bluegrid{icon_state = "bcircuitoff"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+"aL" = (/obj/machinery/optable,/turf/simulated/floor/bluegrid{icon_state = "bcircuitoff"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+"aM" = (/obj/machinery/computer/operating,/turf/simulated/floor/bluegrid{icon_state = "bcircuitoff"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+"aN" = (/obj/machinery/auto_cloner,/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"aO" = (/obj/structure/shuttle/engine/heater,/turf/unsimulated/wall,/area/generic{requires_power = 0})
+"aP" = (/obj/machinery/atmospherics/unary/cryo_cell,/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"aQ" = (/obj/machinery/nuclearbomb,/turf/simulated/floor/bluegrid{icon_state = "bcircuitoff"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+"aR" = (/obj/structure/shuttle/engine/propulsion,/turf/space,/area/generic{requires_power = 0})
+"aS" = (/obj/structure/sink{dir = 4; icon_state = "sink"; pixel_x = 11; pixel_y = 0},/turf/simulated/floor/bluegrid{icon_state = "bcircuitoff"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+"aT" = (/turf/simulated/floor/plating/lava{color = "000000"; icon_state = "black"; name = "bottomless pit"; tag = "icon-black"},/area/generic{requires_power = 0})
+"aU" = (/obj/machinery/sleeper{tag = "icon-body_scanner_0-r"; icon_state = "body_scanner_0-r"},/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"aV" = (/obj/machinery/sleeper{tag = "icon-body_scanner_0"; icon_state = "body_scanner_0"},/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"aW" = (/obj/machinery/power/smes/magical{icon_state = "teg"; name = "advanced power unit"; tag = "icon-teg"},/turf/simulated/floor/greengrid,/area/generic{requires_power = 0})
+"aX" = (/obj/machinery/power/smes/magical{icon_state = "teg"; name = "advanced power unit"; tag = "icon-teg"},/turf/simulated/floor/bluegrid{icon_state = "bcircuitoff"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+"aY" = (/obj/machinery/door/blast/regular/invincible,/turf/simulated/floor/bluegrid{icon_state = "bproof"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/generic{requires_power = 0})
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababacacacacacacacababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababacacacacacababadadadaeaeaeadadadababacacacacacababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaababababababababadadafagafadadabadadagagahagagadadabadadadadadadadababababababababaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaabababababababaiadadadadadajadadadadadadadakadadagagagagagagaeabadalagamamamadababananananababababababababaaaaaaaaaa
+aaaaabababadaoaoaoagabagadadagagagapagaqagagagagagaragagagagagagagasaeabadalagamamamadabanadatadadadauauauavawawababababaaaa
+aaabababaxadayazaAagabagadadagadadajadadadadadadadakadadagadagadagagaeabadalagagagagadabanadadadadatadadadaBawawaCababababaa
+ababababaxadaDaDaDagabaiadadagadadabadadaEagaEadadabadadadadahadadadaFabadadagadadadadabanadagagagagagagaqagagagaGababababab
+ababababaHagagagagagabababakarakabababababababababababababababababababababakarakabababababakarakababacacacacacacabababababab
+ababababaHadaoaoaoagakadadadagadaIaJaIabadadadadadadabadagafagafagadabadadadagadadabaKaLaMadagadakaNadaNadaNadaNadababababab
+aaabaOaOabadaAazayagaragagagagadadaDadajaPadaPadaPadakadadadadadadadakadadaPagaPadajadagadadagagaragagagaQagagagagabaOaOabaa
+aaaaaRaRababaDaDaDagakadadadagagagagagapagagagagagagaragagagagagagagaragagagagagagapagagagagagadakaNadaNadaNadaNababaRaRaaaa
+aaaaaaaaaaabaOaOaOaOaOabadadadadadaoadajadadadadadagakadadadagadadadakagadadadadadajadagadadagaSabaOaOaOaOaOaOaOabaaaaaaaaaa
+aaaaaaaaaaaaaRaRaRaRaRabaOaOaOabaJazaIabadadadadadagabababakarakabababagadadadadadabaKaLaMabaOaOabaRaRaRaRaRaRaRaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaRaRaRabaOaOaOabaPadaPadaPagabaTaTadagadaTaTabagaPadaPadaPabaOaOaOabaRaRaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaRabababacacabapabaTaTadagadaTaTabapabacacabababaRaRaRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababadagagagabaTaTadagadaTaTabagagagadabababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababaUagagaVabaTaTadagadaTaTabaWagagaWababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabadagagadabaTaTadagadaTaTabadagagadabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaUagagaVabaTaTadagadaTaTabaWagagaWabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabadagagadabaTaTadagadaTaTabadagagadabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaUagagaVabaTaTadagadaTaTabaWagagaWabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabadagagadabaTaTadagadaTaTabadagagadabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaUagagaVabaTaTadagadaTaTabaWagagaWabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabadagagadabaTaTadagadaTaTabadagaqadabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaUagagaVabababadagadabababaWagagaWabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababadadadabababajapajabababadadadababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaOaOaOaOababadadagadadababaOaOaOaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaRaRaRaRabadadagagagadadabaRaRaRaRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabadagagaXagagadabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabadadagagagadadabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababadadagadadababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababakaYakababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

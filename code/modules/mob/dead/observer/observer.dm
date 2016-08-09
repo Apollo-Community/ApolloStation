@@ -244,6 +244,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			return
 	mind.current.ajourn=0
 	mind.current.key = key
+	if(mind.current.is_ventcrawling) // ventcrawl hud fix for reentering corpses (aghost mostly)
+		mind.current.hud_used.ventcrawl_hud()
 	if(!admin_ghosted)
 		announce_ghost_joinleave(mind, 0, "They now occupy their body again.")
 	return 1
@@ -289,27 +291,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		M.antagHUD = 1
 		src << "<span class='notice'><B>AntagHUD Enabled</B></span>"
 
-/mob/dead/observer/proc/dead_tele(A in overmap.ghostteleportlocs)
+/mob/dead/observer/proc/dead_tele(var/area/A in return_sorted_areas())
 	set category = "Ghost"
 	set name = "Teleport"
 	set desc= "Teleport to a location"
+
 	if(!istype(usr, /mob/dead/observer))
 		usr << "Not when you're not dead!"
 		return
 	usr.verbs -= /mob/dead/observer/proc/dead_tele
-	spawn(30)
-		usr.verbs += /mob/dead/observer/proc/dead_tele
-	var/area/thearea = overmap.ghostteleportlocs[A]
-	if(!thearea)	return
+	spawn(30)		usr.verbs += /mob/dead/observer/proc/dead_tele
 
-	var/list/L = list()
-	for(var/turf/T in get_area_turfs(thearea.type))
-		L+=T
-
-	if(!L || !L.len)
-		usr << "No area available."
-
-	usr.loc = pick(L)
+	usr.loc = pick(get_area_turfs(A))
 	following = null
 
 /mob/dead/observer/verb/follow(input in getmobs())
@@ -327,6 +320,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(following && following == target)
 			return
 		following = target
+
+		// follow the eye if we're following the AI! The core isn't gonna move a lot
+		if(istype(target, /mob/living/silicon/ai))
+			var/mob/living/silicon/ai/A = target
+			following = A.eyeobj
 		src << "<span class='notice'>Now following [target]</span>"
 		spawn(0)
 			while(target && following == target && client)

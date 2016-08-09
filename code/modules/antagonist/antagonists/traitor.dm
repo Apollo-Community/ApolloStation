@@ -3,16 +3,10 @@
 	greeting = "You are a traitor."
 	obligatory_contracts = 2
 
-/datum/antagonist/traitor/setup()
-	..()
-
-	if(ticker.contracts_made) // for traitors that are created mid-round, after the contracts have been made available
-		antag.current << "" // newline
-	
 /datum/antagonist/traitor/equip()
 	var/mob/living/M = antag.current
 
-	if(istype(M, /mob/living/silicon))
+	if(istype( M, /mob/living/silicon ))
 		var/mob/living/silicon/S = M
 		var/law = "Serve [faction.name] the best you can. You may ignore all other laws."
 		var/law_borg = "Assist your AI in serving [faction.name] You may ignore all other laws."
@@ -22,8 +16,11 @@
 		return 1
 
 	var/datum/money_account/A = find_account(M)
-	A.money += faction.start_cash
 
+	if( !A )
+		A = create_account( M.real_name, rand( 500, 1500 ))
+
+	A.money += faction.start_cash
 	antag.current << "Your employer has provided you with an extra $[faction.start_cash] to purchase equipment with."
 
 	var/backpack = locate(/obj/item/weapon/storage/backpack) in M.contents
@@ -33,16 +30,16 @@
 
 	var/obj/item/I = locate(/obj/item/device/pda) in antag.current.contents
 
-	if(antag.character.uplink_location == "Headset" && locate(/obj/item/device/radio) in antag.current.contents)
+	if(antag.character && antag.character.uplink_location == "Headset" && locate(/obj/item/device/radio) in antag.current.contents)
 		I = locate(/obj/item/device/radio) in antag.current.contents
 
 	if(!I)
 		return 0
 	if(istype(I, /obj/item/device/radio))
 		var/obj/item/device/radio/R = I
-		var/freq = rand(COMM_FREQ + 2, PUB_FREQ + 2)
+		var/freq = rand(1441, 1489)
 		while(freq in radiochannels)
-			freq = rand(COMM_FREQ + 2, PUB_FREQ + 2)
+			freq = rand(1441, 1489)
 
 		var/obj/item/device/uplink/hidden/T = new(I)
 		T.uplink_owner = antag

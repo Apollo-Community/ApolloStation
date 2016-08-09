@@ -153,18 +153,18 @@
 //Start growing a human clone in the pod!
 /obj/machinery/clonepod/proc/growclone(var/datum/dna2/record/R)
 	if(mess || attempting)
-		world << "messy or already attempting"
+		//world << "messy or already attempting"
 		return 0
 	var/datum/mind/clonemind = locate(R.mind)
 	if(!istype(clonemind,/datum/mind))	//not a mind
-		world << "no clone mind"
+	//	world << "no clone mind"
 		return 0
 	if( clonemind.current && clonemind.current.stat != DEAD )	//mind is associated with a non-dead body
-		world << "body not dead"
+	//	world << "body not dead"
 		return 0
 	if( clonemind.active )	//somebody is using that mind
 		if( ckey(clonemind.key)!=R.ckey )
-			world << "somebody using that mind"
+		//	world << "somebody using that mind"
 			return 0
 	else
 		for(var/mob/dead/observer/G in player_list)
@@ -202,8 +202,8 @@
 
 	clonemind.transfer_to(H)
 	H.ckey = R.ckey
-	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"
-	H << "<span class='notice'><b>You are now suffering from Cloning Memory Disorder. You do not remember dying, and you cannot recall any memories up to 30 minutes before your death.</b></span>"
+	H << "<span class='notice'>Consciousness slowly creeps over you as your body regenerates.<br><i>So this is what cloning feels like?</i></span>"
+	H << "<span class='ooc_notice'>You are now suffering from Cloning Memory Disorder. You do not remember dying, and you cannot recall any memories up to 30 minutes before your death.</span>"
 	statistics.increase_stat("clones")
 
 	// -- Mode/mind specific stuff goes here

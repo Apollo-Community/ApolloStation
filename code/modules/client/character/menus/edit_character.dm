@@ -44,10 +44,10 @@
 
 	. += "<tr>"
 	. += "<th>Age:</th>"
-	if( new_character )
-		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=age'>[age]</a></td>"
-	else
-		. += "<td>[age]</td>"
+	//if( new_character )
+	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=age'>[age]</a></td>"
+	//else
+	//	. += "<td>[age]</td>"
 	. += "</tr>"
 
 	. += "<tr>"
@@ -391,17 +391,6 @@
 			var/new_backpack = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backpacklist
 			if(new_backpack)
 				backpack = backpacklist.Find(new_backpack)
-
-
-		if("disabilities")
-			return
-			/*if(text2num(href_list["disabilities"]) >= -1)
-				if(text2num(href_list["disabilities"]) >= 0)
-					disabilities ^= (1<<text2num(href_list["disabilities"])) //MAGIC
-				SetDisabilities(user)
-				return
-			else
-				user << browse(null, "window=disabil")*/
 
 		if("organs_adjust")
 			var/choice = input(user, "Which type do you want to change?") as null|anything in list("Limb","Organ")

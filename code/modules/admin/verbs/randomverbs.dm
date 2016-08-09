@@ -942,8 +942,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	for(var/atom/A in world)
 		if(istype(A,type_path))
 			src.Move(A)
-			switch(alert("Is this the correct object?","Object found!","No","Yes"))
+			switch(alert("Is this the correct object?","Object found!","No","Yes", "View Vars"))
 				if("Yes")	return
+				if("View Vars") debug_variables(A)
 
 	src << "<span class='alert'>No more instances of <b>[type_text]</b> exist on the current map</span>"
 

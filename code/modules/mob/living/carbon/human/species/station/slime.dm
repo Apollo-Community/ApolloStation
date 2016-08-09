@@ -8,7 +8,7 @@
 
 	language = "Sol Common" //todo?
 	unarmed_types = list(/datum/unarmed_attack/slime_glomp)
-	flags = IS_RESTRICTED | NO_BLOOD | NO_SCAN | NO_SLIP | NO_BREATHE
+	flags = NO_BLOOD | NO_SCAN | NO_SLIP | NO_BREATHE
 	siemens_coefficient = 3
 	darksight = 3
 
@@ -28,4 +28,6 @@
 /datum/species/slime/handle_death(var/mob/living/carbon/human/H)
 	spawn(1)
 		if(H)
+			H.character.species = "Human" // CC don't have slime DNA on hand so you turn back into a human.
+			H << "<span class='ooc_notice'>Since you died as a slime-person, your character will be re-cloned as a normal human the next time you play as them.</span>"
 			H.gib()

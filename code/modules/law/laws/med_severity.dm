@@ -41,19 +41,6 @@
 	min_fine = 800
 	max_fine = 1200
 
-/datum/law/med_severity/resisting_arrest
-	name = "Resisting Arrest"
-	desc = "Where an individual attempts to prevent a lawful arrest by a Security Officer."
-
-	min_brig_time = 60
-	max_brig_time = 60
-
-	min_prison_time = 1
-	max_prison_time = 2
-
-	min_fine = 800
-	max_fine = 1200
-
 /datum/law/med_severity/weapon_possession
 	name = "Possession of a Weapon"
 	desc = "Where an individual unlawfully carries an item designed to inflict injury, to cause damage, or to incapacitate."
@@ -134,13 +121,13 @@
 
 /datum/law/med_severity/escape_custody
 	name = "Escaping Custody"
-	desc = "Where a convicted individual attempts to escape their location of imprisonment."
+	desc = "Where a convicted individual attempts or succeeds with escaping their location of imprisonment."
 
 	min_brig_time = 40
 	max_brig_time = 60
 
 	min_prison_time = 0
-	max_prison_time = 1
+	max_prison_time = 2
 
 	min_fine = 300
 	max_fine = 800
@@ -160,7 +147,7 @@
 
 /datum/law/med_severity/tampering_crit_systems
 	name = "Tampering Critical Systems"
-	desc = "Where an unauthorised individual alters any critical system in order to alter functionality."
+	desc = "Where an unauthorized individual alters any critical system in order to alter functionality."
 
 	min_brig_time = 60
 	max_brig_time = 60

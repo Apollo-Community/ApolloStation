@@ -62,7 +62,7 @@
 			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/clerical, 3000, "Morphic Clerical Kit", "CK"),
 			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/space, 3000, "Space Suit", "SS"),
 			new/datum/uplink_item(/obj/item/clothing/glasses/thermal/syndi, 3000, "Thermal Imaging Glasses", "TM"),
-			new/datum/uplink_item(/obj/item/device/encryptionkey/binary, 3000, "Binary Translator Key", "BT"),
+			new/datum/uplink_item(/obj/item/device/encryptionkey/binary, 3000, "Binary Translator Key (Use :f to communicate with silicons)", "BT"),
 			new/datum/uplink_item(/obj/item/weapon/aiModule/syndicate, 7000, "Hacked AI Upload Module", "AI"),
 			new/datum/uplink_item(/obj/item/weapon/plastique, 2000, "C-4 (Destroys walls)", "C4"),
 			new/datum/uplink_item(/obj/item/device/powersink, 5000, "Powersink (DANGER!)", "PS",),
@@ -279,13 +279,11 @@
 /datum/game_mode/proc/persistant_antag_game_end()
 	for( var/datum/mind/traitor in persistant_traitors )
 		var/datum/antagonist/antag = traitor.antagonist
-		if( antag )	continue // admin removed them or something, idk
-
-		// antag got caught check goes here
+		if( !antag )	continue // admin removed them or something, idk
 
 		var/notoriety = traitor.original_character.antag_data["notoriety"]
 		var/contract_requirement = round( ( notoriety + 1 ) / 2 )
-		if( antag.completed_contracts.len > contract_requirement )
+		if( antag.completed_contracts.len >= contract_requirement )
 			notoriety++
 			traitor.current << "<span class='notice'>You have gained notoriety for completing [antag.completed_contracts.len > contract_requirement ? "more than" : ""] [contract_requirement] contracts!</span>"
 		else if( antag.completed_contracts.len < ( notoriety - contract_requirement ))
@@ -473,39 +471,36 @@
 ///////////////////////////////////
 //Picks some antags for the round//
 ///////////////////////////////////
-/datum/game_mode/proc/pick_antagonists(var/role, var/num_antags)
+/datum/game_mode/proc/pick_antagonists(var/role, var/num_antags = required_enemies)
+	if(!num_antags)	return null
+
 	var/list/possible_antags = get_players_for_role(role)
+	log_debug("(pick_antagonists) Amount of possible antags: [possible_antags.len]")
 	var/list/chosen_antags = list()
 	var/list/clients = list()
 
-	// track the top weight and discard candidates below this top weight
-	// antags are then picked from a list of players with that weight
-	var/top_weight
+	// assign players an increased probability of being picked from a candidate list based on their commendations and amount of rounds they haven't played an antagonist
 	for( var/datum/mind/M in possible_antags )
-		if( M.antagonist || ( M.assigned_role in restricted_jobs ))
-			possible_antags -= M
-			continue
-
 		var/weight = 0
 		var/client/C = M.current.client
 		if( !C )
-			possible_antags -= M
+			possible_antags.Remove(M)
 			continue
 		clients += C
 
 		// antag token/commendation weight
 		if( !C.character_tokens["Antagonist"] )
 			C.character_tokens["Antagonist"] = 0
-		weight += ( C.character_tokens["Antagonist"] * 2 )
+		weight += min( (C.character_tokens["Antagonist"] * 10), 1 ) // capped at 1 weight "point"
 
 		// last played as antag weight
-		weight += C.no_antag_weight
-		C.no_antag_weight++ // set to 0 for chosen antags later
+		weight += C.antag_weights["no_antag"]
+		C.antag_weights["no_antag"]++ // set to 0 for chosen antags later
 
-		if(!top_weight || weight >= top_weight)
-			top_weight = weight
-		else
-			possible_antags -= M
+		// static (admin-defined) weight
+		weight += C.antag_weights["static"]
+
+		possible_antags[M] = max(weight, 0)
 
 	if( !possible_antags.len )
 		return chosen_antags
@@ -514,23 +509,19 @@
 		if( !possible_antags.len )
 			break
 
-		var/datum/mind/antag = pick(possible_antags)
-		var/client/C = antag.current.client
-		if( !C )
-			possible_antags -= antag
-			continue
+		var/datum/mind/antag = pick_weighted(possible_antags)
 
-		C.no_antag_weight = 0
+		var/client/C = antag.current.client
+		C.antag_weights["no_antag"] = 0
 
 		chosen_antags += antag
-		possible_antags -= antag
+		possible_antags.Remove(antag)
 
 	// there has to be a better way to do this
 	for( var/client/C in clients )
 		C.saveAntagWeights()
 
 	return chosen_antags
-
 
 /datum/game_mode/proc/latespawn(var/mob)
 
@@ -670,7 +661,7 @@ proc/get_nt_opposed()
 
 /datum/game_mode/proc/print_player_lite(var/datum/mind/ply)
 	var/role = ply.assigned_role == "MODE" ? "\improper[ply.special_role]" : "\improper[ply.assigned_role]"
-	var/text = "<br><b>[ply.name]</b> (<b>[ply.key]</b>) as \a <b>[role]</b> ("
+	var/text = "<br><b>[ply.name]</b> as \a <b>[role]</b> ("
 	if(ply.current)
 		if(ply.current.stat == DEAD)
 			text += "died"

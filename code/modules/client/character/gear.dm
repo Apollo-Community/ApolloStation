@@ -829,6 +829,12 @@ var/global/list/gear_datums = list()
 	sort_category = "misc"
 	cost = 2
 
+/datum/gear/zippo
+	display_name = "zippo lighter"
+	path = /obj/item/weapon/flame/lighter/zippo
+	sort_category = "misc"
+	cost = 2
+
 /datum/gear/comb
 	display_name = "purple comb"
 	path = /obj/item/weapon/haircomb

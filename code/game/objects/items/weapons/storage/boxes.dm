@@ -51,6 +51,7 @@
 			new /obj/item/clothing/mask/breath( src )
 			new /obj/item/weapon/tank/emergency_oxygen/engi( src )
 			new /obj/item/inflatable/spacesuit/budget( src )
+			new /obj/item/trash/map( src )
 		return
 
 

@@ -96,7 +96,8 @@ obj/hanger/square/exterior/merc_home_hanger
 	htag = "merc_home"
 
 obj/hanger/oddshaped/exterior/s_hanger_esc
-	hanger_area_tag = "/area/podbay/hangar/s_hanger_e"
+	//hanger_area_tag = "/area/shuttle/escape/s_hanger_e"
+	hanger_area_tag = "/area/shuttle/escape/station"
 	htag = "s_hanger_esc"
 
 obj/hanger/oddshaped/exterior/c_hanger_esc
@@ -148,6 +149,7 @@ obj/hanger/square/exterior/space_hanger/blue_space/h5
 
 obj/hanger/square/exterior/space_hanger/blue_space/h6
 	htag = "b_space_6"
+	hanger_area_tag = "/area/shuttle/merchant/dock"
 
 obj/hanger/square/exterior/space_hanger/blue_space/h7
 	htag = "b_space_7"

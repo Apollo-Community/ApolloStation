@@ -5,8 +5,8 @@
 #define MINUTES *600
 
 //Returns the world time in english
-proc/worldtime2text(time = world.time)
-	var/hours = round(time / 36000)+8
+proc/worldtime2text(time = world.time, var/bonus_time = 8)
+	var/hours = round(time / 36000)+bonus_time
 	return "[hours < 10 ? hours : add_zero( hours )]:[(time / 600 % 60) < 10 ? add_zero(time / 600 % 60, 1) : time / 600 % 60]"
 
 proc/time_stamp()
@@ -28,35 +28,13 @@ proc/isDay(var/month, var/day)
 	return 0
 
 /proc/getMonthDays( var/month )
-	switch( month )
-		if( 1 )
-			return 31
-		if( 2 )
-			if( universe.getYear()%4 ) // leap year checks
-				return 28
-			else
-				return 29
-		if( 3 )
-			return 31
-		if( 4 )
-			return 30
-		if( 5 )
-			return 31
-		if( 6 )
-			return 30
-		if( 7 )
-			return 31
-		if( 8 )
-			return 31
-		if( 9 )
-			return 30
-		if( 10 )
-			return 31
-		if( 11 )
-			return 30
-		if( 12 )
-			return 31
-	return 31
+	var/list/month_days = list( 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ) // yuck
+	var/days = 31
+
+	if( month_days[month] )
+		days = month_days[month]
+
+	return days
 
 /proc/getMonthName( var/month )
 	if( month < 1 || month > 12 )
@@ -69,9 +47,9 @@ proc/isDay(var/month, var/day)
 	if( !date || date.len < 3 )
 		return "BAD DATE"
 
-	var/year = text2num( date[1] )
-	var/month = text2num( date[2] )
-	var/day = text2num( date[3] )
+	var/year = text2num( date["year"] )
+	var/month = text2num( date["month"] )
+	var/day = text2num( date["day"] )
 
 	if( !year )
 		year = 2560
@@ -85,9 +63,9 @@ proc/isDay(var/month, var/day)
 	return "[getMonthName( month )] [day], [year]"
 
 /proc/progessDate( var/list/date, var/progression = 1 )
-	var/year = date[1]
-	var/month = date[2]
-	var/days = date[3]
+	var/year = date["year"]
+	var/month = date["month"]
+	var/days = date["day"]
 
 	days += progression
 
@@ -102,7 +80,7 @@ proc/isDay(var/month, var/day)
 	if( days < 1 )
 		days = 1
 
-	return list( year, month, days )
+	return list( "year" = year, "month" = month, "day" = days )
 
 // Returns how many days are between current and future
 /proc/daysTilDate( var/list/current, var/list/future )
@@ -112,9 +90,9 @@ proc/isDay(var/month, var/day)
 	if( !date || date.len != 3 )
 		return 0
 
-	var/years = date[1]-START_YEAR
-	var/months = date[2]-1
-	var/days = date[3]-1
+	var/years = date["year"]-START_YEAR
+	var/months = date["month"]-1
+	var/days = date["day"]-1
 
 	for( var/i = 1, i <= months, i++ )
 		days += getMonthDays( i )
