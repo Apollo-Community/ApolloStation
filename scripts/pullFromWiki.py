@@ -29,7 +29,7 @@ while i < len(data_lines):
     i += 1
 
 data_string = str(" ".join(str(x) for x in data_lines))
-text_file = open("wikiForms.txt", "w")
+text_file = open("scripts/wikiForms.txt", "w")
 text_file.write(data_string)
 text_file.close()
 exit()

@@ -1105,13 +1105,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	message_admins("<span class='notice'>[key_name_admin(usr)] setup the supermatter engine  [response == "Setup except coolant" ? "without coolant": ""]</span>")
 	return
 
-/client/proc/getfromwebtest()
-	set category = "Debug"
-	set name = "Get from web test"
-	set desc = "Getting text from websites testing.."
-
-	var/datum/pullFromWiki/puller = new()
-
 /client/proc/supermatter_dam_debug()
 	set category = "Debug"
 	set name = "Debug supermatter dam calc"

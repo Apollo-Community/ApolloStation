@@ -161,7 +161,6 @@ var/list/debug_verbs = list (
         ,/client/proc/setup_supermatter_engine
 		,/client/proc/atmos_toggle_debug
 		,/client/proc/supermatter_dam_debug
-		,/client/proc/getfromwebtest
 	)
 
 
