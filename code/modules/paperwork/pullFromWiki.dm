@@ -9,18 +9,16 @@ proc/getFormsFromWiki()
 
 	var/url = "[config.wikiurl]index.php?title=Example_Paperwork"
 	var/result = shell("python scripts/pullFromWiki.py [url]")
-	error("[result]")
 
 	//Lets start the extracting and parsing
 	var/page = file2text("scripts/wikiForms.txt")
 	if(isnull(page) || page == "")
-		error("WARNING: pulled page is empty or none")
+		message_admins("WARNING: pulled page is empty or none.", "DEBUG:")
 		return
 
 	var/list/lineList = text2list(page)
 
 	for(var/i = 1, i <= lineList.len, i++)
-		world << "[i]: [lineList[i]]"
 		//End of the document.
 		if(findtext(lineList[i], "NewPP") > 0)
 			break
