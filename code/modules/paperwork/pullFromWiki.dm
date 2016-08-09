@@ -8,7 +8,7 @@ var/global/list/public_forms[0]
 proc/getFormsFromWiki()
 
 	var/url = "[config.wikiurl]index.php?title=Example_Paperwork"
-	shell("python3 scripts/pullFromWiki.py [url]")
+	shell("python3.6 scripts/pullFromWiki.py [url]")
 
 	//Lets start the extracting and parsing
 	var/page = file2text("scripts/wikiForms.txt")
