@@ -545,3 +545,17 @@
 		new /obj/item/weapon/grenade/chem_grenade/lube(src)
 		new /obj/item/weapon/grenade/chem_grenade/lube(src)
 		new /obj/item/weapon/grenade/chem_grenade/lube(src)
+
+/obj/item/weapon/storage/box/smoke
+	name = "box of smoke grenades"
+	desc = "A box with 6 smoke grenades."
+	icon_state = "flashbang"
+
+	New()
+		..()
+		new /obj/item/weapon/grenade/smokebomb(src)
+		new /obj/item/weapon/grenade/smokebomb(src)
+		new /obj/item/weapon/grenade/smokebomb(src)
+		new /obj/item/weapon/grenade/smokebomb(src)
+		new /obj/item/weapon/grenade/smokebomb(src)
+		new /obj/item/weapon/grenade/smokebomb(src)
