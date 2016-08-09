@@ -158,19 +158,18 @@
 	return 1
 
 /obj/machinery/power/supermatter/proc/updateDesc()
-	if(damage < 200 )
-		desc = "A strangely translucent and iridescent crystal. <span class='alert'>You get headaches just from looking at it.</span>"
-	else if(damage > 200)
-		desc += "/n <span class='alert'>You can see tiny cracks in the crystal.</span>"
+	desc = initial(desc)
+	if(damage > 200)
+		desc += "<span class='alert'>You can see tiny cracks in the crystal.</span>"
 
 	else if(damage > 400)
-		desc += "/n <span class='alert'>A web of cracks span the crystal.</span>"
+		desc += "<span class='alert'>A web of cracks span the crystal.</span>"
 
 	else if(damage > 600)
-		desc += "/n <span class='alert'>A web of deep cracks span the crystal.</span>"
+		desc += "<span class='alert'>A web of deep cracks span the crystal.</span>"
 
 	else if(damage > 800)
-		desc += "/n <span class='alert'>A deep fissure of cracks span the crystal a pulsing glow is emanating from them.</span>"
+		desc += "<span class='alert'>A deep fissure of cracks span the crystal a pulsing glow is emanating from them.</span>"
 
 /obj/machinery/power/supermatter/proc/turfCheck()
 	var/turf/L = loc
@@ -333,20 +332,21 @@
 /obj/machinery/power/supermatter/bullet_act(var/obj/item/projectile/Proj)
 	var/turf/L = loc
 	if(!istype(L))		// We don't run process() when we are in space
-		return 0	// This stops people from being able to really power up the supermatter
-				// Then bring it inside to explode instantly upon landing on a valid turf.
+		return 0		// This stops people from being able to really power up the supermatter
+						// Then bring it inside to explode instantly upon landing on a valid turf.
 
 	if(istype(Proj, /obj/item/projectile/beam/continuous/emitter))
 		var/factor = getSMVar( smlevel, "emitter_factor" )
 		var/obj/item/projectile/beam/continuous/emitter/B = Proj
 		power += ( 0.16 * ( 1.69 ** factor )) * ( B.power / ( EMITTER_POWER_MAX * 0.6667)) // regression
-		//damage += ( factor / 25 ) * ( B.power / ( EMITTER_POWER_MAX * 0.6667))
-		//faster calculation which outputs the same as above ^
 		if(smlevel > 1)
-			//damage += (factor * B.power) / 100
-			//More dam calc, cause that is just to much damage.
-			//Also using regressiong here so the damage is more related to power.
-			damage += ((damcalc_a*(damcalc_b ** factor)) * B.power)/damcalc_c
+			//If above level 1
+			//Dam calc with a exponential factor (simular as above).
+			//Dam vars can be adjusted in /datum/sm_control
+			var/dama = getSMVar( smlevel, "dama")
+			var/damb = getSMVar( smlevel, "damb")
+			var/damc = getSMVar( smlevel, "damc")
+			damage += ((dama*(damb ** factor)) * B.power)/damc
 	else
 		damage += Proj.damage
 	return 0

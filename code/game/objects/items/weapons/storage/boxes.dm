@@ -40,6 +40,22 @@
 			new /obj/item/trash/map( src )
 		return
 
+/obj/item/weapon/storage/box/sokeGrenades
+	name = "box"
+	desc = "A box with smoke grenades."
+
+	New()
+		..()
+		contents = list()
+		spawn(0)
+			new /obj/item/weapon/grenade/smokebomb (src)
+			new /obj/item/weapon/grenade/smokebomb (src)
+			new /obj/item/weapon/grenade/smokebomb (src)
+			new /obj/item/weapon/grenade/smokebomb (src)
+			new /obj/item/weapon/grenade/smokebomb (src)
+			new /obj/item/weapon/grenade/smokebomb (src)
+		return
+
 /obj/item/weapon/storage/box/engineer/
 	name = "survival kit"
 	desc = "A box with gear necessary for survival in space."

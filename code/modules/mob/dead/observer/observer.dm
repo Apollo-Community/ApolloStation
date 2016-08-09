@@ -320,6 +320,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(following && following == target)
 			return
 		following = target
+
+		// follow the eye if we're following the AI! The core isn't gonna move a lot
+		if(istype(target, /mob/living/silicon/ai))
+			var/mob/living/silicon/ai/A = target
+			following = A.eyeobj
 		src << "<span class='notice'>Now following [target]</span>"
 		spawn(0)
 			while(target && following == target && client)

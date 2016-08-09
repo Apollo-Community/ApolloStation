@@ -1,0 +1,1574 @@
+ If you want to add a form keep to the following template:
+    [center][logo][/center]
+ [small][center][b]NanoTrasen Inc. [br]
+ Whatever Branch of Operation [br]
+ Form name
+ [/b][/small][br]
+                                                                                                           
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Civilian Branch of Operation
+ Additional Access Application Form
+ [/b]
+ 
+ 
+ Form HoP-01[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ 
+ [b]Employee Name:[/b] [field][br]
+ [b]Employee Occupation:[/b] [field][br]
+ [b]Requested Access:[/b] [field][br]
+ [b]Reason(s):[/b] [u][field][/u][br]
+ [b]Signature:[/b] [field][br]
+ [hr]
+ [center][b]Authorization[/b][br]
+ [u][i][field][/i][/u](Requested Department)[br]
+ [u][i][field][/i][/u](Current Department Head)[br]
+ [u][i][field][/i][/u](Head of Personnel’s Signature)[br][/center]
+ [hr]
+ This document can be considered void if the following events occur.
+ [list][*]If the department in which the requester is requesting access has not been contacted regarding this document, and the chief (acting or otherwise) had not authorized this request.[*]If any criminal activity is done with the help of this extra access.[*]If the chief of the affected department wishes this form void.[/list]
+ [hr][/small]
+ 
+  
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Civilian Branch of Operation
+ Job Transfer Application Form
+ [/b]
+ 
+ 
+ Form HoP-02[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ [b]Employee Name:[/b] [field][br]
+ [b]Employee Occupation:[/b] [field][br]
+ [b]Job Requested:[/b] [field][br]
+ [b]Reason(s):[/b] [u][field][/u][br]
+ [b]Signature:[/b] [field][br]
+ [hr]
+ 
+ [center][b]Authorization[/b][br]
+ [u][i][field][/i][/u](Requested Department)[br]
+ [u][i][field][/i][/u](Current Department Head)[br]
+ [u][i][field][/i][/u](Head of Personnel’s Signature)[br][/center]
+ [hr]
+ This document can be considered void if the following events occur.
+ [list][*]If the department in which the requester is requesting a job in has not been contacted regarding this document, and the chief (acting or otherwise) had not authorized this request.[*]If any criminal activity is done with the help of this extra access.[*]If the chief of the affected department wishes this form void.[/list]
+ [hr][/small]
+ 
+--stop--      
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Civilian Branch of Operation
+ Lawsuit Form
+ [/b]
+ 
+ 
+ Form Attorney-01[/center][hr][b]Facility[/b]: NOS Apollo[/center][br]
+ Date: [field][br]
+ Appellant: [field][br]
+ Respondent: [field][br]
+ Cause(s): [field][br]
+ Requested Action: [field][br]
+ [hr][center]Attorney's part[/center]
+ I certify that I delivered a copy of this document to my client, and accept the accusation of Neglect of Duty if this statement is found false.[br]
+ Signature of party or attorney: [field][br]
+ [hr][center]Authorizations[/center][br]
+ Signature of head of concerned department/Head of personnel: [field][br]
+ Signature of Chief Justice: [field][br]
+ Concerned heads may stamp below instead of signing [br][hr]
+ 
+--stop--      
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Civilian Branch of Operation
+ Bar Menu
+ [/b]
+ [b][large][u]THE MALTESE FALCON[/u][/b][/large][br]
+ [br]
+ [br]
+ [b][u]DRINKS[/u][/b][br]
+ [br]*[small]= availability not guaranteed[/small][br][br]
+ Space Beer[br]Beer from the keg[br]Iced Space Beer[br]Station 13 Grog[br]Magm-Ale[br]Griffeater's Gin[br]Uncle Git's Special Reserve[br]Caccavo Guaranteed Quality Tequila[br]Tunguska Triple Distilled[br]Goldeneye Vermouth[br]Captain Pete's Cuban Spiced Rum[br]Doublebeard Beared Special Wine[br]Chateau De Baton Premium Cognac[br]Robert Robust's Coffee Liqueur (Kahlua)[br]Moonshine*[br]
+ [br][br][b][u]COCKTAILS[/u][/b][br][br]Allies Cocktail[br]Andalusia[br]Anti-Freeze[br]Bahama Mama[br]Classic Martini[br]Cuba Libre[br]Gin Fizz[br]Gin and Tonic[br]Irish Car Bomb[br]Irish Coffee[br]Irish Cream[br]Long Island Iced Tea[br]Manhattan[br]The Manly Dorf[br]Margarita[br]Screwdriver[br]Syndicate Bomb[br]Pan-Galactic Gargle Blaster[br]Tequila Sunrise[br]Vodka Martini[br]Vodka and Tonic[br]Whiskey Cola[br]Whiskey Soda[br]White Russian[br]Goldschlager* [br]Hippie's Delight* [br]Hooch* [br]Acid Spit* [br]Aloe* [br]Amasec* [br]Atomic Bomb*[br]B-52[br]Barefoot*[br]Beepsky Smash*[br]Bilk [br]Black Russian [br]Bloody Mary[br]Booger*[br]Brave Bull[br]Changeling Sting [br]Demons Blood*[br]Devil's Kiss* [br]Driest Martini*[br]Erika Surprise*[br]Manhattan Project*[br]Nuka Cola*[br]Neurotoxin*[br]Patron*[br]Sake*[br]Sbiten*[br]Singulo*[br]Snow White[br]Three Mile Island Iced Tea[br]Toxins Special*[br][br][br][b][u]NON-ALCOHOLIC DRINKS[/u][/b][br][br]Coffee[br]Tea[br]Hot Chocolate[br]Iced Tea[br]Iced Coffee[br]Orange Juice[br]Tomato Juice[br]Lime Juice[br]Lemon Juice*[br]Potato Juice*[br]Berry Juice*[br]Watermelon Juice*[br]Tonic Water[br]Sodas[br]Banana Honk*[br]Brown Star[br]Kira Special[br]Lemonade*[br]Cafe Latte[br]Mead*[br]Milk Shake[br]Red Mead*[br]Rewriter[br]Silencer*[br]Soy Latte*[br]The Doctor's Delight*[br]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Civilian Branch of Operation
+ Kitchen Menu
+ [/b]
+ [center][large][b]APOLLO KITCHEN MENU[/b][/large][/center][hr]
+ [center][large]= A la Carte =[/large][/center][br][hr]
+ [u][b]Appetizers[/b][/u][br][list][*]Plump biscuit[*]fortune cookie[*]cracker[*]Popcorn[*]Poppy Pretzel[/list][hr]
+ [u][b]Vegetable Recipes[/b][/u][br][list][*]Boiled Rice[*]Stewed soy meat[*]loaded baked potato[*]Eggplant Parmigiana[*]Chawanmushi[*]Cheese slices[*]Tofu[*]Soylen Viridians[*]Cold Chili Stew[*]Hot Chili Stew[/list][hr]
+ [u][b]Fries[/b][/u][br][list][*]Carrot Fries[*]Potato Fries[*]Cheesy Fries[/list][hr]
+ [u][b]Salads[/b][/u][br][list][*]Herb Salad[*]Aesir Salad[*]Valid Salad[/list][hr]
+ [u][b]Soups[/b][/u][br][list][*]Meatball soup[*]Nettle Soup[*]Wish Soup[*]Vegetable Soup[*]Tomato Soup[*]Mushroom Soup[*]Beet Soup[*]Milo Soup[/list][hr]
+ [u][b]Breads[/b][/u][br][list][*]Baguette[*]Jelly Toast[*]'Two bread'[*]Regular Bread[*]Meat Bread[*]Tofu Bread[*]Banana-nut Bread[*]Cream Cheese Bread[/list][hr]
+ [u][b]Meat Recipes[/b][/u][br][list][*]Meat steak[*]Enchiladas[*]Monkey's delight[*]Stew[*]Sausage[*]Faggot[*]Kebab[*]Cheese omelette[*]Fried eggs[*]Boiled egg[*]Donk Pocket[*]Fish 'n' Chips[*]Fish fingers[*]Cuban Carp[/list][hr]
+ [u][b]Burgers[/b][/u][br][list][*]Meat Burger[*]Tofu Burger[*]Jelly Burger[*]Big Bite Burger[*]Super Bite Burger[*]Fillet-o-Carp burger[/list][hr]
+ [u][b]Sandwiches[/b][/u][br][list][*]Sandwich[*]Toasted Sandwich[*]Grilled Cheese Sandwich[*]Jelly Sandwich[/list][hr]
+ [u][b]Pizzas[/b][/u][br][list][*]Margherita[*]Mushroom Pizza[*]Meat Pizza[*]Vegetable Pizza[*]Personal Pizza[/list][hr]
+ [u][b]Pastas[/b][/u][br][list][*]Boiled Spaghetti[*]Tomato Pasta[*]Spaghetti &amp; meatballs[*]Spesslaw[/list][hr]
+ [u][b]Pies[/b][/u][br][list][*]Golden Apple Tart[*]Plump Pie[*]Pumpkin Pie[*]Meat Pie[*]Tofu Pie[*]Cherry Pie[*]Berry Clafoutis[*]Apple Pie[*]Banana Cream Pie[/list][hr]
+ [u][b]Cakes[/b][/u][br][list][*]Vanilla Cake[*]Carrot Cake[*]Cheese Cake[*]Birthday Cake[*]Apple Cake[*]Orange Cake[*]Lime Cake[*]Lemon Cake[*]Chocolate Cake[/list][hr]
+ [u][b]Desserts[/b][/u][br][list][*]Muffins[*]Candied Apple[*]Rice pudding[*]Chocolate egg[*]Waffle[*]Donut[*]Jelly Donut[/list][hr]
+ [u][b]Drinks[/b][/u][br][list][*]Water[*]Milk[*]Orange Juice[*]Watermelon Juice[*]Lime Juice[*]Lemon Juice[*]Berry Juice[*]Potato Juice[/list][hr]
+ [u][b]Alcohols[/b][/u][br][list][*]Kahlua[*]wine[*]sake[*]vodka[*]moonshine[/list][br][small]Ask the bartender for cocktails[/small][hr]
+ [u][b]Condiments[/b][/u][br][list][*]Hot sauce[*]Cold sauce[*]Ketchup[*]Corn oil[*]Soy sauce[/list]
+ [br][br][br][hr][small][i]The availability of each recipe may vary. Restrictions may apply.[/i][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Civilian Branch of Operation
+ Syndies and 'Sisstants info sheet
+ [/b]
+ [b][u][center]Syndies and ‘Sisstants[/b][/u][/center][br]
+ [br]
+ [center]You’re plunged into deep space upon a station of misfortune and terrorism, a child of fate destined to traverse a path ordained long ago by your own insanity, self chosen to pursue a greater goal to change the universe forever. [br]
+ While all trails lead to the same end, you choose which one to pick.[/center][br]
+ [br]
+ You begin with five points to add additional specs![br]
+ Robustness - How strong you are! And ingenuitive![br]
+ Speed - How fast you are![br]
+ Diplomacy - How easy it is to trade and bargain out a compromise! (Nerd!)[br]
+ Intelligence - How easy it is to make something super awesome, or solve a challenge![br]
+ Charisma - How smoking hot you are! Nobody wants to hit a smoking hot guy![br]
+ Defense - How easy it is to block, or shake off the pain![br]
+ [hr]
+ [center][b]Pick your race![/b][/center][br]
+ [u]Assistant[/u][br]
+ Begin with a loaded toolbox and a duck!
+ [i]Robustness +3[br]
+ Speed +1[br]
+ Diplomacy +1[br]
+ Intelligence -2[br]
+ Charisma +0[br]
+ Defense +0[/i][br]
+ [hr]
+ [u]Security Officer[/u][br]
+ Begin with armor, helmet and a metal rod![br]
+ [i]Robustness -1[br]
+ Speed -1[br]
+ Diplomacy -1[br]
+ Intelligence -1[br]
+ Charisma +2[br]
+ Defense +5[/i][br]
+ [hr]
+ [u]Clown[/u][br]
+ Begin with a horn and banana peels![br]
+ [i]Robustness +3[br]
+ Speed +2[br]
+ Diplomacy -inf[br]
+ Intelligence -1[br]
+ Charisma -inf[br]
+ Defense +1[br][/i]
+ [hr]
+ [u]Scientist[/u][br]
+ Begin with a stun baton and two power cells![br]
+ [i]Robustness -1[br]
+ Speed -2[br]
+ Diplomacy +2[br]
+ Intelligence +3[br]
+ Charisma +1[br]
+ Defense -2[br][/i]
+ [hr]
+ [u]Cargonian[/u]
+ Begin with a clipboard and a three use stunprod![br]
+ [i] Robustness +0[br]
+ Speed +1[br]
+ Diplomacy +3[br]
+ Intelligence +3[br]
+ Charisma +3[br]
+ Defense -2[br]
+ [hr]
+ [u]Bartender[/u][br]
+ Begin with a shotgun, two rounds and some whiskey of +1 robustness![br]
+ [i]Robustness +4[br]
+ Speed -2[br]
+ Diplomacy +1[br]
+ Intelligence -2[br]
+ Charisma +1[br]
+ Defense -1[br][/i]
+ [hr]
+ [br]
+ 
+--stop--      
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Logistic Branch of Operation
+ Parcel Delivery Request Form
+ [/b]
+ 
+ 
+ Form CD-01-02[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ [i][center]Cargo Staff are under the sworn oath to never disclose details regarding your package unless specifically requested by higher command personnel during hightened alert levels.[/i][/center][br]
+ [br]
+ [b]Security Level:[/b][br]
+ [[field]]Green[br]
+ [[field]]Blue[br]
+ [[field]]Red[br]
+ [br]
+ [u][b]Delivery by[/u][/b][small] (Please check appropriate)[br]
+ Mail[[field]]
+ Delivery[[field]]
+ Pick-up[[field]]
+ [br]
+ [b]Contents of Parcel:[/b][i][u][field][/i][/u][br]
+ [b]Parcel Destination*:[/b] [i][u][field][/i][/u][br]
+ [b]Requested Time of Delivery*:[/b] [i][u][field][/i][/u][br]
+ [small]*=Ignore if pick-up order[/small][br]
+ [hr]
+ [br]
+ [b]Signed by:[/b][br]
+ [i][u][field][/u][/i][small](Your signature)[/small][br]
+ [br]
+ [b]Authorized by:[/b][br]
+ [i][u][field][/i][/u][small](Cargo signature)[/small][br]
+ [br]
+ Stamped by:[br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Logistic Branch of Operation
+ Ore and Material Inventory Form
+ [/b]
+ 
+ 
+ Form CD-02[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Station Time:[/b][field][br]
+ [b]Shipment Number:[/b][field][br]
+ 
+ [b]Ores/Material in this shipment:[/b]
+ [small]Leave blank or write 0 if none[/small]
+ Iron Ore: [field], Metal: [field], C.Alloy: [field]
+ Sand: [field], Glass: [field], Reinforced Glass: [field]
+ Platinum Ore: [field], Platinum Bar(s): [field]
+ Gold Ore: [field], Gold Bar(s): [field]
+ Silver Ore: [field], Silver Bar(s): [field]
+ Phoron Ore: [field], Solid Phoron:[field]
+ Uranium Ore: [field], Uranium: [field]
+ Diamond Ore: [field], Diamond(s): [field]
+ [b]miscellaneous:[/b]
+ [Field]
+ [b]Supply personnel's signature:[/b][field]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Logistic Branch of Operation
+ Warehouse Inventory Form
+ [/b]
+ 
+ 
+ Form CD-03[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Inventory Number:[/b][field][br]
+ 
+ [/small][b]Warehouse Inventory:[/b][small]
+ [b]Materials:[/b]
+ Wood: [field]
+ Metal: [field]
+ Catametallic Alloy: [field]
+ Glass: [field]
+ Reinforced Glass: [field]
+ Metal rods: [field]
+ Cardboard: [field]
+ Iron Bar(s): [field]
+ Platinum Bar(s): [field]
+ Gold Bar(s): [field]
+ Silver Bar(s): [field]
+ Solid Phoron: [field]
+ Uranium: [field]
+ Diamond: [field]
+ [b]Miscellaneous:[/b]
+ [field]
+ [b]Supply personnel's signature:[/b][field]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Cargo Branch of Operation
+ Logistic Inventory Request Form
+ [/b]
+ 
+ Form CD-04[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ [b]Security Level:[/b][br]
+ [[field]]Green[br]
+ [[field]]Blue[br]
+ [[field]]Red[br]
+ [br]
+ [b]Employee Name:[/b][field][br]
+ [b]Employee Rank:[/b][field][br]
+ 
+ [b]Requested Item(s):[/b][field][br]
+ [b]Amount:[/b] [field][br]
+ [b]Requested Time of Delivery:[/b] [i][u][field][/i][/u][br]
+ [b]Reason:[/b] [field][br]
+ [hr]
+ [br]
+ [b]Signed by:[/b][br]
+ [field][small](Your signature)[/small][br]
+ [br]
+ [b]Authorized by:[/b][br]
+ [field][small](Cargo signature)[/small][br]
+ [br]
+ Stamped by:[br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Logistic Branch of Operation
+ Cargo Acquisition Form
+ [/b]
+ 
+ 
+ Form CD-05[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ [i][center]Cargo Staff are under the sworn oath to never disclose details regarding your package unless specifically requested by higher command personnel during hightened alert levels.[/i][/center][br]
+ [br]
+ [b]Security Level:[/b][br]
+ [[field]]Green[br]
+ [[field]]Blue[br]
+ [[field]]Red[br]
+ [br][hr][large]PLEASE CONFIRM CARGO CONTENTS FIRST[/large][hr][br]
+ [u][b]Received by[/u][/b][small] (Please check appropriate)[br]
+ Mail[[field]]
+ Delivery[[field]]
+ Pick-up[[field]]
+ [br]
+ [b]Contents of Parcel:[/b][i][u][field][/i][/u][br]
+ [b]Actual Time of Receiving:[/b] [i][u][field][/i][/u][br]
+ [hr]
+ [br]
+ [b]Signed by:[/b][br]
+ [i][u][field][/u][/i][small](Your signature)[/small][br]
+ [br]
+ [b]Delivered/mailed/handed off by:[/b][br]
+ [i][u][field][/i][/u][small](Cargo signature)[/small][br]
+ [br]
+ Stamped by:[br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Logistic Branch of Operation
+ Cargo Pickup Safety Waiver
+ [/b]
+ 
+ 
+ Form CD-S-06[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ [b]Security Level:[/b][br]
+ [[field]]Green[br]
+ [[field]]Blue[br]
+ [[field]]Red[br]
+ [br][hr][large]PLEASE CONFIRM CARGO CONTENTS FIRST[/large][hr][br]
+ [hr]This agreement releases The NOS Apollo cargo department from all liability relating to injuries that may occur during the picking up of ones cargo, or entering the cargo department. By signing this agreement, I agree to hold The NOS Apollo Cargo Department entirely free from any liability, including financial responsibility for injuries incurred, regardless of whether injuries are caused by negligence.
+ [br]
+ I also acknowledge the risks involved in picking cargo up. These include but are not limited to back injuries, hand injuries,... I swear that I am participating voluntarily, and that all risks have been made clear to me. Additionally, I do not have any conditions that will increase my likelihood of experiencing injuries while engaging in this activity.
+ [br]
+ By signing below I forfeit all right to bring a suit against the NOS Apollo Cargo Department for any reason. In return, I will receive my cargo. I will also make every effort to obey safety precautions as listed in writing and as explained to me verbally. I will ask for clarification when needed.
+ [br]
+  [br]
+ [br]
+ I, [field][small] (your signature)[/small], fully understand and agree to the above terms.[br]
+ [hr]
+ [br]
+ [b]Signed by:[/b][br]
+ [i][u][field][/u][/i][small](Your signature)[/small][br]
+ [br]
+ [b]Delivered/mailed/handed off by:[/b][br]
+ [i][u][field][/i][/u][small](Cargo signature)[/small][br]
+ [br]
+ Stamped by:[br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Logistic Branch of Operation
+ Official Notice
+ [/b]
+ 
+ 
+ Form CD-06[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ [/i][/center][br]
+ [br]
+ [b]Security Level:[/b][br]
+ [[field]]Green[br]
+ [[field]]Blue[br]
+ [[field]]Red[br]
+ [large][field][/large]
+ [br]
+ [hr]
+ [br]
+ [b]Signed by:[/b][br]
+ [i][u][field][/u][/i][small][/small][br]
+ [br]
+ Stamped by:[br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Logistic Branch of Operation
+ Cargo Acquisition Form-02
+ [/b]
+ 
+ 
+ Form CD-05-02[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ [i][center]Cargo Staff are under the sworn oath to never disclose details regarding your package unless specifically requested by higher command personnel during hightened alert levels.[/i][/center][br]
+ [br]
+ [b]Security Level:[/b][br]
+ [[field]]Green[br]
+ [[field]]Blue[br]
+ [[field]]Red[br]
+ [br][hr][large]PLEASE CONFIRM CARGO CONTENTS FIRST[/large][hr]
+ [br][large]TO BE USED INCASE THE ORIGINAL RECIPIENT IS UNABLE TO RECEIVE SAID PACKAGE[/large]
+ [hr][br]
+ [u]Goodday! We have attempted to
+ Mail[[field]]
+ Deliver[[field]][br]
+ your packages, but you were not able to pick it up! Instead your package has been[br]
+ Stored in the warehouse [[field]]
+ Given to crewmember [[field]] to hold on to.
+ [br]
+ [b]Contents of Parcel:[/b][i][u][field][/i][/u][br]
+ [b]Actual Time of delivery:[/b] [i][u][field][/i][/u][br]
+ [hr]
+ [br]
+ [b]Signed by:[/b][br]
+ [i][u][field][/u][/i][small](Receiving crewmember, ignore if stored in warehouse)[/small][br]
+ [br]
+ [b]Delivered/mailed by:[/b][br]
+ [i][u][field][/i][/u][small](Cargo signature)[/small][br]
+ [br]
+ Stamped by:[br]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Logistic Branch of Operation
+ Return of property
+ [/b]
+ 
+ 
+ Form CD-07[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ [/i][/center][br]
+ [br]
+ [b]Security Level:[/b][br]
+ [[field]]Green[br]
+ [[field]]Blue[br]
+ [[field]]Red[br]
+ [large]Hello! The Cargo department of operations reports that it has found this/these item(s),
+  and has found them to be (re)usable, and destined for you(r department). 
+ This service is provided free of charge. Have a good shift![/large]
+ [br]
+ [hr]
+ [br]
+ [b]Signed by:[/b][br]
+ [i][u][field][/u][/i][small][/small][br]
+ [br]
+ Stamped by:[br]
+ [hr][/small]
+ 
+--stop--      
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Security Branch of Operation
+ Incident Report Form
+ [/b]
+ 
+ 
+ Form SEC-01
+ Security Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ [i]To be filled out by Officer on duty responding to the Incident. Report must be signed and submitted before the end of the shift.[/i][br]
+ [br]
+ [b]Offense/Incident Type: [/b][field][br]
+ [b]Location: [/b][field][br]
+ [b]Reporting Officer: [/b][field][br]
+ [b]Assisting Officer(s): [/b][br]
+ [field][br]
+ [b]Personnel involved in Incident: [/b][br]
+ [small][i](V-Victim, S-Suspect, W-Witness, M-Missing, A-Arrested, RP-Reporting Person, D-Deceased)[/i][/small][br]
+ [field][br]
+ [hr]
+ [b]Description of Items/Property: [/b][br]
+ [i](D-Damaged, E-Evidence, L-Lost, R-Recovered, S-Stolen)[/i][br]
+ [field][br]
+ [hr]
+ [b][u]Narrative: [/u][/b][br]
+ [field][br]
+ [hr]
+ [b]Reporting Officer's Signature: [/b][field][br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Security Branch of Operation
+ Investigation Warrant
+ [/b]
+ 
+ 
+ Form SEC-02
+ Security Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ I, [u][i][field][/u][/i](Head of Security’s name), hereby authorize the search and possible seizure of [u][i][field][/u][/i](Suspicious personnel) and their department of [u][i][field][/u][/i](Accompanying department). In no circumstance is the search to be denied when this paperwork is provided to the person of interest, and any attempts to escape these methods are to be met with detaining force if necessary. This search is to be undergone by and only by:[br]
+ [br]
+ [br]
+ [u][[field]][/u][br]
+ [u][[field]][/u][br]
+ [u][[field]][/u][br]
+ [u][[field]][/u][br]
+ Signed by:[br]
+ [field](Head of Security's Signature)[br]
+ [br]
+ Stamped by:[br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Security Branch of Operation
+ On-Site Training Report
+ [/b]
+ 
+ 
+ Form SEC-03
+ Security Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ [b]Training carried out by:[/b][u][field][/u][br]
+ [b]Training types:[/b]
+ ([field]) CQC Training: [field]
+ ([field]) Energy Weapons: [field]
+ ([field]) Forensics Training: [field]
+ ([field]) Corporate Regulations:[field]
+ [b]Trainee:[/b] [field]
+ [b]Trainer's Notes:[/b]
+ [field]
+ [hr]
+ [field] (Trainee's Signiature)[br]
+ [b]Signature:[/b] [field][br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Security Branch of Operation
+ Security Guidelines
+ [/b]
+ 
+ [hr][br]
+ [b]Golden rule:[/b] [center]Keep communications up at all times on the Security Channel and
+ report all movements, arrests and all security matters over the radio.[/center][br]
+ [hr][br]
+ [b]Guidelines[/b][br]
+ [*]Talk first, stun second.[br]
+ [*]Always call for backup before attempting to confront a possibly dangerous criminal.[br]
+ [*]Charge your weapons after every usage.[br]
+ [*]Stay calm under all circumstances, anger and fear show weakness.[br]
+ [*]Always lock Security lockers &amp; logout of security terminals after each use.[br]
+ [*]Always label your designated locker with the hand labeller[br]
+ [*]Seal off crime scenes and wait for forensics personnel to arrive. Do not touch anything in the crime scene.[br]
+ [*]Avoid using force where possible.[br]
+ [*]Inform the Warden when a criminal is wanted and set their wanted status via your security HUD if possible. Beepsky is a force to be reckoned with.[br]
+ [*]Respect the chain of command! The Warden outranks you within the brig itself. Obey the Head of Security, but remember that the Captain outranks him.[br]
+ [*]Remember your priorities: One punch is hardly something to arrest anyone over if there is a hostage situation.[br]
+ [*]Always remember to do your paperwork! Keeping a track record of everything that has happened throughout the station is important.[br]
+ [*]Remember: You cannot make a legal arrest without sufficient evidence of a crime. You are subject to arrest and demotion otherwise![br]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Security Branch of Operation
+ Armory Item Supply Form
+ [/b]
+ 
+ 
+ Form SEC-04
+ Security Permit[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ 
+ [b][[field]]concealed[br][/b]
+ [b][[field]]open[br][/b]
+ [br]
+ It is hereby confirmed by the appropriate ranking security personnel, be it either Warden or Head of Security, that [u][i][field][/i][/u](Name) has been deemed competent and able of carrying the following small armament(s): [u][i][field][/i][/u][br]
+ Identified Species: [[field]]Human [[field]]Tajaran [[field]]Skrellian [[field]]Unathi[br]
+ Sex: [[field]]Male [[field]]Female[br]
+ Fingerprint-ID: [u][i][field][/i][/u][br]
+ He and or she has been properly informed that they are exempt of law i212, yet not of i204. Any misuse or mistreatment of personnel not having posed a viable threat will result in confiscation. In the event of a missing Head of Security, a designated Warden's signature may suffice.[br]
+ [hr]
+ [b]Approved by:[/b]
+ [field](Head of Security/Warden's signature)[br]
+ [br]
+ Stamp below:[br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Security Branch of Operation
+ Interrogation Report Form
+ [/b]
+ 
+ 
+ Form SEC-05
+ Security Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ [i]An audio recording or transcript of the interview must be attached to this report to be considered valid! In the event of a criminal prosecution, this report is considered as evidence![/i][br]
+ [br]
+ [b]Interviewer's name: [/b][field][br]
+ [b]Rank: [/b][field][br]
+ [br]
+ [b]Interviewee's name: [/b][field][br]
+ [b]Title: [/b][field][br]
+ [b]Designation[/b][i](Suspect/Witness/Other)[/i][b]: [/b][field][br]
+ [b]Interviewee's Legal Aid present[/b][i](name, title)[/i][b]: [/b][field][br]
+ [b]Other personnel present: [/b][field][br]
+ [hr]
+ [b]Interview Notes:[/b][br]
+ [field][br]
+ [br]
+ [hr]
+ [b]Interviewer's Signature: [/b][field][br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Security Branch of Operation
+ Lawful Injunction Form
+ [/b]
+ 
+ 
+ Form SEC-06
+ Security Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ Crewmember [u][i][field][/i][/u] is officially forbidden from the action of [u][i][field][/i][/u].[br]
+ Under the circumstance of which the mentioned personnel are caught violating this regulation, they will be breaking Space Law i108, which warrants a punishment of up to 10 minutes of incarceration. Repeated offense can gather additional charges if found necessary.[br]
+ [hr]
+ [br]
+ [b]Approved by:[/b][br]
+ [field](Internal Affairs Agent’s signature)[br]
+ [field](Head of Security's signature)[br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Security Branch of Operation
+ Criminal confession Form
+ [/b]
+ 
+ 
+ Form SEC-07
+ Security Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ [i]I,[/i] [field][i](your name),[/i](title) [field] [i]hereby declare, that I committed the crime(s) of[/i] (crime(s))[field] [i]against[/i] (victim(s)) [field] [i]in collaboration with[/i] (accomplice(s))[field][i]. I accept the consequences of my actions and face the sanctions deemed appropriate by NanoTrasen Law. I understand, that this confession is non-withdrawable, non-changeable and is admissible as evidence of my guilt in criminal proceedings.[/i][br]
+ [br]
+ [b]Signature: [/b][field][br]
+ [hr][/small]
+ 
+--stop--    Example: 11:41 departures, no power, oxygen and fire storage OK
+  
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Security Branch of Operation
+ Security Activity Log Form
+ [/b]
+ 
+ 
+ Form SEC-08
+ Security Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ [b]Employee Name:[/b] [field][br]
+ [b]Employee Occupation:[/b] [field][br]
+ [b]Clock-in time: [/b][i][u][field][/u][/i]
+ [hr]
+ 
+ [center][b]Patrol Log[/b][/center]
+ [b]Patrol No.: [/b][i][u][field][/u][/i]
+ [b]Patrol Type: [/b][i][u][field][/u][/i]
+ [small](Common area, maintenance, EVA, other)[/small]
+ [i][field][/i]
+ 
+ [b]Patrol Notes: [/b][i][field][/i]
+ [b]Attachments: [/b][i][field][/i]
+ [hr]
+ [i][field][/i]
+ [hr][/small]
+ 
+--stop--      
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Medical Branch of Operation
+ Autopsy Report Form
+ [/b]
+ 
+ 
+ Form MD-01
+ Medical Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ [b]Deceased:[/b] [field][br]
+ [b]Race:[/b] [field][br]
+ [b]Gender:[/b] [field][br]
+ [b]Age:[/b] [field][br]
+ [b]Station Rank:[/b] [field][br]
+ [hr]
+ [b]Type Of Date:[/b] [field][br]
+ [b]Description of body:[/b] [field][br]
+ [b]Marks and wounds:[/b] [field][br]
+ [hr]
+ [b]Probable Cause of Death:[/b] [field][br]
+ [b]Manner of Death:[/b] [field][br]
+ [hr]
+ [i]I hereby declare that after receiving notice of the death described herein, I took charge of the body and made inquiries regarding the cause of death in accordance with Section 38-701b of NanoTrasen Pathology Code, and that the information contained herein regarding said death is true and correct to the best of my knowledge and belief.[/i][br]
+ [b]Signiature:[/b] [field][br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Medical Branch of Operation
+ Organ Donation Form
+ [/b]
+ 
+ 
+ Form MD-02
+ Medical Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ I, [u][i][field][/i][/u](Your name), hereby submit my consent to allow, while during or after my current life, for my name to qualify as an organ donor, and that my internals can at any moment be requested to be used for another patient of whom’s organs have been compromised depending on the type required. In the event of my death, this donation will apply for any organ available from my corpse. [br]
+ [hr]
+ [b]Signature:[/b] [field][br]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Medical Branch of Operation
+ Cloning Refusal Form
+ [/b]
+ 
+ 
+ Form MD-03
+ Medical Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ I, [u][field][/u](Your name), by signing this form, I hereby declare and renounce the idea of cloning, that in the event of my mortality, my organic form is [b]NOT[/b] to be cloned in any circumstance whatsoever, unless commanded under Nanotrasen Officials, the chance of severe punishment is to be dealt to the individual of which performed the cloning procedure. By signing this I can confirm the following information fields:[br]
+ [b]Blood Type:[/b] [field][br]
+ [b]DNA Hash:[/b] [field][br]
+ [b]Fingerprint Hash:[/b] [field][br]
+ Below are a list of available procedures permitted to be performed in the event of death.[br]
+ [br]
+ [b]Organ Donations[/b][br]
+ [br]
+ In the event of death, my bodily organs are to be[br]
+ [[field]] Available for Harvest / [[field]] To Remain Within Body[br]
+ [br]
+ [b]Burial Information[/b][br]
+ In the event of my death, my place and method of burial will consist of:[br]
+ [[field]]Homeworld Burial - Private[br]
+ [[field]]Homeworld Burial - Public[br]
+ [[field]]Chapel Launch[br]
+ [[field]]Cremation[br]
+ [[field]]Morgue[br]
+ [br]
+ [b]Scientific Testing[/b][br]
+ In the event of my death, the following requests must be respected. If any field checked other than Morgue in terms of burial, this field is null and void.[br]
+ [[field]]I will accept scientific and genetics testing to be done on my corpse.[br]
+ [[field]]I will deny any requests for scientific and genetic testings to be done on my corpse.[br]
+ [br]
+ [b]Cyborgification[/b][br]
+ In the event of my death, I would not appreciate to assume my previous organic form, and would therefore, appreciate to:[br]
+ [[field]](Not become)[br]
+ [[field]](Become)[br]
+ a synthetic, after long and arduous thinking.[br]
+ [hr]
+ [[b]Final Confirmation[/b][br]
+ [br]
+ I, [field](Your signature), fully consent to the provided details and bylaws of rejecting cloning, and am fully aware that this choice is irrevocable unless within dire circumstance.
+ [hr][/small]
+ 
+--stop--      
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Scientific Branch of Operation
+ Pharmaceuticals Request Form
+ [/b]
+ 
+ 
+ Form RD-01
+ Scientific Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ I, [u][i][field][/i][/u](Your name), request [u][i][field][/i][/u](Quantity and name of pharmaceutical), that of which I am fully aware of as a controlled substance. I hereby accept liability for any adverse reactions, symptoms or side effects caused by ingestion of prescribed chemicals which includes damage to Nanotrasen property, personnel or compromise of security caused by ingestion. I fully understand that any contributing third parties to this, e.g., the supplier, Nanotrasen or accompanying associates, are not responsible for any detrimental causes related to  the substance, including theft.[br]
+ [hr]
+ [b]Signed by:[/b][br]
+ [field](Requesting party's signature)[br]
+ [br]
+ [b]Approved by:[/b][br]
+ [field](Chemist's signature)[br]
+ [field](Medical Personnel's signature)[br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Scientific Branch of Operation
+ Robotic Assimilation Application Form
+ [/b]
+ 
+ 
+ Form RD-02
+ Scientific Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ I, [u][i][field][/i][/u](Your name),[br]
+ request to be turned into a(n) [u][i][field][/i][/u](Cyborg Module)[br]cyborg[br]
+ by Roboticist [u][i][field][/i][/u](Roboticist's name)[br]
+ for the following reasons: [u][i][field][/i][/u](list reasons). By signing this, I am fully aware that, by agreeing to cyborgification that I have been effectively warned of any repercussions, possible dangers and the immediate loss of free will that comes with the process. I also understand that I am to warn individuals of close connections, e.g. friends and family, to ensure all possible options of persuasion have been applied and an internal agreement has been reached. I am also aware that in the circumstance all required personnel are not available, a minimum of two heads of staff are to be alerted to further actions as well as a direct message to Central Command regarding the procedure.[br]
+ [br]
+ [hr]
+ [b]Approved by:[/b][br]
+ [field](Personnel requesting cyborgification signature)[br]
+ [field](Roboticist’s signature)[br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Scientific Branch of Operation
+ Protolathe Request Form
+ [/b]
+ 
+ 
+ Form RD-03
+ Scientific Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ I, [i][u][field][/u][/i](Your name), hereby request the permissions to have an protolathe constructed within my place of work. The reasoning for such construction can include [u][i][field][/u][/i](Your reasons). The construction of the protolathe is to be placed within [i][u][field][/i][/u](Location). I understand that this piece of machinery is to be under my supervision at all times, or otherwise left inaccessible by those untrustworthy for the usage of such. I also understand that if any suspicious activity is to occur of which is directed at the protolathe as the source, I, and no others, will be held responsible for the actions resulting from such usage. Absolutely no third party interference is to be accepted as a valid reason behind any such suspicious activity occurring.[br]
+ [hr]
+ [b]Authorized by:[/b][br]
+ [i][u][field][/i][/u](Your signature)[br]
+ [i][u][field][/i][/u](Research Director’s signature)[br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Scientific Branch of Operation
+ Exosuit Production Request Form
+ [/b]
+ 
+ 
+ Form RD-04a
+ Scientific Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ 
+ [b]Requested Exosuit:[/b]
+ [[field]]Automatic Power Loading Unit (APLU)[br]
+ [[field]]Odysseus Medical Class[br]
+ [[field]]Firefighter Grade APLU[br]
+ 
+ [b]Requested Attachments:[/b]
+ [field]
+ [field](Requesting party’s signature)[br]
+ [hr]
+ [b]Authorization:[/b][br]
+ [field](Roboticist Signature)[br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Scientific Branch of Operation
+ Exosuit Production Request Form
+ [/b]
+ 
+ 
+ Form RD-04b
+ Scientific Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ 
+ [b]Constructed Exosuit:[/b]
+ [field]
+ [b]Exosuit Attachments:[/b]
+ [field]
+ [b]Exosuit Power Supply:[/b]
+ [field]
+ [b]Assigned Exosuit Name:[/b]
+ [field]
+ [hr]
+ [b]Authorization:[/b][br]
+ [field](Roboticist Signature)[br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Scientific Branch of Operation
+ Advanced Tools Request Form
+ [/b]
+ 
+ 
+ Form RD-05
+ Scientific Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ I, [u][i][field][/i][/u](Requesting Personnel’s name), humbly request the recent technological advancement(s) consisting of  [u][i][field][/i][/u](State requested technology) to assist in productivity and efficiency of today’s shift. I can assure the technology’s complete safety and full use within the workplace, and hold myself responsible
+ for any damage or breach in security that the provided instruments may cause.[br]
+ [field](Requesting party’s signature)[br]
+ [hr]
+ [b]Authorized by:[/b][br]
+ [field](Scientist’s signature)[br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Scientific Branch of Operation
+ Pod Construction Request Form
+ [/b]
+ 
+ 
+ Form RD-06
+ Scientific Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ I, [i][u][field][/u][/i](Your name), hereby request the permissions to have a pod constructed within the podbay. The reasoning for such construction can include [u][i][field][/u][/i](Your reasons). The pod is to be used by [i][u][field][/i][/u](Persons or Department). I understand that this piece of equipment is to be under my supervision at all times, or otherwise left inaccessible by those untrustworthy for the usage of such. I also understand that if any suspicious activity is to occur of which is directed at the pod as the source, I, and no others, will be held responsible for the actions resulting from such usage. Absolutely no third party interference is to be accepted as a valid reason behind any such suspicious activity occurring.[br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Scientific Branch of Operation
+ Artifact Document Form
+ [/b]
+ 
+ 
+ Form RD-07
+ Scientific Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ Detailed below is a complete report provided by a competent member of the research and development department; that of which details all anomalous properties and traits of the discovered object [i][u][field][small](Identified object)[/small][/i][/u] as well as estimated time of discovery any breakthroughs found on or with the object in question. [br]
+ [br]
+ [i][u][field][/i][/u][br]
+ [br]
+ [hr]
+ [b][center]Classification[b][/center][br]
+ [br]
+ [center]Security Level[/center][br]
+ [[field]] Dangerous[br]
+ [[field]] Deactivated[br]
+ [[field]] Null Properties[br]
+ [[field]] Innocuous[br]
+ [[field]] Unknown/Undiscovered[br]
+ [br]
+ [b]Detail of Appearance[b][br]
+ [br]
+ [i][u][field][/i][/u][br]
+ [br]
+ [b]Discovering Archaeologist(s)[/b][br]
+ [br]
+ [u][field][/u][br]
+ [br]
+ [b]Signature:[/b][br]
+ [br]
+ [i][u][field](Archivist’s signature)[/i][/u][br]
+ [i][u][field](Research Director’s signature)[/i][/u][br]
+ [br]
+ Stamps below:[br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Scientific Branch of Operation
+ Slime Breeding Log Form
+ [/b]
+ 
+ 
+ Form RD-08
+ Scientific Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ Station Time during observation of breeding:[field][br]
+ [br]
+ [b]Parent Slime type of bred Slime:[/b][field][br]
+ [b]Parent Slime ID# of bred Slime:[/b][field][br]
+ [br]
+ [b]Bred Slime type:[/b][field][br]
+ [b]Bred Slime ID#:[/b][field][br]
+ [br]
+ [b]Child Slime type of bred Slime:[/b][field][br]
+ [b]Child Slime ID# of bred Slime:[/b][field][br]
+ [br]
+ [b]Child Slime type of bred Slime:[/b][field][br]
+ [b]Child Slime ID# of bred Slime:[/b][field][br]
+ [br]
+ [b]Child Slime type of bred Slime:[/b][field][br]
+ [b]Child Slime ID# of bred Slime:[/b][field][br]
+ [br]
+ [b]Child Slime type of bred Slime:[/b][field][br]
+ [b]Child Slime ID# of bred Slime:[/b][field][br]
+ [br]
+ [b]Notes:[/b][field][br]
+ [br]
+ [b]Signature of observing scientist:[/b][field]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Scientific Branch of Operation
+ Slime Core Experimentation Form
+ [/b]
+ 
+ 
+ Form RD-09
+ Scientific Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ [b]Core type:[/b][field][br]
+ [b]origin Slime ID#:[/b][field][br]
+ [br]
+ [b]Injected substance:[/b][field][br]
+ [b]Observed Effect:[/b][field][br]
+ [br]
+ [b]Notes:[/b][field][br]
+ [br]
+ [b]Signature:[/b][field]
+ [hr][/small]
+ 
+--stop--      
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Civilian Branch of Operation
+ Employee Observation
+ [/b]
+ 
+ 
+ Form IA-01
+ Internal Affairs Report[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ 
+ [b]Employee Name:[/b] [field][br]
+ [b]Employee Occupation:[/b] [field][br]
+ [b]Investigation carried out by:[/b][br]
+ [u][field][br][/u]
+ [hr]
+ [b]Concerned Incident:[/b] [field][br]
+ [b]Evidence of Incident:[/b] [field][br]
+ [b]Investigation Notes:[/b] [field][br]
+ [hr]
+ [b]Recommended Action[/b][br]
+ Warning[[field]][br]
+ Demotion[[field]][br]
+ Staff Termination[[field]][br]
+ Fine (Include Amount)[[field]][br]
+ [b]Reviewer Comment:[/b] [field][br]
+ [hr]
+ [b]Signature:[/b] [field][br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Civilian Branch of Operation 
+ Department Audit Form
+ [/b]
+ 
+ Form IA-02
+ Internal Affairs Department Audit[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ 
+ [b]Concerned Department:[/b] [field][br]
+ [b]Employees involved:[/b] [field][br]
+ [b]Investigation carried out by:[/b][br]
+ [u][field][br][/u]
+ [hr]
+ [b]Audit Notes:[/b]
+ [field]
+ [hr]
+ [b]Recommended Action Against Listed Individuals[/b][br]
+ [field] - Warning[[field]][br]
+ [field] - Demotion[[field]][br]
+ [field] - Staff Termination[[field]][br]
+ [field] – Fine[[field]][br]
+ [b]Reviewer Comment:[/b] [field][br]
+ [hr]
+ [b]Signature:[/b] [field][br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Civilian Branch of Operation
+ [/b]
+ 
+ Form IA-03a
+ Complaint Form[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ 
+ [i]Complaint Form[/i][/center][hr][center][small]This section is to be filled out by the complainant.[/small][/center]
+ [b]Complainant[/b]:
+ [field]
+ [b]Other Involved Person(s)[/b]:
+ [field]
+ [b]Complaint[/b]:
+ [field]
+ 
+ [center][small]I understand that filing a false complaint may result in detention or a fine, as well as the loss of the privilege to file complaints, and that it is up to the receiving agent's discretion on how this complaint is handled, if at all.[/small][/center]
+ [b]Signature[/b]:
+ [field][hr][center][small]This section is to be filled out by the receiving agent.[/small][/center]
+ [b]Action taken[/b]:
+ [field]
+ [b]Notes[/b]:
+ [field][hr][small][sign];
+ Internal Affairs Agent, NOS Apollo.[/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Civilian Branch of Operation
+ Station Report
+ [/b]
+ 
+ 
+ Form IA-03b[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ 
+ [b][large]Internal Affairs Report[/large][/b][/center][hr][b]Reporter:[/b] [field]
+ [b]Subject:[/b] [field]
+ [b]Contents:[/b] [field]
+ [b]Required Actions:[/b] [field]
+ [hr][b]Signature:[/b] [field][hr][b]Notes:[/b][br]
+ 
+--stop--      
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Engineering Branch of Operation
+ Renovations Request Form
+ [/b]
+ 
+ Form ED-01
+ Request Form[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ I, [i][u][field][/u][/i](Your name), would like to request an interior renovation of my department, [i][u][field][/u][/i](Department name) under the work of Engineer [i][u][field][/u][/i](Requested engineer’s name). I am aware that I will have to provide specific blueprints for the redecoration, or else allow free-form construction to the engineer in service. The changes, I am also aware of, could be permanent depending on extent.[br]
+ [hr]
+ [b]Authorized by:[/b][br]
+ [br]
+ [field](Engineer’s signature)[br]
+ [field](Head of Renovated Department’s signature)[br]
+ [field](Your signature)[br]
+ [br]
+ [b]Stamped by:[/b][br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Engineering Branch of Operation
+ Station Sattelite Construction Form
+ [/b]
+ 
+ Form ED-02
+ Request Form[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ I, [i][u][field][/u][/i](Your name), would like to request permissions to organize materials and construct an additional station structure for the reason(s) of: [i][u][field][/u][/i](Reasons). The additional structure’s location would be located near the general area of [i][u][field][/u][/i](Location) and will provide the additional uses of/being [i][u][field][/u][/i]. I am aware that if my services are required elsewhere, or if the structure extensively damages station atmospherics, integrity, security or hinders productivity of fellow crew members that the project is to be dropped immediately and dealt with by proper officials. [br]
+ [hr]
+ Authorized by:[br]
+ [br]
+ [field](Captain’s signature)[br]
+ [field](Chief Engineer’s signature)[br]
+ [br]
+ Stamped by:[br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Engineering Branch of Operation
+ Autolathe Construction Request Form
+ [/b]
+ 
+ Form ED-03
+ Request Form[/center][hr][b]Facility[/b]: NOS Apollo
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ I, [i][u][field][/u][/i](Your name), hereby request the permissions to have an autolathe constructed within my place of work. The reasoning for such construction can include [u][i][field][/u][/i](Your reasons). The construction of the autolathe is to be placed within [i][u][field][/i][/u](Location). I understand that this piece of machinery is to be under my supervision at all times, or otherwise left inaccessible by those untrustworthy for the usage of such. I also understand that if any suspicious activity is to occur of which is directed at the autolathe as the source, I, and no others, will be held responsible for the actions resulting from such usage. Absolutely no third party interference is to be accepted as a valid reason behind any such suspicious activity occurring.[br]
+ [hr]
+ Authorized by:[br]
+ [field](Your signature)[br]
+ [field](Chief Engineer’s signature)[br]
+ [field](Captain’s signature)[br]
+ [hr][/small]
+ 
+--stop--    Can be attached to their records via the employment records computer. Generally a good idea!
+  
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Engineering Branch of Operation
+ Core Set-Up Qualification Cerificate Form
+ [/b]
+ 
+ Form ED-04
+ [b]Facility[/b]: NOS Apollo[/center][hr]
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ [b][large]CSP Certificate.[/large][/b][/center][hr]
+ [b]The recipient of this certificate has proven to have the required knowledge to be able to setup the super matter engine on NOS Apollo.
+ This certificate is required in order to be considered for promotion to Station Engineer.[/b][hr]
+ [b]Signature Recipient:[/b] [field]
+ [b]Signature issuer:[/b] [field]
+ [b]Notes:[/b] [field]
+ [hr][br]Stamp below:[br]
+ 
+--stop--    This certificate is mandatory to be promoted to atmospheric technician.
+  
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Engineering Branch of Operation
+ Atmospherics Qualification Cerificate Form
+ [/b]
+ 
+ Form ED-05
+ [b]Facility[/b]: NOS Apollo[/center][hr]
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ [b][large]Nanotrasen AQC Certificate.[/large][/b][/center][hr]
+ [b]The recipient of this certificate has proven to have inn depth understanding of the inner workings of station atmospherics and is capable of minor optimization.
+ This Certificate is mandatory to be considered a candidate for promotion to atmospheric technician.[/b][hr]
+ [b]Signature Recipient:[/b] [field]
+ [b]Signature issuer:[/b] [field]
+ [b]Notes:[/b] [field]
+ [hr][br]Stamp below:[br]
+ 
+--stop--      
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Civilian Branch of Operation
+ Pet ownership request/documentation form
+ [/b]
+ 
+ It is hereby confirmed by the appropriate ranking personnel that [u][i][field][/i][/u][small](Name)[/small] has been deemed competent and able of taking care of the following small animal(s): [u][i][field][small](name and species)[/small][/i][/u][br]
+ I am of  Species: [[field]]Human [[field]]Tajaran [[field]]Skrellian [[field]]Unathi[br]
+ Sex: [[field]]Male [[field]]Female[br]
+ [hr]
+ Approved by:
+ [field][small](HoP or IAA)[/small][br]
+ Stamp below:[br]
+ [br]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Command Branch of Operation
+ Message Form
+ [/b]
+ 
+ Form GT-01
+ [b]Facility[/b]: NOS Apollo[/center][hr]
+ [b]General Transmission[/b][/center]
+ [hr]
+ [b]Date: [/b][field]
+ [b]Time: [/b][field]
+ [hr]
+ [b]Origin: [/b]Apollo Station
+ [b]Department: [/b][field]
+ [b]Destination: [/b][field]
+ 
+ [b]Sender's Name: [/b][field]
+ [b]Sender's Rank: [/b][field]
+ [hr]
+ [b]Priority: [/b][field]
+ [b]Subject: [/b][field]
+ [hr]
+ [large][b]Message Body:[/b][/large]
+ [field]
+ [hr]
+ [b]Sender's signature: [/b][field]
+ [b]Signatures of additional authorities:[/b]
+ [field]
+ [b]Stamps of applicable authorities below this line.[/b]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Command Branch of Operation
+ Allert From
+ [/b]
+ 
+ Form GT-02
+ [b]Facility[/b]: NOS Apollo[/center][hr]
+ [b]Hostile Alert Transmission[/b][/center]
+ [hr]
+ [b]Date: [/b][field]
+ [b]Time: [/b][field]
+ [center][i]If entity is [u]xenobiological[/u], state set name and place their origin of appearance aboard station[/center][/i][br]
+ [br]
+ Hostile’s Name: [i][u][field][/i][/u][br]
+ Hostile’s Faction: [i][u][field][/i][/u][br]
+ Description of Attire: [i][u][field][/i][/u][br]
+ [br]
+ Description of Actions:[i][u][field][/i][/u][br]
+ [br]
+ 1a. Has Code Red Initiated?[small](Confirmation)[/small][br]
+ [[field]]Yes[br]
+ [[field]]No[br]
+ [br]
+ 2a. Require Additional Help?[br]
+ [[field]]Yes[br]
+ [[field]]No[br]
+ [br]
+ 3a. Hailed ERT Previously?[br]
+ [[field]]Yes[br]
+ [[field]]No[br]
+ [br]
+ 3b. Was there a response?[br]
+ [[field]]Yes[br]
+ [[field]No[br]
+ [[field]]N/A[br]
+ [hr]
+ Sent by,[br]
+ [i][u][field][/i][/u][br]
+ [br]
+ Stamped by:[br]
+ [br]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Command Branch of Operation
+ Departmental Progress Report Form
+ [/b]
+ 
+ Form DR-01
+ [b]Facility[/b]: NOS Apollo[/center][hr]
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ [b]Sent by:[/b] [i][u][field][/u][/i](Your signature)[br]
+ [b]Sent from:[/b] [i][u][field][/u][/i](Your department)[br]
+ [br]
+ [b]Details Regarding Productivity:[/b][br]
+ [br]
+ [i][u][field][/u][/i][br]
+ [br]
+ [b]Setbacks Regarding Productivity:[/b][br]
+ [br]
+ [i][u][field][/u][/i][br]
+ [br]
+ [b]Notable Employees:[/b][br]
+ [br]
+ [i][u][field][/u][/i][br]
+ [br]
+ [br]
+ [b]Stamped by:[/b][br]
+ [br]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Command Branch of Operation
+ AWOL/MIA Report Form
+ [/b]
+ 
+ Form DR-02
+ [b]Facility[/b]: NOS Apollo[/center][hr]
+ [b]Date:[/b] [field]
+ [b]Index:[/b] [field]
+ [br][b]Name/Aliases:[/b][i]
+ [br][field][/i]
+ [br][b]Assignment:[/b][i]
+ [br][field][/i]
+ [br][b]Reason for Crew missing from duty[/b][i]
+ [br][field][/i]
+ [br][b]What can be done to rectify this issue?:[/b][i]
+ [br][field][/i]
+ [br][b]Is executive action required?:[/b][i]
+ [br][field][/i]
+ [br][b]Head of department:[/b][i]
+ [br][field][/i]
+ [br][hr][i][small]Crewmen delinquent of duty are governed by corporate regulations act i206 (neglect of duty), and NT withhold the right to perform any and all acts of punishment and repossession upon said employee. Crewmen are at minimum docked of pay till such time as recommencement as governed. Crewmen death does not excuse crewmen from employee or contractual duty as per protocol i206. Nanotrasen withhold the right to deny, permit, override all concordance or orders of command staff relating to any members of Nanotrasen not listed as crew members of the NOS Apollo[/i][/small][br]
+ [hr][/small]
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Command Branch of Operation
+ Commendation Form
+ [/b]
+  
+ Form DR-056 
+ [b]Facility[/b]: NOS Apollo[/center][hr] 
+ [b]Date:[/b] [field] 
+ [b]Index:[/b] [field] 
+ [br][b]Name/Aliases:[/b][i] 
+ [br][field][/i] 
+ [br][b]Assignment:[/b][i] 
+ [br][field][/i] 
+ [br][b]Head of department:[/b][i] 
+ [br][field][/i] 
+ [br][hr][i][small]Crew member [field] has gone above and beyond what is expected from then in lines with contractual and standard O.P. He/she has preformed Nanotrasen  a service without direct benefit to themselves in monetary form. Therefore he/she has received this Nanotrasen commendation form. 
+ [hr][/small]
+ [br][b]Reason for Commendation[/b][i] 
+ [br][field][/i] 
+ 
+--stop--     
+--start--
+ [center][logo][/center]
+ [small][center][b]NanoTrasen Inc.
+ Hurtfull Branch of Operation
+ Hurtfull feelings report form
+ [/b]
+ [large][center]HURT FEELINGS REPORT[/center][/large][hr]
+ 
+ [center]For use of this form, see FM 22-102; the proponent agency is the NT Department of Human Resources[/center][hr]
+ [center]DATA REQUIRED BY THE PRIVACY ACT OF 2058[/center][hr]
+ [small][b]AUTHORITY:[/b] 7 NT 301, Departmental Regulations; 14 NT 20341, Minister of Information and HR.
+ [b]PRINCIPAL PURPOSE:[/b] To assist whiners in documenting hurt feelings, and to provide leaders with a list of staff who require additional counseling, Head of Staff leadership, and extra duty...
+ [b]ROUTINE USES:[/b] For subordinate leader development NT/SOLGOV 12-102.
+ Leaders and whiners should use this form as necessary.
+ [b]DISCLOSURE:[/b] Disclosure is  voluntary, but repeated disclosure may
+ result in a Report of Wall to Wall Counseling.[/small][hr]
+ [large][center]PART I - ADMINISTRATIVE DATA[/center][/large][br][hr]
+ WHINER'S NAME [i]Last, First, MI[/i]: [field]
+ OCCUPATION/TITLE: [field]
+ DATE OF REPORT: [field]
+ NAME AND TITLE OF PERSON FILLING OUT THIS FORM: [field][br]
+ [large][center]PART II - INCIDENT REPORT[/center][/large][br][hr]
+ DATE FEELINGS WERE HURT: [field]
+ TIME OF HURTFULNESS: [field]
+ LOCATION OF HURTFUL INCIDENT: [field]
+ HEAD OF STAFF SYMPATHETIC TO WHINER: [field]
+ NAME OF REAL MAN/WOMAN WHO HURT SENSITIVE FEELINGS: [field]
+ OCCUPATION/TITLE: [field][hr]
+ [large][center]INJURY[/center][/large][hr]
+ WHICH EAR WERE THE WORDS OF HURTFULNESS SPOKEN INTO?: [field]
+ IS THERE PERMANENT FEELING DAMAGE?: [field]
+ DID YOU REQUIRE A "TISSUE" FOR TEARS?: [field]
+ HAS THIS RESULTED IN TRAUMATIC BRAIN INJURY?: [field][hr]
+ [large][center]PART III - NARRATIVE[/center][/large][hr]
+ [center][i]Tell us in your own sissy words how your feelings were
+ hurt...[/i][/center][hr]
+ [field][br][hr]
+ [center]Authentication:[/center]
+ PRINTED NAME OF REAL MAN/WOMAN: [field]
+ SIGNATURE: [field]
+ PRINTED NAME OF WHINER: [field]
+ SIGNATURE: [field][hr]
+ [small] Please refer to Form 1703 'Hug Request Form' for supplemental support. Upon written request, we will make every reasonable effort to provide you with a "blankey", a "binky" and/or a bottle if you so desire.[/small]
+ 
+--stop--  NewPP limit report
+ Cached time: 20160809134620
+ Cache expiry: 86400
+ Dynamic content: false
+ CPU time usage: 0.128 seconds
+ Real time usage: 0.128 seconds
+ Preprocessor visited node count: 838/1000000
+ Preprocessor generated node count: 1550/1000000
+ Post‐expand include size: 0/2097152 bytes
+ Template argument size: 0/2097152 bytes
+ Highest expansion depth: 2/40
+ Expensive parser function count: 0/100
+   Transclusion expansion time report (%,ms,calls,template)
+ 100.00%    0.000      1 - -total
+    
