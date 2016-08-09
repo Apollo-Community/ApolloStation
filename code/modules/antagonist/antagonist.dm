@@ -48,8 +48,10 @@
 	C.temporary = 1
 	antag.current.client.prefs.selected_character = C
 
-	if( istype( antag.current, /mob/living/carbon/human ))
-		C.copy_to( antag.current ) // for latespawns
+	// for latespawns
+	if( istype( antag.current, /mob/living ))
+		C.copy_to( antag.current )
+		antag.current.fully_replace_character_name(antag.original_character.name, antag.current.name)
 
 	antag.current << "<span class='ooc_notice'>You are a non-persistent antagonist and have received a randomized character!</span>"
 

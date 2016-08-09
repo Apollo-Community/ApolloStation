@@ -21,6 +21,13 @@ var/global/list/datum/sm_control/sm_levels = list(	  new /datum/sm_control/level
 													  new /datum/sm_control/level_8, \
 													  new /datum/sm_control/level_9 )
 
+//Damage calc vars
+//These are global so all supermatters use the same vars.
+//This needs to be intergrated into the sm_control datum..
+var/global/damcalc_a = 0.7
+var/global/damcalc_b = 1.4
+var/global/damcalc_c = 500
+
 /proc/getSMVar( var/level, var/variable )
 	if( level < MIN_SUPERMATTER_LEVEL )
 		level = MIN_SUPERMATTER_LEVEL

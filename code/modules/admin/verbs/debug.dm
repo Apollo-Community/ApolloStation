@@ -1105,7 +1105,23 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	message_admins("<span class='notice'>[key_name_admin(usr)] setup the supermatter engine  [response == "Setup except coolant" ? "without coolant": ""]</span>")
 	return
 
+/client/proc/supermatter_dam_debug()
+	set category = "Debug"
+	set name = "Debug supermatter dam calc"
+	set desc = "Change the supermatter damage calculation vars"
 
+	if(!check_rights(R_DEBUG|R_ADMIN))      return
+
+	alert("Adjust the damage calculation formula, standart: (0.7*1.4^CoreLevel*EmitterPower)/500. Current: ([damcalc_a]*[damcalc_b]^CoreLevel*EmitterPower/[damcalc_c]",,"Okay")
+
+	var/a = input("Select a (leave blank for no change)") as null|num
+	if(!isnull(a))	damcalc_a = a
+	var/b = input("Select b (leave blank for no change)") as null|num
+	if(!isnull(b))	damcalc_b = b
+	var/c = input("Select c (leave blank for no change)") as null|num
+	if(!isnull(c))	damcalc_c = c
+
+	alert("The new formula is: ([damcalc_a]*[damcalc_b]^CoreLevel*EmitterPower/[damcalc_c]",,"Okay")
 
 /client/proc/cmd_debug_mob_lists()
 	set category = "Debug"
@@ -1156,5 +1172,5 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Debug"
 	set name = "Advanced WinCall"
 	set desc = "Allows you to open specific windows typically unavailable"
-	
+
 	winset(src, null, "command=.command")
