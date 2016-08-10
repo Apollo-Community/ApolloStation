@@ -34,7 +34,6 @@ var/global/datum/global_init/init = new ()
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
 	diary = file("data/logs/[date_string].log")
 	diary << "[log_end]\n[log_end]\nStarting up. [time2text(world.timeofday, "hh:mm.ss")][log_end]\n---------------------[log_end]"
-
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND"
 
@@ -56,7 +55,6 @@ var/global/datum/global_init/init = new ()
 	//end-emergency fix
 
 	src.update_status()
-
 	. = ..()
 
 	// Set up roundstart seed list. This is here because vendors were
@@ -76,6 +74,7 @@ var/global/datum/global_init/init = new ()
 		master_controller.setup()
 
 		universe.load_date()
+		getFormsFromWiki() //Load some data form the wiki page
 
 		sleep_offline = 1 // go to sleep after the controllers are all set up
 
@@ -169,7 +168,7 @@ var/world_topic_spam_protect_time = world.timeofday
 				message_admins("TOPIC: WARNING: [addr] tried to fake an admin message! Please contact a developer")
 				return
 		else	return
-		
+
 		log_debug(input["token"])			//Just for testing
 
 		var/message = input["text"]

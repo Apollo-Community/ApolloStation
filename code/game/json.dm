@@ -97,4 +97,5 @@ client/proc/ChangeMap(var/X as text)
 	switchmap(X,X)
 proc/send2adminirc(channel,msg)
 	world << channel << " "<< msg
-	shell("python nudge.py '[channel]' [msg]")
+	url =
+	shell("python nudge.py [channel]")

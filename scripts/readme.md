@@ -51,3 +51,11 @@ export SLACKTOKEN [token]
 ```
 
 This script is Depreciated and has been replaced with `slack.py` and only exists for legacy reference.
+
+#### PullFromWiki.py
+
+Dependencies: [BeautifulSoup](http://bazaar.launchpad.net/~leonardr/beautifulsoup/3.2/files) python 2.7+`
+
+`pip install BeautifulSoup --upgrade`
+
+This script is used to pull forms from the wiki, do some processing and store them in a txt file.

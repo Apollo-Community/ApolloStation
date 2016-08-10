@@ -31,6 +31,7 @@
 	var/toner = 30 //how much toner is left! woooooo~
 	var/copydelay = 30 // Can be sped up using better parts.
 	var/maxcopies = 0	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
+	var/form_index = 0 //Index of current form (how many forms have we printed).
 
 /obj/machinery/photocopier/attack_ai(mob/user as mob)
 	return attack_hand(user)
@@ -39,6 +40,7 @@
 	user.set_machine(src)
 
 	var/dat = "Photocopier<BR><BR>"
+	dat += "<a href='byond://?src=\ref[src];form=1'>Print Form</a><BR>"
 	if(copyitem)
 		dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Item</a><BR>"
 		if(toner)
@@ -81,6 +83,35 @@
 
 			use_power(active_power_usage)
 		updateUsrDialog()
+	//Print a form from the list
+	else if(href_list["form"])
+		if(stat & (BROKEN|NOPOWER))
+			return
+
+		//The form selection stuff
+		var/form = input("Select form:") as null|anything in public_forms
+		var/copies = input("Number of copies ?") as null|num
+		if(isnull(form)||isnull(copies))
+			usr << "<span class='warning'>User input error!</span>"
+			return
+		if(copies > toner)
+			usr << "<span class='warning'>Not enough toner for the amount of copies selected.</span>"
+			return
+
+		var/formContent = public_forms[form]
+
+		for(var/i = 0, i < copies, i++)
+			//This should never happen but you never know what magic people may pull.
+			if(toner <= 0)
+				break
+				usr << "<span class='warning'>The [src] is out of toner.</span>"
+			var/obj/item/weapon/paper/form/publicForm/pForm = new(formContent, print_date( universe.date ), usr, form_index)
+			pForm.loc = src.loc
+			pForm.name = form
+			toner -= 1
+			form_index += 1
+			sleep(copydelay)
+
 	else if(href_list["remove"])
 		if(copyitem)
 			copyitem.loc = usr.loc
