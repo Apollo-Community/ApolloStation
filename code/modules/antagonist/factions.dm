@@ -184,9 +184,7 @@
 
 	equipment = list(
 		new/datum/uplink_item(/obj/item/weapon/legcuffs/beartrap/viper, 3000, "Viper's Coil", "TVC"),
-		new/datum/uplink_item(/obj/item/weapon/gun/projectile/automatic/mini_uzi, 4000, "The Pure's Uzi", "UZI"),
-		new/datum/uplink_item(/obj/item/weapon/twohanded/spear/exolitic, 4000, "Spear of the Pure", "ECS"),
-		new/datum/uplink_item(/obj/item/weapon/gun/projectile/deagle, 4000, "Godly Pistol", "DEG")
+		new/datum/uplink_item(/obj/item/weapon/twohanded/spear/exolitic, 4000, "Spear of the Pure", "ECS")
 	)
 
 // AIs are always assigned to this one
@@ -259,6 +257,11 @@
 	alliances = list("Gorlex Marauders")
 	friendly_identification = FACTION_ID_COMPLETE
 	operative_notes = "Most other syndicate operatives are not to be trusted, except fellow Donk members and members of the Gorlex Marauders. We do not approve of mindless killing of innocent workers; \"get in, get done, get out\" is our motto. Members of Waffle.co are to be killed on sight; they are not allowed to be on the station while we're around."
+	equipment = list(
+		new/datum/uplink_item(/obj/item/weapon/storage/box/handcuffs, 2000, "Handcuff Box", "BOH"),
+		new/datum/uplink_item(/obj/item/weapon/gun/energy/taser, 4000, "Taser", "TAG")
+		new/datum/uplink_item(/obj/item/clothing/mask/muzzle, 2000, "Muzzle", "MUZ")
+	)
 
 // Neutral to everyone, friendly to Marauders
 /datum/faction/syndicate/waffle
@@ -273,10 +276,6 @@
 	friendly_identification = FACTION_ID_COMPLETE
 	operative_notes = "Most other syndicate operatives are not to be trusted, except for members of the Gorlex Marauders. Do not trust fellow members of the Waffle.co (but try not to rat them out), as they might have been assigned opposing objectives. We encourage humorous terrorism against Nanotrasen; we like to see our operatives creatively kill people while getting the job done."
 
-	equipment = list(
-		new/datum/uplink_item(/obj/item/weapon/storage/box/handcuffs, 2000, "Handcuff Box", "BOH"),
-		new/datum/uplink_item(/obj/item/weapon/gun/energy/taser, 4000, "Taser Gun", "TAG")
-	)
 
 
 /* ----- Begin defining miscellaneous factions ------ */
