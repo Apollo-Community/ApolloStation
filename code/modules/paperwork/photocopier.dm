@@ -98,15 +98,16 @@
 			usr << "<span class='warning'>Not enough toner for the amount of copies selected.</span>"
 			return
 
-		form = public_forms[form]
+		var/formContent = public_forms[form]
 
 		for(var/i = 0, i < copies, i++)
 			//This should never happen but you never know what magic people may pull.
 			if(toner <= 0)
 				break
 				usr << "<span class='warning'>The [src] is out of toner.</span>"
-			var/obj/item/weapon/paper/form/publicForm/pForm = new(form, print_date( universe.date ), usr, form_index)
+			var/obj/item/weapon/paper/form/publicForm/pForm = new(formContent, print_date( universe.date ), usr, form_index)
 			pForm.loc = src.loc
+			pForm.name = form
 			toner -= 1
 			form_index += 1
 			sleep(copydelay)

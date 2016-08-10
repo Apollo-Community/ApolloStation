@@ -15,6 +15,10 @@ data = soup.find('div',id="mw-content-text")
 #Some preprocessing becuase byond is crap with html chars
 data_string = str(data)
 data_lines = list(data_string.splitlines(True))
+
+#If pulled data is empty exit with 1 so the shell knows it failed
+if len(data_lines) == 0
+    exit(1)
 i = 0
 while i < len(data_lines):
     if '<div class="mw-collapsible-content"><pre>' in data_lines[i]:
