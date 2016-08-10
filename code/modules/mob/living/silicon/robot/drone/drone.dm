@@ -399,3 +399,6 @@
 /mob/living/silicon/robot/drone/add_robot_verbs()
 
 /mob/living/silicon/robot/drone/remove_robot_verbs()
+
+/mob/living/silicon/robot/drone/can_use_vents()
+	return
