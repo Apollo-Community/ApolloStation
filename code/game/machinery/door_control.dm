@@ -170,6 +170,10 @@
 /obj/machinery/driver_button/attack_hand(mob/user as mob)
 
 	src.add_fingerprint(usr)
+	if(secure && closed)
+		var/obj/machinery/driver_button/secure/S = src
+		S.toggle_open(user)
+		return
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(active)
@@ -179,7 +183,11 @@
 	use_power(5)
 
 	active = 1
-	icon_state = "launcheract"
+	if(secure)
+		icon_state = "is_busy"
+		flick("is_push",src)
+	else
+		icon_state = "launcheract"
 
 	for(var/obj/machinery/door/blast/M in world)
 		if (M.id == src.id)
@@ -201,7 +209,10 @@
 				M.close()
 				return
 
-	icon_state = "launcherbtt"
+	if(secure)
+		icon_state = "is_open"
+	else
+		icon_state = "launcherbbt"
 	active = 0
 
 	return

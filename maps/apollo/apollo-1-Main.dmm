@@ -5739,7 +5739,7 @@
 "cgs" = (/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_y = 25},/obj/machinery/light{dir = 1},/turf/simulated/floor,/area/crew_quarters/heads/chief)
 "cgt" = (/turf/simulated/floor,/area/crew_quarters/heads/chief)
 "cgu" = (/obj/machinery/alarm{pixel_y = 24; target_temperature = 273.15},/turf/simulated/floor,/area/crew_quarters/heads/chief)
-"cgv" = (/obj/machinery/driver_button{id = "enginecore"; name = "Emergency Core Eject"; pixel_x = 20; pixel_y = 0},/obj/structure/window/basic{dir = 8},/turf/simulated/floor,/area/crew_quarters/heads/chief)
+"cgv" = (/obj/structure/window/basic{dir = 8},/obj/machinery/driver_button/secure/east{id = "enginecore"; name = "Emergency Core Eject"},/turf/simulated/floor,/area/crew_quarters/heads/chief)
 "cgw" = (/obj/structure/table,/obj/random/tech_supply,/obj/random/tech_supply,/obj/random/tech_supply,/turf/simulated/floor,/area/construction/IAA)
 "cgx" = (/obj/machinery/portable_atmospherics/powered/scrubber,/turf/simulated/floor/plating,/area/maintenance/engi_shuttle)
 "cgy" = (/obj/structure/barricade/wooden,/obj/structure/grille{health = 20; icon_state = "grille"; name = "dense grille"; opacity = 1},/turf/simulated/floor/plating,/area/maintenance/engi_shuttle)
