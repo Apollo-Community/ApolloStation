@@ -1,11 +1,10 @@
 /mob/living/carbon/verb/give()
 	set category = "IC"
 	set name = "Give"
-	set src in view(1)
+	set src in oview(1)
 	if(src.stat == 2 || usr.stat == 2 || src.client == null)
 		return
-	if(src == usr)
-		usr << "<span class='alert'>I feel stupider, suddenly.</span>"
+	if(src == usr) //This shouldn't happen at all with oview(), but can't hurt to be safe
 		return
 	var/obj/item/I
 	if(!usr.hand && usr.r_hand == null)

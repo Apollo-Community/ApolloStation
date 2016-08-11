@@ -11,6 +11,22 @@
 	icon_closed = "wall-locker"
 	icon_opened = "wall-lockeropen"
 
+/obj/structure/closet/walllocker/north //Appears on north wall
+	pixel_y = 32
+	dir = SOUTH
+
+/obj/structure/closet/walllocker/south //Appears on south wall
+	pixel_y = -32
+	dir = NORTH
+
+/obj/structure/closet/walllocker/west //Appears on west wall
+	pixel_x = -32
+	dir = EAST
+
+/obj/structure/closet/walllocker/east //Appears on east wall
+	pixel_x = 32
+	dir = WEST
+
 //spawns endless (3 sets) amounts of breathmask, emergency oxy tank and crowbar
 
 /obj/structure/closet/walllocker/emerglocker
