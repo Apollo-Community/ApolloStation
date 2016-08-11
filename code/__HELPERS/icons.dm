@@ -927,3 +927,25 @@ proc/sort_atoms_by_layer(var/list/atoms)
 			colorsum[3] += RGB[3]
 		final_average = rgb(colorsum[1]/total, colorsum[2]/total, colorsum[3]/total)
 	return final_average
+
+/atom/proc/cut_overlays()
+	overlays.Cut()
+	overlays += priority_overlays
+
+/atom/proc/add_overlay(image, priority = 0)
+	if(image in overlays)
+		return
+	var/list/new_overlays = overlays.Copy()
+	if(priority)
+		if(!priority_overlays)
+			priority_overlays = list()
+		priority_overlays += image
+		new_overlays += image
+	else
+		if(priority_overlays)
+			new_overlays -= priority_overlays
+			new_overlays += image
+			new_overlays += priority_overlays
+		else
+			new_overlays += image
+	overlays = new_overlays

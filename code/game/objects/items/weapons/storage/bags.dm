@@ -8,6 +8,7 @@
  *		Trash Bag
  *		Mining Satchel
  *		Plant Bag
+ *		Kitchen Tray
  *		Sheet Snatcher
  *		Cash Bag
  *
@@ -96,6 +97,162 @@
 	w_class = 2
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/grown","/obj/item/seeds","/obj/item/weapon/grown")
 
+// -----------------------------
+//          Kitchen tray
+// -----------------------------
+
+/obj/item/weapon/storage/bag/tray
+	name = "tray"
+	icon = 'icons/obj/food.dmi'
+	icon_state = "tray"
+	desc = "A metal tray to lay food on."
+	force = 5
+	throwforce = 10
+	throw_speed = 3
+	throw_range = 5
+	w_class = 4
+	flags = CONDUCT
+	matter = list("metal" = 3000)
+	preposition = "on"
+	can_hold = list("/obj/item/weapon/reagent_containers/food")
+	var/cooldown = 0 //shield bash cooldown. based on world.time
+
+/obj/item/weapon/storage/bag/tray/attack(mob/living/M, mob/living/user)
+	..()
+	// Drop all the things. All of them.
+	var/list/obj/item/oldContents = contents.Copy()
+	quick_empty()
+
+	// Make each item scatter a bit
+	for(var/obj/item/I in oldContents)
+		spawn()
+			for(var/i = 1, i <= rand(1,2), i++)
+				if(I)
+					step(I, pick(NORTH,SOUTH,EAST,WEST))
+					sleep(rand(2,4))
+	if((CLUMSY in user.mutations) && prob(50))              //What if he's a clown?
+		M << "<span class='alert'>You accidentally slam yourself with the [src]!</span>"
+		M.Weaken(1)
+		user.take_organ_damage(2)
+		if(prob(50))
+			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
+			return
+		else
+			playsound(M, 'sound/items/trayhit2.ogg', 50, 1) //sound playin'
+			return //it always returns, but I feel like adding an extra return just for safety's sakes. EDIT; Oh well I won't :3
+
+	var/mob/living/carbon/human/H = M      ///////////////////////////////////// /Let's have this ready for later.
+
+
+	if(!(user.zone_sel.selecting == ("eyes" || "head"))) //////////////hitting anything else other than the eyes
+		if(prob(33))
+			src.add_blood(H)
+			var/turf/location = H.loc
+			if (istype(location, /turf/simulated))
+				location.add_blood(H)     ///Plik plik, the sound of blood
+
+		if(!in_unlogged(user))
+			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
+			msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+
+		if(prob(15))
+			M.Weaken(3)
+			M.take_organ_damage(3)
+		else
+			M.take_organ_damage(5)
+		if(prob(50))
+			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("<span class='alert'><B>[] slams [] with the tray!</B></span>", user, M), 1)
+			return
+		else
+			playsound(M, 'sound/items/trayhit2.ogg', 50, 1)  //we applied the damage, we played the sound, we showed the appropriate messages. Time to return and stop the proc
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("<span class='alert'><B>[] slams [] with the tray!</B></span>", user, M), 1)
+			return
+
+
+
+
+	if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
+		M << "<span class='alert'>You get slammed in the face with the tray, against your mask!</span>"
+		if(prob(33))
+			src.add_blood(H)
+			if (H.wear_mask)
+				H.wear_mask.add_blood(H)
+			if (H.head)
+				H.head.add_blood(H)
+			if (H.glasses && prob(33))
+				H.glasses.add_blood(H)
+			var/turf/location = H.loc
+			if (istype(location, /turf/simulated))     //Addin' blood! At least on the floor and item :v
+				location.add_blood(H)
+
+		if(prob(50))
+			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("<span class='alert'><B>[] slams [] with the tray!</B></span>", user, M), 1)
+		else
+			playsound(M, 'sound/items/trayhit2.ogg', 50, 1)  //sound playin'
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("<span class='alert'><B>[] slams [] with the tray!</B></span>", user, M), 1)
+		if(prob(10))
+			M.Stun(rand(1,3))
+			M.take_organ_damage(3)
+			return
+		else
+			M.take_organ_damage(5)
+			return
+
+	else //No eye or head protection, tough luck!
+		M << "<span class='alert'>You get slammed in the face with the tray!</span>"
+		if(prob(33))
+			src.add_blood(M)
+			var/turf/location = H.loc
+			if (istype(location, /turf/simulated))
+				location.add_blood(H)
+
+		if(prob(50))
+			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("<span class='alert'><B>[] slams [] in the face with the tray!</B></span>", user, M), 1)
+		else
+			playsound(M, 'sound/items/trayhit2.ogg', 50, 1)  //sound playin' again
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("<span class='alert'><B>[] slams [] in the face with the tray!</B></span>", user, M), 1)
+		if(prob(30))
+			M.Stun(rand(2,4))
+			M.take_organ_damage(4)
+			return
+		else
+			M.take_organ_damage(8)
+			if(prob(30))
+				M.Weaken(2)
+				return
+			return
+
+/obj/item/weapon/storage/bag/tray/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/kitchen/rollingpin))
+		if(cooldown < world.time - 25)
+			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
+			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+			cooldown = world.time
+	else
+		..()
+
+/obj/item/weapon/storage/bag/tray/proc/rebuild_overlays()
+	cut_overlays()
+	for(var/obj/item/I in contents)
+		add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1))
+
+/obj/item/weapon/storage/bag/tray/remove_from_storage(obj/item/W as obj, atom/new_location)
+	..()
+	rebuild_overlays()
+
+/obj/item/weapon/storage/bag/tray/handle_item_insertion(obj/item/I, prevent_warning = 0)
+	add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1))
+	. = ..()
 
 // -----------------------------
 //        Sheet Snatcher
