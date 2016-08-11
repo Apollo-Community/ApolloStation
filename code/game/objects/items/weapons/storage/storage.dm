@@ -1,4 +1,4 @@
-// To clarify:
+	// To clarify:
 // For use_to_pickup and allow_quick_gather functionality,
 // see item/attackby() (/game/objects/items.dm)
 // Do not remove this functionality without good reason, cough reagent_containers cough.
@@ -23,6 +23,7 @@
 	var/collection_mode = 1;  //0 = pick one at a time, 1 = pick all on tile
 	var/foldable = null	// BubbleWrap - if set, can be folded (when empty) into a sheet of cardboard
 	var/use_sound = "rustle"	//sound played when used. null for no sound.
+	var/preposition = "in" // You put things 'in' a bag, but trays need 'on'.
 
 /obj/item/weapon/storage/Destroy()
 	for( var/I in src )
@@ -335,9 +336,8 @@
 	if(!can_be_inserted(W))
 		return
 
-	if(istype(W, /obj/item/weapon/tray))
-		var/obj/item/weapon/tray/T = W
-		if(T.calc_carry() > 0)
+	if(istype(W, /obj/item/weapon/storage/bag/tray))
+		if(W.contents.len)
 			if(prob(85))
 				user << "<span class='alert'>The tray won't fit in [src].</span>"
 				return
