@@ -2,6 +2,12 @@ from urllib.request import build_opener
 from bs4 import BeautifulSoup
 from sys import argv
 
+try:
+    from urllib.request import urlopen
+except ImportError:
+    #Error message to user
+    
+
 opener = build_opener()
 opener.addheaders = [('User-agent', 'Mozilla/5.0')] #wikipedia needs this
 url = str(argv[1])
