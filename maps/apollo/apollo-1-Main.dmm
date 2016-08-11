@@ -501,7 +501,7 @@
 "ajG" = (/turf/simulated/wall/alloy/reinforced,/area/security/warden)
 "ajH" = (/obj/machinery/door/airlock/glass_security{name = "Warden's Office"; req_access_txt = "3"},/obj/machinery/door/firedoor/border_only{dir = 2},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor{icon_state = "dark"},/area/security/warden)
 "ajI" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor{icon_state = "dark"},/area/security/armoury)
-"ajJ" = (/obj/structure/table,/obj/structure/closet/walllocker{name = "Shotgun Locker"; pixel_x = 28},/obj/item/weapon/gun/projectile/shotgun/pump/combat{ammo_type = "/obj/item/ammo_casing/shotgun/beanbag"; pixel_x = 2; pixel_y = -2},/turf/simulated/floor{icon_state = "dark"},/area/security/armoury)
+"ajJ" = (/obj/structure/table,/obj/item/weapon/gun/projectile/shotgun/pump/combat{ammo_type = "/obj/item/ammo_casing/shotgun/beanbag"; pixel_x = 2; pixel_y = -2},/obj/structure/closet/walllocker/east{name = "Shotgun Locker"},/turf/simulated/floor{icon_state = "dark"},/area/security/armoury)
 "ajK" = (/obj/structure/table,/obj/item/weapon/folder/red{pixel_x = 2; pixel_y = 4},/obj/item/weapon/pen,/turf/simulated/floor{icon_state = "dark"},/area/security/evidence)
 "ajL" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor{icon_state = "dark"},/area/security/evidence)
 "ajM" = (/obj/structure/filingcabinet/filingcabinet,/obj/machinery/firealarm{dir = 4; pixel_x = 16; pixel_y = 0},/turf/simulated/floor{icon_state = "dark"},/area/security/evidence)

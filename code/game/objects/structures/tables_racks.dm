@@ -490,6 +490,19 @@
 	if(W.loc != user) // This should stop mounted modules ending up outside the module.
 		return
 
+	if(istype(W, /obj/item/weapon/storage/bag/tray))
+		var/obj/item/weapon/storage/bag/tray/T = W
+		if(T.contents.len > 0) // If the tray isn't empty
+			var/list/obj/item/oldContents = T.contents.Copy()
+			T.quick_empty()
+
+			for(var/obj/item/C in oldContents)
+				C.loc = src.loc
+
+			user.visible_message("[user] empties [W] on [src].")
+			return
+		// If the tray IS empty, continue on (tray will be placed on the table like other items)
+
 	if(istype(W, /obj/item/weapon/melee/energy/blade))
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, src.loc)
