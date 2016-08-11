@@ -79,4 +79,4 @@
 
 // sends ahelps from the server to discord
 /proc/send_discord(var/source, var/target = "1", var/message)
-	shell("python3.6 -v scripts/discord_bot.py [source] [target] '[sanitize(message)]' >> discordbotlog.txt 2>discordbotlog.txt")
+	shell("python3.6 scripts/discord_bot.py [source] [target] '[sanitize(message)]'")
