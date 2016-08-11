@@ -10,6 +10,8 @@
 	anchored = 1
 	icon_closed = "wall-locker"
 	icon_opened = "wall-lockeropen"
+	store_mobs = 0
+	store_misc = 0
 
 /obj/structure/closet/walllocker/north //Appears on north wall
 	pixel_y = 32
