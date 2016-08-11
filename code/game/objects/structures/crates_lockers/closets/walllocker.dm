@@ -10,6 +10,8 @@
 	anchored = 1
 	icon_closed = "wall-locker"
 	icon_opened = "wall-lockeropen"
+	store_mobs = 0
+	store_misc = 0
 
 //spawns endless (3 sets) amounts of breathmask, emergency oxy tank and crowbar
 
