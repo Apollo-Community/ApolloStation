@@ -397,7 +397,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		alert("Wait until the game starts")
 		return
 
-	if(!istype(M, /mob/living/carbon/human))
+	//Now also works for robots! <rjtwins>
+	if(!istype(M, /mob/living/carbon/human) && !istype(M, /mob/living/silicon/robot))
 		return
 
 	if(M.captured == 1)
