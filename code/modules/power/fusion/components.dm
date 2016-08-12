@@ -58,6 +58,10 @@
 				R.receive_pulse(nLevel*(0.7/distance)/4)
 	return
 
+//Return a string with data from the ring obj
+/obj/machinery/power/fusion/ring/proc/status()
+	return "Capacitor Reserve: [power] <br> Mode: [src.mode=1 ? "Direct" : "Indirect"] <br> Neutron Level: [nLevel]"
+
 /obj/machinery/power/fusion/ring/nw
 
 /obj/machinery/power/fusion/ring/se
@@ -69,8 +73,7 @@
 /obj/machinery/power/fusion/plasma
 	dir = 0
 	icon = 'icons/effects/beam.dmi'
-	icon_state = "field"
-
+	icon_state = "plas_stream"
 
 // Borrows code from cloning computer and singulo controll computer
 /obj/machinery/computer/fusion
@@ -80,17 +83,8 @@
 	..()
 
 /obj/machinery/computer/fusion/proc/updatemodules()
-	fusion_components = findComponents()
-
-/obj/machinery/computer/fusion/proc/findgenerator()
-	var/obj/machinery/gravity_generator/foundgenerator = null
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		//world << "SEARCHING IN [dir]"
-		foundgenerator = locate(/obj/machinery/gravity_generator/, get_step(src, dir))
-		if (!isnull(foundgenerator))
-			//world << "FOUND"
-			break
-	return foundgenerator
+	if(fusion_controller.findComponents())
+		fusion_controller.fusion_components.Add(src)
 
 /obj/machinery/computer/fusion/attack_ai(mob/user as mob)
 	return attack_hand(user)
@@ -105,7 +99,7 @@
 	updatemodules()
 	var/dat = "<h3>Tokamak Controll Panel</h3>"
 	//dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>"
-	if(fusion_components.len < 5)
+	if(fusion_controller.fusion_components.len < 5)
 		dat += "<a href='byond://?src=\ref[src];findcomp=1'><font color=green> Connect to reactor components. </font></a>"
 	else
 	//font color=green
