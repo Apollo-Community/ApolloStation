@@ -1470,6 +1470,7 @@
 #include "code\modules\power\cell.dm"
 #include "code\modules\power\engine.dm"
 #include "code\modules\power\fractal_reactor.dm"
+#include "code\modules\power\fusion.dm"
 #include "code\modules\power\generator.dm"
 #include "code\modules\power\generator_type2.dm"
 #include "code\modules\power\gravitygenerator.dm"
