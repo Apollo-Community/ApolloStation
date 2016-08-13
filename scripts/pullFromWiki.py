@@ -17,7 +17,7 @@ data_string = str(data)
 data_lines = list(data_string.splitlines(True))
 
 #If pulled data is empty exit with 1 so the shell knows it failed
-if len(data_lines) == 0
+if len(data_lines) == 0:
     exit(1)
 i = 0
 while i < len(data_lines):

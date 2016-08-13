@@ -83,13 +83,37 @@
 
 			use_power(active_power_usage)
 		updateUsrDialog()
-	//Print a form from the list
+
+	//Form selection window opens
 	else if(href_list["form"])
 		if(stat & (BROKEN|NOPOWER))
 			return
 
 		//The form selection stuff
-		var/form = input("Select form:") as null|anything in public_forms
+		var/dat = "<tt><center><h1><b>Form Selection Menu</b></h1></center>"
+		dat += "<table style='width:100%; padding:4px;'><tr>"
+		for(var/i = 1, i <= public_forms.len, i++)
+			dat += "[public_forms[i]]	"
+			dat += "<a href='byond://?src=\ref[src];preform=[public_forms[i]]'>view</a>"
+			dat += " - "
+			dat += "<a href='byond://?src=\ref[src];selform=[public_forms[i]]'>print</a><BR>"
+		usr << browse(dat, "window=formSelectScreen;size=600x750")
+
+	//Form preview window opens
+	else if(!isnull(href_list["preform"]) && href_list["preform"] in public_forms)
+		var/form = href_list["preform"]
+		var/formContent = public_forms[form]
+		formContent = simpleparsepapercode(formContent)
+
+		//The form view stuff
+		var/dat = "<tt><center>Form Preview</center>"
+		dat += formContent
+		dat += "<BR><a href='byond://?src=\ref[src];selform=[form]'>Print</a>"
+		usr << browse(dat, "window=formPreviewScreen")
+
+	//Print selected form
+	else if(!isnull(href_list["selform"]) && href_list["selform"] in public_forms)
+		var/form = href_list["selform"]
 		var/copies = input("Number of copies ?") as null|num
 		if(isnull(form)||isnull(copies))
 			usr << "<span class='warning'>User input error!</span>"

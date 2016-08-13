@@ -25,6 +25,9 @@ var/global/datum/global_init/init = new ()
 	if(params.len)
 		world.log << "Command-line parameters:"
 		for(var/p in params)	world.log << "[p] = [params[p]]"
+		if(params["hub"])
+			visibility = 1
+			world.log << "Setting server visibility to 1."
 		if(params["genmap"])
 			world.log << "Geneating web maps..."
 			generate_every_map()

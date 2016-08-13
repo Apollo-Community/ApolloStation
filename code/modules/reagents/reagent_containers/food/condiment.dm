@@ -16,7 +16,8 @@
 	volume = 50
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-
+		if(istype(W,/obj/item/weapon/storage/bag/tray))
+			..()
 		return
 	attack_self(mob/user as mob)
 		return
@@ -53,9 +54,10 @@
 			return 1
 		return 0
 
-	attackby(obj/item/I as obj, mob/user as mob)
+//I don't think this is needed.
+//	attackby(obj/item/I as obj, mob/user as mob)
 
-		return
+//		return
 
 	afterattack(obj/target, mob/user , flag)
 		if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
