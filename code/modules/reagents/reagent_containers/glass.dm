@@ -145,6 +145,7 @@
 				user << "<span class='notice'>You set the label to \"[tmp_label]\".</span>"
 				src.label_text = tmp_label
 				src.update_name_label()
+		..()
 
 	proc/update_name_label()
 		if(src.label_text == "")

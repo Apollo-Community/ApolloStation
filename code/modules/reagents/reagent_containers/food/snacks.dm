@@ -173,7 +173,7 @@
 
 	if (is_sliceable())
 		//these are used to allow hiding edge items in food that is not on a table/tray
-		var/can_slice_here = isturf(src.loc) && ((locate(/obj/structure/table) in src.loc) || (locate(/obj/machinery/optable) in src.loc) || (locate(/obj/item/weapon/tray) in src.loc))
+		var/can_slice_here = isturf(src.loc) && ((locate(/obj/structure/table) in src.loc) || (locate(/obj/machinery/optable) in src.loc) || (locate(/obj/item/weapon/storage/bag/tray) in src.loc))
 		var/hide_item = !has_edge(W) || !can_slice_here
 
 		if (hide_item)
@@ -2886,6 +2886,7 @@
 		user << "You make some dough."
 		qdel(W)
 		qdel(src)
+	..()
 
 // Egg + flour = dough
 /obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -2894,6 +2895,7 @@
 		user << "You make some dough."
 		qdel(W)
 		qdel(src)
+	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/dough
 	name = "dough"
@@ -2911,6 +2913,7 @@
 		new /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough(src)
 		user << "You flatten the dough."
 		qdel(src)
+	..()
 
 // slicable into 3xdoughslices
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough
@@ -2965,6 +2968,7 @@
 		user << "You make a hotdog."
 		qdel(W)
 		qdel(src)
+	..()
 
 // Burger + cheese wedge = cheeseburger
 /obj/item/weapon/reagent_containers/food/snacks/monkeyburger/attackby(obj/item/weapon/reagent_containers/food/snacks/cheesewedge/W as obj, mob/user as mob)

@@ -388,6 +388,7 @@ datum/mind
 							C.workers -= antagonist
 						antagonist.active_contracts.Cut()
 
+						antagonist.faction.leave()
 						faction.join(antagonist)
 
 						current << "<b><font size=3 color=red>You are now an agent of [faction.name]</font></b>"
