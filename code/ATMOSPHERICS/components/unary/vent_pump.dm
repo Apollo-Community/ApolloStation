@@ -103,6 +103,11 @@
 	if(frequency != 2141)	set_frequency(2141)
 	broadcast_status()
 
+	//Some wierd vars that need to be edited..
+	pressure_checks = 1
+	pressure_checks_default = 1
+	pump_direction = 0
+
 /obj/machinery/atmospherics/unary/vent_pump/update_icon(var/safety = 0)
 	if(!check_icon_cache())
 		return
