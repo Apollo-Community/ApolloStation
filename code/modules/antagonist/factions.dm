@@ -59,6 +59,8 @@
 /datum/faction/syndicate/join(var/datum/mind/M)
 	..(M)
 
+	M.antagonist.faction = src
+
 	if(faction_controller.contracts_made && members.len == 1) // first member, start making contracts
 		update_contracts()
 
