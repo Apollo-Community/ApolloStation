@@ -170,7 +170,7 @@ var/list/mechtoys = list(
 
 	//Sellin
 	proc/sell()
-		world << "Sup selling started"
+		log_debug("Sup selling started")
 		var/list/turfs = shuttle.current_hanger.hanger_area_turfs
 		if(isnull(turfs))	return
 
@@ -208,7 +208,7 @@ var/list/mechtoys = list(
 							var/obj/item/stack/sheet/mineral/platinum/P = A
 							plat_count += P.get_amount()
 
-						world << "selling [A]"
+						log_debug("selling [A]")
 
 				qdel(MA)
 
@@ -220,7 +220,7 @@ var/list/mechtoys = list(
 
 	//Buyin
 	proc/buy()
-		world << "buying started"
+		log_debug("buying started")
 		if(!shoppinglist.len) return
 
 		var/list/turfs = shuttle.supply_turfs
@@ -231,10 +231,10 @@ var/list/mechtoys = list(
 			if(T.density || T.contents.len) continue
 			clear_turfs += T
 
-		world << "There are [clear_turfs.len] turfs to place stuff on."
-		world << "shopping list:"
+		log_debug("There are [clear_turfs.len] turfs to place stuff on.")
+		log_debug("shopping list:")
 		for(var/item in shoppinglist)
-			world << "/n [item]"
+			log_debug("[item]")
 
 		for(var/S in shoppinglist)
 			if(!clear_turfs.len) break

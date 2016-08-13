@@ -397,7 +397,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		alert("Wait until the game starts")
 		return
 
-	if(!istype(M, /mob/living/carbon/human))
+	//Now also works for robots! <rjtwins>
+	if(!istype(M, /mob/living/carbon/human) && !istype(M, /mob/living/silicon/robot))
 		return
 
 	if(M.captured == 1)
@@ -1111,17 +1112,22 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set desc = "Change the supermatter damage calculation vars"
 
 	if(!check_rights(R_DEBUG|R_ADMIN))      return
-
-	alert("Adjust the damage calculation formula, standart: (0.7*1.4^CoreLevel*EmitterPower)/500. Current: ([damcalc_a]*[damcalc_b]^CoreLevel*EmitterPower/[damcalc_c]",,"Okay")
+	var/dama = getSMVar(1, "dama")
+	var/damb = getSMVar(1, "damb")
+	var/damc = getSMVar(1, "damc")
+	alert("Adjust the damage calculation formula, standart: (0.7*1.4^CoreLevel*EmitterPower)/500. Current: ([dama]*[damb]^CoreLevel*EmitterPower/[damc]",,"ok")
 
 	var/a = input("Select a (leave blank for no change)") as null|num
-	if(!isnull(a))	damcalc_a = a
+	if(!isnull(a))	setSMVar(0, "dama", a)
 	var/b = input("Select b (leave blank for no change)") as null|num
-	if(!isnull(b))	damcalc_b = b
+	if(!isnull(b))	setSMVar(0, "damb", b)
 	var/c = input("Select c (leave blank for no change)") as null|num
-	if(!isnull(c))	damcalc_c = c
+	if(!isnull(c))	setSMVar(0, "damc", c)
 
-	alert("The new formula is: ([damcalc_a]*[damcalc_b]^CoreLevel*EmitterPower/[damcalc_c]",,"Okay")
+	var/ndama = getSMVar(1, "dama")
+	var/ndamb = getSMVar(1, "damb")
+	var/ndamc = getSMVar(1, "damc")
+	alert("The new formula is: ([ndama]*[ndamb]^CoreLevel*EmitterPower/[ndamc]",,"Okay")
 
 /client/proc/cmd_debug_mob_lists()
 	set category = "Debug"

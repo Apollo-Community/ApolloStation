@@ -31,6 +31,7 @@
 	var/toner = 30 //how much toner is left! woooooo~
 	var/copydelay = 30 // Can be sped up using better parts.
 	var/maxcopies = 0	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
+	var/form_index = 0 //Index of current form (how many forms have we printed).
 
 /obj/machinery/photocopier/attack_ai(mob/user as mob)
 	return attack_hand(user)
@@ -39,6 +40,7 @@
 	user.set_machine(src)
 
 	var/dat = "Photocopier<BR><BR>"
+	dat += "<a href='byond://?src=\ref[src];form=1'>Print Form</a><BR>"
 	if(copyitem)
 		dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Item</a><BR>"
 		if(toner)
@@ -81,6 +83,59 @@
 
 			use_power(active_power_usage)
 		updateUsrDialog()
+
+	//Form selection window opens
+	else if(href_list["form"])
+		if(stat & (BROKEN|NOPOWER))
+			return
+
+		//The form selection stuff
+		var/dat = "<tt><center><h1><b>Form Selection Menu</b></h1></center>"
+		dat += "<table style='width:100%; padding:4px;'><tr>"
+		for(var/i = 1, i <= public_forms.len, i++)
+			dat += "[public_forms[i]]	"
+			dat += "<a href='byond://?src=\ref[src];preform=[public_forms[i]]'>view</a>"
+			dat += " - "
+			dat += "<a href='byond://?src=\ref[src];selform=[public_forms[i]]'>print</a><BR>"
+		usr << browse(dat, "window=formSelectScreen;size=600x750")
+
+	//Form preview window opens
+	else if(!isnull(href_list["preform"]) && href_list["preform"] in public_forms)
+		var/form = href_list["preform"]
+		var/formContent = public_forms[form]
+		formContent = simpleparsepapercode(formContent)
+
+		//The form view stuff
+		var/dat = "<tt><center>Form Preview</center>"
+		dat += formContent
+		dat += "<BR><a href='byond://?src=\ref[src];selform=[form]'>Print</a>"
+		usr << browse(dat, "window=formPreviewScreen")
+
+	//Print selected form
+	else if(!isnull(href_list["selform"]) && href_list["selform"] in public_forms)
+		var/form = href_list["selform"]
+		var/copies = input("Number of copies ?") as null|num
+		if(isnull(form)||isnull(copies))
+			usr << "<span class='warning'>User input error!</span>"
+			return
+		if(copies > toner)
+			usr << "<span class='warning'>Not enough toner for the amount of copies selected.</span>"
+			return
+
+		var/formContent = public_forms[form]
+
+		for(var/i = 0, i < copies, i++)
+			//This should never happen but you never know what magic people may pull.
+			if(toner <= 0)
+				break
+				usr << "<span class='warning'>The [src] is out of toner.</span>"
+			var/obj/item/weapon/paper/form/publicForm/pForm = new(formContent, print_date( universe.date ), usr, form_index)
+			pForm.loc = src.loc
+			pForm.name = form
+			toner -= 1
+			form_index += 1
+			sleep(copydelay)
+
 	else if(href_list["remove"])
 		if(copyitem)
 			copyitem.loc = usr.loc

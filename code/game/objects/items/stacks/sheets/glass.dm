@@ -204,7 +204,7 @@
 /*
  * Reinforced phoron glass sheets
  */
-/obj/item/stack/sheet/glass/phoronrglass
+/obj/item/stack/sheet/glass/phoronrglass/reinforced
 	name = "reinforced phoron glass"
 	desc = "Phoron glass which has been reinforced with metal rods."
 	singular_name = "reinforced phoron glass sheet"

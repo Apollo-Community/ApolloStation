@@ -11,11 +11,14 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/kitchenknife))
-		new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
-		user << "You cut the meat into thin strips."
-		qdel(src)
+		if(isturf(src.loc) && ((locate(/obj/structure/table) in src.loc) || (locate(/obj/machinery/optable) in src.loc) || (locate(/obj/item/weapon/storage/bag/tray) in src.loc)))
+			new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
+			new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
+			new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
+			user << "You cut the meat into thin strips."
+			qdel(src)
+		else
+			user << "<span class='alert'>You can't cut the meat here. You need a more suitable surface.</span>"
 	else
 		..()
 

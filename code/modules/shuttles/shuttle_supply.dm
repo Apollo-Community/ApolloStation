@@ -11,7 +11,7 @@
 	supply_turfs = get_turfs_square(current_hanger.x, current_hanger.y, current_hanger.z, 3, 3)
 
 /datum/shuttle/ferry/supply/short_jump(var/obj/hanger/trg_hanger)
-	world << "sup shuttle short jump 1 called"
+	log_debug("sup shuttle short jump 1 called")
 	//Do some checks first
 	if(moving_status != SHUTTLE_IDLE)
 		return
@@ -47,10 +47,10 @@
 	moving_status = SHUTTLE_INTRANSIT
 	traveling = 1
 
-	world << "sup shuttle short jump 1 finished"
+	log_debug("sup shuttle short jump 1 finished")
 
 /datum/shuttle/ferry/supply/proc/short_jump_finish()
-	world << "sup shuttle short jump 2 called"
+	log_debug("sup shuttle short jump 2 called")
 	//We can only arrive late if we are going to the station
 	if (!at_station() && prob(late_chance))
 		sleep(rand(0,max_late_time))
@@ -71,7 +71,7 @@
 	else
 		moving_status = SHUTTLE_IDLE
 
-	world << "sup shuttle short jump 2 finished"
+	log_debug("sup shuttle short jump 2 finished")
 
 /datum/shuttle/ferry/supply/process()
 	..()
