@@ -1454,6 +1454,7 @@
 #include "code\modules\paperwork\pen.dm"
 #include "code\modules\paperwork\photocopier.dm"
 #include "code\modules\paperwork\photography.dm"
+#include "code\modules\paperwork\pullFromWiki.dm"
 #include "code\modules\paperwork\silicon_photography.dm"
 #include "code\modules\paperwork\stamps.dm"
 #include "code\modules\phoron_desub\control.dm"

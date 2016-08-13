@@ -116,8 +116,9 @@
 
 //Check if the pod has a beacon
 /obj/spacepod/proc/has_beacon()
-	if (equipment_system.spacepod_equipment.Find(/obj/item/device/spacepod_equipment/misc/tracker) > 0)
-		return 1
+	for (var/obj/to_check in equipment_system.spacepod_equipment)
+		if (istype(to_check, /obj/item/device/spacepod_equipment/misc/tracker))
+			return 1
 	return 0
 
 /obj/spacepod/proc/is_on_fire()

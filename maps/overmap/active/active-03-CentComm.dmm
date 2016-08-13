@@ -1103,7 +1103,7 @@
 "vk" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/glass/rag,/turf/simulated/floor{icon_state = "grimy"},/area/antagasteroid)
 "vl" = (/obj/machinery/computer/security/telescreen/entertainment,/turf/unsimulated/wall,/area/antagasteroid)
 "vm" = (/obj/machinery/newscaster,/turf/unsimulated/wall,/area/antagasteroid)
-"vn" = (/obj/structure/table,/obj/item/weapon/tray{pixel_y = 5},/obj/item/weapon/storage/box/drinkingglasses{pixel_x = 1; pixel_y = 4},/turf/unsimulated/floor{icon_state = "white"},/area/syndicate_mothership)
+"vn" = (/obj/structure/table,/obj/item/weapon/storage/bag/tray{pixel_y = 5},/obj/item/weapon/storage/box/drinkingglasses{pixel_x = 1; pixel_y = 4},/turf/unsimulated/floor{icon_state = "white"},/area/syndicate_mothership)
 "vo" = (/obj/structure/table,/obj/machinery/chem_dispenser/soda{pixel_x = 2; pixel_y = 6},/turf/unsimulated/floor{icon_state = "white"},/area/syndicate_mothership)
 "vp" = (/obj/structure/table,/obj/machinery/cooking_machines/microwave{pixel_x = -1; pixel_y = 8},/turf/unsimulated/floor{icon_state = "white"},/area/syndicate_mothership)
 "vq" = (/obj/structure/sink{icon_state = "sink"; dir = 8; pixel_x = -12; pixel_y = 2},/obj/structure/mirror{dir = 4; pixel_x = -32; pixel_y = 0},/turf/unsimulated/floor{icon_state = "freezerfloor"; dir = 2},/area/syndicate_mothership)
