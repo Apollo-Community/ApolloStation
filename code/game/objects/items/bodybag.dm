@@ -133,3 +133,16 @@
 		if(!ishuman(usr))	return
 		usr << "<span class='alert'>You can't fold that up anymore..</span>"
 	..()
+
+/obj/item/bodybag/biohaz
+	name = "biohazard body bag"
+	desc = "A folded, green body bag used for moving stuff that isn't good for you."
+	icon_state = "biobag_folded"
+
+/obj/structure/closet/body_bag/biohaz
+	name = "biohazard body bag"
+	desc = "A green body bag with a biohazard symbol on it. Usually seen as a movie prop."
+	icon_state = "biobag_closed"
+	icon_closed = "biobag_closed"
+	icon_opened = "biobag_open"
+	item_path = /obj/item/bodybag/biohaz
