@@ -559,3 +559,19 @@
 		new /obj/item/weapon/grenade/smokebomb(src)
 		new /obj/item/weapon/grenade/smokebomb(src)
 		new /obj/item/weapon/grenade/smokebomb(src)
+
+/obj/item/weapon/storage/box/shuriken
+	name = "box of shurikens"
+	desc = "A box with 7 shurikens."
+	icon_state = "flashbang"
+
+	New()
+		..()
+		new /obj/item/weapon/star(src)
+		new /obj/item/weapon/star(src)
+		new /obj/item/weapon/star(src)
+		new /obj/item/weapon/star(src)
+		new /obj/item/weapon/star(src)
+		new /obj/item/weapon/star(src)
+		new /obj/item/weapon/star(src)
+
