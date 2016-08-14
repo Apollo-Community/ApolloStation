@@ -170,10 +170,9 @@
 /obj/machinery/driver_button/attack_hand(mob/user as mob)
 
 	src.add_fingerprint(usr)
-	if(secure && closed)
-		var/obj/machinery/driver_button/secure/S = src
-		S.toggle_open(user)
-		return
+	var/secure = 0
+	if(istype(src, /obj/machinery/driver_button/secure))
+		secure = 1
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(active)
@@ -216,3 +215,11 @@
 	active = 0
 
 	return
+
+/obj/machinery/driver_button/secure/attack_hand(mob/user as mob)
+    if(closed)
+        src.add_fingerprint(usr)
+        var/obj/machinery/driver_button/secure/S = src
+        S.toggle_open(user)
+        return
+    ..()

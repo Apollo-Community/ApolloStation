@@ -5,8 +5,6 @@
 	desc = "A remote control switch for a mass driver."
 	var/id = null
 	var/active = 0
-	var/closed = 0
-	var/secure = 0
 	anchored = 1.0
 	use_power = 1
 	idle_power_usage = 2
@@ -16,8 +14,7 @@
 	name = "secure mass driver button"
 	icon_state = "is_closed"
 	desc = "A secure remote control switch for a mass driver."
-	closed = 1
-	secure = 1
+	var/closed = 1
 
 /obj/machinery/driver_button/secure/north
 	pixel_y = 32
