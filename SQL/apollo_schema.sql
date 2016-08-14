@@ -160,9 +160,6 @@ CREATE TABLE IF NOT EXISTS `preferences` (
   `UI_style_alpha` tinyint UNSIGNED NOT NULL DEFAULT '255',
   `toggles` int UNSIGNED NOT NULL DEFAULT '0',
   `last_character` varchar(100),
-  `space_parallax` smallint(4) NOT NULL DEFAULT '1',
-  `space_dust` smallint(4) NOT NULL DEFAULT '1',
-  `parallax_speed` float(24) NOT NULL DEFAULT '2',
   PRIMARY KEY (`id`),
   UNIQUE KEY `ckey` (`ckey`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;

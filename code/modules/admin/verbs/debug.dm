@@ -1154,20 +1154,3 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set desc = "Allows you to open specific windows typically unavailable"
 	
 	winset(src, null, "command=.command")
-
-/client/proc/space_color()
-	set category = "Debug"
-	set name = "Change space color"
-	set desc = "Pink space!"
-	if(!check_rights(R_DEBUG))	return
-
-	var/default = "[parallax_canvas ? parallax_canvas.color : "#000000"]"
-	var/color = input("Enter the hex of the new space color:","spess color",default) as text
-	if(!color)	return
-
-	space_color = color
-	for(var/client/C in clients)
-		if(C.mob && C.mob.hud_used)
-			C.mob.hud_used.update_parallax()
-
-	log_debug("[key_name(src)] has changed space's color to [color]")

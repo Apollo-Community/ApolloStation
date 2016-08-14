@@ -3,7 +3,7 @@
 	name = "\proper space"
 	icon_state = "0"
 	dynamic_lighting = 0
-	plane = PLANE_SPACE_BACKGROUND
+	plane = SPACE_PARALLAX_PLANE - 1
 
 	temperature = 3
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
@@ -14,19 +14,10 @@
 
 /turf/space/New()
 	icon_state = ""
-
-	if(istype(src, /turf/space/bluespace))
-		icon_state = "bluespace"
-
-	var/state_roll = "[((x + y) ^ ~(x * y) + z) % 25]"
-	if(!icon_state) // regular space
-		icon_state = state_roll
-
-	var/image/I = image('icons/turf/space_parallax1.dmi',"[state_roll]")
-	I.plane = PLANE_SPACE_DUST
-	I.alpha = 80
-	I.blend_mode = BLEND_ADD
-	overlays += I
+	/*
+	if(!istype(src, /turf/space/transit) && !istype(src, /turf/space/bluespace))
+		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
+	*/
 
 	update_starlight()
 

@@ -148,21 +148,6 @@
 	. += "<td><b>Ghost Radio:</b></td>"
 	. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=ghost_radio'>[(toggles & CHAT_GHOSTRADIO) ? "All Radio" : "Nearby Radio"]</a></td>"
 	. += "</tr>"
-
-	. += "<tr>"
-	. += "<td><b>Space Parallax:</b></td>"
-	. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=space_parallax'>[space_parallax ? "Yes" : "No"]</a></td>"
-	. += "</tr>"
-
-	. += "<tr>"
-	. += "<td><b>Space Dust:</b></td>"
-	. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=space_dust'>[space_dust ? "Yes" : "No"]</a></td>"
-	. += "</tr>"
-
-	. += "<tr>"
-	. += "<td><b>Parallax speed:</b></td>"
-	. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=parallax_speed'>[parallax_speed]</a></td>"
-	. += "</tr>"
 	. += "</table>"
 
 	. += "<hr><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>\[Done\]</a>"
@@ -214,17 +199,6 @@
 
 		if("ghost_radio")
 			toggles ^= CHAT_GHOSTRADIO
-
-		if("space_parallax")
-			space_parallax = !space_parallax
-
-		if("space_dust")
-			space_dust = !space_dust
-
-		if("parallax_speed")
-			var/new_speed = input(user, "Select a new parallax speed (1-4 are usually good values)") as num
-			if(!new_speed)	return
-			parallax_speed = new_speed
 
 		if( "close" )
 			ClientMenu( user )

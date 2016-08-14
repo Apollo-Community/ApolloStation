@@ -275,7 +275,6 @@ var/list/mob/living/forced_ambiance_list = new
 /area/Entered(var/atom/A)
 	if(!istype(A,/mob) && !locate(/mob) in A.contents)	return
 
-	/*
 	var/mob/M = A
 	if(!istype(M))
 		// In case there's multiple mobs inside
@@ -285,7 +284,6 @@ var/list/mob/living/forced_ambiance_list = new
 	else
 		if( M.client )
 			M.hud_used.update_parallax_style(parallax_style)
-	*/
 
 	if(!istype(A,/mob/living))	return
 

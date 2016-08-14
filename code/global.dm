@@ -69,11 +69,6 @@ var/NOPRINTSBLOCK = 0
 var/SHOCKIMMUNITYBLOCK = 0
 var/SMALLSIZEBLOCK = 0
 
-//SPACE PARALLAX
-var/parallax_initialized = 0
-var/space_color = "#000000"
-var/list/parallax_icon[36]
-
 var/skipupdate = 0
 	///////////////
 var/eventchance = 10 //% per 5 mins
