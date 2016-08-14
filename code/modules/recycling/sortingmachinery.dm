@@ -220,6 +220,7 @@
 	icon_state = "deliveryPaper"
 	w_class = 3.0
 	var/amount = 25.0
+	var/icon_prefix = "delivery"
 
 
 	afterattack(var/obj/target as obj, mob/user as mob, proximity)
@@ -247,22 +248,16 @@
 					if(user.client)
 						user.client.screen -= O
 				P.wrapped = O
-				O.loc = P
-				var/i = round(O.w_class)
-				if(i in list(1,2,3,4,5))
-					P.icon_state = "deliverycrate[i]"
-					switch(i)
-						if(1) P.name = "tiny parcel"
-						if(3) P.name = "normal-sized parcel"
-						if(4) P.name = "large parcel"
-						if(5) P.name = "huge parcel"
-				if(i < 1)
-					P.icon_state = "deliverycrate1"
-					P.name = "tiny parcel"
-				if(i > 5)
-					P.icon_state = "deliverycrate5"
-					P.name = "huge parcel"
+				var/i = Clamp(round(O.w_class), 1, 5)
+				P.icon_state = "[icon_prefix]crate[i]"
+				switch(i)
+					if(1) P.name = "tiny parcel"
+					if(3) P.name = "normal-sized parcel"
+					if(4) P.name = "large parcel"
+					if(5) P.name = "huge parcel"
+
 				P.add_fingerprint(usr)
+				O.add_fingerprint(usr)
 				O.add_fingerprint(usr)
 				src.add_fingerprint(usr)
 				src.amount -= 1
@@ -273,7 +268,7 @@
 			var/obj/structure/closet/crate/O = target
 			if (src.amount > 3 && !O.opened)
 				var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
-				P.icon_state = "deliverycrate"
+				P.icon_state = "[icon_prefix]crate"
 				P.wrapped = O
 				O.loc = P
 				src.amount -= 3
@@ -286,6 +281,7 @@
 			var/obj/structure/closet/O = target
 			if (src.amount > 3 && !O.opened)
 				var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
+				P.icon_state = "[icon_prefix]closet"
 				P.wrapped = O
 				O.welded = 1
 				O.loc = P
@@ -308,6 +304,9 @@
 			user << "<span class='notice'>There are [amount] units of package wrap left!</span>"
 
 		return
+
+/obj/item/weapon/packageWrap/bioWrap
+	icon_prefix = "bio"
 
 /obj/structure/bigDelivery/Destroy()
 	if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
