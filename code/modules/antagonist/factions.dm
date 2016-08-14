@@ -171,6 +171,7 @@
 		new/datum/uplink_item(/obj/item/device/chameleon, 4000, "Chameleon-Projector", "CP"),
 		new/datum/uplink_item(/obj/item/weapon/storage/box/smoke, 3000, "Smoke Grenade Box", "SGB"),
 		new/datum/uplink_item(/obj/item/weapon/gun/projectile/silenced, 4000, "Silenced 4.5mm Pistol", "SNM")
+		new/datum/uplink_item(/obj/item/clothing/tie/holster, 1000, "Shoulder Holster", "SHO")
 
 	)
 
