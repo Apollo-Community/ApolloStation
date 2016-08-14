@@ -16,22 +16,6 @@
 	desc = "A secure remote control switch for a mass driver."
 	var/closed = 1
 
-/obj/machinery/driver_button/secure/north
-	pixel_y = 32
-	dir = SOUTH
-
-/obj/machinery/driver_button/secure/south
-	pixel_y = -32
-	dir = NORTH
-
-/obj/machinery/driver_button/secure/west
-	pixel_x = -32
-	dir = EAST
-
-/obj/machinery/driver_button/secure/east
-	pixel_x = 32
-	dir = WEST
-
 /obj/machinery/driver_button/secure/verb/toggle_open()
 	set src in oview(1)
 	set category = "Object"

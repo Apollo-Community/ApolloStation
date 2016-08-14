@@ -219,7 +219,6 @@
 /obj/machinery/driver_button/secure/attack_hand(mob/user as mob)
     if(closed)
         src.add_fingerprint(usr)
-        var/obj/machinery/driver_button/secure/S = src
-        S.toggle_open(user)
+        toggle_open(user)
         return
     ..()
