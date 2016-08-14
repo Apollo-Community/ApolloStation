@@ -115,10 +115,7 @@
 
 	log_debug("c = [C]([C.ckey]) , src = [src.ckey] , msg = [msg]")
 
-	if(C.key in admins)		send_discord(src.ckey, discord ? discord : C.ckey, msg, 0)		//So we can set the colour to orange/green
-	else					send_discord(src.ckey, discord ? discord : C.ckey, msg, 1)
 	send_discord(src.ckey, discord ? discord : C.ckey, msg)
-	//oh god I hope this works :V
 
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/X in admins)
