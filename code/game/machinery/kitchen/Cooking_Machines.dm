@@ -283,8 +283,8 @@
 	var/obj/cooked
 	if (!recipe|(recipe.cookingmethod != machinetype))
 		dirty += 1
+		world << "bad recipe"
 		if (prob(max(10,dirty*5)))
-			world << "bad recipe"
 			if (!wzhzhzh(4))
 				abort()
 				return
@@ -315,9 +315,6 @@
 		var/halftime = round(recipe.time/10/2)
 		if (!wzhzhzh(halftime))
 			abort()
-			return
-		if (!wzhzhzh(halftime))
-			abort()
 			cooked = fail()
 			cooked.loc = loc
 			return
@@ -333,14 +330,15 @@
 		if (stat & (NOPOWER|BROKEN))
 			return 0
 		use_power(500)
-		if (i < 2)
-			overlays = 0
-			cookimg.color = "#A34719"
-			overlays += cookimg
-		else if (i >2)
-			overlays = 0
-			cookimg.color = "#C28566"
-			overlays += cookimg
+		if (machinetype == "grill")
+			if (i < 2)
+				overlays = 0
+				cookimg.color = "#A34719"
+				overlays += cookimg
+			else if (i >2)
+				overlays = 0
+				cookimg.color = "#C28566"
+				overlays += cookimg
 		sleep(10)
 	return 1
 
