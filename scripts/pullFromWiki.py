@@ -11,6 +11,7 @@ try:
 except urllib.error.HTTPError:
 	#url was unreachable.
 	exit(1)
+	
 data = resource.read()
 resource.close()
 soup = BeautifulSoup(data, "html.parser")
