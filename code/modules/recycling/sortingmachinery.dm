@@ -248,20 +248,15 @@
 						user.client.screen -= O
 				P.wrapped = O
 				O.loc = P
-				var/i = round(O.w_class)
-				if(i in list(1,2,3,4,5))
-					P.icon_state = "deliverycrate[i]"
-					switch(i)
-						if(1) P.name = "tiny parcel"
-						if(3) P.name = "normal-sized parcel"
-						if(4) P.name = "large parcel"
-						if(5) P.name = "huge parcel"
-				if(i < 1)
-					P.icon_state = "deliverycrate1"
-					P.name = "tiny parcel"
-				if(i > 5)
-					P.icon_state = "deliverycrate5"
-					P.name = "huge parcel"
+				
+				var/i = Clamp(round(O.w_class), 1, 5)
+				P.icon_state = "deliverycrate[i]"
+				switch(i)
+					if(1) P.name = "tiny parcel"
+					if(3) P.name = "normal-sized parcel"
+					if(4) P.name = "large parcel"
+					if(5) P.name = "huge parcel"
+
 				P.add_fingerprint(usr)
 				O.add_fingerprint(usr)
 				src.add_fingerprint(usr)

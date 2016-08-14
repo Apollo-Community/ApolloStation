@@ -2,25 +2,16 @@ from urllib.request import build_opener
 from bs4 import BeautifulSoup
 from sys import argv
 
+opener = build_opener()
+opener.addheaders = [('User-agent', 'Mozilla/5.0')] #wikipedia needs this
 url = str(argv[1])
-url = "https://apollo-community.org/wiki/index.php?title=Example_Paperwork"
-resource
-
+#url = "https://apollo-community.org/wiki/index.php?title=Example_Paperwork"
 try:
-    from urllib.request import build_opener as opener
-    opener = build_opener()
-    opener.addheaders = [('User-agent', 'Mozilla/5.0')] #wikipedia needs this
-    resource = opener.open(url)
-except ImportError:
-    print("urllib request build_opener not imported")
-    
-try:
-    from urllib.request import urlopen
-    req = Request(url, headers={'User-Agent' : "Mozilla/5.0"}) 
-    resource = opener( req )
-except ImportError:
-    print("urllib request urlopen not imported")
-
+	resource = opener.open(url)
+except urllib.error.HTTPError:
+	#url was unreachable.
+	exit(1)
+	
 data = resource.read()
 resource.close()
 soup = BeautifulSoup(data, "html.parser")

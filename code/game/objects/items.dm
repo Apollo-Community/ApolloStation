@@ -1,3 +1,7 @@
+//This line was located at a RANDOM spot in the code between effect types. I put it here because its related to obj/item.
+//However I have no idea what it does. <rjtwins>
+/obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
