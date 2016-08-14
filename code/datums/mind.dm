@@ -313,7 +313,7 @@ datum/mind
 		. += "</td></tr>"
 		. += "</table>"
 		// END OBJECTIVES PANEL //
-			
+
 		memory_browser.set_user( usr )
 		memory_browser.set_content( replacetext( ., "\improper", "" ) )
 		memory_browser.open()
@@ -865,37 +865,6 @@ datum/mind
 
 		edit_memory()
 
-/*
-	proc/clear_memory(var/silent = 1)
-		var/datum/game_mode/current_mode = ticker.mode
-
-		// remove traitor uplinks
-		var/list/L = current.get_contents()
-		for (var/t in L)
-			if (istype(t, /obj/item/device/pda))
-				if (t:uplink) qdel(t:uplink)
-				t:uplink = null
-			else if (istype(t, /obj/item/device/radio))
-				if (t:traitorradio) qdel(t:traitorradio)
-				t:traitorradio = null
-				t:traitor_frequency = 0.0
-			else if (istype(t, /obj/item/weapon/SWF_uplink) || istype(t, /obj/item/weapon/syndicate_uplink))
-				if (t:origradio)
-					var/obj/item/device/radio/R = t:origradio
-					R.loc = current.loc
-					R.traitorradio = null
-					R.traitor_frequency = 0.0
-				qdel(t)
-
-		// remove wizards spells
-		//If there are more special powers that need removal, they can be procced into here./N
-		current.spellremove(current)
-
-		// clear memory
-		memory = ""
-		antagonist = null
-
-*/
 
 	proc/find_syndicate_uplink()
 		var/list/L = current.get_contents()

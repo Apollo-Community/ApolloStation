@@ -6,7 +6,12 @@ opener = build_opener()
 opener.addheaders = [('User-agent', 'Mozilla/5.0')] #wikipedia needs this
 url = str(argv[1])
 #url = "https://apollo-community.org/wiki/index.php?title=Example_Paperwork"
-resource = opener.open(url)
+try:
+    resource = opener.open(url)
+except urllib.error.HTTPError:
+    #Page is unreachable 
+    exit(1)
+    
 data = resource.read()
 resource.close()
 soup = BeautifulSoup(data, "html.parser")
