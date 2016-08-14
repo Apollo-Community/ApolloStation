@@ -107,8 +107,6 @@
 		R.add_fingerprint(user)
 		qdel(src)
 
-
-
 /obj/structure/closet/body_bag/cryobag
 	name = "stasis bag"
 	desc = "A non-reusable plastic bag designed to prevent additional damage to an occupant at the cost of genetic damage."
