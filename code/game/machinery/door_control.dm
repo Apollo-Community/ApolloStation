@@ -177,7 +177,6 @@
 		return
 	if(active)
 		return
-	add_fingerprint(user)
 
 	use_power(5)
 
@@ -218,7 +217,6 @@
 
 /obj/machinery/driver_button/secure/attack_hand(mob/user as mob)
     if(closed)
-        src.add_fingerprint(usr)
         toggle_open(user)
         return
     ..()
