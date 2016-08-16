@@ -25,6 +25,7 @@
 
 /datum/faction/syndicate
 
+	var/gamemode_faction = 0 // Is this faction gamemode-specific? Prevents persistant antags from joining it, etc.
 	var/list/alliances = list() // these alliances work together
 	var/list/datum/uplink_item/equipment = list() // list of equipment available for this faction and its prices
 	var/friendly_identification	// 0 to 2, the level of identification of fellow operatives or allied factions
@@ -57,6 +58,8 @@
 
 /datum/faction/syndicate/join(var/datum/mind/M)
 	..(M)
+
+	M.antagonist.faction = src
 
 	if(faction_controller.contracts_made && members.len == 1) // first member, start making contracts
 		update_contracts()
@@ -165,7 +168,12 @@
 		new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/chameleon, 3000, "Chameleon Kit", "CB"),
 		new/datum/uplink_item(/obj/item/weapon/card/id/syndicate, 2000, "Agent ID card", "AC"),
 		new/datum/uplink_item(/obj/item/clothing/mask/gas/voice, 4000, "Voice Changer", "VC"),
-		new/datum/uplink_item(/obj/item/device/chameleon, 4000, "Chameleon-Projector", "CP")
+		new/datum/uplink_item(/obj/item/device/chameleon, 4000, "Chameleon-Projector", "CP"),
+		new/datum/uplink_item(/obj/item/weapon/storage/box/smoke, 3000, "Smoke Grenade Box", "SGB"),
+		new/datum/uplink_item(/obj/item/weapon/storage/box/shuriken, 3000, "Shuriken Box", "SHU"),
+		new/datum/uplink_item(/obj/item/weapon/gun/projectile/silenced, 4000, "Silenced 4.5mm Pistol", "SNM"),
+		new/datum/uplink_item(/obj/item/clothing/tie/holster, 1000, "Shoulder Holster", "SHO")
+
 	)
 
 // Hostile to everyone.
@@ -253,6 +261,11 @@
 	alliances = list("Gorlex Marauders")
 	friendly_identification = FACTION_ID_COMPLETE
 	operative_notes = "Most other syndicate operatives are not to be trusted, except fellow Donk members and members of the Gorlex Marauders. We do not approve of mindless killing of innocent workers; \"get in, get done, get out\" is our motto. Members of Waffle.co are to be killed on sight; they are not allowed to be on the station while we're around."
+	equipment = list(
+		new/datum/uplink_item(/obj/item/weapon/storage/box/handcuffs, 2000, "Handcuff Box", "BOH"),
+		new/datum/uplink_item(/obj/item/weapon/gun/energy/taser, 4000, "Taser Gun", "TAG"),
+		new/datum/uplink_item(/obj/item/clothing/mask/muzzle, 2000, "Muzzle", "MUZ")
+	)
 
 // Neutral to everyone, friendly to Marauders
 /datum/faction/syndicate/waffle
@@ -266,6 +279,7 @@
 	alliances = list("Gorlex Marauders")
 	friendly_identification = FACTION_ID_COMPLETE
 	operative_notes = "Most other syndicate operatives are not to be trusted, except for members of the Gorlex Marauders. Do not trust fellow members of the Waffle.co (but try not to rat them out), as they might have been assigned opposing objectives. We encourage humorous terrorism against Nanotrasen; we like to see our operatives creatively kill people while getting the job done."
+
 
 
 /* ----- Begin defining miscellaneous factions ------ */
@@ -298,6 +312,7 @@
 
 /datum/faction/syndicate/marauders/mercenaries
 	name = "Gorlex Mercenaries"
+	gamemode_faction = 1
 
 /datum/faction/syndicate/marauders/mercenaries/can_join(var/datum/mind/M)
 	if( M.antagonist && istype(M.antagonist, /datum/antagonist/mercenary) )

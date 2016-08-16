@@ -40,6 +40,22 @@
 			new /obj/item/trash/map( src )
 		return
 
+/obj/item/weapon/storage/box/sokeGrenades
+	name = "box"
+	desc = "A box with smoke grenades."
+
+	New()
+		..()
+		contents = list()
+		spawn(0)
+			new /obj/item/weapon/grenade/smokebomb (src)
+			new /obj/item/weapon/grenade/smokebomb (src)
+			new /obj/item/weapon/grenade/smokebomb (src)
+			new /obj/item/weapon/grenade/smokebomb (src)
+			new /obj/item/weapon/grenade/smokebomb (src)
+			new /obj/item/weapon/grenade/smokebomb (src)
+		return
+
 /obj/item/weapon/storage/box/engineer/
 	name = "survival kit"
 	desc = "A box with gear necessary for survival in space."
@@ -529,3 +545,33 @@
 		new /obj/item/weapon/grenade/chem_grenade/lube(src)
 		new /obj/item/weapon/grenade/chem_grenade/lube(src)
 		new /obj/item/weapon/grenade/chem_grenade/lube(src)
+
+/obj/item/weapon/storage/box/smoke
+	name = "box of smoke grenades"
+	desc = "A box with 6 smoke grenades."
+	icon_state = "flashbang"
+
+	New()
+		..()
+		new /obj/item/weapon/grenade/smokebomb(src)
+		new /obj/item/weapon/grenade/smokebomb(src)
+		new /obj/item/weapon/grenade/smokebomb(src)
+		new /obj/item/weapon/grenade/smokebomb(src)
+		new /obj/item/weapon/grenade/smokebomb(src)
+		new /obj/item/weapon/grenade/smokebomb(src)
+
+/obj/item/weapon/storage/box/shuriken
+	name = "box of shurikens"
+	desc = "A box with 7 shurikens."
+	icon_state = "flashbang"
+
+	New()
+		..()
+		new /obj/item/weapon/star(src)
+		new /obj/item/weapon/star(src)
+		new /obj/item/weapon/star(src)
+		new /obj/item/weapon/star(src)
+		new /obj/item/weapon/star(src)
+		new /obj/item/weapon/star(src)
+		new /obj/item/weapon/star(src)
+

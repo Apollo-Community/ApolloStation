@@ -108,6 +108,8 @@
 		if( "change_faction" )
 			var/list/choices = list()
 			for( var/datum/faction/syndicate/S in faction_controller.factions )
+				if( S.gamemode_faction )	continue
+				
 				if( S.name != antag_data["faction"] )
 					// going to a rival faction requires a lot of notoriety
 					if( antag_data["faction"] != "" &&  !( antag_data["faction"] in S.alliances ) && antag_data["notoriety"] < 6 )	continue
@@ -130,7 +132,19 @@
 			if(alert("Are you sure you want to use an antagonist token on this character? This will make the character a persistant antagonist, but will consume the token.",,"Yes","No")=="No")
 				return
 
+			var/list/choices = list()
+			for( var/datum/faction/syndicate/S in faction_controller.factions )
+				if( S.gamemode_faction )	continue
+				choices[S.name] = S.name
+
+			if( !choices.len )	return
+
+			var/choice = input("Select your preferred faction.", "Faction Selection", null) in choices
+			while( alert("Are you sure you want to be a member of [choice]?",,"Yes","No")=="No" )
+				choice = input("Select your preferred faction.", "Faction Selection", null) in choices
+
 			useCharacterToken( href_list["type"], user )
+			antag_data["faction"] = choices[choice]
 
 		if( "exploitable_record" )
 			var/expmsg = sanitize(input(usr,"Set your exploitable information here. This information is used by antags.","Exploitable Information",html_decode(exploit_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)

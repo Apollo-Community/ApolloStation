@@ -185,7 +185,7 @@
 
 /obj/machinery/atmospherics/pipe/simple/hide(var/i)
 	if(level == 1 && istype(loc, /turf/simulated))
-		invisibility = i ? 101 : 0
+		invisibility = i ? 100 : 0
 	update_icon()
 
 /obj/machinery/atmospherics/pipe/simple/process()
@@ -442,7 +442,7 @@
 
 /obj/machinery/atmospherics/pipe/manifold/hide(var/i)
 	if(level == 1 && istype(loc, /turf/simulated))
-		invisibility = i ? 101 : 0
+		invisibility = i ? 100 : 0
 	update_icon()
 
 /obj/machinery/atmospherics/pipe/manifold/pipeline_expansion()
@@ -802,7 +802,7 @@
 
 /obj/machinery/atmospherics/pipe/manifold4w/hide(var/i)
 	if(level == 1 && istype(loc, /turf/simulated))
-		invisibility = i ? 101 : 0
+		invisibility = i ? 100 : 0
 	update_icon()
 
 /obj/machinery/atmospherics/pipe/manifold4w/initialize()
@@ -942,7 +942,7 @@
 
 /obj/machinery/atmospherics/pipe/cap/hide(var/i)
 	if(level == 1 && istype(loc, /turf/simulated))
-		invisibility = i ? 101 : 0
+		invisibility = i ? 100 : 0
 	update_icon()
 
 /obj/machinery/atmospherics/pipe/cap/pipeline_expansion()

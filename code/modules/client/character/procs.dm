@@ -95,12 +95,16 @@
 			message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
 			gender = MALE
 
+	round_number = universe.round_number
+
 /datum/character/proc/saveCharacter( var/prompt = 0 )
 	if( istype( char_mob ))
+		char_mob.fully_replace_character_name( char_mob.real_name, name )
 		copy_to( char_mob )
 		char_mob.update_hair()
 		char_mob.update_body()
 		char_mob.check_dna( char_mob )
+
 
 	if( temporary ) // If we're just a temporary character, dont save to database
 		return 1
@@ -226,6 +230,7 @@
 	variables["employment_status"] = html_encode( sql_sanitize_text( employment_status ))
 	variables["felon"] = sanitize_integer( felon, 0, BITFLAGS_MAX, 0 )
 	variables["prison_date"] = html_encode( list2params( prison_date ))
+	variables["round_number"] = sanitize_integer( round_number, 0, 1.8446744e+19, 0 )
 
 	var/list/names = list()
 	var/list/values = list()
@@ -450,15 +455,20 @@
 				else
 					value = "None"
 			if( "birth_date" )
-				birth_date = list()
+				birth_date = params2list( html_decode( value ))
 
-				for( var/num in params2list( value ))
-					if( istext( num ))
-						num = text2num( html_decode( num ))
-						if( num )
-							birth_date.Add( num )
+				var/randomize = 0
+
+				for( var/j in birth_date )
+					if( birth_date[j] )
+						birth_date[j] = text2num( birth_date[j] )
+					else
+						randomize = 1
 
 				if( !birth_date || !birth_date.len == 3 )
+					randomize = 1
+
+				if( randomize )
 					change_age( rand( 25, 45 ))
 
 				calculate_age()
@@ -475,13 +485,23 @@
 						L[V] = text2num( L[V] )
 				value = L
 			if( "prison_date" )
-				prison_date = list()
+				prison_date = params2list( html_decode( value ))
 
-				for( var/num in params2list( value ))
-					if( istext( num ))
-						num = text2num( html_decode( num ))
-						if( num )
-							prison_date.Add( num )
+				var/clear = 0
+
+				for( var/j in prison_date )
+					if( prison_date[j] )
+						prison_date[j] = text2num( prison_date[j] )
+					else
+						clear = 1
+
+				if( !prison_date || !prison_date.len == 3 )
+					clear = 1
+
+				if( clear )
+					prison_date = list()
+
+				value = prison_date
 /* Disabling this for now until we find out why date proc is messing up
 				if( prison_date && prison_date.len == 3 )
 					var/days = daysTilDate( universe.date, prison_date )
@@ -524,8 +544,9 @@
 	skin_tone = random_skin_tone()
 	hair_style = random_hair_style(gender, species)
 	hair_face_style = random_facial_hair_style(gender, species)
-	randomize_hair_color("hair")
-	randomize_hair_color("facial")
+	if(species != "Machine")
+		randomize_hair_color("hair")
+		randomize_hair_color("facial")
 	randomize_eyes_color()
 	randomize_skin_color()
 	underwear = rand(1,underwear_m.len)
@@ -597,7 +618,7 @@
 
 // Call this to change the character's age, will recalculate their birthday given an age
 /datum/character/proc/change_age( var/new_age, var/age_min = AGE_MIN, var/age_max = AGE_MAX )
-	new_age = max(min( round( new_age ), age_max), age_min)
+	new_age = max( min( round( new_age ), age_max), age_min)
 
 	var/birth_year = game_year-new_age
 
@@ -609,9 +630,8 @@
 
 	var/birth_day = rand( 1, getMonthDays( birth_month ))
 
-	birth_date = list( birth_year, birth_month, birth_day )
+	birth_date = list( "year" = birth_year, "month" = birth_month, "day" = birth_day )
 	age = calculate_age()
-
 
 // Calculates the characters age from their birthdate
 /datum/character/proc/calculate_age()
@@ -622,9 +642,9 @@
 	if( !birth_date || birth_date.len < 3 )
 		change_age( rand( 20, 50 )) // If we dont have a birthdate, we better get one
 
-	var/birth_year = birth_date[1]
-	var/birth_month = birth_date[2]
-	var/birth_day = birth_date[3]
+	var/birth_year = birth_date["year"]
+	var/birth_month = birth_date["month"]
+	var/birth_day = birth_date["day"]
 
 	age = ( cur_year-birth_year )+1
 
@@ -830,7 +850,7 @@
 
 /datum/character/proc/useCharacterToken( var/type, var/mob/user )
 	var/num = user.client.character_tokens[type]
-	if( !num || num <= 0 )
+	if( !num || num < 1 )
 		return
 
 	switch( type )
@@ -847,6 +867,7 @@
 
 	user.client.character_tokens[type] = num
 	user.client.saveTokens()
+	saveCharacter()
 
 /datum/character/proc/getAllPromotablePositions( var/succession_level )
 	. = list()
@@ -920,5 +941,10 @@
 /datum/character/proc/canJoin()
 	if( employment_status != "Active" )
 		return 0
+
+	if( prison_date && prison_date.len )
+		var/days = daysTilDate( universe.date, prison_date )
+		if( days > 0 )
+			return 0
 
 	return 1

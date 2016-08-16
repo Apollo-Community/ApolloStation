@@ -8,9 +8,9 @@
     supervisors = "the chief engineer"
     selection_color = "#fff5cc"
     access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
-                        access_heads, access_construction, access_engine_core)
+                         access_construction, access_engine_core, access_desublimation)
     minimal_access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
-                        access_heads, access_construction, access_engine_core)
+                        access_heads, access_construction, access_engine_core, access_desublimation)
 
     alt_titles = list("Engine Specialist","Atmospherics Specialist","Senior Electrician","Senior Technician")
     rank_succesion_level = 5

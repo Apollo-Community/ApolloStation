@@ -422,7 +422,7 @@
 	return
 
 
-/obj/structure/table/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/table/attackby(obj/item/W as obj, mob/user as mob, params)
 	if (!W) return
 
 	// Handle harm intent grabbing/tabling.
@@ -490,6 +490,19 @@
 	if(W.loc != user) // This should stop mounted modules ending up outside the module.
 		return
 
+	if(istype(W, /obj/item/weapon/storage/bag/tray))
+		var/obj/item/weapon/storage/bag/tray/T = W
+		if(T.contents.len > 0) // If the tray isn't empty
+			var/list/obj/item/oldContents = T.contents.Copy()
+			T.quick_empty()
+
+			for(var/obj/item/C in oldContents)
+				C.loc = src.loc
+
+			user.visible_message("[user] empties [W] on [src].")
+			return
+		// If the tray IS empty, continue on (tray will be placed on the table like other items)
+
 	if(istype(W, /obj/item/weapon/melee/energy/blade))
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, src.loc)
@@ -499,7 +512,15 @@
 		user.visible_message("<span class='danger'>The [src] was sliced apart by [user]!</span>")
 		deconstruct()
 
-	user.drop_item(src)
+	if(user.drop_item())
+		W.Move(loc)
+		var/list/click_params = params2list(params)
+		//Center the icon where the user clicked.
+		if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+			return
+		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+		W.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+		W.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 	return
 
 /obj/structure/table/proc/straight_table_check(var/direction)

@@ -29,6 +29,7 @@
 		num_traitors = max(1, min(num_players(), traitors_possible))
 
 	var/list/possible_traitors = pick_antagonists(BE_TRAITOR, num_traitors)
+	log_debug("(pre_setup) Amount of possible traitors returned: [possible_traitors.len]")
 
 	for(var/j = 0, j < num_traitors, j++)
 		if (!possible_traitors.len)

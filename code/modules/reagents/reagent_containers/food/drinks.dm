@@ -284,8 +284,8 @@
 	on_reagent_change()
 		if(reagents.total_volume)
 			icon_state = "ice"
-		else
-			icon_state = "coffe_e"
+		else if (reagents.total_volume == 0)
+			qdel(src)
 
 
 

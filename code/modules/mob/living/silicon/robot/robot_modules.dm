@@ -82,18 +82,25 @@
 	src.emag = new /obj/item/weapon/melee/energy/sword(src)
 	return
 
-/obj/item/weapon/robot_module/surgeon
-	name = "surgeon robot module"
+/obj/item/weapon/robot_module/medical
+	name = "medical robot module"
 	stacktypes = list(
 		/obj/item/stack/medical/advanced/bruise_pack = 5,
-		/obj/item/stack/nanopaste = 5
-		)
+		/obj/item/stack/medical/ointment = 5,
+		/obj/item/stack/medical/splint = 5,
+		/obj/item/stack/nanopaste = 5 )
 
-/obj/item/weapon/robot_module/surgeon/New()
+/obj/item/weapon/robot_module/medical/New()
 	..()
 	src.modules += new /obj/item/device/flash(src)
+	src.modules += new /obj/item/borg/sight/hud/med(src)
 	src.modules += new /obj/item/device/healthanalyzer(src)
-	src.modules += new /obj/item/weapon/reagent_containers/borghypo/surgeon(src)
+	src.modules += new /obj/item/device/reagent_scanner/adv(src)
+	src.modules += new /obj/item/weapon/reagent_containers/borghypo/crisis(src)
+	src.modules += new /obj/item/stack/medical/advanced/bruise_pack(src)
+	src.modules += new /obj/item/stack/medical/ointment(src)
+	src.modules += new /obj/item/stack/medical/splint(src)
+	src.modules += new /obj/item/stack/nanopaste(src)
 	src.modules += new /obj/item/weapon/scalpel(src)
 	src.modules += new /obj/item/weapon/hemostat(src)
 	src.modules += new /obj/item/weapon/retractor(src)
@@ -104,49 +111,12 @@
 	src.modules += new /obj/item/weapon/circular_saw(src)
 	src.modules += new /obj/item/weapon/surgicaldrill(src)
 	src.modules += new /obj/item/weapon/extinguisher/mini(src)
-	src.modules += new /obj/item/stack/medical/advanced/bruise_pack(src)
-	src.modules += new /obj/item/stack/nanopaste(src)
 	src.emag = new /obj/item/weapon/reagent_containers/spray(src)
 	src.emag.reagents.add_reagent("pacid", 250)
 	src.emag.name = "Polyacid spray"
 	return
 
-/obj/item/weapon/robot_module/surgeon/respawn_consumable(var/mob/living/silicon/robot/R)
-	if(src.emag)
-		var/obj/item/weapon/reagent_containers/spray/PS = src.emag
-		PS.reagents.add_reagent("pacid", 2)
-	..()
-
-/obj/item/weapon/robot_module/crisis
-	name = "crisis robot module"
-	stacktypes = list(
-		/obj/item/stack/medical/ointment = 5,
-		/obj/item/stack/medical/bruise_pack = 5,
-		/obj/item/stack/medical/splint = 5
-		)
-
-/obj/item/weapon/robot_module/crisis/New()
-	..()
-	src.modules += new /obj/item/device/flash(src)
-	src.modules += new /obj/item/borg/sight/hud/med(src)
-	src.modules += new /obj/item/device/healthanalyzer(src)
-	src.modules += new /obj/item/device/reagent_scanner/adv(src)
-	src.modules += new /obj/item/roller_holder(src)
-	src.modules += new /obj/item/stack/medical/ointment(src)
-	src.modules += new /obj/item/stack/medical/bruise_pack(src)
-	src.modules += new /obj/item/stack/medical/splint(src)
-	src.modules += new /obj/item/weapon/reagent_containers/borghypo/crisis(src)
-	src.modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
-	src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
-	src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
-	src.modules += new /obj/item/weapon/extinguisher/mini(src)
-	src.emag = new /obj/item/weapon/reagent_containers/spray(src)
-	src.emag.reagents.add_reagent("pacid", 250)
-	src.emag.name = "Polyacid spray"
-	return
-
-/obj/item/weapon/robot_module/crisis/respawn_consumable(var/mob/living/silicon/robot/R)
-
+/obj/item/weapon/robot_module/medical/respawn_consumable(var/mob/living/silicon/robot/R)
 	var/obj/item/weapon/reagent_containers/syringe/S = locate() in src.modules
 	if(S.mode == 2)
 		S.reagents.clear_reagents()
@@ -160,37 +130,15 @@
 
 	..()
 
-/obj/item/weapon/robot_module/construction
-	name = "construction robot module"
-
-	stacktypes = list(
-		/obj/item/stack/sheet/metal = 50,
-		/obj/item/stack/sheet/alloy/plasteel = 10,
-		/obj/item/stack/sheet/glass/reinforced = 50,
-		/obj/item/stack/rods = 50
-		)
-
-/obj/item/weapon/robot_module/construction/New()
-	..()
-	src.modules += new /obj/item/device/flash(src)
-	src.modules += new /obj/item/borg/sight/meson(src)
-	src.modules += new /obj/item/weapon/extinguisher(src)
-	src.modules += new /obj/item/weapon/rcd/borg(src)
-	src.modules += new /obj/item/weapon/screwdriver(src)
-	src.modules += new /obj/item/weapon/wrench(src)
-	src.modules += new /obj/item/weapon/crowbar(src)
-	src.modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
-	src.modules += new /obj/item/device/pipe_painter(src)
-
 /obj/item/weapon/robot_module/engineering
 	name = "engineering robot module"
 
 	stacktypes = list(
 		/obj/item/stack/sheet/metal = 50,
-		/obj/item/stack/sheet/glass = 50,
+		/obj/item/stack/sheet/alloy/plasteel = 10,
 		/obj/item/stack/sheet/glass/reinforced = 50,
+		/obj/item/stack/rods = 50,
 		/obj/item/stack/cable_coil/cyborg = 50,
-		/obj/item/stack/rods = 15,
 		/obj/item/stack/tile/plasteel = 15
 		)
 
@@ -198,21 +146,20 @@
 	..()
 	src.modules += new /obj/item/device/flash(src)
 	src.modules += new /obj/item/borg/sight/meson(src)
-	src.modules += new /obj/item/weapon/extinguisher(src)
-	src.modules += new /obj/item/weapon/weldingtool/largetank(src)
 	src.modules += new /obj/item/weapon/screwdriver(src)
 	src.modules += new /obj/item/weapon/wrench(src)
 	src.modules += new /obj/item/weapon/crowbar(src)
 	src.modules += new /obj/item/weapon/wirecutters(src)
 	src.modules += new /obj/item/device/multitool(src)
+	src.modules += new /obj/item/weapon/weldingtool/largetank(src)
+	src.modules += new /obj/item/weapon/rcd/borg(src)
+	src.modules += new /obj/item/device/pipe_painter(src)
 	src.modules += new /obj/item/device/t_scanner(src)
-	src.modules += new /obj/item/device/analyzer(src)
 	src.modules += new /obj/item/taperoll/engineering(src)
 	src.modules += new /obj/item/weapon/gripper(src)
 	src.modules += new /obj/item/weapon/matter_decompiler(src)
-	src.modules += new /obj/item/device/pipe_painter(src)
+	src.modules += new /obj/item/weapon/extinguisher(src)
 	src.emag = new /obj/item/borg/stun(src)
-	return
 
 /obj/item/weapon/robot_module/security
 	name = "security robot module"
@@ -284,7 +231,7 @@
 	L.lit = 1
 	src.modules += L
 
-	src.modules += new /obj/item/weapon/tray/robotray(src)
+	modules += new /obj/item/weapon/storage/bag/tray(src)
 	src.modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 	src.emag = new /obj/item/weapon/reagent_containers/food/drinks/cans/beer(src)
 

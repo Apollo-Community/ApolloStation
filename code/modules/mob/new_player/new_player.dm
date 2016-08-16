@@ -62,8 +62,10 @@
 
 		output += "</div>"
 
-		src << browse(output,"window=playersetup;size=210x280;can_close=0")
-		return
+		var/datum/browser/popup = new(src, "playersetup", "New Player Options", 210, 280)
+		popup.window_options = "focus=0;can_close=0;"
+		popup.set_content(output)
+		popup.open()
 
 	Stat()
 		..()
@@ -111,7 +113,7 @@
 				return
 
 			if((!ticker || ticker.current_state <= GAME_STATE_PREGAME)) // Make sure we don't ready up after the round has started, or without a selected character
-				ready = text2num(href_list["ready"])
+				ready = !ready
 			else
 				ready = 0
 
@@ -520,7 +522,9 @@
 		dat += "<h4>Show Crew Manifest</h4>"
 		dat += data_core.get_manifest(OOC = 1)
 
-		src << browse(dat, "window=manifest;size=370x420;can_close=1")
+		var/datum/browser/popup = new(src, "manifest", "Show Crew Manifest", 370, 420)
+		popup.set_content(dat)
+		popup.open()
 
 	Move()
 		return 0

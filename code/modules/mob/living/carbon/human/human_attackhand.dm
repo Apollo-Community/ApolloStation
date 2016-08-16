@@ -1,4 +1,5 @@
 /mob/living/carbon/human/attack_hand(mob/living/M as mob)
+	if(status_flags & GODMODE)	return			//godmode takes no damage!
 
 	var/mob/living/carbon/human/H = M
 	if(istype(H))

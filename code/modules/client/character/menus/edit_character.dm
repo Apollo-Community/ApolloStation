@@ -44,10 +44,10 @@
 
 	. += "<tr>"
 	. += "<th>Age:</th>"
-	if( new_character )
-		. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=age'>[age]</a></td>"
-	else
-		. += "<td>[age]</td>"
+	//if( new_character )
+	. += "<td><a href='byond://?src=\ref[src];character=[menu_name];task=age'>[age]</a></td>"
+	//else
+	//	. += "<td>[age]</td>"
 	. += "</tr>"
 
 	. += "<tr>"

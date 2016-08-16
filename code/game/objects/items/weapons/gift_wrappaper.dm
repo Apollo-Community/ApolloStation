@@ -24,6 +24,16 @@
 		icon_state = "gift[pick(1, 2, 3)]"
 	return
 
+/obj/item/weapon/gift
+	name = "gift"
+	desc = "A wrapped item."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "gift3"
+	var/size = 3.0
+	var/obj/item/gift = null
+	item_state = "gift"
+	w_class = 4.0
+
 /obj/item/weapon/gift/attack_self(mob/user as mob)
 	user.drop_item()
 	if(src.gift)
@@ -188,3 +198,13 @@
 			user << "<span class='notice'>You need more paper.</span>"
 	else
 		user << "They are moving around too much. A straightjacket would help."
+
+/obj/item/weapon/c_tube
+	name = "cardboard tube"
+	desc = "A tube... of cardboard."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "c_tube"
+	throwforce = 1
+	w_class = 2.0
+	throw_speed = 4
+	throw_range = 5

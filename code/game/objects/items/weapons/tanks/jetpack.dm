@@ -146,6 +146,7 @@
 	qdel(G)
 	return
 
+/*
 /obj/item/weapon/tank/jetpack/verb/fly_up()
 	set category = "Object"
 	set name = "Fly Upwards"
@@ -193,3 +194,4 @@
 		else
 			usr << "<span class='alert'>There's nothing of interest below you!</span>"
 	return
+*/

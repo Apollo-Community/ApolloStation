@@ -298,12 +298,14 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 	var/type = input(usr, "Which port is being configured?", "Port Modifier") as null|anything in list("input", "output")
 	if(type)
 		var/tag = input(usr,"Enter new ID","[src.name] ID Modifier") as text
-		if(type == "input")		input_tag = tag
-		else					output_tag = tag
+		if(type == "input")
+			input_tag = tag
+		else
+			output_tag = tag
+		user << "You modify the [type] id of [src.name]."
 		//Have to change the frequency if modified cause.. reasons?
 		frequency = 2141
-
-		user << "You modify the [type] id of [src.name]."
+		set_frequency(frequency)
 
 /obj/machinery/computer/general_air_control/supermatter_core/return_text()
 	var/output = ..()
@@ -399,8 +401,10 @@ Min Core Pressure: [pressure_limit] kPa<BR>"}
 
 	signal.data["sigtype"]="command"
 
-	if(frequency == 2141)			radio_connection.post_signal(src, signal)
-	else							radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+	if(frequency == 2141)
+		radio_connection.post_signal(src, signal)
+	else
+		radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 	spawn(5)
 		src.updateUsrDialog()

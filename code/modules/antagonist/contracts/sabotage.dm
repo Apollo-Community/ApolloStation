@@ -91,13 +91,23 @@
 	title = "Sabotage Security Cameras"
 	desc = "Disable a number of security cameras"
 	time_limit = 1800
+	max_contracts = 1
 	reward = 1000
 
+	var/disabled_at_start = 0
 	var/to_disable = 0
 
 /datum/contract/sabotage/cameras/New()
 	. = ..()
 	if(!.)	return
+
+	for(var/obj/machinery/camera/C in world)
+		if(C.z == 3 && (!C.status || (C.stat & BROKEN)))
+			disabled_at_start++
+
+	if(disabled_at_start >= 60) // if 60 cameras have been destroyed already, that's more than enough
+		qdel(src)
+		return 0
 
 	to_disable = rand(2, 10)
 	reward = 150*to_disable
@@ -115,6 +125,7 @@
 	for(var/obj/machinery/camera/C in world)
 		if(C.z == 3 && (!C.status || (C.stat & BROKEN)))
 			disabled_count++
+	disabled_count -= disabled_at_start
 
 	if(disabled_count >= to_disable)
 		end(1, workers[1])

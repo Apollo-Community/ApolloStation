@@ -174,6 +174,7 @@
 
 /datum/cell_auto_master/explosion/proc/processCache()
 	for( var/atom/AM in ex_act_cache )
+		if(!(.++%10))	lag_kill()
 		AM.ex_act( ex_act_cache[AM] )
 
 	ex_act_cache.Cut()

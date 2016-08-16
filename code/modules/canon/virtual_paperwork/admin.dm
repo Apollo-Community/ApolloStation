@@ -2,7 +2,11 @@
 	set name = "Promote / Demote"
 	set category = "Fun"
 
-	if(!check_rights( R_MOD|R_ADMIN ))
+	if( !holder )
+		return
+
+	if( check_rights( R_MOD ))
+		src << "<span class='warning'>Mods are not allowed to use this verb.</span>"
 		return
 
 	var/mob/user = usr

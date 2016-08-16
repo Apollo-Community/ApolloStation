@@ -611,7 +611,7 @@ client
 			usr.loc = T
 		else
 			usr << "This mob is not located in the game world."
-		href_list["datumrefresh"] = href_list["mark_object"]
+		href_list["datumrefresh"] = href_list["jump_to_object"]
 
 	else if(href_list["rotatedatum"])
 		if(!check_rights(0))	return

@@ -28,6 +28,10 @@
 	name = "Large Pod Door"
 	icon = 'icons/obj/doors/1x3blast_vert.dmi'
 
+/obj/machinery/door/poddoor/update_icon()
+	if(density)		icon_state = "pdoor1"
+	else			icon_state = "pdoor0"
+
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(!density)
 		return ..()

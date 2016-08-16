@@ -27,7 +27,7 @@
 	var/target_field_strength = 10
 	var/max_field_strength = 10
 	var/time_since_fail = 100
-	var/energy_conversion_rate = 0.0002	//how many renwicks per watt?
+	var/energy_conversion_rate = 0.0001	//how many renwicks per watt?
 	use_power = 0	//doesn't use APC power
 	var/disabled = 0
 	var/datum/wires/shield_gen/wires = null
@@ -131,11 +131,11 @@
 		<a href='?src=\ref[src];change_radius=5'>++</a> \
 		<a href='?src=\ref[src];change_radius=50'>+++</a><br>"
 		t += "Overall Field Strength: [round(average_field_strength, 0.01)] Renwick ([target_field_strength ? round(100 * average_field_strength / target_field_strength, 0.1) : "NA"]%)<br>"
-		t += "Upkeep Power: [round(field.len * max(average_field_strength * dissipation_rate, min_dissipation) / energy_conversion_rate)] W<br>"
+		t += "Upkeep Power: [round((field.len * max(average_field_strength * dissipation_rate, min_dissipation) / energy_conversion_rate) / 1000000, 0.01)] MW<br>"
 		t += "Charge Rate: <a href='?src=\ref[src];strengthen_rate=-0.1'>--</a> \
 		[strengthen_rate] Renwick/s \
 		<a href='?src=\ref[src];strengthen_rate=0.1'>++</a><br>"
-		t += "Shield Generation Power: [round(field.len * min(strengthen_rate, target_field_strength - average_field_strength) / energy_conversion_rate)] W<br>"
+		t += "Shield Generation Power: [round((field.len * min(strengthen_rate, target_field_strength - average_field_strength) / energy_conversion_rate) / 1000000, 0.01)] MW<br>"
 		t += "Maximum Field Strength: \
 		<a href='?src=\ref[src];target_field_strength=-10'>\[min\]</a> \
 		<a href='?src=\ref[src];target_field_strength=-5'>--</a> \

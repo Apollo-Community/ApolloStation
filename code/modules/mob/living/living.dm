@@ -542,12 +542,52 @@
 	resting = !resting
 	src << "<span class='notice'>You are now [resting ? "resting" : "getting up"]</span>"
 
-/mob/living/proc/handle_ventcrawl(var/obj/machinery/atmospherics/unary/vent_pump/vent_found = null, var/ignore_items = 0) // -- TLE -- Merged by Carn
+/mob/living/proc/handle_ventmove(var/new_loc, var/dir)
+	if(!istype(loc, /obj/machinery/atmospherics))
+		return 0
+
+	var/obj/machinery/atmospherics/target_pipe = null
+	// search the pipes' variables for a node to travel to
+	for(var/V in loc.vars)
+		if(findtext(V, "node"))
+			var/pipe = loc.vars[V]
+			if(dir == get_dir(loc, pipe))
+				target_pipe = pipe
+				break
+
+	if(isnull(target_pipe))
+		return 0
+
+	src.loc = target_pipe
+	client.eye = target_pipe // aggressive view center update
+	return 1
+
+/mob/living/proc/handle_ventcrawl(var/obj/machinery/atmospherics/unary/vent_pump/vent_found = null, var/ignore_items = 0)
 	if(stat)
 		src << "You must be conscious to do this!"
 		return
 	if(lying)
 		src << "You can't vent crawl while you're stunned!"
+		return
+
+	if(is_ventcrawling)
+		if(istype(loc, /obj/machinery/atmospherics/unary/vent_pump))
+			var/obj/machinery/atmospherics/unary/vent_pump/V = loc
+			if(V.welded)
+				src << "The vent is welded shut!"
+				return
+			for(var/mob/O in viewers(src, null))
+				O.show_message(text("<B>[src] [pick(list("squeezes","plops","hops"))] out from the ventilation ducts!</B>"), 1)
+
+			is_ventcrawling = 0
+			see_invisible = SEE_INVISIBLE_LIVING
+			invisibility = 0
+			client.eye = src
+			hud_used.ventcrawl_hud(1)
+
+			src.loc = get_turf(loc)
+		else
+			src << "You can't escape the pipes from here!"
 		return
 
 	var/special_fail_msg = can_use_vents()
@@ -574,34 +614,6 @@
 		src << "This vent is not connected to anything."
 		return
 
-	var/list/vents = list()
-	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in vent_found.network.normal_members)
-		if(temp_vent.welded)
-			continue
-		if(temp_vent in loc)
-			continue
-		var/turf/T = get_turf(temp_vent)
-
-		if(!T || T.z != loc.z)
-			continue
-
-		var/i = 1
-		var/index = "[T.loc.name]\[[i]\]"
-		while(index in vents)
-			i++
-			index = "[T.loc.name]\[[i]\]"
-		vents[index] = temp_vent
-	if(!vents.len)
-		src << "<span class='alert'>There are no available vents to travel to, they could be welded.</span>"
-		return
-
-	var/obj/selection = input("Select a destination.", "Duct System") as null|anything in sortAssoc(vents)
-	if(!selection)	return
-
-	if(!vent_found.Adjacent(src))
-		src << "Never mind, you left."
-		return
-
 	if(!ignore_items)
 		for(var/obj/item/carried_item in contents)//If the monkey got on objects.
 			if( !istype(carried_item, /obj/item/weapon/implant) && !istype(carried_item, /obj/item/clothing/mask/facehugger) )//If it's not an implant or a facehugger
@@ -614,32 +626,16 @@
 			src << "<span class='alert'>You'll have to let [S.Victim] go or finish eating \him first.</span>"
 			return
 
-	var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection]
-	if(!target_vent)
-		return
-
 	for(var/mob/O in viewers(src, null))
-		O.show_message(text("<B>[src] scrambles into the ventillation ducts!</B>"), 1)
-	loc = target_vent
+		O.show_message(text("<B>[src] [pick(list("scrambles","swooces","slithers","sneaks")) ] into the ventillation ducts!</B>"), 1)
 
-	var/travel_time = round(get_dist(loc, target_vent.loc) / 2)
+	is_ventcrawling = 1
+	see_invisible = 100
+	invisibility = 100
+	client.eye = vent_found
+	hud_used.ventcrawl_hud()
 
-	spawn(travel_time)
-
-		if(!target_vent)	return
-		for(var/mob/O in hearers(target_vent,null))
-			O.show_message("You hear something squeezing through the ventilation ducts.",2)
-
-		sleep(travel_time)
-
-		if(!target_vent)	return
-		if(target_vent.welded)			//the vent can be welded while alien scrolled through the list or travelled.
-			target_vent = vent_found 	//travel back. No additional time required.
-			src << "<span class='alert'>The vent you were heading to appears to be welded.</span>"
-		loc = target_vent.loc
-		var/area/new_area = get_area(loc)
-		if(new_area)
-			new_area.Entered(src)
+	src.loc = vent_found
 
 /mob/living/proc/can_use_vents()
 	return "You can't fit into that vent."

@@ -113,7 +113,7 @@
 			\"further proof\" of the colony's anti-NanoTrasen stance. Meanwhile, Refuge Security has been unable to quell
 			the riots. More on this at 6."}
 			round_time = 60 * 60
-
+/*
 	nyx_developments
 
 		legal_struggle
@@ -163,7 +163,7 @@
 			to be the pioneers behind what may very well be the beginning of a new field within phoron research. Nearly all of our Nyx resources
 			have now been moved to the construction of this new research station\"."}
 			round_time = 60 * 45
-
+*/
 
 var/global/list/newscaster_standard_feeds = list(/datum/news_announcement/bluespace_research, /datum/news_announcement/lotus_tree, /datum/news_announcement/random_junk,  /datum/news_announcement/food_riots)
 
@@ -172,7 +172,7 @@ proc/process_newscaster()
 
 var/global/tmp/announced_news_types = list()
 proc/check_for_newscaster_updates(type)
-	for(var/subtype in (typesof(type)-type + typesof(/datum/news_announcement/nyx_developments))) // development news are always shown
+	for( var/subtype in subtypes( type )) // development news are always shown
 		var/datum/news_announcement/news = new subtype()
 		if(news.round_time * 10 <= world.time && !(subtype in announced_news_types))
 			announced_news_types += subtype

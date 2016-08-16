@@ -172,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `ckey` varchar(32) NOT NULL,
   `name` varchar(100) NOT NULL,
   `gender` varchar(11) NOT NULL,
-  `birth_date` varchar(20) NOT NULL,
+  `birth_date` varchar(100) NOT NULL,
   `spawnpoint` varchar(100) NOT NULL DEFAULT "Arrivals Shuttle",
   `blood_type` varchar(10) NOT NULL,
   `underwear` tinyint UNSIGNED NOT NULL DEFAULT '1',
@@ -213,7 +213,8 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `antag_data` text,
   `employment_status` varchar(100) NOT NULL DEFAULT "Active",
   `felon` int UNSIGNED NOT NULL DEFAULT '0',
-  `prison_date` text,
+  `prison_date` varchar(100) NOT NULL,
+  `round_number` bigint UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
 
@@ -223,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `characters` (
 CREATE TABLE IF NOT EXISTS `universe` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`name` varchar(255) NOT NULL,
-	`ic_date` varchar(20) NOT NULL,
+	`ic_date` varchar(100) NOT NULL,
 	`stocks` text,
 	`news` text,
 	PRIMARY KEY (`id`)

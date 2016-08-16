@@ -112,6 +112,9 @@
 		else
 			. += "<center><h2><span class='white'>No Available Contracts</span></h2></center>"
 			. += "<center><span class='white'>No contracts are currently available from your employer.</span></center>"
+	else
+		. += "<center><h2><span class='white'>No Available Contracts</span></h2></center>"
+		. += "<center><span class='white'>No contracts are currently available from your employer.</span></center>"
 
 	. += "</body></html>"
 

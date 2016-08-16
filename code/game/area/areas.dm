@@ -247,11 +247,6 @@ area/space/atmosalert()
 	icon_state = "green"
 	environment = SEWER_PIPE
 
-/area/podbay/hangar/s_hanger_e
-	name = "\improper Hangar_loc_e"
-	icon_state = "green_e"
-	environment = SEWER_PIPE
-
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
 
@@ -812,6 +807,38 @@ area/space/atmosalert()
 	name = "Aft Maintenance"
 	icon_state = "amaint"
 
+/area/maintenance/secret/room1
+	name = "Secret Room"
+	icon_state = "fpmaint"
+/area/maintenance/secret/room2
+	name = "Secret Room"
+	icon_state = "smaint"
+/area/maintenance/secret/room3
+	name = "Secret Room"
+	icon_state = "smaint"
+/area/maintenance/secret/room4
+	name = "Secret Room"
+	icon_state = "asmaint"
+/area/maintenance/secret/room5
+	name = "Secret Room"
+	icon_state = "asmaint"
+/area/maintenance/secret/room6
+	name = "Secret Room"
+	icon_state = "amaint"
+/area/maintenance/secret/room7
+	name = "Secret Room"
+	icon_state = "fsmaint"
+/area/maintenance/secret/room8
+	name = "Secret Room"
+	icon_state = "fsmaint"
+/area/maintenance/secret/room9
+	name = "Secret Room"
+	icon_state = "asmaint"
+
+/area/maintenance/secret/room10
+	name = "Secret Room"
+	icon_state = "asmaint"
+
 /area/maintenance/portdorm
 	name = "Dormitory Maintenance"
 	icon_state = "pmaint"
@@ -1087,6 +1114,17 @@ area/space/atmosalert()
 	icon_state = "bridge"
 	environment = STONEROOM
 
+/area/bridge/bridgedorm
+	name = "\improper Bridge Dormitory"
+	icon_state = "bridge"
+	environment = STONEROOM
+
+/area/bridge/bridgelocker
+	name = "\improper Bridge Locker Room"
+	icon_state = "bridge"
+	environment = STONEROOM
+
+
 /area/bridge/bridgemed
 	name = "\improper Bridge Medical"
 	icon_state = "bridge"
@@ -1178,6 +1216,10 @@ area/space/atmosalert()
 
 /area/crew_quarters/maintrooms/secroom1
 	name = "\improper Fore Starboard Private Quarter One"
+	icon_state = "Sleep"
+
+/area/crew_quarters/maintrooms/arrivalroom1
+	name = "\improper Port Private Quarter One"
 	icon_state = "Sleep"
 
 /area/crew_quarters/maintrooms/secroom2
