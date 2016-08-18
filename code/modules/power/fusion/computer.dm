@@ -1,13 +1,16 @@
 // Borrows code from cloning computer and gravity controll computer.
 // Handles amost all user interaction with the fusion reactor.
 /obj/machinery/computer/fusion
-
+	icon = 'icons/obj/fusion.dmi'
+	icon_state = "computer"
 /obj/machinery/computer/fusion/New()
 	..()
 
 /obj/machinery/computer/fusion/proc/updatemodules()
 	if(fusion_controller.findComponents())
-		fusion_controller.fusion_components.Add(src)
+		fusion_controller.addComp(src)
+		return 1
+	return 0
 
 /obj/machinery/computer/fusion/attack_ai(mob/user as mob)
 	return attack_hand(user)
@@ -22,39 +25,56 @@
 	updatemodules()
 	var/dat = "<h3>Tokamak Controll Panel</h3>"
 	//dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>"
-	if(fusion_controller.fusion_components.len < 5)
-		dat += "<a href='byond://?src=\ref[src];findcomp=1'><font color=green> Connect to reactor components. </font></a>"
+	if(!updatemodules())
+		dat += "<a href='byond://?src=\ref[src];findcomp=1'>Connect to reactor components.</a><br>"
 	else
 	//font color=green
-		dat += "<center>MCU status:</center><br>"
-		dat += "Unit 1 - [fusion_components[1].status()]"
-		dat += "Unit 2 - [fusion_components[2].status()]"
-		dat += "Unit 3 - [fusion_components[3].status()]"
-		dat += "Unit 4 - [fusion_components[4].status()]"
-	user << browse(dat, "window=fusiongen")
+		var/obj/machinery/power/fusion/comp
+		var/status
+		dat += "<b><center>HDR status:</center></b><br>"
+		comp = fusion_controller.fusion_components[13]
+		status = comp.status()
+		dat += (status + "<br>")
+		dat += "Plasma Temperature: [isnull(fusion_controller.gas_contents) ? "No Gas" : "[fusion_controller.gas_contents.temperature]"]<br>"
+		dat += "Plasma nr. Moles: [isnull(fusion_controller.gas_contents) ? "No Gas" : "[fusion_controller.gas_contents.total_moles]"]<br>"
+		var/exchangers = 0
+		for(var/obj/machinery/power/fusion/plasma/plasma in fusion_controller.plasma)
+			if(!isnull(plasma.partner))
+				exchangers ++
+		dat += "Thermal Containment: [fusion_controller.heatpermability==1 ? "Inactive" : "Active"] <br>"
+		dat += "Exchanging with: [exchangers] Heat exchangers. <br>"
+		dat += "<a href='byond://?src=\ref[src];toggleheatperm=1'>Toggle</a><br>"
+		dat += "<br><b><center>MCR status:</center></b><br>"
+		comp = fusion_controller.fusion_components[1]
+		status = comp.status()
+		dat += "Ring 1:<br>[status]<br>"
+		comp = fusion_controller.fusion_components[4]
+		status = comp.status()
+		dat += "Ring 2:<br>[status]<br>"
+		comp = fusion_controller.fusion_components[7]
+		status = comp.status()
+		dat += "Ring 3:<br>[status]<br>"
+		comp = fusion_controller.fusion_components[10]
+		status = comp.status()
+		dat += "Ring 4:<br>[status]<br>"
+		dat += "Containmentfield Power: [fusion_controller.conPower==1 ? "Active" : "Inactive"] - "
+		dat += "<a href='byond://?src=\ref[src];togglecon=1'>Toggle</a><br>"
+		dat += "Gas release: [fusion_controller.gas==1 ? "Open" : "Closed"] -"
+		dat += "<a href='byond://?src=\ref[src];togglegas=1'>Toggle</a><br>"
+	user << browse(dat, "window=fusiongen;size=600x750")
 	//onclose(user, "fusiongen")
 
 
 /obj/machinery/computer/fusion/Topic(href, href_list)
 	..()
+	if(href_list["togglecon"])
+		fusion_controller.toggle_field()
+	if(href_list["togglegas"])
+		fusion_controller.toggle_gas()
+	if(href_list["findcomp"])
+		updatemodules()
+	if(href_list["toggleheatperm"])
+		fusion_controller.toggle_permability()
 
-	if(href_list["gentoggle"])
-		if(gravity_generator:on)
-			gravity_generator:on = 0
-
-			for(var/area/A in gravity_generator:localareas)
-				var/obj/machinery/gravity_generator/G
-				for(G in machines)
-					if((A in G.localareas) && (G.on))
-						break
-				if(!G)
-					A.gravitychange(0,A)
-
-
-		else
-			for(var/area/A in gravity_generator:localareas)
-				gravity_generator:on = 1
-				A.gravitychange(1,A)
-
-		src.updateUsrDialog()
-		return
+	src.updateUsrDialog()
+	return

@@ -112,6 +112,27 @@ steam.start() -- spawns the effect
 					qdel(steam)
 
 /////////////////////////////////////////////
+//Sort plasma ball effec (bluespace ball)
+/////////////////////////////////////////////
+
+/obj/effect/effect/plasma_ball
+	name = "plasma_ball"
+	icon_state = "bluespace"
+	anchored = 1.0
+	mouse_opacity = 0
+
+/obj/effect/effect/plasma_ball/New()
+	..()
+	playsound(src.loc, "sparks", 100, 1)
+	var/turf/T = src.loc
+	if (istype(T, /turf))
+		T.hotspot_expose(1000,100)
+	spawn (15)
+		qdel( src )
+	return
+
+
+/////////////////////////////////////////////
 //SPARK SYSTEM (like steam system)
 // The attach(atom/atom) proc is optional, and can be called to attach the effect
 // to something, like the RCD, so then you can just call start() and the sparks

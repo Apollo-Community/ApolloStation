@@ -139,6 +139,9 @@
 /datum/gas_mixture/proc/get_thermal_energy_change(var/new_temperature)
 	return heat_capacity()*(max(new_temperature, 0) - temperature)
 
+//Returns the thermal energy stored in the gas, usefull for deviding energy between gas systems.
+/datum/gas_mixture/proc/get_thermal_energy()
+	return heat_capacity()*temperature
 
 //Technically vacuum doesn't have a specific entropy. Just use a really big number (infinity would be ideal) here so that it's easy to add gas to vacuum and hard to take gas out.
 #define SPECIFIC_ENTROPY_VACUUM		150000
