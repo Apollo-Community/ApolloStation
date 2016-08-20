@@ -1,6 +1,8 @@
 //The fusion "core" heating rod
 //What gets hit by the beam and heats up the plasma
 /obj/machinery/power/fusion/core
+	name = "Heat Dispersion Device"
+	desc = "Disperses heat input from lasers into serounding plasma."
 	icon = 'icons/obj/fusion.dmi'
 	icon_state = "core"
 	var/heat = 0
@@ -22,3 +24,7 @@
 	else
 		damage += Proj.damage
 	return 0
+
+//Override to make sure the icon does not dissapear
+/obj/machinery/power/fusion/core/update_icon()
+	return

@@ -1,0 +1,25 @@
+"a" = (/turf/grass,/area)
+"b" = (/mob,/turf/grass,/area)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaabaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaabaaaaaaabaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaabaaaaabaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+"}

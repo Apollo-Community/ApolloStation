@@ -22,8 +22,7 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 
-	updatemodules()
-	var/dat = "<h3>Tokamak Controll Panel</h3>"
+	var/dat = "<h3>Tokamak Control Panel</h3>"
 	//dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>"
 	if(!updatemodules())
 		dat += "<a href='byond://?src=\ref[src];findcomp=1'>Connect to reactor components.</a><br>"
@@ -31,20 +30,21 @@
 	//font color=green
 		var/obj/machinery/power/fusion/comp
 		var/status
-		dat += "<b><center>HDR status:</center></b><br>"
-		comp = fusion_controller.fusion_components[13]
-		status = comp.status()
-		dat += (status + "<br>")
 		dat += "Plasma Temperature: [isnull(fusion_controller.gas_contents) ? "No Gas" : "[fusion_controller.gas_contents.temperature]"]<br>"
 		dat += "Plasma nr. Moles: [isnull(fusion_controller.gas_contents) ? "No Gas" : "[fusion_controller.gas_contents.total_moles]"]<br>"
 		var/exchangers = 0
 		for(var/obj/machinery/power/fusion/plasma/plasma in fusion_controller.plasma)
 			if(!isnull(plasma.partner))
 				exchangers ++
-		dat += "Thermal Containment: [fusion_controller.heatpermability==1 ? "Inactive" : "Active"] <br>"
-		dat += "Exchanging with: [exchangers] Heat exchangers. <br>"
+		dat += "Thermal Containment: [fusion_controller.heatpermability==1 ? "Inactive" : "Active"] - "
 		dat += "<a href='byond://?src=\ref[src];toggleheatperm=1'>Toggle</a><br>"
-		dat += "<br><b><center>MCR status:</center></b><br>"
+		dat += "Exchanging with: [exchangers] Heat exchangers. <br>"
+		dat += "<a href='byond://?src=\ref[src];event=1'><font color = red>Emergency Gas Vent</font></a><br>"
+		dat += "<b><center>Dispertion Rod Status:</center></b><br>"
+		comp = fusion_controller.fusion_components[13]
+		status = comp.status()
+		dat += status + "<br>"
+		dat += "<br><b><center>MCR status:</center></b>"
 		comp = fusion_controller.fusion_components[1]
 		status = comp.status()
 		dat += "Ring 1:<br>[status]<br>"
@@ -69,12 +69,20 @@
 	..()
 	if(href_list["togglecon"])
 		fusion_controller.toggle_field()
+		return
 	if(href_list["togglegas"])
 		fusion_controller.toggle_gas()
+		return
 	if(href_list["findcomp"])
 		updatemodules()
+		return
 	if(href_list["toggleheatperm"])
 		fusion_controller.toggle_permability()
+		return
+	if(href_list["event"])
+		spawn(0)
+			if(alert("Confrim Emergency Venting",,"Yes", "No") == "Yes")
+				fusion_controller.emergencyVent()
 
 	src.updateUsrDialog()
 	return

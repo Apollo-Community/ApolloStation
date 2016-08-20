@@ -24,6 +24,7 @@ var/global/datum/fusion_controller/fusion_controller = new()
 	gas_contents.volume = 480
 	gas_contents.temperature = T20C
 
+//Standart process cycle
 /datum/fusion_controller/proc/process()
 	if(fusion_components.len != 14)
 		return
@@ -32,24 +33,69 @@ var/global/datum/fusion_controller/fusion_controller = new()
 	calcFusion()
 	calcDamage()
 	calcConField()
+	checkComponents()
+	updateIcons()
 
+//Shuts down reactor by controlled gas venting
+/datum/fusion_controller/proc/emergencyVent()
+	if(gas_contents.temperature >= 90000)
+		gas_contents.temperature = 89000
+	leakPlasma()
+
+//Check the individual components for various statuses
+/datum/fusion_controller/proc/checkComponents()
+	if(!fusion_components.len == 14)
+		if(gas_contents.temperature > 90000)
+			critFail(pick(list(1,2,3,4,5,6,7,8,9,10,11,12,13,14)))	//OMG so ugly
+		else
+			leakPlasma()
+			removePlasma()
+		fusion_controller = new()
+		qdel(src)
+		return
+
+	var/emmag_nr = 0
+	for(var/obj/machinery/power/fusion/comp in fusion_components)
+		if(!comp.anchored)
+			if(gas_contents.temperature > 90000)
+				critFail(comp)
+			else
+				leakPlasma()
+				removePlasma()
+			fusion_controller = new()
+			qdel(src)
+			return
+		if(comp.emagged)
+			emmag_nr ++
+	if(emmag_nr >= 12)
+		for(var/obj/machinery/power/fusion/comp in fusion_components)
+			comp.locked = 0
+
+//Update the icons
+/datum/fusion_controller/proc/updateIcons()
+	for(var/obj/machinery/power/fusion/comp in fusion_components)
+		comp.update_icon()
+
+//Pass self to the core rod for debug
 /datum/fusion_controller/proc/pass_self()
 	var/obj/machinery/power/fusion/core/core = fusion_components[13]
 	core.controller = src
 
+//Toggle the containment field power scourse
 /datum/fusion_controller/proc/toggle_field()
 	conPower = !conPower
 
+//Toggle the gas outlet
 /datum/fusion_controller/proc/toggle_gas()
 	gas = !gas
 
+//Toggle the containment field heat permability
 /datum/fusion_controller/proc/toggle_permability()
 	heatpermability = !heatpermability
 	for(var/obj/machinery/power/fusion/plasma/p in plasma)
 		p.toggle_heat_transfer()
 
-
-//This spawns the "plasma" based upon the location of the core rod.
+//Spawns the "plasma" based upon the location of the core rod.
 /datum/fusion_controller/proc/generatePlasma()
 	var/obj/machinery/power/fusion/plasma/p
 	var/obj/machinery/power/fusion/core/core = fusion_components[13]
@@ -83,10 +129,18 @@ var/global/datum/fusion_controller/fusion_controller = new()
 	if(plasma.len == 0 || isnull(gas_contents) || gas_contents.total_moles < 1)
 		return
 
+	for(var/obj/machinery/power/fusion/comp in fusion_components)
+		if(comp.anchored == 0)
+			leakPlasma()
+			if(gas_contents.temperature > 90000)	//We are at fusion temp EXPLODE!
+				//crit fail
+				return
+
 	if(!confield)
 		leakPlasma()
-		spawn(5)
-			removePlasma()
+		removePlasma()
+		gas = 0
+		return
 
 	core.decay()
 
@@ -114,7 +168,7 @@ var/global/datum/fusion_controller/fusion_controller = new()
 		for(var/obj/machinery/power/fusion/plasma/p in plasma)
 			p.icon_state = "plas_cool"
 
-
+//Pump plasma from the ring tanks into the "field"
 /datum/fusion_controller/proc/pumpPlasma()
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
 		pump_gas(r, r.get_tank_content(), gas_contents, r.get_tank_moles())
@@ -142,9 +196,15 @@ var/global/datum/fusion_controller/fusion_controller = new()
 	if(confield)
 		for(var/obj/machinery/power/fusion/plasma/p in plasma)
 			p.overlays = list(image(p.icon, "field_overlay"))
+		for(var/obj/machinery/power/fusion/comp in fusion_components)
+			comp.on = 1
+			comp.locked = 1		//Prevent the components from beeing wrenched out of place.
 	else
 		for(var/obj/machinery/power/fusion/plasma/p in plasma)
 			p.overlays.Cut()
+		for(var/obj/machinery/power/fusion/comp in fusion_components)
+			comp.on = 0
+			comp.locked = 0
 
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
 		if(conPower)
@@ -153,7 +213,7 @@ var/global/datum/fusion_controller/fusion_controller = new()
 		r.battery = max(r.battery - 25, 0)
 		if(r.battery == 0)
 			confield = 0
-
+			return
 		else
 			confield = 1
 
@@ -172,10 +232,9 @@ var/global/datum/fusion_controller/fusion_controller = new()
 
 //Fusion event, generates heat neutrons wich generate energy via collectors.
 /datum/fusion_controller/proc/fusionEvent(obj/machinery/power/fusion/plasma/p)
-	world << "Fusion event!"
-	var/neutrons = 100							//Will depent on gas mixture
-	var/heat = 1000							//Will depent on gas mixture
-	var/free_energy = 1000
+	var/neutrons = 100						//Will depent on gas mixture, basic output
+	var/heat = 1000							//Will depent on gas mixture, basic output
+	var/free_energy = 1000					//Energy that can be distrbuted to either heat or neutrons depending on neutron collectors
 	heat += free_energy*free_energy_coef
 	neutrons += free_energy*(1-free_energy_coef)
 	p.transfer_energy(neutrons)
@@ -185,11 +244,9 @@ var/global/datum/fusion_controller/fusion_controller = new()
 	spawn()
 		new/obj/effect/effect/plasma_ball(get_turf(p))
 
-//Check if all components are pressent (14 of them)
-/datum/fusion_controller/proc/checkComponents()
-	if(fusion_components.len == 14)
-		return 1
-	return 0
+	//Neutrons effect the containment field, more neutrons = more power but also more were on the field
+	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
+		r.battery -= neutrons/10
 
 //Calculate if we should do damage to the rings according to heat of the gas.
 //A random ring will take 1 point of damage for every 5000 deg above 1 mil deg.
@@ -199,8 +256,6 @@ var/global/datum/fusion_controller/fusion_controller = new()
 		var/obj/machinery/power/fusion/component = fusion_components[i]
 		component.damage += (gas_contents.temperature - 1000000)/5000
 
-//Check if any of the components are critically damaged, warn and or fail (boom).
-/datum/fusion_controller/proc/damage_act()
 	for(var/obj/machinery/power/fusion/component in fusion_components)
 		if(component.damage > 500 && component.damage < 800)
 			//warning
@@ -210,15 +265,22 @@ var/global/datum/fusion_controller/fusion_controller = new()
 
 		else if(component.damage > 999)
 			//critically fail
-			gas = 0
-			leakPlasma()
-			spawn()
-				removePlasma()
-				explosion(get_turf(component), 2, 4, 10, 15)
+			critFail()
 
+//Critically fail in an explosion .. or worse.
+/datum/fusion_controller/proc/critFail(var/obj/o)
+	gas = 0
+	leakPlasma()
+	spawn()
+		removePlasma()
+		explosion(get_turf(o), 2, 4, 10, 15)
+	//You are really deep in the shit now boi!
+	if(gas_contents.temperature > 2000000)
+		new/obj/fusion_ball(o.loc)
 
 
 //LONG LIVE SPAGETTI !
+//This finds all the components in a efficient but really clumsy code wise way.
 /datum/fusion_controller/proc/findComponents()
 	.=0
 	var/list/temp_list = list()
@@ -253,6 +315,7 @@ var/global/datum/fusion_controller/fusion_controller = new()
 			if(!mag_ring.dir == SOUTH || !mag_ring.anchored == 1)
 				return
 			temp_list.Add(mag_ring)
+			continue
 
 		if(dir == NORTHEAST)
 			if(!mag_ring.dir == SOUTH || !mag_ring.anchored == 1)
@@ -272,6 +335,7 @@ var/global/datum/fusion_controller/fusion_controller = new()
 			if(!mag_ring.dir == SOUTH || !mag_ring.anchored == 1)
 				return
 			temp_list.Add(mag_ring)
+			continue
 
 		if(dir == SOUTHEAST)
 			if(!mag_ring.dir == WEST || !mag_ring.anchored == 1)
@@ -291,6 +355,7 @@ var/global/datum/fusion_controller/fusion_controller = new()
 			if(!mag_ring.dir == NORTH || !mag_ring.anchored == 1)
 				return
 			temp_list.Add(mag_ring)
+			continue
 
 		if(dir == SOUTHWEST)
 			if(!mag_ring.dir == NORTH || !mag_ring.anchored == 1)

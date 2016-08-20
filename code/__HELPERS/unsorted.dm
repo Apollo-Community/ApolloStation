@@ -85,7 +85,7 @@
 	return 1
 
 
-/proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
+/proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams. //Give agle in the x direction not from current dir.
 	if(!start || !end) return 0
 	var/dy
 	var/dx
