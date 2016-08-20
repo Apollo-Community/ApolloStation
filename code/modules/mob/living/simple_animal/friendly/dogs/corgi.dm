@@ -288,6 +288,9 @@
 					else
 						set_dir(SOUTH)
 
+					if(!Adjacent(movement_target)) //can't reach food through windows.
+						return
+
 					if(isturf(movement_target.loc) )
 						UnarmedAttack(movement_target)
 					else if(ishuman(movement_target.loc) && prob(20))
