@@ -266,6 +266,7 @@
 					if(3) P.name = "normal-sized parcel"
 					if(4) P.name = "large parcel"
 					if(5) P.name = "huge parcel"
+				O.forceMove(P)
 
 				P.add_fingerprint(usr)
 				O.add_fingerprint(usr)
