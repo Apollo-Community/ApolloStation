@@ -225,13 +225,10 @@
 		return
 	user.visible_message("<b>[user]</b> nibbles away at the [src].","You nibble away at the [src].")
 	bitecount++
-	if(reagents && user.reagents)
-		reagents.trans_to_ingest(user, bitesize)
 	spawn(5)
-		if(!src && !user.client)
+		if(bitecount >= 5)
 			user.custom_emote(1,"[pick("burps", "cries for more", "burps twice", "looks at the area where the food was")]")
 			qdel(src)
-	On_Consume(user)
 
 //////////////////////////////////////////////////
 ////////////////////////////////////////////Snacks
