@@ -33,6 +33,7 @@ var/global/list/fusion_balls = list()
 	middle_time = start_time + 150
 
 	..()
+	processScheduler.enableProcess("fusion_ball")	//To make sure its not checking for balls when there are non.
 	fusion_balls += src
 	for(var/obj/machinery/power/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
@@ -70,12 +71,7 @@ var/global/list/fusion_balls = list()
 /obj/fusion_ball/process()
 	check_time()
 	move()
-	emp_change()
 	shock()
-
-/obj/fusion_ball/proc/emp_change()
-	if(prob(emp_change))
-		emp_area()
 
 /obj/fusion_ball/proc/check_time()
 	if(world.realtime > end_time)
@@ -105,18 +101,20 @@ var/global/list/fusion_balls = list()
 			qdel(a)
 	*/
 	spawn()
-		for(var/mob/living/M in ohearers(shock_range,src))	//if you are behind glass your are safe.
+		for(var/mob/living/M in ohearers(shock_range,src))	//if you are behind glass your are safe.(this returns only mobs !)
 			var/dist = get_dist(M, src)
 			if(dist > kill_shock_range)
 				kill_shock(M)
 				continue
 			hurt_shock(M)
-		for(var/obj/machinery/m in ohearers(shock_range,src))
-			hurt_shock(m)
-			empulse(m)
+		var/list/viewers = oview(shock_range,src)
+		//Shoot 3 emp bolts at random locations.
+		for(var/i = 0, i <= 3, i++)
+			var/obj/m = pick(viewers)
+			emp(m)
 	return
 
-/obj/fusion_ball/proc/emp(obj/machinery/m)
+/obj/fusion_ball/proc/emp(obj/m)
 	var/datum/effect/effect/system/lightning_bolt/bolt = new()
 	bolt.start(src, m)
 	empulse(get_turf(m), 1, 1)
@@ -144,9 +142,3 @@ var/global/list/fusion_balls = list()
 	spawn(0)
 		step(src, movement_dir)
 	return 1
-
-/obj/fusion_ball/proc/emp_area()
-	if(!escalate)
-		empulse(src, 3, 5)
-	else
-		empulse(src, 3, 7)

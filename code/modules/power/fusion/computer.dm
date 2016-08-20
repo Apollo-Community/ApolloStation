@@ -69,20 +69,15 @@
 	..()
 	if(href_list["togglecon"])
 		fusion_controller.toggle_field()
-		return
 	if(href_list["togglegas"])
 		fusion_controller.toggle_gas()
-		return
 	if(href_list["findcomp"])
 		updatemodules()
-		return
 	if(href_list["toggleheatperm"])
 		fusion_controller.toggle_permability()
-		return
 	if(href_list["event"])
 		spawn(0)
 			if(alert("Confrim Emergency Venting",,"Yes", "No") == "Yes")
 				fusion_controller.emergencyVent()
-
 	src.updateUsrDialog()
 	return

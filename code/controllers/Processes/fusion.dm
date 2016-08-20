@@ -10,7 +10,7 @@
 
 
 /datum/controller/process/fusion_ball/setup()
-	name = "fusion ball controller"
+	name = "fusion_ball"
 	schedule_interval = 5 // every 0.5 seconds
 	if(isnull(fusion_balls))
 		fusion_balls = list()
@@ -19,3 +19,5 @@
 	if(fusion_balls.len > 0)
 		for(var/obj/fusion_ball/ball in fusion_balls)
 			ball.process()
+	else
+		disabled = 1

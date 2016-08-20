@@ -26,15 +26,14 @@ var/global/datum/fusion_controller/fusion_controller = new()
 
 //Standart process cycle
 /datum/fusion_controller/proc/process()
-	if(fusion_components.len != 14)
-		return
-	pass_self()
-	updatePlasma()
-	calcFusion()
-	calcDamage()
-	calcConField()
 	checkComponents()
-	updateIcons()
+	if(fusion_components.len > 0)
+		pass_self()
+		updatePlasma()
+		calcFusion()
+		calcDamage()
+		calcConField()
+		updateIcons()
 
 //Shuts down reactor by controlled gas venting
 /datum/fusion_controller/proc/emergencyVent()

@@ -15,6 +15,31 @@
 	..()
 	tank = new()
 
+/obj/machinery/power/fusion/ring_corner/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/weapon/tank/phoron))
+		if(!src.anchored)
+			user << "<span class='alert'>The [src] needs to be secured to the floor first.</span>"
+			return 1
+		if(src.tank)
+			user << "<span class='alert'>There's already a phoron tank loaded.</span>"
+			return 1
+		user.drop_item()
+		src.tank = W
+		W.loc = src
+		return 1
+	else if(istype(W, /obj/item/weapon/crowbar))
+		if(tank)
+			eject()
+			return 1
+
+/obj/machinery/power/fusion/ring_corner/proc/eject()
+	var/obj/item/weapon/tank/phoron/Z = src.tank
+	if (!Z)
+		return
+	Z.loc = get_turf(src)
+	Z.layer = initial(Z.layer)
+	src.tank = null
+
 //Override to make sure the icon does not dissapear
 /obj/machinery/power/fusion/ring_corner/update_icon()
 	return
