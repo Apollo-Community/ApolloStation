@@ -422,7 +422,7 @@
 	return
 
 
-/obj/structure/table/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/table/attackby(obj/item/W as obj, mob/user as mob, params)
 	if (!W) return
 
 	// Handle harm intent grabbing/tabling.
@@ -512,7 +512,15 @@
 		user.visible_message("<span class='danger'>The [src] was sliced apart by [user]!</span>")
 		deconstruct()
 
-	user.drop_item(src)
+	if(user.drop_item())
+		W.Move(loc)
+		var/list/click_params = params2list(params)
+		//Center the icon where the user clicked.
+		if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+			return
+		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+		W.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+		W.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 	return
 
 /obj/structure/table/proc/straight_table_check(var/direction)

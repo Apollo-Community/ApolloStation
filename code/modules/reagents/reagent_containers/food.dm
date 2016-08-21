@@ -1,5 +1,7 @@
+/*
 #define CELLS 4
 #define CELLSIZE (32/CELLS)
+*/
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Food.
@@ -17,6 +19,8 @@
 		src.pixel_x = rand(-6.0, 6) //Randomizes postion
 		src.pixel_y = rand(-6.0, 6)
 
+//Made obsolete thanks to table pixel placement for all items.
+/*
 /obj/item/weapon/reagent_containers/food/afterattack(atom/A, mob/user, proximity, params)
 	if(proximity && params && istype(A, /obj/structure/table) && center_of_mass.len)
 		//Places the item on a grid
@@ -36,3 +40,4 @@
 
 #undef CELLS
 #undef CELLSIZE
+*/
