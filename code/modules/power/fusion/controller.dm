@@ -146,7 +146,7 @@ var/global/datum/fusion_controller/fusion_controller = new()
 	//heat up plasma and temp sanity check
 	var/heatdif = core.heat
 	//The beams temerature is about 100k deg so we cap input there.
-	if(gas_contents.temperature >= 1000000)
+	if(gas_contents.temperature >= 100000)
 		heatdif = 0
 	core.heat -= heatdif
 	gas_contents.temperature += heatdif + fusion_heat - calcDecay(gas_contents.temperature)		//Calculating temp change

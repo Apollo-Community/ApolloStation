@@ -138,11 +138,11 @@ steam.start() -- spawns the effect
 
 /datum/effect/effect/system/lightning_bolt/New()
 	..()
-/datum/effect/effect/system/lightning_bolt/start(obj/scourse, obj/target)
+/datum/effect/effect/system/lightning_bolt/start(atom/scourse, atom/target)
 	var/vector/start = new (scourse.x * world.icon_size, scourse.y * world.icon_size)
 	var/vector/dest  = new (target.x * world.icon_size, target.y * world.icon_size)
 	var/bolt/b = new(start, dest, 50)
-	b.Draw(scourse.z, color = "#ffffff")
+	b.Draw(scourse.z, color = "#ffffff", thickness = 2, split = 1)
 
 
 /////////////////////////////////////////////
