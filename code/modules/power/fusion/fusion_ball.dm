@@ -23,7 +23,6 @@ var/global/list/fusion_balls = list()
 	var/last_failed_movement = 0 //Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing.
 	var/chained = 0//Adminbus chain-grab
 	var/emp_change = 0
-	//var/des_range = 1 //Eating turs is way to destructive at these speeds
 
 /obj/fusion_ball/New(loc)
 	//CARN: admin-alert for chuckle-fuckery.
@@ -124,7 +123,8 @@ var/global/list/fusion_balls = list()
 		return
 	var/datum/effect/effect/system/lightning_bolt/bolt = new()
 	bolt.start(src, m)
-	m.apply_effect(rand(5, 20), IRRADIATE)
+	m.apply_damage(rand(10, 20), damagetype = BURN)
+	m.apply_effect(rand(10, 20), effecttype = STUN)
 
 /obj/fusion_ball/proc/kill_shock(var/mob/living/m)
 	if(m.status_flags & GODMODE)

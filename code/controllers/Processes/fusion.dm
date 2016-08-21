@@ -1,13 +1,16 @@
+var/global/list/fusion_controllers = list()
+
 /datum/controller/process/fusion/setup()
 	name = "fusion controller"
 	schedule_interval = 5 // every 0.5 seconds
 
-	if(!fusion_controller)
-		fusion_controller = new
+	if(!fusion_controllers)
+		fusion_controllers = new()
 
 /datum/controller/process/fusion/doWork()
-	fusion_controller.process()
-
+	world << "base process!"
+	for(var/datum/fusion_controller/c in fusion_controllers)
+		c.process()
 
 /datum/controller/process/fusion_ball/setup()
 	name = "fusion_ball"

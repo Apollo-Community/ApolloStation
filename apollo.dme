@@ -1511,6 +1511,7 @@
 #include "code\modules\power\fusion\fusion_ball.dm"
 #include "code\modules\power\fusion\plasma.dm"
 #include "code\modules\power\fusion\ring.dm"
+#include "code\modules\power\fusion\upgrades.dm"
 #include "code\modules\power\rust\areas.dm"
 #include "code\modules\power\rust\circuits_and_design.dm"
 #include "code\modules\power\rust\core_control.dm"

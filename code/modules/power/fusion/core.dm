@@ -7,6 +7,7 @@
 	icon_state = "core"
 	var/heat = 0
 	var/controller
+	var/beam_coef = 2
 /obj/machinery/power/fusion/core/status()
 	return "Buildupheat: [heat] <br> Integrity: [(1000-damage)/10] %"
 
@@ -19,8 +20,7 @@
 /obj/machinery/power/fusion/core/bullet_act(var/obj/item/projectile/Proj)
 	if(istype(Proj, /obj/item/projectile/beam/continuous/emitter))
 		var/obj/item/projectile/beam/continuous/emitter/B = Proj
-		//Needs math !
-		heat += B.power*fusion_controller.beam_coef	//Gotta do something with the alloy compo here.
+		heat += B.power*beam_coef
 	else
 		damage += Proj.damage
 	return 0
@@ -28,3 +28,8 @@
 //Override to make sure the icon does not dissapear
 /obj/machinery/power/fusion/core/update_icon()
 	return
+
+/obj/machinery/power/fusion/core/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/device/multitool))
+		src.tag = input(user,"Input Device tag","Input Tag",null) as text|null
+	..()

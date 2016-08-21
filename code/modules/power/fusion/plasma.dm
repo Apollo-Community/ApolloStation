@@ -7,6 +7,7 @@
 	var/datum/gas_mixture/air_contents = null
 	var/obj/machinery/atmospherics/unary/heat_exchanger/partner = null
 	var/network = null
+	ready = 1
 
 //When a fusion event happens neurons are generated that can be collected by radiation collectos.
 /obj/machinery/power/fusion/plasma/proc/transfer_energy(var/neurons = 0)
