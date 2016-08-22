@@ -139,19 +139,19 @@ Creates alloys that can be used to make stronger structures or more complex allo
 			var/obj/item/stack/sheet/alloy/A = null
 			var/obj/item/stack/sheet/mineral/M = mineral
 			if(base.name == "metal")
-				A = new /obj/item/stack/sheet/alloy/metal(comp)
+				A = new /obj/item/stack/sheet/alloy/metal(comp, mineral.name, base.name)
 
 				// >= 40% platinum is considered plasteel
 				// can't do this in the alloy New() :(
 				if(A.materials["platinum"] && A.materials["platinum"] >= 0.4)
 					qdel(A)
-					A = new /obj/item/stack/sheet/alloy/plasteel(comp)
+					A = new /obj/item/stack/sheet/alloy/plasteel(comp, mineral.name, base.name)
 			else
 				//You can now make phoron glass with this !
 				if(mineral.name == "phoron" && base.amount/mineral.amount == 2)
 					A = new /obj/item/stack/sheet/glass/phoronglass()
 				else
-					A = new /obj/item/stack/sheet/alloy/glass(comp)
+					A = new /obj/item/stack/sheet/alloy/glass(comp, mineral.name, base.name)
 					A.effects = M.mineral_effect
 			A.amount = base.amount
 			A.loc = get_turf(src)

@@ -45,6 +45,7 @@
 			user << "You close the acces pannel"
 		else
 			user << "You open the acces panel"
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		panel_open = !panel_open
 		update_icon()
 		return
@@ -54,13 +55,13 @@
 		if(C.amount < 2)
 			user << "<span class='alert'>You need more wires.</span>"
 			return
-		user << "You start adding cables to the ring"
+		user << "You start adding cables to the Tokamak."
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 20) && C.amount >= 2)
 			C.use(2)
 			user.visible_message(\
-				"<span class='alert'>[user.name] has added cables to the panel!</span>",\
-				"You add cables to the panel.")
+				"<span class='alert'>[user.name] has added cables to the Tokamak!</span>",\
+				"You add cables to the Tokamak.")
 			wired = 1
 			update_icon()
 		return
@@ -71,8 +72,8 @@
 		if(do_after(user, 50))
 			new /obj/item/stack/cable_coil(loc,2)
 			user.visible_message(\
-				"<span class='alert'>[user.name] cut the cabling inside the panel.</span>",\
-				"You cut the cabling inside the panel.")
+				"<span class='alert'>[user.name] cut the cabling inside the Tokamak.</span>",\
+				"You cut the cabling inside the Tokamak.")
 			update_icon()
 			wired = 0
 		return

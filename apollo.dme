@@ -1508,6 +1508,7 @@
 #include "code\modules\power\fusion\computer.dm"
 #include "code\modules\power\fusion\controller.dm"
 #include "code\modules\power\fusion\core.dm"
+#include "code\modules\power\fusion\fabricator.dm"
 #include "code\modules\power\fusion\fusion_ball.dm"
 #include "code\modules\power\fusion\plasma.dm"
 #include "code\modules\power\fusion\ring.dm"

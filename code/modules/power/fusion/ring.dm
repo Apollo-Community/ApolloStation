@@ -30,10 +30,16 @@
 		W.loc = src
 		return 1
 	else if(istype(W, /obj/item/weapon/crowbar))
-		var/obj/item/weapon/to_eject = input("What item do you want to remove?","Remove?","") in list(tank, rod, crystal)
-		if(to_eject)
-			eject(to_eject)
-			return 1
+		var/obj/item/weapon/to_eject = input("What do you want to remove?") as null|anything in list(tank,rod,crystal)
+		if(!to_eject)
+			return
+		if(to_eject == tank)
+			eject_tank()
+		if(to_eject == rod)
+			eject_rod()
+		if(to_eject == crystal)
+			eject_crystal()
+		return
 	if(istype(W, /obj/item/weapon/shieldCrystal))
 		if(crystal)
 			user << "<span class='alert'>There's already a field crystal installed.</span>"
@@ -60,38 +66,51 @@
 		ready = 1
 	..()
 
-/obj/machinery/power/fusion/ring_corner/proc/eject(obj/item/weapon/to_eject)
-	if(isnull(to_eject))
-		return
-	var/obj/Z
-	if(istype(to_eject, /obj/item/weapon/tank/phoron))
-		Z = src.tank
-		src.tank = null
-
-	if(istype(to_eject, /obj/item/weapon/tank/phoron))
-		Z = src.rod
-		src.rod = null
-
-	if(istype(to_eject, /obj/item/weapon/tank/phoron))
-		Z = src.crystal
-		src.crystal = null
-
+/obj/machinery/power/fusion/ring_corner/proc/eject_tank()
+	var/obj/item/weapon/tank/phoron/Z = src.tank
 	if (!Z)
 		return
 	Z.loc = get_turf(src)
 	Z.layer = initial(Z.layer)
+	src.tank = null
+
+/obj/machinery/power/fusion/ring_corner/proc/eject_rod()
+	var/obj/item/weapon/neutronRod/Z = src.rod
+	if (!Z)
+		return
+	Z.loc = get_turf(src)
+	Z.layer = initial(Z.layer)
+	src.rod = null
+
+/obj/machinery/power/fusion/ring_corner/proc/eject_crystal()
+	var/obj/item/weapon/shieldCrystal/Z = src.crystal
+	if (!Z)
+		return
+	Z.loc = get_turf(src)
+	Z.layer = initial(Z.layer)
+	src.crystal = null
 
 //Override to make sure the icon does not dissapear
 /obj/machinery/power/fusion/ring_corner/update_icon()
 	return
 
+//Return content of tank inside, returns an empty gas mix if there is no or no gas mix in that tank.
 /obj/machinery/power/fusion/ring_corner/proc/get_tank_content()
+	if(isnull(tank))
+		return new/datum/gas_mixture()
+	if(isnull(tank.air_contents))
+		return new/datum/gas_mixture()
 	return tank.air_contents
 
+//Set the content of the tank
 /obj/machinery/power/fusion/ring_corner/proc/set_tank_content(var/datum/gas_mixture/gas)
 	tank.air_contents = gas
 
 /obj/machinery/power/fusion/ring_corner/proc/get_tank_moles()
+	if(isnull(tank))
+		return 0
+	if(isnull(tank.air_contents))
+		return 0
 	return tank.air_contents.total_moles
 
 /obj/machinery/power/fusion/ring_corner/status()

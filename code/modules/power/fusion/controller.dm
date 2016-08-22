@@ -29,7 +29,6 @@
 
 //Standart process cycle
 /datum/fusion_controller/proc/process()
-	world << "Precess!"
 	checkComponents()
 	if(fusion_components.len > 0)
 		pass_self()
@@ -188,10 +187,13 @@
 //Pump plasma back into rings.
 /datum/fusion_controller/proc/drainPlasma()
 	gas_contents.divide(4)
-	var/tmp/datum/gas_mixture/tank_mix
+	world << "Total gass moles of devide mix: [gas_contents.total_moles]"
+	var/datum/gas_mixture/tank_mix
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
 		tank_mix = new()
-		r.set_tank_content(tank_mix.copy_from(gas_contents))
+		tank_mix.add(gas_contents)
+		world << "Total gass moles of tank mix: [tank_mix.total_moles]"
+		r.set_tank_content(tank_mix)
 	gas_contents = new()
 	removePlasma()
 

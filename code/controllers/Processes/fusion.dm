@@ -8,7 +8,6 @@ var/global/list/fusion_controllers = list()
 		fusion_controllers = new()
 
 /datum/controller/process/fusion/doWork()
-	world << "base process!"
 	for(var/datum/fusion_controller/c in fusion_controllers)
 		c.process()
 
