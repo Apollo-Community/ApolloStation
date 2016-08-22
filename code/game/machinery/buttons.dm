@@ -10,6 +10,36 @@
 	idle_power_usage = 2
 	active_power_usage = 4
 
+/obj/machinery/driver_button/secure
+	name = "secure mass driver button"
+	icon_state = "is_closed"
+	desc = "A secure remote control switch for a mass driver."
+	var/closed = 1
+
+/obj/machinery/driver_button/secure/verb/toggle_open()
+	set src in oview(1)
+	set category = "Object"
+	set name = "Toggle Button Glass"
+
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return
+
+	if(ishuman(usr))
+		src.add_fingerprint(usr)
+	else
+		usr << "<span class='warning'>This mob type can't use this verb.</span>"
+		return
+	if(active)
+		usr << "<span class='warning'>It hasn't reset yet.</span>"
+		return
+	if(closed)
+		closed = 0
+		icon_state = "is_open"
+	else
+		closed = 1
+		icon_state = "is_closed"
+	playsound(src.loc, 'sound/machines/click.ogg', 3, 1, -3)
+
 /obj/machinery/ignition_switch
 	name = "ignition switch"
 	icon = 'icons/obj/objects.dmi'
