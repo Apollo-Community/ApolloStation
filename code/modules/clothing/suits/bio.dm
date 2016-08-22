@@ -29,12 +29,9 @@
 //Standard biosuit, orange stripe
 /obj/item/clothing/head/bio_hood/general
 	icon_state = "bio_general"
-	body_parts_covered = HEAD|FACE|EYES
 
 /obj/item/clothing/suit/bio_suit/general
 	icon_state = "bio_general"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	flags_inv = HIDEGLOVES|HIDEJUMPSUIT|HIDETAIL
 
 //Virology biosuit, green stripe
 /obj/item/clothing/head/bio_hood/virology
@@ -42,8 +39,6 @@
 
 /obj/item/clothing/suit/bio_suit/virology
 	icon_state = "bio_virology"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	flags_inv = HIDEGLOVES|HIDEJUMPSUIT|HIDETAIL
 
 //Security biosuit, grey with red stripe across the chest
 /obj/item/clothing/head/bio_hood/security
@@ -51,8 +46,6 @@
 
 /obj/item/clothing/suit/bio_suit/security
 	icon_state = "bio_security"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	flags_inv = HIDEGLOVES|HIDEJUMPSUIT|HIDETAIL
 
 //Janitor's biosuit, grey with purple arms
 /obj/item/clothing/head/bio_hood/janitor
@@ -60,8 +53,6 @@
 
 /obj/item/clothing/suit/bio_suit/janitor
 	icon_state = "bio_janitor"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	flags_inv = HIDEGLOVES|HIDEJUMPSUIT|HIDETAIL
 
 
 //Scientist's biosuit, white with a pink-ish hue
@@ -70,14 +61,10 @@
 
 /obj/item/clothing/suit/bio_suit/scientist
 	icon_state = "bio_scientist"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	flags_inv = HIDEGLOVES|HIDEJUMPSUIT|HIDETAIL
 
 //CMO's biosuit, blue stripe
 /obj/item/clothing/suit/bio_suit/cmo
 	icon_state = "bio_cmo"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	flags_inv = HIDEGLOVES|HIDEJUMPSUIT|HIDETAIL
 
 /obj/item/clothing/head/bio_hood/cmo
 	icon_state = "bio_cmo"
