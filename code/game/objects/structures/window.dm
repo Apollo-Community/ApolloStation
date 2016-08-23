@@ -393,7 +393,7 @@
 	basestate = "phoronrwindow"
 	icon_state = "phoronrwindow"
 	shardtype = /obj/item/weapon/shard/phoron
-	glasstype = /obj/item/stack/sheet/glass/phoronrglass/reinforced
+	glasstype = /obj/item/stack/sheet/glass/phoronglass/reinforced
 	reinf = 1
 	maxhealth = 160
 
