@@ -8,6 +8,7 @@
 	var/heat = 0
 	var/controller
 	var/beam_coef = 2
+	ready = 1
 /obj/machinery/power/fusion/core/status()
 	return "Buildupheat: [heat] <br> Integrity: [(1000-damage)/10] %"
 

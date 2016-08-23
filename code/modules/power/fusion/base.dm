@@ -2,12 +2,12 @@
 /obj/machinery/power/fusion
 	density = 1
 	var/damage = 0
-	var/wired = 1
+	var/wired = 0
 	var/on = 0
 	var/locked = 0
 	emagged = 0
-	var/ready = 1
-	panel_open = 0
+	var/ready = 0
+	panel_open = 1
 	var/datum/fusion_controller/fusion_controller
 
 /obj/machinery/power/fusion/New()
@@ -63,7 +63,7 @@
 				"<span class='alert'>[user.name] has added cables to the Tokamak!</span>",\
 				"You add cables to the Tokamak.")
 			wired = 1
-			update_icon()
+		update_icon()
 		return
 
 	else if (istype(W, /obj/item/weapon/wirecutters) && panel_open && wired)
@@ -74,8 +74,8 @@
 			user.visible_message(\
 				"<span class='alert'>[user.name] cut the cabling inside the Tokamak.</span>",\
 				"You cut the cabling inside the Tokamak.")
-			update_icon()
 			wired = 0
+		update_icon()
 		return
 	else if(istype(W, /obj/item/weapon/card/emag) && !emagged)
 		user << "You hear a click disabling the magnetic seals."

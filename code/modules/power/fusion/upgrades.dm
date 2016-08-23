@@ -58,7 +58,7 @@
 //The rod has an effect on heat/neutron production.
 /obj/item/weapon/neutronRod
 	name = "Neutron Absobtion Rod"
-	desc = "Constructed from various mineral iron alloys, absorbs neutrons."
+	desc = " neutron absorbtion rod."
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "smes_coil"			// Just few icons patched together. If someone wants to make better icon, feel free to do so!
 	w_class = 4.0 						// It's LARGE (backpack size)
@@ -72,7 +72,7 @@
 //The crystal has an effect on the decay/strengh of plasma/shields
 /obj/item/weapon/shieldCrystal
 	name = "Field Amplification Crystal"
-	desc = "Constructed from various mineral glass alloys, reconfigures field matrix."
+	desc = " field amplification crystal."
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "smes_coil"			// Just few icons patched together. If someone wants to make better icon, feel free to do so!
 	w_class = 4.0 						// It's LARGE (backpack size)
@@ -81,4 +81,5 @@
 /obj/item/weapon/shieldCrystal/New(var/mineral)
 	if(!isnull(mineral))
 		src.mineral = mineral
+	desc = "[mineral]" + desc
 	..()

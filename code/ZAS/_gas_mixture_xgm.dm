@@ -175,6 +175,12 @@
 	//group_multiplier gets divided out in volume/gas[gasid] - also, V/(m*T) = R/(partial pressure)
 	var/molar_mass = gas_data.molar_mass[gasid]
 	var/specific_heat = gas_data.specific_heat[gasid]
+/*	if(gasid == "hydrogen") //Hydrogen gass debug
+		world << "Molar mas of [gasid] = [molar_mass]"
+		world << "Specific heat of [gasid] = [specific_heat]"
+		world << "Temperature of [gasid] = [temperature]"
+		world << "gas\[gasid\] returns [gas[gasid]]"
+*/
 	return R_IDEAL_GAS_EQUATION * ( log( (IDEAL_GAS_ENTROPY_CONSTANT*volume/(gas[gasid] * temperature)) * (molar_mass*specific_heat*temperature)**(2/3) + 1 ) +  15 )
 
 	//alternative, simpler equation

@@ -16,9 +16,9 @@
 /obj/machinery/power/fusion/ring_corner/New()
 	..()
 	//FOR DEBUG
-	tank = new()
-	rod = new()
-	crystal = new()
+	//tank = new()
+	//rod = new()
+	//crystal = new()
 
 /obj/machinery/power/fusion/ring_corner/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/tank/hydrogen))
@@ -60,14 +60,13 @@
 
 /obj/machinery/power/fusion/ring_corner/update_icon()
 	//Some cheaty sneeky var updating here
-	if(!panel_open || !wired || !anchored || isnull(crystal) || isnull(rod))
+	if(!wired || !anchored || isnull(crystal) || isnull(rod))
 		ready = 0
 	else
 		ready = 1
-	..()
 
 /obj/machinery/power/fusion/ring_corner/proc/eject_tank()
-	var/obj/item/weapon/tank/phoron/Z = src.tank
+	var/obj/item/weapon/tank/hydrogen/Z = src.tank
 	if (!Z)
 		return
 	Z.loc = get_turf(src)
@@ -90,9 +89,6 @@
 	Z.layer = initial(Z.layer)
 	src.crystal = null
 
-//Override to make sure the icon does not dissapear
-/obj/machinery/power/fusion/ring_corner/update_icon()
-	return
 
 //Return content of tank inside, returns an empty gas mix if there is no or no gas mix in that tank.
 /obj/machinery/power/fusion/ring_corner/proc/get_tank_content()
@@ -104,7 +100,11 @@
 
 //Set the content of the tank
 /obj/machinery/power/fusion/ring_corner/proc/set_tank_content(var/datum/gas_mixture/gas)
+	//world << "gas moles in set_tank_contents [gas.total_moles]"
+	if(gas.temperature == 0)	//For some reason if I dont do this it turns the temp to 0.
+		gas.temperature = 293.15
 	tank.air_contents = gas
+	//world << "gas moles in tank afther set_tank_contents [tank.air_contents.total_moles]"
 
 /obj/machinery/power/fusion/ring_corner/proc/get_tank_moles()
 	if(isnull(tank))
@@ -126,3 +126,11 @@
 	anchored = 1
 	density = 1
 	use_power = 0
+
+/obj/machinery/power/fusion/ring/update_icon()
+	//Some cheaty sneeky var updating here
+	if(!wired || !anchored)
+		ready = 0
+	else
+		ready = 1
+	..()

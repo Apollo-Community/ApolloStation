@@ -2,23 +2,21 @@
 *	Regulates the fusion engine and this components.
 */
 /datum/fusion_controller
-	var/list/fusion_components = list()	//List of components making up the fusion reactor.
-	var/mode = 1						//Mode, direct = 0, indirect = 1.
-	var/gas = 0							//Is the gas release open.
+	var/list/fusion_components = list()			//List of components making up the fusion reactor.
+	var/mode = 1								//Mode, direct = 0, indirect = 1.
+	var/gas = 0									//Is the gas release open.
 	var/confield = 0
-	var/conPower = 0					//Is the containment field active.
-	var/list/plasma = list()			//List of plasma fields
+	var/conPower = 0							//Is the containment field active.
+	var/list/plasma = list()					//List of plasma fields
 	var/datum/gas_mixture/gas_contents = null	//Plasma must contain a mix of gasses.
 	var/exchange_coef = 0.2
 	var/decay_coef = 55000
-	var/heatpermability = 0				//Do we let the heat escape/exchange with the enviroment or do we contain it. (0 = contain, 0 = exchange)
+	var/heatpermability = 0						//Do we let the heat escape/exchange with the enviroment or do we contain it. (0 = contain, 0 = exchange)
 	var/fusion_heat = 0
 	var/datum/fusionUpgradeTable/table
 	var/list/coefs
 	var/rod_coef = 0
 	var/field_coef = 0
-	var/heat_absorbed
-	var/neutron_absorbed
 
 /datum/fusion_controller/New()
 	fusion_controllers += src
@@ -49,7 +47,7 @@
 	. = 0
 	if(!fusion_components.len >= 13)
 		if(gas_contents.temperature > 90000)
-			critFail(pick(list(1,2,3,4,5,6,7,8,9,10,11,12,13,14)))	//OMG so ugly
+			critFail(pick(fusion_components))	//Easteregg for egnineers who think they are safe behind glass
 		else
 			leakPlasma()
 			removePlasma()
@@ -107,7 +105,8 @@
 	var/obj/machinery/power/fusion/core/core = fusion_components[13]
 
 	for(var/tmp/i in list(-2, 2))
-		p = new(core.loc)
+		p = PoolOrNew(/obj/machinery/power/fusion/plasma, core.loc)
+		//p = new(core.loc)
 		p.x += i
 		if(i == 2)
 			p.dir = SOUTH
@@ -117,7 +116,8 @@
 		plasma.Add(p)
 
 	for(var/tmp/i in list(-2, 2))
-		p = new(core.loc)
+		//p = new(core.loc)
+		p = PoolOrNew(/obj/machinery/power/fusion/plasma, core.loc)
 		p.y += i
 		if(i == 2)
 			p.dir = EAST
@@ -187,12 +187,13 @@
 //Pump plasma back into rings.
 /datum/fusion_controller/proc/drainPlasma()
 	gas_contents.divide(4)
-	world << "Total gass moles of devide mix: [gas_contents.total_moles]"
+	//world << "Total gass moles of devide mix: [gas_contents.total_moles]"
 	var/datum/gas_mixture/tank_mix
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
 		tank_mix = new()
+		tank_mix.temperature = gas_contents.temperature
 		tank_mix.add(gas_contents)
-		world << "Total gass moles of tank mix: [tank_mix.total_moles]"
+		//world << "Total gass moles of tank mix: [tank_mix.total_moles]"
 		r.set_tank_content(tank_mix)
 	gas_contents = new()
 	removePlasma()
@@ -237,11 +238,7 @@
 			//Power check here !
 			r.battery = min(r.battery + 100, 5000)
 		r.battery = max(r.battery - 25*(1+field_coef), 0)
-		if(r.battery == 0)
-			confield = 0
-			return
-		else
-			confield = 1
+		confield = r.battery
 
 //When does fusion happen ?
 /datum/fusion_controller/proc/calcFusion()
@@ -250,7 +247,7 @@
 	if(gas_contents.temperature < 90000)
 		return
 	for(var/obj/machinery/power/fusion/plasma/p in plasma)
-		var/change = min(((gas_contents.temperature/350000)*100), 25)			//This needs tweaking also with gass mixtures
+		var/change = min(((gas_contents.temperature/500000)*100), 25)			//This needs tweaking also with gass mixtures
 		change = change * Clamp(coefs["fuel"], 0, 2)
 		if(prob(change))
 			spawn()
@@ -274,7 +271,7 @@
 		new/obj/effect/effect/plasma_ball(get_turf(p))
 	//Neutrons effect the containment field, more neutrons = more power but also more were on the field
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
-		r.battery -= neutrons/5
+		r.battery -= neutrons/10
 
 //Calculate if we should do damage to the rings according to heat of the gas.
 //A random ring will take 1 point of damage for every 5000 deg above 1 mil deg.
@@ -310,7 +307,6 @@
 //LONG LIVE SPAGETTI !
 //This finds all the components in a efficient but really clumsy code wise way.
 /datum/fusion_controller/proc/findComponents(obj/machinery/power/fusion/core/c)
-	.=0
 	var/tmp/list/temp_list = list()
 	if(isnull(c))
 		return
