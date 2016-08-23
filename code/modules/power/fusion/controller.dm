@@ -146,9 +146,12 @@
 				return
 
 	if(!confield)
-		leakPlasma()
-		removePlasma()
-		gas = 0
+		if(gas_contents.temperature < 75000)
+			leakPlasma()
+			removePlasma()
+			gas = 0
+		else
+			critFail(pick(fusion_components))
 		return
 
 	core.decay()
@@ -212,6 +215,7 @@
 	for(var/obj/machinery/power/fusion/plasma/p in plasma)
 		pump_gas(p, gas_contents, p.loc.return_air(), gas_contents.total_moles/4)
 		gas_contents.temperature -= dif
+	gas = 0
 	gas_contents = new()
 
 //Calculate plasma passive heat decal (will need to take in account gasses).

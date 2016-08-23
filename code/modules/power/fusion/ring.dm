@@ -60,6 +60,7 @@
 
 /obj/machinery/power/fusion/ring_corner/update_icon()
 	//Some cheaty sneeky var updating here
+	..()
 	if(!wired || !anchored || isnull(crystal) || isnull(rod))
 		ready = 0
 	else
@@ -128,9 +129,8 @@
 	use_power = 0
 
 /obj/machinery/power/fusion/ring/update_icon()
-	//Some cheaty sneeky var updating here
+	..()
 	if(!wired || !anchored)
 		ready = 0
 	else
 		ready = 1
-	..()
