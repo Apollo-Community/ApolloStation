@@ -14,7 +14,6 @@
 
 /obj/machinery/light_switch/New(loc, dir, building)
 	..()
-
 	if(loc)
 		src.loc = loc
 
@@ -24,6 +23,18 @@
 	if(building)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -27 : 27)
 		pixel_y = (dir & 3)? (dir ==1 ? -27 : 27) : 0
+
+	spawn(5)
+		src.area = get_area(src)
+
+		if(otherarea)
+			src.area = locate(text2path("/area/[otherarea]"))
+
+		if(!name)
+			name = "light switch ([area.name])"
+
+		src.on = src.area.lightswitch
+		updateicon()
 
 /obj/machinery/light_switch_construct //For building a lightswitch
 	name = "light switch frame"
@@ -120,22 +131,6 @@
 		src.transfer_fingerprints_to(newswitch)
 		qdel(src)
 		return
-
-/obj/machinery/light_switch/New()
-	..()
-	spawn(5)
-		src.area = get_area(src)
-
-		if(otherarea)
-			src.area = locate(text2path("/area/[otherarea]"))
-
-		if(!name)
-			name = "light switch ([area.name])"
-
-		src.on = src.area.lightswitch
-		updateicon()
-
-
 
 /obj/machinery/light_switch/proc/updateicon()
 	if(stat & NOPOWER)
