@@ -88,7 +88,7 @@
 	if(isnull(T))
 		return
 	var/datum/effect/effect/system/lightning_bolt/bolt = PoolOrNew(/datum/effect/effect/system/lightning_bolt)
-	bolt.start(src, T, size = 1, y_offset = rand(8, 11))
+	bolt.start(src, T, size = 1, sy_offset = rand(8, 11), dx_offset = rand(-5,5), dy_offset = rand(-5,5))
 	playsound(src.loc, pick( 'sound/effects/electr1.ogg', 'sound/effects/electr2.ogg', 'sound/effects/electr3.ogg'), 100, 1)
 
 //EMP at given obj
@@ -97,10 +97,7 @@
 
 //Energize given core
 /obj/machinery/power/arc_emitter/proc/energize(obj/machinery/power/fusion/core/c)
-	world << "core heat: [c.heat]"
-	world << "heat transfered: [arc_power*c.beam_coef*20]"
 	c.heat += (arc_power*c.beam_coef*5)	//*5 because this ticks SO MUCH SLOWER !
-	world << "core heat after: [c.heat]"
 
 //Check if given mob is wearing insulated cloathing
 /obj/machinery/power/arc_emitter/proc/insulated(var/mob/living/carbon/human/m)

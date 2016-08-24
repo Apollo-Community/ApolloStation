@@ -116,6 +116,7 @@ var/global/list/fusion_balls = list()
 /obj/fusion_ball/proc/emp(obj/m)
 	var/datum/effect/effect/system/lightning_bolt/bolt = new()
 	bolt.start(src, m)
+	playsound(src.loc, pick( 'sound/effects/electr1.ogg', 'sound/effects/electr2.ogg', 'sound/effects/electr3.ogg'), 100, 1)
 	empulse(get_turf(m), 1, 1)
 
 /obj/fusion_ball/proc/hurt_shock(var/mob/living/m)
@@ -123,6 +124,7 @@ var/global/list/fusion_balls = list()
 		return
 	var/datum/effect/effect/system/lightning_bolt/bolt = new()
 	bolt.start(src, m)
+	playsound(src.loc, pick( 'sound/effects/electr1.ogg', 'sound/effects/electr2.ogg', 'sound/effects/electr3.ogg'), 100, 1)
 	m.apply_damage(rand(10, 20), damagetype = BURN)
 	m.apply_effect(rand(10, 20), effecttype = STUN)
 
@@ -130,6 +132,7 @@ var/global/list/fusion_balls = list()
 	if(m.status_flags & GODMODE)
 		return
 	var/datum/effect/effect/system/lightning_bolt/bolt = new()
+	playsound(src.loc, pick( 'sound/effects/electr1.ogg', 'sound/effects/electr2.ogg', 'sound/effects/electr3.ogg'), 100, 1)
 	bolt.start(src, m)
 	m.dust()
 

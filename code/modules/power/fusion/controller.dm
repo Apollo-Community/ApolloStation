@@ -280,7 +280,7 @@
 		new/obj/effect/effect/plasma_ball(get_turf(p))
 	//Neutrons effect the containment field, more neutrons = more power but also more were on the field
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
-		r.battery -= (neutrons/20)*(1+field_coef)
+		r.battery -= (neutrons/10)*(1+field_coef)
 
 //Calculate if we should do damage to the rings according to heat of the gas.
 //A random ring will take 1 point of damage for every 5000 deg above 1 mil deg.
@@ -303,14 +303,14 @@
 
 //Critically fail in an explosion .. or worse.
 /datum/fusion_controller/proc/critFail(var/obj/o)
+	if(gas_contents.temperature > 600000)
+		new/obj/fusion_ball(o.loc)
 	gas = 0
 	leakPlasma()
 	spawn()
 		removePlasma()
 		explosion(get_turf(o), 2, 4, 10, 15)
 	//You are really deep in the shit now boi!
-	if(gas_contents.temperature > 500000)
-		new/obj/fusion_ball(o.loc)
 
 
 //LONG LIVE SPAGETTI !
