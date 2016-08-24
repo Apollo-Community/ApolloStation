@@ -11,8 +11,8 @@
 	var/datum/fusion_controller/fusion_controller
 
 /obj/machinery/power/fusion/New()
-	..()
 	update_icon()
+	..()
 
 /obj/machinery/power/fusion/proc/spark()
 	// Light up some sparks
@@ -22,6 +22,7 @@
 
 //Just an interface
 /obj/machinery/power/fusion/proc/status()
+	update_icon()
 	return
 
 /obj/machinery/power/fusion/attackby(obj/item/W, mob/user)
@@ -98,3 +99,8 @@
 	if(on)
 		icon_state = "[initial(icon_state)]_on"
 		return
+
+/obj/machinery/power/fusion/Destroy()
+	if(!isnull(fusion_controller))
+		fusion_controller.fusion_components -= src
+	..()

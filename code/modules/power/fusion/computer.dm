@@ -27,6 +27,9 @@
 	user.set_machine(src)
 	add_fingerprint(user)
 
+	if(isnull(fusion_controller))
+		fusion_controller = new()
+
 	if(stat & (BROKEN|NOPOWER))
 		return
 

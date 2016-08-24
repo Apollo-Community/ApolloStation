@@ -18,6 +18,7 @@
 	var/rod_coef = 0
 	var/field_coef = 0
 	var/obj/machinery/computer/fusion/computer
+	var/set_up = 0
 
 /datum/fusion_controller/New()
 	fusion_controllers += src
@@ -28,7 +29,8 @@
 
 //Standart process cycle
 /datum/fusion_controller/proc/process()
-	checkComponents()
+	if(set_up)
+		checkComponents()
 	if(fusion_components.len > 0)
 		pass_self()
 		updatePlasma()
@@ -46,17 +48,13 @@
 //Check the individual components for various statuses
 /datum/fusion_controller/proc/checkComponents()
 	. = 0
-	var/tmp/check_null = 0
-	for(var/obj/machinery/power/fusion/comp in fusion_components)
-		if(isnull(comp))
-			check_null = 1
-			break
-	if(!fusion_components.len >= 13 || check_null)
+	if(!fusion_components.len != 13)
 		if(gas_contents.temperature > 90000)
 			critFail(pick(fusion_components))	//Easteregg for egnineers who think they are safe behind glass
 		else
 			leakPlasma()
 			removePlasma()
+		if(!isnull(computer))
 			computer.reboot()
 		qdel(src)
 		return
@@ -69,7 +67,7 @@
 			else
 				leakPlasma()
 				removePlasma()
-			for(var/obj/machinery/computer/fusion/computer in fusion_components)
+			if(!isnull(computer))
 				computer.reboot()
 			qdel(src)
 			return
@@ -209,8 +207,7 @@
 //Remove plasma objects.
 /datum/fusion_controller/proc/removePlasma()
 	for(var/obj/machinery/power/fusion/plasma/p in plasma)
-		spawn(5)
-			qdel(p)
+		qdel(p)
 	plasma = list()
 
 //If the containment field get disabled.. bad stuff.
@@ -259,8 +256,7 @@
 		var/change = min(((gas_contents.temperature/500000)*100), 25)			//This needs tweaking also with gass mixtures
 		change = change * Clamp(coefs["fuel"], 0, 2)
 		if(prob(change))
-			spawn()
-				fusionEvent(p)
+			fusionEvent(p)
 
 //Fusion event, generates heat neutrons wich generate energy via collectors.
 /datum/fusion_controller/proc/fusionEvent(obj/machinery/power/fusion/plasma/p)
@@ -307,8 +303,8 @@
 		new/obj/fusion_ball(o.loc)
 	gas = 0
 	leakPlasma()
+	removePlasma()
 	spawn()
-		removePlasma()
 		explosion(get_turf(o), 2, 4, 10, 15)
 	//You are really deep in the shit now boi!
 
@@ -410,12 +406,12 @@
 	temp_list.Add(c)
 	if(temp_list.len != 13)
 		return
-	for(var/obj/machinery/power/fusion/comp in fusion_components)
+	for(var/obj/machinery/power/fusion/comp in temp_list)
 		if(!comp.ready)
 			return
 		comp.fusion_controller = src
 	//Calculating component coefs
-	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
+	for(var/obj/machinery/power/fusion/ring_corner/r in temp_list)
 		if(isnull(r.rod) || isnull(r.crystal))
 			return
 		rod_coef += table.rod_coef(r.rod)
@@ -424,6 +420,7 @@
 	field_coef = field_coef/4
 
 	fusion_components = temp_list
+	set_up = 1
 	return 1
 
 /datum/fusion_controller/proc/addComp(var/obj/machinery/computer/fusion/comp)

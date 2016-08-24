@@ -15,12 +15,14 @@
 
 /obj/machinery/power/fusion/ring_corner/New()
 	//FOR DEBUG
+	/*
 	tank = new()
 	rod = new()
 	crystal = new()
 	ready = 1
 	panel_open = 0
 	wired = 1
+	*/
 	..()
 
 /obj/machinery/power/fusion/ring_corner/attackby(obj/item/W, mob/user)

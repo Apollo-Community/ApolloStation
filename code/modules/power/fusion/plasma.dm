@@ -60,3 +60,6 @@
 	if(istype(A, /mob/living))
 		var/tmp/mob/living/M = A
 		M.dust()
+
+/obj/machinery/power/fusion/plasma/update_icon()
+	return

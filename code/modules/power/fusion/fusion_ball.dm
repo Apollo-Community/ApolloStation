@@ -23,6 +23,8 @@ var/global/list/fusion_balls = list()
 	var/last_failed_movement = 0 //Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing.
 	var/chained = 0//Adminbus chain-grab
 	var/emp_change = 0
+	var/x_offset = 0
+	var/y_offset = 0
 
 /obj/fusion_ball/New(loc)
 	//CARN: admin-alert for chuckle-fuckery.
@@ -84,6 +86,8 @@ var/global/list/fusion_balls = list()
 	emp_change = 0
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "emfield_s3"
+	x_offset = 32
+	y_offset = 32
 
 /obj/fusion_ball/attack_ai() //To prevent ais from killing itself be clicking on the ball of plasma (who would klick on a ball of plasma anyway)
 	return
@@ -115,7 +119,7 @@ var/global/list/fusion_balls = list()
 
 /obj/fusion_ball/proc/emp(obj/m)
 	var/datum/effect/effect/system/lightning_bolt/bolt = new()
-	bolt.start(src, m)
+	bolt.start(src, m, sx_offset = x_offset, sy_offset = y_offset)
 	playsound(src.loc, pick( 'sound/effects/electr1.ogg', 'sound/effects/electr2.ogg', 'sound/effects/electr3.ogg'), 100, 1)
 	empulse(get_turf(m), 1, 1)
 
@@ -123,7 +127,7 @@ var/global/list/fusion_balls = list()
 	if(m.status_flags & GODMODE)
 		return
 	var/datum/effect/effect/system/lightning_bolt/bolt = new()
-	bolt.start(src, m)
+	bolt.start(src, m, sx_offset = x_offset, sy_offset = y_offset)
 	playsound(src.loc, pick( 'sound/effects/electr1.ogg', 'sound/effects/electr2.ogg', 'sound/effects/electr3.ogg'), 100, 1)
 	m.apply_damage(rand(10, 20), damagetype = BURN)
 	m.apply_effect(rand(10, 20), effecttype = STUN)
@@ -133,7 +137,7 @@ var/global/list/fusion_balls = list()
 		return
 	var/datum/effect/effect/system/lightning_bolt/bolt = new()
 	playsound(src.loc, pick( 'sound/effects/electr1.ogg', 'sound/effects/electr2.ogg', 'sound/effects/electr3.ogg'), 100, 1)
-	bolt.start(src, m)
+	bolt.start(src, m, sx_offset = x_offset, sy_offset = y_offset)
 	m.dust()
 
 /obj/fusion_ball/proc/move()
