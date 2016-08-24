@@ -17,6 +17,7 @@
 	var/list/coefs
 	var/rod_coef = 0
 	var/field_coef = 0
+	var/obj/machinery/computer/fusion/computer
 
 /datum/fusion_controller/New()
 	fusion_controllers += src
@@ -45,13 +46,17 @@
 //Check the individual components for various statuses
 /datum/fusion_controller/proc/checkComponents()
 	. = 0
-	if(!fusion_components.len >= 13)
+	var/tmp/check_null = 0
+	for(var/obj/machinery/power/fusion/comp in fusion_components)
+		if(isnull(comp))
+			check_null = 1
+			break
+	if(!fusion_components.len >= 13 || check_null)
 		if(gas_contents.temperature > 90000)
 			critFail(pick(fusion_components))	//Easteregg for egnineers who think they are safe behind glass
 		else
 			leakPlasma()
 			removePlasma()
-		for(var/obj/machinery/computer/fusion/computer in fusion_components)
 			computer.reboot()
 		qdel(src)
 		return
@@ -218,9 +223,9 @@
 	gas = 0
 	gas_contents = new()
 
-//Calculate plasma passive heat decal (will need to take in account gasses).
+//Calculate plasma passive heat decay.
 /datum/fusion_controller/proc/calcDecay(var/temp)
-	. = 2**(temp/(decay_coef))*field_coef
+	. = 2**(temp/(decay_coef))*(1-field_coef)
 
 //Containment field calculations and adjustment.. also sprite overlay.
 /datum/fusion_controller/proc/calcConField()
@@ -240,8 +245,8 @@
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
 		if(conPower)
 			//Power check here !
-			r.battery = min(r.battery + 100, 5000)
-		r.battery = max(r.battery - 25*(1+field_coef), 0)
+			r.battery = min(r.battery + 150, 5000)
+		r.battery = max(r.battery - 25, 0)
 		confield = r.battery
 
 //When does fusion happen ?
@@ -275,7 +280,7 @@
 		new/obj/effect/effect/plasma_ball(get_turf(p))
 	//Neutrons effect the containment field, more neutrons = more power but also more were on the field
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
-		r.battery -= neutrons/10
+		r.battery -= (neutrons/20)*(1+field_coef)
 
 //Calculate if we should do damage to the rings according to heat of the gas.
 //A random ring will take 1 point of damage for every 5000 deg above 1 mil deg.

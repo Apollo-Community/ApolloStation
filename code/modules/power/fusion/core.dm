@@ -1,10 +1,10 @@
 //The fusion "core" heating rod
 //What gets hit by the beam and heats up the plasma
 /obj/machinery/power/fusion/core
-	name = "Heat Dispersion Device"
-	desc = "Disperses heat input from lasers into serounding plasma."
+	name = "Heat Distrubtion Device"
+	desc = "Converts incoming energy into heat and distributes it."
 	icon = 'icons/obj/fusion.dmi'
-	icon_state = "core"
+	icon_state = "core_off"
 	var/heat = 0
 	var/controller
 	var/beam_coef = 2
@@ -28,9 +28,17 @@
 
 //Override to make sure the icon does not dissapear
 /obj/machinery/power/fusion/core/update_icon()
+	if(heat > 1)
+		icon_state = "core_on"
+	else
+		icon_state = "core_off"
 	return
 
 /obj/machinery/power/fusion/core/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/multitool))
 		src.tag = input(user,"Input Device tag","Input Tag",null) as text|null
 	..()
+
+/obj/machinery/power/fusion/core/process()
+	update_icon()
+	decay()

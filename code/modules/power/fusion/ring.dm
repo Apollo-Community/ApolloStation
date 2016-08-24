@@ -14,11 +14,14 @@
 	var/obj/item/weapon/shieldCrystal/crystal
 
 /obj/machinery/power/fusion/ring_corner/New()
-	..()
 	//FOR DEBUG
-	//tank = new()
-	//rod = new()
-	//crystal = new()
+	tank = new()
+	rod = new()
+	crystal = new()
+	ready = 1
+	panel_open = 0
+	wired = 1
+	..()
 
 /obj/machinery/power/fusion/ring_corner/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/tank/hydrogen))
@@ -127,6 +130,12 @@
 	anchored = 1
 	density = 1
 	use_power = 0
+
+/obj/machinery/power/fusion/ring/New()
+	ready = 1
+	panel_open = 0
+	wired = 1
+	..()
 
 /obj/machinery/power/fusion/ring/update_icon()
 	..()

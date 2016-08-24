@@ -1,6 +1,6 @@
 /obj/machinery/tokamakFabricator
 	name = "Tokamak Component Fabricator"
-	desc = "A large automated factory for producing components and fuel for the Tokamak reacor."
+	desc = "A large automated factory for producing components for the Tokamak reacor."
 	density = 1
 	anchored = 1
 	use_power = 1

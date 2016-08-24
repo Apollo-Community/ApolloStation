@@ -11,6 +11,7 @@
 	var/datum/fusion_controller/fusion_controller
 
 /obj/machinery/power/fusion/New()
+	..()
 	update_icon()
 
 /obj/machinery/power/fusion/proc/spark()

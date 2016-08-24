@@ -1,6 +1,7 @@
 // Borrows code from cloning computer and gravity controll computer.
 // Handles amost all user interaction with the fusion reactor.
 /obj/machinery/computer/fusion
+	name = "Tokamak Control Console"
 	icon = 'icons/obj/fusion.dmi'
 	icon_state = "computer"
 	var/datum/fusion_controller/fusion_controller
@@ -18,8 +19,7 @@
 	if(isnull(t_core) || !istype(t_core, /obj/machinery/power/fusion/core))
 		return
 	if(fusion_controller.findComponents(t_core))
-		fusion_controller.addComp(src)
-
+		fusion_controller.computer = src
 /obj/machinery/computer/fusion/attack_ai(mob/user as mob)
 	return attack_hand(user)
 
