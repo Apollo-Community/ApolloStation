@@ -6,6 +6,7 @@
 	icon_state = "engspace_suit"
 	item_state = "engspace_suit"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 100)
+	siemens_coefficient = 0.9
 
 /obj/item/clothing/head/bio_hood/anomaly
 	name = "Anomaly hood"
@@ -13,6 +14,7 @@
 	icon_state = "engspace_helmet"
 	item_state = "engspace_helmet"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 100)
+	siemens_coefficient = 0.9
 
 /obj/item/clothing/suit/space/anomaly
 	name = "Excavation suit"
@@ -21,6 +23,7 @@
 	item_state = "cespace_suit"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 100)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit)
+	siemens_coefficient = 0.9
 
 /obj/item/clothing/head/helmet/space/anomaly
 	name = "Excavation hood"
@@ -28,3 +31,4 @@
 	icon_state = "cespace_helmet"
 	item_state = "cespace_helmet"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 100)
+	siemens_coefficient = 0.9

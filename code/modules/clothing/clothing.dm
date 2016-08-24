@@ -251,6 +251,7 @@ BLIND     // can't see anything
 	var/light_applied
 	var/brightness_on
 	var/on = 0
+	var/insulating = 0
 
 /obj/item/clothing/head/New()
 	..()
