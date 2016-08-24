@@ -20,6 +20,7 @@
 		return
 	if(fusion_controller.findComponents(t_core))
 		fusion_controller.computer = src
+
 /obj/machinery/computer/fusion/attack_ai(mob/user as mob)
 	return attack_hand(user)
 
@@ -35,7 +36,7 @@
 
 	var/dat = "<h3>Tokamak Control Panel</h3>"
 	//dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>"
-	if(fusion_controller.fusion_components.len < 13)
+	if(fusion_controller.fusion_components.len != 13)
 		dat += "<a href='byond://?src=\ref[src];findcomp=1'>Connect to reactor components.</a><br>"
 	else
 	//font color=green
