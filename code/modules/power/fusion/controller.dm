@@ -274,9 +274,31 @@
 	p.set_light(3, 5, "#E6FFFF")
 	spawn()
 		new/obj/effect/effect/plasma_ball(get_turf(p))
+		var/list/targets = list()
+		for(var/mob/living/carbon/human/M in oview(p, 5))
+			if(!insulated(M))
+				targets += M
+		if(targets.len > 0)
+			var/mob/living/carbon/human/M = pick(targets)
+			arc(M, p)
+			M.electrocute_act(rand(20, 40), p)
 	//Neutrons effect the containment field, more neutrons = more power but also more were on the field
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
 		r.battery -= (neutrons/10)*(1+field_coef)
+
+/datum/fusion_controller/proc/insulated(var/mob/living/carbon/human/m)
+	if(isnull(m.head) || isnull(m.wear_suit))
+		return 0
+	if(!m.head.siemens_coefficient >= 0.9 || !m.wear_suit.siemens_coefficient >= 0.9)
+		return 0
+	return 1
+
+/datum/fusion_controller/proc/arc(obj/T, obj/S)
+	if(isnull(T))
+		return
+	var/datum/effect/effect/system/lightning_bolt/bolt = PoolOrNew(/datum/effect/effect/system/lightning_bolt)
+	bolt.start(S, T, size = 1)
+	playsound(S.loc, pick( 'sound/effects/electr1.ogg', 'sound/effects/electr2.ogg', 'sound/effects/electr3.ogg'), 100, 1)
 
 //Calculate if we should do damage to the rings according to heat of the gas.
 //A random ring will take 1 point of damage for every 5000 deg above 1 mil deg.
