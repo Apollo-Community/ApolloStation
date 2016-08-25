@@ -48,7 +48,7 @@
 //Check the individual components for various statuses
 /datum/fusion_controller/proc/checkComponents()
 	. = 0
-	if(!fusion_components.len != 13)
+	if(fusion_components.len != 13)
 		if(gas_contents.temperature > 90000)
 			critFail(pick(fusion_components))	//Easteregg for egnineers who think they are safe behind glass
 		else
