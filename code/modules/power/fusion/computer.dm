@@ -44,13 +44,7 @@
 		var/status
 		dat += "Plasma Temperature: [isnull(fusion_controller.gas_contents) ? "No Gas" : "[fusion_controller.gas_contents.temperature]"]<br>"
 		dat += "Plasma nr. Moles: [isnull(fusion_controller.gas_contents) ? "No Gas" : "[fusion_controller.gas_contents.total_moles]"]<br>"
-		var/exchangers = 0
-		for(var/obj/machinery/power/fusion/plasma/plasma in fusion_controller.plasma)
-			if(!isnull(plasma.partner))
-				exchangers ++
-		dat += "Thermal Containment: [fusion_controller.heatpermability==1 ? "Inactive" : "Active"] - "
-		dat += "<a href='byond://?src=\ref[src];toggleheatperm=1'>Toggle</a><br>"
-		dat += "Exchanging with: [exchangers] Heat exchangers. <br>"
+		dat += "Containment field strengh: [fusion_controller.confield]<br>"
 		if(fusion_controller.gas_contents.temperature < 1000)
 			dat += "<a href='byond://?src=\ref[src];drain=1'><font color = red>Drain Gas</font></a><br>"
 		else
@@ -76,6 +70,13 @@
 		dat += "<a href='byond://?src=\ref[src];togglecon=1'>Toggle</a><br>"
 		dat += "Gas release: [fusion_controller.gas==1 ? "Open" : "Closed"] -"
 		dat += "<a href='byond://?src=\ref[src];togglegas=1'>Toggle</a><br>"
+		var/exchangers = 0
+		for(var/obj/machinery/power/fusion/plasma/plasma in fusion_controller.plasma)
+			if(!isnull(plasma.partner))
+				exchangers ++
+		dat += "Thermal Containment: [fusion_controller.heatpermability==1 ? "Inactive" : "Active"] - "
+		dat += "<a href='byond://?src=\ref[src];toggleheatperm=1'>Toggle</a><br>"
+		dat += "Exchanging with: [exchangers] Heat exchangers. <br>"
 	user << browse(dat, "window=fusiongen;size=600x750")
 	//onclose(user, "fusiongen")
 

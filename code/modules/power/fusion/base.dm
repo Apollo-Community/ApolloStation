@@ -9,6 +9,7 @@
 	var/ready = 0
 	panel_open = 1
 	var/datum/fusion_controller/fusion_controller
+	anchored = 0
 
 /obj/machinery/power/fusion/New()
 	update_icon()
@@ -34,6 +35,7 @@
 			user << "You unanchor the bolts."
 		else
 			user << "You anchor the bolts."
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 		anchored = !anchored
 		on = 0
 		update_icon()
@@ -41,12 +43,12 @@
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(locked)
-			user << "The acces pannel is magnetically sealed"
+			user << "The access pannel is magnetically sealed"
 			return
 		if(panel_open)
-			user << "You close the acces pannel"
+			user << "You close the access pannel"
 		else
-			user << "You open the acces panel"
+			user << "You open the access panel"
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		panel_open = !panel_open
 		update_icon()

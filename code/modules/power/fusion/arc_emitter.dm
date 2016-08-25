@@ -30,9 +30,9 @@
 	wires = new(src)
 
 /obj/machinery/power/arc_emitter/update_icon()
-	if (active && powernet && avail(active_power_usage))
+	if (active && avail(active_power_usage))
 		icon_state = "arc_emitter_active"
-	else if (powernet)
+	else if (powered)
 		icon_state = "arc_emitter_on"
 	else
 		icon_state = "arc_emitter_off"
@@ -59,7 +59,7 @@
 			var/mob/living/carbon/human/M = pick(targets)
 			spawn(rand(0, 10))
 				arc(M)
-				M.electrocute_act(rand(arc_power-10, arc_power+10), src)
+				M.electrocute_act(rand(arc_power-30, arc_power-20), src)
 		return
 
 	//Shock any fusion cores
@@ -182,6 +182,9 @@
 			return
 		if(panel_open == 1)
 			wires.Interact(user)
+			message_admins("[key_name(user, user.client)] is messing with Arc emitter wires. (<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+			log_game("[user.ckey] is messing with Arc emitter wires. ([user]) in ([x],[y],[z])")
+			investigate_log("wires where messed with by <font color='red'>off</font> by [user.key]","singulo")
 			return
 		if(locked)
 			user << "<span class='warning'>The controls are locked!</span>"
@@ -244,8 +247,8 @@
 					return 1
 				src.active = 0
 				user << "You turn off [src]."
-				message_admins("Emitter turned off by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-				log_game("Emitter turned off by [user.ckey]([user]) in ([x],[y],[z])")
+				message_admins("Arc emitter turned off by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+				log_game("Arc emitter turned off by [user.ckey]([user]) in ([x],[y],[z])")
 				investigate_log("turned <font color='red'>off</font> by [user.key]","singulo")
 
 			else if(avail(active_power_usage))
@@ -254,8 +257,8 @@
 					return 1
 				src.active = 1
 				user << "You turn on [src]."
-				message_admins("Emitter turned on by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-				log_game("Emitter turned on by [user.ckey]([user]) in ([x],[y],[z])")
+				message_admins("Arc emitter turned on by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+				log_game("Arc mitter turned on by [user.ckey]([user]) in ([x],[y],[z])")
 				investigate_log("turned <font color='green'>on</font> by [user.key]","singulo")
 
 			update_icon()

@@ -1,6 +1,7 @@
 /*
 *	Regulates the fusion engine and this components.
 */
+#define TM_SAFE_ALERT "Con"
 /datum/fusion_controller
 	var/list/fusion_components = list()			//List of components making up the fusion reactor.
 	var/mode = 1								//Mode, direct = 0, indirect = 1.
@@ -19,6 +20,11 @@
 	var/field_coef = 0
 	var/obj/machinery/computer/fusion/computer
 	var/set_up = 0
+	var/lastwarning = 0
+	var/warning_delay = 10 	//10 sec between warnings
+	var/confield_archived = 0
+	var/safe_warned = 0
+	var/obj/item/device/radio/radio
 
 /datum/fusion_controller/New()
 	fusion_controllers += src
@@ -26,6 +32,11 @@
 	gas_contents.volume = 240
 	gas_contents.temperature = T20C
 	table = new()
+	radio = new(src)
+
+/datum/fusion_controller/Destroy()
+	qdel(radio)
+	..()
 
 //Standart process cycle
 /datum/fusion_controller/proc/process()
@@ -37,6 +48,8 @@
 		calcFusion()
 		calcDamage()
 		calcConField()
+		announce_warning()	//Announce a warning if the confield is dropping.
+		confield_archived = confield
 		updateIcons()
 
 //Shuts down reactor by controlled gas venting
@@ -241,10 +254,9 @@
 
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
 		if(conPower)
-			//Power check here !
-			r.battery = min(r.battery + 150, 5000)
-		r.battery = max(r.battery - 25, 0)
-		confield = r.battery
+			r.field_energy()
+		confield = 0
+		confield += r.battery
 
 //When does fusion happen ?
 /datum/fusion_controller/proc/calcFusion()
@@ -284,7 +296,7 @@
 			M.electrocute_act(rand(20, 40), p)
 	//Neutrons effect the containment field, more neutrons = more power but also more were on the field
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
-		r.battery -= (neutrons/10)*(1+field_coef)
+		confield -= (neutrons/10)*(1+field_coef)*3.5
 
 /datum/fusion_controller/proc/insulated(var/mob/living/carbon/human/m)
 	if(isnull(m.head) || isnull(m.wear_suit))
@@ -330,6 +342,23 @@
 		explosion(get_turf(o), 2, 4, 10, 15)
 	//You are really deep in the shit now boi!
 
+
+/datum/fusion_controller/proc/announce_warning()
+	var/alert_msg = "Warning Tokamak containment field integrity at [confield/40000]%"
+	if(confield < 20000)
+		alert_msg = alert_msg
+		lastwarning = world.timeofday - warning_delay * 5
+	else if(confield <= confield_archived) // The damage is still going up
+		safe_warned = 0
+		lastwarning = world.timeofday
+	else if(!safe_warned)
+		safe_warned = 1 // We are safe, warn only once
+		alert_msg = TM_SAFE_ALERT
+		lastwarning = world.timeofday
+	else
+		alert_msg = null
+	if(alert_msg)
+		radio.autosay(alert_msg, "Tokamak Containment Field Monitor")
 
 //LONG LIVE SPAGETTI !
 //This finds all the components in a efficient but really clumsy code wise way.

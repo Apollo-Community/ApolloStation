@@ -9,8 +9,12 @@
 	var/controller
 	var/beam_coef = 2
 	ready = 1
+	var/last_power = 0
+	wired = 1
+	panel_open = 0
+
 /obj/machinery/power/fusion/core/status()
-	return "Buildupheat: [heat] <br> Integrity: [(1000-damage)/10] %"
+	return "Buildupheat: [heat] <br> Integrity: [(1000-damage)/10] % <br> Producing [last_power] Kw"
 
 //Temperature and power decay of the core
 /obj/machinery/power/fusion/core/proc/decay()
@@ -28,7 +32,7 @@
 
 //Override to make sure the icon does not dissapear
 /obj/machinery/power/fusion/core/update_icon()
-	if(heat > 1)
+	if(last_power > 1 || heat > 1)
 		icon_state = "core_on"
 	else
 		icon_state = "core_off"
@@ -42,3 +46,9 @@
 /obj/machinery/power/fusion/core/process()
 	update_icon()
 	decay()
+
+/obj/machinery/power/fusion/core/proc/receive_neutrons(var/neutrons)
+	var/power = 750*neutrons
+	add_avail(power)
+	last_power = power
+	return

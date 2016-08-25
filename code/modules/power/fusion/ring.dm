@@ -6,7 +6,7 @@
 	var/integrity = 1000
 	icon = 'icons/obj/fusion.dmi'
 	icon_state = "ring_corner"
-	anchored = 1
+	anchored = 0
 	density = 1
 	use_power = 0
 	var/obj/item/weapon/tank/hydrogen/tank
@@ -33,6 +33,7 @@
 		user.drop_item()
 		src.tank = W
 		W.loc = src
+		update_icon()
 		return 1
 	else if(istype(W, /obj/item/weapon/crowbar))
 		var/obj/item/weapon/to_eject = input("What do you want to remove?") as null|anything in list(tank,rod,crystal)
@@ -44,6 +45,7 @@
 			eject_rod()
 		if(to_eject == crystal)
 			eject_crystal()
+		update_icon()
 		return
 	if(istype(W, /obj/item/weapon/shieldCrystal))
 		if(crystal)
@@ -52,7 +54,8 @@
 		user.drop_item()
 		crystal = W
 		W.loc = src
-
+		update_icon()
+		return
 	if(istype(W, /obj/item/weapon/neutronRod))
 		if(rod)
 			user << "<span class='alert'>There's already an absorbtion rod installed.</span>"
@@ -60,6 +63,7 @@
 		user.drop_item()
 		rod = W
 		W.loc = src
+		update_icon()
 
 	..()
 
@@ -78,23 +82,40 @@
 	Z.loc = get_turf(src)
 	Z.layer = initial(Z.layer)
 	src.tank = null
+	update_icon()
 
 /obj/machinery/power/fusion/ring_corner/proc/eject_rod()
+	if(check_lock())
+		return
 	var/obj/item/weapon/neutronRod/Z = src.rod
 	if (!Z)
 		return
 	Z.loc = get_turf(src)
 	Z.layer = initial(Z.layer)
 	src.rod = null
+	update_icon()
 
 /obj/machinery/power/fusion/ring_corner/proc/eject_crystal()
+	if(check_lock())
+		return
 	var/obj/item/weapon/shieldCrystal/Z = src.crystal
 	if (!Z)
 		return
 	Z.loc = get_turf(src)
 	Z.layer = initial(Z.layer)
 	src.crystal = null
+	update_icon()
 
+/obj/machinery/power/fusion/ring_corner/proc/check_lock()
+	if(locked)
+		usr << "The component is magnetically locked in place."
+		return 1
+	return 0
+
+//Returns the field energy produced by the ring.
+/obj/machinery/power/fusion/ring_corner/proc/field_energy()
+	use_power(400)	//Use 40k  power to gen field.
+	battery = min(battery + 150, 10000)	//Generate 150 units of shield
 
 //Return content of tank inside, returns an empty gas mix if there is no or no gas mix in that tank.
 /obj/machinery/power/fusion/ring_corner/proc/get_tank_content()
