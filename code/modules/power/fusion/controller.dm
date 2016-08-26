@@ -252,10 +252,10 @@
 			comp.on = 0
 			comp.locked = 0
 
+	confield = 0
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
 		if(conPower)
 			r.field_energy()
-		confield = 0
 		confield += r.battery
 
 //When does fusion happen ?
@@ -293,7 +293,8 @@
 		if(targets.len > 0)
 			var/mob/living/carbon/human/M = pick(targets)
 			arc(M, p)
-			M.electrocute_act(rand(20, 40), p)
+			M.apply_damage(rand(10, 20), damagetype = BURN)
+			M.apply_effect(rand(10, 20), effecttype = STUN)
 	//Neutrons effect the containment field, more neutrons = more power but also more were on the field
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
 		confield -= (neutrons/10)*(1+field_coef)*3.5
@@ -311,6 +312,7 @@
 	var/datum/effect/effect/system/lightning_bolt/bolt = PoolOrNew(/datum/effect/effect/system/lightning_bolt)
 	bolt.start(S, T, size = 1)
 	playsound(S.loc, pick( 'sound/effects/electr1.ogg', 'sound/effects/electr2.ogg', 'sound/effects/electr3.ogg'), 100, 1)
+	new/obj/effect/effect/sparks(get_turf(T))
 
 //Calculate if we should do damage to the rings according to heat of the gas.
 //A random ring will take 1 point of damage for every 5000 deg above 1 mil deg.
@@ -344,11 +346,13 @@
 
 
 /datum/fusion_controller/proc/announce_warning()
+	return
+	/*
 	var/alert_msg = "Warning Tokamak containment field integrity at [confield/40000]%"
 	if(confield < 20000)
 		alert_msg = alert_msg
 		lastwarning = world.timeofday - warning_delay * 5
-	else if(confield <= confield_archived) // The damage is still going up
+	else if(confield < confield_archived) // The damage is still going up
 		safe_warned = 0
 		lastwarning = world.timeofday
 	else if(!safe_warned)
@@ -359,6 +363,7 @@
 		alert_msg = null
 	if(alert_msg)
 		radio.autosay(alert_msg, "Tokamak Containment Field Monitor")
+	*/
 
 //LONG LIVE SPAGETTI !
 //This finds all the components in a efficient but really clumsy code wise way.

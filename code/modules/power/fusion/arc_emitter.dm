@@ -14,13 +14,15 @@
 
 	var/active = 0
 	var/powered = 0
-	var/state = 0
+	var/state = 2
+	anchored = 1
 	var/locked = 0
 	var/datum/wires/arc_emitter/wires = null
 	var/disabled = 0
 	var/arc_power = 40
 
 /obj/machinery/power/arc_emitter/New()
+	update_icon()
 	..()
 
 /obj/machinery/power/arc_emitter/initialize()
@@ -32,7 +34,7 @@
 /obj/machinery/power/arc_emitter/update_icon()
 	if (active && avail(active_power_usage))
 		icon_state = "arc_emitter_active"
-	else if (powered)
+	else if (avail(active_power_usage))
 		icon_state = "arc_emitter_on"
 	else
 		icon_state = "arc_emitter_off"
@@ -42,10 +44,10 @@
 		return
 	if(src.state != 2 || !avail(active_power_usage))
 		src.active = 0
-		update_icon()
 		return
 	if(active)
 		fire_bolt()
+	update_icon()
 
 //Fire bolt at a target
 /obj/machinery/power/arc_emitter/proc/fire_bolt()
@@ -59,7 +61,9 @@
 			var/mob/living/carbon/human/M = pick(targets)
 			spawn(rand(0, 10))
 				arc(M)
-				M.electrocute_act(rand(arc_power-30, arc_power-20), src)
+				M.apply_damage(rand(arc_power-30, arc_power-20), damagetype = BURN)
+				M.apply_effect(rand(5, 10), effecttype = STUN)
+				new/obj/effect/effect/sparks(get_turf(M))
 		return
 
 	//Shock any fusion cores

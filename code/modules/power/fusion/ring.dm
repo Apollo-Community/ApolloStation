@@ -6,7 +6,9 @@
 	var/integrity = 1000
 	icon = 'icons/obj/fusion.dmi'
 	icon_state = "ring_corner"
-	anchored = 0
+	anchored = 1
+	wired = 1
+	panel_open = 0
 	density = 1
 	use_power = 0
 	var/obj/item/weapon/tank/hydrogen/tank
@@ -15,14 +17,10 @@
 
 /obj/machinery/power/fusion/ring_corner/New()
 	//FOR DEBUG
-	/*
 	tank = new()
 	rod = new()
 	crystal = new()
-	ready = 1
-	panel_open = 0
-	wired = 1
-	*/
+	update_icon()
 	..()
 
 /obj/machinery/power/fusion/ring_corner/attackby(obj/item/W, mob/user)
@@ -151,13 +149,13 @@
 	icon = 'icons/obj/fusion.dmi'
 	icon_state = "ring"
 	anchored = 1
+	wired = 1
+	panel_open = 0
 	density = 1
 	use_power = 0
 
 /obj/machinery/power/fusion/ring/New()
-	ready = 1
-	panel_open = 0
-	wired = 1
+	update_icon()
 	..()
 
 /obj/machinery/power/fusion/ring/update_icon()

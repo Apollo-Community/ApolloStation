@@ -12,6 +12,11 @@
 	var/last_power = 0
 	wired = 1
 	panel_open = 0
+	anchored = 1
+
+/obj/machinery/power/fusion/core/New()
+	update_icon()
+	..()
 
 /obj/machinery/power/fusion/core/status()
 	return "Buildupheat: [heat] <br> Integrity: [(1000-damage)/10] % <br> Producing [last_power] Kw"
@@ -48,7 +53,7 @@
 	decay()
 
 /obj/machinery/power/fusion/core/proc/receive_neutrons(var/neutrons)
-	var/power = 750*neutrons
+	var/power = 400*neutrons	//Generate about 450kw at base level.
 	add_avail(power)
 	last_power = power
 	return
