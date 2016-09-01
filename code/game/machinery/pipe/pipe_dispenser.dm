@@ -170,7 +170,7 @@ Nah
 		return
 
 ///// Z-Level stuff
-	var/dat = {"<b>Disposal Pipes</b><br><br>
+	var/dat = {"<b>Disposal Pipes:</b><br><br>
 <A href='?src=\ref[src];dmake=0'>Pipe</A><BR>
 <A href='?src=\ref[src];dmake=1'>Bent Pipe</A><BR>
 <A href='?src=\ref[src];dmake=2'>Junction</A><BR>
@@ -181,6 +181,9 @@ Nah
 <A href='?src=\ref[src];dmake=7'>Chute</A><BR>
 <A href='?src=\ref[src];dmake=21'>Upwards</A><BR>
 <A href='?src=\ref[src];dmake=22'>Downwards</A><BR>
+<BR><b>Conveyor Belts:</b><BR><BR>
+<A href='?src=\ref[src];makeconveyor=1'>Conveyor Belt</A><BR>
+<A href='?src=\ref[src];makeswitch=1'>Conveyor Belt Switch</A><BR>
 "}
 ///// Z-Level stuff
 
@@ -230,6 +233,18 @@ Nah
 ///// Z-Level stuff
 			C.add_fingerprint(usr)
 			C.update()
+			wait = 1
+			spawn(15)
+				wait = 0
+	if(href_list["makeconveyor"])
+		if(!wait)
+			new /obj/item/conveyor_construct(src.loc)
+			wait = 1
+			spawn(10)
+				wait = 0
+	if(href_list["makeswitch"])
+		if(!wait)
+			new /obj/item/conveyor_switch_construct(src.loc)
 			wait = 1
 			spawn(15)
 				wait = 0

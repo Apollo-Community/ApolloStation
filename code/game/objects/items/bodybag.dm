@@ -42,6 +42,12 @@
 	storage_capacity = (default_mob_size * 2) - 1
 	var/contains_body = 0
 
+// so that it doesnt automatically put everything else inside of it when in a wrapper pipe
+/obj/structure/closet/body_bag/initialize()
+	if(istype(src.loc, /obj/structure/disposalholder))
+		return
+	return ..()
+
 /obj/structure/closet/body_bag/attackby(W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/pen))
 		var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
@@ -107,8 +113,6 @@
 		R.add_fingerprint(user)
 		qdel(src)
 
-
-
 /obj/structure/closet/body_bag/cryobag
 	name = "stasis bag"
 	desc = "A non-reusable plastic bag designed to prevent additional damage to an occupant at the cost of genetic damage."
@@ -133,3 +137,25 @@
 		if(!ishuman(usr))	return
 		usr << "<span class='alert'>You can't fold that up anymore..</span>"
 	..()
+
+/obj/item/bodybag/biohaz
+	name = "biohazard body bag"
+	desc = "A folded, green body bag used for moving stuff that isn't good for you."
+	icon_state = "biobag_folded"
+
+/obj/structure/closet/body_bag/biohaz
+	name = "biohazard body bag"
+	desc = "A green body bag with a biohazard symbol on it. Usually seen as a movie prop."
+	icon_state = "biobagclosed"
+	icon_closed = "biobagclosed"
+	icon_opened = "biobag_open"
+	item_path = /obj/item/bodybag/biohaz
+
+/obj/structure/closet/body_bag/biohaz/update_icon()
+	if(opened)
+		icon_state = icon_opened
+	else
+		if(contains_body > 0)
+			icon_state = "biobag_closed1"
+		else
+			icon_state = icon_closed

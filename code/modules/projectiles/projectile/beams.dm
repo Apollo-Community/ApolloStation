@@ -248,7 +248,10 @@ var/list/beam_master = list()
 	return ..(A)
 
 /obj/item/projectile/beam/continuous/process()
-	if(!loc || loc.density || !node1)
+	if(!node1)
+		qdel(src)
+		return
+	if(!loc || loc.density)
 		Bump(loc)
 		return
 	if(node2 && node2.loc) // don't try to propagate if there's a beam segment ahead

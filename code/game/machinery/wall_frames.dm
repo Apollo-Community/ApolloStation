@@ -80,3 +80,11 @@
 	icon_state = "access_button_off"
 	refund_amt = 1
 	build_machine_type = /obj/machinery/radio_button
+
+/obj/item/frame/light_switch
+	name = "light switch frame"
+	desc = "A frame for a light switch."
+	icon = 'icons/obj/power.dmi'
+	icon_state = "light-p"
+	refund_amt = 1
+	build_machine_type = /obj/machinery/light_switch_construct

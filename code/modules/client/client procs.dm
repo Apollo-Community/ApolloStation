@@ -266,14 +266,14 @@
 
 	if( log_client_to_db() == 2.0 ) // if we're an entirely new player
 		src << "<span class='admin_channel'>Hello and welcome to Apollo Station! Since this is your first time connecting, we'll be tossing some info \
-		your way. If you've never played SS13 before, we highly recommend you read this <a href='http://wiki.apollo-community.org/index.php?title=The_Basics'>new player guide</a>. \
-		Otherwise, if you're a veteran SS13 player who's new to Apollo, we'd recommend this <a href='http://wiki.apollo-community.org/index.php?title=Apollo_Crash_Course'>crash course guide</a>, \
-		which explains the major differences of Apollo.\
-		<br>In addition feel free message a member of staff for help at any time by either pressing <b>F1</b> or using the <b>\"ahelp\"</b> command.<br><br><i>~Apollo Team</i></span>"
+		your way. If you've never played SS13 before, we highly recommend you read this <a href='https://apollo-community.org/wiki/index.php?title=The_Basics'>new player guide</a>. \
+		Otherwise, if you're a veteran SS13 player who's new to Apollo, we'd recommend this <a href='https://apollo-community.org/wiki/index.php?title=A_Crash_Course_in_Roleplaying'>crash course guide</a> \
+		which explains the major differences between Apollo station and other SS13 servers.\
+		<br>In addition, feel free to message a staff member for help at any time by either pressing <b>F1</b> or using the <b>\"ahelp\"</b> command.<br><br><i>~Apollo Team</i></span>"
 	else if( !prefs.passed_date )
-		src << "<span class='admin_channel'>We have detected that your ckey is less than one month old. To help get you started we strongly recommend \
-		that you read this wiki page: <a></a>http://wiki.apollo-community.org/index.php?title=The_Basics</a><br>In addition, feel free message a member \
-		of staff for help at any time by either pressing <b>F1</b> or using the <b>\"ahelp\"</b> command.<br><br><i>~Apollo Team</i></span>"
+		src << "<span class='admin_channel'>We have detected that your ckey is less than a month old. To help you get started we strongly recommend \
+		reading <a href='https://apollo-community.org/wiki/index.php?title=The_Basics'>this helpful wiki page</a>.<br>In addition, feel free to message a staff \
+		member for help at any time by either pressing <b>F1</b> or using the <b>\"ahelp\"</b> command.<br><br><i>~Apollo Team</i></span>"
 
 	loadTokens()
 	loadAntagWeights()
