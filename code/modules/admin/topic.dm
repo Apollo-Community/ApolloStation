@@ -1744,6 +1744,18 @@
 
 				template.Reset()
 
+			if("jump")
+				var/datum/dmm_object_collection/template = locate(href_list["template"])
+				if(!template)
+					return 0
+
+				message_admins("[key_name_admin(usr)] has jumped to the template '[template.name]' at {[template.location.x], [template.location.y], [template.location.z]}")
+
+				var/client/C = usr.client
+				if(!isobserver(usr))	C.admin_ghost()
+				sleep(2)
+				C.jumptocoord(x,y,z)
+
 	else if(href_list["secretsfun"])
 		if(!check_rights(R_FUN))	return
 
