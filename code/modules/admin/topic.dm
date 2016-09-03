@@ -1749,7 +1749,11 @@
 				if(!template)
 					return 0
 
-				message_admins("[key_name_admin(usr)] has jumped to the template '[template.name]' at {[template.location.x], [template.location.y], [template.location.z]}")
+				var/x = template.location.x
+				var/y = template.location.y
+				var/z = template.location.z
+
+				message_admins("[key_name_admin(usr)] has jumped to the template '[template.name]' at {[x], [y], [z]}")
 
 				var/client/C = usr.client
 				if(!isobserver(usr))	C.admin_ghost()
