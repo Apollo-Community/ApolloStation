@@ -50,6 +50,9 @@
 
 	// for latespawns
 	if( istype( antag.current, /mob/living ))
+		antag.character = C
+		antag.current.character = C
+
 		C.copy_to( antag.current )
 		antag.current.fully_replace_character_name(antag.original_character.name, antag.current.name)
 
