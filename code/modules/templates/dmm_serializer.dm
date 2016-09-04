@@ -1,3 +1,5 @@
+var/dmm_serializer/dmm_serializer
+
 /datum/dmm_serializer
 
 	var/id_character_set = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
