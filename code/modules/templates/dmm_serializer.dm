@@ -1,4 +1,4 @@
-var/dmm_serializer/dmm_serializer
+var/datum/dmm_serializer/dmm_serializer
 
 /datum/dmm_serializer
 

@@ -46,6 +46,8 @@ datum/controller/game_controller/proc/setup()
 	//Place templates and spawn in shuttles
 	template_controller.PlaceTemplates()
 	shuttle_controller.setup()
+	// Place the construction station/derelict
+	universe.loadConstructionStation()
 
 	// Pick a new race to unwhitelist for today's week
 	var/deciseconds_in_week = DECISECONDS_IN_SECOND*SECONDS_IN_WEEK
