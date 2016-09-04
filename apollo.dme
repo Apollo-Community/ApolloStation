@@ -1729,6 +1729,7 @@
 #include "code\modules\surgery\slimes.dm"
 #include "code\modules\surgery\surgery.dm"
 #include "code\modules\templates\config.dm"
+#include "code\modules\templates\dmm_serializer.dm"
 #include "code\modules\templates\dmm_parsing.dm"
 #include "code\modules\templates\helper.dm"
 #include "code\modules\templates\template.dm"
