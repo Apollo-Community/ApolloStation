@@ -7,6 +7,9 @@ var/datum/dmm_serializer/dmm_serializer
 	// these are vars that are usually set by the game when the objects are loaded
 	// therefore, saving them is mostly redundant
 	var/list/ignore_vars = list(
+		"x", // yes this actually happens
+		"y",
+		"z",
 		"animate_movement",
 		"visibility",
 		"invisibility",
@@ -18,7 +21,10 @@ var/datum/dmm_serializer/dmm_serializer
 		"on",
 		"on_gs",
 		"switchcount",
-		"light_color"
+		"light_color",
+		"smoothwall_connections",
+		"luminosity",
+		"open_directions"
 	)
 
 	// finds the variable list for an atom (that {} part)
@@ -36,6 +42,15 @@ var/datum/dmm_serializer/dmm_serializer
 		for(var/V in A.vars)
 			if(V in ignore_vars)
 				continue
+
+			// here be huge potential for eating disk space and writing completely unnecessary variable defines
+			if(V == "icon_state")
+				var/skip = 0
+
+				if(istype(A, /obj/structure/lattice))	skip = 1
+				if(istype(A, /turf/simulated/wall))	skip = 1
+
+				if(skip)	continue
 
 			var/var_modified = (A.vars[V] != initial(A.vars[V]))
 

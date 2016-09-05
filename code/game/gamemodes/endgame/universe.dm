@@ -176,7 +176,7 @@
 	log_game("Construction station has been loaded")
 
 /datum/universal_state/proc/saveConstructionStation()
-	dmm_serializer.serialize_block(82, 36, 4, 98, 164, "construction_station", "templates/persistent")
+	dmm_serializer.serialize_block(82, 35, 4, 98, 164, "construction_station", "templates/persistent")
 
 	log_game("Construction station has been saved")
 
