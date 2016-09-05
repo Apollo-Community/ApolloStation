@@ -176,7 +176,7 @@
 	if(isnull(current_hanger) || shuttle_ingame) return
 	shuttle_ingame = 1
 	var/turf/location = get_corner_turf(current_hanger.x, current_hanger.y, current_hanger.z, template_dim[1], template_dim[2])
-	shuttle_turfs = template_controller.PlaceTemplateAt(location, template_path, docking_controller_tag, return_list = 1)
+	shuttle_turfs = template_controller.PlaceTemplateAt(location, template_path, docking_controller_tag, return_list = 1, ignore_space = 1)
 
 //Shake effect
 /datum/shuttle/proc/shake_effect(var/list/turfs)
