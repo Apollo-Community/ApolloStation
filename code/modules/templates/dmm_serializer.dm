@@ -134,7 +134,7 @@ var/datum/dmm_serializer/dmm_serializer
 		var/path = "maps/[folder]/[file_name].dmm"
 		var/start = world.timeofday
 
-		log_game("Saving [w * h] turfs on z-level [z] as a map. Brace for lag!")
+		log_game("Serializing [w * h] turfs on z-level [z].")
 
 		var/relative_w = x + w
 		var/relative_h = y + h
@@ -157,7 +157,7 @@ var/datum/dmm_serializer/dmm_serializer
 			signatures.Add(signature)
 
 
-		fdel(path)
+		if(fexists(path))	fdel(path)
 		var/map_file = file(path)
 
 
