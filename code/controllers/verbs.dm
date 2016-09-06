@@ -93,12 +93,3 @@
 			debug_variables(faction_controller)
 		if("Contract Ticker")
 			debug_variables(contract_ticker)
-
-/client/proc/debug_dmm_serialization()
-	set category = "Debug"
-	set name = "Perform DMM serialization"
-	set desc = "Start a DMM serialization of the construction area"
-
-	var/datum/dmm_serializer/serializer = new()
-
-	serializer.serialize_block(82, 37, 4, 98, 164, "testserialize")
