@@ -87,7 +87,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/remove_acc_item,
 	/client/proc/TemplatePanel,
 	/client/proc/editappear,
-	/client/proc/modifyCharacterPromotions
+	/client/proc/modifyCharacterPromotions,
+	/client/proc/reset_construction_station
 )
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -154,6 +155,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/kill_airgroup,
 	/client/proc/debug_controller,
 	/client/proc/debug_antag,
+	/client/proc/save_construction_station,
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_debug_mobs,
 	/client/proc/cmd_admin_delete,

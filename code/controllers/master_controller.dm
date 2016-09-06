@@ -32,6 +32,7 @@ datum/controller/game_controller/New()
 	if(!ticker)						ticker = new /datum/controller/gameticker()
 	if(!template_config)			template_config = new /datum/template_config()
 	if(!template_controller)		template_controller = new /datum/template_controller()
+	if(!dmm_serializer)				dmm_serializer = new /datum/dmm_serializer()
 	if(!hanger_controller)			hanger_controller = new /datum/hanger_controller()
 	if(!emergency_shuttle)			emergency_shuttle = new /datum/emergency_shuttle_controller()
 	if(!shuttle_controller)			shuttle_controller = new /datum/shuttle_controller()
@@ -45,6 +46,8 @@ datum/controller/game_controller/proc/setup()
 	//Place templates and spawn in shuttles
 	template_controller.PlaceTemplates()
 	shuttle_controller.setup()
+	// Place the construction station/derelict
+	universe.loadConstructionStation()
 
 	// Pick a new race to unwhitelist for today's week
 	var/deciseconds_in_week = DECISECONDS_IN_SECOND*SECONDS_IN_WEEK
