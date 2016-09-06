@@ -1,6 +1,6 @@
 /client/proc/TemplatePanel()
 	set name = "Template Panel"
-	set category = "Debug"
+	set category = "Admin"
 
 	// Place
 	var/place = check_rights(R_BUILDMODE)
