@@ -14,6 +14,8 @@ place_last /obj/machinery/atmospherics/unary/vent_scrubber
 place_last /obj/machinery/disposalpipe/segment
 place_last /obj/effect/spawner/space/set_spawner/master
 place_last /obj/structure/lattice
+place_last /obj/machinery/computer/general_air_control
+place_last /obj/machinery/computer/general_air_control/large_tank_control
 
 tries 10
 
