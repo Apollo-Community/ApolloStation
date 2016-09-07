@@ -113,6 +113,10 @@ proc/populate_seed_list()
 	var/flower_icon = "vine_fruit"  // Which overlay to use.
 	var/flower_colour               // Which colour to use.
 
+	// Random harvest count
+	var/min_harvest = 2
+	var/max_harvest = 6
+
 //Creates a random seed. MAKE SURE THE LINE HAS DIVERGED BEFORE THIS IS CALLED.
 /datum/seed/proc/randomize()
 
@@ -576,7 +580,8 @@ proc/populate_seed_list()
 	if(!got_product && !harvest_sample)
 		user << "<span class='alert'>You fail to harvest anything useful.</span>"
 	else
-		user << "You [harvest_sample ? "take a sample" : "harvest"] from the [display_name]."
+		if(harvest_sample)
+			user << "You take a sample from the [display_name]."
 
 		//This may be a new line. Update the global if it is.
 		if(name == "new line" || !(name in seed_types))
@@ -590,19 +595,21 @@ proc/populate_seed_list()
 			seeds.update_seed()
 			return
 
+		var/harvest_base = rand(min_harvest,max_harvest)
 		var/total_yield = 0
 		if(yield > -1)
 			if(isnull(yield_mod) || yield_mod < 1)
 				yield_mod = 0
-				total_yield = yield
+				total_yield = harvest_base
 			else
-				total_yield = yield + rand(yield_mod)
+				total_yield = harvest_base + rand(yield_mod)
 			total_yield = max(1,total_yield)
 
 		currently_querying = list()
+		var/obj/item/product
 		for(var/i = 0;i<total_yield;i++)
 			var/product_type = pick(products)
-			var/obj/item/product = new product_type(get_turf(user))
+			product = new product_type(get_turf(user))
 			if(mysterious)
 				product.name += "?"
 				product.desc += " On second thought, something about this one looks strange."
@@ -625,6 +632,14 @@ proc/populate_seed_list()
 			else if(istype(product,/obj/item/weapon/grown))
 				var/obj/item/weapon/grown/current_product = product
 				current_product.plantname = name
+
+		switch(total_yield)
+			if(2)
+				user << "<span class='notice'>The yield wasn't good this time. You only managed to harvest [total_yield] [product.name]s.</span>"
+			if(6 to INFINITY)
+				user << "<span class='notice'>It's a bumper crop! You harvested [total_yield] [product.name]s.</span>"
+			else
+				user << "<span class='notice'>You harvested [total_yield] [product.name]s.</span>"
 
 
 // When the seed in this machine mutates/is modified, the tray seed value
