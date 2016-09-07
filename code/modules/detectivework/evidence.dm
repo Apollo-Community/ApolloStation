@@ -9,11 +9,43 @@
 	w_class = 2
 	var/obj/item/stored_item = null
 
-/obj/item/weapon/evidencebag/MouseDrop(var/obj/item/I as obj)
-	if (!ishuman(usr))
+/obj/item/weapon/evidencebag/afterattack(obj/item/I, mob/user,proximity)
+	if(!istype(I) || I.anchored == 1)
+		return
+	switch(alert(user,"Do you want to try to put [I] into [src]?","Evidence bag","Yes","No"))
+		if("No")
+			return
+	if(!proximity || loc == I)
+		return
+	evidencebagEquip(I, user)
+
+/obj/item/weapon/evidencebag/attackby(obj/item/I, mob/user, params)
+	if(evidencebagEquip(I, user,))
+		return 1
+
+/obj/item/weapon/evidencebag/proc/evidencebagEquip(obj/item/I, mob/user, bagattack = 1)
+	if(istype(I, /obj/item/weapon/evidencebag))
+		user << "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>"
+		return 1 //now this is podracing
+
+	if(I.w_class > 3)
+		user << "<span class='notice'>[I] won't fit in [src].</span>"
 		return
 
-	var/mob/living/carbon/human/user = usr
+	if(contents.len)
+		user << "<span class='notice'>[src] already has something inside it.</span>"
+		return
+
+	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
+		if(istype(I.loc,/obj/item/weapon/storage))	//in a container.
+			var/obj/item/weapon/storage/U = I.loc
+			U.remove_from_storage(I, src)
+		else if(user.l_hand == I)					//in a hand
+			user.drop_l_hand()
+		else if(user.r_hand == I)					//in a hand
+			user.drop_r_hand()
+		else
+			return
 
 	if (!(user.l_hand == src || user.r_hand == src))
 		return //bag must be in your hands to use
@@ -28,33 +60,8 @@
 			if (sdepth == -1 || sdepth > 1)
 				return	//too deeply nested to access
 
-			var/obj/item/weapon/storage/U = I.loc
-			user.client.screen -= I
-			U.contents.Remove(I)
-		else if(user.l_hand == I)					//in a hand
-			user.drop_l_hand()
-		else if(user.r_hand == I)					//in a hand
-			user.drop_r_hand()
-		else
-			return
-
-	if(!istype(I) || I.anchored)
-		return
-
-	if(istype(I, /obj/item/weapon/evidencebag))
-		user << "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>"
-		return
-
-	if(I.w_class > 3)
-		user << "<span class='notice'>[I] won't fit in [src].</span>"
-		return
-
-	if(contents.len)
-		user << "<span class='notice'>[src] already has something inside it.</span>"
-		return
-
-	user.visible_message("[user] puts [I] into [src]", "You put [I] inside [src].",\
-	"You hear a rustle as someone puts something into a plastic bag.")
+	user.visible_message("[user] puts [I] into [src].", "<span class='notice'>You put [I] inside [src].</span>",\
+	"<span class='italics'>You hear a rustle as someone puts something into a plastic bag.</span>")
 
 	icon_state = "evidence"
 
@@ -65,14 +72,13 @@
 	var/image/img = image("icon"=I, "layer"=FLOAT_LAYER)	//take a snapshot. (necessary to stop the underlays appearing under our inventory-HUD slots ~Carn
 	I.pixel_x = xx		//and then return it
 	I.pixel_y = yy
-	overlays += img
-	overlays += "evidence"	//should look nicer for transparent stuff. not really that important, but hey.
+	add_overlay(img)
+	add_overlay("evidence")	//should look nicer for transparent stuff. not really that important, but hey.
 
-	desc = "An evidence bag containing [I]."
+	desc = "An evidence bag containing [I]. [I.desc]"
 	I.loc = src
-	stored_item = I
 	w_class = I.w_class
-	return
+	return 1
 
 
 /obj/item/weapon/evidencebag/attack_self(mob/user as mob)
