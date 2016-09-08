@@ -529,6 +529,7 @@ var/global/wall_frames = list( \
 	"/obj/item/radio_button_frame", \
 	"/obj/item/frame/light", \
 	"/obj/item/frame/light/small", \
+	"/obj/item/frame/light_switch", \
 	"/obj/item/rust_fuel_compressor_frame", \
 	"/obj/item/rust_fuel_assembly_port_frame", \
 	"/obj/item/intercom_frame", \

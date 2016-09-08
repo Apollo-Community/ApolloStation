@@ -132,7 +132,8 @@
 		if( response == "No" )
 			return 1
 
-	new_character = 0
+		// ONLY mark as "old" / not new character if the player was prompted to save
+		new_character = 0
 
 	var/list/variables = list()
 
@@ -224,6 +225,7 @@
 	variables["DNA"] = html_encode( sql_sanitize_text( DNA ))
 	variables["unique_identifier"] = html_encode( sql_sanitize_text( unique_identifier ))
 
+	// Antagonist related stuff
 	variables["antag_data"] = html_encode( list2params( antag_data ))
 
 	// Status effects
@@ -423,6 +425,7 @@
 	var/sql_ckey = ckey( ckey )
 	var/sql_character_name = html_encode( sql_sanitize_text( character_name ))
 
+	//					vvvvv MAY NOT BE TRUE IN VERY SOON
 	new_character = 0 // If we're loading from the database, we're obviously a pre-existing character
 	temporary = 0
 

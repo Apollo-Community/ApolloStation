@@ -91,6 +91,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("air alarm frame", /obj/item/alarm_frame, 2), \
 	new/datum/stack_recipe("fire alarm frame", /obj/item/firealarm_frame, 2), \
 	new/datum/stack_recipe("radio button frame", /obj/item/radio_button_frame, 1), \
+	new/datum/stack_recipe("light switch frame", /obj/item/frame/light_switch, 1), \
 	new/datum/stack_recipe("atm frame", /obj/item/atm_frame, 1), \
 	null, \
 	new/datum/stack_recipe("knife blade", /obj/item/butterflyblade, 6, time = 20, one_per_turf = 0, on_floor = 1, trigger_bews = 1) \

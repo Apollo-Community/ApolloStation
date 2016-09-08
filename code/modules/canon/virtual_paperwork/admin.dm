@@ -1,4 +1,4 @@
-/client/proc/modifyCharacterPromotions( mob/living/carbon/human/M as mob in world )
+/client/proc/modifyCharacterPromotions( mob/M as mob in world )
 	set name = "Promote / Demote"
 	set category = "Fun"
 
@@ -11,7 +11,10 @@
 
 	var/mob/user = usr
 
-	var/datum/character/C = M.character
+	var/datum/character/C = M.client.prefs.selected_character
+
+	if( !C )
+		return
 
 	var/type = input( user, "What type of role modification?", "Set Department" ) as null|anything in list( "Set Department", "Promotion", "Demotion" )
 
@@ -26,7 +29,7 @@
 				return
 
 			C.AddJob( role )
-			message_admins( "Admin [key_name_admin(usr)] has added role [role] from [key_name_admin(M)]", "CANON:" )
+			message_admins( "Admin [key_name_admin(usr)] has added role [role] to [key_name_admin(M)]", "CANON:" )
 		if( "Demotion" )
 			var/role = input( user, "Choose a role to demote them from:", "Role Demotion" ) as null|anything in C.getAllDemotablePositions()
 			if( !role )

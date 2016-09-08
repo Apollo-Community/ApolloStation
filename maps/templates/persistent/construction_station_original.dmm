@@ -1,0 +1,288 @@
+"aa" = (/turf/space,/area/space)
+"ab" = (/obj/structure/lattice,/turf/space,/area/space)
+"ac" = (/turf/simulated/wall,/area/constructionsite/maintenance)
+"ad" = (/obj/structure/grille,/turf/simulated/floor/plating/airless,/area/constructionsite/maintenance)
+"ae" = (/turf/simulated/floor/plating/airless,/area/constructionsite/maintenance)
+"af" = (/turf/simulated/wall,/area/constructionsite/bridge)
+"ag" = (/obj/structure/grille,/turf/simulated/floor/plating/airless,/area/constructionsite/bridge)
+"ah" = (/turf/simulated/floor/airless,/area/constructionsite/bridge)
+"ai" = (/obj/machinery/door/airlock/maintenance_hatch,/turf/simulated/floor/plating/airless,/area/constructionsite/maintenance)
+"aj" = (/obj/machinery/door/airlock/maintenance_hatch,/turf/simulated/floor/plating/airless,/area/constructionsite/bridge)
+"ak" = (/turf/simulated/floor/airless,/area/space)
+"al" = (/turf/simulated/floor/plating/airless,/area/space)
+"am" = (/obj/machinery/door/airlock/glass_command{name = "Bridge"; req_access_txt = "19"},/turf/simulated/floor/airless,/area/constructionsite/bridge)
+"an" = (/obj/structure/grille,/turf/simulated/floor/plating/airless,/area/constructionsite/hallway/fore)
+"ao" = (/turf/simulated/floor/airless,/area/constructionsite/hallway/fore)
+"ap" = (/turf/simulated/wall,/area/constructionsite/hallway/fore)
+"aq" = (/obj/machinery/door/airlock/maintenance_hatch,/turf/simulated/floor/plating/airless,/area/constructionsite/hallway/fore)
+"ar" = (/obj/machinery/door/airlock/glass{name = "Library"},/turf/simulated/floor/airless,/area/constructionsite/hallway/fore)
+"as" = (/obj/machinery/door/airlock/glass_command{name = "Bridge"; req_access_txt = "19"},/turf/simulated/floor/airless,/area/constructionsite/hallway/fore)
+"at" = (/obj/machinery/door/airlock/glass{name = "Kitchen"; req_access_txt = "28"},/turf/simulated/floor/plating/airless,/area/constructionsite/hallway/fore)
+"au" = (/turf/simulated/floor/plating/airless,/area/constructionsite/hallway/fore)
+"av" = (/turf/simulated/wall,/area/space)
+"aw" = (/turf/simulated/wall,/area/constructionsite/storage)
+"ax" = (/turf/simulated/floor/airless,/area/constructionsite/storage)
+"ay" = (/obj/machinery/door/airlock/glass_science,/turf/simulated/floor/airless,/area/constructionsite/storage)
+"az" = (/obj/machinery/door/airlock/glass_science,/turf/simulated/floor/airless,/area/constructionsite/hallway/fore)
+"aA" = (/obj/machinery/door/airlock/research,/turf/simulated/floor/airless,/area/constructionsite/hallway/fore)
+"aB" = (/obj/machinery/door/airlock/research,/turf/simulated/floor/airless,/area/constructionsite/storage)
+"aC" = (/obj/machinery/door/airlock/maintenance_hatch,/turf/simulated/floor/plating/airless,/area/constructionsite/storage)
+"aD" = (/turf/simulated/wall,/area/solar/constructionsite)
+"aE" = (/turf/simulated/floor/plating/airless,/area/solar/constructionsite)
+"aF" = (/obj/structure/lattice,/turf/space,/area/solar/constructionsite)
+"aG" = (/turf/space,/area/solar/constructionsite)
+"aH" = (/obj/structure/grille,/turf/simulated/floor/plating/airless,/area/solar/constructionsite)
+"aI" = (/obj/machinery/door/airlock/highsecurity{icon_state = "door_closed"; locked = 0; name = "AI Upload Access"; req_access_txt = "16"},/turf/simulated/floor/plating/airless,/area/constructionsite/hallway/fore)
+"aJ" = (/turf/simulated/wall,/area/constructionsite/ai)
+"aK" = (/turf/simulated/floor/plating/airless,/area/constructionsite/ai)
+"aL" = (/turf/simulated/floor/airless{tag = "icon-bcircuit"; icon_state = "bcircuit"},/area/constructionsite/ai)
+"aM" = (/obj/structure/lattice,/turf/space,/area/constructionsite/maintenance)
+"aN" = (/obj/machinery/door/airlock/highsecurity{icon_state = "door_closed"; locked = 0; name = "AI Upload"; req_access_txt = "16"},/turf/simulated/floor/plating/airless,/area/constructionsite/ai)
+"aO" = (/turf/simulated/floor/airless{tag = "icon-gcircuit"; icon_state = "gcircuit"},/area/constructionsite/ai)
+"aP" = (/turf/space,/area/constructionsite/maintenance)
+"aQ" = (/obj/machinery/door/airlock/highsecurity{name = "Messaging Server"; req_access_txt = "30"},/turf/simulated/floor/plating/airless,/area/constructionsite/hallway/fore)
+"aR" = (/obj/machinery/door/airlock/highsecurity{name = "Messaging Server"; req_access_txt = "30"},/turf/simulated/floor/plating/airless,/area/constructionsite/ai)
+"aS" = (/obj/machinery/door/airlock/highsecurity{name = "Cyborg Station"; req_access_txt = "16"},/turf/simulated/floor/plating/airless,/area/constructionsite/ai)
+"aT" = (/obj/machinery/door/airlock/highsecurity{name = "Cyborg Station"; req_access_txt = "16"},/turf/simulated/floor/plating/airless,/area/constructionsite/hallway/fore)
+"aU" = (/obj/machinery/recharge_station,/turf/simulated/floor/plating/airless,/area/constructionsite/ai)
+"aV" = (/obj/machinery/door/airlock/maintenance_hatch,/turf/simulated/wall,/area/constructionsite/hallway/fore)
+"aW" = (/obj/structure/lattice,/turf/space,/area/constructionsite/hallway/fore)
+"aX" = (/turf/simulated/wall,/area/constructionsite/hallway/aft)
+"aY" = (/turf/simulated/floor/airless,/area/constructionsite/hallway/aft)
+"aZ" = (/turf/simulated/floor/plating/airless,/area/constructionsite/hallway/aft)
+"ba" = (/obj/structure/lattice,/turf/space,/area/constructionsite/hallway/aft)
+"bb" = (/obj/structure/grille,/turf/simulated/floor/plating/airless,/area/constructionsite/hallway/aft)
+"bc" = (/obj/machinery/door/airlock/maintenance_hatch,/turf/simulated/wall,/area/constructionsite/hallway/aft)
+"bd" = (/obj/machinery/door/airlock/highsecurity{icon_state = "door_closed"; locked = 0; name = "AI Upload Access"; req_access_txt = "16"},/turf/simulated/floor/plating/airless,/area/constructionsite/hallway/aft)
+"be" = (/obj/machinery/door/airlock/maintenance_hatch,/turf/simulated/floor/plating/airless,/area/constructionsite/hallway/aft)
+"bf" = (/turf/simulated/floor/airless{icon_state = "white"},/area/constructionsite/medical)
+"bg" = (/obj/structure/grille,/turf/simulated/floor/plating/airless,/area/constructionsite/medical)
+"bh" = (/obj/machinery/sleeper,/turf/simulated/floor/airless{icon_state = "white"},/area/constructionsite/medical)
+"bi" = (/turf/simulated/floor/plating/airless,/area/constructionsite/atmospherics)
+"bj" = (/turf/simulated/floor/airless,/area/constructionsite/atmospherics)
+"bk" = (/turf/simulated/floor/plating/airless,/area/constructionsite/medical)
+"bl" = (/obj/machinery/door/airlock/glass_medical{name = "Medbay"; req_access_txt = "0"; req_one_access_txt = "65;5"},/turf/simulated/wall,/area/constructionsite/medical)
+"bm" = (/obj/structure/lattice,/turf/space,/area/constructionsite/medical)
+"bn" = (/turf/space,/area/constructionsite/medical)
+"bo" = (/obj/machinery/door/airlock/glass_medical{name = "Medbay"; req_access_txt = "0"; req_one_access_txt = "65;5"},/turf/simulated/wall,/area/constructionsite/hallway/aft)
+"bp" = (/obj/machinery/door/airlock/glass_atmos{name = "Atmospherics"; req_access_txt = "24"},/turf/simulated/floor/plating/airless,/area/constructionsite/hallway/aft)
+"bq" = (/turf/space,/area/constructionsite/hallway/aft)
+"br" = (/turf/simulated/wall,/area/constructionsite/atmospherics)
+"bs" = (/obj/machinery/atmospherics/pipe/simple/visible{dir = 4},/turf/simulated/floor/plating/airless,/area/constructionsite/atmospherics)
+"bt" = (/obj/machinery/computer/general_air_control/large_tank_control{frequency = 1443; input_tag = "d_air_in"; name = "Mixed Air Supply Control"; output_tag = "d_air_out"; pressure_setting = 2000; sensors = list("d_air_sensor" = "Tank")},/obj/machinery/atmospherics/pipe/simple/visible{dir = 4},/turf/simulated/floor/plating/airless,/area/constructionsite/atmospherics)
+"bu" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/obj/machinery/door/firedoor/border_only{dir = 2},/obj/structure/window/reinforced{dir = 1},/obj/machinery/atmospherics/pipe/simple/visible{dir = 4},/turf/simulated/floor/plating,/area/constructionsite/atmospherics)
+"bv" = (/obj/machinery/atmospherics/unary/vent_pump/high_volume{dir = 8; external_pressure_bound = 0; external_pressure_bound_default = 0; frequency = 1443; icon_state = "map_vent_in"; id_tag = "d_air_out"; internal_pressure_bound = 2000; internal_pressure_bound_default = 2000; use_power = 1; pressure_checks = 2; pressure_checks_default = 2; pump_direction = 0},/turf/simulated/floor/engine{name = "air floor"; nitrogen = 10580; oxygen = 2644},/area/constructionsite/atmospherics)
+"bw" = (/obj/machinery/light/small{dir = 1},/obj/machinery/air_sensor{frequency = 1443; id_tag = "d_air_sensor"; output = 7},/turf/simulated/floor/engine{name = "air floor"; nitrogen = 10580; oxygen = 2644},/area/constructionsite/atmospherics)
+"bx" = (/obj/machinery/atmospherics/pipe/simple/visible{icon_state = "intact"; dir = 6},/turf/simulated/floor/plating/airless,/area/constructionsite/atmospherics)
+"by" = (/obj/machinery/atmospherics/pipe/simple/hidden{dir = 4; icon_state = "intact"; tag = "icon-intact-f (EAST)"},/turf/simulated/wall,/area/constructionsite/atmospherics)
+"bz" = (/obj/machinery/atmospherics/unary/outlet_injector{dir = 8; frequency = 1443; icon_state = "map_injector"; id = "d_air_in"; use_power = 1},/turf/simulated/floor/engine{name = "air floor"; nitrogen = 10580; oxygen = 2644},/area/constructionsite/atmospherics)
+"bA" = (/obj/machinery/portable_atmospherics/canister/air,/turf/simulated/floor/engine{name = "air floor"; nitrogen = 10580; oxygen = 2644},/area/constructionsite/atmospherics)
+"bB" = (/obj/machinery/door/airlock/glass_medical{name = "Medbay"; req_access_txt = "0"; req_one_access_txt = "65;5"},/turf/simulated/floor/plating/airless,/area/constructionsite/hallway/aft)
+"bC" = (/obj/machinery/atmospherics/pipe/simple/visible{dir = 4},/turf/simulated/floor/airless,/area/constructionsite/atmospherics)
+"bD" = (/obj/machinery/computer/general_air_control/large_tank_control{frequency = 1441; input_tag = "d_o2_in"; name = "Oxygen Supply Control"; output_tag = "d_o2_out"; sensors = list("d_o2_sensor" = "Tank")},/obj/machinery/atmospherics/pipe/simple/visible{dir = 4},/turf/simulated/floor/airless,/area/constructionsite/atmospherics)
+"bE" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 8; external_pressure_bound = 0; external_pressure_bound_default = 0; frequency = 1441; icon_state = "map_vent_in"; id_tag = "d_o2_out"; initialize_directions = 1; internal_pressure_bound = 4000; internal_pressure_bound_default = 4000; use_power = 1; pressure_checks = 2; pressure_checks_default = 2; pump_direction = 0},/turf/simulated/floor/engine{name = "o2 floor"; nitrogen = 0; oxygen = 100000},/area/constructionsite/atmospherics)
+"bF" = (/obj/machinery/light/small{dir = 1},/obj/machinery/air_sensor{frequency = 1441; id_tag = "d_o2_sensor"},/turf/simulated/floor/engine{name = "o2 floor"; nitrogen = 0; oxygen = 100000},/area/constructionsite/atmospherics)
+"bG" = (/obj/machinery/atmospherics/unary/outlet_injector{dir = 8; frequency = 1441; icon_state = "map_injector"; id = "d_o2_in"; use_power = 1},/turf/simulated/floor/engine{name = "o2 floor"; nitrogen = 0; oxygen = 100000},/area/constructionsite/atmospherics)
+"bH" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor/engine{name = "o2 floor"; nitrogen = 0; oxygen = 100000},/area/constructionsite/atmospherics)
+"bI" = (/turf/simulated/wall,/area/constructionsite)
+"bJ" = (/obj/structure/grille,/turf/simulated/floor/plating/airless,/area/constructionsite)
+"bK" = (/obj/machinery/computer/general_air_control/large_tank_control{frequency = 1441; input_tag = "d_n2_in"; name = "Nitrogen Supply Control"; output_tag = "d_n2_out"; sensors = list("d_n2_sensor" = "Tank")},/obj/machinery/atmospherics/pipe/simple/visible{dir = 4},/turf/simulated/floor/airless,/area/constructionsite/atmospherics)
+"bL" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 8; external_pressure_bound = 0; external_pressure_bound_default = 0; frequency = 1441; icon_state = "map_vent_in"; id_tag = "d_n2_out"; initialize_directions = 1; internal_pressure_bound = 4000; internal_pressure_bound_default = 4000; use_power = 1; pressure_checks = 2; pressure_checks_default = 2; pump_direction = 0},/turf/simulated/floor/engine{name = "n2 floor"; nitrogen = 100000; oxygen = 0},/area/constructionsite/atmospherics)
+"bM" = (/obj/machinery/light/small{dir = 1},/obj/machinery/air_sensor{frequency = 1441; id_tag = "d_n2_sensor"},/turf/simulated/floor/engine{name = "n2 floor"; nitrogen = 100000; oxygen = 0},/area/constructionsite/atmospherics)
+"bN" = (/turf/simulated/floor/plating/airless,/area/constructionsite)
+"bO" = (/obj/structure/lattice,/turf/space,/area/constructionsite)
+"bP" = (/obj/machinery/pipedispenser,/turf/simulated/floor/airless,/area/constructionsite/atmospherics)
+"bQ" = (/obj/machinery/pipedispenser/disposal,/turf/simulated/floor/airless,/area/constructionsite/atmospherics)
+"bR" = (/obj/machinery/atmospherics/pipe/simple/visible{tag = "icon-intact (NORTHEAST)"; icon_state = "intact"; dir = 5},/turf/simulated/floor/airless,/area/constructionsite/atmospherics)
+"bS" = (/obj/machinery/atmospherics/unary/outlet_injector{dir = 8; frequency = 1441; icon_state = "map_injector"; id = "d_n2_in"; use_power = 1},/turf/simulated/floor/engine{name = "n2 floor"; nitrogen = 100000; oxygen = 0},/area/constructionsite/atmospherics)
+"bT" = (/obj/machinery/portable_atmospherics/canister/nitrogen,/turf/simulated/floor/engine{name = "n2 floor"; nitrogen = 100000; oxygen = 0},/area/constructionsite/atmospherics)
+"bU" = (/turf/simulated/floor/airless,/area/constructionsite)
+"bV" = (/turf/space,/area/constructionsite)
+"bW" = (/obj/machinery/door/airlock/maintenance_hatch,/turf/simulated/floor/plating/airless,/area/constructionsite)
+"bX" = (/turf/simulated/wall,/area/constructionsite/engineering)
+"bY" = (/obj/machinery/door/airlock/maintenance_hatch{icon_state = "door_closed"; locked = 0; name = "Engine Access"; req_access_txt = "0"; req_one_access_txt = "11;24"},/turf/simulated/floor/plating/airless,/area/constructionsite/engineering)
+"bZ" = (/turf/simulated/floor/plating/airless,/area/constructionsite/engineering)
+"ca" = (/obj/machinery/door/airlock/maintenance_hatch,/turf/simulated/floor/plating/airless,/area/constructionsite/engineering)
+"cb" = (/obj/structure/lattice,/turf/space,/area/constructionsite/engineering)
+"cc" = (/turf/space,/area/constructionsite/engineering)
+"cd" = (/obj/structure/grille,/turf/simulated/floor/plating/airless,/area/constructionsite/engineering)
+"ce" = (/obj/machinery/door/airlock/maintenance_hatch{name = "SMES Access"; req_access_txt = "11"},/turf/simulated/floor/plating/airless,/area/constructionsite/engineering)
+"cf" = (/obj/structure/particle_accelerator/end_cap,/turf/simulated/floor/plating/airless,/area/constructionsite/engineering)
+"cg" = (/obj/machinery/power/smes/buildable,/turf/simulated/floor/plating/airless,/area/constructionsite/engineering)
+"ch" = (/obj/machinery/particle_accelerator/control_box,/turf/simulated/floor/plating/airless,/area/constructionsite/engineering)
+"ci" = (/obj/structure/particle_accelerator/fuel_chamber,/turf/simulated/floor/plating/airless,/area/constructionsite/engineering)
+"cj" = (/obj/structure/particle_accelerator/power_box,/turf/simulated/floor/plating/airless,/area/constructionsite/engineering)
+"ck" = (/obj/structure/particle_accelerator/particle_emitter/left,/turf/simulated/floor/plating/airless,/area/constructionsite/engineering)
+"cl" = (/obj/structure/particle_accelerator/particle_emitter/center,/turf/simulated/floor/plating/airless,/area/constructionsite/engineering)
+"cm" = (/obj/structure/particle_accelerator/particle_emitter/right,/turf/simulated/floor/plating/airless,/area/constructionsite/engineering)
+"cn" = (/obj/machinery/power/emitter{dir = 4; icon_state = "emitter"; state = 2; tag = "icon-emitter (EAST)"},/turf/simulated/floor/plating/airless,/area/constructionsite/engineering)
+"co" = (/obj/machinery/field_generator,/turf/simulated/floor/plating/airless,/area/constructionsite/engineering)
+"cp" = (/obj/machinery/power/emitter{dir = 8; icon_state = "emitter"; state = 2; tag = "icon-emitter (WEST)"},/turf/simulated/floor/plating/airless,/area/constructionsite/engineering)
+"cq" = (/obj/machinery/the_singularitygen,/turf/simulated/floor/plating/airless,/area/constructionsite/engineering)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaabaaaaaaabaaaaabaaaaabaaaaaaabaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacacababacacabababababababababababababababababacacaaaaacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacacadadacacaaabaaaaaaabaaaaabaaaaabaaaaaaabaaacacadadacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabadaeaeaeaeadabababababababababababababababababadaeaeaeaeadabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabadaeaeaeaeadaaabafagagafaaaaabaaaaafagagafabaaadaeaeaeaeadabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabadaeaeaeaeadaaabagahahafafabababafafahahagabaaadaeaeaeaeadabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabadaeaeaeaeadaaabagahahahafagagagafahahahagabaaadaeaeaeaeadabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababadaeaeaeaeadaaabagahahahahahahahahahahahagabaaadaeaeaeaeadabababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacacacacacacaiacacacacafahahahahahahahahahahahafacacacacaiacacacacacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacacaeaeaeaeaeaeaeaeaeaeajahahahahahahahahahahahajaeaeaeaeaeaeaeaeaeaeacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacaeaeaeaeacacacacacacacafafahahahahahahahahahafafacacacacacacacaeaeaeaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacaeaeaeacacakakakakakakakafafahahahahahahahafafakakakakalakalacacaeaeaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacaeaeacacakakakakakakakakakafafahahahahahafafakakakalakalakalakacacaeaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacaeacacakakakakakakakakakakakafafamamamafafakakakakakakakakalakalacacaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacaeacakakakakakakakakakakakakakanaoaoaoanakakakakakakakakakakakakakacaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacaeacakakakakakakakakakakakakakanaoaoaoanakakakakakakakakakakakalakacaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababacaeaiakakakakakakakakakakakakakanaoaoaoanakakakakakakakakakakakakakaiaeacabababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababaaaaaaabapapapapaqapapaparapanananananaparapapapasasasapapapatapanananananapauapapacaiacapapapabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabavabababaaaaabanaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoauaoauauaoauauaeaeaeauauanabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaavababaaaaaaabanaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoauauaoaoauauauauanabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabavabababaaaaabanaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoauauauaoaoaoauauauauauauanabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaavababaaaaaaabanaoaoaoaoapapapapaqapapapapapapapapapapaoaoaoapapapapapapapapapapaqapapapapauauauauanabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababaaaaabapapaoaoapapaeaeaeaeaeaeaeaeaeaeaeaeaeapaoaoaoapaeaeaeaeaeaeaeaeaeaeaeaeaeapapauauapapabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababaaaaabababanaoaoapaeaeawawawawawawawawawawaeaeapaoaoaoapaeaeawawawawawawawawawawaeaeapauaoanabababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabavabababaaaaaaabanaoaoapaeawawaxaxaxaxaxaxaxaxawaeaeapaoaoaoapaeaeawaxaxaxaxaxaxaxaxawawaeapauaoanabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababaaaaaaaaabanaoaoapaeawaxaxaxaxaxaxaxaxaxawaeaeapaoaoaoapaeaeawaxaxaxaxaxaxaxaxaxawaeapauaoanabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabavabababaaabababanaoaoapaeawaxaxaxaxaxaxaxaxaxawawawapaoaoaoapawawawaxaxaxaxaxaxaxaxaxawaeapaoaoanabababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaavababavaaaaaaabanaoaoapaeawaxaxaxaxaxaxaxaxaxayaxaxazaoaoaoaAaxaxaBaxaxaxaxaxaxaxaxaxawaeapaoaoanabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabavabababaaaaaaabanaoaoapaeaCaxaxaxaxaxaxaxaxaxayaxaxazaoaoaoaAaxaxaBaxaxaxaxaxaxaxaxaxaCaeapaoaoanabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaavababaaaaabababanaoaoapaeawaxaxaxaxaxaxaxaxaxawawawapaoaoaoapawawawaxaxaxaxaxaxaxaxaxawaeapaoaoanabababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaabaaababavababavaaaaaaabanaoaoapaeawaxaxaxaxaxaxaxaxaxawaeaeaqaoaoaoaqaeaeawaxaxaxaxaxaxaxaxaxawaeapaoaoanabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababavababavaaaaaaabanaoaoapaeawawaxaxaxaxaxaxaxaxawaeapapaoaoaoapapaeawaxaxaxaxaxaxaxaxawawaeapaoaoanabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaabaaabaaavababavaaabababanaoaoapaeaeawawawawawawawawawawaeapaoaoaoaoaoapaeawawawawawawawawawawaeaeapaoaoanabababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababavababavaaacacapapaoaoapapaeaeaeaeaeaeaeaeaeaeaeaeapaoaoaoaoaoapaeaeaeaeaeaeaeaeaeaeaeaeapapaoaoapapacacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaabaaabaDaDaDaDaDacacaeapauaoaoauapapapapapapapapapapapapapapaoaoaoaoaoapapapapapapapapapapapapapapauaoaoauapaeacacacacaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaababababaEaEaEaEaFaEaEabababababaDaEaEaEaEaeaeaeauaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoauaoauauaoauaoaoaoaoaoapaeaeacaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaEaEaEaEaeaeaeauaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoauauauaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoaoapaeaeacaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaGaEaFaFaFaEaFaFaFaEaFaEaFaEaFaEaEaEaEaEaEaDaEaEaEaEacaeaeapaoaoaoaoapanananananananananananapapapaoaoaoapapapanananananananananananapauauaoauapaeaeacaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaababaFaFaFaFaEaEaEaEaEaEaEaEaEaEaEaEaEaEaEaEaEaDaEaEaEaEacaeaeapapauauapapabababababababababababacaeaqaoaoaoaqaeacabababababababababababapapauaoapapaeaeacaEaFaEaFaGaGaGaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaGaGaGaGaFaFaFaDaFaFaFaDaDaDaFaFaDaDaDaDaDaDaEaEaEaEacaeaeaeapaoaoanabaaabaaabaaabacacacacacacaeapaoaoaoapaeacacacacacacabaaabaaabaaabanauaoapaeaeaeacaEaEaEaEaFaEaFababababababab
+aaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababaDaHaHaHaHacacacaeapaoaoanabaaabaaabaaabacaeaeaeaeaeaeapaoaoaoapaeaeaeaeaeaeacabaaabaaabaaabanauaoapaeacacacaDaDaDaDaEaEaEaaabaaabaaabaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababacaeapaoaoanabababababababacaeaeaeaeapapapaoaoaoapapapaeaeaeaeacabababababababanauauapaeacaEaEaEaEaEaEaEaEaEaEaEaFaEaFaFaF
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaabaaabacaeapaoaoanabaaabaaabaaabacaeapapapapauauaoaoaoauauapapapapaeacabaaabaaabaaabanauauapaeacaEaEaEaEaEaEaEaEaEaEaEaEaEaEaEaE
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababacaeapaoaoanabaaabaaabababapaqapauauauauauaoaoaoauauauauauapaqapabababaaabaaabanaoauapaeacaFaEaFaEaFaEaFaEaFaFaEaEaEaFaFaF
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaabaaabacaeapaoaoanababababababapapauauauaoaoaoaoaoaoaoaoaoaoauauauauapapababababababanaoauapaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababacaeapaoaoanabacacacacapapauauauaoaoaoaoaoaoaoaoaoaoaoaoaoaoauauapapacacacacabanaoauapaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaabaaabacaeapaoaoanabacaeaeaeaqauauaoaoaoaoaoapapapaIapapapaoaoaoaoauauauaqaeaeaeacabanaoauapaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababacaeapaoaoanabacaeaeapapauauaoaoaoapapapaJaKaLaKaJapapapaoaoaoauauapapaeaeacabanaoauapaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaabaaabacaeapaoaoanabacaeaeapauauauaoaoapapababaJaKaLaKaJababapapaoaoaoauauapaeaeacabanauauapaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaabaMaeaMaeaeaMaMaeaMaMaeacaeapaoaoanabacaeaeapauaoaoaoapapabababaJaKaLaKaJabababapapauaoauauapaeaeacabanaoauapaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababaeaMaMaeaeaeaeaeaeaeaeaeaeaeacaeapaoaoapacacaeapapauaoaoaoapabababaJaJaJaNaJaJaJabababapauauaoauapapaeacacapauaoapaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeacaeapaoaoapaeaeaeapauauaoaoapapababaJaJaOaOaKaOaOaJaJababapapauaoauauapaeaeaeapauauapaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaMacaMaMaMaMaMacacacacacaMaeaMaeaMaeaMaeaMaeacacacacacacacacacacacaeapaoaoapaqapapapauauauauapaJaJaJaJaKaOaKaKaKaOaKaJaJaJaJapauauaoauapapapaqapauauapacacacacacaMaMaMaMaMaMaMaMaMaMaMaMaM
+aaaaaaaaaaaaaPaPaPaPaPaPaeaMaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeapaoaoauauauauauauaoauauapaKaKaKaJaOaOaKaLaKaOaOaJaKaKaKapauauaoauauauauaoauauaoapaeaeaeaeaeaeaeaeaeaeaeaeaeaeaPaPaMaP
+ababababababaMaMaeaeaeaeaeaMaMaeaeaMaeaMaeaMaeaMaeaMaeaMaeaMaeaeaeaeaeaeaeaeaeapauauauauauauauaoauauauaQaLaLaLaRaKaKaKaLaKaKaKaSaLaLaLaTaoauaoaoaoaoaoaoauauauapaeaeaeaeaeaeaeaeaeaeaeaMaeaMaeaMaeae
+aaaaaaaaaaaaaaaPaMaMaMaMaeaeaeaeaeaeaeaMaeaMaeaeaeaeaeaeaeaeaMaeaeaeaeaeaeaeaeapaoaoauaoaoaoaoaoaoaoaoapaKaKaKaJaOaOaKaLaKaOaOaJaUaUaUapauauaoauauauauauauaoaoapaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeae
+aaaaaaaaaaaaaaaPacacacaMaMaMaMaMacacacacacacacacacacacacacacacacacacacacacacacapaoaoapaVapapapaWauaWauapaJaJaJaJaKaOaKaKaKaOaKaJaJaJaJapauauaoauapapapaqapauaoapacacacacacacacaMaMaMaMaMaMaMaMaMaMaM
+aaaaabababababababababababababababababababababababababababababababababababacaMaXaYaYaXaeaeaeaXaZaZaZaZaXaXababaJaJaOaOaKaOaOaJaJababaXaXaZaZaZaZaXaeaeaeaXaYaYaZaeacababababaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaababacaMaXaYaYaXacacaeaXaXaZbaaZbaaXabababaJaJaJaNaJaJaJabababaXaZaZaYaZaXaXaeacacaXaYaYaXaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaababacaMaXaYaYbbabacaeaeaXaZaZaZaZaXaXabababaJaKaLaKaJabababaXaXaZaZaYaZaXaeaeacabbbaYaYaXaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababacaMaXaYaYbbabacaeaeaXaZbaaZbaaZaXaXababaJaKaLaKaJababaXaXaZaZaZaZaZaXaeaeacabbbaZaYaXaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaababacaMaXaYaZbbabacaeaeaXaXaZaZaZaZaZaXaXaXaJaKaLaKaJaXaXaXaZaYaYaYaZaXaXaeaeacabbbaZaZaXaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaababacaMaXaYaZbbabacaeaeaebcbaaZbaaZbaaZaYaXaXaXbdaXaXaXaZaZaYaYaYaZaZbeaeaeaeacabbbaYaZaXaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababacaMaXaYaZbbabacacacacaXaXaZaZaZaZaYaYaYaYaYaYaYaYaYaYaYaYaYaZaZaXaXacacacacabbbaYaZaXaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaababacaMaXaYaZbbababababababaXaXbaaZbaaZaYaYaYaYaYaYaYaYaYaYaYaZaZaXaXababababababbbaYaZaXaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaababacaMaXaYaZbbabaaabaaabababaXbeaXaZaYaYaYaYaYaYaYaYaYaYaYaYaXbeaXabababaaabaaabbbaYaZaXaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababacaMaXaYaYbbabaaabaaabaaabacaeaXaXaXaXaYaYaYaYaYaYaYaXaXaXaXaeacabaaabaaabaaabbbaYaYaXaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaababacaMaXaYaZbbabababababababacaeaeaeaeaXaXaXaYaYaYaXaXaXaeaeaeaeacabababababababbbaYaZaXaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaababacaMaXaZaZbbabaaabaaabaaabacaeaeaeaeaeaeaXaYaYaYaXaeaeaeaeaeaeacabaaabaaabaaabbbaYaZaXaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacaMaXaZaZbbabaaabaaabaaabacacacacacacaeaXaYaYaYaXaeacacacacacacabaaabaaabaaabbbaZaZaXaeacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaXaXaZaZaXaXabababababababababababacaebeaYaYaYbeaeacabababababababababababaXaXaZaZaXaXacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaXaZaZaZaZaXbbbbbbbbbbbbbbbbbbbbbbaXaXaXaYaYaYaXaXaXbbbbbbbbbbbbbbbbbbbbbbaXaYaYaYaYbbababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaXaZaZaYaZaZaZaZaZaZaZaZaZaYaYaYaZaYaYaZaYaYaYaZaZaZaYaYaYaYaZaYaZaZaYaYaYaZaYaYaYaYbbababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaXaZaZaZaZaZaYaYaYaYaYaYaZaYaYaYaYaZaZaYaYaYaYaZaZaYaYaZaZaZaYaYaYaYaYaYaYaYaYaYaYaYbbabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaXaZaZaZaZaXbbbbbbbbbbbbbbbbbbbbbbbbaXaYaYaZaZaYaXbbbbbbbbbbbbbbbbbbbbbbbbaXaYaYaYaYbbabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaXaXaXaXaXaXbfbfbfbfbgbfbhbfbhbfbhbfaXaYaYaYaYaZaXbibibjbjbjbjbjbjbjbjbibiaXaXaYaYaXaXabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababaXbabaaXbkbkbkbfbfbgbfbfbfbfbfbfbfaXaZaZaZaZaZaXbjbjbibibibjbjbjbjbjbibibiaXaYaYbbababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababaXbabaaXbkbkbfbkbkbgbgbgbgbgbgblblaXaXaXaXaXaXaXbjbjbibibibjbjbjbjbjbibjbiaXaYaYbbababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababaXbabaaXbkbkbkbkbkbgbfbfbkbkbkbfbfbfbbaZaZaZbbbibibjbjbjbjbjbjbjbibibibjbiaXaYaYbbababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaXbabaaXbkbkbkbkbkbkbfbkbkbkbkbfbkbkbbaZaZaZbbbibibjbjbjbjbjbjbjbibibibjbiaXaYaYbbabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaXbabaaXbmbmbmbkbkbkbkbkbkbkbkbkbkbkbbaZaZaZbbbibibjbjbjbjbjbjbjbjbjbjbjbiaXaZaZbbabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaXbabaaXbmbmbmbmbmbkbkbkbkbkbkbkbkbkbbaZaZaZbbbibibibjbjbibibibibjbjbjbjbiaXaZaZbbabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaXbabaaXbnbmbnbmbmbkbmbkbmbkbmbkbmbkboaZaZaZbpbibjbjbjbjbjbjbjbjbjbjbjbjbiaXaZaZbbabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaXbabaaXbmbmbkbmbmbmbkbmbkbkbkbkbkbkbbaZaZaZbbbibjbjbjbjbjbjbjbjbjbjbjbjbiaXbababbabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaXbabaaXbnbmbnbmbmbkbmbkbmbkbmbkbmbkbbaZaZaZbbbibjbjbjbjbjbjbjbibjbjbjbjbiaXaZaZbbabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaXbabaaXbmbmbmbmbkbmbkbmbkbkbkbkbkbkbbaZaZaZbbbibjbibibjbjbjbjbjbibjbibibiaXbababbabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaXbabaaXbnbmbnbmbnbmbmbkbmbkbmbkbmbkbbaYaYaYbbbibibibibjbjbjbjbibibibibibiaXaZaZaXabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaXbabaaXbmbmbmbmbmbmbmbmbkbkbkbkaXaXaXaYaYaYaXaXaXbibibjbjbjbjbibibibibibiaXaZaZbbabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababqbnbmbnbmbnbmbnbnbnbmbmaXaXaYaYaYaYaYaYaYaXaXbjbjbjbjbjbibibibrbrbraXaZaZbbabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabqbabababmbmbmbmbmbmbmbmbmbmbmaXaYaYaYaYaYaYaYaYaYaXbjbjbjbjbjbjbsbtbubvbwaXaZaZbbabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabqbababqbnbnbnbnbnbnbnbnbnbmbmaXaYaYaYaYaYaYaYaYaYaXbjbjbjbibibibxbsbybzbAaXaZaZbbabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabqbqbqbqbnbnbkbnbnbkbkbkbkbkbkbBaYaYaYaYaYaYaYaYaYbpbjbjbjbibibibibibrbrbraXaZaZbbabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabqbqbqbqbkbnbkbnbkbmbkbmbkbmbkbBaYaYaYaYaYaYaYaYaYbpbjbjbjbjbjbjbCbDbubEbFaXaZaZbbabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabqbqbqbqbnbnbnbnbnbkbkbkbkbkbkbBaYaYaYaYaYaYaYaYaYbpbjbjbjbjbjbjbjbCbybGbHaXaZaZbbabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabqbqbqbqbnbnbnbnbnbnbnbnbnbmbmaXaYaYaYaYaYaYaYaYaYaXbjbjbjbjbjbjbjbjbrbrbraXaZaZbbabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabIbJbJbJbJbJbJbJbJbJbJbJbIbmbmbmbmbmaXaYaYaYaYaYaYaYaYaYaXbjbjbjbjbjbjbCbKbubLbMaXaZaZbbabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabIbNbObNbObNbNbNbNbNbNbObJbnbmbnbkbkaXaXaYaYaYaYaYaYaYaXaXbrbrbPbQbRbCbjbCbybSbTaXbababbabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabIbNbNbNbNbNbObNbObIbObObJaaabaabObNbOaXaXaXaYaYaYaXaXaXababbrbrbrbrbrbrbrbrbrbraXaZaZbbalabalabababaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabIbNbObNbObNbNbNbNbNbNbUbJabababbNbNbNbNbNaXaYaYaYaXbObObNbNbObNbObNbNbNbNbObNbOaZbabaaZabababalaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabIbNbNbNbNbNbUbNbNbUbUbUbJaaabaabObNbObNbOaXaZaYaYaXbObNbNbNbIbIbIbIbIbIbIbIbIbIbIbIbIbIbIbObOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabObNbObNbObNbNbNbUbUbUbUbJaaabaabNbNbNbNbNaXaZaZaYaXbObNbNbNbIbNbNbNbNbNbNbObObObObObObObObVbVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabObNbNbNbNbNbNbNbUbUbUbUbJabababbObNbObNbOaXbaaZaYaXbNbNbNbNbIbObNbObNbObNbObObVbVbObVbVbVbVbVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabIbNbObNbObNbNbUbUbUbUbUbJaaabaabNbNbNbNbNaZaZaZaYaXbNbNbObObIbNbNbNbNbNbNbNbNbNbNbObVbVbVbVbVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabIbNbNbNbNbNbNbNbUbUbUbUbJaaabaabObNbObNbOaZbaaZaYaXbObObObObIbObNbObNbObNbObNbObNbObNbObVbVbVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabObNbObNbObNbNbUbUbUbUbUbJabababbNbNbNbNbNaZaZaZaYaXbObObNbNbIbNbNbNbNbNbNbNbNbNbIbIbIbIbVbVbVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabObNbIbNbNbNbUbUbUbUbUbUbJaaabaabObNbObNbOaZaZaYaZaXbObObNbNbIbObNbObNbObNbObObObNbObNbObVbVbVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabObObNbNbUbUbUbUbUbUbUbUbJaaabaabNbNbNbNbNaXaYaZaZaXbObObNbNbIbNbNbNbNbNbNbNbIbVbVbObVbVbVbVbVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabObIbJbJbJbJbJbJbJbJbJbJbIabababbObNbObNbOaXaYaZaZbabObObNbNbIbObNbObNbObNbObObObObObObObVbVbVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabNbNbNbNbNaXaYaZaZbabObObNbNbIbNbNbNbNbNbNbNbNbNbNbObVbVbVbVbVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabObNbObNbOaXaYaYaZaXbObObNbNbIbObNbObNbObNbObObObObObObObVbVbVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabVbVbIbIbIbIbVbVbVbVbVbVbVbVbVaaaaaaabaXaYaYaYaXbObObNbNbIbNbNbIbNbObNbVbObVbVbObVbVbVbVbVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabVbVbNbNbObIbIbIbIbVbVbVbVbVbVaaaaaaaaaXaYaYaYaXbObObObNbIbNbNbObNbNbNbNbObNbObNbObObVbVbVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaabVbVbNbObNbObNbObIbIbIbIbVbVbVaaaaaaaaaXaYaYaYaXbObObObNbIbNbNbNbNbNbNbNbNbNbNbNbNbVbVbVbVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabVbIbIbObNbObNbNbObObNbIbNbNbIaaaaaaabaXaYaYaYaXbVbVbObNbIbIbIbIbIbIbNbIbIbIbIbIbIbObVbVbVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaabVbIbNbNbNbNbObNbObNbObObNbNbIaaaaaaaaaXaYaYaYaXbObObObNbNbNbNbNbNbNbNbNbNbNbNbNbNbVbVbVbVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaabVbIbNbNbNbNbNbNbNbNbNbNbNbNbIaaaaaaaaaXaYaYaYaXbVbVbObNbNbNbNbObNbNbObNbObNbObNbObObVbVbVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabIbIbNbNbNbNbNbNbNbNbNbNbNbIbIaaaaaaabaXaYaYaZaXbObObObNbNbVbObVbVbObVbVbObVaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabNbNbNbNbNbNbNbNbNbNbNbNbNbIbVaaaaaaaaaXaYaYaZbabVbVbVbNbObObObObObObObObObOababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabNbNbNbNbNbNbNbNbNbNbNbNbNbIbVaaaaaaaaaXaYaYaYbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaabIbIbIbIbObNbObNbObNbNbNbIbIbVaaaaaaabaXaYaYaZbaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababbObObVbIbIbIbIbObNbObNbObIbVbVaaaaaaaaaXaYaYaYbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababbObObObVbVbVbIbIbIbIbObNbIbVbVaaaaaaaaaXaYaYaZbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabVbVbVbVbVbVbVbVbVbIbIbIbIbVbVaaaaaaabaXaYaYaZbaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaXaYaYaZbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaXaYaYaZaXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababaXaYaYaZaXabababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababbObObObObIbObObIbIbIbIbIbIbIaXaYaYaZaXbIbIbIbIbIbIbIbIbIbIbIbIbIbIbIbIbObOabababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabVbNbNbNbNbNbNbNbNbNbNbNbNbWaZaYaYaZaZbWbNbNbNbNbNbObObObNbObObNbObNbObObNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababbObObObObObIbIbIbIbIbIbIbIbIaXaYaYaZaXbIbIbIbIbIbIbIbIbIbIbIbIbObObObObObOabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababaXbXbYbXaXababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbXbZbXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabIbIbIbObObObIbIbIbIbIbIbIbIbIbIbIbXbXbXbYbXbXbXbIbIbIbIbIbIbIbIbIbIbIbIbOabababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababbObObObObNbNbNbNbNbNbNbNbNbNbNbNbNcabZbZbZbZbZcabNbNbNbNbNbNbNbNbNbNbNbNbNaaabaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabIbIbIbIbIbIbIbIbIbIbXbXbXbXbXbXbXbXbYbXbXbXbXbXbXbXbXbIbIbIbIbIbObObOababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababcbcbbXbZbXbZbZcabZbZbZbZbZcabZbZbXbZbXcbcbabababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccccbXbZbZbZbZbXbXbXbYbXbXbXbZbZbZbZbXccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccbXbXbZbZbZbZcdcbbXbZbXcbcdbZbZbZbZbXbXccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccbXbZbZbZbZbZcdcbbXbZbXcbcdbZbZbZbZbZbXccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccbXbZbZbZbZbZcdcbbXbZbXcbcdbZbZbZbZbZbXccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabXbXbZbZbZbZbZcdcbbXbZbXcbcdbZbZbZbZbZbXbXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacdbZbZbZbZbZbZcdcbbXbZbXcbcdbZbZbZbZbZbZcdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacdbZbZbZbZbZbZcdcbbXbZbXcbcdbZbZbZbZbZbZcdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacdbZbZbZbZbZbZcdcbbXbZbXcbcdbZbZbZbZbZbZcdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacdbZbZbZbZbZbZcdcbbXbZbXcbcdbZbZbZbZbZbZcdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacdbZbZbZbZbZbZcdcbbXbZbXcbcdbZbZbZbZbZbZcdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabXbXbZbZbZbZbZbXbXbXbYbXbXbXbZbZbZbZbZbXbXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccbXbXbXcebXbXbXbZbZbZbZbZbXbXbXbYbXbXbXccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacccccdbZbZbZcdbZbZbZcfbZbZbZcdbZbZbZcdccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacccccdbZbZbZcdcgbZchcibZbZcgcdbZbZbZcdccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacccccdbZbZbZcdcgbZbZcjbZbZcgcdbZbZbZcdccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacccccdbZbZbZcdbZbZckclcmbZbZcdbZbZbZcdccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccccbXbXbXbXbXbXbZbZbZbZbZbXbXbXbXbXbXccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccccccbZbZbZbZbXbXcdcdcdbXbXbZbZbZbZccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabZbZcbcbcbbZcbcbcbbZcbcbcbbZbZaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacnbZbZcobZbZbZcobZbZbZcobZbZcpaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabZbZcbbZcbcbcbbZcbcbcbbZcbbZbZaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabZbZcbbZcbcccbbZcbcccbbZcbbZbZaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabZbZcbbZcbcbcbbZcbcbcbbZcbbZbZaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacnbZbZcobZbZbZcqbZbZbZcobZbZcpaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabZbZcbbZcbcbcbbZcbcbcbbZcbbZbZaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabZbZcbbZcbcccbbZcbcccbbZcbbZbZaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabZbZbZbZcbcbcbbZcbcbcbbZbZbZbZaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacnbZbZcobZbZbZcobZbZbZcobZbZcpaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccbZbZbZbZbZbZbZbZbZbZbZbZbZccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}
