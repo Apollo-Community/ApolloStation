@@ -21,12 +21,22 @@ var/global/datum/global_init/init = new ()
 
 #define RECOMMENDED_VERSION 510
 /world/New()
+	// if we're being called by command line then lets do stuff!
+	if(params.len)
+		world.log << "Command-line parameters:"
+		for(var/p in params)	world.log << "[p] = [params[p]]"
+		if(params["hub"])
+			visibility = 1
+			world.log << "Setting server visibility to 1."
+		if(params["genmap"])
+			world.log << "Geneating web maps..."
+			generate_every_map()
+
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
 	diary = file("data/logs/[date_string].log")
 	diary << "[log_end]\n[log_end]\nStarting up. [time2text(world.timeofday, "hh:mm.ss")][log_end]\n---------------------[log_end]"
-
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND"
 
@@ -48,7 +58,6 @@ var/global/datum/global_init/init = new ()
 	//end-emergency fix
 
 	src.update_status()
-
 	. = ..()
 
 	// Set up roundstart seed list. This is here because vendors were
@@ -68,6 +77,7 @@ var/global/datum/global_init/init = new ()
 		master_controller.setup()
 
 		universe.load_date()
+		getFormsFromWiki() //Load some data form the wiki page
 
 		sleep_offline = 1 // go to sleep after the controllers are all set up
 
@@ -89,7 +99,7 @@ var/world_topic_spam_protect_ip = "0.0.0.0"
 var/world_topic_spam_protect_time = world.timeofday
 
 /world/Topic(T, addr, master, key)
-	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key][log_end]"
+	log_debug("TOPIC: \"[T]\", from:[addr], master:[master], key:[key][log_end]")
 
 	if (T == "ping")
 		var/x = 1
@@ -103,6 +113,9 @@ var/world_topic_spam_protect_time = world.timeofday
 			if(M.client)
 				n++
 		return n
+
+	else if (copytext(T,1,7) == "sitest")	//returns num of players, round duration (starting at 0:00)
+		return list2params(list("players" = clients.len, "time" = worldtime2text(bonus_time = 0)))
 
 	else if (copytext(T,1,7) == "status")
 		var/input[] = params2list(T)
@@ -148,16 +161,17 @@ var/world_topic_spam_protect_time = world.timeofday
 
 		return list2params(s)
 
+	/*
 	if(copytext(T,1,9) == "adminmsg")					//This recieves messages from slack (/pm command) and processes it before updating slack chat
 		var/input[] = params2list(copytext(T,9))
 		//security check
-		/*
+
 		if(fexists("config/slack.txt"))
 			if(input["token"] != file2text("config/slack.txt"))
 				message_admins("TOPIC: WARNING: [addr] tried to fake an admin message! Please contact a developer")
 				return
 		else	return
-		*/
+
 		log_debug(input["token"])			//Just for testing
 
 		var/message = input["text"]
@@ -170,6 +184,7 @@ var/world_topic_spam_protect_time = world.timeofday
 				//Code to send PMS....
 				slack_admin(C, admin, message, 0)
 				break
+	*/
 
 	else if(copytext(T,1,4) == "age")
 		var/input[] = params2list(T)

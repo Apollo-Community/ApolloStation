@@ -31,7 +31,7 @@
 	if(!.)	return
 
 	phrase = get_phrase()
-	target = locate(pick(target_areas))
+	target = pick(target_areas)
 
 	if(!target || !phrase)
 		qdel(src)

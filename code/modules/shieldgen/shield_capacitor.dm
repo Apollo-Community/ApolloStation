@@ -12,8 +12,8 @@
 	var/stored_charge = 0	//not to be confused with power cell charge, this is in Joules
 	var/last_stored_charge = 0
 	var/time_since_fail = 100
-	var/max_charge = 8e6	//8 MJ
-	var/max_charge_rate = 400000	//400 kW
+	var/max_charge = 16e6	//16 MJ
+	var/max_charge_rate = 1000000	//1MW
 	var/locked = 0
 	use_power = 0 //doesn't use APC power
 	var/charge_rate = 100000	//100 kW

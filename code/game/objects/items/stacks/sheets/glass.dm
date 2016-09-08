@@ -185,18 +185,17 @@
 	created_window = /obj/structure/window/phoronbasic
 
 /obj/item/stack/sheet/glass/phoronglass/attackby(obj/item/W, mob/user)
-	..()
 	if( istype(W, /obj/item/stack/rods) )
 		var/obj/item/stack/rods/V  = W
-		var/obj/item/stack/sheet/glass/phoronrglass/RG = new (user.loc)
+		var/obj/item/stack/sheet/glass/phoronglass/reinforced/RG = new (user.loc)
 		RG.add_fingerprint(user)
 		RG.add_to_stacks(user)
-		V.use(1)
-		var/obj/item/stack/sheet/glass/G = src
+		var/obj/item/stack/sheet/glass/phoronglass/G = src
 		src = null
 		var/replace = (user.get_inactive_hand()==G)
+		V.use(1)
 		G.use(1)
-		if (!G && !RG && replace)
+		if (!G && replace)
 			user.put_in_hands(RG)
 	else
 		return ..()
@@ -204,7 +203,7 @@
 /*
  * Reinforced phoron glass sheets
  */
-/obj/item/stack/sheet/glass/phoronrglass
+/obj/item/stack/sheet/glass/phoronglass/reinforced
 	name = "reinforced phoron glass"
 	desc = "Phoron glass which has been reinforced with metal rods."
 	singular_name = "reinforced phoron glass sheet"

@@ -15,10 +15,6 @@
 	spawn(10)
 		if( real_name )
 			trigger_words += text2list( real_name, " " )
-
-		if( client && hud_used )
-			hud_used.update_parallax()
-
 	..()
 
 /mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)

@@ -1,4 +1,4 @@
-#define EMITTER_DAMAGE_POWER_TRANSFER 450 //used to transfer power to containment field generators
+#define EMITTER_DAMAGE_POWER_TRANSFER 45 //used to transfer power to containment field generators
 #define EMITTER_POWER_MIN 10 // 10kW
 #define EMITTER_POWER_MAX 60 // 60kW
 
@@ -179,6 +179,10 @@
 			return
 		switch(state)
 			if(0)
+				if(istype(loc, /turf/space))
+					user << "<span class='warning'>You try to secure the bolts to space. It doesn't work out too well.</span>"
+					return
+
 				state = 1
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] secures [src] to the floor.", \

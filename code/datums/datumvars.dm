@@ -165,6 +165,8 @@ client
 
 		body += "<option value='?_src_=vars;mark_object=\ref[D]'>Mark Object</option>"
 		body += "<option value='?_src_=vars;jump_to_object=\ref[D]'>Jump to Object</option>"
+		if(isturf(D))
+			body += "<option value='?_src_=vars;dmm_signature=\ref[D]'>Print DMM collection signature</option>"
 		if(ismob(D))
 			body += "<option value='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</option>"
 
@@ -611,7 +613,17 @@ client
 			usr.loc = T
 		else
 			usr << "This mob is not located in the game world."
-		href_list["datumrefresh"] = href_list["mark_object"]
+		href_list["datumrefresh"] = href_list["jump_to_object"]
+
+	else if(href_list["dmm_signature"])
+		var/datum/dmm_serializer/serializer = new()
+
+		var/turf/T = locate(href_list["dmm_signature"])
+		if(!T)
+			usr << "Couldn't find turf"
+			return
+
+		usr << serializer.find_signature(T)
 
 	else if(href_list["rotatedatum"])
 		if(!check_rights(0))	return

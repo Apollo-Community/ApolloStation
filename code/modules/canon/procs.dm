@@ -4,6 +4,7 @@
 		return
 
 	saveAllActiveCharacters()
+	universe.saveConstructionStation()
 	universe.saveToDB()
 
 /proc/saveAllActiveCharacters()

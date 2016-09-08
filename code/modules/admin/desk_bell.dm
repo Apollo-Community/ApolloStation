@@ -8,6 +8,7 @@
 	w_class = 2.0
 	throw_speed = 4
 	throw_range = 5
+	anchored = 1
 
 /obj/item/desk_bell/proc/ring()
 	playsound( get_turf( src ), 'sound/items/desk_bell.ogg', 80 )

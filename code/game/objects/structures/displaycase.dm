@@ -1,87 +1,221 @@
 /obj/structure/displaycase
 	name = "display case"
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "glassbox1"
-	desc = "A display case for prized possessions. It taunts you to kick it."
+	icon_state = "glassbox0"
+	desc = "A display case for prized possessions."
 	density = 1
 	anchored = 1
 	unacidable = 1//Dissolving the case would also delete the gun.
 	var/health = 30
-	var/occupied = 1
 	var/destroyed = 0
+	var/obj/item/showpiece = null
+	var/open = 0
+	var/obj/item/weapon/airlock_electronics/electronics
+	var/start_showpiece_type = null //add type for items on display
 
-/obj/structure/displaycase/ex_act(severity)
+/obj/structure/displaycase/New()
+	..()
+	if(start_showpiece_type)
+		showpiece = new start_showpiece_type (src)
+	update_icon()
+
+/obj/structure/displaycase/ex_act(severity, target)
 	switch(severity)
 		if (1)
 			new /obj/item/weapon/shard( src.loc )
-			if (occupied)
-				new /obj/item/weapon/gun/energy/laser/captain( src.loc )
-				occupied = 0
+			dump()
 			qdel(src)
 		if (2)
-			if (prob(50))
-				src.health -= 15
-				src.healthcheck()
+			take_damage(rand(10,20), BRUTE, 0)
 		if (3)
-			if (prob(50))
-				src.health -= 5
-				src.healthcheck()
+			take_damage(5, BRUTE, 0)
 
-
-/obj/structure/displaycase/bullet_act(var/obj/item/projectile/Proj)
-	health -= Proj.damage
+/obj/structure/displaycase/examine(mob/user)
 	..()
-	src.healthcheck()
-	return
+	if(showpiece)
+		user << "<span class='notice'>There's [showpiece] inside.</span>"
+
+/obj/structure/displaycase/proc/dump()
+	if (showpiece)
+		showpiece.loc = src.loc
+		showpiece = null
+
+/obj/structure/displaycase/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type, 0)
 
 
-/obj/structure/displaycase/blob_act()
+/obj/structure/displaycase/blob_act(obj/effect/blob/B)
 	if (prob(75))
 		new /obj/item/weapon/shard( src.loc )
-		if (occupied)
-			new /obj/item/weapon/gun/energy/laser/captain( src.loc )
-			occupied = 0
+		dump()
 		qdel(src)
 
-/obj/structure/displaycase/proc/healthcheck()
-	if (src.health <= 0)
-		if (!( src.destroyed ))
-			src.density = 0
-			src.destroyed = 1
-			new /obj/item/weapon/shard( src.loc )
-			playsound(src, "shatter", 70, 1)
-			update_icon()
+/obj/structure/displaycase/hitby(atom/movable/AM)
+	..()
+	if(isobj(AM))
+		var/obj/item/I = AM
+		take_damage(I.throwforce * 0.2)
+
+/obj/structure/displaycase/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			return
+	health = max( health - damage, 0)
+	if(!health && !destroyed)
+		density = 0
+		destroyed = 1
+		new /obj/item/weapon/shard( src.loc )
+		playsound(src, "shatter", 70, 1)
+		update_icon()
+
+/obj/structure/displaycase/proc/is_directional(atom/A)
+	try
+		getFlatIcon(A,defdir=4)
+	catch
+		return 0
+	return 1
+/obj/structure/displaycase/proc/get_flat_icon_directional(atom/A)
+	//Get flatIcon even if dir is mismatched for directionless icons
+	//SLOW
+	var/icon/I
+	if(is_directional(A))
+		I = getFlatIcon(A)
 	else
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-	return
+		var/old_dir = A.dir
+		A.set_dir(2)
+		I = getFlatIcon(A)
+		A.set_dir(old_dir)
+	return I
 
 /obj/structure/displaycase/update_icon()
-	if(src.destroyed)
-		src.icon_state = "glassboxb[src.occupied]"
+	var/icon/I
+	if(open)
+		I = icon('icons/obj/stationobjs.dmi',"glassbox_open")
 	else
-		src.icon_state = "glassbox[src.occupied]"
+		I = icon('icons/obj/stationobjs.dmi',"glassbox0")
+	if(destroyed)
+		I = icon('icons/obj/stationobjs.dmi',"glassboxb0")
+	if(showpiece)
+		var/icon/S = get_flat_icon_directional(showpiece)
+		S.Scale(17,17)
+		I.Blend(S,ICON_UNDERLAY,8,8)
+	src.icon = I
 	return
 
 
-/obj/structure/displaycase/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	src.health -= W.force
-	src.healthcheck()
-	..()
-	return
+/obj/structure/displaycase/attackby(obj/item/weapon/W, mob/user, params)
+	if(W.GetID() && electronics && !destroyed)
+		if(allowed(user))
+			user <<  "<span class='notice'>You [open ? "close":"open"] the [src].</span>"
+			open = !open
+			update_icon()
+		else
+			user <<  "<span class='warning'>Access denied.</span>"
+	else if(istype(W,/obj/item/weapon/crowbar))
+		if(destroyed)
+			if(showpiece)
+				user << "<span class='notice'>Remove the displayed object first.</span>"
+			else
+				user << "<span class='notice'>You remove the destroyed case.</span>"
+				qdel(src)
+		else
+			user << "<span class='notice'>You start to [open ? "close":"open"] the [src].</span>"
+			if(do_after(user, 20))
+				user <<  "<span class='notice'>You [open ? "close":"open"] the [src].</span>"
+				open = !open
+				update_icon()
+	else if(open && !showpiece)
+		if(user.drop_item())
+			W.loc = src
+			showpiece = W
+			user << "<span class='notice'>You put [W] on display.</span>"
+			update_icon()
+	else if(istype(W, /obj/item/stack/sheet/glass) && destroyed)
+		var/obj/item/stack/sheet/glass/G = W
+		if(G.get_amount() < 2)
+			user << "<span class='warning'>You need two glass sheets to fix the case!</span>"
+			return
+		user << "<span class='notice'>You start fixing the [src].</span>"
+		if(do_after(user, 20))
+			G.use(2)
+			destroyed = 0
+			health = initial(health)
+			update_icon()
+	else
+		take_damage(W.force, W.damtype)
 
-/obj/structure/displaycase/attack_hand(mob/user as mob)
-	if (src.destroyed && src.occupied)
-		new /obj/item/weapon/gun/energy/laser/captain( src.loc )
-		user << "\b You deactivate the hover field built into the case."
-		src.occupied = 0
+/obj/structure/displaycase/attack_hand(mob/user)
+	if (showpiece && (destroyed || open))
+		dump()
+		user << "<span class='notice'>You deactivate the hover field built into the case.</span>"
 		src.add_fingerprint(user)
 		update_icon()
 		return
 	else
-		usr << text("<span class='notice'>You kick the display case.</span>")
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << text("<span class='alert'>[] kicks the display case.</span>", usr)
-		src.health -= 2
-		healthcheck()
-		return
+	    //prevents remote "kicks" with TK
+		if (!Adjacent(user))
+			return
+		user.visible_message("<span class='danger'>[user] kicks the display case.</span>", \
+						 "<span class='notice'>You kick the display case.</span>")
+		take_damage(2)
+
+/obj/structure/displaycase_chassis
+	anchored = 1
+	density = 0
+	name = "display case chassis"
+	desc = "A wooden base for a display case."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "glassbox_chassis"
+	var/obj/item/weapon/airlock_electronics/electronics
+
+/obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/wrench))
+		user << "<span class='notice'>You start disassembling [src].</span>"
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(do_after(user, 30))
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			new /obj/item/stack/sheet/wood(get_turf(src))
+			qdel(src)
+
+	else if(istype(I, /obj/item/weapon/airlock_electronics))
+		user << "<span class='notice'>You start installing the electronics into [src]...</span>"
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(user.unEquip(I) && do_after(user, 30))
+			I.loc = src
+			electronics = I
+			user << "<span class='notice'>You install the electronics.</span>"
+
+	else if(istype(I, /obj/item/stack/sheet/glass))
+		var/obj/item/stack/sheet/glass/G = I
+		if(G.get_amount() < 10)
+			user << "<span class='warning'>You need ten glass sheets to do this!</span>"
+			return
+		user << "<span class='notice'>You start adding [G] to [src].</span>"
+		if(do_after(user, 20))
+			G.use(10)
+			var/obj/structure/displaycase/display = new(src.loc)
+			if(electronics)
+				electronics.loc = display
+				display.electronics = electronics
+				if(electronics.one_access)
+					display.req_one_access = electronics.conf_access
+				else
+					display.req_access = electronics.conf_access
+			qdel(src)
+	else
+		return ..()
+
+/obj/structure/displaycase/captain
+	start_showpiece_type = /obj/item/weapon/gun/energy/laser/captain
+
+/obj/structure/displaycase/labcage
+	name = "lab cage"
+	desc = "A glass lab container for storing interesting creatures."
+	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr

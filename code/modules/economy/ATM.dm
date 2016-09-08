@@ -511,9 +511,9 @@ log transactions
 	E.owner_name = authenticated_account.owner_name
 
 /*
-INTERCOM FRAME ITEM
-Handheld intercom frame, for placing on walls
-Code shamelessly copied from firealarm_frame
+ATM FRAME ITEM
+Handheld ATM frame, for placing on walls
+Code shamelessly copied from intercom_frame
 */
 /obj/item/atm_frame
 	name = "ATM Frame"
@@ -551,10 +551,10 @@ Code shamelessly copied from firealarm_frame
 
 /*
 ATM CIRCUIT
-Just a object used in constructing air alarms
+Just a object used in constructing ATMs
 */
 /obj/item/weapon/atm_electronics
-	name = "intercom electronics"
+	name = "atm electronics"
 	icon = 'icons/obj/doors/door_assembly.dmi'
 	icon_state = "door_electronics"
 	desc = "Looks like a circuit. Probably is."

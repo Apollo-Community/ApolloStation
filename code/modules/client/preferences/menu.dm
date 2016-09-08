@@ -45,8 +45,9 @@
 	. += "<hr><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>\[Done\]</a>"
 
 
-	user << browse( ., "window=[menu_name];size=360x300;can_close=0")
-	winshow( user, "client_menu", 1)
+	var/datum/browser/popup = new(user, "[menu_name]", "Client Menu", 360, 300)
+	popup.set_content(.)
+	popup.open()
 
 /datum/preferences/proc/ClientMenuDisable( mob/user )
 	winshow( user, "client_menu", 0)
@@ -148,27 +149,14 @@
 	. += "<td><b>Ghost Radio:</b></td>"
 	. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=ghost_radio'>[(toggles & CHAT_GHOSTRADIO) ? "All Radio" : "Nearby Radio"]</a></td>"
 	. += "</tr>"
-
-	. += "<tr>"
-	. += "<td><b>Space Parallax:</b></td>"
-	. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=space_parallax'>[space_parallax ? "Yes" : "No"]</a></td>"
-	. += "</tr>"
-
-	. += "<tr>"
-	. += "<td><b>Space Dust:</b></td>"
-	. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=space_dust'>[space_dust ? "Yes" : "No"]</a></td>"
-	. += "</tr>"
-
-	. += "<tr>"
-	. += "<td><b>Parallax speed:</b></td>"
-	. += "<td><a href='byond://?src=\ref[user];preference=[menu_name];task=parallax_speed'>[parallax_speed]</a></td>"
-	. += "</tr>"
 	. += "</table>"
 
 	. += "<hr><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>\[Done\]</a>"
 
-	user << browse( ., "window=[menu_name];size=350x340;can_close=0" )
-	winshow( user, "[menu_name]", 1)
+	var/datum/browser/popup = new(user, "[menu_name]", "Client Preferences", 350, 340)
+	popup.set_content(.)
+	popup.open()
+
 
 /datum/preferences/proc/PreferencesMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )
@@ -215,17 +203,6 @@
 		if("ghost_radio")
 			toggles ^= CHAT_GHOSTRADIO
 
-		if("space_parallax")
-			space_parallax = !space_parallax
-
-		if("space_dust")
-			space_dust = !space_dust
-
-		if("parallax_speed")
-			var/new_speed = input(user, "Select a new parallax speed (1-4 are usually good values)") as num
-			if(!new_speed)	return
-			parallax_speed = new_speed
-
 		if( "close" )
 			ClientMenu( user )
 			winshow( user, "pref_menu", 0)
@@ -262,7 +239,7 @@
 			var/status = query.item[1]
 			var/list/prison_date = params2list( html_decode( query.item[2] ))
 
-			for( var/i = 1, i <= prison_date.len, i++ )
+			for( var/i in prison_date )
 				prison_date[i] = text2num( prison_date[i] )
 
 			var/employment = status
@@ -296,8 +273,10 @@
 
 	. += "<hr><center><a href='byond://?src=\ref[user];preference=[menu_name];task=close'>\[Done\]</a></center>"
 
-	user << browse( ., "window=[menu_name];size=710x560;can_close=0" )
-	winshow( user, "[menu_name]", 1)
+	var/datum/browser/popup = new(user, "[menu_name]", "Character Selection Menu", 710, 560)
+	popup.set_content(.)
+	popup.open()
+
 
 /datum/preferences/proc/SelectCharacterMenuProcess( mob/user, list/href_list )
 	switch( href_list["task"] )

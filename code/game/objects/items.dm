@@ -1,3 +1,7 @@
+//This line was located at a RANDOM spot in the code between effect types. I put it here because its related to obj/item.
+//However I have no idea what it does. <rjtwins>
+/obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
@@ -188,9 +192,9 @@
 						success = 1
 						S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
 					if(success && !failure)
-						user << "<span class='notice'>You put everything in [S].</span>"
+						user << "<span class='notice'>You put everything [S.preposition] [S].</span>"
 					else if(success)
-						user << "<span class='notice'>You put some things in [S].</span>"
+						user << "<span class='notice'>You put some things [S.preposition] [S].</span>"
 					else
 						user << "<span class='notice'>You fail to pick anything up with [S].</span>"
 

@@ -20,17 +20,22 @@
 
 /proc/spawn_meteors(var/number = 10, var/list/meteortypes)
 	for(var/i = 0; i < number; i++)
+		log_debug( "Spawning meteor [i]" )
 		spawn_meteor(meteortypes)
 
-/proc/spawn_meteor(var/list/meteortypes)
+/proc/spawn_meteor( var/list/meteortypes )
+	var/picked_station_level = pick( overmap.station_levels )
+
+	var/obj/effect/mapinfo/mapinfo = getSectorInfo( picked_station_level )
+	var/edge_length = mapinfo.edge_length+TRANSITION_EDGE_BUFFER
+
 	var/turf/pickedstart
 	var/turf/pickedgoal
-	var/picked_station_level = pick(overmap.station_levels)
 	var/max_i = 10//number of tries to spawn meteor.
-	while (!istype(pickedstart, /turf/space))
+	while( !istype( pickedstart, /turf/space ))
 		var/startSide = pick(cardinal)
-		pickedstart = spaceDebrisStartLoc(startSide, picked_station_level)
-		pickedgoal = spaceDebrisFinishLoc(startSide, picked_station_level)
+		pickedstart = spaceDebrisStartLoc(startSide, picked_station_level, edge_length)
+		pickedgoal = spaceDebrisFinishLoc(startSide, picked_station_level, edge_length)
 		max_i--
 		if(max_i<=0)
 			return
@@ -38,26 +43,27 @@
 	var/obj/effect/meteor/M = new Me(pickedstart)
 	M.dest = pickedgoal
 	M.z_original = picked_station_level
+	log_debug( "Spawned meteor at [pickedstart.x], [pickedstart.y], [pickedstart.z]. Moving to [pickedgoal.x], [pickedgoal.y], [pickedgoal.z]" )
 	spawn(0)
 		walk_towards(M, M.dest, 1)
 	return
 
-/proc/spaceDebrisStartLoc(startSide, Z)
+/proc/spaceDebrisStartLoc(startSide, Z, var/edge_length = TRANSITIONEDGE+TRANSITION_EDGE_BUFFER)
 	var/starty
 	var/startx
 	switch(startSide)
 		if(NORTH)
-			starty = world.maxy-(TRANSITIONEDGE+1)
-			startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+			starty = world.maxy-(edge_length)
+			startx = rand((edge_length), world.maxx-(edge_length))
 		if(EAST)
-			starty = rand((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
-			startx = world.maxx-(TRANSITIONEDGE+1)
+			starty = rand((edge_length),world.maxy-(edge_length))
+			startx = world.maxx-(edge_length)
 		if(SOUTH)
-			starty = (TRANSITIONEDGE+1)
-			startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+			starty = (edge_length)
+			startx = rand((edge_length), world.maxx-(edge_length))
 		if(WEST)
-			starty = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
-			startx = (TRANSITIONEDGE+1)
+			starty = rand((edge_length), world.maxy-(edge_length))
+			startx = (edge_length)
 	var/turf/T = locate(startx, starty, Z)
 	return T
 
@@ -66,17 +72,17 @@
 	var/endx
 	switch(startSide)
 		if(NORTH)
-			endy = TRANSITIONEDGE
-			endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
+			endy = 1
+			endx = rand(1, world.maxx)
 		if(EAST)
-			endy = rand(TRANSITIONEDGE, world.maxy-TRANSITIONEDGE)
-			endx = TRANSITIONEDGE
+			endy = rand(1, world.maxy)
+			endx = 1
 		if(SOUTH)
-			endy = world.maxy-TRANSITIONEDGE
-			endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
+			endy = world.maxy
+			endx = rand(1, world.maxx)
 		if(WEST)
-			endy = rand(TRANSITIONEDGE,world.maxy-TRANSITIONEDGE)
-			endx = world.maxx-TRANSITIONEDGE
+			endy = rand(1,world.maxy)
+			endx = world.maxx
 	var/turf/T = locate(endx, endy, Z)
 	return T
 

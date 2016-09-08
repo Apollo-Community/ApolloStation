@@ -463,6 +463,7 @@ var/global/datum/controller/occupations/job_master
 
 			if(istype(S, /obj/effect/landmark/start) && istype(S.loc, /turf))
 				H.loc = S.loc
+				H.dir = S.dir
 			else
 				H.loc = pick( latejoin )
 

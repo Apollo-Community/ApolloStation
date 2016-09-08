@@ -69,11 +69,6 @@ var/NOPRINTSBLOCK = 0
 var/SHOCKIMMUNITYBLOCK = 0
 var/SMALLSIZEBLOCK = 0
 
-//SPACE PARALLAX
-var/parallax_initialized = 0
-var/space_color = "#000000"
-var/list/parallax_icon[36]
-
 var/skipupdate = 0
 	///////////////
 var/eventchance = 10 //% per 5 mins
@@ -221,7 +216,7 @@ var/list/heartstopper = list("potassium_phorochloride", "zombie_powder") //this 
 var/list/cheartstopper = list("potassium_chloride") //this stops the heart when overdose is met -- c = conditional
 
 //Used by robots and robot preferences.
-var/list/robot_module_types = list("Standard", "Engineering", "Construction", "Surgeon", "Crisis", "Miner", "Janitor", "Service", "Clerical", "Security")
+var/list/robot_module_types = list("Standard", "Security", "Engineering", "Medical", "Miner", "Janitor", "Service", "Clerical")
 
 // Some scary sounds.
 var/static/list/scarySounds = list('sound/weapons/thudswoosh.ogg','sound/weapons/Taser.ogg','sound/weapons/armbomb.ogg','sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg','sound/voice/hiss5.ogg','sound/voice/hiss6.ogg','sound/effects/Glassbr1.ogg','sound/effects/Glassbr2.ogg','sound/effects/Glassbr3.ogg','sound/items/Welder.ogg','sound/items/Welder2.ogg','sound/machines/airlock.ogg','sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg')

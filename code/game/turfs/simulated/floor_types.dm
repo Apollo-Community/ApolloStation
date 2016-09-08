@@ -143,7 +143,7 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = ""
 	name = "space"
-	plane = PLANE_SPACE_BACKGROUND
+	plane = SPACE_PARALLAX_PLANE - 1
 
 	temperature = T20C-270
 
@@ -164,11 +164,17 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "bcircuit"
 	light_range = 1
+	light_color = "#269CDF"
+	light_power = 1
+	light_range = 2
 
 /turf/simulated/floor/greengrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "gcircuit"
 	light_range = 1
+	light_color = "#059100"
+	light_power = 1
+	light_range = 2
 
 /turf/simulated/floor/dock_one
 	icon = 'icons/turf/floors.dmi'

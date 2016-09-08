@@ -156,9 +156,6 @@
 		src.m_flag = 1
 		if ((A != src.loc && A && A.z == src.z))
 			src.last_move = get_dir(A, src.loc)
-
-	update_client_hook(loc)
-
 	return
 
 /client/proc/Move_object(direct)
@@ -199,9 +196,16 @@
 
 	if(isliving(mob))
 		var/mob/living/L = mob
+
+		if(L.is_ventcrawling) // Ventcrawl 2.0
+			L.handle_ventmove(n, direct)
+			set_move_delay()
+			return
+
 		if(L.incorporeal_move)//Move though walls
 			Process_Incorpmove(direct)
 			return
+
 		if(mob.client)
 			if(mob.client.view != world.view) // If mob moves while zoomed in with device, unzoom them.
 				for(var/obj/item/item in mob.contents)
@@ -254,27 +258,9 @@
 			src << "<span class='notice'>You're pinned to a wall by [mob.pinned[1]]!</span>"
 			return 0
 
-		move_delay = world.time//set move delay
-		mob.last_move_intent = world.time + 10
-		switch(mob.m_intent)
-			if("run")
-				if(mob.drowsyness > 0)
-					move_delay += 6
-				move_delay += 1+config.run_speed
-			if("walk")
-				move_delay += 7+config.walk_speed
-		move_delay += mob.movement_delay()
-
-		var/tickcomp = 0 //moved this out here so we can use it for vehicles
-		if(config.Tickcomp)
-			// move_delay -= 1.3 //~added to the tickcomp calculation below
-			tickcomp = ((1/(world.tick_lag))*1.3) - 1.3
-			move_delay = move_delay + tickcomp
+		set_move_delay()
 
 		if(istype(mob.buckled, /obj/vehicle))
-			//manually set move_delay for vehicles so we don't inherit any mob movement penalties
-			//specific vehicle move delays are set in code\modules\vehicles\vehicle.dm
-			move_delay = world.time + tickcomp
 			//drunk driving
 			if(mob.confused)
 				direct = pick(cardinal)
@@ -347,6 +333,30 @@
 		return .
 
 	return
+
+// made a proc out of it since both ventcrawl and regular movement uses it
+/client/proc/set_move_delay()
+	move_delay = world.time//set move delay
+	mob.last_move_intent = world.time + 10
+	switch(mob.m_intent)
+		if("run")
+			if(mob.drowsyness > 0)
+				move_delay += 6
+			move_delay += 1+config.run_speed
+		if("walk")
+			move_delay += 7+config.walk_speed
+	move_delay += mob.movement_delay()
+
+	var/tickcomp = 0 //moved this out here so we can use it for vehicles
+	if(config.Tickcomp)
+		// move_delay -= 1.3 //~added to the tickcomp calculation below
+		tickcomp = ((1/(world.tick_lag))*1.3) - 1.3
+		move_delay = move_delay + tickcomp
+
+	if(istype(mob.buckled, /obj/vehicle))
+		//manually set move_delay for vehicles so we don't inherit any mob movement penalties
+		//specific vehicle move delays are set in code\modules\vehicles\vehicle.dm
+		move_delay = world.time + tickcomp
 
 /mob/proc/SelfMove(turf/n, direct)
 	return Move(n, direct)

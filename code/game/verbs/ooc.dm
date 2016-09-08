@@ -66,7 +66,7 @@
 						display_name = holder.fakekey
 			if(src.IsByondMember())
 				target << "<font color='[src.prefs.OOC_color]'><span class='ooc'>" + create_text_tag("byond-ooc", "VIP-OOC:", target) + " <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
-			else if( config.allow_admin_OOC_color && holder && !holder.fakekey && check_rights( R_ADMIN )) // keeping this for the badmins
+			else if( config.allow_admin_OOC_color && holder && !holder.fakekey && check_rights( R_ADMIN, 0 )) // keeping this for the badmins
 				target << "<font color='[src.prefs.OOC_color]'><span class='ooc'>" + create_text_tag("ooc", "OOC:", target) + " <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
 			else if( donator_tier( src ) && donator_tier( src ) != DONATOR_TIER_1 )
 				target << "<font color='[src.prefs.OOC_color]'><span class='ooc'>" + create_text_tag("ooc", "OOC:", target) + " <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"

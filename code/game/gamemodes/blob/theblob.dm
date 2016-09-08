@@ -146,6 +146,8 @@
 
 	bullet_act(var/obj/item/projectile/Proj)
 		if(!Proj)	return
+		if(istype(Proj, /obj/item/projectile/beam/continuous/emitter))
+			Proj.damage /= 2 // emitter nerf
 		switch(Proj.damage_type)
 		 if(BRUTE)
 			 health -= (Proj.damage/brute_resist)

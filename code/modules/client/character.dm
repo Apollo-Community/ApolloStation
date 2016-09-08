@@ -117,12 +117,14 @@ var/list/all_characters = list() // A list of all loaded characters
 		faction		-	Which syndicate faction is this antag a member of?
 		dismissed	-	Has this player been dismissed from the syndicate?
 	*/
-	var/list/antag_data = list()
+	var/list/antag_data = list("notoriety" =  0, "persistant" = 0, "faction" = "Gorlex Marauders", "career_length" = 0)
 
 	// A few status effects
 	var/employment_status = "Active" // Is this character employed and alive or gone for good?
 	var/felon = 0 // Is this character a convicted felon?
 	var/list/prison_date // The date that they get released from prison
+
+	var/round_number = 0 // When was this character last played?
 
 	var/datum/browser/menu
 
@@ -139,4 +141,3 @@ var/list/all_characters = list() // A list of all loaded characters
 
 	var/new_character = 1 // Is this a new character?
 	var/temporary = 1 // Is this character only for this round?
-

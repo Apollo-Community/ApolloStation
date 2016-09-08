@@ -111,6 +111,19 @@
 	icon_state = "x"
 	anchored = 1.0
 
+//These change the direction the mob is facing when it spawns.
+/obj/effect/landmark/start/south
+	dir = SOUTH
+
+/obj/effect/landmark/start/north
+	dir = NORTH
+
+/obj/effect/landmark/start/east
+	dir = EAST
+
+/obj/effect/landmark/start/west
+	dir = WEST
+
 /obj/effect/landmark/start/New()
 	..()
 	tag = "start*[name]"

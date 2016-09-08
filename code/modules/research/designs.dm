@@ -146,6 +146,7 @@ datum/design/circuit/pandemic
 datum/design/circuit/scan_console
 	name = "DNA machine"
 	id = "scan_console"
+	req_tech = list("programming" = 5, "biotech" = 7)
 	build_path = /obj/item/weapon/circuitboard/scan_consolenew
 
 datum/design/circuit/comconsole
@@ -218,6 +219,12 @@ datum/design/circuit/general_alert
 	id = "general_alert"
 	build_path = /obj/item/weapon/circuitboard/general_alert
 */
+
+datum/design/circuit/supermatter_core
+	name = "core control console"
+	id = "corecontrol"
+	req_tech = list("engineering" = 4)
+	build_path = /obj/item/weapon/circuitboard/air_management/supermatter_core
 
 datum/design/circuit/robocontrol
 	name = "robotics control console"
@@ -1634,6 +1641,7 @@ datum/design/item/omnitool
 	materials = list("$metal" = 7500, "$glass" = 1000)
 	build_path = /obj/item/weapon/omnitool
 */
+/*
 datum/design/item/syndietool
 	name = "Synditool"
 	desc = "An advanced tool capable of replacing many of the tools on a toolbelt."
@@ -1641,3 +1649,4 @@ datum/design/item/syndietool
 	req_tech = list("materials" = 3, "engineering" = 5, "syndicate" = 3)
 	materials = list("$metal" = 7500, "$glass" = 1000)
 	build_path = /obj/item/weapon/omnitool/syndie
+*/

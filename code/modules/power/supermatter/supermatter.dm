@@ -153,7 +153,23 @@
 	// SUPERMATTER DECAY
 	decay()
 
+	// UPDATE DESC
+	updateDesc()
 	return 1
+
+/obj/machinery/power/supermatter/proc/updateDesc()
+	desc = initial(desc)
+	if(damage > 200)
+		desc += "<span class='alert'>You can see tiny cracks in the crystal.</span>"
+
+	else if(damage > 400)
+		desc += "<span class='alert'>A web of cracks span the crystal.</span>"
+
+	else if(damage > 600)
+		desc += "<span class='alert'>A web of deep cracks span the crystal.</span>"
+
+	else if(damage > 800)
+		desc += "<span class='alert'>A deep fissure of cracks span the crystal a pulsing glow is emanating from them.</span>"
 
 /obj/machinery/power/supermatter/proc/turfCheck()
 	var/turf/L = loc
@@ -312,18 +328,25 @@
 
 	update_icon()
 
+//Hitting the core with anything, this includes power and damage calculations from the emitter.
 /obj/machinery/power/supermatter/bullet_act(var/obj/item/projectile/Proj)
 	var/turf/L = loc
 	if(!istype(L))		// We don't run process() when we are in space
-		return 0	// This stops people from being able to really power up the supermatter
-				// Then bring it inside to explode instantly upon landing on a valid turf.
+		return 0		// This stops people from being able to really power up the supermatter
+						// Then bring it inside to explode instantly upon landing on a valid turf.
 
 	if(istype(Proj, /obj/item/projectile/beam/continuous/emitter))
 		var/factor = getSMVar( smlevel, "emitter_factor" )
 		var/obj/item/projectile/beam/continuous/emitter/B = Proj
-
-		power += ( 0.16 * ( 1.69 ** factor )) * ( B.power / ( EMITTER_POWER_MAX * ( 2/3 ))) // regression
-		damage += ( 0.5 * factor - 0.5 ) * ( B.power / ( EMITTER_POWER_MAX * ( 2/3 )))
+		power += ( 0.16 * ( 1.69 ** factor )) * ( B.power / ( EMITTER_POWER_MAX * 0.6667)) // regression
+		if(smlevel > 1)
+			//If above level 1
+			//Dam calc with a exponential factor (simular as above).
+			//Dam vars can be adjusted in /datum/sm_control
+			var/dama = getSMVar( smlevel, "dama")
+			var/damb = getSMVar( smlevel, "damb")
+			var/damc = getSMVar( smlevel, "damc")
+			damage += ((dama*(damb ** factor)) * B.power)/damc
 	else
 		damage += Proj.damage
 	return 0
@@ -357,7 +380,9 @@
 /obj/machinery/power/supermatter/proc/transfer_energy()
 	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
 		var/distance = get_dist(R, src)
-		if(distance  && distance <= getSMVar( smlevel, "collector_range" ))		//sanity for 1/0
+		if(distance && distance <= getSMVar( smlevel, "collector_range" ))		//sanity for 1/0
+			//stop their being a massive benifit to moving the rad collectors closer
+			if(distance < 3)	distance = 2.67			// between 25 - 50k benifit 	(level 1)
 			//for collectors using standard phoron tanks at 1013 kPa, the actual power generated will be this power*0.3*20*29 = power*174
 			R.receive_pulse(power*(0.7/distance))			// mod = 0.65 : 0.325 : 0.211 ..... 0.065    outputs - ~400 - 435kW with default setup (tested via mapping > setup supermatter)
 	return
@@ -449,3 +474,6 @@
 	spawn(0)
 		over.MouseDrop_T(src,usr)
 	return
+
+/obj/machinery/power/supermatter/overmapTravel()
+	qdel( src )

@@ -1175,8 +1175,8 @@
 			stop_regular_sounds()
 
 	proc/stop_regular_sounds()
+		src << sound( null, channel = heartbeat_channel )
 		if( heartbeat )
-			src << sound( null, channel = heartbeat_channel )
 			qdel( heartbeat )
 			heartbeat = null
 
@@ -1310,6 +1310,9 @@
 					see_invisible = SEE_INVISIBLE_LIVING
 					seer = 0
 
+			if(is_ventcrawling)
+				see_invisible = 100
+
 			var/tmp/glasses_processed = 0
 			var/obj/item/weapon/rig/rig = back
 			if(istype(rig) && rig.visor)
@@ -1322,7 +1325,7 @@
 				glasses_processed = 1
 				process_glasses(glasses)
 
-			if(!seer && !glasses_processed && !(species && species.name_plural == "Xenomorphs"))
+			if(!seer && !glasses_processed && !(species && species.name_plural == "Xenomorphs") && !is_ventcrawling)
 				see_invisible = SEE_INVISIBLE_LIVING
 
 			if(healths)

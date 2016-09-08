@@ -173,7 +173,7 @@
 
 	if (is_sliceable())
 		//these are used to allow hiding edge items in food that is not on a table/tray
-		var/can_slice_here = isturf(src.loc) && ((locate(/obj/structure/table) in src.loc) || (locate(/obj/machinery/optable) in src.loc) || (locate(/obj/item/weapon/tray) in src.loc))
+		var/can_slice_here = isturf(src.loc) && ((locate(/obj/structure/table) in src.loc) || (locate(/obj/machinery/optable) in src.loc) || (locate(/obj/item/weapon/storage/bag/tray) in src.loc))
 		var/hide_item = !has_edge(W) || !can_slice_here
 
 		if (hide_item)
@@ -225,13 +225,10 @@
 		return
 	user.visible_message("<b>[user]</b> nibbles away at the [src].","You nibble away at the [src].")
 	bitecount++
-	if(reagents && user.reagents)
-		reagents.trans_to_ingest(user, bitesize)
 	spawn(5)
-		if(!src && !user.client)
+		if(bitecount >= 5)
 			user.custom_emote(1,"[pick("burps", "cries for more", "burps twice", "looks at the area where the food was")]")
 			qdel(src)
-	On_Consume(user)
 
 //////////////////////////////////////////////////
 ////////////////////////////////////////////Snacks
@@ -690,6 +687,42 @@
 		reagents.add_reagent("nutriment", 12)
 		reagents.add_reagent("hyperzine", 5)
 		src.bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/spidermeat
+	name = "spider meat"
+	desc = "A green slab of meat, oozing with disgusting puss."
+	icon_state = "spidermeat"
+	filling_color = "#43DE18"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("hyperzine", 4)
+		src.bitesize = 4
+
+/obj/item/weapon/reagent_containers/food/snacks/spiderleg
+	name = "spider leg"
+	desc = "A squirmy spider leg... Looks crunchy."
+	icon_state = "spiderleg"
+	filling_color = "#111111"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("hyperzine", 2)
+		src.bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/spideregg
+	name = "spider eggs"
+	desc = "A cluster of spider eggs. I think they might still be alive in there.."
+	icon_state = "spidereggs"
+	filling_color = "#43DE18"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("hyperzine", 2)
+		src.bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/xenomeat
 	name = "meat"
@@ -2850,6 +2883,7 @@
 		user << "You make some dough."
 		qdel(W)
 		qdel(src)
+	..()
 
 // Egg + flour = dough
 /obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -2858,6 +2892,7 @@
 		user << "You make some dough."
 		qdel(W)
 		qdel(src)
+	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/dough
 	name = "dough"
@@ -2875,6 +2910,7 @@
 		new /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough(src)
 		user << "You flatten the dough."
 		qdel(src)
+	..()
 
 // slicable into 3xdoughslices
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough
@@ -2929,6 +2965,7 @@
 		user << "You make a hotdog."
 		qdel(W)
 		qdel(src)
+	..()
 
 // Burger + cheese wedge = cheeseburger
 /obj/item/weapon/reagent_containers/food/snacks/monkeyburger/attackby(obj/item/weapon/reagent_containers/food/snacks/cheesewedge/W as obj, mob/user as mob)

@@ -33,7 +33,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("roller bed frame", /obj/item/roller_frame, 2), \
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts, 2), \
 	new/datum/stack_recipe("rack parts", /obj/item/weapon/table_parts/rack), \
-	new/datum/stack_recipe("metal baseball bat", /obj/item/weapon/baseballbat/metal, 10, time = 20, one_per_turf = 0, on_floor = 1), \
+	new/datum/stack_recipe("metal baseball bat", /obj/item/weapon/baseballbat/metal, 10, time = 20, one_per_turf = 0, on_floor = 1, trigger_bews = 1), \
 	new/datum/stack_recipe("closet", /obj/structure/closet, 2, time = 15, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe_list("filing cabinets", list( \
 		new/datum/stack_recipe("filing cabinet", /obj/structure/filingcabinet/filingcabinet, 2, time = 15, one_per_turf = 1, on_floor = 1), \
@@ -45,7 +45,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	null, \
 	new/datum/stack_recipe("canister", /obj/machinery/portable_atmospherics/canister, 10, time = 15, one_per_turf = 1, on_floor = 1), \
 	null, \
-	new/datum/stack_recipe("cannon frame", /obj/item/weapon/cannonframe, 10, time = 15, one_per_turf = 0, on_floor = 0), \
+	new/datum/stack_recipe("cannon frame", /obj/item/weapon/cannonframe, 10, time = 15, one_per_turf = 0, on_floor = 0, trigger_bews = 1), \
 	null, \
 	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/plasteel, 1, 4, 20), \
 	new/datum/stack_recipe("metal rod", /obj/item/stack/rods, 1, 2, 60), \
@@ -91,9 +91,10 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("air alarm frame", /obj/item/alarm_frame, 2), \
 	new/datum/stack_recipe("fire alarm frame", /obj/item/firealarm_frame, 2), \
 	new/datum/stack_recipe("radio button frame", /obj/item/radio_button_frame, 1), \
+	new/datum/stack_recipe("light switch frame", /obj/item/frame/light_switch, 1), \
 	new/datum/stack_recipe("atm frame", /obj/item/atm_frame, 1), \
 	null, \
-	new/datum/stack_recipe("knife blade", /obj/item/butterflyblade, 6, time = 20, one_per_turf = 0, on_floor = 1) \
+	new/datum/stack_recipe("knife blade", /obj/item/butterflyblade, 6, time = 20, one_per_turf = 0, on_floor = 1, trigger_bews = 1) \
 )
 
 /obj/item/stack/sheet/metal
@@ -145,12 +146,13 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts/wood, 2), \
 	new/datum/stack_recipe("wooden chair", /obj/structure/bed/chair/wood, 3, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("wooden barricade", /obj/structure/barricade/wooden, 5, time = 50, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("crossbow frame", /obj/item/weapon/crossbowframe, 5, time = 25, one_per_turf = 0, on_floor = 0), \
+	new/datum/stack_recipe("crossbow frame", /obj/item/weapon/crossbowframe, 5, time = 25, one_per_turf = 0, on_floor = 0, trigger_bews = 1), \
 	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 20, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("coffin", /obj/structure/closet/coffin, 5, time = 15, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("baseball bat", /obj/item/weapon/baseballbat, 10, time = 20, one_per_turf = 0, on_floor = 1), \
-	new/datum/stack_recipe("clipboard", /obj/item/weapon/clipboard, 1, time = 2, one_per_turf = 0, on_floor = 1) \
-//	new/datum/stack_recipe("apiary", /obj/item/apiary, 10, time = 25, one_per_turf = 0, on_floor = 0)
+	new/datum/stack_recipe("display case chassis", /obj/structure/displaycase_chassis, 5, time = 15, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("baseball bat", /obj/item/weapon/baseballbat, 10, time = 20, one_per_turf = 0, on_floor = 1, trigger_bews = 1), \
+	new/datum/stack_recipe("clipboard", /obj/item/weapon/clipboard, 1, time = 2, one_per_turf = 0, on_floor = 1), \
+	new/datum/stack_recipe("apiary", /obj/item/apiary, 10, time = 25, one_per_turf = 0, on_floor = 0)
 	)
 
 /obj/item/stack/sheet/wood
@@ -188,9 +190,9 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	new/datum/stack_recipe("box", /obj/item/weapon/storage/box), \
 	new/datum/stack_recipe("donut box", /obj/item/weapon/storage/donut_box/empty), \
 	new/datum/stack_recipe("egg box", /obj/item/weapon/storage/fancy/egg_box), \
-	new/datum/stack_recipe("light tubes", /obj/item/weapon/storage/box/lights/tubes), \
-	new/datum/stack_recipe("light bulbs", /obj/item/weapon/storage/box/lights/bulbs), \
-	new/datum/stack_recipe("mouse traps", /obj/item/weapon/storage/box/mousetraps), \
+	new/datum/stack_recipe("light tubes box", /obj/item/weapon/storage/box/lights/tubes), \
+	new/datum/stack_recipe("light bulbs box", /obj/item/weapon/storage/box/lights/bulbs), \
+	new/datum/stack_recipe("mouse traps box", /obj/item/weapon/storage/box/mousetraps), \
 	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
 	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
 	new/datum/stack_recipe("pizza box", /obj/item/pizzabox), \

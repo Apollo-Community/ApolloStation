@@ -4,7 +4,7 @@
 	return
 
 // No comment
-/atom/proc/attackby(obj/item/W, mob/user)
+/atom/proc/attackby(obj/item/W, mob/user, params)
 	return
 
 /atom/movable/attackby(obj/item/W, mob/user)
@@ -14,7 +14,8 @@
 /mob/living/attackby(obj/item/I, mob/user)
 	if(istype(I) && ismob(user))
 		user.do_attack_animation(src)
-		I.attack(src, user)
+		if(!(status_flags & GODMODE))		//godmode takes no damage!
+			I.attack(src, user)
 
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.

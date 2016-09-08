@@ -36,6 +36,8 @@
 	department = new_department
 	roles |= new_department.starting_positions
 
+	saveCharacter()
+
 /datum/character/proc/LoadDepartment( var/id )
 	if( !job_master )
 		return
@@ -50,8 +52,12 @@
 
 	roles.["[job_name]"] = "High"
 
+	saveCharacter()
+
 /datum/character/proc/RemoveJob( var/job_name )
 	roles.Remove( "[job_name]" )
+
+	saveCharacter()
 
 /datum/character/proc/SetJob(mob/user, role)
 	var/datum/job/job = job_master.GetJob(role)

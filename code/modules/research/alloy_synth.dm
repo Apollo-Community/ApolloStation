@@ -147,8 +147,12 @@ Creates alloys that can be used to make stronger structures or more complex allo
 					qdel(A)
 					A = new /obj/item/stack/sheet/alloy/plasteel(comp)
 			else
-				A = new /obj/item/stack/sheet/alloy/glass(comp)
-			A.effects = M.mineral_effect
+				//You can now make phoron glass with this !
+				if(mineral.name == "solid phoron" && base.amount/mineral.amount == 2)
+					A = new /obj/item/stack/sheet/glass/phoronglass()
+				else
+					A = new /obj/item/stack/sheet/alloy/glass(comp)
+					A.effects = M.mineral_effect
 			A.amount = base.amount
 			A.loc = get_turf(src)
 			A.update_icon()

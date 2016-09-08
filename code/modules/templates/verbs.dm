@@ -1,6 +1,6 @@
 /client/proc/TemplatePanel()
 	set name = "Template Panel"
-	set category = "Debug"
+	set category = "Admin"
 
 	// Place
 	var/place = check_rights(R_BUILDMODE)
@@ -42,3 +42,25 @@
 	var/datum/browser/popup = new(mob, "templ_panel", "Template Panel")
 	popup.set_content(dat)
 	popup.open()
+
+/client/proc/save_construction_station()
+	set category = "Debug"
+	set name = "Save Construction Station"
+	set desc = "Saves the construction station to maps/serialized/construction_station.dmm"
+
+	dmm_serializer.serialize_block(82, 35, 4, 98, 164, "construction_station")
+	log_debug("[key_name(usr)] has saved the construction station")
+
+/client/proc/reset_construction_station()
+	set category = "Admin"
+	set name = "Reset Construction Station"
+	set desc = "Resets the construction station to the original state."
+
+	var/path = "maps/templates/persistent/construction_station.dmm"
+	if(fexists(path))
+		if(alert("This will reset the construction area back to its original state, and the current construction station will be unrecoverable after the round ends. Are you sure you want to do this?",,"Yes","No")=="No")
+			return
+
+		fdel(path)
+
+		message_admins("[key_name(usr)] has reset the construction station.")

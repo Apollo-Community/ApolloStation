@@ -22,7 +22,7 @@
 			var/obj/mecha/M = O
 			M.go_out()
 		O.loc = src
-		my_atom.visible_message( "[user] loads the [O] into [my_atom]\'s cargohold." )
+		my_atom.visible_message( "[user] loads \the [O] into [my_atom]\'s cargohold." )
 
 	return 1
 

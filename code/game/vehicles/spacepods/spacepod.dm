@@ -114,6 +114,13 @@
 	if( is_on_fire() )
 		overlays += pod_overlays[FIRE]
 
+//Check if the pod has a beacon
+/obj/spacepod/proc/has_beacon()
+	for (var/obj/to_check in equipment_system.spacepod_equipment)
+		if (istype(to_check, /obj/item/device/spacepod_equipment/misc/tracker))
+			return 1
+	return 0
+
 /obj/spacepod/proc/is_on_fire()
 	if( equipment_system )
 		if( equipment_system.engine_system )
@@ -329,7 +336,7 @@
 
 	// Removing the equipment
 	var/obj/item/SPE = input(user, "Remove which equipment?", null, null) as null|anything in equipment_system.spacepod_equipment
-	if( SPE )
+	if( SPE && in_range(src, user) )
 		equipment_system.dequip( SPE, user )
 		update_HUD( pilot )
 
@@ -342,11 +349,11 @@
 		set src = usr.loc
 		set popup_menu = 0
 
-		if( istype( get_area( src ), /area/planet ))
+		if( istype( get_area( src ), /area/planet/moon/exterior ) || istype( get_area( src ), /area/planet/moon/base/exterior ) || istype( get_area( src ), /area/planet/moon/landing_zone ))
 			occupants_announce( "<span class='notice'>Leaving the planet surface and returning to space.</span>" )
 			overmapTravel()
 		else
-			usr << "<span class='warning'>Not currently on a planet.</span>"
+			usr << "<span class='warning'>Not currently on a planet or inside.</span>"
 
 		return
 
@@ -894,6 +901,7 @@
 /obj/effect/landmark/spacepod/random/New()
 	..()
 
+/*
 /obj/spacepod/verb/fly_up()
 	if( src.pilot == usr )
 		set category = "Spacepod"
@@ -943,6 +951,7 @@
 			else
 				pilot << "<span class='warning'>There's nothing of interest below you!!</span>"
 		return
+*/
 
 /obj/spacepod/verb/move_inside()
 	set category = "Object"

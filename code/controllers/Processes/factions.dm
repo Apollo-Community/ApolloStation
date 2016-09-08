@@ -50,7 +50,7 @@ var/global/list/restricted_contracts = list()
 		factions -= F
 
 /datum/controller/process/faction_controller/doWork()
-	if( ticker.mode == "extended" )
+	if( istype( ticker.mode, /datum/game_mode/extended ))
 		return
 
 	if( !contracts_made && world.time > ( ticker.game_start + contract_delay ))
