@@ -946,6 +946,7 @@
 #include "code\modules\antagonist\contracts\custom.dm"
 #include "code\modules\antagonist\contracts\deface.dm"
 #include "code\modules\antagonist\contracts\kill.dm"
+#include "code\modules\antagonist\contracts\poison.dm"
 #include "code\modules\antagonist\contracts\propaganda.dm"
 #include "code\modules\antagonist\contracts\protect.dm"
 #include "code\modules\antagonist\contracts\sabotage.dm"
