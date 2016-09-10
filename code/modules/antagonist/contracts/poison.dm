@@ -48,7 +48,7 @@
 
 /datum/contract/poison/proc/get_taken_targets()
 	var/datum/mind/list/taken = list()
-	for(var/datum/contract/C in faction.contracts // targets from these contracts are recycled
+	for(var/datum/contract/C in faction.contracts) // targets from these contracts are recycled
 		var/datum/contract/poison/P = C
 		if((istype(P)) && P.target)	taken += P.target
 
