@@ -62,5 +62,6 @@
 			return
 
 		fdel(path)
+		universe.save_construction_station = 0
 
 		message_admins("[key_name(usr)] has reset the construction station.")

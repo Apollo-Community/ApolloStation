@@ -40,6 +40,8 @@
 
 	var/round_number = 0 // How many days has it been since Jan 1, 2560?
 
+	var/save_construction_station = 1 // save the construction station on round end?
+
 /datum/universal_state/proc/load_date()
 	var/max_attempts = 5
 
@@ -176,6 +178,10 @@
 	log_game("Construction station has been loaded")
 
 /datum/universal_state/proc/saveConstructionStation()
+	if(!save_construction_station)
+		testing("Didn't save construction station")
+		return
+
 	dmm_serializer.serialize_block(82, 35, 4, 98, 164, "construction_station", "templates/persistent")
 
 	log_game("Construction station has been saved")
