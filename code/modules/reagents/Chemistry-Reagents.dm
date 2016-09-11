@@ -1711,6 +1711,24 @@ datum
 				..()
 				return
 
+		toxin/dicardine
+			name = "Dicardine"
+			id = "dicardine"
+			description = "A potent, synthetic poison often confused with bicaridine"
+			color = "#B70E0E"
+			toxpwr = 2.5
+
+			// for contract completion tracking purposes
+			var/mob/living/syndie_agent = null
+
+			on_mob_life(var/mob/living/M as mob)
+				if(syndie_agent)
+					for(var/datum/contract/poison/C in syndie_agent.mind.antagonist.active_contracts)
+						if(C.target == M)	C.end(1, syndie_agent)
+
+				..()
+				return
+
 		toxin/minttoxin
 			name = "Mint Toxin"
 			id = "minttoxin"

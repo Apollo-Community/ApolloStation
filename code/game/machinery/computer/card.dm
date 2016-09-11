@@ -100,6 +100,7 @@
 				else if( istype( O, /obj/item/weapon/paper/form/job ))
 					var/obj/item/weapon/paper/form/job/J = O
 					var/datum/job/job_datum
+
 					if( istype( J, /obj/item/weapon/paper/form/job/induct ))
 						C.SetDepartment( job_master.GetDepartmentByName( J.job ))
 						job_datum = C.department.getLowestPosition()
