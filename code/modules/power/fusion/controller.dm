@@ -10,21 +10,26 @@
 	var/conPower = 0							//Is the containment field active.
 	var/list/plasma = list()					//List of plasma fields
 	var/datum/gas_mixture/gas_contents = null	//Plasma must contain a mix of gasses.
-	var/exchange_coef = 0.2
-	var/decay_coef = 55000
+	var/decay_coef = 80000						//The direct heat decal is diveded by this for the actual heat decay
 	var/heatpermability = 0						//Do we let the heat escape/exchange with the enviroment or do we contain it. (0 = contain, 0 = exchange)
-	var/fusion_heat = 0
-	var/datum/fusionUpgradeTable/table
-	var/list/coefs
-	var/rod_coef = 0
-	var/field_coef = 0
-	var/obj/machinery/computer/fusion/computer
+	var/fusion_heat = 0							//Fusion heat generated last tick
+	var/datum/fusionUpgradeTable/table			//Datum with gas, rod and crystal coefs
+	var/list/coefs								//List with gas and color coefs
+	var/rod_coef = 0							//What effect does the rod compo do on neutron/heat generation
+	var/field_coef = 0							//Field coef, how much does the field regen extra
+	var/obj/machinery/computer/fusion/computer	//The computer that this is linked to
 	var/set_up = 0
 	var/lastwarning = 0
 	var/warning_delay = 10 	//10 sec between warnings
 	var/confield_archived = 0
 	var/safe_warned = 0
-	var/obj/item/device/radio/radio
+	var/obj/item/device/radio/radio 	//For radio warnings
+	var/rod_insertion = 1		//How far is the rod inserted, has effect on heat, neutrons and neutron damage generation
+	var/message_delay
+	var/safe_warn
+	var/max_field_coef = 1
+	var/event_color = ""		//Color of fusion events
+	var/neutrondam_coef = 8		//Devide neutrons by this for damage to shields
 
 /datum/fusion_controller/New()
 	fusion_controllers += src
@@ -48,7 +53,7 @@
 		calcFusion()
 		calcDamage()
 		calcConField()
-		announce_warning()	//Announce a warning if the confield is dropping.
+		announce_warning()	//Announce a warning if the confield is dropping below 50%
 		confield_archived = confield
 		updateIcons()
 
@@ -57,6 +62,7 @@
 	if(gas_contents.temperature >= 90000)
 		gas_contents.temperature = 89000
 	leakPlasma()
+	removePlasma()
 
 //Check the individual components for various statuses
 /datum/fusion_controller/proc/checkComponents()
@@ -108,6 +114,15 @@
 //Toggle the gas outlet
 /datum/fusion_controller/proc/toggle_gas()
 	gas = !gas
+
+//Reset the force field for maintenance
+/datum/fusion_controller/proc/reset_field()
+	conPower = 0
+	confield = 0
+
+//Neutron Rod insertion percentage
+/datum/fusion_controller/proc/change_rod_insertion(change)
+	rod_insertion = Clamp(rod_insertion + change, 0, 1)
 
 //Toggle the containment field heat permability
 /datum/fusion_controller/proc/toggle_permability()
@@ -174,7 +189,7 @@
 
 	//heat up plasma and temp sanity check
 	var/tmp/heatdif = core.heat
-	//The beams temerature is about 100k deg so we cap input there.
+	//The arc emitters temerature is about 100k deg so we cap input there.
 	if(gas_contents.temperature >= 100000)
 		heatdif = 0
 	core.heat -= heatdif
@@ -235,10 +250,11 @@
 
 //Calculate plasma passive heat decay.
 /datum/fusion_controller/proc/calcDecay(var/temp)
-	. = 2**(temp/(decay_coef))*(1-field_coef)
+	. = (2**(temp/(decay_coef)))+((0.00005*temp)**2)
 
 //Containment field calculations and adjustment.. also sprite overlay.
 /datum/fusion_controller/proc/calcConField()
+	world << "Confield at calcConField [confield]"
 	if(confield)
 		for(var/obj/machinery/power/fusion/plasma/p in plasma)
 			p.overlays = list(image(p.icon, "field_overlay"))
@@ -252,11 +268,16 @@
 			comp.on = 0
 			comp.locked = 0
 
+	var/tmp/tmp_confield = confield
 	confield = 0
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
+		r.charge()
 		if(conPower)
-			r.field_energy()
-		confield += r.battery
+			tmp_confield += r.field_energy()
+	if(!isnull(coefs))
+		tmp_confield = tmp_confield*coefs["shield"] + tmp_confield*field_coef
+	confield = Clamp(tmp_confield, 0, 40000 + 1000*field_coef)
+	world << "Confield afther calcConField [confield]"
 
 //When does fusion happen ?
 /datum/fusion_controller/proc/calcFusion()
@@ -266,26 +287,25 @@
 		return
 	for(var/obj/machinery/power/fusion/plasma/p in plasma)
 		var/change = min(((gas_contents.temperature/500000)*100), 25)			//This needs tweaking also with gass mixtures
-		change = change * Clamp(coefs["fuel"], 0, 2)
+		change = change * coefs["fuel"] * coefs["dampening"]
 		if(prob(change))
 			fusionEvent(p)
 
 //Fusion event, generates heat neutrons wich generate energy via collectors.
 /datum/fusion_controller/proc/fusionEvent(obj/machinery/power/fusion/plasma/p)
+	//These base values should be class values !
 	var/tmp/neutrons = 1000						//Base neutrons
 	var/tmp/heat = 2000							//Base heat
-	var/tmp/heat_absorbed = heat*coefs["heat_neutron"]
-	var/tmp/neutrons_absorbed = neutrons*coefs["heat_neutron"]
-	var/tmp/rod_neutrons = neutrons*rod_coef	//Neutrons generated via the corner neutron rods.
-	var/tmp/rod_heat = heat*(1-rod_coef)
-	var/tmp/gas_neutrons = neutrons*coefs["neutron"] + heat*coefs["heat_neutron"] - neutrons_absorbed
-	var/tmp/gas_heat = heat*coefs["heat"] + neutrons*coefs["neutron_heat"] - heat_absorbed
-	fusion_heat = rod_heat + gas_heat	//The rod is not the middle rod but the nuetron rods in the corners.
-	p.transfer_energy(rod_neutrons + gas_neutrons)
-	p.spark()
-	p.set_light(3, 5, "#E6FFFF")
+	neutrons += (heat*coefs["heat_neutron"] - neutrons*coefs["neutron_heat"])*coefs["neutron"] + neutrons*rod_coef
+	heat += neutrons*coefs["neutron_heat"] - heat*coefs["heat_neutron"] + heat*rod_coef
+	fusion_heat = heat*rod_insertion
+	p.transfer_energy(neutrons*rod_insertion)
 	spawn()
-		new/obj/effect/effect/plasma_ball(get_turf(p))
+		p.spark()
+		p.set_light(3, 5, event_color)
+		var/tmp/obj/effect/effect/plasma_ball/pball = new(get_turf(p))
+		pball.set_color(event_color)
+
 		var/list/targets = list()
 		for(var/mob/living/carbon/human/M in oview(p, 5))
 			if(!insulated(M))
@@ -295,9 +315,15 @@
 			arc(M, p)
 			M.apply_damage(rand(10, 20), damagetype = BURN)
 			M.apply_effect(rand(10, 20), effecttype = STUN)
+
 	//Neutrons effect the containment field, more neutrons = more power but also more were on the field
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
-		confield -= (neutrons/10)*(1+field_coef)*3.5
+		world << "substracting [neutrons*rod_insertion] from confield [confield]"
+		confield -= (neutrons/neutrondam_coef)*rod_insertion
+		world << "Resulting in [confield]"
+
+	if(coefs["explosive"] && prob(5))
+		critFail(p)
 
 /datum/fusion_controller/proc/insulated(var/mob/living/carbon/human/m)
 	if(isnull(m.head) || isnull(m.wear_suit))
@@ -331,39 +357,34 @@
 
 		else if(component.damage > 999)
 			//critically fail
-			critFail()
+			critFail(component)
 
 //Critically fail in an explosion .. or worse.
 /datum/fusion_controller/proc/critFail(var/obj/o)
+	if(isnull(o))
+		return
 	if(gas_contents.temperature > 600000)
+		//You are really deep in the shit now boi!
 		new/obj/fusion_ball(o.loc)
 	gas = 0
 	leakPlasma()
 	removePlasma()
 	spawn()
 		explosion(get_turf(o), 2, 4, 10, 15)
-	//You are really deep in the shit now boi!
-
 
 /datum/fusion_controller/proc/announce_warning()
-	return
-	/*
-	var/alert_msg = "Warning Tokamak containment field integrity at [confield/40000]%"
+	var/tmp/alert_msg = "Warning Tokamak containment field integrity at [round(confield/400)]%"
 	if(confield < 20000)
-		alert_msg = alert_msg
-		lastwarning = world.timeofday - warning_delay * 5
-	else if(confield < confield_archived) // The damage is still going up
-		safe_warned = 0
-		lastwarning = world.timeofday
-	else if(!safe_warned)
-		safe_warned = 1 // We are safe, warn only once
-		alert_msg = TM_SAFE_ALERT
-		lastwarning = world.timeofday
-	else
-		alert_msg = null
-	if(alert_msg)
-		radio.autosay(alert_msg, "Tokamak Containment Field Monitor")
-	*/
+		if(confield < confield_archived) // The damage is still going up sinse last calc
+			safe_warn = 1
+		else if (safe_warn)
+			safe_warn = 0 // We are safe, warn only once
+			alert_msg = TM_SAFE_ALERT
+		else
+			alert_msg = null
+		if(alert_msg && world.timeofday >= message_delay)
+			message_delay = world.timeofday + 15
+			radio.autosay(alert_msg, "Tokamak Monitor")
 
 //LONG LIVE SPAGETTI !
 //This finds all the components in a efficient but really clumsy code wise way.
@@ -467,9 +488,15 @@
 			return
 		comp.fusion_controller = src
 	//Calculating component coefs
+	field_coef = 0
+	rod_coef = 0
 	for(var/obj/machinery/power/fusion/ring_corner/r in temp_list)
 		if(isnull(r.rod) || isnull(r.crystal))
 			return
+		if(isnull(event_color) || event_color == "")
+			event_color = table.rod_color(r.rod)
+		else
+			event_color = BlendRGB(event_color, table.rod_color(r.rod), 0.5)
 		rod_coef += table.rod_coef(r.rod)
 		field_coef += table.field_coef(r.crystal)
 	rod_coef = rod_coef/4

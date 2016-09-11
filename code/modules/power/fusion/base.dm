@@ -88,6 +88,26 @@
 		return
 		..()
 
+/obj/machinery/power/fusion/verb/rotate_clock()
+	set category = "Object"
+	set name = "Rotate (Clockwise)"
+	set src in view(1)
+
+	if (usr.stat || usr.restrained()  || anchored)
+		return
+
+	src.set_dir(turn(src.dir, 90))
+
+/obj/machinery/power/fusion/verb/rotate_anticlock()
+	set category = "Object"
+	set name = "Rotate (Counterclockwise)"
+	set src in view(1)
+
+	if (usr.stat || usr.restrained()  || anchored)
+		return
+
+	src.set_dir(turn(src.dir, -90))
+
 /obj/machinery/power/fusion/update_icon()
 	if(!panel_open && !on)
 		icon_state = initial(icon_state)

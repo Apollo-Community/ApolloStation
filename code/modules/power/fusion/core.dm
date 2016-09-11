@@ -19,7 +19,7 @@
 	..()
 
 /obj/machinery/power/fusion/core/status()
-	return "Buildupheat: [heat] <br> Integrity: [(1000-damage)/10] % <br> Producing [last_power] Kw"
+	return "Buildupheat: [heat] <br> Integrity: [(1000-damage)/10] % <br> Energy Level: [last_power/1000] Kw"
 
 //Temperature and power decay of the core
 /obj/machinery/power/fusion/core/proc/decay()

@@ -43,12 +43,23 @@
 		var/obj/machinery/power/fusion/comp
 		var/status
 		dat += "Plasma Temperature: [isnull(fusion_controller.gas_contents) ? "No Gas" : "[fusion_controller.gas_contents.temperature]"]<br>"
-		dat += "Plasma nr. Moles: [isnull(fusion_controller.gas_contents) ? "No Gas" : "[fusion_controller.gas_contents.total_moles]"]<br>"
-		dat += "Containment field strengh: [fusion_controller.confield]<br>"
-		if(fusion_controller.gas_contents.temperature < 1000)
+		dat += "Plasma nr. Moles: [isnull(fusion_controller.gas_contents) ? "No Gas" : "[fusion_controller.gas_contents.total_moles]"] "
+		if(fusion_controller.gas_contents.temperature < 50000)
 			dat += "<a href='byond://?src=\ref[src];drain=1'><font color = red>Drain Gas</font></a><br>"
 		else
 			dat += "<a href='byond://?src=\ref[src];event=1'><font color = red>Emergency Gas Vent</font></a><br>"
+		//Stuff for the confield percentage
+		dat += "Containment field status: "
+		dat += "[fusion_controller.confield/400]% "
+		if(!fusion_controller.gas && fusion_controller.gas_contents.total_moles < 1)
+			dat += "<a href='byond://?src=\ref[src];reset_field=1'>Reset</a>"
+		//dat += "Containment field strengh: [fusion_controller.confield]<br>"
+		dat += "<br>Neutron rods exposure: "
+		dat += "<a href='byond://?src=\ref[src];change1=1'>--</a> "
+		dat += "<a href='byond://?src=\ref[src];change2=1'>-</a>"
+		dat += " [fusion_controller.rod_insertion*100] % "
+		dat += "<a href='byond://?src=\ref[src];change3=1'>+</a> "
+		dat += "<a href='byond://?src=\ref[src];change4=1'>++</a><br>"
 		dat += "<b><center>Dispertion Rod Status:</center></b><br>"
 		comp = fusion_controller.fusion_components[13]
 		status = comp.status()
@@ -56,16 +67,16 @@
 		dat += "<br><b><center>MCR status:</center></b>"
 		comp = fusion_controller.fusion_components[1]
 		status = comp.status()
-		dat += "Ring 1:<br>[status]<br>"
+		dat += "Ring 1: [status]<br>"
 		comp = fusion_controller.fusion_components[4]
 		status = comp.status()
-		dat += "Ring 2:<br>[status]<br>"
+		dat += "Ring 2: [status]<br>"
 		comp = fusion_controller.fusion_components[7]
 		status = comp.status()
-		dat += "Ring 3:<br>[status]<br>"
+		dat += "Ring 3: [status]<br>"
 		comp = fusion_controller.fusion_components[10]
 		status = comp.status()
-		dat += "Ring 4:<br>[status]<br>"
+		dat += "Ring 4: [status]<br>"
 		dat += "Containmentfield Power: [fusion_controller.conPower==1 ? "Active" : "Inactive"] - "
 		dat += "<a href='byond://?src=\ref[src];togglecon=1'>Toggle</a><br>"
 		dat += "Gas release: [fusion_controller.gas==1 ? "Open" : "Closed"] -"
@@ -83,6 +94,8 @@
 
 /obj/machinery/computer/fusion/Topic(href, href_list)
 	..()
+	if(href_list["reset_field"])
+		fusion_controller.reset_field()
 	if(href_list["togglecon"])
 		fusion_controller.toggle_field()
 	if(href_list["togglegas"])
@@ -97,6 +110,14 @@
 				fusion_controller.emergencyVent()
 	if(href_list["drain"])
 		fusion_controller.drainPlasma()
+	if(href_list["change1"])
+		fusion_controller.change_rod_insertion(-0.1)
+	if(href_list["change2"])
+		fusion_controller.change_rod_insertion(-0.01)
+	if(href_list["change3"])
+		fusion_controller.change_rod_insertion(0.01)
+	if(href_list["change4"])
+		fusion_controller.change_rod_insertion(0.1)
 	src.updateUsrDialog()
 	return
 

@@ -110,15 +110,23 @@ steam.start() -- spawns the effect
 					step(steam,direction)
 				spawn(20)
 					qdel(steam)
+
 /////////////////////////////////////////////
-//Lighning bolt between scourse and target
+//Plasma ball effect, standart blue
 /////////////////////////////////////////////
 
 /obj/effect/effect/plasma_ball
 	name = "Lightning Bolt"
-	icon_state = "bluespace"
+	icon_state = "bluespace_blue"
 	anchored = 1.0
 	mouse_opacity = 0
+
+//Colors given as rgb value
+/obj/effect/effect/plasma_ball/proc/set_color(color)
+	if(isnull(color))
+		return
+	icon_state = "bluespace_grey"
+	src.color = color
 
 /obj/effect/effect/plasma_ball/New()
 	..()
@@ -131,7 +139,7 @@ steam.start() -- spawns the effect
 	return
 
 /////////////////////////////////////////////
-//Sort plasma ball effec (bluespace ball)
+//Lighting bolt between scourse and target
 /////////////////////////////////////////////
 
 /datum/effect/effect/system/lightning_bolt

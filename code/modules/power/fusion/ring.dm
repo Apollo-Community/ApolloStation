@@ -110,10 +110,19 @@
 		return 1
 	return 0
 
+/obj/machinery/power/fusion/ring_corner/proc/charge()
+	if(battery < 10000)
+		use_power(600)
+		battery = min(battery + 200, 10000)
+
 //Returns the field energy produced by the ring.
 /obj/machinery/power/fusion/ring_corner/proc/field_energy()
-	use_power(400)	//Use 40k  power to gen field.
-	battery = min(battery + 150, 10000)	//Generate 150 units of shield
+	if(battery > 150)
+		battery -= 150
+		return 150
+	else
+		return battery
+		battery = 0
 
 //Return content of tank inside, returns an empty gas mix if there is no or no gas mix in that tank.
 /obj/machinery/power/fusion/ring_corner/proc/get_tank_content()
@@ -139,7 +148,7 @@
 	return tank.air_contents.total_moles
 
 /obj/machinery/power/fusion/ring_corner/status()
-	return "Capacitor: [battery] <br>Integrity: [(1000-damage)/10] %<br>"
+	return "[(1000-damage)/10] %<br>"
 
 //8 edges of the magnetic ring
 /obj/machinery/power/fusion/ring
