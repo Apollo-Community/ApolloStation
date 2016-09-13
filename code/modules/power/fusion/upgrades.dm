@@ -94,7 +94,7 @@
 	name = "Field Amplification Crystal"
 	desc = " field amplification crystal."
 	icon = 'icons/obj/stock_parts.dmi'
-	icon_state = "smes_coil"			// Just few icons patched together. If someone wants to make better icon, feel free to do so!
+	icon_state = "ansible_crystal"			// Just few icons patched together. If someone wants to make better icon, feel free to do so!
 	w_class = 4.0 						// It's LARGE (backpack size)
 	var/mineral = "glass"
 
