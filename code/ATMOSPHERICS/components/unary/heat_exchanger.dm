@@ -8,6 +8,7 @@
 	desc = "Exchanges heat between two input gases. Setup for fast heat transfer"
 
 	var/obj/machinery/atmospherics/unary/heat_exchanger/partner = null
+	var/obj/machinery/power/fusion/plasma/plasma = null
 	var/update_cycle
 
 	update_icon()
@@ -27,41 +28,48 @@
 					partner = target
 					partner.partner = src
 					break
-
 		..()
 
 	process()
 		..()
-		if(!partner)
+		var/datum/gas_mixture/partner_air = null
+		if(!partner && !plasma)
 			return 0
+		else if(!isnull(partner))
+			partner_air = partner.air_contents
+		else if (plasma.transfering)
+			partner_air = plasma.air_contents
 
+/*		//I dont think the following is needed as non of the other gas heating/cooling machines use it. <rjtwins>
 		if(!air_master || air_master.current_cycle <= update_cycle)
 			return 0
 
 		update_cycle = air_master.current_cycle
-		partner.update_cycle = air_master.current_cycle
-
+		if(!isnull(partner))
+			partner.update_cycle = air_master.current_cycle
+*/
 		var/air_heat_capacity = air_contents.heat_capacity()
-		var/other_air_heat_capacity = partner.air_contents.heat_capacity()
+		var/other_air_heat_capacity = partner_air.heat_capacity()
 		var/combined_heat_capacity = other_air_heat_capacity + air_heat_capacity
 
 		var/old_temperature = air_contents.temperature
-		var/other_old_temperature = partner.air_contents.temperature
+		var/other_old_temperature = partner_air.temperature
 
 		if(combined_heat_capacity > 0)
-			var/combined_energy = partner.air_contents.temperature*other_air_heat_capacity + air_heat_capacity*air_contents.temperature
+			var/combined_energy = partner_air.temperature*other_air_heat_capacity + air_heat_capacity*air_contents.temperature
 
 			var/new_temperature = combined_energy/combined_heat_capacity
 			air_contents.temperature = new_temperature
-			partner.air_contents.temperature = new_temperature
+			partner_air.temperature = new_temperature
 
 		if(network)
 			if(abs(old_temperature-air_contents.temperature) > 1)
 				network.update = 1
 
-		if(partner.network)
-			if(abs(other_old_temperature-partner.air_contents.temperature) > 1)
-				partner.network.update = 1
+		if(isnull(plasma))//Plasma had not variable called network this will cause erros otherwise
+			if(partner.network)
+				if(abs(other_old_temperature-partner_air.temperature) > 1)
+					partner.network.update = 1
 
 		return 1
 

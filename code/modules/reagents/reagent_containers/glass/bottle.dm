@@ -85,6 +85,20 @@
 		..()
 		reagents.add_reagent("cyanide", 60)
 
+/obj/item/weapon/reagent_containers/glass/bottle/dicardine
+	name = "dicardine bottle"
+	desc = "A bottle of dicardine solution. Often confused with bicaridine."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle12"
+
+	New(var/mob/living/agent)
+		..()
+		reagents.add_reagent("dicardine", 60)
+
+		if(agent)
+			var/datum/reagent/toxin/dicardine/R = reagents.reagent_list[1]
+			R.syndie_agent = agent
+
 /obj/item/weapon/reagent_containers/glass/bottle/stoxin
 	name = "soporific bottle"
 	desc = "A small bottle of soporific. Just the fumes make you sleepy."

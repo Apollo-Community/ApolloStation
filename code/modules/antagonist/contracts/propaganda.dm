@@ -51,8 +51,20 @@
 	P.info = propaganda
 	var/obj/item/weapon/tape_roll/T = new(get_turf(worker))
 
-	worker.put_in_any_hand_if_possible(P)
-	worker.put_in_any_hand_if_possible(T)
+	var/obj/item/weapon/storage/backpack/backpack = locate(/obj/item/weapon/storage/backpack) in worker.contents
+	if(backpack)
+		if(backpack.can_be_inserted(P, 1))
+			backpack.handle_item_insertion(P, 1)
+		else
+			worker.put_in_any_hand_if_possible(P)
+
+		if(backpack.can_be_inserted(T, 1))
+			backpack.handle_item_insertion(T, 1)
+		else
+			worker.put_in_any_hand_if_possible(T)
+	else	
+		worker.put_in_any_hand_if_possible(P)
+		worker.put_in_any_hand_if_possible(T)
 
 	worker << "The contract author has teleported the gear you will need to complete the contract. You will receive a bonus if you hang up the propaganda in the following areas:"
 	for(var/area in bonus_areas)

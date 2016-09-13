@@ -47,6 +47,12 @@
 	canister_color = "orange"
 	can_label = 0
 
+/obj/machinery/portable_atmospherics/canister/hydrogen
+	name = "Canister \[Hydrogen\]"
+	icon_state = "white"
+	canister_color = "white"
+	can_label = 0
+
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "Canister \[CO2\]"
 	icon_state = "black"
@@ -342,6 +348,13 @@ update_flag
 	src.add_fingerprint(usr)
 	update_icon()
 
+	return 1
+
+/obj/machinery/portable_atmospherics/canister/hydrogen/New()
+	..()
+
+	src.air_contents.adjust_gas("hydrogen", MolesForPressure())
+	src.update_icon()
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/phoron/New()
