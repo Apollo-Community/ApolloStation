@@ -6,9 +6,9 @@
 	var/integrity = 1000
 	icon = 'icons/obj/fusion.dmi'
 	icon_state = "ring_corner"
-	anchored = 1
-	wired = 1
-	panel_open = 0
+	anchored = 0
+	wired = 0
+	panel_open = 1
 	density = 1
 	use_power = 0
 	var/obj/item/weapon/tank/hydrogen/tank
@@ -157,9 +157,9 @@
 	var/integrity = 1000
 	icon = 'icons/obj/fusion.dmi'
 	icon_state = "ring"
-	anchored = 1
-	wired = 1
-	panel_open = 0
+	anchored = 0
+	wired = 0
+	panel_open = 1
 	density = 1
 	use_power = 0
 

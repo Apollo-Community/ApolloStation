@@ -8,11 +8,11 @@
 	var/heat = 0
 	var/controller
 	var/beam_coef = 2
-	ready = 1
+	ready = 0
 	var/last_power = 0
-	wired = 1
-	panel_open = 0
-	anchored = 1
+	wired = 0
+	panel_open = 1
+	anchored = 0
 
 /obj/machinery/power/fusion/core/New()
 	update_icon()
