@@ -101,6 +101,17 @@
 				s_energize(S)
 		return
 
+	//Shock any singulo field generators
+	for(var/obj/machinery/field_generator/G in oview(src, 5))
+		targets += G
+	if(targets.len > 0)
+		for(var/i=0, i <= 10, i+=5)
+			var/obj/machinery/field_generator/G = pick(targets)
+			spawn(rand(0, 10))
+				arc(G)
+				G.arc_act(arc_power)
+		return
+
 	//Shock any other machines
 	for(var/obj/machinery/M in oview(src, 5))
 		targets += M
