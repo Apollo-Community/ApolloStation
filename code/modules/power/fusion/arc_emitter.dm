@@ -42,9 +42,11 @@
 /obj/machinery/power/arc_emitter/process()
 	if(stat & (BROKEN))
 		return
+	update_icon()
 	if(src.state != 2 || !avail(active_power_usage))
 		src.active = 0
 		return
+	update_icon()
 	if(active)
 		fire_bolt()
 	update_icon()
@@ -66,6 +68,17 @@
 				new/obj/effect/effect/sparks(get_turf(M))
 		return
 
+	//Shock any blobs
+	for(var/obj/effect/blob/B in oview(src, 5))
+		targets += B
+	if(targets.len > 0)
+		for(var/i=0, i <= 10, i+=5)
+			var/obj/effect/blob/B = pick(targets)
+			spawn(rand(0, 10))
+				arc(B)
+				B.take_damage(arc_power/6)		//diveded by 6 to get a max of 10 damage which will kill a standart blob in 3 shots.
+		return
+
 	//Shock any fusion cores
 	for(var/obj/machinery/power/fusion/core/C in oview(src, 5))
 		targets += C
@@ -74,7 +87,18 @@
 			var/obj/machinery/power/fusion/core/C = pick(targets)
 			spawn(rand(0, 10))
 				arc(C)
-				energize(C)
+				c_energize(C)
+		return
+
+	//Shock any supermatter crystals
+	for(var/obj/machinery/power/supermatter/S in oview(src, 5))
+		targets += S
+	if(targets.len > 0)
+		for(var/i=0, i <= 10, i+=5)
+			var/obj/machinery/power/supermatter/S = pick(targets)
+			spawn(rand(0, 10))
+				arc(S)
+				s_energize(S)
 		return
 
 	//Shock any other machines
@@ -100,8 +124,11 @@
 	empulse(get_turf(m), 1, 1)
 
 //Energize given core
-/obj/machinery/power/arc_emitter/proc/energize(obj/machinery/power/fusion/core/c)
+/obj/machinery/power/arc_emitter/proc/c_energize(obj/machinery/power/fusion/core/c)
 	c.heat += (arc_power*c.beam_coef*5)	//*5 because this ticks SO MUCH SLOWER !
+
+/obj/machinery/power/arc_emitter/proc/s_energize(obj/machinery/power/supermatter/s)
+	s.arc_act(arc_power)
 
 //Check if given mob is wearing insulated cloathing
 /obj/machinery/power/arc_emitter/proc/insulated(var/mob/living/carbon/human/m)
