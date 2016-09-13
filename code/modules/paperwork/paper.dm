@@ -247,6 +247,7 @@
 		t = replacetext(t, "\[cell\]", "<td>")
 		t = replacetext(t, "\[time]", "<font face=\"[signfont]\"><i>[worldtime2text()]</i></font>")	// Adds ability to add a timestamp for added document security.
 		t = replacetext(t, "\[date]", "<font face=\"[signfont]\"><i>[print_date( universe.date )]</i></font>")	// Adds ability to add a timestamp for added document security.
+		t = replacetext(t, "\[date2]", "<font face=\"[signfont]\"><i>[universe.getDateTime()]</i></font>")	// Adds ability to add a timestamp for added document security.
 		t = replacetext(t, "\[logo\]", "<img src = logo-nt.png>")
 		t = replacetext(t, "\[apollo\]", "<img src = logo-apollo.png>")
 		t = replacetext(t, "\[antilogo\]", "<img src = logo-anti.png>")	// Adds alternative anti-NT logo.
