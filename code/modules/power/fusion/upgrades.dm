@@ -7,28 +7,28 @@
 /datum/fusionUpgradeTable/New()
 	rod = list(\
 	"iron"		= 0.1,\
-	"silver" 	= 0.2,\
-	"gold" 		= 0.4,\
-	"platinum"	= 0.8,\
-	"phoron" 	= 1.6,\
+	"phoron" 	= 0.2,\
+	"silver" 	= 0.4,\
+	"gold"		= 0.8,\
+	"platium" 	= 1.6,\
 	"osmium"	= 3.2,\
 	"tritium"	= 6.4)
 
 	rod_color = list(\
 	"iron"		= "#0067FF",\
-	"silver" 	= "#00ccff",\
-	"gold" 		= "#ffff00",\
-	"platinum"	= "#00ff00",\
-	"phoron" 	= "#a31aff",\
+	"phoron" 	= "#00ccff",\
+	"silver" 	= "#ffff00",\
+	"gold"		= "#00ff00",\
+	"platium" 	= "#a31aff",\
 	"osmium"	= "#ff00ff",\
 	"tritium"	= "#ff3300")
 
 	crystal = list(\
 	"iron"		= 0.1,\
-	"silver" 	= 0.2,\
-	"gold" 		= 0.4,\
-	"platinum"	= 0.8,\
-	"phoron" 	= 1.6,\
+	"phoron" 	= 0.2,\
+	"silver" 	= 0.4,\
+	"gold"		= 0.8,\
+	"platium" 	= 1.6,\
 	"osmium"	= 3.2,\
 	"tritium"	= 6.4)
 
