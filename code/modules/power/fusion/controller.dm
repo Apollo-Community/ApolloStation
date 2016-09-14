@@ -24,12 +24,12 @@
 	var/confield_archived = 0
 	var/safe_warned = 0
 	var/obj/item/device/radio/radio 	//For radio warnings
-	var/rod_insertion = 1		//How far is the rod inserted, has effect on heat, neutrons and neutron damage generation
+	var/rod_insertion = 0.5		//How far is the rod inserted, has effect on heat, neutrons and neutron damage generation
 	var/message_delay
 	var/safe_warn
 	var/max_field_coef = 1
 	var/event_color = ""		//Color of fusion events
-	var/neutrondam_coef = 8		//Devide neutrons by this for damage to shields
+	var/neutrondam_coef = 7		//Devide neutrons by this for damage to shields
 
 /datum/fusion_controller/New()
 	fusion_controllers += src
@@ -254,7 +254,6 @@
 
 //Containment field calculations and adjustment.. also sprite overlay.
 /datum/fusion_controller/proc/calcConField()
-	world << "Confield at calcConField [confield]"
 	if(confield)
 		for(var/obj/machinery/power/fusion/plasma/p in plasma)
 			p.overlays = list(image(p.icon, "field_overlay"))
@@ -277,7 +276,6 @@
 	if(!isnull(coefs))
 		tmp_confield = tmp_confield*coefs["shield"] + tmp_confield*field_coef
 	confield = Clamp(tmp_confield, 0, 40000 + 1000*field_coef)
-	world << "Confield afther calcConField [confield]"
 
 //When does fusion happen ?
 /datum/fusion_controller/proc/calcFusion()
@@ -318,9 +316,7 @@
 
 	//Neutrons effect the containment field, more neutrons = more power but also more were on the field
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
-		world << "substracting [neutrons*rod_insertion] from confield [confield]"
 		confield -= (neutrons/neutrondam_coef)*rod_insertion
-		world << "Resulting in [confield]"
 
 	if(coefs["explosive"] && prob(5))
 		critFail(p)
