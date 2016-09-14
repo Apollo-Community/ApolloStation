@@ -1,7 +1,7 @@
 //The fusion "core" heating rod
 //What gets hit by the beam and heats up the plasma
 /obj/machinery/power/fusion/core
-	name = "Heat Distribution Device"
+	name = "Ichinumi Distribution Device"
 	desc = "Two way Heat/Neutron distributor."
 	icon = 'icons/obj/fusion.dmi'
 	icon_state = "core_off"

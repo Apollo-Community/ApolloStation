@@ -77,7 +77,7 @@
 //Upgrade items for the fusion reactor
 //The rod has an effect on heat/neutron production.
 /obj/item/weapon/neutronRod
-	name = "Neutron Absorption Rod"
+	name = "Neutron Focusing Rod"
 	desc = " neutron absorbtion rod."
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "smes_coil"			// Just few icons patched together. If someone wants to make better icon, feel free to do so!

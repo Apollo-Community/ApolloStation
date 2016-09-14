@@ -60,7 +60,7 @@
 		dat += " [fusion_controller.rod_insertion*100] % "
 		dat += "<a href='byond://?src=\ref[src];change3=1'>+</a> "
 		dat += "<a href='byond://?src=\ref[src];change4=1'>++</a><br>"
-		dat += "<b><center>Heat Distribution Device Status</center></b><br>"
+		dat += "<b><center>Distribution Device Status</center></b><br>"
 		comp = fusion_controller.fusion_components[13]
 		status = comp.status()
 		dat += status + "<br>"
