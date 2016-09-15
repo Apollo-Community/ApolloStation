@@ -15,6 +15,8 @@ If you wish to develop and host this codebase in a closed source manner you may 
 
 See [here](https://www.gnu.org/licenses/why-affero-gpl.html) for more information.
 
+As of commit [ec9b95694bc9923bc490dec8f732106fd0a90afa](https://github.com/Apollo-Community/ApolloStation/commit/ec9b95694bc9923bc490dec8f732106fd0a90afa) the [Lightning library](https://github.com/Rotem12/Lightning) by Rotem12 was intergrated under the folder "_helpers/LightingLib". This library falls under the GNU AFFERO GENERAL PUBLIC LICENSE Version 3, 19 November 2007.
+
 ### GETTING THE CODE
 The simplest way to obtain the code is using the github .zip feature.
 
