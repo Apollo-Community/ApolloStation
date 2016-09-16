@@ -7,7 +7,7 @@
 	icon_state = "core_off"
 	var/heat = 0
 	var/controller
-	var/beam_coef = 2
+	var/beam_coef = 5
 	ready = 0
 	var/last_power = 0
 	wired = 0
@@ -41,6 +41,10 @@
 		icon_state = "core_on"
 	else
 		icon_state = "core_off"
+	if(wired && anchored && !panel_open)
+		ready = 1
+	else
+		ready = 0
 	return
 
 /obj/machinery/power/fusion/core/attackby(obj/item/W, mob/user)
