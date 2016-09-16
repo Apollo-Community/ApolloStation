@@ -146,11 +146,26 @@ steam.start() -- spawns the effect
 
 /datum/effect/effect/system/lightning_bolt/New()
 	..()
+
 /datum/effect/effect/system/lightning_bolt/start(atom/scourse, atom/target, size = 2, sx_offset = 0, sy_offset = 0, dx_offset = 0, dy_offset = 0)
 	var/vector/start = new (scourse.x * world.icon_size + world.icon_size/2 + sx_offset, scourse.y * world.icon_size + world.icon_size/2 + sy_offset)
 	var/vector/dest  = new (target.x * world.icon_size + world.icon_size/2 + dx_offset, target.y * world.icon_size + world.icon_size/2 + dy_offset)
 	var/bolt/b = new(start, dest, 50)
 	b.Draw(scourse.z, color = "#ffffff", thickness = size, split = 1)
+
+/////////////////////////////////////////////
+//Beam between scourse and target
+/////////////////////////////////////////////
+/datum/effect/effect/system/beam
+
+/datum/effect/effect/system/beam/New()
+	..()
+
+/datum/effect/effect/system/beam/start(atom/scourse, atom/target, size = 1, sx_offset = 0, sy_offset = 0, dx_offset = 0, dy_offset = 0)
+	var/vector/start = new (scourse.x * world.icon_size + world.icon_size/2 + sx_offset, scourse.y * world.icon_size + world.icon_size/2 + sy_offset)
+	var/vector/dest  = new (target.x * world.icon_size + world.icon_size/2 + dx_offset, target.y * world.icon_size + world.icon_size/2 + dy_offset)
+	var/beam/b = new(start, dest)
+	b.Draw(scourse.z, color = "#ffffff", thickness = size)
 
 
 /////////////////////////////////////////////

@@ -124,6 +124,12 @@
 				E.activate(user)
 				return
 
+	for(var/obj/machinery/power/arc_emitter/E in world)
+		if(E.id == src.id)
+			spawn(0)
+				E.activate(user)
+				return
+
 /obj/machinery/door_control/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 	if(stat & (NOPOWER|BROKEN))

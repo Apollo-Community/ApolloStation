@@ -5,6 +5,7 @@
 	desc = "It is a heavy duty industrial tesla emitter."
 	icon = 'icons/obj/fusion.dmi'
 	icon_state = "arc_emitter_off"
+	var/id = ""
 	anchored = 0
 	density = 1
 	req_access = list(access_engine_equip)

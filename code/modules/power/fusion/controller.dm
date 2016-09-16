@@ -24,12 +24,13 @@
 	var/confield_archived = 0
 	var/safe_warned = 0
 	var/obj/item/device/radio/radio 	//For radio warnings
-	var/rod_insertion = 1		//How far is the rod inserted, has effect on heat, neutrons and neutron damage generation
+	var/rod_insertion = 0.5		//How far is the rod inserted, has effect on heat, neutrons and neutron damage generation
 	var/message_delay
 	var/safe_warn
 	var/max_field_coef = 1
 	var/event_color = ""		//Color of fusion events
-	var/neutrondam_coef = 8		//Devide neutrons by this for damage to shields
+	var/neutrondam_coef = 6		//Devide neutrons by this for damage to shields this will keep it stable at 50 rod insetion at normal activity.
+	var/power_coef = 15
 
 /datum/fusion_controller/New()
 	fusion_controllers += src
@@ -217,6 +218,9 @@
 		pump_gas(r, r.get_tank_content(), gas_contents, r.get_tank_moles())
 	gas_contents.update_values()
 	coefs = table.gas_coef(gas_contents)
+	var/tmp/gas_color = table.gas_color(gas_contents, event_color)
+	//Gas has effect on the color of fusion events.
+	event_color = BlendRGB(event_color, gas_color, 0.5)
 
 //Pump plasma back into rings.
 /datum/fusion_controller/proc/drainPlasma()
@@ -254,7 +258,6 @@
 
 //Containment field calculations and adjustment.. also sprite overlay.
 /datum/fusion_controller/proc/calcConField()
-	world << "Confield at calcConField [confield]"
 	if(confield)
 		for(var/obj/machinery/power/fusion/plasma/p in plasma)
 			p.overlays = list(image(p.icon, "field_overlay"))
@@ -277,7 +280,6 @@
 	if(!isnull(coefs))
 		tmp_confield = tmp_confield*coefs["shield"] + tmp_confield*field_coef
 	confield = Clamp(tmp_confield, 0, 40000 + 1000*field_coef)
-	world << "Confield afther calcConField [confield]"
 
 //When does fusion happen ?
 /datum/fusion_controller/proc/calcFusion()
@@ -299,7 +301,7 @@
 	neutrons += (heat*coefs["heat_neutron"] - neutrons*coefs["neutron_heat"])*coefs["neutron"] + neutrons*rod_coef
 	heat += neutrons*coefs["neutron_heat"] - heat*coefs["heat_neutron"] + heat*rod_coef
 	fusion_heat = heat*rod_insertion
-	p.transfer_energy(neutrons*rod_insertion)
+	p.transfer_energy(neutrons*rod_insertion*power_coef)
 	spawn()
 		p.spark()
 		p.set_light(3, 5, event_color)
@@ -318,9 +320,7 @@
 
 	//Neutrons effect the containment field, more neutrons = more power but also more were on the field
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
-		world << "substracting [neutrons*rod_insertion] from confield [confield]"
 		confield -= (neutrons/neutrondam_coef)*rod_insertion
-		world << "Resulting in [confield]"
 
 	if(coefs["explosive"] && prob(5))
 		critFail(p)

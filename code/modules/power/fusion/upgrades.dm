@@ -2,35 +2,43 @@
 	var/list/rod = list()
 	var/list/crystal = list()
 	var/list/rod_color = list()
+	var/list/gas_color = list()
 	var/const/maxfuel = 240
 
 /datum/fusionUpgradeTable/New()
 	rod = list(\
 	"iron"		= 0.1,\
-	"silver" 	= 0.2,\
-	"gold" 		= 0.4,\
-	"platinum"	= 0.8,\
-	"phoron" 	= 1.6,\
+	"phoron" 	= 0.2,\
+	"silver" 	= 0.4,\
+	"gold"		= 0.8,\
+	"platium" 	= 1.6,\
 	"osmium"	= 3.2,\
 	"tritium"	= 6.4)
 
 	rod_color = list(\
 	"iron"		= "#0067FF",\
-	"silver" 	= "#00ccff",\
-	"gold" 		= "#ffff00",\
-	"platinum"	= "#00ff00",\
-	"phoron" 	= "#a31aff",\
+	"phoron" 	= "#00ccff",\
+	"silver" 	= "#ffff00",\
+	"gold"		= "#00ff00",\
+	"platium" 	= "#a31aff",\
 	"osmium"	= "#ff00ff",\
 	"tritium"	= "#ff3300")
 
 	crystal = list(\
 	"iron"		= 0.1,\
-	"silver" 	= 0.2,\
-	"gold" 		= 0.4,\
-	"platinum"	= 0.8,\
-	"phoron" 	= 1.6,\
+	"phoron" 	= 0.2,\
+	"silver" 	= 0.4,\
+	"gold"		= 0.8,\
+	"platium" 	= 1.6,\
 	"osmium"	= 3.2,\
 	"tritium"	= 6.4)
+
+	gas_color = list(\
+	"phoron" 			= "#b30059",\
+	"nitrogen" 			= "#000000",\
+	"oxygen"			= "#009900",\
+	"carbon_dioxide" 	= "#ff0000",\
+	"sleeping_agent"	= "#ff9900")
 
 //Neutron & heat upgrade
 /datum/fusionUpgradeTable/proc/rod_coef(obj/item/weapon/neutronRod/rod)
@@ -43,6 +51,23 @@
 //Field upgrade
 /datum/fusionUpgradeTable/proc/field_coef(obj/item/weapon/shieldCrystal/crystal)
 	. = src.crystal[crystal.mineral]
+
+
+//Mixes gass into color (SO UGLY NEEDS FOR LOOPING)
+/datum/fusionUpgradeTable/proc/gas_color(datum/gas_mixture/plasma, base_color)
+	var/tmp/phoron = plasma.gas["phoron"]/maxfuel
+	var/tmp/nitrogen = plasma.gas["nitrogen"]/maxfuel
+	var/tmp/oxygen = plasma.gas["oxygen"]/maxfuel
+	var/tmp/carbon_dioxide = plasma.gas["carbon_dioxide"]/maxfuel
+	var/tmp/sleeping_agent = plasma.gas["sleeping_agent"]/maxfuel
+
+	base_color = BlendRGB(base_color, src.gas_color["phoron"], phoron)
+	base_color = BlendRGB(base_color, src.gas_color["nitrogen"], nitrogen)
+	base_color = BlendRGB(base_color, src.gas_color["oxygen"], oxygen)
+	base_color = BlendRGB(base_color, src.gas_color["carbon_dioxide"], carbon_dioxide)
+	base_color = BlendRGB(base_color, src.gas_color["sleeping_agent"], sleeping_agent)
+	return base_color
+
 
 //Coefs on the fusion event determening heat, neutron, conversion rate, and fuel coefs
 /datum/fusionUpgradeTable/proc/gas_coef(datum/gas_mixture/plasma)
@@ -77,7 +102,7 @@
 //Upgrade items for the fusion reactor
 //The rod has an effect on heat/neutron production.
 /obj/item/weapon/neutronRod
-	name = "Neutron Absobtion Rod"
+	name = "Neutron Focusing Rod"
 	desc = " neutron absorbtion rod."
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "smes_coil"			// Just few icons patched together. If someone wants to make better icon, feel free to do so!

@@ -1,13 +1,13 @@
 //The fusion "core" heating rod
 //What gets hit by the beam and heats up the plasma
 /obj/machinery/power/fusion/core
-	name = "Heat Distrubtion Device"
-	desc = "Converts incoming energy into heat and distributes it."
+	name = "Ichinumi Distribution Device"
+	desc = "Two way Heat/Neutron distributor."
 	icon = 'icons/obj/fusion.dmi'
 	icon_state = "core_off"
 	var/heat = 0
 	var/controller
-	var/beam_coef = 2
+	var/beam_coef = 5
 	ready = 0
 	var/last_power = 0
 	wired = 0
@@ -19,7 +19,7 @@
 	..()
 
 /obj/machinery/power/fusion/core/status()
-	return "Buildupheat: [heat] <br> Integrity: [(1000-damage)/10] % <br> Energy Level: [last_power/1000] Kw"
+	return "Buildupheat: [heat] <br> Integrity: [(1000-damage)/10] % <br> Energy Level: [last_power/1000] kW."
 
 //Temperature and power decay of the core
 /obj/machinery/power/fusion/core/proc/decay()
@@ -41,6 +41,10 @@
 		icon_state = "core_on"
 	else
 		icon_state = "core_off"
+	if(wired && anchored && !panel_open)
+		ready = 1
+	else
+		ready = 0
 	return
 
 /obj/machinery/power/fusion/core/attackby(obj/item/W, mob/user)
