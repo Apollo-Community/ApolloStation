@@ -29,7 +29,8 @@
 	var/safe_warn
 	var/max_field_coef = 1
 	var/event_color = ""		//Color of fusion events
-	var/neutrondam_coef = 7		//Devide neutrons by this for damage to shields
+	var/neutrondam_coef = 6		//Devide neutrons by this for damage to shields this will keep it stable at 50 rod insetion at normal activity.
+	var/power_coef = 15
 
 /datum/fusion_controller/New()
 	fusion_controllers += src
@@ -217,6 +218,9 @@
 		pump_gas(r, r.get_tank_content(), gas_contents, r.get_tank_moles())
 	gas_contents.update_values()
 	coefs = table.gas_coef(gas_contents)
+	var/tmp/gas_color = table.gas_color(gas_contents, event_color)
+	//Gas has effect on the color of fusion events.
+	event_color = BlendRGB(event_color, gas_color, 0.5)
 
 //Pump plasma back into rings.
 /datum/fusion_controller/proc/drainPlasma()
@@ -297,7 +301,7 @@
 	neutrons += (heat*coefs["heat_neutron"] - neutrons*coefs["neutron_heat"])*coefs["neutron"] + neutrons*rod_coef
 	heat += neutrons*coefs["neutron_heat"] - heat*coefs["heat_neutron"] + heat*rod_coef
 	fusion_heat = heat*rod_insertion
-	p.transfer_energy(neutrons*rod_insertion)
+	p.transfer_energy(neutrons*rod_insertion*power_coef)
 	spawn()
 		p.spark()
 		p.set_light(3, 5, event_color)

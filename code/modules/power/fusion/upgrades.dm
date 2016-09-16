@@ -2,6 +2,7 @@
 	var/list/rod = list()
 	var/list/crystal = list()
 	var/list/rod_color = list()
+	var/list/gas_color = list()
 	var/const/maxfuel = 240
 
 /datum/fusionUpgradeTable/New()
@@ -32,6 +33,13 @@
 	"osmium"	= 3.2,\
 	"tritium"	= 6.4)
 
+	gas_color = list(\
+	"phoron" 			= "#b30059",\
+	"nitrogen" 			= "#000000",\
+	"oxygen"			= "#009900",\
+	"carbon_dioxide" 	= "#ff0000",\
+	"sleeping_agent"	= "#ff9900")
+
 //Neutron & heat upgrade
 /datum/fusionUpgradeTable/proc/rod_coef(obj/item/weapon/neutronRod/rod)
 	. = src.rod[rod.mineral]
@@ -43,6 +51,23 @@
 //Field upgrade
 /datum/fusionUpgradeTable/proc/field_coef(obj/item/weapon/shieldCrystal/crystal)
 	. = src.crystal[crystal.mineral]
+
+
+//Mixes gass into color (SO UGLY NEEDS FOR LOOPING)
+/datum/fusionUpgradeTable/proc/gas_color(datum/gas_mixture/plasma, base_color)
+	var/tmp/phoron = plasma.gas["phoron"]/maxfuel
+	var/tmp/nitrogen = plasma.gas["nitrogen"]/maxfuel
+	var/tmp/oxygen = plasma.gas["oxygen"]/maxfuel
+	var/tmp/carbon_dioxide = plasma.gas["carbon_dioxide"]/maxfuel
+	var/tmp/sleeping_agent = plasma.gas["sleeping_agent"]/maxfuel
+
+	base_color = BlendRGB(base_color, src.gas_color["phoron"], phoron)
+	base_color = BlendRGB(base_color, src.gas_color["nitrogen"], nitrogen)
+	base_color = BlendRGB(base_color, src.gas_color["oxygen"], oxygen)
+	base_color = BlendRGB(base_color, src.gas_color["carbon_dioxide"], carbon_dioxide)
+	base_color = BlendRGB(base_color, src.gas_color["sleeping_agent"], sleeping_agent)
+	return base_color
+
 
 //Coefs on the fusion event determening heat, neutron, conversion rate, and fuel coefs
 /datum/fusionUpgradeTable/proc/gas_coef(datum/gas_mixture/plasma)
