@@ -7,6 +7,7 @@
 	var/datum/fusion_controller/fusion_controller
 	//var/obj/machinery/power/fusion/core/c
 	var/ctag = ""
+
 /obj/machinery/computer/fusion/New()
 	fusion_controller = new()
 	..()
@@ -24,6 +25,44 @@
 /obj/machinery/computer/fusion/attack_ai(mob/user as mob)
 	return attack_hand(user)
 
+/obj/machinery/computer/fusion/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
+	var/data[0]
+	data["gas_temp"] = round(fusion_controller.gas_contents.temperature)
+	data["gas_moles"] = round(fusion_controller.gas_contents.total_moles)
+	data["nr_comp"] = fusion_controller.fusion_components.len
+	data["gas"] = fusion_controller.gas
+	data["rod_insert"] = round(fusion_controller.rod_insertion*100)
+	data["fieldstrengh"] = round(fusion_controller.confield/400)
+	data["conpower"] = fusion_controller.conPower
+	data["heat_exchange"] = fusion_controller.heatpermability
+	var/exchangers = 0
+	for(var/obj/machinery/power/fusion/plasma/plasma in fusion_controller.plasma)
+		if(!isnull(plasma.partner))
+			exchangers ++
+	data["exchangers"] = exchangers
+	if(fusion_controller.fusion_components.len == 13)
+		var/tmp/obj/machinery/power/fusion/core/c = fusion_controller.fusion_components[13]
+		data["IDDpower"] = c.last_power/1000
+	else
+		data["IDDpower"] = 0
+	var/list/ring_list = list()
+	if(fusion_controller)
+		for(var/obj/machinery/power/fusion/ring_corner/ring in fusion_controller.fusion_components)
+			ring_list += ring.integrity/10
+	data["rings"] = ring_list
+	// update the ui with data if it exists, returns null if no ui is passed/found or if force_open is 1/true
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
+	//nanomanager.update_uis(src)
+	if (!ui)
+		// the ui does not exist, so we'll create a new() one
+		// for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
+		ui = new(user, src, ui_key, "tokamak_computer.tmpl", "test", 550, 800)
+		// when the ui is first opened this is the data it will use
+		ui.set_initial_data(data)
+		// open the new ui window
+		ui.open()
+		ui.set_auto_update(1)
+
 /obj/machinery/computer/fusion/attack_hand(mob/user as mob)
 	user.set_machine(src)
 	add_fingerprint(user)
@@ -34,12 +73,11 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 
-	var/dat = "<h3>Tokamak Control Panel</h3>"
+/*	var/dat = "<h3>Tokamak Control Panel</h3>"
 	//dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>"
 	if(fusion_controller.fusion_components.len != 13)
 		dat += "<a href='byond://?src=\ref[src];findcomp=1'>Connect to reactor components.</a><br>"
 	else
-	//font color=green
 		var/obj/machinery/power/fusion/comp
 		var/status
 		dat += "Plasma Temperature: [isnull(fusion_controller.gas_contents) ? "No Gas" : "[fusion_controller.gas_contents.temperature]"]<br>"
@@ -89,6 +127,8 @@
 		dat += "<a href='byond://?src=\ref[src];toggleheatperm=1'>Toggle</a><br>"
 		dat += "Exchanging with: [exchangers] Heat exchangers. <br>"
 	user << browse(dat, "window=fusiongen;size=600x750")
+	*/
+	ui_interact(user)
 	//onclose(user, "fusiongen")
 
 
@@ -118,8 +158,9 @@
 		fusion_controller.change_rod_insertion(0.01)
 	if(href_list["change4"])
 		fusion_controller.change_rod_insertion(0.1)
-	src.updateUsrDialog()
-	return
+	nanomanager.update_uis(src)
+	//src.updateUsrDialog()
+	return 1
 
 /obj/machinery/computer/fusion/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/multitool))

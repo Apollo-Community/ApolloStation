@@ -225,13 +225,11 @@
 //Pump plasma back into rings.
 /datum/fusion_controller/proc/drainPlasma()
 	gas_contents.divide(4)
-	//world << "Total gass moles of devide mix: [gas_contents.total_moles]"
 	var/datum/gas_mixture/tank_mix
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
 		tank_mix = new()
 		tank_mix.temperature = gas_contents.temperature
 		tank_mix.add(gas_contents)
-		//world << "Total gass moles of tank mix: [tank_mix.total_moles]"
 		r.set_tank_content(tank_mix)
 	gas_contents = new()
 	removePlasma()
