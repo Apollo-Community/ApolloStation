@@ -17,9 +17,11 @@
 
 /obj/machinery/power/fusion/ring_corner/New()
 	//FOR DEBUG
+	/*
 	tank = new()
 	rod = new()
 	crystal = new()
+	*/
 	update_icon()
 	..()
 
