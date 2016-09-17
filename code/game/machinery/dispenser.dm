@@ -65,4 +65,5 @@
 							 /obj/item/weapon/gun/energy/taser,
 							 /obj/item/weapon/gun/energy/gun,
 							 /obj/item/weapon/gun/energy/gun/nuclear,
-							 /obj/item/weapon/gun/energy/lasercannon)
+							 /obj/item/weapon/gun/energy/lasercannon,
+							 /obj/item/weapon/gun/energy/electric)

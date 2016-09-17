@@ -351,6 +351,22 @@
 		damage += Proj.damage
 	return 0
 
+/obj/machinery/power/supermatter/proc/arc_act(energy)
+	var/turf/L = loc
+	if(!istype(L))		// We don't run process() when we are in space
+		return 0		// This stops people from being able to really power up the supermatter
+						// Then bring it inside to explode instantly upon landing on a valid turf.
+	var/factor = getSMVar( smlevel, "emitter_factor" )
+	power += ( 0.16 * ( 1.69 ** factor )) * ( energy / ( ARC_EMITTER_POWER_MAX * 0.6667)) *50 // regression, times 50 to make up for arc emitter fire rate.
+	if(smlevel > 1)
+		//If above level 1
+		//Dam calc with a exponential factor (simular as above).
+		//Dam vars can be adjusted in /datum/sm_control
+		var/dama = getSMVar( smlevel, "dama")
+		var/damb = getSMVar( smlevel, "damb")
+		var/damc = getSMVar( smlevel, "damc")
+		damage += ((dama*(damb ** factor)) * energy)/damc * 50 //Times 50 to make up for arc emitter fire rate.
+
 /obj/machinery/power/supermatter/attack_robot(mob/user as mob)
 	if(Adjacent(user))
 		return attack_hand(user)

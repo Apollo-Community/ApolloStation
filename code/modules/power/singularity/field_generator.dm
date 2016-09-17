@@ -172,6 +172,10 @@ field_generator power level display
 		update_icon()
 	return 0
 
+/obj/machinery/field_generator/proc/arc_act(energy)
+	power += energy * EMITTER_DAMAGE_POWER_TRANSFER * 50 //Times 50 for the slow fire rate of arc emitters compared to beam emitters
+	update_icon()
+	return 0
 
 /obj/machinery/field_generator/Destroy()
 	src.cleanup()

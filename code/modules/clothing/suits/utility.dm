@@ -91,7 +91,7 @@
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	body_parts_covered = HEAD|FACE|EYES
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 100)
-
+	siemens_coefficient = 0.9
 
 /obj/item/clothing/suit/radiation
 	name = "Radiation suit"
@@ -106,3 +106,4 @@
 	slowdown = 1.5
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 100)
 	flags_inv = HIDEJUMPSUIT|HIDETAIL
+	siemens_coefficient = 0.9
