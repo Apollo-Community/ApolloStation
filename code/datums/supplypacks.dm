@@ -623,6 +623,15 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	access = access_ce
 	group = "Engineering"
 
+/datum/supply_packs/tokamak_rings
+	name = "Distribution Device Crate"
+	contains = list(/obj/machinery/power/fusion/core)
+	cost = 50
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Distribution Device Crate"
+	access = access_ce
+	group = "Engineering"
+
 /datum/supply_packs/engine/field_gen
 	name = "Field Generator crate"
 	contains = list(/obj/machinery/field_generator,
