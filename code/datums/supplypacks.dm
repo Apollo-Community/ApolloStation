@@ -597,6 +597,41 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	access = access_ce
 	group = "Engineering"
 
+/datum/supply_packs/arc_emitter
+	name = "Arc emitter crate"
+	contains = list(/obj/machinery/power/arc_emitter,
+					/obj/machinery/power/arc_emitter)
+	cost = 50
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Arc emitter crate"
+	access = access_ce
+	group = "Engineering"
+
+/datum/supply_packs/tokamak_rings
+	name = "Tokamak Ring Crate"
+	contains = list(/obj/machinery/power/fusion/ring_corner,
+					/obj/machinery/power/fusion/ring_corner,
+					/obj/machinery/power/fusion/ring_corner,
+					/obj/machinery/power/fusion/ring_corner,
+					/obj/machinery/power/fusion/ring,
+					/obj/machinery/power/fusion/ring,
+					/obj/machinery/power/fusion/ring,
+					/obj/machinery/power/fusion/ring,)
+	cost = 200
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Tokamak Ring Crate"
+	access = access_ce
+	group = "Engineering"
+
+/datum/supply_packs/tokamak_rings
+	name = "Distribution Device Crate"
+	contains = list(/obj/machinery/power/fusion/core)
+	cost = 50
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Distribution Device Crate"
+	access = access_ce
+	group = "Engineering"
+
 /datum/supply_packs/engine/field_gen
 	name = "Field Generator crate"
 	contains = list(/obj/machinery/field_generator,

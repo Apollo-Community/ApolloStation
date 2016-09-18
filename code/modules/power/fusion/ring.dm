@@ -26,6 +26,9 @@
 	..()
 
 /obj/machinery/power/fusion/ring_corner/attackby(obj/item/W, mob/user)
+	if(stat == BROKEN)
+		..()
+
 	if(istype(W, /obj/item/weapon/tank/hydrogen))
 		if(src.tank)
 			user << "<span class='alert'>There's already a phoron tank loaded.</span>"
@@ -70,7 +73,7 @@
 /obj/machinery/power/fusion/ring_corner/update_icon()
 	//Some cheaty sneeky var updating here
 	..()
-	if(!wired || !anchored || isnull(crystal) || isnull(rod))
+	if(!wired || !anchored || isnull(crystal) || isnull(rod) || stat == BROKEN)
 		ready = 0
 	else
 		ready = 1
@@ -113,12 +116,19 @@
 	return 0
 
 /obj/machinery/power/fusion/ring_corner/proc/charge()
+	if(stat == BROKEN)
+		battery = 0
+		return
+
 	if(battery < 10000)
 		use_power(600)
 		battery = min(battery + 200, 10000)
 
 //Returns the field energy produced by the ring.
 /obj/machinery/power/fusion/ring_corner/proc/field_energy()
+	if(stat == BROKEN)
+		return 0
+
 	if(battery > 150)
 		battery -= 150
 		return 150
@@ -171,7 +181,7 @@
 
 /obj/machinery/power/fusion/ring/update_icon()
 	..()
-	if(!wired || !anchored)
+	if(!wired || !anchored || stat == BROKEN)
 		ready = 0
 	else
 		ready = 1

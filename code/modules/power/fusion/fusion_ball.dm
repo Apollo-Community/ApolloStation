@@ -143,11 +143,15 @@ var/global/list/fusion_balls = list()
 	m.dust()
 
 /obj/fusion_ball/proc/move()
-	var/movement_dir = pick(alldirs)
+	var/movement_dir = pick(list(NORTH, EAST, SOUTH, WEST))
 
 	if(target && prob(60))
 		movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
-
 	spawn(0)
-		step(src, movement_dir)
+		if(!step(src, movement_dir))
+			//step does not go trough walls -_-.
+			var/turf/t = get_step(src, movement_dir)
+			if(istype(t, /turf/unsimulated/wall) || istype(t, /turf/simulated/wall))
+				src.x = t.x
+				src.y = t.y
 	return 1

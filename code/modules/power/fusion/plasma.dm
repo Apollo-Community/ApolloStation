@@ -8,6 +8,7 @@
 	var/obj/machinery/atmospherics/unary/heat_exchanger/partner = null
 	var/network = null
 	ready = 1
+	anchored = 1
 
 //When fusion happens energize the core copied over from rad collectors.
 /obj/machinery/power/fusion/plasma/proc/transfer_energy(var/neurons = 0)
