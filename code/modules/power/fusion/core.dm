@@ -13,10 +13,23 @@
 	wired = 0
 	panel_open = 1
 	anchored = 0
+	var/total_power = 0
+	var/nr_events = 0
 
 /obj/machinery/power/fusion/core/New()
 	update_icon()
+	//I dont know why this is nessecery but it does not seem to happen on its own.
+	machines += src
+	MachineProcessing += src
 	..()
+
+/obj/machinery/power/fusion/core/process()
+	add_avail(total_power/(nr_events * 0.8))	//To stabilize the power but keep it fluctiating
+	last_power = total_power/nr_events
+	total_power = 0
+	nr_events = 0
+	update_icon()
+	decay()
 
 /obj/machinery/power/fusion/core/status()
 	return "Buildupheat: [heat] <br> Integrity: [(1000-damage)/10] % <br> Energy Level: [last_power/1000] kW."
@@ -63,14 +76,10 @@
 		src.tag = input(user,"Input Device tag","Input Tag",null) as text|null
 	..()
 
-/obj/machinery/power/fusion/core/process()
-	update_icon()
-	decay()
-
 /obj/machinery/power/fusion/core/proc/receive_neutrons(var/neutrons)
 	if(stat == BROKEN)
 		return
 	var/power = 400*neutrons	//Generate about 450kw at base level.
-	add_avail(power)
-	last_power = power
+	total_power += power
+	nr_events ++
 	return

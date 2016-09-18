@@ -30,7 +30,7 @@
 	var/max_field_coef = 1
 	var/event_color = ""		//Color of fusion events
 	var/neutrondam_coef = 5		//Devide neutrons by this for damage to shields this will keep it stable at 50 rod insetion at normal activity.
-	var/power_coef = 15
+	var/power_coef = 16.5
 
 /datum/fusion_controller/New()
 	fusion_controllers += src

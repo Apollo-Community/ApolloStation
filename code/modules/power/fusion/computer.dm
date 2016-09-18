@@ -42,7 +42,7 @@
 	data["exchangers"] = exchangers
 	if(fusion_controller.fusion_components.len == 13)
 		var/tmp/obj/machinery/power/fusion/core/c = fusion_controller.fusion_components[13]
-		data["IDDpower"] = c.last_power/1000
+		data["IDDpower"] = round(c.last_power/1000)
 	else
 		data["IDDpower"] = 0
 	var/list/ring_list = list()
