@@ -29,7 +29,7 @@
 	var/safe_warn
 	var/max_field_coef = 1
 	var/event_color = ""		//Color of fusion events
-	var/neutrondam_coef = 6		//Devide neutrons by this for damage to shields this will keep it stable at 50 rod insetion at normal activity.
+	var/neutrondam_coef = 5		//Devide neutrons by this for damage to shields this will keep it stable at 50 rod insetion at normal activity.
 	var/power_coef = 15
 
 /datum/fusion_controller/New()
@@ -81,7 +81,7 @@
 
 	var/emmag_nr = 0
 	for(var/obj/machinery/power/fusion/comp in fusion_components)
-		if(!comp.ready)
+		if(!comp.ready || comp.stat == BROKEN)
 			if(gas_contents.temperature > 90000)
 				critFail(comp)
 			else
@@ -361,7 +361,7 @@
 /datum/fusion_controller/proc/critFail(var/obj/o)
 	if(isnull(o))
 		return
-	if(gas_contents.temperature > 600000)
+	if(gas_contents.temperature > 250000)
 		//You are really deep in the shit now boi!
 		new/obj/fusion_ball(o.loc)
 	gas = 0

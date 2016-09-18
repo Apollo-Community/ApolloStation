@@ -11,6 +11,16 @@
 	var/datum/fusion_controller/fusion_controller
 	anchored = 0
 
+/obj/machinery/power/fusion/ex_act()
+	stat = BROKEN
+	update_icon()
+/*
+/obj/machinery/power/fusion/emp_act(severity)
+	stat = EMPED
+	..(severity)
+	update_icon()
+*/
+
 /obj/machinery/power/fusion/New()
 	update_icon()
 	..()
@@ -109,6 +119,10 @@
 	src.set_dir(turn(src.dir, -90))
 
 /obj/machinery/power/fusion/update_icon()
+	if(stat == BROKEN)
+		icon_state = "[initial(icon_state)]_broken"
+		ready = 0
+		return
 	if(!panel_open && !on)
 		icon_state = initial(icon_state)
 		return

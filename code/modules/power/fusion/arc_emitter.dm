@@ -77,7 +77,7 @@
 			var/obj/effect/blob/B = pick(targets)
 			spawn(rand(0, 10))
 				arc(B)
-				B.take_damage(arc_power/6)		//diveded by 6 to get a max of 10 damage which will kill a standart blob in 3 shots.
+				B.take_damage(arc_power)
 		return
 
 	//Shock any fusion cores
