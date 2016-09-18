@@ -2,7 +2,7 @@
 	dir = 0
 	icon = 'icons/obj/fusion.dmi'
 	icon_state = "plas_cool"
-	density = 0
+	density = 1
 	var/transfering = 0
 	var/datum/gas_mixture/air_contents = null
 	var/obj/machinery/atmospherics/unary/heat_exchanger/partner = null
@@ -53,13 +53,11 @@
 /obj/machinery/power/fusion/plasma/Bump(atom/A)
 	if(istype(A, /mob/living))
 		var/tmp/mob/living/M = A
-		M.dust()
-		return
-
-/obj/machinery/power/fusion/plasma/Bumped(atom/A)
-	if(istype(A, /mob/living))
-		var/tmp/mob/living/M = A
-		M.dust()
+		if(fusion_controller.gas_contents.temperature < 100000)
+			M.dust()
+			return
+		else if(fusion_controller.gas_contents.temperature < 1000)
+			M.apply_damage(rand(50, 100), damagetype = BURN)
 
 /obj/machinery/power/fusion/plasma/update_icon()
 	return
