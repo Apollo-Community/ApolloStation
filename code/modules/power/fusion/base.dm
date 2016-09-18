@@ -13,6 +13,7 @@
 
 /obj/machinery/power/fusion/ex_act()
 	stat = BROKEN
+	desc += " It looks broken beyond repiar."
 	update_icon()
 /*
 /obj/machinery/power/fusion/emp_act(severity)
