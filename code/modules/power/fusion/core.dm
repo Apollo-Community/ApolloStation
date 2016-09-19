@@ -25,10 +25,11 @@
 	..()
 
 /obj/machinery/power/fusion/core/process()
-	add_avail(total_power/(nr_events * 0.8))	//To stabilize the power but keep it fluctiating
-	last_power = total_power/nr_events
-	total_power = 0
-	nr_events = 0
+	if(nr_events && total_power)
+		add_avail(total_power/(nr_events * 0.8))	//To stabilize the power but keep it fluctiating
+		last_power = total_power/nr_events
+		total_power = 0
+		nr_events = 0
 	update_icon()
 	decay()
 
