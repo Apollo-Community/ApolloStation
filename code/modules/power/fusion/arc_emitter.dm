@@ -56,7 +56,7 @@
 /obj/machinery/power/arc_emitter/proc/fire_bolt()
 	//Shock unprotected mobs
 	var/list/targets = list()
-	for(var/mob/M in oview(src, 5))
+	for(var/mob/living/M in oview(src, 5))
 		if(!insulated(M))
 			targets += M
 	if(targets.len > 0)

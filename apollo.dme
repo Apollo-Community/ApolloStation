@@ -108,7 +108,6 @@
 #include "code\controllers\Processes\air.dm"
 #include "code\controllers\Processes\cell_auto.dm"
 #include "code\controllers\Processes\contract_ticker.dm"
-#include "code\controllers\Processes\discord_ahelper.dm"
 #include "code\controllers\Processes\disease.dm"
 #include "code\controllers\Processes\emergencyShuttle.dm"
 #include "code\controllers\Processes\event.dm"
