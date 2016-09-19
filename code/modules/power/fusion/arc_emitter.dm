@@ -54,14 +54,14 @@
 
 //Fire bolt at a target
 /obj/machinery/power/arc_emitter/proc/fire_bolt()
-	//Shock unprotected humans
+	//Shock unprotected mobs
 	var/list/targets = list()
-	for(var/mob/living/carbon/human/M in oview(src, 5))
+	for(var/mob/M in oview(src, 5))
 		if(!insulated(M))
 			targets += M
 	if(targets.len > 0)
 		for(var/i=0, i <= 10, i+=5)
-			var/mob/living/carbon/human/M = pick(targets)
+			var/mob/living/M = pick(targets)
 			spawn(rand(0, 10))
 				arc(M)
 				M.apply_damage(rand(arc_power-30, arc_power-20), damagetype = BURN)

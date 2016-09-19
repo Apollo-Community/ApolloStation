@@ -21,6 +21,7 @@
 	//I dont know why this is nessecery but it does not seem to happen on its own.
 	machines += src
 	MachineProcessing += src
+	connect_to_network()
 	..()
 
 /obj/machinery/power/fusion/core/process()
@@ -57,6 +58,7 @@
 		icon_state = "core_broken"
 		ready = 0
 		heat = 0
+		disconnect_from_network()
 
 	if(last_power > 1 || heat > 1)
 		icon_state = "core_on"
