@@ -80,3 +80,105 @@
 // sends ahelps from the server to discord
 /proc/send_discord(var/source, var/target = "1", var/message)
 	shell("python3.6 scripts/discord_bot.py [source] [target] '[sanitize(message)]'")
+
+//Get stored ahelp from a file
+/proc/check_discord_ahelp()
+	//Lets start the extracting and parsing
+	var/page = file2text("scripts/ahelps.txt")
+	var/list/data = list()
+	//No backloged messages
+	if(isnull(page) || page == "")
+		return
+	var/list/lineList = text2list(page)
+	for(var/i = 1, i <= lineList.len, i++)
+		//End of the document.
+		if(findtext(lineList[i], "start_ahelp") > 0)
+			data["mod"] = lineList[i+1]
+			data["ckey"] = lineList[i+2]
+			i+=3
+			var/message = ""
+			while(!(findtext(lineList[i], "stop_ahelp") > 0))
+				message += lineList[i]
+				i++
+			i++
+			data["message"] = message
+		discord_game_handler.discord_admin_pm(data["mod"], data["ckey"], data["message"])
+	//Remove the file so you dont start over in again on the next process cycle.
+	fdel("scripts/ahelps.txt")
+
+var/global/datum/discord_game_pm_handler/discord_game_handler = new()
+
+datum/discord_game_pm_handler/proc/discord_admin_pm(var/sender, var/target, var/msg = null, var/discord = 0)
+	world << "discord_admin_pm called with [sender], [target], [msg]"
+	if(isnull(target) || isnull(sender))
+		return
+	world << "null checks passed"
+	var/client/C
+	//Find for who the message is.
+	for(var/client/c in clients)
+		world << "ckey [c.ckey], target [target]"
+		if(c.key == target)
+			C = c
+			world << "ckey found"
+			break
+
+	if(isnull(C) || !istype(C,/client))
+		world << "ckey was null or wrong type"
+		return
+
+	if(!msg)
+		world << "no message found"
+		return
+
+	//Sanatize the message so no exploits can be had !
+	msg = sanitize(msg)
+	world << "message after senatizing"
+	if(!msg)
+		return
+
+	var/recieve_pm_type = "Discord mod/admin"
+	/*spawn(0)	//so we don't hold the caller proc up
+		var/sender = src
+		var/sendername = key
+		var/reply = sanitize(input(C, msg,"[recieve_pm_type] PM from [sendername]", "") as text|null)		//show message and await a reply
+		if(C && reply)
+			if(sender)
+				C.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them
+			else
+				adminhelp(reply)													//sender has left, adminhelp instead
+		return
+	*/
+	C << "<font color=red> <b>\[[recieve_pm_type] PM\] [sender]:</b> [msg] <a href='?src=\ref[discord_game_handler];receiver=discord'>reply</a> </font>"
+	C << 'sound/effects/adminhelp.ogg'
+	log_admin("PM: [sender]->[key_name(C)]: [msg]")
+	STUI.staff.Add("\[[time_stamp()]] <font color=red>PM: </font><font color='#0066ff'>[sender] -> [key_name(C)] : [msg]</font><br>")
+	STUI.processing |= 3
+
+	log_debug("c = [C]([C.ckey]) , src = sender , msg = [msg]")
+
+	send_discord(sender, discord ? discord : C.ckey, msg)
+
+	//we don't use message_admins here because the sender/receiver might get it too
+	for(var/client/X in admins)
+		//check client/X is an admin and isn't the sender or recipient
+		if(X == C || X == discord)
+			continue
+		if(X.key != C.key && (X.holder.rights & (R_ADMIN|R_MOD|R_MENTOR)))
+			X << "<span class='pm'><span class='other'>" + create_text_tag("pm_other", "PM:", X) + " <span class='name'>[sender]</span> to <span class='name'>[key_name(C, X, 0)]</span>: <span class='message'>[msg]</span></span></span>"
+
+datum/discord_game_pm_handler/Topic(href,href_list[])
+	//Whoever clicks the link is the replier/sender of the pm back
+	var/client/sender = usr.client
+	if(isnull(sender) || !istype(sender))
+		return
+	var/reply = sanitize(input(usr, "", "Reply", "") as text|null)
+	world << "[reply]"
+	if(isnull(reply) || reply == "")
+		return
+	send_discord(sender.key, href_list["receiver"], reply)
+	for(var/client/X in admins)
+		//check client/X is an admin and isn't the sender or recipient
+		if(X == sender)
+			continue
+		if(X.key != sender.key && (X.holder.rights & (R_ADMIN|R_MOD|R_MENTOR)))
+			X << "<span class='pm'><span class='other'>" + create_text_tag("pm_other", "PM:", X) + " <span class='name'>[sender.key]</span> to <span class='name'>["discord"]</span>: <span class='message'>[reply]</span></span></span>"
