@@ -25,6 +25,8 @@
 	..()
 
 /obj/machinery/power/fusion/core/process()
+	if(isnull(powernet))
+		connect_to_network()
 	if(nr_events && total_power)
 		add_avail(total_power/(nr_events * 0.8))	//To stabilize the power but keep it fluctiating
 		last_power = total_power/nr_events
