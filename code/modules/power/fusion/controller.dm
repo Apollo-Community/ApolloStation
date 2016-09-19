@@ -217,8 +217,14 @@
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
 		pump_gas(r, r.get_tank_content(), gas_contents, r.get_tank_moles())
 	gas_contents.update_values()
+	if(isnull(table))
+		return
 	coefs = table.gas_coef(gas_contents)
+	if(isnull(event_color) || isnull(gas_contents))
+		return
 	var/tmp/gas_color = table.gas_color(gas_contents, event_color)
+	if(isnull(gas_color))
+		return
 	//Gas has effect on the color of fusion events.
 	event_color = BlendRGB(event_color, gas_color, 0.5)
 
