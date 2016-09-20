@@ -189,6 +189,7 @@
 	equipment = list(
 		new/datum/uplink_item(/obj/item/weapon/legcuffs/beartrap/viper, 3000, "Viper's Coil", "TVC"),
 		new/datum/uplink_item(/obj/item/weapon/twohanded/spear/exolitic, 4000, "Spear of the Pure", "ECS")
+		new/datum/uplink_item(/obj/item/weapon/sord, 10000, "The God's Toy")
 	)
 
 // AIs are always assigned to this one
