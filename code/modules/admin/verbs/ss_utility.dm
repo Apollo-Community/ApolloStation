@@ -79,6 +79,7 @@
 
 // sends ahelps from the server to discord
 /proc/send_discord(var/source, var/target = "1", var/message)
+	//shell("python scripts/discord_bot.py [source] [target] '["[message]"]'") //For windows testing
 	shell("python3.6 scripts/discord_bot.py [source] [target] '[sanitize(message)]'")
 
 //Get stored ahelp from a file
@@ -109,45 +110,27 @@
 var/global/datum/discord_game_pm_handler/discord_game_handler = new()
 
 datum/discord_game_pm_handler/proc/discord_admin_pm(var/sender, var/target, var/msg = null, var/discord = 0)
-	world << "discord_admin_pm called with [sender], [target], [msg]"
 	if(isnull(target) || isnull(sender))
 		return
-	world << "null checks passed"
 	var/client/C
 	//Find for who the message is.
 	for(var/client/c in clients)
-		world << "ckey [c.ckey], target [target]"
-		if(c.key == target)
+		if(c.ckey == target)
 			C = c
-			world << "ckey found"
 			break
 
 	if(isnull(C) || !istype(C,/client))
-		world << "ckey was null or wrong type"
 		return
 
 	if(!msg)
-		world << "no message found"
 		return
 
 	//Sanatize the message so no exploits can be had !
 	msg = sanitize(msg)
-	world << "message after senatizing"
 	if(!msg)
 		return
 
 	var/recieve_pm_type = "Discord mod/admin"
-	/*spawn(0)	//so we don't hold the caller proc up
-		var/sender = src
-		var/sendername = key
-		var/reply = sanitize(input(C, msg,"[recieve_pm_type] PM from [sendername]", "") as text|null)		//show message and await a reply
-		if(C && reply)
-			if(sender)
-				C.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them
-			else
-				adminhelp(reply)													//sender has left, adminhelp instead
-		return
-	*/
 	C << "<font color=red> <b>\[[recieve_pm_type] PM\] [sender]:</b> [msg] <a href='?src=\ref[discord_game_handler];receiver=discord'>reply</a> </font>"
 	C << 'sound/effects/adminhelp.ogg'
 	log_admin("PM: [sender]->[key_name(C)]: [msg]")
@@ -172,7 +155,6 @@ datum/discord_game_pm_handler/Topic(href,href_list[])
 	if(isnull(sender) || !istype(sender))
 		return
 	var/reply = sanitize(input(usr, "", "Reply", "") as text|null)
-	world << "[reply]"
 	if(isnull(reply) || reply == "")
 		return
 	send_discord(sender.key, href_list["receiver"], reply)

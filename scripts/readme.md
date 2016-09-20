@@ -41,17 +41,6 @@ export DISCORDTOKEN [token]
 
 Similar to slack.py, this script sends ahelps to discord. The script itself requires some configuration (server and text channel IDs), and as with the slack script, you need to add the bot user's token to your environment variables.
 
-#### Discord_ahelp.py
-
-Dependencies: [discord.py](https://github.com/Rapptz/discord.py), Discord API token, python 3.4+
-
-```
-pip install discord.py --upgrade
-```
-
-Similar this script intercepts messages starting with ! in a desginated channel. The first messages is stored in a head the rest in a buffer to be pushed forward when the head is empty.
-The script itself requires some configuration (server and text channel IDs and the bot's token).
-
 #### Adminbus.py
 
 Dependencies: [SlackClient](https://github.com/slackhq/python-slackclient), Slack API token
