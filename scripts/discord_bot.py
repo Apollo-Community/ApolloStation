@@ -5,13 +5,11 @@ import re
 from sys import argv
 from os import environ
 ### config
-bot_token = 'MjI3MTk3ODA5NjgwNDQ5NTM2.CsCqFA.Qx4C-CeY6kCRVRYIQFa4rqfB1_0' #bots token goes here
 server_id = '204308700477915136' #server id goes here
 channel_id = '207995528779137024' #ahelp channel id goes here
 ###
 
 client = discord.Client()
-print(argv[0])
 
 #Runs every seccond in the background to push the buffer forward.
 async def my_background_task():

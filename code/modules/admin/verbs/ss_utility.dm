@@ -131,7 +131,7 @@ datum/discord_game_pm_handler/proc/discord_admin_pm(var/sender, var/target, var/
 		return
 
 	var/recieve_pm_type = "Discord mod/admin"
-	C << "<font color=red> <b>\[[recieve_pm_type] PM\] [sender]:</b> [msg] <a href='?src=\ref[discord_game_handler];receiver=discord'>reply</a> </font>"
+	C << "<font color=red> <b>\[[recieve_pm_type] PM\] <a href='?src=\ref[discord_game_handler];receiver=discord'>[sender]</a>:</b> [msg]</font>"
 	C << 'sound/effects/adminhelp.ogg'
 	log_admin("PM: [sender]->[key_name(C)]: [msg]")
 	STUI.staff.Add("\[[time_stamp()]] <font color=red>PM: </font><font color='#0066ff'>[sender] -> [key_name(C)] : [msg]</font><br>")
