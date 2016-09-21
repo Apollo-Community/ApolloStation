@@ -75,9 +75,11 @@ var/global/datum/global_init/init = new ()
 		processScheduler.deferSetupFor(/datum/controller/process/ticker)
 		processScheduler.setup()
 		master_controller.setup()
-
+		spawn(0)
+			shell("python scripts/discord_bot.py")
 		universe.load_date()
 		getFormsFromWiki() //Load some data form the wiki page
+
 
 		sleep_offline = 1 // go to sleep after the controllers are all set up
 

@@ -89,7 +89,6 @@
 	log_admin("PM: [admin]->[key_name(C)]: [message]")
 	STUI.staff.Add("\[[time_stamp()]] <font color=red>PM: </font><font color='#0066ff'>[admin] -> [key_name(C)] : [message]</font><br>")
 	STUI.processing |= 3
-
 	//now send it back to slack
 	send_discord(admin, C.ckey, message)
 
