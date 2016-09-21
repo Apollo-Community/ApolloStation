@@ -79,8 +79,8 @@
 
 // sends ahelps from the server to discord
 /proc/send_discord(var/source, var/target = "1", var/message)
-	shell("python scripts/discord_bot.py [source] [target] '["[message]"]'") //For windows testing
-	//shell("python3.6 scripts/discord_bot.py [source] [target] '[sanitize(message)]'")
+	//shell("python scripts/discord_bot.py [source] [target] '["[message]"]'") //For windows testing
+	shell("python3.6 scripts/discord_bot.py [source] [target] '[sanitize(message)]'")
 
 /proc/discord_admin(var/client/C, var/admin, var/message, var/dir)
 	C << "<span class='pm'><span class='in'>" + create_text_tag("pm_[dir ? "out" : "in"]", "", C) + " <b>\[DISCORD ADMIN PM\]</b> <span class='name'><b><a href='?priv_msg=\ref[C];discord=[admin]'>[admin]</a></b></span>: <span class='message'>[message]</span></span></span>"
