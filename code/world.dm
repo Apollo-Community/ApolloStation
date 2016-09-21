@@ -76,7 +76,7 @@ var/global/datum/global_init/init = new ()
 		processScheduler.setup()
 		master_controller.setup()
 		spawn(0)
-			shell("python scripts/discord_bot.py")
+			shell("python3.6 scripts/discord_bot.py")
 		universe.load_date()
 		getFormsFromWiki() //Load some data form the wiki page
 
