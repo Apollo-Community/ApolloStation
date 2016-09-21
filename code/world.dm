@@ -100,7 +100,6 @@ var/world_topic_spam_protect_time = world.timeofday
 
 /world/Topic(T, addr, master, key)
 	log_debug("TOPIC: \"[T]\", from:[addr], master:[master], key:[key][log_end]")
-
 	if (T == "ping")
 		var/x = 1
 		for (var/client/C)
@@ -160,6 +159,23 @@ var/world_topic_spam_protect_time = world.timeofday
 			s["admins"] = admins
 
 		return list2params(s)
+
+
+	if(copytext(T,1,9) == "adminmsg")
+		var/input[] = params2list(copytext(T,9))
+		//Check if messages is coming from local host for security reasons.
+		if (addr != "127.0.0.1")
+			return
+		var/message = input["text"]
+		var/target = lowertext(input["target"])
+		var/admin = input["admin"]
+
+		//get the target and send PM
+		for(var/client/C in clients)
+			if(C.ckey == target)
+				//Code to send PMS....
+				discord_admin(C, admin, message, 0)
+				break
 
 	/*
 	if(copytext(T,1,9) == "adminmsg")					//This recieves messages from slack (/pm command) and processes it before updating slack chat
