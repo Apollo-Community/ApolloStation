@@ -76,11 +76,11 @@ var/global/datum/global_init/init = new ()
 		processScheduler.setup()
 		master_controller.setup()
 		spawn(0)
+			log_debug("Starting discord bot background process.")
 			shell("python3.6 scripts/discord_bot.py")
+			log_debug("Returning from discord bot background proces")
 		universe.load_date()
 		getFormsFromWiki() //Load some data form the wiki page
-
-
 		sleep_offline = 1 // go to sleep after the controllers are all set up
 
 	#ifdef PRECISE_TIMER_AVAILABLE
