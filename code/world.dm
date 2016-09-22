@@ -181,7 +181,7 @@ var/world_topic_spam_protect_time = world.timeofday
 				discord_admin(C, admin, message, 0)
 				break
 
-	if(copytext(T,1,6) == "gencom")	//Message received from general channel in discord (non admin message)
+	if(copytext(T,1,7) == "gencom")	//Message received from general channel in discord (non admin message)
 		var/input[] = params2list(copytext(T,6))
 		if (addr != "127.0.0.1")
 			message_admins("TOPIC: WARNING: [addr] tried to fake an admin command to the server! Please contact a developer")
@@ -189,22 +189,26 @@ var/world_topic_spam_protect_time = world.timeofday
 			return
 		var/command = input["command"]
 		var/message = ""
+		world << command
 		switch(command)
-			if("staffwho")
+			if(" staffwho")
 				for(var/client/c in admins)
 					message += "[c.ckey] "
-				return = admins_string
-			if("players")
+			if(" players")
+				message += "There are [clients.len] players:/n"
 				for(var/client/c in clients)
-					message += "[c.ckey] "
-			if("uptime")
+					message += "[c.ckey] /n"
+			if(" uptime")
 				message = worldtime2text()
 			else
 				return
+			world << message
+		if(isnull(message) || message == "")
+			return
 		command_discord("general", "Server", message)
 
 
-	if(copytext(T,1,6) == "modcom")	//Message received from staff channel in discord mod/admin message.
+	if(copytext(T,1,7) == "modcom")	//Message received from staff channel in discord mod/admin message.
 		var/input[] = params2list(copytext(T,6))
 		if (addr != "127.0.0.1")
 			message_admins("TOPIC: WARNING: [addr] tried to fake an admin command to the server! Please contact a developer")
@@ -212,7 +216,7 @@ var/world_topic_spam_protect_time = world.timeofday
 			return
 		var/command = input["command"]
 		switch(command)
-			if("update")
+			if(" update")
 				update_server_command(input["author"])
 				command_discord("staff", "server", "[input["author"]] called server update via discord.")
 			else

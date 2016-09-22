@@ -18,7 +18,7 @@ async def on_ready():
         if(len(argv) < 3):
                 return
         if(argv[1] == "command"):
-                adv_commands()
+                await adv_commands()
                 return
         message = ''
         if argv[2] == '1':
@@ -32,14 +32,12 @@ async def on_ready():
 
 async def adv_commands():
         server = client.get_server(server_id)
-        channel
+        channel = server.get_channel(channel_id)
         for c in server.channels:
                 if str(c) == argv[2]:
                     channel = c
                     break
-
-        message = argv[3] + '_' + '```' + argv[4] + '```' #argv[3] contains author, argv[4] message
-        channel = server.get_channel(channel)
+        message = argv[3] + '```' + argv[4] + '```' #argv[3] contains author, argv[4] message
         await client.send_message(channel, message)
         await client.close()
         
@@ -53,9 +51,18 @@ async def on_message(message):
         if not message.content.startswith('!'):
                 return
         author = str(message.author)
+        channel = message.channel
         message = message.content
-        if message.channel == server.get_channel(channel_id):   #its in the ahelp channel.
-                message = message.content
+        if(message == "!help"):
+                message = '```!help for a list of commands.\n\n'
+                message += 'Commands in general:\n\n'
+                message += '!staffwho for a list of staff members ingame.\n\n'
+                message += '!players for a list of players ingame.\n\n'
+                message += '!uptime for the current round duration.```'
+                await client.send_message(channel, message)
+                return
+        
+        elif channel == server.get_channel(channel_id):   #its in the ahelp channel.
                 pm_list = re.split('\s+', message)
                 ckey = pm_list[0]
                 message = message.replace(ckey,"")
@@ -66,14 +73,19 @@ async def on_message(message):
                 ckey = re.sub('[^A-Za-z0-9]+', '', ckey)
                 message = re.sub('[^A-Za-z0-9]+', ' ', message)
                 await byond_export('adminmsg'+'&target='+ckey+'&admin='+author+'&text='+message)
+                return
                 
-        elif message.channel == server.get_channel(channel_common):     #Its in the general channel
+        elif channel == server.get_channel(channel_common):     #Its in the general channel
+                message.replace("!","")
                 message = re.sub('[^A-Za-z0-9]+', ' ', message)
                 await byond_export('gencom'+'&command='+message+'&author='+author)
+                return
                 
-        elif message.channel == server.get_channel(channel_staff):     #Its in the staff channel
+        elif channel == server.get_channel(channel_staff):     #Its in the staff channel
+                message.replace("!","")
                 message = re.sub('[^A-Za-z0-9]+', ' ', message)
                 await byond_export('modcom'+'&command='+message+'&author='+author)
+                return
 
         
 #Mimic byond world export to call world/topic() with given string
@@ -86,7 +98,7 @@ async def byond_export(string):
                 ahelp_channel = server.get_channel(channel_id)
                 await client.send_message(ahelp_channel, "WARNING: Failed to connect to IP:"+ip+":"+str(port))
                 return
-        packet = struct.pack('>xcH5x', packet_id, len(string)+6) + bytes(string, encoding='ascii') + b'\x00'
+        packet = struct.pack('>xcH5x', packet_id, len(string)+6) + bytes(string, encoding='utf-8') + b'\x00'
         sock.send(packet)
         data = sock.recv(512)
         sock.close()

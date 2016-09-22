@@ -17,6 +17,9 @@
 	update_server_command(src.ckey)
 
 /proc/update_server_command(remote)
+	var/command = file2text("config/update_script_command.txt")		//Security measure to stop people changing command via config debug
+	if(!command)
+		return
 	message_admins("[remote] is remotely updating the server. Shout at them if something goes horribly wrong.")
 	usr << "<b>Update log can be accessed with '.getupdatelog'</b>"
 	log_debug("IG UPDATE: Origin = [remote]")
@@ -86,8 +89,8 @@
 	//shell("python scripts/discord_bot.py [source] [target] '["[message]"]'") //For windows testing
 	shell("python3.6 scripts/discord_bot.py [source] [target] '[sanitize(message)]'")
 
-/proc/command_discord(var/channel, var/author, var/message)
-	shell("python3.6 scripts/discord_bot.py command [channel] [author] '[sanitize(message)]'")	//Sent a message to a discord channel
+/proc/command_discord(var/channel, var/author, var/message, var/prefix = "command")
+	shell("python3.6 scripts/discord_bot.py [prefix] [channel] [author] '[sanitize(message)]'")	//Sent a message to a discord channel
 
 /proc/discord_admin(var/client/C, var/admin, var/message, var/dir)
 	if (copytext(message, 1, 6) == "angry")
