@@ -69,9 +69,10 @@ async def on_message(message):
                 ckey = ckey.replace("!","")
                 message = message.replace('\n',"")
                 message = message[1:]
-                mod = re.sub('[^A-Za-z0-9]+', '', mod)
+                mod = re.sub('[^A-Za-z0-9]+', '', author)
                 ckey = re.sub('[^A-Za-z0-9]+', '', ckey)
                 message = re.sub('[^A-Za-z0-9]+', ' ', message)
+                print(ckey, mod, message)
                 await byond_export('adminmsg'+'&target='+ckey+'&admin='+author+'&text='+message)
                 return
                 
