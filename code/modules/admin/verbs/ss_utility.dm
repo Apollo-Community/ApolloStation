@@ -84,6 +84,7 @@
 
 /proc/discord_admin(var/client/C, var/admin, var/message, var/dir)
 	if (copytext(message, 1, 6) == "angry")
+		message = copytext(message, 6) // prune the angry part.
 		C << 'sound/effects/adminhelpLOUD.ogg' //AGRY BOINK!
 	else
 		C << 'sound/effects/adminhelp.ogg' //BOINK!
