@@ -21,7 +21,7 @@
 	if(!command)
 		return
 	message_admins("[remote] is remotely updating the server. Shout at them if something goes horribly wrong.")
-	usr << "<b>Update log can be accessed with '.getupdatelog'</b>"
+	message_admins("<b>Update log can be accessed with '.getupdatelog'</b>")
 	log_debug("IG UPDATE: Origin = [remote]")
 	spawn(0)
 		shell(command)		//Error handling and such is handled server side. The data_log is sufficient to see what the issue was.
