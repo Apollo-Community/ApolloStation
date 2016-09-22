@@ -162,7 +162,6 @@ var/world_topic_spam_protect_time = world.timeofday
 
 		return list2params(s)
 
-
 	if(copytext(T,1,9) == "adminmsg")
 		var/input[] = params2list(copytext(T,9))
 		//Check if messages is coming from local host for security reasons.
@@ -189,20 +188,18 @@ var/world_topic_spam_protect_time = world.timeofday
 			return
 		var/command = input["command"]
 		var/message = ""
-		world << command
 		switch(command)
 			if(" staffwho")
 				for(var/client/c in admins)
 					message += "[c.ckey] "
 			if(" players")
-				message += "There are [clients.len] players:/n"
+				message += "There are [clients.len] players: "
 				for(var/client/c in clients)
-					message += "[c.ckey] /n"
+					message += "[c.ckey] - "
 			if(" uptime")
 				message = worldtime2text()
 			else
 				return
-			world << message
 		if(isnull(message) || message == "")
 			return
 		command_discord("general", "Server", message)
