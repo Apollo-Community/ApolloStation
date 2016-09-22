@@ -7,9 +7,6 @@ channel_id = '207995528779137024' #ahelp channel id goes here
 #server IP and Port
 ip = '127.0.0.1'
 port = 3333
-#Pid file for is running checks
-pid = str(os.getpid())
-pidfile = "discord_bot.pid"
 ###
 client = discord.Client()
 # send the ahelp as soon as the client is ready to be used
