@@ -2,8 +2,7 @@
 ** Server Side utilities
 ** - Any admin commands using shell()
 */
-
-/client/proc/update_server()
+/client/proc/update_server(var/remote = 0)
 	set category = "Server"
 	set name = "Update Server"
 
@@ -15,11 +14,16 @@
 	if(!command)
 		usr << "<span class='danger'>The update command could not be found on the server.</span>"
 		return
+	update_server_command(src.ckey)
 
-	message_admins("[src.ckey] is remotely updating the server. Shout at them if something goes horribly wrong.")
+/proc/update_server_command(remote)
+	message_admins("[remote] is remotely updating the server. Shout at them if something goes horribly wrong.")
 	usr << "<b>Update log can be accessed with '.getupdatelog'</b>"
-	log_debug("IG UPDATE: Origin = [src.ckey]")
-	shell(command)		//Error handling and such is handled server side. The data_log is sufficient to see what the issue was.
+	log_debug("IG UPDATE: Origin = [remote]")
+	spawn(0)
+		shell(command)		//Error handling and such is handled server side. The data_log is sufficient to see what the issue was.
+
+
 
 /* We don't use these anymore so should disable them for safety.
 
@@ -81,6 +85,9 @@
 /proc/send_discord(var/source, var/target = "1", var/message)
 	//shell("python scripts/discord_bot.py [source] [target] '["[message]"]'") //For windows testing
 	shell("python3.6 scripts/discord_bot.py [source] [target] '[sanitize(message)]'")
+
+/proc/command_discord(var/channel, var/author, var/message)
+	shell("python3.6 scripts/discord_bot.py command [channel] [author] '[sanitize(message)]'")	//Sent a message to a discord channel
 
 /proc/discord_admin(var/client/C, var/admin, var/message, var/dir)
 	if (copytext(message, 1, 6) == "angry")

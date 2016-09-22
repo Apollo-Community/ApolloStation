@@ -167,6 +167,8 @@ var/world_topic_spam_protect_time = world.timeofday
 		var/input[] = params2list(copytext(T,9))
 		//Check if messages is coming from local host for security reasons.
 		if (addr != "127.0.0.1")
+			message_admins("TOPIC: WARNING: [addr] tried to fake an admin command to the server! Please contact a developer")
+			command_discord("staff", "Server", "WARNING:[addr] tried to fake an admin command to the server! Please contact a developer.")
 			return
 		var/message = input["text"]
 		var/target = lowertext(input["target"])
@@ -178,6 +180,43 @@ var/world_topic_spam_protect_time = world.timeofday
 				//Code to send PMS....
 				discord_admin(C, admin, message, 0)
 				break
+
+	if(copytext(T,1,6) == "gencom")	//Message received from general channel in discord (non admin message)
+		var/input[] = params2list(copytext(T,6))
+		if (addr != "127.0.0.1")
+			message_admins("TOPIC: WARNING: [addr] tried to fake an admin command to the server! Please contact a developer")
+			command_discord("staff", "Server", "WARNING:[addr] tried to fake an admin command to the server! Please contact a developer.")
+			return
+		var/command = input["command"]
+		var/message = ""
+		switch(command)
+			if("staffwho")
+				for(var/client/c in admins)
+					message += "[c.ckey] "
+				return = admins_string
+			if("players")
+				for(var/client/c in clients)
+					message += "[c.ckey] "
+			if("uptime")
+				message = worldtime2text()
+			else
+				return
+		command_discord("general", "Server", message)
+
+
+	if(copytext(T,1,6) == "modcom")	//Message received from staff channel in discord mod/admin message.
+		var/input[] = params2list(copytext(T,6))
+		if (addr != "127.0.0.1")
+			message_admins("TOPIC: WARNING: [addr] tried to fake an admin command to the server! Please contact a developer")
+			command_discord("staff", "server", "WARNING:[addr] tried to fake an admin command to the server! Please contact a developer.")
+			return
+		var/command = input["command"]
+		switch(command)
+			if("update")
+				update_server_command(input["author"])
+				command_discord("staff", "server", "[input["author"]] called server update via discord.")
+			else
+				return
 
 	/*
 	if(copytext(T,1,9) == "adminmsg")					//This recieves messages from slack (/pm command) and processes it before updating slack chat
