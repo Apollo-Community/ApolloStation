@@ -44,9 +44,9 @@ async def on_message(message):
         message = message[1:]
         mod = re.sub('[^A-Za-z0-9]+', '', mod)
         ckey = re.sub('[^A-Za-z0-9]+', '', ckey)
-        message = re.sub('[^A-Za-z0-9]+', '', message)
+        message = re.sub('[^A-Za-z0-9]+', ' ', message)
         await byond_export('adminmsg'+'&target='+ckey+'&admin='+mod+'&text='+message)
-
+        print(message)
 #Mimic byond world export to call world/topic() with given string
 async def byond_export(string):
         packet_id = b'\x83'

@@ -83,8 +83,11 @@
 	shell("python3.6 scripts/discord_bot.py [source] [target] '[sanitize(message)]'")
 
 /proc/discord_admin(var/client/C, var/admin, var/message, var/dir)
+	if (copytext(message, 1, 6) == "angry")
+		C << 'sound/effects/adminhelpLOUD.ogg' //AGRY BOINK!
+	else
+		C << 'sound/effects/adminhelp.ogg' //BOINK!
 	C << "<span class='pm'><span class='in'>" + create_text_tag("pm_[dir ? "out" : "in"]", "", C) + " <b>\[DISCORD ADMIN PM\]</b> <span class='name'><b><a href='?priv_msg=\ref[C];discord=[admin]'>[admin]</a></b></span>: <span class='message'>[message]</span></span></span>"
-
 	//STUI stuff
 	log_admin("PM: [admin]->[key_name(C)]: [message]")
 	STUI.staff.Add("\[[time_stamp()]] <font color=red>PM: </font><font color='#0066ff'>[admin] -> [key_name(C)] : [message]</font><br>")
