@@ -1,6 +1,7 @@
 /obj/item/clothing/head/helmet/space/rig/ert
 	light_overlay = "helmet_light_dual"
 	camera_networks = list("ERT","SS13")
+	siemens_coefficient = 0.9
 
 /obj/item/weapon/rig/ert
 	name = "ERT-C hardsuit control module"

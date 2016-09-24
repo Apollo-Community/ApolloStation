@@ -16,6 +16,14 @@ var/list/sqrtTable = list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 
 	var/a = arccos(x / sqrt(x*x + y*y))
 	return y >= 0 ? a : -a
 
+/proc/alt_atan2(x,y)
+	return (x||y)&&(y>=0 ? arccos(x/sqrt(x*x+y*y)) : 360-arccos(x/sqrt(x*x+y*y)))
+
+/proc/alt_Rand(min, max, precision = 3)
+	var/d = 10 ** precision
+
+	return rand(min * d, max * d) / d
+
 /proc/Ceiling(x)
 	return -round(-x)
 

@@ -215,6 +215,24 @@ world
 
 #define TO_HEX_DIGIT(n) ascii2text((n&15) + ((n&15)<10 ? 48 : 87))
 
+/atom/proc/add_overlay(image, priority = 0)
+	if(image in overlays)
+		return
+	var/list/new_overlays = overlays.Copy()
+	if(priority)
+		if(!priority_overlays)
+			priority_overlays = list()
+		priority_overlays += image
+		new_overlays += image
+	else
+		if(priority_overlays)
+			new_overlays -= priority_overlays
+			new_overlays += image
+			new_overlays += priority_overlays
+		else
+			new_overlays += image
+	overlays = new_overlays
+
 icon
 	proc/MakeLying()
 		var/icon/I = new(src,dir=SOUTH)
@@ -931,21 +949,3 @@ proc/sort_atoms_by_layer(var/list/atoms)
 /atom/proc/cut_overlays()
 	overlays.Cut()
 	overlays += priority_overlays
-
-/atom/proc/add_overlay(image, priority = 0)
-	if(image in overlays)
-		return
-	var/list/new_overlays = overlays.Copy()
-	if(priority)
-		if(!priority_overlays)
-			priority_overlays = list()
-		priority_overlays += image
-		new_overlays += image
-	else
-		if(priority_overlays)
-			new_overlays -= priority_overlays
-			new_overlays += image
-			new_overlays += priority_overlays
-		else
-			new_overlays += image
-	overlays = new_overlays

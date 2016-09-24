@@ -44,5 +44,3 @@
 
 			message_admins( "Admin [key_name_admin(usr)] has set the department of [key_name_admin(M)] to [department]", "CANON:" )
 			C.SetDepartment( department )
-
-	C.saveCharacter()

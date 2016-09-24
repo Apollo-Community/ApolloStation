@@ -481,9 +481,6 @@ datum/mind
 				if( "randomize_char" ) // Randomizes the antagonist character
 					antagonist.randomize_character()
 
-					character.copy_to( current )
-					current.fully_replace_character_name( current.name, character.name )
-
 				if( "save_char" ) // Saves the antagonist's character. Useful is somebody got attached to their randomized character
 					if( character.saveCharacter() )
 						message_admins("[usr] initiated a character save for [key]. Their antagonist character was saved successfully")

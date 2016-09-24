@@ -40,6 +40,8 @@
 
 	var/round_number = 0 // How many days has it been since Jan 1, 2560?
 
+	var/save_construction_station = 1 // save the construction station on round end?
+
 /datum/universal_state/proc/load_date()
 	var/max_attempts = 5
 
@@ -159,6 +161,30 @@
 		D[i] = text2num( date_text[i] )
 
 	return D
+
+/datum/universal_state/proc/loadConstructionStation()
+	var/turf/T = locate(82, 36, 4)
+	if(isnull(T))
+		log_game("Couldn't find where to place the construction area!!! (fuck!!! (SHIT!))")
+
+	var/reset = 0
+	if(!fexists("maps/templates/persistent/construction_station.dmm"))
+		reset = 1
+
+	var/path = "maps/templates/persistent/construction_station[reset ? "_original" : ""].dmm"
+
+	template_controller.PlaceTemplateAt(T, path, "Construction Station")
+
+	log_game("Construction station has been loaded")
+
+/datum/universal_state/proc/saveConstructionStation()
+	if(!save_construction_station)
+		testing("Didn't save construction station")
+		return
+
+	dmm_serializer.serialize_block(82, 35, 4, 98, 164, "construction_station", "templates/persistent")
+
+	log_game("Construction station has been saved")
 
 // Actually decay the turf.
 /datum/universal_state/proc/DecayTurf(var/turf/T)

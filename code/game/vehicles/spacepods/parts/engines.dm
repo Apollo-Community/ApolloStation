@@ -107,7 +107,6 @@
 		return 0
 
 	for( var/G in tank.air_contents.gas )
-		world << G
 		if( G == "phoron" && tank.air_contents.gas[G] > 0 )
 			fuel_tank.adjust_gas( "phoron", tank.air_contents.gas[G] )
 			tank.air_contents.adjust_gas( "phoron", -tank.air_contents.gas[G] )

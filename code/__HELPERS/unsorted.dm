@@ -85,7 +85,7 @@
 	return 1
 
 
-/proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
+/proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams. //Give agle in the x direction not from current dir.
 	if(!start || !end) return 0
 	var/dy
 	var/dx
@@ -1714,7 +1714,7 @@ proc/get_mob_with_client_list()
 
 	return turfs
 
-/proc/get_turfs(xmin, xmax, ymin, ymax)
+/proc/get_turfs(xmin, xmax, ymin, ymax, z = 3)
 //Needs: two sets of coordinates, lower left and high right.
 //Returns: List of turfs
 
@@ -1723,7 +1723,7 @@ proc/get_mob_with_client_list()
 	for(x=xmin+1 ,x <= xmax, x++)
 		var/y = 1
 		for(y=ymin+1, y <= ymax, y++)
-			turfs += locate(x,y,3)
+			turfs += locate(x,y,z)
 	return turfs
 
 //gets the turf the atom is located in (or itself, if it is a turf).

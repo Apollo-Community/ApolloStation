@@ -1,0 +1,167 @@
+<div style="min-width: 480px">
+	{{if (!data.nr_comp || data.nr_comp != 13)}}
+		<div class="item">
+			<div class="itemLabel">
+				Component Status:
+			</div>
+			<div class="itemContent">
+				{{if data.nr_comp}}
+					{{if data.nr_comp == 13}}
+						Status Green.
+					{{else}}
+						{{:helper.link('Find Components', 'null', { 'findcomp' : 1 })}}
+					{{/if}}
+				{{else}}
+					{{:helper.link('Find Components', 'null', { 'findcomp' : 1 })}}
+				{{/if}}
+			</div>
+		</div>
+	{{else}}
+		<b>Plasma Information:</b><br>
+		<div class="item">
+			<div class="itemLabel">
+				Gas Pump:
+			</div>
+			<div class="itemContent">
+				{{if data.gas}}
+					Online
+				{{else}}
+					Offline
+				{{/if}}
+				{{:helper.link('Toggle', null, {'togglegas' : 1})}}
+			</div>
+		</div>
+		<div class="item">
+			<div class="itemLabel">
+				Temperature:
+			</div>
+			<div class="itemContent">
+				{{if data.gas_moles}}
+					{{:data.gas_temp}} K
+				{{else}}
+					No gas samples found.
+				{{/if}}
+			</div>
+		</div>
+		<div class="item">
+			<div class="itemLabel">
+				Nr. Moles:
+			</div>
+			<div class="itemContent">
+				{{if data.gas_moles}}
+					{{if 50000 > data.gas_temp}}
+						{{:data.gas_moles}} Moles {{:helper.link('Drain Plasma', 'null', { 'drain' : 1 })}}
+					{{else}}
+						{{:data.gas_moles}} Moles {{:helper.link('Vent Plasma', 'null', { 'event' : 1 })}}
+					{{/if}}
+				{{else}}
+					No gas samples found.
+				{{/if}}
+			</div>
+		</div>
+		<br><b>Contaiment Field:</b><br>
+		<div class="item">
+			<div class="itemLabel">
+				Capacitor Power Supply:
+			</div>
+			<div class="itemContent">
+				{{if data.conpower}}
+					Online
+				{{else}}
+					Offline
+				{{/if}}
+				{{:helper.link('Toggle', null, {'togglecon' : 1})}}
+			</div>
+		</div>
+		<div class="item">
+			<div class="itemLabel">
+				Field Status:
+			</div>
+			<div class="itemContent">
+				{{if data.fieldstrengh}}
+					Online
+				{{else}}
+					Offline
+				{{/if}}
+			</div>
+		</div>
+		<div class="item">
+			<div class="itemLabel">
+				Field Strengh:
+			</div>
+			<div class="itemContent">
+				{{if data.fieldstrengh}}
+					{{:helper.displayBar(data.fieldstrengh, 0, 100, 'Good')}} {{:data.fieldstrengh}}% <br>
+					{{if (data.gas == 0 && data.gas_moles == 0)}}
+						{{:helper.link('Reset Capacitors', null, {'reset_field' : 1})}}
+					{{/if}}
+				{{/if}}
+			</div>
+		</div>
+		<br><b>Distribution Device Status</b><br>
+		<div class="item">
+			<div class="itemLabel">
+				Power Generation
+			</div>
+			<div class="itemContent">
+				{{if data.IDDpower}}
+					{{:data.IDDpower}} kW
+				{{else}}
+					No Readingings.
+				{{/if}}
+			</div>
+		</div>
+		<br><b>Neutron Focusing Rods Controlls:</b><br>
+		<div class="item">
+			<div class="itemLabel">
+				Exposure Controlls
+			</div>
+			<div class="itemContent">
+				{{if (data.rod_insert || data.rod_insert == 0)}}
+				<div style="clear: both; padding-top: 4px;">
+					{{:helper.link('-', null, {'change1' : 1})}}
+					{{:helper.link('-', null, {'change2' : 1})}}
+					<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:data.rod_insert}} %&nbsp;</div>
+					{{:helper.link('+', null, {'change3' : 1})}}
+					{{:helper.link('+', null, {'change4' : 1})}}
+				</div>
+				{{else}}
+					ERROR: Controll systems not found.
+				{{/if}}
+			</div>
+		</div>
+		<br><b>Ring Integrity</b><br>
+		{{for data.rings}}
+			<div class="item">
+				<div class="itemLabel">
+					Ring {{:index}}:
+				</div>
+				<div class="itemContent">
+					{{:value}}%
+				</div>
+			</div>
+		{{/for}}
+		<br><b>Heat Exchange</b><br>
+		<div class="item">
+			<div class="itemLabel">
+				Thermal Containment Field Status:
+			</div>
+			<div class="itemContent">
+				{{if data.heat_exchange}}
+					Offline
+				{{else}}
+					Online
+				{{/if}}
+				{{:helper.link('Toggle', null, {'toggleheatperm' : 1})}}
+			</div>
+		</div>
+		<div class="item">
+			<div class="itemLabel">
+				Nr. Interfacing points:
+			</div>
+			<div class="itemContent">
+				{{:data.exchangers}}
+			</div>
+		</div>
+	{{/if}}
+</div>
