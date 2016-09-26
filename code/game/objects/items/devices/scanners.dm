@@ -45,6 +45,7 @@ REAGENT SCANNER
 			if(O.level != 1)
 				continue
 
+			//For piping
 			if(O.invisibility == 100)
 				O.invisibility = 0
 				O.alpha = 128
@@ -53,6 +54,17 @@ REAGENT SCANNER
 						var/turf/U = O.loc
 						if(U.intact)
 							O.invisibility = 100
+							O.alpha = 255
+
+			//For wires
+			if(O.invisibility == 101)
+				O.invisibility = 0
+				O.alpha = 128
+				spawn(10)
+					if(O)
+						var/turf/U = O.loc
+						if(U.intact)
+							O.invisibility = 101
 							O.alpha = 255
 
 		var/mob/living/M = locate() in T
