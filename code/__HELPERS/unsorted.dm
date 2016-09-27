@@ -1,5 +1,13 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
+//Testing proc
+/proc/test_proc()
+	var/shell_return1 = null
+	shell_return1 = shell("ps aux | grep discord_bot | grep -v grep")
+	var/shell_return2 = null
+	shell_return2 = shell("ps aux | grep nonsense | grep -v grep")
+	world << "[shell_return1]"
+	world << "[shell_return2]"
 /*
  * A large number of misc global procs.
  */
