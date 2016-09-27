@@ -20,6 +20,7 @@ var/global/list/fusion_balls = list()
 	var/kill_shock_range = 5 //How var away do we fry people ?
 	var/move_self = 1 //Do we move on our own?
 	var/target = null //Its target. Moves towards the target if it has one.
+	var/obj/machinery/power/smes/smes_target = null //The temp target it move to if no beacon is set.
 	var/last_failed_movement = 0 //Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing.
 	var/chained = 0//Adminbus chain-grab
 	var/emp_change = 0
@@ -144,14 +145,24 @@ var/global/list/fusion_balls = list()
 
 /obj/fusion_ball/proc/move()
 	var/movement_dir = pick(list(NORTH, EAST, SOUTH, WEST))
-
+	if(isnull(smes_target))
+		var/list/targets = list()
+		for(var/obj/machinery/power/smes/S in machines)
+			if(S.z != src.z)	//Lets not try to go to other z levels and only target smesses with juice in it.
+				continue
+			targets += S
+		smes_target = pick(targets)
+	if(smes_target)
+		if(prob(80))
+			movement_dir = get_dir(src,smes_target)
+		if(smes_target.charge < 100)
+			smes_target = null
 	if(target && prob(60))
 		movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
 	spawn(0)
 		if(!step(src, movement_dir))
 			//step does not go trough walls -_-.
-			var/turf/t = get_step(src, movement_dir)
-			if(istype(t, /turf/unsimulated/wall) || istype(t, /turf/simulated/wall))
-				src.x = t.x
-				src.y = t.y
+			var/atom/a = get_step(src, movement_dir)
+			src.x = a.x
+			src.y = a.y
 	return 1
