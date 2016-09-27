@@ -5,7 +5,7 @@
 	var/shell_return1 = null
 	shell_return1 = shell("ps aux | grep discord_bot | grep -v grep")
 	var/shell_return2 = null
-	shell_return2 = shell("ps aux | grep nonsense | grep -v grep")
+	shell_return2 = shell("ps aux")
 	world << "[shell_return1]"
 	world << "[shell_return2]"
 /*
