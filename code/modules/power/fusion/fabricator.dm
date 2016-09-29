@@ -142,7 +142,7 @@
 
 //Eject alloy from the machine
 /obj/machinery/tokamakFabricator/proc/ejectAlloy()
-	if(alloy.amount = 0)
+	if(alloy.amount == 0)
 		usr << "<span class='warning'>Nothing to be ejected.</span>"
 		return
 	var/amount_ejected = alloy.amount
