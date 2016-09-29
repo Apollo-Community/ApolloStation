@@ -12,12 +12,15 @@
 	specific_heat = 20	// J/(mol*K)
 	molar_mass = 0.028	// kg/mol
 
+//Depreciated
+/*
 /xgm_gas/hydrogen
 	id = "hydrogen"
 	name = "Hydrogen"
 	specific_heat = 28	// J/(mol*K)
 	molar_mass = 0.020	// kg/mol
 	flags = XGM_GAS_FUEL
+*/
 
 /xgm_gas/carbon_dioxide
 	id = "carbon_dioxide"

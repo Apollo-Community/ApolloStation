@@ -12,7 +12,7 @@
 	var/obj/item/stack/sheet/alloy/alloy
 	var/datum/reagents/liquid
 	var/datum/gas_mixture/gas_contents
-	var/obj/item/weapon/tank/hydrogen/tank
+	var/obj/item/weapon/tank
 
 /obj/machinery/tokamakFabricator/New()
 	..()
@@ -100,7 +100,7 @@
 	if(!isnull(alloy))
 		dat += "<a href='byond://?src=\ref[src];crystal=1'>Produce Field Crystal</a><br>"
 		dat += "<a href='byond://?src=\ref[src];rod=1'>Produce Neutron Rod</a><br>"
-		dat += "<a href='byond://?src=\ref[src];rod=1'>Eject Alloy</a><br>"
+		dat += "<a href='byond://?src=\ref[src];eject=1'>Eject Alloy</a><br>"
 	user << browse(dat, "window=tokamakfab;size=500x500")
 
 //Topic by browser
@@ -112,6 +112,8 @@
 		produceCrystal()
 	if(href_list["rod"])
 		produceRod()
+	if(href_list["eject"])
+		ejectAlloy()
 	src.updateUsrDialog()
 
 //produce a field crystal
@@ -138,14 +140,15 @@
 	var/obj/item/weapon/neutronRod/rod = new(alloy.mineral)
 	rod.loc = get_turf(get_step(src, EAST))
 
-//produce a neutron rod
+//Eject alloy from the machine
 /obj/machinery/tokamakFabricator/proc/ejectAlloy()
-	if(alloy.base != "metal")
-		usr << "<span class='warning'>Stored alloy is of the wrong base.</span>"
+	if(alloy.amount = 0)
+		usr << "<span class='warning'>Nothing to be ejected.</span>"
 		return
-	if(alloy.amount < 5)
-		usr << "<span class='warning'>Not enough alloy in store..</span>"
-		return
-	alloy.use(5)
-	var/obj/item/weapon/neutronRod/rod = new(alloy.mineral)
-	rod.loc = get_turf(usr)
+	var/amount_ejected = alloy.amount
+	alloy.use(alloy.amount)
+	alloy = new()
+	var/tmp/obj/item/stack/sheet/alloy/ejected = alloy
+	ejected.loc = get_turf(usr)
+	ejected.amount = amount_ejected
+	alloy = null
