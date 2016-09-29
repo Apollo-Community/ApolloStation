@@ -1,15 +1,11 @@
-//Carn: Spacevines random event.
+//Carn: Spacevines random event. rjtwins: Edit so that it will pick from vinestart landmarks.
+
 /proc/spacevine_infestation()
 
 	spawn() //to stop the secrets panel hanging
-		var/list/turf/simulated/floor/turfs = list() //list of all the empty floor turfs in the hallway areas
-		for(var/areapath in typesof(/area/hallway))
-			var/area/A = locate(areapath)
-			for(var/turf/simulated/floor/F in A.contents)
-				if(!F.contents.len)
-					turfs += F
-
-		if(turfs.len) //Pick a turf to spawn at if we can
-			var/turf/simulated/floor/T = pick(turfs)
-			new/obj/effect/plant_controller(T) //spawn a controller at turf
-			message_admins("Spacevines spawned at [T.loc] ([T.x],[T.y],[T.z])", "EVENT:")
+		var/turf/T = pick(vinestart)
+		if(!T)
+			return
+			message_admins("Tried to spawn spacevines but selected turf was null", "EVENT:")
+		new/obj/effect/plant_controller(T) //spawn a controller at turf
+		message_admins("Spacevines spawned at [T.loc] ([T.x],[T.y],[T.z])", "EVENT:")

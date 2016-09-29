@@ -2,8 +2,7 @@
 ** Server Side utilities
 ** - Any admin commands using shell()
 */
-
-/client/proc/update_server()
+/client/proc/update_server(var/remote = 0)
 	set category = "Server"
 	set name = "Update Server"
 
@@ -15,11 +14,22 @@
 	if(!command)
 		usr << "<span class='danger'>The update command could not be found on the server.</span>"
 		return
+	update_server_command(src)
 
-	message_admins("[src.ckey] is remotely updating the server. Shout at them if something goes horribly wrong.")
-	usr << "<b>Update log can be accessed with '.getupdatelog'</b>"
-	log_debug("IG UPDATE: Origin = [src.ckey]")
+/proc/update_server_command(remote)
+	var/command = file2text("config/update_script_command.txt")		//Security measure to stop people changing command via config debug
+	if(!command)
+		return
+	message_admins("[remote] is remotely updating the server. Shout at them if something goes horribly wrong.")
+	var/client/C
+	if(istype(remote, /client))
+		C = remote
+	if(!isnull(C))
+		C << "<b>Update log can be accessed with '.getupdatelog'</b>"
+	log_debug("IG UPDATE: Origin = [remote]")
 	shell(command)		//Error handling and such is handled server side. The data_log is sufficient to see what the issue was.
+
+
 
 /* We don't use these anymore so should disable them for safety.
 
@@ -79,4 +89,26 @@
 
 // sends ahelps from the server to discord
 /proc/send_discord(var/source, var/target = "1", var/message)
+	//shell("python scripts/discord_bot.py [source] [target] '["[message]"]'") //For windows testing
 	shell("python3.6 scripts/discord_bot.py [source] [target] '[sanitize(message)]'")
+
+/proc/command_discord(var/channel, var/author, var/message, var/prefix = "command")
+	shell("python3.6 scripts/discord_bot.py [prefix] [channel] [author] '[sanitize(message)]'")	//Sent a message to a discord channel
+
+/proc/discord_admin(var/client/C, var/admin, var/message, var/dir)
+	if (copytext(message, 1, 6) == "angry")
+		message = copytext(message, 6) // prune the angry part.
+		C << 'sound/effects/adminhelpLOUD.ogg' //AGRY BOINK!
+	else
+		C << 'sound/effects/adminhelp.ogg' //BOINK!
+	C << "<span class='pm'><span class='in'>" + create_text_tag("pm_[dir ? "out" : "in"]", "", C) + " <b>\[DISCORD ADMIN PM\]</b> <span class='name'><b><a href='?priv_msg=\ref[C];discord=[admin]'>[admin]</a></b></span>: <span class='message'>[message]</span></span></span>"
+	//STUI stuff
+	log_admin("PM: [admin]->[key_name(C)]: [message]")
+	STUI.staff.Add("\[[time_stamp()]] <font color=red>PM: </font><font color='#0066ff'>[admin] -> [key_name(C)] : [message]</font><br>")
+	STUI.processing |= 3
+	//now send it back to slack
+	send_discord(admin, C.ckey, message)
+
+	//We can blindly send this to all admins cause it is from slack
+	for(var/client/X in admins)
+		X << "<span class='pm'><span class='other'>" + create_text_tag("pm_other", "PM:", X) + " <span class='name'>[admin]:</span> to <span class='name'>[key_name(C, X, 0)]</span>: <span class='message'>[message]</span></span></span>"

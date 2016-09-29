@@ -23,28 +23,31 @@
 /obj/effect/biomass/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (!W || !user || !W.type) return
 	switch(W.type)
-		if(/obj/item/weapon/circular_saw) del src
-		if(/obj/item/weapon/kitchen/utensil/knife) del src
-		if(/obj/item/weapon/scalpel) del src
-		if(/obj/item/weapon/twohanded/fireaxe) del src
-		if(/obj/item/weapon/hatchet) del src
-		if(/obj/item/weapon/melee/energy) del src
-		if(/obj/item/weapon/pickaxe/plasmacutter) del src
+		if(/obj/item/weapon/circular_saw) remove_self()
+		if(/obj/item/weapon/kitchen/utensil/knife) remove_self()
+		if(/obj/item/weapon/scalpel) remove_self()
+		if(/obj/item/weapon/twohanded/fireaxe) remove_self()
+		if(/obj/item/weapon/hatchet) remove_self()
+		if(/obj/item/weapon/melee/energy) remove_self()
+		if(/obj/item/weapon/melee/energy/sword) remove_self()
+		if(/obj/item/weapon/pickaxe/plasmacutter) remove_self()
+		if(/obj/item/weapon/scythe) remove_self()
 
 		//less effective weapons
 		if(/obj/item/weapon/wirecutters)
-			if(prob(25)) del src
+			if(prob(25)) remove_self()
 		if(/obj/item/weapon/shard)
-			if(prob(25)) del src
+			if(prob(25)) remove_self()
 
-		else //weapons with subtypes
-			if(istype(W, /obj/item/weapon/melee/energy/sword)) del src
-			else if(istype(W, /obj/item/weapon/weldingtool))
-				var/obj/item/weapon/weldingtool/WT = W
-				if(WT.remove_fuel(0, user)) del src
-			else
-				return
+		if (/obj/item/weapon/weldingtool)
+			var/obj/item/weapon/weldingtool/WT = W
+			if(WT.remove_fuel(5, user)) remove_self()
+		else
+			user << "[W] not sharp or hot enough to cut trough the biomass."
 	..()
+
+/obj/effect/biomass/proc/remove_self()
+	qdel(src)
 
 /obj/effect/biomass_controller
 	var/list/obj/effect/biomass/vines = list()
@@ -166,7 +169,7 @@
 		for(var/areapath in typesof(/area/hallway))
 			var/area/A = locate(areapath)
 			for(var/turf/simulated/floor/F in A.contents)
-				if(!F.contents.len)
+				if(F.contents.len < 2) //one shot is occupied by the lighting overlay.
 					turfs += F
 
 		if(turfs.len) //Pick a turf to spawn at if we can

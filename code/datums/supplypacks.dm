@@ -623,7 +623,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	access = access_ce
 	group = "Engineering"
 
-/datum/supply_packs/tokamak_rings
+/datum/supply_packs/IDD
 	name = "Distribution Device Crate"
 	contains = list(/obj/machinery/power/fusion/core)
 	cost = 50

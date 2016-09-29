@@ -54,14 +54,14 @@
 
 //Fire bolt at a target
 /obj/machinery/power/arc_emitter/proc/fire_bolt()
-	//Shock unprotected humans
+	//Shock unprotected mobs
 	var/list/targets = list()
-	for(var/mob/living/carbon/human/M in oview(src, 5))
-		if(!insulated(M))
+	for(var/mob/living/M in oview(src, 5))
+		if(!insulated(M) && !istype(M, /mob/living/silicon))
 			targets += M
 	if(targets.len > 0)
 		for(var/i=0, i <= 10, i+=5)
-			var/mob/living/carbon/human/M = pick(targets)
+			var/mob/living/M = pick(targets)
 			spawn(rand(0, 10))
 				arc(M)
 				M.apply_damage(rand(arc_power-30, arc_power-20), damagetype = BURN)
@@ -69,15 +69,24 @@
 				new/obj/effect/effect/sparks(get_turf(M))
 		return
 
-	//Shock any blobs
+	//Shock any blobs/vines/biomass
 	for(var/obj/effect/blob/B in oview(src, 5))
 		targets += B
+	for(var/obj/effect/biomass/B in oview(src, 5))
+		targets += B
+	for(var/obj/effect/plantsegment/V in oview(src, 5))
+		targets += V
+
 	if(targets.len > 0)
 		for(var/i=0, i <= 10, i+=5)
-			var/obj/effect/blob/B = pick(targets)
+			var/obj/effect/E = pick(targets)
 			spawn(rand(0, 10))
-				arc(B)
+				arc(E)
+			if(istype(E, /obj/effect/blob))
+				var/obj/effect/blob/B = E
 				B.take_damage(arc_power)
+			else
+				qdel(E)
 		return
 
 	//Shock any fusion cores

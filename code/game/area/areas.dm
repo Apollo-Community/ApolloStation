@@ -1941,8 +1941,16 @@ area/space/atmosalert()
 	name = "\improper Research and Development"
 	icon_state = "research"
 
+/area/rnd/researchhalla
+	name = "\improper Research and Development"
+	icon_state = "research"
+
+/area/rnd/researchhallb
+	name = "\improper Research Hallway"
+	icon_state = "research"
+
 /area/rnd/researchbreak
-	name = "\improper Research Break Room"
+	name = "\improper Hazardous Research Hallway"
 	icon_state = "research"
 
 /area/rnd/docking

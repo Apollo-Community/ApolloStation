@@ -20,7 +20,7 @@
 	var/obj/machinery/computer/fusion/computer	//The computer that this is linked to
 	var/set_up = 0
 	var/lastwarning = 0
-	var/warning_delay = 10 	//10 sec between warnings
+	var/warning_delay = 600 	//10 sec between warnings
 	var/confield_archived = 0
 	var/safe_warned = 0
 	var/obj/item/device/radio/radio 	//For radio warnings
@@ -217,8 +217,14 @@
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
 		pump_gas(r, r.get_tank_content(), gas_contents, r.get_tank_moles())
 	gas_contents.update_values()
+	if(isnull(table))
+		return
 	coefs = table.gas_coef(gas_contents)
+	if(isnull(event_color) || isnull(gas_contents))
+		return
 	var/tmp/gas_color = table.gas_color(gas_contents, event_color)
+	if(isnull(gas_color))
+		return
 	//Gas has effect on the color of fusion events.
 	event_color = BlendRGB(event_color, gas_color, 0.5)
 
@@ -486,8 +492,6 @@
 			return
 		comp.fusion_controller = src
 	//Calculating component coefs
-	field_coef = 0
-	rod_coef = 0
 	for(var/obj/machinery/power/fusion/ring_corner/r in temp_list)
 		if(isnull(r.rod) || isnull(r.crystal))
 			return
