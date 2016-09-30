@@ -60,7 +60,7 @@
 
 /datum/gear/account/grant4455_medal
 	display_name = "Gold medal"
-	path = /obj/item/clothing/tie/medal/gold/fluff/byron_steward
+	path = /obj/item/clothing/accessory/medal/gold/fluff/byron_steward
 	sort_category = slot_tie
 
 /datum/gear/account/mysticflame98_bunny
