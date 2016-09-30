@@ -334,7 +334,8 @@
 //power_source is a source of electricity, can be powercell, area, apc, cable, powernet or null
 //source is an object caused electrocuting (airlock, grille, etc)
 //No animations will be performed by this proc.
-/proc/electrocute_mob(mob/living/carbon/M as mob, var/power_source, var/obj/source, var/max_damage = 25, var/siemens_coeff = 1.0)
+//the arc = 0 var is here to make sure you DIE DIE DIE from an arc emitter/fusion event/fusion_ball
+/proc/electrocute_mob(mob/living/carbon/M as mob, var/power_source, var/obj/source, var/max_damage = 25, var/siemens_coeff = 1.0, var/arc = 0)
 	if(istype(M.loc,/obj/mecha))	return 0	//feckin mechs are dumb
 	var/area/source_area
 	if(istype(power_source,/area))
@@ -376,7 +377,7 @@
 		var/mob/living/carbon/human/H = M
 		if(H.species.siemens_coefficient == 0)
 			return
-		if(H.gloves)
+		if(H.gloves && !arc)
 			var/obj/item/clothing/gloves/G = H.gloves
 			if(G.siemens_coefficient == 0)	return 0		//to avoid spamming with insulated glvoes on
 

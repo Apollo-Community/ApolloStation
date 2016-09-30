@@ -75,10 +75,12 @@ var/global/datum/global_init/init = new ()
 		processScheduler.deferSetupFor(/datum/controller/process/ticker)
 		processScheduler.setup()
 		master_controller.setup()
-
+		spawn(0)
+			log_debug("Starting discord bot background process.")
+			shell("python3.6 scripts/discord_bot.py")
+			log_debug("Returning from discord bot background proces")
 		universe.load_date()
 		getFormsFromWiki() //Load some data form the wiki page
-
 		sleep_offline = 1 // go to sleep after the controllers are all set up
 
 	#ifdef PRECISE_TIMER_AVAILABLE
@@ -100,7 +102,6 @@ var/world_topic_spam_protect_time = world.timeofday
 
 /world/Topic(T, addr, master, key)
 	log_debug("TOPIC: \"[T]\", from:[addr], master:[master], key:[key][log_end]")
-
 	if (T == "ping")
 		var/x = 1
 		for (var/client/C)
@@ -160,6 +161,63 @@ var/world_topic_spam_protect_time = world.timeofday
 			s["admins"] = admins
 
 		return list2params(s)
+
+	if(copytext(T,1,9) == "adminmsg")
+		var/input[] = params2list(copytext(T,9))
+		//Check if messages is coming from local host for security reasons.
+		if (addr != "127.0.0.1")
+			message_admins("TOPIC: WARNING: [addr] tried to fake an admin command to the server! Please contact a developer")
+			command_discord("staff", "Server", "WARNING:[addr] tried to fake an admin command to the server! Please contact a developer.")
+			return
+		var/message = input["text"]
+		var/target = lowertext(input["target"])
+		var/admin = input["admin"]
+
+		//get the target and send PM
+		for(var/client/C in clients)
+			if(C.ckey == target)
+				//Code to send PMS....
+				discord_admin(C, admin, message, 0)
+				break
+
+	if(copytext(T,1,7) == "gencom")	//Message received from general channel in discord (non admin message)
+		var/input[] = params2list(copytext(T,6))
+		if (addr != "127.0.0.1")
+			message_admins("TOPIC: WARNING: [addr] tried to fake an admin command to the server! Please contact a developer")
+			command_discord("staff", "Server", "WARNING:[addr] tried to fake an admin command to the server! Please contact a developer.")
+			return
+		var/command = input["command"]
+		var/message = ""
+		switch(command)
+			if(" staffwho")
+				for(var/client/c in admins)
+					message += "[c.ckey] "
+			if(" players")
+				message += "There are [clients.len] players: "
+				for(var/client/c in clients)
+					message += "[c.ckey] - "
+			if(" uptime")
+				message = worldtime2text()
+			else
+				return
+		if(isnull(message) || message == "")
+			return
+		command_discord("general", "Server", message)
+
+
+	if(copytext(T,1,7) == "modcom")	//Message received from staff channel in discord mod/admin message.
+		var/input[] = params2list(copytext(T,6))
+		if (addr != "127.0.0.1")
+			message_admins("TOPIC: WARNING: [addr] tried to fake an admin command to the server! Please contact a developer")
+			command_discord("staff", "server", "WARNING:[addr] tried to fake an admin command to the server! Please contact a developer.")
+			return
+		var/command = input["command"]
+		switch(command)
+			if(" update")
+				update_server_command(input["author"])
+				command_discord("staff", "server", "[input["author"]] called server update via discord.")
+			else
+				return
 
 	/*
 	if(copytext(T,1,9) == "adminmsg")					//This recieves messages from slack (/pm command) and processes it before updating slack chat

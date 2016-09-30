@@ -29,14 +29,18 @@
 	var/list/materials = list()
 	var/unique_id = ""
 	var/list/effects = list()
+	var/mineral
+	var/base
 
-/obj/item/stack/sheet/alloy/New(var/list/comp)
+/obj/item/stack/sheet/alloy/New(var/list/comp, var/mineral, var/base)
 	..()
 	if(!comp)
 		usr << "<span class='warning'>This should never appear. There HAS to be a composition list!</span>"
 		return
 
 	materials = comp.Copy()
+	src.mineral = mineral
+	src.base = base
 
 	var/pre = ""
 	var/post = ""
@@ -121,7 +125,7 @@
 	new/datum/stack_recipe("RUST fuel compressor frame", /obj/item/rust_fuel_compressor_frame, 12, time = 50, one_per_turf = 1), \
 	new/datum/stack_recipe("knife grip", /obj/item/butterflyhandle, 4, time = 20, one_per_turf = 0, on_floor = 1))
 
-/obj/item/stack/sheet/alloy/plasteel/New(var/list/comp)
+/obj/item/stack/sheet/alloy/plasteel/New(var/list/comp, var/mineral, var/base)
 	if(!comp || !istype(comp))
 		comp = list("platinum" = 0.5, "metal" = 0.5)
-	..(comp)
+	..(comp, mineral, base)

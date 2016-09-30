@@ -115,6 +115,9 @@
 			A.blob_act()
 		return 1
 
+	proc/take_damage(damage)
+		health -= (damage)
+		update_icon()
 
 	ex_act(severity)
 		var/damage = 50
