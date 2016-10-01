@@ -8,6 +8,7 @@
 
 	var/atom/movable/object = null // The object that the traveler represents, usually just spacepods
 	var/frozen = 0 // Used to prevent movement
+	var/global/list/travelling_landing_zones = list()
 
 /obj/effect/traveler/New( var/atom/movable/new_object )
 	object = new_object
@@ -97,8 +98,25 @@
 
 		// Landing on a moon or other planetoid
 		if( sector.metadata && sector.metadata.landing_area )
-			var/area/A = locate( sector.metadata.landing_area ) in return_areas()
+			var/area/planet/moon/landing_zone/destination
+			var/mob/user = usr
+			var/list/landing_zone_dest = list()
+			for( var/name in travelling_landing_zones )
+				var/area/planet/moon/landing_zone/B = travelling_landing_zones[name]
+				landing_zone_dest.Add( B )
 
+			destination = input( user, "Where would you like to land?", "Destination", destination ) in landing_zone_dest
+			if( destination )
+				sector.metadata.landing_area = destination
+			else
+				usr << "No valid landing site chosen!"
+				fadein()
+
+				src.dir = turn( src.dir, 180 )
+				handleMovement( src.dir ) // Turn them around and move them away from the sector
+
+				return
+			var/area/A = locate( sector.metadata.landing_area ) in return_areas()
 			var/turf/T = pick( get_area_turfs( A ))
 			if( T )
 				object.loc = T

@@ -2746,14 +2746,6 @@ area/space/atmosalert()
 
 	base_turf = /turf/planet/lunar
 
-/area/planet/exterior
-	name = "\improper moon"
-	icon_state = "moon"
-	environment = PLAIN
-
-	ambience = list( 'sound/ambience/ambience_outpost.ogg' )
-	music = list( 'sound/ambience/ambispace.ogg','sound/ambience/ambispace1.ogg','sound/ambience/ambispace2.ogg' )
-
 /area/planet/moon/exterior
 	name = "\improper moon"
 	icon_state = "moon"
@@ -2762,171 +2754,177 @@ area/space/atmosalert()
 	ambience = list( 'sound/ambience/ambience_outpost.ogg' )
 	music = list( 'sound/ambience/ambispace.ogg','sound/ambience/ambispace1.ogg','sound/ambience/ambispace2.ogg' )
 
+/area/planet/moon/exterior/explored
+	name = "\improper explored moon"
+	icon_state = "explored"
 
 /area/planet/moon/landing_zone
 	name = "\improper landing zone"
 	icon_state = "south"
-	requires_power = 0
+	luminosity = 1
 
-/area/planet/moon/explored
-	name = "\improper explored moon"
-	icon_state = "north"
-	requires_power = 0
+/area/planet/moon/landing_zone/central
+	name = "\improper Central Outpost"
+
+/area/planet/moon/landing_zone/engineering
+	name = "\improper Engineering Outpost"
+
+/area/planet/moon/landing_zone/science
+	name = "\improper Research Outpost"
+
+/area/planet/moon/landing_zone/mining
+	name = "\improper Mining Outpost"
+
+/area/planet/moon/landing_zone/security
+	name = "\improper Security Prison"
 
 /area/planet/moon/outpost
 	name = "\improper outpost"
 	icon_state = "south"
-	requires_power = 0
-
-/area/planet/moon/base/
+	requires_power = 1
 	environment = HALLWAY
+//Main Outpost
+/area/planet/moon/outpost/central
+	name = "\improper Central Outpost"
+	icon_state = "bridge"
 
-/area/planet/moon/base/dorms
-	name = "\improper Dormitory"
-	icon_state = "Sleep"
-
-/area/planet/moon/base/arrivals
-	name = "\improper Moonbase Entry"
-	icon_state = "research"
-
-/area/planet/moon/base/security
-	name = "\improper Security Post"
-	icon_state = "security"
-
-/area/planet/moon/base/medbay
-	name = "\improper Medbay"
+/area/planet/moon/outpost/central/medical
+	name = "\improper Central Outpost Medbay"
 	icon_state = "medbay"
 
-/area/planet/moon/base/engineering
-	name = "\improper Engineering"
-	icon_state = "engine"
+/area/planet/moon/outpost/central/EVA
+	name = "\improper Central Outpost EVA"
+	icon_state = "eva"
 
-/area/planet/moon/base/maintenance/foreport
-	name = "\improper Fore Port Maintenance"
-	icon_state = "fpmaint"
+/area/planet/moon/outpost/central/hallway
+	name = "\improper Central Outpost Hallway"
 
-/area/planet/moon/base/maintenance/forestarboard
-	name = "\improper Fore Starboard Maintenance"
-	icon_state = "fsmaint"
-
-/area/planet/moon/base/maintenance/aftport
-	name = "\improper Aft Port Maintenance"
-	icon_state = "apmaint"
-
-/area/planet/moon/base/maintenance/aftstarboard
-	name = "\improper Aft Starboard Maintenance"
-	icon_state = "asmaint"
-
-/area/planet/moon/base/maintenance/solars
-	name = "\improper Solar Control Room"
-	icon_state = "SolarcontrolP"
-
-/area/planet/moon/base/maintenance/solarsex
-	name = "\improper Moonbase Solar Arrays"
-	icon_state = "panelsA"
-
-/area/planet/moon/base/dorms
-	name = "\improper Dormitory"
+/area/planet/moon/outpost/central/lounge
+	name = "\improper Central Outpost Lounge"
 	icon_state = "Sleep"
 
-/area/planet/moon/base/exterior
-	name = "\improper Moonbase Exterior"
-	icon_state = "research"
+/area/planet/moon/outpost/central/incinerator
+	name = "\improper Central Outpost Incinerator"
+	icon_state = "disposal"
 
-/area/planet/moon/base/rnd/research
-	name = "\improper Research and Development"
-	icon_state = "research"
+/area/planet/moon/outpost/central/substation
+	name = "\improper Central Outpost Substation"
+	icon_state = "substation"
 
-/area/planet/moon/base/rnd/researchbreak
-	name = "\improper Research Break Room"
-	icon_state = "research"
 
-/area/planet/moon/base/rnd/docking
-	name = "\improper Research Dock"
-	icon_state = "research_dock"
 
-/area/planet/moon/base/rnd/iso1
-	name = "Isolation Cell 1"
+//Engineering Outpost
+/area/planet/moon/outpost/engineering
+	name = "\improper Engineering Outpost"
+	icon_state = "engine"
+
+/area/planet/moon/outpost/engineering/lounge
+	name = "\improper Engineering Outpost Lounge"
+	icon_state = "Sleep"
+
+/area/planet/moon/outpost/engineering/storage
+	name = "\improper Engineering Outpost Storage"
+	icon_state = "engine_storage"
+
+/area/planet/moon/outpost/engineering/EVA
+	name = "\improper Engineering Outpost EVA"
+	icon_state = "eva"
+
+/area/planet/moon/outpost/engineering/atmospherics
+	name = "\improper Engineering Outpost Atmospherics"
+	icon_state = "atmos"
+
+/area/planet/moon/outpost/engineering/SMES
+	name = "\improper Engineering Outpost SMES Storage"
+	icon_state = "engine_smes"
+
+/area/planet/moon/outpost/engineering/hallway
+	name = "\improper Engineering Outpost Hallway"
+	icon_state = "engine"
+
+/area/planet/moon/outpost/engineering/solars
+	name = "\improper Engineering Outpost Solars"
+	icon_state = "panelsA"
+
+//Mining Outpost
+/area/planet/moon/outpost/mining
+	name = "\improper Mining Outpost"
+	icon_state = "mining"
+
+/area/planet/moon/outpost/mining/EVA
+	name = "\improper Mining Outpost EVA"
+	icon_state = "eva"
+
+/area/planet/moon/outpost/mining/lounge
+	name = "\improper Mining Outpost Lounge"
+	icon_state = "mining_living"
+
+/area/planet/moon/outpost/mining/refinery
+	name = "\improper Mining Outpost Refinery"
+	icon_state = "mining_production"
+
+/area/planet/moon/outpost/mining/maintenance
+	name = "\improper Mining Outpost Maintenance"
+	icon_state = "fmaint"
+
+/area/planet/moon/outpost/mining/foreman
+	name = "\improper Mining Outpost Foreman Office"
+
+/area/planet/moon/outpost/mining/hallway
+	name = "\improper Mining Outpost"
+
+/area/planet/moon/outpost/mining/substation
+	name = "\improper Mining Outpost Substation"
+	icon_state = "substation"
+
+//Research Outpost
+/area/planet/moon/outpost/science
+	name = "\improper Research Outpost"
+	icon_state = "anomaly"
+
+/area/planet/moon/outpost/science/EVA
+	name = "\improper Research Outpost EVA"
+	icon_state = "eva"
+
+/area/planet/moon/outpost/science/hallway
+	name = "\improper Research Outpost Hallway"
+	icon_state = "anohallway"
+
+/area/planet/moon/outpost/science/lounge
+	name = "\improper Research Outpost Lounge"
+	icon_state = "Sleep"
+
+/area/planet/moon/outpost/science/chemistry
+	name = "\improper Research Outpost Chemistry Lab"
+	icon_state = "chem"
+
+/area/planet/moon/outpost/science/exotic
+	name = "\improper Research Outpost Exotic Particle Harvesting"
+	icon_state = "anomaly"
+
+/area/planet/moon/outpost/science/containment
+	name = "\improper Research Outpost Isolation"
 	icon_state = "iso1"
 
-/area/planet/moon/base/rnd/iso1_access
-	name = "Isolation Cell 1 - Access"
-	icon_state = "iso1"
-
-/area/planet/moon/base/rnd/iso2
-	name = "Isolation Cell 2"
-	icon_state = "iso2"
-
-/area/planet/moon/base/rnd/iso3
-	name = "Isolation Cell 3"
-	icon_state = "iso3"
-
-/area/planet/moon/base/rnd/anomaly
-	name = "Anomalous Materials Lab"
+/area/planet/moon/outpost/science/lab
+	name = "\improper Research Outpost Laboratory"
 	icon_state = "anolab"
 
-/area/planet/moon/base/incinerator
-	name = "Incinerator"
-	icon_state = "apmaint"
+/area/planet/moon/outpost/science/anomaly
+	name = "\improper Research Outpost Anomaly Lab"
+	icon_state = "anosample"
 
-/area/planet/moon/base/rnd/lab
-	name = "\improper Research Lab"
-	icon_state = "toxlab"
+/area/planet/moon/outpost/science/spectromotry
+	name = "\improper Research Outpost Spectromotry"
+	icon_state = "anospectro"
 
-/area/planet/moon/base/rnd/rdoffice
-	name = "\improper Research Director's Office"
-	icon_state = "head_quarters"
+/area/planet/moon/outpost/science/substation
+	name = "\improper Research Outpost Substation"
+	icon_state = "substation"
 
-/area/planet/moon/base/rnd/supermatter
-	name = "\improper Supermatter Lab"
-	icon_state = "toxlab"
-
-/area/planet/moon/base/rnd/xenobiology
-	name = "\improper Xenobiology Lab"
-	icon_state = "xeno_lab"
-
-/area/planet/moon/base/rnd/xenobiology/xenoflora_storage
-	name = "\improper Xenoflora Storage"
-	icon_state = "xeno_f_store"
-
-/area/planet/moon/base/rnd/xenobiology/xenoflora
-	name = "\improper Xenoflora Lab"
-	icon_state = "xeno_f_lab"
-
-/area/planet/moon/base/rnd/storage
-	name = "\improper Toxins Storage"
-	icon_state = "toxstorage"
-
-/area/planet/moon/base/rnd/storage2
-	name = "\improper Research Equipment Storage"
-	icon_state = "storage"
-
-/area/planet/moon/base/rnd/test_area
-	name = "\improper Toxins Test Area"
-	icon_state = "toxtest"
-
-/area/planet/moon/base/rnd/mixing
-	name = "\improper Toxins Mixing Room"
-	icon_state = "toxmix"
-
-/area/planet/moon/base/rnd/alloy_lab
-	name = "\improper Alloys Lab"
-	icon_state = "alloylab"
-
-/area/planet/moon/base/rnd/misc_lab
-	name = "\improper Miscellaneous Research"
-	icon_state = "toxmisc"
-
-/area/planet/moon/base/rnd/server
-	name = "\improper Server Room"
-	icon_state = "server"
-
-/area/planet/moon/base/rnd/hallway
-	name = "\improper Server Room"
-	icon_state = "research"
-
-
-
+/area/planet/moon/outpost/science/tcomms
+	name = "\improper Research Outpost Telecomms"
+	icon_state = "tcomsat"
 
 /////////////////////////////////////////////////////////////////////
 /*
