@@ -2761,7 +2761,7 @@ area/space/atmosalert()
 /area/planet/moon/landing_zone
 	name = "\improper landing zone"
 	icon_state = "south"
-	luminosity = 1
+	light_range = 1
 
 /area/planet/moon/landing_zone/central
 	name = "\improper Central Outpost"
