@@ -45,26 +45,26 @@
 
 //Neutron & heat upgrade
 /datum/fusionUpgradeTable/proc/rod_coef(obj/item/weapon/neutronRod/rod)
-	world << "rod_coef called with [rod.mineral]"
-	world << "returning with [src.rod[rod.mineral]]"
+	//world << "rod_coef called with [rod.mineral]"
+	//world << "returning with [src.rod[rod.mineral]]"
 	return src.rod[rod.mineral]
 
 //Returns a color asosiated with a rod
 /datum/fusionUpgradeTable/proc/rod_color(obj/item/weapon/neutronRod/rod)
-	world << "rod_color called with [rod.mineral]"
-	world << "returning with [src.rod_color[rod.mineral]]"
+	//world << "rod_color called with [rod.mineral]"
+	//world << "returning with [src.rod_color[rod.mineral]]"
 	return src.rod_color[rod.mineral]
 
 //Field upgrade
 /datum/fusionUpgradeTable/proc/field_coef(obj/item/weapon/shieldCrystal/crystal)
-	world << "field_coef called with [crystal.mineral]"
-	world << "returning with [src.crystal[crystal.mineral]]"
+	//world << "field_coef called with [crystal.mineral]"
+	//world << "returning with [src.crystal[crystal.mineral]]"
 	return src.crystal[crystal.mineral]
 
 
 //Mixes gass into color (SO UGLY NEEDS FOR LOOPING)
 /datum/fusionUpgradeTable/proc/gas_color(datum/gas_mixture/plasma, base_color)
-	world << "gas_color called with [plasma] and [base_color]"
+	//world << "gas_color called with [plasma] and [base_color]"
 	//var/tmp/phoron = plasma.gas["phoron"]/maxfuel
 	var/tmp/nitrogen = plasma.gas["nitrogen"]/maxfuel
 	var/tmp/oxygen = plasma.gas["oxygen"]/maxfuel
@@ -76,13 +76,13 @@
 	base_color = BlendRGB(base_color, src.gas_color["oxygen"], oxygen)
 	base_color = BlendRGB(base_color, src.gas_color["carbon_dioxide"], carbon_dioxide)
 	base_color = BlendRGB(base_color, src.gas_color["sleeping_agent"], sleeping_agent)
-	world << "returning with [base_color]"
+	//world << "returning with [base_color]"
 	return base_color
 
 
 //Coefs on the fusion event determening heat, neutron, conversion rate, and fuel coefs
 /datum/fusionUpgradeTable/proc/gas_coef(datum/gas_mixture/plasma)
-	world << "gas_coef called"
+	//world << "gas_coef called"
 	//Gas propeties:
 	//Phoron - Basic fuel need at least 120 moles for 100% reactivity
 	//Nitrogen - Shield vitalizer, enhance shield regen rate
@@ -108,9 +108,7 @@
 	"neutron_heat" = neutron_heat_coef,\
 	"explosive" = explosive\
 	)
-	world << "returning with:"
-	for(var/x in gas_coefs)
-		world << "[gas_coefs[x]]"
+	//world << "returning with:"
 	return gas_coefs
 
 
