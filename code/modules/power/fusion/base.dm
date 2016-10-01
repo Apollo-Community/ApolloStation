@@ -13,8 +13,9 @@
 
 /obj/machinery/power/fusion/ex_act()
 	stat = BROKEN
-	desc += " It looks broken beyond repiar."
+	desc = "[initial(desc)] It looks broken beyond repair."
 	update_icon()
+
 /*
 /obj/machinery/power/fusion/emp_act(severity)
 	stat = EMPED

@@ -11,7 +11,7 @@
 	panel_open = 1
 	density = 1
 	use_power = 0
-	var/obj/item/weapon/tank/hydrogen/tank
+	var/obj/item/weapon/tank/tank
 	var/obj/item/weapon/neutronRod/rod
 	var/obj/item/weapon/shieldCrystal/crystal
 
@@ -29,7 +29,7 @@
 	if(stat == BROKEN)
 		..()
 
-	if(istype(W, /obj/item/weapon/tank/hydrogen))
+	if(istype(W, /obj/item/weapon/tank))
 		if(src.tank)
 			user << "<span class='alert'>There's already a phoron tank loaded.</span>"
 			return 1
@@ -79,7 +79,7 @@
 		ready = 1
 
 /obj/machinery/power/fusion/ring_corner/proc/eject_tank()
-	var/obj/item/weapon/tank/hydrogen/Z = src.tank
+	var/obj/item/weapon/tank/fusion/Z = src.tank
 	if (!Z)
 		return
 	Z.loc = get_turf(src)

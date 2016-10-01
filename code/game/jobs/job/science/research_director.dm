@@ -10,11 +10,11 @@
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
 	access = list(access_rd, access_heads, access_tox, access_genetics, access_morgue,
-			            access_chemistry, access_moon, access_teleporter, access_sec_doors,
+			            access_chemistry, access_teleporter, access_sec_doors,
 			            access_research, access_robotics, access_xenobiology, access_ai_upload,
 			            access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_change_ids)
 	minimal_access = list(access_rd, access_heads, access_tox, access_genetics, access_morgue,
-			            access_chemistry, access_moon, access_teleporter, access_sec_doors,
+			            access_chemistry, access_teleporter, access_sec_doors,
 			            access_research, access_robotics, access_xenobiology, access_ai_upload,
 			            access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_change_ids)
 
