@@ -10,7 +10,8 @@
 	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels, access_morgue)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
 
-	rank_succesion_level = 4
+	//rank_succesion_level = 4
+	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL
 
 /datum/job/officer/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
