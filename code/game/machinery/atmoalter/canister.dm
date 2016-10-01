@@ -75,10 +75,21 @@
 	name = "Canister: \[O2\]"
 	icon_state = "blue"
 	canister_color = "blue"
+
 /obj/machinery/portable_atmospherics/canister/empty/phoron
 	name = "Canister \[Phoron\]"
 	icon_state = "orange"
 	canister_color = "orange"
+
+/obj/machinery/portable_atmospherics/canister/empty/co2
+	name = "Canister \[CO2\]"
+	icon_state = "black"
+	canister_color = "black"
+
+/obj/machinery/portable_atmospherics/canister/empty/n2o
+	name = "Canister \[N2O\]"
+	icon_state = "redws"
+	canister_color = "redws"
 
 /obj/machinery/portable_atmospherics/canister/proc/check_change()
 	var/old_flag = update_flag

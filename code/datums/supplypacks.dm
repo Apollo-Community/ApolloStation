@@ -736,7 +736,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	cost = 10
 	containertype = /obj/structure/closet/crate/secure/phoron
 	containername = "Phoron assembly crate"
-	access = access_moon
+	access = access_xenoarch
 	group = "Science"
 
 /datum/supply_packs/weapons

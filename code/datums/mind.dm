@@ -516,7 +516,7 @@ datum/mind
 
 					if( !C.character_tokens["Antagonist"] )
 						C.character_tokens["Antagonist"] = 0
-					C.character_tokens["Antagonist"] += 0.03125 // 32 commendations = 1 token
+					C.character_tokens["Antagonist"] += 0.05 // 20 commendations = 1 token
 
 					var/progress = C.character_tokens["Antagonist"] - round(C.character_tokens["Antagonist"])
 					log_debug("[usr] has commended [key] as an antagonist via admin command.")
