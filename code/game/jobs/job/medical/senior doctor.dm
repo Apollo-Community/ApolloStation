@@ -7,9 +7,9 @@
 	spawn_positions = 3
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
-	access = list(access_medical, access_morgue, access_surgery, access_virology, access_genetics)
-	minimal_access = list(access_medical, access_morgue, access_surgery, access_virology)
-	alt_titles = list("Virologist", "Pathologist", "Surgeon")
+	access = list(access_medical, access_morgue, access_surgery, access_virology, access_genetics, access_chemistry)
+	minimal_access = list(access_medical, access_morgue, access_surgery, access_virology, access_chemistry)
+	alt_titles = list("Virologist", "Pathologist", "Senior Surgeon")
 
 	rank_succesion_level = 5
 
@@ -19,7 +19,7 @@
 	H.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/white(H), slot_shoes)
 	H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/firstaid/adv(H), slot_l_hand)
 
-	if(H.job == "Surgeon")
+	if(H.job == "Senior Surgeon")
 		if(prob(33))
 			H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/medical/green(H), slot_w_uniform)
 			H.equip_to_slot_or_qdel(new /obj/item/clothing/head/surgery/green(H), slot_head)
