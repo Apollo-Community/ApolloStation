@@ -1115,6 +1115,7 @@
 #include "code\modules\events\event_container.dm"
 #include "code\modules\events\event_dynamic.dm"
 #include "code\modules\events\event_manager.dm"
+#include "code\modules\events\gravity_distortion.dm"
 #include "code\modules\events\grid_check.dm"
 #include "code\modules\events\infestation.dm"
 #include "code\modules\events\ion_storm.dm"
