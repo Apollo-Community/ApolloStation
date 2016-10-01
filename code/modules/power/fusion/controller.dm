@@ -76,6 +76,8 @@
 			removePlasma()
 		if(!isnull(computer))
 			computer.reboot()
+		for(var/obj/machinery/power/fusion/locked_comp in fusion_components)
+			locked_comp.locked = 0
 		qdel(src)
 		return
 
@@ -89,6 +91,8 @@
 				removePlasma()
 			if(!isnull(computer))
 				computer.reboot()
+			for(var/obj/machinery/power/fusion/locked_comp in fusion_components)
+				locked_comp.locked = 0
 			qdel(src)
 			return
 		if(comp.emagged)
