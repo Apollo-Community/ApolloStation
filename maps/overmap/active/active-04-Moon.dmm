@@ -1,6 +1,6 @@
 "aa" = (/turf/unsimulated/wall{desc = "Looks like you're not going to be able to mine this."; icon_state = "lunar_rock"; name = "hardened rock"},/area/planet/moon/exterior)
 "ab" = (/turf/planet/lunar,/area/planet/moon/exterior/explored)
-"ac" = (/turf/simulated/mineral/lunar,/area/planet/moon/exterior)
+"ac" = (/turf/simulated/mineral/random/moon,/area/planet/moon/exterior)
 "ad" = (/turf/planet/lunar,/area/planet/moon/exterior)
 "ae" = (/obj/structure/grille,/turf/simulated/floor/plating/airless{icon_state = "asteroidplating"; tag = "icon-lunar_regolith"},/area/planet/moon/exterior/explored)
 "af" = (/obj/structure/cable/yellow{d2 = 2; icon_state = "0-2"},/obj/machinery/power/tracker,/turf/simulated/floor/plating/airless{icon_state = "asteroidplating"; tag = "icon-lunar_regolith"},/area/planet/moon/outpost/engineering/solars)
