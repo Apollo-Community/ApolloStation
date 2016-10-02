@@ -2,7 +2,7 @@
 ** Server Side utilities
 ** - Any admin commands using shell()
 */
-/client/proc/update_server(var/remote = 0)
+/client/proc/update_server()
 	set category = "Server"
 	set name = "Update Server"
 
@@ -14,19 +14,18 @@
 	if(!command)
 		usr << "<span class='danger'>The update command could not be found on the server.</span>"
 		return
-	update_server_command(src)
 
-/proc/update_server_command(remote)
+	message_admins("[src.ckey] is remotely updating the server. Shout at them if something goes horribly wrong.")
+	usr << "<b>Update log can be accessed with '.getupdatelog'</b>"
+	log_debug("IG UPDATE: Origin = [src.ckey]")
+	shell(command)		//Error handling and such is handled server side. The data_log is sufficient to see what the issue was.
+
+/proc/update_server_command()
 	var/command = file2text("config/update_script_command.txt")		//Security measure to stop people changing command via config debug
 	if(!command)
 		return
-	message_admins("[remote] is remotely updating the server. Shout at them if something goes horribly wrong.")
-	var/client/C
-	if(istype(remote, /client))
-		C = remote
-	if(!isnull(C))
-		C << "<b>Update log can be accessed with '.getupdatelog'</b>"
-	log_debug("IG UPDATE: Origin = [remote]")
+	message_admins("A discord admin is remotely updating the server. Shout at them if something goes horribly wrong.")
+	log_debug("IG UPDATE: Origin = discrod admin")
 	shell(command)		//Error handling and such is handled server side. The data_log is sufficient to see what the issue was.
 
 
