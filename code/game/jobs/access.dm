@@ -7,7 +7,6 @@
 /var/const/access_medical = 5
 /var/const/access_morgue = 6
 /var/const/access_tox = 7
-/var/const/access_moon = 8
 /var/const/access_genetics = 9
 /var/const/access_engine = 10
 /var/const/access_engine_equip= 11
@@ -202,7 +201,7 @@
 /proc/get_all_accesses()
 	return list(access_security, access_sec_doors, access_brig, access_armory, access_forensics_lockers, access_court,
 	            access_medical, access_genetics, access_morgue, access_rd,
-	            access_tox, access_moon, access_chemistry, access_engine, access_engine_equip, access_maint_tunnels,
+	            access_tox, access_chemistry, access_engine, access_engine_equip, access_maint_tunnels,
 	            access_external_airlocks, access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
@@ -261,8 +260,6 @@
 			return "Morgue"
 		if(access_tox)
 			return "R&D Lab"
-		if(access_moon)
-			return "Moonbase Labs"
 		if(access_chemistry)
 			return "Chemistry Lab"
 		if(access_rd)

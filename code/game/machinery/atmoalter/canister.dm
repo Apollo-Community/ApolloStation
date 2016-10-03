@@ -47,11 +47,13 @@
 	canister_color = "orange"
 	can_label = 0
 
+/* Depreciated
 /obj/machinery/portable_atmospherics/canister/hydrogen
 	name = "Canister \[Hydrogen\]"
 	icon_state = "white"
 	canister_color = "white"
 	can_label = 0
+*/
 
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "Canister \[CO2\]"
@@ -73,10 +75,21 @@
 	name = "Canister: \[O2\]"
 	icon_state = "blue"
 	canister_color = "blue"
+
 /obj/machinery/portable_atmospherics/canister/empty/phoron
 	name = "Canister \[Phoron\]"
 	icon_state = "orange"
 	canister_color = "orange"
+
+/obj/machinery/portable_atmospherics/canister/empty/co2
+	name = "Canister \[CO2\]"
+	icon_state = "black"
+	canister_color = "black"
+
+/obj/machinery/portable_atmospherics/canister/empty/n2o
+	name = "Canister \[N2O\]"
+	icon_state = "redws"
+	canister_color = "redws"
 
 /obj/machinery/portable_atmospherics/canister/proc/check_change()
 	var/old_flag = update_flag
@@ -350,12 +363,14 @@ update_flag
 
 	return 1
 
+/* Depreciated
 /obj/machinery/portable_atmospherics/canister/hydrogen/New()
 	..()
 
 	src.air_contents.adjust_gas("hydrogen", MolesForPressure())
 	src.update_icon()
 	return 1
+*/
 
 /obj/machinery/portable_atmospherics/canister/phoron/New()
 	..()

@@ -20,7 +20,7 @@
 	var/obj/machinery/computer/fusion/computer	//The computer that this is linked to
 	var/set_up = 0
 	var/lastwarning = 0
-	var/warning_delay = 10 	//10 sec between warnings
+	var/warning_delay = 600 	//10 sec between warnings
 	var/confield_archived = 0
 	var/safe_warned = 0
 	var/obj/item/device/radio/radio 	//For radio warnings
@@ -74,6 +74,9 @@
 		else
 			leakPlasma()
 			removePlasma()
+		for(var/obj/machinery/power/fusion/locked_comp in fusion_components)
+			locked_comp.locked = 0
+			locked_comp.on = 0
 		if(!isnull(computer))
 			computer.reboot()
 		qdel(src)
@@ -87,6 +90,9 @@
 			else
 				leakPlasma()
 				removePlasma()
+			for(var/obj/machinery/power/fusion/locked_comp in fusion_components)
+				locked_comp.locked = 0
+				locked_comp.on = 0
 			if(!isnull(computer))
 				computer.reboot()
 			qdel(src)
@@ -492,8 +498,6 @@
 			return
 		comp.fusion_controller = src
 	//Calculating component coefs
-	field_coef = 0
-	rod_coef = 0
 	for(var/obj/machinery/power/fusion/ring_corner/r in temp_list)
 		if(isnull(r.rod) || isnull(r.crystal))
 			return

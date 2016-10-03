@@ -4,7 +4,7 @@
  *		Anesthetic
  *		Air
  *		Phorony
- *		Hydrogen
+ *		Hydrogen - Depreciated
  *		Emergency Oxygen
  */
 
@@ -78,21 +78,21 @@
 
 	return
 /*
- * Hydrogen
+ * Fusion Fuel Tank
  */
-/obj/item/weapon/tank/hydrogen
+/obj/item/weapon/tank/fusion
 	name = "Fusion Fuel Tank"
-	desc = "Contains Hydrogen for use in a Fusion Reactor. Warning: extremely flammable."
+	desc = "Contains Phoron for use in a Fusion Reactor. Warning: extremely flammable."
 	icon_state = "hydrogen"
 	//item_state = "phoron_tank" 	//What does thie even do ?
 	flags = CONDUCT
 	slot_flags = null	//they have no straps!
 
 
-/obj/item/weapon/tank/hydrogen/New()
+/obj/item/weapon/tank/fusion/New()
 	..()
 
-	src.air_contents.adjust_gas("hydrogen", 30, 1)	//Needs 30 each for 4 tanks
+	src.air_contents.adjust_gas("phoron", 30, 1)	//Needs 30 each for 4 tanks
 	return
 
 /*
