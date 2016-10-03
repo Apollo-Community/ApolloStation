@@ -149,7 +149,7 @@
 
 	else if(istype(W, /obj/item/weapon/wrench))
 		var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(get_turf(src))
-		M.amount = 5
+		M.amount = 2
 		qdel(src)
 		return
 
