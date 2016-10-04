@@ -1020,6 +1020,42 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if(SMES.anchored)
 			SMES.input_attempt = 1
 
+
+/client/proc/setup_tokamak_engine()
+	set category = "Debug"
+	set name = "Setup tokamak"
+	set desc = "Sets up all tokamak components in the world (use for debug)."
+
+	if(!check_rights(R_DEBUG|R_ADMIN))      return
+
+	var/response = alert("Are you sure? This will setup all tokamak engine components on the map. Should only be used during debug!",,"Yes","No")
+
+	if(response == "No")
+		return
+
+	for(var/obj/machinery/power/fusion/ring_corner/r in world)
+		if(isnull(r.rod))
+			r.rod = new(r)
+		if(isnull(r.crystal))
+			r.crystal = new(r)
+		if(isnull(r.tank))
+			r.tank =  new /obj/item/weapon/tank/fusion (r)
+		r.wired = 1
+		r.panel_open = 0
+		r.anchored = 1
+		r.ready = 1
+	for(var/obj/machinery/power/fusion/ring/r in world)
+		r.wired = 1
+		r.panel_open = 0
+		r.anchored = 1
+		r.ready = 1
+	for(var/obj/machinery/power/fusion/core/c in world)
+		c.wired = 1
+		c.panel_open = 0
+		c.anchored = 1
+		c.ready = 1
+
+
 /client/proc/setup_supermatter_engine()
 	set category = "Debug"
 	set name = "Setup supermatter"

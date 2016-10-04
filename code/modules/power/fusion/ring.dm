@@ -79,7 +79,7 @@
 		ready = 1
 
 /obj/machinery/power/fusion/ring_corner/proc/eject_tank()
-	var/obj/item/weapon/tank/fusion/Z = src.tank
+	var/obj/item/weapon/tank/Z = src.tank
 	if (!Z)
 		return
 	Z.loc = get_turf(src)
