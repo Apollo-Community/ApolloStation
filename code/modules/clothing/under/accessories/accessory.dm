@@ -12,7 +12,6 @@
 	var/list/mob_overlay = list()
 	var/overlay_state = null
 	var/list/accessory_icons = list(slot_w_uniform_str = 'icons/mob/ties.dmi')
-	sprite_sheets = list("Resomi" = 'icons/mob/species/resomi/ties.dmi') // for species where human variants do not fit
 
 /obj/item/clothing/accessory/Destroy()
 	on_removed()
@@ -24,7 +23,7 @@
 		if(icon_override && ("[tmp_icon_state]_tie" in icon_states(icon_override)))
 			inv_overlay = image(icon = icon_override, icon_state = "[tmp_icon_state]_tie", dir = SOUTH)
 		else
-			inv_overlay = image(icon = default_onmob_icons[slot_tie_str], icon_state = tmp_icon_state, dir = SOUTH)
+			inv_overlay = image(icon = default_onmob_icons[slot_tie], icon_state = tmp_icon_state, dir = SOUTH)
 	inv_overlay.color = color
 	return inv_overlay
 
@@ -33,10 +32,6 @@
 		return ..()
 	var/bodytype = "Default"
 	if(ishuman(user_mob))
-		var/mob/living/carbon/human/user_human = user_mob
-		if(user_human.species.get_bodytype() in sprite_sheets)
-			bodytype = user_human.species.get_bodytype()
-
 		var/tmp_icon_state = overlay_state? overlay_state : icon_state
 		var/use_sprite_sheet = accessory_icons[slot]
 		if(sprite_sheets[bodytype])
@@ -128,40 +123,24 @@
 					if(MALE)	their = "his"
 					if(FEMALE)	their = "her"
 
-				var/sound = "heartbeat"
-				var/sound_strength = "cannot hear"
-				var/heartbeat = 0
-				var/obj/item/organ/internal/heart/heart = M.internal_organs_by_name[BP_HEART]
-				if(heart && !(heart.robotic >= ORGAN_ROBOT))
-					heartbeat = 1
+				var/sound = "pulse"
+				var/sound_strength
+
 				if(M.stat == DEAD || (M.status_flags&FAKEDEATH))
 					sound_strength = "cannot hear"
 					sound = "anything"
 				else
+					sound_strength = "hear a weak"
 					switch(body_part)
-						if(BP_CHEST)
-							sound_strength = "hear"
-							sound = "no heartbeat"
-							if(heartbeat)
-								if(heart.is_bruised() || M.getOxyLoss() > 50)
-									sound = "[pick("odd noises in","weak")] heartbeat"
-								else
-									sound = "healthy heartbeat"
-
-							var/obj/item/organ/internal/lungs/L = M.internal_organs_by_name[BP_LUNGS]
-							if(!L || M.losebreath)
-								sound += " and no respiration"
-							else if(M.is_lung_ruptured() || M.getOxyLoss() > 50)
-								sound += " and [pick("wheezing","gurgling")] sounds"
-							else
-								sound += " and healthy respiration"
-						if(BP_EYES,BP_MOUTH)
+						if("chest")
+							if(M.oxyloss < 50)
+								sound_strength = "hear a healthy"
+							sound = "pulse and respiration"
+						if("eyes","mouth")
 							sound_strength = "cannot hear"
 							sound = "anything"
 						else
-							if(heartbeat)
-								sound_strength = "hear a weak"
-								sound = "pulse"
+							sound_strength = "hear a weak"
 
 				user.visible_message("[user] places [src] against [M]'s [body_part] and listens attentively.", "You place [src] against [their] [body_part]. You [sound_strength] [sound].")
 				return

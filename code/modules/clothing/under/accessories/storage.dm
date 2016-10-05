@@ -81,14 +81,14 @@
 /obj/item/clothing/accessory/storage/knifeharness/New()
 	..()
 	hold.can_hold = list(
-		/obj/item/weapon/material/hatchet,
-		/obj/item/weapon/material/kitchen/utensil/knife,
-		/obj/item/weapon/material/knife,
-		/obj/item/weapon/material/butterfly,
+		/obj/item/weapon/hatchet,
+		/obj/item/weapon/kitchen/utensil/knife,
+		/obj/item/weapon/kitchenknife,
+		/obj/item/weapon/butterfly,
 	)
 
-	new /obj/item/weapon/material/hatchet/unathiknife(hold)
-	new /obj/item/weapon/material/hatchet/unathiknife(hold)
+	new /obj/item/weapon/kitchenknife/unathiknife(hold)
+	new /obj/item/weapon/kitchenknife/unathiknife(hold)
 
 /obj/item/clothing/accessory/storage/bandolier
 	name = "bandolier"
@@ -102,14 +102,12 @@
 	hold.can_hold = list(
 		/obj/item/ammo_casing,
 		/obj/item/weapon/grenade,
-		/obj/item/weapon/material/hatchet/tacknife,
-		/obj/item/weapon/material/kitchen/utensil/knife,
-		/obj/item/weapon/material/knife,
-		/obj/item/weapon/material/star,
+		/obj/item/weapon/hatchet,
+		/obj/item/weapon/kitchenknife,
+		/obj/item/weapon/kitchen/utensil/knife,
+		/obj/item/weapon/star,
 		/obj/item/weapon/rcd_ammo,
 		/obj/item/weapon/reagent_containers/syringe,
-		/obj/item/weapon/syringe_cartridge,
 		/obj/item/weapon/plastique,
-		/obj/item/clothing/mask/smokable
 	)
 

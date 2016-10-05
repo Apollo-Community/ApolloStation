@@ -7,6 +7,12 @@
 var/global/list/human_icon_cache = list()
 var/global/list/light_overlay_cache = list()
 
+/proc/overlay_image(icon,icon_state,color,flags)
+	var/image/ret = image(icon,icon_state)
+	ret.color = color
+	ret.appearance_flags = flags
+	return ret
+
 	///////////////////////
 	//UPDATE_ICONS SYSTEM//
 	///////////////////////
@@ -781,7 +787,7 @@ var/global/list/damage_icon_parts = list()
 
 
 /mob/living/carbon/human/update_inv_wear_mask(var/update_icons=1)
-	if( wear_mask && ( istype(wear_mask, /obj/item/clothing/mask) || istype(wear_mask, /obj/item/clothing/tie) ) && !(head && head.flags_inv & HIDEMASK))
+	if( wear_mask && ( istype(wear_mask, /obj/item/clothing/mask) || istype(wear_mask, /obj/item/clothing/accessory) ) && !(head && head.flags_inv & HIDEMASK))
 		wear_mask.screen_loc = ui_mask	//TODO
 
 		var/image/standing

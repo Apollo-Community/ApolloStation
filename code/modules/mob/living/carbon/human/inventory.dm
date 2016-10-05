@@ -490,17 +490,28 @@
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to unlegcuff [target.name]'s ([target.ckey])</font>")
 				message = "<span class='alert'><B>[source] is trying to unlegcuff [target]!</B></span>"
 			if("tie")
-				if(suit.accessories.len)
-				var/obj/item/clothing/accessory/A = suit.accessories[1]
-				target.attack_log += "\[[time_stamp()]\] <font color='orange'>Has had their accessory ([A]) removed by [source.name] ([source.ckey])</font>"
-				source.attack_log += "\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) accessory ([A])</font>"
-				if(istype(A, /obj/item/clothing/accessory/holobadge) || istype(A, /obj/item/clothing/accessory/medal))
-					for(var/mob/M in viewers(target, null))
-					M.show_message("\red <B>[source] tears off \the [A] from [target]'s [suit]!</B>" , 1)
-					done()
+				var/obj/item/clothing/under/suit = target.w_uniform
+				if(!istype(suit) || !suit.accessories.len)
 					return
-				else
-					message = "\red <B>[source] is trying to take off \a [A] from [target]'s [suit]!</B>"
+				var/obj/item/clothing/accessory/A = suit.accessories[1]
+				if(!istype(A))
+					return
+				visible_message("<span class='danger'>\The [usr] is trying to remove \the [src]'s [A.name]!</span>")
+
+				if(!do_after(usr, HUMAN_STRIP_DELAY, src, progress = 0))
+					return
+
+				if(!A || suit.loc != src || !(A in suit.accessories))
+					return
+
+				if(istype(A, /obj/item/clothing/accessory/badge) || istype(A, /obj/item/clothing/accessory/medal))
+					for(var/mob/M in viewers(target, null))
+						M.show_message("<span class='alert'><B>[source] tears off \the [suit.hastie] from [target]'s suit!</B></span>" , 1)
+					done()
+				A.on_removed(usr)
+				suit.accessories -= A
+				usr.update_inv_w_uniform()
+				return
 			if("pockets")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their pockets emptied by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to empty [target.name]'s ([target.ckey]) pockets</font>")

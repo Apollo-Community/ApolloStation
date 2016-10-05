@@ -7,7 +7,7 @@
 
 /datum/fusionUpgradeTable/New()
 	rod = list(\
-	"iron"			= 0.1,\
+	"iron"			= 0.0,\
 	"platinum"		= 0.2,\
 	"solid phoron" 	= 0.4,\
 	"silver" 		= 0.8,\
@@ -27,7 +27,7 @@
 	"diamond"		= "#8f29ce")
 
 	crystal = list(\
-	"iron"			= 0.05,\
+	"iron"			= 0.0,\
 	"platinum"		= 0.1,\
 	"solid phoron" 	= 0.2,\
 	"silver" 		= 0.4,\
@@ -38,7 +38,7 @@
 
 	gas_color = list(\
 	"phoron" 			= "#b30059",\
-	"nitrogen" 			= "#000000",\
+	"nitrogen" 			= "#b30059",\
 	"oxygen"			= "#009900",\
 	"carbon_dioxide" 	= "#ff0000",\
 	"sleeping_agent"	= "#ff9900")
@@ -82,7 +82,7 @@
 
 //Coefs on the fusion event determening heat, neutron, conversion rate, and fuel coefs
 /datum/fusionUpgradeTable/proc/gas_coef(datum/gas_mixture/plasma)
-	world << "gas_coef called"
+	//world << "gas_coef called"
 	//Gas propeties:
 	//Phoron - Basic fuel need at least 120 moles for 100% reactivity
 	//Nitrogen - Shield vitalizer, enhance shield regen rate
@@ -108,11 +108,8 @@
 	"neutron_heat" = neutron_heat_coef,\
 	"explosive" = explosive\
 	)
-	world << "returning with:"
-	for(var/x in gas_coefs)
-		world << "[gas_coefs[x]]"
+	//world << "returning with:"
 	return gas_coefs
-
 
 //Upgrade items for the fusion reactor
 //The rod has an effect on heat/neutron production.
@@ -124,13 +121,6 @@
 	w_class = 4.0 						// It's LARGE (backpack size)
 	var/mineral = "iron"
 
-/obj/item/weapon/neutronRod/New(var/mineral)
-	if(!isnull(mineral))
-		if(istype(mineral, /turf/simulated/floor/plating))	mineral = "iron"
-		src.mineral = mineral
-	desc = "[mineral]" + desc
-	..()
-
 //The crystal has an effect on the decay/strengh of plasma/shields
 /obj/item/weapon/shieldCrystal
 	name = "Field Amplification Crystal"
@@ -139,10 +129,3 @@
 	icon_state = "ansible_crystal"			// Just few icons patched together. If someone wants to make better icon, feel free to do so!
 	w_class = 4.0 						// It's LARGE (backpack size)
 	var/mineral = "iron"
-
-/obj/item/weapon/shieldCrystal/New(var/mineral)
-	if(!isnull(mineral))
-		if(istype(mineral, /turf/simulated/floor/plating))	mineral = "iron"
-		src.mineral = mineral
-	desc = "[mineral]" + desc
-	..()

@@ -1,8 +1,11 @@
 /obj/item/clothing
 	name = "clothing"
 	siemens_coefficient = 0.9
+	var/list/valid_accessory_slots
+	var/list/restricted_accessory_slots
+	var/list/starting_accessories
 	var/list/species_restricted = null //Only these species can wear this kit.
-
+	var/list/accessories = list()
 	/*
 		Sprites used when the clothing item is refit. This is done by setting icon_override.
 		For best results, if this is set then sprite_sheets should be null and vice versa, but that is by no means necessary.
@@ -368,7 +371,7 @@ BLIND     // can't see anything
 
 ///////////////////////////////////////////////////////////////////////
 //Suit
-/obj/item/clothing/suit
+/obj/item/clothing/
 	icon = 'icons/obj/clothing/suits.dmi'
 	name = "suit"
 	var/fire_resist = T0C+100
@@ -411,39 +414,11 @@ BLIND     // can't see anything
 		var/mob/M = src.loc
 		M.update_inv_w_uniform()
 
-/obj/item/clothing/under/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/clothing/accessory))
-		var/obj/item/clothing/accessory/A = I
-		if(can_attach_accessory(A))
-			user.drop_item()
-			accessories += A
-			A.on_attached(src, user)
-
-			if(istype(loc, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = loc
-				H.update_inv_w_uniform()
-
-			return
-		else
-			user << "<span class='notice'>You cannot attach more accessories of this type to [src].</span>"
-
-	if(accessories.len)
-		for(var/obj/item/clothing/accessory/A in accessories)
-			A.attackby(I, user)
+/obj/item/clothing/under/attack_hand(var/mob/user)
+	if(accessories && accessories.len)
+		..()
+	if ((ishuman(usr) || issmall(usr)) && src.loc == user)
 		return
-
-	..()
-
-/obj/item/clothing/under/attack_hand(mob/user as mob)
-	//only forward to the attached accessory if the clothing is equipped (not in a storage)
-	if(accessories.len && src.loc == user)
-		for(var/obj/item/clothing/accessory/A in accessories)
-			A.attack_hand(user)
-		return
-
-	if ((ishuman(usr) || issmall(usr)) && src.loc == user)	//make it harder to accidentally undress yourself
-		return
-
 	..()
 
 /obj/item/clothing/under/MouseDrop(obj/over_object as obj)
@@ -547,14 +522,6 @@ BLIND     // can't see anything
 		update_clothing_icon()
 	else
 		usr << "<span class='notice'>You cannot roll down the uniform!</span>"
-
-/obj/item/clothing/under/proc/remove_accessory(mob/user, obj/item/clothing/accessory/A)
-	if(!(A in accessories))
-		return
-
-	A.on_removed(user)
-	accessories -= A
-	update_clothing_icon()
 
 /obj/item/clothing/under/verb/removetie()
 	set name = "Remove Accessory"

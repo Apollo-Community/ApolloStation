@@ -1,7 +1,7 @@
 /*
 *	Regulates the fusion engine and this components.
 */
-#define TM_SAFE_ALERT "Con"
+#define TM_SAFE_ALERT ""
 /datum/fusion_controller
 	var/list/fusion_components = list()			//List of components making up the fusion reactor.
 	var/mode = 1								//Mode, direct = 0, indirect = 1.
@@ -20,17 +20,18 @@
 	var/obj/machinery/computer/fusion/computer	//The computer that this is linked to
 	var/set_up = 0
 	var/lastwarning = 0
-	var/warning_delay = 600 	//10 sec between warnings
+	var/warning_delay = 600 					//10 sec between warnings
 	var/confield_archived = 0
 	var/safe_warned = 0
-	var/obj/item/device/radio/radio 	//For radio warnings
-	var/rod_insertion = 0.5		//How far is the rod inserted, has effect on heat, neutrons and neutron damage generation
-	var/message_delay
+	var/obj/item/device/radio/radio 			//For radio warnings
+	var/rod_insertion = 0.5						//How far is the rod inserted, has effect on heat, neutrons and neutron damage generation
+	var/message_delay = 10
 	var/safe_warn
 	var/max_field_coef = 1
-	var/event_color = ""		//Color of fusion events
-	var/neutrondam_coef = 5		//Devide neutrons by this for damage to shields this will keep it stable at 50 rod insetion at normal activity.
+	var/event_color = ""						//Color of fusion events
+	var/neutrondam_coef = 3.65					//Devide neutrons by this for damage to shields this will keep it stable at 50 rod insetion at normal activity.
 	var/power_coef = 16.5
+	var/list/plasma_locs = list()
 
 /datum/fusion_controller/New()
 	fusion_controllers += src
@@ -74,6 +75,9 @@
 		else
 			leakPlasma()
 			removePlasma()
+		for(var/obj/machinery/power/fusion/locked_comp in fusion_components)
+			locked_comp.locked = 0
+			locked_comp.on = 0
 		if(!isnull(computer))
 			computer.reboot()
 		qdel(src)
@@ -87,6 +91,9 @@
 			else
 				leakPlasma()
 				removePlasma()
+			for(var/obj/machinery/power/fusion/locked_comp in fusion_components)
+				locked_comp.locked = 0
+				locked_comp.on = 0
 			if(!isnull(computer))
 				computer.reboot()
 			qdel(src)
@@ -105,8 +112,8 @@
 
 //Pass self to the core rod for debug
 /datum/fusion_controller/proc/pass_self()
-	var/obj/machinery/power/fusion/core/core = fusion_components[13]
-	core.controller = src
+	for(var/obj/machinery/power/fusion/core/core in fusion_components)
+		core.controller = src
 
 //Toggle the containment field power scourse
 /datum/fusion_controller/proc/toggle_field()
@@ -134,7 +141,13 @@
 //Spawns the "plasma" based upon the location of the core rod.
 /datum/fusion_controller/proc/generatePlasma()
 	var/obj/machinery/power/fusion/plasma/p
-	var/obj/machinery/power/fusion/core/core = fusion_components[13]
+	var/obj/machinery/power/fusion/core/core
+	//for(var/atom/a in plasma_locs)
+	//	p = PoolOrNew(/obj/machinery/power/fusion/plasma, a.loc)
+
+	for(var/obj/machinery/power/fusion/core/c in fusion_components)
+		core = c
+		break
 
 	for(var/tmp/i in list(-2, 2))
 		p = PoolOrNew(/obj/machinery/power/fusion/plasma, core.loc)
@@ -194,6 +207,7 @@
 	if(gas_contents.temperature >= 100000)
 		heatdif = 0
 	core.heat -= heatdif
+	//world << "heat calc output: [heatdif], [fusion_heat], [calcDecay(gas_contents.temperature)]"
 	gas_contents.temperature += heatdif + fusion_heat - calcDecay(gas_contents.temperature)		//Calculating temp change
 	if(gas_contents.temperature < 290)		//need to do a area check here
 		gas_contents.temperature = 290
@@ -320,7 +334,7 @@
 			var/mob/living/carbon/human/M = pick(targets)
 			arc(M, p)
 			M.apply_damage(rand(10, 20), damagetype = BURN)
-			M.apply_effect(rand(10, 20), effecttype = STUN)
+			M.apply_effect(rand(2.5, 5), effecttype = STUN)
 
 	//Neutrons effect the containment field, more neutrons = more power but also more were on the field
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
@@ -348,9 +362,13 @@
 //A random ring will take 1 point of damage for every 5000 deg above 1 mil deg.
 /datum/fusion_controller/proc/calcDamage()
 	if(gas_contents.temperature > 1000000)
-		var/i = pick(list(1,2,3,4,5,6,7,8,9,10,11,12))
-		var/obj/machinery/power/fusion/component = fusion_components[i]
-		component.damage += (gas_contents.temperature - 1000000)/5000
+		var/obj/machinery/power/fusion/ring_corner/ring
+		var/list/clist = list()
+		for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
+			clist += r
+		ring = pick(clist)
+		if(!isnull(ring))
+			ring.damage += (gas_contents.temperature - 1000000)/5000
 
 	for(var/obj/machinery/power/fusion/component in fusion_components)
 		if(component.damage > 500 && component.damage < 800)

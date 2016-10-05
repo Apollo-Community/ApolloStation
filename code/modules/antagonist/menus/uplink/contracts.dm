@@ -85,7 +85,7 @@
 
 		// Faction Contracts
 		var/list/datum/contract/available_contracts = (antag.faction.contracts - antag.active_contracts)
-		if(available_contracts.len > 0 && !antag.uplink_blocked)
+		if(available_contracts.len > 0 && !antag.uplink_blocked && faction_controller.contracts_made)
 			. += "<h2><span class='white'>Available Contracts</span></h2>"
 			. += "<table><center>"
 			for(var/datum/contract/C in available_contracts)
@@ -110,7 +110,11 @@
 			. += "</center></table>"
 		else
 			. += "<center><h2><span class='white'>No Available Contracts</span></h2></center>"
-			. += "<center><span class='white'>No contracts are currently available from your employer.</span></center>"
+			if(!faction_controller.contracts_made)
+				. += "<center><span class='white'>No contracts are currently available from your employer.</span></center>"
+				. += "<center><span class='white'>Contracts will be made available [faction_controller.contracts_made / 600] minutes after shifts begin.</span></center>"
+			else
+				. += "<center><span class='white'>No contracts are currently available from your employer.</span></center>"
 	else
 		. += "<center><h2><span class='white'>No Available Contracts</span></h2></center>"
 		. += "<center><span class='white'>No contracts are currently available from your employer.</span></center>"

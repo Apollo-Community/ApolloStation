@@ -19,9 +19,6 @@
 	set category = "Object"
 	set src in usr
 
-	if(usr.incapacitated())
-		return 0
-
 	var/obj/item/clothing/accessory/toggleable/H = null
 	if (istype(src, /obj/item/clothing/accessory/toggleable))
 		H = src

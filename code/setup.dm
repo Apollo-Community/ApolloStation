@@ -168,6 +168,7 @@
 #define SLOT_DENYPOCKET 4096	//this is to deny items with a w_class of 2 or 1 to fit in pockets.
 #define SLOT_TWOEARS 8192
 #define SLOT_TIE 16384
+#define SLOT_HOLSTER 32768
 
 //FLAGS BITMASK
 #define STOPSPRESSUREDMAGE 1	//This flag is used on the flags variable for SUIT and HEAD items which stop pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
@@ -246,6 +247,27 @@
 #define slot_r_ear 20
 #define slot_legs 21
 #define slot_tie 22
+
+var/list/default_onmob_icons = list(
+		slot_l_hand = 'icons/mob/items/lefthand.dmi',
+		slot_r_hand = 'icons/mob/items/righthand.dmi',
+		slot_belt = 'icons/mob/belt.dmi',
+		slot_back = 'icons/mob/back.dmi',
+		slot_l_ear = 'icons/mob/ears.dmi',
+		slot_r_ear = 'icons/mob/ears.dmi',
+		slot_glasses = 'icons/mob/eyes.dmi',
+		slot_wear_id = 'icons/mob/mob.dmi',
+		slot_w_uniform = 'icons/mob/uniform.dmi',
+		slot_wear_suit = 'icons/mob/suit.dmi',
+		slot_head = 'icons/mob/head.dmi',
+		slot_shoes_ = 'icons/mob/feet.dmi',
+		slot_wear_mask = 'icons/mob/mask.dmi',
+		slot_handcuffed = 'icons/mob/mob.dmi',
+		slot_legcuffed = 'icons/mob/mob.dmi',
+		slot_gloves = 'icons/mob/hands.dmi',
+		slot_s_store = 'icons/mob/belt_mirror.dmi',
+		slot_tie = 'icons/mob/ties.dmi'
+		)
 
 //Cant seem to find a mob bitflags area other than the powers one
 

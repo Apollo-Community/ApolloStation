@@ -18,7 +18,7 @@ var/const/CHIEF_ENGINEER	=(1<<0)
 var/const/ENGINEER			=(1<<1)
 var/const/SENIOR_ENGINEER	=(1<<2)
 var/const/ATMOSTECH			=(1<<3)
-var/const/ENGINEER_ASSISTANT=(1<<4)
+//var/const/ENGINEER_ASSISTANT=(1<<4)
 
 
 var/const/SUPPLY			= 2
@@ -37,7 +37,7 @@ var/const/PSYCHIATRIST		=(1<<3)
 var/const/DOCTOR			=(1<<4)
 var/const/SENIOR_DOCTOR		=(1<<4)
 var/const/VIROLOGIST		=(1<<6)
-var/const/NURSE				=(1<<7)
+//var/const/NURSE				=(1<<7)
 
 var/const/SCIENCE			= 4
 
@@ -46,7 +46,7 @@ var/const/SCIENTIST			=(1<<1)
 var/const/SENIOR_SCIENTIST	=(1<<2)
 var/const/ROBOTICIST		=(1<<3)
 var/const/XENOBIOLOGIST		=(1<<4)
-var/const/RESEARCH_ASSISTANT=(1<<5)
+//var/const/RESEARCH_ASSISTANT=(1<<5)
 
 var/const/SECURITY			= 5
 
@@ -54,7 +54,7 @@ var/const/HOS				=(1<<0)
 var/const/WARDEN			=(1<<1)
 var/const/DETECTIVE			=(1<<2)
 var/const/OFFICER			=(1<<3)
-var/const/CADET				=(1<<4)
+//var/const/CADET				=(1<<4)
 
 var/const/SYNTHETIC			= 6
 

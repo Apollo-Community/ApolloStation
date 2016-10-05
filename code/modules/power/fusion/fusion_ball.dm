@@ -163,8 +163,8 @@ var/global/list/fusion_balls = list()
 		if(!step(src, movement_dir))
 			//step does not go trough walls -_-.
 			var/atom/a = get_step(src, movement_dir)
-			world << "start xy: [x],[y]"
-			world << "dest xy: [a.x][a.y]"
-			src.x = a.x
-			src.y = a.y
+			var/tmp/dx = Clamp(a.x - src.x, -1, 1)
+			var/tmp/dy = Clamp(a.y - src.y, -1, 1)
+			src.x += dx
+			src.y += dy
 	return 1

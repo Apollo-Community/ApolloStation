@@ -18,9 +18,8 @@
 
 /obj/machinery/power/fusion/core/New()
 	update_icon()
-	//I dont know why this is nessecery but it does not seem to happen on its own.
-	machines += src
-	MachineProcessing += src
+	//machines += src
+	//MachineProcessing += src
 	connect_to_network()
 	..()
 
