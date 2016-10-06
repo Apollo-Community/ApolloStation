@@ -25,9 +25,13 @@
 /turf/simulated/shuttle/wall
 	explosion_resistance = 10
 
+/turf/simulated/shuttle/arrival/wall
+	explosion_resistance = 999
+
 /turf/simulated/wall
 	explosion_resistance = 10
 
+//This should not be here !
 /turf/simulated/shuttle/wall/engine/propulsion
 	name = "propulsion"
 	icon_state = "propulsion"
