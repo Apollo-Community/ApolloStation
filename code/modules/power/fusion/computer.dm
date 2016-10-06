@@ -7,6 +7,7 @@
 	var/datum/fusion_controller/fusion_controller
 	//var/obj/machinery/power/fusion/core/c
 	var/ctag = ""
+	var/obj/machinery/power/fusion/core/core = null
 
 /obj/machinery/computer/fusion/New()
 	fusion_controller = new()
@@ -21,6 +22,7 @@
 		return
 	if(fusion_controller.findComponents(t_core))
 		fusion_controller.computer = src
+	core = t_core
 
 /obj/machinery/computer/fusion/attack_ai(mob/user as mob)
 	return attack_hand(user)
@@ -43,9 +45,8 @@
 		if(!isnull(plasma.partner))
 			exchangers ++
 	data["exchangers"] = exchangers
-	if(fusion_controller.fusion_components.len == 13)
-		var/tmp/obj/machinery/power/fusion/core/c = fusion_controller.fusion_components[13]
-		data["IDDpower"] = round(c.last_power/1000)
+	if(!isnull(core))
+		data["IDDpower"] = round(core.last_power/1000)
 	else
 		data["IDDpower"] = 0
 	var/list/ring_list = list()

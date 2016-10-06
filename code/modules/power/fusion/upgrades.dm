@@ -3,7 +3,7 @@
 	var/list/crystal = list()
 	var/list/rod_color = list()
 	var/list/gas_color = list()
-	var/maxfuel = 60
+	var/maxfuel = 360
 
 /datum/fusionUpgradeTable/New()
 	rod = list(\
@@ -73,7 +73,7 @@
 
 //Coefs on the fusion event determening heat, neutron, conversion rate, and fuel coefs
 /datum/fusionUpgradeTable/proc/gas_coef(datum/gas_mixture/plasma, nr_corners)
-	maxfuel = maxfuel*nr_corners
+	//maxfuel = maxfuel*nr_corners
 	//Gas propeties:
 	//Phoron - Basic fuel need at least 120 moles for 100% reactivity
 	//Nitrogen - Shield vitalizer, enhance shield regen rate

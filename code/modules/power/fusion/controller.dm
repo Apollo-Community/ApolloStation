@@ -29,7 +29,7 @@
 	var/safe_warn
 	var/max_field_coef = 1
 	var/event_color = ""						//Color of fusion events
-	var/neutrondam_coef = 3.65					//Devide neutrons by this for damage to shields this will keep it stable at 50 rod insetion at normal activity.
+	var/neutrondam_coef = 3.7					//Devide neutrons by this for damage to shields this will keep it stable at 50 rod insetion at normal activity.
 	var/power_coef = 16.5
 	var/list/plasma_locs = list()
 	var/nr_comp = 0
@@ -149,7 +149,6 @@
 /datum/fusion_controller/proc/generatePlasma()
 	var/dub = 0	//To make sure we dont place to fields on one turf.
 	var/obj/machinery/power/fusion/plasma/p
-	world << "plasma locs [plasma_locs.len]"
 	for(var/turf/a in plasma_locs)
 		dub = 0
 		for(var/obj/o in a.contents)
@@ -157,7 +156,6 @@
 				dub = 1
 		if(dub)
 			continue
-		world << "Generating plasma [a.loc], [a.x], [a.y]"
 		p = PoolOrNew(/obj/machinery/power/fusion/plasma, a)
 		p.dir = plasma_locs[a]	//Associative list with turfs and their directions.
 		plasma.Add(p)
@@ -170,11 +168,9 @@
 	for(var/obj/machinery/power/fusion/core/c in fusion_components)
 		if(istype(c, /obj/machinery/power/fusion/core))
 			core = c
-	world << "Check if core is null :[core]:"
 	if(isnull(core))
 		return
 
-	world << "Checking if we need to generate plasma, plasma.len = [plasma.len] gas = [gas]"
 	if(plasma.len == 0 && gas)
 		generatePlasma()
 
@@ -212,7 +208,6 @@
 	if(gas_contents.temperature >= 100000)
 		heatdif = 0
 	core.heat -= heatdif
-	//world << "heat calc output: [heatdif], [fusion_heat], [calcDecay(gas_contents.temperature)]"
 	gas_contents.temperature += heatdif + fusion_heat - calcDecay(gas_contents.temperature)		//Calculating temp change
 	if(gas_contents.temperature < 290)		//need to do a area check here
 		gas_contents.temperature = 290
@@ -432,22 +427,21 @@
 	var/list/network = list()
 	var/list/tmpnetwork = list()
 	tmpnetwork += cring.build_network(1, network)
-	world << "[network], [network.len]"
 	if(isnull(tmpnetwork) || tmpnetwork.len == 0)
-		world << "Network building failed."
 		return
 	network += tmpnetwork
-	world << "Network building complete."
 	network.Remove(null)
 	temp_list += network
 
 	temp_list.Add(c)
 	nr_comp = temp_list.len
-	world << "nr of comps [nr_comp]"
 	for(var/obj/machinery/power/fusion/comp in temp_list)
 		if(!comp.ready)
 			return
 		comp.fusion_controller = src
+
+	if(!check_symetry(c, temp_list))
+		return
 
 	//Calculating component coefs and event color.
 	nr_corners = 0
@@ -464,16 +458,23 @@
 	rod_coef = rod_coef/nr_corners
 	max_field = max(9000*nr_corners, 40000)	//Min of 40k fields strengh.
 	field_coef = field_coef/nr_corners
-	world << "Rod coefs and colors completed"
 	//Getting locations of plasma fields
-	world << "Getting plasma locs"
 	get_plasma_locs(temp_list)
 	if(src.plasma_locs.len < 1)
-		world << "no plasma locs found returning"
 		return
-	world << "Plasma locs found [src.plasma_locs.len]"
 	fusion_components = temp_list
 	set_up = 1
+	return 1
+
+/datum/fusion_controller/proc/check_symetry(center, comp_list)
+	var/range = 2
+	var/list/L = list()
+	while(range <= 10)
+		L += (orange(range, center) & comp_list)	//Populate with all that is in range and comp_list
+		if(!IsEven(L.len))
+			return 0
+		L.Cut()
+		range ++
 	return 1
 
 /datum/fusion_controller/proc/get_plasma_locs(var/list/components)

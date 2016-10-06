@@ -147,11 +147,9 @@
 
 //Set the content of the tank
 /obj/machinery/power/fusion/ring_corner/proc/set_tank_content(var/datum/gas_mixture/gas)
-	//world << "gas moles in set_tank_contents [gas.total_moles]"
 	if(gas.temperature == 0)	//For some reason if I dont do this it turns the temp to 0.
 		gas.temperature = 293.15
 	tank.air_contents = gas
-	//world << "gas moles in tank afther set_tank_contents [tank.air_contents.total_moles]"
 
 /obj/machinery/power/fusion/ring_corner/proc/get_tank_moles()
 	if(isnull(tank))
@@ -165,15 +163,11 @@
 
 
 /obj/machinery/power/fusion/ring_corner/proc/build_network(var/start, var/list/comp_list)
-	//Self stuff
-	world << "[origen], [comp_list], [comp_list.len]"
 	if(src.origen == 1)
 		//world.loop_checks=1
 		src.in_network = 0
 		src.origen = 0
-		world << "I'm origen, returning with [comp_list.len]"
 		return comp_list
-	world << "I'm not origen"
 	comp_list += src
 	in_network = 1
 
@@ -184,29 +178,21 @@
 	rings += locate(/obj/machinery/power/fusion/ring) in get_step(src, turn(src.dir, 90))
 	rings += locate(/obj/machinery/power/fusion/ring) in get_step(src, turn(src.dir, 270))
 	for(var/obj/machinery/power/fusion/ring/r in rings)
-		world << "Found ring dir: [r.dir] in_network [r.in_network]"
 		if(!r.in_network)
 			ring = r
 			break
 	if(isnull(ring))
-		world << "no adjacent ring found returning empty list"
 		return list()
 
 	ring.in_network = 1
-	world << "Got adjacent staight ring"
 	comp_list += ring
 	ring = ring.get_pair()
-	world << "ring.get_piar() returning with [ring]"
 	if(isnull(ring))
-		world << "ring.get_piar() returning with [ring] which was null"
 		return list()
 	ring.in_network = 1
 	comp_list += ring
 	var/obj/machinery/power/fusion/ring_corner/rc = ring.get_corner()
-	world << "ring.get_corner() returning with [rc]"
-
 	if(isnull(rc))
-		world << "returning with empty list"
 		return list()
 
 	//We dont need to add the next corner sins it will add itself.
@@ -214,7 +200,6 @@
 	//If you are the origen pass yourself as it. Else pass it allong
 	if(start)
 		src.origen = 1
-		//world.loop_checks=0
 	rc.build_network(0, comp_list)
 	//When we return anywhere wee need to reset this.
 	src.in_network = 0
@@ -261,7 +246,6 @@
 	return null
 
 /obj/machinery/power/fusion/ring/proc/plasma_locs()
-	world << "Getting plasma locs"
 	var/turf/t = src
 	var/list/locs = list()
 	var/max_range = 10
@@ -273,9 +257,7 @@
 			t = get_turf(t)
 		for(var/obj/machinery/power/fusion/ring/r in t.contents)
 			if(istype(r, /obj/machinery/power/fusion/ring) && src.dir == turn(r.dir, 180))
-				world << "Returning with locs [locs.len]"
 				return locs
-		world << "plasma loc/turf: [t], [t.dir]"
 		locs[t] = src.dir
 	return null
 
