@@ -14,6 +14,7 @@
 	var/obj/item/weapon/tank/tank
 	var/obj/item/weapon/neutronRod/rod
 	var/obj/item/weapon/shieldCrystal/crystal
+	origen = 0
 
 /obj/machinery/power/fusion/ring_corner/New()
 	//FOR DEBUG
@@ -162,6 +163,63 @@
 /obj/machinery/power/fusion/ring_corner/status()
 	return "[(1000-damage)/10] %<br>"
 
+
+/obj/machinery/power/fusion/ring_corner/proc/build_network(var/start, var/list/comp_list)
+	//Self stuff
+	world << "[origen], [comp_list], [comp_list.len]"
+	if(src.origen == 1)
+		//world.loop_checks=1
+		src.in_network = 0
+		src.origen = 0
+		world << "I'm origen, returning with [comp_list.len]"
+		return comp_list
+	world << "I'm not origen"
+	comp_list += src
+	in_network = 1
+
+	//Find staight connection
+	var/obj/machinery/power/fusion/ring/ring = null
+	var/list/rings = list()
+	rings += locate(/obj/machinery/power/fusion/ring) in get_step(src, src.dir)
+	rings += locate(/obj/machinery/power/fusion/ring) in get_step(src, turn(src.dir, 90))
+	rings += locate(/obj/machinery/power/fusion/ring) in get_step(src, turn(src.dir, 270))
+	for(var/obj/machinery/power/fusion/ring/r in rings)
+		world << "Found ring dir: [r.dir] in_network [r.in_network]"
+		if(!r.in_network)
+			ring = r
+			break
+	if(isnull(ring))
+		world << "no adjacent ring found returning empty list"
+		return list()
+
+	ring.in_network = 1
+	world << "Got adjacent staight ring"
+	comp_list += ring
+	ring = ring.get_pair()
+	world << "ring.get_piar() returning with [ring]"
+	if(isnull(ring))
+		world << "ring.get_piar() returning with [ring] which was null"
+		return list()
+	ring.in_network = 1
+	comp_list += ring
+	var/obj/machinery/power/fusion/ring_corner/rc = ring.get_corner()
+	world << "ring.get_corner() returning with [rc]"
+
+	if(isnull(rc))
+		world << "returning with empty list"
+		return list()
+
+	//We dont need to add the next corner sins it will add itself.
+
+	//If you are the origen pass yourself as it. Else pass it allong
+	if(start)
+		src.origen = 1
+		//world.loop_checks=0
+	rc.build_network(0, comp_list)
+	//When we return anywhere wee need to reset this.
+	src.in_network = 0
+	src.origen = 0
+
 //8 edges of the magnetic ring
 /obj/machinery/power/fusion/ring
 	name = "Fusion Containment Ring"
@@ -178,6 +236,48 @@
 /obj/machinery/power/fusion/ring/New()
 	update_icon()
 	..()
+
+//Finds facing pair of containment ring (straight piece) checks and returns it.
+//Returns null if not found or check failed.
+/obj/machinery/power/fusion/ring/proc/get_pair()
+	var/turf/t = get_turf(get_step(src, src.dir))
+	var/max_range = 10
+	var/range = 0
+	while(range <= max_range)
+		range += 1
+		t = get_turf(get_step(t, src.dir))
+		for(var/obj/machinery/power/fusion/ring/r in t.contents)
+			if(istype(r, /obj/machinery/power/fusion/ring) && src.dir == turn(r.dir, 180)) //Are they facing each other ?
+				return r
+	return null
+
+//Find connecting containment ring (corner piece)
+/obj/machinery/power/fusion/ring/proc/get_corner()
+	var/turf/t = get_turf(get_step(src, turn(src.dir, 180)))	//Get turf adacent from the pos its not facing.
+	for(var/obj/machinery/power/fusion/ring_corner/rc in t.contents)
+		if(istype(rc, /obj/machinery/power/fusion/ring_corner))
+			if(turn(src.dir, 180) == turn(rc.dir, 90) || turn(src.dir, 180) == turn(rc.dir, 270) || src.dir == rc.dir )	//Are we facing either 90 deg away, 270 away or with the same dir.
+				return rc
+	return null
+
+/obj/machinery/power/fusion/ring/proc/plasma_locs()
+	world << "Getting plasma locs"
+	var/turf/t = src
+	var/list/locs = list()
+	var/max_range = 10
+	var/range = 0
+	while(range <= max_range)
+		range += 1
+		t = get_step(t, src.dir)
+		if(!istype(t, /turf))
+			t = get_turf(t)
+		for(var/obj/machinery/power/fusion/ring/r in t.contents)
+			if(istype(r, /obj/machinery/power/fusion/ring) && src.dir == turn(r.dir, 180))
+				world << "Returning with locs [locs.len]"
+				return locs
+		world << "plasma loc/turf: [t], [t.dir]"
+		locs[t] = src.dir
+	return null
 
 /obj/machinery/power/fusion/ring/update_icon()
 	..()

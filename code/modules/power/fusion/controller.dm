@@ -32,6 +32,9 @@
 	var/neutrondam_coef = 3.65					//Devide neutrons by this for damage to shields this will keep it stable at 50 rod insetion at normal activity.
 	var/power_coef = 16.5
 	var/list/plasma_locs = list()
+	var/nr_comp = 0
+	var/nr_corners = 0
+	var/max_field = 0
 
 /datum/fusion_controller/New()
 	fusion_controllers += src
@@ -69,7 +72,7 @@
 //Check the individual components for various statuses
 /datum/fusion_controller/proc/checkComponents()
 	. = 0
-	if(fusion_components.len != 13)
+	if(fusion_components.len != nr_comp)
 		if(gas_contents.temperature > 90000)
 			critFail(pick(fusion_components))	//Easteregg for egnineers who think they are safe behind glass
 		else
@@ -78,6 +81,8 @@
 		for(var/obj/machinery/power/fusion/locked_comp in fusion_components)
 			locked_comp.locked = 0
 			locked_comp.on = 0
+			locked_comp.in_network = 0
+			locked_comp.origen = 0
 		if(!isnull(computer))
 			computer.reboot()
 		qdel(src)
@@ -94,6 +99,8 @@
 			for(var/obj/machinery/power/fusion/locked_comp in fusion_components)
 				locked_comp.locked = 0
 				locked_comp.on = 0
+				locked_comp.in_network = 0
+				locked_comp.origen = 0
 			if(!isnull(computer))
 				computer.reboot()
 			qdel(src)
@@ -140,40 +147,34 @@
 
 //Spawns the "plasma" based upon the location of the core rod.
 /datum/fusion_controller/proc/generatePlasma()
+	var/dub = 0	//To make sure we dont place to fields on one turf.
 	var/obj/machinery/power/fusion/plasma/p
-	var/obj/machinery/power/fusion/core/core
-	//for(var/atom/a in plasma_locs)
-	//	p = PoolOrNew(/obj/machinery/power/fusion/plasma, a.loc)
-
-	for(var/obj/machinery/power/fusion/core/c in fusion_components)
-		core = c
-		break
-
-	for(var/tmp/i in list(-2, 2))
-		p = PoolOrNew(/obj/machinery/power/fusion/plasma, core.loc)
-		//p = new(core.loc)
-		p.x += i
-		if(i == 2)
-			p.dir = SOUTH
-		if(i == -2)
-			p.dir = NORTH
-		p.fusion_controller = src
+	world << "plasma locs [plasma_locs.len]"
+	for(var/turf/a in plasma_locs)
+		dub = 0
+		for(var/obj/o in a.contents)
+			if (istype(o, /obj/machinery/power/fusion/plasma))
+				dub = 1
+		if(dub)
+			continue
+		world << "Generating plasma [a.loc], [a.x], [a.y]"
+		p = PoolOrNew(/obj/machinery/power/fusion/plasma, a)
+		p.dir = plasma_locs[a]	//Associative list with turfs and their directions.
 		plasma.Add(p)
-
-	for(var/tmp/i in list(-2, 2))
-		//p = new(core.loc)
-		p = PoolOrNew(/obj/machinery/power/fusion/plasma, core.loc)
-		p.y += i
-		if(i == 2)
-			p.dir = EAST
-		if(i == -2)
-			p.dir = WEST
 		p.fusion_controller = src
-		plasma.Add(p)
 
 //Update the status of the plasma.. among other things -_-'
 /datum/fusion_controller/proc/updatePlasma()
-	var/obj/machinery/power/fusion/core/core = fusion_components[13]
+	var/obj/machinery/power/fusion/core/core = null
+
+	for(var/obj/machinery/power/fusion/core/c in fusion_components)
+		if(istype(c, /obj/machinery/power/fusion/core))
+			core = c
+	world << "Check if core is null :[core]:"
+	if(isnull(core))
+		return
+
+	world << "Checking if we need to generate plasma, plasma.len = [plasma.len] gas = [gas]"
 	if(plasma.len == 0 && gas)
 		generatePlasma()
 
@@ -187,16 +188,20 @@
 		if(comp.anchored == 0)
 			leakPlasma()
 			if(gas_contents.temperature > 90000)	//We are at fusion temp EXPLODE!
-				critFail()
+				comp.stat = BROKEN
 				return
 
 	if(!confield)
-		if(gas_contents.temperature < 75000)
+		if(gas_contents.temperature < 90000)
 			leakPlasma()
 			removePlasma()
 			gas = 0
 		else
-			critFail(pick(fusion_components))
+			leakPlasma()
+			removePlasma()
+			gas = 0
+			var/obj/machinery/power/fusion/comp = pick(fusion_components)
+			comp.stat = BROKEN
 		return
 
 	core.decay()
@@ -233,7 +238,7 @@
 	gas_contents.update_values()
 	if(isnull(table))
 		return
-	coefs = table.gas_coef(gas_contents)
+	coefs = table.gas_coef(gas_contents, nr_corners)
 	if(isnull(event_color) || isnull(gas_contents))
 		return
 	var/tmp/gas_color = table.gas_color(gas_contents, event_color)
@@ -297,7 +302,7 @@
 			tmp_confield += r.field_energy()
 	if(!isnull(coefs))
 		tmp_confield = tmp_confield*coefs["shield"] + tmp_confield*field_coef
-	confield = Clamp(tmp_confield, 0, 40000 + 1000*field_coef)
+	confield = Clamp(tmp_confield, 0, max_field + 1000*field_coef)
 
 //When does fusion happen ?
 /datum/fusion_controller/proc/calcFusion()
@@ -415,101 +420,37 @@
 	if(isnull(c))
 		return
 	c.controller = src
-	var/obj/machinery/power/fusion/mag_ring = null
-	for(var/dir in list(NORTHWEST,NORTHEAST,SOUTHEAST,SOUTHWEST))
-		//Getting the corner ring
-		mag_ring = null
-		mag_ring = locate(/obj/machinery/power/fusion/ring_corner/, get_step(get_step(c, dir),dir))
-		if(!(istype(mag_ring, /obj/machinery/power/fusion/ring_corner) ||!isnull(mag_ring)))
-			return
-		//Getting straight rings and check dir on corner, let the spagetti begin.
-		if(dir == NORTHWEST)
-			if(!mag_ring.dir == EAST || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
-			mag_ring = null
-			mag_ring = locate(/obj/machinery/power/fusion/ring/, get_step(get_step(c, dir),NORTH))
-			if(!(istype(mag_ring, /obj/machinery/power/fusion/ring) ||!isnull(mag_ring)))
-				return
-			if(!mag_ring.dir == EAST || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
-			mag_ring = null
-			mag_ring = locate(/obj/machinery/power/fusion/ring/, get_step(get_step(c, dir),WEST))
-			if(!(istype(mag_ring, /obj/machinery/power/fusion/ring) ||!isnull(mag_ring)))
-				return
-			if(!mag_ring.dir == SOUTH || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
-			continue
 
-		if(dir == NORTHEAST)
-			if(!mag_ring.dir == SOUTH || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
-			mag_ring = null
-			mag_ring = locate(/obj/machinery/power/fusion/ring/, get_step(get_step(c, dir),NORTH))
-			if(!(istype(mag_ring, /obj/machinery/power/fusion/ring) ||!isnull(mag_ring)))
-				return
-			if(!mag_ring.dir == WEST || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
-			mag_ring = null
-			mag_ring = locate(/obj/machinery/power/fusion/ring/, get_step(get_step(c, dir),EAST))
-			if(!(istype(mag_ring, /obj/machinery/power/fusion/ring) ||!isnull(mag_ring)))
-				return
-			if(!mag_ring.dir == SOUTH || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
+	//Pick a ring to start from:
+	var/obj/machinery/power/fusion/ring_corner/cring = null
+	for(var/obj/machinery/power/fusion/ring_corner/cr in orange(10, c))
+		if(!cr.ready)
 			continue
-
-		if(dir == SOUTHEAST)
-			if(!mag_ring.dir == WEST || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
-			mag_ring = null
-			mag_ring = locate(/obj/machinery/power/fusion/ring/, get_step(get_step(c, dir),SOUTH))
-			if(!(istype(mag_ring, /obj/machinery/power/fusion/ring) ||!isnull(mag_ring)))
-				return
-			if(!mag_ring.dir == WEST || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
-			mag_ring = null
-			mag_ring = locate(/obj/machinery/power/fusion/ring/, get_step(get_step(c, dir),EAST))
-			if(!(istype(mag_ring, /obj/machinery/power/fusion/ring) ||!isnull(mag_ring)))
-				return
-			if(!mag_ring.dir == NORTH || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
-			continue
-
-		if(dir == SOUTHWEST)
-			if(!mag_ring.dir == NORTH || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
-			mag_ring = null
-			mag_ring = locate(/obj/machinery/power/fusion/ring/, get_step(get_step(c, dir),WEST))
-			if(!(istype(mag_ring, /obj/machinery/power/fusion/ring) ||!isnull(mag_ring)))
-				return
-			if(!mag_ring.dir == NORTH || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
-			mag_ring = null
-			mag_ring = locate(/obj/machinery/power/fusion/ring/, get_step(get_step(c, dir),SOUTH))
-			if(!(istype(mag_ring, /obj/machinery/power/fusion/ring) ||!isnull(mag_ring)))
-				return
-			if(!mag_ring.dir == EAST || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
+		cring = cr
+	if(isnull(cring))
+		return
+	var/list/network = list()
+	var/list/tmpnetwork = list()
+	tmpnetwork += cring.build_network(1, network)
+	world << "[network], [network.len]"
+	if(isnull(tmpnetwork) || tmpnetwork.len == 0)
+		world << "Network building failed."
+		return
+	network += tmpnetwork
+	world << "Network building complete."
+	network.Remove(null)
+	temp_list += network
 
 	temp_list.Add(c)
-	if(temp_list.len != 13)
-		return
+	nr_comp = temp_list.len
+	world << "nr of comps [nr_comp]"
 	for(var/obj/machinery/power/fusion/comp in temp_list)
 		if(!comp.ready)
 			return
 		comp.fusion_controller = src
-	//Calculating component coefs
+
+	//Calculating component coefs and event color.
+	nr_corners = 0
 	for(var/obj/machinery/power/fusion/ring_corner/r in temp_list)
 		if(isnull(r.rod) || isnull(r.crystal))
 			return
@@ -519,12 +460,25 @@
 			event_color = BlendRGB(event_color, table.rod_color(r.rod), 0.5)
 		rod_coef += table.rod_coef(r.rod)
 		field_coef += table.field_coef(r.crystal)
-	rod_coef = rod_coef/4
-	field_coef = field_coef/4
-
+		nr_corners ++
+	rod_coef = rod_coef/nr_corners
+	max_field = max(9000*nr_corners, 40000)	//Min of 40k fields strengh.
+	field_coef = field_coef/nr_corners
+	world << "Rod coefs and colors completed"
+	//Getting locations of plasma fields
+	world << "Getting plasma locs"
+	get_plasma_locs(temp_list)
+	if(src.plasma_locs.len < 1)
+		world << "no plasma locs found returning"
+		return
+	world << "Plasma locs found [src.plasma_locs.len]"
 	fusion_components = temp_list
 	set_up = 1
 	return 1
+
+/datum/fusion_controller/proc/get_plasma_locs(var/list/components)
+	for(var/obj/machinery/power/fusion/ring/r in components)
+		plasma_locs += r.plasma_locs()
 
 /datum/fusion_controller/proc/addComp(var/obj/machinery/computer/fusion/comp)
 	fusion_components.Add(comp)

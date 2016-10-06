@@ -10,6 +10,8 @@
 	panel_open = 1
 	var/datum/fusion_controller/fusion_controller
 	anchored = 0
+	var/in_network = 0
+	var/origen = 0
 
 /obj/machinery/power/fusion/ex_act()
 	stat = BROKEN

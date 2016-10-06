@@ -1,0 +1,35 @@
+"a" = (/turf/unsimulated/wall,/area/centcom/test)
+"b" = (/turf/unsimulated/floor{tag = "icon-plating"; icon_state = "plating"},/area/centcom/test)
+"c" = (/obj/machinery/power/fusion/ring_corner{tag = "icon-ring_corner (EAST)"; icon_state = "ring_corner"; dir = 4},/turf/unsimulated/floor{tag = "icon-plating"; icon_state = "plating"},/area/centcom/test)
+"d" = (/obj/machinery/power/fusion/ring{tag = "icon-ring (EAST)"; icon_state = "ring"; dir = 4},/turf/unsimulated/floor{tag = "icon-plating"; icon_state = "plating"},/area/centcom/test)
+"e" = (/obj/machinery/power/fusion/ring{tag = "icon-ring (WEST)"; icon_state = "ring"; dir = 8},/turf/unsimulated/floor{tag = "icon-plating"; icon_state = "plating"},/area/centcom/test)
+"f" = (/obj/machinery/power/fusion/ring_corner,/turf/unsimulated/floor{tag = "icon-plating"; icon_state = "plating"},/area/centcom/test)
+"g" = (/obj/machinery/power/fusion/ring,/turf/unsimulated/floor{tag = "icon-plating"; icon_state = "plating"},/area/centcom/test)
+"h" = (/obj/machinery/computer/fusion{ctag = "testcore"},/turf/unsimulated/floor{tag = "icon-plating"; icon_state = "plating"},/area/centcom/test)
+"i" = (/obj/machinery/power/fusion/ring{tag = "icon-ring (NORTH)"; icon_state = "ring"; dir = 1},/turf/unsimulated/floor{tag = "icon-plating"; icon_state = "plating"},/area/centcom/test)
+"j" = (/obj/machinery/power/fusion/ring_corner{tag = "icon-ring_corner (WEST)"; icon_state = "ring_corner"; dir = 8},/turf/unsimulated/floor{tag = "icon-plating"; icon_state = "plating"},/area/centcom/test)
+"k" = (/obj/machinery/power/fusion/ring_corner{tag = "icon-ring_corner (NORTH)"; icon_state = "ring_corner"; dir = 1},/turf/unsimulated/floor{tag = "icon-plating"; icon_state = "plating"},/area/centcom/test)
+"l" = (/obj/machinery/power/fusion/core{tag = "testcore"},/turf/unsimulated/floor{tag = "icon-plating"; icon_state = "plating"},/area/centcom/test)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaa
+abbbbbbcdbefbbbbbbba
+abbbbbbgbbbgbbbbbbba
+abbbbbbbbbbbbbbbbbba
+abbbhbbbbbbbbbbbbbba
+abbbbbbbbbbbbbbbbbba
+abbbbbbibbbibbbbbbba
+acdbbbejbbbkdbbbefba
+agbbbbbbbbbbbbbbbgba
+abbbbbbbblbbbbbbbbba
+aibbbbbbbbbbbbbbbiba
+akdbbbefbbbcdbbbejba
+abbbbbbgbbbgbbbbbbba
+abbbbbbbbbbbbbbbbbba
+abbbbbbbbbbbbbbbbbba
+abbbbbbbbbbbbbbbbbba
+abbbbbbibbbibbbbbbba
+abbbbbbkdbejbbbbbbba
+abbbbbbbbbbbbbbbbbba
+aaaaaaaaaaaaaaaaaaaa
+"}

@@ -1044,16 +1044,19 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		r.panel_open = 0
 		r.anchored = 1
 		r.ready = 1
+		r.stat = 0
 	for(var/obj/machinery/power/fusion/ring/r in world)
 		r.wired = 1
 		r.panel_open = 0
 		r.anchored = 1
 		r.ready = 1
+		r.stat = 0
 	for(var/obj/machinery/power/fusion/core/c in world)
 		c.wired = 1
 		c.panel_open = 0
 		c.anchored = 1
 		c.ready = 1
+		c.stat = 0
 
 
 /client/proc/setup_supermatter_engine()
