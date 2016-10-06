@@ -26,6 +26,7 @@ var/global/list/fusion_balls = list()
 	var/emp_change = 0
 	var/x_offset = 0
 	var/y_offset = 0
+	var/stage = 1
 
 /obj/fusion_ball/New(loc)
 	//CARN: admin-alert for chuckle-fuckery.
@@ -82,6 +83,7 @@ var/global/list/fusion_balls = list()
 		escalate()
 
 /obj/fusion_ball/proc/escalate()
+	stage = 2
 	shock_range = 7
 	kill_shock_range = 3
 	emp_change = 0
@@ -104,6 +106,15 @@ var/global/list/fusion_balls = list()
 		for(var/atom/a in orange(des_range, src))
 			qdel(a)
 	*/
+	//Darken turfs under you
+	var/list/effected = list()
+	effected += get_turf(src)
+	if(stage == 2)
+		effected += locate(x,y+1)
+		effected += locate(x +1,y)
+		effected += locate(x+1,y+1)
+	for(var/turf/simulated/floor/f in effected)
+		f.burn_tile()
 	spawn()
 		for(var/mob/living/M in ohearers(shock_range,src))	//if you are behind glass your are safe.(this returns only mobs !)
 			var/dist = get_dist(M, src)
