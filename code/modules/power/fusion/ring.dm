@@ -14,6 +14,7 @@
 	var/obj/item/weapon/tank/tank
 	var/obj/item/weapon/neutronRod/rod
 	var/obj/item/weapon/shieldCrystal/crystal
+	origen = 0
 
 /obj/machinery/power/fusion/ring_corner/New()
 	//FOR DEBUG
@@ -146,11 +147,9 @@
 
 //Set the content of the tank
 /obj/machinery/power/fusion/ring_corner/proc/set_tank_content(var/datum/gas_mixture/gas)
-	//world << "gas moles in set_tank_contents [gas.total_moles]"
 	if(gas.temperature == 0)	//For some reason if I dont do this it turns the temp to 0.
 		gas.temperature = 293.15
 	tank.air_contents = gas
-	//world << "gas moles in tank afther set_tank_contents [tank.air_contents.total_moles]"
 
 /obj/machinery/power/fusion/ring_corner/proc/get_tank_moles()
 	if(isnull(tank))
@@ -161,6 +160,50 @@
 
 /obj/machinery/power/fusion/ring_corner/status()
 	return "[(1000-damage)/10] %<br>"
+
+
+/obj/machinery/power/fusion/ring_corner/proc/build_network(var/start, var/list/comp_list)
+	if(src.origen == 1)
+		//world.loop_checks=1
+		src.in_network = 0
+		src.origen = 0
+		return comp_list
+	comp_list += src
+	in_network = 1
+
+	//Find staight connection
+	var/obj/machinery/power/fusion/ring/ring = null
+	var/list/rings = list()
+	rings += locate(/obj/machinery/power/fusion/ring) in get_step(src, src.dir)
+	rings += locate(/obj/machinery/power/fusion/ring) in get_step(src, turn(src.dir, 90))
+	rings += locate(/obj/machinery/power/fusion/ring) in get_step(src, turn(src.dir, 270))
+	for(var/obj/machinery/power/fusion/ring/r in rings)
+		if(!r.in_network)
+			ring = r
+			break
+	if(isnull(ring))
+		return list()
+
+	ring.in_network = 1
+	comp_list += ring
+	ring = ring.get_pair()
+	if(isnull(ring))
+		return list()
+	ring.in_network = 1
+	comp_list += ring
+	var/obj/machinery/power/fusion/ring_corner/rc = ring.get_corner()
+	if(isnull(rc))
+		return list()
+
+	//We dont need to add the next corner sins it will add itself.
+
+	//If you are the origen pass yourself as it. Else pass it allong
+	if(start)
+		src.origen = 1
+	rc.build_network(0, comp_list)
+	//When we return anywhere wee need to reset this.
+	src.in_network = 0
+	src.origen = 0
 
 //8 edges of the magnetic ring
 /obj/machinery/power/fusion/ring
@@ -178,6 +221,45 @@
 /obj/machinery/power/fusion/ring/New()
 	update_icon()
 	..()
+
+//Finds facing pair of containment ring (straight piece) checks and returns it.
+//Returns null if not found or check failed.
+/obj/machinery/power/fusion/ring/proc/get_pair()
+	var/turf/t = get_turf(get_step(src, src.dir))
+	var/max_range = 10
+	var/range = 0
+	while(range <= max_range)
+		range += 1
+		t = get_turf(get_step(t, src.dir))
+		for(var/obj/machinery/power/fusion/ring/r in t.contents)
+			if(istype(r, /obj/machinery/power/fusion/ring) && src.dir == turn(r.dir, 180)) //Are they facing each other ?
+				return r
+	return null
+
+//Find connecting containment ring (corner piece)
+/obj/machinery/power/fusion/ring/proc/get_corner()
+	var/turf/t = get_turf(get_step(src, turn(src.dir, 180)))	//Get turf adacent from the pos its not facing.
+	for(var/obj/machinery/power/fusion/ring_corner/rc in t.contents)
+		if(istype(rc, /obj/machinery/power/fusion/ring_corner))
+			if(turn(src.dir, 180) == turn(rc.dir, 90) || turn(src.dir, 180) == turn(rc.dir, 270) || src.dir == rc.dir )	//Are we facing either 90 deg away, 270 away or with the same dir.
+				return rc
+	return null
+
+/obj/machinery/power/fusion/ring/proc/plasma_locs()
+	var/turf/t = src
+	var/list/locs = list()
+	var/max_range = 10
+	var/range = 0
+	while(range <= max_range)
+		range += 1
+		t = get_step(t, src.dir)
+		if(!istype(t, /turf))
+			t = get_turf(t)
+		for(var/obj/machinery/power/fusion/ring/r in t.contents)
+			if(istype(r, /obj/machinery/power/fusion/ring) && src.dir == turn(r.dir, 180))
+				return locs
+		locs[t] = src.dir
+	return null
 
 /obj/machinery/power/fusion/ring/update_icon()
 	..()

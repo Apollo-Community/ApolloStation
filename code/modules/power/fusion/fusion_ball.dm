@@ -16,8 +16,8 @@ var/global/list/fusion_balls = list()
 	var/end_time = 0 //At what time are we going to end
 	var/middle_time = 0	//Right in the middle of start and end.
 	var/escalate = 0 //Are we at full or half size ?
-	var/shock_range = 10 //How far away do we sock people ?
-	var/kill_shock_range = 5 //How var away do we fry people ?
+	var/shock_range = 5 //How far away do we sock people ?
+	var/kill_shock_range = 2 //How var away do we fry people ?
 	var/move_self = 1 //Do we move on our own?
 	var/target = null //Its target. Moves towards the target if it has one.
 	var/obj/machinery/power/smes/smes_target = null //The temp target it move to if no beacon is set.
@@ -26,6 +26,7 @@ var/global/list/fusion_balls = list()
 	var/emp_change = 0
 	var/x_offset = 0
 	var/y_offset = 0
+	var/stage = 1
 
 /obj/fusion_ball/New(loc)
 	//CARN: admin-alert for chuckle-fuckery.
@@ -82,8 +83,9 @@ var/global/list/fusion_balls = list()
 		escalate()
 
 /obj/fusion_ball/proc/escalate()
-	shock_range = 15
-	kill_shock_range = 5
+	stage = 2
+	shock_range = 7
+	kill_shock_range = 3
 	emp_change = 0
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "emfield_s3"
@@ -104,6 +106,15 @@ var/global/list/fusion_balls = list()
 		for(var/atom/a in orange(des_range, src))
 			qdel(a)
 	*/
+	//Darken turfs under you
+	var/list/effected = list()
+	effected += get_turf(src)
+	if(stage == 2)
+		effected += locate(x,y+1)
+		effected += locate(x +1,y)
+		effected += locate(x+1,y+1)
+	for(var/turf/simulated/floor/f in effected)
+		f.burn_tile()
 	spawn()
 		for(var/mob/living/M in ohearers(shock_range,src))	//if you are behind glass your are safe.(this returns only mobs !)
 			var/dist = get_dist(M, src)
@@ -116,6 +127,11 @@ var/global/list/fusion_balls = list()
 		for(var/i = 0, i <= 3, i++)
 			var/obj/m = pick(viewers)
 			emp(m)
+			if(!istype(m, /turf/simulated/floor))
+				continue
+			var/turf/simulated/floor/f = m
+			f.burn_tile()
+
 	return
 
 /obj/fusion_ball/proc/emp(obj/m)
@@ -131,7 +147,7 @@ var/global/list/fusion_balls = list()
 	bolt.start(src, m, sx_offset = x_offset, sy_offset = y_offset)
 	playsound(src.loc, pick( 'sound/effects/electr1.ogg', 'sound/effects/electr2.ogg', 'sound/effects/electr3.ogg'), 100, 1)
 	m.apply_damage(rand(10, 20), damagetype = BURN)
-	m.apply_effect(rand(10, 20), effecttype = STUN)
+	m.apply_effect(rand(2.5, 5), effecttype = STUN)
 	new/obj/effect/effect/sparks(get_turf(m))
 
 /obj/fusion_ball/proc/kill_shock(var/mob/living/m)
@@ -144,7 +160,7 @@ var/global/list/fusion_balls = list()
 	m.dust()
 
 /obj/fusion_ball/proc/move()
-	var/movement_dir = pick(list(NORTH, EAST, SOUTH, WEST))
+	var/movement_dir = pick(list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 	if(isnull(smes_target))
 		var/list/targets = list()
 		for(var/obj/machinery/power/smes/S in machines)
@@ -153,18 +169,33 @@ var/global/list/fusion_balls = list()
 			targets += S
 		smes_target = pick(targets)
 	if(smes_target)
-		if(prob(80))
+		if(prob(70))
 			movement_dir = get_dir(src,smes_target)
 		if(smes_target.charge < 100)
 			smes_target = null
 	if(target && prob(60))
 		movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
-	spawn(0)
-		if(!step(src, movement_dir))
-			//step does not go trough walls -_-.
-			var/atom/a = get_step(src, movement_dir)
-			var/tmp/dx = Clamp(a.x - src.x, -1, 1)
-			var/tmp/dy = Clamp(a.y - src.y, -1, 1)
-			src.x += dx
-			src.y += dy
+
+	//Because get_step or step SUCKS
+	switch(movement_dir)
+		if(NORTH)
+			y += 1
+		if(EAST)
+			x += 1
+		if(SOUTH)
+			y -= 1
+		if(WEST)
+			x -= 1
+		if(NORTHEAST)
+			x += 1
+			y += 1
+		if(NORTHWEST)
+			x -= 1
+			y += 1
+		if(SOUTHEAST)
+			x += 1
+			y -= 1
+		if(SOUTHWEST)
+			x -= 1
+			y -= 1
 	return 1
