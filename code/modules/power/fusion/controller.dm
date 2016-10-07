@@ -368,6 +368,8 @@
 			fail()
 			critFail(component)
 
+//Called if something goes wrong in a not so bad manner.
+//Vent all plasma gasses and unlock all components.
 /datum/fusion_controller/proc/fail()
 	for(var/obj/machinery/power/fusion/locked_comp in fusion_components)
 		locked_comp.locked = 0
@@ -390,8 +392,9 @@
 	spawn()
 		explosion(get_turf(o), 2, 4, 10, 15)
 
+//Announce a contianment field warning to the crew (general comms) if the field is les then 50%
 /datum/fusion_controller/proc/announce_warning()
-	var/tmp/alert_msg = "Warning Tokamak containment field integrity at [round(confield/400)]%"
+	var/tmp/alert_msg = "Warning Tokamak containment field integrity at [round(confield/max_field)]%"
 	if(confield < 20000)
 		if(confield < confield_archived) // The damage is still going up sinse last calc
 			safe_warn = 1
@@ -420,6 +423,8 @@
 		cring = cr
 	if(isnull(cring))
 		return
+
+	//Some safety checks on what the network builder returned.
 	var/list/network = list()
 	var/list/tmpnetwork = list()
 	tmpnetwork += cring.build_network(1, network)
@@ -428,14 +433,16 @@
 	network += tmpnetwork
 	network.Remove(null)
 	temp_list += network
-
 	temp_list.Add(c)
 	nr_comp = temp_list.len
+
+	//Check if all components found are ready (wired, closed, have compnents).
 	for(var/obj/machinery/power/fusion/comp in temp_list)
 		if(!comp.ready)
 			return
 		comp.fusion_controller = src
 
+	//Check if the network has a symetric shape (aka is the core in the middle).
 	if(!check_symetry(c, temp_list))
 		return
 
@@ -454,6 +461,7 @@
 	rod_coef = rod_coef/nr_corners
 	max_field = max(9000*nr_corners, 40000)	//Min of 40k fields strengh.
 	field_coef = field_coef/nr_corners
+
 	//Getting locations of plasma fields
 	get_plasma_locs(temp_list)
 	if(src.plasma_locs.len < 1)
@@ -462,6 +470,8 @@
 	set_up = 1
 	return 1
 
+//Check if listed components in an increasing radius are symetric.
+//Do this by checking for even/odd number of components found in a radius.
 /datum/fusion_controller/proc/check_symetry(center, comp_list)
 	var/range = 2
 	var/list/L = list()
@@ -473,9 +483,11 @@
 		range ++
 	return 1
 
+//Get the locations (turfs) where plasma is going to be generated.
 /datum/fusion_controller/proc/get_plasma_locs(var/list/components)
 	for(var/obj/machinery/power/fusion/ring/r in components)
 		plasma_locs += r.plasma_locs()
 
+//External setter for components list.
 /datum/fusion_controller/proc/addComp(var/obj/machinery/computer/fusion/comp)
 	fusion_components.Add(comp)

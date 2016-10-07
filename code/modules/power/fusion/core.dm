@@ -19,8 +19,6 @@
 
 /obj/machinery/power/fusion/core/New()
 	update_icon()
-	//machines += src
-	//MachineProcessing += src
 	connect_to_network()
 	..()
 

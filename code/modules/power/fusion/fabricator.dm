@@ -147,10 +147,5 @@
 	if(alloy.amount == 0)
 		usr << "<span class='warning'>Nothing to be ejected.</span>"
 		return
-	var/amount_ejected = alloy.amount
-	alloy.use(alloy.amount)
-	alloy = new()
-	var/tmp/obj/item/stack/sheet/alloy/ejected = alloy
-	ejected.loc = get_turf(usr)
-	ejected.amount = amount_ejected
+	alloy.loc = get_turf(usr)
 	alloy = null

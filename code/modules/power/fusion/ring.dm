@@ -17,12 +17,6 @@
 	origen = 0
 
 /obj/machinery/power/fusion/ring_corner/New()
-	//FOR DEBUG
-	/*
-	tank = new()
-	rod = new()
-	crystal = new()
-	*/
 	update_icon()
 	..()
 
@@ -208,7 +202,7 @@
 //8 edges of the magnetic ring
 /obj/machinery/power/fusion/ring
 	name = "Fusion Containment Ring"
-	desc = "Part of the fusion containment ring keeps hot fusion from escaping."
+	desc = "Part of the fusion containment ring keeps hot plasma from escaping."
 	var/integrity = 1000
 	icon = 'icons/obj/fusion.dmi'
 	icon_state = "ring"
@@ -245,6 +239,7 @@
 				return rc
 	return null
 
+//Get a list of plasma locs between a pair of rings
 /obj/machinery/power/fusion/ring/proc/plasma_locs()
 	var/turf/t = src
 	var/list/locs = list()

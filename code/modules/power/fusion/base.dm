@@ -96,15 +96,16 @@
 		update_icon()
 		return
 	else if(istype(W, /obj/item/weapon/card/emag) && !emagged)
-		user << "You hear a click disabling the magnetic seals."
+		user << "You hear a series of clicks as the main seals get disabled and auxilery ones take over."
 		emagged = 1
 		update_icon()
 		return
 		..()
 
-/obj/machinery/power/fusion/verb/rotate_clock()
+//Rotation procs.
+/obj/machinery/power/fusion/verb/rotate_anticlock()
 	set category = "Object"
-	set name = "Rotate (Clockwise)"
+	set name = "Rotate (Counterclockwise)"
 	set src in view(1)
 
 	if (usr.stat || usr.restrained()  || anchored)
@@ -112,9 +113,9 @@
 
 	src.set_dir(turn(src.dir, 90))
 
-/obj/machinery/power/fusion/verb/rotate_anticlock()
+/obj/machinery/power/fusion/verb/rotate_clock()
 	set category = "Object"
-	set name = "Rotate (Counterclockwise)"
+	set name = "Rotate (Clockwise)"
 	set src in view(1)
 
 	if (usr.stat || usr.restrained()  || anchored)

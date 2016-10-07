@@ -9,7 +9,7 @@ var/global/list/fusion_balls = list()
 	anchored = 1
 	density = 0
 	layer = 6
-	light_range = 6
+	light_range = 7
 	unacidable = 1 //Don't comment this out.
 	can_fall = 0 // can't fall down z-levels
 	var/start_time = 0 //At what time did we start
@@ -34,7 +34,7 @@ var/global/list/fusion_balls = list()
 	start_time = world.realtime
 	end_time = start_time + 300
 	middle_time = start_time + 150
-
+	set_light(light_range, 7, COLOR_WHITE)
 	..()
 	processScheduler.enableProcess("fusion_ball")	//To make sure its not checking for balls when there are non.
 	fusion_balls += src
@@ -48,6 +48,7 @@ var/global/list/fusion_balls = list()
 	fusion_balls -= src
 	..()
 
+//Not a very smart move.
 /obj/fusion_ball/attack_hand(mob/user as mob)
 	kill_shock(user)
 	return 1
@@ -86,7 +87,6 @@ var/global/list/fusion_balls = list()
 	stage = 2
 	shock_range = 7
 	kill_shock_range = 3
-	emp_change = 0
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "emfield_s3"
 	x_offset = 32
@@ -100,21 +100,16 @@ var/global/list/fusion_balls = list()
 	investigate_log("A fusion ball has spawned at: ([x], [y], [z]), src")
 
 /obj/fusion_ball/proc/shock()
-	//set background = BACKGROUND_ENABLED
-	/*
-	spawn()
-		for(var/atom/a in orange(des_range, src))
-			qdel(a)
-	*/
 	//Darken turfs under you
 	var/list/effected = list()
 	effected += get_turf(src)
-	if(stage == 2)
-		effected += locate(x,y+1)
-		effected += locate(x +1,y)
-		effected += locate(x+1,y+1)
+	var/turf/center = locate(src.x+1, src.y+1)
+	effected += center
+	effected += orange(2, center)
 	for(var/turf/simulated/floor/f in effected)
 		f.burn_tile()
+
+	//Shock things.
 	spawn()
 		for(var/mob/living/M in ohearers(shock_range,src))	//if you are behind glass your are safe.(this returns only mobs !)
 			var/dist = get_dist(M, src)
@@ -131,15 +126,16 @@ var/global/list/fusion_balls = list()
 				continue
 			var/turf/simulated/floor/f = m
 			f.burn_tile()
-
 	return
 
+//Shoot EMP at a turf.
 /obj/fusion_ball/proc/emp(obj/m)
 	var/datum/effect/effect/system/lightning_bolt/bolt = new()
 	bolt.start(src, m, sx_offset = x_offset, sy_offset = y_offset)
 	playsound(src.loc, pick( 'sound/effects/electr1.ogg', 'sound/effects/electr2.ogg', 'sound/effects/electr3.ogg'), 100, 1)
 	empulse(get_turf(m), 1, 1)
 
+//Hurt (burn) shock target.
 /obj/fusion_ball/proc/hurt_shock(var/mob/living/m)
 	if(m.status_flags & GODMODE)
 		return
@@ -150,6 +146,7 @@ var/global/list/fusion_balls = list()
 	m.apply_effect(rand(2.5, 5), effecttype = STUN)
 	new/obj/effect/effect/sparks(get_turf(m))
 
+//Kill (dustify) shock a target.
 /obj/fusion_ball/proc/kill_shock(var/mob/living/m)
 	if(m.status_flags & GODMODE)
 		return
@@ -159,6 +156,7 @@ var/global/list/fusion_balls = list()
 	new/obj/effect/effect/sparks(get_turf(m))
 	m.dust()
 
+//Movement handle, move one turf per processes tick.
 /obj/fusion_ball/proc/move()
 	var/movement_dir = pick(list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 	if(isnull(smes_target))
@@ -176,7 +174,7 @@ var/global/list/fusion_balls = list()
 	if(target && prob(60))
 		movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
 
-	//Because get_step or step SUCKS
+	//Because get_step or step SUCKS.
 	switch(movement_dir)
 		if(NORTH)
 			y += 1
