@@ -73,36 +73,18 @@
 /datum/fusion_controller/proc/checkComponents()
 	. = 0
 	if(fusion_components.len != nr_comp)
+		fail()
 		if(gas_contents.temperature > 90000)
 			critFail(pick(fusion_components))	//Easteregg for egnineers who think they are safe behind glass
-		else
-			leakPlasma()
-			removePlasma()
-		for(var/obj/machinery/power/fusion/locked_comp in fusion_components)
-			locked_comp.locked = 0
-			locked_comp.on = 0
-			locked_comp.in_network = 0
-			locked_comp.origen = 0
-		if(!isnull(computer))
-			computer.reboot()
 		qdel(src)
 		return
 
 	var/emmag_nr = 0
 	for(var/obj/machinery/power/fusion/comp in fusion_components)
 		if(!comp.ready || comp.stat == BROKEN)
+			fail()
 			if(gas_contents.temperature > 90000)
 				critFail(comp)
-			else
-				leakPlasma()
-				removePlasma()
-			for(var/obj/machinery/power/fusion/locked_comp in fusion_components)
-				locked_comp.locked = 0
-				locked_comp.on = 0
-				locked_comp.in_network = 0
-				locked_comp.origen = 0
-			if(!isnull(computer))
-				computer.reboot()
 			qdel(src)
 			return
 		if(comp.emagged)
@@ -244,7 +226,7 @@
 
 //Pump plasma back into rings.
 /datum/fusion_controller/proc/drainPlasma()
-	gas_contents.divide(4)
+	gas_contents.divide(nr_corners)
 	var/datum/gas_mixture/tank_mix
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
 		tank_mix = new()
@@ -341,8 +323,11 @@
 		confield -= (neutrons/neutrondam_coef)*rod_insertion
 
 	if(coefs["explosive"] && prob(5))
+		fail()
 		critFail(p)
+		qdel(src)
 
+//Check if victem is insulated
 /datum/fusion_controller/proc/insulated(var/mob/living/carbon/human/m)
 	if(isnull(m.head) || isnull(m.wear_suit))
 		return 0
@@ -350,6 +335,7 @@
 		return 0
 	return 1
 
+//Arc from a fusion field to a victem.
 /datum/fusion_controller/proc/arc(obj/T, obj/S)
 	if(isnull(T))
 		return
@@ -379,7 +365,20 @@
 
 		else if(component.damage > 999)
 			//critically fail
+			fail()
 			critFail(component)
+
+/datum/fusion_controller/proc/fail()
+	for(var/obj/machinery/power/fusion/locked_comp in fusion_components)
+		locked_comp.locked = 0
+		locked_comp.on = 0
+		locked_comp.in_network = 0
+		locked_comp.origen = 0
+	if(!isnull(computer))
+		computer.reboot()
+	gas = 0
+	leakPlasma()
+	removePlasma()
 
 //Critically fail in an explosion .. or worse.
 /datum/fusion_controller/proc/critFail(var/obj/o)
@@ -388,9 +387,6 @@
 	if(gas_contents.temperature > 250000)
 		//You are really deep in the shit now boi!
 		new/obj/fusion_ball(o.loc)
-	gas = 0
-	leakPlasma()
-	removePlasma()
 	spawn()
 		explosion(get_turf(o), 2, 4, 10, 15)
 

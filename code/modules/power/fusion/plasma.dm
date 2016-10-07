@@ -14,12 +14,12 @@
 /obj/machinery/power/fusion/plasma/proc/transfer_energy(var/neurons = 0)
 	for(var/obj/machinery/power/fusion/core/C in fusion_controller.fusion_components)
 		var/distance = get_dist(C, src)
-		if(distance && distance <= 10)		//sanity for 1/0
+		if(distance && distance <= 15)		//sanity for 1/0
 			//stop their being a massive benifit to moving the rad collectors closer
 			if(distance < 3)	distance = 2.67			// between 25 - 50k benifit 	(level 1)
 			//for collectors using standard phoron tanks at 1013 kPa, the actual power generated will be this power*0.3*20*29 = power*174
 			//The closer the better radiation intensity is inversely to space traveled.
-			C.receive_neutrons(neurons/(distance**2))
+			C.receive_neutrons(neurons/(distance*0.3))
 	return
 
 /obj/machinery/power/fusion/plasma/proc/toggle_heat_transfer()

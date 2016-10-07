@@ -15,6 +15,7 @@
 	anchored = 0
 	var/total_power = 0
 	var/nr_events = 0
+	var/power_coef = 50
 
 /obj/machinery/power/fusion/core/New()
 	update_icon()
@@ -83,7 +84,7 @@
 /obj/machinery/power/fusion/core/proc/receive_neutrons(var/neutrons)
 	if(stat == BROKEN)
 		return
-	var/power = 400*neutrons	//Generate about 450kw at base level.
+	var/power = power_coef*neutrons	//Generate about 450kw at base level.
 	total_power += power
 	nr_events ++
 	return
