@@ -46,7 +46,7 @@
 			exchangers ++
 	data["exchangers"] = exchangers
 	if(!isnull(core))
-		data["IDDpower"] = round(core.last_power/1000)
+		data["IDDpower"] = round(core.wire_power/1000)
 	else
 		data["IDDpower"] = 0
 	var/list/ring_list = list()

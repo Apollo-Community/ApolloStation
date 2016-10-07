@@ -13,6 +13,7 @@
 	var/in_network = 0
 	var/origen = 0
 
+//Explosions brake components
 /obj/machinery/power/fusion/ex_act()
 	stat = BROKEN
 	desc = "[initial(desc)] It looks broken beyond repair."
@@ -29,8 +30,8 @@
 	update_icon()
 	..()
 
+// Light up some sparks
 /obj/machinery/power/fusion/proc/spark()
-	// Light up some sparks
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up( 3, 1, src )
 	s.start()
@@ -100,7 +101,7 @@
 		emagged = 1
 		update_icon()
 		return
-		..()
+	..()
 
 //Rotation procs.
 /obj/machinery/power/fusion/verb/rotate_anticlock()
