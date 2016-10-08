@@ -5,6 +5,7 @@
 	density = 1
 	var/transfering = 0
 	var/datum/gas_mixture/air_contents = null
+	var/list/partners = list()
 	var/obj/machinery/atmospherics/unary/heat_exchanger/partner = null
 	var/network = null
 	ready = 1
@@ -26,21 +27,26 @@
 	//Init part and partner check
 	transfering = !transfering
 	if (!transfering)
-		if(!isnull(partner))
-			partner.partner = null
-			partner = null
+		if(partners.len != 0)
+			partners.Cut()
 		return
 
-	if(!partner)
-		var/partner_connect = turn(dir, 90)
-
-		for(var/obj/machinery/atmospherics/unary/heat_exchanger/target in get_step(src,partner_connect))
-			if(target.dir & get_dir(src,target))
+	if(partners.len < 2)
+		//Get partners -90 deg from you
+		for(var/obj/machinery/atmospherics/unary/heat_exchanger/target in get_step(src,turn(src.dir, 90)))
+			if(target.dir == get_dir(target, src))	//Is if facing you our way ?
 				partner = target
 				partner.partner = src
 				break
 
-		if(isnull(partner))	//No partner was found :(
+		//Get partner 90 deg from you
+		for(var/obj/machinery/atmospherics/unary/heat_exchanger/target in get_step(src, turn(src.dir, -90)))
+			if(target.dir == get_dir(target, src))
+				partner = target
+				partner.partner = src
+				break
+
+		if(partners.len == 0)	//No partner was found :(
 			return 0
 		air_contents = fusion_controller.gas_contents
 

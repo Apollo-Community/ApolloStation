@@ -7,34 +7,38 @@
 
 /datum/fusionUpgradeTable/New()
 	rod = list(\
-	"iron"			= 0.0,\
-	"platinum"		= 0.2,\
-	"solid phoron" 	= 0.4,\
-	"silver" 		= 0.8,\
-	"gold"			= 1.6,\
-	"osmium"		= 3.2,\
-	"tritium"		= 6.4,\
-	"diamond"		= 12.8)
+	"iron"				= 0.0,\
+	"sandstone brick" 	= 0.1,\
+	"Plastic"			= 0.2,\
+	"platinum"			= 0.4,\
+	"solid phoron" 		= 0.8,\
+	"silver" 			= 1.6,\
+	"gold"				= 3.2,\
+	"osmium"			= 6.4,\
+	"diamond"			= 12.8,\
+	"tritium"			= 25.6)
 
 	rod_color = list(\
-	"iron"			= "#0067FF",\
-	"solid phoron" 	= "#00ccff",\
-	"silver" 		= "#ffff00",\
-	"gold"			= "#00ff00",\
-	"platinum" 		= "#a31aff",\
-	"osmium"		= "#ff00ff",\
-	"tritium"		= "#ff3300",\
-	"diamond"		= "#8f29ce")
+	"iron"				= "#0067FF",\
+	"solid phoron" 		= "#00ccff",\
+	"silver" 			= "#ffff00",\
+	"gold"				= "#00ff00",\
+	"platinum" 			= "#a31aff",\
+	"osmium"			= "#ff00ff",\
+	"diamond"			= "#ff3300",\
+	"tritium"			= "#8f29ce")
 
 	crystal = list(\
-	"iron"			= 0.0,\
-	"platinum"		= 0.1,\
-	"solid phoron" 	= 0.2,\
-	"silver" 		= 0.4,\
-	"gold"			= 0.8,\
-	"osmium"		= 1.6,\
-	"tritium"		= 3.2,\
-	"diamond"		= 6.4)
+	"iron"				= 0.0,\
+	"sandstone brick" 	= 0.1,\
+	"Plastic"			= 0.2,\
+	"platinum"			= 0.3,\
+	"solid phoron" 		= 0.4,\
+	"silver" 			= 0.6,\
+	"gold"				= 1.2,\
+	"osmium"			= 3.0,\
+	"diamond"			= 6.0,\
+	"tritium"			= 12.8)
 
 	gas_color = list(\
 	"phoron" 			= "#b30059",\
@@ -85,7 +89,7 @@
 	var/neutron_coef = 1 + Clamp(plasma.gas["oxygen"]/maxfuel, 0, 1)
 	var/heat_neutron_coef = plasma.gas["carbon_dioxide"]/maxfuel
 	var/neutron_heat_coef = plasma.gas["sleeping_agent"]/maxfuel
-	var/shield_coef = 1 + Clamp(plasma.gas["nitrogen"]/maxfuel, 0 ,1)
+	var/shield_coef = 1 + Clamp(plasma.gas["nitrogen"]/(maxfuel*2), 0 ,1)
 	var/explosive = 0
 	if(plasma.gas["phoron"] > 0 && plasma.gas["oxygen"] > 0)
 		explosive = 1
