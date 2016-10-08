@@ -178,8 +178,8 @@
 			leakPlasma()
 			removePlasma()
 			gas = 0
-			var/obj/machinery/power/fusion/comp = pick(fusion_components)
-			comp.stat = BROKEN
+		var/obj/machinery/power/fusion/comp = pick(fusion_components)
+		comp.stat = BROKEN
 		return
 
 	core.decay()
