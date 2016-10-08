@@ -20,7 +20,7 @@
 	var/obj/machinery/computer/fusion/computer	//The computer that this is linked to
 	var/set_up = 0
 	var/lastwarning = 0
-	var/warning_delay = 600 					//10 sec between warnings
+	var/warning_delay = 10000 					//10 sec between warnings
 	var/confield_archived = 0
 	var/safe_warned = 0
 	var/obj/item/device/radio/radio 			//For radio warnings
@@ -51,6 +51,7 @@
 //Standart process cycle
 /datum/fusion_controller/proc/process()
 	if(set_up)
+		checkField()
 		checkComponents()
 	if(fusion_components.len > 0)
 		pass_self()
@@ -71,7 +72,6 @@
 
 //Check the individual components for various statuses
 /datum/fusion_controller/proc/checkComponents()
-	. = 0
 	if(fusion_components.len != nr_comp)
 		fail()
 		if(gas_contents.temperature > 90000)
@@ -85,6 +85,7 @@
 			fail()
 			if(gas_contents.temperature > 90000)
 				critFail(comp)
+			comp.ex_act()
 			qdel(src)
 			return
 		if(comp.emagged)
@@ -92,7 +93,14 @@
 	if(emmag_nr >= 12)
 		for(var/obj/machinery/power/fusion/comp in fusion_components)
 			comp.locked = 0
-	. = 1
+
+//Check if the containment field is still online
+/datum/fusion_controller/proc/checkField()
+	if(!confield)
+		if(gas_contents.temperature > 90000)
+			var/obj/machinery/power/fusion/comp = pick(fusion_components)
+			comp.stat = BROKEN
+		return
 
 //Update the icons
 /datum/fusion_controller/proc/updateIcons()
@@ -168,19 +176,6 @@
 			if(gas_contents.temperature > 90000)	//We are at fusion temp EXPLODE!
 				comp.stat = BROKEN
 				return
-
-	if(!confield)
-		if(gas_contents.temperature < 90000)
-			leakPlasma()
-			removePlasma()
-			gas = 0
-		else
-			leakPlasma()
-			removePlasma()
-			gas = 0
-		var/obj/machinery/power/fusion/comp = pick(fusion_components)
-		comp.stat = BROKEN
-		return
 
 	core.decay()
 
@@ -376,6 +371,7 @@
 		locked_comp.on = 0
 		locked_comp.in_network = 0
 		locked_comp.origen = 0
+		locked_comp.update_icon()
 	if(!isnull(computer))
 		computer.reboot()
 	gas = 0
@@ -394,6 +390,8 @@
 
 //Announce a contianment field warning to the crew (general comms) if the field is les then 50%
 /datum/fusion_controller/proc/announce_warning()
+	return
+	/*
 	var/tmp/alert_msg = "Warning Tokamak containment field integrity at [round(confield/max_field)]%"
 	if(confield < 20000)
 		if(confield < confield_archived) // The damage is still going up sinse last calc
@@ -406,6 +404,7 @@
 		if(alert_msg && world.timeofday >= message_delay)
 			message_delay = world.timeofday + 15
 			radio.autosay(alert_msg, "Tokamak Monitor")
+	*/
 
 //LONG LIVE SPAGETTI !
 //This finds all the components in a efficient but really clumsy code wise way.
