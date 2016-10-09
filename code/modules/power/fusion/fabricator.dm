@@ -125,7 +125,8 @@
 		usr << "<span class='warning'>Not enough alloy in store.</span>"
 		return
 	alloy.use(5)
-	var/obj/item/weapon/shieldCrystal/crystal = new(alloy.mineral)
+	var/obj/item/weapon/shieldCrystal/crystal = new()
+	crystal.mineral = alloy.mineral
 	crystal.loc = get_turf(get_step(src, EAST))
 
 //produce a neutron rod
@@ -137,7 +138,8 @@
 		usr << "<span class='warning'>Not enough alloy in store..</span>"
 		return
 	alloy.use(5)
-	var/obj/item/weapon/neutronRod/rod = new(alloy.mineral)
+	var/obj/item/weapon/neutronRod/rod = new()
+	rod.mineral = alloy.mineral
 	rod.loc = get_turf(get_step(src, EAST))
 
 //Eject alloy from the machine
@@ -145,10 +147,5 @@
 	if(alloy.amount == 0)
 		usr << "<span class='warning'>Nothing to be ejected.</span>"
 		return
-	var/amount_ejected = alloy.amount
-	alloy.use(alloy.amount)
-	alloy = new()
-	var/tmp/obj/item/stack/sheet/alloy/ejected = alloy
-	ejected.loc = get_turf(usr)
-	ejected.amount = amount_ejected
+	alloy.loc = get_turf(usr)
 	alloy = null

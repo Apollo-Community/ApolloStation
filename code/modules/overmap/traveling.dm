@@ -103,7 +103,7 @@
 		if( sector.metadata && sector.metadata.landing_area )
 			var/area/planet/moon/landing_zone/destination
 
-			//For some reason the usr is null here -_- I've never incountered this but the follow hack finds a user.
+			//For some reason the usr is null here -_- I've never incountered this but the following hack finds a user.
 			var/mob/user = null
 			if( istype( object, /obj/spacepod ))
 				var/obj/spacepod/pod = object
@@ -118,7 +118,6 @@
 				handleMovement( src.dir ) // Turn them around and move them away from the sector
 				return
 
-			world << "[travelling_landing_zones.len]"
 			destination = input(user, "Where would you like to land?", "Destination") in travelling_landing_zones
 
 			if( destination )

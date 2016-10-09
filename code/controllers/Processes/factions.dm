@@ -11,7 +11,7 @@ var/global/list/regular_contracts = list()
 var/global/list/restricted_contracts = list()
 
 /datum/controller/process/faction_controller
-	var/contract_delay = 12000 // this (in 1/10 seconds) is how long it takes before traitors get their contracts, and the factions are populated with contracts
+	var/contract_delay = 6000 // this (in 1/10 seconds) is how long it takes before traitors get their contracts, and the factions are populated with contracts
 
 	var/list/datum/faction/factions = list()
 	var/contract_ban = 0 // stops any more contracts from being created
