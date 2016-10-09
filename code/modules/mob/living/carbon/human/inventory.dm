@@ -496,22 +496,17 @@
 				var/obj/item/clothing/accessory/A = suit.accessories[1]
 				if(!istype(A))
 					return
-				visible_message("<span class='danger'>\The [usr] is trying to remove \the [src]'s [A.name]!</span>")
-
-				if(!do_after(usr, HUMAN_STRIP_DELAY, src, progress = 0))
-					return
-
+				visible_message("<span class='alert'><B>[source] is trying to remove \the [target]'s [A.name]!</B></span>")
 				if(!A || suit.loc != src || !(A in suit.accessories))
 					return
 
 				if(istype(A, /obj/item/clothing/accessory/badge) || istype(A, /obj/item/clothing/accessory/medal))
-					for(var/mob/M in viewers(target, null))
-						M.show_message("<span class='alert'><B>[source] tears off \the [suit.hastie] from [target]'s suit!</B></span>" , 1)
-					done()
-				A.on_removed(usr)
+					message = "<span class='alert'><B>[source] tears off \the [A] from [target]'s [suit.name]!</B></span>"
+				A.on_removed(source)
 				suit.accessories -= A
-				usr.update_inv_w_uniform()
+				target.update_inv_w_uniform()
 				return
+
 			if("pockets")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their pockets emptied by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to empty [target.name]'s ([target.ckey]) pockets</font>")
@@ -578,8 +573,10 @@ It can still be worn/put on as normal.
 	if(item && source.get_active_hand() != item) return	//Swapped hands / removed item from the active one
 	if ((source.restrained() || source.stat)) return //Source restrained or unconscious / dead
 
+	var/obj/item/held = source.get_active_hand()
 	var/slot_to_process
 	var/strip_item //this will tell us which item we will be stripping - if any.
+
 
 	switch(place)	//here we go again...
 		if("mask")
@@ -640,18 +637,12 @@ It can still be worn/put on as normal.
 				strip_item = target.wear_suit
 		if("tie")
 			var/obj/item/clothing/under/suit = target.w_uniform
-			//var/obj/item/clothing/accessory/tie = suit.hastie
-			/*if(tie)
-				if (istype(tie,/obj/item/clothing/accessory/storage))
-					var/obj/item/clothing/accessory/storage/W = tie
-					if (W.hold)
-						W.hold.close(usr)
-				usr.put_in_hands(tie)
-				suit.hastie = null*/
-			if(suit && suit.hastie)
-				suit.hastie.on_removed(usr)
-				suit.hastie = null
-				target.update_inv_w_uniform()
+			if (suit && suit.accessories)
+				if(istype(held,obj/item/clothing/accessory))
+					var/obj/item/clothing/accessory/B = held
+					for(var/obj/item/clothing/accessory/A in suit.accessories.len)
+						if((B.slot == A.slot) && (B.slot != "decor"))
+							suit.remove_accessory(target, A)
 		if("id")
 			slot_to_process = slot_wear_id
 			if (target.wear_id)

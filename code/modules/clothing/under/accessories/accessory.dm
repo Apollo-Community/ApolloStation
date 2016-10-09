@@ -11,7 +11,7 @@
 	var/image/inv_overlay = null	//overlay used when attached to clothing.
 	var/list/mob_overlay = list()
 	var/overlay_state = null
-	var/list/accessory_icons = list(slot_w_uniform_str = 'icons/mob/ties.dmi')
+	var/list/accessory_icons = list(slot_w_uniform = 'icons/mob/ties.dmi')
 
 /obj/item/clothing/accessory/Destroy()
 	on_removed()

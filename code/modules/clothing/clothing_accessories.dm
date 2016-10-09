@@ -70,11 +70,13 @@
  *  user is the user doing the attaching. Can be null, such as when attaching
  *  items on spawn
  */
+
 /obj/item/clothing/proc/attach_accessory(mob/user, obj/item/clothing/accessory/A)
 	accessories += A
 	A.on_attached(src, user)
 	src.verbs |= /obj/item/clothing/proc/removetie_verb
 	update_clothing_icon()
+
 
 /obj/item/clothing/proc/remove_accessory(mob/user, obj/item/clothing/accessory/A)
 	if(!(A in accessories))

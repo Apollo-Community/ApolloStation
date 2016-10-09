@@ -248,27 +248,6 @@
 #define slot_legs 21
 #define slot_tie 22
 
-var/list/default_onmob_icons = list(
-		slot_l_hand = 'icons/mob/items/lefthand.dmi',
-		slot_r_hand = 'icons/mob/items/righthand.dmi',
-		slot_belt = 'icons/mob/belt.dmi',
-		slot_back = 'icons/mob/back.dmi',
-		slot_l_ear = 'icons/mob/ears.dmi',
-		slot_r_ear = 'icons/mob/ears.dmi',
-		slot_glasses = 'icons/mob/eyes.dmi',
-		slot_wear_id = 'icons/mob/mob.dmi',
-		slot_w_uniform = 'icons/mob/uniform.dmi',
-		slot_wear_suit = 'icons/mob/suit.dmi',
-		slot_head = 'icons/mob/head.dmi',
-		slot_shoes_ = 'icons/mob/feet.dmi',
-		slot_wear_mask = 'icons/mob/mask.dmi',
-		slot_handcuffed = 'icons/mob/mob.dmi',
-		slot_legcuffed = 'icons/mob/mob.dmi',
-		slot_gloves = 'icons/mob/hands.dmi',
-		slot_s_store = 'icons/mob/belt_mirror.dmi',
-		slot_tie = 'icons/mob/ties.dmi'
-		)
-
 //Cant seem to find a mob bitflags area other than the powers one
 
 // bitflags for clothing parts
@@ -850,6 +829,10 @@ var/list/be_special_flags = list(
 #define SUIT_SENSOR_BINARY 1
 #define SUIT_SENSOR_VITAL 2
 #define SUIT_SENSOR_TRACKING 3
+
+#define SUIT_NO_SENSORS 0
+#define SUIT_HAS_SENSORS 1
+#define SUIT_LOCKED_SENSORS 2
 
 #define MINERAL_MATERIAL_AMOUNT 2000 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
 

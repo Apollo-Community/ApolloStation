@@ -28,7 +28,16 @@ var/datum/announcement/minor/captain_announcement = new(do_newscast = 1)
 		if(4) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 	H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 	var/obj/item/clothing/under/U = new /obj/item/clothing/under/rank/captain(H)
-	if(H.character.age>49)		U.hastie = new /obj/item/clothing/accessory/medal/gold/nanotrasen(U)
+	if(H.character.age>49)
+		// Since we can have something other than the default uniform at this
+		// point, check if we can actually attach the medal
+		var/obj/item/clothing/uniform = H.w_uniform
+		if(uniform)
+			var/obj/item/clothing/accessory/medal/gold/nanotrasen/medal = new()
+			if(uniform.can_attach_accessory(medal))
+				uniform.attach_accessory(null, medal)
+			else
+				qdel(medal)
 	H.equip_to_slot_or_qdel(U, slot_w_uniform)
 	H.equip_to_slot_or_qdel(new /obj/item/device/pda/captain(H), slot_belt)
 	H.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/brown(H), slot_shoes)
