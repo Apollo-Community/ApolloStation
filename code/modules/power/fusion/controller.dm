@@ -436,6 +436,11 @@
 	nr_comp = temp_list.len
 
 	//Check if all components found are ready (wired, closed, have compnents).
+	//Also set some internal vars to prevent errors on destruction of the machine.
+	for(var/obj/machinery/power/fusion/comp in temp_list)
+		comp.in_network = 0
+		comp.origen = 0
+
 	for(var/obj/machinery/power/fusion/comp in temp_list)
 		if(!comp.ready)
 			return

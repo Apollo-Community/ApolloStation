@@ -154,6 +154,8 @@
 
 //Check if given mob is wearing insulated cloathing
 /obj/machinery/power/arc_emitter/proc/insulated(var/mob/living/carbon/human/m)
+	if(isnull(m))
+		return 0
 	if(isnull(m.head) || isnull(m.wear_suit))
 		return 0
 	if(!m.head.siemens_coefficient >= 0.9 || !m.wear_suit.siemens_coefficient >= 0.9)

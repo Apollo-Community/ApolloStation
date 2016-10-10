@@ -12,6 +12,7 @@
 
 	//rank_succesion_level = 4
 	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL
+	alt_titles = list("Security Cadet")
 
 /datum/job/officer/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
@@ -20,7 +21,10 @@
 		if(2) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/security(H), slot_back)
 		if(3) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel_sec(H), slot_back)
 		if(4) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
-	H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/security(H), slot_w_uniform)
+	if(H.job == "Security Cadet")
+		H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/security2(H), slot_w_uniform)
+	else
+		H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/security(H), slot_w_uniform)
 	H.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
 	H.equip_to_slot_or_qdel(new /obj/item/device/pda/security(H), slot_belt)
 	H.equip_to_slot_or_qdel(new /obj/item/weapon/handcuffs(H), slot_s_store)
@@ -31,10 +35,11 @@
 	else
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_qdel(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
-		H.equip_to_slot_or_qdel(new /obj/item/weapon/melee/baton/loaded(H), slot_in_backpack)
-		H.equip_to_slot_or_qdel(new /obj/item/weapon/gun/energy/taser(H), slot_in_backpack)
+		if(H.job == "Security Officer")
+			H.equip_to_slot_or_qdel(new /obj/item/weapon/melee/baton/loaded(H), slot_in_backpack)
+			H.equip_to_slot_or_qdel(new /obj/item/weapon/gun/energy/taser(H), slot_in_backpack)
+			H.equip_to_slot_or_qdel(new /obj/item/clothing/tie/holster(H), slot_in_backpack)
 		H.equip_to_slot_or_qdel(new /obj/item/device/flash(H), slot_in_backpack)
-		H.equip_to_slot_or_qdel(new /obj/item/clothing/tie/holster(H), slot_in_backpack)
 	return 1
 
 /datum/job/officer/make_preview_icon( var/backpack , var/job , var/gender )
