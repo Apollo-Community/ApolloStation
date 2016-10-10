@@ -160,7 +160,7 @@
 	die()
 
 //To handle death of biomass
-/obj/effect/biomass/die()
+/obj/effect/biomass/proc/die()
 	//Reliese some gas if its fullgrown and with a prop of 50 percent.
 	if(energy == 2 && prob(50))
 		src.visible_message("[src] emits an audible pop as someting rupteres and gas is released.", "You hear an audible pop.")
