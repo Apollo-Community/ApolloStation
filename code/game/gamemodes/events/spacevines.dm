@@ -7,5 +7,6 @@
 		if(!T)
 			return
 			message_admins("Tried to spawn spacevines but selected turf was null", "EVENT:")
-		new/obj/effect/plant_controller(T) //spawn a controller at turf
+		var/obj/effect/plant_controller/C = new(T) //spawn a controller at turf
+		C.seed = seed_types[pick(seed_types)]
 		message_admins("Spacevines spawned at [T.loc] ([T.x],[T.y],[T.z])", "EVENT:")
