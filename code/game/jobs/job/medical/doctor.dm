@@ -51,12 +51,12 @@
 		H.equip_to_slot_or_qdel(new /obj/item/device/pda/chemist(H), slot_belt)
 	else if("Nurse")
 		if(H.gender == FEMALE)
-		if(prob(50))			H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/nurse_dress(H), slot_w_uniform)
-		else					H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/nurse(H), slot_w_uniform)
+			if(prob(50))			H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/nurse_dress(H), slot_w_uniform)
+			else					H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/nurse(H), slot_w_uniform)
+			H.equip_to_slot_or_qdel(new /obj/item/clothing/head/nursehat(H), slot_head)
+		else
+			H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/nurse_suit(H), slot_w_uniform)
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/white(H), slot_shoes)
-		H.equip_to_slot_or_qdel(new /obj/item/clothing/head/nursehat(H), slot_head)
-	else
-		H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/nurse_suit(H), slot_w_uniform)
 	else	//Catch all for medical titles.
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 		H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/toggle/labcoat(H), slot_wear_suit)
