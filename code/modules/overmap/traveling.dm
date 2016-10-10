@@ -8,8 +8,12 @@
 
 	var/atom/movable/object = null // The object that the traveler represents, usually just spacepods
 	var/frozen = 0 // Used to prevent movement
+	var/list/travelling_landing_zones = list()
 
 /obj/effect/traveler/New( var/atom/movable/new_object )
+	for(var/area/planet/moon/landing_zone/lz in return_areas())
+		travelling_landing_zones += lz
+
 	object = new_object
 
 	if( !object )
@@ -97,8 +101,36 @@
 
 		// Landing on a moon or other planetoid
 		if( sector.metadata && sector.metadata.landing_area )
-			var/area/A = locate( sector.metadata.landing_area ) in return_areas()
+			var/area/planet/moon/landing_zone/destination
 
+			//For some reason the usr is null here -_- I've never incountered this but the following hack finds a user.
+			var/mob/user = null
+			if( istype( object, /obj/spacepod ))
+				var/obj/spacepod/pod = object
+				user = pod.pilot
+
+			if( istype( object, /mob ))
+				user = object
+
+			if(isnull(user))
+				fadein()
+				src.dir = turn( src.dir, 180 )
+				handleMovement( src.dir ) // Turn them around and move them away from the sector
+				return
+
+			destination = input(user, "Where would you like to land?", "Destination") in travelling_landing_zones
+
+			if( destination )
+				sector.metadata.landing_area = destination
+			else
+				usr << "No valid landing site chosen!"
+				fadein()
+
+				src.dir = turn( src.dir, 180 )
+				handleMovement( src.dir ) // Turn them around and move them away from the sector
+
+				return
+			var/area/A = locate( sector.metadata.landing_area ) in return_areas()
 			var/turf/T = pick( get_area_turfs( A ))
 			if( T )
 				object.loc = T

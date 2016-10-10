@@ -1,5 +1,5 @@
 <div style="min-width: 480px">
-	{{if (!data.nr_comp || data.nr_comp != 13)}}
+	{{if (!data.nr_comp)}}
 		<div class="item">
 			<div class="itemLabel">
 				Component Status:
@@ -107,14 +107,14 @@
 				{{if data.IDDpower}}
 					{{:data.IDDpower}} kW
 				{{else}}
-					No Readingings.
+					No Output.
 				{{/if}}
 			</div>
 		</div>
-		<br><b>Neutron Focusing Rods Controlls:</b><br>
+		<br><b>Neutron Focusing Rods Controls:</b><br>
 		<div class="item">
 			<div class="itemLabel">
-				Exposure Controlls
+				Exposure Controls
 			</div>
 			<div class="itemContent">
 				{{if (data.rod_insert || data.rod_insert == 0)}}
@@ -126,7 +126,7 @@
 					{{:helper.link('+', null, {'change4' : 1})}}
 				</div>
 				{{else}}
-					ERROR: Controll systems not found.
+					ERROR: Control systems not found.
 				{{/if}}
 			</div>
 		</div>

@@ -442,3 +442,20 @@
 
 	update_icon() //icon_state has to be set manually
 		return
+
+/obj/structure/window/shuttle/arrival
+	name = "shuttle window"
+	desc = "It looks rather strong. Might take a few good hits to shatter it."
+	icon = 'icons/obj/podwindows.dmi'
+	icon_state = "window"
+	basestate = "window"
+	maxhealth = 999
+	reinf = 1
+	dir = 5
+
+	update_icon() //icon_state has to be set manually
+		return
+
+//Window is indestructable!
+/obj/structure/window/shuttle/arrival/ex_act(severity)
+	return

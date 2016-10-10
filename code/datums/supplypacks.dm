@@ -616,11 +616,15 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/machinery/power/fusion/ring,
 					/obj/machinery/power/fusion/ring,
 					/obj/machinery/power/fusion/ring,
+					/obj/machinery/power/fusion/ring,
+					/obj/machinery/power/fusion/ring,
+					/obj/machinery/power/fusion/ring,
+					/obj/machinery/power/fusion/ring,
 					/obj/machinery/power/fusion/ring,)
 	cost = 200
 	containertype = /obj/structure/closet/crate/secure
 	containername = "Tokamak Ring Crate"
-	access = access_ce
+	access = access_engine
 	group = "Engineering"
 
 /datum/supply_packs/IDD
@@ -736,7 +740,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	cost = 10
 	containertype = /obj/structure/closet/crate/secure/phoron
 	containername = "Phoron assembly crate"
-	access = access_moon
+	access = access_xenoarch
 	group = "Science"
 
 /datum/supply_packs/weapons
