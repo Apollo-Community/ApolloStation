@@ -8,7 +8,6 @@
 	meat_amount = 10
 	turns_per_move = 2
 	move_to_delay = 2
-	attack_same = 1
 	speed = 0
 	mob_size = 4
 	pixel_x = -16
