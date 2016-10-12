@@ -190,9 +190,9 @@
 /mob/living/simple_animal/spiderbot/death()
 
 	living_mob_list -= src
-	dead_mob_list += src
 
 	new /obj/effect/gibspawner/robot(get_turf(src))
+	qdel(src)
 	return
 
 //Cannibalized from the parrot mob. ~Zuhayr

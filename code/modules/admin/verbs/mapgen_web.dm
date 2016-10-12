@@ -9,6 +9,10 @@
 	genmapall(5, {"/slater"})
 	gen_special_all(5, "slater/")
 
+	//generate moon outpost map
+	genmapall(7, "/moon")
+	gen_special_all(7, "moon/")
+
 	shell("sh scripts/move_map.sh")
 
 	shutdown()

@@ -23,44 +23,42 @@
 /obj/effect/biomass/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (!W || !user || !W.type) return
 	switch(W.type)
-		if(/obj/item/weapon/circular_saw) remove_self()
-		if(/obj/item/weapon/kitchen/utensil/knife) remove_self()
-		if(/obj/item/weapon/scalpel) remove_self()
-		if(/obj/item/weapon/twohanded/fireaxe) remove_self()
-		if(/obj/item/weapon/hatchet) remove_self()
-		if(/obj/item/weapon/melee/energy) remove_self()
-		if(/obj/item/weapon/melee/energy/sword) remove_self()
-		if(/obj/item/weapon/pickaxe/plasmacutter) remove_self()
-		if(/obj/item/weapon/scythe) remove_self()
+		if(/obj/item/weapon/circular_saw) die()
+		if(/obj/item/weapon/kitchen/utensil/knife) die()
+		if(/obj/item/weapon/scalpel) die()
+		if(/obj/item/weapon/twohanded/fireaxe) die()
+		if(/obj/item/weapon/hatchet) die()
+		if(/obj/item/weapon/melee/energy) die()
+		if(/obj/item/weapon/melee/energy/sword) die()
+		if(/obj/item/weapon/pickaxe/plasmacutter) die()
+		if(/obj/item/weapon/scythe) die()
 
 		//less effective weapons
 		if(/obj/item/weapon/wirecutters)
-			if(prob(25)) remove_self()
+			if(prob(50)) die()
 		if(/obj/item/weapon/shard)
-			if(prob(25)) remove_self()
+			if(prob(25)) die()
 
-		if (/obj/item/weapon/weldingtool)
+		if(/obj/item/weapon/weldingtool)
 			var/obj/item/weapon/weldingtool/WT = W
-			if(WT.remove_fuel(5, user)) remove_self()
+			if(WT.remove_fuel(5, user)) die()
 		else
 			user << "[W] not sharp or hot enough to cut trough the biomass."
 	..()
-
-/obj/effect/biomass/proc/remove_self()
-	qdel(src)
 
 /obj/effect/biomass_controller
 	var/list/obj/effect/biomass/vines = list()
 	var/list/growth_queue = list()
 	var/reached_collapse_size
 	var/reached_slowdown_size
+	var/gas_type = "oxygen"
 	//What this does is that instead of having the grow minimum of 1, required to start growing, the minimum will be 0,
 	//meaning if you get the biomasssss..s' size to something less than 20 plots, it won't grow anymore.
 
 	New()
 		if(!istype(src.loc,/turf/simulated/floor))
 			qdel(src)
-
+		gas_type = pick("oxygen","nitrogen","carbon_dioxide","phoron","sleeping_agent")
 		spawn_biomass_piece(src.loc)
 		processing_objects.Add(src)
 
@@ -150,17 +148,29 @@
 			return
 		if(2.0)
 			if (prob(90))
-				qdel(src)
+				die()
 				return
 		if(3.0)
 			if (prob(50))
-				qdel(src)
+				die()
 				return
 	return
 
 /obj/effect/biomass/fire_act(null, temp, volume) //hotspots kill biomass
-	del src
+	die()
 
+//To handle death of biomass
+/obj/effect/biomass/proc/die()
+	//Reliese some gas if its fullgrown and with a prop of 50 percent.
+	if(energy == 2 && prob(50))
+		src.visible_message("[src] emits an audible pop as someting rupteres and gas is released.", "You hear an audible pop.")
+		var/datum/gas_mixture/air_contents = new
+		air_contents.volume = 5
+		air_contents.temperature = T20C
+		air_contents.adjust_gas(master.gas_type, 5)	//Not much but enough to cause harm if not noticed.
+		pump_gas(src, air_contents, src.loc.return_air(), air_contents.total_moles)
+	src.visible_message("[src] shrivels up lifeless and crumbles into flakes.", "")
+	qdel(src)
 
 /proc/biomass_infestation()
 

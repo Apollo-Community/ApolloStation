@@ -42,15 +42,15 @@
 
 /obj/machinery/power/arc_emitter/process()
 	if(stat & (BROKEN))
+		update_icon()
 		return
-	update_icon()
 	if(src.state != 2 || !avail(active_power_usage))
 		src.active = 0
+		update_icon()
 		return
-	update_icon()
 	if(active)
 		fire_bolt()
-	update_icon()
+		update_icon()
 
 //Fire bolt at a target
 /obj/machinery/power/arc_emitter/proc/fire_bolt()
@@ -131,6 +131,7 @@
 			spawn(rand(i, i+5))
 				arc(M)
 				emp(M)
+		return
 
 //Shoot a bolt from self to C
 /obj/machinery/power/arc_emitter/proc/arc(obj/T)
@@ -153,6 +154,8 @@
 
 //Check if given mob is wearing insulated cloathing
 /obj/machinery/power/arc_emitter/proc/insulated(var/mob/living/carbon/human/m)
+	if(isnull(m))
+		return 0
 	if(isnull(m.head) || isnull(m.wear_suit))
 		return 0
 	if(!m.head.siemens_coefficient >= 0.9 || !m.wear_suit.siemens_coefficient >= 0.9)
@@ -281,8 +284,6 @@
 /obj/machinery/power/arc_emitter/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 	activate(user)
-
-
 
 /obj/machinery/power/arc_emitter/proc/activate(mob/user as mob)
 	if(stat & BROKEN)

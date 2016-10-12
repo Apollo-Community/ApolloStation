@@ -349,7 +349,7 @@
 		set src = usr.loc
 		set popup_menu = 0
 
-		if( istype( get_area( src ), /area/planet/moon/landing_zone ) || istype( get_area( src ), /area/planet/moon/landing_zone/central ) || istype( get_area( src ), /area/planet/moon/landing_zone/engineering ) || istype( get_area( src ), /area/planet/moon/landing_zone/mining ) || istype( get_area( src ), /area/planet/moon/landing_zone/security ) || istype( get_area( src ), /area/planet/moon/landing_zone/science ))
+		if( istype( get_area( src ), /area/planet/moon/landing_zone ) || istype( get_area( src ), /area/planet/moon/exterior ))
 			occupants_announce( "<span class='notice'>Leaving the planet surface and returning to space.</span>" )
 			overmapTravel()
 		else
