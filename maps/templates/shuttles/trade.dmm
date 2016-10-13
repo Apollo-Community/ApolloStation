@@ -1,0 +1,44 @@
+"a" = (/turf/space,/area/space)
+"b" = (/turf/space,/turf/simulated/shuttle/wall{icon_state = "swall_f6"; dir = 2},/area/shuttle/trade/centcom)
+"c" = (/obj/structure/grille,/obj/structure/shuttle/window{tag = "icon-13"; icon_state = "13"},/turf/simulated/floor/plating,/area/shuttle/trade/centcom)
+"d" = (/obj/structure/grille,/obj/structure/shuttle/window{tag = "icon-9"; icon_state = "9"},/turf/simulated/floor/plating,/area/shuttle/trade/centcom)
+"e" = (/obj/structure/grille,/obj/structure/shuttle/window{tag = "icon-12"; icon_state = "12"},/turf/simulated/floor/plating,/area/shuttle/trade/centcom)
+"f" = (/turf/space,/turf/simulated/shuttle/wall{icon_state = "swall_f10"; dir = 2},/area/shuttle/trade/centcom)
+"g" = (/turf/simulated/shuttle/wall{icon_state = "swall3"; dir = 2},/area/shuttle/trade/centcom)
+"h" = (/obj/structure/table/reinforced,/obj/machinery/embedded_controller/radio/simple_docking_controller{frequency = 1380; id_tag = "trade_shuttle"; pixel_x = 0; pixel_y = -25; req_access_txt = "0"; req_one_access_txt = "0"; tag_door = "trade_shuttle_hatch"},/turf/simulated/shuttle/floor,/area/shuttle/trade/centcom)
+"i" = (/obj/structure/bed/chair/shuttle{tag = "icon-chair3 (NORTH)"; icon_state = "chair3"; dir = 1},/turf/simulated/shuttle/floor,/area/shuttle/trade/centcom)
+"j" = (/obj/machinery/computer/shuttle_control{req_access = null; req_access_txt = "101"; shuttle_tag = "Trade"},/turf/simulated/shuttle/floor,/area/shuttle/trade/centcom)
+"k" = (/turf/simulated/shuttle/wall{icon_state = "swall13"; dir = 2},/area/shuttle/trade/centcom)
+"l" = (/turf/simulated/shuttle/wall{icon_state = "swall12"; dir = 2},/area/shuttle/trade/centcom)
+"m" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/shuttle/floor,/area/shuttle/trade/centcom)
+"n" = (/obj/machinery/door/airlock/external{frequency = 1380; icon_state = "door_locked"; id_tag = "trade_shuttle_hatch"; locked = 1; name = "Shuttle Hatch"; req_access_txt = "13"},/turf/simulated/floor/plating,/area/shuttle/trade/centcom)
+"o" = (/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/shuttle/trade/centcom)
+"p" = (/obj/machinery/light{dir = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/shuttle/trade/centcom)
+"q" = (/turf/space,/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/shuttle/trade/centcom)
+"r" = (/turf/simulated/shuttle/wall{dir = 2; icon_state = "swallc1"},/area/shuttle/trade/centcom)
+"s" = (/turf/simulated/shuttle/wall{tag = "icon-swallc2"; icon_state = "swallc2"; dir = 2},/area/shuttle/trade/centcom)
+"t" = (/turf/space,/turf/simulated/shuttle/wall{icon_state = "swall_f9"; dir = 2},/area/shuttle/trade/centcom)
+"u" = (/obj/structure/grille,/obj/structure/shuttle/window{tag = "icon-2"; icon_state = "2"},/turf/simulated/floor/plating,/area/shuttle/trade/centcom)
+"v" = (/obj/machinery/conveyor/centcom_auto,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/shuttle/trade/centcom)
+"w" = (/obj/structure/plasticflaps/mining,/obj/machinery/conveyor/centcom_auto,/turf/simulated/floor/plating,/area/shuttle/trade/centcom)
+"x" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/shuttle/engine/heater,/turf/simulated/floor/plating,/area/shuttle/trade/centcom)
+"y" = (/obj/machinery/conveyor/centcom_auto{dir = 4},/obj/effect/landmark{name = "tradespawn"},/turf/simulated/floor/plating,/area/shuttle/trade/centcom)
+"z" = (/obj/machinery/conveyor/centcom_auto{dir = 4},/turf/simulated/floor/plating,/area/shuttle/trade/centcom)
+"A" = (/obj/machinery/conveyor/centcom_auto,/turf/simulated/floor/plating,/area/shuttle/trade/centcom)
+"B" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/shuttle/engine/heater,/turf/simulated/floor/plating,/area/shuttle/trade/centcom)
+"C" = (/obj/structure/shuttle/engine/propulsion,/turf/simulated/floor/plating,/area/shuttle/trade/centcom)
+"D" = (/obj/structure/window/reinforced{dir = 1; maxhealth = 1.#INF},/obj/structure/shuttle/engine/heater,/turf/simulated/floor/plating,/area/shuttle/trade/centcom)
+
+(1,1,1) = {"
+abcdefa
+aghijga
+bklmlkf
+nooopon
+nooooon
+qrooost
+auoovua
+bkllwkf
+gxyzABg
+qCrDsCt
+aaqCtaa
+"}
