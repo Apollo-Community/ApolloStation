@@ -1,5 +1,5 @@
-#define MIN_ASTEROIDS 3
-#define MAX_ASTEROIDS 6
+#define MIN_ASTEROIDS 1
+#define MAX_ASTEROIDS 2
 
 /var/global/datum/controller/process/overmap/overmap
 
@@ -49,7 +49,7 @@
 
 	return .
 
-// Creates a field of asteroids near the mining shuttle
+// Creates a field of asteroids near the moon
 /datum/controller/process/overmap/proc/collect_asteroid_field()
 	. = list()
 
