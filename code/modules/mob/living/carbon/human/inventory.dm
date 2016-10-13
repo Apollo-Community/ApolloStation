@@ -492,13 +492,16 @@
 			if("tie")
 				var/obj/item/clothing/under/suit = target.w_uniform
 				if(!istype(suit) || !suit.accessories.len)
+					world << "no accessory in list"
 					return
 				var/obj/item/clothing/accessory/A = suit.accessories[1]
 				if(!istype(A))
+					world << "accessory not right type"
 					return
-				visible_message("<span class='alert'><B>[source] is trying to remove \the [target]'s [A.name]!</B></span>")
+				message = "<span class='alert'><B>[source] is trying to remove \the [target]'s [A.name]!</B></span>"
 				if(!A || suit.loc != src || !(A in suit.accessories))
 					return
+					world << "suit not in loc"
 
 				if(istype(A, /obj/item/clothing/accessory/badge) || istype(A, /obj/item/clothing/accessory/medal))
 					message = "<span class='alert'><B>[source] tears off \the [A] from [target]'s [suit.name]!</B></span>"
@@ -638,7 +641,7 @@ It can still be worn/put on as normal.
 		if("tie")
 			var/obj/item/clothing/under/suit = target.w_uniform
 			if (suit && suit.accessories)
-				if(istype(held,obj/item/clothing/accessory))
+				if(istype(held, /obj/item/clothing/accessory))
 					var/obj/item/clothing/accessory/B = held
 					for(var/obj/item/clothing/accessory/A in suit.accessories.len)
 						if((B.slot == A.slot) && (B.slot != "decor"))
