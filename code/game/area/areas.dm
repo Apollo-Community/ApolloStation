@@ -240,10 +240,6 @@ area/space/atmosalert()
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
 
-/area/shuttle/arrival/apollo
-	icon_state = "shuttle"
-	name = "\improper NOS Apollo Arrival Shuttle"
-
 /area/shuttle/escape
 	name = "\improper Emergency Shuttle"
 
@@ -302,14 +298,6 @@ area/space/atmosalert()
 
 /area/shuttle/mining/outpost
 	icon_state = "shuttle"
-
-/area/shuttle/transport1/centcom
-	icon_state = "shuttle"
-	name = "\improper Transport Shuttle Centcom"
-
-/area/shuttle/transport1/station
-	icon_state = "shuttle"
-	name = "\improper Transport Shuttle"
 
 /area/shuttle/alien/base
 	icon_state = "shuttle"

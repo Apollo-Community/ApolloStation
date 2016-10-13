@@ -26,7 +26,6 @@ var/list/the_station_areas = list (
 	/area/hydroponics,
 	/area/rnd,
 	/area/storage,
-	/area/construction,
 	/area/ai_monitored/storage/eva, //do not try to simplify to "/area/ai_monitored" --rastaf0
 	/area/ai_monitored/storage/secure,
 	/area/ai_monitored/storage/emergency,
@@ -38,6 +37,15 @@ var/list/the_station_areas = list (
 /*=========================================
 ================01 - Apollo================
 ===========================================*/
+
+/area/shuttle/transport1/station
+	icon_state = "shuttle"
+	name = "\improper Transport Shuttle"
+
+/area/shuttle/arrival/apollo
+	icon_state = "shuttle"
+	name = "\improper NOS Apollo Arrival Shuttle"
+
 //Escape Pods
 /area/shuttle/escape_pod1/station
 	icon_state = "shuttle2"
@@ -154,6 +162,19 @@ var/list/the_station_areas = list (
 	icon_state = "Tactical"
 	environment = QUARRY
 
+/area/ai_monitored/storage/eva
+	name = "EVA Storage"
+	icon_state = "eva"
+	environment = ALLEY
+
+/area/ai_monitored/storage/secure
+	name = "Secure Storage"
+	icon_state = "storage"
+	environment = ALLEY
+
+/area/ai_monitored/storage/emergency
+	name = "Emergency Storage"
+	icon_state = "storage"
 
 //Command
 /area/bridge
@@ -980,6 +1001,18 @@ var/list/the_station_areas = list (
 ==============04 - Centcomm================
 ===========================================*/
 
+/area/shuttle/transport1/centcom
+	icon_state = "shuttle"
+	name = "\improper Transport Shuttle"
+
+/area/shuttle/pizza/centcom
+	icon_state = "shuttle"
+	name = "\improper Pizza Shuttle"
+
+/area/shuttle/trade/centcom
+	icon_state = "shuttle"
+	name = "\improper Trade Shuttle"
+
 //Central command
 /area/shuttle/escape/centcom
 	name = "Emergency Shuttle Centcom"
@@ -1063,6 +1096,19 @@ var/list/the_station_areas = list (
 /area/tdome/tdomeobserve
 	name = "Thunderdome (Observer.)"
 	icon_state = "purple"
+
+//Trade Station
+/area/centcom/trade
+	name = "Remote Trade Outpost"
+	icon_state = "green"
+	requires_power = 0
+
+//Pizzaland!!!!
+/area/pizzaland
+	name = "Pizzaland"
+	icon_state = "red"
+	requires_power = 0
+	ambience = list('sound/music/1.ogg')
 
 //Antag Areas
 	//Syndicate Base
