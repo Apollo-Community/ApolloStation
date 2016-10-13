@@ -168,6 +168,7 @@
 #define SLOT_DENYPOCKET 4096	//this is to deny items with a w_class of 2 or 1 to fit in pockets.
 #define SLOT_TWOEARS 8192
 #define SLOT_TIE 16384
+#define SLOT_HOLSTER 32768
 
 //FLAGS BITMASK
 #define STOPSPRESSUREDMAGE 1	//This flag is used on the flags variable for SUIT and HEAD items which stop pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
@@ -828,6 +829,10 @@ var/list/be_special_flags = list(
 #define SUIT_SENSOR_BINARY 1
 #define SUIT_SENSOR_VITAL 2
 #define SUIT_SENSOR_TRACKING 3
+
+#define SUIT_NO_SENSORS 0
+#define SUIT_HAS_SENSORS 1
+#define SUIT_LOCKED_SENSORS 2
 
 #define MINERAL_MATERIAL_AMOUNT 2000 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
 

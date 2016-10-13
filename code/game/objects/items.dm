@@ -44,6 +44,34 @@
 	var/zoomdevicename = null //name used for message when binoculars/scope is used
 	var/zoom = 0 //1 if item is actively being used to zoom. For scoped guns and binoculars.
 
+	var/list/item_state_slots = list(slot_wear_id = "id") //overrides the default item_state for particular slots.
+
+	// Used to specify the icon file to be used when the item is worn. If not set the default icon for that slot will be used.
+	// If icon_override or sprite_sheets are set they will take precendence over this, assuming they apply to the slot in question.
+	// Only slot_l_hand/slot_r_hand are implemented at the moment. Others to be implemented as needed.
+	var/list/item_icons
+
+	var/list/default_onmob_icons = list(
+		slot_l_hand = 'icons/mob/items/lefthand.dmi',
+		slot_r_hand = 'icons/mob/items/righthand.dmi',
+		slot_belt = 'icons/mob/belt.dmi',
+		slot_back = 'icons/mob/back.dmi',
+		slot_l_ear = 'icons/mob/ears.dmi',
+		slot_r_ear = 'icons/mob/ears.dmi',
+		slot_glasses = 'icons/mob/eyes.dmi',
+		slot_wear_id = 'icons/mob/mob.dmi',
+		slot_w_uniform = 'icons/mob/uniform.dmi',
+		slot_wear_suit = 'icons/mob/suit.dmi',
+		slot_head = 'icons/mob/head.dmi',
+		slot_shoes_ = 'icons/mob/feet.dmi',
+		slot_wear_mask = 'icons/mob/mask.dmi',
+		slot_handcuffed = 'icons/mob/mob.dmi',
+		slot_legcuffed = 'icons/mob/mob.dmi',
+		slot_gloves = 'icons/mob/hands.dmi',
+		slot_s_store = 'icons/mob/belt_mirror.dmi',
+		slot_tie = 'icons/mob/ties.dmi'
+		)
+
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
 	ex:
 	sprite_sheets = list(
@@ -425,13 +453,10 @@
 						H << "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>"
 					return 0
 				var/obj/item/clothing/under/uniform = H.w_uniform
-				if(uniform.hastie)
+				if(uniform.accessories.len && !uniform.can_attach_accessory(src))
 					if (!disable_warning)
-						H << "<span class='warning'>You already have [uniform.hastie] attached to your [uniform].</span>"
-					return 0
-				if( !(slot_flags & SLOT_TIE) )
-					return 0
-				return 1
+						H << "<span class='warning'>You already have an accessory of this type attached to your [uniform].</span>"
+				return 0
 		return 0 //Unsupported slot
 		//END HUMAN
 
@@ -689,3 +714,33 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 /obj/item/proc/try_build(/turf/simulated/wall/W)
 	return // try build interface
+
+/obj/item/proc/get_mob_overlay(mob/user_mob, slot)
+	var/bodytype = "Default"
+	var/mob_state
+	if(item_state_slots && item_state_slots[slot])
+		mob_state = item_state_slots[slot]
+	else if (item_state)
+		mob_state = item_state
+	else
+		mob_state = icon_state
+
+	var/mob_icon
+	if(icon_override)
+		mob_icon = icon_override
+		if(slot == 	slot_l_hand || slot == slot_l_ear)
+			mob_state = "[mob_state]_l"
+		if(slot == 	slot_r_hand || slot == slot_r_ear)
+			mob_state = "[mob_state]_r"
+	else if(sprite_sheets && sprite_sheets[bodytype] && !(slot == slot_r_hand || slot == slot_l_hand))
+		if(slot == slot_l_ear)
+			mob_state = "[mob_state]_l"
+		if(slot == slot_r_ear)
+			mob_state = "[mob_state]_r"
+		mob_icon = sprite_sheets[bodytype]
+	else if(item_icons && item_icons[slot])
+		mob_icon = item_icons[slot]
+	else
+		mob_icon = default_onmob_icons[slot]
+
+	return overlay_image(mob_icon,mob_state,color,RESET_COLOR)

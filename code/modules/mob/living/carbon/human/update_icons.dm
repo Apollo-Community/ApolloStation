@@ -7,6 +7,12 @@
 var/global/list/human_icon_cache = list()
 var/global/list/light_overlay_cache = list()
 
+/proc/overlay_image(icon,icon_state,color,flags)
+	var/image/ret = image(icon,icon_state)
+	ret.color = color
+	ret.appearance_flags = flags
+	return ret
+
 	///////////////////////
 	//UPDATE_ICONS SYSTEM//
 	///////////////////////
@@ -133,29 +139,15 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human
 	var/list/overlays_standing[TOTAL_LAYERS]
 	var/previous_damage_appearance // store what the body last looked like, so we only have to update it if something changed
-
+	var/stealth = 0
 //UPDATES OVERLAYS FROM OVERLAYS_LYING/OVERLAYS_STANDING
 //this proc is messy as I was forced to include some old laggy cloaking code to it so that I don't break cloakers
 //I'll work on removing that stuff by rewriting some of the cloaking stuff at a later date.
 /mob/living/carbon/human/update_icons()
-
-	if(lying && species.name_plural == "Xenomorphs" && stat == DEAD && icon_state == src.species.prone_icon && icon == src.species.icobase)
-		lying_prev = 0
-	else
-		lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
-
+	lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
 	update_hud()		//TODO: remove the need for this
 	overlays.Cut()
 
-	//Hacky pre-empting of this whacky icon stuff
-	if(lying && species.name_plural == "Xenomorphs" && stat != DEAD && resting)
-		icon = src.species.icobase
-		icon_state = src.species.prone_icon
-		return
-
-
-	var/stealth = 0
-	//cloaking devices. //TODO: get rid of this :<
 	for(var/obj/item/weapon/cloaking_device/S in list(l_hand,r_hand,belt,l_store,r_store))
 		if(S.active)
 			stealth = 1
@@ -185,7 +177,6 @@ Please contact me on #coderbus IRC. ~Carn x
 		animate(src, transform=M, time=1.4)
 
 var/global/list/damage_icon_parts = list()
-
 //DAMAGE OVERLAYS
 //constructs damage icon for each organ from mask * damage field and saves it in our overlays_ lists
 /mob/living/carbon/human/UpdateDamageIcon(var/update_icons=1)
@@ -545,10 +536,11 @@ var/global/list/damage_icon_parts = list()
 			bloodsies.color		= w_uniform.blood_color
 			standing.overlays	+= bloodsies
 
-		if(w_uniform:hastie)	//WE CHECKED THE TYPE ABOVE. THIS REALLY SHOULD BE FINE.
-			var/tie_color = w_uniform:hastie.item_color
-			if(!tie_color) tie_color = w_uniform:hastie.icon_state
-			standing.overlays	+= image("icon" = 'icons/mob/ties.dmi', "icon_state" = "[tie_color]")
+		if(w_uniform:accessories.len)	//WE CHECKED THE TYPE ABOVE. THIS REALLY SHOULD BE FINE.
+			for(var/obj/item/clothing/accessory/A in w_uniform:accessories)
+				var/acc_color = A.item_color
+				if(!acc_color) acc_color = A.icon_state
+				standing.overlays	+= image("icon" = 'icons/mob/ties.dmi', "icon_state" = "[acc_color]")
 
 		overlays_standing[UNIFORM_LAYER]	= standing
 	else
@@ -558,7 +550,7 @@ var/global/list/damage_icon_parts = list()
 		for( var/obj/item/thing in list(r_store, l_store, wear_id, belt) )
 			if(thing)
 				remove_from_mob(thing)
-	if(update_icons)   update_icons()
+	if(update_icons) update_icons()
 
 /mob/living/carbon/human/update_inv_wear_id(var/update_icons=1)
 	if(wear_id)
@@ -781,7 +773,7 @@ var/global/list/damage_icon_parts = list()
 
 
 /mob/living/carbon/human/update_inv_wear_mask(var/update_icons=1)
-	if( wear_mask && ( istype(wear_mask, /obj/item/clothing/mask) || istype(wear_mask, /obj/item/clothing/tie) ) && !(head && head.flags_inv & HIDEMASK))
+	if( wear_mask && ( istype(wear_mask, /obj/item/clothing/mask) || istype(wear_mask, /obj/item/clothing/accessory) ) && !(head && head.flags_inv & HIDEMASK))
 		wear_mask.screen_loc = ui_mask	//TODO
 
 		var/image/standing

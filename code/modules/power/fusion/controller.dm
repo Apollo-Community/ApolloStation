@@ -185,6 +185,7 @@
 	if(gas_contents.temperature >= 100000)
 		heatdif = 0
 	core.heat -= heatdif
+	//world << "heat calc output: [heatdif], [fusion_heat], [calcDecay(gas_contents.temperature)]"
 	gas_contents.temperature += heatdif + fusion_heat - calcDecay(gas_contents.temperature)		//Calculating temp change
 	if(gas_contents.temperature < 290)		//need to do a area check here
 		gas_contents.temperature = 290

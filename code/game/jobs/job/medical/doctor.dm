@@ -24,6 +24,7 @@
 		if(2) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/medic(H), slot_back)
 		if(3) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel_med(H), slot_back)
 		if(4) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
+
 	if(H.job == "Surgeon")
 		if(prob(33))
 			H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/medical/green(H), slot_w_uniform)
