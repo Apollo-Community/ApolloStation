@@ -1798,6 +1798,7 @@
 #include "interface\skin.dmf"
 #include "maps\__overmap.dmm"
 #include "maps\_bluespace.dmm"
+#include "maps\apollo\apollo-areas.dm"
 #include "maps\apollo\apollo-01-Main.dmm"
 #include "maps\apollo\apollo-02-Engipost.dmm"
 #include "maps\apollo\apollo-04-CentComm.dmm"
