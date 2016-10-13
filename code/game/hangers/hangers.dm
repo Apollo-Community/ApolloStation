@@ -85,6 +85,16 @@ obj/hanger/square/interior/cc_hanger_r
 	dimy =11
 	htag = "c_hanger_r"
 
+obj/hanger/square/interior/cc_hanger_p
+	dimx =7
+	dimy =11
+	htag = "c_hanger_p"
+
+obj/hanger/square/interior/cc_hanger_t
+	dimx =7
+	dimy =11
+	htag = "c_hanger_t"
+
 obj/hanger/square/interior/frigate_hanger
 	dimx = 11
 	dimy = 5

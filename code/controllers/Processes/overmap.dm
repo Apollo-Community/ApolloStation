@@ -1,5 +1,5 @@
-#define MIN_ASTEROIDS 3
-#define MAX_ASTEROIDS 6
+#define MIN_ASTEROIDS 1
+#define MAX_ASTEROIDS 2
 
 /var/global/datum/controller/process/overmap/overmap
 
@@ -49,7 +49,7 @@
 
 	return .
 
-// Creates a field of asteroids near the mining shuttle
+// Creates a field of asteroids near the moon
 /datum/controller/process/overmap/proc/collect_asteroid_field()
 	. = list()
 
@@ -177,7 +177,7 @@
 /datum/controller/process/overmap/proc/setupGhostTeleportLocs()
 	for(var/area/AR in world)
 		if(ghostteleportlocs.Find(AR.name)) continue
-		if(istype(AR, /area/turret_protected/aisat) || istype(AR, /area/derelict) || istype(AR, /area/tdome) || istype(AR, /area/shuttle/specops/centcom))
+		if(istype(AR, /area/derelict) || istype(AR, /area/tdome) || istype(AR, /area/shuttle/specops/centcom))
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = pick(get_area_turfs(AR.type))

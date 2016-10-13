@@ -114,7 +114,7 @@
 	build_priority = 3
 
 /obj/effect/mapinfo/sector/asteroid/getMapLoc()
-	var/turf/center = get_turf( locate( "OVERMAP NMV Slater" ))
+	var/turf/center = get_turf( locate( "OVERMAP Moon" ))
 
 	if( !center )
 		return ..()
