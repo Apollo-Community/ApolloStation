@@ -610,18 +610,9 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 /datum/supply_packs/tokamak_rings
 	name = "Tokamak Ring Crate"
 	contains = list(/obj/machinery/power/fusion/ring_corner,
-					/obj/machinery/power/fusion/ring_corner,
-					/obj/machinery/power/fusion/ring_corner,
-					/obj/machinery/power/fusion/ring_corner,
-					/obj/machinery/power/fusion/ring,
-					/obj/machinery/power/fusion/ring,
-					/obj/machinery/power/fusion/ring,
-					/obj/machinery/power/fusion/ring,
-					/obj/machinery/power/fusion/ring,
-					/obj/machinery/power/fusion/ring,
 					/obj/machinery/power/fusion/ring,
 					/obj/machinery/power/fusion/ring,)
-	cost = 200
+	cost = 50
 	containertype = /obj/structure/closet/crate/secure
 	containername = "Tokamak Ring Crate"
 	access = access_engine
