@@ -55,3 +55,4 @@ changes:
   - rscdel: "Removed the NMV Slater (For now)"
   - rscdel: "Removed the engineering outpost (For now)"
   - bugfix: "Spiderbots no longer infitely gib"
+  - rscadd: "Added the changelog!"
