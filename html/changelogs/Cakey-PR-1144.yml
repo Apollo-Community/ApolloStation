@@ -1,0 +1,58 @@
+################################
+# Example Changelog File
+#
+# Note: This file, and files beginning with ".", and files that don't end in ".yml" will not be read. If you change this file, you will look really dumb.
+#
+# Your changelog will be merged with a master changelog. (New stuff added only, and only on the date entry for the day it was merged.)
+# When it is, any changes listed below will disappear.
+#
+# Valid Prefixes:
+#   bugfix
+#   wip (For works in progress)
+#   tweak
+#   soundadd
+#   sounddel
+#   rscadd (general adding of nice things)
+#   rscdel (general deleting of nice things)
+#   imageadd
+#   imagedel
+#   maptweak
+#   spellcheck (typo fixes)
+#   experiment
+#################################
+
+# Your name.
+author: Cakey
+
+# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
+delete-after: True
+
+# Any changes you've made.  See valid prefix list above.
+# INDENT WITH TWO SPACES.  NOT TABS.  SPACES.
+# SCREW THIS UP AND IT WON'T WORK.
+# Also, all entries are changed into a single [] after a master changelog generation. Just remove the brackets when you add new entries.
+# Please surround your changes in  double quotes ("), as certain characters otherwise screws up compiling. The quotes will not show up in the changelog.
+changes:
+  - maptweak: "Central command has been overhauled to be prettier"
+  - maptweak: "Medical and Science departments have swapped locations on the main station"
+  - maptweak: "Carpspawn locations have been modified"
+  - maptweak: "The NSS Artemis has been updated for if we ever decide to use it (tinystation, lowpop maybe?)"
+  - rscadd: "Added space pike, a larger version of space carp"
+  - rscadd: "Added a new type of giant spider that only spawns very rarely"
+  - rscadd: "Adds the pizza shuttle and merchant shuttle"
+  - rscadd: "Inductee titles now available for each department"
+  - rscadd: "the alternate title 'Commander' is now available for HoS"
+  - rscadd: "Level 5 biohazards now spawn either space vines or biomasses"
+  - tweak: "Tokamak engine parts crate from cargo has been changed to be 1/4 the price and contain 1/4 the parts"
+  - tweak: "Space Carp now have a new sprite"
+  - tweak: "Areacode has been moved to localised folders"
+  - tweak: "Maps have been moved into localised folders"
+  - tweak: "NanoUI map for medical tracker has been updated"
+  - tweak: "Survival map has been updated"
+  - tweak: "Any head of staff can now change code level to blue"
+  - tweak: "You can now use drills on the moon"
+  - tweak: "Changed asteroid generation count from 3-6 to 1-2"
+  - rscdel: "Removed the NMV Slater (For now)"
+  - rscdel: "Removed the engineering outpost (For now)"
+  - bugfix: "Spiderbots no longer infitely gib"
+  - rscadd: "Added the changelog!"
