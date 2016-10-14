@@ -8,7 +8,7 @@
 "h" = (/turf/simulated/shuttle/wall{icon_state = "swall3"; dir = 2},/area/shuttle/pizza/centcom)
 "i" = (/obj/structure/table,/obj/machinery/microwave,/turf/simulated/shuttle/floor{icon_state = "floor2"},/area/shuttle/pizza/centcom)
 "j" = (/obj/structure/bed/chair/shuttle{tag = "icon-chair3 (NORTH)"; icon_state = "chair3"; dir = 1},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/pizza/centcom)
-"k" = (/obj/item/pizzabox,/obj/item/pizzabox,/obj/item/pizzabox,/obj/item/pizzabox,/obj/item/pizzabox,/obj/item/pizzabox,/obj/item/pizzabox,/obj/item/pizzabox,/obj/item/pizzabox,/mob/living/simple_animal/hostile/mimic/crate,/turf/simulated/shuttle/floor{icon_state = "floor2"},/area/shuttle/pizza/centcom)
+"k" = (/obj/item/pizzabox,/obj/item/pizzabox,/obj/item/pizzabox,/obj/item/pizzabox,/obj/item/pizzabox,/obj/item/pizzabox,/obj/item/pizzabox,/obj/item/pizzabox,/obj/item/pizzabox,/obj/structure/closet/crate,/turf/simulated/shuttle/floor{icon_state = "floor2"},/area/shuttle/pizza/centcom)
 "l" = (/obj/structure/table,/obj/machinery/embedded_controller/radio/simple_docking_controller{frequency = 1380; id_tag = "pizza_shuttle"; pixel_x = 0; pixel_y = -25; req_access_txt = "0"; req_one_access_txt = "0"; tag_door = "pizza_shuttle_hatch"},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/pizza/centcom)
 "m" = (/turf/simulated/shuttle/floor{icon_state = "floor2"},/area/shuttle/pizza/centcom)
 "n" = (/obj/structure/closet/crate/freezer/rations,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/pizza/centcom)
