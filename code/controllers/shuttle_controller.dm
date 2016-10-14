@@ -127,6 +127,30 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttles["Centcom"] = admin_shuttle
 	process_shuttles += admin_shuttle
 
+	var/datum/shuttle/ferry/pizza_shuttle = new/datum/shuttle/ferry()
+	admin_shuttle.location = 1
+	admin_shuttle.warmup_time = 10
+	admin_shuttle.hanger_station = hangers_as["s_hanger_l"]
+	admin_shuttle.hanger_offsite = hangers_as["c_hanger_p"]
+	admin_shuttle.template_path ="maps/templates/shuttles/pizza.dmm"
+	admin_shuttle.docking_controller_tag = "pizza_shuttle"
+	admin_shuttle.dock_target_station = "pizza_shuttle_dock_airlock"
+	admin_shuttle.dock_target_offsite = "pizza_shuttle_bay"
+	shuttles["Pizza"] = pizza_shuttle
+	process_shuttles += pizza_shuttle
+
+	var/datum/shuttle/ferry/trade_shuttle = new/datum/shuttle/ferry()
+	admin_shuttle.location = 1
+	admin_shuttle.warmup_time = 10
+	admin_shuttle.hanger_station = hangers_as["s_hanger_l"]
+	admin_shuttle.hanger_offsite = hangers_as["c_hanger_t"]
+	admin_shuttle.template_path ="maps/templates/shuttles/trade.dmm"
+	admin_shuttle.docking_controller_tag = "trade_shuttle"
+	admin_shuttle.dock_target_station = "trade_shuttle_dock_airlock"
+	admin_shuttle.dock_target_offsite = "trade_shuttle_bay"
+	shuttles["Trade"] = trade_shuttle
+	process_shuttles += trade_shuttle
+
 	/*
 	//Is this even in ?
 	//yea its the cicle shaped shuttle

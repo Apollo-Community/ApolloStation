@@ -191,7 +191,14 @@
 	if(isturf(loc) && amount_grown > 0)
 		amount_grown += rand(0,2)
 		if(amount_grown >= 100)
-			var/spawn_type = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
+			var/spawn_type
+			if(prob(99))
+				do
+				spawn_type = pick(typesof(/mob/living/simple_animal/hostile/giant_spider/))
+				while(spawn_type == /mob/living/simple_animal/hostile/giant_spider/queen)
+			else
+				spawn_type = /mob/living/simple_animal/hostile/giant_spider/queen
+
 			new spawn_type(src.loc)
 			qdel(src)
 

@@ -35,7 +35,7 @@
 "I" = (/obj/structure/closet{icon_closed = "cabinet_closed"; icon_opened = "cabinet_open"; icon_state = "cabinet_closed"},/turf/simulated/floor/carpet{tag = "icon-carpet1-0"; icon_state = "carpet1-0"},/area/ballshuttle)
 "J" = (/obj/machinery/door/airlock/external{frequency = 1381; icon_state = "door_locked"; id_tag = "templateball_inner"; locked = 1},/turf/simulated/floor/plating,/area/ballshuttle)
 "K" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1; maxhealth = 1.#INF},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/ballshuttle)
-"L" = (/obj/machinery/atmospherics/portables_connector,/obj/machinery/portable_atmospherics/canister/air/airlock,/turf/simulated/floor/plating,/area/ballshuttle)
+"L" = (/obj/machinery/atmospherics/portables_connector,/obj/machinery/door/airlock,/turf/simulated/floor/plating,/area/ballshuttle)
 "M" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"},/turf/space,/area/ballshuttle)
 "N" = (/obj/machinery/airlock_sensor{id_tag = "templateball_sensor"; master_tag = "listeningpost_airlock"; pixel_x = -23},/turf/simulated/floor/plating,/area/ballshuttle)
 "O" = (/obj/machinery/light/small{dir = 4},/obj/machinery/atmospherics/unary/vent_pump/high_volume{dir = 4; frequency = 1381; id_tag = "templateball_pump"},/obj/machinery/embedded_controller/radio/airlock/airlock_controller{frequency = 1381; id_tag = "templateball_airlock"; pixel_x = 0; pixel_y = -25; tag_airpump = "templateball_pump"; tag_chamber_sensor = "templateball_sensor"; tag_exterior_door = "templateball_exterior"; tag_interior_door = "templateball_inner"},/turf/simulated/floor/plating,/area/ballshuttle)

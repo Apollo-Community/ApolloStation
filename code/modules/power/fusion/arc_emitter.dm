@@ -42,26 +42,26 @@
 
 /obj/machinery/power/arc_emitter/process()
 	if(stat & (BROKEN))
+		update_icon()
 		return
-	update_icon()
 	if(src.state != 2 || !avail(active_power_usage))
 		src.active = 0
+		update_icon()
 		return
-	update_icon()
 	if(active)
 		fire_bolt()
-	update_icon()
+		update_icon()
 
 //Fire bolt at a target
 /obj/machinery/power/arc_emitter/proc/fire_bolt()
-	//Shock unprotected humans
+	//Shock unprotected mobs
 	var/list/targets = list()
-	for(var/mob/living/carbon/human/M in oview(src, 5))
-		if(!insulated(M))
+	for(var/mob/living/M in oview(src, 5))
+		if(!insulated(M) && !istype(M, /mob/living/silicon))
 			targets += M
 	if(targets.len > 0)
 		for(var/i=0, i <= 10, i+=5)
-			var/mob/living/carbon/human/M = pick(targets)
+			var/mob/living/M = pick(targets)
 			spawn(rand(0, 10))
 				arc(M)
 				M.apply_damage(rand(arc_power-30, arc_power-20), damagetype = BURN)
@@ -69,15 +69,24 @@
 				new/obj/effect/effect/sparks(get_turf(M))
 		return
 
-	//Shock any blobs
+	//Shock any blobs/vines/biomass
 	for(var/obj/effect/blob/B in oview(src, 5))
 		targets += B
+	for(var/obj/effect/biomass/B in oview(src, 5))
+		targets += B
+	for(var/obj/effect/plantsegment/V in oview(src, 5))
+		targets += V
+
 	if(targets.len > 0)
 		for(var/i=0, i <= 10, i+=5)
-			var/obj/effect/blob/B = pick(targets)
+			var/obj/effect/E = pick(targets)
 			spawn(rand(0, 10))
-				arc(B)
+				arc(E)
+			if(istype(E, /obj/effect/blob))
+				var/obj/effect/blob/B = E
 				B.take_damage(arc_power)
+			else
+				qdel(E)
 		return
 
 	//Shock any fusion cores
@@ -122,6 +131,7 @@
 			spawn(rand(i, i+5))
 				arc(M)
 				emp(M)
+		return
 
 //Shoot a bolt from self to C
 /obj/machinery/power/arc_emitter/proc/arc(obj/T)
@@ -144,6 +154,8 @@
 
 //Check if given mob is wearing insulated cloathing
 /obj/machinery/power/arc_emitter/proc/insulated(var/mob/living/carbon/human/m)
+	if(isnull(m))
+		return 0
 	if(isnull(m.head) || isnull(m.wear_suit))
 		return 0
 	if(!m.head.siemens_coefficient >= 0.9 || !m.wear_suit.siemens_coefficient >= 0.9)
@@ -272,8 +284,6 @@
 /obj/machinery/power/arc_emitter/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 	activate(user)
-
-
 
 /obj/machinery/power/arc_emitter/proc/activate(mob/user as mob)
 	if(stat & BROKEN)

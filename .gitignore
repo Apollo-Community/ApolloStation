@@ -12,3 +12,5 @@ code/hub.dm
 .atom-build.json
 btime.so
 scripts/wikiForms.txt
+discord_bot.pid
+dlogs.txt

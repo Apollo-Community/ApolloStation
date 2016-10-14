@@ -25,7 +25,7 @@
 		/area/hallway/secondary/exit,
 		/area/medical/reception,
 		/area/crew_quarters/bar,
-		/area/security/lobby,
+		/area/security/main,
 		/area/hallway/primary/aft_port,
 		/area/storage/primary
 		)
@@ -77,7 +77,6 @@
 	areas = list(
 		/area/bridge,
 		/area/crew_quarters/captain,
-		/area/server,
 		/area/security/main,
 		/area/turret_protected/ai_server_room,
 		/area/tcomms/computer,

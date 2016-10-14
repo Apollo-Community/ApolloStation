@@ -82,6 +82,10 @@
 			blobstart += loc
 			qdel(src)
 
+		if("vinestart")
+			vinestart += loc
+			qdel(src)
+
 		if("xeno_spawn")
 			xeno_spawn += loc
 			qdel(src)

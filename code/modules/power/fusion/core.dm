@@ -15,19 +15,23 @@
 	anchored = 0
 	var/total_power = 0
 	var/nr_events = 0
+	var/power_coef = 50
+	var/wire_power = 0
 
 /obj/machinery/power/fusion/core/New()
 	update_icon()
-	//I dont know why this is nessecery but it does not seem to happen on its own.
-	machines += src
-	MachineProcessing += src
+	connect_to_network()
 	..()
 
 /obj/machinery/power/fusion/core/process()
-	add_avail(total_power/(nr_events * 0.8))	//To stabilize the power but keep it fluctiating
-	last_power = total_power/nr_events
-	total_power = 0
-	nr_events = 0
+	if(isnull(powernet))
+		connect_to_network()
+
+	if(nr_events && total_power)
+		add_avail(total_power/(nr_events * 0.8))	//To stabilize the power but keep it fluctiating
+		last_power = total_power/nr_events
+		total_power = 0
+		nr_events = 0
 	update_icon()
 	decay()
 
@@ -57,6 +61,7 @@
 		icon_state = "core_broken"
 		ready = 0
 		heat = 0
+		disconnect_from_network()
 
 	if(last_power > 1 || heat > 1)
 		icon_state = "core_on"
@@ -79,7 +84,8 @@
 /obj/machinery/power/fusion/core/proc/receive_neutrons(var/neutrons)
 	if(stat == BROKEN)
 		return
-	var/power = 400*neutrons	//Generate about 450kw at base level.
+	var/power = power_coef*neutrons	//Generate about 450kw at base level.
 	total_power += power
 	nr_events ++
+	wire_power = powernet.avail
 	return

@@ -371,7 +371,7 @@
 
 /turf/simulated/mineral/random
 	name = "Mineral deposit"
-	var/mineralSpawnChanceList = list("Uranium" = 5, "Platinum" = 5, "Iron" = 35, "Coal" = 35, "Diamond" = 1, "Gold" = 5, "Silver" = 5, "Phoron" = 10)
+	var/mineralSpawnChanceList = list("Uranium" = 5, "Iron" = 10, "Coal" = 10, "Diamond" = 1, "Phoron" = 10, "Tritium" = 1)
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
 
 /turf/simulated/mineral/random/New()
@@ -391,11 +391,12 @@
 	mineralChance = 25
 	mineralSpawnChanceList = list("Uranium" = 10, "Platinum" = 10, "Iron" = 20, "Coal" = 20, "Diamond" = 2, "Gold" = 10, "Silver" = 10, "Phoron" = 20)
 
-/turf/simulated/mineral/lunar
+/turf/simulated/mineral/random/moon
+	mineralSpawnChanceList = list("Platinum" = 5, "Iron" = 10, "Coal" = 10, "Gold" = 5, "Silver" = 5, "Tritium" = 1)
+	mineralChance = 10
 	name = "lunar rocks"
 	icon_state = "lunar_rock"
 	side_type = "lunar_rock"
-	has_resources = 0
 	has_artifacts = 1
 	dug_type = /turf/planet/lunar
 

@@ -40,6 +40,7 @@ export DISCORDTOKEN [token]
 ```
 
 Similar to slack.py, this script sends ahelps to discord. The script itself requires some configuration (server and text channel IDs), and as with the slack script, you need to add the bot user's token to your environment variables.
+Aditionally the script can be ran on the background aswell and intercept messages starting witht ! in the assigned channel. These will be forwarded as ahelp to players in the server.
 
 #### Adminbus.py
 
@@ -56,6 +57,6 @@ This script is Depreciated and has been replaced with `slack.py` and only exists
 
 Dependencies: [BeautifulSoup](http://bazaar.launchpad.net/~leonardr/beautifulsoup/3.2/files) python 2.7+`
 
-`pip install BeautifulSoup --upgrade`
+pip install BeautifulSoup --upgrade
 
 This script is used to pull forms from the wiki, do some processing and store them in a txt file.

@@ -158,6 +158,7 @@ var/list/debug_verbs = list (
         ,/client/proc/hide_debug_verbs
         ,/client/proc/testZAScolors
         ,/client/proc/testZAScolors_remove
+        ,/client/proc/setup_tokamak_engine
         ,/client/proc/setup_supermatter_engine
 		,/client/proc/atmos_toggle_debug
 		,/client/proc/supermatter_dam_debug
