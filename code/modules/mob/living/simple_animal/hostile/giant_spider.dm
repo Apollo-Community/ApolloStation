@@ -54,7 +54,7 @@
 /mob/living/simple_animal/hostile/giant_spider/queen
 	desc = "Furry and black, it makes you shudder to look at it. Holy moly, this one is HUGE!"
 	name = "giant spider queen"
-	icon = "icons/mob/spiderqueen.dmi"
+	icon = 'icons/mob/spiderqueen.dmi'
 	icon_state = "queen"
 	icon_living = "queen"
 	icon_dead = "queen_dead"
