@@ -1013,10 +1013,6 @@ var/list/the_station_areas = list (
 	icon_state = "shuttle"
 	name = "\improper Trade Shuttle"
 
-/area/shuttle/hippie/centcom
-	icon_state = "shuttle"
-	name = "\improper Hippie Shuttle"
-
 //Central command
 /area/shuttle/escape/centcom
 	name = "Emergency Shuttle Centcom"
