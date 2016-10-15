@@ -718,6 +718,10 @@ var/list/the_station_areas = list (
 	icon_state = "panelsP"
 
 //Maintenance
+/area/maintenance
+	rad_shielded = 1
+environment = STONEROOM
+
 /area/maintenance/fore_port
 	name = "Fore Port Maintenance"
 	icon_state = "fpmaint"
