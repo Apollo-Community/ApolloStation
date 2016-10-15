@@ -1,0 +1,104 @@
+"aa" = (/turf/space,/area/space)
+"ab" = (/turf/simulated/shuttle/wall{icon_state = "swall_f6"; dir = 2},/area/space)
+"ac" = (/turf/simulated/shuttle/wall{icon_state = "swall12"; dir = 2},/area/space)
+"ad" = (/turf/simulated/shuttle/wall{icon_state = "swall14"; dir = 2},/area/space)
+"ae" = (/turf/simulated/shuttle/wall{dir = 3; icon_state = "swall_f10"; layer = 2},/area/space)
+"af" = (/turf/simulated/shuttle/floor{icon_state = "floor3"},/turf/simulated/shuttle/wall{icon_state = "swall_f9"; dir = 2},/area/space)
+"ag" = (/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"ah" = (/obj/machinery/sleeper,/obj/machinery/light{dir = 1},/obj/effect/decal/remains/human,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"ai" = (/obj/machinery/sleep_console,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"aj" = (/turf/simulated/shuttle/floor{icon_state = "floor3"},/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/space)
+"ak" = (/turf/simulated/shuttle/wall{icon_state = "swall13"; dir = 2},/area/space)
+"al" = (/obj/structure/shuttle/engine/propulsion{icon_state = "burst_r"; dir = 8},/turf/space,/area/space)
+"am" = (/turf/simulated/shuttle/wall{icon_state = "swall11"; dir = 2},/area/space)
+"an" = (/obj/machinery/computer/med_data,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"ao" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/regular{pixel_x = 6; pixel_y = -5},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"ap" = (/turf/simulated/shuttle/wall{icon_state = "swall15"; dir = 2},/area/space)
+"aq" = (/turf/simulated/shuttle/plating,/turf/simulated/shuttle/wall{icon_state = "swall_f9"; dir = 2},/area/space)
+"ar" = (/obj/structure/shuttle/engine/heater{icon_state = "heater"; dir = 4},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating/airless,/area/space)
+"as" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion"; dir = 8},/turf/space,/area/space)
+"at" = (/turf/simulated/shuttle/floor{icon_state = "floor3"},/turf/simulated/shuttle/wall{icon_state = "swall_f10"; dir = 2},/area/space)
+"au" = (/obj/item/weapon/scalpel,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"av" = (/turf/simulated/shuttle/wall{icon_state = "swall7"; dir = 2},/area/space)
+"aw" = (/turf/simulated/shuttle/plating,/area/space)
+"ax" = (/obj/structure/computerframe{anchored = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"ay" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/turf/simulated/shuttle/plating,/area/space)
+"az" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/turf/simulated/shuttle/plating,/area/space)
+"aA" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/turf/simulated/shuttle/plating,/area/space)
+"aB" = (/obj/machinery/door/airlock/glass{name = "Hibernation Pods"},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"aC" = (/obj/structure/table,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"aD" = (/turf/simulated/shuttle/wall{icon_state = "swall3"; dir = 2},/area/space)
+"aE" = (/obj/item/device/multitool,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"aF" = (/obj/item/weapon/cell{charge = 100; maxcharge = 15000},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"aG" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/floor/plating,/area/space)
+"aH" = (/turf/simulated/shuttle/plating,/turf/simulated/shuttle/wall{icon_state = "swall_f6"; dir = 2},/area/space)
+"aI" = (/obj/structure/shuttle/engine/propulsion{icon_state = "burst_l"; dir = 8},/turf/space,/area/space)
+"aJ" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/turf/simulated/shuttle/plating,/area/space)
+"aK" = (/obj/structure/table,/obj/machinery/light{dir = 4},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"aL" = (/turf/simulated/shuttle/floor{icon_state = "floor3"},/turf/simulated/shuttle/wall{icon_state = "swall_f6"; dir = 2},/area/space)
+"aM" = (/obj/machinery/door/airlock/glass,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"aN" = (/obj/machinery/light_switch{pixel_x = 27},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"aO" = (/obj/machinery/portable_atmospherics/powered/scrubber,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"aP" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/turf/simulated/shuttle/plating,/area/space)
+"aQ" = (/obj/item/weapon/bedsheet,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/obj/structure/bed,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"aR" = (/obj/machinery/door/window/southright,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"aS" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"aT" = (/obj/structure/table,/obj/item/weapon/gun/energy/laser/retro,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"aU" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/turf/simulated/shuttle/plating,/area/space)
+"aV" = (/obj/machinery/light/small{dir = 8},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"aW" = (/obj/structure/table,/obj/item/weapon/tank/oxygen,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"aX" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/turf/simulated/shuttle/plating,/area/space)
+"aY" = (/obj/machinery/light{dir = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"aZ" = (/obj/structure/table,/obj/item/device/analyzer,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"ba" = (/obj/effect/decal/remains/human,/obj/structure/bed/chair{dir = 8},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bb" = (/obj/machinery/door/airlock/glass{name = "Living Module"},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bc" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bd" = (/obj/machinery/door/window/northright,/obj/effect/decal/remains/human,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"be" = (/obj/item/weapon/bedsheet,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/bed,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bf" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bg" = (/turf/simulated/shuttle/wall{icon_state = "swall_f9"; dir = 2},/area/space)
+"bh" = (/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/space)
+"bi" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/turf/simulated/shuttle/plating,/area/space)
+"bj" = (/obj/machinery/light_switch{pixel_x = 27},/obj/machinery/light{dir = 4},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bk" = (/obj/item/weapon/shard{icon_state = "medium"},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bl" = (/obj/item/weapon/shard,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bm" = (/obj/structure/cable,/obj/structure/computerframe{anchored = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bn" = (/obj/structure/cable,/obj/structure/computerframe{anchored = 1},/obj/item/stack/cable_coil/cut,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bo" = (/obj/structure/table/rack,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_oxygen,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bp" = (/obj/structure/table/rack,/obj/item/clothing/suit/space/syndicate,/obj/item/clothing/head/helmet/space/syndicate,/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bq" = (/obj/structure/table/rack,/obj/item/weapon/storage/toolbox/syndicate,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"br" = (/obj/machinery/light/small,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bs" = (/turf/simulated/shuttle/plating,/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/space)
+"bt" = (/obj/machinery/door/blast/regular{id = "oldship_gun"; name = "Pod Bay Door"},/turf/simulated/shuttle/plating,/area/space)
+"bu" = (/obj/machinery/mass_driver{dir = 8; icon_state = "mass_driver"; id = "oldship_gun"},/turf/simulated/shuttle/plating,/area/space)
+"bv" = (/obj/machinery/door/airlock/glass,/turf/simulated/shuttle/plating,/area/space)
+"bw" = (/obj/machinery/door/airlock/glass{name = "Pod Bay"},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bx" = (/obj/effect/decal/remains/human,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"by" = (/turf/simulated/shuttle/plating,/turf/simulated/shuttle/wall{icon_state = "swall_f10"; dir = 2},/area/space)
+"bz" = (/obj/machinery/computer/pod{id = "oldship_gun"},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bA" = (/obj/structure/table,/obj/item/weapon/screwdriver,/obj/machinery/light,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bB" = (/obj/structure/table,/obj/item/device/radio/off,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+
+(1,1,1) = {"
+aaaaaaaaaaabacacacacadaeaaaaaaaaaaaaaaabaeaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaabacafagagahaiajakadaeaaaaaaaaabakalaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaabamanagagagagagagaoajapaeaaaaabaqarasaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabapakatagagagagauagagagavapaeabaqawarasaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+abapafaxajacadayazaAacacaBakakakamawawarasaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+avafagagagaCaDaEagaFagagagagagagaGawaHacaIaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aDagagagagaCaDagagagagagagagagagavacapaeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aJagagagagaKaDagagaLaMacacatagaNaDaOajakadaeaaaaaaaaaaaaaaaaaaaaaaaaaa
+aPagagagagagaDagagaDagaQaRaDagagaDaSagagajapaeaaabadacacacacacacacadae
+aPaTaCagagagaUagagaDaVaWaNaDagagaXagagagagajapacapafagagagaYagagagajam
+aPaZbaagagagaMagagaDagagagaDagagbbagagagagagbcagbcagagagagagagagagagbc
+aPaCaCagagagaUagagaDbdbeagaDagagaXagagagagaLapacapatagagagagagagbfaLam
+aPagagagagagaDagagajacacaMafagagaDagagagaLapbgaabhakacacacacacacacakbg
+biagagagagbjavatagagagagagagagagaDagagadakbgaaaaaaaaaaaaaaaaaaaaaaaaaa
+aDbkblagagaLapakacacadatagagagagavacapbgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+avatbmbnaLapafbobpbqajamagagaFbraGawbsacalaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bhakadacapafagagagagagaDagagaLadamawawarasaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaabtbubvagagagagagagbwbxaLapbgbhbyawarasaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaabhacambzagagagagagavadapbgaaaabhbyarasaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaabhadatagbAbBaLapakbgaaaaaaaabhadaIaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaabhakacacacakbgaaaaaaaaaaaaaabhbgaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}
