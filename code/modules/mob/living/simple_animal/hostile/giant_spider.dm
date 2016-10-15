@@ -53,14 +53,12 @@
 
 /mob/living/simple_animal/hostile/giant_spider/queen
 	desc = "Furry and black, it makes you shudder to look at it. Holy moly, this one is HUGE!"
-	name = "giant spider queen"
-	icon = "icons/mob/spiderqueen.dmi"
 	icon_state = "queen"
 	icon_living = "queen"
 	icon_dead = "queen_dead"
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/spideregg
-	maxHealth = 800
-	health = 800
+	maxHealth = 400
+	health = 400
 	melee_damage_lower = 10
 	melee_damage_upper = 20
 	poison_per_bite = 10

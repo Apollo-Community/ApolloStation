@@ -128,40 +128,28 @@ var/global/datum/shuttle_controller/shuttle_controller
 	process_shuttles += admin_shuttle
 
 	var/datum/shuttle/ferry/pizza_shuttle = new/datum/shuttle/ferry()
-	pizza_shuttle.location = 1
-	pizza_shuttle.warmup_time = 10
-	pizza_shuttle.hanger_station = hangers_as["s_hanger_l"]
-	pizza_shuttle.hanger_offsite = hangers_as["c_hanger_p"]
-	pizza_shuttle.template_path ="maps/templates/shuttles/pizza.dmm"
-	pizza_shuttle.docking_controller_tag = "pizza_shuttle"
-	pizza_shuttle.dock_target_station = "pizza_shuttle_dock_airlock"
-	pizza_shuttle.dock_target_offsite = "pizza_shuttle_bay"
+	admin_shuttle.location = 1
+	admin_shuttle.warmup_time = 10
+	admin_shuttle.hanger_station = hangers_as["s_hanger_l"]
+	admin_shuttle.hanger_offsite = hangers_as["c_hanger_p"]
+	admin_shuttle.template_path ="maps/templates/shuttles/pizza.dmm"
+	admin_shuttle.docking_controller_tag = "pizza_shuttle"
+	admin_shuttle.dock_target_station = "pizza_shuttle_dock_airlock"
+	admin_shuttle.dock_target_offsite = "pizza_shuttle_bay"
 	shuttles["Pizza"] = pizza_shuttle
 	process_shuttles += pizza_shuttle
 
 	var/datum/shuttle/ferry/trade_shuttle = new/datum/shuttle/ferry()
-	trade_shuttle.location = 1
-	trade_shuttle.warmup_time = 10
-	trade_shuttle.hanger_station = hangers_as["s_hanger_l"]
-	trade_shuttle.hanger_offsite = hangers_as["c_hanger_t"]
-	trade_shuttle.template_path ="maps/templates/shuttles/trade.dmm"
-	trade_shuttle.docking_controller_tag = "trade_shuttle"
-	trade_shuttle.dock_target_station = "trade_shuttle_dock_airlock"
-	trade_shuttle.dock_target_offsite = "trade_shuttle_bay"
+	admin_shuttle.location = 1
+	admin_shuttle.warmup_time = 10
+	admin_shuttle.hanger_station = hangers_as["s_hanger_l"]
+	admin_shuttle.hanger_offsite = hangers_as["c_hanger_t"]
+	admin_shuttle.template_path ="maps/templates/shuttles/trade.dmm"
+	admin_shuttle.docking_controller_tag = "trade_shuttle"
+	admin_shuttle.dock_target_station = "trade_shuttle_dock_airlock"
+	admin_shuttle.dock_target_offsite = "trade_shuttle_bay"
 	shuttles["Trade"] = trade_shuttle
 	process_shuttles += trade_shuttle
-
-	var/datum/shuttle/ferry/hippe_shuttle = new/datum/shuttle/ferry()
-	hippe_shuttle.location = 1
-	hippe_shuttle.warmup_time = 10
-	hippe_shuttle.hanger_station = hangers_as["s_hanger_l"]
-	hippe_shuttle.hanger_offsite = hangers_as["c_hanger_h"]
-	hippe_shuttle.template_path ="maps/templates/shuttles/hippie.dmm"
-	hippe_shuttle.docking_controller_tag = "hippie_shuttle"
-	hippe_shuttle.dock_target_station = "hippie_shuttle_dock_airlock"
-	hippe_shuttle.dock_target_offsite = "hippie_shuttle_bay"
-	shuttles["Hippie"] = hippe_shuttle
-	process_shuttles += hippe_shuttle
 
 	/*
 	//Is this even in ?

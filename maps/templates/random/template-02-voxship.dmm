@@ -1,44 +1,49 @@
-"a" = (/turf/space,/area/vox_station/mining)
-"b" = (/obj/structure/lattice,/turf/space,/area/vox_station/mining)
-"c" = (/obj/item/clothing/suit/space/vox/pressure,/turf/space,/area/vox_station/mining)
-"d" = (/turf/simulated/shuttle/wall{tag = "icon-swall3"; icon_state = "swall3"},/area/vox_station/mining)
-"e" = (/turf/simulated/floor/plating/airless,/area/vox_station/mining)
-"f" = (/obj/structure/shuttle/engine/propulsion{tag = "icon-propulsion (NORTH)"; icon_state = "propulsion"; dir = 1},/turf/space,/area/vox_station/mining)
-"g" = (/obj/structure/shuttle/engine/heater{dir = 1},/turf/simulated/shuttle/wall{tag = "icon-swall3"; icon_state = "swall3"},/area/vox_station/mining)
-"h" = (/turf/simulated/floor/airless{icon_state = "floor4"},/area/vox_station/mining)
-"i" = (/obj/structure/table,/turf/simulated/floor/airless{icon_state = "floor4"},/area/vox_station/mining)
-"j" = (/obj/item/clothing/shoes/magboots/vox,/turf/simulated/floor/plating/airless,/area/vox_station/mining)
-"k" = (/turf/simulated/shuttle/wall{tag = "icon-swall_f5"; icon_state = "swall_f5"},/area/vox_station/mining)
-"l" = (/turf/simulated/shuttle/wall{tag = "icon-swall11"; icon_state = "swall11"; dir = 2},/area/vox_station/mining)
-"m" = (/obj/structure/table,/obj/item/weapon/gun/dartgun/vox,/turf/simulated/floor/airless{icon_state = "floor4"},/area/vox_station/mining)
-"n" = (/obj/item/weapon/tank/nitrogen,/turf/simulated/floor/plating/airless,/area/vox_station/mining)
-"o" = (/turf/simulated/shuttle/wall{icon_state = "swall7"; dir = 2},/area/vox_station/mining)
-"p" = (/turf/simulated/shuttle/wall{tag = "icon-swall_f9"; icon_state = "swall_f9"},/area/vox_station/mining)
-"q" = (/turf/space,/area/space)
-"r" = (/turf/simulated/shuttle/wall{tag = "icon-swall3"; icon_state = "swall3"},/area/space)
-"s" = (/turf/simulated/shuttle/wall{tag = "icon-swall_f5"; icon_state = "swall_f5"},/area/space)
-"t" = (/turf/simulated/shuttle/wall{tag = "icon-swall14"; icon_state = "swall14"},/area/vox_station/mining)
-"u" = (/turf/simulated/shuttle/wall{tag = "icon-swall12"; icon_state = "swall12"},/area/vox_station/mining)
-"v" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
-"w" = (/turf/simulated/shuttle/wall{tag = "icon-swall_f9"; icon_state = "swall_f9"},/area/space)
-"x" = (/obj/structure/computerframe,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
-"y" = (/obj/structure/bed/chair/shuttle,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
-"z" = (/obj/machinery/computer3/server/rack,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
-"A" = (/turf/space,/turf/simulated/shuttle/wall{tag = "icon-swall_f5"; icon_state = "swall_f5"},/area/vox_station/mining)
-"B" = (/obj/structure/window/shuttle{tag = "icon-4 (NORTHEAST)"; icon_state = "4"},/turf/simulated/shuttle/plating/vox,/area/vox_station/mining)
-"C" = (/obj/structure/window/shuttle{tag = "icon-9 (NORTHEAST)"; icon_state = "9"},/turf/simulated/shuttle/plating/vox,/area/vox_station/mining)
-"D" = (/obj/structure/window/shuttle{tag = "icon-7 (NORTHEAST)"; icon_state = "7"},/turf/simulated/shuttle/plating/vox,/area/vox_station/mining)
-"E" = (/turf/space,/turf/simulated/shuttle/wall{tag = "icon-swall_f9"; icon_state = "swall_f9"},/area/vox_station/mining)
+"a" = (/turf/space,/turf/simulated/shuttle/wall{tag = "icon-swall_f6"; icon_state = "swall_f6"},/area/vox_station/mining)
+"b" = (/turf/simulated/shuttle/wall{tag = "icon-swall12"; icon_state = "swall12"},/area/vox_station/mining)
+"c" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"d" = (/turf/space,/turf/simulated/shuttle/wall{tag = "icon-swall_f10"; icon_state = "swall_f10"},/area/vox_station/mining)
+"e" = (/turf/simulated/shuttle/wall{tag = "icon-swall3"; icon_state = "swall3"},/area/vox_station/mining)
+"f" = (/obj/structure/table/rack,/obj/item/weapon/flame/lighter,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"g" = (/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"h" = (/obj/machinery/light{tag = "icon-tube1 (NORTH)"; icon_state = "tube1"; dir = 1},/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"i" = (/obj/structure/bed/chair,/obj/machinery/light{tag = "icon-tube1 (NORTH)"; icon_state = "tube1"; dir = 1},/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"j" = (/obj/structure/bed/chair,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"k" = (/obj/item/stack/light_w,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"l" = (/obj/structure/table/rack,/obj/item/weapon/storage/box/lights,/obj/machinery/light{tag = "icon-tube1 (WEST)"; icon_state = "tube1"; dir = 8},/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"m" = (/obj/structure/table,/obj/item/weapon/dart_cartridge,/obj/item/weapon/gun/dartgun/vox,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"n" = (/obj/structure/table/gamblingtable,/obj/item/weapon/dnainjector/xraymut,/obj/item/weapon/plastique,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"o" = (/obj/structure/table/gamblingtable,/obj/item/clothing/under/lightblue,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"p" = (/obj/machinery/light{tag = "icon-tube1 (EAST)"; icon_state = "tube1"; dir = 4},/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"q" = (/obj/structure/closet/masks,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"r" = (/obj/structure/table,/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/nitrogen,/obj/item/weapon/tank/nitrogen,/obj/item/clothing/mask/breath,/obj/item/clothing/mask/breath,/obj/item/clothing/mask/breath,/obj/item/clothing/mask/breath,/obj/item/weapon/tank/nitrogen,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"s" = (/obj/structure/table/gamblingtable,/obj/item/clothing/under/lightgreen,/obj/item/weapon/storage/bag/plasticbag,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"t" = (/obj/structure/table/gamblingtable,/obj/item/weapon/deck,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"u" = (/obj/machinery/portable_atmospherics/canister/nitrogen,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"v" = (/obj/machinery/light,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"w" = (/obj/structure/bed/chair{tag = "icon-chair1 (NORTH)"; icon_state = "chair1"; dir = 1},/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"x" = (/obj/structure/bed/chair{tag = "icon-chair1 (NORTH)"; icon_state = "chair1"; dir = 1},/obj/machinery/light,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"y" = (/obj/item/ammo_magazine/c45m,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"z" = (/turf/space,/turf/simulated/shuttle/wall{tag = "icon-swall_f5"; icon_state = "swall_f5"},/area/vox_station/mining)
+"A" = (/turf/simulated/shuttle/wall{tag = "icon-swall14"; icon_state = "swall14"},/area/vox_station/mining)
+"B" = (/turf/space,/turf/simulated/shuttle/wall{tag = "icon-swall_f9"; icon_state = "swall_f9"},/area/vox_station/mining)
+"C" = (/turf/space,/area/space)
+"D" = (/obj/machinery/computer3/server/rack,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"E" = (/obj/machinery/light{tag = "icon-tube1 (WEST)"; icon_state = "tube1"; dir = 8},/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"F" = (/obj/structure/bed/chair/shuttle,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"G" = (/obj/machinery/computer/shuttle,/turf/simulated/shuttle/floor4/vox,/area/vox_station/mining)
+"H" = (/obj/structure/window/shuttle{tag = "icon-4 (NORTHEAST)"; icon_state = "4"},/turf/simulated/shuttle/plating/vox,/area/vox_station/mining)
+"I" = (/obj/structure/window/shuttle{tag = "icon-9 (NORTHEAST)"; icon_state = "9"},/turf/simulated/shuttle/plating/vox,/area/vox_station/mining)
+"J" = (/obj/structure/window/shuttle{tag = "icon-7 (NORTHEAST)"; icon_state = "7"},/turf/simulated/shuttle/plating/vox,/area/vox_station/mining)
 
 (1,1,1) = {"
-aabaaacaa
-adebbaaba
-fdeebabef
-gdheebbeg
-ddiejeedd
-klmhhenop
-qriihhhrq
-qstuvutwq
-qqdxyzdqq
-qqABCDEqq
+abbbcbbbd
+efghgijke
+elgmgnope
+eqgrgstge
+euvggwxye
+zbAbcbAbB
+CCeggDeCC
+CCeEFpeCC
+CCegGgeCC
+CCzHIJBCC
 "}
