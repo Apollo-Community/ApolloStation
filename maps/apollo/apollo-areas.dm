@@ -720,7 +720,7 @@ var/list/the_station_areas = list (
 //Maintenance
 /area/maintenance
 	rad_shielded = 1
-environment = STONEROOM
+	environment = STONEROOM
 
 /area/maintenance/fore_port
 	name = "Fore Port Maintenance"
