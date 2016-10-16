@@ -308,7 +308,7 @@
 		return 0
 
 	if( crime.brig_sentence >= PERMABRIG_SENTENCE )
-		buzz( "\The [src] buzzes, \"The criminal has a permabrig sentence and needs to be frozen.\"" )
+		buzz( "\The [src] buzzes, \"The criminal has a permabrig sentence and needs to move to moon prison.\"" )
 		return 0
 
 	var/addtime = timetoset
