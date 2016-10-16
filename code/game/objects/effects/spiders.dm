@@ -195,9 +195,9 @@
 			if(prob(99))
 				do
 				spawn_type = pick(typesof(/mob/living/simple_animal/hostile/giant_spider/))
-				while(spawn_type == /mob/living/simple_animal/hostile/giant_spider/queen)
+				while(spawn_type == /mob/living/simple_animal/hostile/giant_spider/nurse/queen)
 			else
-				spawn_type = /mob/living/simple_animal/hostile/giant_spider/queen
+				spawn_type = /mob/living/simple_animal/hostile/giant_spider/nurse/queen
 
 			new spawn_type(src.loc)
 			qdel(src)
