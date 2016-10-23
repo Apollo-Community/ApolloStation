@@ -20,6 +20,11 @@ obj/hanger/oddshaped/exterior
 	square = 0
 	invisibility = 101
 
+obj/hanger/square/exterior/vox
+	dimx =21
+	dimy =20
+	htag = "c_vox"
+
 obj/hanger/square/exterior/s_escape_pod_1
 	dimx =3
 	dimy =4

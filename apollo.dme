@@ -290,6 +290,9 @@
 #include "code\game\gamemodes\cult\runes.dm"
 #include "code\game\gamemodes\cult\talisman.dm"
 #include "code\game\gamemodes\endgame\universe.dm"
+#include "code\game\gamemodes\endgame\supermatter_cascade\blob.dm"
+#include "code\game\gamemodes\endgame\supermatter_cascade\portal.dm"
+#include "code\game\gamemodes\endgame\supermatter_cascade\universe.dm"
 #include "code\game\gamemodes\events\biomass.dm"
 #include "code\game\gamemodes\events\clang.dm"
 #include "code\game\gamemodes\events\dust.dm"
@@ -1800,6 +1803,7 @@
 #include "maps\_bluespace.dmm"
 #include "maps\apollo\apollo-areas.dm"
 #include "maps\apollo\apollo-01-Main.dmm"
+#include "maps\apollo\apollo-02-Engipost.dmm"
 #include "maps\apollo\apollo-04-CentComm.dmm"
 #include "maps\apollo\apollo-05-Moon.dmm"
 // END_INCLUDE
