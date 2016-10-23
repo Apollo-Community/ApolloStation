@@ -46,8 +46,6 @@
 	var/const/max_cultists_to_start = 4
 	var/acolytes_survived = 0
 
-	votable = 0
-
 
 /datum/game_mode/cult/announce()
 /*
@@ -56,7 +54,7 @@
 */
 
 /datum/game_mode/cult/pre_setup()
-	config.canon = 0
+	//config.canon = 0
 
 	if(!config.objectives_disabled)
 		if(prob(50))
