@@ -19,7 +19,9 @@
 		/obj/item/weapon/camera_assembly,
 		/obj/item/weapon/tank,
 		/obj/item/weapon/circuitboard,
-		/obj/item/weapon/smes_coil
+		/obj/item/weapon/smes_coil,
+		/obj/item/weapon/neutronRod,
+		/obj/item/weapon/shieldCrystal
 		)
 
 	var/obj/item/wrapped = null // Item currently being held.
@@ -48,6 +50,29 @@
 		/obj/item/weapon/card/id,
 		/obj/item/weapon/book,
 		/obj/item/weapon/newspaper
+		)
+
+/obj/item/weapon/gripper/medical //A general usage gripper, used for toxins/robotics/xenobio/etc
+	name = "medical gripper"
+	icon_state = "gripper"
+	desc = "A simple grasping tool suited to assist in a wide array of medical applications."
+	can_hold = list(
+		/obj/item/device/mmi,
+		/obj/item/organ/brain, //to insert into MMIs.
+		/obj/item/organ/borer,
+		/obj/item/organ/appendix,
+		/obj/item/organ/eyes,
+		/obj/item/organ/heart,
+		/obj/item/organ/kidneys,
+		/obj/item/organ/liver,
+		/obj/item/organ/lungs,
+		/obj/item/weapon/reagent_containers/glass,
+		/obj/item/weapon/reagent_containers/blood,
+		/obj/item/weapon/reagent_containers/dropper,
+		/obj/item/weapon/reagent_containers/pill,
+		/obj/item/weapon/reagent_containers/spray,
+		/obj/item/weapon/reagent_containers/syringe,
+		/obj/item/weapon/reagent_containers/food/snacks/monkeycube
 		)
 
 /obj/item/weapon/gripper/research //A general usage gripper, used for toxins/robotics/xenobio/etc
