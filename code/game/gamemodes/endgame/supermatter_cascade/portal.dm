@@ -6,9 +6,9 @@
 	icon = 'icons/obj/rift.dmi'
 	icon_state = "rift"
 
-	move_self = 0
-	announce=0
-	cause_hell=0
+	move_self  = 0
+	announce   = 0
+	//cause_hell = 0
 
 	layer = 12 // ITS SO BRIGHT
 
