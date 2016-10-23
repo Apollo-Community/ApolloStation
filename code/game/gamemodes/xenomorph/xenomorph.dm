@@ -11,8 +11,6 @@
 	required_enemies = 1
 	recommended_enemies = 1
 
-	votable = 0
-
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
@@ -23,7 +21,7 @@
 /datum/game_mode/xenomorph/announce()
 
 /datum/game_mode/xenomorph/pre_setup()
-	config.canon = 0
+	//config.canon = 0
 
 	config.aliens_allowed = 1
 	/*if(config.protect_roles_from_antagonist)
