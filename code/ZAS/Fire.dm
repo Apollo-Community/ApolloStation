@@ -38,8 +38,6 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	return igniting
 
 /zone/proc/process_fire()
-	world << "process fire if vars:"
-	world << "combustability: [air.check_combustability()]"
 	var/list/to_remove = list()
 	if(!air.check_combustability())
 		for(var/turf/simulated/T in fire_tiles)
@@ -47,7 +45,6 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 			if(!air.check_combustability(liquid))
 				if(istype(T.fire))
 					T.fire.RemoveFire()
-					world << "Remove Fire was called via zone process fire"
 				T.fire = null
 				to_remove += T
 			if(!isnull(liquid))
@@ -68,17 +65,13 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	burn_gas.group_multiplier = gm
 
 	air.merge(burn_gas)
-	world << "Checking fire level:"
 	var/firelevel = air.calculate_firelevel()
-	world << "Afther update: [firelevel]"
 	for(var/turf/T in fire_tiles)
 		if(T.fire)
-			world << "Is fire a fuel fire: [T.fire.fuel_fire]"
 			if(T.fire.fuel_fire)
 				T.fire.firelevel = 10
 			else
 				T.fire.firelevel = firelevel
-			world << "Each turfs fire level: [T.fire.firelevel]"
 
 		else
 			fire_tiles -= 1
@@ -139,7 +132,6 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 		if(my_tile.fire == src)
 			my_tile.fire = null
 		RemoveFire()
-		world << "Remove fire was called via vire process"
 		return 1
 
 	if( phoron_fire )
@@ -225,7 +217,6 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 
 
 /obj/fire/proc/RemoveFire()
-	world << "Remove fire was called!"
 	if (istype(loc, /turf))
 		set_light(0)
 		loc.light_color = null

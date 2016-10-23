@@ -277,7 +277,6 @@
 
 		if(old_fire)
 			old_fire.RemoveFire()
-			world << "Remove fire was called via turf.old_fire"
 
 		if(tell_universe)
 			universe.OnTurfChange(W)
