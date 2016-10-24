@@ -48,7 +48,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 				T.fire = null
 				to_remove += T
 			if(!isnull(liquid))
-				liquid.amount -= 0.025
+				liquid.amount -= 0.03
 				if(liquid.amount < 0)
 					qdel(liquid)
 		fire_tiles -= to_remove
