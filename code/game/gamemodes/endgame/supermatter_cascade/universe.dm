@@ -58,7 +58,7 @@ var/global/universe_has_ended = 0
 	//cult.allow_narsie = 0
 
 	PlayerSet()
-	new /obj/singularity/narsie/large/exit(T, 120)
+	//new /obj/singularity/narsie/large/exit(T, 120)
 	spawn(rand(30,60) SECONDS)
 		var/txt = {"
 This is the NAV Crescent,
