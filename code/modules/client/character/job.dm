@@ -36,8 +36,6 @@
 	department = new_department
 	roles |= new_department.starting_positions
 
-	saveCharacter()
-
 /datum/character/proc/LoadDepartment( var/id )
 	if( !job_master )
 		return

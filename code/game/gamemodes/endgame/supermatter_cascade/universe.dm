@@ -68,8 +68,9 @@ var/global/universe_has_ended = 0
 	//cult.allow_narsie = 0
 
 	PlayerSet()
-	var/turf/T = locate(rand(10,245),rand(10,245),4)
-	new /obj/singularity/narsie/large/exit(T, 120)
+
+	//var/turf/T = locate(rand(10,245),rand(10,245),4)
+	//new /obj/singularity/narsie/large/exit(T, 120)
 	spawn(rand(30,60) SECONDS)
 		var/txt = {"
 There's been a galaxy-wide electromagnetic pulse.  All of our systems are heavily damaged and many personnel are dead or dying. We are seeing increasing indications of the universe itself beginning to unravel.

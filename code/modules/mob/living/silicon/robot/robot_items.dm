@@ -110,7 +110,7 @@
 
 	user.put_in_active_hand(G)
 
-	G.synch()
-	G.affecting = src
+	//G.synch()
+	//G.affecting = src
 
 	M.visible_message("<span class='alert'>[user] has grabbed [M] passively!</span>")

@@ -58,7 +58,8 @@
 	antag.current << "<span class='ooc_notice'>You are a non-persistent antagonist and have received a randomized character!</span>"
 
 /datum/antagonist/proc/setup(var/skip_greet=0)
-	if(faction) 
+	ticker.mode.traitors += antag
+	if(faction)
 		faction = faction_controller.join_faction(antag, faction)
 	else
 		faction = faction_controller.get_syndie_faction(antag)
