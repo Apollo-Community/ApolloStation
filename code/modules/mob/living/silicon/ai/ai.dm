@@ -315,7 +315,6 @@ var/list/ai_verbs_default = list(
 			//usr <<"You can only change your display once!"
 			//return
 
-/*
 /mob/living/silicon/ai/proc/is_malf()
 	if(ticker.mode.name == "AI malfunction")
 		var/datum/game_mode/malfunction/malf = ticker.mode
@@ -329,7 +328,6 @@ var/list/ai_verbs_default = list(
 	var/datum/game_mode/malfunction/malf = is_malf()
 	if(malf && malf.apcs >= 3)
 		stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
-*/
 
 /mob/living/silicon/ai/proc/ai_alerts()
 	set category = "AI Commands"
@@ -592,13 +590,12 @@ var/list/ai_verbs_default = list(
 	src << "<span class='notice'>Switched to [network] camera network.</span>"
 //End of code by Mord_Sith
 
-/*
+
 /mob/living/silicon/ai/proc/choose_modules()
 	set category = "Malfunction"
 	set name = "Choose Module"
 
 	malf_picker.use(src)
-*/
 
 /mob/living/silicon/ai/proc/ai_statuschange()
 	set category = "AI Commands"
@@ -654,7 +651,7 @@ var/list/ai_verbs_default = list(
 					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo4"))
 	return
 
-/*/mob/living/silicon/ai/proc/corereturn()
+/mob/living/silicon/ai/proc/corereturn()
 	set category = "Malfunction"
 	set name = "Return to Main Core"
 
@@ -662,7 +659,7 @@ var/list/ai_verbs_default = list(
 	if(!istype(apc))
 		src << "<span class='notice'>You are already in your Main Core.</span>"
 		return
-	apc.malfvacate()*/
+	apc.malfvacate()
 
 //Toggles the light_range and applies it by re-entereing the camera.
 /mob/living/silicon/ai/proc/toggle_camera_light()

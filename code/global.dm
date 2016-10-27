@@ -130,6 +130,7 @@ var/list/tdomeadmin = list()
 var/list/prisonsecuritywarp = list()	//prison security goes to these
 var/list/prisonwarped = list()	//list of players already warped
 var/list/blobstart = list()	//All locations the blob can start
+var/list/cascadestart = list()	//All locations the cascade exit can start
 var/list/vinestart = list() //All locations the vines can start
 var/list/ninjastart = list()
 //	list/traitors = list()	//traitor list
