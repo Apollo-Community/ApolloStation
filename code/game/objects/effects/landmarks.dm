@@ -102,6 +102,10 @@
 			synd_spawn += loc
 			qdel(src)
 
+		if("cascadestart")
+			cascadestart += loc
+			qdel(src)
+
 	landmarks_list += src
 	return 1
 

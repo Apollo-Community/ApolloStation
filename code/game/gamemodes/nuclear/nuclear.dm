@@ -71,7 +71,7 @@ var/global/list/turf/synd_spawn = list()
 
 
 /datum/game_mode/nuclear/pre_setup()
-	config.canon = 0
+	//config.canon = 0
 
 	return 1
 
