@@ -8,8 +8,8 @@ var/global/universe_has_ended = 0
  	decay_rate = 5 // 5% chance of a turf decaying on lighting update/airflow (there's no actual tick for turfs)
 
 /datum/universal_state/supermatter_cascade/proc/BeginCascade()
-	var/cascade = new /datum/universal_state/supermatter_cascade
-	cascade.OnEnter()
+	//var/cascade = new /datum/universal_state/supermatter_cascade
+	OnEnter()
 
 /datum/universal_state/supermatter_cascade/OnShuttleCall(var/mob/user)
 	if(user)
@@ -39,14 +39,14 @@ var/global/universe_has_ended = 0
 		return
 
 // Apply changes when entering state
-/datum/universal_state/supermatter_cascade/proc/OnEnter()
+/datum/universal_state/supermatter_cascade/OnEnter()
 	var/turf/T = pick(cascadestart)
 	if(!T)
 		return
 		message_admins("Tried to spawn cascade exit rift, but selected turf was NULL", "EVENT:")
-	var/obj/effect/plant_controller/C = new(T)
-
-	set background = 1
+	new /obj/singularity/narsie/large/exit(T)
+	message_admins("Cascade exit spawned at [T]")
+	//set background = 1
 	garbage_collector.garbage_collect = 0
 	world << "<span class='sinister' style='font-size:22pt'>You are blinded by a brilliant flash of energy.</span>"
 
@@ -69,13 +69,11 @@ var/global/universe_has_ended = 0
 
 	PlayerSet()
 
-	//var/turf/T = locate(rand(10,245),rand(10,245),4)
-	//new /obj/singularity/narsie/large/exit(T, 120)
 	spawn(rand(30,60) SECONDS)
 		var/txt = {"
 There's been a galaxy-wide electromagnetic pulse.  All of our systems are heavily damaged and many personnel are dead or dying. We are seeing increasing indications of the universe itself beginning to unravel.
 
-[station_name()], you are the only facility nearby a bluespace rift, which is somewhere near [T.area.name]. You are hereby directed to enter the rift using all means necessary, quite possibly as the last of your species alive.
+[station_name()], you are the only facility nearby a bluespace rift, which is somewhere near your station. You are hereby directed to enter the rift using all means necessary, quite possibly as the last of your species alive.
 
 You have five minutes before t#e universe #$$laps#. Go## luc#$$ $#--$#$-
 
@@ -89,6 +87,7 @@ AUTOMATED ALERT: Link to [command_name()] lost.
 			if(istype(C, /obj/machinery/computer/shuttle_control/research) || istype(C, /obj/machinery/computer/shuttle_control/mining))
 				C.req_access = list()
 				C.req_one_access = list()
+		//Commented out because we don't use turf-based shuttles anymore - Cakey
 		*/
 
 		spawn(30 MINUTES)

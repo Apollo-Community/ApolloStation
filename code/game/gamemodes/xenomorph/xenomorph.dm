@@ -1,6 +1,7 @@
 /datum/game_mode
 	// this includes admin-appointed aliens and multialiens. Easy!
 	var/list/datum/mind/aliens = list()
+	var/const/aliens_needed = 5 //for the survive objective
 
 /datum/game_mode/xenomorph
 	name = "xenomorph"
@@ -16,7 +17,6 @@
 
 	var/aliens_possible = 2 //hard limit on aliens if scaling is turned off
 	var/const/alien_scaling_coeff = 15.0 //how much does the amount of players get divided by to determine aliens
-
 
 /datum/game_mode/xenomorph/announce()
 
@@ -72,15 +72,25 @@
 	..()
 	return 1
 
+/datum/game_mode/proc/forge_alien_objectives(var/datum/mind/alien)
+	if(!alien.assigned_role == "MODE" || !alien.special_role == "alien")
+		alien.assigned_role = "MODE"
+		alien.special_role = "alien"
 
-/datum/game_mode/proc/forge_alien_objectives(var/datum/mind/alien_mind)
-
-//	var/explanation = "The species must survive. Make sure at least one Xenomorph escapes on the shuttle to spread the species."
-
-//	alien_mind.current << "<B>Objective #1</B>: [explanation]"
-
+	if(prob(50))
+		alien.objectives += "escape"
+	else
+		alien.objectives += "takeover"
+	for(alien in aliens)
+		for(var/obj_count = 1,obj_count <= alien.objectives.len,obj_count++)
+			var/explanation
+			switch(alien.objectives[obj_count])
+				if("escape")
+					explanation = "Our species must live on. Make sure at least [aliens_needed] Xenomorph escape on the shuttle to spread the species."
+				if("takeover")
+					explanation = "Take over the station so that you can build a home for your aliens. Make sure the crew either flee the station or are killed."
+			alien.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
 	return
-
 
 /datum/game_mode/proc/greet_alien(var/datum/mind/alien)
 	if(!alien.assigned_role == "MODE" || !alien.special_role == "alien")
@@ -88,12 +98,15 @@
 		alien.special_role = "alien"
 
 	alien.current << "<B><font size=3 color=red>You are an alien!</font></B>"
-
-	var/explanation = "The species must survive. Make sure at least one Xenomorph escapes on the shuttle to spread the species."
-
-	alien.current << "<B>Objective #1</B>: [explanation]"
-
-	show_objectives(alien)
+	for(var/obj_count = 1,obj_count <= alien.objectives.len,obj_count++)
+		var/explanation
+		switch(alien.objectives[obj_count])
+			if("escape")
+				explanation = "Our species must live on. Make sure at least [aliens_needed] Xenomorph escape on the shuttle to spread the species."
+			if("takeover")
+				explanation = "Take over the station so that you can build a home for your aliens. Make sure the crew either flee the station or are killed."
+		alien.current << "<B>Objective #[obj_count]</B>: [explanation]"
+	return
 
 
 /datum/game_mode/proc/finalize_alien(var/datum/mind/alien)
@@ -108,18 +121,26 @@
 	return
 
 
-/datum/game_mode/alien/declare_completion()
+/datum/game_mode/declare_completion()
 	..()
 	return//aliens will be checked as part of check_extra_completion. Leaving this here as a reminder.
 
-/datum/game_mode/alien/process()
+/datum/game_mode/process()
 	// Make sure all objectives are processed regularly, so that objectives
 	// which can be checked mid-round are checked mid-round.
-	//for(var/datum/mind/alien_mind in aliens)
-	//	for(var/datum/objective/objective in alien_mind.objectives)
-	//		objective.check_completion()
+	for(var/datum/mind/alien_mind in aliens)
+		for(var/datum/objective/objective in alien_mind.objectives)
+			objective.check_completion()
 	return 0
 
+/datum/game_mode/proc/check_alien_victory()
+	var/alien_fail = 0
+	for(var/datum/mind/alien in aliens)
+		if(alien.objectives.Find("escape"))
+			alien_fail += check_alien_survive() //the proc returns 1 if there are not enough aliens on the shuttle, 0 otherwise
+		if(alien.objectives.Find("takeover"))
+			alien_fail += check_takeover() //1 by default, 0 if there are crew on the station still
+	return alien_fail //if any objectives aren't met, failure
 
 /datum/game_mode/proc/check_alien_survive()
 	var/aliens_survived = 0
@@ -137,23 +158,32 @@
 				aliens_survived++
 
 	if(aliens_survived >= 1)
-		return 1
-	else
 		return 0
+	else
+		return 1
+
+/datum/game_mode/proc/check_takeover()
+	for(var/mob/living/carbon/human/H in living_mob_list)
+		var/turf/T = get_turf(H)
+		if((!H.mind.special_role == "alien") && (H.mind.current) && (H.mind.current.stat != DEAD) && T && (T.z in overmap.station_levels))
+			return 0
+	return 1
 
 /datum/game_mode/proc/auto_declare_completion_alien()
 	if(aliens.len)
+		var/datum/mind/alien
 		var/text = "<FONT size = 2><B>The aliens were:</B></FONT>"
 
-		for(var/datum/mind/alien in aliens)
+		for(alien in aliens)
 			text += print_player_full(alien)
 
 		var/alienwin = check_alien_survive()
 
-		if(alienwin)
-			text += "<br><B>Objective #1</B>: The species must survive. Make sure at least one Xenomorph or Xenomorph embryo escapes on the shuttle to spread the species. <font color='green'><B>Success!</B></font>"
-		else
-			text += "<br><B>Objective #1</B>: The species must survive. Make sure at least one Xenomorph or Xenomorph embryo escapes on the shuttle to spread the species. <font color='red'>Fail.</font>"
+		switch(alien.objectives)
+			if("escape")
+				text += "Make sure at least [aliens_needed] Xenomorph escape on the shuttle to spread the species."
+			if("takeover")
+				text += "Make sure the crew either flee the station or are killed.<br>"
 
 		if(alienwin)
 			text += "<br><font color='green'><B>The Xenomorphs were successful!</B></font>"
