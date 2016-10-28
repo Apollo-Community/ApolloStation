@@ -87,12 +87,14 @@
 	var/fuel_coef = Clamp(plasma.gas["phoron"]/(maxfuel/2), 0, 2)	//120 moles are needed for full reactivity
 	var/dampening = 1 //1 - Clamp(plasma.gas["nitrogen"]/100, 0, 1) - Depreciated
 	var/neutron_coef = 1 + Clamp(plasma.gas["oxygen"]/maxfuel, 0, 1)
-	var/heat_neutron_coef = plasma.gas["carbon_dioxide"]/maxfuel
+	var/heat_neutron_coef = plasma.gas["carbon_dioxide"]/maxfuel*2
 	var/neutron_heat_coef = plasma.gas["sleeping_agent"]/maxfuel
 	var/shield_coef = 1 + Clamp(plasma.gas["nitrogen"]/(maxfuel*2), 0 ,1)
 	var/explosive = 0
 	if(plasma.gas["phoron"] > 0 && plasma.gas["oxygen"] > 0)
 		explosive = 1
+	if(plasma.gas["carbon_dioxide"] > 0)
+		explosive = 0
 
 	var/list/gas_coefs = list(\
 	"fuel" = fuel_coef,\
