@@ -4,6 +4,7 @@
 	name = "Tokamak Control Console"
 	icon = 'icons/obj/fusion.dmi'
 	icon_state = "computer"
+	circuit = /obj/item/weapon/circuitboard/tokamak_control_console
 	var/datum/fusion_controller/fusion_controller
 	//var/obj/machinery/power/fusion/core/c
 	var/ctag = ""
@@ -112,4 +113,5 @@
 /obj/machinery/computer/fusion/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/multitool))
 		ctag = input(user,"Input Heat Dispersion Device tag","Input Tag",null) as text|null
+		return
 	..()
