@@ -159,11 +159,14 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 
 	//im not sure how to implement a version that works for every creature so for now monkeys are firesafe
 	for(var/mob/living/carbon/human/M in loc)
-		M.FireBurn(firelevel, air_contents.temperature, air_contents.return_pressure())  //Burn the humans!
+		if(istype(M.species, /datum/species/xenos))
+			M.FireBurn(firelevel*4, air_contents.temperature*2, air_contents.return_pressure()*2)  //PURGE THE ALIENS!
+		else
+			M.FireBurn(firelevel, air_contents.temperature, air_contents.return_pressure())  //Burn the humans!
 
 	loc.fire_act(air_contents, air_contents.temperature, air_contents.volume)
 	for(var/atom/A in loc)
-		A.fire_act(air_contents, air_contents.temperature, air_contents.volume)
+		A.fire_act(air_contents, air_contents.temperature, air_contents.volume, firelevel)
 
 	//spread
 	for(var/direction in cardinal)
