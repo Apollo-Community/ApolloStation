@@ -42,7 +42,9 @@
 	data["heat_exchange"] = fusion_controller.heatpermability
 	var/exchangers = 0
 	for(var/obj/machinery/power/fusion/plasma/plasma in fusion_controller.plasma)
-		exchangers += plasma.partners.len
+		if(!isnull(plasma))
+			if(!isnull(plasma.partners))
+				exchangers += plasma.partners.len
 	data["exchangers"] = exchangers
 	if(!isnull(core))
 		data["IDDpower"] = round(core.wire_power/1000)

@@ -11,6 +11,10 @@
 	ready = 1
 	anchored = 1
 
+/obj/machinery/power/fusion/plasma/New()
+	partners = list()
+	..()
+
 //When fusion happens energize the core copied over from rad collectors.
 /obj/machinery/power/fusion/plasma/proc/transfer_energy(var/neurons = 0)
 	for(var/obj/machinery/power/fusion/core/C in fusion_controller.fusion_components)
@@ -28,7 +32,7 @@
 	transfering = !transfering
 	if (!transfering)
 		if(partners.len != 0)
-			partners.Cut()
+			partners = list()
 		return
 
 	if(partners.len < 2)
