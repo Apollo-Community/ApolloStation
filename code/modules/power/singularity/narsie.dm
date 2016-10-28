@@ -11,6 +11,7 @@
 	grav_pull = 10 //How many tiles out do we pull?
 	consume_range = 3 //How many tiles out do we eat
 	var/last_boom = 0
+	var/announce = 1
 
 
 /obj/singularity/narsie/large
@@ -25,11 +26,12 @@
 
 /obj/singularity/narsie/large/New()
 	..()
-	playsound(loc, 'sound/voice/narsierisen.ogg', 255, 1)
-	world << "<font size='28' color='red'><b>NAR-SIE HAS RISEN</b></font>"
-	if(emergency_shuttle && emergency_shuttle.can_call())
-		emergency_shuttle.call_evac()
-		emergency_shuttle.launch_time = 0	// Cannot recall
+	if(announce)
+		playsound(loc, 'sound/voice/narsierisen.ogg', 255, 1)
+		world << "<font size='28' color='red'><b>NAR-SIE HAS RISEN</b></font>"
+		if(emergency_shuttle && emergency_shuttle.can_call())
+			emergency_shuttle.call_evac()
+			emergency_shuttle.launch_time = 0	// Cannot recall
 
 /obj/singularity/narsie/process()
 	eat()

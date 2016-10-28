@@ -398,7 +398,7 @@
 	icon_state = "lunar_rock"
 	side_type = "lunar_rock"
 	has_artifacts = 1
-	dug_type = /turf/planet/lunar
+	dug_type = /turf/simulated/floor/plating/airless/asteroid/lunar
 
 /turf/simulated/mineral/lunar/MineralSpread()
 	return

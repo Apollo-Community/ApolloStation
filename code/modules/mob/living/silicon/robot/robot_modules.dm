@@ -111,6 +111,8 @@
 	src.modules += new /obj/item/weapon/circular_saw(src)
 	src.modules += new /obj/item/weapon/surgicaldrill(src)
 	src.modules += new /obj/item/weapon/extinguisher/mini(src)
+	src.modules += new /obj/item/weapon/gripper/medical(src)
+	//src.modules += new /obj/item/weapon/borg_claw(src)
 	src.emag = new /obj/item/weapon/reagent_containers/spray(src)
 	src.emag.reagents.add_reagent("pacid", 250)
 	src.emag.name = "Polyacid spray"

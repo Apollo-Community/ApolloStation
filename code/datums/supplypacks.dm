@@ -170,6 +170,19 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containername = "Emergency crate"
 	group = "Atmospherics"
 
+/datum/supply_packs/void_suits
+	name = "Void Suits (3x)"
+	contains = list(/obj/item/clothing/suit/space,
+					/obj/item/clothing/suit/space,
+					/obj/item/clothing/suit/space,
+					/obj/item/clothing/head/helmet/space,
+					/obj/item/clothing/head/helmet/space,
+					/obj/item/clothing/head/helmet/space)
+	cost = 100
+	containertype = /obj/structure/closet/crate/internals
+	containername = "Void Suit Crate"
+	group = "Atmospherics"
+
 /datum/supply_packs/inflatable
 	name = "Inflatable barriers"
 	contains = list(/obj/item/weapon/storage/briefcase/inflatable,

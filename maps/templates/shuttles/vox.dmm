@@ -60,29 +60,31 @@
 "bh" = (/obj/machinery/bodyscanner,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
 "bi" = (/obj/machinery/body_scanconsole,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
 "bj" = (/turf/simulated/shuttle/wall{icon_state = "diagonalWall3"},/area/shuttle/vox/station)
-"bk" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/basic{dir = 1},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
-"bl" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/basic{dir = 1},/obj/structure/window/reinforced{dir = 4},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
-"bm" = (/obj/structure/table/rack,/obj/item/clothing/tie/storage/black_vest,/obj/item/clothing/suit/space/vox/medic,/obj/item/clothing/head/helmet/space/vox/medic,/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bn" = (/obj/structure/table/rack,/obj/item/weapon/gun/launcher/pneumatic,/obj/item/weapon/harpoon,/obj/item/weapon/harpoon,/obj/item/weapon/harpoon,/obj/item/weapon/harpoon,/obj/item/weapon/tank/nitrogen,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bo" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/basic{dir = 1},/obj/structure/window/reinforced{dir = 8},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
-"bp" = (/turf/simulated/shuttle/wall{dir = 4; icon_state = "diagonalWall3"},/area/shuttle/vox/station)
-"bq" = (/obj/structure/shuttle/engine/propulsion,/turf/simulated/floor/plating,/area/shuttle/vox/station)
-"br" = (/obj/structure/table/rack,/obj/item/clothing/tie/storage/black_vest,/obj/item/clothing/suit/space/vox/pressure,/obj/item/clothing/head/helmet/space/vox/pressure,/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bs" = (/obj/structure/table/rack,/obj/item/weapon/gun/launcher/spikethrower,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bt" = (/obj/structure/table/rack,/obj/item/clothing/tie/storage/black_vest,/obj/item/clothing/suit/space/vox/stealth,/obj/item/clothing/head/helmet/space/vox/stealth,/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bu" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
-"bv" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
-"bw" = (/obj/machinery/door/airlock/hatch{req_access_txt = "150"; req_one_access = null; req_one_access_txt = "0"},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
-"bx" = (/obj/item/clothing/head/bowler,/obj/item/weapon/broken_bottle,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"by" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bz" = (/obj/item/weapon/tank/emergency_oxygen,/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bA" = (/obj/item/clothing/head/bearpelt,/obj/item/xenos_claw,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bB" = (/obj/structure/bed/chair{dir = 4},/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bC" = (/obj/item/clothing/head/collectable/xenom,/obj/item/clothing/head/chicken,/obj/item/weapon/aiModule/syndicate,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bD" = (/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c500,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bE" = (/obj/item/weapon/spacecash/c50,/obj/structure/bed/chair{dir = 8},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bF" = (/obj/structure/AIcore,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
-"bG" = (/obj/item/weapon/spacecash/c200,/obj/item/weapon/spacecash/c50,/obj/structure/bed/chair{dir = 1},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bk" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/basic{dir = 1},/obj/structure/window/reinforced{dir = 8},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"bl" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/basic{dir = 1},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"bm" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/basic{dir = 1},/obj/structure/shuttle/engine/heater,/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"bn" = (/obj/structure/table/rack,/obj/item/clothing/tie/storage/black_vest,/obj/item/clothing/suit/space/vox/medic,/obj/item/clothing/head/helmet/space/vox/medic,/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bo" = (/obj/structure/table/rack,/obj/item/weapon/gun/launcher/pneumatic,/obj/item/weapon/harpoon,/obj/item/weapon/harpoon,/obj/item/weapon/harpoon,/obj/item/weapon/harpoon,/obj/item/weapon/tank/nitrogen,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bp" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/shuttle/engine/heater,/obj/structure/window/basic{dir = 1},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"bq" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/basic{dir = 1},/obj/structure/window/reinforced{dir = 4},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"br" = (/turf/simulated/shuttle/wall{dir = 4; icon_state = "diagonalWall3"},/area/shuttle/vox/station)
+"bs" = (/obj/structure/shuttle/engine/propulsion,/turf/simulated/floor/plating,/area/shuttle/vox/station)
+"bt" = (/obj/structure/table/rack,/obj/item/clothing/tie/storage/black_vest,/obj/item/clothing/suit/space/vox/pressure,/obj/item/clothing/head/helmet/space/vox/pressure,/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bu" = (/obj/structure/table/rack,/obj/item/weapon/gun/launcher/spikethrower,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bv" = (/obj/structure/table/rack,/obj/item/clothing/tie/storage/black_vest,/obj/item/clothing/suit/space/vox/stealth,/obj/item/clothing/head/helmet/space/vox/stealth,/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bw" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"bx" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"by" = (/obj/machinery/door/airlock/hatch{req_access_txt = "150"; req_one_access = null; req_one_access_txt = "0"},/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
+"bz" = (/obj/item/clothing/head/bowler,/obj/item/weapon/broken_bottle,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bA" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bB" = (/obj/item/weapon/tank/emergency_oxygen,/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bC" = (/obj/item/clothing/head/bearpelt,/obj/item/xenos_claw,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bD" = (/obj/structure/bed/chair{dir = 4},/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bE" = (/obj/item/clothing/head/collectable/xenom,/obj/item/clothing/head/chicken,/obj/item/weapon/aiModule/syndicate,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bF" = (/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c500,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bG" = (/obj/item/weapon/spacecash/c50,/obj/structure/bed/chair{dir = 8},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bH" = (/obj/structure/AIcore,/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
+"bI" = (/obj/item/weapon/spacecash/c200,/obj/item/weapon/spacecash/c50,/obj/structure/bed/chair{dir = 1},/turf/simulated/shuttle/floor4/vox,/area/shuttle/vox/station)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaabaaaaaaacaaaaaaaaaaaaaaaa
@@ -96,12 +98,12 @@ aaauaJaKaKaKaKaKaKadaKadaKaKaKaKaKaKaJauaa
 aaaLaMaNaOaPaQadaGadaGadaGadaRaSaTaUaMaLaa
 aaaBaVapapapaWadapapapapapadapapaXapaVaBaa
 abadaYaZbabbbcadbdapapapbeadbfbgbhbiaYadac
-bjadbkbladadadadbmapapapbnadadadadbobladbp
-aabjbqbqbpaaaaadbrapapapbsadaaaabjbqbqbpaa
-aaaaaaaaaaaaaaadbtapapapbsadaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaadbubvbwbubvadaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaadbxbyapbzbAadaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaadbBbCapbDbEadaaaaaaaaaaaaaa
-aaaaaaaaaaaaaabjadbFbGapadbpaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaabjadadadbpaaaaaaaaaaaaaaaa
+bjadbkblbmadadadbnapapapboadadadbpblbqadbr
+aabjbsbsbsbraaadbtapapapbuadaabjbsbsbsbraa
+aaaaaaaaaaaaaaadbvapapapbuadaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaadbwbxbybwbxadaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaadbzbAapbBbCadaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaadbDbEapbFbGadaaaaaaaaaaaaaa
+aaaaaaaaaaaaaabjadbHbIapadbraaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaabjadadadbraaaaaaaaaaaaaaaa
 "}

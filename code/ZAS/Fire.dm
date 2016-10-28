@@ -34,17 +34,24 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 
 	if(air_contents.check_combustability(liquid))
 		igniting = 1
-
-		create_fire(1000)
+		create_fire(1000, 1)
 	return igniting
 
 /zone/proc/process_fire()
+	var/list/to_remove = list()
 	if(!air.check_combustability())
 		for(var/turf/simulated/T in fire_tiles)
-			if(istype(T.fire))
-				T.fire.RemoveFire()
-			T.fire = null
-		fire_tiles.Cut()
+			var/obj/effect/decal/cleanable/liquid_fuel/liquid = locate() in T
+			if(!air.check_combustability(liquid))
+				if(istype(T.fire))
+					T.fire.RemoveFire()
+				T.fire = null
+				to_remove += T
+			if(!isnull(liquid))
+				liquid.amount -= 0.03
+				if(liquid.amount < 0)
+					qdel(liquid)
+		fire_tiles -= to_remove
 
 	if(!fire_tiles.len)
 		air_master.active_fire_zones.Remove(src)
@@ -58,19 +65,21 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	burn_gas.group_multiplier = gm
 
 	air.merge(burn_gas)
-
 	var/firelevel = air.calculate_firelevel()
-
 	for(var/turf/T in fire_tiles)
 		if(T.fire)
-			T.fire.firelevel = firelevel
+			if(T.fire.fuel_fire)
+				T.fire.firelevel = 10
+			else
+				T.fire.firelevel = firelevel
+
 		else
-			fire_tiles -= T
+			fire_tiles -= 1
 
 /turf/proc/create_fire(fl)
 	return 0
 
-/turf/simulated/create_fire(fl)
+/turf/simulated/create_fire(fl, fuel_fire)
 	if(fire)
 		fire.firelevel = max(fl, fire.firelevel)
 		return 1
@@ -78,7 +87,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	if(!zone)
 		return 1
 
-	fire = new(src, fl)
+	fire = new(src, fl, fuel_fire)
 	zone.fire_tiles |= src
 	air_master.active_fire_zones |= zone
 	return 0
@@ -87,7 +96,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	//Icon for fire on turfs.
 
 	var/phoron_fire = 0
-
+	var/fuel_fire = 0
 	anchored = 1
 	mouse_opacity = 0
 
@@ -183,9 +192,9 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 			else
 				enemy_tile.adjacent_fire_act(loc, air_contents, air_contents.temperature, air_contents.volume)
 
-/obj/fire/New(newLoc,fl)
+/obj/fire/New(newLoc,fl,var/fuel_fire=0)
 	..()
-
+	src.fuel_fire = fuel_fire
 	if(!istype(loc, /turf))
 		del src
 
