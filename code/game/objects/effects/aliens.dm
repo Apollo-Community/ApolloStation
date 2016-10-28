@@ -154,6 +154,7 @@
 	var/health = 15
 	var/obj/effect/alien/weeds/node/linked_node = null
 
+
 /obj/effect/alien/weeds/node
 	icon_state = "weednode"
 	name = "purple sac"
@@ -254,10 +255,9 @@ Alien plants should do something if theres a lot of poison
 		qdel(src)
 
 
-/obj/effect/alien/weeds/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		health -= 5
-		healthcheck()
+/obj/effect/alien/weeds/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume, firelevel)
+	health -= firelevel
+	healthcheck()
 
 #undef NODERANGE
 
@@ -399,7 +399,6 @@ Alien plants should do something if theres a lot of poison
 	healthcheck()
 	return
 
-
 /obj/effect/alien/egg/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(health <= 0)
 		return
@@ -419,15 +418,13 @@ Alien plants should do something if theres a lot of poison
 	src.health -= damage
 	src.healthcheck()
 
-
 /obj/effect/alien/egg/proc/healthcheck()
 	if(health <= 0)
 		Burst()
 
-/obj/effect/alien/egg/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 500)
-		health -= 5
-		healthcheck()
+/obj/effect/alien/egg/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume, firelevel)
+	health -= firelevel
+	healthcheck()
 
 /obj/effect/alien/egg/HasProximity(atom/movable/AM as mob|obj)
 	if(status == GROWN)

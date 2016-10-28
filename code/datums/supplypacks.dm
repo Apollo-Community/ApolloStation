@@ -243,6 +243,14 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containername = "MULEbot Crate"
 	group = "Operations"
 
+/datum/supply_packs/janiwagon
+	name = "Janitorial Wagon"
+	contains = list(/obj/vehicle/train/cargo/engine)
+	cost = 75
+	containertype = /obj/structure/largecrate
+	containername = "Janitorial wagon Crate"
+	group = "Supply"
+
 /datum/supply_packs/cargotrain
 	name = "Cargo Train Tug"
 	contains = list(/obj/vehicle/train/cargo/engine)
