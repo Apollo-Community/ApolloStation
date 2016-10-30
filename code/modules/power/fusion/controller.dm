@@ -29,8 +29,8 @@
 	var/safe_warn
 	var/max_field_coef = 1
 	var/event_color = ""						//Color of fusion events
-	var/neutrondam_coef = 3.7					//Devide neutrons by this for damage to shields this will keep it stable at 50 rod insetion at normal activity.
-	var/power_coef = 16.5
+	var/neutrondam_coef = 3.3					//Devide neutrons by this for damage to shields this will keep it stable at 50 rod insetion at normal activity.
+	var/power_coef = 14
 	var/list/plasma_locs = list()
 	var/nr_comp = 0
 	var/nr_corners = 0

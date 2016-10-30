@@ -4,6 +4,7 @@
 	name = "Tokamak Control Console"
 	icon = 'icons/obj/fusion.dmi'
 	icon_state = "computer"
+	circuit = /obj/item/weapon/circuitboard/tokamak_control_console
 	var/datum/fusion_controller/fusion_controller
 	//var/obj/machinery/power/fusion/core/c
 	var/ctag = ""
@@ -42,7 +43,9 @@
 	data["heat_exchange"] = fusion_controller.heatpermability
 	var/exchangers = 0
 	for(var/obj/machinery/power/fusion/plasma/plasma in fusion_controller.plasma)
-		exchangers += plasma.partners.len
+		if(!isnull(plasma))
+			if(!isnull(plasma.partners))
+				exchangers += plasma.partners.len
 	data["exchangers"] = exchangers
 	if(!isnull(core))
 		data["IDDpower"] = round(core.wire_power/1000)
@@ -110,4 +113,5 @@
 /obj/machinery/computer/fusion/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/multitool))
 		ctag = input(user,"Input Heat Dispersion Device tag","Input Tag",null) as text|null
+		return
 	..()
