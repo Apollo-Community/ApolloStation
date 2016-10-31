@@ -1031,6 +1031,11 @@ var/list/the_station_areas = list (
 	icon_state = "centcom"
 	requires_power = 0
 
+/area/centcom/event/mansion
+	name = "Haunted Mansion"
+	icon_state = "centcom"
+	requires_power = 0
+
 /area/centcom/control
 	name = "Centcom Control"
 
