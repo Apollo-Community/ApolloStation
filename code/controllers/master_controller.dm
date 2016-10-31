@@ -13,6 +13,7 @@ var/global/pipe_processing_killed = 0
 datum/controller/game_controller
 	var/list/shuttle_list	                    // For debugging and VV
 	var/datum/ore_distribution/asteroid_ore_map   // For debugging and VV.
+	var/datum/ore_distribution/moon_ore_map   // For debugging and VV.
 
 datum/controller/game_controller/New()
 	//There can be only one master_controller. Out with the old and in with the new.
@@ -92,6 +93,8 @@ datum/controller/game_controller/proc/setup_objects()
 	// If you do not use the official Baycode asteroid map, you will need to change them.
 	asteroid_ore_map = new /datum/ore_distribution()
 	asteroid_ore_map.populate_distribution_map()
+	moon_ore_map = new /datum/ore_distribution()
+	moon_ore_map.populate_distribution_map()
 
 	// Set up antagonists.
 //	populate_antag_type_list()
