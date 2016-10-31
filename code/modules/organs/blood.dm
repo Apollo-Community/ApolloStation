@@ -40,7 +40,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if(species && species.flags & NO_BLOOD)
 		return
 
-	if(stat != DEAD && bodytemperature >= 170)	//Dead or cryosleep people do not pump the blood.
+	if(stat != DEAD && bodytemperature >= 170 && !heartStopped)	//Dead, cryosleep or heart stopped people do not pump the blood.
 
 		var/blood_volume = round(vessel.get_reagent_amount("blood"))
 
