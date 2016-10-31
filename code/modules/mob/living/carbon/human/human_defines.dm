@@ -42,3 +42,4 @@
 
 	var/mob/remoteview_target = null
 	var/hand_blood_color
+	var/heartStopped = 0 //For heart surgery

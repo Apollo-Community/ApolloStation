@@ -72,7 +72,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			var/datum/organ/internal/heart/heart = internal_organs_by_name["heart"]
 
 			if(!heart)
-				blood_volume = 0
+				if(!heartStopped)	//For heart surgery if this means meds stopping the heart where administered.
+					blood_volume = 0
 			else if(heart.damage > 1 && heart.damage < heart.min_bruised_damage)
 				blood_volume *= 0.8
 			else if(heart.damage >= heart.min_bruised_damage && heart.damage < heart.min_broken_damage)
