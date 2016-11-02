@@ -111,7 +111,6 @@
 	w_class = 2
 	flags = NOSHIELD | NOBLOODY
 	origin_tech = "magnets=3;syndicate=4"
-	hitsound = 'sound/weapons/esword_slice.ogg'
 
 /obj/item/weapon/melee/energy/sword/dropped(var/mob/user)
 	..()
