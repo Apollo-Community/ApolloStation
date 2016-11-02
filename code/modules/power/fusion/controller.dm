@@ -205,8 +205,14 @@
 
 //Pump plasma from the ring tanks into the "field"
 /datum/fusion_controller/proc/pumpPlasma()
+	//There cannot be more then 240 moles in the engine !
+	var/to_pump = 0
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
-		pump_gas(r, r.get_tank_content(), gas_contents, r.get_tank_moles())
+		to_pump = r.get_tank_moles()
+		if(gas_contents.total_moles + r.get_tank_moles() >= 240)
+			to_pump = 240 - gas_contents.total_moles
+		if(to_pump > 0)
+			pump_gas(r, r.get_tank_content(), gas_contents, to_pump)
 	gas_contents.update_values()
 	if(isnull(table))
 		return
