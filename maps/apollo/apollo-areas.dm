@@ -718,6 +718,10 @@ var/list/the_station_areas = list (
 	icon_state = "panelsP"
 
 //Maintenance
+/area/maintenance
+	rad_shielded = 1
+	environment = STONEROOM
+
 /area/maintenance/fore_port
 	name = "Fore Port Maintenance"
 	icon_state = "fpmaint"
@@ -1027,6 +1031,11 @@ var/list/the_station_areas = list (
 	icon_state = "centcom"
 	requires_power = 0
 
+/area/centcom/event/mansion
+	name = "Haunted Mansion"
+	icon_state = "centcom"
+	requires_power = 0
+
 /area/centcom/control
 	name = "Centcom Control"
 
@@ -1223,7 +1232,7 @@ var/list/centcom_areas = list (
 	icon_state = "moon"
 	environment = PLAIN
 
-	base_turf = /turf/planet/lunar
+	base_turf = /turf/simulated/floor/plating/airless/asteroid/lunar
 
 //Exterior Zones
 /area/planet/moon/exterior
@@ -1291,6 +1300,30 @@ var/list/centcom_areas = list (
 
 /area/planet/moon/outpost/central/substation
 	name = "Central Outpost Substation"
+	icon_state = "substation"
+
+//Security Outpost
+/area/planet/moon/outpost/security
+	name = "Security Outpost"
+	icon_state = "security"
+
+/area/planet/moon/outpost/security/hallway
+	name = "Security Outpost Hallway"
+
+/area/planet/moon/outpost/security/processing
+	name = "Security Outpost Processing"
+	icon_state = "brig"
+
+/area/planet/moon/outpost/security/breakroom
+	name = "Security Outpost Break Room"
+	icon_state = "Sleep"
+
+/area/planet/moon/outpost/security/brig
+	name = "Security Outpost Brig"
+	icon_state = "brig"
+
+/area/planet/moon/outpost/security/substation
+	name = "Security Outpost Substation"
 	icon_state = "substation"
 
 //Engineering Outpost

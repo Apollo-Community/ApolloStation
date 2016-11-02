@@ -154,7 +154,7 @@
 	if(signs)
 		overlays += "cart_sign[signs]"
 
-
+/*
 //old style retardo-cart
 /obj/structure/bed/chair/janicart
 	name = "janicart"
@@ -293,7 +293,7 @@
 			return buckled_mob.bullet_act(Proj)
 	visible_message("<span class='warning'>[Proj] ricochets off the [callme]!</span>")
 
-
+*/
 /obj/item/key
 	name = "key"
 	desc = "A keyring with a small steel key, and a pink fob reading \"Pussy Wagon\"."

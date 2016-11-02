@@ -4,11 +4,11 @@
 /datum/game_mode/malfunction
 	name = "AI malfunction"
 	config_tag = "malfunction"
-	required_players = 2
+	required_players = 0
 	required_players_secret = 15
 	required_enemies = 1
 	recommended_enemies = 1
-
+	votable = 0
 	uplink_welcome = "Crazy AI Uplink Console:"
 	uplink_uses = 10
 
@@ -30,8 +30,10 @@
 */
 
 /datum/game_mode/malfunction/pre_setup()
+	var/list/possible_malfs = get_players_for_role(BE_MALF)
+
 	for(var/mob/new_player/player in player_list)
-		if(player.mind && player.mind.assigned_role == "AI" && (player.client.prefs.be_special & BE_MALF))
+		if(player.mind && player.mind.assigned_role == "AI" && (player in possible_malfs))
 			malf_ai+=player.mind
 	if(malf_ai.len)
 		return 1

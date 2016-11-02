@@ -130,6 +130,7 @@ var/list/tdomeadmin = list()
 var/list/prisonsecuritywarp = list()	//prison security goes to these
 var/list/prisonwarped = list()	//list of players already warped
 var/list/blobstart = list()	//All locations the blob can start
+var/list/cascadestart = list()	//All locations the cascade exit can start
 var/list/vinestart = list() //All locations the vines can start
 var/list/ninjastart = list()
 //	list/traitors = list()	//traitor list
@@ -270,4 +271,4 @@ var/global/datum/subsystem/cell_auto/cell_auto_manager = new()
 #define PROCESS_DEFAULT_TICK_ALLOWANCE		75	// 75% of one tick
 
 //For client IC automute management
-var/global/list/non_spawn_emote = list("gasps","shivers","drools","chokes","moans","twitches violently","twitches","sneezes","snores","yawns")
+var/global/list/non_spawn_emote = list("gasps","shivers","drools","chokes","moans","twitches violently","twitches","sneezes","snores","yawns","winces painfully","winces")

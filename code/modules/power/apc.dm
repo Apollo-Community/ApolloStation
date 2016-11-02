@@ -176,8 +176,8 @@
 	area.power_equip = 0
 	area.power_environ = 0
 	area.power_change()
-/*	if(occupier)
-		malfvacate(1)*/
+	if(occupier)
+		malfvacate(1)
 	qdel(wires)
 	if(cell)
 		qdel(cell) // qdel
@@ -743,7 +743,7 @@
 
 	return ui_interact(user)
 
-/*
+
 /obj/machinery/power/apc/proc/get_malf_status(mob/user)
 	if (ticker && ticker.mode && (user.mind in ticker.mode.malf_ai) && istype(user, /mob/living/silicon/ai))
 		if (src.malfai == (user:parent ? user:parent : user))
@@ -757,7 +757,6 @@
 			return 1 // 1 = APC not hacked.
 	else
 		return 0 // 0 = User is not a Malf AI
-*/
 
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
 	if(!user)
@@ -936,7 +935,7 @@
 	else if (href_list["overload"])
 		if(istype(usr, /mob/living/silicon))
 			src.overload_lighting()
-/*
+
 	else if (href_list["malfhack"])
 		var/mob/living/silicon/ai/malfai = usr
 		if(get_malf_status(malfai)==1)
@@ -969,7 +968,7 @@
 	else if (href_list["deoccupyapc"])
 		if(get_malf_status(usr))
 			malfvacate()
-*/
+
 	else if (href_list["toggleaccess"])
 		if(istype(usr, /mob/living/silicon))
 			if(emagged || (stat & (BROKEN|MAINT)))
@@ -983,15 +982,15 @@
 /obj/machinery/power/apc/proc/toggle_breaker()
 	operating = !operating
 
-/*	if(malfai)
+	if(malfai)
 		if (ticker.mode.config_tag == "malfunction")
 			if (src.z in overmap.station_levels) //if (is_type_in_list(get_area(src), the_station_areas))
-				operating ? ticker.mode:apcs++ : ticker.mode:apcs--*/
+				operating ? ticker.mode:apcs++ : ticker.mode:apcs--
 
 	src.update()
 	update_icon()
 
-/*
+
 /obj/machinery/power/apc/proc/malfoccupy(var/mob/living/silicon/ai/malf)
 	return
 
@@ -1048,7 +1047,7 @@
 			src.occupier.gib()
 			for(var/obj/item/weapon/pinpointer/point in world)
 				point.the_disk = null //the pinpointer will go back to pointing at the nuke disc.
-*/
+
 
 /obj/machinery/power/apc/proc/ion_act()
 	//intended to be exactly the same as an AI malf attack
@@ -1332,8 +1331,8 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 		operating = 0
 		update_icon()
 		update()
-/*		if(occupier)
-			malfvacate(1)*/
+		if(occupier)
+			malfvacate(1)
 
 // overload all the lights in this APC area
 

@@ -1958,6 +1958,11 @@ datum
 							H.losebreath = max(10, M.losebreath-10)
 						H.adjustOxyLoss(20*REM)
 						H.Weaken(10*REM)
+
+						//For heart surgery give the surgeon 10 secconds to extract the heart!
+						H.heartStopped = 1
+						spawn(100)
+							H.heartStopped = 0
 				..()
 				return
 

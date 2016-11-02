@@ -76,7 +76,8 @@
 
 	spawn( 10 )
 		master_controller.SetupXenoarch( zlevel )
-
+	spawn( 10 )
+		master_controller.moon_ore_map.apply_to_asteroid( zlevel )
 	return 1
 
 /obj/effect/mapinfo/sector/tcomm_old

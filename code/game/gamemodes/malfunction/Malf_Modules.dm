@@ -51,7 +51,7 @@ rcd light flash thingy on matter drain
 	usr.verbs -= /client/proc/upgrade_turrets
 	for(var/obj/machinery/porta_turret/turret in machines)
 		var/turf/T = get_turf(turret)
-		if(T.z in config.station_levels)
+		if(T.z == 3)//hacky replacement for checking station z levels. Needs to be changed when station is no longer Z 3 - Cakey
 			// Increase health by 37.5% of original max, decrease delays between shots to 66%
 			turret.health += initial(turret.health) * 3 / 8
 			turret.shot_delay = initial(turret.shot_delay) * 2 / 3
