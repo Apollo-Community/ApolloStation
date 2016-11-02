@@ -147,7 +147,7 @@ Creates alloys that can be used to make stronger structures or more complex allo
 					qdel(A)
 					A = new /obj/item/stack/sheet/alloy/plasteel(comp, mineral.name, base.name)
 			else
-				//You can now make phoron glass with this !
+				// You can now make phoron glass with this !
 				if(mineral.name == "solid phoron" && base.amount/mineral.amount == 2)
 					A = new /obj/item/stack/sheet/glass/phoronglass()
 				else
