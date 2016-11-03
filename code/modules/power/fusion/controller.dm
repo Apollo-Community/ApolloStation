@@ -1,7 +1,10 @@
 /*
 *	Regulates the fusion engine and this components.
 */
-#define TM_SAFE_ALERT ""
+#define TOKA_MAX_TEMP 1000000
+#define TOKA_FUSION_TEMP 100000
+#define TOKA_CRIT_TEMP 90000
+
 /datum/fusion_controller
 	var/list/fusion_components = list()			//List of components making up the fusion reactor.
 	var/mode = 1								//Mode, direct = 0, indirect = 1.
@@ -19,14 +22,8 @@
 	var/field_coef = 0							//Field coef, how much does the field regen extra
 	var/obj/machinery/computer/fusion/computer	//The computer that this is linked to
 	var/set_up = 0
-	var/lastwarning = 0
-	var/warning_delay = 10000 					//10 sec between warnings
-	var/confield_archived = 0
-	var/safe_warned = 0
 	var/obj/item/device/radio/radio 			//For radio warnings
 	var/rod_insertion = 0.5						//How far is the rod inserted, has effect on heat, neutrons and neutron damage generation
-	var/message_delay = 10
-	var/safe_warn
 	var/max_field_coef = 1
 	var/event_color = ""						//Color of fusion events
 	var/neutrondam_coef = 3.3					//Devide neutrons by this for damage to shields this will keep it stable at 50 rod insetion at normal activity.
@@ -59,14 +56,14 @@
 		calcFusion()
 		calcDamage()
 		calcConField()
-		announce_warning()	//Announce a warning if the confield is dropping below 50%
-		confield_archived = confield
+		//announce_warning()	//Announce a warning if the confield is dropping below 50%
+		//confield_archived = confield
 		updateIcons()
 
 //Shuts down reactor by controlled gas venting
 /datum/fusion_controller/proc/emergencyVent()
-	if(gas_contents.temperature >= 90000)
-		gas_contents.temperature = 89000
+	if(gas_contents.temperature >= TOKA_CRIT_TEMP)
+		gas_contents.temperature = TOKA_CRIT_TEMP - 1000
 	leakPlasma()
 	removePlasma()
 
@@ -74,8 +71,6 @@
 /datum/fusion_controller/proc/checkComponents()
 	if(fusion_components.len != nr_comp)
 		fail()
-		if(gas_contents.temperature > 90000)
-			critFail(pick(fusion_components))	//Easteregg for egnineers who think they are safe behind glass
 		qdel(src)
 		return
 
@@ -83,8 +78,6 @@
 	for(var/obj/machinery/power/fusion/comp in fusion_components)
 		if(!comp.ready || comp.stat == BROKEN)
 			fail()
-			if(gas_contents.temperature > 90000)
-				critFail(comp)
 			comp.ex_act()
 			qdel(src)
 			return
@@ -97,7 +90,7 @@
 //Check if the containment field is still online
 /datum/fusion_controller/proc/checkField()
 	if(!confield)
-		if(gas_contents.temperature > 90000)
+		if(gas_contents.temperature > TOKA_CRIT_TEMP)
 			var/obj/machinery/power/fusion/comp = pick(fusion_components)
 			comp.stat = BROKEN
 		return
@@ -173,7 +166,7 @@
 	for(var/obj/machinery/power/fusion/comp in fusion_components)
 		if(comp.anchored == 0)
 			leakPlasma()
-			if(gas_contents.temperature > 90000)	//We are at fusion temp EXPLODE!
+			if(gas_contents.temperature > TOKA_CRIT_TEMP)	//We are at fusion temp EXPLODE!
 				comp.stat = BROKEN
 				return
 
@@ -182,7 +175,7 @@
 	//heat up plasma and temp sanity check
 	var/tmp/heatdif = core.heat
 	//The arc emitters temerature is about 100k deg so we cap input there.
-	if(gas_contents.temperature >= 100000)
+	if(gas_contents.temperature >= TOKA_FUSION_TEMP)
 		heatdif = 0
 	core.heat -= heatdif
 	gas_contents.temperature += heatdif + fusion_heat - calcDecay(gas_contents.temperature)		//Calculating temp change
@@ -190,8 +183,8 @@
 		gas_contents.temperature = 290
 	gas_contents.update_values()
 	fusion_heat = 0
-	if(gas_contents.temperature > 100000000)
-		gas_contents.temperature = 100000000
+	if(gas_contents.temperature > TOKA_MAX_TEMP)
+		gas_contents.temperature = TOKA_MAX_TEMP
 		gas_contents.update_values()
 
 	if(gas_contents.temperature > 10000)
@@ -286,7 +279,7 @@
 /datum/fusion_controller/proc/calcFusion()
 	if(plasma.len == 0 || isnull(gas_contents))
 		return
-	if(gas_contents.temperature < 90000)
+	if(gas_contents.temperature < TOKA_CRIT_TEMP)
 		return
 	for(var/obj/machinery/power/fusion/plasma/p in plasma)
 		var/change = min(((gas_contents.temperature/500000)*100), 25)			//This needs tweaking also with gass mixtures
@@ -323,10 +316,9 @@
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
 		confield -= (neutrons/neutrondam_coef)*rod_insertion
 
-	if(coefs["explosive"] && prob(5))
-		fail()
-		critFail(p)
-		qdel(src)
+	if(coefs["explosive"] && prob(1))
+		var/obj/machinery/power/fusion/comp = pick(fusion_components)
+		comp.stat = BROKEN
 
 //Check if victem is insulated
 /datum/fusion_controller/proc/insulated(var/mob/living/carbon/human/m)
@@ -348,14 +340,14 @@
 //Calculate if we should do damage to the rings according to heat of the gas.
 //A random ring will take 1 point of damage for every 5000 deg above 1 mil deg.
 /datum/fusion_controller/proc/calcDamage()
-	if(gas_contents.temperature > 1000000)
+	if(gas_contents.temperature > 800000)
 		var/obj/machinery/power/fusion/ring_corner/ring
 		var/list/clist = list()
 		for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
 			clist += r
 		ring = pick(clist)
 		if(!isnull(ring))
-			ring.damage += (gas_contents.temperature - 1000000)/5000
+			ring.damage += (gas_contents.temperature - 800000)/5000
 
 	for(var/obj/machinery/power/fusion/component in fusion_components)
 		if(component.damage > 500 && component.damage < 800)
@@ -366,8 +358,7 @@
 
 		else if(component.damage > 999)
 			//critically fail
-			fail()
-			critFail(component)
+			component.stat = BROKEN
 
 //Called if something goes wrong in a not so bad manner.
 //Vent all plasma gasses and unlock all components.
@@ -378,6 +369,8 @@
 		locked_comp.in_network = 0
 		locked_comp.origen = 0
 		locked_comp.update_icon()
+	if(gas_contents.temperature > TOKA_CRIT_TEMP)
+		critFail(pick(fusion_components))
 	if(!isnull(computer))
 		computer.reboot()
 	gas = 0
@@ -388,29 +381,13 @@
 /datum/fusion_controller/proc/critFail(var/obj/o)
 	if(isnull(o))
 		return
-	if(gas_contents.temperature > 250000)
-		//You are really deep in the shit now boi!
-		new/obj/fusion_ball(o.loc)
+	new/obj/fusion_ball(o.loc)
 	spawn()
 		explosion(get_turf(o), 2, 4, 10, 15)
 
 //Announce a contianment field warning to the crew (general comms) if the field is les then 50%
 /datum/fusion_controller/proc/announce_warning()
 	return
-	/*
-	var/tmp/alert_msg = "Warning Tokamak containment field integrity at [round(confield/max_field)]%"
-	if(confield < 20000)
-		if(confield < confield_archived) // The damage is still going up sinse last calc
-			safe_warn = 1
-		else if (safe_warn)
-			safe_warn = 0 // We are safe, warn only once
-			alert_msg = TM_SAFE_ALERT
-		else
-			alert_msg = null
-		if(alert_msg && world.timeofday >= message_delay)
-			message_delay = world.timeofday + 15
-			radio.autosay(alert_msg, "Tokamak Monitor")
-	*/
 
 //LONG LIVE SPAGETTI !
 //This finds all the components in a efficient but really clumsy code wise way.
