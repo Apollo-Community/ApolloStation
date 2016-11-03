@@ -33,6 +33,7 @@
 		W.loc = src
 		update_icon()
 		return 1
+
 	else if(istype(W, /obj/item/weapon/crowbar))
 		var/obj/item/weapon/to_eject = input("What do you want to remove?") as null|anything in list(tank,rod,crystal)
 		if(!to_eject)
@@ -44,7 +45,8 @@
 		if(to_eject == crystal)
 			eject_crystal()
 		update_icon()
-		return
+		return 1
+
 	if(istype(W, /obj/item/weapon/shieldCrystal))
 		if(crystal)
 			user << "<span class='alert'>There's already a field crystal installed.</span>"
@@ -53,7 +55,8 @@
 		crystal = W
 		W.loc = src
 		update_icon()
-		return
+		return 1
+
 	if(istype(W, /obj/item/weapon/neutronRod))
 		if(rod)
 			user << "<span class='alert'>There's already an absorbtion rod installed.</span>"
@@ -62,6 +65,7 @@
 		rod = W
 		W.loc = src
 		update_icon()
+		return 1
 
 	..()
 
