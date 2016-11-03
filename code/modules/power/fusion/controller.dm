@@ -293,7 +293,7 @@
 	var/tmp/neutrons = 1000						//Base neutrons
 	var/tmp/heat = 2000							//Base heat
 	neutrons += (heat*coefs["heat_neutron"] - neutrons*coefs["neutron_heat"])*coefs["neutron"] + neutrons*rod_coef
-	heat += neutrons*coefs["neutron_heat"] - heat*coefs["heat_neutron"] + heat*rod_coef
+	heat += neutrons*coefs["neutron_heat"] - (heat*coefs["heat_neutron"]*1.8) + heat*rod_coef
 	fusion_heat = heat*rod_insertion
 	p.transfer_energy(neutrons*rod_insertion*power_coef)
 	spawn()
@@ -389,8 +389,7 @@
 /datum/fusion_controller/proc/announce_warning()
 	return
 
-//LONG LIVE SPAGETTI !
-//This finds all the components in a efficient but really clumsy code wise way.
+//This finds all the components that are connected to each other beginning with a random component.
 /datum/fusion_controller/proc/findComponents(obj/machinery/power/fusion/core/c)
 	var/tmp/list/temp_list = list()
 	if(isnull(c))
