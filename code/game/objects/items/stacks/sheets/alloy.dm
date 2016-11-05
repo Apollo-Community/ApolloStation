@@ -128,5 +128,4 @@
 /obj/item/stack/sheet/alloy/plasteel/New(var/list/comp, var/mineral, var/base)
 	if(!comp || !istype(comp))
 		comp = list("platinum" = 0.5, "metal" = 0.5)
-		mineral = "platinum"
 	..(comp, mineral, base)
