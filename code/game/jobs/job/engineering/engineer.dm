@@ -9,9 +9,10 @@
 	selection_color = "#fff5cc"
 	access = list(access_eva, access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction,access_engine_core,  access_atmospherics)
 	minimal_access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_engine_core)
-	alt_titles = list("Maintenance Technician", "Electrician")
+	alt_titles = list("Maintenance Technician", "Electrician","Junior Engineer")
 
-	rank_succesion_level = 4
+	//rank_succesion_level = 4
+	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL
 
 /datum/job/engineer/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
@@ -20,7 +21,11 @@
 		if(2) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/industrial(H), slot_back)
 		if(3) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel_eng(H), slot_back)
 		if(4) H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
-	H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/engineer(H), slot_w_uniform)
+	if(H.job == "Junior Engineer")
+		H.equip_to_slot_or_qdel(new /obj/item/clothing/under/color/yellow(H), slot_w_uniform)
+		H.equip_to_slot_or_qdel(new /obj/item/clothing/suit/storage/hazardvest, slot_wear_suit)
+	else
+		H.equip_to_slot_or_qdel(new /obj/item/clothing/under/rank/engineer(H), slot_w_uniform)
 	H.equip_to_slot_or_qdel(new /obj/item/clothing/shoes/orange(H), slot_shoes)
 	H.equip_to_slot_or_qdel(new /obj/item/weapon/storage/belt/utility/full(H), slot_belt)
 	H.equip_to_slot_or_qdel(new /obj/item/clothing/head/hardhat(H), slot_head)

@@ -30,13 +30,13 @@ async def on_ready():
         await client.send_message(ahelp_channel, message)
         await client.close()
 
+#Sends a message to a given channel determined by argvs the scripts it called with.
 async def adv_commands():
         server = client.get_server(server_id)
         channel = server.get_channel(channel_id)
-        for c in server.channels:
-                if str(c) == argv[2]:
-                    channel = c
-                    break
+        temp_channel = channelFromString(argv[2])
+        if not (channel == 0):
+                channel = temp_channel
         message = argv[3] + '```' + argv[4] + '```' #argv[3] contains author, argv[4] message
         await client.send_message(channel, message)
         await client.close()
@@ -50,6 +50,8 @@ async def on_message(message):
         server = client.get_server(server_id)
         if not message.content.startswith('!'):
                 return
+        #private = message.channel.is_private
+        objauthor = message.author
         author = str(message.author)
         channel = message.channel
         message = message.content
@@ -82,12 +84,45 @@ async def on_message(message):
                 await byond_export('gencom'+'&command='+message+'&author='+author)
                 return
                 
-        elif channel == server.get_channel(channel_staff):     #Its in the staff channel
+        elif channel == server.get_channel(channel_staff): # or private:     #Its in the staff channel
+                if(message.startswith('!logs')):
+                        message = message[6:]
+                        if await printLogs(message, objauthor, channel) == 0:
+                                await client.send_message(channel, "WARNING: You either had a typo or something is wrong with the bot permissions. Contact a developer.")
+                        return
                 message.replace("!","")
                 message = re.sub('[^A-Za-z0-9]+', ' ', message)
                 await byond_export('modcom'+'&command='+message+'&author='+author)
                 return
 
+#Utility function to get a channel from a string
+#Returns 0 if fail, return a channel if succes.
+def channelFromString(string):
+        server = client.get_server(server_id)
+        for c in server.channels:
+                if str(c) == string:
+                        return c
+        return 0
+
+#Log the last 1000 messages in a txt file and sent it to the user.
+async def printLogs(channel, author, channel_from):
+        channel = channelFromString(channel)
+        if(channel == 0):
+                return 0
+        logs = ["---------END OF LOG---------"]
+        async for message in client.logs_from(channel, limit=1000):
+                logs.append(str(message.timestamp) + ":" + re.sub('[^A-Za-z0-9]+', ' ', str(message.author) + ": " + message.content))
+        logs = logs[::-1]
+        logs.insert(0, "CHANNEL LOGS OF: " + str(channel) + " GENERATED FOR: " + str(author))
+        logs = "\n".join(logs)
+        flogs = open("dlogs.txt", "w")
+        flogs.write(logs)
+        flogs.close()
+        flogs = open("dlogs.txt", "rb")
+        await client.send_file(author, flogs, filename="Logs.txt", content="Logs from "+str(channel))
+        flogs.close()
+        #binurl = createPaste(logs, api_paste_name='Logs From: '+str(channel), api_paste_format='', api_paste_private='1', api_paste_expire_date='1D')
+        #await client.send_message(author, "Logs Pastebin URL: " + binurl, tts=False)
         
 #Mimic byond world export to call world/topic() with given string
 async def byond_export(string):

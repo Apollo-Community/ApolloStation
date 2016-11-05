@@ -8,7 +8,7 @@
 
 	//luminosity = 5
 	//l_color="#0066FF"
-	layer = LIGHTING_LAYER+1
+	layer = 11
 
 	var/spawned=0 // DIR mask
 	var/next_check=0
@@ -43,7 +43,7 @@
 	// EXPAND
 	if(!istype(T,type))
 		// Do pretty fadeout animation for 1s.
-		new /obj/effect/overlay/bluespacify(T)
+		//new /obj/effect/overlay/bluespacify(T)
 		spawn(10)
 			// Nom.
 			for(var/atom/movable/A in T)
@@ -88,7 +88,7 @@
 
 /turf/unsimulated/wall/supermatter/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 	user.visible_message("<span class=\"warning\">\The [user] touches \a [W] to \the [src] as a silence fills the room...</span>",\
-		"<span class=\"danger\">You touch \the [W] to \the [src] when everything suddenly goes silent.\"</span>"\n<span class=\"notice\">\The [W] flashes into dust as you flinch away from \the [src].</span>",\
+		"<span class=\"danger\">You touch \the [W] to \the [src] when everything suddenly goes silent.</span>\n<span class=\"notice\">\The [W] flashes into dust as you flinch away from \the [src].</span>",\
 		"<span class=\"warning\">Everything suddenly goes silent.</span>")
 
 	playsound(src, 'sound/effects/supermatter.ogg', 50, 1)

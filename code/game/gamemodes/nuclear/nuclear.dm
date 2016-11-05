@@ -20,8 +20,6 @@ var/global/list/turf/synd_spawn = list()
 	uplink_welcome = "Corporate Backed Uplink Console:"
 	uplink_uses = 40
 
-	votable = 0
-
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -73,7 +71,7 @@ var/global/list/turf/synd_spawn = list()
 
 
 /datum/game_mode/nuclear/pre_setup()
-	config.canon = 0
+	//config.canon = 0
 
 	return 1
 

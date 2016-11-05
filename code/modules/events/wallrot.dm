@@ -18,7 +18,7 @@ datum/event/wallrot/start()
 		if(center)
 			// Make sure at least one piece of wall rots!
 			center.rot()
-
+			message_admins("Wallrod started at [center.loc] ([center.x],[center.y],[center.z])", "EVENT:")
 			// Have a chance to rot lots of other walls.
 			var/rotcount = 0
 			var/actual_severity = severity * rand(5, 10)

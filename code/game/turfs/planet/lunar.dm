@@ -1,3 +1,4 @@
-/turf/planet/lunar
+/turf/simulated/floor/plating/airless/asteroid/lunar
 	name = "lunar regolith"
-	icon_state = "lunar_regolith"
+	icon_state = "concrete"
+

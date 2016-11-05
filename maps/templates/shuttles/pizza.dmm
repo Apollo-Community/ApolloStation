@@ -1,0 +1,47 @@
+"a" = (/turf/space,/area/space)
+"b" = (/turf/simulated/shuttle/wall{icon_state = "swall_f6"; dir = 2},/area/shuttle/pizza/centcom)
+"c" = (/obj/structure/grille,/obj/structure/shuttle/window{tag = "icon-3"; icon_state = "3"},/turf/simulated/floor/plating,/area/shuttle/pizza/centcom)
+"d" = (/turf/simulated/shuttle/wall{icon_state = "swall_f10"; dir = 2},/area/shuttle/pizza/centcom)
+"e" = (/turf/simulated/shuttle/wall{icon_state = "swallc4"},/area/shuttle/pizza/centcom)
+"f" = (/obj/machinery/computer/shuttle_control{req_access = null; req_access_txt = "0"; shuttle_tag = "Pizza"},/turf/simulated/shuttle/floor{icon_state = "floor2"},/area/shuttle/pizza/centcom)
+"g" = (/turf/simulated/shuttle/wall{icon_state = "swallc3"},/area/shuttle/pizza/centcom)
+"h" = (/turf/simulated/shuttle/wall{icon_state = "swall3"; dir = 2},/area/shuttle/pizza/centcom)
+"i" = (/obj/structure/table,/obj/machinery/microwave,/turf/simulated/shuttle/floor{icon_state = "floor2"},/area/shuttle/pizza/centcom)
+"j" = (/obj/structure/bed/chair/shuttle{tag = "icon-chair3 (NORTH)"; icon_state = "chair3"; dir = 1},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/pizza/centcom)
+"k" = (/obj/item/pizzabox,/obj/item/pizzabox,/obj/item/pizzabox,/obj/item/pizzabox,/obj/item/pizzabox,/obj/item/pizzabox,/obj/item/pizzabox,/obj/item/pizzabox,/obj/item/pizzabox,/obj/structure/closet/crate,/turf/simulated/shuttle/floor{icon_state = "floor2"},/area/shuttle/pizza/centcom)
+"l" = (/obj/structure/table,/obj/machinery/embedded_controller/radio/simple_docking_controller{frequency = 1380; id_tag = "pizza_shuttle"; pixel_x = 0; pixel_y = -25; req_access_txt = "0"; req_one_access_txt = "0"; tag_door = "pizza_shuttle_hatch"},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/pizza/centcom)
+"m" = (/turf/simulated/shuttle/floor{icon_state = "floor2"},/area/shuttle/pizza/centcom)
+"n" = (/obj/structure/closet/crate/freezer/rations,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/pizza/centcom)
+"o" = (/turf/simulated/shuttle/wall{icon_state = "swall7"; dir = 2},/area/shuttle/pizza/centcom)
+"p" = (/turf/simulated/shuttle/wall{icon_state = "swall12"; dir = 2},/area/shuttle/pizza/centcom)
+"q" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/pizza/centcom)
+"r" = (/turf/simulated/shuttle/wall{icon_state = "swall11"; dir = 2},/area/shuttle/pizza/centcom)
+"s" = (/obj/structure/shuttle/window{tag = "icon-2"; icon_state = "2"},/obj/structure/grille,/turf/simulated/floor/plating,/area/shuttle/pizza/centcom)
+"t" = (/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/pizza/centcom)
+"u" = (/obj/item/pizzabox,/obj/structure/table,/turf/simulated/shuttle/floor{icon_state = "floor2"},/area/shuttle/pizza/centcom)
+"v" = (/obj/item/pizzabox,/obj/structure/table,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/pizza/centcom)
+"w" = (/obj/machinery/door/window/southright,/turf/simulated/shuttle/floor{icon_state = "floor2"},/area/shuttle/pizza/centcom)
+"x" = (/obj/machinery/door/airlock/external{frequency = 1380; icon_state = "door_locked"; id_tag = "pizza_shuttle_hatch"; locked = 1; name = "Shuttle Hatch"; req_access_txt = "0"},/turf/simulated/floor/plating,/area/shuttle/pizza/centcom)
+"y" = (/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/shuttle/pizza/centcom)
+"z" = (/turf/simulated/shuttle/wall{dir = 2; icon_state = "swallc1"},/area/shuttle/pizza/centcom)
+"A" = (/obj/structure/bed/chair/shuttle{tag = "icon-chair3 (EAST)"; icon_state = "chair3"; dir = 4},/turf/simulated/shuttle/floor{icon_state = "floor2"},/area/shuttle/pizza/centcom)
+"B" = (/obj/structure/table,/obj/item/weapon/kitchen/utensil/fork,/obj/item/weapon/kitchen/utensil/spoon,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/pizza/centcom)
+"C" = (/obj/structure/bed/chair/shuttle{dir = 8; icon_state = "chair3"; name = "bridge chair"; tag = "icon-chair3 (WEST)"},/turf/simulated/shuttle/floor{icon_state = "floor2"},/area/shuttle/pizza/centcom)
+"D" = (/turf/simulated/shuttle/wall{tag = "icon-swallc2"; icon_state = "swallc2"; dir = 2},/area/shuttle/pizza/centcom)
+"E" = (/turf/simulated/shuttle/wall{icon_state = "swall_f9"; dir = 2},/area/shuttle/pizza/centcom)
+"F" = (/obj/structure/window/reinforced{dir = 1; maxhealth = 1.#INF},/obj/structure/shuttle/engine/heater,/turf/simulated/floor/plating,/area/shuttle/pizza/centcom)
+"G" = (/obj/structure/shuttle/engine/propulsion,/turf/simulated/floor/plating,/area/shuttle/pizza/centcom)
+
+(1,1,1) = {"
+aabcdaa
+abefgda
+ahijkha
+ahlmnha
+aopqpra
+astmtsa
+beuvwgd
+xmtmtmx
+yzABCDE
+ahFFFha
+ayGGGEa
+"}

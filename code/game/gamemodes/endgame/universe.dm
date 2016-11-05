@@ -81,7 +81,9 @@
 
 // Returns the universe datetime in format "YYYY-MM-DD HH:MM:SS"
 /datum/universal_state/proc/getDateTime()
-	var/timestamp = "[date[1]]-[ date[2] < 10 ? date[2] : add_zero( date[2] )]-[ date[3] < 10 ? date[3] : add_zero( date[3] )]"
+	//The timestamp wants ints not strings !
+	var/list/num_date = list(date[date[1]], date[date[2]], date[date[3]])
+	var/timestamp = "[num_date[1]]-[ num_date[2] < 10 ? num_date[2] : add_zero( num_date[2] )]-[ num_date[3] < 10 ? num_date[3] : add_zero( num_date[3] )]"
 
 	var/seconds = world.time / 10 % 60
 	timestamp += " [worldtime2text()]:[ seconds < 10 ? seconds : add_zero( seconds )]"
@@ -163,6 +165,8 @@
 	return D
 
 /datum/universal_state/proc/loadConstructionStation()
+	return
+	/*
 	var/turf/T = locate(82, 36, 4)
 	if(isnull(T))
 		log_game("Couldn't find where to place the construction area!!! (fuck!!! (SHIT!))")
@@ -176,8 +180,11 @@
 	template_controller.PlaceTemplateAt(T, path, "Construction Station")
 
 	log_game("Construction station has been loaded")
+	*/
 
 /datum/universal_state/proc/saveConstructionStation()
+	return
+	/*
 	if(!save_construction_station)
 		testing("Didn't save construction station")
 		return
@@ -185,6 +192,7 @@
 	dmm_serializer.serialize_block(82, 35, 4, 98, 164, "construction_station", "templates/persistent")
 
 	log_game("Construction station has been saved")
+	*/
 
 // Actually decay the turf.
 /datum/universal_state/proc/DecayTurf(var/turf/T)

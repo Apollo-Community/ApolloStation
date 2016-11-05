@@ -76,7 +76,8 @@
 
 	spawn( 10 )
 		master_controller.SetupXenoarch( zlevel )
-
+	spawn( 10 )
+		master_controller.moon_ore_map.apply_to_asteroid( zlevel )
 	return 1
 
 /obj/effect/mapinfo/sector/tcomm_old
@@ -114,7 +115,7 @@
 	build_priority = 3
 
 /obj/effect/mapinfo/sector/asteroid/getMapLoc()
-	var/turf/center = get_turf( locate( "OVERMAP NMV Slater" ))
+	var/turf/center = get_turf( locate( "OVERMAP Moon" ))
 
 	if( !center )
 		return ..()

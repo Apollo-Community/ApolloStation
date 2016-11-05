@@ -40,6 +40,8 @@
 		var/freq = rand(1441, 1489)
 		while(freq in radiochannels)
 			freq = rand(1441, 1489)
+		if ((freq % 2) == 0)
+			freq += 1
 
 		var/obj/item/device/uplink/hidden/T = new(I)
 		T.uplink_owner = antag

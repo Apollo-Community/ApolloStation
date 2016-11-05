@@ -170,6 +170,19 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containername = "Emergency crate"
 	group = "Atmospherics"
 
+/datum/supply_packs/void_suits
+	name = "Void Suits (3x)"
+	contains = list(/obj/item/clothing/suit/space,
+					/obj/item/clothing/suit/space,
+					/obj/item/clothing/suit/space,
+					/obj/item/clothing/head/helmet/space,
+					/obj/item/clothing/head/helmet/space,
+					/obj/item/clothing/head/helmet/space)
+	cost = 100
+	containertype = /obj/structure/closet/crate/internals
+	containername = "Void Suit Crate"
+	group = "Atmospherics"
+
 /datum/supply_packs/inflatable
 	name = "Inflatable barriers"
 	contains = list(/obj/item/weapon/storage/briefcase/inflatable,
@@ -229,6 +242,14 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containertype = /obj/structure/largecrate/mule
 	containername = "MULEbot Crate"
 	group = "Operations"
+
+/datum/supply_packs/janiwagon
+	name = "Janitorial Wagon"
+	contains = list(/obj/vehicle/train/cargo/engine)
+	cost = 75
+	containertype = /obj/structure/largecrate
+	containername = "Janitorial wagon Crate"
+	group = "Supply"
 
 /datum/supply_packs/cargotrain
 	name = "Cargo Train Tug"
@@ -610,17 +631,12 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 /datum/supply_packs/tokamak_rings
 	name = "Tokamak Ring Crate"
 	contains = list(/obj/machinery/power/fusion/ring_corner,
-					/obj/machinery/power/fusion/ring_corner,
-					/obj/machinery/power/fusion/ring_corner,
-					/obj/machinery/power/fusion/ring_corner,
-					/obj/machinery/power/fusion/ring,
-					/obj/machinery/power/fusion/ring,
 					/obj/machinery/power/fusion/ring,
 					/obj/machinery/power/fusion/ring,)
-	cost = 200
+	cost = 50
 	containertype = /obj/structure/closet/crate/secure
 	containername = "Tokamak Ring Crate"
-	access = access_ce
+	access = access_engine
 	group = "Engineering"
 
 /datum/supply_packs/IDD
@@ -736,7 +752,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	cost = 10
 	containertype = /obj/structure/closet/crate/secure/phoron
 	containername = "Phoron assembly crate"
-	access = access_moon
+	access = access_xenoarch
 	group = "Science"
 
 /datum/supply_packs/weapons

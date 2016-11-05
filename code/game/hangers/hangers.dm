@@ -20,6 +20,11 @@ obj/hanger/oddshaped/exterior
 	square = 0
 	invisibility = 101
 
+obj/hanger/square/exterior/vox
+	dimx =21
+	dimy =20
+	htag = "c_vox"
+
 obj/hanger/square/exterior/s_escape_pod_1
 	dimx =3
 	dimy =4
@@ -84,6 +89,21 @@ obj/hanger/square/interior/cc_hanger_r
 	dimx =7
 	dimy =11
 	htag = "c_hanger_r"
+
+obj/hanger/square/interior/cc_hanger_p
+	dimx =7
+	dimy =11
+	htag = "c_hanger_p"
+
+obj/hanger/square/interior/cc_hanger_t
+	dimx =7
+	dimy =11
+	htag = "c_hanger_t"
+
+obj/hanger/square/interior/cc_hanger_h
+	dimx =7
+	dimy =11
+	htag = "c_hanger_h"
 
 obj/hanger/square/interior/frigate_hanger
 	dimx = 11

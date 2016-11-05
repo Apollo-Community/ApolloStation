@@ -1,7 +1,10 @@
 /*
 *	Regulates the fusion engine and this components.
 */
-#define TM_SAFE_ALERT "Con"
+#define TOKA_MAX_TEMP 1000000
+#define TOKA_FUSION_TEMP 100000
+#define TOKA_CRIT_TEMP 90000
+
 /datum/fusion_controller
 	var/list/fusion_components = list()			//List of components making up the fusion reactor.
 	var/mode = 1								//Mode, direct = 0, indirect = 1.
@@ -19,18 +22,16 @@
 	var/field_coef = 0							//Field coef, how much does the field regen extra
 	var/obj/machinery/computer/fusion/computer	//The computer that this is linked to
 	var/set_up = 0
-	var/lastwarning = 0
-	var/warning_delay = 10 	//10 sec between warnings
-	var/confield_archived = 0
-	var/safe_warned = 0
-	var/obj/item/device/radio/radio 	//For radio warnings
-	var/rod_insertion = 0.5		//How far is the rod inserted, has effect on heat, neutrons and neutron damage generation
-	var/message_delay
-	var/safe_warn
+	var/obj/item/device/radio/radio 			//For radio warnings
+	var/rod_insertion = 0.5						//How far is the rod inserted, has effect on heat, neutrons and neutron damage generation
 	var/max_field_coef = 1
-	var/event_color = ""		//Color of fusion events
-	var/neutrondam_coef = 5		//Devide neutrons by this for damage to shields this will keep it stable at 50 rod insetion at normal activity.
-	var/power_coef = 16.5
+	var/event_color = ""						//Color of fusion events
+	var/neutrondam_coef = 3.3					//Devide neutrons by this for damage to shields this will keep it stable at 50 rod insetion at normal activity.
+	var/power_coef = 14
+	var/list/plasma_locs = list()
+	var/nr_comp = 0
+	var/nr_corners = 0
+	var/max_field = 0
 
 /datum/fusion_controller/New()
 	fusion_controllers += src
@@ -47,6 +48,7 @@
 //Standart process cycle
 /datum/fusion_controller/proc/process()
 	if(set_up)
+		checkField()
 		checkComponents()
 	if(fusion_components.len > 0)
 		pass_self()
@@ -54,41 +56,29 @@
 		calcFusion()
 		calcDamage()
 		calcConField()
-		announce_warning()	//Announce a warning if the confield is dropping below 50%
-		confield_archived = confield
+		//announce_warning()	//Announce a warning if the confield is dropping below 50%
+		//confield_archived = confield
 		updateIcons()
 
 //Shuts down reactor by controlled gas venting
 /datum/fusion_controller/proc/emergencyVent()
-	if(gas_contents.temperature >= 90000)
-		gas_contents.temperature = 89000
+	if(gas_contents.temperature >= TOKA_CRIT_TEMP)
+		gas_contents.temperature = TOKA_CRIT_TEMP - 1000
 	leakPlasma()
 	removePlasma()
 
 //Check the individual components for various statuses
 /datum/fusion_controller/proc/checkComponents()
-	. = 0
-	if(fusion_components.len != 13)
-		if(gas_contents.temperature > 90000)
-			critFail(pick(fusion_components))	//Easteregg for egnineers who think they are safe behind glass
-		else
-			leakPlasma()
-			removePlasma()
-		if(!isnull(computer))
-			computer.reboot()
+	if(fusion_components.len != nr_comp)
+		fail()
 		qdel(src)
 		return
 
 	var/emmag_nr = 0
 	for(var/obj/machinery/power/fusion/comp in fusion_components)
 		if(!comp.ready || comp.stat == BROKEN)
-			if(gas_contents.temperature > 90000)
-				critFail(comp)
-			else
-				leakPlasma()
-				removePlasma()
-			if(!isnull(computer))
-				computer.reboot()
+			fail()
+			comp.ex_act()
 			qdel(src)
 			return
 		if(comp.emagged)
@@ -96,7 +86,14 @@
 	if(emmag_nr >= 12)
 		for(var/obj/machinery/power/fusion/comp in fusion_components)
 			comp.locked = 0
-	. = 1
+
+//Check if the containment field is still online
+/datum/fusion_controller/proc/checkField()
+	if(!confield)
+		if(gas_contents.temperature > TOKA_CRIT_TEMP)
+			var/obj/machinery/power/fusion/comp = pick(fusion_components)
+			comp.stat = BROKEN
+		return
 
 //Update the icons
 /datum/fusion_controller/proc/updateIcons()
@@ -105,8 +102,8 @@
 
 //Pass self to the core rod for debug
 /datum/fusion_controller/proc/pass_self()
-	var/obj/machinery/power/fusion/core/core = fusion_components[13]
-	core.controller = src
+	for(var/obj/machinery/power/fusion/core/core in fusion_components)
+		core.controller = src
 
 //Toggle the containment field power scourse
 /datum/fusion_controller/proc/toggle_field()
@@ -133,34 +130,30 @@
 
 //Spawns the "plasma" based upon the location of the core rod.
 /datum/fusion_controller/proc/generatePlasma()
+	var/dub = 0	//To make sure we dont place to fields on one turf.
 	var/obj/machinery/power/fusion/plasma/p
-	var/obj/machinery/power/fusion/core/core = fusion_components[13]
-
-	for(var/tmp/i in list(-2, 2))
-		p = PoolOrNew(/obj/machinery/power/fusion/plasma, core.loc)
-		//p = new(core.loc)
-		p.x += i
-		if(i == 2)
-			p.dir = SOUTH
-		if(i == -2)
-			p.dir = NORTH
-		p.fusion_controller = src
+	for(var/turf/a in plasma_locs)
+		dub = 0
+		for(var/obj/o in a.contents)
+			if (istype(o, /obj/machinery/power/fusion/plasma))
+				dub = 1
+		if(dub)
+			continue
+		p = PoolOrNew(/obj/machinery/power/fusion/plasma, a)
+		p.dir = plasma_locs[a]	//Associative list with turfs and their directions.
 		plasma.Add(p)
-
-	for(var/tmp/i in list(-2, 2))
-		//p = new(core.loc)
-		p = PoolOrNew(/obj/machinery/power/fusion/plasma, core.loc)
-		p.y += i
-		if(i == 2)
-			p.dir = EAST
-		if(i == -2)
-			p.dir = WEST
 		p.fusion_controller = src
-		plasma.Add(p)
 
 //Update the status of the plasma.. among other things -_-'
 /datum/fusion_controller/proc/updatePlasma()
-	var/obj/machinery/power/fusion/core/core = fusion_components[13]
+	var/obj/machinery/power/fusion/core/core = null
+
+	for(var/obj/machinery/power/fusion/core/c in fusion_components)
+		if(istype(c, /obj/machinery/power/fusion/core))
+			core = c
+	if(isnull(core))
+		return
+
 	if(plasma.len == 0 && gas)
 		generatePlasma()
 
@@ -173,25 +166,16 @@
 	for(var/obj/machinery/power/fusion/comp in fusion_components)
 		if(comp.anchored == 0)
 			leakPlasma()
-			if(gas_contents.temperature > 90000)	//We are at fusion temp EXPLODE!
-				critFail()
+			if(gas_contents.temperature > TOKA_CRIT_TEMP)	//We are at fusion temp EXPLODE!
+				comp.stat = BROKEN
 				return
-
-	if(!confield)
-		if(gas_contents.temperature < 75000)
-			leakPlasma()
-			removePlasma()
-			gas = 0
-		else
-			critFail(pick(fusion_components))
-		return
 
 	core.decay()
 
 	//heat up plasma and temp sanity check
 	var/tmp/heatdif = core.heat
 	//The arc emitters temerature is about 100k deg so we cap input there.
-	if(gas_contents.temperature >= 100000)
+	if(gas_contents.temperature >= TOKA_FUSION_TEMP)
 		heatdif = 0
 	core.heat -= heatdif
 	gas_contents.temperature += heatdif + fusion_heat - calcDecay(gas_contents.temperature)		//Calculating temp change
@@ -199,8 +183,8 @@
 		gas_contents.temperature = 290
 	gas_contents.update_values()
 	fusion_heat = 0
-	if(gas_contents.temperature > 100000000)
-		gas_contents.temperature = 100000000
+	if(gas_contents.temperature > TOKA_MAX_TEMP)
+		gas_contents.temperature = TOKA_MAX_TEMP
 		gas_contents.update_values()
 
 	if(gas_contents.temperature > 10000)
@@ -214,12 +198,18 @@
 
 //Pump plasma from the ring tanks into the "field"
 /datum/fusion_controller/proc/pumpPlasma()
+	//There cannot be more then 240 moles in the engine !
+	var/to_pump = 0
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
-		pump_gas(r, r.get_tank_content(), gas_contents, r.get_tank_moles())
+		to_pump = r.get_tank_moles()
+		if(gas_contents.total_moles + r.get_tank_moles() >= 240)
+			to_pump = 240 - gas_contents.total_moles
+		if(to_pump > 0)
+			pump_gas(r, r.get_tank_content(), gas_contents, to_pump)
 	gas_contents.update_values()
 	if(isnull(table))
 		return
-	coefs = table.gas_coef(gas_contents)
+	coefs = table.gas_coef(gas_contents, nr_corners)
 	if(isnull(event_color) || isnull(gas_contents))
 		return
 	var/tmp/gas_color = table.gas_color(gas_contents, event_color)
@@ -230,7 +220,7 @@
 
 //Pump plasma back into rings.
 /datum/fusion_controller/proc/drainPlasma()
-	gas_contents.divide(4)
+	gas_contents.divide(nr_corners)
 	var/datum/gas_mixture/tank_mix
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
 		tank_mix = new()
@@ -283,13 +273,13 @@
 			tmp_confield += r.field_energy()
 	if(!isnull(coefs))
 		tmp_confield = tmp_confield*coefs["shield"] + tmp_confield*field_coef
-	confield = Clamp(tmp_confield, 0, 40000 + 1000*field_coef)
+	confield = Clamp(tmp_confield, 0, max_field + 1000*field_coef)
 
 //When does fusion happen ?
 /datum/fusion_controller/proc/calcFusion()
 	if(plasma.len == 0 || isnull(gas_contents))
 		return
-	if(gas_contents.temperature < 90000)
+	if(gas_contents.temperature < TOKA_CRIT_TEMP)
 		return
 	for(var/obj/machinery/power/fusion/plasma/p in plasma)
 		var/change = min(((gas_contents.temperature/500000)*100), 25)			//This needs tweaking also with gass mixtures
@@ -303,7 +293,7 @@
 	var/tmp/neutrons = 1000						//Base neutrons
 	var/tmp/heat = 2000							//Base heat
 	neutrons += (heat*coefs["heat_neutron"] - neutrons*coefs["neutron_heat"])*coefs["neutron"] + neutrons*rod_coef
-	heat += neutrons*coefs["neutron_heat"] - heat*coefs["heat_neutron"] + heat*rod_coef
+	heat += neutrons*coefs["neutron_heat"] - (heat*coefs["heat_neutron"]*1.8) + heat*rod_coef
 	fusion_heat = heat*rod_insertion
 	p.transfer_energy(neutrons*rod_insertion*power_coef)
 	spawn()
@@ -320,15 +310,17 @@
 			var/mob/living/carbon/human/M = pick(targets)
 			arc(M, p)
 			M.apply_damage(rand(10, 20), damagetype = BURN)
-			M.apply_effect(rand(10, 20), effecttype = STUN)
+			M.apply_effect(rand(2.5, 5), effecttype = STUN)
 
 	//Neutrons effect the containment field, more neutrons = more power but also more were on the field
 	for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
 		confield -= (neutrons/neutrondam_coef)*rod_insertion
 
-	if(coefs["explosive"] && prob(5))
-		critFail(p)
+	if(coefs["explosive"] && prob(1))
+		var/obj/machinery/power/fusion/comp = pick(fusion_components)
+		comp.stat = BROKEN
 
+//Check if victem is insulated
 /datum/fusion_controller/proc/insulated(var/mob/living/carbon/human/m)
 	if(isnull(m.head) || isnull(m.wear_suit))
 		return 0
@@ -336,6 +328,7 @@
 		return 0
 	return 1
 
+//Arc from a fusion field to a victem.
 /datum/fusion_controller/proc/arc(obj/T, obj/S)
 	if(isnull(T))
 		return
@@ -347,10 +340,14 @@
 //Calculate if we should do damage to the rings according to heat of the gas.
 //A random ring will take 1 point of damage for every 5000 deg above 1 mil deg.
 /datum/fusion_controller/proc/calcDamage()
-	if(gas_contents.temperature > 1000000)
-		var/i = pick(list(1,2,3,4,5,6,7,8,9,10,11,12))
-		var/obj/machinery/power/fusion/component = fusion_components[i]
-		component.damage += (gas_contents.temperature - 1000000)/5000
+	if(gas_contents.temperature > 800000)
+		var/obj/machinery/power/fusion/ring_corner/ring
+		var/list/clist = list()
+		for(var/obj/machinery/power/fusion/ring_corner/r in fusion_components)
+			clist += r
+		ring = pick(clist)
+		if(!isnull(ring))
+			ring.damage += (gas_contents.temperature - 800000)/5000
 
 	for(var/obj/machinery/power/fusion/component in fusion_components)
 		if(component.damage > 500 && component.damage < 800)
@@ -361,139 +358,82 @@
 
 		else if(component.damage > 999)
 			//critically fail
-			critFail(component)
+			component.stat = BROKEN
+
+//Called if something goes wrong in a not so bad manner.
+//Vent all plasma gasses and unlock all components.
+/datum/fusion_controller/proc/fail()
+	for(var/obj/machinery/power/fusion/locked_comp in fusion_components)
+		locked_comp.locked = 0
+		locked_comp.on = 0
+		locked_comp.in_network = 0
+		locked_comp.origen = 0
+		locked_comp.update_icon()
+	if(gas_contents.temperature > TOKA_CRIT_TEMP)
+		critFail(pick(fusion_components))
+	if(!isnull(computer))
+		computer.reboot()
+	gas = 0
+	leakPlasma()
+	removePlasma()
 
 //Critically fail in an explosion .. or worse.
 /datum/fusion_controller/proc/critFail(var/obj/o)
 	if(isnull(o))
 		return
-	if(gas_contents.temperature > 250000)
-		//You are really deep in the shit now boi!
-		new/obj/fusion_ball(o.loc)
-	gas = 0
-	leakPlasma()
-	removePlasma()
+	new/obj/fusion_ball(o.loc)
 	spawn()
 		explosion(get_turf(o), 2, 4, 10, 15)
 
+//Announce a contianment field warning to the crew (general comms) if the field is les then 50%
 /datum/fusion_controller/proc/announce_warning()
-	var/tmp/alert_msg = "Warning Tokamak containment field integrity at [round(confield/400)]%"
-	if(confield < 20000)
-		if(confield < confield_archived) // The damage is still going up sinse last calc
-			safe_warn = 1
-		else if (safe_warn)
-			safe_warn = 0 // We are safe, warn only once
-			alert_msg = TM_SAFE_ALERT
-		else
-			alert_msg = null
-		if(alert_msg && world.timeofday >= message_delay)
-			message_delay = world.timeofday + 15
-			radio.autosay(alert_msg, "Tokamak Monitor")
+	return
 
-//LONG LIVE SPAGETTI !
-//This finds all the components in a efficient but really clumsy code wise way.
+//This finds all the components that are connected to each other beginning with a random component.
 /datum/fusion_controller/proc/findComponents(obj/machinery/power/fusion/core/c)
 	var/tmp/list/temp_list = list()
 	if(isnull(c))
 		return
 	c.controller = src
-	var/obj/machinery/power/fusion/mag_ring = null
-	for(var/dir in list(NORTHWEST,NORTHEAST,SOUTHEAST,SOUTHWEST))
-		//Getting the corner ring
-		mag_ring = null
-		mag_ring = locate(/obj/machinery/power/fusion/ring_corner/, get_step(get_step(c, dir),dir))
-		if(!(istype(mag_ring, /obj/machinery/power/fusion/ring_corner) ||!isnull(mag_ring)))
-			return
-		//Getting straight rings and check dir on corner, let the spagetti begin.
-		if(dir == NORTHWEST)
-			if(!mag_ring.dir == EAST || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
-			mag_ring = null
-			mag_ring = locate(/obj/machinery/power/fusion/ring/, get_step(get_step(c, dir),NORTH))
-			if(!(istype(mag_ring, /obj/machinery/power/fusion/ring) ||!isnull(mag_ring)))
-				return
-			if(!mag_ring.dir == EAST || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
-			mag_ring = null
-			mag_ring = locate(/obj/machinery/power/fusion/ring/, get_step(get_step(c, dir),WEST))
-			if(!(istype(mag_ring, /obj/machinery/power/fusion/ring) ||!isnull(mag_ring)))
-				return
-			if(!mag_ring.dir == SOUTH || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
+
+	//Pick a ring to start from:
+	var/obj/machinery/power/fusion/ring_corner/cring = null
+	for(var/obj/machinery/power/fusion/ring_corner/cr in orange(10, c))
+		if(!cr.ready)
 			continue
-
-		if(dir == NORTHEAST)
-			if(!mag_ring.dir == SOUTH || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
-			mag_ring = null
-			mag_ring = locate(/obj/machinery/power/fusion/ring/, get_step(get_step(c, dir),NORTH))
-			if(!(istype(mag_ring, /obj/machinery/power/fusion/ring) ||!isnull(mag_ring)))
-				return
-			if(!mag_ring.dir == WEST || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
-			mag_ring = null
-			mag_ring = locate(/obj/machinery/power/fusion/ring/, get_step(get_step(c, dir),EAST))
-			if(!(istype(mag_ring, /obj/machinery/power/fusion/ring) ||!isnull(mag_ring)))
-				return
-			if(!mag_ring.dir == SOUTH || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
-			continue
-
-		if(dir == SOUTHEAST)
-			if(!mag_ring.dir == WEST || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
-			mag_ring = null
-			mag_ring = locate(/obj/machinery/power/fusion/ring/, get_step(get_step(c, dir),SOUTH))
-			if(!(istype(mag_ring, /obj/machinery/power/fusion/ring) ||!isnull(mag_ring)))
-				return
-			if(!mag_ring.dir == WEST || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
-			mag_ring = null
-			mag_ring = locate(/obj/machinery/power/fusion/ring/, get_step(get_step(c, dir),EAST))
-			if(!(istype(mag_ring, /obj/machinery/power/fusion/ring) ||!isnull(mag_ring)))
-				return
-			if(!mag_ring.dir == NORTH || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
-			continue
-
-		if(dir == SOUTHWEST)
-			if(!mag_ring.dir == NORTH || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
-			mag_ring = null
-			mag_ring = locate(/obj/machinery/power/fusion/ring/, get_step(get_step(c, dir),WEST))
-			if(!(istype(mag_ring, /obj/machinery/power/fusion/ring) ||!isnull(mag_ring)))
-				return
-			if(!mag_ring.dir == NORTH || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
-			mag_ring = null
-			mag_ring = locate(/obj/machinery/power/fusion/ring/, get_step(get_step(c, dir),SOUTH))
-			if(!(istype(mag_ring, /obj/machinery/power/fusion/ring) ||!isnull(mag_ring)))
-				return
-			if(!mag_ring.dir == EAST || !mag_ring.anchored == 1)
-				return
-			temp_list.Add(mag_ring)
-
-	temp_list.Add(c)
-	if(temp_list.len != 13)
+		cring = cr
+	if(isnull(cring))
 		return
+
+	//Some safety checks on what the network builder returned.
+	var/list/network = list()
+	var/list/tmpnetwork = list()
+	tmpnetwork += cring.build_network(1, network)
+	if(isnull(tmpnetwork) || tmpnetwork.len == 0)
+		return
+	network += tmpnetwork
+	network.Remove(null)
+	temp_list += network
+	temp_list.Add(c)
+	nr_comp = temp_list.len
+
+	//Check if all components found are ready (wired, closed, have compnents).
+	//Also set some internal vars to prevent errors on destruction of the machine.
+	for(var/obj/machinery/power/fusion/comp in temp_list)
+		comp.in_network = 0
+		comp.origen = 0
+
 	for(var/obj/machinery/power/fusion/comp in temp_list)
 		if(!comp.ready)
 			return
 		comp.fusion_controller = src
-	//Calculating component coefs
-	field_coef = 0
-	rod_coef = 0
+
+	//Check if the network has a symetric shape (aka is the core in the middle).
+	if(!check_symetry(c, temp_list))
+		return
+
+	//Calculating component coefs and event color.
+	nr_corners = 0
 	for(var/obj/machinery/power/fusion/ring_corner/r in temp_list)
 		if(isnull(r.rod) || isnull(r.crystal))
 			return
@@ -503,12 +443,37 @@
 			event_color = BlendRGB(event_color, table.rod_color(r.rod), 0.5)
 		rod_coef += table.rod_coef(r.rod)
 		field_coef += table.field_coef(r.crystal)
-	rod_coef = rod_coef/4
-	field_coef = field_coef/4
+		nr_corners ++
+	rod_coef = rod_coef/nr_corners
+	max_field = max(9000*nr_corners, 40000)	//Min of 40k fields strengh.
+	field_coef = field_coef/nr_corners
 
+	//Getting locations of plasma fields
+	get_plasma_locs(temp_list)
+	if(src.plasma_locs.len < 1)
+		return
 	fusion_components = temp_list
 	set_up = 1
 	return 1
 
+//Check if listed components in an increasing radius are symetric.
+//Do this by checking for even/odd number of components found in a radius.
+/datum/fusion_controller/proc/check_symetry(center, comp_list)
+	var/range = 2
+	var/list/L = list()
+	while(range <= 10)
+		L += (orange(range, center) & comp_list)	//Populate with all that is in range and comp_list
+		if(!IsEven(L.len))
+			return 0
+		L.Cut()
+		range ++
+	return 1
+
+//Get the locations (turfs) where plasma is going to be generated.
+/datum/fusion_controller/proc/get_plasma_locs(var/list/components)
+	for(var/obj/machinery/power/fusion/ring/r in components)
+		plasma_locs += r.plasma_locs()
+
+//External setter for components list.
 /datum/fusion_controller/proc/addComp(var/obj/machinery/computer/fusion/comp)
 	fusion_components.Add(comp)

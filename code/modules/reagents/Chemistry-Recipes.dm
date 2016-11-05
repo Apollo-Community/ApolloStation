@@ -32,11 +32,6 @@ datum
 				var/datum/effect/effect/system/reagents_explosion/e = new()
 				e.set_up(round (created_volume/10, 1), holder.my_atom, 0, 0)
 				e.holder_damage(holder.my_atom)
-				if(isliving(holder.my_atom))
-					e.amount *= 0.5
-					var/mob/living/L = holder.my_atom
-					if(L.stat!=DEAD)
-						e.amount *= 0.5
 				e.start()
 				holder.clear_reagents()
 				return

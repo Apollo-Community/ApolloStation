@@ -360,13 +360,7 @@
 	if(security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)*/
 
-
-/datum/game_mode/proc/get_players_for_role(var/role, override_jobbans=0)
-	var/list/players = list()
-	var/list/candidates = list()
-	//var/list/drafted = list()
-	//var/datum/mind/applicant = null
-
+/datum/game_mode/proc/get_role_text(var/role)
 	var/roletext
 	switch(role)
 		if(BE_CHANGELING)	roletext="changeling"
@@ -378,6 +372,16 @@
 		if(BE_NINJA)		roletext="ninja"
 		if(BE_RAIDER)		roletext="raider"
 		if(BE_ALIEN)        roletext="alien"
+
+	return roletext
+
+/datum/game_mode/proc/get_players_for_role(var/role, override_jobbans=0)
+	var/list/players = list()
+	var/list/candidates = list()
+	//var/list/drafted = list()
+	//var/datum/mind/applicant = null
+
+	var/roletext = get_role_text(role)
 
 	// Assemble a list of active players without jobbans.
 	for(var/mob/new_player/player in player_list)
@@ -408,6 +412,7 @@
 	// Remove candidates who want to be antagonist but have a job that precludes it
 	if(restricted_jobs)
 		for(var/datum/mind/player in candidates)
+			log_debug("(get_players_for_role) Assigned role for [roletext] candidate [player.key]: [player.assigned_role]")
 			for(var/job in restricted_jobs)
 				if(player.assigned_role == job)
 					candidates -= player
@@ -476,6 +481,16 @@
 
 	var/list/possible_antags = get_players_for_role(role)
 	log_debug("(pick_antagonists) Amount of possible antags: [possible_antags.len]")
+	if( possible_antags.len == 0 )
+		log_debug("(pick_antagonists) No antagonist candidates! Picking randomly from ready players.")
+
+		var/roletext = get_role_text(role)
+
+		for( var/mob/new_player/player in player_list )
+			if( player.client && player.ready )
+				if( !jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext) && !(player.mind.assigned_role in restricted_jobs) )
+					possible_antags += player
+
 	var/list/chosen_antags = list()
 	var/list/clients = list()
 

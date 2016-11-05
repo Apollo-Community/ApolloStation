@@ -1,0 +1,48 @@
+"a" = (/turf/simulated/wall,/area/admin)
+"b" = (/turf/simulated/floor/plating,/area/admin)
+"c" = (/obj/machinery/light{dir = 1},/turf/simulated/floor/plating,/area/admin)
+"d" = (/obj/machinery/power/fusion/ring_corner{tag = "icon-ring_corner (EAST)"; icon_state = "ring_corner"; dir = 4},/turf/simulated/floor/plating,/area/admin)
+"e" = (/obj/machinery/power/fusion/ring{tag = "icon-ring (EAST)"; icon_state = "ring"; dir = 4},/turf/simulated/floor/plating,/area/admin)
+"f" = (/obj/machinery/power/fusion/ring{tag = "icon-ring (WEST)"; icon_state = "ring"; dir = 8},/turf/simulated/floor/plating,/area/admin)
+"g" = (/obj/machinery/power/fusion/ring_corner,/turf/simulated/floor/plating,/area/admin)
+"h" = (/obj/machinery/power/apc{dir = 1; name = "north bump"; pixel_x = 0; pixel_y = 29},/obj/structure/cable/cyan{d2 = 2; icon_state = "0-2"},/turf/simulated/floor/plating,/area/admin)
+"i" = (/obj/machinery/light{dir = 4; icon_state = "tube1"},/turf/simulated/floor/plating,/area/admin)
+"j" = (/obj/machinery/light{dir = 8; light_power = 1.5; light_range = 25},/turf/simulated/floor/plating,/area/admin)
+"k" = (/obj/machinery/power/fusion/ring,/turf/simulated/floor/plating,/area/admin)
+"l" = (/obj/structure/cable/cyan{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/admin)
+"m" = (/obj/machinery/power/smes/buildable{charge = 100000},/obj/structure/cable/cyan,/turf/simulated/floor/plating,/area/admin)
+"n" = (/obj/machinery/computer/fusion{ctag = "testcore"},/turf/simulated/floor/plating,/area/admin)
+"o" = (/obj/structure/cable/cyan{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/simulated/floor/plating,/area/admin)
+"p" = (/obj/structure/cable/cyan{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/plating,/area/admin)
+"q" = (/obj/machinery/power/terminal{icon_state = "term"; dir = 1},/obj/structure/cable/cyan{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/plating,/area/admin)
+"r" = (/obj/machinery/power/fusion/ring{tag = "icon-ring (NORTH)"; icon_state = "ring"; dir = 1},/turf/simulated/floor/plating,/area/admin)
+"s" = (/obj/machinery/power/fusion/ring_corner{tag = "icon-ring_corner (WEST)"; icon_state = "ring_corner"; dir = 8},/turf/simulated/floor/plating,/area/admin)
+"t" = (/obj/machinery/power/fusion/ring_corner{tag = "icon-ring_corner (NORTH)"; icon_state = "ring_corner"; dir = 1},/turf/simulated/floor/plating,/area/admin)
+"u" = (/obj/machinery/power/fusion/ring,/obj/machinery/light{dir = 8; light_power = 1.5; light_range = 25},/turf/simulated/floor/plating,/area/admin)
+"v" = (/obj/machinery/power/fusion/core{tag = "testcore"},/obj/structure/cable/cyan,/turf/simulated/floor/plating,/area/admin)
+"w" = (/obj/machinery/power/fusion/ring{tag = "icon-ring (NORTH)"; icon_state = "ring"; dir = 1},/obj/machinery/light{dir = 8; light_power = 1.5; light_range = 25},/turf/simulated/floor/plating,/area/admin)
+"x" = (/obj/machinery/light{dir = 8; light_power = 1.5; light_range = 25},/obj/machinery/light,/turf/simulated/floor/plating,/area/admin)
+"y" = (/obj/machinery/light,/turf/simulated/floor/plating,/area/admin)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaa
+abcbcbcdebfgchcbcbia
+ajbbbbbkbbbkblbbbbba
+abbbbbbbbbbbbmbbbbia
+ajbbnbbbbopppqbbbbba
+abbbbbbbblbbbbbbbbia
+ajbbbbbrblbrbbbbbbba
+adebbbfsblbtebbbfgia
+aubbbbbbblbbbbbbbkba
+abbbbbbbbvbbbbbbbbia
+awbbbbbbbbbbbbbbbrba
+atebbbfgbbbdebbbfsia
+ajbbbbbkbbbkbbbbbbba
+abbbbbbbbbbbbbbbbbia
+ajbbbbbbbbbbbbbbbbba
+abbbbbbbbbbbbbbbbbia
+ajbbbbbrbbbrbbbbbbba
+abbbbbbtebfsbbbbbbia
+axbybybybybybybybyba
+aaaaaaaaaaaaaaaaaaaa
+"}

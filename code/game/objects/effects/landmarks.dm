@@ -82,6 +82,10 @@
 			blobstart += loc
 			qdel(src)
 
+		if("vinestart")
+			vinestart += loc
+			qdel(src)
+
 		if("xeno_spawn")
 			xeno_spawn += loc
 			qdel(src)
@@ -96,6 +100,10 @@
 
 		if("Syndicate-Spawn")
 			synd_spawn += loc
+			qdel(src)
+
+		if("cascadestart")
+			cascadestart += loc
 			qdel(src)
 
 	landmarks_list += src

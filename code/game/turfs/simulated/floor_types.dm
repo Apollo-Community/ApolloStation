@@ -230,6 +230,18 @@
 		else
 	return
 
+/turf/simulated/shuttle/arrival/wall
+	name = "shuttle"
+	icon = 'icons/turf/shuttle.dmi'
+	thermal_conductivity = 0
+	heat_capacity = 0
+	layer = 2
+	density = 1
+	blocks_air = 1
+
+/turf/simulated/shuttle/arrival/wall/ex_act(severity)
+	return
+
 /turf/simulated/shuttle/floor
 	name = "floor"
 	icon_state = "floor"

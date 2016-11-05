@@ -9,9 +9,10 @@
 	selection_color = "#ffeeff"
 	access = list(access_robotics, access_tox, access_research, access_chemistry)
 	minimal_access = list(access_robotics, access_tox, access_research, access_chemistry)
-	alt_titles = list("Roboticist", "Researcher", "Chemist")
+	alt_titles = list("Roboticist", "Researcher", "Chemist","Junior Scientist")
 
-	rank_succesion_level = 4
+	//rank_succesion_level = 4
+	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL
 
 /datum/job/scientist/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0

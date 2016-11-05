@@ -127,6 +127,42 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttles["Centcom"] = admin_shuttle
 	process_shuttles += admin_shuttle
 
+	var/datum/shuttle/ferry/pizza_shuttle = new/datum/shuttle/ferry()
+	pizza_shuttle.location = 1
+	pizza_shuttle.warmup_time = 10
+	pizza_shuttle.hanger_station = hangers_as["s_hanger_l"]
+	pizza_shuttle.hanger_offsite = hangers_as["c_hanger_p"]
+	pizza_shuttle.template_path ="maps/templates/shuttles/pizza.dmm"
+	pizza_shuttle.docking_controller_tag = "pizza_shuttle"
+	pizza_shuttle.dock_target_station = "pizza_shuttle_dock_airlock"
+	pizza_shuttle.dock_target_offsite = "pizza_shuttle_bay"
+	shuttles["Pizza"] = pizza_shuttle
+	process_shuttles += pizza_shuttle
+
+	var/datum/shuttle/ferry/trade_shuttle = new/datum/shuttle/ferry()
+	trade_shuttle.location = 1
+	trade_shuttle.warmup_time = 10
+	trade_shuttle.hanger_station = hangers_as["s_hanger_l"]
+	trade_shuttle.hanger_offsite = hangers_as["c_hanger_t"]
+	trade_shuttle.template_path ="maps/templates/shuttles/trade.dmm"
+	trade_shuttle.docking_controller_tag = "trade_shuttle"
+	trade_shuttle.dock_target_station = "trade_shuttle_dock_airlock"
+	trade_shuttle.dock_target_offsite = "trade_shuttle_bay"
+	shuttles["Trade"] = trade_shuttle
+	process_shuttles += trade_shuttle
+
+	var/datum/shuttle/ferry/hippe_shuttle = new/datum/shuttle/ferry()
+	hippe_shuttle.location = 1
+	hippe_shuttle.warmup_time = 10
+	hippe_shuttle.hanger_station = hangers_as["s_hanger_l"]
+	hippe_shuttle.hanger_offsite = hangers_as["c_hanger_h"]
+	hippe_shuttle.template_path ="maps/templates/shuttles/hippie.dmm"
+	hippe_shuttle.docking_controller_tag = "hippie_shuttle"
+	hippe_shuttle.dock_target_station = "hippie_shuttle_dock_airlock"
+	hippe_shuttle.dock_target_offsite = "hippie_shuttle_bay"
+	shuttles["Hippie"] = hippe_shuttle
+	process_shuttles += hippe_shuttle
+
 	/*
 	//Is this even in ?
 	//yea its the cicle shaped shuttle
@@ -180,11 +216,12 @@ var/global/datum/shuttle_controller/shuttle_controller
 		"Aft Starboard Side" = hangers_as["s_space_south_east"]
 		)
 
-	VS.announcer = "NSV Icarus"
+	VS.announcer = "NDV Icarus"
 	VS.arrival_message = "Attention, Apollo, we just tracked a small target bypassing our defensive perimeter. Can't fire on it without hitting the station - you've got incoming visitors, like it or not."
 	VS.departure_message = "Your guests are pulling away, Apollo - moving too fast for us to draw a bead on them. Looks like they're heading out of the system at a rapid clip."
 	VS.docking_controller_tag = "Vox Shuttle"
 	VS.warmup_time = 0
+	VS.starting_hanger = hangers_as["c_vox"]
 	shuttles["Vox Skipjack"] = VS
 
 	//For when infrantry witn guns is not enough
@@ -204,8 +241,8 @@ var/global/datum/shuttle_controller/shuttle_controller
 		"In-station Starboard hanger" = hangers_as["s_hanger_r"]
 		)
 
-	MS.announcer = "NSV Icarus"
-	MS.arrival_message = "Attention, Apollo, you have a shuttle sized signature approaching the station - looks unarmed to surface scans but we are reading allot of mechanical signatures. We're too far out to intercept - brace for visitors."
+	MS.announcer = "NDV Icarus"
+	MS.arrival_message = "Attention, Apollo, you have a shuttle sized signature approaching the station - looks unarmed to surface scans but we are reading alot of mechanical signatures. We're too far out to intercept - brace for visitors."
 	MS.departure_message = "Your visitors are on their way out of the system, Apollo, burning delta-v like it's nothing. Good riddance."
 	MS.warmup_time = 0
 	MS.docking_controller_tag = "Mech_Merc_Shuttle"
@@ -226,7 +263,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 		"Aft Starboard Side" = hangers_as["s_space_south_east"]
 		)
 
-	NS.announcer = "NSV Icarus"
+	NS.announcer = "NDV Icarus"
 	NS.arrival_message = "Attention, Apollo, you have a large signature approaching the station - looks unarmed to surface scans. We're too far out to intercept - brace for visitors."
 	NS.departure_message = "Your visitors are on their way out of the system, Apollo, burning delta-v like it's nothing. Good riddance."
 	NS.warmup_time = 0
@@ -249,7 +286,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 		"Aft Starboard Side" = hangers_as["s_space_south_east"]
 		)
 
-	VALS.announcer = "NSV Icarus"
+	VALS.announcer = "NDV Icarus"
 	VALS.arrival_message = "Attention, Apollo, you have a large signature approaching the station - looks unarmed to surface scans. We're too far out to intercept - brace for visitors."
 	VALS.departure_message = "Your visitors are on their way out of the system Apollo. They are moving to fast for us to atempt an intercept."
 	VALS.warmup_time = 0

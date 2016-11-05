@@ -59,8 +59,10 @@
 			var/combined_energy = partner_air.temperature*other_air_heat_capacity + air_heat_capacity*air_contents.temperature
 
 			var/new_temperature = combined_energy/combined_heat_capacity
-			air_contents.temperature = new_temperature
-			partner_air.temperature = new_temperature
+			var/air_temp_dif = new_temperature - air_contents.temperature
+			var/partner_temp_dif = new_temperature - partner_air.temperature
+			air_contents.temperature += (air_temp_dif*0.1)
+			partner_air.temperature += (partner_temp_dif*0.1)
 
 		if(network)
 			if(abs(old_temperature-air_contents.temperature) > 1)

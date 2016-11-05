@@ -10,11 +10,15 @@
 	panel_open = 1
 	var/datum/fusion_controller/fusion_controller
 	anchored = 0
+	var/in_network = 0
+	var/origen = 0
 
+//Explosions brake components
 /obj/machinery/power/fusion/ex_act()
 	stat = BROKEN
-	desc += " It looks broken beyond repiar."
+	desc = "[initial(desc)] It looks broken beyond repair."
 	update_icon()
+
 /*
 /obj/machinery/power/fusion/emp_act(severity)
 	stat = EMPED
@@ -26,8 +30,8 @@
 	update_icon()
 	..()
 
+// Light up some sparks
 /obj/machinery/power/fusion/proc/spark()
-	// Light up some sparks
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up( 3, 1, src )
 	s.start()
@@ -38,6 +42,11 @@
 	return
 
 /obj/machinery/power/fusion/attackby(obj/item/W, mob/user)
+	if(locked && stat == BROKEN)
+		locked = 0
+		on = 0
+		update_icon()
+
 	if(istype(W, /obj/item/weapon/wrench))
 		if(locked)
 			user << "The anchoring bolts are magnetically locked in place."
@@ -50,7 +59,7 @@
 		anchored = !anchored
 		on = 0
 		update_icon()
-		return
+		return 1
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(locked)
@@ -92,16 +101,19 @@
 			wired = 0
 		update_icon()
 		return
+
 	else if(istype(W, /obj/item/weapon/card/emag) && !emagged)
-		user << "You hear a click disabling the magnetic seals."
+		user << "You hear a series of clicks as the main seals get disabled and auxilery ones take over."
 		emagged = 1
 		update_icon()
 		return
-		..()
 
-/obj/machinery/power/fusion/verb/rotate_clock()
+	..()
+
+//Rotation procs.
+/obj/machinery/power/fusion/verb/rotate_anticlock()
 	set category = "Object"
-	set name = "Rotate (Clockwise)"
+	set name = "Rotate (Counterclockwise)"
 	set src in view(1)
 
 	if (usr.stat || usr.restrained()  || anchored)
@@ -109,9 +121,9 @@
 
 	src.set_dir(turn(src.dir, 90))
 
-/obj/machinery/power/fusion/verb/rotate_anticlock()
+/obj/machinery/power/fusion/verb/rotate_clock()
 	set category = "Object"
-	set name = "Rotate (Counterclockwise)"
+	set name = "Rotate (Clockwise)"
 	set src in view(1)
 
 	if (usr.stat || usr.restrained()  || anchored)

@@ -16,12 +16,18 @@
 
 // This return true if the modify card is lower rank than the scan card
 /obj/machinery/computer/card/proc/modifyingSubordinate()
+	if(isnull(modify))
+		return 1
+	if(isnull(scan))
+		return 0
+
 	var/datum/job/subordinate = job_master.GetJob( modify.assignment )
 	var/datum/job/superior = job_master.GetJob( scan.assignment )
 
 	if( !subordinate )
 		return 1
-
+	log_admin("DEBUG: ID card debug: Subord: [subordinate] Rank: [subordinate.rank_succesion_level]")
+	log_admin("DEBUG: ID card debug: Superi: [superior] Rank: [superior.rank_succesion_level]")
 	if( superior && ( superior.rank_succesion_level > subordinate.rank_succesion_level ))
 		return 1
 	return 0
@@ -283,6 +289,9 @@
 /obj/machinery/computer/card/Topic(href, href_list)
 	if(..())
 		return 1
+	//world << "CARD DEBUG:"
+	//world << "is the user authenticated? [is_authenticated()]"
+	//world << "is te user a superior? [modifyingSubordinate()]"
 
 	switch(href_list["choice"])
 		if ("modify")

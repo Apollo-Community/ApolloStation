@@ -1,6 +1,6 @@
 //Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
 /client/verb/wiki()
-	set name = "wiki"
+	set name = "Wiki"
 	set desc = "Visit the wiki."
 	set hidden = 1
 	if( config.wikiurl )
@@ -12,7 +12,7 @@
 	return
 
 /client/verb/forum()
-	set name = "forum"
+	set name = "Forum"
 	set desc = "Visit the forum."
 	set hidden = 1
 	if( config.forumurl )
@@ -32,7 +32,7 @@
 #undef RULES_FILE
 
 /client/verb/sourcecode()
-	set name = "sourcecode"
+	set name = "Source Code"
 	set desc = "View the source code on GitHub."
 	set hidden = 1
 	if( config.gitrepourl )
@@ -44,7 +44,7 @@
 	return
 
 /client/verb/discord()
-	set name = "discord"
+	set name = "Discord"
 	set desc = "Join Apollo Station's Discord chat!"
 	set hidden = 1
 	if( config.discordinvurl )
@@ -54,6 +54,14 @@
 	else
 		src << "<span class='alert'>This server's discord chat is not set in the server configuration.</span>"
 	return
+
+#define CHANGELOG_FILE "html/changelog.html"
+/client/verb/changelog()
+	set name = "Changelog"
+	set desc = "Show Server Changelog."
+	set hidden = 1
+	src << browse(file(CHANGELOG_FILE), "window=changelog;size=480x320")
+#undef CHANGELOG_FILE
 
 /client/verb/hotkeys_help()
 	set name = "hotkeys-help"
