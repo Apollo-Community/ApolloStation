@@ -13,12 +13,11 @@
 	var/edit = 1
 	var/repeat = 0
 
-/obj/item/device/violin/proc/playnote(var/note as text)
+/obj/item/device/violin/proc/playnote(var/note as text, mob/living/user as mob|obj)
 	if(!note)	return
 	var/soundfile = "sound/violin/[note].mid"
 
-	for(var/mob/M in ohearers(7, src))
-		M.playsound_local(src, file(soundfile), 100, falloff = 5)
+	hearers(7, get_turf(src)) << sound(soundfile)
 
 /obj/item/device/violin/proc/playsong()
 	do
