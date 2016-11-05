@@ -16,7 +16,6 @@
 			access_virology, access_cmo, access_surgery, access_RC_announce,
 			access_keycard_auth, access_sec_doors, access_psychiatrist, access_change_ids)
 			
-	alt_titles = list("Master of Medical Science")
 
 	rank_succesion_level = COMMAND_SUCCESSION_LEVEL
 
