@@ -13,13 +13,13 @@
 
 	var/list/mat = list( "Osmium", "Phoron", "Diamonds", "Platinum", "Gold", "Uranium",  "Silver", "Steel", "Supermatter" )
 	var/list/mat_mod = list(    "Steel" = 3.5,
-								"Silver" = 1.0,
-								"Uranium" = 0.5,
-								"Gold" = 0.5,
-								"Platinum" = 0.3,
-								"Diamonds" = 0.2,
-								"Phoron" = 0.2,
-								"Osmium" = 0.1,
+								"Silver" = 1.5,
+								"Uranium" = 0.8,
+								"Gold" = 1,
+								"Platinum" = 0.7,
+								"Diamonds" = 0.55,
+								"Phoron" = 0.55,
+								"Osmium" = 1,
 								"Supermatter" = 1.0 ) // modifier for output amount
 
 	var/list/mat_peak = list()
@@ -106,8 +106,12 @@
 				break
 			else
 				var/size_modifier = shard.size*0.2
-				amount = (( max_distance-distance )/max_distance )*mat_mod[cur_mat] // Produces amount based on distance from flow and modifier
-				amount += amount*size_modifier
+				// Produces amount based on distance from flow and modifier
+				//amount = (( max_distance-distance )/max_distance )*mat_mod[cur_mat]
+				//amount += amount*size_modifier
+				
+				var/k = (2 * PI) / (max_distance * 4)
+				amount = mat_mod[cur_mat] * size_modifier * sin(k * PI * distance + (PI / 2))
 				amount = round( amount )
 
 				if( amount > 0 ) // Will only do anything if any amount was actually created

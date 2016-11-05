@@ -42,6 +42,11 @@
 	return
 
 /obj/machinery/power/fusion/attackby(obj/item/W, mob/user)
+	if(locked && stat == BROKEN)
+		locked = 0
+		on = 0
+		update_icon()
+
 	if(istype(W, /obj/item/weapon/wrench))
 		if(locked)
 			user << "The anchoring bolts are magnetically locked in place."
@@ -54,7 +59,7 @@
 		anchored = !anchored
 		on = 0
 		update_icon()
-		return
+		return 1
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(locked)
@@ -96,11 +101,13 @@
 			wired = 0
 		update_icon()
 		return
+
 	else if(istype(W, /obj/item/weapon/card/emag) && !emagged)
 		user << "You hear a series of clicks as the main seals get disabled and auxilery ones take over."
 		emagged = 1
 		update_icon()
 		return
+
 	..()
 
 //Rotation procs.

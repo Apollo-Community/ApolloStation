@@ -271,4 +271,4 @@ var/global/datum/subsystem/cell_auto/cell_auto_manager = new()
 #define PROCESS_DEFAULT_TICK_ALLOWANCE		75	// 75% of one tick
 
 //For client IC automute management
-var/global/list/non_spawn_emote = list("gasps","shivers","drools","chokes","moans","twitches violently","twitches","sneezes","snores","yawns")
+var/global/list/non_spawn_emote = list("gasps","shivers","drools","chokes","moans","twitches violently","twitches","sneezes","snores","yawns","winces painfully","winces")

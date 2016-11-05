@@ -128,6 +128,7 @@
 	var/obj/item/weapon/shieldCrystal/crystal = new()
 	crystal.mineral = alloy.mineral
 	crystal.loc = get_turf(get_step(src, EAST))
+	crystal.desc = crystal.mineral + crystal.desc
 
 //produce a neutron rod
 /obj/machinery/tokamakFabricator/proc/produceRod()
@@ -141,6 +142,7 @@
 	var/obj/item/weapon/neutronRod/rod = new()
 	rod.mineral = alloy.mineral
 	rod.loc = get_turf(get_step(src, EAST))
+	rod.desc = rod.mineral + rod.desc
 
 //Eject alloy from the machine
 /obj/machinery/tokamakFabricator/proc/ejectAlloy()
