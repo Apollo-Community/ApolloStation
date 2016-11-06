@@ -117,3 +117,13 @@
 	display_name = "Alfreds mask"
 	path = /obj/item/clothing/mask/gas/mime
 	sort_category = slot_wear_mask
+
+/datum/gear/account/clownshoes
+	display_name = "Annoying Clown Shoes"
+	path = /obj/item/clothing/shoes/clown_shoes
+	sort_category = slot_shoes
+
+/datum/gear/account/violin
+	display_name = "Violin"
+	path = /obj/item/device/violin
+	sort_category = "misc"
