@@ -109,9 +109,11 @@
 				// Produces amount based on distance from flow and modifier
 				//amount = (( max_distance-distance )/max_distance )*mat_mod[cur_mat]
 				//amount += amount*size_modifier
-				
+
 				var/k = (2 * PI) / (max_distance * 4)
-				amount = mat_mod[cur_mat] * size_modifier * sin(k * PI * distance + (PI / 2))
+				var/sin_exp = (k * PI * distance) + (PI / 2)
+
+				amount = mat_mod[cur_mat] * size_modifier * sin(ToDegrees(sin_exp)) // u suck dm
 				amount = round( amount )
 
 				if( amount > 0 ) // Will only do anything if any amount was actually created
