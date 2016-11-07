@@ -31,10 +31,12 @@
 
 /datum/game_mode/malfunction/pre_setup()
 	var/list/possible_malfs = get_players_for_role(BE_MALF)
+	world << "Possible malfs: [possible_malfs.len]"
 
 	for(var/mob/new_player/player in player_list)
 		if(player.mind && player.mind.assigned_role == "AI" && (player in possible_malfs))
 			malf_ai+=player.mind
+	world << "Assigned and malfs: [malf_ai.len]"
 	if(malf_ai.len)
 		return 1
 	return 0

@@ -28,7 +28,16 @@
 	set name = "Rules"
 	set desc = "Show Server Rules."
 	set hidden = 1
-	src << browse(file(RULES_FILE), "window=rules;size=480x320")
+	if( config.wikiurl )
+		if(alert("This will open the rules in your browser. Are you sure?",,"Yes","No")=="No")
+			return
+		src << link(config.wikiurl + "index.php?title=Rules_condensed")
+	else
+		src << "<span class='alert'>The wiki URL is not set in the server configuration.</span>"
+	return
+
+
+	//src << browse(file(RULES_FILE), "window=rules;size=480x320")
 #undef RULES_FILE
 
 /client/verb/sourcecode()
