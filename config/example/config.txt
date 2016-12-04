@@ -171,7 +171,7 @@ GUEST_BAN
 
 
 ## forum address
-FORUMURL http://apollo-community.org/
+FORUMURL http://apollo-community.enjin.com/home
 
 ## Wiki address
 WIKIURL https://apollo-community.org/wiki/
