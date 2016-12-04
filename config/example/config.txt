@@ -180,7 +180,7 @@ WIKIURL https://apollo-community.org/wiki/
 GITREPOURL https://github.com/Apollo-Community/ApolloStation
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
-BANAPPEALS https://apollo-community.org/viewforum.php?f=34
+BANAPPEALS http://apollo-community.enjin.com/forum/m/41735571/viewthread/29050610-ban-appeal
 
 ## In-game features
 ## spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard
