@@ -1788,6 +1788,7 @@
 #include "code\WorkInProgress\null\chem\compound.dm"
 #include "code\WorkInProgress\null\chem\holder.dm"
 #include "code\WorkInProgress\null\chem\reaction.dm"
+#include "code\WorkInProgress\null\chem\compounds\oil.dm"
 #include "code\ZAS\_docs.dm"
 #include "code\ZAS\_gas_mixture_xgm.dm"
 #include "code\ZAS\_xgm_gas_data.dm"
