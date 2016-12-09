@@ -127,3 +127,8 @@
 	display_name = "Violin"
 	path = /obj/item/device/violin
 	sort_category = "misc"
+
+/datum/gear/account/haldreithen_pipe
+	display_name = "Smoking Pipe"
+	path = /obj/item/clothing/mask/cigarette/pipe
+	sort_category = "misc"
