@@ -20,6 +20,7 @@
 	update_icon()
 
 /obj/structure/drum/Destroy()
+	qdel(chemicals)
 	..()
 
 /obj/structure/drum/access_chems()
