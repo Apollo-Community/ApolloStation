@@ -1784,6 +1784,7 @@
 #include "code\TriDimension\Structures.dm"
 #include "code\TriDimension\Structures_presets.dm"
 #include "code\TriDimension\Turfs.dm"
+#include "code\WorkInProgress\null\crusher.dm"
 #include "code\WorkInProgress\null\drum.dm"
 #include "code\WorkInProgress\null\chem\compound.dm"
 #include "code\WorkInProgress\null\chem\holder.dm"
