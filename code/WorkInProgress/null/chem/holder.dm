@@ -1,5 +1,5 @@
 // * Reference list for active chemicals, by their ID * //
-var/global/list/chemical_list = chemical_meta_init()
+var/global/list/chemical = chemical_meta_init()
 
 // * To initialize chemical list * //
 /proc/chemical_meta_init()
@@ -62,6 +62,13 @@ var/global/list/chemical_list = chemical_meta_init()
 	if(flags & SETTLED)
 		flags &= ~SETTLED
 
+// * Adds or removes a list of chemicals from the mixture. * //
+/datum/chemicals/proc/adjust_many(list/chems, temp = T20C)
+	if(!chems || !temp)
+		return
+	for(var/L in chems)
+		adjust(chemical[L], chems[L], temp)
+
 // * Adjusts the thermal energy of a mixure. * //
 /datum/chemicals/proc/adjust_thermal_energy(amount)
 	if(amount == 0)
@@ -101,7 +108,7 @@ var/global/list/chemical_list = chemical_meta_init()
 
 // * Measures the true heat capacity of the chemical mixture. * //
 /datum/chemicals/proc/heat_capacity()
-	. = 0
+	. = 1
 	for(var/datum/compound/C in contents)
 		. += contents[C] * C.specific_heat
 

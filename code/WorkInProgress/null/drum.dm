@@ -22,6 +22,9 @@
 /obj/structure/drum/Destroy()
 	..()
 
+/obj/structure/drum/access_chems()
+	return chemicals
+
 /obj/structure/drum/update_icon()
 	var/icon/I = new('icons/obj/storage_col.dmi', "drum")
 	I.Blend(drum_color, ICON_MULTIPLY)
@@ -34,8 +37,6 @@
 	I.Blend(high, ICON_ADD)
 	I.Blend(lid, ICON_OVERLAY)
 	icon = I
-
-
 
 /obj/structure/drum/proc/fillup(list/chems)
 	return

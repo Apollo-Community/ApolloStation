@@ -78,6 +78,14 @@
 /atom/proc/emp_act(var/severity)
 	return
 
+// Access the atoms chemicals, if available.
+// Saves a bit of overhead to do it this way.
+/atom/proc/access_chems()
+	return
+
+// Do something when crushed. Return a list of chemicals and amounts if it should return anything.
+/atom/proc/crush_act(atom/crusher)
+	return
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
 	P.on_hit(src, 0, def_zone)
