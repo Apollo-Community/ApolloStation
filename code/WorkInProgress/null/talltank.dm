@@ -38,7 +38,7 @@
 		var/icon/stripe = new('icons/obj/talltank.dmi', "tank_stripe")
 		stripe.Blend(stripe_color, ICON_MULTIPLY)
 		top.Blend(stripe, ICON_OVERLAY)
-	var/icon/high = new('icons/obj/storage_col.dmi', "drum_highlight")
+	var/icon/high = new('icons/obj/talltank.dmi', "tank_highlight")
 	top.Blend(high, ICON_ADD)
 	I.Blend(top, ICON_OVERLAY)
 	icon = I
