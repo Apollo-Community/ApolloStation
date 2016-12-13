@@ -3,6 +3,7 @@
 	desc = "a large vessel for storing fluids and gasses."
 	icon = 'icons/obj/talltank.dmi'
 	icon_state = "tank"
+	layer = MOB_LAYER+0.1 //So it draws over mobs
 
 	density = 1
 	anchored = 1
@@ -11,8 +12,8 @@
 	var/volume = 25000
 	var/datum/chemicals/chemicals
 	var/tank_color = "#FF3333" // The base color of the drum
-	var/striped = TRUE // Whether the drum is striped.
-	var/stripe_color = "#333333" // The color of the stripe. Only applicable if the drum is striped.
+	var/decal = 1 // Whether the drum is striped.
+	var/decal_color = "#333333" // The color of the stripe. Only applicable if the drum is striped.
 
 	var/list/conduit_nodes = list("south" = "smallpipe")
 
@@ -34,9 +35,9 @@
 	var/icon/I = new('icons/obj/talltank.dmi', "tank", dir)
 	var/icon/top = new('icons/obj/talltank.dmi', "tank_top")
 	top.Blend(tank_color, ICON_MULTIPLY)
-	if(striped)
-		var/icon/stripe = new('icons/obj/talltank.dmi', "tank_stripe")
-		stripe.Blend(stripe_color, ICON_MULTIPLY)
+	if(decal)
+		var/icon/stripe = new('icons/obj/talltank.dmi', "tank_decal_[decal]")
+		stripe.Blend(decal_color, ICON_MULTIPLY)
 		top.Blend(stripe, ICON_OVERLAY)
 	var/icon/high = new('icons/obj/talltank.dmi', "tank_highlight")
 	top.Blend(high, ICON_ADD)

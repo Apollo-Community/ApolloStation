@@ -8,8 +8,8 @@
 	var/volume = 2000
 	var/datum/chemicals/chemicals
 	var/drum_color = "#FF3333" // The base color of the drum
-	var/striped = TRUE // Whether the drum is striped.
-	var/stripe_color = "#333333" // The color of the stripe. Only applicable if the drum is striped.
+	var/decal = 1 // Whether the drum has a decal.
+	var/decal_color = "#333333" // The color of the decal. Only applicable if the drum has a decal.
 
 
 /obj/structure/drum/New()
@@ -29,9 +29,9 @@
 /obj/structure/drum/update_icon()
 	var/icon/I = new('icons/obj/storage_col.dmi', "drum")
 	I.Blend(drum_color, ICON_MULTIPLY)
-	if(striped)
-		var/icon/stripe = new('icons/obj/storage_col.dmi', "drum_stripe")
-		stripe.Blend(stripe_color, ICON_MULTIPLY)
+	if(decal)
+		var/icon/stripe = new('icons/obj/storage_col.dmi', "drum_decal_[decal]")
+		stripe.Blend(decal_color, ICON_MULTIPLY)
 		I.Blend(stripe, ICON_OVERLAY)
 	var/icon/lid = new('icons/obj/storage_col.dmi', "drum_top")
 	var/icon/high = new('icons/obj/storage_col.dmi', "drum_highlight")
