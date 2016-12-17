@@ -59,10 +59,10 @@
 			return 0
 		if( "Justice #1" )
 			minSeverity = 3.0
-			same_access = C.access & list( access_heads )
+			same_access = C.access & list( access_heads, access_iaa )
 		if( "Justice #2")
 			minSeverity = 3.0
-			same_access = C.access & list( access_heads )
+			same_access = C.access & list( access_heads, access_iaa )
 		if( "Chief Justice" )
 			minSeverity = 2.0
 
