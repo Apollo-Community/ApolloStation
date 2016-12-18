@@ -768,7 +768,7 @@
 "aoN" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 4},/turf/simulated/floor/wood,/area/crew_quarters/captain)
 "aoO" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/floor/wood,/area/crew_quarters/captain)
 "aoP" = (/obj/structure/disposalpipe/segment{dir = 8; icon_state = "pipe-c"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 9},/turf/simulated/floor/wood,/area/crew_quarters/captain)
-"aoQ" = (/obj/structure/table/woodentable,/obj/machinery/light{icon_state = "tube1"; dir = 4},/obj/item/weapon/katana{desc = "The Captain's authentic and honorable ceremonial sword."; edge = 0; force = 5; name = "ceremonial sword"; sharp = 0},/turf/simulated/floor/wood,/area/crew_quarters/captain)
+"aoQ" = (/obj/structure/table/woodentable,/obj/machinery/light{icon_state = "tube1"; dir = 4},/obj/item/weapon/katana{desc = "The Captain's authentic and honorable ceremonial sword."; edge = 1; force = 12; name = "ceremonial sword"; sharp = 1},/turf/simulated/floor/wood,/area/crew_quarters/captain)
 "aoR" = (/obj/machinery/light/small{dir = 8},/obj/structure/table/rack,/obj/random/tech_supply,/turf/simulated/floor/plating,/area/maintenance/bridge_starboard)
 "aoS" = (/obj/machinery/power/apc{dir = 4; name = "east bump"; pixel_x = 24},/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/simulated/floor/plating,/area/maintenance/bridge_starboard)
 "aoT" = (/obj/structure/closet/l3closet/virology,/obj/item/clothing/mask/gas,/turf/simulated/floor{icon_state = "vault"; dir = 8},/area/medical/biostorage)
