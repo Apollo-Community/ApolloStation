@@ -132,3 +132,8 @@
 	display_name = "Smoking Pipe"
 	path = /obj/item/clothing/mask/cigarette/pipe
 	sort_category = "misc"
+
+/datum/gear/account/vice_kitty
+	display_name = "collectable kitty ears"
+	path = /obj/item/clothing/head/collectable/kitty
+	sort_category = slot_head
