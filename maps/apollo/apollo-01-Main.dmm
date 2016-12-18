@@ -3366,7 +3366,7 @@
 "bmL" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plating,/area/maintenance/port)
 "bmM" = (/obj/machinery/door/airlock/maintenance{name = "Maintenance"; req_access_txt = "12"; req_one_access_txt = "0"},/turf/simulated/floor/plating,/area/maintenance/port)
 "bmN" = (/turf/simulated/wall,/area/hydroponics)
-"bmO" = (/obj/machinery/door/airlock/maintenance{name = "Hydroponics Maintenance"; req_access_txt = "0"; req_one_access_txt = "12;35"},/turf/simulated/floor/plating,/area/hydroponics)
+"bmO" = (/obj/machinery/door/airlock/maintenance{name = "Hydroponics Maintenance"; req_access_txt = "0"; req_one_access_txt = "28"},/turf/simulated/floor/plating,/area/hydroponics)
 "bmP" = (/obj/machinery/vending/dinnerware,/obj/machinery/status_display{density = 0; layer = 4; pixel_x = 0; pixel_y = 32},/obj/structure/extinguisher_cabinet{pixel_x = -24},/turf/simulated/floor{icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
 "bmQ" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 5},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 5},/obj/structure/cable/green{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor{icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
 "bmR" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 10},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 10},/obj/structure/cable/green{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/computer/guestpass{pixel_y = 25},/turf/simulated/floor{icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
