@@ -15,6 +15,7 @@
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_heads,
 			access_virology, access_cmo, access_surgery, access_RC_announce,
 			access_keycard_auth, access_sec_doors, access_psychiatrist, access_change_ids, access_chemistry, access_maint_tunnels)
+	alt_titles = list("Master of Medical Science")
 
 	rank_succesion_level = COMMAND_SUCCESSION_LEVEL
 
