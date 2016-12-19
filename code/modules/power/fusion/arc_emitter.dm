@@ -21,6 +21,7 @@
 	var/datum/wires/arc_emitter/wires = null
 	var/disabled = 0
 	var/arc_power = 40
+	var/shock_damage = 25
 
 /obj/machinery/power/arc_emitter/New()
 	update_icon()
@@ -64,8 +65,7 @@
 			var/mob/living/M = pick(targets)
 			spawn(rand(0, 10))
 				arc(M)
-				M.apply_damage(rand(arc_power-30, arc_power-20), damagetype = BURN)
-				M.apply_effect(rand(5, 10), effecttype = STUN)
+				M.electrocute_act(shock_damage, src)
 				new/obj/effect/effect/sparks(get_turf(M))
 		return
 

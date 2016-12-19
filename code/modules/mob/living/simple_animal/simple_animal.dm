@@ -307,6 +307,17 @@
 		user << "<span class='danger'>This weapon is ineffective; it does no damage.</span>"
 		visible_message("<span class='danger'>\The [user] gently taps [src] with the [O].</span>")
 
+/mob/living/simple_animal/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0)
+	if(status_flags & GODMODE)	return 0	//godmode
+	shock_damage *= siemens_coeff
+	if (shock_damage<1)
+		return 0
+
+	gib()
+	visible_message("<span class='danger'>\The [src] violently explodes after being electrocuted!</span>")
+
+	return shock_damage
+
 /mob/living/simple_animal/movement_delay()
 	var/tally = 0 //Incase I need to add stuff other than "speed" later
 
