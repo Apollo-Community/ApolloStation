@@ -9,7 +9,7 @@
 	throwforce = 5
 	w_class = 3
 	origin_tech = "combat=4"
-	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
+	attack_verb = list("flogged", "whipped", "lashed", "disciplined","corrected","enslaved")
 	hitsound = 'sound/weapons/whip.ogg'
 
 	suicide_act(mob/user)
