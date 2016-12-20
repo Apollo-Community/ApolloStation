@@ -12,7 +12,7 @@
 
 	rank_succesion_level = 3
 	
-	alt_titles = list("Sanitarial Engineer")
+	alt_titles = list("Sanitary Engineer")
 
 /datum/job/janitor/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
