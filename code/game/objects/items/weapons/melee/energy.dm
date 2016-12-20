@@ -101,13 +101,13 @@
 	name = "energy sword"
 	desc = "May the force be within you."
 	icon_state = "sword0"
-	active_force = 35
-	active_throwforce = 20
+	active_force = 30
+	active_throwforce = 15
 	active_w_class = 4
-	force = 3
-	throwforce = 2
+	force = 2
+	throwforce = 1
 	throw_speed = 1
-	throw_range = 5
+	throw_range = 7
 	w_class = 2
 	flags = NOSHIELD | NOBLOODY
 	origin_tech = "magnets=3;syndicate=4"
