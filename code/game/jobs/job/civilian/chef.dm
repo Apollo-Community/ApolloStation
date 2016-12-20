@@ -9,7 +9,7 @@
 	selection_color = "#dddddd"
 	access = list(access_hydroponics, access_bar, access_kitchen)
 	minimal_access = list(access_kitchen)
-	alt_titles = list("Cook", "Gardener")
+	alt_titles = list("Cook","Cafeteria Attendant","Gardener")
 
 	rank_succesion_level = 3
 
