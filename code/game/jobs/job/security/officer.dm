@@ -12,7 +12,7 @@
 
 	//rank_succesion_level = 4
 	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL
-	alt_titles = list("Security Cadet")
+	alt_titles = list("Security Cadet","Security Guard","Patrol Officer")
 
 /datum/job/officer/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0

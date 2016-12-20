@@ -11,7 +11,9 @@
 	minimal_access = list(access_bar)
 
 	rank_succesion_level = 3
-
+	
+	alt_titles = list("Barkeeper")
+	
 /datum/job/bartender/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
 	switch(H.character.backpack)
