@@ -7161,7 +7161,7 @@
 "cHK" = (/obj/machinery/light/spot{tag = "icon-tube1 (WEST)"; icon_state = "tube1"; dir = 8},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 8},/turf/simulated/floor{icon_state = "engine"; name = "hangar floor"},/area/podbay/hangar)
 "cHL" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 8},/turf/simulated/floor{icon_state = "engine"; name = "hangar floor"},/area/podbay/hangar)
 "cHM" = (/obj/structure/ore_box,/turf/simulated/floor/plating{dir = 2; icon_state = "platebot"; nitrogen = 82.1472; oxygen = 21.8366; tag = "icon-platebot"},/area/quartermaster/miningstorage)
-"cHN" = (/obj/structure/disposalpipe/segment,/obj/machinery/door/firedoor,/obj/machinery/door/airlock/maintenance{name = "Quartermaster Maintenance"; req_access_txt = "12;24"},/turf/simulated/floor{icon_state = "floorgrime"},/area/maintenance/aft)
+"cHN" = (/obj/structure/disposalpipe/segment,/obj/machinery/door/firedoor,/obj/machinery/door/airlock/maintenance{name = "Quartermaster Maintenance"; req_access_txt = "0"; req_one_access_txt = "12;24"},/turf/simulated/floor{icon_state = "floorgrime"},/area/maintenance/aft)
 "cHO" = (/obj/machinery/telecomms/server/presets/science,/turf/simulated/floor{dir = 1; icon_state = "vault"; nitrogen = 100; oxygen = 0; temperature = 80},/area/tcomms/chamber)
 "cHP" = (/obj/machinery/telecomms/server/presets/medical,/turf/simulated/floor{dir = 1; icon_state = "vault"; nitrogen = 100; oxygen = 0; temperature = 80},/area/tcomms/chamber)
 "cHQ" = (/obj/machinery/telecomms/processor/preset_one,/turf/simulated/floor{dir = 1; icon_state = "vault"; nitrogen = 100; oxygen = 0; temperature = 80},/area/tcomms/chamber)
