@@ -137,3 +137,8 @@
 	display_name = "collectable kitty ears"
 	path = /obj/item/clothing/head/collectable/kitty
 	sort_category = slot_head
+
+/datum/gear/account/pygmal_suit
+	display_name = "custom Head of Personnel suit"
+	path = /obj/item/clothing/suit/armor/hos/pygmal
+	sort_category = slot_wear_suit
