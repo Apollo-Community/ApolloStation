@@ -272,7 +272,7 @@
 "afl" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/cable/green{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/wood,/area/crew_quarters/captain)
 "afm" = (/obj/structure/cable/green{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/simulated/floor/wood,/area/crew_quarters/captain)
 "afn" = (/obj/machinery/hologram/holopad,/turf/simulated/floor/wood,/area/crew_quarters/captain)
-"afo" = (/mob/living/simple_animal/hostile/retaliate/wolf{desc = "The Captain's trusty companion!"; name = "Ookami"},/turf/simulated/floor/wood,/area/crew_quarters/captain)
+"afo" = (/mob/living/simple_animal/friendly/wolf/ookami,/turf/simulated/floor/wood,/area/crew_quarters/captain)
 "afp" = (/obj/machinery/camera{c_tag = "Captain's Office"; dir = 8; network = list("SS13")},/turf/simulated/floor/wood,/area/crew_quarters/captain)
 "afq" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/obj/structure/disposalpipe/segment,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/maintenance/fore_starboard)
 "afr" = (/turf/simulated/wall,/area/maintenance/secret/room4)

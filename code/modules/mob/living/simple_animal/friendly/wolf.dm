@@ -1,5 +1,6 @@
-/mob/living/simple_animal/hostile/retaliate/wolf
-	name = "wolf"
+/mob/living/simple_animal/friendly/wolf
+	name = "\improper wolf"
+	real_name = "wolf"
 	desc = "The ancestor of humanity's greatest friend!"
 	icon = 'icons/mob/wolfsprite.dmi'
 	icon_state = "german_shep"
@@ -24,3 +25,9 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	attacktext = "bitten"
+
+/mob/living/simple_animal/friendly/wolf/ookami
+	name = "\improper Ookami"
+	real_name = "Ookami"
+	desc = "The Captain's trustworthy companion, his eyes look friendly and he seems enthusiastic."
+	gender = MALE

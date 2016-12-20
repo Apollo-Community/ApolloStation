@@ -1117,3 +1117,7 @@ datum/mind
 	..()
 	mind.assigned_role = "Juggernaut"
 	mind.special_role = "Cultist"
+
+/mob/living/simple_animal/hostile/retaliate/wolf/mind_initialize()
+	..()
+	mind.assigned_role = "Wolf"
