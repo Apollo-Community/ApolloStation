@@ -142,7 +142,7 @@
 		)
 		playsound(src.loc, pick( 'sound/effects/electr1.ogg', 'sound/effects/electr2.ogg', 'sound/effects/electr3.ogg'), 100, 1)
 
-		Stun(10)//This should work for now, more is really silly and makes you lay there forever
+		Stun(5)//This should work for now, more is really silly and makes you lay there forever
 		Weaken(10)
 
 	else
