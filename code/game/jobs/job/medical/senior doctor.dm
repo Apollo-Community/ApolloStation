@@ -9,7 +9,7 @@
 	selection_color = "#ffeef0"
 	access = list(access_medical, access_morgue, access_surgery, access_virology, access_genetics, access_chemistry, access_maint_tunnels)
 	minimal_access = list(access_medical, access_morgue, access_surgery, access_virology, access_chemistry, access_maint_tunnels)
-	alt_titles = list("Virologist", "Pathologist", "Senior Surgeon")
+	alt_titles = list("Virologist", "Pathologist", "Senior Surgeon","Therapist")
 
 	rank_succesion_level = 5
 
