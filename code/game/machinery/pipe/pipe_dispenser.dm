@@ -56,6 +56,7 @@
 <A href='?src=\ref[src];make=26;dir=1'>Omni Gas Mixer</A><BR>
 <A href='?src=\ref[src];make=27;dir=1'>Omni Gas Filter</A><BR>
 <A href='?src=\ref[src];make=43;dir=1'>Coolant Injector</A><BR>
+<A href='?src=\ref[src];makeoutlet=1'>Outlet Injector</A><BR>
 <A href='?src=\ref[src];make=44;dir=1'>Engine vent pump</A><BR>
 <b>Heat exchange:</b><BR>
 <A href='?src=\ref[src];make=2;dir=1'>Pipe</A><BR>
@@ -95,6 +96,12 @@
 	if(href_list["makemeter"])
 		if(!wait)
 			new /obj/item/pipe_meter(/*usr.loc*/ src.loc)
+			wait = 1
+			spawn(15)
+				wait = 0
+	if(href_list["makeoutlet"])
+		if(!wait)
+			new /obj/machinery/atmospherics/unary/outlet_injector(/*usr.loc*/ src.loc)
 			wait = 1
 			spawn(15)
 				wait = 0
