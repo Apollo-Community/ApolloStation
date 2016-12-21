@@ -15,6 +15,7 @@
 	maxHealth = 60
 	health = 60
 	faction = "plasmoids"
+	var/alive = 1
 
 	harm_intent_damage = 0
 	melee_damage_lower = 5
@@ -26,7 +27,9 @@
 	attack_sound = 'sound/effects/knife_stab.ogg'
 
 	minbodytemp = 0
-	maxbodytemp = 100000 //Plasmoids like it hot baby
+	maxbodytemp = 0
+	heat_damage_per_tick = 0
+	cold_damage_per_tick = 0
 	min_oxy = 0
 	max_oxy = 0					//Leaving something at 0 means it's off - has no maximum
 	min_tox = 1
@@ -66,10 +69,12 @@
 		return B
 
 /mob/living/simple_animal/hostile/plasmoid/death()
-	icon_state = icon_dead
-	density = 0
-	new/obj/item/weapon/shard/phoron( src.loc )
-	return ..(deathmessage = "tears to pieces and falls to the ground.")
+	if(alive)
+		icon_state = icon_dead
+		density = 0
+		alive = 0
+		new/obj/item/weapon/shard/phoron( src.loc )
+		return ..(deathmessage = "tears to pieces and falls to the ground.")
 
 /mob/living/simple_animal/hostile/plasmoid/overlord
 	name = "plasmoid overlord"
