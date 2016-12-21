@@ -21,10 +21,11 @@
 	melee_damage_upper = 15
 	var/poison_per_stab = 5
 	var/poison_type = "phoron"
-	attacktext = "has injected"
+	attacktext = "injected"
+	var/attacktext_ni = "hit" //attacktext for non-injectable mobs or objects
 	attack_sound = 'sound/effects/knife_stab.ogg'
 
-	minbodytemp = 400
+	minbodytemp = 0
 	maxbodytemp = 100000 //Plasmoids like it hot baby
 	min_oxy = 0
 	max_oxy = 0					//Leaving something at 0 means it's off - has no maximum
@@ -49,19 +50,19 @@
 //feel the horrible code optimilization!
 	if(isliving(target_mob) && !target_mob.reagents)
 		var/mob/living/LNR = target_mob
-		LNR.attack_generic(src,rand(melee_damage_lower,melee_damage_upper),attacktext)
+		LNR.attack_generic(src,rand(melee_damage_lower,melee_damage_upper),attacktext_ni)
 		return LNR
 	if(istype(target_mob,/obj/mecha))
 		var/obj/mecha/M = target_mob
-		M.attack_generic(src,rand(melee_damage_lower,melee_damage_upper),attacktext)
+		M.attack_generic(src,rand(melee_damage_lower,melee_damage_upper),attacktext_ni)
 		return M
 	if(istype(target_mob,/obj/spacepod))
 		var/obj/spacepod/S = target_mob
-		S.attack_generic(src,rand(melee_damage_lower,melee_damage_upper),attacktext)
+		S.attack_generic(src,rand(melee_damage_lower,melee_damage_upper),attacktext_ni)
 		return S
 	if(istype(target_mob,/obj/machinery/bot))
 		var/obj/machinery/bot/B = target_mob
-		B.attack_generic(src,rand(melee_damage_lower,melee_damage_upper),attacktext)
+		B.attack_generic(src,rand(melee_damage_lower,melee_damage_upper),attacktext_ni)
 		return B
 
 /mob/living/simple_animal/hostile/plasmoid/death()
