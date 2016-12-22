@@ -269,13 +269,13 @@
 	item_state = "callmanfok"
 	icon_open = "callmanfok_open"
 	icon_closed = "callmanfok"
-	
+
 //////Haldreithen pipe
 /obj/item/clothing/mask/cigarette/pipe/fluff/haldreithen
-	name = "smoking pipe"
-	desc - "A premium smoking pipe."
+	name = "custom smoking pipe"
+	desc = "A custom premium smoking pipe."
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "pipeoff"
-	icon_state = "pipeoff" 
+	icon_state = "pipeoff"
 	icon_off = "pipeoff"
 	icon_on = "pipeon"
