@@ -20,7 +20,7 @@
 	harm_intent_damage = 0
 	melee_damage_lower = 5
 	melee_damage_upper = 15
-	var/poison_per_stab = 5
+	var/poison_per_stab = 3
 	var/poison_type = "phoron"
 	attacktext = "injected"
 	var/attacktext_ni = "hit" //attacktext for non-injectable mobs or objects
@@ -38,7 +38,7 @@
 	max_co2 = 0
 	min_n2 = 0
 	max_n2 = 0
-	unsuitable_atoms_damage = 5
+	unsuitable_atoms_damage = 10
 
 /mob/living/simple_animal/hostile/plasmoid/AttackingTarget()
 	if(!Adjacent(target_mob))
@@ -49,6 +49,9 @@
 		var/mob/living/L = target_mob
 		L.attack_generic(src,rand(melee_damage_lower,melee_damage_upper),attacktext)
 		target_mob.reagents.add_reagent(poison_type, poison_per_stab)
+		if(prob(25))
+			src.visible_message("<span class='notice'>\the [src] emits a bright purple light.</span>")
+			new/obj/item/weapon/shard/phoron( src.loc )
 		return L
 //feel the horrible code optimilization!
 	if(isliving(target_mob) && !target_mob.reagents)
@@ -68,13 +71,46 @@
 		B.attack_generic(src,rand(melee_damage_lower,melee_damage_upper),attacktext_ni)
 		return B
 
+/mob/living/simple_animal/hostile/plasmoid/attackby(var/obj/item/O, var/mob/user)
+
+	if(istype(O, /obj/item/stack/medical))
+		if(stat != DEAD && health < maxHealth)
+			var/obj/item/stack/medical/medical_pack = O
+			if(medical_pack.use(1))
+				adjustBruteLoss(-medical_pack.heal_brute)
+				visible_message("<span class='warning'>\The [user] applies the [medical_pack] to \the [src].</span>")
+		else
+			user << "<span class='warning'>\The [src] cannot benefit from medical items in its current state.</span>"
+		return
+
+	if(istype(O, /obj/item/weapon/pickaxe/plasmacutter))
+		user.do_attack_animation(src)
+		user.visible_message("<span class='danger'>[user] grinds some plasma from \the [src]!</span>")
+		new/obj/item/weapon/shard/phoron( src.loc )
+		adjustBruteLoss(O.force)
+		qdel(src)
+		return
+
+	user.do_attack_animation(src)
+	if(O.force)
+		var/damage = O.force
+		if (O.damtype == HALLOSS)
+			damage = 0
+		adjustBruteLoss(damage)
+
+		visible_message("<span class='danger'>\The [src] has been attacked with \the [O] by [user].</span>")
+	else
+		user << "<span class='danger'>This weapon is ineffective; it does no damage.</span>"
+		visible_message("<span class='danger'>\The [user] gently taps [src] with the [O].</span>")
+
+
 /mob/living/simple_animal/hostile/plasmoid/death()
 	if(alive)
 		icon_state = icon_dead
 		density = 0
 		alive = 0
 		new/obj/item/weapon/shard/phoron( src.loc )
-		return ..(deathmessage = "tears to pieces and falls to the ground.")
+		return ..(deathmessage = "breaks into pieces and falls to the ground.")
 
 /mob/living/simple_animal/hostile/plasmoid/overlord
 	name = "plasmoid overlord"
@@ -87,8 +123,8 @@
 	maxHealth = 150
 	health = 150
 
-	melee_damage_lower = 15
+	melee_damage_lower = 10
 	melee_damage_upper = 20
-	poison_per_stab = 10
+	poison_per_stab = 6
 
-	unsuitable_atoms_damage = 15
+	unsuitable_atoms_damage = 25
