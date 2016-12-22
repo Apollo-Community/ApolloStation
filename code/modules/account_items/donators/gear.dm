@@ -131,7 +131,7 @@
 /datum/gear/account/haldreithen_pipe
 	display_name = "Smoking Pipe"
 	path = /obj/item/clothing/mask/cigarette/pipe/fluff/haldreithen
-	sort_category = "misc"
+	sort_category = slot_wear_mask
 
 /datum/gear/account/vice_kitty
 	display_name = "collectable kitty ears"
