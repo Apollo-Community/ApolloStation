@@ -88,7 +88,10 @@
 		user.visible_message("<span class='danger'>[user] grinds some plasma from \the [src]!</span>")
 		new/obj/item/weapon/shard/phoron( src.loc )
 		adjustBruteLoss(O.force)
+<<<<<<< HEAD
 		qdel(src)
+=======
+>>>>>>> Some more plasmoid changes and interactions
 		return
 
 	user.do_attack_animation(src)
