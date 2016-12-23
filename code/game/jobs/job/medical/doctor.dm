@@ -9,7 +9,7 @@
 	selection_color = "#ffeef0"
 	access = list(access_medical, access_morgue, access_genetics, access_chemistry, access_surgery, access_maint_tunnels)
 	minimal_access = list(access_medical, access_morgue, access_chemistry, access_surgery, access_maint_tunnels)
-	alt_titles = list("First Responder", "Psychiatrist", "Diagnostician", "Mortician", "Pharmacist", "Surgeon")
+	alt_titles = list("First Responder", "Psychiatrist", "Diagnostician", "Mortician", "Pharmacist", "Surgeon","Nurse")
 
 	//rank_succesion_level = 4
 	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL

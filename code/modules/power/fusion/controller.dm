@@ -4,6 +4,7 @@
 #define TOKA_MAX_TEMP 1000000
 #define TOKA_FUSION_TEMP 100000
 #define TOKA_CRIT_TEMP 90000
+#define BASE_FIELDS 4	//Standart reactor has 4 fields.
 
 /datum/fusion_controller
 	var/list/fusion_components = list()			//List of components making up the fusion reactor.
@@ -77,8 +78,9 @@
 	var/emmag_nr = 0
 	for(var/obj/machinery/power/fusion/comp in fusion_components)
 		if(!comp.ready || comp.stat == BROKEN)
+			if(confield && plasma.len > 0)
+				comp.ex_act()
 			fail()
-			comp.ex_act()
 			qdel(src)
 			return
 		if(comp.emagged)
@@ -290,12 +292,13 @@
 //Fusion event, generates heat neutrons wich generate energy via collectors.
 /datum/fusion_controller/proc/fusionEvent(obj/machinery/power/fusion/plasma/p)
 	//These base values should be class values !
-	var/tmp/neutrons = 1000						//Base neutrons
-	var/tmp/heat = 2000							//Base heat
+	var/tmp/neutrons = 1000												//Base neutrons
+	var/tmp/heat = 2000*plasma.len/BASE_FIELDS							//Base heat
 	neutrons += (heat*coefs["heat_neutron"] - neutrons*coefs["neutron_heat"])*coefs["neutron"] + neutrons*rod_coef
 	heat += neutrons*coefs["neutron_heat"] - (heat*coefs["heat_neutron"]*1.8) + heat*rod_coef
 	fusion_heat = heat*rod_insertion
-	p.transfer_energy(neutrons*rod_insertion*power_coef)
+	//Some magic happens here that makes is so you actually get two time as much energy if you have two times as many plasma fiels
+	p.transfer_energy((neutrons*plasma.len/BASE_FIELDS)*rod_insertion*power_coef)
 	spawn()
 		p.spark()
 		p.set_light(3, 5, event_color)

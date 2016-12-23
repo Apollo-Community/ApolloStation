@@ -180,7 +180,10 @@
 
 /obj/item/device/radio/headset/heads/hop/iaa
 	name = "internal affairs agent's headset"
-	desc = "Always watching, always listening, always paperwork."
+	desc = "The headset of Central Commands watchdog."
+	icon_state = "com_headset"
+	item_state = "headset"
+	ks2type = /obj/item/device/encryptionkey/heads/captain
 
 /*
 /obj/item/device/radio/headset/headset_mine

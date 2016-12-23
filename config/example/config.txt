@@ -74,7 +74,7 @@ LOG_ADMINCHAT
 ## Use Mentors instead of Moderators.  Mentors are designed with the idea that
 ###they help in pushing new people to be better at roleplay.  If you uncomment
 ###this it will reduce the rights that your mods have.
-#MENTORS
+MENTORS
 
 
 ## probablities for game modes chosen in "secret" and "random" modes
@@ -171,7 +171,7 @@ GUEST_BAN
 
 
 ## forum address
-FORUMURL http://apollo-community.org/
+FORUMURL http://apollo-community.enjin.com/home
 
 ## Wiki address
 WIKIURL https://apollo-community.org/wiki/
@@ -180,7 +180,7 @@ WIKIURL https://apollo-community.org/wiki/
 GITREPOURL https://github.com/Apollo-Community/ApolloStation
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
-BANAPPEALS https://apollo-community.org/viewforum.php?f=34
+BANAPPEALS http://apollo-community.enjin.com/forum/m/41735571/viewthread/29050610-ban-appeal
 
 ## In-game features
 ## spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard

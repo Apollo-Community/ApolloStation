@@ -8,8 +8,10 @@
 	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	access = list(access_iaa, access_court, access_sec_doors, access_maint_tunnels)
-	minimal_access = list(access_iaa, access_court, access_sec_doors)
+	access = list(access_iaa, access_court, access_sec_doors, access_maint_tunnels, access_medical, access_morgue, access_research, access_tox, access_security, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_eva, access_engine, access_engine_equip, access_external_airlocks, access_construction, access_bar, access_janitor,
+access_crematorium, access_kitchen, access_hydroponics, access_theatre, access_chapel_office, access_library, access_clown, access_mime)
+	minimal_access = list(access_iaa, access_court, access_sec_doors, access_maint_tunnels, access_medical, access_morgue, access_research, access_tox, access_security, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_eva, access_engine, access_engine_equip, access_external_airlocks, access_construction, access_bar, access_janitor,
+access_crematorium, access_kitchen, access_hydroponics, access_theatre, access_chapel_office, access_library, access_clown, access_mime)
 
 	minimal_playtime = 30
 

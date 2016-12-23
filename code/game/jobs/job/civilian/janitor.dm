@@ -11,6 +11,8 @@
 	minimal_access = list(access_janitor, access_maint_tunnels)
 
 	rank_succesion_level = 3
+	
+	alt_titles = list("Sanitary Engineer")
 
 /datum/job/janitor/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0

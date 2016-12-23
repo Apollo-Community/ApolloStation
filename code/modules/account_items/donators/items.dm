@@ -253,13 +253,14 @@
 	icon_closed = "luna_labcoat_cmo"
 	item_state = "luna_labcoat_cmo"
 
+/////// Draco16 mesons
 /obj/item/clothing/glasses/meson/fluff/draco16
 	name = "gar mesons"
 	desc = "These mesons are the mesons that will see through the Heavens!"
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "garm"
 	item_state = "garm"
-
+/////Callmanfok coat
 /obj/item/clothing/suit/storage/toggle/labcoat/fluff/callmanfok
 	name = "red labcoat"
 	desc = "A labcoat tagged with the name \"Phoebe Weisgarber\". Underneath it has a embroidered badge that says, \"From your friends aboard the NOS Apollo.\""
@@ -268,3 +269,13 @@
 	item_state = "callmanfok"
 	icon_open = "callmanfok_open"
 	icon_closed = "callmanfok"
+
+//////Haldreithen pipe
+/obj/item/clothing/mask/cigarette/pipe/fluff/haldreithen
+	name = "custom smoking pipe"
+	desc = "A custom premium smoking pipe."
+	icon = 'icons/obj/clothing/masks.dmi'
+	icon_state = "pipeoff"
+	icon_state = "pipeoff"
+	icon_off = "pipeoff"
+	icon_on = "pipeon"

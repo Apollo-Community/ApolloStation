@@ -22,9 +22,9 @@ obj/item/weapon/gun/energy/laser/retro
 
 
 /obj/item/weapon/gun/energy/laser/captain
-	name = "antique laser gun"
+	name = "The Exterminator"
 	icon_state = "caplaser"
-	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Apollo Station. The station is exploding."
+	desc = "This is The Exterminator. Only shooters designated at the highest rank may use this piece of expensive weaponry. Only to be used in emergencies."
 	force = 10
 	origin_tech = null
 	var/charge_tick = 0

@@ -7,11 +7,11 @@
 	spawn_positions = 2
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
-	alt_titles = list("Forensic Technician")
+	alt_titles = list("Forensic Technician","Investigator")
 
 	access = list(access_security, access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 	minimal_access = list(access_security, access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
-	alt_titles = list("Forensic Technician")
+	alt_titles = list("Forensic Technician","Investigator")
 
 	//rank_succesion_level = 4
 	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL

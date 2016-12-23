@@ -30,6 +30,7 @@
 	new /obj/item/clothing/under/rank/miner(src)
 	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/shoes/black(src)
+	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/device/analyzer(src)
 	new /obj/item/weapon/storage/bag/ore(src)
 	new /obj/item/device/flashlight/lantern(src)
@@ -78,8 +79,15 @@
 
 /obj/item/weapon/pickaxe/hammer
 	name = "sledgehammer"
-	//icon_state = "sledgehammer" Waiting on sprite
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "sledgehammer"
+	item_state = "sledgehammer"
+	force = 20.0
+	attack_verb = list("hit", "smashed", "bashed", "attacked")
+	drill_sound = 'sound/weapons/tablehit1.ogg'
+	drill_verb = "crushing"
 	desc = "A mining hammer made of reinforced metal. You feel like smashing your boss in the face with this."
+	sharp = 0
 
 /obj/item/weapon/pickaxe/silver
 	name = "silver pickaxe"
