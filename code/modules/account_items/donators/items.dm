@@ -272,7 +272,7 @@
 
 //////Haldreithen pipe
 /obj/item/clothing/mask/cigarette/pipe/fluff/haldreithen
-	name = "custom smoking pipe"
+	name = "premium smoking pipe"
 	desc = "A custom premium smoking pipe."
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "pipeoff"
