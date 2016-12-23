@@ -1,7 +1,7 @@
 /obj/item/clothing/head/helmet/space/rig/hos
 	light_overlay = "helmet_light_dual_green"
 
-/obj/item/weapon/rig/combat
+/obj/item/weapon/rig/hos
 	name = "combat hardsuit control module"
 	desc = "A black hardsuit designed for a Head of Security to wear during emergencies."
 	icon_state = "security_rig"
