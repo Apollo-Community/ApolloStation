@@ -26,6 +26,7 @@
 		new /obj/item/clothing/gloves/captain(src)
 		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/weapon/melee/telebaton(src)
+		new /obj/item/clothing/shoes/jackboots(src)
 		new /obj/item/clothing/under/dress/dress_cap(src)
 		new /obj/item/clothing/head/helmet/formalcaptain(src)
 		new /obj/item/clothing/under/captainformal(src)
