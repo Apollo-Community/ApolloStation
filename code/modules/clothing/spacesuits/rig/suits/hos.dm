@@ -16,7 +16,6 @@
 
 	initial_modules = list(
 		/obj/item/rig_module/mounted,
-		/obj/item/rig_module/vision/thermal,
 		/obj/item/rig_module/ai_container,
 		/obj/item/rig_module/mounted/egun
 		)
