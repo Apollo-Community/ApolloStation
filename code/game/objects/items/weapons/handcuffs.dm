@@ -27,7 +27,7 @@
 	M.visible_message("<span class='warning'>[M] looks like they are trying to break out of their [src]!</span>",
 					  "<span class='warning'>You start to struggle out of your [src]!</span> \n(This can take up to two minutes and requires that you don't move.)")
 	if( do_after( M, rand( breakouttime/2, breakouttime )))
-		M.visible_message("<span class='warning'>[M] manages to break free of their [src]!</span>",
+		M.visible_message("<span class='warning'>[M] breaks out of their [src]!</span>",
 						  "<span class='warning'>You break out of the [src]!</span>")
 		remove_handcuffs()
 	else
@@ -147,7 +147,7 @@ var/last_chew = 0
 	name = "cable restraints"
 	desc = "Looks like some cables tied together. Could be used to tie something up."
 	icon_state = "cuff_white"
-	breakouttime = 300 //Deciseconds = 30s
+	breakouttime = 400 //Deciseconds = 40s
 	cuff_sound = 'sound/weapons/cablecuff.ogg'
 	cuff_type = "cable restraints"
 

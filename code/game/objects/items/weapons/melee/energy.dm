@@ -63,15 +63,15 @@
 	desc = "An energised battle axe."
 	icon_state = "axe0"
 	//active_force = 150 //holy...
-	active_force = 60
-	active_throwforce = 35
+	active_force = 50
+	active_throwforce = 30
 	active_w_class = 5
 	//force = 40
 	//throwforce = 25
-	force = 20
-	throwforce = 10
+	force = 25
+	throwforce = 15
 	throw_speed = 1
-	throw_range = 5
+	throw_range = 6
 	w_class = 3
 	flags = CONDUCT | NOSHIELD | NOBLOODY
 	origin_tech = "magnets=3;combat=4"
@@ -102,12 +102,12 @@
 	desc = "May the force be within you."
 	icon_state = "sword0"
 	active_force = 30
-	active_throwforce = 20
+	active_throwforce = 15
 	active_w_class = 4
-	force = 3
-	throwforce = 5
+	force = 2
+	throwforce = 1
 	throw_speed = 1
-	throw_range = 5
+	throw_range = 7
 	w_class = 2
 	flags = NOSHIELD | NOBLOODY
 	origin_tech = "magnets=3;syndicate=4"

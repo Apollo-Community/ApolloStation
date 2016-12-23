@@ -151,6 +151,13 @@
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0.6
 
+/obj/item/clothing/suit/armor/hos/pygmal
+	name = "padded Head of Personnel suit"
+	desc = "A custom-made Head of Personnel suit, padded and woven with care and style."
+	icon_state = "pygmal_suit"
+	item_state = "pygmal_suit"
+	armor = list (melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	siemens_coefficient = 1.0
 
 /obj/item/clothing/head/helmet/HoS/dermal
 	name = "Dermal Armour Patch"

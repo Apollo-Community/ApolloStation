@@ -1230,7 +1230,6 @@ var/list/centcom_areas = list (
 /area/planet/moon
 	name = "moon"
 	icon_state = "moon"
-	environment = PLAIN
 
 	base_turf = /turf/simulated/floor/plating/airless/asteroid/lunar
 
