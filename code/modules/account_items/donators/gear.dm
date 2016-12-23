@@ -140,5 +140,5 @@
 
 /datum/gear/account/pygmal_suit
 	display_name = "custom Head of Personnel suit"
-	path = /obj/item/clothing/suit/armor/hos/pygmal
+	path = /obj/item/clothing/suit/armor/hos/fluff/pygmal
 	sort_category = slot_wear_suit
