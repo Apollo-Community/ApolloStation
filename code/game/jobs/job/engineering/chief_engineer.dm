@@ -9,6 +9,9 @@
 	selection_color = "#ffeeaa"
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
+	
+	alt_titles = list("Engineering Director")
+	
 	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_engine_core,
 			            access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
 			            access_heads, access_construction, access_sec_doors,
