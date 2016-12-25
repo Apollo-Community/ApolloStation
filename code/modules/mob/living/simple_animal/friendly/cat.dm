@@ -103,3 +103,5 @@
 	icon_living = "kitten"
 	icon_dead = "kitten_dead"
 	gender = NEUTER
+	/mob/living/simple_animal/cat/kitten/can_use_vents()
+		return
