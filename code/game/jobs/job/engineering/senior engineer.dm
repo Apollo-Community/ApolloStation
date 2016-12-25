@@ -12,7 +12,7 @@
     minimal_access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
                         access_construction, access_engine_core, access_desublimation)
 
-    alt_titles = list("Engine Specialist","Atmospherics Specialist","Senior Electrician","Senior Technician","Desublimation Specialist")
+    alt_titles = list("Engine Specialist","Atmospherics Specialist","Senior Electrician","Senior Technician","Desublimation Specialist","Subsystems Specialist")
     rank_succesion_level = 5
 
 /datum/job/senior_engineer/equip(var/mob/living/carbon/human/H)
