@@ -9,6 +9,9 @@
 	selection_color = "#ffddff"
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
+	
+	alt_titles = list("Head Science Coordinator")
+	
 	access = list(access_rd, access_heads, access_tox, access_genetics, access_morgue,
 			            access_chemistry, access_teleporter, access_sec_doors,
 			            access_research, access_robotics, access_xenobiology, access_ai_upload,

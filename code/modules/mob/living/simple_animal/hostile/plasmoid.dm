@@ -84,10 +84,13 @@
 		return
 
 	if(istype(O, /obj/item/weapon/pickaxe/plasmacutter))
+		var/damage = O.force
 		user.do_attack_animation(src)
 		user.visible_message("<span class='danger'>[user] grinds some plasma from \the [src]!</span>")
 		new/obj/item/weapon/shard/phoron( src.loc )
-		adjustBruteLoss(O.force)
+		if (O.damtype == HALLOSS)
+			damage = 0
+		adjustBruteLoss(damage)
 		return
 
 	user.do_attack_animation(src)
