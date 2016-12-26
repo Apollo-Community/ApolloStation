@@ -23,6 +23,10 @@
 	maxbodytemp = 323	//Above 50 Degrees Celcius
 	holder_type = /obj/item/weapon/holder/cat
 	mob_size = 5
+	verbs += /mob/living/proc/hide
+ 	verbs += /mob/living/proc/ventcrawl
+	/mob/living/simple_animal/cat/kitten/can_use_vents()
+		return
 
 /mob/living/simple_animal/cat/Life()
 
@@ -103,5 +107,7 @@
 	icon_living = "kitten"
 	icon_dead = "kitten_dead"
 	gender = NEUTER
+	verbs += /mob/living/proc/hide
+ 	verbs += /mob/living/proc/ventcrawl
 	/mob/living/simple_animal/cat/kitten/can_use_vents()
 		return
