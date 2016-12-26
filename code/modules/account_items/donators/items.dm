@@ -276,7 +276,7 @@
 	desc = "A custom premium smoking pipe."
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "pipeoff"
-	icon_state = "pipeoff"
+	item_state = "pipeoff"
 	icon_off = "pipeoff"
 	icon_on = "pipeon"
 	
@@ -284,6 +284,6 @@
 /obj/item/clothing/suit/armor/hos/fluff/pygmal
 	name = "padded head of personel uniform"
 	desc = "Old Head of Security suits. Given as a gift by Central operatives to Lisa Willing"
-	icon = 'icons/apollo/clothing/uniforms.dmi'
+	icon = 'icons/mob/suit.dmi'
 	icon_state = "pygmal_suit"
-	icon_state = "pygmal_suit"
+	item_state = "pygmal_suit"
