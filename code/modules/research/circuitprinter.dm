@@ -13,6 +13,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	var/gold_amount = 0
 	var/diamond_amount = 0
 	var/uranium_amount = 0
+	var/phoron_amount = 0
 	var/max_material_amount = 75000.0
 
 	use_power = 1
@@ -47,7 +48,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			qdel(src)
 
 	proc/TotalMaterials()
-		return g_amount + gold_amount + diamond_amount + uranium_amount
+		return g_amount + gold_amount + diamond_amount + uranium_amount + phoron_amount
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if (shocked)
@@ -89,6 +90,9 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 				if(uranium_amount >= 2000)
 					var/obj/item/stack/sheet/mineral/uranium/G = new /obj/item/stack/sheet/mineral/uranium(src.loc)
 					G.amount = round(uranium_amount / 2000)
+				if(phoron_amount >= 2000)
+					var/obj/item/stack/sheet/mineral/phoron/G = new /obj/item/stack/sheet/mineral/phoron(src.loc)
+					G.amount = round(phoron_amount / 1000)
 				qdel(src)
 				return 1
 			else
@@ -102,7 +106,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			return 1
 		if (O.is_open_container())
 			return 0
-		if (!istype(O, /obj/item/stack/sheet/glass) && !istype(O, /obj/item/stack/sheet/mineral/gold) && !istype(O, /obj/item/stack/sheet/mineral/diamond) && !istype(O, /obj/item/stack/sheet/mineral/uranium))
+		if (!istype(O, /obj/item/stack/sheet/glass) && !istype(O, /obj/item/stack/sheet/mineral/gold) && !istype(O, /obj/item/stack/sheet/mineral/diamond) && !istype(O, /obj/item/stack/sheet/mineral/uranium) && !istype(O, /obj/item/stack/sheet/mineral/phoron))
 			user << "<span class='alert'>You cannot insert this item into the [name]!</span>"
 			return 1
 		if (stat)
@@ -140,6 +144,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 						diamond_amount += amount * 2000
 					if(/obj/item/stack/sheet/mineral/uranium)
 						uranium_amount += amount * 2000
+					if(/obj/item/stack/sheet/mineral/phoron)
+						phoron_amount += amount * 1000
 			else
 				new stacktype(src.loc, amount)
 		busy = 0
