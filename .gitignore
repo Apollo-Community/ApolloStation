@@ -7,7 +7,6 @@
 data/
 cfg/
 apollo.int
-cfg/admin.txt
 code/hub.dm
 .atom-build.json
 btime.so
