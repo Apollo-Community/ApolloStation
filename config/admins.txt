@@ -7,4 +7,4 @@
 
 xRev - Host
 Koenigsegg - Host
-Haldreithen - Game Admin
+Haldreithen - Head Admin
