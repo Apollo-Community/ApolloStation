@@ -108,9 +108,9 @@
 	path = /obj/item/clothing/suit/storage/toggle/labcoat/red
 	sort_category = slot_wear_suit
 
-/datum/gear/account/callmanfok_jumpsuit
-	display_name = "Phoebes labcoat"
-	path = /obj/item/clothing/suit/storage/toggle/labcoat/fluff/callmanfok
+/datum/gear/account/haldreihen_jumpsuit
+	display_name = "Atmos labcoat"
+	path = /obj/item/clothing/suit/storage/toggle/labcoat/fluff/haldreithen
 	sort_category = slot_wear_suit
 
 /datum/gear/account/notmegatron_mimemask
