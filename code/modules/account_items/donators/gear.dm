@@ -110,7 +110,7 @@
 
 /datum/gear/account/haldreihen_jumpsuit
 	display_name = "Atmos labcoat"
-	path = /obj/item/clothing/suit/storage/toggle/labcoat/fluff/callmanfok
+	path = /obj/item/clothing/suit/storage/toggle/labcoat/fluff/haldreithen
 	sort_category = slot_wear_suit
 
 /datum/gear/account/notmegatron_mimemask
