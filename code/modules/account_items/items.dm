@@ -25,3 +25,4 @@
 	display_name = "Gold Zippo Lighter"
 	path = /obj/item/weapon/flame/lighter/zippo/fluff/golden
 	sort_category = "misc"
+/////End gold zippo
