@@ -260,10 +260,10 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "garm"
 	item_state = "garm"
-/////Callmanfok coat
-/obj/item/clothing/suit/storage/toggle/labcoat/fluff/callmanfok
-	name = "red labcoat"
-	desc = "A labcoat tagged with the name \"Phoebe Weisgarber\". Underneath it has a embroidered badge that says, \"From your friends aboard the NOS Apollo.\""
+//////Haldreithen(Callmanfok) coat
+/obj/item/clothing/suit/storage/toggle/labcoat/fluff/haldreithen
+	name = "atmospheric specialist labcoat"
+	desc = "A labcoat designed for Atmospheric Specialists given to Dra'Krasha Njarir'Akhan as a gift for his long and good service."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "callmanfok"
 	item_state = "callmanfok"
