@@ -2922,7 +2922,7 @@
 "bej" = (/obj/structure/bed/chair/office/dark{dir = 8},/obj/effect/landmark/start{name = "Head of Personnel"},/turf/simulated/floor/carpet,/area/crew_quarters/heads/hop)
 "bek" = (/obj/machinery/computer/card,/turf/simulated/floor/carpet,/area/crew_quarters/heads/hop)
 "bel" = (/obj/machinery/atmospherics/unary/vent_pump/on,/obj/item/device/radio/intercom{freerange = 0; frequency = 1459; name = "Station Intercom (General)"; pixel_x = -30},/turf/simulated/floor/carpet,/area/crew_quarters/heads/hop)
-"bem" = (/obj/structure/table/woodentable,/obj/item/weapon/rig/ce{desc = "An advanced voidsuit that protects against hazardous, low pressure enviornments, worn by the Head of Personnel."; initial_modules = list(/obj/item/rig_module/ai_container,/obj/item/rig_module/maneuvering_jets); name = "command voidsuit control module"; req_access = null; req_access_txt = "57"},/turf/simulated/floor/carpet,/area/crew_quarters/heads/hop)
+"bem" = (/obj/structure/table/woodentable,/turf/simulated/floor/carpet,/area/crew_quarters/heads/hop)
 "ben" = (/obj/structure/closet/crate,/obj/item/stack/sheet/glass/reinforced,/obj/item/stack/sheet/glass/reinforced,/obj/item/stack/sheet/glass/reinforced,/turf/simulated/floor/plating{dir = 2; icon_state = "platebot"; nitrogen = 82.1472; oxygen = 21.8366; tag = "icon-platebot"},/area/maintenance/bridge_aft)
 "beo" = (/obj/structure/reagent_dispensers/watertank,/turf/simulated/floor/plating{dir = 2; icon_state = "platebot"; nitrogen = 82.1472; oxygen = 21.8366; tag = "icon-platebot"},/area/maintenance/bridge_aft)
 "bep" = (/obj/structure/bed/chair/office/dark{dir = 1},/obj/effect/landmark/start{name = "Attorney"},/turf/simulated/floor{icon_state = "grimy"; name = "linoleum"},/area/security/vacantoffice)
