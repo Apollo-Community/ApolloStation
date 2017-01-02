@@ -592,6 +592,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"tournament chef",
 		"tournament janitor",
 		"pirate",
+		"ninja",
 		"space pirate",
 		"soviet admiral",
 		"tunnel clown",
@@ -630,6 +631,14 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			J.toggle()
 			M.equip_to_slot_or_qdel(new /obj/item/clothing/mask/breath(M), slot_wear_mask)
 			J.Topic(null, list("stat" = 1))
+			
+		if("ninja")
+			M.equip_to_slot_or_qdel(new /obj/item/weapon/tank/emergency_oxygen(M), slot_l_store)
+			M.equip_to_slot_or_qdel(new /obj/item/device/radio/headset(M), slot_l_ear)
+			M.equip_to_slot_or_qdel(new /obj/item/weapon/rig/light/ninja(M), slot_back)
+			M.equip_to_slot_or_qdel(new /obj/item/clothing/under/color/black(M), slot_w_uniform)
+			M.equip_to_slot_or_qdel(new /obj/item/weapon/bikehorn(M), slot_r_store)
+		
 		if ("tournament standard red","tournament standard green") //we think stunning weapon is too overpowered to use it on tournaments. --rastaf0
 			if (dresscode=="tournament standard red")
 				M.equip_to_slot_or_qdel(new /obj/item/clothing/under/color/red(M), slot_w_uniform)
