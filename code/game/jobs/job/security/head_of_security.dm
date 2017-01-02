@@ -21,6 +21,8 @@
 	rank_succesion_level = COMMAND_SUCCESSION_LEVEL
 	alt_titles = list("Commander")
 	dep_authority = list( SECURITY )
+	if title = "Commander"
+		dep_authority = list( SECURITY )
 	
 /datum/job/hos/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
