@@ -287,3 +287,11 @@
 	icon = 'icons/mob/suit.dmi'
 	icon_state = "pygmal_suit"
 	item_state = "pygmal_suit"
+	
+//////Faustico Plague Mask
+ /obj/item/clothing/mask/gas/fluff/plaguefaustico
+ 	name = "premium smoking pipe"
+ 	desc = "A custom premium smoking pipe."
+ 	icon = 'icons/obj/clothing/masks.dmi'
+ 	icon_state = "plaguedoctor"
+ 	item_state = "plaguedoctor"
