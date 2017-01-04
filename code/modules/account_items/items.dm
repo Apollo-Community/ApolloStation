@@ -26,3 +26,9 @@
 	path = /obj/item/weapon/flame/lighter/zippo/fluff/golden
 	sort_category = "misc"
 /////End gold zippo
+/////Gold Medal (Only needs Datum)
+/datum/gear/account/goldmedalreward
+	display_name = "Gold Heroism Medal"
+	path = /obj/item/clothing/tie/medal/gold/heroism
+	sort_category = "misc"
+/////End Medal
