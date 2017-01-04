@@ -32,3 +32,15 @@
 	path = /obj/item/clothing/tie/medal/gold/heroism
 	sort_category = "misc"
 /////End Medal
+//// Koenigsegg's account item test
+/obj/item/weapon/holder/delta
+	name = "Delta"
+	desc = "This is Delta the dog."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "german_shep"
+	origin_tech = null
+
+/datum/gear/account/delta
+	display_name = "Delta"
+	path = /mob/living/simple_animal/dog/german_shep/fluff/delta
+	sort_category = "misc"
