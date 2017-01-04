@@ -108,9 +108,9 @@
 	path = /obj/item/clothing/suit/storage/toggle/labcoat/red
 	sort_category = slot_wear_suit
 
-/datum/gear/account/callmanfok_jumpsuit
-	display_name = "Phoebes labcoat"
-	path = /obj/item/clothing/suit/storage/toggle/labcoat/fluff/callmanfok
+/datum/gear/account/haldreihen_jumpsuit
+	display_name = "Atmos labcoat"
+	path = /obj/item/clothing/suit/storage/toggle/labcoat/fluff/haldreithen
 	sort_category = slot_wear_suit
 
 /datum/gear/account/notmegatron_mimemask
@@ -140,5 +140,10 @@
 
 /datum/gear/account/pygmal_suit
 	display_name = "custom Head of Personnel suit"
-	path = /obj/item/clothing/suit/armor/hos/pygmal
+	path = /obj/item/clothing/suit/armor/hos/fluff/pygmal
 	sort_category = slot_wear_suit
+	
+/datum/gear/account/faustico_mask
+	display_name = "plague doctor mask"
+	path = /obj/item/clothing/mask/gas/fluff/plaguefaustico
+	sort_category = slot_wear_mask

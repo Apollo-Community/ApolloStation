@@ -88,7 +88,7 @@
 	..()
 	for( var/mob/living/carbon/human/M in living_mob_list )
 		if (M.mind)
-			if (M.mind.key == "Greatmoon")
+			if (M.mind.key == "Koenigsegg")
 				bff = M
 				break
 
@@ -260,10 +260,10 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "garm"
 	item_state = "garm"
-/////Callmanfok coat
-/obj/item/clothing/suit/storage/toggle/labcoat/fluff/callmanfok
-	name = "red labcoat"
-	desc = "A labcoat tagged with the name \"Phoebe Weisgarber\". Underneath it has a embroidered badge that says, \"From your friends aboard the NOS Apollo.\""
+//////Haldreithen(Callmanfok) coat
+/obj/item/clothing/suit/storage/toggle/labcoat/fluff/haldreithen
+	name = "atmospheric specialist labcoat"
+	desc = "A labcoat designed for Atmospheric Specialists given to Dra'Krasha Njarir'Akhan as a gift for his long and good service."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "callmanfok"
 	item_state = "callmanfok"
@@ -272,10 +272,26 @@
 
 //////Haldreithen pipe
 /obj/item/clothing/mask/cigarette/pipe/fluff/haldreithen
-	name = "custom smoking pipe"
+	name = "premium smoking pipe"
 	desc = "A custom premium smoking pipe."
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "pipeoff"
-	icon_state = "pipeoff"
+	item_state = "pipeoff"
 	icon_off = "pipeoff"
 	icon_on = "pipeon"
+	
+//////Pymal HoS Suit
+/obj/item/clothing/suit/armor/hos/fluff/pygmal
+	name = "padded head of personel uniform"
+	desc = "Old Head of Security suits. Given as a gift by Central operatives to Lisa Willing"
+	icon = 'icons/mob/suit.dmi'
+	icon_state = "pygmal_suit"
+	item_state = "pygmal_suit"
+	
+//////Faustico Plague Mask
+ /obj/item/clothing/mask/gas/fluff/plaguefaustico
+ 	name = "premium smoking pipe"
+ 	desc = "A custom premium smoking pipe."
+ 	icon = 'icons/obj/clothing/masks.dmi'
+ 	icon_state = "plaguedoctor"
+ 	item_state = "plaguedoctor"

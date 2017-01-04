@@ -1,5 +1,6 @@
 /datum/job/hos
 	title = "Head of Security"
+	alt_titles = list("Commander")
 	flag = HOS
 	department_id = SECURITY
 	faction = "Station"
@@ -19,10 +20,8 @@
 			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_change_ids)
 
 	rank_succesion_level = COMMAND_SUCCESSION_LEVEL
-
 	dep_authority = list( SECURITY )
-	alt_titles = list("Commander")
-
+	
 /datum/job/hos/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
 	switch(H.character.backpack)
