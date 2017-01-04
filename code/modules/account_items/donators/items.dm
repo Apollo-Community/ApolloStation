@@ -88,7 +88,7 @@
 	..()
 	for( var/mob/living/carbon/human/M in living_mob_list )
 		if (M.mind)
-			if (M.mind.key == "Greatmoon")
+			if (M.mind.key == "Koenigsegg")
 				bff = M
 				break
 
