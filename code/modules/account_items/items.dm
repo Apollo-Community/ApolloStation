@@ -1,7 +1,13 @@
 ///////This file is just for account items, not donator items. Event rewards and such can be added here.
 
 
-/////ID
+/////CentCom ID (Only for characters promoted to NT Officials jobs.)
+/datum/gear/account/centcom_id
+	display_name = "CentCom ID"
+	path = /obj/item/weapon/card/id/centcom
+	sort_category = "ID_card"
+/////CentCom ID End
+/////End ID
 /obj/item/weapon/card/id/fluff/lifetime
 	name = "Lifetime ID Card"
 	desc = "A modified ID card given only to those people who have devoted their lives to the better interests of NanoTrasen."
@@ -11,7 +17,6 @@
 	display_name = "Lifetime ID Card"
 	path = /obj/item/weapon/card/id/fluff/lifetime
 	sort_category = "ID_card"
-/////End ID
 /////Gold Zippo (sprite credit to Linker)
 /obj/item/weapon/flame/lighter/zippo/fluff/golden
 	name = "golden zippo lighter"
@@ -32,3 +37,15 @@
 	path = /obj/item/clothing/tie/medal/gold/heroism
 	sort_category = "misc"
 /////End Medal
+//// Koenigsegg's account item test
+/obj/item/weapon/holder/delta
+	name = "Delta"
+	desc = "This is Delta the dog."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "german_shep"
+	origin_tech = null
+
+/datum/gear/account/delta
+	display_name = "Delta"
+	path = /mob/living/simple_animal/dog/german_shep/fluff/delta
+	sort_category = "misc"
