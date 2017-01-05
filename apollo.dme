@@ -1809,6 +1809,7 @@
 #include "maps\apollo\apollo-areas.dm"
 #include "maps\apollo\apollo-01-Main.dmm"
 #include "maps\apollo\apollo-02-Engipost.dmm"
+#include "maps\apollo\apollo-03-Slater.dmm"
 #include "maps\apollo\apollo-04-CentComm.dmm"
 #include "maps\apollo\apollo-05-Moon.dmm"
 // END_INCLUDE
