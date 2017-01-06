@@ -1403,6 +1403,7 @@
 #include "code\modules\mob\living\simple_animal\friendly\farm_animals.dm"
 #include "code\modules\mob\living\simple_animal\friendly\lizard.dm"
 #include "code\modules\mob\living\simple_animal\friendly\mushroom.dm"
+#include "code\modules\mob\living\simple_animal\friendly\pug.dm"
 #include "code\modules\mob\living\simple_animal\friendly\rodent.dm"
 #include "code\modules\mob\living\simple_animal\friendly\slime.dm"
 #include "code\modules\mob\living\simple_animal\friendly\spiderbot.dm"
