@@ -635,3 +635,18 @@
 */
 
 //This should really be somewhere else but I don't know where. w/e
+
+////Shark Plushie
+/obj/item/weapon/fluff/sharkplushie
+	name = "shark plush doll"
+	desc = "A giant cute shark plushie. It's so soft!"
+	w_class = 2
+	icon = 'icons/obj/items/sharks.dmi'
+	item_state = "shark_plushie"
+	icon_state = "shark_plushie"
+
+/datum/gear/account/sharkdoll
+	display_name = "Shark Doll"
+	path = /obj/item/weapon/fluff/sharkplushie
+	sort_category = "misc"
+////Shark code end
