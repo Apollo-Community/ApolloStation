@@ -25,12 +25,26 @@
 	icon_state = "zippo_gold_linker"
 	icon_on = "zippoon_gold_linker"
 	icon_off = "zippo_gold_linker"
-	
+
 /datum/gear/account/goldzippo
 	display_name = "Gold Zippo Lighter"
 	path = /obj/item/weapon/flame/lighter/zippo/fluff/golden
 	sort_category = "misc"
 /////End gold zippo
+/////Survivor Zippo (sprite credit to Imborgoss)
+/obj/item/weapon/flame/lighter/zippo/fluff/survivor
+	name = "survivor zippo"
+	desc = "A rugged custom-made zippo gifted to some crew members by Central Command operatives"
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "zippo_vivor"
+	icon_on = "zippo_vivor_on"
+	icon_off = "zippo_vivor"
+
+/datum/gear/account/survivorzippo
+	display_name = "Survivor Zippo Lighter"
+	path = /obj/item/weapon/flame/lighter/zippo/fluff/survivor
+	sort_category = "misc"
+/////End survivor zippo
 /////Gold Medal (Only needs Datum)
 /datum/gear/account/goldmedalreward
 	display_name = "Gold Heroism Medal"
