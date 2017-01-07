@@ -89,6 +89,26 @@ var/global/list/account_items = list()
 	else
 		usr << "Could not add [obj_type] to [account]!"
 
+/client/proc/add_online_acc_item()
+	set category = "Admin"
+	set name = "Account Item Add Online"
+	set desc = "Allow an online user to spawn with the given item."
+
+	var/client/input = input("Please, select a player!", "Give Account Item") as null|anything in sortKey(clients)
+	if(!input)
+		return
+	else
+		input = input.ckey
+
+	var/obj_type = sanitizeSafe(input(src, "Enter the object's datum name variable. Leave blank or as is to cancel.", "Enter Object", null))
+	if( !obj_type )
+		return
+
+	if( log_acc_item_to_db( input, obj_type ))
+		admin_log_and_message_admins("has added [obj_type] to the account of [input].")
+	else
+		usr << "Could not add [obj_type] to [input]!"
+
 /client/proc/remove_acc_item()
 	set category = "Admin"
 	set name = "Account Item Remove"
