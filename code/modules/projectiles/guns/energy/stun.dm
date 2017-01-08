@@ -61,7 +61,7 @@
 	matter = list("metal" = 2000, "uranium" = 100)
 	origin_tech = "combat=2;magnets=2;syndicate=5"
 	silenced = 1
-	charge_cost = 250
+	charge_cost = 125
 	fire_sound = 'sound/weapons/Genhit.ogg'
 	projectile_type = "/obj/item/projectile/energy/bolt"
 	cell_type = "/obj/item/weapon/cell/crap"
