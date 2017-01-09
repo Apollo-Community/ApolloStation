@@ -698,6 +698,7 @@
 		..()
 		reagents.add_reagent("nutriment", 8)
 		reagents.add_reagent("hyperzine", 4)
+		reagents.add_reagent("toxin", 4)
 		src.bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/spiderleg
@@ -710,6 +711,7 @@
 		..()
 		reagents.add_reagent("nutriment", 4)
 		reagents.add_reagent("hyperzine", 2)
+		reagents.add_reagent("toxin", 2)
 		src.bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/spideregg
