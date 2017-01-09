@@ -644,6 +644,12 @@
 	icon = 'icons/obj/items/sharks.dmi'
 	item_state = "shark_plushie"
 	icon_state = "shark_plushie"
+	attack_verb = list("slapped")
+	hitsound = 'sound/weapons/whip.ogg'
+	/obj/item/weapon/fluff/sharkplushie/attack_self(mob/user as mob)
+		user.visible_message("<span class='notice'>[user] hugs [src]! How cute! </span>", \
+			"<span class='notice'>You hug [src]. Dawwww... </span>")
+			
 
 /datum/gear/account/sharkdoll
 	display_name = "Shark Doll"
