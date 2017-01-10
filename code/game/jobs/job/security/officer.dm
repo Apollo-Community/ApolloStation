@@ -3,7 +3,7 @@
 	flag = OFFICER
 	department_id = SECURITY
 	faction = "Station"
-	total_positions = 3
+	total_positions = 6
 	spawn_positions = 3
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
