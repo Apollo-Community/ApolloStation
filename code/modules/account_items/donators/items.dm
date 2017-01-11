@@ -207,9 +207,9 @@
 	desc = "A labcoat that has a nametag noting that it belongs to Eriziki Sidier."
 	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "labcoat_sidier_open"
-	item_state = "labcoat_sidier_open"
+	item_state = "labcoat_sidier"
 	icon_open = "labcoat_sidier_open"
-	icon_closed = "labcoat_sidier_closed"
+	icon_closed = "labcoat_sidier"
 
 //////////////////// King_nexus
 
@@ -279,7 +279,7 @@
 	item_state = "pipeoff"
 	icon_off = "pipeoff"
 	icon_on = "pipeon"
-	
+
 //////Pymal HoS Suit
 /obj/item/clothing/suit/armor/hos/fluff/pygmal
 	name = "padded head of personel uniform"
@@ -287,7 +287,7 @@
 	icon = 'icons/mob/suit.dmi'
 	icon_state = "pygmal_suit"
 	item_state = "pygmal_suit"
-	
+
 //////Faustico Plague Mask
  /obj/item/clothing/mask/gas/fluff/plaguefaustico
  	name = "premium smoking pipe"
