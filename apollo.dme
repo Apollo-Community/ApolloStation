@@ -933,6 +933,7 @@
 #include "code\modules\admin\verbs\mapgen_web.dm"
 #include "code\modules\admin\verbs\mapping.dm"
 #include "code\modules\admin\verbs\massmodvar.dm"
+#include "code\modules\admin\verbs\mentor.dm"
 #include "code\modules\admin\verbs\modifyvariables.dm"
 #include "code\modules\admin\verbs\one_click_antag.dm"
 #include "code\modules\admin\verbs\onlyone.dm"
