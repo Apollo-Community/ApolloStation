@@ -29,7 +29,7 @@ Famous last words.
 	STUI.staff.Add("\[[time_stamp()]] <font color=red>MHELP: </font><font color='#0066ff'>[key_name(mob)]:</b> [msg]</font><br>")
 	STUI.processing |= 3
 
-	msg = "<span class='notice'><b><font color=blue>Request for Mentor:: </font>[get_options_bar(mob, 4, 1, 0)]:</b> [msg]</span>"
+	msg = "<span class='notice'><b><font color=green>Request for Mentor:: </font>[get_options_bar(mob, 4, 1, 1)]:</b> [msg]</span>"
 
 	for(var/client/X in admins) //Let's go send it to the mentors (and other staff)
 		if((R_ADMIN|R_MENTOR) & X.holder.rights)
@@ -39,7 +39,7 @@ Famous last words.
 
 /client/proc/cmd_mentor_say(msg as text)
 	set category = "Special Verbs"
-	set name = "Mensay"
+	set name = "Hsay"
 	set hidden = 1
 
 	if(!msg) //Sanitizing the given message again.
