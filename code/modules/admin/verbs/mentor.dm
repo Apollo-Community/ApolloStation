@@ -32,7 +32,7 @@ Famous last words.
 	msg = "<span class='notice'><b><font color=blue>Request for Mentor:: </font>[get_options_bar(mob, 4, 1, 0)]:</b> [msg]</span>"
 
 	for(var/client/X in admins) //Let's go send it to the mentors (and other staff)
-		if(X.holder.rights == R_MENTOR)
+		if((R_ADMIN|R_MENTOR) & X.holder.rights)
 			X << msg
 
 	src << "<font color='blue'>PM to-<b>Mentors </b>: [original_msg]</font>" //Let's show it back to the person Mentorhelping
@@ -58,6 +58,6 @@ Famous last words.
 	var/sender_name = src.key
 	for(var/client/C in admins)
 		if((R_MENTOR) & C.holder.rights)
-			C << "<span class='mod_channel'>" + create_text_tag("mod", "MENTOR:", C) + " <span class='name'>[sender_name]</span>(<A HREF='?src=\ref[C.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='message'>[msg]</span></span>"
+			C << "<span class='mentor_channel'>" + create_text_tag("mentor", "MENTOR:", C) + " <span class='name'>[sender_name]</span>(<A HREF='?src=\ref[C.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='message'>[msg]</span></span>"
 
 	feedback_add_details("admin_verb","MENS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
