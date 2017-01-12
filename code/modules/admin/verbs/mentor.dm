@@ -31,7 +31,7 @@ Famous last words.
 
 	msg = "<span class='notice'><b><font color=blue>Request for Mentor:: </font>[get_options_bar(mob, 4, 1, 0)]:</b> [msg]</span>"
 
-	for(var/client/X) //Let's go send it to the mentors (and other staff)
+	for(var/client/X in admins) //Let's go send it to the mentors (and other staff)
 		if(X.holder.rights == R_MENTOR)
 			X << msg
 
