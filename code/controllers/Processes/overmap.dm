@@ -1,5 +1,5 @@
-#define MIN_ASTEROIDS 1
-#define MAX_ASTEROIDS 2
+#define MIN_ASTEROIDS 3
+#define MAX_ASTEROIDS 6
 
 /var/global/datum/controller/process/overmap/overmap
 
