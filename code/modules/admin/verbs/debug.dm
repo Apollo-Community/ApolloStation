@@ -391,14 +391,13 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 /client/proc/cmd_admin_restrain(var/mob/living/carbon/human/M in mob_list)
 	set category = "Admin"
-	set name = "Restrain Mob"
+	set name = "Restrain Human"
 
 	if(!ticker)
 		alert("Wait until the game starts")
 		return
 
-	//Now also works for robots! <rjtwins>
-	if(!istype(M, /mob/living/carbon/human) && !istype(M, /mob/living/silicon/robot))
+	if(!istype(M, /mob/living/carbon/human))
 		return
 
 	if(M.captured == 1)
@@ -415,6 +414,28 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.handcuffed = 2
 
 		message_admins("[key_name_admin(src)] has restrained [key_name(M)].")
+
+/client/proc/cmd_admin_robot_restrain(var/mob/living/silicon/robot/M in mob_list)
+	set category = "Admin"
+	set name = "Restrain Robot"
+
+	if(!ticker)
+		alert("Wait until the game starts")
+		return
+
+	if(!istype(M, /mob/living/silicon/robot))
+		return
+
+	if(M.captured == 1)
+		M.captured = 0
+		M.anchored = 0
+
+		message_admins("[key_name_admin(src)] has lifted [key_name(M)]'s borg restraining order.")
+	else
+		M.captured = 1
+		M.anchored = 1
+
+		message_admins("[key_name_admin(src)] has borg-restrained [key_name(M)].")
 /*
 /client/proc/toggle_lagfree()
 	set category = "Server"
@@ -631,14 +652,14 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			J.toggle()
 			M.equip_to_slot_or_qdel(new /obj/item/clothing/mask/breath(M), slot_wear_mask)
 			J.Topic(null, list("stat" = 1))
-			
+
 		if("ninja")
 			M.equip_to_slot_or_qdel(new /obj/item/weapon/tank/emergency_oxygen(M), slot_l_store)
 			M.equip_to_slot_or_qdel(new /obj/item/device/radio/headset(M), slot_l_ear)
 			M.equip_to_slot_or_qdel(new /obj/item/weapon/rig/light/ninja(M), slot_back)
 			M.equip_to_slot_or_qdel(new /obj/item/clothing/under/color/black(M), slot_w_uniform)
 			M.equip_to_slot_or_qdel(new /obj/item/weapon/bikehorn(M), slot_r_store)
-		
+
 		if ("tournament standard red","tournament standard green") //we think stunning weapon is too overpowered to use it on tournaments. --rastaf0
 			if (dresscode=="tournament standard red")
 				M.equip_to_slot_or_qdel(new /obj/item/clothing/under/color/red(M), slot_w_uniform)

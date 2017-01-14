@@ -31,6 +31,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_pm_panel,	/*admin-pm list*/
 	/client/proc/cmd_admin_subtle_message,	/*send an message to somebody as a 'voice in their head'*/
 	/client/proc/cmd_admin_restrain,
+	/client/proc/cmd_admin_robot_restrain,
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_admin_check_contents,	/*displays the contents of an instance*/
 	/client/proc/rename_mob,
@@ -283,7 +284,7 @@ var/list/admin_verbs_mentor = list(
 	/client/proc/cmd_admin_pm_panel,
 	/client/proc/playernotes,
 	/client/proc/admin_ghost,
-	/client/proc/cmd_mod_say,
+	/client/proc/cmd_mentor_say,
 	/datum/admins/proc/show_player_info,
 //	/client/proc/dsay,
 	/client/proc/cmd_admin_subtle_message

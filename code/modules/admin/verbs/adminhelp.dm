@@ -87,31 +87,27 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	var/ai_cl
 	if(ai_found)
 		ai_cl = " (<A HREF='?_src_=holder;adminchecklaws=\ref[mob]'>CL</A>)"
-
-			//Options bar:  mob, details ( admin = 2, dev = 3, mentor = 4, character name (0 = just ckey, 1 = ckey and character name), link? (0 no don't make it a link, 1 do so),
-			//		highlight special roles (0 = everyone has same looking name, 1 = antags / special roles get a golden name)
-
-	var/mentor_msg = "<span class='notice'><b><font color=red>Request for Help: </font>[get_options_bar(mob, 4, 1, 1, 0)][ai_cl]:</b> [msg]</span>"
 	STUI.staff.Add("\[[time_stamp()]] <font color=red>AHELP: </font><font color='#0066ff'>[key_name(mob)]:</b> [msg]</font><br>")
 	STUI.processing |= 3
 
 	send_discord(usr.ckey, 1, original_msg)
+
+	//Options bar:  mob, details ( admin = 2, dev = 3, mentor = 4, character name (0 = just ckey, 1 = ckey and character name), link? (0 no don't make it a link, 1 do so),
+
+			//		highlight special roles (0 = everyone has same looking name, 1 = antags / special roles get a golden name)
 
 	msg = "<span class='notice'><b><font color=red>Request for Help:: </font>[get_options_bar(mob, 2, 1, 1)][ai_cl]:</b> [msg]</span>"
 
 	var/admin_number_afk = 0
 
 	for(var/client/X in admins)
-		if((R_ADMIN|R_MOD|R_MENTOR) & X.holder.rights)
+		if((R_ADMIN|R_MOD) & X.holder.rights)
 			if(X.is_afk())
 				admin_number_afk++
 
 			X << 'sound/effects/adminhelp.ogg'
 
-			if(X.holder.rights == R_MENTOR)
-				X << mentor_msg		// Mentors won't see coloring of names on people with special_roles (Antags, etc.)
-			else
-				X << msg
+			X << msg
 
 	//show it to the person adminhelping too
 	src << "<font color='blue'>PM to-<b>Staff </b>: [original_msg]</font>"

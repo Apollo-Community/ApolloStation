@@ -36,7 +36,7 @@
 	next_move = world.time + 8
 	// You are responsible for checking config.ghost_interaction when you override this function
 	// Not all of them require checking, see below
-	if(check_rights(R_ADMIN|R_MOD))
+	if(check_rights(R_ADMIN|R_MOD|R_MENTOR))
 		A.attack_ai(src)
 		if(ispath(A, /obj/machinery))
 			log_misc("[src.name] has opened [A.name]'s interface ([A.x],[A.y],[A.z])")
