@@ -38,6 +38,16 @@ var/list/spawntypes = list()
 /datum/spawnpoint/cryo/New()
 	..()
 	turfs = latejoin_cryo
+	
+	
+/datum/spawnpoint/gateway
+ 	display_name = "Gateway"
+ 	msg = "has completed translation from offsite gateway"
+ 
+/datum/spawnpoint/gateway/New()
+	..()
+	turfs = latejoin_gateway
+ 
 
 /datum/spawnpoint/cyborg
 	display_name = "Cyborg Storage"

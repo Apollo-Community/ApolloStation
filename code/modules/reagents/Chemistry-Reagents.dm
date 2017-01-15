@@ -1145,10 +1145,10 @@ datum
 				..()
 				return
 
-		Tetrazine
-			name = "Tetrazine"
-			id = "tetrazine"
-			description = "Tetrazine is a highly potent stimulant, originally derived from cordrazine. Can be used to treat a wide range of injuries."
+		Tetracordrazine
+			name = "Tetracordrazine"
+			id = "tetracordrazine"
+			description = "Tetracordrazine is a highly potent stimulant, originally derived from cordrazine. Can be used to treat a wide range of injuries."
 			reagent_state = LIQUID
 			color = "#8040FF" // rgb: 200, 165, 220
 			scannable = 1

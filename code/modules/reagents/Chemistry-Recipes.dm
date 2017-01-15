@@ -230,10 +230,10 @@ datum
 			required_reagents = list("potassium" = 1, "oxygen" = 1, "sugar" = 1)
 			result_amount = 3
 
-		Tetrazine
-			name = "Tetrazine"
-			id = "tetrazine"
-			result = "tetrazine"
+		Tetracordrazine
+			name = "Tetracordrazine"
+			id = "tetracordrazine"
+			result = "tetracordrazine"
 			required_reagents = list("inaprovaline" = 1, "anti_toxin" = 1)
 			result_amount = 2
 
@@ -1693,7 +1693,7 @@ datum
 			name = "The Doctor's Delight"
 			id = "doctordelight"
 			result = "doctorsdelight"
-			required_reagents = list("limejuice" = 1, "tomatojuice" = 1, "orangejuice" = 1, "cream" = 1, "tetrazine" = 1)
+			required_reagents = list("limejuice" = 1, "tomatojuice" = 1, "orangejuice" = 1, "cream" = 1, "tetracordrazine" = 1)
 			result_amount = 5
 
 		irish_cream
