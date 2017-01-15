@@ -244,12 +244,12 @@
 		O.icon = icon('./icons/playerlist.dmi')
 		O.player = src
 
-		if (holder && (R_ADMIN & holder.rights))
-			O.name = "Admin"
-			O.icon_state = "admin"
-		else if(holder && (R_MOD & holder.rights))
+		if (holder && (R_MOD & holder.rights))
 			O.name = "Moderator"
 			O.icon_state = "mod"
+		else if(holder && (R_ADMIN & holder.rights))
+			O.name = "Admin"
+			O.icon_state = "admin"
 		else if(holder && (R_DEBUG & holder.rights))
 			O.name = "Developer"
 			O.icon_state = "dev"
