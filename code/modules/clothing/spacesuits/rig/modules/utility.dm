@@ -119,7 +119,7 @@
 	interface_desc = "Dispenses loaded chemicals directly into the wearer's bloodstream."
 
 	charges = list(
-		list("tricordrazine", "tricordrazine", 0, 80),
+		list("tetracordrazine", "tetracordrazine", 0, 80),
 		list("tramadol",      "tramadol",      0, 80),
 		list("dexalin plus",  "dexalinp",      0, 80),
 		list("antibiotics",   "spaceacillin",  0, 80),

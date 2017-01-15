@@ -418,7 +418,7 @@
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/New()
 	..()
-	reagents.remove_reagent("tricordrazine", 30)
+	reagents.remove_reagent("tetracordrazine", 30)
 	reagents.add_reagent("oxycodone", 15)
 	update_icon()
 	return
@@ -831,7 +831,7 @@
 		new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 15, "Dermaline")
 		new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 16, "Dylovene")
 		new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 17, "Dexalin Plus")
-		new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 18, "Tricordrazine")
+		new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 18, "Tetracordrazine")
 		new /obj/item/weapon/reagent_containers/syringe/(src)
 		new /obj/item/device/healthanalyzer(src)
 
