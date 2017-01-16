@@ -238,7 +238,7 @@
 
 //Notes by Darem: Food in the "snacks" subtype can hold a maximum of 50 units Generally speaking, you don't want to go over 40
 //	total for the item because you want to leave space for extra condiments. If you want effect besides healing, add a reagent for
-//	it. Try to stick to existing reagents when possible (so if you want a stronger healing effect, just use Tricordrazine). On use
+//	it. Try to stick to existing reagents when possible (so if you want a stronger healing effect, just use Tetracordrazine). On use
 //	effect (such as the old officer eating a donut code) requires a unique reagent (unless you can figure out a better way).
 
 //The nutriment reagent and bitesize variable replace the old heal_amt and amount variables. Each unit of nutriment is equal to
@@ -271,7 +271,7 @@
 		..()
 		reagents.add_reagent("nutriment", 8)
 		reagents.add_reagent("doctorsdelight", 8)
-		reagents.add_reagent("tricordrazine", 8)
+		reagents.add_reagent("tetracordrazine", 8)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/candy
@@ -412,7 +412,7 @@
 			if(9)
 				reagents.add_reagent("berryjuice", 3)
 			if(10)
-				reagents.add_reagent("tricordrazine", 3)
+				reagents.add_reagent("tetracordrazine", 3)
 		if(prob(30))
 			src.icon_state = "donut2"
 			src.overlay_state = "box-donut2"
@@ -774,7 +774,7 @@
 		if (src.warm)
 			spawn( 4200 )
 				src.warm = 0
-				src.reagents.del_reagent("tricordrazine")
+				src.reagents.del_reagent("tetracordrazine")
 				src.name = "donk-pocket"
 		return
 
@@ -1073,7 +1073,7 @@
 			name = "exceptional plump pie"
 			desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump pie!"
 			reagents.add_reagent("nutriment", 8)
-			reagents.add_reagent("tricordrazine", 5)
+			reagents.add_reagent("tetracordrazine", 5)
 			bitesize = 2
 		else
 			reagents.add_reagent("nutriment", 8)
@@ -1443,7 +1443,7 @@
 		..()
 		reagents.add_reagent("nutriment", 8)
 		reagents.add_reagent("water", 5)
-		reagents.add_reagent("tricordrazine", 5)
+		reagents.add_reagent("tetracordrazine", 5)
 		bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/mysterysoup
@@ -1468,7 +1468,7 @@
 			if(3)
 				reagents.add_reagent("nutriment", 5)
 				reagents.add_reagent("water", 5)
-				reagents.add_reagent("tricordrazine", 5)
+				reagents.add_reagent("tetracordrazine", 5)
 			if(4)
 				reagents.add_reagent("nutriment", 5)
 				reagents.add_reagent("water", 10)
@@ -2071,7 +2071,7 @@
 			name = "exceptional plump helmet biscuit"
 			desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump helmet biscuit!"
 			reagents.add_reagent("nutriment", 8)
-			reagents.add_reagent("tricordrazine", 5)
+			reagents.add_reagent("tetracordrazine", 5)
 			bitesize = 2
 		else
 			reagents.add_reagent("nutriment", 5)

@@ -66,8 +66,10 @@
 
 	var/msg = ""
 	var/modmsg = ""
+	var/mentormsg = ""
 	var/num_mods_online = 0
 	var/num_admins_online = 0
+	var/num_mentors_online = 0
 	if(holder)
 		for(var/client/C in admins)
 			if((R_ADMIN & C.holder.rights) && !(R_MOD & C.holder.rights))	//Used to determine who shows up in admin rows
@@ -92,7 +94,7 @@
 				msg += "\n"
 
 				num_admins_online++
-			else if(R_MOD & C.holder.rights || R_MENTOR & C.holder.rights)				//Who shows up in mod/mentor rows.
+			else if(R_MOD & C.holder.rights)				//Who shows up in mod/mentor rows.
 				modmsg += "\t[C] is a [C.holder.rank]"
 
 				if(isobserver(C.mob))
@@ -107,15 +109,33 @@
 				modmsg += "\n"
 				num_mods_online++
 
+			else if(R_MENTOR & C.holder.rights)
+				mentormsg += "\t[C] is a [C.holder.rank]"
+
+				if(isobserver(C.mob))
+					mentormsg += " - Observing"
+				else if(istype(C.mob,/mob/new_player))
+					mentormsg += " - Lobby"
+				else
+					mentormsg += " - Playing"
+
+				if(C.is_afk())
+					mentormsg += " (AFK)"
+				mentormsg += "\n"
+				num_mentors_online++
+
 	else
 		for(var/client/C in admins)
 			if(R_ADMIN & C.holder.rights || (!R_MOD & C.holder.rights && !R_MENTOR & C.holder.rights))
 				if(!C.holder.fakekey)
 					msg += "\t[C] is a [C.holder.rank]\n"
 					num_admins_online++
-			else if (R_MOD & C.holder.rights || R_MENTOR & C.holder.rights)
+			else if (R_MOD & C.holder.rights)
 				modmsg += "\t[C] is a [C.holder.rank]\n"
 				num_mods_online++
+			else if (R_MENTOR & C.holder.rights)
+				mentormsg += "\t[C] is a [C.holder.rank]\n"
+				num_mentors_online++
 
-	msg = "<b>Current Admins ([num_admins_online]):</b>\n" + msg + "\n<b> Current Moderators ([num_mods_online]):</b>\n" + modmsg
+	msg = "<b>Current Admins ([num_admins_online]):</b>\n" + msg + "\n<b> Current Moderators ([num_mods_online]):</b>\n" + modmsg + "\n<b> Current Mentors ([num_mentors_online]):</b>\n" + mentormsg
 	src << msg

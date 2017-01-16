@@ -245,14 +245,17 @@
 		O.player = src
 
 		if (holder && (R_MOD & holder.rights))
-			O.name = "Mod"
+			O.name = "Moderator"
 			O.icon_state = "mod"
 		else if(holder && (R_ADMIN & holder.rights))
 			O.name = "Admin"
 			O.icon_state = "admin"
 		else if(holder && (R_DEBUG & holder.rights))
-			O.name = "Dev"
+			O.name = "Developer"
 			O.icon_state = "dev"
+		else if(holder && (R_MENTOR & holder.rights))
+			O.name = "Mentor"
+			O.icon_state = "mentor"
 		else if(donator)
 			O.name = "Donator"
 			O.icon_state = "donator"

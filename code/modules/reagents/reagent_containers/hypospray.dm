@@ -8,7 +8,7 @@
 	icon = 'icons/obj/syringe.dmi'
 	item_state = "hypo"
 	icon_state = "hypo"
-	var/reagent_inside_of_this_object_which_is_being_used = "tricordrazine"  // hehee, awaiting for the day this gets me yelled at
+	var/reagent_inside_of_this_object_which_is_being_used = "tetracordrazine"  // hehee, awaiting for the day this gets me yelled at
 
 	amount_per_transfer_from_this = 5
 	volume = 30

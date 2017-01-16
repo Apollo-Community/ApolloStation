@@ -228,7 +228,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 							 "cryptobiolin",
 							 "dermaline",
 							 "dexalinp",
-							 "tricordrazine",
+							 "tetracordrazine",
 							 "anti_toxin",
 							 "adminordrazine",
 							 "impedrezene",
