@@ -115,7 +115,7 @@
 	desc = "A heavy high-power security flashlight. Shines brighter than regular flashlights."
 	icon_state = "seclite"
 	item_state = ""
-	brightness_on = 5
+	brightness_on = 7
 	w_class = 3
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
