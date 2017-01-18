@@ -121,6 +121,7 @@
 		new /obj/item/clothing/tie/holster/waist(src)
 		new /obj/item/weapon/melee/telebaton(src)
 		new /obj/item/clothing/head/beret/sec/hos(src)
+		new /obj/item/device/flashlight/seclite(src)
 		return
 
 
@@ -158,6 +159,7 @@
 		new /obj/item/weapon/gun/energy/taser(src)
 		new /obj/item/weapon/storage/box/holobadge(src)
 		new /obj/item/clothing/head/beret/sec/warden(src)
+		new /obj/item/device/flashlight/seclite(src)
 		return
 
 
@@ -191,6 +193,7 @@
 		new /obj/item/clothing/tie/storage/black_vest(src)
 		new /obj/item/clothing/head/soft/sec/corp(src)
 		new /obj/item/clothing/under/rank/security/corp(src)
+		new /obj/item/device/flashlight/seclite(src)
 		return
 
 
