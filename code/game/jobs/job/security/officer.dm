@@ -9,14 +9,8 @@
 	selection_color = "#ffeeee"
 	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels, access_morgue)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
-
-<<<<<<< HEAD
-	//rank_succesion_level = 4
-	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL
-	alt_titles = list("Security Cadet","Security Guard","Patrol Officer")
-=======
 	rank_succesion_level = 4
->>>>>>> parent of 077728a76... temporary removal of inductee roles
+
 
 /datum/job/officer/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
