@@ -2743,7 +2743,7 @@
 "baM" = (/turf/simulated/wall/alloy/reinforced,/area/ai_monitored/storage/eva)
 "baN" = (/obj/structure/table/rack{dir = 8; layer = 2.9},/obj/item/weapon/tank/jetpack/carbondioxide,/obj/item/clothing/shoes/magboots,/obj/structure/cable/green{d2 = 2; icon_state = "0-2"},/obj/machinery/power/apc{dir = 1; name = "north bump"; pixel_x = 0; pixel_y = 29},/turf/simulated/floor,/area/ai_monitored/storage/eva)
 "baO" = (/obj/structure/table/rack{dir = 8; layer = 2.9},/obj/item/weapon/tank/jetpack/carbondioxide,/obj/item/clothing/shoes/magboots,/obj/machinery/status_display{density = 0; layer = 4; pixel_x = 0; pixel_y = 32},/turf/simulated/floor,/area/ai_monitored/storage/eva)
-"baP" = (/obj/machinery/alarm{frequency = 1441; pixel_y = 22},/turf/simulated/floor{dir = 4; icon_state = "warning"},/area/ai_monitored/storage/eva)
+"baP" = (/obj/machinery/alarm{frequency = 1441; pixel_y = 22},/obj/item/device/suit_cooling_unit,/obj/item/device/suit_cooling_unit{step_x = -5; step_y = -5},/turf/simulated/floor{dir = 4; icon_state = "warning"},/area/ai_monitored/storage/eva)
 "baQ" = (/turf/simulated/floor{icon_state = "dark"},/area/ai_monitored/storage/eva)
 "baR" = (/obj/structure/table/reinforced,/obj/item/roller,/obj/item/roller,/obj/item/device/radio{frequency = 1487; name = "Medbay Emergency Radio Link"},/obj/item/device/radio{frequency = 1487; name = "Medbay Emergency Radio Link"},/turf/simulated/floor{icon_state = "dark"},/area/ai_monitored/storage/eva)
 "baS" = (/obj/structure/closet/emcloset,/turf/simulated/floor/plating,/area/maintenance/central_port)
