@@ -11,8 +11,7 @@
 	minimal_access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_engine_core)
 	alt_titles = list("Maintenance Technician", "Electrician","Junior Engineer","Civil Engineer")
 
-	//rank_succesion_level = 4
-	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL
+	rank_succesion_level = 4
 
 /datum/job/engineer/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
