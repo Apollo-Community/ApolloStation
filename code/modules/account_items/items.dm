@@ -68,4 +68,4 @@
 /datum/gear/account/advancedpda
 	display_name = "Advanced PDA"
 	path = /obj/item/device/pda/fluff/rylanasteelclaw
-	sort_category = "belt"
+	sort_category = slot_belt
