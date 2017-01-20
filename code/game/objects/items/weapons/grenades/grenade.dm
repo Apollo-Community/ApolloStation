@@ -10,7 +10,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/active = 0
-	var/det_time = 50
+	var/det_time = 30
 
 /obj/item/weapon/grenade/proc/clown_check(var/mob/living/user)
 	if((CLUMSY in user.mutations) && prob(50))
@@ -90,16 +90,16 @@
 /obj/item/weapon/grenade/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(isscrewdriver(W))
 		switch(det_time)
-			if ("1")
+			if (1)
 				det_time = 10
 				user << "<span class='notice'>You set the [name] for 1 second detonation time.</span>"
-			if ("10")
+			if (10)
 				det_time = 30
 				user << "<span class='notice'>You set the [name] for 3 second detonation time.</span>"
-			if ("30")
+			if (30)
 				det_time = 50
 				user << "<span class='notice'>You set the [name] for 5 second detonation time.</span>"
-			if ("50")
+			if (50)
 				det_time = 1
 				user << "<span class='notice'>You set the [name] for instant detonation.</span>"
 		add_fingerprint(user)
