@@ -1,4 +1,4 @@
-"aa" = (/turf/unsimulated/wall{desc = "Looks like you're not going to be able to mine this."; icon_state = "lunar_rock"; name = "hardened rock"},/area/planet/moon/exterior)
+"aa" = (/turf/unsimulated/wall{desc = "Looks like you're not going to be able to mine this."; icon_state = "lunar_rock"; name = "hardened rock"; nitrogen = 0; oxygen = 0; temperature = 0},/area/planet/moon/exterior)
 "ab" = (/turf/simulated/floor/plating/airless/asteroid/lunar,/area/planet/moon/exterior/explored)
 "ac" = (/turf/simulated/mineral/random/moon,/area/planet/moon/exterior)
 "ad" = (/turf/simulated/floor/plating/airless/asteroid/lunar,/area/planet/moon/exterior)
@@ -1888,7 +1888,7 @@
 "Kp" = (/obj/structure/closet/crate/medical,/turf/simulated/floor/airless,/area/planet/moon/exterior)
 "Kq" = (/obj/effect/decal/cleanable/ash,/obj/item/weapon/shard{icon_state = "small"},/turf/simulated/floor/airless,/area/planet/moon/exterior)
 "Kr" = (/obj/structure/closet/crate/trashcart,/turf/simulated/floor/plating/airless,/area/planet/moon/exterior)
-"Ks" = (/obj/effect/mapinfo/sector/moon,/turf/unsimulated/wall{desc = "Looks like you're not going to be able to mine this."; icon_state = "lunar_rock"; name = "hardened rock"},/area/planet/moon/exterior)
+"Ks" = (/obj/effect/mapinfo/sector/moon,/turf/unsimulated/wall{desc = "Looks like you're not going to be able to mine this."; icon_state = "lunar_rock"; name = "hardened rock"; nitrogen = 0; oxygen = 0; temperature = 0},/area/planet/moon/exterior)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
