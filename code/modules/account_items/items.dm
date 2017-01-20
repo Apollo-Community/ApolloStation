@@ -63,3 +63,9 @@
 	display_name = "Delta"
 	path = /mob/living/simple_animal/dog/german_shep/fluff/delta
 	sort_category = "misc"
+
+/////Rylana Steelclaw Advanced PDA datum
+/datum/gear/account/advancedpda
+	display_name = "Advanced PDA"
+	path = /obj/item/device/pda/fluff/rylanasteelclaw
+	sort_category = slot_belt
