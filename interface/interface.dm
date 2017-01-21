@@ -31,7 +31,7 @@
 	if( config.wikiurl )
 		if(alert("This will open the rules in your browser. Are you sure?",,"Yes","No")=="No")
 			return
-		src << link(config.wikiurl + "/index.php?title=Rules_condensed")
+		src << link("http://apollo-community.enjin.com/forum/m/41735571/viewthread/29434722-community-guidelines-rules")
 	else
 		src << "<span class='alert'>The wiki URL is not set in the server configuration.</span>"
 	return

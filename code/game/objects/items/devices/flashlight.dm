@@ -110,6 +110,16 @@
 
 	on = 1
 
+/obj/item/device/flashlight/seclite
+	name = "heavy-duty flashlight"
+	desc = "A heavy high-power security flashlight. Shines brighter than regular flashlights."
+	icon_state = "seclite"
+	item_state = ""
+	brightness_on = 7
+	w_class = 3
+	flags = CONDUCT
+	slot_flags = SLOT_BELT
+
 
 // green-shaded desk lamp
 /obj/item/device/flashlight/lamp/green

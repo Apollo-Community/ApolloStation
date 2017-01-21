@@ -295,3 +295,18 @@
  	icon = 'icons/obj/clothing/masks.dmi'
  	icon_state = "plaguedoctor"
  	item_state = "plaguedoctor"
+
+//////Rylana Steelclaw Advanced PDA
+/obj/item/device/pda/fluff/rylanasteelclaw
+	icon_state = "fluff-pda"
+	desc = "A custom PDA with two screens. It seems rather advanced and has a golden plaque on the top, displaying the owner's first and last name."
+
+/obj/item/device/pda/fluff/rylanasteelclaw/update_icon()
+	..()
+
+	overlays.Cut()
+	if(new_message || new_news)
+		overlays += image('icons/obj/pda.dmi', "fluff-pda-r")
+
+/obj/item/device/pda/fluff/rylanasteelclaw/generateName()
+	name = "Advanced PDA-[owner] ([ownjob])"
