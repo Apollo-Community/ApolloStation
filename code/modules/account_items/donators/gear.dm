@@ -108,11 +108,6 @@
 	path = /obj/item/clothing/suit/storage/toggle/labcoat/red
 	sort_category = slot_wear_suit
 
-/datum/gear/account/haldreihen_jumpsuit
-	display_name = "Atmos labcoat"
-	path = /obj/item/clothing/suit/storage/toggle/labcoat/fluff/haldreithen
-	sort_category = slot_wear_suit
-
 /datum/gear/account/notmegatron_mimemask
 	display_name = "Alfreds mask"
 	path = /obj/item/clothing/mask/gas/mime
@@ -142,8 +137,13 @@
 	display_name = "custom Head of Personnel suit"
 	path = /obj/item/clothing/suit/armor/hos/fluff/pygmal
 	sort_category = slot_wear_suit
-	
+
 /datum/gear/account/faustico_mask
 	display_name = "plague doctor mask"
 	path = /obj/item/clothing/mask/gas/fluff/plaguefaustico
 	sort_category = slot_wear_mask
+
+/datum/gear/account/haldreithen_formal
+	display_name = "Qilxuq Formal"
+	path = /obj/item/clothing/under/captainformal/fluff/haldreihen
+	sort_category = slot_w_uniform
