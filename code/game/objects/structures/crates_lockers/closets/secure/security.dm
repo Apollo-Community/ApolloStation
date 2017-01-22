@@ -147,6 +147,7 @@
 		new /obj/item/clothing/under/rank/warden(src)
 		new /obj/item/clothing/under/rank/warden/corp(src)
 		new /obj/item/clothing/suit/armor/vest/warden(src)
+		new /obj/item/clothing/suit/security/wardenblack(src)
 		new /obj/item/clothing/head/helmet/warden(src)
 //		new /obj/item/weapon/cartridge/security(src)
 		new /obj/item/device/radio/headset/headset_sec(src)

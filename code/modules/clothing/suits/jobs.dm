@@ -90,6 +90,7 @@
 	desc = "A beautiful black jacket that gives any warden an awesome style."
 	icon_state = "wardenblackjacket"
 	item_state = "wardenblackjacket"
+	armor = list(melee = 50, bullet = 15, laser = 50,energy = 10, bomb = 20, bio = 0, rad = 0)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
 /obj/item/clothing/suit/security/navyhos
