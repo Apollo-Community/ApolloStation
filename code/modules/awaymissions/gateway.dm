@@ -19,7 +19,6 @@
 	var/wait = 0				//this just grabs world.time at world start
 	var/obj/machinery/gateway/centeraway/awaygate = null
 
-/* Stuff for away missions - Unused at the moment.
 /obj/machinery/gateway/initialize()
 	update_icon()
 	if(dir == 2)
@@ -233,4 +232,4 @@ obj/machinery/gateway/centerstation/process()
 			calibrated = 1
 			return
 
-*/
+
