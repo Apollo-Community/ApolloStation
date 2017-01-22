@@ -85,6 +85,13 @@
 	item_state = "wardenbluejacket"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
+/obj/item/clothing/suit/security/wardenblack
+	name = "warden's black jacket"
+	desc = "A beautiful black jacket that gives any warden an awesome style."
+	icon_state = "wardenblackjacket"
+	item_state = "wardenblackjacket"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
 /obj/item/clothing/suit/security/navyhos
 	name = "head of security's jacket"
 	desc = "This piece of clothing was specifically designed for asserting superior authority."
