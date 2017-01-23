@@ -147,3 +147,8 @@
 	display_name = "Qilxuq Formal"
 	path = /obj/item/clothing/under/captainformal/fluff/haldreihen
 	sort_category = slot_w_uniform
+
+/datum/gear/account/haldreithen_dress
+	display_name = "Qilxuq Dress"
+	path = /obj/item/clothing/under/fluff/solara_light_1
+	sort_category = slot_w_uniform
