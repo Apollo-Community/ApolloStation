@@ -34,6 +34,7 @@ Famous last words.
 	for(var/client/X in admins) //Let's go send it to the mentors (and other staff)
 		if((R_ADMIN|R_MENTOR) & X.holder.rights)
 			X << msg
+			X << 'sound/effects/adminhelp.ogg'
 
 	src << "<font color='blue'>PM to-<b>Mentors </b>: [original_msg]</font>" //Let's show it back to the person Mentorhelping
 
