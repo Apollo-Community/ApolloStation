@@ -987,6 +987,7 @@
 #include "code\modules\awaymissions\loot.dm"
 #include "code\modules\awaymissions\pamphlet.dm"
 #include "code\modules\awaymissions\trigger.dm"
+#include "code\modules\awaymissions\zlevel.dm"
 #include "code\modules\canon\procs.dm"
 #include "code\modules\canon\virtual_paperwork\admin.dm"
 #include "code\modules\canon\virtual_paperwork\virtual_paperwork.dm"
@@ -1815,4 +1816,6 @@
 #include "maps\apollo\apollo-03-Slater.dmm"
 #include "maps\apollo\apollo-04-CentComm.dmm"
 #include "maps\apollo\apollo-05-Moon.dmm"
+#include "maps\misc\arcticwaste.dmm"
+#include "maps\misc\listeningpost.dmm"
 // END_INCLUDE
