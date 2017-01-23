@@ -1816,6 +1816,5 @@
 #include "maps\apollo\apollo-03-Slater.dmm"
 #include "maps\apollo\apollo-04-CentComm.dmm"
 #include "maps\apollo\apollo-05-Moon.dmm"
-#include "maps\misc\arcticwaste.dmm"
 #include "maps\misc\listeningpost.dmm"
 // END_INCLUDE
