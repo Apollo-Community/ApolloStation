@@ -17,6 +17,10 @@
 	storage = new(src, 250)
 	update_icon()
 
+/obj/machinery/crusher/Destroy()
+	qdel(storage)
+	..()
+
 /obj/machinery/crusher/update_icon()
 	icon_state = "grinder[on]"
 
@@ -50,3 +54,6 @@
 
 /obj/machinery/crusher/process()
 	..()
+
+/obj/machinery/crusher/access_chems()
+	return storage
