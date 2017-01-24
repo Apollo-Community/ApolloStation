@@ -366,7 +366,7 @@
 	O.real_name = chosen_dna.real_name
 
 	for(var/obj/T in C)
-		qdel(T)
+		del(T)
 
 	O.loc = C.loc
 
