@@ -76,7 +76,6 @@ obj/machinery/gateway/centerstation/process()
 
 /obj/machinery/gateway/centerstation/proc/toggleon(mob/user as mob)
 	if(!ready)			return
-	if(linked.len != 8)	return
 	if(!powered())		return
 	if(!awaygate)
 		user << "<span class='notice'>Error: No destination found.</span>"
@@ -180,7 +179,6 @@ obj/machinery/gateway/centerstation/process()
 
 /obj/machinery/gateway/centeraway/proc/toggleon(mob/user as mob)
 	if(!ready)			return
-	if(linked.len != 8)	return
 	if(!stationgate)
 		user << "<span class='notice'>Error: No destination found.</span>"
 		return
