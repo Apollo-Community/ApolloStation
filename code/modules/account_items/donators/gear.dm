@@ -152,3 +152,8 @@
 	display_name = "Qilxuq Dress"
 	path = /obj/item/clothing/under/fluff/solara_light_1
 	sort_category = slot_w_uniform
+
+/datum/gear/account/silviatail
+	display_name = "Shark Tail"
+	path = /obj/item/clothing/head/fluff/silviatail
+	sort_category = slot_head
