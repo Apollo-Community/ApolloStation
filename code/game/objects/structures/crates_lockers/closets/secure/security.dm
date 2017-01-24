@@ -16,6 +16,7 @@
 			new /obj/item/weapon/storage/backpack/satchel_cap(src)
 		new /obj/item/clothing/suit/captunic(src)
 		new /obj/item/clothing/suit/captunic/capjacket(src)
+		new /obj/item/clothing/suit/storage/toggle/labcoat/wintercoat/captain(src)
 		new /obj/item/clothing/head/helmet/cap(src)
 		new /obj/item/clothing/under/rank/captain(src)
 		new /obj/item/clothing/suit/armor/vest(src)
@@ -29,6 +30,7 @@
 		new /obj/item/clothing/under/dress/dress_cap(src)
 		new /obj/item/clothing/head/helmet/formalcaptain(src)
 		new /obj/item/clothing/under/captainformal(src)
+		new /obj/item/clothing/tie/holster(src)
 		return
 
 
@@ -53,6 +55,7 @@
 		new /obj/item/weapon/storage/box/ids(src)
 		new /obj/item/weapon/storage/box/ids( src )
 		new /obj/item/weapon/gun/energy/gun(src)
+		new /obj/item/clothing/tie/holster(src)
 		new /obj/item/device/flash(src)
 		return
 
@@ -105,6 +108,7 @@
 		new /obj/item/clothing/suit/armor/vest(src)
 		new /obj/item/clothing/under/rank/head_of_security/jensen(src)
 		new /obj/item/clothing/under/rank/head_of_security/corp(src)
+		new /obj/item/clothing/suit/storage/toggle/labcoat/wintercoat/security(src)
 		new /obj/item/clothing/suit/armor/hos/jensen(src)
 		new /obj/item/clothing/suit/armor/hos(src)
 		new /obj/item/clothing/head/helmet/HoS/dermal(src)
@@ -148,6 +152,7 @@
 		new /obj/item/clothing/under/rank/warden/corp(src)
 		new /obj/item/clothing/suit/armor/vest/warden(src)
 		new /obj/item/clothing/suit/security/wardenblack(src)
+		new /obj/item/clothing/suit/storage/toggle/labcoat/wintercoat/security(src)
 		new /obj/item/clothing/head/helmet/warden(src)
 //		new /obj/item/weapon/cartridge/security(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
@@ -183,6 +188,7 @@
 			new /obj/item/weapon/storage/backpack/satchel_sec(src)
 		new /obj/item/clothing/suit/armor/vest/security(src)
 		new /obj/item/clothing/head/helmet(src)
+		new /obj/item/clothing/suit/storage/toggle/labcoat/wintercoat/security(src)
 //		new /obj/item/weapon/cartridge/security(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/weapon/storage/belt/security(src)
@@ -250,6 +256,7 @@
 		new /obj/item/clothing/suit/storage/det_suit/black(src)
 		new /obj/item/clothing/suit/storage/forensics/blue(src)
 		new /obj/item/clothing/suit/storage/forensics/red(src)
+		new /obj/item/clothing/suit/storage/toggle/labcoat/wintercoat/security(src)
 		new /obj/item/clothing/gloves/black(src)
 		new /obj/item/clothing/head/det_hat(src)
 		new /obj/item/clothing/head/det_hat/black(src)
