@@ -310,3 +310,11 @@
 	icon = 'icons/obj/clothing/uniforms.dmi'
 	icon_state = "captain_formal"
 	item_state = "captain_formal"
+
+
+/////Silvia Shark tail
+/obj/item/clothing/head/fluff/silviatail
+	name = "fake shark tail"
+	desc = "A very pristine tail clothing which makes the user look like they are a cute shark"
+	icon_state = "shark_tail"
+	item_state = "shark_tail" //Both of the icons (icon_state - item_state) are in the hats sprites files (icons/mob/heads.dmi and icons/items/clothings/hats) because the item is coded as a hat
