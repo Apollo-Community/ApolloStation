@@ -878,7 +878,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	overlays.Cut()
 	if(new_message || new_news)
-		overlays += image('icons/obj/pda.dmi', "pda-r")
+		overlays += icon_state + "-r"
 
 /obj/item/device/pda/proc/detonate_act(var/obj/item/device/pda/P)
 	//TODO: sometimes these attacks show up on the message server
