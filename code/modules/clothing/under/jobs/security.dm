@@ -24,7 +24,7 @@
 	item_state = "r_suit"
 	item_color = "secred"
 	armor = list(melee = 10, bullet = 2, laser = 2, energy = 2, bomb = 0, bio = 0, rad = 0)
-	siemens_coefficient = 0.5
+	siemens_coefficient = 0.9
 
 /obj/item/clothing/under/rank/dispatch
 	name = "dispatcher's uniform"
