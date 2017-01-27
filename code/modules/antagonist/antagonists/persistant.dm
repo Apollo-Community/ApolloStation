@@ -2,11 +2,13 @@
 	name = "Autonomous Agent"
 	greeting = "You are an autonomous agent."
 	obligatory_contracts = 0
+	var/datum/mind/autonomous = null
 
 /datum/antagonist/traitor/persistant/New(var/datum/mind/us, var/datum/faction/syndicate/join_faction)
 	..(us)
 
 	faction = join_faction
+	autonomous = us
 
 /datum/antagonist/traitor/persistant/greet()
 	antag.current << "<B><font size=3 color=red>[greeting]</font></B>"
@@ -91,3 +93,8 @@
 
 		antag.current << "An Uplink interface has been installed in your [P.name]. Enter the code \"[pass]\" into the ringtone select to access it."
 		antag.store_memory("<B>Uplink Access Passcode:</B> [pass] ([P.name]).")
+	ticker.mode.traitors += autonomous
+
+/datum/antagonist/traitor/persistant/Destroy()
+	..()
+	ticker.mode.traitors -= autonomous
