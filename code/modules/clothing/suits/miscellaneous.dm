@@ -397,3 +397,8 @@
 	min_cold_protection_temperature = T0C - 20
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS
 
+/obj/item/clothing/suit/captain_cloak
+	name = "Regional Manager Cloak"
+	desc ="A long, flowing silk over-cloak worn by the superior of the Captain, the NanoTrasen Regional Manager."
+	icon_state = "captain_cloak"
+	item_state = "captain_cloak"
