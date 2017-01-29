@@ -288,7 +288,14 @@
  	icon_state = "plaguedoctor"
  	item_state = "plaguedoctor"
 
-//////Rylana Steelclaw Advanced PDA
+//////Rylana Steelclaw Stuff
+/obj/item/weapon/storage/backpack/fluff/hierarch_void_link
+	name = "Hierarch Void Link"
+	desc = "A hovering gateway with blue energy pulsing from it's core. It seems to open a gateway to somewhere."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "hierarch_void_link"
+	item_state = "hierarch_void_link"
+	
 /obj/item/device/pda/fluff/rylanasteelclaw
 	icon_state = "fluff-pda"
 	desc = "A custom PDA with two screens. It seems rather advanced and has a golden plaque on the top, displaying the owner's first and last name."
