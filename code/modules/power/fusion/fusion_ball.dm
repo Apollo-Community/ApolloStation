@@ -113,7 +113,7 @@ var/global/list/fusion_balls = list()
 	spawn()
 		for(var/mob/living/M in ohearers(shock_range,src))	//if you are behind glass your are safe.(this returns only mobs !)
 			var/dist = get_dist(M, src)
-			if(dist > kill_shock_range)
+			if(dist < kill_shock_range)
 				kill_shock(M)
 				continue
 			hurt_shock(M)
@@ -142,8 +142,7 @@ var/global/list/fusion_balls = list()
 	var/datum/effect/effect/system/lightning_bolt/bolt = new()
 	bolt.start(src, m, sx_offset = x_offset, sy_offset = y_offset)
 	playsound(src.loc, pick( 'sound/effects/electr1.ogg', 'sound/effects/electr2.ogg', 'sound/effects/electr3.ogg'), 100, 1)
-	m.apply_damage(rand(10, 20), damagetype = BURN)
-	m.apply_effect(rand(2.5, 5), effecttype = STUN)
+	m.electrocute_act(rand(10, 20))
 	new/obj/effect/effect/sparks(get_turf(m))
 
 //Kill (dustify) shock a target.
