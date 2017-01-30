@@ -141,10 +141,10 @@ turf/simulated/floor/update_icon()
 		if(get_lightfloor_on())
 			switch(get_lightfloor_state())
 				if(LIGHTFLOOR_STATE_OK)
-					if(name == "Dance floor")
-						icon_state = "light_on-c"
+					if(name == "Dance floor") 
+						icon_state = "light_on-c" //If we are a dance floor, use the dance floor animated icon
 					else
-						icon_state = "light_on"
+						icon_state = "light_on" //Else be a boring light tile
 					set_light(5)
 				if(LIGHTFLOOR_STATE_FLICKER)
 					var/num = pick("1","2","3","4")
