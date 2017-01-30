@@ -103,13 +103,6 @@
 ////////// Usable Items //////////
 //////////////////////////////////
 
-/obj/item/weapon/storage/backpack/fluff/hierarch_void_link //
-	name = "Hierarch Void Link"
-	desc = "A hovering gateway with blue energy pulsing from it's core. It seems to open a gateway to somewhere."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "hierarch_void_link"
-	item_state = "hierarch_void_link"
-
 /obj/item/weapon/folder/blue/fluff/matthew_riebhardt //Matthew Riebhardt - ZekeSulastin
 	name = "academic journal"
 	desc = "An academic journal, seemingly pertaining to medical genetics. This issue is for the second quarter of 2557. Paper flags demarcate some articles the owner finds interesting."
