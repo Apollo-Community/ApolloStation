@@ -64,7 +64,7 @@
 	if(!..())
 		return 0
 
-	A.attack_generic(src,rand(5,6),"bitten")
+	A.attack_generic(src,rand(5,6),"bitten","Claw Marks")
 
 /*
 	Slimes
@@ -84,7 +84,7 @@
 		return
 
 	// Basic attack.
-	A.attack_generic(src, (is_adult ? rand(20,40) : rand(5,25)), "glomped")
+	A.attack_generic(src, (is_adult ? rand(20,40) : rand(5,25)), "glomped", used_weapon = "Slime Marks")
 
 	// Handle mob shocks.
 	var/mob/living/M = A
