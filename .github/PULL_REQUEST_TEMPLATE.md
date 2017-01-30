@@ -12,6 +12,5 @@
 - [ ] Code takes game balance into account.
 - [ ] Code is clear and understandable.
 - [ ] Code is commented.
-- [ ] New code is documented in the changelog.
 
 _Maintainers: Do not merge code before the above steps are crossed out_
