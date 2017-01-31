@@ -51,8 +51,8 @@
 	cell_type = "/obj/item/weapon/cell"
 
 /obj/item/weapon/gun/energy/stunrevolver/detective
-	name = "stun revolver"
-	desc = "A high-tech gun that looks just like a ballistic gun, but it actually fires stun shells. It's obviously based on the Terran Lügermorph Pistol, from their second world war Era. You can see an energy indicator on the side."
+	name = "detective's stunrevolver"
+	desc = "A high-tech gun that looks just like a ballistic gun, but it actually fires stun shells. It's obviously based on the Terran LÃ¼germorph Pistol, from their second world war Era. You can see an energy indicator on the side."
 	icon_state = "detectivstun"
 	fire_sound = 'sound/weapons/Taser.ogg'
 	origin_tech = "combat=2;materials=2;powerstorage=2"
