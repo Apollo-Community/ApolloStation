@@ -55,8 +55,9 @@
 		air_contents = fusion_controller.gas_contents
 
 /obj/machinery/power/fusion/plasma/attack_hand(mob/user as mob)
-	var/tmp/mob/living/M = user
-	M.dust()
+	if(istype(user, /mob/living) && get_dist(src, user <= 1))
+		var/tmp/mob/living/M = user
+		M.dust()
 
 /obj/machinery/power/fusion/plasma/bullet_act(obj/item/projectile/P)
 	return 0 //Will there be an impact? Who knows. Will we see it? No.
