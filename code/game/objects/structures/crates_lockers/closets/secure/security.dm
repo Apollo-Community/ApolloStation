@@ -247,7 +247,7 @@
 	icon_broken = "cabinetdetective_broken"
 	icon_off = "cabinetdetective_broken"
 
-	New()
+	New() //All the items in the locker
 		..()
 		new /obj/item/clothing/under/det(src)
 		new /obj/item/clothing/under/det/black(src)
