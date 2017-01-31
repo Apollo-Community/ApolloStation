@@ -85,6 +85,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/allow_character_respawn,    /* Allows a ghost to respawn */
 	/client/proc/event_manager_panel,
 	/client/proc/add_acc_item,
+	/client/proc/add_online_acc_item,
 	/client/proc/remove_acc_item,
 	/client/proc/TemplatePanel,
 	/client/proc/editappear,

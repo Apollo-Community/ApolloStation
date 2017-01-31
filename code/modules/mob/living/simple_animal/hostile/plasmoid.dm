@@ -56,7 +56,7 @@
 //feel the horrible code optimilization!
 	if(isliving(target_mob) && !target_mob.reagents)
 		var/mob/living/LNR = target_mob
-		LNR.attack_generic(src,rand(melee_damage_lower,melee_damage_upper),attacktext_ni)
+		LNR.attack_generic(src,rand(melee_damage_lower,melee_damage_upper),attacktext_ni,"Puncture Wounds")
 		return LNR
 	if(istype(target_mob,/obj/mecha))
 		var/obj/mecha/M = target_mob
