@@ -5,65 +5,67 @@
 	min_brig_time = 60
 	max_brig_time = 60
 
-/datum/law/high_severity/murder
-	name = "Murder"
-	desc = "Where an individual intentionally causes the death of a crew member."
+/datum/law/high_severity/high_misprision
+	name = "High Misprision"
+	desc = "To assist in or fail to report any crime that is listed as a High Crime."
 
-	min_prison_time = 60
+	min_prison_time = 20
 	max_prison_time = 60
 
-/datum/law/high_severity/attempted_murder
-	name = "Attempted Murder"
-	desc = "Where an individual intentionally attempts to cause the death of a crew member."
 
-	min_prison_time = 30
-	max_prison_time = 60
+/datum/law/high_severity/breach_of_information
+	name = "Breach of Information"
+	desc = "To release classified information to any unauthorized personnel."
 
-/datum/law/high_severity/manslaughter
-	name = "Manslaughter"
-	desc = "Where an individual, through reckless action, causes the death of a crew member."
-
-	min_prison_time = 6
-	max_prison_time = 12
-
-/datum/law/high_severity/mutiny
-	name = "Mutiny"
-	desc = "Where a group systematically seeks to undermine the rule of law, Command Staff, or NanoTrasen."
-
-	min_prison_time = 10
-	max_prison_time = 60
-
-/datum/law/high_severity/inciting_mutiny
-	name = "Inciting Mutiny"
-	desc = "Where an individual incites a group with the purpose of systematically undermining law, Command Staff, or NanoTrasen"
-
-	min_prison_time = 30
-	max_prison_time = 60
-
-/datum/law/high_severity/misprision
-	name = "Misprision"
-	desc = "Where an individual aids or fails to report an individual or group guilty of sedition."
-
-	min_prison_time = 30
-	max_prison_time = 60
-
-/datum/law/high_severity/sedition
-	name = "Sedition"
-	desc = "Where an individual or group acts in a manner hostile towards NanoTrasen or its officials."
-
-	min_prison_time = 60
+	min_prison_time = 25
 	max_prison_time = 60
 
 /datum/law/high_severity/abduction
 	name = "Abduction"
-	desc = "To unlawfully and maliciously hold a person against their will."
+	desc = "To unlawfully hold someone against their will."
 
-	min_prison_time = 4
+	min_prison_time = 15
+	max_prison_time = 20
+
+/datum/law/high_severity/manslaughter
+	name = "Manslaughter"
+	desc = "To have such dutiful or general negligence that it leads to the death of an employee of NanoTrasen or member of the crew."
+
+	min_prison_time = 15
 	max_prison_time = 30
 
-/datum/law/high_severity/breach_information
-	name = "Breach of Information"
-	desc = "To provide classified information to an unauthorized personnel."
+/datum/law/high_severity/attempted_murder
+	name = "Attempted Murder"
+	desc = "To attempt to unlawfully and intentionally take the life of an employee of NanoTrasen or member of the crew."
 
 	min_prison_time = 30
 	max_prison_time = 60
+
+/datum/law/high_severity/murder
+	name = "Murder"
+	desc = "To unlawfully and intentionally take the life of an employee of NanoTrasen or member of the crew."
+
+	min_prison_time = 60
+	max_prison_time = 60
+
+/datum/law/high_severity/mutiny
+	name = "Mutiny"
+	desc = "To act in such a way that undermines NanoTrasen Law or the Chain of Command."
+
+	min_prison_time = 15
+	max_prison_time = 60
+
+/datum/law/high_severity/incitation_of_mutiny
+	name = "Incitation of Mutiny"
+	desc = "To act in such a way that causes an undermining of NanoTrasen Law or the Chain of Command."
+
+	min_prison_time = 60
+	max_prison_time = 60
+
+/datum/law/high_severity/treason
+	name = "Treason"
+	desc = "To act in such a way that is hostile towards NanoTrasen or its officials, or to be affiliated with a group organized to do such"
+
+	min_prison_time = 60
+	max_prison_time = 60
+
