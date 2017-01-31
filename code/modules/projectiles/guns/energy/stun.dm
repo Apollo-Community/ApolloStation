@@ -50,7 +50,7 @@
 	projectile_type = "/obj/item/projectile/beam/stun"
 	cell_type = "/obj/item/weapon/cell"
 
-/obj/item/weapon/gun/energy/stunrevolver/detective
+/obj/item/weapon/gun/energy/stunrevolver/detective //Detective's private stungun
 	name = "detective's stunrevolver"
 	desc = "A high-tech gun that looks just like a ballistic gun, but it actually fires stun shells. It's obviously based on the Terran Lügermorph Pistol, from their second world war Era. You can see an energy indicator on the side."
 	icon_state = "detectivstun"
