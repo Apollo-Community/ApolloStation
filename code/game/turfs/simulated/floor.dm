@@ -141,7 +141,10 @@ turf/simulated/floor/update_icon()
 		if(get_lightfloor_on())
 			switch(get_lightfloor_state())
 				if(LIGHTFLOOR_STATE_OK)
-					icon_state = "light_on"
+					if(name == "Dance floor")
+						icon_state = "light_on-c" //If we are a dance light floor, then set our icon state to the dance floor version
+					else
+						icon_state = "light_on" //Else we are a regular light floor and will use the regular light floor icon state
 					set_light(5)
 				if(LIGHTFLOOR_STATE_FLICKER)
 					var/num = pick("1","2","3","4")
