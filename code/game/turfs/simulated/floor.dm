@@ -141,8 +141,11 @@ turf/simulated/floor/update_icon()
 		if(get_lightfloor_on())
 			switch(get_lightfloor_state())
 				if(LIGHTFLOOR_STATE_OK)
-					icon_state = "light_on"
-					set_light(5)
+					if(name == "Dance floor")
+						updateDiscoFloor()		//If we are a disco floor, update our icon depending on x and y pos
+					else
+						icon_state = "light_on" //Else we are a regular light floor and will use the regular light floor icon state
+						set_light(5)
 				if(LIGHTFLOOR_STATE_FLICKER)
 					var/num = pick("1","2","3","4")
 					icon_state = "light_on_flicker[num]"
@@ -247,6 +250,23 @@ turf/simulated/floor/update_icon()
 	break_tile()
 
 	statistics.increase_stat("damage_cost", 100)
+
+/turf/simulated/floor/proc/updateDiscoFloor()
+	set_light(0.15)
+	switch((src.x + ((src.y % 2) * 3)) % 6) //Math to figure out what colour we should be
+		if (0)
+			icon_state = "light_on-m-r"
+		if (1)
+			icon_state = "light_on-m-b"
+		if (2)
+			icon_state = "light_on-m-p"
+		if (3)
+			icon_state = "light_on-m-g"
+		if (4)
+			icon_state = "light_on-m-y"
+		if (5)
+			icon_state = "light_on-m-c"
+
 
 /turf/simulated/floor/is_plasteel_floor()
 	if(ispath(floor_type, /obj/item/stack/tile/plasteel))
