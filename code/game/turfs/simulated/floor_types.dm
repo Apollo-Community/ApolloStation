@@ -39,8 +39,8 @@
 
 /turf/simulated/floor/light/rainbow
 	name = "Dance floor"
-	light_range = 5
-	icon_state = "light_on-c"
+	light_range = 1
+	icon_state = "light_on-m-r"
 	floor_type = /obj/item/stack/tile/light
 
 
