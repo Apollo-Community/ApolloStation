@@ -247,7 +247,7 @@
 	icon_broken = "cabinetdetective_broken"
 	icon_off = "cabinetdetective_broken"
 
-	New()
+	New() //All the items in the locker
 		..()
 		new /obj/item/clothing/under/det(src)
 		new /obj/item/clothing/under/det/black(src)
@@ -261,6 +261,8 @@
 		new /obj/item/clothing/head/det_hat(src)
 		new /obj/item/clothing/head/det_hat/black(src)
 		new /obj/item/clothing/shoes/brown(src)
+		new /obj/item/clothing/tie/holster/armpit(src)
+		new /obj/item/weapon/gun/energy/stunrevolver/detective(src)
 		new /obj/item/weapon/storage/box/evidence(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/device/detective_scanner(src)
