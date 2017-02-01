@@ -3326,7 +3326,7 @@
 "blX" = (/obj/structure/table,/obj/machinery/microwave,/obj/machinery/light{dir = 1},/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/kitchen)
 "blY" = (/obj/machinery/camera{c_tag = "Kitchen"; dir = 2},/obj/structure/table,/obj/machinery/microwave,/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_y = 25},/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/kitchen)
 "blZ" = (/obj/structure/table,/obj/machinery/cooker/cerealmaker{pixel_y = 7},/obj/machinery/computer/guestpass{pixel_y = 28},/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/kitchen)
-"bma" = (/obj/structure/table,/obj/machinery/newscaster{pixel_y = 30},/obj/machinery/cooking/candy{pixel_y = 8},/obj/structure/extinguisher_cabinet{step_x = 24},/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/kitchen)
+"bma" = (/obj/structure/table,/obj/machinery/newscaster{pixel_y = 30},/obj/machinery/cooking/candy{pixel_y = 8},/obj/structure/extinguisher_cabinet{pixel_x = 24},/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/kitchen)
 "bmb" = (/obj/structure/disposalpipe/segment,/obj/machinery/door/firedoor,/turf/simulated/floor{dir = 9; icon_state = "green"},/area/hallway/primary/port)
 "bmc" = (/obj/machinery/door/firedoor,/turf/simulated/floor,/area/hallway/primary/port)
 "bmd" = (/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/obj/machinery/door/firedoor,/turf/simulated/floor{dir = 5; icon_state = "green"},/area/hallway/primary/port)
