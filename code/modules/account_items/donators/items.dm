@@ -322,9 +322,9 @@
 /////Silvia Shark tail
 /obj/item/weapon/storage/belt/fluff/silviatail
 	name = "fake shark tail"
-	desc = "A very pristine tail clothing which makes the user look like they are a cute shark"
+	desc = "A very pristine tail clothing which makes the user look like they are a cute shark,there are storage compartments with zippers along the side of the belt."
 	icon_state = "shark_tail"
-	item_state = "shark_tail" //Both of the icons (icon_state - item_state) are in the hats sprites files (icons/mob/heads.dmi and icons/items/clothings/hats) because the item is coded as a hat. (Lol nope made that thing a medical belt aren't I a stinker :P -Cola )
+	item_state = "shark_tail" //Both of the icons (icon_state - item_state) are in the hats sprites files (icons/mob/heads.dmi and icons/items/clothings/hats) because the item is coded as a hat. (I've edited it to be used as a belt, icons are in apporate places.)
 	slot_flags = SLOT_BELT
 	can_hold = list(
 		"/obj/item/device/healthanalyzer",
