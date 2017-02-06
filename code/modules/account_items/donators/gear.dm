@@ -155,11 +155,11 @@
 
 /datum/gear/account/silviatail
 	display_name = "Shark Tail"
-	path = /obj/item/clothing/head/fluff/silviatail
-	sort_category = slot_head
-	
+	path = /obj/item/weapon/storage/belt/fluff/silviatail
+	sort_category = slot_belt
+
 /datum/gear/account/rylana_hierarch_void_link
 	display_name = "Hierarch Void Link"
 	path = /obj/item/weapon/storage/backpack/fluff/hierarch_void_link
 	sort_category = slot_back
-	
+
