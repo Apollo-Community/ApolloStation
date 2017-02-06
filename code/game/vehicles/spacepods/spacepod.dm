@@ -617,8 +617,49 @@
 	if( user in passengers )
 		removePassenger( user )
 
-	playsound( src, 'sound/machines/windowdoor.ogg', 50, 1 )
-	user.loc = src.loc
+	var/x = src.x
+	var/y = src.y - 1
+	var/z = src.z
+
+	if(isBlocked(x,y,z, user))
+		user << "Blocked is true"
+		x++
+		if(isBlocked(x,y,z,user))
+			x++
+			y++
+			if(isBlocked(x,y,z,user))
+				y++
+				if(isBlocked(x,y,z,user))
+					x--
+					y++
+					if(isBlocked(x,y,z,user))
+						x--
+						if(isBlocked(x,y,z,user))
+							x--
+							y--
+							if(isBlocked(x,y,z,user))
+								y--
+								if(isBlocked(x,y,z,user))
+									x = src.x
+									y = src.y
+									z = src.z
+
+
+
+	playsound( src.loc, 'sound/machines/windowdoor.ogg', 50, 1 )
+	user.loc = locate(x,y,z)
+
+/obj/spacepod/proc/isBlocked(var/x, var/y, var/z, mob/user as mob)
+	var/blocked = 0
+	var/turf/T = locate(x,y,z)
+	if(!T.density)
+		for(var/atom/A in T.contents)
+			if(A.density)
+				blocked = 1
+				break
+	else
+		blocked = 1
+	return blocked
 
 /obj/spacepod/MouseDrop_T(var/atom/movable/W, mob/user as mob)
 	if( istype( W, /mob ))
