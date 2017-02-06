@@ -295,7 +295,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "hierarch_void_link"
 	item_state = "hierarch_void_link"
-	
+
 /obj/item/device/pda/fluff/rylanasteelclaw
 	icon_state = "fluff-pda"
 	desc = "A custom PDA with two screens. It seems rather advanced and has a golden plaque on the top, displaying the owner's first and last name."
@@ -320,8 +320,27 @@
 
 
 /////Silvia Shark tail
-/obj/item/clothing/head/fluff/silviatail
+/obj/item/weapon/storage/belt/fluff/silviatail
 	name = "fake shark tail"
 	desc = "A very pristine tail clothing which makes the user look like they are a cute shark"
 	icon_state = "shark_tail"
-	item_state = "shark_tail" //Both of the icons (icon_state - item_state) are in the hats sprites files (icons/mob/heads.dmi and icons/items/clothings/hats) because the item is coded as a hat
+	item_state = "shark_tail" //Both of the icons (icon_state - item_state) are in the hats sprites files (icons/mob/heads.dmi and icons/items/clothings/hats) because the item is coded as a hat. (Lol nope made that thing a medical belt aren't I a stinker :P -Cola )
+	slot_flags = SLOT_BELT
+	can_hold = list(
+		"/obj/item/device/healthanalyzer",
+		"/obj/item/weapon/dnainjector",
+		"/obj/item/weapon/reagent_containers/dropper",
+		"/obj/item/weapon/reagent_containers/glass/beaker",
+		"/obj/item/weapon/reagent_containers/glass/bottle",
+		"/obj/item/weapon/reagent_containers/pill",
+		"/obj/item/weapon/reagent_containers/syringe",
+		"/obj/item/weapon/reagent_containers/glass/dispenser",
+		"/obj/item/weapon/flame/lighter/zippo",
+		"/obj/item/weapon/storage/fancy/cigarettes",
+		"/obj/item/weapon/storage/pill_bottle",
+		"/obj/item/stack/medical",
+		"/obj/item/device/flashlight/pen",
+		"/obj/item/clothing/mask/surgical",
+		"/obj/item/clothing/gloves/latex",
+	        "/obj/item/weapon/reagent_containers/hypospray"
+	)
