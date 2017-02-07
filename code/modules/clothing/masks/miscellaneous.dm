@@ -101,3 +101,35 @@
 	w_class = 2
 	var/voicechange = 0
 	siemens_coefficient = 0.9
+
+// Cola's spoopys mask.
+
+/obj/item/clothing/mask/goblinmask
+	name = "Goblin Mask"
+	desc = "I don't like em' I don't like goblins, they're scary!"
+	icon_state = "goblinmask"
+	item_state = "goblinmask"
+	siemens_coefficient = 0.7
+
+/obj/item/clothing/mask/demonmask
+	name = "Demon Mask"
+	desc = "Undertakers will fear you in this mask."
+	icon_state = "demonmask"
+	item_state = "demonmask"
+	siemens_coefficient = 0.7
+
+/obj/item/clothing/mask/sharkmask
+	name = "Shark Mask"
+	desc = "On the station it's shark week all year round."
+	icon_state = "sharkmask"
+	item_state = "sharkmask"
+	siemens_coefficient = 0.7
+
+/obj/item/clothing/mask/dolphinmask
+	name = "Dolphin Mask"
+	desc = "Disguise yourself on the dreaded Day of the Dolphin!"
+	icon_state = "dolphinmask"
+	item_state = "dolphinmask"
+	siemens_coefficient = 0.7
+
+
