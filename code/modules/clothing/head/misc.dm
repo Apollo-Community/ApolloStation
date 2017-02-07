@@ -274,3 +274,5 @@
 /obj/item/clothing/head/roman/fluff
 	icon_state = "roman2"
 	item_state = "roman2"
+
+// Cola's spoopy mask collection

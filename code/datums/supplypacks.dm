@@ -1517,3 +1517,19 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/cell/super
 					)
 	group = "Operations"
+
+//Cola's Spoopy masks
+
+/datum/supply_packs/spookymasks
+	name = "NT Brand: Spooky Scary Halloween Mask Set"
+	containername = "NT Brand: Spooky Scary Halloween Mask Set"
+	containertype = /obj/structure/closet
+	cost = 75
+	contains = list(/obj/item/clothing/mask/demonmask,
+	                /obj/item/clothing/mask/goblinmask,
+	                /obj/item/clothing/mask/sharkmask,
+                  	/obj/item/clothing/mask/dolphinmask
+                  	)
+	group = "Miscellaneous"
+
+// I tried to keep the price inline with stuff like the collectable hat crate.
