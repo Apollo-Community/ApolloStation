@@ -617,13 +617,14 @@
 	if( user in passengers )
 		removePassenger( user )
 
+	// Rotates around the pod, checking if the tile it is on is blocked. If it is, it continues to rotate. If it isn't, it spits out the passenger into that tile.
+
 	var/x = src.x
 	var/y = src.y - 1
 	var/z = src.z
 
-	if(isBlocked(x,y,z, user))
-		user << "Blocked is true"
-		x++
+	if(isBlocked(x,y,z)) 	//If the tile at x,y,z, is blocked...
+		x++		//...onto the next tile.
 		if(isBlocked(x,y,z,user))
 			x++
 			y++
@@ -639,7 +640,7 @@
 							y--
 							if(isBlocked(x,y,z,user))
 								y--
-								if(isBlocked(x,y,z,user))
+								if(isBlocked(x,y,z,user)) //If all the tiles around us are blocked, spit them out on top of the pod
 									x = src.x
 									y = src.y
 									z = src.z
@@ -649,7 +650,7 @@
 	playsound( src.loc, 'sound/machines/windowdoor.ogg', 50, 1 )
 	user.loc = locate(x,y,z)
 
-/obj/spacepod/proc/isBlocked(var/x, var/y, var/z, mob/user as mob)
+/obj/spacepod/proc/isBlocked(var/x, var/y, var/z) //Checks to see if the tile at x,y,z is blocked. If it is, returns true, else false.
 	var/blocked = 0
 	var/turf/T = locate(x,y,z)
 	if(!T.density)
