@@ -1,233 +1,154 @@
+var/list/gateways = list()			//A list of all gateways avalible at the start of the round
+var/list/awaygates = list()			//A list of all awaygates not avalible at the start of the round
+
+
 /obj/machinery/gateway
 	name = "gateway"
 	desc = "A mysterious gateway built by unknown hands, it allows for faster than light travel to far-flung locations."
 	icon = 'icons/obj/machines/gateway.dmi'
 	icon_state = "off"
-	density = 1
-	anchored = 1
-	var/active = 0
+	density = 1						//Does it block us?
+	anchored = 1					//Is it anchored?
+	var/active = 0					//Are we active?
 
-//this is da important part wot makes things go
-/obj/machinery/gateway/centerstation
-	density = 1
+
+/obj/machinery/gateway/center
 	icon_state = "offcenter"
-	use_power = 1
 
-	//warping vars
-	var/list/linked = list()
-	var/ready = 0				//have we got all the parts for a gateway?
-	var/wait = 0				//this just grabs world.time at world start
-	var/obj/machinery/gateway/centeraway/awaygate = null
+	var/awaygate = 0				//Are we an awaygate?
+	var/centgate = 0				//Are we centcomm's gate?
+	var/ready = 0					//Do we have all our parts?
+
+	var/list/parts = list()			//List of all our gateway parts
+	var/obj/machinery/gateway/center/link = null		//Who are we linked with?
+
 
 /obj/machinery/gateway/initialize()
+	update_icon()					//Update our icon,
+	if(dir == 2)					//If we are facing south...
+		density = 0					//We don't block movement.
+
+
+/obj/machinery/gateway/center/initialize()
 	update_icon()
-	if(dir == 2)
-		density = 0
+	if(awaygate)					//If we are an awaygate...
+		awaygates.Add(src)			//Add us to the awaygate list,
+		return
+
+	if(centgate)					//Else, if we are a gate in centcomm, add us to no list,
+		return
+
+	gateways.Add(src)				//Else, add us to the default gateway list.
 
 
 /obj/machinery/gateway/update_icon()
-	if(active)
-		icon_state = "on"
-		return
-	icon_state = "off"
-
-/obj/machinery/gateway/centerstation/initialize()
-	update_icon()
-	wait = world.time + config.gateway_delay	//+ thirty minutes default
-	awaygate = locate(/obj/machinery/gateway/centeraway)
-
-
-/obj/machinery/gateway/centerstation/update_icon()
-	if(active)
-		icon_state = "oncenter"
-		return
-	icon_state = "offcenter"
-
-
-
-obj/machinery/gateway/centerstation/process()
-	if(stat & (NOPOWER))
-		if(active) toggleoff()
+	if(active)						//If we are active...
+		icon_state = "on"			//Appear on,
 		return
 
-	if(active)
-		use_power(5000)
+	icon_state = "off"				//Else, appear off.
 
 
-/obj/machinery/gateway/centerstation/proc/detect()
-	linked = list()	//clear the list
+/obj/machinery/gateway/center/update_icon()
+	if(active)						//If we are active...
+		icon_state = "oncenter"		//Appear on,
+		return
+
+	icon_state = "offcenter"		//Else, appear off.
+
+
+obj/machinery/gateway/center/process()
+	if(awaygate || centgate)		//If we are an awaygate or gate in centcomm, don't draw power,
+		return
+
+	if(stat & (NOPOWER))			//If we have no stat? or power...
+		if(active) toggleoff()		//If we are active, turn us off,
+		return
+
+	if(active)						//Else if we have power and are active...
+		use_power(5000)				//Use 5000 power.
+
+
+/obj/machinery/gateway/center/proc/detect()
+	parts = list()					//Clear the parts list
 	var/turf/T = loc
 
-	for(var/i in alldirs)
-		T = get_step(loc, i)
-		var/obj/machinery/gateway/G = locate(/obj/machinery/gateway) in T
-		if(G)
-			linked.Add(G)
+	for(var/i in alldirs)			//For every direction...
+		T = get_step(loc, i)		//Get the turf there,
+		var/obj/machinery/gateway/G = locate(/obj/machinery/gateway) in T		//Locate a gateway on that turf,
+		if(G)						//If it exists...
+			parts.Add(G)			//Add it to the parts list,
 			continue
 
-		//this is only done if we fail to find a part
-		ready = 0
-		toggleoff()
+									//Else, if we don't find a part...
+		ready = 0					//We arn't ready,
+		toggleoff()					//We should turn off,
 		break
 
-	if(linked.len == 8)
-		ready = 1
+	if(parts.len == 8)				//Else, if there is a gateway part in all directions...
+		ready = 1					//We are ready.
 
 
-/obj/machinery/gateway/centerstation/proc/toggleon(mob/user as mob)
-	if(!ready)			return
-	if(!powered())		return
-	if(!awaygate)
-		user << "<span class='notice'>Error: No destination found.</span>"
+/obj/machinery/gateway/center/proc/toggleon(mob/user as mob)
+	if(!ready)			return		//If we arn't ready, don't turn on,
+	if(!powered())		return		//Else, if we don't have but need power, don't turn on,
+	if(awaygate)		return		//Else, if we are an awaygate, don't turn on,
+
+	var/list/opengateways = gateways	//Else, populate the list opengateways with all current gateways,
+	var/list/names = list()			//And create a list for names of the gateways,
+	if(centgate || world.time > config.gateway_delay)		//If we are a gate in centcomm or the time is past the gateway_delay...
+		opengateways += awaygates	//Add awaygates to opengateways,
+
+	for(var/obj/machinery/gateway/center/C in opengateways)		//For every gateway in opengateways...
+		names.Add(C.name)			//Add their name to the names list,
+
+	var/name = input("Select Gateway") in names		//Prompt user for gateway from the names list,
+
+	for(var/obj/machinery/gateway/center/C in opengateways)		//For every gateway in opengates....
+		if(name == C.name)			//If its name is equal to the one given by the user...
+			link = C				//Link the gateway to it.
+			break
+
+	if(link == null)	return		//If it doesn't exist, don't turn on,
+
+	for(var/obj/machinery/gateway/G in parts)		//Else, for every gateway part in the parts list...
+		G.active = 1				//Turn if on,
+		G.update_icon()				//And update its icon,
+	active = 1						//Become active,
+	update_icon()					//And update our icon.
+
+
+/obj/machinery/gateway/center/proc/toggleoff()
+	for(var/obj/machinery/gateway/G in parts)		//For every gateway part in the parts list...
+		G.active = 0				//Turn it off,
+		G.update_icon()				//And update its icon,
+	active = 0						//Become inactive,
+	update_icon()					//And update our icon.
+
+
+/obj/machinery/gateway/center/attack_hand(mob/user as mob)
+	if(!ready)						//If we arn't ready...
+		detect()					//Look for gateway parts,
+		if(!ready)					//If we are still not ready...
+			return					//Do nothing,
+
+	if(!active)						//Else, if we are not on...
+		toggleon(user)				//Turn on,
 		return
-	if(world.time < wait)
-		user << "<span class='notice'>Error: Warpspace triangulation in progress. Estimated time to completion: [round(((wait - world.time) / 10) / 60)] minutes.</span>"
-		return
-
-	for(var/obj/machinery/gateway/G in linked)
-		G.active = 1
-		G.update_icon()
-	active = 1
-	update_icon()
+	toggleoff()						//Else, turn off.
 
 
-/obj/machinery/gateway/centerstation/proc/toggleoff()
-	for(var/obj/machinery/gateway/G in linked)
-		G.active = 0
-		G.update_icon()
-	active = 0
-	update_icon()
+/obj/machinery/gateway/center/Bumped(atom/movable/M as mob|obj)
+	if(!ready)		return			//If we are not ready, do nothing,
+	if(!active)		return			//Else, if we are not active, do nothing
+	if(!link)		return			//Else, if we are not linked, do nothing
 
+	if(awaygate & istype(M, /mob/living/carbon))		//Else, if we are an awaygate and if the mob is a carbon...
+		for(var/obj/item/weapon/implant/exile/E in M)		//For every exile implant on the mob...
+			if(E.imp_in == M)		//If the implant is implanted...
+				M << "\black The station gate has detected your exile implant and is blocking your entry."		//Tell them they can't come back,
+				return				//And do nothing,
 
-/obj/machinery/gateway/centerstation/attack_hand(mob/user as mob)
-	if(!ready)
-		detect()
-		return
-	if(!active)
-		toggleon(user)
-		return
-	toggleoff()
-
-
-//okay, here's the good teleporting stuff
-/obj/machinery/gateway/centerstation/Bumped(atom/movable/M as mob|obj)
-	if(!ready)		return
-	if(!active)		return
-	if(!awaygate)	return
-	if(awaygate.calibrated)
-		M.loc = get_step(awaygate.loc, SOUTH)
-		M.set_dir(SOUTH)
-		return
-	else
-		var/obj/effect/landmark/dest = pick(awaydestinations)
-		if(dest)
-			M.loc = dest.loc
-			M.set_dir(SOUTH)
-			use_power(5000)
-		return
-
-
-/obj/machinery/gateway/centerstation/attackby(obj/item/device/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/device/multitool))
-		user << "\black The gate is already calibrated, there is no work for you to do here."
-		return
-
-/////////////////////////////////////Away////////////////////////
-
-
-/obj/machinery/gateway/centeraway
-	density = 1
-	icon_state = "offcenter"
-	use_power = 0
-	var/calibrated = 1
-	var/list/linked = list()	//a list of the connected gateway chunks
-	var/ready = 0
-	var/obj/machinery/gateway/centeraway/stationgate = null
-
-
-/obj/machinery/gateway/centeraway/initialize()
-	update_icon()
-	stationgate = locate(/obj/machinery/gateway/centerstation)
-
-
-/obj/machinery/gateway/centeraway/update_icon()
-	if(active)
-		icon_state = "oncenter"
-		return
-	icon_state = "offcenter"
-
-
-/obj/machinery/gateway/centeraway/proc/detect()
-	linked = list()	//clear the list
-	var/turf/T = loc
-
-	for(var/i in alldirs)
-		T = get_step(loc, i)
-		var/obj/machinery/gateway/G = locate(/obj/machinery/gateway) in T
-		if(G)
-			linked.Add(G)
-			continue
-
-		//this is only done if we fail to find a part
-		ready = 0
-		toggleoff()
-		break
-
-	if(linked.len == 8)
-		ready = 1
-
-
-/obj/machinery/gateway/centeraway/proc/toggleon(mob/user as mob)
-	if(!ready)			return
-	if(!stationgate)
-		user << "<span class='notice'>Error: No destination found.</span>"
-		return
-
-	for(var/obj/machinery/gateway/G in linked)
-		G.active = 1
-		G.update_icon()
-	active = 1
-	update_icon()
-
-
-/obj/machinery/gateway/centeraway/proc/toggleoff()
-	for(var/obj/machinery/gateway/G in linked)
-		G.active = 0
-		G.update_icon()
-	active = 0
-	update_icon()
-
-
-/obj/machinery/gateway/centeraway/attack_hand(mob/user as mob)
-	if(!ready)
-		detect()
-		return
-	if(!active)
-		toggleon(user)
-		return
-	toggleoff()
-
-
-/obj/machinery/gateway/centeraway/Bumped(atom/movable/M as mob|obj)
-	if(!ready)	return
-	if(!active)	return
-	if(istype(M, /mob/living/carbon))
-		for(var/obj/item/weapon/implant/exile/E in M)//Checking that there is an exile implant in the contents
-			if(E.imp_in == M)//Checking that it's actually implanted vs just in their pocket
-				M << "\black The station gate has detected your exile implant and is blocking your entry."
-				return
-	M.loc = get_step(stationgate.loc, SOUTH)
-	M.set_dir(SOUTH)
-
-
-/obj/machinery/gateway/centeraway/attackby(obj/item/device/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/device/multitool))
-		if(calibrated)
-			user << "\black The gate is already calibrated, there is no work for you to do here."
-			return
-		else
-			user << "<span class='notice'><b>Recalibration successful!</b>: </span><span class='black'>This gate's systems have been fine tuned.  Travel to this gate will now be on target.</span>>"
-			calibrated = 1
-			return
-
+	M.loc = get_step(link.loc, SOUTH)		//Else, teleport the mob to the link's location...
+	M.set_dir(SOUTH)				//And make it face south.
 
