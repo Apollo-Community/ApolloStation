@@ -92,7 +92,6 @@ obj/machinery/gateway/center/process()
 /obj/machinery/gateway/center/proc/toggleon(mob/user as mob)
 	if(!ready)		return					//If we arn't ready, don't turn on,
 	if(!powered())		return					//Else, if we don't have but need power, don't turn on,
-	if(awaygate)		return					//Else, if we are an awaygate, don't turn on,
 
 	var/list/opengateways = gateways				//Else, populate the list opengateways with all current gateways,
 	var/list/names = list()						//And create a list for names of the gateways,
