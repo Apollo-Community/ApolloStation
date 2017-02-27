@@ -11,8 +11,7 @@
 	minimal_access = list(access_robotics, access_research, access_chemistry)
 	alt_titles = list("Roboticist", "Researcher", "Chemist","Junior Scientist")
 
-	//rank_succesion_level = 4
-	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL
+	rank_succesion_level = 4
 
 /datum/job/scientist/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0

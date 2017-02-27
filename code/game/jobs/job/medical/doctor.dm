@@ -11,8 +11,7 @@
 	minimal_access = list(access_medical, access_morgue, access_chemistry, access_surgery, access_maint_tunnels)
 	alt_titles = list("First Responder", "Psychiatrist", "Diagnostician", "Mortician", "Pharmacist", "Surgeon","Nurse")
 
-	//rank_succesion_level = 4
-	rank_succesion_level = INDUCTEE_SUCCESSION_LEVEL
+	rank_succesion_level = 4
 
 /datum/job/doctor/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
