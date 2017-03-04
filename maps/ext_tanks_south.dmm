@@ -1,0 +1,36 @@
+"a" = (/turf/space,/area/space)
+"b" = (/obj/structure/grille,/turf/simulated/wall/r_wall,/area/atmos)
+"c" = (/obj/structure/grille,/obj/machinery/meter,/obj/machinery/atmospherics/pipe/simple/visible/purple,/turf/simulated/wall/r_wall,/area/atmos)
+"d" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/obj/machinery/door/firedoor/border_only{dir = 2},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/atmos)
+"e" = (/obj/structure/grille,/obj/machinery/atmospherics/pipe/simple/visible/green,/turf/simulated/wall/r_wall,/area/atmos)
+"f" = (/obj/machinery/atmospherics/unary/outlet_injector{dir = 1; frequency = 1441; icon_state = "map_injector"; id = "co2_in"; use_power = 1; pixel_y = 1},/turf/simulated/floor/engine{carbon_dioxide = 50000; name = "co2 floor"; nitrogen = 0; oxygen = 0},/area/atmos)
+"g" = (/obj/machinery/air_sensor{frequency = 1441; id_tag = "co2_sensor"},/turf/simulated/floor/engine{carbon_dioxide = 50000; name = "co2 floor"; nitrogen = 0; oxygen = 0},/area/atmos)
+"h" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 1; external_pressure_bound = 0; external_pressure_bound_default = 0; frequency = 1441; icon_state = "map_vent_in"; id_tag = "co2_out"; initialize_directions = 1; internal_pressure_bound = 4000; internal_pressure_bound_default = 4000; use_power = 1; pressure_checks = 2; pressure_checks_default = 2; pump_direction = 0},/turf/simulated/floor/engine{carbon_dioxide = 50000; name = "co2 floor"; nitrogen = 0; oxygen = 0},/area/atmos)
+"i" = (/obj/machinery/atmospherics/unary/outlet_injector{dir = 1; frequency = 1441; icon_state = "map_injector"; id = "tox_in"; use_power = 1; pixel_y = 1},/turf/simulated/floor/engine{carbon_dioxide = 0; name = "phoron floor"; nitrogen = 0; oxygen = 0; phoron = 70000},/area/atmos)
+"j" = (/obj/machinery/air_sensor{frequency = 1441; id_tag = "tox_sensor"},/turf/simulated/floor/engine{carbon_dioxide = 0; name = "phoron floor"; nitrogen = 0; oxygen = 0; phoron = 70000},/area/atmos)
+"k" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 1; external_pressure_bound = 0; external_pressure_bound_default = 0; frequency = 1441; icon_state = "map_vent_in"; id_tag = "tox_out"; initialize_directions = 1; internal_pressure_bound = 4000; internal_pressure_bound_default = 4000; pressure_checks = 2; pressure_checks_default = 2; pump_direction = 0; use_power = 1},/turf/simulated/floor/engine{carbon_dioxide = 0; name = "phoron floor"; nitrogen = 0; oxygen = 0; phoron = 70000},/area/atmos)
+"l" = (/obj/machinery/atmospherics/unary/outlet_injector{dir = 1; frequency = 1441; icon_state = "map_injector"; id = "n2o_in"; use_power = 1; pixel_y = 1},/turf/simulated/floor/engine{name = "vacuum floor"; nitrogen = 0.01; oxygen = 0.01},/area/atmos)
+"m" = (/obj/machinery/air_sensor{frequency = 1441; id_tag = "n2o_sensor"},/turf/simulated/floor/engine{name = "vacuum floor"; nitrogen = 0.01; oxygen = 0.01},/area/atmos)
+"n" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 1; external_pressure_bound = 0; external_pressure_bound_default = 0; frequency = 1441; icon_state = "map_vent_in"; id_tag = "n2o_out"; initialize_directions = 1; internal_pressure_bound = 4000; internal_pressure_bound_default = 4000; pressure_checks = 2; pressure_checks_default = 2; pump_direction = 0; use_power = 1},/turf/simulated/floor/engine{name = "vacuum floor"; nitrogen = 0.01; oxygen = 0.01},/area/atmos)
+"o" = (/turf/simulated/floor/engine{carbon_dioxide = 50000; name = "co2 floor"; nitrogen = 0; oxygen = 0},/area/atmos)
+"p" = (/obj/machinery/portable_atmospherics/canister/carbon_dioxide,/turf/simulated/floor/engine{carbon_dioxide = 50000; name = "co2 floor"; nitrogen = 0; oxygen = 0},/area/atmos)
+"q" = (/turf/simulated/floor/engine{carbon_dioxide = 0; name = "phoron floor"; nitrogen = 0; oxygen = 0; phoron = 70000},/area/atmos)
+"r" = (/obj/machinery/portable_atmospherics/canister/phoron,/turf/simulated/floor/engine{carbon_dioxide = 0; name = "phoron floor"; nitrogen = 0; oxygen = 0; phoron = 70000},/area/atmos)
+"s" = (/turf/simulated/floor/engine{name = "vacuum floor"; nitrogen = 0.01; oxygen = 0.01},/area/atmos)
+"t" = (/obj/machinery/portable_atmospherics/canister/sleeping_agent/roomfiller,/turf/simulated/floor/engine{name = "vacuum floor"; nitrogen = 0.01; oxygen = 0.01},/area/atmos)
+"u" = (/obj/machinery/light/small,/turf/simulated/floor/engine{carbon_dioxide = 50000; name = "co2 floor"; nitrogen = 0; oxygen = 0},/area/atmos)
+"v" = (/obj/machinery/light/small,/turf/simulated/floor/engine{carbon_dioxide = 0; name = "phoron floor"; nitrogen = 0; oxygen = 0; phoron = 70000},/area/atmos)
+"w" = (/obj/machinery/light/small,/turf/simulated/floor/engine{name = "vacuum floor"; nitrogen = 0.01; oxygen = 0.01},/area/atmos)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaa
+aabcdebcdebcdebaaa
+aabfghbijkblmnbaaa
+aabopobqrqbstsbaaa
+aabouobqvqbswsbaaa
+aabbbbbbbbbbbbbaaa
+aaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaa
+"}
