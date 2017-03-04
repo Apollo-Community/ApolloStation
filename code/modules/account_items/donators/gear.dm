@@ -1,7 +1,7 @@
 /datum/gear/account/delta_dog
 	display_name = "Delta the dog"
 	path = /obj/item/weapon/holder/delta
-	sort_category = "misc"
+	sort_category = "slot_l_hand"
 
 /datum/gear/account/halocat_balaclava
 	display_name = "Lunas balaclava"
