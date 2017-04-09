@@ -48,7 +48,7 @@
 		target << "<span class='danger'>You feel extreme pain!</span>"
 		affecting.adjustHalLoss(Clamp(0, 60-affecting.halloss, 30)) //up to 60 halloss
 
-/*
+
 /obj/item/weapon/grab/proc/attack_eye(mob/living/carbon/human/target, mob/living/carbon/human/attacker)
 	if(!istype(attacker))
 		return
@@ -73,7 +73,7 @@
 	msg_admin_attack("[key_name(attacker)] attacked [key_name(target)]'s eyes using a grab action.")
 
 	attack.handle_eye_attack(attacker, target)
-*/
+
 
 /obj/item/weapon/grab/proc/headbut(mob/living/carbon/human/target, mob/living/carbon/human/attacker)
 	if(!istype(attacker))
@@ -105,7 +105,7 @@
 	qdel(src)
 	return
 
-/*
+
 /obj/item/weapon/grab/proc/dislocate(mob/living/carbon/human/target, mob/living/attacker, var/target_zone)
 	if(state < GRAB_NECK)
 		attacker << "<span class='warning'>You require a better grab to do this.</span>"
@@ -113,7 +113,7 @@
 	if(target.grab_joint(attacker, target_zone))
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		return
-*/
+
 
 /obj/item/weapon/grab/proc/pin_down(mob/target, mob/attacker)
 	if(state < GRAB_AGGRESSIVE)
