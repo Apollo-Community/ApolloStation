@@ -396,6 +396,13 @@ area/space/atmosalert()
 	requires_power = 0
 	lighting_use_dynamic = 0
 
+// ----- test
+	name = "\improper mytestarea"
+	icon_state = "blue"
+	requires_power = 0
+	lighting_use_dynamic = 0
+//------- test
+
 
 /area/shuttle/laborcamp/station
 	name = "\improper Labor Camp Shuttle"
