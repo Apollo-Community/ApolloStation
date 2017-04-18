@@ -12,6 +12,7 @@
 NOTE: there are two lists of areas in the end of this file: centcom and station itself. Please maintain these lists valid. --rastaf0
 
 */
+// test 1
 
 
 /area
@@ -392,7 +393,7 @@ area/space/atmosalert()
 
 /area/shuttle/vox/station
 	name = "\improper Vox Skipjack"
-	icon_state = "yellow"
+	icon_state = "blue"
 	requires_power = 0
 	lighting_use_dynamic = 0
 
