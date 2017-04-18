@@ -41,12 +41,19 @@
 	usr.visible_message("<b>[src]</b> points to [A]")
 	return 1
 
+//Last words.
 /mob/living/verb/succumb()
-	set hidden = 1
-	if ((src.health < 0 && src.health > -95.0))
-		src.adjustOxyLoss(src.health + 200)
-		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
-		src << "<span class='notice'>You have given up life and succumbed to death.</span>"
+    set hidden = 1
+    if (isCrit())
+        src.adjustOxyLoss(src.health + 200)
+        src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
+        src << "<span class='notice'>You have given up life and succumbed to death.</span>"
+
+/mob/living/carbon/human/succumb()
+    if(isDying())
+        var/input = input(src,"What are your final words?", "Final Words")
+        whisper(lentext(input) > 20 ? "[copytext(input,1,20)]..." : "[input]...")
+        ..()
 
 
 /mob/living/proc/updatehealth()

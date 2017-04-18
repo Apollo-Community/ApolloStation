@@ -21,6 +21,10 @@
 			italics = 1
 			sound_vol *= 0.5 //muffle the sound a bit, so it's like we're actually talking through contact
 
+	if(isDying(src))
+		hear_dying(message,speaker)
+		return
+		
 	if(sleeping || stat == 1)
 		hear_sleep(message)
 		return
@@ -93,11 +97,16 @@
 
 	if(!client)
 		return
-
+		
+	if(isDying(src))   
+		if(prob(30))
+			src << "<span class = 'game_say'>...You hear...[lentext(message) > 20 ? "[copytext(message,1,20)]..." : "[message]..."] hiss in your ear.</span>"
+		else
+			src << "<span class = 'game_say'>...You hear a hiss in your ear...</span>"
+		
 	if(sleeping || stat==1) //If unconscious or sleeping
 		hear_sleep(message)
 		return
-
 	var/track = null
 
 	//non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
@@ -243,3 +252,10 @@
 		heard = "<span class = 'game_say'>...<i>You almost hear someone talking</i>...</span>"
 
 	src << heard
+
+/mob/proc/hear_dying(var/message, var/mob/M)
+	if(get_dist(src, M) <= 2)
+		message = "span class = 'game_say'>...You hear someone say...\"[message]\"</span>"
+	else
+		message = "<span class = 'game_say'>...<i>You almost hear someone talking</i>...</span>"
+	src << message
